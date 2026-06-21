@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>グループコミュニケーションツール比較 — Discord / Facebook / Slack / Chatwork — Mits Reports</title>
+<meta name="description" content="少人数グループ講座に最適なコミュニケーションツールを4候補で比較。過去ログ保持・音声通話・スレッド・AI連携の観点から検証。">
+<meta property="og:title" content="グループコミュニケーションツール比較 — Discord / Facebook / Slack / Chatwork">
+<meta property="og:description" content="少人数グループ講座に最適なコミュニケーションツールを4候補で比較検証。">
+<meta property="og:type" content="article">
+<style>
+  :root {
+    --navy: #1a3a52;
+    --navy-light: #2c5575;
+    --ivory: #f7f3ea;
+    --paper: #fbfaf5;
+    --ink: #2a2a2a;
+    --gray: #7a7a7a;
+    --line: #d8d4ca;
+    --ok: #2d8659;
+    --warn: #c89020;
+    --ng: #b04848;
+    --gold: #b89544;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.75;
+    font-size: 15px;
+    padding: 20px 16px;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  header.report-head {
+    background: var(--navy);
+    color: var(--ivory);
+    padding: 36px 40px;
+    border-radius: 6px;
+    margin-bottom: 24px;
+  }
+  header.report-head .tag {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 3px;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+  }
+  header.report-head h1 {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+  header.report-head .meta {
+    font-size: 13px;
+    color: rgba(247,243,234,0.7);
+    line-height: 1.7;
+  }
+
+  section { margin-bottom: 28px; }
+  h2 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--navy);
+    border-left: 4px solid var(--gold);
+    padding-left: 12px;
+    margin-bottom: 16px;
+  }
+  p { margin-bottom: 10px; }
+
+  .conclusion {
+    background: white;
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--gold);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .conclusion .lead {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+  .conclusion ul { padding-left: 22px; }
+  .conclusion li { margin-bottom: 6px; font-size: 14px; }
+
+  .engines {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .engine-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 16px;
+  }
+  .engine-card.rec { border-top: 4px solid var(--ok); }
+  .engine-card.watch { border-top: 4px solid var(--warn); }
+  .engine-card.skip { border-top: 4px solid var(--ng); }
+  .engine-card .vendor { font-size: 11px; color: var(--gray); letter-spacing: 0.05em; margin-bottom: 4px; }
+  .engine-card .name { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .engine-card .judgement { font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+  .engine-card.rec .judgement { color: var(--ok); }
+  .engine-card.watch .judgement { color: var(--warn); }
+  .engine-card.skip .judgement { color: var(--ng); }
+  .engine-card .reason { font-size: 12px; color: var(--ink); line-height: 1.6; }
+
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 8px; }
+
+  .matrix {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    font-size: 13px;
+  }
+  .matrix th, .matrix td {
+    border: 1px solid var(--line);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .matrix thead th {
+    background: var(--navy);
+    color: var(--ivory);
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+  }
+  .matrix thead th.func { background: var(--navy-light); text-align: left; }
+  .matrix thead th.highlight { background: var(--gold); color: var(--navy); }
+  .matrix tbody td.func {
+    background: var(--ivory);
+    font-weight: 600;
+    color: var(--navy);
+    min-width: 150px;
+  }
+  .matrix tbody td.highlight {
+    background: rgba(184,149,68,0.06);
+  }
+  .matrix .status { display: inline-block; font-weight: 700; margin-right: 4px; }
+  .status.ok { color: var(--ok); }
+  .status.warn { color: var(--warn); }
+  .status.ng { color: var(--ng); }
+  .matrix .note { font-size: 11px; color: var(--gray); line-height: 1.5; margin-top: 3px; display: block; }
+
+  footer.report-foot {
+    background: var(--ivory);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px 22px;
+    font-size: 12px;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+  footer.report-foot strong { color: var(--navy); }
+  footer.report-foot a {
+    color: var(--navy-light);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--navy-light);
+  }
+  footer.report-foot ul { padding-left: 20px; margin-top: 6px; }
+
+  @media (max-width: 720px) {
+    body { font-size: 14px; padding: 12px 8px; }
+    header.report-head { padding: 24px 20px; }
+    header.report-head h1 { font-size: 21px; }
+    .engines { grid-template-columns: 1fr 1fr; }
+    .matrix { font-size: 11px; }
+    .matrix th, .matrix td { padding: 6px 8px; }
+  }
+  @media (max-width: 480px) {
+    .engines { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="report-head">
+    <span class="tag">COMPARISON REPORT</span>
+    <h1>グループコミュニケーションツール比較<br>Discord / Facebook / Slack / Chatwork</h1>
+    <div class="meta">
+      発行: 2026-06-21 / 対象: 少人数グループ講座（2ヶ月・隔週開催）のグループ会話ツール選定<br>
+      検証: 各サービス公式ドキュメント・料金ページ（2026-06-21 時点）
+    </div>
+  </header>
+
+  <section>
+    <h2>結論</h2>
+    <div class="conclusion">
+      <p class="lead">少人数グループ講座のコミュニケーションツールには Discord が最適</p>
+      <ul>
+        <li><strong>過去ログが無料で無制限に残る</strong>（Slackは90日、Chatworkは40日で閲覧不可）</li>
+        <li><strong>音声・ビデオ・画面共有がすべて無料</strong>（Slack・Chatworkはグループ通話が有料）</li>
+        <li><strong>チャンネル＋スレッド＋フォーラムで話題を整理できる</strong>（Facebookはスレッド機能なし）</li>
+        <li><strong>AIボット連携が無料で可能</strong>（AI活用の講座との相性が最も高い）</li>
+      </ul>
+
+      <div class="engines">
+        <div class="engine-card rec">
+          <div class="vendor">推奨</div>
+          <div class="name">Discord</div>
+          <div class="judgement">✅ 採用</div>
+          <div class="reason">無料・無制限ログ・音声/画面共有・AIボット対応</div>
+        </div>
+        <div class="engine-card watch">
+          <div class="vendor">条件付き</div>
+          <div class="name">Facebook</div>
+          <div class="judgement">⚠️ 次点</div>
+          <div class="reason">ログは残るがスレッド不可・実名制が障壁</div>
+        </div>
+        <div class="engine-card skip">
+          <div class="vendor">不採用</div>
+          <div class="name">Slack</div>
+          <div class="judgement">❌ 90日制限</div>
+          <div class="reason">無料プランは90日でログ非表示・グループ通話は有料</div>
+        </div>
+        <div class="engine-card skip">
+          <div class="vendor">不採用</div>
+          <div class="name">Chatwork</div>
+          <div class="judgement">❌ 40日制限</div>
+          <div class="reason">無料プランは40日でログ閲覧不可・グループビデオ有料</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>比較表（15項目）</h2>
+    <div class="table-wrap">
+    <table class="matrix">
+    <thead>
+    <tr>
+      <th class="func">比較要素</th>
+      <th class="highlight">Discord</th>
+      <th>Facebook グループ / Messenger</th>
+      <th>Slack</th>
+      <th>Chatwork</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td class="func">アカウント新規作成の必要性</td>
+      <td class="highlight"><span class="status warn">⚠️</span> 多くの受講者は未所持。新規作成が必要な可能性が高い</td>
+      <td><span class="status ok">✅</span> ほぼ全員が既にアカウント所持</td>
+      <td><span class="status warn">⚠️</span> ビジネス利用者以外は未所持が多い</td>
+      <td><span class="status ok">✅</span> 日本のビジネス利用者は所持率が高い</td>
+    </tr>
+    <tr>
+      <td class="func">会話が流れるか（埋もれやすさ）</td>
+      <td class="highlight"><span class="status ok">✅</span> チャンネル分離＋スレッド＋ピン留めで埋もれにくい</td>
+      <td><span class="status ng">❌</span> タイムライン型で流れやすい。過去投稿が埋もれる</td>
+      <td><span class="status ok">✅</span> チャンネル＋スレッドで整理可能</td>
+      <td><span class="status warn">⚠️</span> 時系列で流れる。スレッド機能なし</td>
+    </tr>
+    <tr>
+      <td class="func">検索しやすさ</td>
+      <td class="highlight"><span class="status ok">✅</span> 全メッセージ検索可能。from: / in: / has: 等のフィルタあり（無料）</td>
+      <td><span class="status warn">⚠️</span> グループ内検索は可能だが精度が低い</td>
+      <td><span class="status warn">⚠️</span> 無料プランは90日以内のみ検索可能</td>
+      <td><span class="status warn">⚠️</span> 無料プランは直近40日のメッセージのみ</td>
+    </tr>
+    <tr>
+      <td class="func">過去ログの保持</td>
+      <td class="highlight"><span class="status ok">✅</span> <strong>無料で無制限。全履歴が永久に残る</strong></td>
+      <td><span class="status ok">✅</span> グループ投稿は残る（Messengerチャットは整理困難）</td>
+      <td><span class="status ng">❌</span> <strong>無料は90日で非表示化。1年超で削除</strong></td>
+      <td><span class="status ng">❌</span> <strong>無料は40日で閲覧不可</strong></td>
+    </tr>
+    <tr>
+      <td class="func">スレッド（話題別の分離）</td>
+      <td class="highlight"><span class="status ok">✅</span> チャンネル＋スレッド＋フォーラムチャンネル。完全分離可能</td>
+      <td><span class="status ng">❌</span> スレッド機能なし（コメントのネストのみ）</td>
+      <td><span class="status ok">✅</span> スレッドあり（無料でも利用可能）</td>
+      <td><span class="status ng">❌</span> スレッド機能なし</td>
+    </tr>
+    <tr>
+      <td class="func">グループとDMの使い分け</td>
+      <td class="highlight"><span class="status ok">✅</span> サーバー内チャンネル（全体）とDM（個別）を明確に分離</td>
+      <td><span class="status warn">⚠️</span> グループ投稿とMessenger DMは別アプリ。切り替えが煩雑</td>
+      <td><span class="status ok">✅</span> チャンネルとDMを分離可能</td>
+      <td><span class="status ok">✅</span> グループチャットとDMを分離可能</td>
+    </tr>
+    <tr>
+      <td class="func">無料プランの人数上限</td>
+      <td class="highlight"><span class="status ok">✅</span> 無制限</td>
+      <td><span class="status ok">✅</span> グループ上限なし / Messengerは250人</td>
+      <td><span class="status ok">✅</span> 無制限</td>
+      <td><span class="status ok">✅</span> 100人まで（少人数講座では十分）</td>
+    </tr>
+    <tr>
+      <td class="func">画面共有・音声・ビデオ通話</td>
+      <td class="highlight"><span class="status ok">✅</span> <strong>音声・ビデオ・画面共有すべて無料</strong></td>
+      <td><span class="status warn">⚠️</span> Messengerで音声・ビデオ可。画面共有は限定的。グループ通話8人まで</td>
+      <td><span class="status ng">❌</span> 無料は1:1のみ（30分制限）。グループ通話は有料（Pro $7.25/月/人）</td>
+      <td><span class="status ng">❌</span> 無料は1:1ビデオのみ。グループビデオは有料（$7/月/人）</td>
+    </tr>
+    <tr>
+      <td class="func">ファイル共有（容量制限）</td>
+      <td class="highlight"><span class="status ok">✅</span> ストレージ無制限。1ファイル10MBまで（無料）</td>
+      <td><span class="status ok">✅</span> 写真・動画・ファイル共有可。容量制限は緩い</td>
+      <td><span class="status warn">⚠️</span> 全体で5GBまで（無料）</td>
+      <td><span class="status warn">⚠️</span> 全体で10GBまで（無料）</td>
+    </tr>
+    <tr>
+      <td class="func">ボット・自動化（AI連携）</td>
+      <td class="highlight"><span class="status ok">✅</span> <strong>Bot開発自由。無料Bot多数。Webhook連携も無料</strong></td>
+      <td><span class="status ng">❌</span> Bot機能なし</td>
+      <td><span class="status ok">✅</span> 無料は10アプリまで。Zapier等と連携可能</td>
+      <td><span class="status warn">⚠️</span> Webhook・API連携は可能だがBot文化は薄い</td>
+    </tr>
+    <tr>
+      <td class="func">モバイルアプリ</td>
+      <td class="highlight"><span class="status ok">✅</span> iOS/Android対応。PC版と同等機能</td>
+      <td><span class="status ok">✅</span> Facebookアプリ＋Messengerアプリ（2アプリ必要）</td>
+      <td><span class="status ok">✅</span> iOS/Android対応</td>
+      <td><span class="status ok">✅</span> iOS/Android対応</td>
+    </tr>
+    <tr>
+      <td class="func">通知設定の柔軟性</td>
+      <td class="highlight"><span class="status ok">✅</span> チャンネル単位・メンション限定・ミュート等、細かく設定可能</td>
+      <td><span class="status warn">⚠️</span> 通知設定は粗い。グループ単位のミュートは可能</td>
+      <td><span class="status ok">✅</span> チャンネル単位・キーワード通知等、柔軟</td>
+      <td><span class="status ok">✅</span> グループ単位のミュート可能</td>
+    </tr>
+    <tr>
+      <td class="func">匿名性（実名制か）</td>
+      <td class="highlight"><span class="status ok">✅</span> ニックネーム制。サーバーごとに表示名を変更可能</td>
+      <td><span class="status ng">❌</span> 実名制（Facebookアカウント紐付け）</td>
+      <td><span class="status warn">⚠️</span> 表示名は自由だがメールアドレスは見える</td>
+      <td><span class="status warn">⚠️</span> 表示名は自由（プロフィール設定次第）</td>
+    </tr>
+    <tr>
+      <td class="func">退会・アーカイブ</td>
+      <td class="highlight"><span class="status ok">✅</span> サーバーから即時退出可能。主催者側でアーカイブ・読み取り専用化も容易</td>
+      <td><span class="status warn">⚠️</span> グループ退会は可能だが投稿履歴の管理が煩雑</td>
+      <td><span class="status ok">✅</span> ワークスペースから退出可能</td>
+      <td><span class="status ok">✅</span> グループから退出可能</td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>少人数グループ講座に特化した評価（4項目）</h2>
+    <div class="table-wrap">
+    <table class="matrix">
+    <thead>
+    <tr>
+      <th class="func">観点</th>
+      <th class="highlight">Discord</th>
+      <th>Facebook</th>
+      <th>Slack</th>
+      <th>Chatwork</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td class="func">2ヶ月終了後も受講者が過去ログを見返せるか</td>
+      <td class="highlight"><span class="status ok">✅</span> 永久保持</td>
+      <td><span class="status ok">✅</span> グループ投稿は残る</td>
+      <td><span class="status ng">❌</span> 90日で非表示（2ヶ月講座終了直後に消え始める）</td>
+      <td><span class="status ng">❌</span> 40日で閲覧不可（講座中に前半の会話が消える）</td>
+    </tr>
+    <tr>
+      <td class="func">運営コスト（主催者の月額費用）</td>
+      <td class="highlight"><span class="status ok">✅</span> 無料</td>
+      <td><span class="status ok">✅</span> 無料</td>
+      <td><span class="status ng">❌</span> 参加者人数 × $7.25/月（グループ通話に必要）</td>
+      <td><span class="status ng">❌</span> 参加者人数 × $7/月（グループビデオに必要）</td>
+    </tr>
+    <tr>
+      <td class="func">次回講座でのサーバー再利用</td>
+      <td class="highlight"><span class="status ok">✅</span> チャンネル追加で期ごとに運用可能</td>
+      <td><span class="status warn">⚠️</span> 新グループ作成が必要</td>
+      <td><span class="status ok">✅</span> チャンネル追加で対応可能</td>
+      <td><span class="status warn">⚠️</span> 新グループ作成が必要</td>
+    </tr>
+    <tr>
+      <td class="func">AIボット連携の拡張性</td>
+      <td class="highlight"><span class="status ok">✅</span> ChatGPT/Claude等のAIボットを無料で導入可能</td>
+      <td><span class="status ng">❌</span> なし</td>
+      <td><span class="status ok">✅</span> 有料プランで連携可能</td>
+      <td><span class="status warn">⚠️</span> API経由で限定的に可能</td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>まとめ</h2>
+    <div class="conclusion">
+      <p>少人数グループ講座のコミュニケーションツールとしてDiscordを選ぶ最大の理由は、<strong>無料で全機能が使えること</strong>と<strong>過去ログが永久に残ること</strong>の2点です。</p>
+      <p>Slackは90日、Chatworkは40日でメッセージが閲覧不可になるため、2ヶ月の講座では途中〜終了直後に前半の会話が消える致命的な問題があります。Facebookグループは過去ログは残りますが、スレッド機能がなく、話題別の会話整理ができません。</p>
+      <p>Discordはチャンネル・スレッド・フォーラムで「質問」「課題提出」「雑談」等を明確に分離でき、音声・ビデオ・画面共有もすべて無料。さらにAIボット連携も無料で可能なため、AI活用を実践する講座のツールとして最も整合性が高いです。</p>
+      <p>唯一の注意点はアカウント新規作成が必要な受講者がいる可能性ですが、登録は無料・数分で完了するため、初回セッションで案内すれば問題になりません。</p>
+    </div>
+  </section>
+
+  <footer class="report-foot">
+    <strong>一次資料（✅確認済・2026-06-21 取得）</strong>
+    <ul>
+      <li>Discord Pricing 2026: <a href="https://costbench.com/software/communication/discord/">costbench.com</a></li>
+      <li>Discord Free Plan: <a href="https://costbench.com/software/communication/discord/free-plan/">costbench.com</a></li>
+      <li>Discord File Upload Limit: <a href="https://sto.care/blog/discord-file-upload-limit/">sto.care</a></li>
+      <li>Discord Screen Share: <a href="https://support.discord.com/hc/en-us/articles/360040816151-Go-Live-and-Screen-Share">support.discord.com</a></li>
+      <li>Slack Free Plan Limitations: <a href="https://slack.com/help/articles/27204752526611-Feature-limitations-on-the-free-version-of-Slack">slack.com</a></li>
+      <li>Slack Free Plan Limits 2026: <a href="https://viewexport.com/post/slack-free-plan-limitations">viewexport.com</a></li>
+      <li>Slack Plans and Features: <a href="https://slack.com/help/articles/115003205446-Slack-plans-and-features">slack.com</a></li>
+      <li>Chatwork Pricing: <a href="https://go.chatwork.com/en/pricing/">chatwork.com</a></li>
+      <li>Chatwork Free Plan Restrictions: <a href="https://support-en.chatwork.com/hc/en-us/articles/11119241467673">support-en.chatwork.com</a></li>
+      <li>Facebook Messenger Limits: <a href="https://nerdschalk.com/facebook-messenger-limit/">nerdschalk.com</a></li>
+      <li>Facebook Group Chats: <a href="https://www.socialmediatoday.com/news/facebook-is-removing-its-group-chats-feature-to-limit-spammers/561141/">socialmediatoday.com</a></li>
+    </ul>
+
+    <strong style="display:block; margin-top:14px;">© 西田光弘個人事務所 / Mits Reports</strong>
+  </footer>
+
+</div>
+</body>
+</html>
