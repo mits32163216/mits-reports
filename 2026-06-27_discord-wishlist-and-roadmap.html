@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>みんなの「やりたいこと」一覧と、これから作る動画ロードマップ｜The Innovation</title>
+<style>
+:root {
+  --navy: #1A2A4A;
+  --navy-light: #2D3F61;
+  --ivory: #FAF7EE;
+  --ivory-soft: #F2EDDC;
+  --gold: #C8A055;
+  --gold-light: #E5C885;
+  --gray-text: #555;
+  --gray-soft: #999;
+  --done: #4A8260;
+  --hot: #C8553D;
+  --mid: #C8A055;
+  --light: #6B8FA8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+  background: var(--ivory);
+  color: var(--navy);
+  line-height: 1.8;
+  padding: 0;
+}
+.container { max-width: 880px; margin: 0 auto; padding: 60px 24px; }
+
+header { text-align: center; margin-bottom: 60px; border-bottom: 2px solid var(--gold); padding-bottom: 40px; }
+header .eyebrow { color: var(--gold); font-size: 14px; letter-spacing: 0.3em; font-weight: bold; margin-bottom: 16px; }
+header h1 { font-size: 32px; line-height: 1.4; color: var(--navy); margin-bottom: 16px; font-weight: 700; }
+header p.lead { color: var(--gray-text); font-size: 16px; max-width: 620px; margin: 0 auto; }
+header .date { color: var(--gray-soft); font-size: 13px; margin-top: 20px; letter-spacing: 0.1em; }
+
+section { margin-bottom: 64px; }
+section h2 {
+  color: var(--navy);
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  padding-left: 16px;
+  border-left: 6px solid var(--gold);
+  line-height: 1.4;
+}
+section .lead-text { color: var(--gray-text); margin-bottom: 32px; font-size: 15px; }
+
+.intro-box {
+  background: var(--ivory-soft);
+  border: 1px solid var(--gold-light);
+  padding: 32px 28px;
+  margin-bottom: 40px;
+  border-radius: 6px;
+}
+.intro-box p { margin-bottom: 12px; font-size: 15px; }
+.intro-box p:last-child { margin-bottom: 0; }
+.intro-box .highlight { color: var(--navy); font-weight: 700; }
+
+/* テーマカード */
+.theme-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); }
+.theme-card {
+  background: white;
+  border: 1px solid #E6DFC9;
+  border-left: 4px solid var(--gold);
+  padding: 24px 24px 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(26, 42, 74, 0.06);
+}
+.theme-card .badge {
+  display: inline-block;
+  background: var(--navy);
+  color: var(--ivory);
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 2px;
+  letter-spacing: 0.15em;
+  margin-bottom: 12px;
+  font-family: 'Inter', sans-serif;
+}
+.theme-card h3 { color: var(--navy); font-size: 18px; margin-bottom: 12px; line-height: 1.4; }
+.theme-card ul { list-style: none; padding: 0; }
+.theme-card ul li {
+  padding: 4px 0 4px 16px;
+  position: relative;
+  font-size: 14px;
+  color: var(--gray-text);
+  line-height: 1.6;
+}
+.theme-card ul li:before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+}
+
+/* 動画ロードマップ */
+.roadmap-section { margin-top: 40px; }
+.roadmap-block { margin-bottom: 36px; }
+.roadmap-block h3 {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: var(--navy);
+  gap: 12px;
+}
+.roadmap-block h3 .status-icon {
+  font-size: 22px;
+}
+.video-list { display: grid; gap: 12px; }
+.video-item {
+  background: white;
+  padding: 16px 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  border-left: 4px solid var(--gold);
+}
+.video-item.done { border-left-color: var(--done); opacity: 0.7; }
+.video-item.hot { border-left-color: var(--hot); }
+.video-item.mid { border-left-color: var(--mid); }
+.video-item.light { border-left-color: var(--light); }
+.video-item .num {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  color: var(--gold);
+  font-size: 14px;
+  min-width: 32px;
+}
+.video-item.done .num { color: var(--done); }
+.video-item.hot .num { color: var(--hot); }
+.video-item .body { flex: 1; }
+.video-item .title { font-weight: 700; color: var(--navy); font-size: 15px; margin-bottom: 4px; }
+.video-item .note { font-size: 13px; color: var(--gray-soft); }
+
+/* 統計 */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin: 32px 0; }
+.stat-card {
+  background: var(--navy);
+  color: var(--ivory);
+  padding: 24px;
+  text-align: center;
+  border-radius: 4px;
+}
+.stat-card .num {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--gold);
+  font-family: 'Inter', sans-serif;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.stat-card .label { font-size: 13px; letter-spacing: 0.1em; }
+
+/* 個別フォロー */
+.followup-list { display: grid; gap: 14px; }
+.followup-item {
+  background: white;
+  padding: 18px 22px;
+  border-radius: 4px;
+  border: 1px solid #E6DFC9;
+}
+.followup-item .name {
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+.followup-item .biz {
+  color: var(--gold);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.followup-item .next {
+  font-size: 14px;
+  color: var(--gray-text);
+}
+
+/* 観察ボックス */
+.observation {
+  background: var(--navy);
+  color: var(--ivory);
+  padding: 32px 28px;
+  border-radius: 6px;
+  margin: 32px 0;
+}
+.observation h3 {
+  color: var(--gold);
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+.observation p { font-size: 15px; margin-bottom: 12px; }
+.observation .quote {
+  font-style: italic;
+  color: var(--gold-light);
+  border-left: 3px solid var(--gold);
+  padding-left: 16px;
+  margin: 12px 0;
+}
+
+/* フッター */
+footer {
+  margin-top: 80px;
+  padding: 32px 0;
+  border-top: 2px solid var(--gold);
+  text-align: center;
+  color: var(--gray-soft);
+  font-size: 13px;
+}
+footer .sign {
+  font-family: 'Noto Serif JP', serif;
+  font-style: italic;
+  color: var(--navy);
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+/* スマホ */
+@media (max-width: 768px) {
+  .container { padding: 40px 20px !important; }
+  header h1 { font-size: 24px !important; }
+  header p.lead { font-size: 14px !important; }
+  section h2 { font-size: 20px !important; padding-left: 12px !important; border-left-width: 4px !important; }
+  .theme-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+  .theme-card { padding: 20px !important; }
+  .theme-card h3 { font-size: 16px !important; }
+  .roadmap-block h3 { font-size: 17px !important; }
+  .video-item { padding: 14px 16px !important; flex-direction: column !important; gap: 6px !important; }
+  .video-item .num { min-width: auto !important; }
+  .video-item .title { font-size: 14px !important; }
+  .stats-grid { gap: 12px !important; }
+  .stat-card { padding: 20px 16px !important; }
+  .stat-card .num { font-size: 28px !important; }
+  .followup-item { padding: 16px !important; }
+  .observation { padding: 24px 20px !important; }
+  .intro-box { padding: 24px 20px !important; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="eyebrow">THE INNOVATION ─ BE-02 AIエージェント経営2ヶ月グルコン</div>
+  <h1>みんなの「やりたいこと」一覧と、<br>これから作る動画ロードマップ</h1>
+  <p class="lead">Discord で受講生のみなさんが書いてくれた「やりたいこと・困りごと・要望」を、AI 講座の解決案件として整理しました。これから作る動画のロードマップにも反映しています。</p>
+  <p class="date">2026年6月27日 整理</p>
+</header>
+
+<section>
+  <div class="intro-box">
+    <p>2週間でみなさんが Discord に書いてくれた発言を <span class="highlight">全部読み返して</span>、テーマごとに整理しました。</p>
+    <p>「自分の業種・自分の困りごとは、他の人と <span class="highlight">こんなに重なってる</span>」「自分が言ってたことが <span class="highlight">これからの動画になる</span>」が見える形にしてあります。</p>
+    <p>これからの動画は <span class="highlight">この一覧から順番に作っていきます</span>。Discord でやりたいことを書くほど、自分の事業に効く動画が並ぶようになります。</p>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card"><div class="num">7</div><div class="label">受講メンバー</div></div>
+    <div class="stat-card"><div class="num">13</div><div class="label">テーマ</div></div>
+    <div class="stat-card"><div class="num">24</div><div class="label">動画ネタ</div></div>
+    <div class="stat-card"><div class="num">6</div><div class="label">優先度高（次に作る）</div></div>
+  </div>
+</section>
+
+<section>
+  <h2>📌 13のテーマに集約しました</h2>
+  <p class="lead-text">みなさんの発言を整理すると、AI でやりたいことは概ね13テーマに分けられました。あなたが言ったことも、誰かが似たことを言っています。</p>
+
+  <div class="theme-grid">
+
+    <div class="theme-card">
+      <span class="badge">A</span>
+      <h3>note・SNS を自動化したい</h3>
+      <ul>
+        <li>note の原稿作成（自分のトンマナ学習）</li>
+        <li>note 自動投稿・予約配信</li>
+        <li>フォロワー周りのアクション自動化</li>
+        <li>365日メルマガを書きたい</li>
+      </ul>
+    </div>
+
+    <div class="theme-card">
+      <span class="badge">B</span>
+      <h3>教材・コンテンツを量産したい</h3>
+      <ul>
+        <li>過去講座の集大成・完全版を作りたい</li>
+        <li>Google スライド 20本シリーズ</li>
+        <li>AI に喋らせて動画コンテンツ化</li>
+        <li>マスター資料＋AI 参照（資料作成の脱力）</li>
+      </ul>
+    </div>
+
+    <div class="theme-card">
+      <span class="badge">C</span>
+      <h3>UTAGE 会員サイトを立ち上げたい</h3>
+      <ul>
+        <li>UTAGE 会員サイト構築</li>
+        <li>動画ナレッジを整備する</li>
+        <li>「これも全部 AI で作れるんですか？」（答え：はい）</li>
+      </ul>
+    </div>
+
+    <div class="theme-card">
+      <span class="badge">D</span>
+      <h3>自分の分身 AI を作りたい</h3>
+      <ul>
+        <li>AI ブランドマネージャー</li>
+        <li>顧客に AI を渡す（訪問しなくて OK）</li>
+        <li>自分専用ブランドカルテ・診断アプリ</li>
+        <li>その過程を研修・コンサル化</li>
+      </ul>
+    </div>
+
+    <div class="theme-card">
+      <span class="badge">E</span>
+      <h3>AI との対話思考法を身につけたい</h3>
+      <ul>
+        <li>AI への取り入れ方が分からない</li>
+        <li>選択肢に乗らず自分の頭を言語化させる</li>
+        <li>「AI で絶対できる」マインドの配線</li>
+        <li>初心者から中級へ橋渡し</li>
+      </ul>
+    </div>
+
+    <div class="theme-card">
+      <span class="badge">F</span>
+      <h3>環境構築・初期設定で詰まらない</h3>
+      <ul>
+        <li>【必須】初期設定（モデル・許可・フォルダ）✓ 完成済み</li>
+        <li>discord チュートリアル ✓ 完成済み</li>
+        <li>agent teams 設定</li>
+        <li>Zoom 録画→ YouTube 自動アップ</li>
+      </ul>
+    </div>
+
+    <div class="theme-card">
+      <span class="badge">G</span>
+      <h3>タスク管理・進行管理を任せたい</h3>
+      <ul>
+        <li>プロマネを AI に任せる</li>
+        <li>Zoom 要約・TODO 抽出</li>
+        <li>実現したいことリスト・ビジョンボード</li>
+      </ul>
+    </div>
+
+    <div class="theme-card">
+      <span class="badge">H</span>
+      <h3>メッセージ対応を自動化したい</h3>
+      <ul>
+        <li>Chatwork 全チャット読ませて自動化</li>
+        <li>LINE・Messenger をアプリごと AI 操作</li>
+        <li>メール対応の自動化</li>
+      </ul>
+    </div>
+
+    <div class="theme-card">
+      <span class="badge">I</span>
+      <h3>マーケ・LP・販促を一気通貫</h3>
+      <ul>
+        <li>広告→ LP→ オプト→ 決済の全体導線</li>
+        <li>LP を作ってみる手順動画</li>
+        <li>365日メルマガパイプライン</li>
+      </ul>
+    </div>
+
+    <div class="theme-card">
+      <span class="badge">J</span>
+      <h3>散らかったデータを整理したい</h3>
+      <ul>
+        <li>HDD・デスクトップ・GoogleDrive が壊滅的</li>
+        <li>任意フォルダ格納・重複データ削除</li>
+        <li>パスワード管理</li>
+      </ul>
+    </div>
+
+    <div class="theme-card">
+      <span class="badge">K</span>
+      <h3>家のパソコンを 24 時間動かしたい</h3>
+      <ul>
+        <li>外からリモートで AI に指示</li>
+        <li>Claude Code リモコン機能</li>
+        <li>Claude in Chrome と Computer Use の使い分け</li>
+      </ul>
+    </div>
+
+    <div class="theme-card">
+      <span class="badge">L</span>
+      <h3>AI エージェントチームを動かしたい</h3>
+      <ul>
+        <li>もっと多くのスタッフに指示出し</li>
+        <li>AI 社員を複数体動かす</li>
+        <li>スキル連携の見える化</li>
+      </ul>
+    </div>
+
+    <div class="theme-card">
+      <span class="badge">M</span>
+      <h3>個人記録もついでに</h3>
+      <ul>
+        <li>体重・体脂肪・トレーニング記録</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <h2>🎬 これから作る動画 24本（優先度別）</h2>
+  <p class="lead-text">みなさんの「やりたい」を、動画ロードマップに落とし込みました。Discord に書いてくれた声が直接動画になります。</p>
+
+  <div class="roadmap-section">
+
+    <div class="roadmap-block">
+      <h3><span class="status-icon">✅</span> もう完成しているもの（4本）</h3>
+      <div class="video-list">
+        <div class="video-item done"><div class="num">01</div><div class="body"><div class="title">【必須】初期設定 1-3（モデル・許可・フォルダ）</div><div class="note">講座本体に既収録</div></div></div>
+        <div class="video-item done"><div class="num">02</div><div class="body"><div class="title">Discord チュートリアル</div><div class="note">講座本体に既収録</div></div></div>
+        <div class="video-item done"><div class="num">03</div><div class="body"><div class="title">スキルの使い方</div><div class="note">講座本体に既収録</div></div></div>
+        <div class="video-item done"><div class="num">04</div><div class="body"><div class="title">「常にここに戻ってくればいい」ガイド</div><div class="note">Discord 内に配置済み</div></div></div>
+      </div>
+    </div>
+
+    <div class="roadmap-block">
+      <h3><span class="status-icon">🔥</span> 優先度・高（次に作る 6本）</h3>
+      <div class="video-list">
+        <div class="video-item hot"><div class="num">05</div><div class="body"><div class="title">LP を作ってみる手順動画</div><div class="note">受講生案件で実演（許諾済み）</div></div></div>
+        <div class="video-item hot"><div class="num">06</div><div class="body"><div class="title">agent teams 設計と起動</div><div class="note">複数受講生から要望多数</div></div></div>
+        <div class="video-item hot"><div class="num">07</div><div class="body"><div class="title">note 量産パイプライン</div><div class="note">原稿→投稿→フォロー周り全部</div></div></div>
+        <div class="video-item hot"><div class="num">08</div><div class="body"><div class="title">Zoom 録画→ YouTube 自動アップ</div><div class="note">受講生「1時間かかる」事案直撃</div></div></div>
+        <div class="video-item hot"><div class="num">09</div><div class="body"><div class="title">魔法のランプ対話法（選択肢に乗らない）</div><div class="note">受講生の気付きを教材化</div></div></div>
+        <div class="video-item hot"><div class="num">10</div><div class="body"><div class="title">Claude Code リモコン機能</div><div class="note">外から自宅PCへ指示</div></div></div>
+      </div>
+    </div>
+
+    <div class="roadmap-block">
+      <h3><span class="status-icon">🟡</span> 中優先（順次 12本）</h3>
+      <div class="video-list">
+        <div class="video-item mid"><div class="num">11</div><div class="body"><div class="title">UTAGE 会員サイトを AI で立ち上げる</div></div></div>
+        <div class="video-item mid"><div class="num">12</div><div class="body"><div class="title">分身 AI（AI〇〇）を作る</div><div class="note">自社専用カルテ／コンサル AI</div></div></div>
+        <div class="video-item mid"><div class="num">13</div><div class="body"><div class="title">AI 秘書を作る（PM・TODO・Vision）</div></div></div>
+        <div class="video-item mid"><div class="num">14</div><div class="body"><div class="title">LINE/CW/Messenger を Computer Use で AI に渡す</div></div></div>
+        <div class="video-item mid"><div class="num">15</div><div class="body"><div class="title">GIT インストール</div></div></div>
+        <div class="video-item mid"><div class="num">16</div><div class="body"><div class="title">Notion 活用ビデオ</div></div></div>
+        <div class="video-item mid"><div class="num">17</div><div class="body"><div class="title">みんなで Amazon 体験（体感重視）</div></div></div>
+        <div class="video-item mid"><div class="num">18</div><div class="body"><div class="title">Claude in Chrome と Computer Use の使い分け</div></div></div>
+        <div class="video-item mid"><div class="num">19</div><div class="body"><div class="title">ぼんやり→実践方法（言語化のテクニック）</div></div></div>
+        <div class="video-item mid"><div class="num">20</div><div class="body"><div class="title">UTAGE 運用基礎</div></div></div>
+        <div class="video-item mid"><div class="num">21</div><div class="body"><div class="title">Mac フォルダ整理を AI で</div></div></div>
+        <div class="video-item mid"><div class="num">22</div><div class="body"><div class="title">パスワード管理 AI</div></div></div>
+      </div>
+    </div>
+
+    <div class="roadmap-block">
+      <h3><span class="status-icon">🟢</span> 余裕枠（2本）</h3>
+      <div class="video-list">
+        <div class="video-item light"><div class="num">23</div><div class="body"><div class="title">個人記録（体重・トレ）の AI 化</div></div></div>
+        <div class="video-item light"><div class="num">24</div><div class="body"><div class="title">365日メルマガパイプライン</div></div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <h2>🌟 みんなの発言から見えてきたこと</h2>
+
+  <div class="observation">
+    <h3>受講生の関心は「仕組み化」と「発信量産」に集中している</h3>
+    <p>13テーマを集計すると、最も多いのは <strong>仕組み化・業務改善（H軸）</strong> と <strong>発信・コンテンツ量産（G軸）</strong>。これは <strong>「1人型起業家のための AI エージェント経営」</strong> の核心と完全に一致します。</p>
+    <p>つまり、みなさんが書いてくれたことは、そのまま <strong>BE-02 講座のメインテーマの最前線</strong>。Discord で書き続けてくれることが、講座そのものを進化させます。</p>
+  </div>
+
+  <div class="observation">
+    <h3>3つの「気付き」が他の人にも効く教材になる</h3>
+    <div class="quote">「魔法のランプのアラジンに、適当に話しかける感じ」<br><span style="font-size: 12px;">─ 渡邉さんの個別相談での気付き</span></div>
+    <div class="quote">「『AI で出来るかな…？』では諦めるが、『絶対できる』と思って思考し続けると、AI でどうにかしようという脳の配線が強化される」<br><span style="font-size: 12px;">─ 棚原さんのシェア投稿</span></div>
+    <div class="quote">「やりたいことを、言語化しないまま、AI が勝手に予測してくれるわけじゃない。そりゃそう」<br><span style="font-size: 12px;">─ 高田さんの「AIできるかな？MEMO」</span></div>
+    <p>これらは <strong>全員に効くマインドセット教材</strong>として、動画 09「魔法のランプ対話法」に統合します。</p>
+  </div>
+</section>
+
+<section>
+  <h2>🔁 Discord の使い方（リマインド）</h2>
+  <div class="intro-box">
+    <p><span class="highlight">📥 やりたいこと・困りごとを書く</span> → 「💡 学んだ・できたことをシェアする」「⚠️ つまずき相談する」「📣 みんなの声」のどれかに新しい投稿を立ててください。</p>
+    <p><span class="highlight">🎬 動画ができたら</span> → 「🎬 1000時間を100時間にする！」に流していきます。「これ作りました」報告もここに。</p>
+    <p><span class="highlight">🔁 2週間後（7/11頃）に再収集</span> → みなさんの新しい発言を加えて、動画ロードマップを更新します。</p>
+    <p><span class="highlight">📌 別の話題は新しい投稿で</span> → 1スレッド＝1話題が基本。話が変わったら新規スレッドを立ててください。後から読む人が迷いません。</p>
+  </div>
+</section>
+
+<footer>
+  <div>The Innovation ─ BE-02 AIエージェント経営2ヶ月グルコン</div>
+  <div class="sign">西田光弘</div>
+  <div style="margin-top: 12px; font-size: 11px;">2026年6月27日 初版 / Discord 全55メッセージ・全7メンバーから抽出</div>
+</footer>
+
+</div>
+</body>
+</html>
