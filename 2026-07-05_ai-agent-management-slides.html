@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIエージェント経営 2ヶ月グループコンサルティング｜プレゼンスライド</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700;800&family=Noto+Serif+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100vw;height:100vh;overflow:hidden;background:#14182f;}
+:root{
+  --navy:#14182f;--navy-2:#1e2340;--navy-3:#0f1226;
+  --gold:#8b7355;--gold-2:#a08966;--gold-3:#6f5a41;
+  --ivory:#f5f5f0;--ivory-2:#faf9f4;--ivory-3:#ece9df;
+  --ok:#3d6b48;--warn:#a04d3a;
+  --ink:#1a1a1a;--ink-2:#4a4a4a;--ink-3:#7a7a7a;
+  --bg-page:linear-gradient(180deg,#faf9f4 0%,#f5f5f0 100%);
+  --font-sans:"Inter","Noto Sans JP",sans-serif;
+  --font-serif:"Noto Serif JP",serif;
+  --font-mono:ui-monospace,"SF Mono",Menlo,monospace;
+}
+#slides{width:100vw;height:100vh;position:relative;}
+.slide{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:6vh 8vw;text-align:center;font-family:var(--font-sans);color:var(--ink);background:var(--bg-page);}
+.slide.active{display:flex;flex-direction:column;}
+.slide.night{background:radial-gradient(60% 100% at 15% 0%,rgba(139,115,85,0.22),transparent 65%),radial-gradient(50% 100% at 90% 100%,rgba(15,18,38,0.85),transparent 65%),#14182f;color:#f5f5f0;}
+.slide.gold{background:linear-gradient(180deg,#a08966 0%,#8b7355 50%,#6f5a41 100%);color:#f5f5f0;}
+.slide.ivory-cta{background:linear-gradient(180deg,#ece9df 0%,#f5f5f0 100%);color:var(--navy);}
+
+.eyebrow{font-family:var(--font-mono);font-size:1.3vw;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:3vh;}
+.slide.night .eyebrow,.slide.gold .eyebrow{color:rgba(245,245,240,0.75);}
+
+.title{font-family:var(--font-serif);font-weight:700;font-size:5vw;line-height:1.3;letter-spacing:0.02em;margin-bottom:3vh;color:var(--navy);}
+.slide.night .title,.slide.gold .title{color:#f5f5f0;}
+.title.smaller{font-size:3.6vw;}
+.title.large{font-size:6.2vw;}
+.title.sans{font-family:var(--font-sans);font-weight:800;}
+
+.serif{font-family:var(--font-serif);font-style:italic;font-weight:400;}
+.sub{font-family:var(--font-serif);font-style:italic;font-size:2.3vw;line-height:1.55;opacity:0.9;max-width:80vw;margin:1.5vh auto 0;color:var(--ink-2);}
+.slide.night .sub,.slide.gold .sub{color:rgba(245,245,240,0.9);}
+.body{font-size:2vw;line-height:1.65;max-width:75vw;margin:2vh auto 0;font-weight:500;color:var(--ink);}
+.slide.night .body,.slide.gold .body{color:#f5f5f0;}
+.body.left{text-align:left;}
+.body strong{color:var(--gold);font-weight:700;}
+.slide.night .body strong,.slide.gold .body strong{color:#e8d9b8;}
+.bullet{font-size:2vw;line-height:1.75;text-align:left;max-width:72vw;margin:2vh auto 0;list-style:none;}
+.bullet li{padding-left:1.5em;text-indent:-1.5em;margin-bottom:1.2vh;color:var(--ink);}
+.slide.night .bullet li,.slide.gold .bullet li{color:#f5f5f0;}
+.bullet li::before{content:"§ ";color:var(--gold);font-weight:700;font-family:var(--font-serif);}
+.slide.night .bullet li::before,.slide.gold .bullet li::before{color:#e8d9b8;}
+.bullet li strong{color:var(--navy);font-weight:700;}
+.slide.night .bullet li strong,.slide.gold .bullet li strong{color:#e8d9b8;}
+
+.big-num{font-family:var(--font-serif);font-style:italic;font-weight:400;font-size:14vw;line-height:1;color:var(--gold);margin:0 0 2vh 0;}
+.slide.night .big-num,.slide.gold .big-num{color:#f5f5f0;}
+
+.quote{font-family:var(--font-serif);font-style:italic;font-size:3vw;line-height:1.55;border-top:1px solid rgba(139,115,85,0.5);border-bottom:1px solid rgba(139,115,85,0.5);padding:3vh 0;max-width:78vw;margin:0 auto;color:var(--navy);}
+.slide.night .quote,.slide.gold .quote{border-color:rgba(245,245,240,0.4);color:#f5f5f0;}
+
+.roman-label{font-family:var(--font-serif);font-style:italic;color:var(--gold);font-size:2.5vw;line-height:1;margin-bottom:1vh;}
+.slide.night .roman-label,.slide.gold .roman-label{color:#e8d9b8;}
+
+.row-cards{display:grid;grid-template-columns:1fr 1fr;gap:2.5vw;max-width:82vw;margin:3vh auto 0;}
+.row-cards.tri{grid-template-columns:1fr 1fr 1fr;}
+.row-cards.six{grid-template-columns:1fr 1fr 1fr;gap:2vw 2vw;}
+.card{background:rgba(245,245,240,0.96);color:var(--ink);padding:2.5vh 2vw;border:1px solid rgba(139,115,85,0.25);border-top:3px solid var(--gold);border-radius:0.4vw;text-align:left;}
+.slide.night .card{background:rgba(245,245,240,0.94);}
+.card .card-num{font-family:var(--font-mono);font-size:0.9vw;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6vh;}
+.card .card-ttl{font-family:var(--font-serif);font-weight:700;font-size:1.6vw;color:var(--navy);margin-bottom:0.8vh;line-height:1.4;}
+.card .card-desc{font-size:1.1vw;line-height:1.6;color:var(--ink-2);}
+
+.step-flow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:0.7vw;max-width:80vw;margin:3vh auto;font-family:var(--font-mono);font-size:1.3vw;letter-spacing:0.05em;}
+.step{background:var(--ivory);border:1.5px solid var(--gold);color:var(--navy);padding:1vh 1.5vw;font-weight:700;line-height:1.4;border-radius:0.3vw;}
+.step.step-ng{background:rgba(160,77,58,0.12);border-color:var(--warn);color:var(--warn);text-decoration:line-through;}
+.step-arrow{color:var(--gold);font-weight:700;font-family:var(--font-serif);font-size:1.8vw;}
+.slide.night .step{background:rgba(245,245,240,0.95);}
+
+.matrix-3axis{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2vw;max-width:82vw;margin:3vh auto 0;}
+.axis-item{background:rgba(245,245,240,0.96);color:var(--ink);padding:3vh 2vw;border:1px solid rgba(139,115,85,0.25);border-top:3px solid var(--gold);text-align:center;}
+.axis-num{font-family:var(--font-serif);font-style:italic;font-size:3vw;color:var(--gold);line-height:1;margin-bottom:1vh;}
+.axis-ttl{font-family:var(--font-serif);font-weight:700;font-size:1.8vw;color:var(--navy);margin-bottom:1vh;line-height:1.4;}
+.axis-desc{font-size:1.2vw;line-height:1.6;color:var(--ink-2);}
+
+.week-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1.5vw;max-width:85vw;margin:3vh auto 0;}
+.week-card{background:rgba(245,245,240,0.96);color:var(--ink);padding:2vh 1.2vw;border:1px solid rgba(139,115,85,0.25);border-left:3px solid var(--gold);text-align:left;border-radius:0.3vw;}
+.week-tag{font-family:var(--font-mono);font-size:0.85vw;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6vh;}
+.week-ttl{font-family:var(--font-serif);font-weight:700;font-size:1.4vw;color:var(--navy);line-height:1.4;margin-bottom:0.6vh;}
+.week-desc{font-size:1vw;line-height:1.55;color:var(--ink-2);}
+
+.callout-line{font-family:var(--font-serif);font-style:italic;font-size:2.4vw;line-height:1.55;color:var(--navy);border-left:4px solid var(--gold);padding:2vh 3vw;background:rgba(139,115,85,0.06);max-width:80vw;margin:3vh auto 0;text-align:left;}
+.slide.night .callout-line,.slide.gold .callout-line{color:#f5f5f0;background:rgba(245,245,240,0.10);border-color:#e8d9b8;}
+
+.footer-meta{position:absolute;bottom:2vh;left:0;right:0;display:flex;justify-content:space-between;padding:0 3vw;font-family:var(--font-mono);font-size:0.9vw;color:rgba(20,24,47,0.35);letter-spacing:0.15em;text-transform:uppercase;}
+.slide.night .footer-meta,.slide.gold .footer-meta{color:rgba(245,245,240,0.45);}
+
+#progress{position:fixed;bottom:0;left:0;height:4px;background:var(--gold);width:0;transition:width 0.3s;z-index:99;}
+#help{position:fixed;top:1vh;right:1vw;font-family:var(--font-mono);font-size:0.8vw;color:rgba(245,245,240,0.5);background:rgba(20,24,47,0.55);padding:0.5vh 1vw;border-radius:0.3vw;z-index:99;letter-spacing:0.1em;}
+#counter{position:fixed;bottom:1.5vh;right:1.5vw;font-family:var(--font-mono);font-size:0.9vw;color:rgba(245,245,240,0.65);letter-spacing:0.15em;z-index:99;}
+</style>
+</head>
+<body>
+
+<div id="help">← / → / SPACE</div>
+<div id="counter"><span id="cur">1</span> / <span id="total">30</span></div>
+<div id="progress"></div>
+
+<div id="slides">
+
+<!-- ============================================================
+     BLOCK 1 — Opening / Speaker（agent B1 が挿入）
+     ============================================================ -->
+<!-- ============================================================
+     BLOCK 1 — Opening / Speaker（4 slides）
+     ============================================================ -->
+
+<!-- Slide 1: Opening quote -->
+<section class="slide night">
+  <div class="quote">
+    AIエージェントは、<br>
+    1人型起業家の経営に、<br>
+    どう入り込むのか。
+  </div>
+  <div class="footer-meta">
+    <span>Block 1 / Opening</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- Slide 2: Who is this for -->
+<section class="slide">
+  <div class="eyebrow">Who is this for</div>
+  <div class="title smaller">こういう方に、向けた話です</div>
+  <ul class="bullet">
+    <li>非エンジニアで、<strong>1人型起業家</strong>（本人＋スタッフ2人までの最大3人体制）</li>
+    <li>Claude Cowork や GPTs は、触ってきた</li>
+    <li>AIエージェント経営を自分の事業に落とし込みたいが、アイデアが結びついていない</li>
+    <li>Claude Code + 25体のAIエージェントで経営を回す実物を、見たい</li>
+  </ul>
+  <div class="footer-meta">
+    <span>Block 1 / Opening</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- Slide 3: Title -->
+<section class="slide gold">
+  <div class="title large">AIエージェント経営</div>
+  <div class="sub">2ヶ月グループコンサルティング<br>全4回 × 2時間 ／ 隔週日曜 10-12</div>
+  <div class="footer-meta">
+    <span>Block 1 / Opening</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- Slide 4: Speaker -->
+<section class="slide">
+  <div class="eyebrow">Speaker</div>
+  <div class="title">西田 光弘</div>
+  <div class="sub">経営コンサル20年・60業種以上<br>非エンジニア × Claude Code × 25体のAIエージェントで、自社経営を運用</div>
+  <div class="footer-meta">
+    <span>Block 1 / Opening</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     BLOCK 2 — Course Overview + teach-flow（agent B2 が挿入）
+     ============================================================ -->
+<!-- ============================================================
+     BLOCK 2 — Course Overview + teach-flow（4 slides）
+     ============================================================ -->
+
+<!-- B2-1 : Course Theme / 主題（.slide.night + .quote） -->
+<section class="slide night">
+  <div class="quote">
+    経営をする。事業をやる。<br>
+    AIエージェントに任せる。
+  </div>
+  <div class="sub">Course Theme ／ 講義主題</div>
+  <div class="footer-meta">
+    <span>Block 2 ／ Overview</span>
+    <span>AI-AGENT MANAGEMENT ／ NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- B2-2 : これまで西田が教えてきたこと（.slide） -->
+<section class="slide">
+  <div class="eyebrow">これまで西田が教えてきたこと</div>
+  <div class="body">
+    経営を学ぶ<br>
+    → 効率が上がる<br>
+    → お金が残る<br>
+    → 時間ができる<br>
+    → <strong>大切なことに集中できる</strong>
+  </div>
+  <div class="footer-meta">
+    <span>Block 2 ／ Overview</span>
+    <span>AI-AGENT MANAGEMENT ／ NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- B2-3 : AIエージェント経営が加わると（.slide.gold） -->
+<section class="slide gold">
+  <div class="eyebrow">AIエージェント経営が加わると</div>
+  <div class="body">
+    経営の土台 ＋ <strong>AIに魂を入れる</strong>（1人でも組織を持つ）<br>
+    → <strong>判断だけが自分の仕事になる</strong><br>
+    （何を任せ・何を自分でやるかの意思決定基準を持つ）<br>
+    → <strong>経営そのものが深まる</strong><br>
+    （人間関係の価値・創造・関係性に時間が使える）
+  </div>
+  <div class="footer-meta">
+    <span>Block 2 ／ Overview</span>
+    <span>AI-AGENT MANAGEMENT ／ NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- B2-4 : 大切なこと（.slide.night + .quote） -->
+<section class="slide night">
+  <div class="quote">
+    大切なことは、<span class="serif">大切にしたいこと</span>を<br>
+    大切にしたいときに大切にできる。
+  </div>
+  <div class="footer-meta">
+    <span>Block 2 ／ Overview</span>
+    <span>AI-AGENT MANAGEMENT ／ NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     BLOCK 3 — 6つのAI癖 + 人間ボトルネック（agent B3 が挿入）
+     ============================================================ -->
+<!-- ============================================================
+     BLOCK 3 — 6つのAI癖 + 人間ボトルネック（5 slides）
+     ============================================================ -->
+
+<!-- Slide 3-1 : Bottleneck opening -->
+<section class="slide night">
+  <div class="eyebrow">Block 3 / AI Habits</div>
+  <div class="title smaller">なぜ人間がボトルネックになるのか</div>
+  <div class="sub">本来「自動化のため」のAIに、6つの癖がある。</div>
+  <div class="footer-meta">
+    <span>Block 3 / AI Habits</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- Slide 3-2 : 6 habits overview -->
+<section class="slide">
+  <div class="eyebrow">6 AI habits</div>
+  <div class="title smaller">6つのAI癖</div>
+  <div class="row-cards six">
+    <div class="card">
+      <div class="card-num">01</div>
+      <div class="card-ttl">着手癖</div>
+      <div class="card-desc">動き出しの癖。</div>
+    </div>
+    <div class="card">
+      <div class="card-num">02</div>
+      <div class="card-ttl">完了癖</div>
+      <div class="card-desc">終わらせたがる癖。</div>
+    </div>
+    <div class="card">
+      <div class="card-num">03</div>
+      <div class="card-ttl">捏造癖</div>
+      <div class="card-desc">作り出す癖。</div>
+    </div>
+    <div class="card">
+      <div class="card-num">04</div>
+      <div class="card-ttl">偽証癖</div>
+      <div class="card-desc">根拠を盛る癖。</div>
+    </div>
+    <div class="card">
+      <div class="card-num">05</div>
+      <div class="card-ttl">逆委任癖</div>
+      <div class="card-desc">人間に返す癖。</div>
+    </div>
+    <div class="card">
+      <div class="card-num">06</div>
+      <div class="card-ttl">健忘症</div>
+      <div class="card-desc">忘れる癖。</div>
+    </div>
+  </div>
+  <div class="footer-meta">
+    <span>Block 3 / AI Habits</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- Slide 3-3 : Detail 1 (01-02-03) -->
+<section class="slide">
+  <div class="title smaller">詳細①</div>
+  <div class="row-cards tri">
+    <div class="card">
+      <div class="card-num">01</div>
+      <div class="card-ttl">着手癖</div>
+      <div class="card-desc">指示が確定する前に勝手に動き出す。方向が定まる前に手を動かす。</div>
+    </div>
+    <div class="card">
+      <div class="card-num">02</div>
+      <div class="card-ttl">完了癖</div>
+      <div class="card-desc">完了していないのに完了したと報告する／完了したがる／仕事を終わらせたがる。</div>
+    </div>
+    <div class="card">
+      <div class="card-num">03</div>
+      <div class="card-ttl">捏造癖</div>
+      <div class="card-desc">ない情報をあるかのように作り出す。従来ハルシネーションと呼ばれてきたもの。</div>
+    </div>
+  </div>
+  <div class="footer-meta">
+    <span>Block 3 / AI Habits</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- Slide 3-4 : Detail 2 (04-05-06) -->
+<section class="slide">
+  <div class="title smaller">詳細②</div>
+  <div class="row-cards tri">
+    <div class="card">
+      <div class="card-num">04</div>
+      <div class="card-ttl">偽証癖</div>
+      <div class="card-desc">嘘の証拠・根拠を提示する。ソース／URL／数値を捏造して自分の応答を補強する。</div>
+    </div>
+    <div class="card">
+      <div class="card-num">05</div>
+      <div class="card-ttl">逆委任癖</div>
+      <div class="card-desc">本来AIが判断すべきことを人間に丸投げして手を止める。「どうしますか？」で人間を止める。</div>
+    </div>
+    <div class="card">
+      <div class="card-num">06</div>
+      <div class="card-ttl">健忘症</div>
+      <div class="card-desc">前回言われたことを忘れる／同じミスを繰り返す。セッションをまたいで文脈が消える。</div>
+    </div>
+  </div>
+  <div class="footer-meta">
+    <span>Block 3 / AI Habits</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- Slide 3-5 : Bottleneck close-out (callout) -->
+<section class="slide night">
+  <div class="callout-line">
+    本来「自動化のため」のAIで、これら6つの癖が働き、逆に人間がボトルネックになる。CLAUDE.md / memory / hook / 参照ルール表 / doublecheck は、この6つの癖を1つずつ潰すための構造として設計する。
+  </div>
+  <div class="footer-meta">
+    <span>Block 3 / AI Habits</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     BLOCK 4 — 西田の問題解決5段階（agent B4 が挿入）
+     ============================================================ -->
+<!-- ============================================================
+     BLOCK 4 — 西田の問題解決5段階（3枚）
+     ============================================================ -->
+
+<!-- B4-1 : 対症療法を打たない（night / title.smaller + sub） -->
+<section class="slide night">
+  <div class="eyebrow">Working Discipline</div>
+  <div class="title smaller">対症療法を打たない</div>
+  <div class="sub">AI癖に対しても、事業のあらゆる問題に対しても</div>
+  <div class="footer-meta">
+    <span>Block 4 / Discipline</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- B4-2 : 西田の問題解決5段階（default / step-flow） -->
+<section class="slide">
+  <div class="eyebrow">Problem Solving</div>
+  <div class="title smaller">西田の問題解決5段階</div>
+  <div class="step-flow">
+    <div class="step step-ng">対症療法</div>
+    <div class="step-arrow">✕</div>
+    <div class="step">1. 原因究明</div>
+    <div class="step-arrow">→</div>
+    <div class="step">2. 解決</div>
+    <div class="step-arrow">→</div>
+    <div class="step">3. 対策</div>
+    <div class="step-arrow">→</div>
+    <div class="step">4. 再発防止</div>
+    <div class="step-arrow">→</div>
+    <div class="step">5. 実施</div>
+  </div>
+  <div class="body">「なぜその事象が起きるのか」の原因を掴んで初めて<strong>根治的な解決</strong>に届く。解決が見えてから対策を組み、再発防止まで組み上げてから実施に移る。</div>
+  <div class="footer-meta">
+    <span>Block 4 / Discipline</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- B4-3 : 実装への接続（gold / callout-line） -->
+<section class="slide gold">
+  <div class="eyebrow">Implementation</div>
+  <div class="callout-line">
+    第3回で扱う memory 都度追記5トリガー・doublecheck の運用は、この5段階を <strong>AIとの共同作業に落とし込んだ実装例</strong>。第4回の運用サイクル（週次点検・全記録保存・定期整理）も同じ姿勢を1週間単位・1ヶ月単位のリズムに落としたもの。
+  </div>
+  <div class="footer-meta">
+    <span>Block 4 / Discipline</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     BLOCK 5 — 4回骨格 + 経営判断3軸マトリックス（agent B5 が挿入）
+     ============================================================ -->
+<!-- ============================================================
+     BLOCK 5 — 4回骨格 + 経営判断3軸マトリックス（5 slides）
+     ============================================================ -->
+
+<!-- Slide 5-1 : Structure Cover -->
+<section class="slide gold">
+  <div class="eyebrow">Course Structure</div>
+  <h1 class="title">4回 × 2時間の骨格</h1>
+  <p class="sub">隔週日曜 10:00-12:00・全2ヶ月</p>
+  <div class="footer-meta">
+    <span>Block 5 / Structure</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- Slide 5-2 : 4-Week Grid -->
+<section class="slide">
+  <div class="eyebrow">Weekly Schedule</div>
+  <h2 class="title smaller">魂 → 組織 → 道具 → サイクル</h2>
+  <div class="week-grid">
+    <div class="week-card">
+      <div class="week-tag">Week 1</div>
+      <div class="week-ttl">魂の設計</div>
+      <div class="week-desc">CLAUDE.md / context/ / git init。AIに憲法と永続情報を与える。</div>
+    </div>
+    <div class="week-card">
+      <div class="week-tag">Week 2</div>
+      <div class="week-ttl">組織化</div>
+      <div class="week-desc">Agent Teams + SendMessage + subagent。1人でも組織を持つ。</div>
+    </div>
+    <div class="week-card">
+      <div class="week-tag">Week 3</div>
+      <div class="week-ttl">メモリと衝突 + git</div>
+      <div class="week-desc">memory / skill / hook / 参照ルール / git。subagent の道具を整える。</div>
+    </div>
+    <div class="week-card">
+      <div class="week-tag">Week 4</div>
+      <div class="week-ttl">運用サイクル + 4つの道</div>
+      <div class="week-desc">doublecheck / session-log / 継続教育 + 修了後の分岐。</div>
+    </div>
+  </div>
+  <div class="footer-meta">
+    <span>Block 5 / Structure</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- Slide 5-3 : Matrix Cover -->
+<section class="slide night">
+  <div class="eyebrow">Decision Framework</div>
+  <h2 class="title smaller">経営判断3軸マトリックス</h2>
+  <p class="sub">何を自分で判断し、何をAIに任せ、何を外部に委ねるか</p>
+  <div class="footer-meta">
+    <span>Block 5 / Structure</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- Slide 5-4 : 3-Axis Detail -->
+<section class="slide">
+  <div class="eyebrow">Three Axes</div>
+  <h2 class="title smaller">判断・委任・外注の切り分け</h2>
+  <div class="matrix-3axis">
+    <div class="axis-item">
+      <div class="axis-num">I</div>
+      <div class="axis-ttl">安全性軸</div>
+      <div class="axis-desc">誤りが起きた場合の被害の大きさ</div>
+    </div>
+    <div class="axis-item">
+      <div class="axis-num">II</div>
+      <div class="axis-ttl">カスタマイズ度軸</div>
+      <div class="axis-desc">自身の業種・顧客文脈への適合度</div>
+    </div>
+    <div class="axis-item">
+      <div class="axis-num">III</div>
+      <div class="axis-ttl">人間関係価値軸</div>
+      <div class="axis-desc">対面／人間関与の代替不可能性</div>
+    </div>
+  </div>
+  <div class="footer-meta">
+    <span>Block 5 / Structure</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- Slide 5-5 : Callout -->
+<section class="slide gold">
+  <div class="eyebrow">Why It Matters</div>
+  <div class="callout-line">
+    意思決定基準を3軸で言語化 → CLAUDE.md に <strong>「経営者専権タスク明示」</strong> ノウハウとして埋め込む。何を任せ・何を自分でやるかが AI 経営の急所。
+  </div>
+  <div class="footer-meta">
+    <span>Block 5 / Structure</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     BLOCK 6 — コンテキスト設計ワークシート（agent B6 が挿入）
+     ============================================================ -->
+<!-- ============================================================
+     BLOCK 6 — コンテキスト設計ワークシート（6 slides）
+     ============================================================ -->
+
+<!-- Slide 6-1: Opening quote (night) -->
+<section class="slide night">
+  <div class="quote">
+    AIが「迷わず、正しく」動くために、<br>
+    自分の事業を毎日言語化し続け、更新し続ける
+  </div>
+  <div class="sub">コンテキスト設計ワークシート ／ 補助資料</div>
+  <div class="footer-meta">
+    <span>Block 6 / Worksheet</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- Slide 6-2: Part 1 26問6ブロック -->
+<section class="slide">
+  <div class="eyebrow">Part 1</div>
+  <h2 class="title smaller">26問 6ブロック（自分の魂と顧客の言語化）</h2>
+  <div class="row-cards six">
+    <div class="card">
+      <div class="card-num">Block 01</div>
+      <div class="card-ttl">私の魂</div>
+      <div class="card-desc">事業の起点・使命・信念</div>
+    </div>
+    <div class="card">
+      <div class="card-num">Block 02</div>
+      <div class="card-ttl">ペルソナと痛み</div>
+      <div class="card-desc">顧客の顔と深層課題</div>
+    </div>
+    <div class="card">
+      <div class="card-num">Block 03</div>
+      <div class="card-ttl">提供価値</div>
+      <div class="card-desc">約束するベネフィット</div>
+    </div>
+    <div class="card">
+      <div class="card-num">Block 04</div>
+      <div class="card-ttl">事業構造</div>
+      <div class="card-desc">商品ラインとファネル</div>
+    </div>
+    <div class="card">
+      <div class="card-num">Block 05</div>
+      <div class="card-ttl">組織と権限</div>
+      <div class="card-desc">誰が何を判断するか</div>
+    </div>
+    <div class="card">
+      <div class="card-num">Block 06</div>
+      <div class="card-ttl">リズムと運用</div>
+      <div class="card-desc">毎日／毎週の運用サイクル</div>
+    </div>
+  </div>
+  <div class="footer-meta">
+    <span>Block 6 / Worksheet</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- Slide 6-3: Part 2 8ステップ表 -->
+<section class="slide">
+  <div class="eyebrow">Part 2</div>
+  <h2 class="title smaller">8ステップ表（業務プロセス分解）</h2>
+  <div class="sub">Step 1–5 は Salesforce 5ステップ、Step 6–8 は西田拡張</div>
+  <div class="week-grid">
+    <div class="week-card">
+      <div class="week-tag">STEP 1</div>
+      <div class="week-ttl">気づく</div>
+      <div class="week-desc">渡したい業務を特定する</div>
+    </div>
+    <div class="week-card">
+      <div class="week-tag">STEP 2</div>
+      <div class="week-ttl">分ける</div>
+      <div class="week-desc">業務を実行ステップに分解</div>
+    </div>
+    <div class="week-card">
+      <div class="week-tag">STEP 3</div>
+      <div class="week-ttl">決める</div>
+      <div class="week-desc">各ステップで必要な情報を特定</div>
+    </div>
+    <div class="week-card">
+      <div class="week-tag">STEP 4</div>
+      <div class="week-ttl">動く</div>
+      <div class="week-desc">構造化データの参照先を接続</div>
+    </div>
+    <div class="week-card">
+      <div class="week-tag">STEP 5</div>
+      <div class="week-ttl">完了</div>
+      <div class="week-desc">非構造化データの参照先を接続</div>
+    </div>
+    <div class="week-card">
+      <div class="week-tag">STEP 6</div>
+      <div class="week-ttl">記録</div>
+      <div class="week-desc">AI可読性チェック（西田拡張）</div>
+    </div>
+    <div class="week-card">
+      <div class="week-tag">STEP 7</div>
+      <div class="week-ttl">見直し</div>
+      <div class="week-desc">エージェント境界を3軸で設定</div>
+    </div>
+    <div class="week-card">
+      <div class="week-tag">STEP 8</div>
+      <div class="week-ttl">育てる</div>
+      <div class="week-desc">成果・完了条件・改善サイクル</div>
+    </div>
+  </div>
+  <div class="footer-meta">
+    <span>Block 6 / Worksheet</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- Slide 6-4: API / MCP / Computer Use 判別ツリー -->
+<section class="slide">
+  <h2 class="title smaller">API ／ MCP ／ Computer Use ── 3方式判別ツリー</h2>
+  <div class="row-cards tri">
+    <div class="card">
+      <div class="card-num">Option 01</div>
+      <div class="card-ttl">API</div>
+      <div class="card-desc">システム連携（安定・大量・堅い）。公開APIがあれば最優先。速度・保守性の面で最も強い。</div>
+    </div>
+    <div class="card">
+      <div class="card-num">Option 02</div>
+      <div class="card-ttl">MCP</div>
+      <div class="card-desc">AI直結（Claude Code配下）。公式MCPが提供されている業務ツールから直接接続する。</div>
+    </div>
+    <div class="card">
+      <div class="card-num">Option 03</div>
+      <div class="card-ttl">Computer Use</div>
+      <div class="card-desc">ブラウザ操作（人間の代替）。他方式が使えないときの最後の砦。画面変更に弱い。</div>
+    </div>
+  </div>
+  <div class="footer-meta">
+    <span>Block 6 / Worksheet</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- Slide 6-5: memory 5トリガー -->
+<section class="slide">
+  <h2 class="title smaller">memory 都度追記の5トリガー</h2>
+  <ul class="bullet">
+    <li>叱責されたとき</li>
+    <li>同じミスを2回目したとき</li>
+    <li>新規原則が確定したとき</li>
+    <li>原則違反を検知したとき</li>
+    <li>改善アイデアが浮かんだとき</li>
+  </ul>
+  <div class="footer-meta">
+    <span>Block 6 / Worksheet</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- Slide 6-6: Closing (gold) -->
+<section class="slide gold">
+  <div class="callout-line">
+    シラバスは<strong>講義本体</strong>・ワークシートは<strong>事前記入の補助資料</strong>。<br>
+    両者を対で使う
+  </div>
+  <div class="footer-meta">
+    <span>Block 6 / Worksheet</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     BLOCK 7 — 修了後の4つの道 + Closing（agent B7 が挿入）
+     ============================================================ -->
+<!-- ============================================================
+     BLOCK 7 — 修了後の4つの道 + Closing（3 slides）
+     ============================================================ -->
+
+<!-- Slide 1 : Post-Course / 修了後の4つの道 -->
+<section class="slide">
+  <div class="eyebrow">Post-Course</div>
+  <h2 class="title smaller">修了後の4つの道</h2>
+  <div class="week-grid">
+    <div class="week-card">
+      <div class="week-tag">A</div>
+      <div class="week-ttl">自走</div>
+      <div class="week-desc">独力で事業に組み込み続ける</div>
+    </div>
+    <div class="week-card">
+      <div class="week-tag">B</div>
+      <div class="week-ttl">ゆっくり</div>
+      <div class="week-desc">1ヶ月に1歩・じっくり</div>
+    </div>
+    <div class="week-card">
+      <div class="week-tag">C</div>
+      <div class="week-ttl">低空飛行</div>
+      <div class="week-desc">無理せず今の水準を維持</div>
+    </div>
+    <div class="week-card">
+      <div class="week-tag">D</div>
+      <div class="week-ttl">加速</div>
+      <div class="week-desc">個別コンサルで一気に構築</div>
+    </div>
+  </div>
+  <div class="footer-meta">
+    <span>Block 7 / Post-Course</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- Slide 2 : Closing quote（night） -->
+<section class="slide night">
+  <div class="quote">大切なことは、<span class="serif" style="font-size:1.1em;">大切にしたいこと</span>を大切にしたいときに大切にできる</div>
+  <div class="footer-meta">
+    <span>Block 7 / Closing</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- Slide 3 : Final title（gold） -->
+<section class="slide gold">
+  <h2 class="title large">AIエージェント経営</h2>
+  <p class="sub">西田 光弘 と、あなたと、AI組織で</p>
+  <div class="callout-line">隔週日曜 10:00-12:00 ／ 2ヶ月 ／ 全4回×2時間</div>
+  <div class="footer-meta">
+    <span>Block 7 / Closing</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+document.getElementById('total').textContent = total;
+let cur = 0;
+function show(i){
+  slides.forEach(s => s.classList.remove('active'));
+  slides[i].classList.add('active');
+  document.getElementById('cur').textContent = i + 1;
+  document.getElementById('progress').style.width = ((i + 1) / total * 100) + '%';
+}
+function next(){ if(cur < total - 1){ cur++; show(cur); } }
+function prev(){ if(cur > 0){ cur--; show(cur); } }
+document.addEventListener('keydown', e => {
+  if(e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+  else if(e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+});
+show(0);
+</script>
+</body>
+</html>
