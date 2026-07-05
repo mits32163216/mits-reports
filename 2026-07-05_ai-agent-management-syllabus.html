@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIエージェント経営｜シラバス（Course Syllabus）</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&family=Noto+Serif+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+.lp-root *{margin:0;padding:0;box-sizing:border-box;}
+.lp-root{
+  --text-xs:11px;--text-sm:14.4px;--text-md:18px;--text-lg:22.5px;--text-xl:28px;--text-2xl:32px;--text-3xl:38px;
+  --text-h1:34px;--text-header-sub:22px;
+  --lh-md:29.7px;--lh-lg:37.1px;
+  --sp-1:8px;--sp-2:16px;--sp-3:24px;--sp-4:32px;--sp-5:36px;--sp-6:48px;--sp-8:64px;--sp-10:88px;
+  --blue:rgb(40,10,202);--ink:rgb(33,37,41);--ink-2:#555;--ink-3:#888;--ink-4:#aaa;
+  --bg-page:#f5f5f0;--bg-card:#fff;--font-mono:ui-monospace,"SF Mono",Menlo,monospace;
+  --font-serif:"Noto Serif JP",serif;
+  --navy:#14182f;--navy-2:#1e2340;--gold:#8b7355;--rule:#d4d0c8;
+  --r-3:2px;--r-4:2px;
+  font-family:'Noto Sans JP',sans-serif;font-size:var(--text-md);line-height:var(--lh-md);color:var(--ink);letter-spacing:0.02em;background:var(--bg-page);
+}
+body{font-family:'Noto Sans JP',sans-serif;font-size:var(--text-md);line-height:var(--lh-md);color:var(--ink);letter-spacing:0.02em;background:var(--bg-page);}
+.sec-wrap{padding-left:50px;padding-right:50px;}
+.sec-1100{max-width:1100px;margin:0 auto;}
+.sec-800{max-width:800px;margin:0 auto;}
+.sec{margin-bottom:var(--sp-3);}
+.pt60{padding-top:var(--sp-8);}
+.pb20{padding-bottom:var(--sp-2);}
+.pb60{padding-bottom:var(--sp-8);}
+
+/* ============ HEADER（アカデミックネイビー） ============ */
+.header-block{position:relative;width:100vw;background:var(--navy);min-height:420px;display:flex;align-items:center;overflow:hidden;
+  background-image:
+    linear-gradient(180deg,rgba(20,24,47,0.75) 0%,rgba(20,24,47,0.55) 45%,rgba(10,13,31,0.85) 100%);
+  background-size:cover;background-position:center;
+  border-bottom:6px double rgba(139,115,85,0.5);}
+.header-inner{position:relative;z-index:1;width:100%;padding:var(--sp-10) 0 var(--sp-6) 0;max-width:1100px;margin:0 auto;}
+.header-block .sec-wrap{padding-top:18px;padding-bottom:var(--sp-3);text-align:left;}
+.course-number{font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:0.25em;text-transform:uppercase;color:rgba(212,180,155,0.85);margin-bottom:var(--sp-2);}
+.header-h1{font-family:var(--font-serif);font-size:var(--text-h1);font-weight:500;line-height:1.45;color:#fff;margin-bottom:var(--sp-3);}
+.header-h1 strong{color:#fff;font-weight:700;}
+.header-sub{font-family:var(--font-serif);font-style:italic;font-size:var(--text-header-sub);line-height:1.7;color:rgba(255,255,255,0.72);border-top:1px solid rgba(255,255,255,0.25);border-bottom:1px solid rgba(255,255,255,0.25);padding:var(--sp-2) 0;margin-top:var(--sp-4);max-width:720px;}
+
+.meta-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:var(--navy-2);border-top:1px solid rgba(255,255,255,0.1);width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;padding:var(--sp-3) 50px;}
+.meta-strip-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+.meta-cell{padding:0 var(--sp-3);border-right:1px solid rgba(255,255,255,0.12);}
+.meta-cell:last-child{border-right:none;}
+.meta-cell:first-child{padding-left:0;}
+.meta-label{font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(212,180,155,0.75);margin-bottom:6px;}
+.meta-value{font-family:var(--font-serif);font-size:var(--text-md);color:#fff;line-height:1.5;font-weight:500;}
+
+.lp-root p{margin-bottom:var(--sp-2);color:var(--ink);}
+.lp-root p:last-child{margin-bottom:0;}
+.lp-root strong{font-weight:700;color:var(--navy);}
+
+/* ============ セクション見出し ============ */
+.sec-h2{font-family:var(--font-serif);font-size:var(--text-2xl);font-weight:700;line-height:1.4;color:var(--navy);margin-bottom:var(--sp-1);}
+.sec-h2-label{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:var(--sp-1);display:block;}
+.sec-h2-block{border-bottom:2px solid var(--navy);padding-bottom:var(--sp-2);margin-bottom:var(--sp-4);}
+.sec-lead{font-size:var(--text-md);color:var(--ink-2);line-height:var(--lh-md);margin-bottom:var(--sp-3);}
+
+/* ============ callout（引用） ============ */
+.callout{background:none;border-top:1px solid var(--navy);border-bottom:1px solid var(--navy);border-left:none;font-family:var(--font-serif);font-style:italic;font-size:22px;line-height:1.6;text-align:center;padding:var(--sp-3) 0;margin:var(--sp-3) 0;color:var(--navy);}
+.callout-source{display:block;font-family:var(--font-mono);font-size:11px;color:var(--ink-3);letter-spacing:0.15em;text-transform:uppercase;font-style:normal;margin-top:var(--sp-1);}
+
+/* ============ Course Overview ============ */
+.overview-card{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--navy);padding:var(--sp-4);}
+.overview-card p{font-size:var(--text-md);line-height:var(--lh-md);color:var(--ink);}
+.overview-card p + p{margin-top:var(--sp-2);}
+
+/* ============ Teaching Continuity Flow（Mits の思想フロー） ============ */
+.teach-flow{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--gold);padding:var(--sp-3) var(--sp-4);margin:var(--sp-3) 0;}
+.teach-line{padding:var(--sp-2) 0;}
+.teach-line.teach-after{background:linear-gradient(90deg,rgba(139,115,85,0.06),transparent);padding:var(--sp-2) var(--sp-3);border-radius:2px;margin-top:var(--sp-1);}
+.teach-label{font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.teach-body{font-family:var(--font-serif);font-size:var(--text-md);line-height:1.85;color:var(--navy);letter-spacing:0.02em;}
+.teach-body strong{color:var(--navy);font-weight:700;}
+.teach-arrow{font-family:var(--font-serif);text-align:center;color:var(--gold);font-size:14px;letter-spacing:0.15em;font-style:italic;padding:6px 0;}
+
+/* ============ Learning Objectives（narrow-grid） ============ */
+.obj-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-2);margin:var(--sp-2) 0;}
+.obj-item{background:var(--bg-card);padding:var(--sp-3);border:1px solid var(--rule);}
+.obj-num{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:var(--sp-1);}
+.obj-title{font-family:var(--font-serif);font-size:var(--text-md);font-weight:700;color:var(--navy);margin-bottom:var(--sp-1);line-height:1.5;}
+.obj-body{font-size:14.4px;line-height:1.65;color:var(--ink-2);}
+.obj-risk{margin-top:var(--sp-2);padding-top:var(--sp-2);border-top:1px dashed var(--rule);}
+.obj-risk-label{font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#a04d3a;margin-bottom:4px;}
+.obj-risk-body{font-size:13px;line-height:1.7;color:var(--ink-2);}
+.obj-benefit{margin-top:var(--sp-2);padding-top:var(--sp-2);border-top:1px dashed var(--rule);}
+.obj-benefit-label{font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#3d6b48;margin-bottom:4px;}
+.obj-benefit-body{font-size:13px;line-height:1.7;color:var(--ink-2);}
+
+/* ============ Level Ladder（到達3段階） ============ */
+.level-ladder{margin:var(--sp-3) 0 var(--sp-4);position:relative;}
+.level-item{display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-3);background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--navy);margin-bottom:var(--sp-1);position:relative;}
+.level-item.lv1{border-left-color:var(--gold);opacity:0.92;}
+.level-item.lv2{border-left-color:var(--navy);}
+.level-item.lv3{border-left-color:#3d6b48;background:#f7f5ee;}
+.level-num{font-family:var(--font-serif);font-size:var(--text-2xl);font-weight:700;color:var(--navy);font-style:italic;flex:0 0 56px;line-height:1;text-align:center;}
+.level-item.lv1 .level-num{color:var(--gold);}
+.level-item.lv3 .level-num{color:#3d6b48;}
+.level-mark{font-size:var(--text-xl);color:var(--gold);flex:0 0 auto;font-weight:700;line-height:1;}
+.level-item.lv2 .level-mark{color:var(--navy);}
+.level-item.lv3 .level-mark{color:#3d6b48;}
+.level-body{flex:1;min-width:0;}
+.level-label{font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+.level-item.lv2 .level-label{color:var(--navy);}
+.level-item.lv3 .level-label{color:#3d6b48;}
+.level-title{font-family:var(--font-serif);font-size:var(--text-lg);font-weight:700;color:var(--navy);line-height:1.4;}
+.level-arrow{text-align:center;font-family:var(--font-serif);font-size:var(--text-md);color:var(--ink-3);padding:4px 0;font-style:italic;letter-spacing:0.05em;}
+
+/* ============ Weekly Schedule / 各回 ============ */
+.week-block{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--navy);padding:var(--sp-4);margin-bottom:var(--sp-3);}
+.week-head{display:flex;align-items:baseline;gap:var(--sp-3);border-bottom:1px solid var(--rule);padding-bottom:var(--sp-2);margin-bottom:var(--sp-3);flex-wrap:wrap;}
+.week-num{font-family:var(--font-serif);font-size:var(--text-3xl);font-weight:700;color:var(--navy);line-height:1;font-style:italic;}
+.week-title-wrap{flex:1;min-width:280px;}
+.week-title{font-family:var(--font-serif);font-size:var(--text-xl);font-weight:700;color:var(--navy);line-height:1.4;}
+.week-meta{font-family:var(--font-mono);font-size:11px;color:var(--ink-3);letter-spacing:0.15em;text-transform:uppercase;margin-top:6px;}
+.week-section{margin-bottom:var(--sp-3);padding-bottom:var(--sp-2);border-bottom:1px dashed var(--rule);}
+.week-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.week-label{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:var(--sp-1);}
+.week-text{font-size:var(--text-md);line-height:var(--lh-md);color:var(--ink);}
+.week-text strong{color:var(--navy);}
+.week-list{list-style:none;padding:0;margin-top:var(--sp-1);}
+.week-list li{font-size:14.4px;line-height:1.7;padding-left:1.4em;position:relative;margin-bottom:6px;color:var(--ink-2);}
+.week-list li::before{content:"§";position:absolute;left:0;color:var(--gold);font-weight:700;font-family:var(--font-serif);}
+.week-list li strong{color:var(--navy);font-weight:700;}
+
+/* ============ Course Materials / References ============ */
+.ref-block{background:var(--bg-card);border:1px solid var(--rule);padding:var(--sp-3);margin-bottom:var(--sp-2);}
+.ref-label{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:var(--sp-1);}
+.ref-title{font-family:var(--font-serif);font-size:var(--text-md);font-weight:700;color:var(--navy);margin-bottom:var(--sp-1);}
+.ref-body{font-size:14.4px;line-height:1.7;color:var(--ink-2);}
+.ref-body code{font-family:var(--font-mono);font-size:12.5px;background:#eee8e0;padding:2px 6px;color:var(--navy);}
+
+/* ============ Evaluation / 3列表 ============ */
+.eval-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--sp-2);margin:var(--sp-3) 0;}
+.eval-item{background:var(--bg-card);padding:var(--sp-3);border:1px solid var(--rule);border-top:3px solid var(--gold);}
+.eval-weight{font-family:var(--font-serif);font-size:var(--text-2xl);font-weight:700;color:var(--navy);line-height:1;margin-bottom:var(--sp-1);}
+.eval-title{font-family:var(--font-serif);font-size:var(--text-md);font-weight:700;color:var(--navy);margin-bottom:var(--sp-1);}
+.eval-body{font-size:14.4px;line-height:1.65;color:var(--ink-2);}
+
+/* ============ Instructor / profile ============ */
+.instructor-block{background:var(--bg-card);border:1px solid var(--rule);padding:var(--sp-4);display:grid;grid-template-columns:180px 1fr;gap:var(--sp-4);align-items:start;}
+.instructor-photo{width:180px;height:180px;background:var(--navy);border:1px solid var(--rule);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-serif);font-style:italic;font-size:64px;}
+.instructor-body{}
+.instructor-name{font-family:var(--font-serif);font-size:var(--text-xl);font-weight:700;color:var(--navy);margin-bottom:6px;}
+.instructor-title{font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:var(--sp-2);}
+.instructor-bio{font-size:var(--text-sm);line-height:1.75;color:var(--ink-2);}
+.instructor-bio p + p{margin-top:var(--sp-1);}
+
+/* ============ Post-Course Options ============ */
+.post-group{margin-bottom:var(--sp-2);border-left:3px solid var(--navy);padding:var(--sp-2) var(--sp-3);background:var(--bg-card);}
+.post-label{font-family:var(--font-serif);font-weight:700;font-size:var(--text-md);color:var(--navy);margin-bottom:6px;}
+.post-body{font-size:14.4px;line-height:1.7;color:var(--ink-2);}
+
+/* ============ Registration ============ */
+.reg-box{background:var(--bg-card);border:1px solid var(--rule);border-top:4px solid var(--navy);padding:var(--sp-4);margin:var(--sp-3) 0;}
+.reg-row{display:flex;align-items:baseline;gap:var(--sp-2);font-size:var(--text-md);line-height:var(--lh-md);padding:14px 0;border-bottom:1px solid var(--rule);}
+.reg-row:last-child{border-bottom:none;}
+.reg-label{flex:0 0 160px;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);padding-top:4px;}
+.reg-value{flex:1;color:var(--ink);}
+.reg-value strong{font-family:var(--font-serif);font-weight:700;color:var(--navy);}
+.reg-value .note{display:block;font-size:13px;color:var(--ink-3);margin-top:4px;}
+
+/* ============ FAQ ============ */
+.faq-item{margin-bottom:var(--sp-2);border-left:3px solid var(--navy);padding:var(--sp-2) var(--sp-3);background:var(--bg-card);}
+.faq-q{font-family:var(--font-serif);font-weight:700;font-size:var(--text-md);margin-bottom:6px;color:var(--navy);}
+.faq-a{font-size:14.4px;color:var(--ink-2);line-height:1.75;}
+
+/* ============ Section divider ============ */
+.sec-divider{border:0;border-top:1px solid var(--rule);margin:var(--sp-4) 0;}
+
+/* ============ Course Coverage（101項目） ============ */
+.coverage-intro{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--gold);padding:var(--sp-3);margin-bottom:var(--sp-3);}
+.coverage-intro p{font-size:var(--text-md);line-height:var(--lh-md);color:var(--ink);}
+.coverage-cat-block{background:var(--bg-card);border:1px solid var(--rule);padding:var(--sp-3);margin-bottom:var(--sp-2);}
+.coverage-cat-head{display:flex;align-items:baseline;gap:var(--sp-2);border-bottom:1px solid var(--rule);padding-bottom:var(--sp-1);margin-bottom:var(--sp-2);flex-wrap:wrap;}
+.coverage-cat-num{font-family:var(--font-serif);font-size:var(--text-xl);font-weight:700;color:var(--navy);font-style:italic;line-height:1;flex:0 0 auto;}
+.coverage-cat-title{font-family:var(--font-serif);font-size:var(--text-lg);font-weight:700;color:var(--navy);flex:1;min-width:200px;line-height:1.4;}
+.coverage-cat-count{font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);flex:0 0 auto;}
+.coverage-cat-tools{font-family:var(--font-mono);font-size:11px;color:var(--ink-3);margin-bottom:var(--sp-2);letter-spacing:0.02em;line-height:1.5;}
+.coverage-item-list{list-style:none;padding:0;margin:0;}
+.coverage-item-list li{font-size:14.4px;line-height:1.7;padding-left:1.6em;position:relative;margin-bottom:6px;color:var(--ink);}
+.coverage-item-list li::before{content:"§";position:absolute;left:0;color:var(--gold);font-weight:700;font-family:var(--font-serif);}
+
+/* ============ FAQ ============ */
+.faq-item{margin-bottom:var(--sp-2);border-left:3px solid var(--navy);padding:var(--sp-2) var(--sp-3);background:var(--bg-card);}
+.faq-q{font-family:var(--font-serif);font-weight:700;font-size:var(--text-md);margin-bottom:6px;color:var(--navy);}
+.faq-a{font-size:14.4px;color:var(--ink-2);line-height:1.75;}
+
+/* ============ Contact / link ============ */
+.contact-block{background:var(--bg-card);border:1px solid var(--rule);padding:var(--sp-3);display:flex;flex-direction:column;gap:var(--sp-1);}
+.contact-row{display:flex;gap:var(--sp-2);align-items:baseline;}
+.contact-label{flex:0 0 120px;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);}
+.contact-value{flex:1;font-size:var(--text-sm);color:var(--ink);}
+.contact-value a{color:var(--navy);text-decoration:underline;}
+
+/* ============ Footer ============ */
+.lp-footer{background:var(--navy);color:white;padding:32px 50px;text-align:center;border-top:6px double rgba(139,115,85,0.5);width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;}
+.lp-footer a{display:inline-block;margin:0 16px;font-size:12px;color:rgba(255,255,255,0.75);text-decoration:none;}
+.lp-footer .copyright{font-family:var(--font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-top:12px;}
+
+/* ============ mobile ============ */
+@media (max-width:768px){
+  .sec-wrap{padding-left:20px;padding-right:20px;}
+  .header-h1{font-size:24px;}
+  .header-sub{font-size:16px;}
+  .sec-h2{font-size:22px;}
+  .meta-strip{padding:var(--sp-2) 20px;}
+  .meta-strip-inner{grid-template-columns:1fr 1fr;gap:var(--sp-2);}
+  .meta-cell{padding:8px 12px;border-right:none;border-bottom:1px solid rgba(255,255,255,0.1);}
+  .obj-grid{grid-template-columns:1fr;}
+  .eval-grid{grid-template-columns:1fr;}
+  .instructor-block{grid-template-columns:1fr;text-align:center;}
+  .instructor-photo{margin:0 auto;}
+  .week-head{gap:var(--sp-2);}
+  .week-num{font-size:28px;}
+  .week-title{font-size:20px;}
+  .reg-row{flex-direction:column;gap:6px;padding:12px 0;}
+  .reg-label{flex:0 0 auto;}
+  .contact-row{flex-direction:column;gap:4px;}
+  .contact-label{flex:0 0 auto;}
+  .callout{font-size:18px;padding:var(--sp-2) var(--sp-1);}
+}
+</style>
+</head>
+<body>
+<div class="lp-root">
+
+<!-- ================================================================
+     HEADER：Course Syllabus
+     ================================================================ -->
+<div class="header-block">
+  <div class="header-inner">
+    <div class="sec-wrap">
+      <div class="course-number">Course Syllabus</div>
+      <h1 class="header-h1">
+        AIエージェント経営<br>
+        <strong>2ヶ月グループコンサルティング</strong>
+      </h1>
+      <div class="header-sub">
+        1人型起業家のための、AIエージェント経営 実践講義。<br>
+        全4回・合計8時間のグループコンサルティング形式。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- meta strip -->
+<div class="meta-strip">
+  <div class="meta-strip-inner">
+    <div class="meta-cell">
+      <div class="meta-label">Term ／ 開講期</div>
+      <div class="meta-value">2026年 7月期</div>
+    </div>
+    <div class="meta-cell">
+      <div class="meta-label">Format ／ 形式</div>
+      <div class="meta-value">全4回 × 2時間</div>
+    </div>
+    <div class="meta-cell">
+      <div class="meta-label">Instructor ／ 担当</div>
+      <div class="meta-value">西田 光弘</div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     Course Overview（講義概要）
+     ================================================================ -->
+<div class="sec-wrap pt60 pb20">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Course Overview</span>
+      <h2 class="sec-h2">講義概要</h2>
+    </div>
+
+    <div class="overview-card">
+      <p>
+        本講義は、1人型起業家（本人＋スタッフ2人までの最大3人体制）を対象とした、<strong>AIエージェントを用いた事業経営</strong>の実践指導講義である。
+      </p>
+      <p>
+        受講者は、2ヶ月間・全4回のグループコンサルティングを通じて、CLAUDE.md（憲法）／ context/（永続情報）／ subagent（配下）／ memory（記録）／ skill（業務手順）／ hook（自動発火）／ git（変更履歴）の <strong>5層モデル</strong>を体系的に習得する。
+      </p>
+      <p>
+        最終的に受講者は、自身の事業に対して <strong>「AI組織を持って経営する」状態</strong>を到達目標とする。西田が実運用しているAIエージェント経営の構造を、実案件を題材にした実演を通じて伝達する。
+      </p>
+    </div>
+
+    <div class="teach-flow">
+      <div class="teach-line">
+        <div class="teach-label">これまで西田が教えてきたこと</div>
+        <div class="teach-body">
+          経営を学ぶ → 効率が上がる → お金が残る → 時間ができる → <strong>大切なことに集中できる</strong>
+        </div>
+      </div>
+      <div class="teach-arrow">↓  AIエージェント経営が加わると（2026年7月熟達版）</div>
+      <div class="teach-line teach-after">
+        <div class="teach-label">本講義で得ること</div>
+        <div class="teach-body">
+          経営の土台 + <strong>AIに魂を入れる</strong>（1人でも組織を持つ）→ <strong>判断だけが自分の仕事になる</strong>（何を任せ・何を自分でやるかの意思決定基準を持つ）→ <strong>経営そのものが深まる</strong>（人間関係の価値・創造・関係性に時間が使える）→ <strong>大切にしたいことを大切にしたいときに大切にできる</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      「経営をする。事業をやる。AIエージェントに任せる」
+      <span class="callout-source">Course Theme ／ 講義主題</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     Learning Objectives（到達目標）
+     ================================================================ -->
+<div class="sec-wrap pt60 pb20">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Learning Objectives</span>
+      <h2 class="sec-h2">到達目標</h2>
+    </div>
+    <p class="sec-lead">
+      本講義の到達目標は、以下の3段階を順に登ることにある。個別の到達項目（Objective 01〜07）は、この階段を登るための実装内容として位置付ける。
+    </p>
+
+    <div class="level-ladder">
+      <div class="level-item lv1">
+        <div class="level-num">I.</div>
+        <div class="level-mark">✓</div>
+        <div class="level-body">
+          <div class="level-label">Level 1 ／ 認識</div>
+          <div class="level-title">AIエージェント経営を知る</div>
+        </div>
+      </div>
+      <div class="level-arrow">↓</div>
+      <div class="level-item lv2">
+        <div class="level-num">II.</div>
+        <div class="level-mark">✓</div>
+        <div class="level-body">
+          <div class="level-label">Level 2 ／ 実行</div>
+          <div class="level-title">知っている から できる へ</div>
+        </div>
+      </div>
+      <div class="level-arrow">↓</div>
+      <div class="level-item lv3">
+        <div class="level-num">III.</div>
+        <div class="level-mark">✓</div>
+        <div class="level-body">
+          <div class="level-label">Level 3 ／ 熟達</div>
+          <div class="level-title">できる から 使いこなす へ ── そして熟練者になる</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="sec-lead">
+      以下の7項目は、上記3段階を実装レベルで達成するための到達目標。
+    </p>
+
+    <div class="obj-grid">
+      <div class="obj-item">
+        <div class="obj-num">Objective 01</div>
+        <div class="obj-title">CLAUDE.md（憲法）を使いこなせる</div>
+        <div class="obj-body">自身の事業体・顧客・哲学・禁止事項をAIに読ませる形で明文化する能力を習得する。</div>
+        <div class="obj-risk">
+          <div class="obj-risk-label">× 未習得時に起きること</div>
+          <div class="obj-risk-body">毎セッションで会社説明から始まる。AIが業界一般論で回答し、自身の事業に合わない提案が出続ける。指示の言い直しに時間が奪われる。</div>
+        </div>
+        <div class="obj-benefit">
+          <div class="obj-benefit-label">○ 習得後に得られること</div>
+          <div class="obj-benefit-body">明日からAIが「自身の会社」を知った状態で立ち上がる。指示が短くなり、判断の一貫性が担保される。</div>
+        </div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-num">Objective 02</div>
+        <div class="obj-title">subagent（配下AI）を使いこなせる</div>
+        <div class="obj-body">業務別の専門特化AIを、description・役割・トリガー言葉の3要素で構成する能力を習得する。</div>
+        <div class="obj-risk">
+          <div class="obj-risk-label">× 未習得時に起きること</div>
+          <div class="obj-risk-body">全業務を汎用AIに毎回長い指示で依頼する状態が続く。1つの業務に集中させる仕組みがなく、出力精度が上がらない。</div>
+        </div>
+        <div class="obj-benefit">
+          <div class="obj-benefit-label">○ 習得後に得られること</div>
+          <div class="obj-benefit-body">業務別の専門AI配下が立ち、一言のトリガーで発火する。「言い直し」が減り、出力精度が業務ごとに最適化される。</div>
+        </div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-num">Objective 03</div>
+        <div class="obj-title">Agent Teams / SendMessage による連携を使いこなせる</div>
+        <div class="obj-body">複数のsubagentを連携させ、複雑な業務を並列処理する構造を組む能力を習得する。</div>
+        <div class="obj-risk">
+          <div class="obj-risk-label">× 未習得時に起きること</div>
+          <div class="obj-risk-body">複雑な業務が単発指示の連鎖になり、自身が毎回中継役として介在する。並列化ができず、5つの業務は5倍の時間を要する。</div>
+        </div>
+        <div class="obj-benefit">
+          <div class="obj-benefit-label">○ 習得後に得られること</div>
+          <div class="obj-benefit-body">1つの指示で3〜4体のAIが同時に稼働する。5倍〜10倍速で業務が回る。自身の役割は判断に集約される。</div>
+        </div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-num">Objective 04</div>
+        <div class="obj-title">5層モデル（CLAUDE.md / memory / skill / hook / git）を使いこなせる</div>
+        <div class="obj-body">各層の役割・衝突解決の型・整備順序を体系的に理解し運用する能力を習得する。</div>
+        <div class="obj-risk">
+          <div class="obj-risk-label">× 未習得時に起きること</div>
+          <div class="obj-risk-body">skill と CLAUDE.md が矛盾しても検知できず、AIが場当たり的判断を返す。同じ失敗が何度も繰り返される。指示の増加とともに管理不能に陥る。</div>
+        </div>
+        <div class="obj-benefit">
+          <div class="obj-benefit-label">○ 習得後に得られること</div>
+          <div class="obj-benefit-body">層ごとに役割が明確で、衝突を検知・解決できる状態になる。「同じ失敗を2回しない」設計が実装される。</div>
+        </div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-num">Objective 05</div>
+        <div class="obj-title">継続教育サイクル（週次・月次・季節）を使いこなせる</div>
+        <div class="obj-body">doublecheck・session-log・memory整理・CLAUDE.md季節見直しの3周期リズムを日常運用する能力を習得する。</div>
+        <div class="obj-risk">
+          <div class="obj-risk-label">× 未習得時に起きること</div>
+          <div class="obj-risk-body">2ヶ月で構築した骨格が3ヶ月後に劣化する。放置したAI組織が徐々に使い物にならなくなり、再構築コストが再発する。</div>
+        </div>
+        <div class="obj-benefit">
+          <div class="obj-benefit-label">○ 習得後に得られること</div>
+          <div class="obj-benefit-body">週次・月次・季節ごとに自動整理される。放置しても劣化せず、AI組織が「育ち続ける」状態になる。</div>
+        </div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-num">Objective 06</div>
+        <div class="obj-title">git による変更履歴管理を使いこなせる</div>
+        <div class="obj-body">status / commit / log / diff / branch / checkout / merge の7コマンドと季節スナップショットの運用を習得する。</div>
+        <div class="obj-risk">
+          <div class="obj-risk-label">× 未習得時に起きること</div>
+          <div class="obj-risk-body">CLAUDE.md や skill を書き換えて壊しても元に戻せない。実験を怖がって進歩が止まる。過去の判断が辿れない。</div>
+        </div>
+        <div class="obj-benefit">
+          <div class="obj-benefit-label">○ 習得後に得られること</div>
+          <div class="obj-benefit-body">いつでも過去に戻せる安心感を得る。思い切って実験できる。全判断の履歴が10年後にも参照可能な状態になる。</div>
+        </div>
+      </div>
+      <div class="obj-item" style="grid-column:1 / -1;">
+        <div class="obj-num">Objective 07 ／ 統合目標</div>
+        <div class="obj-title">「AIエージェントに任せる」経営判断を使いこなせる</div>
+        <div class="obj-body">
+          何を自分で判断し、何をAIに任せ、何を外部（個別コンサル等）に委ねるかの意思決定基準を、自身の事業文脈に即して言語化できる状態を到達目標とする。
+        </div>
+        <div class="obj-risk">
+          <div class="obj-risk-label">× 未習得時に起きること</div>
+          <div class="obj-risk-body">案件ごとに「これは自分で／AIに／外部に」で毎回悩む。判断の消耗が続き、案件が来るたびに立ち止まる。1人型起業の身軽さが失われる。</div>
+        </div>
+        <div class="obj-benefit">
+          <div class="obj-benefit-label">○ 習得後に得られること</div>
+          <div class="obj-benefit-body">判断基準が自身の中で言語化される。案件が来た瞬間に振り分けができる状態になる。「全部自分でしなくていい」を自身の判断として運用できる。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     Prerequisites（履修前提）
+     ================================================================ -->
+<div class="sec-wrap pt60 pb20">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Prerequisites</span>
+      <h2 class="sec-h2">履修前提</h2>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-label">Required ／ 必須</div>
+      <div class="ref-title">Claude Max プラン契約</div>
+      <div class="ref-body">
+        月額約 15,000円 × 2ヶ月 = 約 3万円。Pro / Free プランでは本講義の実演分量で制限に達するため受講不可。<br>
+        毎日 1〜3 時間の使用を想定した場合、Max プランで事実上制限に達することはほぼない。
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-label">Recommended ／ 推奨</div>
+      <div class="ref-title">AIエージェント基本講座の事前視聴</div>
+      <div class="ref-body">
+        Claude Code / Agent Teams / subagent / SendMessage / skill / hook の基本概念を事前に習得しておくことで、本講義の理解度が向上する。<br>
+        未受講の場合は、開講前2週間の stepmail 期間に段階的に視聴することで補完できる。
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-label">Recommended ／ 推奨</div>
+      <div class="ref-title">Discord への参加</div>
+      <div class="ref-body">
+        本講義は「反転学習」形式を採用しており、各回の間の2週間に受講者が Discord で進捗・詰まりを共有し、西田が動画で回答する運用を行う。Discord への参加により学習効果が向上する。
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-label">Required ／ 必須（作業環境）</div>
+      <div class="ref-title">作業環境の準備（Mac / Windows / Google Drive ミラー設定）</div>
+      <div class="ref-body">
+        開講前に以下を整える。Mac / Windows いずれも可。<br>
+        <br>
+        <strong>1. ハードウェア最低スペック目安</strong>：RAM 16GB 以上推奨（MacBook Air M2 8GB 相当では長時間セッションで詰まる事例あり）。ストレージ空き 100GB 以上。<br>
+        <strong>2. Google Drive ミラー設定</strong>：クラウド同期ではなく<strong>ミラー設定</strong>を選択（オフラインでも作業可能・同期遅延回避）。<code>~/My Drive/</code> 直下に本講義用の専用フォルダを1つ作成する。<br>
+        <strong>3. Mac / Windows の差異</strong>：ファイルパス表記・改行コード・ターミナルコマンドが異なる。第1回冒頭で両者の使い分けを解説。
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-label">Required ／ 必須（インフラセットアップ）</div>
+      <div class="ref-title">CloudCode / Chrome MCP / permission の初期セットアップ</div>
+      <div class="ref-body">
+        以下の <strong>4ステップ「成功状態チェックリスト」</strong>を開講前2週間の stepmail 期間に完了する。各ステップに補助動画を提供。<br>
+        <br>
+        <strong>Step 1</strong>：CloudCode Desktop app 起動確認（アカウント認証・初回セッション開始）<br>
+        <strong>Step 2</strong>：Chrome MCP extension 有効化（Chrome拡張機能で MCP 権限を許可）<br>
+        <strong>Step 3</strong>：permission level 1〜5 の意味理解（Read-only / Ask each time / Trust for session / Trust always / Bypass）<br>
+        <strong>Step 4</strong>：初回セッションで簡単な指示を実行して各 permission level の挙動を体験<br>
+        <br>
+        非エンジニアの受講者を想定した動画ガイド付き。各ステップに「これができたら OK」の判定基準を明示。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     Course Format（開講形式）
+     ================================================================ -->
+<div class="sec-wrap pt60 pb20">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Course Format</span>
+      <h2 class="sec-h2">開講形式</h2>
+    </div>
+
+    <div class="overview-card">
+      <p>
+        <strong>週2時間 × 全4回 = 合計8時間のグループコンサルティング（Zoom開催）</strong>。<br>
+        隔週日曜 10:00〜12:00 に開催する。
+      </p>
+      <p>
+        各回の間の2週間は<strong>宿題実装期間</strong>と位置付ける。受講者はグルコンで学んだ内容を実業務に反映し、詰まりを Discord に投稿する。西田は投稿された詰まりに対して動画で回答する。この形式を <strong>「反転学習」</strong>と呼ぶ。
+      </p>
+      <p>
+        各回のグルコンは、前回宿題の進捗共有からはじまる。受講者は自身の実装成果を画面共有で発表し、西田から個別のフィードバックを受ける。
+      </p>
+      <p>
+        本講義は<strong>奇数月スタート組</strong>（7月・9月・11月・・・開講）と<strong>偶数月スタート組</strong>（8月・10月・12月・・・開講）の2系統で運用する。
+      </p>
+      <p>
+        3ヶ月版申込者は3ヶ月目に、次期の奇数月組または偶数月組いずれかの第1回または第2回を再受講可能（<strong>輪唱型</strong>と呼ぶ）。
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     Weekly Schedule（各回シラバス）
+     ================================================================ -->
+<div class="sec-wrap pt60 pb20">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Weekly Schedule</span>
+      <h2 class="sec-h2">各回シラバス</h2>
+    </div>
+    <p class="sec-lead">
+      全4回、順序は「魂 → 組織 → 道具 → サイクル」で構成する。この順序は西田が実運用の試行錯誤から導出したものであり、逆順（道具→組織）では学習効果が減少することが確認されている。
+    </p>
+
+    <!-- 第1回 -->
+    <div class="week-block">
+      <div class="week-head">
+        <div class="week-num">I.</div>
+        <div class="week-title-wrap">
+          <div class="week-title">魂の設計 ── 外部記憶と判断の土台</div>
+          <div class="week-meta">Session 1 ／ 2026 / 07 / 12 (SUN) 10:00–12:00 ／ 120 min</div>
+        </div>
+      </div>
+
+      <div class="week-section">
+        <div class="week-label">Session Objectives ／ 到達目標</div>
+        <div class="week-text">
+          <strong>受講者本人が「これは AI ですごい経営ができそうだ」と思えてしまう状態</strong>を到達目標とする。CLAUDE.md 最小版の記述・context ファイルの切り出し・git init による初回コミットは、その確信を得るための実装手段として第1回で扱う。
+        </div>
+      </div>
+
+      <div class="week-section">
+        <div class="week-label">Topics ／ 扱う内容</div>
+        <ul class="week-list">
+          <li><strong>全4回オーバービュー：</strong>各回の順序と方法論・8時間で得るものの全体像</li>
+          <li><strong>AI社員に会社案内を渡す：</strong>昭和の人間社員採用モデルを AI に移植する思想</li>
+          <li><strong>CLAUDE.md（憲法）：</strong>5ブロック構造（自己定義／哲学／顧客／トンマナ／禁止事項）</li>
+          <li><strong>context/（永続情報）：</strong>persona / philosophy / tonmana の3ファイル分離設計</li>
+          <li><strong>外部記憶の配線：</strong>Notion「Claude履歴保存」DB と Obsidian Vault の2段構え</li>
+          <li><strong>魔法のランプ対話法：</strong>AIの三択に乗らず問いを取り戻す対話プロトコル</li>
+          <li><strong>git 導入：</strong>init と初回コミット・.gitignore の記述</li>
+        </ul>
+      </div>
+
+      <div class="week-section">
+        <div class="week-label">Assignments ／ 次回までの課題</div>
+        <ul class="week-list">
+          <li>CLAUDE.md v1（5ブロック・約30行）を記述し、1週間の実業務で運用しながら都度追記する</li>
+          <li>context/persona_v1.md と context/philosophy_v1.md を作成する</li>
+          <li>Notion「Claude履歴保存」DB または Obsidian に <strong>セッション履歴の自動保存 hook を設置する</strong>（手動保存ではなく仕組みで自動化する）</li>
+          <li>魔法のランプ対話法を実業務の相談で1回試行し、Claude の反応の変化を観察する</li>
+          <li>git init を実行し、<strong>auto-backup hook を設置して自動 commit の仕組みを構築する</strong>（手動運用ではなく仕組みで自動化する）</li>
+          <li>自身の1週間の繰り返し業務を3つ紙に書き出し、次回に持参する</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 第2回 -->
+    <div class="week-block">
+      <div class="week-head">
+        <div class="week-num">II.</div>
+        <div class="week-title-wrap">
+          <div class="week-title">組織化 ── Agent Teams と業務落とし込み</div>
+          <div class="week-meta">Session 2 ／ 2026 / 07 / 26 (SUN) 10:00–12:00 ／ 120 min</div>
+        </div>
+      </div>
+
+      <div class="week-section">
+        <div class="week-label">Session Objectives ／ 到達目標</div>
+        <div class="week-text">
+          subagent を最低1体作成し、SendMessage による指示を実施し、Agent Teams で2体連携を体験し、自身の実業務を AI組織構造に翻訳する設計図を得ている状態。
+        </div>
+      </div>
+
+      <div class="week-section">
+        <div class="week-label">Topics ／ 扱う内容</div>
+        <ul class="week-list">
+          <li><strong>1人型起業と組織化：</strong>社長／副社長（参謀）／配下（subagent）の3階層構造</li>
+          <li><strong>メッセンジャー禁止原則：</strong>参謀が配下を教育する役割の設計</li>
+          <li><strong>subagent の最小構成：</strong>description / 役割 / トリガー言葉の3要素（skill 未装備で運用可能）</li>
+          <li><strong>SendMessage の運用：</strong>参謀から配下への指示伝達</li>
+          <li><strong>Agent Teams の連携：</strong>writer → checker の型・並列型・線形型</li>
+          <li><strong>組織構造の AI 移植：</strong>自組織を4部門（経営・会計・営業・サポート）または5フェーズ（相談→見積→受注→納品→請求）に分解し、部門別 subagent を配置する設計。複数人体制（社長+スタッフ+AI配下）の組織図化。</li>
+          <li><strong>実案件による Feature 実演：</strong>LP改訂 3体構成／AIブランドマネージャー 3体構成／Zoom→YouTube 4体並列</li>
+          <li><strong>マルチAI 議論の運用：</strong>「一社依存は事業リスク」。MCP 経由で Claude と Codex を議論させる型。単一AIに依存せず、複数AI間で意見を戦わせて判断する運用の思想と実装。</li>
+          <li><strong>git branch の概念：</strong>並列作業と統合の関係（本編は第3回）</li>
+        </ul>
+      </div>
+
+      <div class="week-section">
+        <div class="week-label">Assignments ／ 次回までの課題</div>
+        <ul class="week-list">
+          <li>subagent を1体作成し、<strong>実業務で稼働させる</strong>（デモではなく、日常業務に組み込んで動かす）</li>
+          <li>SendMessage を実業務で発火させ、参謀 → 配下の指示の型を掴む（回数ではなく実装に主眼）</li>
+          <li>自身の主要業務1つを AI組織構造に翻訳した設計図を作成する</li>
+          <li>Agent Teams による2体連携を <strong>実業務で稼働させる</strong>（LP改訂 / note量産 / Zoom→YT 等の自身の題材で）</li>
+          <li><strong>自組織を4部門（経営・会計・営業・サポート）または5フェーズ（相談→見積→受注→納品→請求）に分解</strong>し、各部門/フェーズに配置する subagent の設計図（1人体制/スタッフ複数体制の別に応じて）を作成する</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 第3回 -->
+    <div class="week-block">
+      <div class="week-head">
+        <div class="week-num">III.</div>
+        <div class="week-title-wrap">
+          <div class="week-title">メモリと衝突 ／ git 本編 ── 道具の整備</div>
+          <div class="week-meta">Session 3 ／ 2026 / 08 / 09 (SUN) 10:00–12:00 ／ 120 min</div>
+        </div>
+      </div>
+
+      <div class="week-section">
+        <div class="week-label">Session Objectives ／ 到達目標</div>
+        <div class="week-text">
+          memory / skill / hook / 参照ルール / git の5層モデルを理解し、第2回で構築した subagent に memory と skill を装備し、衝突解決の手順を持ち、git 7コマンドの運用を開始している状態。
+        </div>
+      </div>
+
+      <div class="week-section">
+        <div class="week-label">Topics ／ 扱う内容</div>
+        <ul class="week-list">
+          <li><strong>5層モデルの体系：</strong>CLAUDE.md（憲法）／ memory（日報）／ skill（業務マニュアル）／ hook（就業規則）／ git（稟議書控え）</li>
+          <li><strong>subagent 強化の順序：</strong>memory → skill → hook の整備順序と根拠</li>
+          <li><strong>衝突の3パターン：</strong>CLAUDE.md vs skill ／ skill vs skill ／ memory vs 現在判断 の解決手順</li>
+          <li><strong>skill 化判別フロー：</strong>4問による skill 化可否判定（3回以上／トリガー固定／5ステップ以上／全条件YES）。<strong>実践例5個</strong>：ChatWork履歴のパターン化 skill（棚原事例・「3回以上」判定）／Notion「相談者カルテ」の自動生成 skill（川田事例・「トリガー言葉」設計）／FBグループ添削 skill（川田事例・5ステップ判定）／note→メルマガ変換 skill（高田事例）／Zoom→YouTube 章立て skill（山口事例）</li>
+          <li><strong>memory の都度追記運用（5トリガー）：</strong>「週N回」ではなく<strong>「都度」が原則</strong>。以下の5トリガーで即追記：(1) 叱責を受けた瞬間 (2) 失敗した瞬間 (3) 新規原則を確立した瞬間 (4) CLAUDE.md 違反を検知した瞬間 (5) 改善アイデアを発見した瞬間。memory テンプレート（日付／トリガー種別／学習内容／次の対応／タグ）を配布。</li>
+          <li><strong>実案件による Feature 実演：</strong>ChatWork履歴パターン化 3層セット／FBグループ添削 skill化</li>
+          <li><strong>git 本編：</strong>status / log / diff / branch / checkout / merge / push の7コマンド</li>
+        </ul>
+      </div>
+
+      <div class="week-section">
+        <div class="week-label">Assignments ／ 次回までの課題</div>
+        <ul class="week-list">
+          <li>skill を最低2本作成し、subagent がトリガー言葉で呼び出せる状態にする</li>
+          <li><strong>memory の都度追記運用を開始する</strong>（叱責を受けた瞬間・失敗した瞬間・新規原則を確立した瞬間に即追記する。「週N回」ではなく「都度」が原則）</li>
+          <li>hook を最低3本設定する（auto-checkpoint ／ セッション開始時の memory 自動注入 ／ 特定キーワード検知の割り込み の最低3系統）</li>
+          <li><strong>自然発生した衝突を1回以上 memory に記録する</strong>（意図的発生ではなく、実業務で起きた衝突を捉えて記録する）</li>
+          <li>第1回で設置した auto-backup hook が正常稼働していることを検証する（自動 commit の運用確認）</li>
+          <li>修了後の道（A / B / C / D）を仮決めする</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 第4回 -->
+    <div class="week-block">
+      <div class="week-head">
+        <div class="week-num">IV.</div>
+        <div class="week-title-wrap">
+          <div class="week-title">運用サイクル ／ 修了後の4つの道</div>
+          <div class="week-meta">Session 4 ／ 2026 / 08 / 23 (SUN) 10:00–12:00 ／ 120 min</div>
+        </div>
+      </div>
+
+      <div class="week-section">
+        <div class="week-label">Session Objectives ／ 到達目標</div>
+        <div class="week-text">
+          AI組織を継続教育サイクル（週次点検・全記録保存・定期整理・季節スナップショット）に乗せ、修了後の4つの道から1つを自身で選択できる状態。加えて、<strong>「何を自分で判断し・何をAIに任せ・何を外部に委ねるか」の意思決定基準を3軸（安全性 / カスタマイズ度 / 人間関係価値）で言語化</strong>できる状態。
+        </div>
+      </div>
+
+      <div class="week-section">
+        <div class="week-label">Topics ／ 扱う内容</div>
+        <ul class="week-list">
+          <li><strong>継続教育の思想：</strong>「育てる」から「育て続ける」への転換・昭和の会社の3年育成モデル</li>
+          <li><strong>4つの継続教育レバー：</strong>doublecheck（週1）／ session-log（毎回自動）／ 定期整理（memory週1・skill月1・CLAUDE.md季節1）／ 継続追記</li>
+          <li><strong>event-dispatcher：</strong>Windows常駐・1分毎cron・3イベント検知（Slack DM / Notion Inbox / タスク完了）による24時間稼働の実装</li>
+          <li><strong>Chrome MCP / Computer Use：</strong>LINE / Messenger 等の自動化（Web経由）</li>
+          <li><strong>git tag と季節スナップショット：</strong>四季初日の自動 tag と GitHub 定期push</li>
+          <li><strong>経営判断の3軸マトリックス：</strong>「何をAIに任せるか」の判定基準を3軸で言語化する。(1) <strong>安全性軸</strong>（誤りが起きた場合の被害の大きさ）(2) <strong>カスタマイズ度軸</strong>（自身の業種・顧客文脈への適合度）(3) <strong>人間関係価値軸</strong>（対面／人間関与の代替不可能性）。CLAUDE.md に「Mits 専権タスク明示」ノウハウを埋め込む具体例。</li>
+          <li><strong>修了後の4つの道：</strong>自走 / ゆっくり育つ / 無料枠回遊 / 個別コンサルで加速 の意思決定</li>
+        </ul>
+      </div>
+
+      <div class="week-section">
+        <div class="week-label">Assignments ／ 修了後の課題</div>
+        <ul class="week-list">
+          <li>doublecheck skill を週1回スケジュール実行に組み込む（cron / スケジュールタスクで自動発火）</li>
+          <li>session-log 自動保存 hook の運用を確認する（第1回で設置済みの場合は継続稼働の検証）</li>
+          <li>memory 週次整理を毎週金曜21:00 に固定する（都度追記とは別の週次点検として）</li>
+          <li>CLAUDE.md 季節見直しリマインダを設定する（3/1・6/1・9/1・12/1）</li>
+          <li>業務1つを <strong>完全サイクル（event検知 → subagent 発火 → memory 記録 → doublecheck）で稼働させる</strong></li>
+          <li>git tag と GitHub 定期push を設定する（第1回の auto-backup hook と統合する）</li>
+          <li>修了後の道（A / B / C / D）を西田に宣言する</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     Course Materials（教材・参考資料）
+     ================================================================ -->
+<div class="sec-wrap pt60 pb20">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Course Materials</span>
+      <h2 class="sec-h2">教材・参考資料</h2>
+    </div>
+    <p class="sec-lead">
+      本講義では、西田が実運用している構成物を教材として画面共有で提示する。受講者は、これらを参照実装として自身の設計に流用できる。
+    </p>
+
+    <div class="ref-block">
+      <div class="ref-label">Primary Materials ／ 一次教材</div>
+      <div class="ref-title">西田の 5層 実運用ファイル群</div>
+      <div class="ref-body">
+        <code>CLAUDE.md</code>（憲法）／ <code>context/persona_master.md, mits_tonmana_guide.md, mits_philosophy.md</code>（永続情報）／ <code>.claude/agents/</code>（subagent 20体以上）／ <code>.claude/skills/</code>（skill 100本以上）／ <code>.claude/hooks/</code>（hook 30本以上）／ <code>memory/</code>（memory 200件以上）／ Notion「Claude履歴保存」DB。<br>
+        各Feature実演で西田が画面共有し、構造を提示する。
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-label">Secondary Materials ／ 二次教材（動画）</div>
+      <div class="ref-title">AIエージェント基本講座</div>
+      <div class="ref-body">
+        Agent Teams / subagent / SendMessage / skill / hook の基本概念を扱う。開講前 2週間の stepmail Day3-14 で該当レッスンを段階的に視聴する構成。
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-label">Secondary Materials ／ 補助動画</div>
+      <div class="ref-title">各回開講前の補助教材動画</div>
+      <div class="ref-body">
+        <strong>第1回前：</strong>CLAUDE.md 実物解説（15分）／ 魔法のランプ対話法（10分）／ git init と初回コミット（10分）<br>
+        <strong>第2回前：</strong>Agent Teams SendMessage 実演（20分）／ LP改訂 subagent 3体構成（15分）<br>
+        <strong>第3回前：</strong>memory 運用の実物（15分）／ skill 化判別フロー（10分）／ git branch と衝突解決（15分）<br>
+        <strong>第4回前：</strong>event-dispatcher 実装（20分）／ Chrome MCP による自動化（15分）／ git tag と季節スナップショット（10分）
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-label">Reference ／ 参照体系</div>
+      <div class="ref-title">The Innovation エコシステム（Skool / Discord / UTAGE）</div>
+      <div class="ref-body">
+        本講義は「The Innovation」エコシステムの一部として位置付けられる。<br>
+        Skool コミュニティ（無料枠 + 上位クラス）／ Discord（本講義修了生の日常議論場）／ UTAGE「The Library」（有料コース群）との関係性を、修了後の展開として説明する。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     [2026-07-04 削除: Evaluation Method]
+     ================================================================ -->
+
+<!-- ================================================================
+     Course Instructor（西田）
+     ================================================================ -->
+<div class="sec-wrap pt60 pb20">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Course Instructor</span>
+      <h2 class="sec-h2">西田</h2>
+    </div>
+
+    <div class="instructor-block">
+      <div class="instructor-photo">M</div>
+      <div class="instructor-body">
+        <div class="instructor-name">西田 光弘（Mits）</div>
+        <div class="instructor-title">Instructor ／ 西田光弘個人事務所 代表</div>
+        <div class="instructor-bio">
+          <p>
+            1人型起業家のためのAIエージェント経営 実践研究者。自身の事業運営において <strong>CLAUDE.md ／ context/ ／ subagent 20体以上 ／ skill 100本以上 ／ memory 200件以上 ／ hook 30本以上 ／ event-dispatcher（Windows常駐・24時間稼働）</strong> を実装・運用している。
+          </p>
+          <p>
+            経営コンサルタントとしての職業経験を土台に、2026年から <strong>「AI-MITSプロジェクト」</strong>（自身のコンサルティング判断を AI に移植するプロジェクト）と <strong>「The Innovation エコシステム」</strong>（1人型起業家向けの学習コミュニティ）を並行運営。
+          </p>
+          <p>
+            研究領域：1人型起業（本人＋スタッフ2人まで）／ AIエージェント経営 ／ 昭和の人間社員教育モデルの AI 移植 ／ 継続教育サイクルの実装。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ================================================================
+     Course Coverage（本講義で扱う範囲・101項目 / 13領域）
+     ================================================================ -->
+<div class="sec-wrap pt60 pb20">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Course Coverage</span>
+      <h2 class="sec-h2">西田の過去実践事例</h2>
+    </div>
+    <p class="sec-lead">
+      西田が自社経営で実装・運用してきた実践事例を13領域・101項目で整理。本講義ではこの中から受講者の業種・段階に合わせて扱う項目を個別に検討する。
+    </p>
+
+    <div class="coverage-intro">
+      <p>各項目は西田が自社経営で実装済または実運用中の実例。受講者は自身の事業文脈に合わせて、どの項目から着手するかを西田と個別に検討する。</p>
+    </div>
+
+    <!-- I -->
+    <div class="coverage-cat-block">
+      <div class="coverage-cat-head">
+        <div class="coverage-cat-num">I.</div>
+        <div class="coverage-cat-title">メルマガ自動化まわり</div>
+        <div class="coverage-cat-count">9 items</div>
+      </div>
+      <div class="coverage-cat-tools">mainmail-loop ／ heavy-mail-writer ／ merumaga-nishida ／ column-wrapper ／ coworkmail-daily-checker</div>
+      <ul class="coverage-item-list">
+        <li>mainmail-loop で販売メルマガを AI に自動生成させるフロー構築</li>
+        <li>heavy-mail-writer スキルで AI に「自分っぽい」文体を書かせた</li>
+        <li>coworkmail-daily-checker でメルマガ品質を AI に8軸採点・自動検収</li>
+        <li>column-wrapper で AI に配信フォーマットを自動整形</li>
+        <li>メルマガ品質8軸採点基準を AI に判定させる形で言語化</li>
+        <li>AIっぽい文章を回避する5ステップ手法を heavy-mail-writer に組み込み</li>
+        <li>西田トンマナ13項目を AI が守れるルールとして実セッション書き起こしから抽出</li>
+        <li>merumaga-nishida スキルで西田式販売メルマガの型を AI に再現</li>
+        <li>daily-column スキルでデイリーコラムを AI に自動生成</li>
+      </ul>
+    </div>
+
+    <!-- II -->
+    <div class="coverage-cat-block">
+      <div class="coverage-cat-head">
+        <div class="coverage-cat-num">II.</div>
+        <div class="coverage-cat-title">UTAGE・ファネル自動化まわり</div>
+        <div class="coverage-cat-count">11 items</div>
+      </div>
+      <div class="coverage-cat-tools">scenario-plumber ／ utage-lesson-html-uploader ／ utage-funnel-lp-html-uploader ／ utage-step-mail-editor ／ LP制作の型</div>
+      <ul class="coverage-item-list">
+        <li>ファネル LP・ステップメール・会員サイトの HTML 更新を AI（Chrome 操作）に自動で実施</li>
+        <li>特商法・外部リンクの一括差し替えを AI に30ファネル走査</li>
+        <li>読者リストの DL・マージ・LINE 登録URL 抽出を AI に実施</li>
+        <li>scenario-plumber スキルでシナリオ設計から実装まで AI に一貫対応</li>
+        <li>UTAGE CKEditor 保存バグの回避策を AI 操作の手順として確立</li>
+        <li>UTAGE ステップメール送信タイミングのリセットバグを AI が検出・防止するガードを構築</li>
+        <li>utage-lesson-html-uploader で AI に会員サイトの HTML を確実にアップ</li>
+        <li>utage-funnel-lp-html-uploader で AI に LP を丸ごと一発公開</li>
+        <li>utage-step-mail-editor でステップメールを AI に壊さず安全に編集</li>
+        <li>LP 制作の手順（文章を先に確定 → AI に HTML 化させる）を型として確立</li>
+        <li>LP 設計原則（西田 LP 大原則）を AI が従える形で体系化</li>
+      </ul>
+    </div>
+
+    <!-- III -->
+    <div class="coverage-cat-block">
+      <div class="coverage-cat-head">
+        <div class="coverage-cat-num">III.</div>
+        <div class="coverage-cat-title">会計・財務自動化まわり</div>
+        <div class="coverage-cat-count">6 items</div>
+      </div>
+      <div class="coverage-cat-tools">MoneyForward MCP ／ CFO エージェント ／ cashflow-app ／ mf-shiwake</div>
+      <ul class="coverage-item-list">
+        <li>MoneyForward 確定申告を MCP で AI に接続し自動仕訳</li>
+        <li>Amex US・Chase 等の海外カード明細を AI に自動処理</li>
+        <li>キャッシュフロー管理アプリ（cashflow-app）を AI で構築</li>
+        <li>CFO エージェントを作り月次決算を AI に自動化させた（ガバナンスルール付き）</li>
+        <li>MoneyForward の React 画面を AI（Chrome 経由 JavaScript）に操作させるノウハウ確立</li>
+        <li>mf-shiwake スキルで未仕訳を AI に自動補正・登録</li>
+      </ul>
+    </div>
+
+    <!-- IV -->
+    <div class="coverage-cat-block">
+      <div class="coverage-cat-head">
+        <div class="coverage-cat-num">IV.</div>
+        <div class="coverage-cat-title">情報・ナレッジ管理自動化まわり</div>
+        <div class="coverage-cat-count">8 items</div>
+      </div>
+      <div class="coverage-cat-tools">YouTube・Zoom トランスクリプト ／ Dify Corpus2Skill ／ Obsidian-Notion 同期</div>
+      <ul class="coverage-item-list">
+        <li>YouTube トランスクリプトを AI に自動取得・Notion 保存</li>
+        <li>Zoom トランスクリプトを AI に自動取得・保存</li>
+        <li>コンサルナレッジ DB を AI で構築した（97件の整理・移管）</li>
+        <li>Obsidian-Notion 自動同期を AI に毎日 06:03 自動実行</li>
+        <li>Dify Corpus2Skill でコンサル動画を AI に「使えるスキル」へ自動変換させるパイプライン構築</li>
+        <li>youtube-transcript-to-notion スキルで動画を AI に即知識化</li>
+        <li>zoom-transcript-fetcher スキルで会議の文字起こしを AI に実施</li>
+        <li>ai-glossary-extractor スキルで AI に動画から用語集を自動生成</li>
+      </ul>
+    </div>
+
+    <!-- V -->
+    <div class="coverage-cat-block">
+      <div class="coverage-cat-head">
+        <div class="coverage-cat-num">V.</div>
+        <div class="coverage-cat-title">タスク・プロジェクト管理自動化まわり</div>
+        <div class="coverage-cat-count">8 items</div>
+      </div>
+      <div class="coverage-cat-tools">最強仕事術DB v2 ／ PM エージェント ／ gmail-filter-manager ／ saikyou-shiwake</div>
+      <ul class="coverage-item-list">
+        <li>最強仕事術 DB v2（16プロパティ・6ビュー）を AI で構築</li>
+        <li>音声メモを AI に Notion タスクへ毎日 07:30 自動投入</li>
+        <li>PM エージェントを作り朝のタスク振り分けを AI に毎日 08:00 自動化</li>
+        <li>Gmail フィルター 757件を AI に分析させ管理する仕組みを構築</li>
+        <li>gmail-filter-manager スキルで新しい送信者の扱いを AI に5ルールで判断</li>
+        <li>saikyou-shiwake スキルでタスクの後先順位仕訳を AI にやらせダッシュボードを自動更新</li>
+        <li>task-diary スキルで毎日の業務メモを AI に Notion 記録</li>
+        <li>gyomu-shuryo スキルで業務終了時の引き継ぎ書を AI に自動作成</li>
+      </ul>
+    </div>
+
+    <!-- VI -->
+    <div class="coverage-cat-block">
+      <div class="coverage-cat-head">
+        <div class="coverage-cat-num">VI.</div>
+        <div class="coverage-cat-title">AI 経営体制・マルチエージェント組織</div>
+        <div class="coverage-cat-count">12 items</div>
+      </div>
+      <div class="coverage-cat-tools">FBAS フレームワーク ／ 4象限（FA / FS / BA / BS）／ return path プロトコル</div>
+      <ul class="coverage-item-list">
+        <li>FBAS フレームワークで一人起業家向けの AI エージェント組織を設計し実運用</li>
+        <li>フロントアタック象限を AI エージェント（mits-writer 等）に担当</li>
+        <li>フロントサポート象限を AI エージェントに担わせ顧客対応・問い合わせ振り分けを</li>
+        <li>バックアタック象限を AI エージェントに担わせナレッジ蓄積・システム開発を</li>
+        <li>バックサポート象限を AI エージェントに担わせタスク管理・情報同期を</li>
+        <li>「Mits 専権タスク（経営判断・対外メール）」を AI にやらせない保護を CLAUDE.md で明示</li>
+        <li>AI 自律実行の段階移行（A: 人間確認 → B: 提示 → C: 全自動）を設計し段階運用</li>
+        <li>CLAUDE.md で AI への禁止事項を明文化し、AI がやらかさない運用を確立</li>
+        <li>「AI 役員は二重判断を生む」という失敗を実際に経験し、設計に反映</li>
+        <li>「Mits 専権」と「AI 委任」の境界線を実運用しつつ再設定</li>
+        <li>AI エージェント同士が連携する通信（return path プロトコル）を設計</li>
+        <li>AI エージェント定義 21体を作成・組織稼働</li>
+      </ul>
+    </div>
+
+    <!-- VII -->
+    <div class="coverage-cat-block">
+      <div class="coverage-cat-head">
+        <div class="coverage-cat-num">VII.</div>
+        <div class="coverage-cat-title">Claude Cowork / Claude Code 活用そのもの</div>
+        <div class="coverage-cat-count">10 items</div>
+      </div>
+      <div class="coverage-cat-tools">非エンジニアのまま実装 ／ MCP ／ skill-creator ／ skill-evaluator</div>
+      <ul class="coverage-item-list">
+        <li>Claude Cowork を自社経営で実運用</li>
+        <li>非エンジニアのまま Claude Code で AI エージェントを設計・実装</li>
+        <li>複数ツールを AI につなぐ MCP 接続を実装</li>
+        <li>Chrome 拡張で AI にブラウザ操作・JavaScript 実行をさせるノウハウ確立</li>
+        <li>スケジュール実行（Routine）で AI の作業を定時に自動で回</li>
+        <li>セッション横断のコンテキスト管理（Notion 保存＋引き継ぎ書）を AI 運用に組み込み</li>
+        <li>cowork-saver-v2 / code-saver / auto-checkpoint で AI の作業を自動保存</li>
+        <li>CLAUDE.md 整備で AI に同じ説明を繰り返さなくていい状態を構築</li>
+        <li>skill-creator で自分の業務を AI のスキル（型）にする方法を確立</li>
+        <li>skill-evaluator で作った AI スキルの穴を使う前に検出</li>
+      </ul>
+    </div>
+
+    <!-- VIII -->
+    <div class="coverage-cat-block">
+      <div class="coverage-cat-head">
+        <div class="coverage-cat-num">VIII.</div>
+        <div class="coverage-cat-title">月次コンサル・伴走で提供すること</div>
+        <div class="coverage-cat-count">5 items</div>
+      </div>
+      <div class="coverage-cat-tools">HQM ／ CFO エージェント ／ UTAGE・Skool 連動</div>
+      <ul class="coverage-item-list">
+        <li>HQM で各 AI エージェントの報告を AI に回収・分析</li>
+        <li>月次決算・キャッシュフロー確認を CFO エージェント連携で AI に実施</li>
+        <li>コンテンツ・講座の更新・改善を AI（UTAGE・Skool 連動）で伴走する形に整備</li>
+        <li>新スキル・新エージェントの設計・実装を AI と一緒に進める伴走の形を保有</li>
+        <li>業務引き継ぎ・セッション横断管理を AI 運用で回す伴走の形を保有</li>
+      </ul>
+    </div>
+
+    <!-- IX -->
+    <div class="coverage-cat-block">
+      <div class="coverage-cat-head">
+        <div class="coverage-cat-num">IX.</div>
+        <div class="coverage-cat-title">学習システム・講座づくりの実績</div>
+        <div class="coverage-cat-count">6 items</div>
+      </div>
+      <div class="coverage-cat-tools">koza-creator ／ YouTube キュレーション型</div>
+      <ul class="coverage-item-list">
+        <li>Claude Cowork 講座を YouTube 動画キュレーション型・ロードマップ式で AI で構築</li>
+        <li>AI エージェント活用講座をマルチエージェント・Claude Code 連携の内容で構築</li>
+        <li>Obsidian 実践講座を「AI 時代の知識整理術」として AI 連携込みで構築</li>
+        <li>AI 時代の二刀流戦略セミナー（CPF 理論・4C・ダイヤモンドマトリックス）を AI 事業の文脈で設計</li>
+        <li>koza-creator スキルで学習ロードマップ講座づくりそのものを AI に実施</li>
+        <li>SKOOL 連携・UTAGE 会員サイト配信を AI 運用で回すノウハウを確立</li>
+      </ul>
+    </div>
+
+    <!-- X -->
+    <div class="coverage-cat-block">
+      <div class="coverage-cat-head">
+        <div class="coverage-cat-num">X.</div>
+        <div class="coverage-cat-title">経営戦略の理論・フレームワーク</div>
+        <div class="coverage-cat-count">11 items</div>
+      </div>
+      <div class="coverage-cat-tools">ダイヤモンドマトリックス ／ CPF 理論 ／ 4C ／ 業務効率化 4段階</div>
+      <ul class="coverage-item-list">
+        <li>ダイヤモンドマトリックス（4象限・時間軸）を、AI-MITS という自分 AI の設計基準として実装した（右下象限＝関係性の深さに軸足を置く AI として開発）</li>
+        <li>CPF 理論（置き換えの波）を、AI が何を代替し何を代替しないかを読む軸として整理し、AI 戦略の前提に置いた</li>
+        <li>4C（Cash・Client・Content・Creativity）を、AI-MITS が追跡する4指標としてチャットボットに実装</li>
+        <li>A 型戦略（自社×AI で新パッケージを作り続ける）を、Mits 自身が AI-MITS・各種スキルを次々リリースする形で実証</li>
+        <li>Creativity の3層モデル（頼める → 組み込める → 自分を移植できる）を、AI-MITS 開発の到達点として言語化</li>
+        <li>業務効率化の4段階を、Mits 自身が①→④を実際に AI で進んで実証</li>
+        <li>成長期の区間という時間軸を、AI 普及データ（普及日数 180 → 36 日）として整理し AI 事業判断の根拠に</li>
+        <li>「1勝9敗・荒くていい」を、AI-MITS をβ版で出し続ける開発方針（売れてから完成させる）として実践</li>
+        <li>「AI 化した自分を棚に並べる」を、AI-MITS（知見を AI に移植した自己複製ボット）という現物で実証</li>
+        <li>大福帳（Client 実装）を、AI が顧客の文脈を記憶し「覚えています」と返す機能に落とし込み</li>
+        <li>「何を自動化すべきか」の判断軸を、Mits 専権タスクと AI 委任タスクの線引きとして実運用で確立</li>
+      </ul>
+    </div>
+
+    <!-- XI -->
+    <div class="coverage-cat-block">
+      <div class="coverage-cat-head">
+        <div class="coverage-cat-num">XI.</div>
+        <div class="coverage-cat-title">コンテンツ・品質のノウハウ</div>
+        <div class="coverage-cat-count">4 items</div>
+      </div>
+      <div class="coverage-cat-tools">思想言語化 ／ ペルソナ設計 ／ mits-tonmana</div>
+      <ul class="coverage-item-list">
+        <li>「ペルソナへの刺さりより思想言語化を優先」を、AI に文章を書かせる際の最優先ルールとして設定</li>
+        <li>ペルソナ設計（メイン／セカンダリ）を、AI が文章を書くときに参照する定義ファイルとして整備</li>
+        <li>メリットとベネフィットの区別を、AI が書いた文章を採点・修正する基準として運用</li>
+        <li>mits-tonmana スキルで西田文体を AI が適用できる形に</li>
+      </ul>
+    </div>
+
+    <!-- XII -->
+    <div class="coverage-cat-block">
+      <div class="coverage-cat-head">
+        <div class="coverage-cat-num">XII.</div>
+        <div class="coverage-cat-title">AI-MITS という実例そのもの</div>
+        <div class="coverage-cat-count">4 items</div>
+      </div>
+      <div class="coverage-cat-tools">自己複製ボット ／ Dify ／ Corpus2Skill</div>
+      <ul class="coverage-item-list">
+        <li>AI-MITS（自分の知見を AI に移植した自己複製ボット）を作成・公開</li>
+        <li>AI-MITS を「起点・ハブ・トールゲート」の3役を担う AI として設計</li>
+        <li>Dify でチャットボットを構築する実務（RAG 設定・ナレッジ DB 運用・公文方式プロンプト実装）を実施</li>
+        <li>コンサル動画を AI で「スキル」に変換するパイプライン（Corpus2Skill）を構築</li>
+      </ul>
+    </div>
+
+    <!-- XIII -->
+    <div class="coverage-cat-block">
+      <div class="coverage-cat-head">
+        <div class="coverage-cat-num">XIII.</div>
+        <div class="coverage-cat-title">西田自身の経営実証・実績</div>
+        <div class="coverage-cat-count">7 items</div>
+      </div>
+      <div class="coverage-cat-tools">21体エージェント運用 ／ 130件セッション ／ The Innovation</div>
+      <ul class="coverage-item-list">
+        <li>21体の AI エージェント組織を自社経営で運用中</li>
+        <li>130件以上の AI 活用セッションを積み上げ・都度 Notion 記録・検証</li>
+        <li>毎日自動で動く3つの AI Routine（06:03 同期・07:30 音声 Inbox・08:00 振り分け）を運用中</li>
+        <li>UTAGE・Notion・MoneyForward・Dify・Gmail・Zoom・Chrome をすべて AI に連携させ実装</li>
+        <li>20年・1,000人超の一人型起業家を支援したコンサル経験を、AI-MITS という AI に移植して再現</li>
+        <li>あらゆる業種のコンサル実績（士業・物販・飲食・デザイン・建設・塾・コーチ等）を、AI が業種別に当てる素材として保有</li>
+        <li>The Innovation（無料 Skool コミュニティ・4マス経営 × AI）を、AI エージェント経営を学ぶ場として運営中</li>
+      </ul>
+    </div>
+
+    <p class="sec-lead" style="margin-top:var(--sp-4);">
+      以上が西田の過去実践事例の全体マップ。受講者は自身の業種・段階に合わせて、どの領域・どの項目から手をつけるかを西田と個別に検討する。
+    </p>
+  </div>
+</div>
+
+<!-- ================================================================
+     Frequently Asked Questions（履修相談）
+     ================================================================ -->
+<div class="sec-wrap pt60 pb20">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Frequently Asked Questions</span>
+      <h2 class="sec-h2">履修相談</h2>
+    </div>
+
+    
+    <div class="faq-item">
+      <div class="faq-q">Q. 2ヶ月版と3ヶ月版の違いは何か。</div>
+      <div class="faq-a">4回のグルコン内容は各期で反復し洗練される（構造・順序・実演題材は共通で、細部の完成度を高めていく）。3ヶ月版は「深掘り宿題の追加」と「3ヶ月目に第1回または第2回を再受講する権利」が付与される。3ヶ月目は次期の<strong>奇数月組または偶数月組いずれか</strong>の受講生と一緒に受講する<strong>輪唱型</strong>で運用する。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Q. 3ヶ月版の3ヶ月目は具体的にどう受講するのか。</div>
+      <div class="faq-a">3ヶ月目は次期の<strong>奇数月組または偶数月組のいずれか</strong>の第1回または第2回に、新規受講生と混ざって参加する（西田承認のうえ受講者が選択可能）。同じ構造を2度目に踏み直すことで理解が深まり、初回では手が回らなかった宿題も余裕を持って実装できる。3ヶ月目の宿題は「深掘り版」(subagent 3体連携・GitHub 連携・event-dispatcher 拡張等)が別途提示される。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Q. Discord への参加は必須か。</div>
+      <div class="faq-a">必須ではないが強く推奨する。各回の間の2週間の反転学習は Discord を中心に運用する。参加しない場合、詰まりに対する西田の回答動画を受け取れず、学習効果が半減する。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Q. 欠席した場合の対応は。</div>
+      <div class="faq-a">全4回の各回は録画で保管する。追いつく追いつかないは学校的な基準であり、本講義では扱わない。各自のペースで録画を視聴し、宿題は自身の実装ペースで進める。翌回のグルコンで前回の宿題進捗共有から始まるため、録画視聴と宿題実装は必要とする。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Q. 質問はいつどこで受け付けるか。</div>
+      <div class="faq-a">3経路で受け付ける。① グルコン当日の Q&A ブロック(各回30〜60分) ／ ② 各回の間の2週間の Discord 投稿 or メッセンジャー(反転学習・西田が動画で回答) ／ ③ 3ヶ月版の場合、3ヶ月目の再受講回。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Q. 業界特有の要素に対応可能か。</div>
+      <div class="faq-a">対応可能。本講義では汎用の骨格を構築した上で、業界特有の要素を context/ に切り出す設計を採用する。第1回の Feature 実演で該当手法を提示する。</div>
+    </div>
+
+  </div>
+</div>
+
+
+  </div>
+</div>
+
+<!-- ================================================================
+     Contact（問い合わせ）
+     ================================================================ -->
+<div class="sec-wrap pt60 pb60">
+  <div class="sec-800">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Contact</span>
+      <h2 class="sec-h2">問い合わせ</h2>
+    </div>
+
+    <div class="contact-block">
+      <div class="contact-row">
+        <div class="contact-label">履修申請</div>
+        <div class="contact-value">
+          <a href="https://change.7years.life/p/HP7g0Lhg2SyY">change.7years.life/p/HP7g0Lhg2SyY</a>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-label">Skool</div>
+        <div class="contact-value">
+          The Innovation コミュニティ
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-label">担当</div>
+        <div class="contact-value">
+          西田光弘個人事務所
+        </div>
+      </div>
+    </div>
+
+    <hr class="sec-divider">
+
+    <div class="callout">
+      1人型起業家のための AIエージェント経営を、2ヶ月8時間で体系的に習得する。
+      <span class="callout-source">Course Syllabus</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     Footer
+     ================================================================ -->
+<div class="lp-footer">
+  <div>
+    <a href="https://change.7years.life/p/HP7g0Lhg2SyY">Course Registration</a>
+    <a href="https://the-innovation.skool.com/">The Innovation Community</a>
+  </div>
+  <div class="copyright">
+    © 西田光弘個人事務所 ／ Course Syllabus
+  </div>
+</div>
+
+</div><!-- /.lp-root -->
+</body>
+</html>

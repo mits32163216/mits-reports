@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1人型起業家のためのコンテキスト設計ワークシート｜補助資料</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&family=Noto+Serif+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+.lp-root *{margin:0;padding:0;box-sizing:border-box;}
+.lp-root{
+  --text-xs:11px;--text-sm:14.4px;--text-md:18px;--text-lg:22.5px;--text-xl:28px;--text-2xl:32px;--text-3xl:38px;
+  --text-h1:34px;--text-header-sub:22px;
+  --lh-md:29.7px;--lh-lg:37.1px;
+  --sp-1:8px;--sp-2:16px;--sp-3:24px;--sp-4:32px;--sp-5:36px;--sp-6:48px;--sp-8:64px;--sp-10:88px;
+  --blue:rgb(40,10,202);--ink:rgb(33,37,41);--ink-2:#555;--ink-3:#888;--ink-4:#aaa;
+  --bg-page:#f5f5f0;--bg-card:#fff;--font-mono:ui-monospace,"SF Mono",Menlo,monospace;
+  --font-serif:"Noto Serif JP",serif;
+  --navy:#14182f;--navy-2:#1e2340;--gold:#8b7355;--gold-2:#a5896a;--rule:#d4d0c8;
+  --r-3:2px;--r-4:2px;
+  --risk:#a04d3a;--ok:#3d6b48;
+  font-family:'Noto Sans JP',sans-serif;font-size:var(--text-md);line-height:var(--lh-md);color:var(--ink);letter-spacing:0.02em;background:var(--bg-page);
+}
+body{font-family:'Noto Sans JP',sans-serif;font-size:var(--text-md);line-height:var(--lh-md);color:var(--ink);letter-spacing:0.02em;background:var(--bg-page);}
+.sec-wrap{padding-left:50px;padding-right:50px;}
+.sec-1100{max-width:1100px;margin:0 auto;}
+.sec-1200{max-width:1200px;margin:0 auto;}
+.sec-800{max-width:800px;margin:0 auto;}
+.pt60{padding-top:var(--sp-8);}
+.pb20{padding-bottom:var(--sp-2);}
+.pb60{padding-bottom:var(--sp-8);}
+
+/* ============ HEADER ============ */
+.header-block{position:relative;width:100vw;background:var(--navy);min-height:360px;display:flex;align-items:center;overflow:hidden;
+  background-image:linear-gradient(180deg,rgba(20,24,47,0.75) 0%,rgba(20,24,47,0.55) 45%,rgba(10,13,31,0.85) 100%);
+  border-bottom:6px double rgba(139,115,85,0.5);}
+.header-inner{position:relative;z-index:1;width:100%;padding:var(--sp-10) 0 var(--sp-6) 0;max-width:1100px;margin:0 auto;}
+.header-block .sec-wrap{padding-top:18px;padding-bottom:var(--sp-3);text-align:left;}
+.course-number{font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:0.25em;text-transform:uppercase;color:rgba(212,180,155,0.85);margin-bottom:var(--sp-2);}
+.header-h1{font-family:var(--font-serif);font-size:var(--text-h1);font-weight:500;line-height:1.45;color:#fff;margin-bottom:var(--sp-3);}
+.header-h1 strong{color:#fff;font-weight:700;}
+.header-sub{font-family:var(--font-serif);font-style:italic;font-size:var(--text-header-sub);line-height:1.7;color:rgba(255,255,255,0.72);border-top:1px solid rgba(255,255,255,0.25);border-bottom:1px solid rgba(255,255,255,0.25);padding:var(--sp-2) 0;margin-top:var(--sp-4);max-width:800px;}
+
+.meta-strip{background:var(--navy-2);border-top:1px solid rgba(255,255,255,0.1);width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;padding:var(--sp-3) 50px;}
+.meta-strip-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:0;}
+.meta-cell{padding:0 var(--sp-3);border-right:1px solid rgba(255,255,255,0.12);}
+.meta-cell:last-child{border-right:none;}
+.meta-cell:first-child{padding-left:0;}
+.meta-label{font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(212,180,155,0.75);margin-bottom:6px;}
+.meta-value{font-family:var(--font-serif);font-size:var(--text-md);color:#fff;line-height:1.5;font-weight:500;}
+
+.lp-root p{margin-bottom:var(--sp-2);color:var(--ink);}
+.lp-root p:last-child{margin-bottom:0;}
+.lp-root strong{font-weight:700;color:var(--navy);}
+
+/* ============ Section 見出し ============ */
+.sec-h2{font-family:var(--font-serif);font-size:var(--text-2xl);font-weight:700;line-height:1.4;color:var(--navy);margin-bottom:var(--sp-1);}
+.sec-h2-label{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:var(--sp-1);display:block;}
+.sec-h2-block{border-bottom:2px solid var(--navy);padding-bottom:var(--sp-2);margin-bottom:var(--sp-4);}
+.sec-lead{font-size:var(--text-md);color:var(--ink-2);line-height:var(--lh-md);margin-bottom:var(--sp-3);}
+
+/* ============ Callout ============ */
+.callout{background:none;border-top:1px solid var(--navy);border-bottom:1px solid var(--navy);border-left:none;font-family:var(--font-serif);font-style:italic;font-size:22px;line-height:1.6;text-align:center;padding:var(--sp-3) 0;margin:var(--sp-3) 0;color:var(--navy);}
+.callout-source{display:block;font-family:var(--font-mono);font-size:11px;color:var(--ink-3);letter-spacing:0.15em;text-transform:uppercase;font-style:normal;margin-top:var(--sp-1);}
+
+/* ============ Teach Flow ============ */
+.teach-flow{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--gold);padding:var(--sp-3) var(--sp-4);margin:var(--sp-3) 0;}
+.teach-line{padding:var(--sp-2) 0;}
+.teach-line.teach-after{background:linear-gradient(90deg,rgba(139,115,85,0.06),transparent);padding:var(--sp-2) var(--sp-3);border-radius:2px;margin-top:var(--sp-1);}
+.teach-label{font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.teach-body{font-family:var(--font-serif);font-size:var(--text-md);line-height:1.85;color:var(--navy);letter-spacing:0.02em;}
+.teach-arrow{font-family:var(--font-serif);text-align:center;color:var(--gold);font-size:14px;letter-spacing:0.15em;font-style:italic;padding:6px 0;}
+
+/* ============ 対応マップ表 ============ */
+.map-table{width:100%;border-collapse:collapse;margin:var(--sp-3) 0;background:var(--bg-card);border:1px solid var(--rule);}
+.map-table th{background:var(--navy);color:#fff;font-family:var(--font-serif);font-size:13px;font-weight:700;padding:var(--sp-2) var(--sp-2);text-align:left;letter-spacing:0.05em;border-right:1px solid rgba(255,255,255,0.1);}
+.map-table th:last-child{border-right:none;}
+.map-table td{padding:var(--sp-2);border-top:1px solid var(--rule);border-right:1px solid var(--rule);font-size:13.5px;line-height:1.6;color:var(--ink);vertical-align:top;}
+.map-table td:last-child{border-right:none;}
+.map-table td strong{color:var(--navy);}
+.map-table tr:nth-child(even) td{background:#faf8f2;}
+
+/* ============ Block（26問6ブロック） ============ */
+.block-item{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--navy);padding:var(--sp-3);margin-bottom:var(--sp-3);}
+.block-head{border-bottom:1px solid var(--rule);padding-bottom:var(--sp-2);margin-bottom:var(--sp-3);display:flex;align-items:baseline;gap:var(--sp-3);flex-wrap:wrap;}
+.block-num{font-family:var(--font-serif);font-size:var(--text-2xl);font-weight:700;font-style:italic;color:var(--navy);line-height:1;flex:0 0 auto;}
+.block-title-wrap{flex:1;min-width:200px;}
+.block-title{font-family:var(--font-serif);font-size:var(--text-lg);font-weight:700;color:var(--navy);line-height:1.4;}
+.block-meta{font-family:var(--font-mono);font-size:10px;color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;margin-top:4px;}
+.block-mapping{font-family:var(--font-mono);font-size:10px;color:var(--ink-3);letter-spacing:0.05em;margin-top:4px;background:#f0eee7;padding:2px 8px;border-radius:2px;display:inline-block;}
+
+.q-list{list-style:none;padding:0;margin:0;}
+.q-item{padding:var(--sp-2) 0;border-bottom:1px dashed var(--rule);}
+.q-item:last-child{border-bottom:none;}
+.q-num{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.15em;color:var(--gold);margin-bottom:4px;}
+.q-text{font-family:var(--font-serif);font-size:var(--text-md);line-height:1.7;color:var(--navy);font-weight:500;}
+.q-hint{font-size:13px;line-height:1.65;color:var(--ink-2);margin-top:6px;padding-left:var(--sp-2);border-left:2px solid var(--rule);font-style:italic;}
+.q-new{display:inline-block;background:var(--gold);color:#fff;font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:2px 6px;border-radius:2px;margin-left:6px;vertical-align:middle;}
+
+/* ============ 8ステップ表 ============ */
+.step-table-wrap{overflow-x:auto;margin:var(--sp-3) 0;}
+.step-table{width:100%;min-width:900px;border-collapse:collapse;background:var(--bg-card);border:1px solid var(--rule);}
+.step-table th{background:var(--navy);color:#fff;font-family:var(--font-serif);font-size:13px;font-weight:700;padding:var(--sp-2);text-align:left;letter-spacing:0.05em;border-right:1px solid rgba(255,255,255,0.1);vertical-align:top;}
+.step-table th:last-child{border-right:none;}
+.step-table td{padding:var(--sp-2);border-top:1px solid var(--rule);border-right:1px solid var(--rule);font-size:13px;line-height:1.65;color:var(--ink);vertical-align:top;}
+.step-table td:last-child{border-right:none;}
+.step-table td.step-cell{background:var(--navy);color:#fff;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.15em;text-align:center;width:70px;}
+.step-table td.step-title{font-family:var(--font-serif);font-weight:700;color:var(--navy);width:180px;}
+.step-table td.step-title strong{color:var(--navy);}
+.step-table tr.mits-ext td.step-cell{background:var(--gold);}
+.step-table tr.mits-ext td.step-title{color:var(--gold);border-left:3px solid var(--gold);padding-left:calc(var(--sp-2) - 3px);}
+
+/* ============ 3軸マトリックス ============ */
+.axis-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--sp-2);margin:var(--sp-3) 0;}
+.axis-item{background:var(--bg-card);padding:var(--sp-3);border:1px solid var(--rule);border-top:3px solid var(--gold);}
+.axis-num{font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.axis-title{font-family:var(--font-serif);font-size:var(--text-md);font-weight:700;color:var(--navy);margin-bottom:6px;line-height:1.4;}
+.axis-body{font-size:13px;line-height:1.65;color:var(--ink-2);}
+
+/* ============ 5トリガーチェックリスト ============ */
+.trigger-list{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--gold);padding:var(--sp-3);margin:var(--sp-3) 0;}
+.trigger-list ol{list-style:none;padding:0;counter-reset:trigger;}
+.trigger-list ol li{padding:8px 0 8px 40px;position:relative;counter-increment:trigger;font-family:var(--font-serif);font-size:var(--text-md);line-height:1.6;color:var(--navy);border-bottom:1px dashed var(--rule);}
+.trigger-list ol li:last-child{border-bottom:none;}
+.trigger-list ol li::before{content:"("counter(trigger)")";position:absolute;left:0;top:8px;font-family:var(--font-mono);font-size:14px;font-weight:700;color:var(--gold);letter-spacing:0.05em;}
+
+/* ============ 3方式判別ツリー ============ */
+.decision-tree{background:var(--bg-card);border:1px solid var(--rule);padding:var(--sp-3);margin:var(--sp-3) 0;font-family:var(--font-mono);font-size:13px;line-height:1.9;color:var(--navy);white-space:pre-wrap;overflow-x:auto;}
+
+/* ============ 入力サンプル ============ */
+.sample-box{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--gold);padding:var(--sp-3);margin:var(--sp-3) 0;}
+.sample-label{font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:var(--sp-1);}
+.sample-title{font-family:var(--font-serif);font-size:var(--text-md);font-weight:700;color:var(--navy);margin-bottom:var(--sp-1);}
+.sample-body{font-size:14.4px;line-height:1.7;color:var(--ink);}
+.sample-body p + p{margin-top:8px;}
+
+/* ============ 白紙テンプレ ============ */
+.blank-row{display:flex;gap:var(--sp-2);align-items:flex-start;padding:var(--sp-2) 0;border-bottom:1px dashed var(--rule);}
+.blank-num{flex:0 0 60px;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.15em;color:var(--gold);padding-top:4px;}
+.blank-q{flex:1;}
+.blank-q-text{font-family:var(--font-serif);font-size:14.4px;font-weight:600;color:var(--navy);margin-bottom:6px;line-height:1.5;}
+.blank-line{border-bottom:1px solid var(--rule);height:24px;margin-bottom:4px;}
+
+/* ============ Footer ============ */
+.lp-footer{background:var(--navy);color:white;padding:32px 50px;text-align:center;border-top:6px double rgba(139,115,85,0.5);width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;}
+.lp-footer a{display:inline-block;margin:0 16px;font-size:12px;color:rgba(255,255,255,0.75);text-decoration:none;}
+.lp-footer .copyright{font-family:var(--font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-top:12px;}
+
+/* ============ mobile ============ */
+@media (max-width:768px){
+  .sec-wrap{padding-left:20px;padding-right:20px;}
+  .header-h1{font-size:24px;}
+  .header-sub{font-size:16px;}
+  .sec-h2{font-size:22px;}
+  .meta-strip-inner{grid-template-columns:1fr 1fr;gap:var(--sp-2);}
+  .meta-cell{padding:8px 12px;border-right:none;border-bottom:1px solid rgba(255,255,255,0.1);}
+  .axis-grid{grid-template-columns:1fr;}
+  .step-table{font-size:12px;}
+  .callout{font-size:18px;padding:var(--sp-2) var(--sp-1);}
+  .block-head{gap:var(--sp-2);}
+  .block-num{font-size:24px;}
+  .block-title{font-size:16px;}
+}
+</style>
+</head>
+<body>
+<div class="lp-root">
+
+<!-- ================================================================
+     HEADER
+     ================================================================ -->
+<div class="header-block">
+  <div class="header-inner">
+    <div class="sec-wrap">
+      <div class="course-number">Context Design Worksheet ／ 補助資料</div>
+      <h1 class="header-h1">
+        1人型起業家のための<br>
+        <strong>コンテキスト設計ワークシート</strong>
+      </h1>
+      <div class="header-sub">
+        AIエージェント経営を始める前に、自分の事業を「AIが読める形」に翻訳する。<br>
+        26問6ブロック × 8ステップ表 の併記型。
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="meta-strip">
+  <div class="meta-strip-inner">
+    <div class="meta-cell">
+      <div class="meta-label">Reference</div>
+      <div class="meta-value">全4回シラバス</div>
+    </div>
+    <div class="meta-cell">
+      <div class="meta-label">Sections</div>
+      <div class="meta-value">26問6ブロック + 8ステップ</div>
+    </div>
+    <div class="meta-cell">
+      <div class="meta-label">Instructor</div>
+      <div class="meta-value">西田 光弘</div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     はじめに（このワークシートの位置付け）
+     ================================================================ -->
+<div class="sec-wrap pt60 pb20">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Introduction</span>
+      <h2 class="sec-h2">このワークシートの位置付け</h2>
+    </div>
+
+    <div class="teach-flow">
+      <div class="teach-line">
+        <div class="teach-label">これまで西田が教えてきたこと</div>
+        <div class="teach-body">
+          経営を学ぶ → 効率が上がる → お金が残る → 時間ができる → <strong>大切なことに集中できる</strong>
+        </div>
+      </div>
+      <div class="teach-arrow">↓  AIエージェント経営が加わると</div>
+      <div class="teach-line teach-after">
+        <div class="teach-label">本ワークシートで得ること</div>
+        <div class="teach-body">
+          経営の土台 + <strong>AIに魂を入れる</strong>（1人でも組織を持つ）→ <strong>判断だけが自分の仕事になる</strong>（何を任せ・何を自分でやるかの意思決定基準を持つ）→ <strong>経営そのものが深まる</strong>（人間関係の価値・創造・関係性に時間が使える）→ <strong>大切にしたいことを大切にしたいときに大切にできる</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <del style="color:var(--ink-3);text-decoration-thickness:1.5px;">AIが「迷わず、正しく」動くために、自分の事業を先に言語化しておく。</del><br>
+      AIが「迷わず、正しく」動くために、自分の事業を<strong style="font-style:normal;">毎日言語化し続け、更新し続ける。</strong>
+      <span class="callout-source">Context Design Worksheet ／ 序文</span>
+    </div>
+
+    <p style="margin-top:var(--sp-3);color:var(--ink);line-height:1.75;">
+      AIエージェントは「脳」となる<strong>コンテキスト（自身の事業・顧客・判断基準）</strong>が不足していると、以下の6つの癖が顕在化する：
+    </p>
+
+    <ul style="margin:var(--sp-2) 0 var(--sp-3);padding-left:var(--sp-3);list-style:none;background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--gold);padding:var(--sp-3) var(--sp-4);">
+      <li style="font-family:var(--font-serif);font-size:var(--text-md);line-height:1.7;color:var(--navy);padding:4px 0;border-bottom:1px dashed var(--rule);"><strong style="color:var(--gold);font-family:var(--font-mono);font-size:11px;letter-spacing:0.15em;margin-right:8px;">01.</strong> <strong>着手癖</strong>：指示が確定する前に勝手に動き出す</li>
+      <li style="font-family:var(--font-serif);font-size:var(--text-md);line-height:1.7;color:var(--navy);padding:4px 0;border-bottom:1px dashed var(--rule);"><strong style="color:var(--gold);font-family:var(--font-mono);font-size:11px;letter-spacing:0.15em;margin-right:8px;">02.</strong> <strong>完了癖</strong>：完了していないのに完了したと報告する ／ 完了したがる ／ 仕事を終わらせたがる</li>
+      <li style="font-family:var(--font-serif);font-size:var(--text-md);line-height:1.7;color:var(--navy);padding:4px 0;border-bottom:1px dashed var(--rule);"><strong style="color:var(--gold);font-family:var(--font-mono);font-size:11px;letter-spacing:0.15em;margin-right:8px;">03.</strong> <strong>捏造癖</strong>：ない情報をあるかのように作り出す（従来「ハルシネーション」と呼ばれてきたもの）</li>
+      <li style="font-family:var(--font-serif);font-size:var(--text-md);line-height:1.7;color:var(--navy);padding:4px 0;border-bottom:1px dashed var(--rule);"><strong style="color:var(--gold);font-family:var(--font-mono);font-size:11px;letter-spacing:0.15em;margin-right:8px;">04.</strong> <strong>偽証癖</strong>：嘘の証拠・根拠を提示する（ソースを捏造して補強する）</li>
+      <li style="font-family:var(--font-serif);font-size:var(--text-md);line-height:1.7;color:var(--navy);padding:4px 0;border-bottom:1px dashed var(--rule);"><strong style="color:var(--gold);font-family:var(--font-mono);font-size:11px;letter-spacing:0.15em;margin-right:8px;">05.</strong> <strong>逆委任癖</strong>：本来AIが判断すべきことを人間に丸投げして手を止める</li>
+      <li style="font-family:var(--font-serif);font-size:var(--text-md);line-height:1.7;color:var(--navy);padding:4px 0;"><strong style="color:var(--gold);font-family:var(--font-mono);font-size:11px;letter-spacing:0.15em;margin-right:8px;">06.</strong> <strong>健忘症</strong>：前回言われたことを忘れる／同じミスを繰り返す</li>
+    </ul>
+
+    <p style="color:var(--ink);line-height:1.75;">
+      結果として、この6つの癖を人間が毎回チェック・修正する構造になる。<strong>本来「自動化のため」に入れたはずのAIで、逆に人間がボトルネックになる</strong>。特に自律実行するAgent AIでは、コンテキスト欠落は雪だるま式に大きなミスに膨らむ。<br>
+      本ワークシートは、この事故を防ぐために「AIが読める形」で自分の事業を先に整理するもの。26問6ブロックで自分の魂と顧客を言語化し、8ステップ表で業務プロセスを分解する。両者を併記することで、大企業向けの業務分解フレーム（5+3ステップ）と1人型起業家向けの人格・顧客言語化（26問）の両方から挟み込む形になる。
+    </p>
+  </div>
+</div>
+
+<!-- ================================================================
+     全体マップ（26問 × 8ステップ × Weekly Schedule の対応）
+     ================================================================ -->
+<div class="sec-wrap pt60 pb20">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Overall Map</span>
+      <h2 class="sec-h2">全体マップ（3つのフレームの対応関係）</h2>
+    </div>
+    <p class="sec-lead">
+      本ワークシートの各セクションと 本講義シラバスの Weekly Schedule I〜IV は、以下のように1対1対応する。受講者は「今週どのブロックを埋めるか」を明示的に把握できる。
+    </p>
+
+    <table class="map-table">
+      <thead>
+        <tr>
+          <th>本ワークシートのセクション</th>
+          <th>対応する8ステップ表</th>
+          <th>Weekly Schedule</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Block 0 現状の棚卸し（Q1-4）</strong></td>
+          <td>Step 1（AIエージェントに渡したい業務の特定）</td>
+          <td>Prerequisites（履修前提・環境構築）</td>
+        </tr>
+        <tr>
+          <td><strong>Block 1 自分のコアコンテキスト（Q5-10）</strong></td>
+          <td>—（人格の言語化・8ステップ表には対応なし）</td>
+          <td>Session I 魂の設計（CLAUDE.md / context/philosophy）</td>
+        </tr>
+        <tr>
+          <td><strong>Block 2 顧客コンテキスト（Q11-15）</strong></td>
+          <td>—（顧客の言語化）</td>
+          <td>Session I（context/persona_v1）</td>
+        </tr>
+        <tr>
+          <td><strong>Block 3 業務フローの設計（Q16-19）</strong></td>
+          <td>Step 2（業務ステップの分解）／ Step 3（各ステップで必要な情報）</td>
+          <td>Session II 組織化（subagent 配置設計図）</td>
+        </tr>
+        <tr>
+          <td><strong>Block 4 AI優先順位の設定（Q20-22）</strong></td>
+          <td>Step 4（構造化データ参照先）／ Step 5（非構造化データ参照先）</td>
+          <td>Session II Assignments（自組織を4部門/5フェーズに分解）</td>
+        </tr>
+        <tr>
+          <td><strong>Block 5 エージェントの境界線（Q23-26）</strong></td>
+          <td>Step 6（AI可読性チェック）／ Step 7（境界設定・3軸）／ Step 8（成果の定義）</td>
+          <td>Session III memory 5トリガー ／ Session IV 経営判断3軸</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:var(--sp-3);font-size:14.4px;color:var(--ink-2);line-height:1.7;">
+      ※ 8ステップ表のうち Step 1-5 は業務分解フレームを1人型起業家向けに翻訳したもの、Step 6-8 は西田が追加した拡張（AI 可読性 / 境界設定 / 成果定義）。Block 1-2 は8ステップ表に対応がないため、26問側だけで扱う。
+    </p>
+  </div>
+</div>
+
+<!-- ================================================================
+     Part 1: 26問6ブロック（自分の魂と顧客の言語化）
+     ================================================================ -->
+<div class="sec-wrap pt60 pb20">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Part 1 ／ 26 Questions</span>
+      <h2 class="sec-h2">26問6ブロック（自分の魂と顧客の言語化）</h2>
+    </div>
+    <p class="sec-lead">
+      西田自身が2026年3月〜7月にかけて実際に踏んだ「AIに事業を渡すための思考プロセス」を、26問6ブロックに構造化したもの。順序は、実運用でこの順に進めた方が詰まらないという実証からの逆算。7月熟達版では、Block 3-5 に で新たに確立した観点を追記している。
+    </p>
+
+    <!-- Block 0 -->
+    <div class="block-item">
+      <div class="block-head">
+        <div class="block-num">Block 0.</div>
+        <div class="block-title-wrap">
+          <div class="block-title">現状の棚卸し</div>
+          <div class="block-meta">4 Questions ／ 最初にやる</div>
+          <div class="block-mapping">→ Prerequisites（履修前提）／ Session I 冒頭</div>
+        </div>
+      </div>
+      <ul class="q-list">
+        <li class="q-item">
+          <div class="q-num">Q1.</div>
+          <div class="q-text">今、1週間でどんな作業を繰り返していますか？</div>
+          <div class="q-hint">例：メルマガ書く／顧客返信／請求書作成／SNS投稿／打ち合わせ準備 など</div>
+        </li>
+        <li class="q-item">
+          <div class="q-num">Q2.</div>
+          <div class="q-text">その作業の中で「これ毎回やるの苦痛」なものは？</div>
+        </li>
+        <li class="q-item">
+          <div class="q-num">Q3.</div>
+          <div class="q-text">今、データや情報はどこに何が入っていますか？</div>
+          <div class="q-hint">顧客情報 → どこに？／売上・経理データ → どこに？／自分のコンテンツ（過去の文章・動画）→ どこに？／メモ・アイデア → どこに？</div>
+        </li>
+        <li class="q-item">
+          <div class="q-num">Q4.</div>
+          <div class="q-text">今使っているツールを全部書いてください</div>
+          <div class="q-hint">LINE ／ UTAGE ／ Notion ／ Gmail ／ スプレッドシート ／ ChatWork ／ Zoom など</div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Block 1 -->
+    <div class="block-item">
+      <div class="block-head">
+        <div class="block-num">Block 1.</div>
+        <div class="block-title-wrap">
+          <div class="block-title">自分のコアコンテキスト</div>
+          <div class="block-meta">6 Questions ／ AIの「人格」を定義する</div>
+          <div class="block-mapping">→ Session I（CLAUDE.md ／ context/philosophy）</div>
+        </div>
+      </div>
+      <ul class="q-list">
+        <li class="q-item">
+          <div class="q-num">Q5.</div>
+          <div class="q-text">あなたは何者ですか？（肩書きではなく、変えてきたこと）</div>
+          <div class="q-hint">「私は◯◯年間、◯◯業種の◯◯に関わってきた」の形式で</div>
+        </li>
+        <li class="q-item">
+          <div class="q-num">Q6.</div>
+          <div class="q-text">あなたが解決できる問題を、一番苦しんでいる人の言葉で言うと？</div>
+          <div class="q-hint">「私のクライアントはよくこう言う：＿＿＿」</div>
+        </li>
+        <li class="q-item">
+          <div class="q-num">Q7.</div>
+          <div class="q-text">なぜあなたでないといけないのですか？</div>
+          <div class="q-hint">経験・実績・視点・生き様で答える</div>
+        </li>
+        <li class="q-item">
+          <div class="q-num">Q8.</div>
+          <div class="q-text">絶対にやらないこと・言わないことは？</div>
+          <div class="q-hint">価値観の境界線。CLAUDE.md の「禁止事項」ブロックの原型になる</div>
+        </li>
+        <li class="q-item">
+          <div class="q-num">Q9.</div>
+          <div class="q-text">あなたの言葉の癖・よく使うフレーズ・文体の特徴は？</div>
+          <div class="q-hint">AIが「あなたとして書く」ときの設定。context/mits_tonmana_guide.md の原型</div>
+        </li>
+        <li class="q-item">
+          <div class="q-num">Q10.</div>
+          <div class="q-text">今後1〜3年でどこに向かっていますか？</div>
+          <div class="q-hint">この方向性がAIの判断基準になる</div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Block 2 -->
+    <div class="block-item">
+      <div class="block-head">
+        <div class="block-num">Block 2.</div>
+        <div class="block-title-wrap">
+          <div class="block-title">顧客コンテキスト</div>
+          <div class="block-meta">5 Questions ／ AIの「判断基準」を定義する</div>
+          <div class="block-mapping">→ Session I（context/persona_v1）</div>
+        </div>
+      </div>
+      <ul class="q-list">
+        <li class="q-item">
+          <div class="q-num">Q11.</div>
+          <div class="q-text">買ってくれた人は、買う前にどんな状態でしたか？</div>
+          <div class="q-hint">感情・状況・検索していたこと</div>
+        </li>
+        <li class="q-item">
+          <div class="q-num">Q12.</div>
+          <div class="q-text">購入した決め手を、クライアントの言葉で書いてください</div>
+          <div class="q-hint">「あの時、◯◯と言ってくれたから決めた」という実例</div>
+        </li>
+        <li class="q-item">
+          <div class="q-num">Q13.</div>
+          <div class="q-text">リピート・紹介してくれる人の共通点は何ですか？</div>
+        </li>
+        <li class="q-item">
+          <div class="q-num">Q14.</div>
+          <div class="q-text">うまくいかなかった・合わなかったクライアントの特徴は？</div>
+          <div class="q-hint">断る基準の言語化。CLAUDE.md「顧客ではない人」の定義になる</div>
+        </li>
+        <li class="q-item">
+          <div class="q-num">Q15.</div>
+          <div class="q-text">顧客は今、あなたと何のチャネルでつながっていますか？</div>
+          <div class="q-hint">LINE ／ メルマガ ／ SNS ／ 直接 ／ 紹介 → チャネルごとに「温度感」の違いも書く</div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Block 3（7月熟達で強化） -->
+    <div class="block-item">
+      <div class="block-head">
+        <div class="block-num">Block 3.</div>
+        <div class="block-title-wrap">
+          <div class="block-title">業務フローの設計</div>
+          <div class="block-meta">4 Questions ／ AIが動く「場面」を特定する</div>
+          <div class="block-mapping">→ Session II 組織化（subagent 配置設計図）</div>
+        </div>
+      </div>
+      <ul class="q-list">
+        <li class="q-item">
+          <div class="q-num">Q16.</div>
+          <div class="q-text">新しい見込み客が来てから、成約するまでの流れを書いてください</div>
+          <div class="q-hint">
+            <strong>業務プロセス分解の2型で書き分ける</strong>：<br>
+            ・BtoB 型（コンサル・研修・法人向けサービス）：<strong>相談 → 見積 → 受注 → 納品 → 請求</strong> の5フェーズ<br>
+            ・BtoC 型（コンテンツ・情報販売・研究）：<strong>取得 → 分析 → 解釈 → 戦略立案</strong> の4フェーズ<br>
+            自身の業種に応じてどちらかを選ぶ（両方を持つ場合は両方書く）
+          </div>
+        </li>
+        <li class="q-item">
+          <div class="q-num">Q17.</div>
+          <div class="q-text">購入後、顧客との関係はどう続きますか？</div>
+          <div class="q-hint">フォロー ／ 次の提案 ／ コミュニティ参加 など</div>
+        </li>
+        <li class="q-item">
+          <div class="q-num">Q18.</div>
+          <div class="q-text">毎月必ず発生する作業は何ですか？</div>
+          <div class="q-hint">請求 ／ レポート ／ 配信 ／ 更新 など。<strong>skill 化判別4問</strong>（3回以上／トリガー固定／5ステップ以上／全条件YES）に通す候補になる</div>
+        </li>
+        <li class="q-item">
+          <div class="q-num">Q19.</div>
+          <div class="q-text">突発的に発生する対応で一番時間を取られるのは？</div>
+          <div class="q-hint">この項目は自動化ではなく「AIの助言モード」で対応する候補</div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Block 4（7月熟達で強化） -->
+    <div class="block-item">
+      <div class="block-head">
+        <div class="block-num">Block 4.</div>
+        <div class="block-title-wrap">
+          <div class="block-title">AI優先順位の設定</div>
+          <div class="block-meta">3 Questions ／ 最初に自動化する「的」を絞る</div>
+          <div class="block-mapping">→ Session II Assignments（4部門/5フェーズに分解）</div>
+        </div>
+      </div>
+      <ul class="q-list">
+        <li class="q-item">
+          <div class="q-num">Q20.</div>
+          <div class="q-text">上記の繰り返し作業のうち、AIに先にやらせたいもの Top 3 は？</div>
+          <div class="q-hint">
+            <strong>組織構造の AI 移植</strong>：4部門（経営・会計・営業・サポート）に分けて、どの部門にどの subagent を配置するかも並記する。
+          </div>
+        </li>
+        <li class="q-item">
+          <div class="q-num">Q21.</div>
+          <div class="q-text">逆に「これだけは自分でないとダメ」というものは？（理由も含めて）</div>
+          <div class="q-hint">これが Block 5 の「AI委任禁止」領域の原型になる</div>
+        </li>
+        <li class="q-item">
+          <div class="q-num">Q22.</div>
+          <div class="q-text">最初にAIが動いて「効果があった」と感じるには、何が起きればOKですか？</div>
+          <div class="q-hint">成功の定義。8ステップ表の Step 8（成果の定義）と接続</div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Block 5（7月熟達で強化） -->
+    <div class="block-item">
+      <div class="block-head">
+        <div class="block-num">Block 5.</div>
+        <div class="block-title-wrap">
+          <div class="block-title">エージェントの境界線</div>
+          <div class="block-meta">4 Questions ／ AIが「暴走しない」ルールを引く</div>
+          <div class="block-mapping">→ Session III（memory 5トリガー） ／ Session IV（経営判断3軸）</div>
+        </div>
+      </div>
+      <ul class="q-list">
+        <li class="q-item">
+          <div class="q-num">Q23.</div>
+          <div class="q-text">AIが自動で動いていい範囲はどこまでですか？</div>
+          <div class="q-hint">
+            <strong>経営判断の3軸マトリックス</strong>で判定する：<br>
+            (1) 安全性軸（誤りが起きた場合の被害の大きさ）<br>
+            (2) カスタマイズ度軸（自身の業種・顧客文脈への適合度）<br>
+            (3) 人間関係価値軸（対面／人間関与の代替不可能性）<br>
+            例：送信までOK？ ／ 下書きまで？ ／ 金額に関わることは自動化OK？ ／ 顧客の個人情報をAIに渡すことはOK？
+          </div>
+        </li>
+        <li class="q-item">
+          <div class="q-num">Q24.</div>
+          <div class="q-text">必ず人間の目を通すべきタイミングは？</div>
+          <div class="q-hint">例：新規顧客への初回連絡 ／ クレーム対応 ／ 金額交渉 ／ 契約書</div>
+        </li>
+        <li class="q-item">
+          <div class="q-num">Q25.</div>
+          <div class="q-text">AIが絶対に言ってはいけない言葉・してはいけない判断は？</div>
+          <div class="q-hint">Q8（禁止事項）と連動。CLAUDE.md の「禁止事項」ブロックに反映</div>
+        </li>
+        <li class="q-item">
+          <div class="q-num">Q26.</div>
+          <div class="q-text">AIが「わからない」と感じたら、どうさせますか？</div>
+          <div class="q-hint">
+            <strong>memory 都度追記の5トリガー</strong>と連動する（詳細は本ワークシート後半参照）：<br>
+            保留して報告 ／ 自分で判断 ／ テンプレ返答 ／ 「わからない」を memory に記録して次回参照
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <p class="sec-lead" style="margin-top:var(--sp-4);">
+      26問すべての回答が揃うと、第1回の CLAUDE.md v1（5ブロック）と context/persona_v1 + philosophy_v1 の原文がほぼ完成する。第2回以降の subagent 設計もこの回答が土台になる。
+    </p>
+  </div>
+</div>
+
+<!-- ================================================================
+     Part 2: 8ステップ表（業務分解フレーム）
+     ================================================================ -->
+<div class="sec-wrap pt60 pb20">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Part 2 ／ 8 Steps Framework</span>
+      <h2 class="sec-h2">8ステップ表（業務分解フレーム）</h2>
+    </div>
+    <p class="sec-lead">
+      大企業向けの5ステップ業務分解フレーム（AI エージェント業界で広く使われる型）を1人型起業家向けに翻訳し、西田が実運用で追加した Step 6-8（AI 可読性 ／ 境界設定 ／ 成果定義）と統合した8ステップ表。26問6ブロックの Block 3-5 で得た内容を、この表に転記して業務ごとに整理する。
+    </p>
+
+    <div class="step-table-wrap">
+      <table class="step-table">
+        <thead>
+          <tr>
+            <th style="width:70px;">段階</th>
+            <th style="width:180px;">段階項目</th>
+            <th>説明</th>
+            <th>1人型起業家向けの実施内容</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="step-cell">Step<br>1</td>
+            <td class="step-title">AIエージェントに<br>渡したい業務の特定</td>
+            <td>人が介在していた業務を、AIが自律的かつ一貫して遂行するプロセスを意識して業務を切り出す。</td>
+            <td>Block 3 Q16（成約までの流れ）／ Q18（毎月必ず発生する作業）から候補を選ぶ。<strong>まずは業務プロセスが明確でビジネス効果が高い業務を切り出す</strong>。</td>
+          </tr>
+          <tr>
+            <td class="step-cell">Step<br>2</td>
+            <td class="step-title">業務ステップの分解</td>
+            <td>人またはシステムが連携して行っていた業務を分解し、AIエージェントが実行するステップを明確にする。</td>
+            <td>BtoB 型は <strong>「相談 → 見積 → 受注 → 納品 → 請求」の5フェーズ</strong>で分解。BtoC 型は <strong>「取得 → 分析 → 解釈 → 戦略立案」の4フェーズ</strong>。</td>
+          </tr>
+          <tr>
+            <td class="step-cell">Step<br>3</td>
+            <td class="step-title">各業務ステップで<br>必要な情報の特定</td>
+            <td>分解された各業務ステップにおける必須アクションを棚卸して、業務遂行に必要な確認事項や情報を列挙する。</td>
+            <td>各ステップで参照する項目（顧客名 ／ 過去の履歴 ／ 契約情報 ／ 商品仕様 など）を列挙。26問 Block 2（顧客コンテキスト）の回答と接続。</td>
+          </tr>
+          <tr>
+            <td class="step-cell">Step<br>4</td>
+            <td class="step-title">データ参照先の特定 ①<br>構造化データ</td>
+            <td>各業務ステップを実行するために必要な構造化データ（DBに整理された情報）の参照先を特定する。</td>
+            <td>Notion DB ／ スプレッドシート ／ CRM ／ 会計ソフト ／ Google Calendar など。<strong>API / MCP / Computer Use の3方式判別ツリー</strong>で接続方式も決める（後述）。</td>
+          </tr>
+          <tr>
+            <td class="step-cell">Step<br>5</td>
+            <td class="step-title">データ参照先の特定 ②<br>非構造化データ</td>
+            <td>「人が参照していた資料」など、各業務ステップを実行するために必要な非構造化データの参照先を特定する。</td>
+            <td>PDF マニュアル ／ 過去のメール履歴 ／ 動画・音声記録 ／ Slack / Discord のログ など。Google Drive の永続配置・Notion 記録が主。</td>
+          </tr>
+          <tr class="mits-ext">
+            <td class="step-cell">Step<br>6</td>
+            <td class="step-title">AI可読性チェック<br>（西田拡張）</td>
+            <td>Step 4-5 で特定した参照先が「AIから読める形」か検証する。データがAI可読でなければ、いくら参照先を決めてもAIは動かない。</td>
+            <td>関係性・背景・判断根拠が付与されているか？ ／ ファイル名が意味を持つか？ ／ 埋込画像でなく検索可能なテキストか？ の3チェック。</td>
+          </tr>
+          <tr class="mits-ext">
+            <td class="step-cell">Step<br>7</td>
+            <td class="step-title">エージェント境界の設定<br>（西田拡張）</td>
+            <td>AIがどこまで自律で動いてよいかの境界を、経営判断3軸で定義する。</td>
+            <td>
+              <strong>3軸マトリックス</strong>で判定：<br>
+              ・安全性軸（誤りの被害の大きさ）<br>
+              ・カスタマイズ度軸（業種・顧客文脈への適合度）<br>
+              ・人間関係価値軸（対面／人間関与の代替不可能性）<br>
+              各業務ステップに ✅ 自律OK ／ ⚠️ 人間承認必要 ／ 🚫 絶対禁止 の3分類を割り当てる。
+            </td>
+          </tr>
+          <tr class="mits-ext">
+            <td class="step-cell">Step<br>8</td>
+            <td class="step-title">成果の定義<br>（西田拡張）</td>
+            <td>AIが「完了」と判断する条件・品質KPI・失敗時のフォールバック・改善サイクルを定義する。</td>
+            <td>
+              完了条件（例：メール送信＆Notion記録の両方完了で完了）／ 品質KPI（誤字率 / 応答時間）／ フォールバック（失敗時は西田に Slack DM）／ 改善サイクル（memory 5トリガー記録）を明示。
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- API/MCP/Computer Use 3方式判別ツリー -->
+    <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin:var(--sp-4) 0 var(--sp-2);">Step 4 補助：API / MCP / Computer Use の3方式判別ツリー</h3>
+    <div class="decision-tree">対象のデータ参照先 → 接続方式の判定
+├─ (1) 公開 API が用意されているか？
+│    YES → <strong>API 方式</strong>（速度・保守性の面で最優先）
+│      例：MoneyForward ／ Notion ／ Google 系
+│    NO ↓
+│
+├─ (2) 公式 MCP サーバー ／ Claude 対応の MCP がある？
+│    YES → <strong>MCP 方式</strong>（Claude Code から直接接続可能）
+│      例：Notion MCP ／ Slack MCP ／ Google Drive MCP
+│    NO ↓
+│
+└─ (3) Web / Desktop アプリを画面操作で扱う
+     → <strong>Chrome MCP / Computer Use 方式</strong>
+     例：業種特化型の管理システム ／ Web ベースの業務アプリ ／ 独自のクラウドツール
+     ⚠️ 速度・保守性は最も低い（画面変更に脆弱）
+     ✅ ただし他方式が使えない場合の最後の砦
+</div>
+
+    <!-- 経営判断3軸マトリックス -->
+    <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin:var(--sp-4) 0 var(--sp-2);">Step 7 補助：経営判断の3軸マトリックス</h3>
+    <div class="axis-grid">
+      <div class="axis-item">
+        <div class="axis-num">Axis 01</div>
+        <div class="axis-title">安全性軸</div>
+        <div class="axis-body">誤りが起きた場合の被害の大きさ。金銭・信用・法的リスクの大小で判定する。高リスク領域（契約書・請求書送信・法的判断）はAIに任せない。</div>
+      </div>
+      <div class="axis-item">
+        <div class="axis-num">Axis 02</div>
+        <div class="axis-title">カスタマイズ度軸</div>
+        <div class="axis-body">自身の業種・顧客文脈への適合度。標準的な業務（メール返信のテンプレ応答）はAI委任度高。個別カスタマイズ性が強いもの（コンサル判断）は人間関与が必要。</div>
+      </div>
+      <div class="axis-item">
+        <div class="axis-num">Axis 03</div>
+        <div class="axis-title">人間関係価値軸</div>
+        <div class="axis-body">対面／人間関与の代替不可能性。人間が対応することそれ自体に価値がある業務（初回相談・関係修復・励まし）はAI委任不可。</div>
+      </div>
+    </div>
+
+    <!-- memory 5トリガー -->
+    <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin:var(--sp-4) 0 var(--sp-2);">Step 8 補助：memory 都度追記の5トリガー</h3>
+    <div class="trigger-list">
+      <ol>
+        <li>叱責を受けた瞬間（顧客・自分・他者からの指摘）</li>
+        <li>失敗した瞬間（AI or 自分の判断ミス）</li>
+        <li>新規原則を確立した瞬間（「今後はこうする」と決めた瞬間）</li>
+        <li>CLAUDE.md 違反を検知した瞬間（AIが憲法に反する行動を取った）</li>
+        <li>改善アイデアを発見した瞬間（「こうすればもっと良い」と気付いた）</li>
+      </ol>
+    </div>
+    <p style="font-size:14.4px;color:var(--ink-2);line-height:1.7;">
+      「週N回」ではなく<strong>「都度」が原則</strong>。上記5トリガーの瞬間に即 memory に追記する。memory テンプレート（日付 ／ トリガー種別 ／ 学習内容 ／ 次の対応 ／ タグ）を各人が Notion または Obsidian に整備する。
+    </p>
+  </div>
+</div>
+
+<!-- ================================================================
+     Part 3: 入力サンプル（1人型起業家・コンサル業）
+     ================================================================ -->
+<div class="sec-wrap pt60 pb20">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Part 3 ／ Sample Input</span>
+      <h2 class="sec-h2">入力サンプル（1人型起業家・コンサル業）</h2>
+    </div>
+    <p class="sec-lead">
+      受講者に近い業種例として「1人型経営コンサルタント（グループコンサル運営中）」を題材にした記入例。実際にはこのように各項目を埋めていく。
+    </p>
+
+    <div class="sample-box">
+      <div class="sample-label">Sample 01 ／ Block 3 Q16（業務プロセス分解）</div>
+      <div class="sample-title">BtoB 5フェーズ：新規見込み客→成約まで</div>
+      <div class="sample-body">
+        <p><strong>相談</strong>：無料体験セミナー LP からの申込 → Zoom 無料相談60分 → 課題ヒアリング → 提案骨子</p>
+        <p><strong>見積</strong>：提案書作成（月次コンサル 20万〜 or グループコンサル 11万〜）→ Notion で見積書生成 → メール送信</p>
+        <p><strong>受注</strong>：契約書送付 → UTAGE 決済導線 → 決済完了通知</p>
+        <p><strong>納品</strong>：月次1on1 60分 × 2回 + Slack DM 無制限 + 月次レポート</p>
+        <p><strong>請求</strong>：月末に MoneyForward で請求書自動生成 → メール送信 → 入金確認 → 領収書送付</p>
+      </div>
+    </div>
+
+    <div class="sample-box">
+      <div class="sample-label">Sample 02 ／ Step 7（境界設定・3軸マトリックス）</div>
+      <div class="sample-title">各業務ステップに 3分類（✅／⚠️／🚫）を割り当てる</div>
+      <div class="sample-body">
+        <p><strong>✅ 自律OK</strong>：見積書自動生成 ／ 月末請求書自動生成 ／ Slack DM への一次応答（テンプレ範囲内）／ Notion 記録の自動整理</p>
+        <p><strong>⚠️ 人間承認必要</strong>：提案書の骨子生成（AI下書き → 自分で仕上げ）／ 新規顧客への初回メール ／ 月次レポートの結論部分</p>
+        <p><strong>🚫 絶対禁止</strong>：契約書の締結判断 ／ 金額変更・値引き交渉 ／ クレーム対応の初期応答 ／ 別の顧客の情報を紛れ込ませない</p>
+      </div>
+    </div>
+
+    <div class="sample-box">
+      <div class="sample-label">Sample 03 ／ Step 8（成果の定義）</div>
+      <div class="sample-title">請求書自動生成 subagent の成果定義</div>
+      <div class="sample-body">
+        <p><strong>完了条件</strong>：MoneyForward で請求書生成 + 顧客メールへ送信 + Notion「請求管理」DB へ記録 の3点すべて完了</p>
+        <p><strong>品質KPI</strong>：誤字率 0 ／ 金額誤り 0 ／ 送信タイミング 月末最終営業日 17:00 まで</p>
+        <p><strong>フォールバック</strong>：MoneyForward API エラー時 → 自分の Slack DM に「請求書生成失敗・原因：…」を通知 ／ 手動作業に切り替え</p>
+        <p><strong>改善サイクル</strong>：月次で memory「請求 skill 運用ログ」を確認 → 5トリガーに該当するイベントがあれば記録 → 翌月に skill 改修</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     Part 4: 白紙テンプレ（26問記入用）
+     ================================================================ -->
+<div class="sec-wrap pt60 pb20">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Part 4 ／ Blank Template</span>
+      <h2 class="sec-h2">白紙テンプレート（26問6ブロック 記入用）</h2>
+    </div>
+    <p class="sec-lead">
+      本ワークシートを印刷 or PDF 化してご記入ください。回答は 第1回で CLAUDE.md / context ファイルに転写します。
+    </p>
+
+    <div class="block-item">
+      <div class="block-head">
+        <div class="block-num">Block 0.</div>
+        <div class="block-title-wrap">
+          <div class="block-title">現状の棚卸し</div>
+        </div>
+      </div>
+      <div class="blank-row"><div class="blank-num">Q1.</div><div class="blank-q"><div class="blank-q-text">今、1週間でどんな作業を繰り返していますか？</div><div class="blank-line"></div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+      <div class="blank-row"><div class="blank-num">Q2.</div><div class="blank-q"><div class="blank-q-text">その作業の中で「これ毎回やるの苦痛」なものは？</div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+      <div class="blank-row"><div class="blank-num">Q3.</div><div class="blank-q"><div class="blank-q-text">今、データや情報はどこに何が入っていますか？</div><div class="blank-line"></div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+      <div class="blank-row"><div class="blank-num">Q4.</div><div class="blank-q"><div class="blank-q-text">今使っているツールを全部書いてください</div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+    </div>
+
+    <div class="block-item">
+      <div class="block-head">
+        <div class="block-num">Block 1.</div>
+        <div class="block-title-wrap">
+          <div class="block-title">自分のコアコンテキスト</div>
+        </div>
+      </div>
+      <div class="blank-row"><div class="blank-num">Q5.</div><div class="blank-q"><div class="blank-q-text">あなたは何者ですか？</div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+      <div class="blank-row"><div class="blank-num">Q6.</div><div class="blank-q"><div class="blank-q-text">解決できる問題を、一番苦しんでいる人の言葉で言うと？</div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+      <div class="blank-row"><div class="blank-num">Q7.</div><div class="blank-q"><div class="blank-q-text">なぜあなたでないといけないのですか？</div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+      <div class="blank-row"><div class="blank-num">Q8.</div><div class="blank-q"><div class="blank-q-text">絶対にやらないこと・言わないことは？</div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+      <div class="blank-row"><div class="blank-num">Q9.</div><div class="blank-q"><div class="blank-q-text">あなたの言葉の癖・よく使うフレーズ・文体の特徴は？</div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+      <div class="blank-row"><div class="blank-num">Q10.</div><div class="blank-q"><div class="blank-q-text">今後1〜3年でどこに向かっていますか？</div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+    </div>
+
+    <div class="block-item">
+      <div class="block-head">
+        <div class="block-num">Block 2.</div>
+        <div class="block-title-wrap">
+          <div class="block-title">顧客コンテキスト</div>
+        </div>
+      </div>
+      <div class="blank-row"><div class="blank-num">Q11.</div><div class="blank-q"><div class="blank-q-text">買ってくれた人は、買う前にどんな状態でしたか？</div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+      <div class="blank-row"><div class="blank-num">Q12.</div><div class="blank-q"><div class="blank-q-text">購入した決め手を、クライアントの言葉で書いてください</div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+      <div class="blank-row"><div class="blank-num">Q13.</div><div class="blank-q"><div class="blank-q-text">リピート・紹介してくれる人の共通点は何ですか？</div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+      <div class="blank-row"><div class="blank-num">Q14.</div><div class="blank-q"><div class="blank-q-text">うまくいかなかったクライアントの特徴は？</div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+      <div class="blank-row"><div class="blank-num">Q15.</div><div class="blank-q"><div class="blank-q-text">顧客は今、何のチャネルでつながっていますか？</div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+    </div>
+
+    <div class="block-item">
+      <div class="block-head">
+        <div class="block-num">Block 3.</div>
+        <div class="block-title-wrap">
+          <div class="block-title">業務フローの設計</div>
+        </div>
+      </div>
+      <div class="blank-row"><div class="blank-num">Q16.</div><div class="blank-q"><div class="blank-q-text">新規見込み客→成約までの流れ（BtoB 5フェーズ or BtoC 4フェーズ）</div><div class="blank-line"></div><div class="blank-line"></div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+      <div class="blank-row"><div class="blank-num">Q17.</div><div class="blank-q"><div class="blank-q-text">購入後、顧客との関係はどう続きますか？</div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+      <div class="blank-row"><div class="blank-num">Q18.</div><div class="blank-q"><div class="blank-q-text">毎月必ず発生する作業は何ですか？</div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+      <div class="blank-row"><div class="blank-num">Q19.</div><div class="blank-q"><div class="blank-q-text">突発的に時間を取られる対応は？</div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+    </div>
+
+    <div class="block-item">
+      <div class="block-head">
+        <div class="block-num">Block 4.</div>
+        <div class="block-title-wrap">
+          <div class="block-title">AI優先順位の設定</div>
+        </div>
+      </div>
+      <div class="blank-row"><div class="blank-num">Q20.</div><div class="blank-q"><div class="blank-q-text">AIに先にやらせたい作業 Top 3（4部門分けも並記）</div><div class="blank-line"></div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+      <div class="blank-row"><div class="blank-num">Q21.</div><div class="blank-q"><div class="blank-q-text">「これだけは自分でないとダメ」なもの（理由も）</div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+      <div class="blank-row"><div class="blank-num">Q22.</div><div class="blank-q"><div class="blank-q-text">「効果があった」と感じる成功の定義は？</div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+    </div>
+
+    <div class="block-item">
+      <div class="block-head">
+        <div class="block-num">Block 5.</div>
+        <div class="block-title-wrap">
+          <div class="block-title">エージェントの境界線</div>
+        </div>
+      </div>
+      <div class="blank-row"><div class="blank-num">Q23.</div><div class="blank-q"><div class="blank-q-text">AIが自動で動いていい範囲は？（3軸マトリックスで判定）</div><div class="blank-line"></div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+      <div class="blank-row"><div class="blank-num">Q24.</div><div class="blank-q"><div class="blank-q-text">必ず人間の目を通すべきタイミングは？</div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+      <div class="blank-row"><div class="blank-num">Q25.</div><div class="blank-q"><div class="blank-q-text">AIが絶対に言ってはいけない言葉・してはいけない判断は？</div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+      <div class="blank-row"><div class="blank-num">Q26.</div><div class="blank-q"><div class="blank-q-text">AIが「わからない」時の対処（5トリガーと連動）</div><div class="blank-line"></div><div class="blank-line"></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     Part 5: 白紙テンプレ（8ステップ表 記入用）
+     ================================================================ -->
+<div class="sec-wrap pt60 pb60">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Part 5 ／ Blank Template</span>
+      <h2 class="sec-h2">白紙テンプレート（8ステップ表 記入用）</h2>
+    </div>
+    <p class="sec-lead">
+      Block 3-5 の回答が揃った後、業務ごとに1枚この表を埋める。複数業務がある場合は業務数分コピーして使う。
+    </p>
+
+    <div class="step-table-wrap">
+      <table class="step-table">
+        <thead>
+          <tr>
+            <th style="width:70px;">段階</th>
+            <th style="width:180px;">段階項目</th>
+            <th>記入欄</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="step-cell">Step<br>1</td>
+            <td class="step-title">AIエージェントに<br>渡したい業務の特定</td>
+            <td style="height:80px;">&nbsp;</td>
+          </tr>
+          <tr>
+            <td class="step-cell">Step<br>2</td>
+            <td class="step-title">業務ステップの分解</td>
+            <td style="height:100px;">&nbsp;</td>
+          </tr>
+          <tr>
+            <td class="step-cell">Step<br>3</td>
+            <td class="step-title">各業務ステップで<br>必要な情報の特定</td>
+            <td style="height:100px;">&nbsp;</td>
+          </tr>
+          <tr>
+            <td class="step-cell">Step<br>4</td>
+            <td class="step-title">データ参照先の特定 ①<br>構造化データ</td>
+            <td style="height:80px;">&nbsp;</td>
+          </tr>
+          <tr>
+            <td class="step-cell">Step<br>5</td>
+            <td class="step-title">データ参照先の特定 ②<br>非構造化データ</td>
+            <td style="height:80px;">&nbsp;</td>
+          </tr>
+          <tr class="mits-ext">
+            <td class="step-cell">Step<br>6</td>
+            <td class="step-title">AI可読性チェック</td>
+            <td style="height:80px;">&nbsp;</td>
+          </tr>
+          <tr class="mits-ext">
+            <td class="step-cell">Step<br>7</td>
+            <td class="step-title">エージェント境界の設定<br>（3軸マトリックス）</td>
+            <td style="height:100px;">&nbsp;</td>
+          </tr>
+          <tr class="mits-ext">
+            <td class="step-cell">Step<br>8</td>
+            <td class="step-title">成果の定義</td>
+            <td style="height:100px;">&nbsp;</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr style="border:0;border-top:1px solid var(--rule);margin:var(--sp-6) 0;">
+
+    <div class="callout">
+      大切なことは、大切にしたいことを大切にしたいときに大切にできること。
+      <span class="callout-source">Context Design Worksheet ／ Closing</span>
+    </div>
+
+    <p style="margin-top:var(--sp-3);font-size:14.4px;color:var(--ink-2);line-height:1.7;text-align:center;">
+      本ワークシートは 全4回のシラバスと1対1対応しており、記入内容はそのまま CLAUDE.md / context / subagent 設計に転写できます。<br>
+      詳細は シラバス本編をご参照ください。
+    </p>
+  </div>
+</div>
+
+<!-- ================================================================
+     Footer
+     ================================================================ -->
+<div class="lp-footer">
+  <div>
+    <a href="https://change.7years.life/p/HP7g0Lhg2SyY">シラバス本編</a>
+    <a href="https://the-innovation.skool.com/">The Innovation Community</a>
+  </div>
+  <div class="copyright">
+    © 西田光弘個人事務所 ／ Context Design Worksheet ／ 補助資料
+  </div>
+</div>
+
+</div><!-- /.lp-root -->
+</body>
+</html>
