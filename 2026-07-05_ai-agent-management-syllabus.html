@@ -41,8 +41,8 @@ body{font-family:'Noto Sans JP',sans-serif;font-size:var(--text-md);line-height:
 .header-h1 strong{color:#fff;font-weight:700;}
 .header-sub{font-family:var(--font-serif);font-style:italic;font-size:var(--text-header-sub);line-height:1.7;color:rgba(255,255,255,0.72);border-top:1px solid rgba(255,255,255,0.25);border-bottom:1px solid rgba(255,255,255,0.25);padding:var(--sp-2) 0;margin-top:var(--sp-4);max-width:720px;}
 
-.meta-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:var(--navy-2);border-top:1px solid rgba(255,255,255,0.1);width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;padding:var(--sp-3) 50px;}
-.meta-strip-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+.meta-strip{display:block;background:var(--navy-2);border-top:1px solid rgba(255,255,255,0.1);width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;padding:var(--sp-3) 50px;}
+.meta-strip-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;align-items:center;}
 .meta-cell{padding:8px 16px;border-right:1px solid rgba(255,255,255,0.12);min-width:0;}
 .meta-cell:last-child{border-right:none;}
 .meta-cell:first-child{padding-left:0;}
@@ -76,6 +76,25 @@ body{font-family:'Noto Sans JP',sans-serif;font-size:var(--text-md);line-height:
 .teach-body{font-family:var(--font-serif);font-size:var(--text-md);line-height:1.85;color:var(--navy);letter-spacing:0.02em;}
 .teach-body strong{color:var(--navy);font-weight:700;}
 .teach-arrow{font-family:var(--font-serif);text-align:center;color:var(--gold);font-size:14px;letter-spacing:0.15em;font-style:italic;padding:6px 0;}
+
+/* ============ Working Discipline（実践姿勢：6つのAI癖 + Mits 5段階） ============ */
+.discipline-wrap{margin:var(--sp-3) 0;}
+.discipline-h3{font-family:var(--font-serif);font-size:var(--text-lg);font-weight:700;color:var(--navy);border-bottom:1px solid var(--gold);padding-bottom:6px;margin:var(--sp-4) 0 var(--sp-2);}
+.ai-habit-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-2);margin:var(--sp-2) 0;}
+.ai-habit-item{background:var(--bg-card);padding:var(--sp-3);border:1px solid var(--rule);border-top:3px solid #a04d3a;}
+.ai-habit-num{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#a04d3a;margin-bottom:6px;}
+.ai-habit-title{font-family:var(--font-serif);font-size:var(--text-md);font-weight:700;color:var(--navy);margin-bottom:4px;line-height:1.4;}
+.ai-habit-body{font-size:13.5px;line-height:1.7;color:var(--ink-2);}
+.bottleneck-line{background:linear-gradient(90deg,rgba(160,77,58,0.08),transparent);border-left:3px solid #a04d3a;padding:var(--sp-2) var(--sp-3);margin:var(--sp-2) 0 var(--sp-3);font-family:var(--font-serif);font-size:var(--text-md);color:var(--navy);line-height:1.75;}
+.bottleneck-line strong{color:#a04d3a;}
+.mits-approach{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid #3d6b48;padding:var(--sp-3) var(--sp-4);margin:var(--sp-2) 0;}
+.mits-approach-lead{font-size:var(--text-md);line-height:var(--lh-md);color:var(--ink);margin-bottom:var(--sp-2);}
+.mits-approach-lead strong{color:#3d6b48;}
+.mits-step-flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:var(--sp-2) 0;font-family:var(--font-mono);font-size:12px;letter-spacing:0.05em;}
+.mits-step{background:#f7f5ee;border:1px solid #3d6b48;color:var(--navy);padding:8px 14px;font-weight:700;line-height:1.4;}
+.mits-step.mits-step-ng{background:#fce8e2;border-color:#a04d3a;color:#a04d3a;text-decoration:line-through;}
+.mits-step-arrow{color:#3d6b48;font-weight:700;font-family:var(--font-serif);}
+.mits-approach-note{font-size:13.5px;line-height:1.7;color:var(--ink-2);margin-top:var(--sp-2);border-top:1px dashed var(--rule);padding-top:var(--sp-2);}
 
 /* ============ Learning Objectives（narrow-grid） ============ */
 .obj-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-2);margin:var(--sp-2) 0;}
@@ -208,7 +227,7 @@ body{font-family:'Noto Sans JP',sans-serif;font-size:var(--text-md);line-height:
   .header-sub{font-size:16px;}
   .sec-h2{font-size:22px;}
   .meta-strip{padding:var(--sp-2) 20px;}
-  .meta-strip-inner{grid-template-columns:1fr 1fr;gap:var(--sp-2);}
+  .meta-strip-inner{grid-template-columns:1fr;gap:var(--sp-1);}
   .meta-cell{padding:10px 12px;border-right:none;border-bottom:1px solid rgba(255,255,255,0.1);}
   .obj-grid{grid-template-columns:1fr;}
   .eval-grid{grid-template-columns:1fr;}
@@ -294,7 +313,7 @@ body{font-family:'Noto Sans JP',sans-serif;font-size:var(--text-md);line-height:
           経営を学ぶ → 効率が上がる → お金が残る → 時間ができる → <strong>大切なことに集中できる</strong>
         </div>
       </div>
-      <div class="teach-arrow">↓  AIエージェント経営が加わると（2026年7月熟達版）</div>
+      <div class="teach-arrow">↓  AIエージェント経営が加わると</div>
       <div class="teach-line teach-after">
         <div class="teach-label">本講義で得ること</div>
         <div class="teach-body">
@@ -306,6 +325,86 @@ body{font-family:'Noto Sans JP',sans-serif;font-size:var(--text-md);line-height:
     <div class="callout">
       「経営をする。事業をやる。AIエージェントに任せる」
       <span class="callout-source">Course Theme ／ 講義主題</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     Working Discipline（実践姿勢：AIの癖と、それに向き合う人間の姿勢）
+     ================================================================ -->
+<div class="sec-wrap pt60 pb20">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Working Discipline</span>
+      <h2 class="sec-h2">実践姿勢 ── AIの癖と、それに向き合う人間の姿勢</h2>
+    </div>
+    <p class="sec-lead">
+      本講義は技術習得と同時に、AIエージェント経営を成立させる<strong>2つの姿勢</strong>を通奏低音として置く。片側は「AI側に現れる癖」を理解すること、もう片側は「その癖と、事業のあらゆる問題に対して、人間側がどう向き合うか」の姿勢を持つこと。以降の各回で扱う CLAUDE.md / memory / hook / doublecheck は、すべてこの2つの姿勢を実装するための道具である。
+    </p>
+
+    <div class="discipline-wrap">
+
+      <h3 class="discipline-h3">6つのAI癖 ── なぜ「自動化のため」に入れたはずのAIで、逆に人間がボトルネックになるのか</h3>
+      <div class="ai-habit-grid">
+        <div class="ai-habit-item">
+          <div class="ai-habit-num">01</div>
+          <div class="ai-habit-title">着手癖</div>
+          <div class="ai-habit-body">指示が確定する前に勝手に動き出す。方向が定まる前に手を動かす。</div>
+        </div>
+        <div class="ai-habit-item">
+          <div class="ai-habit-num">02</div>
+          <div class="ai-habit-title">完了癖</div>
+          <div class="ai-habit-body">完了していないのに完了したと報告する／完了したがる／仕事を終わらせたがる。</div>
+        </div>
+        <div class="ai-habit-item">
+          <div class="ai-habit-num">03</div>
+          <div class="ai-habit-title">捏造癖</div>
+          <div class="ai-habit-body">ない情報をあるかのように作り出す。従来「ハルシネーション」と呼ばれてきたもの。</div>
+        </div>
+        <div class="ai-habit-item">
+          <div class="ai-habit-num">04</div>
+          <div class="ai-habit-title">偽証癖</div>
+          <div class="ai-habit-body">嘘の証拠・根拠を提示する。ソース／URL／数値を捏造して自分の応答を補強する。</div>
+        </div>
+        <div class="ai-habit-item">
+          <div class="ai-habit-num">05</div>
+          <div class="ai-habit-title">逆委任癖</div>
+          <div class="ai-habit-body">本来AIが判断すべきことを人間に丸投げして手を止める。「どうしますか？」で人間を止める。</div>
+        </div>
+        <div class="ai-habit-item">
+          <div class="ai-habit-num">06</div>
+          <div class="ai-habit-title">健忘症</div>
+          <div class="ai-habit-body">前回言われたことを忘れる／同じミスを繰り返す。セッションをまたいで文脈が消える。</div>
+        </div>
+      </div>
+
+      <div class="bottleneck-line">
+        本来「自動化のため」に入れたはずのAIで、これら6つの癖が働き、<strong>逆に人間がボトルネックになる</strong>。CLAUDE.md / memory / hook / 参照ルール表 / doublecheck は、この6つの癖を1つずつ潰すための構造として設計する。
+      </div>
+
+      <h3 class="discipline-h3">西田の問題解決5段階 ── 対症療法を打たない</h3>
+      <div class="mits-approach">
+        <p class="mits-approach-lead">
+          AI癖に対しても、事業のあらゆる問題に対しても、<strong>対症療法は打たない</strong>。目の前で起きた事象を「その場で消す」だけの手当ては、同じ事象を再発させる。以下の5段階を順に通してから、実施する。
+        </p>
+        <div class="mits-step-flow">
+          <div class="mits-step mits-step-ng">対症療法</div>
+          <div class="mits-step-arrow">✕</div>
+          <div class="mits-step">1. 原因究明</div>
+          <div class="mits-step-arrow">→</div>
+          <div class="mits-step">2. 解決</div>
+          <div class="mits-step-arrow">→</div>
+          <div class="mits-step">3. 対策</div>
+          <div class="mits-step-arrow">→</div>
+          <div class="mits-step">4. 再発防止</div>
+          <div class="mits-step-arrow">→</div>
+          <div class="mits-step">5. 実施</div>
+        </div>
+        <p class="mits-approach-note">
+          「なぜその事象が起きるのか」の原因を掴んで初めて、根治的な解決に届く。解決が見えてから対策を組み、再発防止まで組み上げてから実施に移る。第3回（メモリと衝突 + git）で扱う memory 都度追記5トリガー・doublecheck の運用は、この5段階を<strong>AIとの共同作業に落とし込んだ実装例</strong>である。第4回の運用サイクル（週次点検・全記録保存・定期整理）も、同じ姿勢を1週間単位・1ヶ月単位のリズムに落としたものにあたる。
+        </p>
+      </div>
+
     </div>
   </div>
 </div>
@@ -718,7 +817,7 @@ body{font-family:'Noto Sans JP',sans-serif;font-size:var(--text-md);line-height:
           <li><strong>event-dispatcher：</strong>Windows常駐・1分毎cron・3イベント検知（Slack DM / Notion Inbox / タスク完了）による24時間稼働の実装</li>
           <li><strong>Chrome MCP / Computer Use：</strong>LINE / Messenger 等の自動化（Web経由）</li>
           <li><strong>git tag と季節スナップショット：</strong>四季初日の自動 tag と GitHub 定期push</li>
-          <li><strong>経営判断の3軸マトリックス：</strong>「何をAIに任せるか」の判定基準を3軸で言語化する。(1) <strong>安全性軸</strong>（誤りが起きた場合の被害の大きさ）(2) <strong>カスタマイズ度軸</strong>（自身の業種・顧客文脈への適合度）(3) <strong>人間関係価値軸</strong>（対面／人間関与の代替不可能性）。CLAUDE.md に「Mits 専権タスク明示」ノウハウを埋め込む具体例。</li>
+          <li><strong>経営判断の3軸マトリックス：</strong>「何をAIに任せるか」の判定基準を3軸で言語化する。(1) <strong>安全性軸</strong>（誤りが起きた場合の被害の大きさ）(2) <strong>カスタマイズ度軸</strong>（自身の業種・顧客文脈への適合度）(3) <strong>人間関係価値軸</strong>（対面／人間関与の代替不可能性）。CLAUDE.md に「経営者専権タスク明示」ノウハウを埋め込む具体例。</li>
           <li><strong>修了後の4つの道：</strong>自走 / ゆっくり育つ / 無料枠回遊 / 個別コンサルで加速 の意思決定</li>
         </ul>
       </div>
@@ -756,7 +855,7 @@ body{font-family:'Noto Sans JP',sans-serif;font-size:var(--text-md);line-height:
       <div class="ref-label">Primary Materials ／ 一次教材</div>
       <div class="ref-title">西田の 5層 実運用ファイル群</div>
       <div class="ref-body">
-        <code>CLAUDE.md</code>（憲法）／ <code>context/persona_master.md, mits_tonmana_guide.md, mits_philosophy.md</code>（永続情報）／ <code>.claude/agents/</code>（subagent 20体以上）／ <code>.claude/skills/</code>（skill 100本以上）／ <code>.claude/hooks/</code>（hook 30本以上）／ <code>memory/</code>（memory 200件以上）／ Notion「Claude履歴保存」DB。<br>
+        <code>CLAUDE.md</code>（憲法）／ <code>context/</code>（ペルソナ／文体／哲学の永続情報3ファイル）（永続情報）／ <code>.claude/agents/</code>（subagent 20体以上）／ <code>.claude/skills/</code>（skill 100本以上）／ <code>.claude/hooks/</code>（hook 30本以上）／ <code>memory/</code>（memory 200件以上）／ Notion「Claude履歴保存」DB。<br>
         各Feature実演で西田が画面共有し、構造を提示する。
       </div>
     </div>
@@ -808,7 +907,7 @@ body{font-family:'Noto Sans JP',sans-serif;font-size:var(--text-md);line-height:
     <div class="instructor-block">
       <div class="instructor-photo">M</div>
       <div class="instructor-body">
-        <div class="instructor-name">西田 光弘（Mits）</div>
+        <div class="instructor-name">西田 光弘</div>
         <div class="instructor-title">Instructor ／ 西田光弘個人事務所 代表</div>
         <div class="instructor-bio">
           <p>
@@ -954,15 +1053,15 @@ body{font-family:'Noto Sans JP',sans-serif;font-size:var(--text-md);line-height:
       <div class="coverage-cat-tools">FBAS フレームワーク ／ 4象限（FA / FS / BA / BS）／ return path プロトコル</div>
       <ul class="coverage-item-list">
         <li>FBAS フレームワークで一人起業家向けの AI エージェント組織を設計し実運用</li>
-        <li>フロントアタック象限を AI エージェント（mits-writer 等）に担当</li>
+        <li>フロントアタック象限を AI エージェント（書き手 AI エージェント 等）に担当</li>
         <li>フロントサポート象限を AI エージェントに担わせ顧客対応・問い合わせ振り分けを</li>
         <li>バックアタック象限を AI エージェントに担わせナレッジ蓄積・システム開発を</li>
         <li>バックサポート象限を AI エージェントに担わせタスク管理・情報同期を</li>
-        <li>「Mits 専権タスク（経営判断・対外メール）」を AI にやらせない保護を CLAUDE.md で明示</li>
+        <li>「経営者専権タスク（経営判断・対外メール）」を AI にやらせない保護を CLAUDE.md で明示</li>
         <li>AI 自律実行の段階移行（A: 人間確認 → B: 提示 → C: 全自動）を設計し段階運用</li>
         <li>CLAUDE.md で AI への禁止事項を明文化し、AI がやらかさない運用を確立</li>
         <li>「AI 役員は二重判断を生む」という失敗を実際に経験し、設計に反映</li>
-        <li>「Mits 専権」と「AI 委任」の境界線を実運用しつつ再設定</li>
+        <li>「経営者専権」と「AI 委任」の境界線を実運用しつつ再設定</li>
         <li>AI エージェント同士が連携する通信（return path プロトコル）を設計</li>
         <li>AI エージェント定義 21体を作成・組織稼働</li>
       </ul>
@@ -1037,14 +1136,14 @@ body{font-family:'Noto Sans JP',sans-serif;font-size:var(--text-md);line-height:
         <li>ダイヤモンドマトリックス（4象限・時間軸）を、AI-MITS という自分 AI の設計基準として実装した（右下象限＝関係性の深さに軸足を置く AI として開発）</li>
         <li>CPF 理論（置き換えの波）を、AI が何を代替し何を代替しないかを読む軸として整理し、AI 戦略の前提に置いた</li>
         <li>4C（Cash・Client・Content・Creativity）を、AI-MITS が追跡する4指標としてチャットボットに実装</li>
-        <li>A 型戦略（自社×AI で新パッケージを作り続ける）を、Mits 自身が AI-MITS・各種スキルを次々リリースする形で実証</li>
+        <li>A 型戦略（自社×AI で新パッケージを作り続ける）を、西田自身が AI-MITS・各種スキルを次々リリースする形で実証</li>
         <li>Creativity の3層モデル（頼める → 組み込める → 自分を移植できる）を、AI-MITS 開発の到達点として言語化</li>
-        <li>業務効率化の4段階を、Mits 自身が①→④を実際に AI で進んで実証</li>
+        <li>業務効率化の4段階を、西田自身が①→④を実際に AI で進んで実証</li>
         <li>成長期の区間という時間軸を、AI 普及データ（普及日数 180 → 36 日）として整理し AI 事業判断の根拠に</li>
         <li>「1勝9敗・荒くていい」を、AI-MITS をβ版で出し続ける開発方針（売れてから完成させる）として実践</li>
         <li>「AI 化した自分を棚に並べる」を、AI-MITS（知見を AI に移植した自己複製ボット）という現物で実証</li>
         <li>大福帳（Client 実装）を、AI が顧客の文脈を記憶し「覚えています」と返す機能に落とし込み</li>
-        <li>「何を自動化すべきか」の判断軸を、Mits 専権タスクと AI 委任タスクの線引きとして実運用で確立</li>
+        <li>「何を自動化すべきか」の判断軸を、経営者専権タスクと AI 委任タスクの線引きとして実運用で確立</li>
       </ul>
     </div>
 
@@ -1055,12 +1154,12 @@ body{font-family:'Noto Sans JP',sans-serif;font-size:var(--text-md);line-height:
         <div class="coverage-cat-title">コンテンツ・品質のノウハウ</div>
         <div class="coverage-cat-count">4 items</div>
       </div>
-      <div class="coverage-cat-tools">思想言語化 ／ ペルソナ設計 ／ mits-tonmana</div>
+      <div class="coverage-cat-tools">思想言語化 ／ ペルソナ設計 ／ 文体スキル</div>
       <ul class="coverage-item-list">
         <li>「ペルソナへの刺さりより思想言語化を優先」を、AI に文章を書かせる際の最優先ルールとして設定</li>
         <li>ペルソナ設計（メイン／セカンダリ）を、AI が文章を書くときに参照する定義ファイルとして整備</li>
         <li>メリットとベネフィットの区別を、AI が書いた文章を採点・修正する基準として運用</li>
-        <li>mits-tonmana スキルで西田文体を AI が適用できる形に</li>
+        <li>文体スキル スキルで西田文体を AI が適用できる形に</li>
       </ul>
     </div>
 
