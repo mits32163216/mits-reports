@@ -24,9 +24,9 @@ body{font-family:'Noto Sans JP',sans-serif;font-size:var(--text-md);line-height:
 .sec-1100{max-width:1100px;margin:0 auto;}
 .sec-800{max-width:800px;margin:0 auto;}
 .sec{margin-bottom:var(--sp-3);}
-.pt60{padding-top:var(--sp-8);}
+.pt60{padding-top:var(--sp-10);}
 .pb20{padding-bottom:var(--sp-2);}
-.pb60{padding-bottom:var(--sp-8);}
+.pb60{padding-bottom:var(--sp-10);}
 
 /* ============ HEADER（アカデミックネイビー） ============ */
 .header-block{position:relative;width:100vw;background:var(--navy);min-height:420px;display:flex;align-items:center;overflow:hidden;
@@ -43,11 +43,11 @@ body{font-family:'Noto Sans JP',sans-serif;font-size:var(--text-md);line-height:
 
 .meta-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:var(--navy-2);border-top:1px solid rgba(255,255,255,0.1);width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;padding:var(--sp-3) 50px;}
 .meta-strip-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
-.meta-cell{padding:0 var(--sp-3);border-right:1px solid rgba(255,255,255,0.12);}
+.meta-cell{padding:8px 16px;border-right:1px solid rgba(255,255,255,0.12);min-width:0;}
 .meta-cell:last-child{border-right:none;}
 .meta-cell:first-child{padding-left:0;}
-.meta-label{font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(212,180,155,0.75);margin-bottom:6px;}
-.meta-value{font-family:var(--font-serif);font-size:var(--text-md);color:#fff;line-height:1.5;font-weight:500;}
+.meta-label{font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(212,180,155,0.75);margin-bottom:6px;writing-mode:horizontal-tb;white-space:nowrap;}
+.meta-value{font-family:var(--font-serif);font-size:var(--text-md);color:#fff;line-height:1.5;font-weight:500;writing-mode:horizontal-tb;white-space:nowrap;text-orientation:mixed;}
 
 .lp-root p{margin-bottom:var(--sp-2);color:var(--ink);}
 .lp-root p:last-child{margin-bottom:0;}
@@ -56,7 +56,7 @@ body{font-family:'Noto Sans JP',sans-serif;font-size:var(--text-md);line-height:
 /* ============ セクション見出し ============ */
 .sec-h2{font-family:var(--font-serif);font-size:var(--text-2xl);font-weight:700;line-height:1.4;color:var(--navy);margin-bottom:var(--sp-1);}
 .sec-h2-label{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:var(--sp-1);display:block;}
-.sec-h2-block{border-bottom:2px solid var(--navy);padding-bottom:var(--sp-2);margin-bottom:var(--sp-4);}
+.sec-h2-block{border-bottom:2px solid var(--navy);padding-bottom:var(--sp-3);margin-bottom:var(--sp-5);}
 .sec-lead{font-size:var(--text-md);color:var(--ink-2);line-height:var(--lh-md);margin-bottom:var(--sp-3);}
 
 /* ============ callout（引用） ============ */
@@ -64,7 +64,7 @@ body{font-family:'Noto Sans JP',sans-serif;font-size:var(--text-md);line-height:
 .callout-source{display:block;font-family:var(--font-mono);font-size:11px;color:var(--ink-3);letter-spacing:0.15em;text-transform:uppercase;font-style:normal;margin-top:var(--sp-1);}
 
 /* ============ Course Overview ============ */
-.overview-card{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--navy);padding:var(--sp-4);}
+.overview-card{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--navy);padding:var(--sp-5) var(--sp-6);}
 .overview-card p{font-size:var(--text-md);line-height:var(--lh-md);color:var(--ink);}
 .overview-card p + p{margin-top:var(--sp-2);}
 
@@ -110,13 +110,13 @@ body{font-family:'Noto Sans JP',sans-serif;font-size:var(--text-md);line-height:
 .level-arrow{text-align:center;font-family:var(--font-serif);font-size:var(--text-md);color:var(--ink-3);padding:4px 0;font-style:italic;letter-spacing:0.05em;}
 
 /* ============ Weekly Schedule / 各回 ============ */
-.week-block{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--navy);padding:var(--sp-4);margin-bottom:var(--sp-3);}
+.week-block{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--navy);padding:var(--sp-5) var(--sp-6);margin-bottom:var(--sp-4);}
 .week-head{display:flex;align-items:baseline;gap:var(--sp-3);border-bottom:1px solid var(--rule);padding-bottom:var(--sp-2);margin-bottom:var(--sp-3);flex-wrap:wrap;}
 .week-num{font-family:var(--font-serif);font-size:var(--text-3xl);font-weight:700;color:var(--navy);line-height:1;font-style:italic;}
 .week-title-wrap{flex:1;min-width:280px;}
 .week-title{font-family:var(--font-serif);font-size:var(--text-xl);font-weight:700;color:var(--navy);line-height:1.4;}
 .week-meta{font-family:var(--font-mono);font-size:11px;color:var(--ink-3);letter-spacing:0.15em;text-transform:uppercase;margin-top:6px;}
-.week-section{margin-bottom:var(--sp-3);padding-bottom:var(--sp-2);border-bottom:1px dashed var(--rule);}
+.week-section{margin-bottom:var(--sp-4);padding-bottom:var(--sp-3);border-bottom:1px dashed var(--rule);}
 .week-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
 .week-label{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:var(--sp-1);}
 .week-text{font-size:var(--text-md);line-height:var(--lh-md);color:var(--ink);}
@@ -202,14 +202,14 @@ body{font-family:'Noto Sans JP',sans-serif;font-size:var(--text-md);line-height:
 .lp-footer .copyright{font-family:var(--font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-top:12px;}
 
 /* ============ mobile ============ */
-@media (max-width:768px){
+@media (max-width:900px){
   .sec-wrap{padding-left:20px;padding-right:20px;}
   .header-h1{font-size:24px;}
   .header-sub{font-size:16px;}
   .sec-h2{font-size:22px;}
   .meta-strip{padding:var(--sp-2) 20px;}
   .meta-strip-inner{grid-template-columns:1fr 1fr;gap:var(--sp-2);}
-  .meta-cell{padding:8px 12px;border-right:none;border-bottom:1px solid rgba(255,255,255,0.1);}
+  .meta-cell{padding:10px 12px;border-right:none;border-bottom:1px solid rgba(255,255,255,0.1);}
   .obj-grid{grid-template-columns:1fr;}
   .eval-grid{grid-template-columns:1fr;}
   .instructor-block{grid-template-columns:1fr;text-align:center;}
