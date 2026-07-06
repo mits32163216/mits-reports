@@ -926,6 +926,312 @@
     </ul>
   </footer>
 
+  <!-- ============================================================ -->
+  <!-- ===== 2026-07-06 アップデートセクション（追記）           ===== -->
+  <!-- ============================================================ -->
+
+  <section style="margin-top:48px; padding-top:32px; border-top:3px double #b04848;">
+    <div style="background:#fdecec; border:1px solid #b04848; border-left:5px solid #b04848; border-radius:4px; padding:18px 22px; margin-bottom:24px;">
+      <div style="font-size:11px; color:#b04848; font-weight:700; letter-spacing:0.1em; margin-bottom:6px;">UPDATE — 転換点</div>
+      <div style="font-size:20px; font-weight:700; color:#1a3a52; margin-bottom:8px;">2026-07-06 アップデート（v3.1 → v3.2 経路変更）</div>
+      <div style="font-size:13px; color:#2a2a2a; line-height:1.7;">
+        6/30 追記から 6 日経過。<strong style="color:#b04848;">Anthropic Agent Teams の複合バグを実運用で検出</strong>し、実装経路を <strong style="color:#b04848;">Agent Teams（experimental・SendMessage）から Agent tool（subagent・run_in_background）へ変更</strong>。他社比較の結論（Claude Code 最良）は変わらず、その中の <strong>「どう Claude Code を使うか」</strong> が変わった。25 ノード概念は温存。
+      </div>
+    </div>
+
+    <h2>今日の重大変化（Anthropic Agent Teams 実運用バグの複合検出）</h2>
+    <div class="conclusion" style="border-left-color: #b04848;">
+      <p class="lead" style="color:#b04848;">「参謀が並列に振ったのに配下が動かず、参謀が自分で代行する」症状を実運用で複合検出。</p>
+      <ul>
+        <li><strong style="color:#b04848;">#50779 deferred injection</strong>：teammate spawn 前に到着した message が <code>stop_reason=end_turn</code> まで buried される</li>
+        <li><strong style="color:#b04848;">#70087 peer body 未配送</strong>：teammate → teammate の SendMessage 本文が届かない consistent failure</li>
+        <li><strong style="color:#b04848;">#73489 main 未読</strong>：teammate が main に SendMessage しても main が読まない</li>
+        <li><strong style="color:#b04848;">#74113 idle without report</strong>：teammate が idle 化するが完了報告なし → 参謀が結果を待ち続ける</li>
+        <li><strong style="color:#b04848;">#72611 negative leverage</strong>：subagent 経由の失敗が「参謀が自分でやった方が速く済んだ」状態を作る（多層委任のオーバーヘッドが便益を上回る）</li>
+      </ul>
+      <p style="font-size:13px; margin-top:12px;">全件 Anthropic 公式リポで <strong>open</strong>（2026-07-06 時点）。experimental 機能の複合バグとして、Mits の実業務経路として耐えない水準と判断。</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>v3.2 = Agent Teams → Agent tool 経路移行（承認済 plan）</h2>
+    <p style="font-size:13px; margin-bottom:12px;"><strong>承認済 plan</strong>：<code>/Users/nishidamitsuhiro/.claude/plans/declarative-enchanting-bentley.md</code>／<strong>本論</strong>：<code>memory/reference_agent_team_keiei_project.md</code> v3.2</p>
+
+    <div class="detail-grid">
+      <div class="detail-card full">
+        <div class="head">v3.1 → v3.2 差分（実装経路のみ変更・25 ノード概念は温存）</div>
+        <table class="matrix" style="margin-top:8px;">
+          <thead>
+            <tr>
+              <th class="func">項目</th>
+              <th>v3.1（旧・Agent Teams）</th>
+              <th>v3.2（新・Agent tool）</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="func">実装経路</td>
+              <td>Anthropic Agent Teams（<code>~/.claude/teams/</code> + SendMessage + inboxes）</td>
+              <td><code>Agent(subagent_type=..., prompt=..., run_in_background=true/false)</code></td>
+            </tr>
+            <tr>
+              <td class="func">参謀→リーダー</td>
+              <td>SendMessage で非同期振り</td>
+              <td>Agent tool 直接呼び出し（同期 or background）</td>
+            </tr>
+            <tr>
+              <td class="func">リーダー→配下</td>
+              <td>teammate↔teammate SendMessage（#70087 直撃）</td>
+              <td>参謀が配下を直接 spawn、リーダーは「振り分け判定カテゴリ + 単体 subagent」</td>
+            </tr>
+            <tr>
+              <td class="func">20 配下</td>
+              <td>リーダー配下（2 階層 spawn）</td>
+              <td>参謀直属だが FA/FS/BA/BS 象限で概念的にグループ化</td>
+            </tr>
+            <tr>
+              <td class="func">恒久永続</td>
+              <td><code>~/.claude/teams/keiei-project/config.json</code></td>
+              <td><code>.claude/agents/*.md</code> の subagent 定義（既存 28 体・変更不要）</td>
+            </tr>
+            <tr>
+              <td class="func">並列発注</td>
+              <td>一括発注前提（v3.1 概念）</td>
+              <td><strong>incremental 発注前提</strong>（Mits の実運用パターン）</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>ハイブリッド運用宣言（本命2件 = 議論型ニッチ運用 5-10%）</h2>
+    <div class="conclusion">
+      <p class="lead">v3.2 発注型（Agent tool）が経営運営の基本経路。議論型（Agent Teams）は 5-10% のニッチ運用として並行維持。</p>
+
+      <h3 style="margin-top:14px;">Agent Teams を使う本命 2 件（真に議論型が必要）</h3>
+      <ul>
+        <li><strong>AI-MITS 3 段階移行判断</strong>（Dify → 自走モック → 本番）：技術・戦略・データの 3 視点独立・trade-off 非自明</li>
+        <li><strong>中心的な質問の再定義最終 Round</strong>（AI-MITS / The Innovation）：哲学判断で複数視点必須</li>
+      </ul>
+
+      <h3>Agent Teams を検討する準本命 4 件</h3>
+      <ul>
+        <li>セールスレター A 版 vs B 版 マージ判断</li>
+        <li>動画シナリオの 3 レビュー軸相互批判</li>
+        <li>TimeWaver 多層解釈</li>
+        <li>経営戦略の戦略素案 vs 反論</li>
+      </ul>
+
+      <h3>議論型が有効な 3 条件</h3>
+      <ol style="padding-left:22px; font-size:13px;">
+        <li>一次ソース照合・裏取りが複数観点必要なリサーチ</li>
+        <li>複数レビュー軸で作品評価</li>
+        <li>解釈が多義的で「独立仮説→相互批判→統合」が本質</li>
+      </ol>
+
+      <p style="font-size:13px; margin-top:12px;">3 型分析 subagent（<code>aa751f16</code>・2026-07-06 実測）の結論：直近 30 日で「議論型が真に有効」だったのは業務の <strong>5-10%</strong>。90%+ は workflow 型（skill）＋ ハーネス型（hook）で <strong>cost 半減・信頼性向上</strong>。</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>6/21 の他社比較結論は温存（Claude Code が最良）</h2>
+    <div class="detail-card full">
+      <div class="head">重要：6/21〜6/30 の他社比較（Codex / Antigravity）の結論は変わらない</div>
+      <ul style="padding-left:18px; font-size:13px; line-height:1.7;">
+        <li>Claude Code が v3.1（現 v3.2）の運用エンジンとして最良である評価は変わらない</li>
+        <li>Codex：実機検証フェーズ位置づけは維持（stable 化未確定・team 永続化未実装）</li>
+        <li>Antigravity：判定保留位置づけは維持（v3.1 必須機能の公式 docs 記述なし）</li>
+        <li>変わったのは「Claude Code 内でどの経路を使うか」＝ Agent Teams（experimental）→ Agent tool（stable）への switch のみ</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>subagent 停止時の自動再発注フロー確立（Mits 明示指示）</h2>
+    <div class="detail-card full">
+      <div class="head">運用ルール（2026-07-06 Mits 承認）</div>
+      <ul style="padding-left:18px; font-size:13px; line-height:1.7;">
+        <li>subagent が idle・停止・タイムアウトした場合、参謀は Mits の追加指示を待たず <strong>その場で自動再発注</strong> する</li>
+        <li>再発注時は前回 prompt に「前回停止コンテキスト」を追加埋め込み（情報損失防止）</li>
+        <li>再発注 3 回で成功しない場合のみ Mits にエスカレーション</li>
+        <li>関連 feedback：<code>feedback-incremental-parallel-spawn-pattern</code> / <code>feedback-task-notification-immediate-report</code> / <code>feedback-worktree-only-for-shared-file-writes</code></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>ハーネスエンジニアリング型 hook の整備（追加 4 件 + 修正 3 件）</h2>
+    <p style="font-size:13px; margin-bottom:10px;">3 型分析の結論「hook で workflow 起動を機械化する」を実装層で反映。default = <strong>workflow 型（skill）＋ハーネス型（hook）</strong>。</p>
+
+    <div class="detail-grid">
+      <div class="detail-card">
+        <div class="head">追加 4 件（UserPromptSubmit 起動）</div>
+        <ul>
+          <li>LP / セールスレター 検知 hook（禁止⑦強制トリガー）</li>
+          <li>メルマガ執筆検知 hook（heavy-mail-writer / mainmail-loop 起動）</li>
+          <li>シナリオ配管検知 hook（scenario-plumber 起動）</li>
+          <li>経理 / 仕訳検知 hook（keiri-collector 起動）</li>
+        </ul>
+      </div>
+      <div class="detail-card">
+        <div class="head">修正 3 件</div>
+        <ul>
+          <li>skill-must-read hook（参照ルール表の完読強制）</li>
+          <li>GUI request block hook（<code>feedback_no_gui_request_use_open_command</code> 準拠）</li>
+          <li>progress table 維持 hook（30 秒沈黙禁止）</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>判定 default（execution_rules.md §6・v1.1 で新設）</h2>
+    <div class="conclusion">
+      <p class="lead">参謀・4 リーダー・全 subagent は以下を判定 default とする。</p>
+
+      <div class="timeline" style="border-left-color: #b89544;">
+        <div class="item">
+          <div class="when">STEP 1</div>
+          <div class="what">Mits 直感判定だけで済むか</div>
+          <div class="why">YES → AI 使わない</div>
+        </div>
+        <div class="item">
+          <div class="when">STEP 2</div>
+          <div class="what">入力→処理→出力 pipeline 化できるか</div>
+          <div class="why">YES → <strong>workflow 型（skill）</strong></div>
+        </div>
+        <div class="item">
+          <div class="when">STEP 3</div>
+          <div class="what">同じ違反・呼び忘れが 2 回以上出ているか</div>
+          <div class="why">YES → <strong>hook で workflow 起動を機械化</strong></div>
+        </div>
+        <div class="item">
+          <div class="when">STEP 4</div>
+          <div class="what">正解が 1 つに定まらず対立視点必要か</div>
+          <div class="why">YES → <strong>議論型（Agent Teams）</strong>（bugs 承知・本命 2 件のみ）</div>
+        </div>
+        <div class="item">
+          <div class="when">DEFAULT</div>
+          <div class="what">迷ったら default</div>
+          <div class="why"><strong>workflow 型（skill）</strong></div>
+        </div>
+      </div>
+
+      <p style="font-size:13px; margin-top:12px;"><strong>参照</strong>：<code>context/execution_rules.md §6</code>（v1.1 で新設）／<code>memory/reference_agent_team_keiei_project.md</code> v3.2 ハイブリッド運用宣言</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>agent_teams_template.md ひな形完成（議論型 reusable template）</h2>
+    <div class="detail-card full">
+      <div class="head">場所：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/references/agent_teams_template.md</code></div>
+      <p style="font-size:13px; line-height:1.7;">v3.2 発注型（Agent tool 経路）の隙間を埋める <strong>議論型ニッチ運用</strong> のための reusable template。既知バグ4件回避策を内蔵。</p>
+      <ul style="padding-left:18px; font-size:13px; line-height:1.7;">
+        <li><strong>モード(a) 直列反証チェーン</strong>：teammate A→B→C→D を Round ごとに直列 spawn。前 Round の tool_result を次 Round の prompt に丸ごと埋め込む（要約禁止・情報損失防止）</li>
+        <li><strong>モード(b) 並列 fan-out 議論</strong>：teammate A/B/C を同ターン内・1 メッセージ内で並列 spawn（<code>run_in_background=true</code>）。peer 通信ゼロで #70087 に触れない安全帯</li>
+        <li><strong>混合モード</strong>：Round 1 だけ並列 + Round 2 以降は直列（セールスレター A/B マージ判断など）</li>
+        <li><strong>参謀リレー方式</strong>：teammate↔teammate の SendMessage を <em>一切使わず</em>、全てを参謀経由で中継。#70087 peer body 未配送バグを回避</li>
+        <li><strong>Round 上限 3〜4</strong>：それ以上は改善量減衰・コスト膨張</li>
+        <li><strong>タイムアウト 10 分</strong>：#74113 idle without report 対策として参謀が強制回収</li>
+        <li><strong>進捗テーブル維持</strong>：参謀は全ターン応答冒頭に Round × teammate × 状態のテーブルを配置し、SendMessage 到着有無を毎ターン確認（#73489 main 未読対策）</li>
+      </ul>
+      <p style="font-size:13px; margin-top:10px;"><strong>完全埋め使用例</strong>（template 内）：AI-MITS 3 段階移行判断（モード(b)・所要 15〜20 分）／セールスレター A 版 vs B 版 マージ判断（混合モード・骨子）</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>選択肢 (IV) ハイブリッド採用（実装 cost ゼロ・運用宣言のみ）</h2>
+    <div class="conclusion">
+      <p class="lead">v3.2 発注型を default、議論型を 5-10% ニッチとして並行維持。既存資産は削除せず放置。</p>
+      <div class="detail-grid">
+        <div class="detail-card">
+          <div class="head">実装 stance</div>
+          <ul>
+            <li>flag <code>CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS: "1"</code> を維持</li>
+            <li><code>~/.claude/teams/</code> 配下 + <code>~/.claude/tasks/</code> 配下は放置（削除しない）</li>
+            <li>archived-v2 config を温存（v3.0 履歴資料として）</li>
+            <li>Anthropic のバグ FIX 待ち姿勢：#50779/#70087/#73489/#74113 が open のうちは本命 2 件でも慎重運用</li>
+          </ul>
+        </div>
+        <div class="detail-card">
+          <div class="head">議論型実験は Mits 監視要で保留</div>
+          <ul>
+            <li>本命 2 件を実業務で走らせるのは Mits の意思確認後</li>
+            <li>実測データは今後の実業務で収集（試行 → 記録 → 判断）</li>
+            <li>準本命 4 件は「試す価値あり」候補として保留</li>
+            <li>3 条件（一次ソース複数観点／複数レビュー軸／解釈多義的）を全て満たさないなら workflow 型で足りる</li>
+          </ul>
+        </div>
+      </div>
+      <p style="font-size:13px; margin-top:12px;"><strong>選択肢 (I)〜(III) 却下理由</strong>：(I) Agent Teams 全廃棄 → 議論型本命 2 件の受け皿を失う／(II) Agent Teams 主軸維持 → 実運用バグで負のレバレッジ（#72611）／(III) 全面ハーネス化 → 議論型固有の相互批判プロセスを workflow で代替不可</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>hook 整備の粒度（追加 4 件 + 修正 3 件の内訳）</h2>
+    <div class="detail-grid">
+      <div class="detail-card full">
+        <div class="head">修正 3 件（false positive 抑制・精度向上）</div>
+        <ul style="padding-left:18px; font-size:13px; line-height:1.7;">
+          <li><strong>LP / セールスレター 検知 hook</strong>：単純 keyword マッチ → 動詞共起パターンに変更で false positive 抑制（「LP を見た」等の言及だけでは発火しない）</li>
+          <li><strong>skill-must-read hook</strong>：動詞共起 + <strong>warning 降格</strong>（block ではなく警告表示）で作業妨害を回避しつつ完読促進</li>
+          <li><strong>GUI request block hook</strong>：<code>Agent.prompt</code> 走査を削除（subagent への正当な GUI 説明まで誤 block する事故を修正）・<code>feedback_no_gui_request_use_open_command</code> の主目的（Mits に GUI 依頼禁止）に焦点化</li>
+        </ul>
+      </div>
+      <div class="detail-card full">
+        <div class="head">新規 4 件（UserPromptSubmit 起動 3 件 + background 監視 1 件）</div>
+        <ul style="padding-left:18px; font-size:13px; line-height:1.7;">
+          <li><strong>メルマガ執筆検知 hook</strong>：「メルマガ書いて」「厚みのある文章で」等を検知して <code>heavy-mail-writer</code> / <code>mainmail-loop</code> の起動をリマインド</li>
+          <li><strong>シナリオ配管検知 hook</strong>：「シナリオ設計」「ファネル配管」「ステップメール導線」等を検知して <code>scenario-plumber</code> 起動をリマインド</li>
+          <li><strong>経理 / 仕訳検知 hook</strong>：「仕訳」「月次決算」「MF 投入」等を検知して <code>keiri-collector</code> 起動をリマインド</li>
+          <li><strong>background 進捗テーブル check hook</strong>：background subagent 走行中に参謀応答の冒頭に進捗テーブルが無いと警告（30 秒沈黙禁止の機械的強制）</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>memory feedback 追加 6 件</h2>
+    <div class="detail-card full">
+      <div class="head">v3.2 経路変更に伴う運用ルール恒久化</div>
+      <ul style="padding-left:18px; font-size:13px; line-height:1.7;">
+        <li><code>feedback-incremental-parallel-spawn-pattern</code>：incremental 発注時は既走行分をそのまま維持し追加分のみ spawn（一括発注前提の v3.1 概念から脱却）</li>
+        <li><code>feedback-task-notification-immediate-report</code>：task-notification 到着ターンで Mits に自発報告（貯め込み禁止）</li>
+        <li><code>feedback-worktree-only-for-shared-file-writes</code>：worktree は同一ファイル同時書き込み時のみ・デフォルト無し（cost 節約）</li>
+        <li><code>feedback-skill-invocation-via-background-subagent</code>：長時間 skill は background subagent 経由で invoke（参謀の block 回避）</li>
+        <li><code>feedback-background-progress-report-mandatory</code>：background 走行中は全ターン応答冒頭に進捗テーブル維持（Mits が常時把握可能に）</li>
+        <li><code>feedback-stall-detection-and-smart-reroute</code>：120 秒沈黙検知で自動再発注・詰まり部分から再開・3 回失敗のみ Mits にエスカレーション</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="report-foot" style="margin-top:36px;">
+    <strong>7/06 追記の一次資料</strong>
+    <ul>
+      <li>Anthropic 公式リポ Issue #50779（deferred injection・open）</li>
+      <li>Anthropic 公式リポ Issue #70087（peer body 未配送・open）</li>
+      <li>Anthropic 公式リポ Issue #73489（main 未読・open）</li>
+      <li>Anthropic 公式リポ Issue #74113（idle without report・open）</li>
+      <li>Anthropic 公式リポ Issue #72611（negative leverage・open）</li>
+      <li>承認済 plan：<code>/Users/nishidamitsuhiro/.claude/plans/declarative-enchanting-bentley.md</code></li>
+      <li>本論：<code>memory/reference_agent_team_keiei_project.md</code> v3.2 改編</li>
+      <li>3 型分析 subagent 実測結論：<code>aa751f16</code>（2026-07-06 実施）</li>
+    </ul>
+
+    <strong style="display:block; margin-top:14px;">7/06 追記の検証履歴</strong>
+    <ul>
+      <li>2026-07-06 Anthropic Agent Teams 実運用バグ 5 件を GitHub Issues で照合（全件 open 確認）</li>
+      <li>2026-07-06 3 型分析 subagent（<code>aa751f16</code>）で直近 30 日業務の型別分類を実測 → 議論型 5-10% / workflow+hook 90%+ 確定</li>
+      <li>2026-07-06 承認済 plan（declarative-enchanting-bentley.md）に基づき v3.2 経路変更</li>
+      <li>2026-07-06 memory/reference_agent_team_keiei_project.md を v3.2 改編（25 ノード概念温存・実装経路のみ変更）</li>
+      <li>2026-07-06 context/execution_rules.md §6 新設（判定 default = workflow + hook 中心）</li>
+      <li>2026-07-06 subagent 停止時の自動再発注フローを Mits 明示指示で確立</li>
+      <li>2026-07-06 hook 4 件追加 + 3 件修正でハーネス層を強化</li>
+    </ul>
+  </footer>
+
 </div>
 </body>
 </html>
