@@ -159,6 +159,45 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
 .supp-hot .lesson-num { background: var(--rose); }
 .supp-hot { border: 1px dashed var(--rose); }
 
+/* チェックリスト（localStorage 保存・全カード共通） */
+.lesson-check {
+  margin-top: auto;
+  padding: 10px 12px;
+  border-top: 1px dashed var(--line);
+  font-family: var(--mono); font-size: 12px;
+  display: flex; align-items: center; gap: 8px;
+  cursor: pointer;
+  color: var(--muted);
+  transition: color 0.15s, background 0.15s;
+  border-radius: 0 0 8px 8px;
+}
+.lesson-check:hover { color: var(--fg); background: var(--sub-bg); }
+.lesson-check input {
+  margin: 0; width: 16px; height: 16px;
+  cursor: pointer; accent-color: var(--sage);
+}
+.lesson-check.checked { color: var(--sage); font-weight: 600; background: rgba(122, 155, 126, 0.08); }
+.lesson-check .lc-label { flex: 1; }
+.lesson-card.checked-card { border-color: var(--sage); }
+.checklist-summary {
+  position: sticky; bottom: 0; z-index: 90;
+  margin: 24px -48px -120px; padding: 14px 48px;
+  background: var(--card-bg);
+  border-top: 2px solid var(--gold);
+  font-family: var(--mono); font-size: 13px;
+  display: flex; justify-content: space-between; align-items: center;
+  box-shadow: 0 -4px 12px rgba(15, 27, 46, 0.08);
+}
+.checklist-summary strong { color: var(--gold); }
+.checklist-summary .reset-btn {
+  padding: 4px 12px; font-size: 11px;
+  background: transparent; color: var(--muted);
+  border: 1px solid var(--line); border-radius: 4px;
+  cursor: pointer; font-family: var(--mono);
+  transition: all 0.15s;
+}
+.checklist-summary .reset-btn:hover { color: var(--rose); border-color: var(--rose); }
+
 /* 週間ルーティン */
 .routine {
   font-family: var(--mono);
@@ -761,7 +800,7 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
     <div class="lesson-meta"><span class="ch">シダパンのYouTube体育大学</span></div>
     <div class="lesson-focus">狙い: 高音・ミックスの原理（Phase E とセット視聴）</div>
   </a>
-  <div class="lesson-card" style="opacity:0.55; text-align:center; padding:32px 24px;">
+  <div class="lesson-card" data-no-check="1" style="opacity:0.55; text-align:center; padding:32px 24px;">
     <span class="lesson-num" style="background:var(--muted);">M4-3</span>
     <div class="lesson-title" style="margin-top:12px;">該当動画なし</div>
     <p class="lesson-why" style="margin-top:12px;">努努は 2007 年初期楽曲で、日本人ボイストレーナーによる曲固有教材が YouTube 上に事実上存在せず。M4-1/M4-2 の Taka 一般技法で代替。</p>
@@ -879,5 +918,57 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
   <a href="./" style="display:inline-block; padding:10px 20px; font-family:var(--mincho); font-size:14px; font-weight:600; color:var(--gold); background:rgba(212,168,91,0.10); border:1px solid var(--gold); border-radius:6px; text-decoration:none;">← カラオケ練習AI ダッシュボードに戻る</a>
 </div>
 
+<script>
+// チェックリスト自動注入・localStorage 保存
+document.addEventListener('DOMContentLoaded', () => {
+  const STORAGE_PREFIX = 'karaoke-curriculum-v5:';
+  const cards = document.querySelectorAll('.lesson-card');
+  let totalCheckable = 0;
+  const updateSummary = () => {
+    const checked = document.querySelectorAll('.lesson-check.checked').length;
+    const s = document.getElementById('checklist-summary-text');
+    if (s) s.innerHTML = `📚 進捗: <strong>${checked} / ${totalCheckable} 本</strong> 視聴済み`;
+  };
+  cards.forEach((card, idx) => {
+    if (card.dataset.noCheck === '1') return;
+    totalCheckable++;
+    const numEl = card.querySelector('.lesson-num');
+    const num = numEl ? numEl.textContent.trim().split(' ')[0] : `card-${idx}`;
+    const chkId = 'chk-' + num.replace(/[^\w-]/g, '_');
+    const div = document.createElement('div');
+    div.className = 'lesson-check';
+    div.innerHTML = `<input type="checkbox" id="${chkId}"><span class="lc-label">見たらチェック</span>`;
+    card.appendChild(div);
+    const cb = div.querySelector('input');
+    const span = div.querySelector('.lc-label');
+    const key = STORAGE_PREFIX + chkId;
+    const setChecked = (v) => {
+      cb.checked = v;
+      div.classList.toggle('checked', v);
+      card.classList.toggle('checked-card', v);
+      span.textContent = v ? '✓ 見た！' : '見たらチェック';
+      updateSummary();
+    };
+    if (localStorage.getItem(key) === '1') setChecked(true);
+    // カード本体（<a>）への click 伝播を阻止
+    div.addEventListener('click', e => { e.stopPropagation(); });
+    cb.addEventListener('click', e => { e.stopPropagation(); });
+    cb.addEventListener('change', () => {
+      localStorage.setItem(key, cb.checked ? '1' : '0');
+      setChecked(cb.checked);
+    });
+  });
+
+  // 画面下部の進捗サマリー
+  const summary = document.createElement('div');
+  summary.className = 'checklist-summary';
+  summary.innerHTML = `
+    <span id="checklist-summary-text">📚 進捗: <strong>0 / ${totalCheckable} 本</strong> 視聴済み</span>
+    <button class="reset-btn" onclick="if(confirm('全チェックをリセットしますか？')){Object.keys(localStorage).filter(k=>k.startsWith('${STORAGE_PREFIX}')).forEach(k=>localStorage.removeItem(k));location.reload();}">全リセット</button>
+  `;
+  document.body.appendChild(summary);
+  updateSummary();
+});
+</script>
 </body>
 </html>
