@@ -179,14 +179,50 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
   display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
 }
 
+/* 戻るボタン（ダッシュボードへ） */
+.back-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--bg);
+  padding: 12px 0 10px;
+  margin: -40px -48px 24px;
+  padding-left: 48px; padding-right: 48px;
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(6px);
+}
+.back-nav a {
+  display: inline-block;
+  padding: 6px 14px;
+  font-family: var(--mincho); font-size: 13px; font-weight: 600;
+  color: var(--gold);
+  background: rgba(212, 168, 91, 0.10);
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.back-nav a:hover {
+  background: rgba(212, 168, 91, 0.22);
+  transform: translateX(-2px);
+  text-decoration: none;
+}
+.back-nav-bottom {
+  margin-top: 40px; text-align: center;
+  padding-top: 20px; border-top: 1px dashed var(--line);
+}
+
 /* prin */
 @media print {
   body { padding: 20px; max-width: none; }
   .lesson-card { break-inside: avoid; page-break-inside: avoid; }
+  .back-nav, .back-nav-bottom { display: none; }
 }
 </style>
 </head>
 <body>
+
+<nav class="back-nav">
+  <a href="./" title="カラオケ練習AI ダッシュボードに戻る">← カラオケ練習AI ダッシュボードに戻る</a>
+</nav>
 
 <header class="top">
   <div>
@@ -611,6 +647,10 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
 <div class="footer">
   <div>元データ: 歌の教材動画DB (Notion 70本) + カラオケ練習AI 4曲9軸実測</div>
   <div>Notion DB: <a href="https://www.notion.so/80946514e5cb4cf1babdd01dfaf56edf" target="_blank">80946514...56edf</a></div>
+</div>
+
+<div class="back-nav-bottom">
+  <a href="./" style="display:inline-block; padding:10px 20px; font-family:var(--mincho); font-size:14px; font-weight:600; color:var(--gold); background:rgba(212,168,91,0.10); border:1px solid var(--gold); border-radius:6px; text-decoration:none;">← カラオケ練習AI ダッシュボードに戻る</a>
 </div>
 
 </body>
