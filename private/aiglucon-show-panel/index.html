@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>AIグルコン ShowPanel — 講座中クイック起動</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --navy:#14182f;--navy-2:#1f2647;--ivory:#f5f2e8;--ivory-2:#ede8d6;
+  --gold:#e6b259;--ink:#0e1220;--muted:#6b7280;--danger:#c94747;
+  --shadow:0 4px 14px rgba(0,0,0,.15);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--ivory);color:var(--ink);
+  font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;font-size:14px;line-height:1.55}
+header{position:sticky;top:0;background:var(--navy);color:var(--ivory);
+  padding:14px 20px;z-index:100;box-shadow:var(--shadow)}
+header .title{font-size:15px;letter-spacing:.06em;font-weight:600;margin-bottom:8px}
+header .title small{font-weight:400;color:var(--gold);margin-left:10px;font-size:12px}
+.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+#search{flex:1;min-width:220px;padding:9px 12px;font-size:14px;border:1px solid var(--gold);
+  border-radius:4px;background:var(--ivory);color:var(--ink);outline:none}
+#search:focus{border-color:var(--ivory);box-shadow:0 0 0 2px var(--gold)}
+.pill{padding:6px 12px;font-size:12px;border:1px solid var(--gold);color:var(--ivory);
+  background:transparent;border-radius:99px;cursor:pointer;letter-spacing:.03em}
+.pill.active{background:var(--gold);color:var(--navy);font-weight:600}
+.pill:hover{background:var(--gold);color:var(--navy)}
+main{padding:20px;max-width:1400px;margin:0 auto}
+.category{margin-bottom:28px}
+.cat-head{display:flex;align-items:baseline;gap:12px;margin-bottom:10px;
+  border-bottom:2px solid var(--navy);padding-bottom:6px}
+.cat-tag{display:inline-block;padding:3px 10px;background:var(--navy);color:var(--ivory);
+  font-size:11px;letter-spacing:.08em;border-radius:3px}
+.cat-title{font-size:16px;font-weight:600}
+.cat-count{color:var(--muted);font-size:12px}
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.item{background:#fff;border:1px solid #d8d3c0;border-left:4px solid var(--gold);
+  border-radius:4px;padding:12px 14px;text-decoration:none;color:var(--ink);
+  transition:all .15s;display:flex;flex-direction:column;min-height:78px}
+.item:hover{border-color:var(--navy);border-left-color:var(--navy);
+  transform:translateY(-1px);box-shadow:var(--shadow)}
+.item .name{font-weight:600;font-size:13.5px;margin-bottom:6px;line-height:1.4}
+.item .purpose{color:var(--muted);font-size:11.5px;flex:1}
+.item .url-hint{color:var(--gold);font-size:10px;margin-top:6px;letter-spacing:.02em;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:ui-monospace,Menlo,monospace}
+.item.mail{border-left-color:var(--navy)}
+.item.mail .name{font-size:12.5px}
+.item.mail .purpose{font-size:11px}
+.item.pending{border-left-color:var(--danger);opacity:.85}
+.hidden{display:none!important}
+footer{padding:16px 20px;text-align:center;color:var(--muted);font-size:11px;
+  border-top:1px solid #ddd;margin-top:24px}
+.empty{padding:40px;text-align:center;color:var(--muted)}
+@media(max-width:640px){
+  .items{grid-template-columns:1fr}
+  header{padding:10px 12px}
+  main{padding:12px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="title">📺 AIグルコン ShowPanel <small>講座中クイック起動 / 2026-07-11</small></div>
+  <div class="controls">
+    <input id="search" type="search" placeholder="🔍 名称・目的で絞り込み…（例：シラバス、Discord、8.91倍、S0）" autocomplete="off">
+    <button class="pill active" data-cat="all">All</button>
+    <button class="pill" data-cat="mail">📧 Mail</button>
+    <button class="pill" data-cat="lp">📄 LP</button>
+    <button class="pill" data-cat="slide">🎞 Slide</button>
+    <button class="pill" data-cat="discord">💬 Discord</button>
+    <button class="pill" data-cat="curriculum">📚 教材</button>
+    <button class="pill" data-cat="satellite">🛰 副産物</button>
+    <button class="pill" data-cat="biz">🏢 事業全体</button>
+  </div>
+</header>
+
+<main>
+
+<section class="category" data-cat="mail">
+  <div class="cat-head"><span class="cat-tag">A</span><span class="cat-title">送信済メール（broadcast completed）</span><span class="cat-count">11件</span></div>
+  <div class="items">
+    <a class="item mail" href="#" data-msg="QCoLTPidv0JL" data-search="AIグループ講座中身決定"><div class="name">A1 · 07-05 18:57 AIグループ講座中身決定</div><div class="purpose">中身確定の告知</div><div class="url-hint">msg=QCoLTPidv0JL</div></a>
+    <a class="item mail" href="#" data-search="Discord通知の設定 情報摂取"><div class="name">A2 · 06-28 18:02 Discord通知の設定</div><div class="purpose">Discord設定誘導</div><div class="url-hint">msg=F6GCsJjxleZX</div></a>
+    <a class="item mail" href="#" data-search="本日"><div class="name">A3 · 06-28 09:55 本日</div><div class="purpose">当日リマインド</div><div class="url-hint">msg=qQbQbfH8DQsf</div></a>
+    <a class="item mail" href="#" data-search="必須初期設定動画3本"><div class="name">A4 · 06-27 20:12 【重要】必須初期設定動画3本</div><div class="purpose">初期設定誘導</div><div class="url-hint">msg=2yYox43yzB9I</div></a>
+    <a class="item mail" href="#" data-search="グループにご招待 Discord招待"><div class="name">A5 · 06-22 12:41 【重要】グループにご招待</div><div class="purpose">Discord招待</div><div class="url-hint">msg=k5kkJdZ67ERV</div></a>
+    <a class="item mail" href="#" data-search="プレ開催 個別相談"><div class="name">A6 · 06-21 12:14 6/28 プレ開催+個別相談</div><div class="purpose">プレ開催告知</div><div class="url-hint">msg=VyPfrI2rObsS</div></a>
+    <a class="item mail" href="#" data-search="お詫び 訂正 日程"><div class="name">A7 · 06-18 21:00 【お詫びと訂正】運用と日程</div><div class="purpose">訂正告知</div><div class="url-hint">msg=JaACTHVMIkEx</div></a>
+    <a class="item mail" href="#" data-search="日程確定"><div class="name">A8 · 06-15 21:06 AIグルコン7,8,9日程確定</div><div class="purpose">日程確定告知</div><div class="url-hint">msg=PvxhsVgOimKs</div></a>
+    <a class="item mail" href="#" data-search="日程調整 西田"><div class="name">A9 · 06-11 16:30 【7月・日程調整】西田です</div><div class="purpose">日程調整</div><div class="url-hint">msg=Ev383MY2iXPg</div></a>
+    <a class="item mail" href="#" data-search="完成 販売告知 F1-08"><div class="name">A10 · 05-30 20:58 【完成】2ヶ月グループ講座</div><div class="purpose">販売告知（F1-08向け）</div><div class="url-hint">msg=u3vognUu6yB9</div></a>
+    <a class="item mail" href="#" data-search="S0 ご購入ありがとうございます"><div class="name">A11 · 購入時 S0_ご購入ありがとうございます</div><div class="purpose">購入直後サンクス</div><div class="url-hint">msg=Ufx3DEApawBv</div></a>
+  </div>
+  <div style="margin-top:8px;color:var(--muted);font-size:11px">＋予約中 20本（S1〜S7 / R系リマインダー13本）</div>
+</section>
+
+<section class="category" data-cat="lp">
+  <div class="cat-head"><span class="cat-tag">B</span><span class="cat-title">LP・オプトイン・サンクス</span><span class="cat-count">5件</span></div>
+  <div class="items">
+    <a class="item" href="https://change.7years.life/p/HP7g0Lhg2SyY" target="_blank" rel="noopener" data-search="F1-08 セールスレター 販売"><div class="name">B1 · F1-08 セールスレター（2ヶ月グルコン）</div><div class="purpose">販売</div><div class="url-hint">change.7years.life/p/HP7g0Lhg2SyY</div></a>
+    <a class="item pending" href="https://change.7years.life/p/vqSxScZpPojd" target="_blank" rel="noopener" data-search="レター 未確認"><div class="name">B2 · レター（要ラベル）</div><div class="purpose">用途未確認</div><div class="url-hint">change.7years.life/p/vqSxScZpPojd</div></a>
+    <a class="item" href="https://change.7years.life/p/u3udc3efeLF9" target="_blank" rel="noopener" data-search="AIエージェント講座 LP 販売"><div class="name">B3 · AIエージェント講座 LP</div><div class="purpose">販売</div><div class="url-hint">change.7years.life/p/u3udc3efeLF9</div></a>
+    <a class="item" href="https://change.7years.life/p/yUxScVSkUych" target="_blank" rel="noopener" data-search="サンクス ご参加ありがとうございます"><div class="name">B4 · サンクスページ（2ヶ月グルコン）</div><div class="purpose">購入直後着地</div><div class="url-hint">change.7years.life/p/yUxScVSkUych</div></a>
+    <a class="item pending" href="https://change.7years.life/p/Z19zzItBYKgr" target="_blank" rel="noopener" data-search="LP 未確認"><div class="name">B5 · LP（要ラベル）</div><div class="purpose">用途未確認</div><div class="url-hint">change.7years.life/p/Z19zzItBYKgr</div></a>
+  </div>
+</section>
+
+<section class="category" data-cat="slide">
+  <div class="cat-head"><span class="cat-tag">C</span><span class="cat-title">スライド・PDF</span><span class="cat-count">1件</span></div>
+  <div class="items">
+    <a class="item" href="https://reports.7years.life/2026-07-05_ai-agent-management-slides.html" target="_blank" rel="noopener" data-search="プレゼンスライド 07-05"><div class="name">C1 · 2026-07-05 プレゼンスライド</div><div class="purpose">講義本体スライド</div><div class="url-hint">reports.7years.life/…-slides</div></a>
+  </div>
+</section>
+
+<section class="category" data-cat="discord">
+  <div class="cat-head"><span class="cat-tag">D</span><span class="cat-title">Discord 関連</span><span class="cat-count">3件</span></div>
+  <div class="items">
+    <a class="item" href="https://reports.7years.life/2026-06-22_discord-tutorial-slides.html" target="_blank" rel="noopener" data-search="Discord導入チュートリアル 06-22"><div class="name">D1 · 06-22 Discord導入チュートリアル</div><div class="purpose">導入手順</div><div class="url-hint">reports.7years.life/…-tutorial</div></a>
+    <a class="item" href="https://reports.7years.life/2026-06-27_discord-wishlist-and-roadmap.html" target="_blank" rel="noopener" data-search="やりたいこと ロードマップ 06-27"><div class="name">D2 · 06-27 やりたいこと一覧+ロードマップ</div><div class="purpose">全体像共有</div><div class="url-hint">reports.7years.life/…-wishlist</div></a>
+    <a class="item" href="https://discord.com/channels/745242086751731802/1518384671011115140" target="_blank" rel="noopener" data-search="Discord チャンネル直リンク"><div class="name">D3 · Discord チャンネル直リンク</div><div class="purpose">メンバー案内</div><div class="url-hint">discord.com/channels/…</div></a>
+  </div>
+</section>
+
+<section class="category" data-cat="curriculum">
+  <div class="cat-head"><span class="cat-tag">E</span><span class="cat-title">カリキュラム・教材</span><span class="cat-count">6件</span></div>
+  <div class="items">
+    <a class="item" href="https://reports.7years.life/2026-07-05_ai-agent-management-syllabus.html" target="_blank" rel="noopener" data-search="シラバス 07-05"><div class="name">E1 · 07-05 シラバス</div><div class="purpose">講座設計提示</div><div class="url-hint">reports.7years.life/…-syllabus</div></a>
+    <a class="item" href="https://reports.7years.life/2026-07-05_ai-agent-context-worksheet.html" target="_blank" rel="noopener" data-search="コンテキスト設計ワークシート"><div class="name">E2 · 07-05 コンテキスト設計ワークシート</div><div class="purpose">事前ワーク</div><div class="url-hint">reports.7years.life/…-worksheet</div></a>
+    <a class="item pending" href="https://change.7years.life/p/0KBdVC66r4CZ" target="_blank" rel="noopener" data-search="資料 要ラベル"><div class="name">E3 · 資料（要ラベル）</div><div class="purpose">用途未確認</div><div class="url-hint">change.7years.life/p/0KBdVC66r4CZ</div></a>
+    <a class="item" href="https://change.7years.life/members/mxjeSnXmJDbO/course/rYlcVyUY5fis/lesson/ar0A1PkswDh3" target="_blank" rel="noopener" data-search="会員サイト rYlcVyUY5fis ar0A1PkswDh3"><div class="name">E4 · 会員サイト直URL（rYlcV…/ar0A1…）</div><div class="purpose">The Library内レッスン</div><div class="url-hint">members/…/rYlcVyUY5fis/…/ar0A1PkswDh3</div></a>
+    <a class="item" href="https://change.7years.life/members/mxjeSnXmJDbO/course/MaXquphUqbjS/lesson/tjOIWZEK4EQG" target="_blank" rel="noopener" data-search="会員サイト MaXquphUqbjS tjOIWZEK4EQG"><div class="name">E5 · 会員サイト直URL（MaXqu…/tjOIW…）</div><div class="purpose">The Library内レッスン</div><div class="url-hint">members/…/MaXquphUqbjS/…/tjOIWZEK4EQG</div></a>
+    <a class="item" href="https://change.7years.life/members/mxjeSnXmJDbO/course/MaXquphUqbjS/lesson/iSCjXKjZkWPB" target="_blank" rel="noopener" data-search="会員サイト MaXquphUqbjS iSCjXKjZkWPB"><div class="name">E6 · 会員サイト直URL（MaXqu…/iSCjX…）</div><div class="purpose">The Library内レッスン</div><div class="url-hint">members/…/MaXquphUqbjS/…/iSCjXKjZkWPB</div></a>
+  </div>
+</section>
+
+<section class="category" data-cat="satellite">
+  <div class="cat-head"><span class="cat-tag">F</span><span class="cat-title">副産物（見せる予定の各種）</span><span class="cat-count">9件</span></div>
+  <div class="items">
+    <a class="item" href="https://reports.7years.life/2026-07-09_claude-usage-cowork-to-code-8x.html" target="_blank" rel="noopener" data-search="Cowork CODE 8.91倍 エージェント"><div class="name">F1 · 07-09 Cowork→CODE 8.91倍</div><div class="purpose">エージェント運用の証拠提示</div><div class="url-hint">reports.7years.life/…-8x</div></a>
+    <a class="item" href="https://platform.claude.com/dashboard" target="_blank" rel="noopener" data-search="Anthropic dashboard usage データ根拠"><div class="name">F1a · Anthropic Console usage dashboard</div><div class="purpose">F1のデータ根拠</div><div class="url-hint">platform.claude.com/dashboard</div></a>
+    <a class="item" href="https://reports.7years.life/2026-06-21_v31_codex_antigravity.html" target="_blank" rel="noopener" data-search="v3.1 Codex Antigravity 技術検証"><div class="name">F2 · 06-21 v3.1 Codex/Antigravity比較</div><div class="purpose">技術検証共有</div><div class="url-hint">reports.7years.life/…-v31_codex</div></a>
+    <a class="item" href="https://mits32163216.github.io/aiglucon-checklist/" target="_blank" rel="noopener" data-search="AIグルコン チェックリスト"><div class="name">F3 · AIグルコン チェックリスト</div><div class="purpose">メンバー用チェックリスト</div><div class="url-hint">mits32163216.github.io/aiglucon-checklist</div></a>
+    <a class="item" href="https://mits32163216.github.io/saikyou-dashboard/" target="_blank" rel="noopener" data-search="最強仕事術ダッシュボード"><div class="name">F4 · 最強仕事術ダッシュボード</div><div class="purpose">仕事術可視化</div><div class="url-hint">mits32163216.github.io/saikyou-dashboard</div></a>
+    <a class="item" href="https://mits32163216.github.io/supplement-tracker/" target="_blank" rel="noopener" data-search="サプリメント トラッカー"><div class="name">F5 · サプリメントトラッカー</div><div class="purpose">個人管理ツール事例</div><div class="url-hint">mits32163216.github.io/supplement-tracker</div></a>
+    <a class="item" href="https://mits32163216.github.io/ai-mits-tracker/" target="_blank" rel="noopener" data-search="AI-MITS トラッカー"><div class="name">F6 · AI-MITS トラッカー</div><div class="purpose">AI-MITSプロジェクト進捗</div><div class="url-hint">mits32163216.github.io/ai-mits-tracker</div></a>
+    <a class="item" href="https://7years.life/dashboard_locked.html" target="_blank" rel="noopener" data-search="7years.life ダッシュボード"><div class="name">F7 · 7years.life ダッシュボード（ロック版）</div><div class="purpose">統合ダッシュボード</div><div class="url-hint">7years.life/dashboard_locked.html</div></a>
+    <a class="item" href="https://github.com/mits32163216/claude-nishida" target="_blank" rel="noopener" data-search="claude-nishida GitHub ソースコード"><div class="name">F8 · claude-nishida リポジトリ</div><div class="purpose">ソースコード</div><div class="url-hint">github.com/mits32163216/claude-nishida</div></a>
+  </div>
+</section>
+
+<section class="category" data-cat="biz">
+  <div class="cat-head"><span class="cat-tag">G</span><span class="cat-title">事業全体（AIグルコン専用ではない）</span><span class="cat-count">3件</span></div>
+  <div class="items">
+    <a class="item" href="https://utage-system.com/p/I0DhTHFyevVP" target="_blank" rel="noopener" data-search="THE INNOVATION 総合案内 事業全体"><div class="name">G1 · THE INNOVATION 総合案内 LP</div><div class="purpose">事業全体ハブ</div><div class="url-hint">utage-system.com/p/I0DhTHFyevVP</div></a>
+    <a class="item" href="https://www.skool.com/the-innovation" target="_blank" rel="noopener" data-search="SKOOL コミュニティ THE INNOVATION"><div class="name">G2 · SKOOL コミュニティ「THE INNOVATION」</div><div class="purpose">関係性の流れの本拠地</div><div class="url-hint">skool.com/the-innovation</div></a>
+    <a class="item" href="https://claude.ai/design/p/b536e5c0-071f-42a2-bfbc-80062e25db82?file=index.html&amp;slide=1" target="_blank" rel="noopener" data-search="Claude Artifact スライド"><div class="name">G3 · Claude Artifact（スライド index.html）</div><div class="purpose">Mits scope の Artifact</div><div class="url-hint">claude.ai/design/p/b536e5c0…</div></a>
+  </div>
+</section>
+
+<div id="empty" class="empty hidden">🔍 該当なし。検索語を変えてください。</div>
+
+</main>
+
+<footer>
+  内部管理・自分用 / 講座中クイック起動 / メール（A系）は URL 未取得のため参照専用 /
+  元台帳：AIglucon_deliverables_index_20260711.md
+</footer>
+
+<script>
+(function(){
+  const search=document.getElementById('search');
+  const items=document.querySelectorAll('.item');
+  const cats=document.querySelectorAll('.category');
+  const pills=document.querySelectorAll('.pill');
+  const empty=document.getElementById('empty');
+  let activeCat='all';
+
+  function apply(){
+    const q=search.value.trim().toLowerCase();
+    let visibleTotal=0;
+    cats.forEach(c=>{
+      const catKey=c.dataset.cat;
+      const catMatch=(activeCat==='all'||activeCat===catKey);
+      let visInCat=0;
+      c.querySelectorAll('.item').forEach(it=>{
+        const hay=(it.textContent+' '+(it.dataset.search||'')).toLowerCase();
+        const hit=q===''||hay.includes(q);
+        const show=catMatch&&hit;
+        it.classList.toggle('hidden',!show);
+        if(show)visInCat++;
+      });
+      c.classList.toggle('hidden',visInCat===0);
+      visibleTotal+=visInCat;
+    });
+    empty.classList.toggle('hidden',visibleTotal>0);
+  }
+  search.addEventListener('input',apply);
+  pills.forEach(p=>p.addEventListener('click',()=>{
+    pills.forEach(x=>x.classList.remove('active'));
+    p.classList.add('active');
+    activeCat=p.dataset.cat;
+    apply();
+  }));
+  // ⌘K / Ctrl+K で検索フォーカス
+  document.addEventListener('keydown',e=>{
+    if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();search.focus();search.select();}
+    if(e.key==='Escape'){search.value='';apply();search.blur();}
+  });
+})();
+</script>
+
+</body>
+</html>
