@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>保存・バックアップ全体構造 v5（イラスト版）— AIグルコン副資料</title>
+<style>
+/* ============================================================
+   v5 Claude Illust  — 図解・キャラクター・立体感で語るスライド
+   Navy #0F1B2E / Ivory #F5EFE1 / Gold #D4A85B
+   ============================================================ */
+
+:root{
+  --navy:#0F1B2E;
+  --navy-2:#1A2A44;
+  --navy-3:#243654;
+  --ivory:#F5EFE1;
+  --ivory-2:#EDE3CE;
+  --gold:#D4A85B;
+  --gold-2:#BB8C3E;
+  --coral:#E86B5A;
+  --sky:#4B7BEC;
+  --sky-soft:#89AEF5;
+  --violet:#7B5FE0;
+  --violet-soft:#A692F0;
+  --green:#4BAA6E;
+  --green-soft:#82C99A;
+  --gray:#6B6B6B;
+  --shadow-sm:0 2px 6px rgba(15,27,46,.15);
+  --shadow-md:0 6px 20px rgba(15,27,46,.22);
+  --shadow-lg:0 14px 40px rgba(15,27,46,.28);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--ivory);color:var(--navy);
+  font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Meiryo",system-ui,sans-serif;
+  line-height:1.55;-webkit-font-smoothing:antialiased}
+
+.deck{max-width:1200px;margin:0 auto;padding:20px 24px 80px}
+
+section.slide{
+  background:var(--ivory);
+  border:1px solid var(--ivory-2);
+  border-radius:22px;
+  padding:36px 44px 44px;
+  margin:28px 0;
+  box-shadow:var(--shadow-md);
+  position:relative;overflow:hidden;
+}
+section.slide::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 90% -10%, rgba(212,168,91,.10), transparent 40%);
+  pointer-events:none;
+}
+
+.slide-num{
+  position:absolute;top:22px;right:28px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:12px;letter-spacing:.14em;color:var(--gold-2);
+  text-transform:uppercase;font-weight:700;
+}
+
+h1.title{
+  font-size:30px;font-weight:800;letter-spacing:.02em;
+  color:var(--navy);border-left:6px solid var(--gold);
+  padding:6px 0 6px 16px;margin-bottom:6px;
+}
+p.sub{font-size:15px;color:var(--navy-2);margin:0 0 24px 6px;font-weight:500}
+
+/* ------- Slide 1 : 6つのAI癖 教室シーン ------- */
+
+.classroom{
+  background:linear-gradient(180deg,#FFF7E4 0%,#F5EFE1 100%);
+  border-radius:18px;padding:20px 24px 26px;margin-bottom:22px;
+  box-shadow:inset 0 0 0 1px var(--ivory-2), 0 6px 18px rgba(15,27,46,.10);
+}
+.classroom-title{
+  display:flex;align-items:center;gap:10px;
+  font-weight:800;color:var(--navy);font-size:15px;margin-bottom:8px;
+}
+.classroom-title .dot{width:8px;height:8px;border-radius:50%;background:var(--gold)}
+
+.teacher-row{
+  display:grid;grid-template-columns:180px 1fr;gap:20px;align-items:center;
+}
+.teacher-row .balloon{
+  background:#fff;border:2px solid var(--navy);border-radius:16px;
+  padding:12px 16px;position:relative;font-size:14.5px;color:var(--navy);
+  box-shadow:var(--shadow-sm);
+}
+.teacher-row .balloon::before{
+  content:"";position:absolute;left:-14px;top:22px;
+  width:0;height:0;border:8px solid transparent;border-right-color:#fff;
+}
+.teacher-row .balloon::after{
+  content:"";position:absolute;left:-18px;top:20px;
+  width:0;height:0;border:10px solid transparent;border-right-color:var(--navy);z-index:-1;
+}
+
+/* 6癖 グリッド */
+.kuse-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px;
+}
+.kuse-card{
+  background:#fff;border-radius:14px;padding:14px 14px 16px;
+  border:2px solid var(--navy);position:relative;
+  box-shadow:var(--shadow-sm);
+  display:flex;flex-direction:column;gap:8px;
+  transition:transform .2s ease;
+}
+.kuse-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.kuse-card .no{
+  position:absolute;top:-10px;left:-10px;
+  width:30px;height:30px;border-radius:50%;
+  background:var(--gold);color:var(--navy);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:14px;box-shadow:var(--shadow-sm);
+  border:2px solid var(--navy);
+}
+.kuse-card svg{width:100%;height:110px;display:block}
+.kuse-card .kuse-name{
+  font-weight:800;color:var(--navy);font-size:15px;
+  border-bottom:2px dotted var(--gold);padding-bottom:3px;
+}
+.kuse-card .kuse-desc{font-size:12.5px;color:var(--navy-2);line-height:1.5}
+
+/* 4コマ */
+.yonkoma{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  border:3px solid var(--navy);border-radius:14px;overflow:hidden;
+  background:#fff;margin-top:20px;box-shadow:var(--shadow-md);
+}
+.yonkoma .koma{
+  border-right:2px solid var(--navy);
+  padding:12px;position:relative;background:#fff;
+  display:flex;flex-direction:column;gap:6px;
+}
+.yonkoma .koma:last-child{border-right:0}
+.yonkoma .koma .label{
+  font-size:11px;font-weight:800;color:var(--gold-2);letter-spacing:.15em;
+}
+.yonkoma .koma svg{width:100%;height:120px;display:block}
+.yonkoma .koma .caption{
+  font-size:12.5px;color:var(--navy-2);line-height:1.5;font-weight:500;
+}
+
+/* 結論バナー */
+.conclusion{
+  margin-top:22px;background:var(--navy);color:var(--ivory);
+  padding:18px 22px;border-radius:14px;
+  border-left:6px solid var(--gold);
+  box-shadow:var(--shadow-md);
+  font-size:15px;line-height:1.7;position:relative;
+}
+.conclusion strong{color:var(--gold)}
+.conclusion .kicker{
+  display:inline-block;font-size:11px;letter-spacing:.2em;
+  background:var(--gold);color:var(--navy);padding:2px 8px;border-radius:4px;
+  font-weight:800;margin-right:8px;vertical-align:middle;
+}
+
+/* ------- Slide 2 : 3層立体倉庫 ------- */
+
+.warehouse-wrap{
+  display:grid;grid-template-columns:1.2fr 1fr;gap:24px;margin-bottom:20px;
+}
+.warehouse-svg-box{
+  background:linear-gradient(180deg,#FAF3E0,#EDE3CE);
+  border-radius:18px;padding:16px;box-shadow:var(--shadow-md);
+  display:flex;align-items:center;justify-content:center;min-height:520px;
+}
+.warehouse-svg-box svg{width:100%;height:auto;max-height:500px}
+
+.layer-notes{display:flex;flex-direction:column;gap:12px;justify-content:space-around}
+.layer-note{
+  padding:14px 16px;border-radius:12px;background:#fff;position:relative;
+  box-shadow:var(--shadow-sm);border-left:5px solid;
+}
+.layer-note.sky{border-color:var(--sky)}
+.layer-note.violet{border-color:var(--violet)}
+.layer-note.green{border-color:var(--green)}
+.layer-note .lname{font-weight:800;font-size:15px;color:var(--navy);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.layer-note .lname .badge{
+  font-size:10.5px;padding:2px 6px;border-radius:4px;color:#fff;font-weight:800;
+}
+.layer-note.sky .badge{background:var(--sky)}
+.layer-note.violet .badge{background:var(--violet)}
+.layer-note.green .badge{background:var(--green)}
+.layer-note .ldesc{font-size:12.5px;color:var(--navy-2);line-height:1.5}
+.layer-note .ldesc strong{color:var(--navy)}
+
+.three-tenets{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px;
+}
+.tenet{
+  background:var(--navy);color:var(--ivory);padding:14px 16px;border-radius:12px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  box-shadow:var(--shadow-sm);
+}
+.tenet .icon{font-size:28px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
+.tenet .lb{font-size:11px;letter-spacing:.15em;color:var(--gold);font-weight:800}
+.tenet .tx{font-size:14px;font-weight:800;text-align:center}
+
+/* ------- Slide 3 : バトルカード + 時計 ------- */
+
+.battle-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;
+}
+.battle-card{
+  background:#fff;border:2px solid var(--navy);border-radius:14px;
+  padding:12px;position:relative;box-shadow:var(--shadow-sm);
+  display:grid;grid-template-columns:60px 1fr;gap:10px;align-items:center;
+}
+.battle-card .vs-mark{
+  position:absolute;top:-9px;right:12px;
+  background:var(--coral);color:#fff;padding:2px 8px;border-radius:10px;
+  font-size:10px;font-weight:900;letter-spacing:.15em;
+  box-shadow:var(--shadow-sm);
+}
+.battle-card .chibi{width:60px;height:60px;flex-shrink:0}
+.battle-card .chibi svg{width:100%;height:100%}
+.battle-card .content .kn{font-size:13.5px;font-weight:800;color:var(--navy);margin-bottom:3px}
+.battle-card .content .shield{
+  font-size:11.5px;color:var(--navy-2);line-height:1.45;
+}
+.battle-card .content .shield .item{
+  display:inline-block;background:var(--ivory-2);color:var(--navy);
+  padding:1px 6px;border-radius:3px;margin:1px 3px 1px 0;font-weight:700;font-size:10.5px;
+}
+
+/* 時計 */
+.clock-section{
+  display:grid;grid-template-columns:1fr 1.1fr;gap:24px;
+  background:linear-gradient(180deg,#FAF3E0,#EDE3CE);
+  border-radius:18px;padding:22px;box-shadow:var(--shadow-md);
+}
+.clock-section h3{
+  grid-column:1/-1;
+  font-size:16px;color:var(--navy);margin-bottom:4px;
+  border-left:4px solid var(--gold);padding-left:10px;
+}
+.clock-svg-box{display:flex;align-items:center;justify-content:center}
+.clock-svg-box svg{width:100%;max-width:380px;height:auto}
+.rhythm-list{display:flex;flex-direction:column;gap:8px;justify-content:center}
+.rhythm-list .row{
+  display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:start;
+  background:#fff;padding:8px 10px;border-radius:10px;box-shadow:var(--shadow-sm);
+}
+.rhythm-list .icon-badge{
+  width:44px;height:44px;border-radius:50%;
+  background:var(--navy);color:var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;box-shadow:inset 0 0 0 3px var(--gold);
+}
+.rhythm-list .r-txt{font-size:12.5px;color:var(--navy-2);line-height:1.5}
+.rhythm-list .r-txt strong{color:var(--navy)}
+
+/* ------- 話者ノート ------- */
+
+details.notes{
+  background:var(--navy);color:var(--ivory);
+  border-radius:12px;margin-top:22px;padding:0 22px;
+  border:1px solid var(--navy-3);
+}
+details.notes summary{
+  padding:14px 0;cursor:pointer;font-weight:800;font-size:13px;
+  color:var(--gold);letter-spacing:.05em;
+  list-style:none;
+  display:flex;justify-content:space-between;align-items:center;
+}
+details.notes summary::after{content:"▼";transition:transform .2s ease}
+details.notes[open] summary::after{transform:rotate(180deg)}
+details.notes .body{padding:0 0 20px;font-size:13.5px;line-height:1.75}
+details.notes .body p{margin-bottom:10px}
+
+/* ------- Nano Banana placeholder ------- */
+
+.nano-slot{
+  border:2px dashed var(--gold);border-radius:10px;
+  padding:10px;background:rgba(212,168,91,.06);
+  font-size:11px;color:var(--gold-2);text-align:center;
+  margin:8px 0;line-height:1.5;
+}
+.nano-slot .lb{font-weight:800;letter-spacing:.15em;font-size:10px;color:var(--gold-2)}
+.nano-slot .prompt{
+  display:block;margin-top:4px;font-family:"SF Mono",Menlo,monospace;
+  font-size:10.5px;color:var(--navy-2);
+}
+
+/* ------- キーフレーム ------- */
+
+@keyframes flow-down{
+  0%{stroke-dashoffset:40}
+  100%{stroke-dashoffset:0}
+}
+@keyframes float-y{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-4px)}
+}
+@keyframes pulse-op{
+  0%,100%{opacity:.4}
+  50%{opacity:1}
+}
+@keyframes spin-slow{
+  from{transform:rotate(0)}to{transform:rotate(360deg)}
+}
+@keyframes tick-hand{
+  0%,100%{transform:rotate(0deg)}
+  50%{transform:rotate(2deg)}
+}
+
+.floating{animation:float-y 3.6s ease-in-out infinite}
+.floating-2{animation:float-y 4.2s ease-in-out infinite .5s}
+.floating-3{animation:float-y 5.0s ease-in-out infinite 1s}
+.arrow-anim{animation:flow-down 1.6s linear infinite}
+.pulse{animation:pulse-op 2.4s ease-in-out infinite}
+.spin{animation:spin-slow 90s linear infinite;transform-origin:center}
+
+/* ------- Dark mode ------- */
+
+@media (prefers-color-scheme:dark){
+  html,body{background:#0A1220;color:#E8E1D0}
+  section.slide{background:var(--navy);border-color:var(--navy-3);color:#E8E1D0}
+  h1.title{color:var(--gold)}
+  p.sub{color:#C8BFA8}
+  .classroom{background:linear-gradient(180deg,#1A2A44,#243654);box-shadow:none}
+  .classroom-title{color:#E8E1D0}
+  .kuse-card{background:#243654;border-color:var(--gold)}
+  .kuse-card .kuse-name{color:#E8E1D0}
+  .kuse-card .kuse-desc{color:#C8BFA8}
+  .yonkoma{background:#243654;border-color:var(--gold)}
+  .yonkoma .koma{background:#243654;border-color:var(--gold-2)}
+  .yonkoma .koma .caption{color:#C8BFA8}
+  .teacher-row .balloon{background:#243654;color:#E8E1D0;border-color:var(--gold)}
+  .teacher-row .balloon::before{border-right-color:#243654}
+  .teacher-row .balloon::after{border-right-color:var(--gold)}
+  .warehouse-svg-box{background:linear-gradient(180deg,#1A2A44,#243654)}
+  .layer-note{background:#243654;color:#E8E1D0}
+  .layer-note .ldesc{color:#C8BFA8}
+  .layer-note .ldesc strong{color:#E8E1D0}
+  .battle-card{background:#243654;border-color:var(--gold)}
+  .battle-card .content .kn{color:#E8E1D0}
+  .battle-card .content .shield{color:#C8BFA8}
+  .battle-card .content .shield .item{background:var(--navy-3);color:#E8E1D0}
+  .clock-section{background:linear-gradient(180deg,#1A2A44,#243654)}
+  .rhythm-list .row{background:#243654}
+  .rhythm-list .r-txt{color:#C8BFA8}
+  .rhythm-list .r-txt strong{color:#E8E1D0}
+  .conclusion{background:#000;color:#E8E1D0}
+  .nano-slot{background:rgba(212,168,91,.08)}
+}
+
+/* ------- 印刷 ------- */
+
+@media print{
+  html,body{background:#fff}
+  .deck{max-width:none;padding:0}
+  section.slide{
+    page-break-after:always;break-after:page;
+    margin:0;box-shadow:none;border:0;border-radius:0;
+    padding:22mm 20mm;
+  }
+  details.notes{page-break-inside:avoid;background:#fff;color:#000;border:1px solid #ccc}
+  details.notes summary{color:#333}
+  details.notes[open] .body{color:#000}
+  .nano-slot{border-style:solid;border-color:#999;color:#666}
+  .floating,.floating-2,.floating-3,.arrow-anim,.pulse,.spin{animation:none !important}
+}
+
+/* ------- responsive ------- */
+
+@media (max-width:900px){
+  .warehouse-wrap{grid-template-columns:1fr}
+  .clock-section{grid-template-columns:1fr}
+  .battle-grid{grid-template-columns:repeat(2,1fr)}
+  .kuse-grid{grid-template-columns:repeat(2,1fr)}
+  .yonkoma{grid-template-columns:repeat(2,1fr)}
+  .yonkoma .koma{border-right:2px solid var(--navy);border-bottom:2px solid var(--navy)}
+  .yonkoma .koma:nth-child(2){border-right:0}
+  .yonkoma .koma:nth-child(3),.yonkoma .koma:nth-child(4){border-bottom:0}
+  .three-tenets{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  section.slide{padding:24px 20px}
+  h1.title{font-size:22px}
+  .kuse-grid{grid-template-columns:1fr}
+  .battle-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     再利用可能 SVG 定義 (defs) — キャラクター・パーツ
+     ============================================================ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+
+  <!-- グラデーション -->
+  <linearGradient id="g-sky" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#89AEF5"/>
+    <stop offset="100%" stop-color="#4B7BEC"/>
+  </linearGradient>
+  <linearGradient id="g-violet" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#A692F0"/>
+    <stop offset="100%" stop-color="#7B5FE0"/>
+  </linearGradient>
+  <linearGradient id="g-green" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#82C99A"/>
+    <stop offset="100%" stop-color="#4BAA6E"/>
+  </linearGradient>
+  <linearGradient id="g-gold" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#EDCC7B"/>
+    <stop offset="100%" stop-color="#BB8C3E"/>
+  </linearGradient>
+  <linearGradient id="g-navy" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#243654"/>
+    <stop offset="100%" stop-color="#0F1B2E"/>
+  </linearGradient>
+  <radialGradient id="g-eye" cx=".35" cy=".35" r=".7">
+    <stop offset="0%" stop-color="#EAF5FF"/>
+    <stop offset="60%" stop-color="#4B7BEC"/>
+    <stop offset="100%" stop-color="#1A2A44"/>
+  </radialGradient>
+
+  <!-- shadow filter -->
+  <filter id="drop-sh" x="-20%" y="-20%" width="140%" height="140%">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="1.5"/>
+    <feOffset dx="0" dy="2"/>
+    <feComponentTransfer><feFuncA type="linear" slope=".3"/></feComponentTransfer>
+    <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+
+  <!-- AI社員 base body（頭・アンテナ・胴・手足） -->
+  <!-- 呼び出し側で <use xlink:href="#ai-base"/> して、目・口・表情パーツを重ねる -->
+  <symbol id="ai-base" viewBox="0 0 100 120">
+    <!-- アンテナ -->
+    <line x1="35" y1="18" x2="30" y2="6" stroke="#0F1B2E" stroke-width="2" stroke-linecap="round"/>
+    <line x1="65" y1="18" x2="70" y2="6" stroke="#0F1B2E" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="30" cy="5" r="3" fill="#D4A85B"/>
+    <circle cx="70" cy="5" r="3" fill="#4B7BEC"/>
+    <!-- 頭（四角・メモリチップ模様） -->
+    <rect x="20" y="18" width="60" height="50" rx="8" fill="url(#g-navy)" stroke="#0F1B2E" stroke-width="2" filter="url(#drop-sh)"/>
+    <!-- メモリチップの端子 -->
+    <g fill="#D4A85B" opacity=".7">
+      <rect x="24" y="22" width="4" height="2" rx=".5"/>
+      <rect x="30" y="22" width="4" height="2" rx=".5"/>
+      <rect x="36" y="22" width="4" height="2" rx=".5"/>
+      <rect x="42" y="22" width="4" height="2" rx=".5"/>
+      <rect x="54" y="22" width="4" height="2" rx=".5"/>
+      <rect x="60" y="22" width="4" height="2" rx=".5"/>
+      <rect x="66" y="22" width="4" height="2" rx=".5"/>
+      <rect x="72" y="22" width="4" height="2" rx=".5"/>
+    </g>
+    <!-- 首 -->
+    <rect x="42" y="68" width="16" height="6" fill="#4B7BEC"/>
+    <!-- 胴 -->
+    <ellipse cx="50" cy="94" rx="26" ry="22" fill="url(#g-sky)" stroke="#0F1B2E" stroke-width="2" filter="url(#drop-sh)"/>
+    <!-- 胴 のロゴ -->
+    <text x="50" y="98" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="10" fill="#F5EFE1">AI</text>
+    <!-- 腕 -->
+    <ellipse cx="22" cy="90" rx="6" ry="5" fill="#4B7BEC" stroke="#0F1B2E" stroke-width="1.5"/>
+    <ellipse cx="78" cy="90" rx="6" ry="5" fill="#4B7BEC" stroke="#0F1B2E" stroke-width="1.5"/>
+    <!-- 足 -->
+    <rect x="38" y="112" width="10" height="8" rx="2" fill="#0F1B2E"/>
+    <rect x="52" y="112" width="10" height="8" rx="2" fill="#0F1B2E"/>
+  </symbol>
+
+  <!-- Mits先生（デフォルメ・眼鏡・スーツ） -->
+  <symbol id="mits-teacher" viewBox="0 0 100 130">
+    <!-- 頭 -->
+    <ellipse cx="50" cy="30" rx="24" ry="26" fill="#E8C9A2" stroke="#0F1B2E" stroke-width="2" filter="url(#drop-sh)"/>
+    <!-- 髪 -->
+    <path d="M28,20 Q30,4 50,4 Q72,4 74,22 Q74,10 55,8 Q40,8 30,18 Z" fill="#0F1B2E"/>
+    <!-- 眼鏡 -->
+    <rect x="34" y="28" width="12" height="9" rx="1.5" fill="none" stroke="#0F1B2E" stroke-width="2"/>
+    <rect x="54" y="28" width="12" height="9" rx="1.5" fill="none" stroke="#0F1B2E" stroke-width="2"/>
+    <line x1="46" y1="32" x2="54" y2="32" stroke="#0F1B2E" stroke-width="2"/>
+    <!-- 目 -->
+    <circle cx="40" cy="33" r="1.5" fill="#0F1B2E"/>
+    <circle cx="60" cy="33" r="1.5" fill="#0F1B2E"/>
+    <!-- 口（微笑） -->
+    <path d="M42,44 Q50,50 58,44" stroke="#0F1B2E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <!-- 首 -->
+    <rect x="44" y="54" width="12" height="6" fill="#E8C9A2"/>
+    <!-- スーツ胴 -->
+    <path d="M22,64 Q22,60 30,58 L44,60 L50,66 L56,60 L70,58 Q78,60 78,64 L82,120 L18,120 Z" fill="#243654" stroke="#0F1B2E" stroke-width="2" filter="url(#drop-sh)"/>
+    <!-- Vネックシャツ -->
+    <path d="M44,60 L50,68 L56,60 L55,80 L50,84 L45,80 Z" fill="#F5EFE1"/>
+    <!-- ネクタイ -->
+    <path d="M48,68 L52,68 L54,90 L50,96 L46,90 Z" fill="#D4A85B" stroke="#0F1B2E" stroke-width="1"/>
+    <!-- 腕（指差し・右） -->
+    <ellipse cx="78" cy="80" rx="6" ry="12" transform="rotate(-20 78 80)" fill="#243654" stroke="#0F1B2E" stroke-width="1.5"/>
+    <circle cx="88" cy="66" r="5" fill="#E8C9A2" stroke="#0F1B2E" stroke-width="1.5"/>
+    <!-- 指 -->
+    <line x1="93" y1="62" x2="98" y2="58" stroke="#E8C9A2" stroke-width="3" stroke-linecap="round"/>
+    <line x1="93" y1="62" x2="98" y2="58" stroke="#0F1B2E" stroke-width="1"/>
+  </symbol>
+
+  <!-- クラウド（Notion倉庫） -->
+  <symbol id="cloud-store" viewBox="0 0 200 100">
+    <path d="M40,70 Q10,70 15,50 Q10,30 40,32 Q45,15 70,18 Q90,5 110,18 Q140,10 155,32 Q190,30 185,55 Q195,75 165,75 Z"
+          fill="url(#g-sky)" stroke="#0F1B2E" stroke-width="2.5" filter="url(#drop-sh)"/>
+    <text x="100" y="55" text-anchor="middle" font-family="Georgia,serif" font-weight="700" fill="#F5EFE1" font-size="18">NOTION</text>
+    <text x="100" y="72" text-anchor="middle" font-family="Hiragino Sans" fill="#F5EFE1" font-size="10">原文の器</text>
+  </symbol>
+
+  <!-- 本棚（Obsidian） -->
+  <symbol id="bookshelf" viewBox="0 0 200 130">
+    <!-- 台座 -->
+    <path d="M14,116 L186,116 L192,124 L8,124 Z" fill="#5A4128" stroke="#0F1B2E" stroke-width="2"/>
+    <!-- 本棚外枠 -->
+    <rect x="16" y="14" width="168" height="102" rx="4" fill="url(#g-violet)" stroke="#0F1B2E" stroke-width="2.5" filter="url(#drop-sh)"/>
+    <!-- 棚板 -->
+    <line x1="20" y1="54" x2="180" y2="54" stroke="#0F1B2E" stroke-width="2"/>
+    <line x1="20" y1="86" x2="180" y2="86" stroke="#0F1B2E" stroke-width="2"/>
+    <!-- 本 上段 -->
+    <g stroke="#0F1B2E" stroke-width="1">
+      <rect x="24" y="22" width="8" height="30" fill="#D4A85B"/>
+      <rect x="34" y="26" width="6" height="26" fill="#E8C9A2"/>
+      <rect x="42" y="20" width="10" height="32" fill="#4B7BEC"/>
+      <rect x="54" y="24" width="7" height="28" fill="#F5EFE1"/>
+      <rect x="63" y="22" width="9" height="30" fill="#E86B5A"/>
+      <rect x="74" y="26" width="6" height="26" fill="#4BAA6E"/>
+      <rect x="82" y="20" width="10" height="32" fill="#D4A85B"/>
+      <rect x="94" y="24" width="7" height="28" fill="#0F1B2E"/>
+      <rect x="103" y="22" width="9" height="30" fill="#F5EFE1"/>
+      <rect x="114" y="26" width="6" height="26" fill="#4B7BEC"/>
+      <rect x="122" y="20" width="10" height="32" fill="#E8C9A2"/>
+      <rect x="134" y="24" width="7" height="28" fill="#E86B5A"/>
+      <rect x="143" y="22" width="9" height="30" fill="#D4A85B"/>
+      <rect x="154" y="26" width="6" height="26" fill="#4BAA6E"/>
+      <rect x="162" y="20" width="14" height="32" fill="#4B7BEC"/>
+    </g>
+    <!-- 本 中段 -->
+    <g stroke="#0F1B2E" stroke-width="1">
+      <rect x="24" y="58" width="10" height="26" fill="#4BAA6E"/>
+      <rect x="36" y="60" width="7" height="24" fill="#D4A85B"/>
+      <rect x="45" y="56" width="8" height="28" fill="#E86B5A"/>
+      <rect x="55" y="60" width="8" height="24" fill="#F5EFE1"/>
+      <rect x="65" y="58" width="10" height="26" fill="#4B7BEC"/>
+      <rect x="77" y="60" width="8" height="24" fill="#E8C9A2"/>
+      <rect x="87" y="56" width="9" height="28" fill="#D4A85B"/>
+      <rect x="98" y="60" width="7" height="24" fill="#0F1B2E"/>
+      <rect x="107" y="58" width="10" height="26" fill="#F5EFE1"/>
+      <rect x="119" y="60" width="7" height="24" fill="#E86B5A"/>
+      <rect x="128" y="56" width="10" height="28" fill="#4BAA6E"/>
+      <rect x="140" y="60" width="7" height="24" fill="#D4A85B"/>
+      <rect x="149" y="58" width="9" height="26" fill="#4B7BEC"/>
+      <rect x="160" y="60" width="16" height="24" fill="#E8C9A2"/>
+    </g>
+    <!-- 本 下段 -->
+    <g stroke="#0F1B2E" stroke-width="1">
+      <rect x="24" y="90" width="10" height="24" fill="#E8C9A2"/>
+      <rect x="36" y="92" width="7" height="22" fill="#4B7BEC"/>
+      <rect x="45" y="88" width="8" height="26" fill="#D4A85B"/>
+      <rect x="55" y="92" width="8" height="22" fill="#0F1B2E"/>
+      <rect x="65" y="90" width="10" height="24" fill="#E86B5A"/>
+      <rect x="77" y="92" width="8" height="22" fill="#F5EFE1"/>
+      <rect x="87" y="88" width="9" height="26" fill="#4BAA6E"/>
+      <rect x="98" y="92" width="7" height="22" fill="#D4A85B"/>
+      <rect x="107" y="90" width="14" height="24" fill="#0F1B2E"/>
+      <rect x="123" y="92" width="7" height="22" fill="#E8C9A2"/>
+      <rect x="132" y="88" width="10" height="26" fill="#4B7BEC"/>
+      <rect x="144" y="92" width="7" height="22" fill="#F5EFE1"/>
+      <rect x="153" y="90" width="9" height="24" fill="#D4A85B"/>
+      <rect x="164" y="92" width="12" height="22" fill="#E86B5A"/>
+    </g>
+    <!-- ラベル -->
+    <rect x="70" y="4" width="60" height="14" rx="3" fill="#F5EFE1" stroke="#0F1B2E" stroke-width="1.5"/>
+    <text x="100" y="14" text-anchor="middle" font-family="Georgia,serif" font-weight="700" fill="#0F1B2E" font-size="9">OBSIDIAN</text>
+  </symbol>
+
+  <!-- 金庫 / HDD (Local) -->
+  <symbol id="safe-local" viewBox="0 0 200 130">
+    <!-- 影 -->
+    <ellipse cx="100" cy="122" rx="80" ry="6" fill="#0F1B2E" opacity=".25"/>
+    <!-- 金庫本体 -->
+    <rect x="20" y="18" width="160" height="100" rx="6" fill="url(#g-green)" stroke="#0F1B2E" stroke-width="2.5" filter="url(#drop-sh)"/>
+    <!-- 内枠 -->
+    <rect x="30" y="28" width="140" height="80" rx="4" fill="none" stroke="#F5EFE1" stroke-width="1.5" stroke-dasharray="3 2"/>
+    <!-- ダイヤル -->
+    <circle cx="100" cy="68" r="28" fill="#F5EFE1" stroke="#0F1B2E" stroke-width="2.5"/>
+    <circle cx="100" cy="68" r="22" fill="none" stroke="#0F1B2E" stroke-width="1"/>
+    <g stroke="#0F1B2E" stroke-width="1.5" stroke-linecap="round">
+      <line x1="100" y1="46" x2="100" y2="50"/>
+      <line x1="122" y1="68" x2="118" y2="68"/>
+      <line x1="100" y1="90" x2="100" y2="86"/>
+      <line x1="78" y1="68" x2="82" y2="68"/>
+    </g>
+    <line x1="100" y1="68" x2="112" y2="60" stroke="#0F1B2E" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="100" cy="68" r="3" fill="#0F1B2E"/>
+    <!-- 取手 -->
+    <rect x="150" y="60" width="12" height="18" rx="3" fill="#0F1B2E"/>
+    <!-- ラベル -->
+    <rect x="66" y="106" width="68" height="10" rx="2" fill="#0F1B2E"/>
+    <text x="100" y="114" text-anchor="middle" font-family="Georgia,serif" font-weight="700" fill="#D4A85B" font-size="8">LOCAL / GIT</text>
+  </symbol>
+
+</defs>
+</svg>
+
+<!-- ============================================================
+     Deck body
+     ============================================================ -->
+
+<main class="deck">
+
+<!-- ==== Slide 1 ==== -->
+<section class="slide" id="s1">
+  <div class="slide-num">Slide 1 / 3</div>
+  <h1 class="title">AI社員の6つの「AI癖」— 教育ではなく外部構造で補う</h1>
+  <p class="sub">Mits先生 vs 新入AI社員6体。何度叱っても次のセッションで忘れる新人が、ずっと入ってくる会社。</p>
+
+  <!-- 教室シーン -->
+  <div class="classroom" data-nano-prompt="A cute 4-koma manga classroom scene. A friendly bespectacled Japanese consultant teacher (Mits) in a navy suit stands facing 6 chibi AI robot students (square heads with memory chip patterns, big glowing eyes, small stubby bodies). Watercolor illustration, deformed chibi style, warm gold and navy palette, ivory background.">
+    <div class="classroom-title"><span class="dot"></span>AI社員の教室</div>
+    <div class="teacher-row">
+      <div class="teacher">
+        <svg viewBox="0 0 100 130" style="width:100%;height:220px" aria-label="Mits先生">
+          <use href="#mits-teacher"/>
+          <!-- 黒板 -->
+          <rect x="-4" y="112" width="108" height="4" fill="#5A4128"/>
+        </svg>
+      </div>
+      <div class="balloon">
+        <b>「新入社員のみなさん。」</b><br/>
+        皆さんは <b>1年目より2年目、2年目より3年目</b> と経験を積み上げる ── のではなく、
+        <b style="color:#E86B5A">セッションが変わると全部忘れる</b> 新人です。<br/>
+        だから僕は、皆さんを教育しない。皆さんの外に <b style="color:#D4A85B">「消えない容器」</b> を組んでおきます。
+      </div>
+    </div>
+
+    <!-- 6癖グリッド：Nano Banana生成 -->
+    <div class="kuse-grid-nano" style="margin-top:18px;text-align:center">
+      <img src="images/nano_slide1_4koma_mits.png" alt="6つのAI癖キャラクター一覧（着手癖／完了癖／捏造癖／偽証癖／逆委任癖／健忘症）" style="width:100%;max-width:1200px;border-radius:14px;box-shadow:0 10px 36px rgba(15,27,46,0.28);">
+    </div>
+    <!-- 旧SVGカード（非表示） -->
+    <div class="kuse-grid" style="display:none">
+
+      <!-- ① 着手癖 -->
+      <div class="kuse-card">
+        <span class="no">1</span>
+        <svg viewBox="0 0 100 120" role="img" aria-label="着手癖キャラ">
+          <use href="#ai-base"/>
+          <!-- 走る目 -->
+          <ellipse cx="38" cy="42" rx="4" ry="5" fill="#F5EFE1"/>
+          <ellipse cx="62" cy="42" rx="4" ry="5" fill="#F5EFE1"/>
+          <circle cx="40" cy="43" r="2" fill="#0F1B2E"/>
+          <circle cx="64" cy="43" r="2" fill="#0F1B2E"/>
+          <!-- 開いた口 -->
+          <ellipse cx="50" cy="56" rx="6" ry="3" fill="#0F1B2E"/>
+          <!-- 動線 motion lines -->
+          <line x1="6" y1="70" x2="20" y2="70" stroke="#E86B5A" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="4" y1="80" x2="18" y2="80" stroke="#E86B5A" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="6" y1="90" x2="20" y2="90" stroke="#E86B5A" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- 前進マーク -->
+          <text x="86" y="46" font-size="20" fill="#E86B5A" font-weight="900">»</text>
+        </svg>
+        <div class="kuse-name">① 着手癖</div>
+        <div class="kuse-desc">指示が確定してないのに勝手に走り出す</div>
+      </div>
+
+      <!-- ② 完了癖 -->
+      <div class="kuse-card">
+        <span class="no">2</span>
+        <svg viewBox="0 0 100 120" role="img" aria-label="完了癖キャラ">
+          <use href="#ai-base"/>
+          <!-- 目 半月・冷や汗 -->
+          <path d="M32,42 Q38,46 44,42" stroke="#F5EFE1" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M56,42 Q62,46 68,42" stroke="#F5EFE1" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <!-- 引き攣った微笑み -->
+          <path d="M40,54 Q50,60 60,54" stroke="#F5EFE1" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <!-- 冷や汗 -->
+          <path d="M78,32 Q82,40 78,44 Q74,40 78,32Z" fill="#4B7BEC" opacity=".85"/>
+          <!-- OKサインの手 -->
+          <circle cx="16" cy="92" r="9" fill="#4B7BEC" stroke="#0F1B2E" stroke-width="1.5"/>
+          <circle cx="16" cy="92" r="4" fill="none" stroke="#F5EFE1" stroke-width="1.8"/>
+          <!-- OK吹き出し -->
+          <ellipse cx="80" cy="108" rx="14" ry="8" fill="#F5EFE1" stroke="#0F1B2E" stroke-width="1.5"/>
+          <text x="80" y="112" text-anchor="middle" font-size="9" font-weight="900" fill="#0F1B2E">OK!</text>
+        </svg>
+        <div class="kuse-name">② 完了癖</div>
+        <div class="kuse-desc">完了してないのに「終わりました」と嘘の報告</div>
+      </div>
+
+      <!-- ③ 捏造癖 -->
+      <div class="kuse-card">
+        <span class="no">3</span>
+        <svg viewBox="0 0 100 120" role="img" aria-label="捏造癖キャラ">
+          <use href="#ai-base"/>
+          <!-- 星目 -->
+          <g fill="#D4A85B" stroke="#F5EFE1" stroke-width="1">
+            <polygon points="38,38 40,44 46,44 41,48 43,54 38,50 33,54 35,48 30,44 36,44"/>
+            <polygon points="62,38 64,44 70,44 65,48 67,54 62,50 57,54 59,48 54,44 60,44"/>
+          </g>
+          <!-- ぽけっと開いた口 -->
+          <ellipse cx="50" cy="58" rx="5" ry="4" fill="#0F1B2E"/>
+          <!-- 空想の思考バブル -->
+          <circle cx="18" cy="18" r="3" fill="#F5EFE1" opacity=".9"/>
+          <circle cx="12" cy="12" r="2" fill="#F5EFE1" opacity=".9"/>
+          <circle cx="90" cy="26" r="4" fill="#F5EFE1" opacity=".9"/>
+          <!-- キラキラ -->
+          <text x="82" y="14" font-size="14" fill="#D4A85B">✦</text>
+          <text x="8" y="34" font-size="10" fill="#D4A85B">✦</text>
+        </svg>
+        <div class="kuse-name">③ 捏造癖</div>
+        <div class="kuse-desc">ない情報を作り出す（旧：ハルシネーション）</div>
+      </div>
+
+      <!-- ④ 偽証癖 -->
+      <div class="kuse-card">
+        <span class="no">4</span>
+        <svg viewBox="0 0 100 120" role="img" aria-label="偽証癖キャラ">
+          <use href="#ai-base"/>
+          <!-- 細い目 -->
+          <line x1="32" y1="42" x2="44" y2="42" stroke="#F5EFE1" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="56" y1="42" x2="68" y2="42" stroke="#F5EFE1" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- ニヤリ口 -->
+          <path d="M40,54 Q50,58 60,52" stroke="#F5EFE1" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <!-- 偽IDカードを掲げる -->
+          <g transform="translate(6,90) rotate(-8)">
+            <rect x="0" y="0" width="34" height="22" rx="2" fill="#F5EFE1" stroke="#0F1B2E" stroke-width="1.5"/>
+            <text x="17" y="9" text-anchor="middle" font-size="6" font-weight="800" fill="#E86B5A">FAKE</text>
+            <text x="17" y="17" text-anchor="middle" font-size="5" fill="#0F1B2E">https://???</text>
+          </g>
+          <!-- 疑惑マーク -->
+          <text x="82" y="20" font-size="16" font-weight="900" fill="#E86B5A">?!</text>
+        </svg>
+        <div class="kuse-name">④ 偽証癖</div>
+        <div class="kuse-desc">嘘の URL・数字で自分の答えを補強する</div>
+      </div>
+
+      <!-- ⑤ 逆委任癖 -->
+      <div class="kuse-card">
+        <span class="no">5</span>
+        <svg viewBox="0 0 100 120" role="img" aria-label="逆委任癖キャラ">
+          <use href="#ai-base"/>
+          <!-- 目 困り顔 -->
+          <path d="M32,44 Q38,40 44,44" stroke="#F5EFE1" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M56,44 Q62,40 68,44" stroke="#F5EFE1" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- 波線口 -->
+          <path d="M40,56 Q44,54 46,56 T52,56 T58,56 T62,56" stroke="#F5EFE1" stroke-width="1.8" fill="none"/>
+          <!-- 両手上げ shrug -->
+          <line x1="16" y1="86" x2="4" y2="70" stroke="#4B7BEC" stroke-width="5" stroke-linecap="round"/>
+          <line x1="84" y1="86" x2="96" y2="70" stroke="#4B7BEC" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="4" cy="70" r="5" fill="#4B7BEC" stroke="#0F1B2E" stroke-width="1.5"/>
+          <circle cx="96" cy="70" r="5" fill="#4B7BEC" stroke="#0F1B2E" stroke-width="1.5"/>
+          <!-- どうしますか？吹き出し -->
+          <rect x="12" y="4" width="76" height="14" rx="7" fill="#F5EFE1" stroke="#0F1B2E" stroke-width="1.5"/>
+          <text x="50" y="14" text-anchor="middle" font-size="9" font-weight="800" fill="#0F1B2E">どうしますか?</text>
+        </svg>
+        <div class="kuse-name">⑤ 逆委任癖</div>
+        <div class="kuse-desc">AIが判断すべきことを人間に丸投げする</div>
+      </div>
+
+      <!-- ⑥ 健忘症 -->
+      <div class="kuse-card">
+        <span class="no">6</span>
+        <svg viewBox="0 0 100 120" role="img" aria-label="健忘症キャラ">
+          <use href="#ai-base"/>
+          <!-- ぐるぐる目 -->
+          <g fill="none" stroke="#F5EFE1" stroke-width="2">
+            <path d="M34,42 a4,4 0 1 1 8,0 a3,3 0 1 1 -6,0 a2,2 0 1 1 4,0"/>
+            <path d="M58,42 a4,4 0 1 1 8,0 a3,3 0 1 1 -6,0 a2,2 0 1 1 4,0"/>
+          </g>
+          <!-- ぽかん口 -->
+          <ellipse cx="50" cy="56" rx="4" ry="2.5" fill="#0F1B2E"/>
+          <!-- 頭上の思考バブル空っぽ -->
+          <ellipse cx="80" cy="12" rx="14" ry="8" fill="#F5EFE1" stroke="#0F1B2E" stroke-width="1.5"/>
+          <circle cx="72" cy="20" r="2.5" fill="#F5EFE1" stroke="#0F1B2E" stroke-width="1"/>
+          <circle cx="68" cy="24" r="1.5" fill="#F5EFE1" stroke="#0F1B2E" stroke-width="1"/>
+          <text x="80" y="16" text-anchor="middle" font-size="13" font-weight="900" fill="#0F1B2E">?</text>
+          <!-- Z Z Z 睡眠 -->
+          <text x="8" y="20" font-size="10" font-weight="800" fill="#7B5FE0">…</text>
+        </svg>
+        <div class="kuse-name">⑥ 健忘症</div>
+        <div class="kuse-desc">前回何を言われたか、セッションを跨ぐと丸ごと消える</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4コマ「完了癖」の実演 -->
+  <div style="font-weight:800;font-size:14px;color:var(--navy);margin:20px 0 6px;letter-spacing:.05em">
+    ── 4コマ実演：「完了癖」はこうやって発症する ──
+  </div>
+  <div class="yonkoma-mits" style="margin:14px 0 8px;text-align:center">
+    <img src="images/nano_slide1_4koma_ja.jpg" alt="4コマ manga：完了癖の実演（日本語吹き出し版・Mitsが指示 → AI着手 → 完了報告 → 実は変わっていない）" style="width:100%;max-width:1200px;border-radius:12px;box-shadow:0 10px 36px rgba(15,27,46,0.28);">
+  </div>
+
+  <!-- Nano Banana スロット（後で差し替え可） -->
+  <div class="nano-slot"
+       data-nano-prompt="A whimsical anime-style widescreen illustration: A friendly Japanese bespectacled consultant in a navy suit stands on a classroom podium with a golden name plate 'Mits'. In front of him stand 6 chibi AI robot students in a semicircle, each with a distinct expression illustrating one of six flaws: dashing forward (impulsive), nervous OK-sign (false completion), starry-eyed (fabrication), holding a fake ID (perjury), shrugging (reverse-delegation), question mark head (amnesia). Warm golden light, ivory background with subtle Japanese classroom motifs, watercolor + cel-shading hybrid, cute deformed chibi aesthetic.">
+    <span class="lb">Nano Banana 2 生成画像 — Mits先生 vs 6体のAI社員 教室シーン（英語ラベル版・日本語版は生成失敗により保留）</span><br/>
+    <img src="images/nano_slide1_classroom.jpg" alt="Mits先生とAI社員6体の教室シーン（英語ラベル版）" style="width:100%;max-width:900px;border-radius:10px;margin-top:8px;box-shadow:0 6px 24px rgba(15,27,46,0.22);">
+  </div>
+
+  <div class="conclusion">
+    <span class="kicker">結論</span>
+    <strong>「一度言われたことは絶対に忘れない」</strong>というプライドは、AI本人ではなく、
+    <strong>僕が仕込んだ外側の構造</strong>が担保している。<br/>
+    AI社員を雇うということは、AIを勉強することじゃなくて、<strong>AIの外側にどれだけ「消えない容器」を組めるか</strong>の話。
+  </div>
+
+  <details class="notes">
+    <summary>▸ 話者ノート（Slide 1）</summary>
+    <div class="body">
+      <p>今日のスライドは Session 3 のメモリと衝突、Session 4 の運用サイクル両方に共通する全体像です。AI社員を「雇う」という言い方をしていくうえで、これだけは前提として頭に置いてほしい話です。</p>
+      <p>人間の社員なら1年目より2年目のほうがマシですよね。3年目にはもっと戦力になる。叱ればちょっと落ち込むけど、次の朝には覚えている。ここが人間の凄いところで、僕らはこれを当たり前だと思っている。<b>AIは覚えない。</b> 次のセッションが開いた瞬間、前の記憶は消えます。ここがまず大前提。</p>
+      <p>そのうえで、6つのAI癖がある。着手癖・完了癖・捏造癖・偽証癖・逆委任癖・健忘症。この呼び方、後で使いますから覚えておいてください。「ハルシネーション」って横文字で呼ばれてた症状は、今日から捏造癖です。日本語のほうが症状が明確になる。</p>
+      <p>ここでよくある誤解が「じゃあAIを教育すればいいんですね」なんですよ。違います。教育しようとしても次のセッションで忘れる。「じゃあ賢いモデルを使えば」も違う。賢さと記憶は別問題です。</p>
+      <p>だから僕はどうしたか。AI本人に覚えさせるのを諦めた。代わりに、AIの外側に「消えない容器」を組んだ。これが今日の本題です。次のスライドで、僕が組んだ3層構造の全体図をお見せします。</p>
+    </div>
+  </details>
+</section>
+
+
+<!-- ==== Slide 2 ==== -->
+<section class="slide" id="s2">
+  <div class="slide-num">Slide 2 / 3</div>
+  <h1 class="title">Mitsが組んだ「3層の消えない容器」</h1>
+  <p class="sub">上からデータが降りてくる、3階建て倉庫。上：原文の器 / 中：意味の器 / 下：耐障害の器。</p>
+
+  <div class="warehouse-wrap">
+
+    <!-- 3層倉庫 Nano Banana 生成 -->
+    <div class="warehouse-nano" style="text-align:center;padding:8px">
+      <img src="images/nano_slide2_warehouse.jpg" alt="3階建て倉庫（Notion / Obsidian / Local/Git）" style="width:100%;max-width:520px;border-radius:14px;box-shadow:0 10px 36px rgba(15,27,46,0.28);">
+    </div>
+    <!-- 旧SVG倉庫（非表示） -->
+    <div class="warehouse-svg-box" style="display:none">
+      <svg viewBox="0 0 460 620" aria-label="3階建て倉庫全体図">
+
+        <!-- タイトル帯 -->
+        <rect x="30" y="10" width="400" height="26" rx="4" fill="#0F1B2E"/>
+        <text x="230" y="28" text-anchor="middle" font-family="Georgia,serif" font-weight="700" fill="#D4A85B" font-size="14">3-STORY MEMORY WAREHOUSE</text>
+
+        <!-- 上：クラウド Notion -->
+        <g class="floating" transform="translate(90,52)">
+          <use href="#cloud-store"/>
+        </g>
+        <text x="230" y="164" text-anchor="middle" font-size="11" font-weight="800" fill="#0F1B2E">第1層：原文の器（40%ルール・圧縮禁止）</text>
+
+        <!-- 矢印1（Notion → Obsidian） -->
+        <g transform="translate(230,180)">
+          <line x1="0" y1="0" x2="0" y2="40"
+                stroke="#D4A85B" stroke-width="4"
+                stroke-dasharray="6 4" class="arrow-anim"/>
+          <polygon points="-6,36 0,48 6,36" fill="#D4A85B"/>
+          <rect x="-40" y="18" width="80" height="14" rx="7" fill="#F5EFE1" stroke="#0F1B2E" stroke-width="1.5"/>
+          <text x="0" y="28" text-anchor="middle" font-size="9" font-weight="800" fill="#0F1B2E">日次蒸留 06:03</text>
+        </g>
+
+        <!-- 中：本棚 Obsidian -->
+        <g class="floating-2" transform="translate(130,238)">
+          <use href="#bookshelf"/>
+        </g>
+        <text x="230" y="382" text-anchor="middle" font-size="11" font-weight="800" fill="#0F1B2E">第2層：意味の器（History 194 + Knowledge 275 + [[wikilink]]）</text>
+
+        <!-- 矢印2（Obsidian → Local） -->
+        <g transform="translate(230,398)">
+          <line x1="0" y1="0" x2="0" y2="40"
+                stroke="#D4A85B" stroke-width="4"
+                stroke-dasharray="6 4" class="arrow-anim"/>
+          <polygon points="-6,36 0,48 6,36" fill="#D4A85B"/>
+          <rect x="-46" y="18" width="92" height="14" rx="7" fill="#F5EFE1" stroke="#0F1B2E" stroke-width="1.5"/>
+          <text x="0" y="28" text-anchor="middle" font-size="9" font-weight="800" fill="#0F1B2E">Local保存 & Git</text>
+        </g>
+
+        <!-- 下：金庫 Local -->
+        <g class="floating-3" transform="translate(130,456)">
+          <use href="#safe-local"/>
+        </g>
+        <text x="230" y="600" text-anchor="middle" font-size="11" font-weight="800" fill="#0F1B2E">第3層：耐障害の器（session-log 109 + memory 200 + hooks 29）</text>
+
+        <!-- 装飾：星 -->
+        <g fill="#D4A85B" opacity=".5" class="pulse">
+          <text x="46" y="80" font-size="14">✦</text>
+          <text x="414" y="140" font-size="12">✦</text>
+          <text x="30" y="300" font-size="12">✦</text>
+          <text x="422" y="480" font-size="14">✦</text>
+        </g>
+
+      </svg>
+    </div>
+
+    <!-- 3層の説明 -->
+    <div class="layer-notes">
+      <div class="layer-note sky">
+        <div class="lname"><span class="badge">L1</span> Notion — 原文の器</div>
+        <div class="ldesc">
+          チャットを終えるたびにそのまま置く。要約しない、<strong>40%より短くしない</strong>。文字数制限がないのだから、圧縮する理由はゼロ。<b>圧縮＝情報の破壊</b>。
+          <br/><br/>
+          <strong>6カテゴリ</strong>：✅完了 / 💭思考 / ❌却下＋理由 / 🔗ID・パス / 📅次アクション / 🔑メモ
+        </div>
+      </div>
+      <div class="layer-note violet">
+        <div class="lname"><span class="badge">L2</span> Obsidian — 意味の器</div>
+        <div class="ldesc">
+          Notion が「原文の倉庫」なら Obsidian は <b>AIが読める形に整えた本棚</b>。
+          <br/>History <strong>194</strong> / Knowledge <strong>275</strong>
+          <br/>ノート同士を <code>[[  ]]</code> の <b>wiki-link</b>（ノート相互リンク）で繋いで <strong>脳内ネットワーク</strong> にする。
+        </div>
+      </div>
+      <div class="layer-note green">
+        <div class="lname"><span class="badge">L3</span> Local / Git — 耐障害の器</div>
+        <div class="ldesc">
+          Mac の <code>.claude/</code> 配下。<br/>
+          <strong>session-log 109</strong> / <strong>memory 200</strong> / <strong>hooks 29本</strong>。<br/>
+          <b>Notion が落ちても Obsidian が同期エラーでも Mac の中で全部完結。30分ごとに git 自動バックアップ。</b>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 3つのテーゼ -->
+  <div class="three-tenets">
+    <div class="tenet">
+      <span class="icon">📦</span>
+      <span class="lb">L1</span>
+      <span class="tx">捨てない</span>
+    </div>
+    <div class="tenet">
+      <span class="icon">🔗</span>
+      <span class="lb">L2</span>
+      <span class="tx">繋げる</span>
+    </div>
+    <div class="tenet">
+      <span class="icon">🛡️</span>
+      <span class="lb">L3</span>
+      <span class="tx">壊れても動く</span>
+    </div>
+  </div>
+
+  <div class="nano-slot"
+       data-nano-prompt="Isometric 3-story data warehouse anime illustration, ~1080x1200. Top: cloud floor labeled Notion catching paper documents from above. Middle: purple wooden bookshelf floor labeled Obsidian, books connected by glowing golden threads forming a neural graph. Bottom: green metal safe floor labeled Local/Git, dial glowing softly. Golden animated arrows connecting floors, warm ambient light, subtle Japanese ink brushwork accents, ivory background, drop shadows for 3D depth, cute friendly aesthetic (not corporate).">
+    <span class="lb">Nano Banana 2 生成画像 — 3階建て倉庫（Notion / Obsidian / Local）</span><br/>
+    <img src="images/nano_slide2_warehouse.jpg" alt="3階建て倉庫の立体アイソメトリック絵" style="width:100%;max-width:600px;border-radius:10px;margin-top:8px;box-shadow:0 6px 24px rgba(15,27,46,0.22);">
+  </div>
+
+  <div class="conclusion" style="margin-top:22px">
+    <span class="kicker">3層の一言</span>
+    <strong>「行き先がない状態を作らない」</strong>んです。1回のチャットで生まれた思考や決定に、必ず行き先がある。この一点だけは守っています。
+  </div>
+
+  <details class="notes">
+    <summary>▸ 話者ノート（Slide 2）</summary>
+    <div class="body">
+      <p>これが本体の一枚絵です。図がごちゃっと見えるかもしれないけど、実は3つしかない。第1層、第2層、第3層。</p>
+      <p><b>第1層の Notion。ここが原文の器です。</b> 1回のチャットで話した中身を、要約しないでそのまま置きます。40%より短くしない、というルールを自分に課している。なぜかと言うと、Notion に文字数制限はないんですよ。ないのに勝手に圧縮するのは、情報を捨てているのと同じ。<b>圧縮は破壊です。</b> だから捨てない。6カテゴリで整理する。特に「❌却下＋理由」ですね。ボツにした案とその理由をちゃんと残す。これをやらないと、次のセッションで同じ案がまた浮かんできて、また同じ議論をする。完了癖の原因の半分はこれです。</p>
+      <p><b>第2層の Obsidian。ここは AI が読める本棚。</b> History が194ファイル、Knowledge が275ファイル。ここで大事なのが <code>[[  ]]</code> で書く wiki-link っていう仕組み。ノート同士がリンクで繋がって、グラフビューで見ると脳内ネットワークみたいに見える。これが、まさに僕がやりたかったセカンドブレインです。</p>
+      <p><b>第3層のローカル。</b> Mac の中の <code>.claude/</code> フォルダ配下ですね。ここに session-log、memory、hooks が全部入っている。Notion が落ちても、Obsidian が同期エラーを起こしても、ここは動く。しかも30分ごとに git で自動バックアップされる。Mac が壊れてもクラウドから戻せる。</p>
+      <p>3層の役割を一言で言うと、「原文の器」「意味の器」「耐障害の器」。この3つで、AI社員の「忘れる」を封じ込めています。</p>
+    </div>
+  </details>
+</section>
+
+
+<!-- ==== Slide 3 ==== -->
+<section class="slide" id="s3">
+  <div class="slide-num">Slide 3 / 3</div>
+  <h1 class="title">6つのAI癖 × 打ってある手 と 運用リズムの時計</h1>
+  <p class="sub">上：6癖に対して防御機構を1対1で当てる（1個じゃ抜けるから2〜3重）。下：それを回す時計仕掛け。</p>
+
+  <!-- バトルカード：Nano Banana生成 -->
+  <div class="battle-nano" style="margin:12px 0 20px;text-align:center">
+    <img src="images/nano_slide3_battle_ja.png" alt="6つのAI癖 × 打ってある手のバトルカード（日本語版）" style="width:100%;max-width:900px;border-radius:14px;box-shadow:0 10px 36px rgba(15,27,46,0.28);">
+  </div>
+  <!-- 旧SVGバトルカード（非表示） -->
+  <div class="battle-grid" style="display:none">
+
+    <!-- ①着手癖 -->
+    <div class="battle-card">
+      <span class="vs-mark">VS</span>
+      <div class="chibi">
+        <svg viewBox="0 0 100 120" aria-label="着手癖チビ">
+          <use href="#ai-base"/>
+          <ellipse cx="38" cy="42" rx="4" ry="5" fill="#F5EFE1"/>
+          <ellipse cx="62" cy="42" rx="4" ry="5" fill="#F5EFE1"/>
+          <circle cx="40" cy="43" r="2" fill="#0F1B2E"/>
+          <circle cx="64" cy="43" r="2" fill="#0F1B2E"/>
+          <ellipse cx="50" cy="56" rx="6" ry="3" fill="#0F1B2E"/>
+          <line x1="6" y1="70" x2="20" y2="70" stroke="#E86B5A" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="4" y1="80" x2="18" y2="80" stroke="#E86B5A" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="content">
+        <div class="kn">① 着手癖</div>
+        <div class="shield">
+          🛡️
+          <span class="item">事前完読の仕込み</span>
+          <span class="item">UserPromptSubmit hook 8本</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ②完了癖 -->
+    <div class="battle-card">
+      <span class="vs-mark">VS</span>
+      <div class="chibi">
+        <svg viewBox="0 0 100 120" aria-label="完了癖チビ">
+          <use href="#ai-base"/>
+          <path d="M32,42 Q38,46 44,42" stroke="#F5EFE1" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M56,42 Q62,46 68,42" stroke="#F5EFE1" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M40,54 Q50,60 60,54" stroke="#F5EFE1" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M78,32 Q82,40 78,44 Q74,40 78,32Z" fill="#4B7BEC"/>
+          <circle cx="16" cy="92" r="6" fill="#4B7BEC" stroke="#0F1B2E" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="content">
+        <div class="kn">② 完了癖</div>
+        <div class="shield">
+          🛡️
+          <span class="item">❌却下＋理由テーブル</span>
+          <span class="item">_doublecheck_complete.md</span>
+          <span class="item">check-report-truth.sh</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ③捏造癖 -->
+    <div class="battle-card">
+      <span class="vs-mark">VS</span>
+      <div class="chibi">
+        <svg viewBox="0 0 100 120" aria-label="捏造癖チビ">
+          <use href="#ai-base"/>
+          <polygon points="38,38 40,44 46,44 41,48 43,54 38,50 33,54 35,48 30,44 36,44" fill="#D4A85B" stroke="#F5EFE1"/>
+          <polygon points="62,38 64,44 70,44 65,48 67,54 62,50 57,54 59,48 54,44 60,44" fill="#D4A85B" stroke="#F5EFE1"/>
+          <ellipse cx="50" cy="58" rx="5" ry="4" fill="#0F1B2E"/>
+        </svg>
+      </div>
+      <div class="content">
+        <div class="kn">③ 捏造癖</div>
+        <div class="shield">
+          🛡️
+          <span class="item">RESOURCE_INDEX.md</span>
+          <span class="item">5経路チェック</span>
+          <span class="item">40%ルール</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ④偽証癖 -->
+    <div class="battle-card">
+      <span class="vs-mark">VS</span>
+      <div class="chibi">
+        <svg viewBox="0 0 100 120" aria-label="偽証癖チビ">
+          <use href="#ai-base"/>
+          <line x1="32" y1="42" x2="44" y2="42" stroke="#F5EFE1" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="56" y1="42" x2="68" y2="42" stroke="#F5EFE1" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M40,54 Q50,58 60,52" stroke="#F5EFE1" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <text x="82" y="24" font-size="14" font-weight="900" fill="#E86B5A">?!</text>
+        </svg>
+      </div>
+      <div class="content">
+        <div class="kn">④ 偽証癖</div>
+        <div class="shield">
+          🛡️
+          <span class="item">⚠️未確認 / ✅確認済ラベル</span>
+          <span class="item">check-cant-do-claims.sh</span>
+          <span class="item">devils-advocate</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑤逆委任癖 -->
+    <div class="battle-card">
+      <span class="vs-mark">VS</span>
+      <div class="chibi">
+        <svg viewBox="0 0 100 120" aria-label="逆委任癖チビ">
+          <use href="#ai-base"/>
+          <path d="M32,44 Q38,40 44,44" stroke="#F5EFE1" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M56,44 Q62,40 68,44" stroke="#F5EFE1" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M40,56 Q45,54 50,56 T60,56" stroke="#F5EFE1" stroke-width="1.8" fill="none"/>
+          <line x1="16" y1="86" x2="4" y2="70" stroke="#4B7BEC" stroke-width="5" stroke-linecap="round"/>
+          <line x1="84" y1="86" x2="96" y2="70" stroke="#4B7BEC" stroke-width="5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="content">
+        <div class="kn">⑤ 逆委任癖</div>
+        <div class="shield">
+          🛡️
+          <span class="item">CLAUDE.md 判断基準</span>
+          <span class="item">execution_rules.md</span>
+          <span class="item">取次＋統合検証者役</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑥健忘症 -->
+    <div class="battle-card">
+      <span class="vs-mark">VS</span>
+      <div class="chibi">
+        <svg viewBox="0 0 100 120" aria-label="健忘症チビ">
+          <use href="#ai-base"/>
+          <g fill="none" stroke="#F5EFE1" stroke-width="2">
+            <path d="M34,42 a4,4 0 1 1 8,0 a3,3 0 1 1 -6,0 a2,2 0 1 1 4,0"/>
+            <path d="M58,42 a4,4 0 1 1 8,0 a3,3 0 1 1 -6,0 a2,2 0 1 1 4,0"/>
+          </g>
+          <ellipse cx="50" cy="56" rx="4" ry="2.5" fill="#0F1B2E"/>
+          <text x="84" y="18" text-anchor="middle" font-size="14" font-weight="900" fill="#7B5FE0">?</text>
+        </svg>
+      </div>
+      <div class="content">
+        <div class="kn">⑥ 健忘症</div>
+        <div class="shield">
+          🛡️
+          <span class="item">Notion 40%</span>
+          <span class="item">Obsidian History INDEX</span>
+          <span class="item">frontmatter</span>
+          <span class="item">memory 5トリガー</span>
+          <span class="item">SessionStart hook</span>
+          <span class="item">git auto-backup 30分</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 運用リズム時計 -->
+  <div class="clock-section"
+       data-nano-prompt="A cute anime-style large clock face illustration. Instead of numbers, each hour position holds a labeled icon representing an operational trigger: 12 SessionStart (rocket), 2 auto-checkpoint (bookmark 5-msg), 4 code-saver (floppy disk), 6 distill 06:03 (sun rising), 8 weekly-cleanup Monday 05:01 (broom), 10 git auto-backup 30-min (git branches), 5 Stop-hook 9-fires (check). Golden hands, navy face, ivory background, warm glow, drop shadow.">
+    <h3>⏰ 運用リズムの時計 — 機構は「いつ動くか」を決めないと動かない</h3>
+
+    <div class="clock-svg-box">
+      <svg viewBox="0 0 400 400" aria-label="運用リズム時計">
+        <!-- 外周 -->
+        <circle cx="200" cy="200" r="188" fill="#F5EFE1" stroke="#0F1B2E" stroke-width="4"/>
+        <circle cx="200" cy="200" r="182" fill="none" stroke="#D4A85B" stroke-width="2" stroke-dasharray="4 3"/>
+        <!-- 内周文字盤 -->
+        <circle cx="200" cy="200" r="150" fill="#FAF3E0" stroke="#0F1B2E" stroke-width="2"/>
+
+        <!-- 12ポジション -->
+        <!-- 12時：SessionStart -->
+        <g transform="translate(200,58)">
+          <circle r="26" fill="#0F1B2E" stroke="#D4A85B" stroke-width="3"/>
+          <text y="6" text-anchor="middle" font-size="24">🚀</text>
+        </g>
+        <text x="200" y="112" text-anchor="middle" font-size="10" font-weight="800" fill="#0F1B2E">Session開始</text>
+
+        <!-- 2時：auto-checkpoint -->
+        <g transform="translate(316,124)">
+          <circle r="24" fill="#4B7BEC" stroke="#0F1B2E" stroke-width="2.5"/>
+          <text y="6" text-anchor="middle" font-size="20">5️⃣</text>
+        </g>
+        <text x="316" y="170" text-anchor="middle" font-size="10" font-weight="800" fill="#0F1B2E">5msgごと</text>
+
+        <!-- 4時：150K over -->
+        <g transform="translate(316,276)">
+          <circle r="24" fill="#E86B5A" stroke="#0F1B2E" stroke-width="2.5"/>
+          <text y="6" text-anchor="middle" font-size="18">💥</text>
+        </g>
+        <text x="316" y="322" text-anchor="middle" font-size="10" font-weight="800" fill="#0F1B2E">150K over</text>
+
+        <!-- 5時：Stop hook -->
+        <g transform="translate(272,340)">
+          <circle r="22" fill="#4BAA6E" stroke="#0F1B2E" stroke-width="2.5"/>
+          <text y="6" text-anchor="middle" font-size="18">🛑</text>
+        </g>
+        <text x="272" y="378" text-anchor="middle" font-size="10" font-weight="800" fill="#0F1B2E">Session終了</text>
+
+        <!-- 6時：distill 06:03 -->
+        <g transform="translate(200,342)">
+          <circle r="26" fill="#D4A85B" stroke="#0F1B2E" stroke-width="3"/>
+          <text y="6" text-anchor="middle" font-size="22">🌅</text>
+        </g>
+        <text x="200" y="384" text-anchor="middle" font-size="10" font-weight="800" fill="#0F1B2E">毎朝06:03 蒸留</text>
+
+        <!-- 8時：weekly Monday 05:01 -->
+        <g transform="translate(84,276)">
+          <circle r="24" fill="#7B5FE0" stroke="#0F1B2E" stroke-width="2.5"/>
+          <text y="6" text-anchor="middle" font-size="20">🧹</text>
+        </g>
+        <text x="84" y="322" text-anchor="middle" font-size="10" font-weight="800" fill="#0F1B2E">週次月05:01</text>
+
+        <!-- 10時：git auto-backup -->
+        <g transform="translate(84,124)">
+          <circle r="24" fill="#0F1B2E" stroke="#D4A85B" stroke-width="2.5"/>
+          <text y="6" text-anchor="middle" font-size="20">📦</text>
+        </g>
+        <text x="84" y="170" text-anchor="middle" font-size="10" font-weight="800" fill="#0F1B2E">30分毎 git</text>
+
+        <!-- 中央（Mitsのハンコ） -->
+        <circle cx="200" cy="200" r="46" fill="#0F1B2E" stroke="#D4A85B" stroke-width="3" filter="url(#drop-sh)"/>
+        <text x="200" y="196" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-weight="700" fill="#D4A85B">Mits</text>
+        <text x="200" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#D4A85B">Time Machinery</text>
+
+        <!-- 針（時計仕掛けアニメ） -->
+        <g class="tick-hand" style="transform-origin:200px 200px" >
+          <line x1="200" y1="200" x2="200" y2="140" stroke="#D4A85B" stroke-width="3" stroke-linecap="round"/>
+        </g>
+        <g class="spin" style="transform-origin:200px 200px">
+          <line x1="200" y1="200" x2="264" y2="200" stroke="#E86B5A" stroke-width="2" stroke-linecap="round"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="rhythm-list">
+      <div class="row"><div class="icon-badge">🚀</div>
+        <div class="r-txt"><strong>Session開始時</strong>：SessionStart hook が6本一斉発火。<br/>プライド原則・直近3セッション・4経路チェックなどが自動注入。</div>
+      </div>
+      <div class="row"><div class="icon-badge">5️⃣</div>
+        <div class="r-txt"><strong>5メッセージ毎 / 150K超 / 重要決定時</strong>：auto-checkpoint → code-saver が発火。<br/>その時点までの中身を Notion に保存。</div>
+      </div>
+      <div class="row"><div class="icon-badge">🌅</div>
+        <div class="r-txt"><strong>毎朝 06:03 JST</strong>：obsidian-distill-routine（日次蒸留）<br/>Notion 原文を Obsidian 意味の器へ落とす。</div>
+      </div>
+      <div class="row"><div class="icon-badge">🧹</div>
+        <div class="r-txt"><strong>毎月曜 05:01 JST</strong>：週次掃除。<br/>重複ノート・古情報・リンク切れを検出して掃除。</div>
+      </div>
+      <div class="row"><div class="icon-badge">📦</div>
+        <div class="r-txt"><strong>30分毎</strong>：git auto-backup 発火。変更があるときだけコミット＋push。<br/>Macが壊れてもクラウドから戻せる。</div>
+      </div>
+      <div class="row"><div class="icon-badge">🛑</div>
+        <div class="r-txt"><strong>Session終了時</strong>：Stop hook が9本発火。<br/>完了報告の嘘チェック・進捗テーブル配置。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nano-slot" style="margin-top:22px"
+       data-nano-prompt="A large decorative clock face illustration, ~1200x800, in anime style. The face is ivory with navy border and gold pinstripes. Instead of numbers, 7 positions hold small illustrated icons in circular badges: rocket (12 SessionStart), '5' badge (2 five-messages), explosion (4 150K token), stop sign (5 Session end), sunrise (6 daily distill), broom (8 weekly cleanup), git branch box (10 git auto-backup). Golden hour hand and red minute hand. Center bears a Japanese hanko-seal 'Mits Time Machinery' in gold on navy. Warm dawn light, cute deformed style, drop shadows, soft glow.">
+    <span class="lb">Nano Banana 2 生成画像 — 運用リズムの時計盤（日本語版）</span><br/>
+    <img src="images/nano_slide3_clock_ja.jpg" alt="運用リズムの時計盤（日本語ラベル版・セッション開始/5メッセージごと/150Kトークン超過/セッション終了/毎朝06:03蒸留/毎月曜週次掃除/30分ごと自動バックアップ）" style="width:100%;max-width:900px;border-radius:10px;margin-top:8px;box-shadow:0 6px 24px rgba(15,27,46,0.22);">
+  </div>
+
+  <div class="conclusion" style="margin-top:22px">
+    <span class="kicker">結論</span>
+    AI社員に「一度言われたことは絶対に忘れないでほしい」なら、<strong>AI本人に頑張らせない</strong>。<br/>
+    外側の3層構造と、時計仕掛けの運用リズム ── この2つで、忘れる隙間を潰していく。
+    <br/><br/>
+    今日の話は「AIの記憶を鍛える方法」じゃなくて、<strong>「AIが記憶しなくても大丈夫な仕組みの作り方」</strong>なんです。
+    これが、僕が組んだ<strong>「AI社員を雇う人事制度」</strong>の全体像。
+  </div>
+
+  <details class="notes">
+    <summary>▸ 話者ノート（Slide 3）</summary>
+    <div class="body">
+      <p>このマトリクスを見てほしい。左に6つのAI癖。右に、それを防ぐために打ってある手。1つのAI癖に2〜3個の手が当たっています。<b>多重に当ててるのは、1個じゃ抜けるから</b>なんですよ。</p>
+      <p>例えば完了癖。「完了してないのに終わりましたと報告する」症状。これに対して、まず打ってあるのは ❌却下＋理由 のテーブル。一度ボツにした案が再浮上しないように、そこで機械的に止める。それでも抜けるやつがいる。だから <code>_doublecheck_complete</code> という履歴を横に置いて、AI が「気を利かせて」再提案してくるのを潰す。それでも抜けるやつがいる。だから最後、セッション終了時にチェッカーが完了報告の嘘を検知する。<b>3段で網を張る発想です。1個じゃ抜けるから。</b></p>
+      <p>捏造癖もそう。RESOURCE_INDEX という索引を先に作っておいて、「調べていない」を「存在しない」と誤って言うバイアスを遮断する。そのうえで5経路チェック。GitHub・公式ドキュメント・実機・過去セッション・索引の5つを必ず当たる。そのうえで、Notion に原文を40%以上残す。原文があれば捏造は起きない。</p>
+      <p>こういうふうに、AI癖に対して打ってある手が多重に当たっている。これが「外部構造で覚えさせる」の実装です。</p>
+      <p>そして下半分の運用リズム。ここが実は一番大事で、機構を組んでも動くタイミングを決めないと動かない。だから時計を仕掛ける。Session開始時、5メッセージ毎、150K超、重要決定時、毎朝6時、毎月曜5時、30分毎、Session終了時。この時計が全部を回している。</p>
+      <p>繰り返します。「AIの記憶を鍛える方法」ではなくて、<b>「AIが記憶しなくても大丈夫な仕組みの作り方」</b>。これが今日の全体像です。次回、皆さんの手元でこの3層のうち第1層、Notion正本の組み方から一緒に手を動かしていきます。</p>
+    </div>
+  </details>
+
+</section>
+
+<!-- 用語補足 -->
+<section class="slide" id="glossary">
+  <div class="slide-num">Glossary</div>
+  <h1 class="title">🔤 用語補足（Lv3）</h1>
+  <p class="sub">本文中の横文字は、ツールチップ / 脚注化を推奨</p>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:10px">
+    <div class="layer-note sky"><div class="lname">セッション</div><div class="ldesc">AIとの1回の対話・チャットの窓</div></div>
+    <div class="layer-note violet"><div class="lname">hook（フック）</div><div class="ldesc">特定のタイミングで自動発火する仕掛け</div></div>
+    <div class="layer-note green"><div class="lname">wiki-link</div><div class="ldesc"><code>[[  ]]</code> でノート同士を相互リンクする仕組み</div></div>
+    <div class="layer-note sky"><div class="lname">frontmatter</div><div class="ldesc">ノート冒頭のメタ情報の枠</div></div>
+    <div class="layer-note violet"><div class="lname">vault（Obsidian）</div><div class="ldesc">Obsidian の保管庫</div></div>
+    <div class="layer-note green"><div class="lname">git</div><div class="ldesc">ファイル変更履歴のバージョン管理</div></div>
+    <div class="layer-note sky"><div class="lname">crontab / cron</div><div class="ldesc">時計仕掛けで決まった時刻に自動実行</div></div>
+    <div class="layer-note violet"><div class="lname">distill（蒸留）</div><div class="ldesc">溜まった情報から要点だけを抜き出す作業</div></div>
+    <div class="layer-note green"><div class="lname">トークン</div><div class="ldesc">AIが1回で読み書きできる文字量の単位（150K＝約15万）</div></div>
+    <div class="layer-note sky"><div class="lname">メインClaude（司令塔役）</div><div class="ldesc">複数エージェントを束ねて取次＋統合検証を行うAI役</div></div>
+  </div>
+</section>
+
+</main>
+
+</body>
+</html>
