@@ -255,6 +255,49 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
   .lesson-card { break-inside: avoid; page-break-inside: avoid; }
   .back-nav, .back-nav-bottom { display: none; }
 }
+
+/* 追記ボックス（2026-07-12〜） */
+.update-box {
+  margin: 20px 0;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, rgba(122, 155, 126, 0.10), rgba(212, 168, 91, 0.06));
+  border: 1px solid var(--sage);
+  border-left: 4px solid var(--sage);
+  border-radius: 8px;
+}
+.update-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  margin-bottom: 8px;
+  background: var(--sage);
+  color: white;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 12px;
+  letter-spacing: 0.05em;
+}
+.update-box h4 { color: var(--sage); margin-top: 0; }
+.update-box h3 { color: var(--gold); margin-top: 0; }
+.update-box ul { margin: 8px 0; padding-left: 20px; }
+.update-box li { line-height: 1.7; margin: 3px 0; }
+.update-box p { margin: 6px 0; }
+.update-box table { margin-top: 8px; font-size: 12px; }
+.update-box a { color: var(--gold); font-weight: 600; }
+
+.phase-progress { width: 100%; border-collapse: collapse; }
+.phase-progress th, .phase-progress td { padding: 6px 8px; border: 1px solid var(--line); text-align: center; font-size: 12px; }
+.phase-progress th { background: var(--highlight); font-family: var(--sans); }
+.phase-progress td:first-child { text-align: left; font-family: var(--mincho); font-weight: 600; }
+
+.dashboard-link-box {
+  margin: 12px 0 24px;
+  padding: 12px 20px;
+  background: rgba(212, 168, 91, 0.08);
+  border: 1px dashed var(--gold);
+  border-radius: 6px;
+  text-align: center;
+}
 </style>
 </head>
 <body>
@@ -275,6 +318,11 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
   <p><span class="label">目的</span>独学で「1音を最後まで鳴らし切る」精度を上げ、3ヶ月で「不安定 → やや不安定」に到達する</p>
   <p><span class="label">元データ</span>メロディ / 大空と大地 / Wherever you are / 努努 · 4曲全て9軸フル計測</p>
 </section>
+
+<div class="dashboard-link-box" data-updated="2026-07-12">
+  <div class="update-tag">📝 2026-07-12 追記</div>
+  <p>📊 最新の実測データ・全体比較・成長サマリは <a href="./" style="color:var(--gold); font-weight:600;">カラオケ練習AI ダッシュボード</a> で確認可能。</p>
+</div>
 
 <h2>ヒアリング所見（実測データ要約）</h2>
 
@@ -297,6 +345,14 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
 </ul>
 
 <h3>4曲比較（9軸フル実測）</h3>
+
+<div class="update-box" data-updated="2026-07-12">
+  <div class="update-tag">📝 2026-07-12 追記 — セッション拡張</div>
+  <p>本 curriculum 作成時：<strong>4 曲 / 4 セッション</strong></p>
+  <p>2026-07-12 現在：<strong>5 曲 / 7 セッション</strong>（メロディ #2・大空 #2・旅姿六人衆 #1 追加）</p>
+  <p>最新の全体比較・実測数値は <a href="./" target="_blank">ダッシュボード</a> を参照。</p>
+</div>
+
 <div class="compare-wrap">
 <table class="compare">
 <thead><tr>
@@ -356,6 +412,20 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
 <div class="diag">
   <div class="diag-title">6. リズムは全 4 曲で「不安定」</div>
   <p>BPM 118〜138 全域で不安定。補講 S1（しらスタ手拍子）の重要度を格上げ、Phase A 併走で早めに取り入れる推奨。</p>
+</div>
+
+<div class="update-box" data-updated="2026-07-12">
+  <div class="update-tag">📝 2026-07-12 追記 — 成長エビデンス</div>
+  <h4>🌱 Mits の癖は改善可能（実測で証明）</h4>
+  <p>メロディ v2 実測で以下が改善：</p>
+  <ul>
+    <li>HNR: 6.56 → <strong>7.76 dB</strong>（+1.20）</li>
+    <li>Shimmer: 17.4% → <strong>14.3%</strong>（-3.07）</li>
+    <li>Jitter: 2.62% → <strong>2.33%</strong>（-0.29）</li>
+    <li>ロングトーン: 3 → <strong>4 本</strong>（+1）</li>
+    <li>ビブラート: 6 → <strong>13 回</strong>（+7・倍増）</li>
+  </ul>
+  <p><strong>「Mits の癖」は変えられる</strong>。診断結果の Shimmer 高値も練習で改善できる証拠。</p>
 </div>
 
 <h3>曲難易度 3 タイプ分類</h3>
@@ -627,6 +697,14 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
     </a>
 
   </div>
+
+  <div class="update-box" data-updated="2026-07-12">
+    <div class="update-tag">📝 2026-07-12 追記</div>
+    <h4>✅ Phase C アプローチ 実証済み</h4>
+    <p><strong>メロディ v2（2026-07-12 実測）</strong>で低音ノイズが <strong>10 → 4 カ所（-60%）</strong> に激減。
+    Phase C の練習アプローチ（フレーズ末の息だけ止めて音程キープ）は<strong>実際に効果あり</strong>。
+    同アプローチを大空・Wherever・努努 にも展開推奨。</p>
+  </div>
 </section>
 
 <!-- ============================== Phase D ============================== -->
@@ -807,6 +885,32 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
   </div>
 </div>
 
+<div class="update-box" data-updated="2026-07-12">
+  <div class="update-tag">📝 2026-07-12 追記 — 新曲追加</div>
+  <h3>🎤 曲 5: 旅姿六人衆（サザンオールスターズ / 1983）</h3>
+  <p><strong>ジャンル</strong>：民謡調・ノヴェルティ寄り（サザン初期）</p>
+  <p><strong>音域</strong>：C#2 〜 F#4（29 半音・約 2.4 オクターブ）</p>
+  <p><strong>実測特徴</strong>：装飾テクニック密度 4 曲中最高</p>
+  <ul>
+    <li>こぶし 51 回 / ビブラート 24 回（幅 184 cent・深め）/ しゃくり 34 回 / フォール 22 回</li>
+    <li>合計 131 発動 = 曲想（民謡調）に対する<strong>正解の歌唱アプローチ</strong>ができている</li>
+  </ul>
+  <p><strong>推奨</strong>：Mits の民謡素養を活かせるジャンル。演歌/民謡系の楽曲追加の可能性あり。</p>
+</div>
+
+<div class="update-box" data-updated="2026-07-12">
+  <div class="update-tag">📝 2026-07-12 追記 — Phase 進度</div>
+  <h3>🎯 曲別 Phase 進度チェックリスト</h3>
+  <table class="phase-progress">
+    <tr><th>曲</th><th>Phase 0 座学</th><th>Phase A 座標</th><th>Phase B 短音率</th><th>Phase C 低音ノイズ</th><th>Phase D cent 変動</th><th>Phase E ロング延伸</th></tr>
+    <tr><td>メロディ</td><td>✅</td><td>✅ v1</td><td>❌ 変化なし</td><td>✅ v2 で -60%</td><td>△ わずかに改善</td><td>△ +1 本</td></tr>
+    <tr><td>大空と大地の中で</td><td>✅</td><td>✅ v2 で E5 拡張</td><td>❌ 悪化</td><td>△ わずかに悪化</td><td>△ 継続課題</td><td>❌ 12→8 本</td></tr>
+    <tr><td>Wherever you are</td><td>—</td><td>✅ v1</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>努努</td><td>—</td><td>✅ v1</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>旅姿六人衆</td><td>—</td><td>✅ v1</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+  </table>
+</div>
+
 <!-- ============================== 補講 ============================== -->
 <h2>補講枠（本編12週で足りない時 / 気分転換に）</h2>
 <div class="lesson-grid">
@@ -883,6 +987,13 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
 <tr><td>Shimmer</td><td>17.1%</td><td class="best">13% 以下</td></tr>
 </tbody></table>
 
+<div class="update-box" data-updated="2026-07-12">
+  <div class="update-tag">📝 2026-07-12 追記</div>
+  <p><strong>Wherever you are / 努努 はまだ v2 未挑戦</strong>。</p>
+  <p>メロディ・大空で改善実証したアプローチ（Phase C 低音ノイズ消し・Phase E ロング延伸）を、
+  次回はこの 2 曲にも展開して効果測定推奨。</p>
+</div>
+
 <h3>C タイプ・ロック限界キー（努努・腕試し用）</h3>
 <table>
 <thead><tr><th>指標</th><th>Now (原曲キー)</th><th>Phase E 完走後・-3 半音下げの目標</th></tr></thead>
@@ -894,12 +1005,26 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
 <tr><td>ビブラート</td><td>2 回</td><td class="best">6 回以上（装飾の余裕を取り戻す）</td></tr>
 </tbody></table>
 
+<div class="update-box" data-updated="2026-07-12">
+  <div class="update-tag">📝 2026-07-12 追記</div>
+  <p><strong>Wherever you are / 努努 はまだ v2 未挑戦</strong>。</p>
+  <p>メロディ・大空で改善実証したアプローチ（Phase C 低音ノイズ消し・Phase E ロング延伸）を、
+  次回はこの 2 曲にも展開して効果測定推奨。</p>
+</div>
+
 <h3>キー戦略の原則（4曲データから確定）</h3>
 <blockquote>
 <strong>1.</strong> その日の 1 曲目は必ず A タイプ（バラードで声帯を温めてから難曲へ）<br>
 <strong>2.</strong> B/C タイプは -2〜-3 半音下げから始める（原曲キー挑戦は Shimmer 崩壊・声質全乱れ）<br>
 <strong>3.</strong> 同セッションで 3 曲以上歌う日は最後の 1 曲を A タイプに戻す（クールダウン）
 </blockquote>
+
+<div class="update-box" data-updated="2026-07-12">
+  <div class="update-tag">📝 2026-07-12 追記 — 音域可能性の再評価</div>
+  <p>大空と大地の中で v2 で <strong>E5 到達</strong>（F#4 → E5・+10 半音・+1 オクターブ弱）。</p>
+  <p>Mits の音域は<strong>キー下げ一択ではなく、キー戻し・キー上げも試す価値あり</strong>。</p>
+  <p>ただしトレードオフあり：v2 では音域拡張の代償に、短音率・ロング数・抑揚が僅かに後退。</p>
+</div>
 
 <h3>曲選びの推奨</h3>
 <ul>
@@ -908,6 +1033,12 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
 <li><strong>Week 12（Phase E）</strong>: F#4／G4 の助走安定＋ロングトーン延伸を A タイプで測る</li>
 <li><strong>Phase E 以降 or 半年〜1年後</strong>: C タイプ努努を -3 半音下げで腕試し（原曲キーは声帯保護の観点から今は非推奨）</li>
 </ul>
+
+<div class="update-box" data-updated="2026-07-12">
+  <div class="update-tag">📝 2026-07-12 追記 — 進捗ペース</div>
+  <p>2026-07-10 → 2026-07-12（2 日）で 3 セッション追加。</p>
+  <p><strong>ペース見直し</strong>：3 ヶ月目標達成の可能性は高い。各曲最低 3 挑戦・月 5〜7 セッションが現実的。</p>
+</div>
 
 <div class="footer">
   <div>元データ: 歌の教材動画DB (Notion 89本) + カラオケ練習AI 4曲9軸実測</div>
