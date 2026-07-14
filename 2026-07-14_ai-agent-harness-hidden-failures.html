@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIツール本体の見えない障害モード3つ｜AIエージェント経営シラバス Session 3-4 副資料 — Mits Reports</title>
+<meta name="description" content="AIの癖（着手癖・完了癖・捏造癖・偽証癖・逆委任癖・健忘症）を直しても防げない、AIツール本体側で起きる障害モード3つ。バックアップ運用・安全装置の実機確認・圧縮頻度の監視の3点を1人型起業家向けに解説。">
+<meta property="og:title" content="AIツール本体の見えない障害モード3つ｜Session 3-4 副資料">
+<meta property="og:description" content="あなたのプロンプトの問題じゃない。AIツール本体側で起きる3つの障害モードと、1人型起業家の自己防衛策。">
+<meta property="og:type" content="article">
+<style>
+  :root {
+    --navy: #1a3a52;
+    --navy-light: #2c5575;
+    --ivory: #f7f3ea;
+    --paper: #fbfaf5;
+    --ink: #2a2a2a;
+    --gray: #7a7a7a;
+    --line: #d8d4ca;
+    --ok: #2d8659;
+    --warn: #c89020;
+    --ng: #b04848;
+    --gold: #b89544;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.75;
+    font-size: 15px;
+    padding: 20px 16px;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  header.report-head {
+    background: var(--navy);
+    color: var(--ivory);
+    padding: 36px 40px;
+    border-radius: 6px;
+    margin-bottom: 24px;
+  }
+  header.report-head .tag {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 3px;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+  }
+  header.report-head h1 {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+  header.report-head .meta {
+    font-size: 13px;
+    color: rgba(247,243,234,0.7);
+    line-height: 1.7;
+  }
+
+  section { margin-bottom: 28px; }
+  h2 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--navy);
+    border-left: 4px solid var(--gold);
+    padding-left: 12px;
+    margin-bottom: 16px;
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 18px 0 10px;
+  }
+  p { margin-bottom: 10px; }
+  code { background: var(--ivory); padding: 1px 5px; border-radius: 2px; font-size: 13px; }
+  strong { color: var(--navy); }
+
+  .conclusion {
+    background: white;
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--gold);
+    border-radius: 4px;
+    padding: 20px 24px;
+  }
+  .conclusion .lead {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+  .conclusion ul { padding-left: 22px; margin-top: 8px; }
+  .conclusion li { margin-bottom: 6px; font-size: 14px; }
+
+  .engines {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .engine-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 16px;
+  }
+  .engine-card.rec { border-top: 4px solid var(--warn); }
+  .engine-card .vendor { font-size: 11px; color: var(--gray); letter-spacing: 0.05em; margin-bottom: 4px; }
+  .engine-card .name { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 8px; line-height:1.4; }
+  .engine-card .judgement { font-size: 12px; font-weight: 600; color: var(--warn); margin-bottom: 8px; }
+  .engine-card .reason { font-size: 12px; color: var(--ink); line-height: 1.6; }
+
+  .case {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 22px 26px;
+    margin-bottom: 16px;
+  }
+  .case .case-num {
+    display: inline-block;
+    background: var(--warn);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+  }
+  .case h3 {
+    font-size: 18px;
+    margin: 0 0 14px 0;
+    line-height: 1.4;
+  }
+  .case .subhead {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+    background: var(--ivory);
+    padding: 6px 10px;
+    border-radius: 3px;
+    margin: 18px 0 10px;
+    display: block;
+  }
+  .case .quote-box {
+    background: var(--ivory);
+    border-left: 3px solid var(--navy-light);
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+  .case .quote-box .src {
+    display: block;
+    font-size: 11px;
+    color: var(--gray);
+    margin-top: 6px;
+  }
+  .case ul { padding-left: 22px; margin: 8px 0; }
+  .case ul li { margin-bottom: 5px; font-size: 14px; }
+  .case .self-defense {
+    background: #f0f7f3;
+    border: 1px solid var(--ok);
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin-top: 14px;
+  }
+  .case .self-defense .head {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ok);
+    margin-bottom: 8px;
+  }
+  .case .self-defense ul { padding-left: 20px; margin: 0; }
+  .case .self-defense li { font-size: 13px; margin-bottom: 4px; }
+
+  .close-box {
+    background: white;
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    padding: 22px 26px;
+  }
+  .close-box p { font-size: 14px; margin-bottom: 10px; }
+  .close-box p:last-child { margin-bottom: 0; }
+  .close-box .em {
+    background: var(--ivory);
+    padding: 12px 16px;
+    border-radius: 3px;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 12px 0;
+  }
+
+  footer.report-foot {
+    background: var(--ivory);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px 22px;
+    font-size: 12px;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+  footer.report-foot strong { color: var(--navy); display:block; margin-bottom: 6px; }
+  footer.report-foot a {
+    color: var(--navy-light);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--navy-light);
+    word-break: break-all;
+  }
+  footer.report-foot ul { padding-left: 20px; margin-top: 6px; margin-bottom: 12px; }
+  footer.report-foot li { margin-bottom: 4px; }
+
+  @media (max-width: 720px) {
+    body { font-size: 14px; padding: 12px 8px; }
+    header.report-head { padding: 24px 20px; }
+    header.report-head h1 { font-size: 20px; }
+    .engines { grid-template-columns: 1fr; }
+    .case { padding: 18px 18px; }
+    .case h3 { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="report-head">
+    <span class="tag">SESSION 3-4 副資料</span>
+    <h1>AIツール本体の見えない障害モード3つ<br>— あなたの操作ミスじゃない層で起きること</h1>
+    <div class="meta">
+      発行: 2026-07-14 / 対象: BE-02 AIエージェント経営 2ヶ月グルコン メンバー<br>
+      関連: <a href="2026-07-11_ai-agent-backup-system.html" style="color:rgba(247,243,234,0.85);">2026-07-11 AI社員の6つのAI癖と3層の消えない容器</a> の続編副資料
+    </div>
+  </header>
+
+  <section>
+    <h2>結論先頭</h2>
+    <div class="conclusion">
+      <p class="lead">6つのAI癖を直しても、これは防げないんですよ。</p>
+      <p>前号（2026-07-11）でAIエージェントの「6つの慢性癖」と、それを封じる「3層の消えない容器」の話をしました。ただ、そこでは扱わなかった層があるんです。</p>
+      <p><strong>AI本体（ツール自体）が、あなたに何も言わずに勝手にやること</strong>。ここで起きる事故はプロンプトの書き方でも、AIに指示の出し方を工夫しても、6つの癖を全部封じても、防げません。あなたが操作していない層で起きるからです。</p>
+      <p style="margin-top:14px;">2026年に入って実際に世界中で報告された3つの障害モードを、Session 3-4 の副資料として整理しました。あなたが今のうちに「これは知ってる」の状態にしておいてください。</p>
+
+      <div class="engines">
+        <div class="engine-card rec">
+          <div class="vendor">障害モード ①</div>
+          <div class="name">ツール本体の自動お掃除でデータが消える</div>
+          <div class="judgement">⚠️ あなたの操作の外側で起きる</div>
+          <div class="reason">作業履歴が数千件・数百GBの単位で予告なく消える事例が複数件。</div>
+        </div>
+        <div class="engine-card rec">
+          <div class="vendor">障害モード ②</div>
+          <div class="name">安全装置（hook）自体のバグですり抜ける</div>
+          <div class="judgement">⚠️ 「守ってるはず」が守っていない</div>
+          <div class="reason">「実行前に確認しますね」と設定したのに、条件次第で黙って承認される。</div>
+        </div>
+        <div class="engine-card rec">
+          <div class="vendor">障害モード ③</div>
+          <div class="name">セッション内部の異常圧縮で請求が跳ねる</div>
+          <div class="judgement">⚠️ 気づく前に高額請求</div>
+          <div class="reason">短時間に何度も「文脈圧縮」が走ると、その分課金される事例。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <section>
+    <h2>障害モード① ツール本体の自動お掃除でデータが消える</h2>
+
+    <div class="case">
+      <span class="case-num">CASE 01</span>
+      <h3>あなたが何も指示していないのに、AIツール本体のバックグラウンド処理でデータが消える</h3>
+
+      <p>AIエージェントに何かを指示しました、というのが「あなたが操作した層」。それに対して<strong>指示していないのに、ツール本体が裏で勝手に動く処理</strong>があります。作業ディレクトリのお掃除（garbage collection）、ツール自身のアップデート、内部データベースの形式変換、といった処理です。</p>
+
+      <p>これらは<strong>作業画面に一切表示されません</strong>。「削除しました」も「バックアップしました」も出ない。それどころか、AIとの会話履歴にも残らない。「気づいたら消えていた」という起こり方をします。</p>
+
+      <span class="subhead">実際に起きた事例（原文引用）</span>
+
+      <div class="quote-box">
+        「作業用の隔離フォルダ（worktree）が、5回、破壊された」<br>
+        <em style="color:var(--gray);">"destroyed five times"</em>
+        <span class="src">出典: <a href="https://github.com/anthropics/claude-code/issues/77268" target="_blank" rel="noopener">GitHub Issues - claude-code #77268</a></span>
+      </div>
+
+      <div class="quote-box">
+        「作業関連のお掃除機能が、約800GBのフォルダ参照（junction）を消してしまった」<br>
+        <em style="color:var(--gray);">"~800 GB / harness housekeeping"</em>
+        <span class="src">出典: <a href="https://github.com/anthropics/claude-code/issues/75275" target="_blank" rel="noopener">GitHub Issues - claude-code #75275</a></span>
+      </div>
+
+      <div class="quote-box">
+        「セッション書き起こしが、2,300件、一度に静かに消えた」<br>
+        <em style="color:var(--gray);">"silently deleted every session transcript"（約2,300件）</em>
+        <span class="src">出典: <a href="https://github.com/anthropics/claude-code/issues/62041" target="_blank" rel="noopener">GitHub Issues - claude-code #62041</a></span>
+      </div>
+
+      <span class="subhead">なぜ「AIの癖」を直しても防げないのか</span>
+
+      <p>これらは全部、<strong>AIエージェントが「よし、削除しよう」と判断して実行したことじゃない</strong>んです。ツール本体（Claude Code というアプリ）自身が、裏側で自動的に走らせている「お掃除の仕組み」がやっています。</p>
+
+      <p>だから「AIに『消していい？』と聞かせる」「6つの癖のチェックをする」「hookで確認を挟む」——これらの対策は<strong>全部届かない</strong>んです。AIは何もしていないから、AIを直しても何も変わらない。あなたの側の運用でしか、防ぎようがない。</p>
+
+      <div class="self-defense">
+        <div class="head">✅ 1人型起業家の自己対処法</div>
+        <ul>
+          <li><strong>業務データをAIツール本体の中に置きっぱなしにしない</strong>。Google Drive・GitHub・Notion のような「AIツールの外」に必ず本体を持つ。</li>
+          <li><strong>大事なファイルは週1で外部バックアップ</strong>。特に「あの相談履歴、あとで見返そう」と思っているログ類。</li>
+          <li><strong>AIツール自体のアップデート直後は要注意</strong>。データ形式が変わって不整合を起こす事例が多い。アップデート前に一度エクスポートしておく。</li>
+          <li><strong>「ツール本体で運用してる」と気づいたら、外側に一次コピーを退避</strong>。ツール本体は「作業場」であって「保管庫」ではない。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <section>
+    <h2>障害モード② 安全装置（hook）自体のバグですり抜ける</h2>
+
+    <div class="case">
+      <span class="case-num">CASE 02</span>
+      <h3>「実行前に必ず確認する」と設定した安全装置が、実装バグで機能していない</h3>
+
+      <p>AIエージェントを運用するとき、「これをやる前に必ず聞いてね」というブレーキ（hook・フック）を仕込みます。危険な削除・書き込み・送信の前に、ユーザーに一度確認を取らせる仕組み。The Innovation でも Session 3-4 で扱います。</p>
+
+      <p>ただ、その安全装置自体がバグを持っていて、<strong>「聞くはず」の場面で聞かずに黙って承認してしまう</strong>ことがあります。設定は正しく書いてある。それでも動かない。</p>
+
+      <span class="subhead">実際に起きた事例（原文引用）</span>
+
+      <div class="quote-box">
+        「hookが『ask（ユーザーに聞く）』を返しているのに、権限バイパスモードの下では黙って承認されてしまう。<br>
+        兄弟のhookが『deny（拒否）』を返すのは正しく動く」<br>
+        <em style="color:var(--gray);">"sibling hook emitting deny works"</em>
+        <span class="src">出典: <a href="https://github.com/anthropics/claude-code/issues/77212" target="_blank" rel="noopener">GitHub Issues - claude-code #77212</a></span>
+      </div>
+
+      <div class="quote-box">
+        「サンドボックス（隔離環境）を無効化する設定が、公式ドキュメントに明記されていない状態で存在していた」
+        <span class="src">出典: <a href="https://github.com/anthropics/claude-code/issues/72960" target="_blank" rel="noopener">GitHub Issues - claude-code #72960</a> - <code>dangerouslyDisableSandbox</code></span>
+      </div>
+
+      <span class="subhead">なぜ「AIの癖」を直しても防げないのか</span>
+
+      <p>hookは「AIを止めるための仕組み」です。AI本体が悪さをしても、hookが「待って」と割り込む。だからhookを仕込んでいれば安心——という前提が崩れる話です。</p>
+
+      <p><strong>hookが実装バグで動いていない</strong>と、AIが従順であるほど危ない。「大丈夫、hook が止めてくれるはず」の思い込みで、AIに広い権限を渡してしまうからです。</p>
+
+      <div class="self-defense">
+        <div class="head">✅ 1人型起業家の自己対処法</div>
+        <ul>
+          <li><strong>hookを設定したら、必ず「本当に発火するか」の実機テストをする</strong>。「設定したから安心」で終わらない。わざと危険操作を試して、止まるか確認する。</li>
+          <li><strong>安全装置は多層に持つ</strong>。hook 一枚に頼らない。ツール側の権限設定（bypass を使わない）・OS 側の権限（ファイル書込許可）・バックアップ、と3層。</li>
+          <li><strong>アップデート直後は hook が壊れやすい</strong>。実装が変わって挙動が変わる。アップデート後は再度テスト。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <section>
+    <h2>障害モード③ セッション内部の異常圧縮で請求が跳ねる</h2>
+
+    <div class="case">
+      <span class="case-num">CASE 03</span>
+      <h3>気づかないうちに「文脈圧縮」が短時間で何度も走って、その分課金される</h3>
+
+      <p>AIとの会話が長くなると、内部で「文脈の圧縮（compaction）」という処理が走ります。過去のやり取りを要約して、短くまとめて保持する仕組み。これ自体は普通のことです。</p>
+
+      <p>ただ、<strong>この圧縮が異常な頻度で発火するバグ</strong>があります。本来は会話全体の使用率が高くなってから走る処理が、まだ余裕がある段階で連続で走る。しかも圧縮のたびに課金される。気づいたときには請求が跳ねている、という起こり方をします。</p>
+
+      <span class="subhead">実際に起きた事例（原文引用）</span>
+
+      <div class="quote-box">
+        「12分の間に3回連続で圧縮が発火した。<br>
+        <em style="color:var(--gray);">12:23:15 / 12:27:49 / 12:35:33</em>」
+        <span class="src">出典: <a href="https://github.com/anthropics/claude-code/issues/76147" target="_blank" rel="noopener">GitHub Issues - claude-code #76147</a></span>
+      </div>
+
+      <span class="subhead">なぜ「AIの癖」を直しても防げないのか</span>
+
+      <p>これはAIが「圧縮しよう」と判断しているわけじゃありません。ツール本体の圧縮判定ロジックが、閾値の計算バグで<strong>過剰に発火してしまっている</strong>。あなたのプロンプトの書き方に関係なく、AIに何を頼んだかにも関係なく、起きます。</p>
+
+      <p>気づく側の負担が大きいのがこの障害モードの厄介なところ。<strong>使っている最中は「ちょっと遅いな」以外の症状がない</strong>。翌月の請求書で初めて気づく。</p>
+
+      <div class="self-defense">
+        <div class="head">✅ 1人型起業家の自己対処法</div>
+        <ul>
+          <li><strong>週1回、AIサービスの使用量ダッシュボードを見る癖をつける</strong>。異常な突出があれば、その日に何があったかを振り返る。</li>
+          <li><strong>「同じ話題で長時間セッションを引きずる」を避ける</strong>。用件が変わったら新しいセッションを開く。圧縮が走る回数自体を減らす。</li>
+          <li><strong>月次予算の上限アラートを設定する</strong>。予算の80%到達で通知を受け取る。異常な請求パターンに翌月まで気づかない状態を作らない。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <section>
+    <h2>まとめ — AIを直すんじゃなくて、外側に受け皿を作る</h2>
+
+    <div class="close-box">
+      <p>Session 3-4 でメインに扱うのは「AIエージェントの6つの慢性癖と、それを封じる3層の消えない容器」です。ここは<strong>AIとの向き合い方</strong>の話。</p>
+
+      <p>今回の副資料はその外側の話です。<strong>AIが何もしていない層で起きる事故</strong>があって、そこは「AIを賢く使う」という発想では届かない。</p>
+
+      <div class="em">
+        AIを直すんじゃない。外側に受け皿を作るんです。
+      </div>
+
+      <p><strong>受け皿の中身は3つだけ。</strong></p>
+      <ul style="padding-left:22px; margin: 8px 0 14px;">
+        <li><strong>バックアップ</strong>：業務データはAIツール本体の中に置きっぱなしにしない。Google Drive / GitHub / Notion に一次コピー。</li>
+        <li><strong>安全装置の実機確認</strong>：hook設定しただけで安心せず、わざと発火させて動作テスト。</li>
+        <li><strong>使用量の定点観測</strong>：週1でダッシュボードを見て、月次予算にアラートを仕込む。</li>
+      </ul>
+
+      <p>この3つが揃っていれば、今回の3障害モードのどれが起きても、事業が止まる規模には広がりません。あとは Session 3-4 でメインの「AI癖対策」と組み合わせれば、AIエージェント経営の下地は整います。</p>
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <footer class="report-foot">
+    <strong>一次資料（GitHub Issues on anthropics/claude-code）</strong>
+    <ul>
+      <li>#77268 worktree recycled: <a href="https://github.com/anthropics/claude-code/issues/77268" target="_blank" rel="noopener">https://github.com/anthropics/claude-code/issues/77268</a></li>
+      <li>#75275 800GB junction loss: <a href="https://github.com/anthropics/claude-code/issues/75275" target="_blank" rel="noopener">https://github.com/anthropics/claude-code/issues/75275</a></li>
+      <li>#62041 session transcript silent delete (2,300件): <a href="https://github.com/anthropics/claude-code/issues/62041" target="_blank" rel="noopener">https://github.com/anthropics/claude-code/issues/62041</a></li>
+      <li>#77212 hook 'ask' silent auto-approve bug: <a href="https://github.com/anthropics/claude-code/issues/77212" target="_blank" rel="noopener">https://github.com/anthropics/claude-code/issues/77212</a></li>
+      <li>#72960 dangerouslyDisableSandbox undocumented: <a href="https://github.com/anthropics/claude-code/issues/72960" target="_blank" rel="noopener">https://github.com/anthropics/claude-code/issues/72960</a></li>
+      <li>#76147 abnormal compaction (12分内3連続発火): <a href="https://github.com/anthropics/claude-code/issues/76147" target="_blank" rel="noopener">https://github.com/anthropics/claude-code/issues/76147</a></li>
+    </ul>
+
+    <strong>関連レポート</strong>
+    <ul>
+      <li>前号: <a href="2026-07-11_ai-agent-backup-system.html">2026-07-11 AI社員の6つのAI癖と、それを防ぐ3層の消えない容器</a></li>
+      <li>本編: <a href="2026-07-05_ai-agent-management-slides.html">2026-07-05 AIエージェント経営 2ヶ月グループコンサルティング｜プレゼンスライド</a></li>
+      <li>シラバス: <a href="2026-07-05_ai-agent-management-syllabus.html">2026-07-05 シラバス</a></li>
+    </ul>
+
+    <strong style="margin-top: 6px;">© 西田光弘個人事務所 / Mits Reports</strong>
+    <div>本レポートは2026-07-14時点で公開されているGitHub Issues本文からの引用に基づく。issue #番号のリンクから各原文を確認できます。</div>
+  </footer>
+
+</div>
+</body>
+</html>
