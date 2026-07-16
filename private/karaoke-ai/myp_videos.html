@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>MYPチャンネル 練習動画マップ — カラオケ練習AI</title>
+<style>
+:root {
+  --navy: #0F1B2E;
+  --ivory: #F5EFE1;
+  --gold: #D4A85B;
+  --sage: #7A9B7E;
+  --rose: #C77B70;
+  --mincho: "Hiragino Mincho ProN", "游明朝", serif;
+  --sans: "Hiragino Sans", "游ゴシック", sans-serif;
+  --mono: "SF Mono", "Menlo", monospace;
+  --bg: var(--ivory);
+  --fg: var(--navy);
+  --line: rgba(15, 27, 46, 0.12);
+  --card-bg: #ffffff;
+  --muted: rgba(15, 27, 46, 0.58);
+  --sub-bg: rgba(212, 168, 91, 0.06);
+  --highlight: rgba(212, 168, 91, 0.14);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: var(--navy);
+    --fg: var(--ivory);
+    --line: rgba(245, 239, 225, 0.14);
+    --card-bg: #17223a;
+    --muted: rgba(245, 239, 225, 0.62);
+    --sub-bg: rgba(212, 168, 91, 0.09);
+    --highlight: rgba(212, 168, 91, 0.18);
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); font-family: var(--sans); }
+body { padding: 40px 48px 120px; max-width: 1200px; margin: 0 auto; }
+h1, h2, h3 { font-family: var(--mincho); font-weight: 600; letter-spacing: 0.02em; }
+h1 { font-size: 30px; margin: 0 0 8px; }
+a { color: var(--gold); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* 戻るボタン */
+.back-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--bg);
+  padding: 12px 0 10px;
+  margin: -40px -48px 24px;
+  padding-left: 48px; padding-right: 48px;
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(6px);
+}
+.back-nav a {
+  display: inline-block;
+  padding: 6px 14px;
+  font-family: var(--mincho); font-size: 13px; font-weight: 600;
+  color: var(--gold);
+  background: rgba(212, 168, 91, 0.10);
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  text-decoration: none;
+  margin-right: 8px;
+  transition: all 0.2s;
+}
+.back-nav a:hover {
+  background: rgba(212, 168, 91, 0.22);
+  transform: translateX(-2px);
+  text-decoration: none;
+}
+
+header.top { margin-bottom: 24px; }
+header.top .sub { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+.overview {
+  padding: 20px 24px;
+  background: linear-gradient(135deg, rgba(212, 168, 91, 0.10), rgba(122, 155, 126, 0.06));
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+  margin: 12px 0 32px;
+}
+.overview p { margin: 4px 0; line-height: 1.75; }
+.overview .label { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; margin-right: 8px; }
+
+/* サマリバー */
+.summary-bars {
+  margin: 12px 0 40px;
+  padding: 20px 24px;
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.summary-bars h3 { margin: 0 0 12px; font-size: 15px; color: var(--gold); }
+.bar-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 60px;
+  align-items: center;
+  gap: 12px;
+  margin: 6px 0;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.bar-row .bar-label {
+  font-family: var(--mincho);
+  font-size: 14px;
+  color: var(--fg);
+  font-weight: 600;
+}
+.bar-row.priority .bar-label::after { content: " 🔴"; }
+.bar-track {
+  height: 12px;
+  background: var(--sub-bg);
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--sage));
+  border-radius: 6px;
+}
+.bar-row.priority .bar-fill {
+  background: linear-gradient(90deg, var(--rose), var(--gold));
+}
+.bar-count {
+  text-align: right;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* Phase セクション */
+.phase-section {
+  margin: 32px 0;
+  padding: 20px 24px;
+  background: var(--sub-bg);
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+}
+.phase-section.priority {
+  background: linear-gradient(135deg, rgba(199, 123, 112, 0.08), rgba(212, 168, 91, 0.05));
+  border-color: var(--rose);
+}
+.phase-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+.phase-name {
+  font-family: var(--mincho);
+  font-size: 22px;
+  margin: 0;
+  color: var(--gold);
+}
+.phase-section.priority .phase-name { color: var(--rose); }
+.phase-count {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: normal;
+  margin-left: 6px;
+}
+.priority-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  background: var(--rose);
+  color: white;
+  border-radius: 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+}
+.phase-desc {
+  font-family: var(--mincho);
+  font-size: 14px;
+  color: var(--muted);
+  margin: 10px 0 14px;
+  line-height: 1.7;
+}
+
+/* 動画リスト */
+.video-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.video-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 12px;
+  border-bottom: 1px dashed var(--line);
+  transition: background 0.15s;
+}
+.video-list li:hover {
+  background: var(--sub-bg);
+}
+.video-list li:last-child { border-bottom: none; }
+.video-list a {
+  flex: 1;
+  color: var(--fg);
+  font-family: var(--mincho);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.video-list a:hover {
+  color: var(--gold);
+  text-decoration: none;
+}
+.vnum {
+  display: inline-block;
+  min-width: 44px;
+  padding: 2px 8px;
+  margin-right: 8px;
+  background: var(--gold);
+  color: white;
+  border-radius: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+}
+.phase-section.priority .vnum { background: var(--rose); }
+.vdur {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+footer {
+  margin-top: 60px;
+  padding-top: 24px;
+  border-top: 1px dashed var(--line);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.8;
+}
+footer a { color: var(--gold); }
+
+@media (max-width: 640px) {
+  body { padding: 20px 20px 80px; }
+  .back-nav { margin: -20px -20px 20px; padding-left: 20px; padding-right: 20px; }
+  .bar-row { grid-template-columns: 100px 1fr 50px; gap: 8px; }
+  .video-list li { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .vdur { margin-left: 52px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="back-nav">
+  <a href="./curriculum_20260710.html">← カリキュラム</a>
+  <a href="./">← ダッシュボード</a>
+</nav>
+
+<header class="top">
+  <h1>🎬 MYPチャンネル 練習動画マップ</h1>
+  <div class="sub">
+    トレーナー <a href="https://www.youtube.com/@myp_channel/videos" target="_blank" rel="noopener">Mitsuhiro Yamashita Project</a>
+    ／全 129 本を Phase 0/A/B/C/D/E に仕分け（2026-07-16 取得）
+  </div>
+</header>
+
+<div class="overview">
+  <p><span class="label">目的</span>Mits のカラオケ練習AIカリキュラム（Phase 0/A/B/C/D/E）に、トレーナー動画を配属してある。「今週どの Phase を強化するか」を決めたら、その Phase のリストから動画を選ぶ運用。</p>
+  <p><span class="label">最優先</span><strong>Phase B（短音率）</strong>と <strong>Phase E（ロングトーン・高音）</strong>が Mits の実測課題（短音率 52-78% / 音域 F#4→E5 拡張中）に直撃する Phase。</p>
+  <p><span class="label">分類方針</span>各動画は primary Phase を 1 個割当（複数 Phase 該当時は最も強い訴求先）。並びは各 Phase 内で動画 # 順（トレーナーの理論構築順）。</p>
+</div>
+
+<section class="summary-bars">
+  <h3>Phase 別本数</h3>
+
+    <div class="bar-row">
+      <a href="#phase-0" class="bar-label">Phase 0</a>
+      <div class="bar-track"><div class="bar-fill" style="width: 14.0%"></div></div>
+      <span class="bar-count">18本</span>
+    </div>
+    <div class="bar-row">
+      <a href="#phase-a" class="bar-label">Phase A</a>
+      <div class="bar-track"><div class="bar-fill" style="width: 20.9%"></div></div>
+      <span class="bar-count">27本</span>
+    </div>
+    <div class="bar-row priority">
+      <a href="#phase-b" class="bar-label">Phase B</a>
+      <div class="bar-track"><div class="bar-fill" style="width: 17.1%"></div></div>
+      <span class="bar-count">22本</span>
+    </div>
+    <div class="bar-row">
+      <a href="#phase-c" class="bar-label">Phase C</a>
+      <div class="bar-track"><div class="bar-fill" style="width: 13.2%"></div></div>
+      <span class="bar-count">17本</span>
+    </div>
+    <div class="bar-row">
+      <a href="#phase-d" class="bar-label">Phase D</a>
+      <div class="bar-track"><div class="bar-fill" style="width: 10.9%"></div></div>
+      <span class="bar-count">14本</span>
+    </div>
+    <div class="bar-row priority">
+      <a href="#phase-e" class="bar-label">Phase E</a>
+      <div class="bar-track"><div class="bar-fill" style="width: 16.3%"></div></div>
+      <span class="bar-count">21本</span>
+    </div>
+    <div class="bar-row">
+      <a href="#phase-x" class="bar-label">範囲外</a>
+      <div class="bar-track"><div class="bar-fill" style="width: 7.8%"></div></div>
+      <span class="bar-count">10本</span>
+    </div>
+</section>
+
+
+<section id="phase-0" class="phase-section">
+  <div class="phase-header">
+    <h2 class="phase-name">Phase 0 — 数値の意味を知る <span class="phase-count">〈18本〉</span></h2>
+    
+  </div>
+  <p class="phase-desc">座学・音楽の仕組み・歌手研究。「なぜ／どういう仕組みで」を掴む。</p>
+  <ul class="video-list">
+    <li><a href="https://www.youtube.com/watch?v=EOJQ4-mV16Q" target="_blank" rel="noopener"><span class="vnum">#1</span> 【ボイトレ基礎】歌が上手くなる最大の要素を教えます｜究極のボイトレ動画のはじまり！</a><span class="vdur">9分11秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=YawtBF9-Eh8" target="_blank" rel="noopener"><span class="vnum">#2</span> ズバ抜けて歌が上手くなる発声 6つのポイント【ボイトレの基礎・基本】</a><span class="vdur">9分32秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=ZmEDwXrOGxM" target="_blank" rel="noopener"><span class="vnum">#3</span> Demonstrate world-class vocal skills! What Japanese singers lack [Voice training basics]</a><span class="vdur">19分28秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=tFOFhaZMN4Y" target="_blank" rel="noopener"><span class="vnum">#14</span> This video is a must-watch for those who dislike their own voice or wonder if their voice cha...</a><span class="vdur">6分14秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=a8Uo8oDiQg4" target="_blank" rel="noopener"><span class="vnum">#22</span> 衝撃！プロも喉声？本物の正しい発声教えます｜歌が上手くなる方法</a><span class="vdur">21分08秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=_5GEfolNtwI" target="_blank" rel="noopener"><span class="vnum">#24</span> 一発で歌が上手くなる発声の方法はコレ【究極のボイトレ】</a><span class="vdur">27分03秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=DSi2Mfyqi9o" target="_blank" rel="noopener"><span class="vnum">#46</span> 歌上達のために知るべき【音楽の4大要素】歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">7分53秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=v5GXvXqt-fM" target="_blank" rel="noopener"><span class="vnum">#62</span> コレが歌がうまくなる方法【最重要キーワード】歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">6分48秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=JuoHBvrcHxo" target="_blank" rel="noopener"><span class="vnum">#68</span> 歌のプロの実演が衝撃！【こんなに変わる】歌が上手くなるための良い歌声と悪い歌声とは</a><span class="vdur">13分57秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=pFwNG-CG6G4" target="_blank" rel="noopener"><span class="vnum">#76</span> Really good male singers Part 1! Singing skills, karaoke improvement, singing ability improv...</a><span class="vdur">10分35秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=uTGk6TDN_Iw" target="_blank" rel="noopener"><span class="vnum">#77</span> Really good male singers Part 2! Singing, karaoke skills, singing ability, voice training ba...</a><span class="vdur">9分35秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=7O1pMwVP6_s" target="_blank" rel="noopener"><span class="vnum">#78</span> 本当に歌が上手い女性歌手！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本</a><span class="vdur">12分56秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=r_JzHfqNl4w" target="_blank" rel="noopener"><span class="vnum">#86</span> 【ボイトレ理論】声は〇〇感が重要？ミックスボイスや地声も裏声も！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本</a><span class="vdur">6分21秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=NA3BkKBn_vY" target="_blank" rel="noopener"><span class="vnum">#88</span> 本当に歌が上手い歌手たちの背景とは？ 歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本</a><span class="vdur">10分13秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=vAapMXmVoKk" target="_blank" rel="noopener"><span class="vnum">#97</span> 歌がうまくなるために何が一番大事か？ 歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">7分33秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=fGeKPgC01ng" target="_blank" rel="noopener"><span class="vnum">#112</span> 歌が上手くなる一番のトレーニングは？カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">6分34秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=8N7Pt4sL1hw" target="_blank" rel="noopener"><span class="vnum">#118</span> 高い声やミックスボイスのお手本になる世界の歌手！カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">14分40秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=StyUtp5DTAg" target="_blank" rel="noopener"><span class="vnum">#120</span> 超一流を1秒で聴き分ける方法を伝授！世界レベルに歌が上手くなるボイストレーニング</a><span class="vdur">22分23秒</span></li>
+  </ul>
+</section>
+<section id="phase-a" class="phase-section">
+  <div class="phase-header">
+    <h2 class="phase-name">Phase A — 現状の座標を掴む <span class="phase-count">〈27本〉</span></h2>
+    
+  </div>
+  <p class="phase-desc">練習環境・姿勢・道具・ルーティン。カラオケに入る前のセットアップ。</p>
+  <ul class="video-list">
+    <li><a href="https://www.youtube.com/watch?v=n4aiIS0SR2Q" target="_blank" rel="noopener"><span class="vnum">#7</span> コレなしでの歌練習はNG｜歌唱力アップに直結すること教えます【歌うまに必要なボイトレ基礎】</a><span class="vdur">8分22秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=Hmg7_vs2CLM" target="_blank" rel="noopener"><span class="vnum">#9</span> I&#x27;ll teach you some extremely effective muscle stretches for talented singers that even profes...</a><span class="vdur">6分47秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=frKXSTlaTFs" target="_blank" rel="noopener"><span class="vnum">#10</span> 自宅でできる歌唱力UPストレッチ【毎日の歌唱力UPトレーニングその④】歌うま！カラオケ上達・プロ歌手に必要なボイトレ基本！</a><span class="vdur">6分53秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=gpf5Fpp8Fhk" target="_blank" rel="noopener"><span class="vnum">#17</span> ボイトレ基礎〈ﾘｯﾌﾟﾛｰﾙ〉間違いの多いトレーニング！【毎日の歌唱力UPトレーニングその⑧】歌うま！カラオケ上達・プロ歌手へのボイトレ基本！</a><span class="vdur">17分04秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=ybuS_u4J4QU" target="_blank" rel="noopener"><span class="vnum">#20</span> アゴを引くのは間違い！日本一正しい歌唱姿勢【正しい基礎を身につけよう】歌うま・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">7分36秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=I3laUw6uBJo" target="_blank" rel="noopener"><span class="vnum">#21</span> 歌唱力向上に欠かせないアプリ｜コレ無しで練習はNG！歌うま・カラオケ上達・プロ歌手へのボイトレ基本！</a><span class="vdur">12分04秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=rGvkM0ebP8w" target="_blank" rel="noopener"><span class="vnum">#23</span> 【基礎の発声練習】男子と女性のやり方は？歌がうまくなるボイトレの基本！</a><span class="vdur">13分18秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=ap2uP4KEHG4" target="_blank" rel="noopener"><span class="vnum">#26</span> Maximize your voice training results in a practice environment! Sing better, improve your kar...</a><span class="vdur">8分29秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=o9ydWKxjaAI" target="_blank" rel="noopener"><span class="vnum">#27</span> 歌の練習【最も早く成長するルーティーン】何をどれくらいやるの？歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">11分20秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=c69GBvsWtaA" target="_blank" rel="noopener"><span class="vnum">#28</span> 目からウロコ！【最も効率的な練習法】を伝授！歌上達に『最重要』　歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">9分26秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=8JFWAfZZIs0" target="_blank" rel="noopener"><span class="vnum">#29</span> How to hold the microphone to improve your singing | Instant change! | Show off the results of...</a><span class="vdur">10分51秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=JegFsQ7I2Ps" target="_blank" rel="noopener"><span class="vnum">#36</span> Only 3 minutes! Training to become a great singer. Improve your singing, karaoke skills, and ...</a><span class="vdur">11分15秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=i6-pzbxWdL8" target="_blank" rel="noopener"><span class="vnum">#65</span> YouTubeボイトレ独学で本気で歌がうまくなるために！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！初心者から上級者まで</a><span class="vdur">4分08秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=cMiv-dClhXw" target="_blank" rel="noopener"><span class="vnum">#66</span> 歌うま続出！一緒にやろうボイトレ【ウィズトレーニング】やり方完全公開！ボイトレ独学にも最適！</a><span class="vdur">26分46秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=w56-mAVjZzk" target="_blank" rel="noopener"><span class="vnum">#72</span> 歌がうまくなる人がやっていること！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">10分34秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=XcmsqR1FIos" target="_blank" rel="noopener"><span class="vnum">#73</span> カラオケでマイクは？皆が間違えてる練習法！ 歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">7分26秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=uB3jX05JtLs" target="_blank" rel="noopener"><span class="vnum">#82</span> 座って歌うときのコツ！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本</a><span class="vdur">5分35秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=mPliCs3k5xU" target="_blank" rel="noopener"><span class="vnum">#83</span> ボイトレで確実に歌がうまくなる方法！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本</a><span class="vdur">7分15秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=ObQWnKi43eI" target="_blank" rel="noopener"><span class="vnum">#87</span> マイクの使い方で歌唱力を上げよう　歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本</a><span class="vdur">6分24秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=azaonG2r2Ms" target="_blank" rel="noopener"><span class="vnum">#90</span> 大声を出さずに歌が上手くなる練習法！ 歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">7分11秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=1JmTDF_wHPI" target="_blank" rel="noopener"><span class="vnum">#93</span> 歌がうまくなる練習曲とは？高い曲やアップテンポや洋楽は？ 歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">8分57秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=QcxC5OXRi6Y" target="_blank" rel="noopener"><span class="vnum">#95</span> 危険！間違ったボイトレ3選！歌上達に遠回りしないために　歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">10分49秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=4muZr3hjw9c" target="_blank" rel="noopener"><span class="vnum">#96</span> How to improve your singing skills at karaoke. Singing well, improving your karaoke skills, ...</a><span class="vdur">7分26秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=B-qmklrYj58" target="_blank" rel="noopener"><span class="vnum">#98</span> ボイトレ中級者によくある歌唱力向上ポイント！ 歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">9分47秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=Ev37cuAIoCc" target="_blank" rel="noopener"><span class="vnum">#101</span> ボイトレ初心者のうちからやっておいて良かったこと！ 歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">9分18秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=npDC-eBh2yw" target="_blank" rel="noopener"><span class="vnum">#102</span> ボイトレ初心者が基礎から学ぶには？ 【歌ウマを目指す皆さんへ】カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">8分14秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=HoOK8y9roFU" target="_blank" rel="noopener"><span class="vnum">#104</span> カラオケでのボイトレ手順　歌の練習の手順について　カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">6分53秒</span></li>
+  </ul>
+</section>
+<section id="phase-b" class="phase-section priority">
+  <div class="phase-header">
+    <h2 class="phase-name">Phase B — 短音率を殺す（最優先課題） <span class="phase-count">〈22本〉</span></h2>
+    <span class="priority-badge">🔴 Mitsの最優先</span>
+  </div>
+  <p class="phase-desc">息支え・呼吸・声量・腹圧。Mits の現状 short_note_ratio 52-78% を減らす直撃領域。</p>
+  <ul class="video-list">
+    <li><a href="https://www.youtube.com/watch?v=Sp3zRzggfx4" target="_blank" rel="noopener"><span class="vnum">#5</span> Teaching authentic abdominal breathing | Voice training for beginners to professionals [Daily ...</a><span class="vdur">21分31秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=Dpk5pfgxKfE" target="_blank" rel="noopener"><span class="vnum">#6</span> 下腹部で動かせない？本物の腹式呼吸を徹底解説｜ボイトレの第一歩をこの動画から</a><span class="vdur">4分14秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=7cltq_hoaG0" target="_blank" rel="noopener"><span class="vnum">#8</span> 腹式呼吸を上達させるストレッチ【毎日の歌唱力UPトレーニングその②】カラオケ上達ボイトレ</a><span class="vdur">5分36秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=1j612-0vYq4" target="_blank" rel="noopener"><span class="vnum">#15</span> ボイトレ基礎は横隔膜トレーニング！【毎日の歌唱力UPトレーニングその⑥息止め】歌がうまくなるボイトレの基本</a><span class="vdur">15分14秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=NCjsMLgMAtA" target="_blank" rel="noopener"><span class="vnum">#16</span> Improve your vocal volume and tone! [Daily Singing Skills Training #7: Exhalation] Sing well!...</a><span class="vdur">9分04秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=OrpNOsw5PZk" target="_blank" rel="noopener"><span class="vnum">#18</span> コレ使えば声量アップや声質改善や声が安定し歌唱力が激変！【毎日の歌唱力UPトレーニングその⑨紙吹き】歌うま！カラオケ上達・プロ歌手へのボイトレ基本！</a><span class="vdur">10分28秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=NQnRaV95eUM" target="_blank" rel="noopener"><span class="vnum">#19</span> The most accurate dog breath technique in Japan! How to properly learn the basics [Daily Sing...</a><span class="vdur">12分25秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=jNed77_FVrg" target="_blank" rel="noopener"><span class="vnum">#25</span> ボイトレ初心者が絶対やってはいけないこと！歌が上手くなる声量の考え方</a><span class="vdur">9分23秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=AiFgsQH85ng" target="_blank" rel="noopener"><span class="vnum">#32</span> 歌が上手くなるブレスの方法【お手本あり】歌うまへのボイトレ基本！</a><span class="vdur">9分23秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=4M1j334MK8s" target="_blank" rel="noopener"><span class="vnum">#33</span> Become a master of abdominal breathing! Sing better, improve your karaoke skills, and become ...</a><span class="vdur">10分01秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=A7Tr1TkWN24" target="_blank" rel="noopener"><span class="vnum">#34</span> 究極の歌うまへ 今後の展開と歌唱マッスルコントロールとは？歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">14分33秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=saA81BfvJC0" target="_blank" rel="noopener"><span class="vnum">#35</span> 歌がうまくなる筋トレ教えます！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">15分38秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=cSutvBNqwyQ" target="_blank" rel="noopener"><span class="vnum">#44</span> 歌のため腹筋をしている人は必見！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">7分18秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=4ubV1JDnTlk" target="_blank" rel="noopener"><span class="vnum">#63</span> 声量UPや正しい声帯閉鎖、究極の発声の基盤となる【横隔膜と腹圧理論】をわかりやすく解説！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">11分29秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=3LTpbsiIBJc" target="_blank" rel="noopener"><span class="vnum">#64 Part1</span> 声量が激変！究極の発声の【腹圧と横隔膜】歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">9分14秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=MhNqLJMD4xY" target="_blank" rel="noopener"><span class="vnum">#64 Part2</span> How to create abdominal pressure to see how serious the ultimate voice training is [Ab...</a><span class="vdur">8分02秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=08djn5NLrDM" target="_blank" rel="noopener"><span class="vnum">#67</span> 歌唱力向上トレーニング【ドッグブレス・シャベル方式】歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">4分22秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=a1AuYXaQl_Q" target="_blank" rel="noopener"><span class="vnum">#69</span> 歌唱力向上トレーニング【ドッグブレス・スピード方式】歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">7分24秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=r8_0XRqeRW0" target="_blank" rel="noopener"><span class="vnum">#75</span> 歌のための効果的・効率的な筋トレ法　歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本</a><span class="vdur">7分07秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=WWHAVODML6g" target="_blank" rel="noopener"><span class="vnum">#81</span> Dramatically increase your vocal volume! How to use your diaphragm. Basics of voice training...</a><span class="vdur">11分43秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=r11HT_6BAbU" target="_blank" rel="noopener"><span class="vnum">#89</span> 歌が上手くなるために腹式呼吸が必要なワケは？ 歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">7分14秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=uYlDeIfppC4" target="_blank" rel="noopener"><span class="vnum">#94</span> 声量が出ない、声が小さい原因を知ろう！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">10分45秒</span></li>
+  </ul>
+</section>
+<section id="phase-c" class="phase-section">
+  <div class="phase-header">
+    <h2 class="phase-name">Phase C — 低音ノイズを消す <span class="phase-count">〈17本〉</span></h2>
+    
+  </div>
+  <p class="phase-desc">喉ケア・声帯管理・共鳴・力み。Mits の low_noise_hits 5-29 に対応。</p>
+  <ul class="video-list">
+    <li><a href="https://www.youtube.com/watch?v=Uzfvnff2ZLY" target="_blank" rel="noopener"><span class="vnum">#4</span> Do you know about body resonance? Explaining the vocal techniques of the world&#x27;s top singers |...</a><span class="vdur">14分47秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=JKtikP-Ls9o" target="_blank" rel="noopener"><span class="vnum">#40</span> Why humming is a no-no [A detour to improving your singing] Basics of voice training to becom...</a><span class="vdur">8分26秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=vtWtukz53No" target="_blank" rel="noopener"><span class="vnum">#41</span> 正しい声の響かせ方とは？【共鳴練習に警告】歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">4分50秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=9ezy4pJeadE" target="_blank" rel="noopener"><span class="vnum">#42</span> 声帯閉鎖がうまくできずハスキーになってしまう人へ！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">4分30秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=iGPZEf-TQ98" target="_blank" rel="noopener"><span class="vnum">#45</span> 【1秒で響きが激変】発声「ん」のコツ！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">4分28秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=FcgIvFJH8l0" target="_blank" rel="noopener"><span class="vnum">#50</span> 低い声（低音発声）を徹底解説！高い声（ミックスボイス）の第一歩目！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">14分38秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=qsppIpeDPN0" target="_blank" rel="noopener"><span class="vnum">#60</span> 歌唱中にアゴや首が力んだらこの動画！高音発声やミックスボイスのステップにも！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">4分40秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=prcU1w2kIIk" target="_blank" rel="noopener"><span class="vnum">#70</span> 歌プロがやってる【喉のケア知識】(前編) 歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">7分39秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=APGFs_DTdEc" target="_blank" rel="noopener"><span class="vnum">#71</span> 歌ってもOK？【喉のケア知識】(後編) 歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">10分23秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=PYTocVTD6Ug" target="_blank" rel="noopener"><span class="vnum">#74</span> 歌に影響する食べ物・飲み物！ 歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">6分10秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=H_S_7496xGI" target="_blank" rel="noopener"><span class="vnum">#80</span> 低音の発声練習の音域について！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本</a><span class="vdur">4分53秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=JLpwupSewiU" target="_blank" rel="noopener"><span class="vnum">#84</span> I&#x27;m in tune, but my voice doesn&#x27;t sound good! Improve your singing, karaoke skills, and voic...</a><span class="vdur">11分32秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=M0oNeMzUM3U" target="_blank" rel="noopener"><span class="vnum">#103</span> 低音で歌がうまいと思わせる方法！カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">11分16秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=Lf0TG4Uzo1U" target="_blank" rel="noopener"><span class="vnum">#107</span> 声量が上がらない人や声が喉でつまる人は必見！カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">7分06秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=ET7Zjifa3nY" target="_blank" rel="noopener"><span class="vnum">#110</span> のど閉めの解決策！横隔膜による影響について　カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">8分27秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=rFD3KKCgYF0" target="_blank" rel="noopener"><span class="vnum">#113</span> 深い声と太い声、歌が上手いのはどっち？カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">12分03秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=tw0XERcgbpU" target="_blank" rel="noopener"><span class="vnum">#117</span> 歌うとかすれ声になる人・首や体が力む人の改善法！カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">9分56秒</span></li>
+  </ul>
+</section>
+<section id="phase-d" class="phase-section">
+  <div class="phase-header">
+    <h2 class="phase-name">Phase D — cent 変動を絞る <span class="phase-count">〈14本〉</span></h2>
+    
+  </div>
+  <p class="phase-desc">ピッチ精度・母音子音・リズム論・イヤトレ。avg_cent_variation 32-37 の改善方向。</p>
+  <ul class="video-list">
+    <li><a href="https://www.youtube.com/watch?v=K2mCKWDacHM" target="_blank" rel="noopener"><span class="vnum">#12</span> 音痴を治す方法は？ 【音がハズれる仕組み】を解説｜カラオケ上達・プロ歌手へのボイトレ基本！</a><span class="vdur">9分24秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=boR6sYUFMks" target="_blank" rel="noopener"><span class="vnum">#30</span> How to open your mouth properly: the foundation of proper vocalization! Improve your singing,...</a><span class="vdur">7分32秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=cbWgekMizL8" target="_blank" rel="noopener"><span class="vnum">#31</span> 正しい発声の基礎となる口の開け方②【母音ごとの開け方】歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">11分21秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=UFqWMJDHp4U" target="_blank" rel="noopener"><span class="vnum">#37</span> 本物のリズム論で驚きの変化！【最強ボイトレリズム理論①】 歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">11分51秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=1b-UP0OwWYU" target="_blank" rel="noopener"><span class="vnum">#38</span> 初心者もプロへ導く【最強ボイトレリズム理論②】リズムの捉え方と練習 歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">23分54秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=vLebDka6bns" target="_blank" rel="noopener"><span class="vnum">#39</span> あなたも一流のボーカルへ【最強ボイトレリズム理論③】リズムの捉え方と練習　 歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">22分22秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=xa-O_rocEgw" target="_blank" rel="noopener"><span class="vnum">#43</span> リズム感UPアーティストの紹介！【ラップのお手本あり】歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">6分08秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=LyYDpoZDhlg" target="_blank" rel="noopener"><span class="vnum">#59</span> タングトリルはNG？【喉絞め解消の舌トレを伝授】高音発声やミックスボイスのステップにも！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">8分08秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=e3OTkig8pMU" target="_blank" rel="noopener"><span class="vnum">#61</span> [Easy &amp; Effective] Tongue Shape for Each Vowel! Great for High-Pitch Vocals and Mixed Voices!...</a><span class="vdur">9分05秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=mBoDp7hfxFE" target="_blank" rel="noopener"><span class="vnum">#85</span> 【ボイトレ理論】子音で歌の上手さが変わる！？歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本</a><span class="vdur">8分21秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=KQgo0LVupmU" target="_blank" rel="noopener"><span class="vnum">#111</span> アップテンポ攻略としてスタッカート！声帯を開く感覚も！カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">6分13秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=cP_mGapg_FE" target="_blank" rel="noopener"><span class="vnum">#116</span> リズム感テンポ感が激変するトレーニング【最強ボイトレリズム理論④】カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">13分34秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=A12EFN7fpjM" target="_blank" rel="noopener"><span class="vnum">#119</span> ボーカルリズム感が激変するトレーニング【最強ボイトレリズム理論⑤】カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">14分22秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=NJYLyAKXhFE" target="_blank" rel="noopener"><span class="vnum">#121</span> 【全部公開】このイヤートレーニングでズバ抜けた歌唱力を手に入れろ！歌が上手くなるボイトレ</a><span class="vdur">19分06秒</span></li>
+  </ul>
+</section>
+<section id="phase-e" class="phase-section priority">
+  <div class="phase-header">
+    <h2 class="phase-name">Phase E — 助走音とロングトーン延伸 <span class="phase-count">〈21本〉</span></h2>
+    <span class="priority-badge">🔴 Mitsの最優先</span>
+  </div>
+  <p class="phase-desc">高音・裏声・ミックス・装飾。Mits の音域拡張（F#4→E5・D5）と longtones_count 直撃。</p>
+  <ul class="video-list">
+    <li><a href="https://www.youtube.com/watch?v=Cf8w8Hyr8b4" target="_blank" rel="noopener"><span class="vnum">#11</span> Get a high-pitched voice in one go! Extremely effective stretches for high-pitched vocalizati...</a><span class="vdur">6分19秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=Z1bu6BFMATA" target="_blank" rel="noopener"><span class="vnum">#13</span> 高い声やミックスボイスを出したい人へ｜声が低い人が高音をマスターできたワケとは？歌が上手くなるボイトレの基本！</a><span class="vdur">10分43秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=nlIll7hslj8" target="_blank" rel="noopener"><span class="vnum">#47</span> The key to getting a high-pitched voice is 〇〇! [For those aiming for high-pitched and mixed v...</a><span class="vdur">7分30秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=YTG_Elswhyw" target="_blank" rel="noopener"><span class="vnum">#48</span> ミックスボイスやミドルボイス、ヘッドボイスやファルセット、全ての基盤はコレだけ！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">9分55秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=xb0PfpUg2XY" target="_blank" rel="noopener"><span class="vnum">#49</span> 高い声（ミックスボイス・ミドルボイス）高音発声への道筋！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">9分44秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=L136Qm-TGHk" target="_blank" rel="noopener"><span class="vnum">#51</span> 裏声入門！ 地声高音や「ミックスボイス」のステップにも！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論！</a><span class="vdur">11分55秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=6qIOsjzX8Ik" target="_blank" rel="noopener"><span class="vnum">#52</span> [Real falsetto] teaching! Steps for high-pitched voice and mixed voice | Voice training basics...</a><span class="vdur">13分56秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=zDX83QBR8jk" target="_blank" rel="noopener"><span class="vnum">#53</span> 高音発声のカギは○○！【裏声ハイトーン】を伝授！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">11分36秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=zrlh7jRBJJw" target="_blank" rel="noopener"><span class="vnum">#54</span> ミックスボイスよりも簡単で強力な高い声の出し方！ｼﾞｬｽﾃｨﾝ･ﾋﾞｰﾊﾞｰ、ﾌﾞﾙｰﾉ･ﾏｰｽﾞ、ｽﾃｨｰﾋﾞｰ･ﾜﾝﾀﾞｰの声を裏声から攻略</a><span class="vdur">12分59秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=2FSfULwO_WQ" target="_blank" rel="noopener"><span class="vnum">#55</span> 【裏声の低音】換声点の攻略、地声高音や「ミックスボイス」のステップにも！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">13分26秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=RLJknkd0UFw" target="_blank" rel="noopener"><span class="vnum">#56</span> Mastering the voice change point! Mixed voice alone is not enough! Improve your singing, kara...</a><span class="vdur">10分37秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=EkNe8IgA5GY" target="_blank" rel="noopener"><span class="vnum">#57</span> To maintain high notes and mixed voice using abdominal vocalization, be conscious of the air ...</a><span class="vdur">10分10秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=kRscscQOtzI" target="_blank" rel="noopener"><span class="vnum">#58</span> 歌唱力向上に必須！裏声の特徴と最適な練習タイミングは？歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><span class="vdur">5分19秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=v08gCf4Cs0o" target="_blank" rel="noopener"><span class="vnum">#79</span> 高い声やミックスボイスに効果のある喉のストレッチ！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本</a><span class="vdur">10分58秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=rMBS3RsWnjI" target="_blank" rel="noopener"><span class="vnum">#91</span> 高い声やミックスボイスが出ない理由を知ろう！ 歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">7分38秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=YNSy5zVvi1k" target="_blank" rel="noopener"><span class="vnum">#105</span> 実力派テク【フェイク】これだけで歌が上手くなる カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">12分15秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=QzJNscozKr4" target="_blank" rel="noopener"><span class="vnum">#106</span> ブルーノマーズも余裕！劇的に歌が上手くなったエピソード　カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">10分29秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=-ApSPyWHHc8" target="_blank" rel="noopener"><span class="vnum">#108</span> ロングトーン練習で歌唱力向上！カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">10分17秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=wMn21BIKUmA" target="_blank" rel="noopener"><span class="vnum">#114</span> 本物の歌うまのテクニック教えます｜歌の感情表現｜歌が上手くなるボイトレ理論</a><span class="vdur">14分15秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=0OktQ0vGR0I" target="_blank" rel="noopener"><span class="vnum">#126</span> How to do vibrato correctly | Professionals reveal easy practice methods! Improve your singing</a><span class="vdur">16分00秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=8fGDETH8ChE" target="_blank" rel="noopener"><span class="vnum">#127</span> 高い声を出す原理とは？ミックスボイスの正体をわかりやすく解説｜高音域の発声の真実</a><span class="vdur">6分08秒</span></li>
+  </ul>
+</section>
+<section id="phase-x" class="phase-section">
+  <div class="phase-header">
+    <h2 class="phase-name">メタ・モチベ・業界話・チャンネル案内 <span class="phase-count">〈10本〉</span></h2>
+    
+  </div>
+  <p class="phase-desc">Phase 0-E に直接該当しないが視聴価値のあるトピック。</p>
+  <ul class="video-list">
+    <li><a href="https://www.youtube.com/watch?v=cAZxghL4F18" target="_blank" rel="noopener"><span class="vnum">#0</span> [MYP Channel Introduction Video] We bring you authentic voice training | Become a world-class s...</a><span class="vdur">2分50秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=9QIfi8Er9Bc" target="_blank" rel="noopener"><span class="vnum">#92</span> カラオケの点数についてプロが批評！ 歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">6分12秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=FqtINVZ1frw" target="_blank" rel="noopener"><span class="vnum">#99</span> ボイトレの記録が伸び悩んだとき！ 歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">7分21秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=gp63BcAmCJk" target="_blank" rel="noopener"><span class="vnum">#100</span> 歌が上手くなるおすすめ動画ベスト5！ 歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">11分10秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=KDb0aBNvIuo" target="_blank" rel="noopener"><span class="vnum">#109</span> 驚愕なボイトレ業界の実態を暴露！先生選びは正しい？カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">12分47秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=aEcTac881sg" target="_blank" rel="noopener"><span class="vnum">#115</span> オンラインボイトレってどうなの？ネットでやるボイストレーニングの実態！カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><span class="vdur">8分16秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=WbH_da9fPbg" target="_blank" rel="noopener"><span class="vnum">#122</span> やる気が出ない人へ【モチベーション爆上げ法を公開】夢を叶える鍵となる方法論</a><span class="vdur">15分39秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=8KO8U55a-j8" target="_blank" rel="noopener"><span class="vnum">#123</span> For those who want to improve their singing skills, ○○○ is important | Improve your karaoke...</a><span class="vdur">7分14秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=AU27jDTzd5M" target="_blank" rel="noopener"><span class="vnum">#124</span> What professional singers need is not motivation but ○○ | How to choose life for singing lo...</a><span class="vdur">3分43秒</span></li>
+    <li><a href="https://www.youtube.com/watch?v=XBwxQdwV5rQ" target="_blank" rel="noopener"><span class="vnum">#125</span> Is it really that easy to become a professional singer? Improve your karaoke skills, singing...</a><span class="vdur">12分31秒</span></li>
+  </ul>
+</section>
+
+<footer>
+  更新日 2026-07-16 ／ 取得元 <a href="https://www.youtube.com/@myp_channel/videos" target="_blank" rel="noopener">MYP Channel /videos</a><br>
+  ビルド：yt-dlp --flat-playlist → Phase 分類（カリキュラム_20260710.html §Phase 0-E 準拠）→ 単一 HTML<br>
+  <a href="./curriculum_20260710.html">← カリキュラムに戻る</a>
+</footer>
+
+</body>
+</html>
