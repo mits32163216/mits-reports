@@ -23,11 +23,15 @@ a { color:var(--gold); text-decoration:none; }
 .hero h1 { font-size:28px; margin:0 0 6px; }
 .hero .tag { font-family:var(--mono); font-size:12px; color:var(--muted); }
 
-.grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:28px 0; }
+.genre { margin:34px 0 10px; display:flex; align-items:center; gap:12px; }
+.genre h2 { font-size:17px; margin:0; white-space:nowrap; }
+.genre::after { content:""; flex:1; border-top:1px dashed var(--line); }
+
+.grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
 @media (max-width:760px){ .grid { grid-template-columns:1fr; } }
 
 .node { display:flex; flex-direction:column; gap:8px; text-decoration:none; color:var(--fg);
-  background:var(--card-bg); border:1px solid var(--line); border-radius:14px; padding:18px 16px; transition:all 0.16s; }
+  background:var(--card-bg); border:1px solid var(--line); border-radius:14px; padding:18px 16px; transition:all 0.16s; height:100%; }
 .node:hover { transform:translateY(-4px); border-color:var(--gold); box-shadow:0 10px 28px rgba(15,27,46,0.12); text-decoration:none; }
 .node .emoji { font-size:30px; }
 .node .name { font-family:var(--mincho); font-size:18px; font-weight:600; }
@@ -50,23 +54,11 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line);
 
 <div class="hero">
   <h1>🔒 プライベート・ダッシュボード</h1>
-  <div class="tag">非公開コンテンツの入口 ─ ここからすべてに飛べる ／ 更新 2026-07-16</div>
+  <div class="tag">Mitsのプライベートコンテンツの入口 ─ ここからすべてに飛べる ／ 更新 2026-07-16</div>
 </div>
 
+<div class="genre"><h2>🎓 学習</h2></div>
 <div class="grid">
-
-  <div class="wrap">
-    <a class="node" href="https://reports.7years.life/private/karaoke-ai/">
-      <span class="emoji">🎤</span>
-      <span class="name">カラオケ練習AI</span>
-      <span class="desc">9軸実測・原曲基準の声質偏差値・「測って→学んで→また測る」練習ループ。</span>
-      <span class="pages">8ページ ─ 開く →</span>
-    </a>
-    <div class="sub"><b>主要ページ</b>
-      <a href="https://reports.7years.life/private/karaoke-ai/dashboard.html">ダッシュボード</a><a href="https://reports.7years.life/private/karaoke-ai/myp_voice_quality.html">声質スコアカード</a><a href="https://reports.7years.life/private/karaoke-ai/curriculum_20260710.html">カリキュラム</a><a href="https://reports.7years.life/private/karaoke-ai/myp_videos.html">動画マップ</a>
-    </div>
-  </div>
-
   <div class="wrap">
     <a class="node" href="https://reports.7years.life/private/eng40/">
       <span class="emoji">📘</span>
@@ -78,19 +70,41 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line);
       <a href="https://reports.7years.life/private/eng40/program.html">40日チェック</a><a href="https://reports.7years.life/private/eng40/route.html">教材ルート</a><a href="https://reports.7years.life/private/eng40/test.html">測る</a>
     </div>
   </div>
+</div>
 
+<div class="genre"><h2>🎤 カラオケ</h2></div>
+<div class="grid">
   <div class="wrap">
-    <a class="node" href="https://reports.7years.life/private/aiglucon-show-panel/">
-      <span class="emoji">📺</span>
-      <span class="name">AIグルコン ShowPanel</span>
-      <span class="desc">講座中に画面共有で見せる資料のクイック起動パネル。送信済メール・LP・スライド・Discord ほか7カテゴリ。</span>
-      <span class="pages">1ページ ─ 開く →</span>
+    <a class="node" href="https://reports.7years.life/private/karaoke-ai/">
+      <span class="emoji">🎤</span>
+      <span class="name">カラオケ練習AI</span>
+      <span class="desc">9軸実測・原曲基準の声質偏差値・「測って→学んで→また測る」練習ループ。</span>
+      <span class="pages">8ページ ─ 開く →</span>
     </a>
-    <div class="sub"><b>構成</b>
-      <span style="color:var(--muted)">単一パネル（カテゴリ内リンクはパネル内から起動）</span>
+    <div class="sub"><b>主要ページ</b>
+      <a href="https://reports.7years.life/private/karaoke-ai/dashboard.html">ダッシュボード</a><a href="https://reports.7years.life/private/karaoke-ai/myp_voice_quality.html">声質スコアカード</a><a href="https://reports.7years.life/private/karaoke-ai/curriculum_20260710.html">カリキュラム</a><a href="https://reports.7years.life/private/karaoke-ai/myp_videos.html">動画マップ</a>
     </div>
   </div>
+</div>
 
+<div class="genre"><h2>💪 健康</h2></div>
+<div class="grid">
+  <div class="wrap">
+    <a class="node" href="https://7years.life/dashboard_locked.html">
+      <span class="emoji">🩺</span>
+      <span class="name">健康ダッシュボード</span>
+      <span class="desc">HRV・血液検査・Apple Health・Welltory を統合した機能性医学ダッシュボード。ロック付き（パスワード入力）。</span>
+      <span class="pages">1ページ ─ 開く →</span>
+    </a>
+  </div>
+  <div class="wrap">
+    <a class="node" href="https://mits32163216.github.io/supplement-tracker/">
+      <span class="emoji">💊</span>
+      <span class="name">サプリ摂取トラッカー</span>
+      <span class="desc">記録専用PWA。今日チェック・達成率リング・履歴ヒートマップ・連続達成。記録は端末内のみ保存。</span>
+      <span class="pages">PWA ─ 開く →</span>
+    </a>
+  </div>
 </div>
 
 <footer>

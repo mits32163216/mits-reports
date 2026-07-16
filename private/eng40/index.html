@@ -48,7 +48,8 @@ a:hover { text-decoration:underline; }
 .step-section h2 { font-size:15px; margin:0 0 10px; }
 .step-section.priority h2 { color:var(--rose); }
 .step-section ul { margin:0; padding-left:20px; font-size:13px; line-height:2; }
-.goal-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.goal-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+@media (max-width:760px){ .goal-grid { grid-template-columns:repeat(2,1fr); } }
 @media (max-width:640px){ .goal-grid { grid-template-columns:1fr; } }
 .goal { background:var(--card-bg); border:1px solid var(--line); border-radius:10px; padding:12px 14px; font-size:12px; line-height:1.8; }
 .goal b { color:var(--gold); font-family:var(--mincho); }
@@ -109,6 +110,7 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
   <h2>🌅 40日後の到達見込み</h2>
   <div class="goal-grid">
     <div class="goal"><b>文法</b><br>過去形・助動詞・代名詞・前置詞まで体に入る（学校の約1年先。英検3級の文法主戦場をカバー）</div>
+    <div class="goal"><b>語彙</b><br>新出350〜400語を収集し、D+1翌日テストで250〜300語の定着を見込む（中学1年分弱を夏で先取り）</div>
     <div class="goal"><b>音</b><br>英語の44音＋リンキングの基礎＋シャドーイングの型</div>
     <div class="goal"><b>測定</b><br>英検模試①→②の点数差＋診断テスト前後比較で伸びが数字で見える</div>
   </div>
