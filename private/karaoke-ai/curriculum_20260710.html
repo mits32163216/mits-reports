@@ -1152,6 +1152,18 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
   </ul>
 </div>
 
+<div class="update-box" data-updated="2026-07-16" data-kind="timbre-remeasure">
+  <div class="update-tag">📝 2026-07-16 追記 — 🔬 音色軸を全面再測定（演奏除去＋新手法）・本文の旧HNR値は訂正</div>
+  <p><strong>重要な訂正</strong>：この本文中の HNR 数値（例「HNR 3-10dB」「HNR 10.22 / 6.56 / 5.83」「HNR 10.22 dB（4曲中最高）」等）は<strong>すべて演奏込みの旧測定値</strong>です。以下の新パイプラインで測り直しました：</p>
+  <ul>
+    <li><strong>demucs で演奏を除去</strong>してから測定 → HNR が全曲 2〜5dB 上昇（演奏が引き下げていた）。例：努努 3.73→8.11 / 大空 7.54→10.96 / メロディ 6.56→12.7</li>
+    <li><strong>ピッチを torchcrepe に統一</strong>（Tony 代替・原曲と同一手法）→ 以前「音程が大きく劣る」は測定法違いのアーティファクトで、実際は<strong>ほぼ互角</strong></li>
+    <li><strong>深みを openSMILE(αRatio) で実測化</strong>（計測不能→実測）→ Mits は松山千春・長渕剛より<strong>深い側＝意外な強み</strong></li>
+  </ul>
+  <p><strong>最新の正しい評価</strong>：総合偏差値 <strong>54.9（平均〜良）</strong>。<strong>唯一の明確な弱点は息漏れ＝HNR（偏差値48）だけ</strong>。②安定(CREPE 60)・③丸さ・⑤深み(62✨) は平均〜強み。→ 数値の正本は <a href="./myp_voice_quality.html" style="color:var(--gold);font-weight:600;">🎙️ 声質スコアカード</a>。</p>
+  <p style="font-size:12px;color:var(--muted);">※ 上の各 Phase の日付き記録（2026-07-12 等）は当時の演奏込みスナップショットとして残置。数値の最新は常に声質スコアカードを見る。</p>
+</div>
+
 <div class="footer">
   <div>元データ: 歌の教材動画DB (Notion 89本) + カラオケ練習AI 4曲9軸実測</div>
   <div>Notion DB: <a href="https://www.notion.so/80946514e5cb4cf1babdd01dfaf56edf" target="_blank">80946514...56edf</a></div>
