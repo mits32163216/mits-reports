@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>基礎レッスン30 — カラオケ練習AI</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06); --highlight:rgba(212,168,91,0.14);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); --highlight:rgba(212,168,91,0.18); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:24px 32px 100px; max-width:1000px; margin:0 auto; }
+h1,h2 { font-family:var(--mincho); font-weight:600; }
+h1 { font-size:28px; margin:0 0 6px; }
+a { color:var(--gold); text-decoration:none; } a:hover { text-decoration:underline; }
+header.top .sub { font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:6px; }
+
+.overview { padding:18px 22px; background:linear-gradient(135deg,rgba(212,168,91,0.10),rgba(122,155,126,0.06)); border:1px solid var(--gold); border-radius:10px; margin:16px 0 10px; }
+.overview p { margin:6px 0; line-height:1.75; }
+.overview .label { font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:0.08em; margin-right:8px; }
+.full-link { display:inline-block; margin:8px 0 24px; font-family:var(--mincho); font-size:13px; color:var(--gold); }
+
+.step-section { margin:22px 0; padding:18px 22px; background:var(--sub-bg); border:1px solid var(--gold); border-radius:12px; }
+.step-section.priority { background:linear-gradient(135deg,rgba(199,123,112,0.08),rgba(212,168,91,0.05)); border-color:var(--rose); }
+.step-head { display:flex; align-items:baseline; justify-content:space-between; gap:10px; padding-bottom:8px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+.step-name { font-size:20px; margin:0; color:var(--gold); }
+.step-section.priority .step-name { color:var(--rose); }
+.step-badge { font-family:var(--mono); font-size:12px; background:var(--gold); color:#fff; padding:2px 8px; border-radius:8px; vertical-align:middle; }
+.step-section.priority .step-badge { background:var(--rose); }
+.step-sub { font-family:var(--sans); font-size:12px; color:var(--muted); font-weight:600; }
+.step-count { font-family:var(--mono); font-size:12px; color:var(--muted); }
+.step-desc { font-family:var(--mincho); font-size:13.5px; color:var(--muted); line-height:1.7; margin:10px 0 12px; }
+
+.video-list { list-style:none; margin:0; padding:0; }
+.video-list li { display:flex; align-items:flex-start; gap:10px; padding:11px 8px; border-bottom:1px dashed var(--line); transition:background 0.15s; }
+.video-list li:last-child { border-bottom:none; }
+.video-list li:hover { background:var(--sub-bg); }
+.video-list li.watched { background:rgba(122,155,126,0.09); }
+.video-list li.watched .vbody a { color:var(--muted); }
+.rank { flex:0 0 auto; width:22px; text-align:center; font-family:var(--mono); font-size:13px; font-weight:700; color:var(--gold); margin-top:2px; }
+.step-section.priority .rank { color:var(--rose); }
+.vbody { flex:1 1 auto; min-width:0; }
+.vbody a { color:var(--fg); font-family:var(--mincho); font-size:14px; line-height:1.5; }
+.vbody a:hover { color:var(--gold); text-decoration:none; }
+.reason { font-size:12px; color:var(--muted); margin-top:3px; line-height:1.5; }
+.vnum { display:inline-block; min-width:40px; padding:1px 7px; margin-right:6px; background:var(--gold); color:#fff; border-radius:9px; font-family:var(--mono); font-size:10px; font-weight:700; text-align:center; }
+.step-section.priority .vnum { background:var(--rose); }
+.vdur { flex:0 0 auto; font-family:var(--mono); font-size:10px; color:var(--muted); white-space:nowrap; margin-top:3px; }
+
+.vchk { flex:0 0 auto; cursor:pointer; display:inline-flex; margin-top:1px; }
+.vchk input { position:absolute; opacity:0; width:0; height:0; }
+.vchk-mark { display:inline-block; width:20px; height:20px; border-radius:5px; border:2px solid var(--line); background:var(--card-bg); transition:all 0.15s; position:relative; }
+.vchk:hover .vchk-mark { border-color:var(--sage); }
+.vchk input:checked + .vchk-mark { background:var(--sage); border-color:var(--sage); }
+.vchk input:checked + .vchk-mark::after { content:""; position:absolute; left:6px; top:2px; width:5px; height:10px; border:solid #fff; border-width:0 2.5px 2.5px 0; transform:rotate(45deg); }
+
+.watch-summary { position:fixed; bottom:16px; left:50%; transform:translateX(-50%); z-index:200; display:flex; align-items:center; gap:14px; padding:10px 20px; background:var(--card-bg); border:1px solid var(--gold); border-radius:24px; box-shadow:0 6px 20px rgba(15,27,46,0.18); font-family:var(--sans); font-size:13px; }
+.watch-summary strong { color:var(--sage); font-size:15px; }
+
+footer { margin-top:40px; padding-top:20px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.8; }
+footer a { color:var(--gold); }
+@media (max-width:600px){ body { padding:20px 16px 90px; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>🌱 基礎レッスン30</h1>
+  <div class="sub">トレーナー MYP 全129本から、<strong>Mits の分析結果に基づくおすすめ順</strong>で基礎30本を厳選・プログラム化（2026-07-16）</div>
+</header>
+
+<div class="overview">
+  <p><span class="label">組み方</span>番号順ではなく<strong>「Mits が今やるべき順」</strong>。分析で判明した最優先課題＝<strong>息漏れ(HNR)・短音率(フレーズ細切れ)</strong>を潰す順に STEP を組んだ。</p>
+  <p><span class="label">優先順位</span>STEP1 土台 → <strong>STEP2 息支え(本丸・最優先)</strong> → <strong>STEP3 声質・喉ケア(息漏れ対策)</strong> → STEP4 音程・リズム基礎。高音・ミックスは基礎を終えてからなので、この30本には<strong>あえて入れていない</strong>。</p>
+  <p><span class="label">使い方</span>上から順に。見たらチェック（右下に進捗）。チェックは<a href="./myp_videos.html">全動画マップ</a>と同期する。</p>
+</div>
+<a class="full-link" href="./myp_videos.html">→ Phase別の全129本マップを見る</a>
+
+
+<section class="step-section">
+  <div class="step-head">
+    <h2 class="step-name"><span class="step-badge">STEP 1</span> まず土台をつくる <span class="step-sub">姿勢・練習法・道具</span></h2>
+    <span class="step-count">7本</span>
+  </div>
+  <p class="step-desc">歌う前の体と練習の土台。ここが崩れると何をやっても伸びない。まず7本で足場を固める。</p>
+  <ul class="video-list">
+    <li data-vid="EOJQ4-mV16Q"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="EOJQ4-mV16Q"><span class="vchk-mark"></span></label><span class="rank">1</span><div class="vbody"><a href="https://www.youtube.com/watch?v=EOJQ4-mV16Q" target="_blank" rel="noopener"><span class="vnum">#1</span> 【ボイトレ基礎】歌が上手くなる最大の要素を教えます｜究極のボイトレ動画のはじまり！</a><div class="reason">全体像：なぜ発声が全ての土台になるか</div></div><span class="vdur">9分11秒</span></li>
+    <li data-vid="ybuS_u4J4QU"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="ybuS_u4J4QU"><span class="vchk-mark"></span></label><span class="rank">2</span><div class="vbody"><a href="https://www.youtube.com/watch?v=ybuS_u4J4QU" target="_blank" rel="noopener"><span class="vnum">#20</span> アゴを引くのは間違い！日本一正しい歌唱姿勢【正しい基礎を身につけよう】歌うま・歌唱力向上・プロ歌手へのボイトレ基本！</a><div class="reason">息を支える体の入口＝正しい歌唱姿勢</div></div><span class="vdur">7分36秒</span></li>
+    <li data-vid="n4aiIS0SR2Q"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="n4aiIS0SR2Q"><span class="vchk-mark"></span></label><span class="rank">3</span><div class="vbody"><a href="https://www.youtube.com/watch?v=n4aiIS0SR2Q" target="_blank" rel="noopener"><span class="vnum">#7</span> コレなしでの歌練習はNG｜歌唱力アップに直結すること教えます【歌うまに必要なボイトレ基礎】</a><div class="reason">練習の大前提。これ無しの練習はNG</div></div><span class="vdur">8分22秒</span></li>
+    <li data-vid="o9ydWKxjaAI"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="o9ydWKxjaAI"><span class="vchk-mark"></span></label><span class="rank">4</span><div class="vbody"><a href="https://www.youtube.com/watch?v=o9ydWKxjaAI" target="_blank" rel="noopener"><span class="vnum">#27</span> 歌の練習【最も早く成長するルーティーン】何をどれくらいやるの？歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><div class="reason">何をどれだけやるか＝最短で伸びるルーティン</div></div><span class="vdur">11分20秒</span></li>
+    <li data-vid="c69GBvsWtaA"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="c69GBvsWtaA"><span class="vchk-mark"></span></label><span class="rank">5</span><div class="vbody"><a href="https://www.youtube.com/watch?v=c69GBvsWtaA" target="_blank" rel="noopener"><span class="vnum">#28</span> 目からウロコ！【最も効率的な練習法】を伝授！歌上達に『最重要』　歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><div class="reason">遠回りしないための最重要練習法</div></div><span class="vdur">9分26秒</span></li>
+    <li data-vid="8JFWAfZZIs0"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="8JFWAfZZIs0"><span class="vchk-mark"></span></label><span class="rank">6</span><div class="vbody"><a href="https://www.youtube.com/watch?v=8JFWAfZZIs0" target="_blank" rel="noopener"><span class="vnum">#29</span> How to hold the microphone to improve your singing | Instant change! | Show off the results of...</a><div class="reason">カラオケ実地の基本＝マイクの持ち方</div></div><span class="vdur">10分51秒</span></li>
+    <li data-vid="I3laUw6uBJo"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="I3laUw6uBJo"><span class="vchk-mark"></span></label><span class="rank">7</span><div class="vbody"><a href="https://www.youtube.com/watch?v=I3laUw6uBJo" target="_blank" rel="noopener"><span class="vnum">#21</span> 歌唱力向上に欠かせないアプリ｜コレ無しで練習はNG！歌うま・カラオケ上達・プロ歌手へのボイトレ基本！</a><div class="reason">録って測る習慣（Mitsの分析そのもの）に直結するアプリ</div></div><span class="vdur">12分04秒</span></li>
+  </ul>
+</section>
+<section class="step-section priority">
+  <div class="step-head">
+    <h2 class="step-name"><span class="step-badge">STEP 2</span> 息を支える <span class="step-sub">🔴 Mits 最優先課題</span></h2>
+    <span class="step-count">10本</span>
+  </div>
+  <p class="step-desc">Mits の最大の弱点＝息漏れ(HNR)・短音率(フレーズ細切れ)。息の支えが全ての音色を決める。ここが本丸で最も本数が多い。</p>
+  <ul class="video-list">
+    <li data-vid="Dpk5pfgxKfE"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="Dpk5pfgxKfE"><span class="vchk-mark"></span></label><span class="rank">8</span><div class="vbody"><a href="https://www.youtube.com/watch?v=Dpk5pfgxKfE" target="_blank" rel="noopener"><span class="vnum">#6</span> 下腹部で動かせない？本物の腹式呼吸を徹底解説｜ボイトレの第一歩をこの動画から</a><div class="reason">息漏れHNRの根本。腹式呼吸の第一歩</div></div><span class="vdur">4分14秒</span></li>
+    <li data-vid="Sp3zRzggfx4"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="Sp3zRzggfx4"><span class="vchk-mark"></span></label><span class="rank">9</span><div class="vbody"><a href="https://www.youtube.com/watch?v=Sp3zRzggfx4" target="_blank" rel="noopener"><span class="vnum">#5</span> Teaching authentic abdominal breathing | Voice training for beginners to professionals [Daily ...</a><div class="reason">初心者→プロの腹式呼吸の本命</div></div><span class="vdur">21分31秒</span></li>
+    <li data-vid="7cltq_hoaG0"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="7cltq_hoaG0"><span class="vchk-mark"></span></label><span class="rank">10</span><div class="vbody"><a href="https://www.youtube.com/watch?v=7cltq_hoaG0" target="_blank" rel="noopener"><span class="vnum">#8</span> 腹式呼吸を上達させるストレッチ【毎日の歌唱力UPトレーニングその②】カラオケ上達ボイトレ</a><div class="reason">腹式を毎日の習慣にするストレッチ</div></div><span class="vdur">5分36秒</span></li>
+    <li data-vid="4ubV1JDnTlk"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="4ubV1JDnTlk"><span class="vchk-mark"></span></label><span class="rank">11</span><div class="vbody"><a href="https://www.youtube.com/watch?v=4ubV1JDnTlk" target="_blank" rel="noopener"><span class="vnum">#63</span> 声量UPや正しい声帯閉鎖、究極の発声の基盤となる【横隔膜と腹圧理論】をわかりやすく解説！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><div class="reason">息支えの仕組み＝横隔膜と腹圧の理論</div></div><span class="vdur">11分29秒</span></li>
+    <li data-vid="3LTpbsiIBJc"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="3LTpbsiIBJc"><span class="vchk-mark"></span></label><span class="rank">12</span><div class="vbody"><a href="https://www.youtube.com/watch?v=3LTpbsiIBJc" target="_blank" rel="noopener"><span class="vnum">#64 P1</span> 声量が激変！究極の発声の【腹圧と横隔膜】歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><div class="reason">声量が激変する腹圧と横隔膜の土台</div></div><span class="vdur">9分14秒</span></li>
+    <li data-vid="1j612-0vYq4"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="1j612-0vYq4"><span class="vchk-mark"></span></label><span class="rank">13</span><div class="vbody"><a href="https://www.youtube.com/watch?v=1j612-0vYq4" target="_blank" rel="noopener"><span class="vnum">#15</span> ボイトレ基礎は横隔膜トレーニング！【毎日の歌唱力UPトレーニングその⑥息止め】歌がうまくなるボイトレの基本</a><div class="reason">支え筋を鍛える息止めトレ</div></div><span class="vdur">15分14秒</span></li>
+    <li data-vid="NCjsMLgMAtA"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="NCjsMLgMAtA"><span class="vchk-mark"></span></label><span class="rank">14</span><div class="vbody"><a href="https://www.youtube.com/watch?v=NCjsMLgMAtA" target="_blank" rel="noopener"><span class="vnum">#16</span> Improve your vocal volume and tone! [Daily Singing Skills Training #7: Exhalation] Sing well!...</a><div class="reason">息の使い方＝声質(HNR)に直結</div></div><span class="vdur">9分04秒</span></li>
+    <li data-vid="NQnRaV95eUM"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="NQnRaV95eUM"><span class="vchk-mark"></span></label><span class="rank">15</span><div class="vbody"><a href="https://www.youtube.com/watch?v=NQnRaV95eUM" target="_blank" rel="noopener"><span class="vnum">#19</span> The most accurate dog breath technique in Japan! How to properly learn the basics [Daily Sing...</a><div class="reason">支えの実践ドリル＝ドッグブレス</div></div><span class="vdur">12分25秒</span></li>
+    <li data-vid="-ApSPyWHHc8"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="-ApSPyWHHc8"><span class="vchk-mark"></span></label><span class="rank">16</span><div class="vbody"><a href="https://www.youtube.com/watch?v=-ApSPyWHHc8" target="_blank" rel="noopener"><span class="vnum">#108</span> ロングトーン練習で歌唱力向上！カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><div class="reason">短音率を殺す本命＝ロングトーン</div></div><span class="vdur">10分17秒</span></li>
+    <li data-vid="uYlDeIfppC4"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="uYlDeIfppC4"><span class="vchk-mark"></span></label><span class="rank">17</span><div class="vbody"><a href="https://www.youtube.com/watch?v=uYlDeIfppC4" target="_blank" rel="noopener"><span class="vnum">#94</span> 声量が出ない、声が小さい原因を知ろう！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><div class="reason">声量が出ない＝息の量。原因を知る</div></div><span class="vdur">10分45秒</span></li>
+  </ul>
+</section>
+<section class="step-section priority">
+  <div class="step-head">
+    <h2 class="step-name"><span class="step-badge">STEP 3</span> 声質・喉のケア <span class="step-sub">🔴 息漏れ・かすれ対策</span></h2>
+    <span class="step-count">8本</span>
+  </div>
+  <p class="step-desc">Mits の息漏れ(かすれ)HNR を直接下げる。声帯閉鎖と喉の力み解消がカギ。低音ノイズ対策もここ。</p>
+  <ul class="video-list">
+    <li data-vid="9ezy4pJeadE"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="9ezy4pJeadE"><span class="vchk-mark"></span></label><span class="rank">18</span><div class="vbody"><a href="https://www.youtube.com/watch?v=9ezy4pJeadE" target="_blank" rel="noopener"><span class="vnum">#42</span> 声帯閉鎖がうまくできずハスキーになってしまう人へ！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><div class="reason">息漏れHNRの直接対策＝声帯閉鎖</div></div><span class="vdur">4分30秒</span></li>
+    <li data-vid="tw0XERcgbpU"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="tw0XERcgbpU"><span class="vchk-mark"></span></label><span class="rank">19</span><div class="vbody"><a href="https://www.youtube.com/watch?v=tw0XERcgbpU" target="_blank" rel="noopener"><span class="vnum">#117</span> 歌うとかすれ声になる人・首や体が力む人の改善法！カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><div class="reason">かすれ声・力み改善＝弱点直撃</div></div><span class="vdur">9分56秒</span></li>
+    <li data-vid="ET7Zjifa3nY"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="ET7Zjifa3nY"><span class="vchk-mark"></span></label><span class="rank">20</span><div class="vbody"><a href="https://www.youtube.com/watch?v=ET7Zjifa3nY" target="_blank" rel="noopener"><span class="vnum">#110</span> のど閉めの解決策！横隔膜による影響について　カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><div class="reason">喉を開いて雑音を減らす</div></div><span class="vdur">8分27秒</span></li>
+    <li data-vid="prcU1w2kIIk"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="prcU1w2kIIk"><span class="vchk-mark"></span></label><span class="rank">21</span><div class="vbody"><a href="https://www.youtube.com/watch?v=prcU1w2kIIk" target="_blank" rel="noopener"><span class="vnum">#70</span> 歌プロがやってる【喉のケア知識】(前編) 歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><div class="reason">声帯コンディション＝喉ケア前編</div></div><span class="vdur">7分39秒</span></li>
+    <li data-vid="APGFs_DTdEc"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="APGFs_DTdEc"><span class="vchk-mark"></span></label><span class="rank">22</span><div class="vbody"><a href="https://www.youtube.com/watch?v=APGFs_DTdEc" target="_blank" rel="noopener"><span class="vnum">#71</span> 歌ってもOK？【喉のケア知識】(後編) 歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><div class="reason">喉ケア後編</div></div><span class="vdur">10分23秒</span></li>
+    <li data-vid="vtWtukz53No"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="vtWtukz53No"><span class="vchk-mark"></span></label><span class="rank">23</span><div class="vbody"><a href="https://www.youtube.com/watch?v=vtWtukz53No" target="_blank" rel="noopener"><span class="vnum">#41</span> 正しい声の響かせ方とは？【共鳴練習に警告】歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><div class="reason">響き＝HNRを上げる正しい響かせ方</div></div><span class="vdur">4分50秒</span></li>
+    <li data-vid="FcgIvFJH8l0"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="FcgIvFJH8l0"><span class="vchk-mark"></span></label><span class="rank">24</span><div class="vbody"><a href="https://www.youtube.com/watch?v=FcgIvFJH8l0" target="_blank" rel="noopener"><span class="vnum">#50</span> 低い声（低音発声）を徹底解説！高い声（ミックスボイス）の第一歩目！歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><div class="reason">低音ノイズ対策＝低音発声</div></div><span class="vdur">14分38秒</span></li>
+    <li data-vid="Lf0TG4Uzo1U"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="Lf0TG4Uzo1U"><span class="vchk-mark"></span></label><span class="rank">25</span><div class="vbody"><a href="https://www.youtube.com/watch?v=Lf0TG4Uzo1U" target="_blank" rel="noopener"><span class="vnum">#107</span> 声量が上がらない人や声が喉でつまる人は必見！カラオケ上達・歌唱力向上・プロ歌手へのボイトレ理論</a><div class="reason">喉でつまる・力みを取る</div></div><span class="vdur">7分06秒</span></li>
+  </ul>
+</section>
+<section class="step-section">
+  <div class="step-head">
+    <h2 class="step-name"><span class="step-badge">STEP 4</span> 音程とリズムの基礎 <span class="step-sub">整ってきたら</span></h2>
+    <span class="step-count">5本</span>
+  </div>
+  <p class="step-desc">音色が整ってきたら音程・リズムの基礎へ。座学の土台も1本。高音・ミックスは基礎を終えてから（この30本には入れていない）。</p>
+  <ul class="video-list">
+    <li data-vid="K2mCKWDacHM"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="K2mCKWDacHM"><span class="vchk-mark"></span></label><span class="rank">26</span><div class="vbody"><a href="https://www.youtube.com/watch?v=K2mCKWDacHM" target="_blank" rel="noopener"><span class="vnum">#12</span> 音痴を治す方法は？ 【音がハズれる仕組み】を解説｜カラオケ上達・プロ歌手へのボイトレ基本！</a><div class="reason">音程がハズれる仕組みを知る</div></div><span class="vdur">9分24秒</span></li>
+    <li data-vid="boR6sYUFMks"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="boR6sYUFMks"><span class="vchk-mark"></span></label><span class="rank">27</span><div class="vbody"><a href="https://www.youtube.com/watch?v=boR6sYUFMks" target="_blank" rel="noopener"><span class="vnum">#30</span> How to open your mouth properly: the foundation of proper vocalization! Improve your singing,...</a><div class="reason">母音の土台＝口の開け方</div></div><span class="vdur">7分32秒</span></li>
+    <li data-vid="cbWgekMizL8"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="cbWgekMizL8"><span class="vchk-mark"></span></label><span class="rank">28</span><div class="vbody"><a href="https://www.youtube.com/watch?v=cbWgekMizL8" target="_blank" rel="noopener"><span class="vnum">#31</span> 正しい発声の基礎となる口の開け方②【母音ごとの開け方】歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><div class="reason">音程・音色の土台＝母音ごとの開け方</div></div><span class="vdur">11分21秒</span></li>
+    <li data-vid="UFqWMJDHp4U"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="UFqWMJDHp4U"><span class="vchk-mark"></span></label><span class="rank">29</span><div class="vbody"><a href="https://www.youtube.com/watch?v=UFqWMJDHp4U" target="_blank" rel="noopener"><span class="vnum">#37</span> 本物のリズム論で驚きの変化！【最強ボイトレリズム理論①】 歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><div class="reason">リズムの入口＝最強リズム理論①</div></div><span class="vdur">11分51秒</span></li>
+    <li data-vid="DSi2Mfyqi9o"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="DSi2Mfyqi9o"><span class="vchk-mark"></span></label><span class="rank">30</span><div class="vbody"><a href="https://www.youtube.com/watch?v=DSi2Mfyqi9o" target="_blank" rel="noopener"><span class="vnum">#46</span> 歌上達のために知るべき【音楽の4大要素】歌うま・カラオケ上達・歌唱力向上・プロ歌手へのボイトレ基本！</a><div class="reason">座学の土台＝音楽の4大要素</div></div><span class="vdur">7分53秒</span></li>
+  </ul>
+</section>
+
+<div class="watch-summary">
+  <span id="watch-text">🌱 基礎レッスン <strong>0 / 30 本</strong></span>
+</div>
+
+<footer>
+  更新日 2026-07-16 ／ 出典 <a href="https://www.youtube.com/@myp_channel/videos" target="_blank" rel="noopener">MYP Channel</a>
+  ／おすすめ順の根拠：<a href="./myp_voice_quality.html">声質スコアカード</a>の分析（最優先＝息漏れHNR・短音率）<br>
+  <a href="./index.html">← ホーム</a> ／ <a href="./myp_videos.html">全動画マップ</a>
+</footer>
+
+<script>
+(function() {
+  var PREFIX = 'myp-watched:';
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('.vchk input[data-vkey]'));
+  var total = boxes.length;
+  var textEl = document.getElementById('watch-text');
+  function update() {
+    var n = document.querySelectorAll('.video-list li.watched').length;
+    textEl.innerHTML = '🌱 基礎レッスン <strong>' + n + ' / ' + total + ' 本</strong>';
+  }
+  boxes.forEach(function(cb) {
+    var key = PREFIX + cb.getAttribute('data-vkey');
+    var li = cb.closest('li');
+    if (localStorage.getItem(key) === '1') { cb.checked = true; li.classList.add('watched'); }
+    cb.addEventListener('change', function() {
+      if (cb.checked) { localStorage.setItem(key, '1'); li.classList.add('watched'); }
+      else { localStorage.removeItem(key); li.classList.remove('watched'); }
+      update();
+    });
+  });
+  update();
+})();
+</script>
+<script src="./nav.js"></script>
+</body>
+</html>

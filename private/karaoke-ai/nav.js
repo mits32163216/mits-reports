@@ -8,7 +8,8 @@
     { file: "dashboard.html",          key: "dashboard",  emoji: "📊", label: "測る",     sub: "9軸実測" },
     { file: "myp_voice_quality.html",  key: "voice",      emoji: "🎯", label: "課題",     sub: "声質偏差値" },
     { file: "curriculum_20260710.html",key: "curriculum", emoji: "📖", label: "計画",     sub: "カリキュラム" },
-    { file: "myp_videos.html",         key: "videos",     emoji: "🎬", label: "学ぶ",     sub: "動画マップ" },
+    { file: "myp_basics.html",         key: "basics",     emoji: "🌱", label: "基礎30",   sub: "おすすめ順" },
+    { file: "myp_videos.html",         key: "videos",     emoji: "🎬", label: "学ぶ",     sub: "全動画" },
   ];
 
   // 現在ページ判定（パス末尾のファイル名。/ で終わる or 空なら index）
