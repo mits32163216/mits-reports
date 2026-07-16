@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>カラオケ練習日記 — カラオケ練習AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root {
+  --navy: #0F1B2E;
+  --ivory: #F5EFE1;
+  --gold: #D4A85B;
+  --sage: #7A9B7E;
+  --rose: #C77B70;
+  --mincho: "Hiragino Mincho ProN", "游明朝", serif;
+  --sans: "Hiragino Sans", "游ゴシック", sans-serif;
+  --mono: "SF Mono", "Menlo", monospace;
+  --bg: var(--ivory);
+  --fg: var(--navy);
+  --line: rgba(15, 27, 46, 0.12);
+  --card-bg: #ffffff;
+  --muted: rgba(15, 27, 46, 0.58);
+  --sub-bg: rgba(212, 168, 91, 0.06);
+  --highlight: rgba(212, 168, 91, 0.14);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: var(--navy);
+    --fg: var(--ivory);
+    --line: rgba(245, 239, 225, 0.14);
+    --card-bg: #17223a;
+    --muted: rgba(245, 239, 225, 0.62);
+    --sub-bg: rgba(212, 168, 91, 0.09);
+    --highlight: rgba(212, 168, 91, 0.18);
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); font-family: var(--sans); }
+body { padding: 40px 48px 120px; max-width: 1200px; margin: 0 auto; }
+h1, h2, h3, h4 { font-family: var(--mincho); font-weight: 600; letter-spacing: 0.02em; }
+h1 { font-size: 32px; margin: 0 0 8px; }
+h2 { font-size: 24px; margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--gold); }
+h3 { font-size: 19px; margin: 28px 0 10px; color: var(--gold); }
+h4 { font-size: 16px; margin: 18px 0 8px; }
+p { line-height: 1.75; margin: 8px 0; }
+a { color: var(--gold); text-decoration: none; }
+a:hover { text-decoration: underline; }
+hr { border: none; border-top: 1px solid var(--line); margin: 24px 0; }
+code { font-family: var(--mono); font-size: 0.9em; background: var(--highlight); padding: 1px 6px; border-radius: 3px; }
+strong { color: var(--gold); }
+blockquote { border-left: 3px solid var(--gold); padding: 4px 14px; margin: 12px 0; color: var(--muted); background: var(--sub-bg); border-radius: 4px; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; margin: 12px 0; }
+th, td { padding: 8px 12px; border-bottom: 1px solid var(--line); text-align: left; }
+th { background: var(--highlight); font-weight: 600; white-space: nowrap; font-family: var(--sans); }
+td { font-family: var(--mono); }
+td.mincho { font-family: var(--mincho); font-size: 14px; }
+
+header.top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+header.top .sub { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+header.top .version { display: inline-block; padding: 3px 10px; background: var(--gold); color: white; border-radius: 12px; font-family: var(--mono); font-size: 12px; font-weight: 600; margin-left: 10px; vertical-align: middle; }
+
+.overview {
+  padding: 20px 24px;
+  background: linear-gradient(135deg, rgba(212, 168, 91, 0.10), rgba(122, 155, 126, 0.06));
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+  margin: 12px 0 32px;
+}
+.overview p { margin: 4px 0; }
+.overview .label { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; margin-right: 8px; }
+
+.compare-wrap { overflow-x: auto; }
+.compare th, .compare td { padding: 7px 10px; }
+.compare .best { color: var(--sage); font-weight: 700; }
+.compare .worst { color: var(--rose); font-weight: 700; }
+
+.diag {
+  padding: 18px 22px;
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin: 14px 0;
+}
+.diag-title { font-family: var(--mincho); font-size: 17px; color: var(--gold); margin: 0 0 8px; }
+
+.tier-table td { vertical-align: top; }
+.tier-a { border-left: 4px solid var(--sage); }
+.tier-b { border-left: 4px solid var(--gold); }
+.tier-c { border-left: 4px solid var(--rose); }
+
+/* Phase セクション */
+.phase-section {
+  margin: 40px 0 20px;
+  padding: 20px 24px;
+  background: var(--sub-bg);
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+}
+.phase-header {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
+  margin-bottom: 6px; padding-bottom: 8px; border-bottom: 1px solid var(--line);
+}
+.phase-name { font-family: var(--mincho); font-size: 22px; margin: 0; color: var(--gold); }
+.phase-weeks { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.phase-desc { font-family: var(--mincho); font-size: 14px; color: var(--muted); margin: 8px 0 16px; }
+
+/* Lesson カード */
+.lesson-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin-top: 12px; }
+.lesson-card {
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 20px 22px;
+  display: flex; flex-direction: column; gap: 10px;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+  text-decoration: none; color: var(--fg);
+}
+.lesson-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--gold);
+  box-shadow: 0 8px 24px rgba(15, 27, 46, 0.10);
+  text-decoration: none;
+}
+.lesson-num {
+  display: inline-block;
+  padding: 3px 10px;
+  background: var(--gold);
+  color: white;
+  border-radius: 12px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  align-self: flex-start;
+}
+.lesson-title { font-family: var(--mincho); font-size: 17px; font-weight: 600; line-height: 1.4; margin: 2px 0 0; }
+.lesson-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 6px;
+  background: var(--muted);
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+.lesson-meta { display: flex; gap: 12px; font-family: var(--mono); font-size: 11px; color: var(--muted); flex-wrap: wrap; }
+.lesson-meta .ch { color: var(--sage); font-weight: 600; }
+.lesson-section { margin-top: 4px; }
+.lesson-section h5 {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+  color: var(--muted); margin: 6px 0 3px; text-transform: uppercase;
+}
+.lesson-why { font-family: var(--mincho); font-size: 13.5px; line-height: 1.65; margin: 0; color: var(--fg); }
+.lesson-focus {
+  font-family: var(--sans); font-size: 12.5px; padding: 8px 12px;
+  background: var(--sub-bg); border-radius: 4px; border-left: 3px solid var(--sage);
+  margin: 6px 0 0;
+}
+
+/* 補講 */
+.supp-title { color: var(--rose); }
+.supp-hot .lesson-num { background: var(--rose); }
+.supp-hot { border: 1px dashed var(--rose); }
+
+/* チェックリスト（localStorage 保存・全カード共通） */
+.lesson-check {
+  margin-top: auto;
+  padding: 10px 12px;
+  border-top: 1px dashed var(--line);
+  font-family: var(--mono); font-size: 12px;
+  display: flex; align-items: center; gap: 8px;
+  cursor: pointer;
+  color: var(--muted);
+  transition: color 0.15s, background 0.15s;
+  border-radius: 0 0 8px 8px;
+}
+.lesson-check:hover { color: var(--fg); background: var(--sub-bg); }
+.lesson-check input {
+  margin: 0; width: 16px; height: 16px;
+  cursor: pointer; accent-color: var(--sage);
+}
+.lesson-check.checked { color: var(--sage); font-weight: 600; background: rgba(122, 155, 126, 0.08); }
+.lesson-check .lc-label { flex: 1; }
+.lesson-card.checked-card { border-color: var(--sage); }
+.checklist-summary {
+  position: sticky; bottom: 0; z-index: 90;
+  margin: 24px -48px -120px; padding: 14px 48px;
+  background: var(--card-bg);
+  border-top: 2px solid var(--gold);
+  font-family: var(--mono); font-size: 13px;
+  display: flex; justify-content: space-between; align-items: center;
+  box-shadow: 0 -4px 12px rgba(15, 27, 46, 0.08);
+}
+.checklist-summary strong { color: var(--gold); }
+.checklist-summary .reset-btn {
+  padding: 4px 12px; font-size: 11px;
+  background: transparent; color: var(--muted);
+  border: 1px solid var(--line); border-radius: 4px;
+  cursor: pointer; font-family: var(--mono);
+  transition: all 0.15s;
+}
+.checklist-summary .reset-btn:hover { color: var(--rose); border-color: var(--rose); }
+
+/* 週間ルーティン */
+.routine {
+  font-family: var(--mono);
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-size: 13px;
+  line-height: 1.8;
+  margin: 12px 0;
+}
+.routine .day { color: var(--gold); font-weight: 700; }
+
+/* footer */
+.footer {
+  margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--line);
+  font-family: var(--mono); font-size: 11px; color: var(--muted);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+}
+
+/* 戻るボタン（ダッシュボードへ） */
+.back-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--bg);
+  padding: 12px 0 10px;
+  margin: -40px -48px 24px;
+  padding-left: 48px; padding-right: 48px;
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(6px);
+}
+.back-nav a {
+  display: inline-block;
+  padding: 6px 14px;
+  font-family: var(--mincho); font-size: 13px; font-weight: 600;
+  color: var(--gold);
+  background: rgba(212, 168, 91, 0.10);
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.back-nav a:hover {
+  background: rgba(212, 168, 91, 0.22);
+  transform: translateX(-2px);
+  text-decoration: none;
+}
+.back-nav-bottom {
+  margin-top: 40px; text-align: center;
+  padding-top: 20px; border-top: 1px dashed var(--line);
+}
+
+/* prin */
+@media print {
+  body { padding: 20px; max-width: none; }
+  .lesson-card { break-inside: avoid; page-break-inside: avoid; }
+  .back-nav, .back-nav-bottom { display: none; }
+}
+
+/* 追記ボックス（2026-07-12〜） */
+.update-box {
+  margin: 20px 0;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, rgba(122, 155, 126, 0.10), rgba(212, 168, 91, 0.06));
+  border: 1px solid var(--sage);
+  border-left: 4px solid var(--sage);
+  border-radius: 8px;
+}
+.update-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  margin-bottom: 8px;
+  background: var(--sage);
+  color: white;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 12px;
+  letter-spacing: 0.05em;
+}
+.update-box h4 { color: var(--sage); margin-top: 0; }
+.update-box h3 { color: var(--gold); margin-top: 0; }
+.update-box ul { margin: 8px 0; padding-left: 20px; }
+.update-box li { line-height: 1.7; margin: 3px 0; }
+.update-box p { margin: 6px 0; }
+.update-box table { margin-top: 8px; font-size: 12px; }
+.update-box a { color: var(--gold); font-weight: 600; }
+
+.phase-progress { width: 100%; border-collapse: collapse; }
+.phase-progress th, .phase-progress td { padding: 6px 8px; border: 1px solid var(--line); text-align: center; font-size: 12px; }
+.phase-progress th { background: var(--highlight); font-family: var(--sans); }
+.phase-progress td:first-child { text-align: left; font-family: var(--mincho); font-weight: 600; }
+
+.dashboard-link-box {
+  margin: 12px 0 24px;
+  padding: 12px 20px;
+  background: rgba(212, 168, 91, 0.08);
+  border: 1px dashed var(--gold);
+  border-radius: 6px;
+  text-align: center;
+}
+</style>
+
+<style>
+.diary-summary { margin:18px 0; padding:16px 20px; border-radius:12px; background:linear-gradient(135deg,rgba(212,168,91,0.12),rgba(122,155,126,0.06)); border:1px solid var(--gold); }
+.diary-summary h2 { margin:0 0 10px; font-size:15px; color:var(--gold); }
+.ds-grid { display:flex; flex-wrap:wrap; gap:20px; }
+.ds-grid .d { font-size:13px; } .ds-grid .d b { font-size:20px; color:var(--sage); display:block; font-family:var(--mincho); }
+.topics { margin:18px 0; } .topics h2 { font-size:15px; color:var(--gold); }
+.topics ul { padding-left:18px; } .topics li { line-height:1.8; }
+.diary-toc { margin:18px 0 26px; padding:14px 18px; border:1px dashed var(--line); border-radius:10px; }
+.diary-toc h2 { font-size:14px; margin:0 0 8px; color:var(--muted); font-family:var(--mono); letter-spacing:0.05em; }
+.diary-toc ul { list-style:none; margin:0; padding:0; }
+.diary-toc a { display:flex; gap:12px; align-items:baseline; padding:6px 8px; border-radius:6px; text-decoration:none; color:var(--fg); }
+.diary-toc a:hover { background:var(--sub-bg); }
+.toc-date { font-family:var(--mono); font-size:12px; color:var(--gold); font-weight:700; min-width:92px; }
+.toc-titles { flex:1; font-family:var(--mincho); font-size:13px; }
+.toc-n { font-family:var(--mono); font-size:11px; color:var(--muted); }
+.diary-day { margin:12px 0; border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+.diary-day summary { cursor:pointer; padding:12px 16px; background:var(--sub-bg); display:flex; gap:14px; align-items:baseline; list-style:none; }
+.diary-day summary::-webkit-details-marker { display:none; }
+.diary-day summary::before { content:'▸'; color:var(--gold); transition:transform 0.15s; }
+.diary-day[open] summary::before { transform:rotate(90deg); }
+.d-date { font-family:var(--mono); font-size:13px; font-weight:700; color:var(--gold); }
+.d-titles { flex:1; font-family:var(--mincho); font-size:13px; color:var(--fg); }
+.d-count { font-family:var(--mono); font-size:11px; color:var(--muted); }
+.diary-body { padding:8px 16px 4px; }
+</style>
+</head>
+<body>
+<header class="top"><div>
+  <h1>📔 カラオケ練習日記</h1>
+  <div class="sub">日々の実測・気づき・成長の記録（新しい順）／練習の"やり方"は <a href="./curriculum_20260710.html" style="color:var(--gold)">カリキュラム</a> へ</div>
+</div></header>
+
+<section class="diary-summary">
+  <h2>📌 現在地（2026-07-16 時点）</h2>
+  <div class="ds-grid">
+    <div class="d"><b>54.9</b>総合偏差値（対上手歌手）</div>
+    <div class="d"><b>6曲 / 11回</b>解析セッション</div>
+    <div class="d"><b>息漏れ(HNR)</b>唯一の明確な弱点</div>
+    <div class="d"><b>②安定 / ⑤深み</b>実は強み</div>
+  </div>
+</section>
+
+<section class="topics">
+  <h2>🔖 今のトピック</h2>
+  <ul>
+    <li><strong>最優先＝息支え（Phase B）</strong>：短音率が高くフレーズが細切れ。1音を伸ばし切る練習が最短ルート。</li>
+    <li><strong>キー戦略が実証済み</strong>：ロック(努努/Wherever)は原曲もかすれ系。無理にクリーンを目指さず -2〜3半音で。</li>
+    <li><strong>音色は演奏除去(demucs)で再測定済み</strong>：数値の正本は <a href="./myp_voice_quality.html" style="color:var(--gold)">声質スコアカード</a>。</li>
+  </ul>
+</section>
+
+<section class="diary-toc">
+  <h2>■ 日付目次（新しい順）</h2>
+  <ul>
+    <li><a href="#d2026-07-16"><span class="toc-date">2026-07-16</span><span class="toc-titles">セッション拡張 v3 / 🌟 stability 判定初の昇格 / 🎯 キー戦略の実測実証 / 新曲追加（6 曲目） / 🎯 Phase 進度チェックリスト v2 / 🎬 MYPチャンネル 練習動画マップ 公開 / 🔬 音色軸を全面再測定（演奏除去＋新手法）・本文の旧HNR値は訂正</span><span class="toc-n">7件</span></a></li>
+    <li><a href="#d2026-07-12"><span class="toc-date">2026-07-12</span><span class="toc-titles">追記 / セッション拡張 / 成長エビデンス / 追記 / 新曲追加 / Phase 進度 / 追記 / 追記 / 音域可能性の再評価 / 進捗ペース / 参考チャンネル追加</span><span class="toc-n">11件</span></a></li>
+  </ul>
+</section>
+
+<details class="diary-day" id="d2026-07-16"><summary><span class="d-date">📅 2026-07-16</span><span class="d-titles">セッション拡張 v3 / 🌟 stability 判定初の昇格 / 🎯 キー戦略の実測実証 / 新曲追加（6 曲目） / 🎯 Phase 進度チェックリスト v2 / 🎬 MYPチャンネル 練習動画マップ 公開 / 🔬 音色軸を全面再測定（演奏除去＋新手法）・本文の旧HNR値は訂正</span><span class="d-count">7件</span></summary><div class="diary-body"><div class="update-box" data-updated="2026-07-16" data-kind="session-extension">
+  <div class="update-tag">📝 2026-07-16 追記 — セッション拡張 v3</div>
+  <p>07-10 作成時：<strong>4 曲 / 4 セッション</strong></p>
+  <p>07-12 時点：<strong>5 曲 / 7 セッション</strong></p>
+  <p>07-16 現在：<strong>6 曲 / 11 セッション</strong>（07-15 に「大空 v3・旅姿 v2・乾杯・努努 v2」の 4 セッション追加）</p>
+  <p>詳細は <a href="./" target="_blank">ダッシュボード</a> で確認可能。</p>
+</div>
+<div class="update-box" data-updated="2026-07-16" data-kind="growth-milestone">
+  <div class="update-tag">📝 2026-07-16 追記 — 🌟 stability 判定初の昇格</div>
+  <h4>大空と大地の中で v3 で「不安定 → やや不安定」に昇格</h4>
+  <p>過去 11 セッション中 <strong>初めて</strong> stability 判定が「不安定」以外に。</p>
+  <ul>
+    <li>v1（07-10）：不安定・短音率 57.2% / cent 変動 37.1</li>
+    <li>v2（07-12）：不安定・短音率 60.5% / cent 変動 35.9</li>
+    <li>v3（07-15）：<strong>やや不安定</strong> ⭐・短音率 <strong>52.7%</strong>（-4.5%）/ cent 変動 <strong>32.7</strong>（-4.4）</li>
+  </ul>
+  <p>ビブラート数も 29 → 30 → <strong>41</strong> と過去最多。<strong>Phase B（短音率殺し）+ Phase D（cent 変動）が同時に効果を示した</strong>。</p>
+</div>
+<div class="update-box" data-updated="2026-07-16" data-kind="key-strategy-validation">
+  <div class="update-tag">📝 2026-07-16 追記 — 🎯 キー戦略の実測実証</div>
+  <h4>努努 v2 で「キー下げ」の効果が数値で証明された</h4>
+  <p>努努を v1 で原曲キー±0 挑戦（C#5 到達）→ v2 でキー下げ挑戦（F4 まで・-7 半音）：</p>
+  <table class="phase-progress">
+    <thead>
+      <tr><th>指標</th><th>v1（±0 推定）</th><th>v2（キー下げ推定）</th><th>変化</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>最高音</td><td>C#5</td><td>F4</td><td>-7 半音</td></tr>
+      <tr><td>短音率</td><td>78.4%</td><td><strong>69.9%</strong></td><td>-8.5% ⭐</td></tr>
+      <tr><td>ロングトーン</td><td>0 本</td><td><strong>3 本</strong></td><td>+3 ⭐</td></tr>
+      <tr><td>抑揚判定</td><td>普通</td><td><strong>豊か</strong></td><td>判定昇格 ⭐</td></tr>
+      <tr><td>ビブラート</td><td>2</td><td>7</td><td>+3.5×</td></tr>
+      <tr><td>こぶし</td><td>7</td><td>26</td><td>+3.7×</td></tr>
+      <tr><td>HNR</td><td>3.75</td><td>3.73</td><td>横ばい（体質）</td></tr>
+      <tr><td>Shimmer</td><td>19.5%</td><td>19.6%</td><td>横ばい（体質）</td></tr>
+    </tbody>
+  </table>
+  <p><strong>結論：</strong>キー適正化で改善する指標（短音率／ロング／抑揚／装飾）と、キー変更では改善しない体質的指標（HNR／Shimmer）が明確に分離された。</p>
+  <p><strong>推奨アクション：</strong>Wherever you are v2 も同様に -2 半音下げで挑戦する価値あり（原曲 E major・サビ G#4 が厳しいなら D major で C#4 に）。</p>
+</div>
+<div class="update-box" data-updated="2026-07-16" data-kind="new-song">
+  <div class="update-tag">📝 2026-07-16 追記 — 新曲追加（6 曲目）</div>
+  <h3>🎤 曲 6: 乾杯（長渕剛 / 1980）</h3>
+  <p><strong>ジャンル</strong>：バラード（結婚式・卒業式定番）</p>
+  <p><strong>音域</strong>：C2 〜 A#4（34 半音・約 2.8 オクターブ）</p>
+  <p><strong>実測特徴</strong>：</p>
+  <ul>
+    <li><strong>ロングトーン 23 本・過去最多</strong>（バラード曲想の反映）</li>
+    <li>短音率 53.4%（過去最低・音を伸ばす楽曲構造）</li>
+    <li>ビブラート 37 回・こぶし 52 回（情感表現豊富）</li>
+    <li>最高音 A#4 は 6 曲中最も低い（長渕剛キーの中低音特徴）</li>
+  </ul>
+  <p><strong>推奨</strong>：長渕剛の魂こもった歌唱アプローチが Mits の装飾癖と親和性高い。バラード系の練習素材として継続活用推奨。</p>
+</div>
+<div class="update-box" data-updated="2026-07-16" data-kind="phase-progress-v2">
+  <div class="update-tag">📝 2026-07-16 追記 — 🎯 Phase 進度チェックリスト v2</div>
+  <p>07-12 版から更新（05 曲・8 セッション → 06 曲・11 セッション）：</p>
+  <table class="phase-progress">
+    <tr><th>曲</th><th>試行</th><th>Phase B 短音率</th><th>Phase C 低音ノイズ</th><th>Phase D cent 変動</th><th>Phase E ロング</th><th>stability</th></tr>
+    <tr><td>メロディ</td><td>v1/v2</td><td>❌ 57.6→57.7</td><td>✅ 10→4（-60%）</td><td>△ 39→37</td><td>△ 3→4</td><td>不安定</td></tr>
+    <tr><td>大空と大地の中で</td><td>v1/v2/<strong>v3</strong></td><td>✅ 57.2→60.5→<strong>52.7</strong></td><td>△ 3→5→5</td><td>✅ 37.1→35.9→<strong>32.7</strong></td><td>△ 12→8→10</td><td><strong>やや不安定</strong> ⭐</td></tr>
+    <tr><td>Wherever you are</td><td>v1 のみ</td><td>—</td><td>—</td><td>—</td><td>—</td><td>不安定</td></tr>
+    <tr><td>努努</td><td>v1/<strong>v2</strong>(キー下)</td><td>✅ <strong>78.4→69.9</strong></td><td>❌ 34→29</td><td>△ 32→37</td><td>✅ <strong>0→3</strong></td><td>不安定</td></tr>
+    <tr><td>旅姿六人衆</td><td>v1/v2(音域↑)</td><td>❌ 58→64</td><td>❌ 7→29</td><td>△ 39→32</td><td>△ 5→6</td><td>不安定</td></tr>
+    <tr><td>乾杯（NEW）</td><td>v1</td><td>—（53.4）</td><td>—（8）</td><td>—</td><td>—（23）</td><td>やや不安定 ⭐</td></tr>
+  </table>
+  <p><strong>次の課題</strong>：</p>
+  <ol>
+    <li>Wherever you are v2 未挑戦（キー下げ検証の残り 1 曲）</li>
+    <li>大空と大地の中で v4 で「やや不安定 → 安定」を目指す</li>
+    <li>努努 v3 で v2 のキーを維持しつつ短音率 60% 台へ</li>
+    <li>Shimmer / HNR は全曲共通で悪化中 → 発声トレーニングで根本対応必要</li>
+  </ol>
+</div>
+<div class="update-box" data-updated="2026-07-16" data-kind="myp-video-map">
+  <div class="update-tag">📝 2026-07-16 追記 — 🎬 MYPチャンネル 練習動画マップ 公開</div>
+  <p>トレーナー <a href="https://www.youtube.com/@myp_channel/videos" target="_blank" rel="noopener">MYP Channel（Mitsuhiro Yamashita Project）</a> の全 <strong>129 本</strong>を、この カリキュラム の Phase 0/A/B/C/D/E に配属した一覧ページを別ページで公開：</p>
+  <p style="margin: 14px 0;"><a href="./myp_videos.html" style="display:inline-block; padding:8px 16px; background:var(--gold); color:white; border-radius:6px; font-weight:600; text-decoration:none;">🎬 MYPチャンネル 練習動画マップを開く →</a></p>
+  <ul>
+    <li>Phase 0（座学）18本 / Phase A（座標）26本 / <strong>Phase B（短音率）22本 🔴</strong> / Phase C（低音ノイズ）17本 / Phase D（cent 変動）14本 / <strong>Phase E（ロング・高音）21本 🔴</strong> / 範囲外 11本</li>
+    <li>各動画には YouTube 直リンク・所要時間・#連番 を付記。動画 # 順に並べているのでトレーナーの理論構築順で追える</li>
+    <li><strong>Phase B / E は Mits の実測課題（短音率 52-78%・音域 F#4→E5）に直撃</strong>する Phase として最上部に固定</li>
+  </ul>
+</div>
+<div class="update-box" data-updated="2026-07-16" data-kind="timbre-remeasure">
+  <div class="update-tag">📝 2026-07-16 追記 — 🔬 音色軸を全面再測定（演奏除去＋新手法）・本文の旧HNR値は訂正</div>
+  <p><strong>重要な訂正</strong>：この本文中の HNR 数値（例「HNR 3-10dB」「HNR 10.22 / 6.56 / 5.83」「HNR 10.22 dB（4曲中最高）」等）は<strong>すべて演奏込みの旧測定値</strong>です。以下の新パイプラインで測り直しました：</p>
+  <ul>
+    <li><strong>demucs で演奏を除去</strong>してから測定 → HNR が全曲 2〜5dB 上昇（演奏が引き下げていた）。例：努努 3.73→8.11 / 大空 7.54→10.96 / メロディ 6.56→12.7</li>
+    <li><strong>ピッチを torchcrepe に統一</strong>（Tony 代替・原曲と同一手法）→ 以前「音程が大きく劣る」は測定法違いのアーティファクトで、実際は<strong>ほぼ互角</strong></li>
+    <li><strong>深みを openSMILE(αRatio) で実測化</strong>（計測不能→実測）→ Mits は松山千春・長渕剛より<strong>深い側＝意外な強み</strong></li>
+  </ul>
+  <p><strong>最新の正しい評価</strong>：総合偏差値 <strong>54.9（平均〜良）</strong>。<strong>唯一の明確な弱点は息漏れ＝HNR（偏差値48）だけ</strong>。②安定(CREPE 60)・③丸さ・⑤深み(62✨) は平均〜強み。→ 数値の正本は <a href="./myp_voice_quality.html" style="color:var(--gold);font-weight:600;">🎙️ 声質スコアカード</a>。</p>
+  <p style="font-size:12px;color:var(--muted);">※ 上の各 Phase の日付き記録（2026-07-12 等）は当時の演奏込みスナップショットとして残置。数値の最新は常に声質スコアカードを見る。</p>
+</div></div></details>
+<details class="diary-day" id="d2026-07-12"><summary><span class="d-date">📅 2026-07-12</span><span class="d-titles">追記 / セッション拡張 / 成長エビデンス / 追記 / 新曲追加 / Phase 進度 / 追記 / 追記 / 音域可能性の再評価 / 進捗ペース / 参考チャンネル追加</span><span class="d-count">11件</span></summary><div class="diary-body"><div class="dashboard-link-box" data-updated="2026-07-12">
+  <div class="update-tag">📝 2026-07-12 追記</div>
+  <p>📊 最新の実測データ・全体比較・成長サマリは <a href="./" style="color:var(--gold); font-weight:600;">カラオケ練習AI ダッシュボード</a> で確認可能。</p>
+</div>
+<div class="update-box" data-updated="2026-07-12">
+  <div class="update-tag">📝 2026-07-12 追記 — セッション拡張</div>
+  <p>本 curriculum 作成時：<strong>4 曲 / 4 セッション</strong></p>
+  <p>2026-07-12 現在：<strong>5 曲 / 7 セッション</strong>（メロディ #2・大空 #2・旅姿六人衆 #1 追加）</p>
+  <p>最新の全体比較・実測数値は <a href="./" target="_blank">ダッシュボード</a> を参照。</p>
+</div>
+<div class="update-box" data-updated="2026-07-12">
+  <div class="update-tag">📝 2026-07-12 追記 — 成長エビデンス</div>
+  <h4>🌱 Mits の癖は改善可能（実測で証明）</h4>
+  <p>メロディ v2 実測で以下が改善：</p>
+  <ul>
+    <li>HNR: 6.56 → <strong>7.76 dB</strong>（+1.20）</li>
+    <li>Shimmer: 17.4% → <strong>14.3%</strong>（-3.07）</li>
+    <li>Jitter: 2.62% → <strong>2.33%</strong>（-0.29）</li>
+    <li>ロングトーン: 3 → <strong>4 本</strong>（+1）</li>
+    <li>ビブラート: 6 → <strong>13 回</strong>（+7・倍増）</li>
+  </ul>
+  <p><strong>「Mits の癖」は変えられる</strong>。診断結果の Shimmer 高値も練習で改善できる証拠。</p>
+</div>
+<div class="update-box" data-updated="2026-07-12">
+    <div class="update-tag">📝 2026-07-12 追記</div>
+    <h4>✅ Phase C アプローチ 実証済み</h4>
+    <p><strong>メロディ v2（2026-07-12 実測）</strong>で低音ノイズが <strong>10 → 4 カ所（-60%）</strong> に激減。
+    Phase C の練習アプローチ（フレーズ末の息だけ止めて音程キープ）は<strong>実際に効果あり</strong>。
+    同アプローチを大空・Wherever・努努 にも展開推奨。</p>
+  </div>
+<div class="update-box" data-updated="2026-07-12">
+  <div class="update-tag">📝 2026-07-12 追記 — 新曲追加</div>
+  <h3>🎤 曲 5: 旅姿六人衆（サザンオールスターズ / 1983）</h3>
+  <p><strong>ジャンル</strong>：民謡調・ノヴェルティ寄り（サザン初期）</p>
+  <p><strong>音域</strong>：C#2 〜 F#4（29 半音・約 2.4 オクターブ）</p>
+  <p><strong>実測特徴</strong>：装飾テクニック密度 4 曲中最高</p>
+  <ul>
+    <li>こぶし 51 回 / ビブラート 24 回（幅 184 cent・深め）/ しゃくり 34 回 / フォール 22 回</li>
+    <li>合計 131 発動 = 曲想（民謡調）に対する<strong>正解の歌唱アプローチ</strong>ができている</li>
+  </ul>
+  <p><strong>推奨</strong>：Mits の民謡素養を活かせるジャンル。演歌/民謡系の楽曲追加の可能性あり。</p>
+</div>
+<div class="update-box" data-updated="2026-07-12">
+  <div class="update-tag">📝 2026-07-12 追記 — Phase 進度</div>
+  <h3>🎯 曲別 Phase 進度チェックリスト</h3>
+  <table class="phase-progress">
+    <tr><th>曲</th><th>Phase 0 座学</th><th>Phase A 座標</th><th>Phase B 短音率</th><th>Phase C 低音ノイズ</th><th>Phase D cent 変動</th><th>Phase E ロング延伸</th></tr>
+    <tr><td>メロディ</td><td>✅</td><td>✅ v1</td><td>❌ 変化なし</td><td>✅ v2 で -60%</td><td>△ わずかに改善</td><td>△ +1 本</td></tr>
+    <tr><td>大空と大地の中で</td><td>✅</td><td>✅ v2 で E5 拡張</td><td>❌ 悪化</td><td>△ わずかに悪化</td><td>△ 継続課題</td><td>❌ 12→8 本</td></tr>
+    <tr><td>Wherever you are</td><td>—</td><td>✅ v1</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>努努</td><td>—</td><td>✅ v1</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>旅姿六人衆</td><td>—</td><td>✅ v1</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+  </table>
+</div>
+<div class="update-box" data-updated="2026-07-12">
+  <div class="update-tag">📝 2026-07-12 追記</div>
+  <p><strong>Wherever you are / 努努 はまだ v2 未挑戦</strong>。</p>
+  <p>メロディ・大空で改善実証したアプローチ（Phase C 低音ノイズ消し・Phase E ロング延伸）を、
+  次回はこの 2 曲にも展開して効果測定推奨。</p>
+</div>
+<div class="update-box" data-updated="2026-07-12">
+  <div class="update-tag">📝 2026-07-12 追記</div>
+  <p><strong>Wherever you are / 努努 はまだ v2 未挑戦</strong>。</p>
+  <p>メロディ・大空で改善実証したアプローチ（Phase C 低音ノイズ消し・Phase E ロング延伸）を、
+  次回はこの 2 曲にも展開して効果測定推奨。</p>
+</div>
+<div class="update-box" data-updated="2026-07-12">
+  <div class="update-tag">📝 2026-07-12 追記 — 音域可能性の再評価</div>
+  <p>大空と大地の中で v2 で <strong>E5 到達</strong>（F#4 → E5・+10 半音・+1 オクターブ弱）。</p>
+  <p>Mits の音域は<strong>キー下げ一択ではなく、キー戻し・キー上げも試す価値あり</strong>。</p>
+  <p>ただしトレードオフあり：v2 では音域拡張の代償に、短音率・ロング数・抑揚が僅かに後退。</p>
+</div>
+<div class="update-box" data-updated="2026-07-12">
+  <div class="update-tag">📝 2026-07-12 追記 — 進捗ペース</div>
+  <p>2026-07-10 → 2026-07-12（2 日）で 3 セッション追加。</p>
+  <p><strong>ペース見直し</strong>：3 ヶ月目標達成の可能性は高い。各曲最低 3 挑戦・月 5〜7 セッションが現実的。</p>
+</div>
+<div class="update-box" data-updated="2026-07-12" data-kind="reference-channel">
+  <div class="update-tag">📝 2026-07-12 追記 — 参考チャンネル追加</div>
+  <h4>📺 参考チャンネル一覧（練習素材の外部参照）</h4>
+  <p>個別動画は Notion「歌の教材動画DB」で管理。ここは<strong>チャンネル単位で継続的に見る参考先</strong>を追記式で残す。</p>
+  <table class="phase-progress">
+    <thead>
+      <tr><th>登録日</th><th>チャンネル名</th><th>URL</th><th>特徴・用途</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>2026-07-12</td>
+        <td><strong>カラオケ歌っちゃ王</strong></td>
+        <td><a href="https://www.youtube.com/@uta-cha-oh" target="_blank" rel="noopener">@uta-cha-oh</a></td>
+        <td>カラオケ実用系（Mits 追加・詳細未調査）</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:12px; color:var(--muted); margin-top:10px;">
+    ※ 追加時は同じテーブルに行を追加。将来「動画本数」「登録者数」「代表動画」等の列を後付けで拡張可。
+  </p>
+</div></div></details>
+
+<footer class="footer">
+  カラオケ練習日記 ／ 練習の"やり方"は <a href="./curriculum_20260710.html">カリキュラム</a>・数値は <a href="./dashboard.html">ダッシュボード</a>／<a href="./index.html">← ホーム</a>
+</footer>
+<script src="./nav.js"></script>
+</body>
+</html>
