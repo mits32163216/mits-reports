@@ -10,6 +10,7 @@
     { file: "route.html",   key: "route",   emoji: "📖", label: "教材ルート", sub: "51ユニット" },
     { file: "vocab.html",   key: "vocab",   emoji: "📓", label: "単語",       sub: "D+1テスト" },
     { file: "phonics.html", key: "phonics", emoji: "🎧", label: "音",         sub: "フォニックス13回" },
+    { file: "progress.html", key: "progress", emoji: "📈", label: "記録", sub: "見える化" },
     { file: "test.html",    key: "test",    emoji: "📊", label: "測る",       sub: "テスト記録" },
   ];
 
