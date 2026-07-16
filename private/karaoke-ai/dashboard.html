@@ -331,7 +331,7 @@ footer.foot { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--l
   <header class="top">
     <div>
       <h1>🎵 カラオケ練習AI</h1>
-      <div class="sub">曲：6　セッション：11　生成：2026/7/16 13:34:59</div>
+      <div class="sub">曲：6　セッション：11　生成：2026/7/16 13:54:25</div>
     </div>
   </header>
 
@@ -1338,23 +1338,23 @@ footer.foot { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--l
 <ul><li>推定 BPM：<strong>138.2</strong>（大空 128.8 より速い）</li><li>ビート間隔 σ：<strong>104.7 ms</strong>（不安定）</li><li>※ 歌のみ録音では aubiotrack が母音アタックを拾う <strong>参考値扱い</strong></li></ul>
 <hr>
 <h2>7. 音色／声質（軸8）</h2>
-<p><strong>判定：息漏れ多め</strong>（大空「やや息漏れ」より悪化）</p>
-<ul><li>HNR：<strong>5.83 dB</strong>（大空 10.22・かなり息漏れが多い）</li><li>Jitter：<strong>4.10%</strong>（大空 1.90%・大幅悪化）</li><li>Shimmer：<strong>17.1%</strong>（大空 13.5%・振幅揺らぎ悪化）</li><li>フォルマント：F1=930 / F2=1809 / F3=2931 / F4=3968 Hz（F1 が高め＝母音「あ」寄り・口の開きが浅め）</li></ul>
-<p><strong>評価</strong>：<strong>今回最も声質が乱れている</strong>。低音ノイズ 47 箇所と Shimmer 17% は同じ根っこ（<strong>息の支え不足</strong>）から。歌唱曲が難しいのか声帯コンディションが良くなかったのか要確認。</p>
+<p><strong>判定：やや息漏れ</strong>（演奏除去後・大空 13.89 dB より低い）</p>
+<ul><li>HNR：<strong>10.73 dB</strong>（大空 13.89・やや息漏れ）※演奏除去後の再測定値</li><li>Jitter：<strong>1.96%</strong>（大空 1.28%・やや高め）</li><li>Shimmer：<strong>13.9%</strong>（大空 10.9%・やや高め）</li><li>フォルマント：F1=930 / F2=1809 / F3=2931 / F4=3968 Hz（F1 が高め＝母音「あ」寄り・口の開きが浅め）</li></ul>
+<p><strong>評価</strong>：低音ノイズ 47 箇所（過去最多）と Shimmer 14% は同じ根っこ（<strong>息の支え不足</strong>）から。歌唱曲が難しいのか声帯コンディションが良くなかったのか要確認。</p>
 <hr>
 <h2>8. 装飾／息継ぎ（軸9）</h2>
 <table><thead><tr><th>装飾</th><th>検出数</th><th>補足</th></tr></thead><tbody><tr><td>ビブラート</td><td><strong>17 カ所</strong></td><td>平均振幅 125.7 cent（大空 154 より狭い＝洗練寄り）／平均周期 5.53 Hz</td></tr><tr><td>しゃくり</td><td>12 カ所</td><td>サビの上昇音（E4/F#4/G#4）に集中</td></tr><tr><td>こぶし</td><td>22 カ所</td><td>サビの F#4/G#4 で使用（テクニック意識あり）</td></tr><tr><td>フォール</td><td>9 カ所</td><td>フレーズ末の下降で発動</td></tr><tr><td>息継ぎ</td><td><strong>127 カ所</strong></td><td>大空 103 より多い（note_gap fallback・実際の息継ぎとフレーズ切れの区別なし）</td></tr></tbody></table>
 <p><strong>評価</strong>：<strong>ビブラート幅 125 cent は大空 154 より洗練</strong>（より狭く音楽的に）。装飾テクニック（しゃくり/こぶし/フォール）は 43 発動で意識的な使用が伺える。ただし息継ぎ 127 は multi-count 疑い（1 息切れが 2〜3 count される）。</p>
 <hr>
 <h2>総評</h2>
-<p><strong>総合的な位置付け</strong>：3 曲中もっとも<strong>苦しい歌唱</strong>の可能性。短音率 67%・HNR 5.83・Jitter 4.10%・低音ノイズ 47 が同時に悪化。</p>
+<p><strong>総合的な位置付け</strong>：短音率 67%・低音ノイズ 47 が高い回。演奏除去後の音色（HNR 10.73・Jitter 1.96）は中位で、当初の「最も苦しい」評価は演奏込みの過小評価だった。</p>
 <p><strong>ただし前進もある</strong>：</p>
 <ul><li><strong>音域</strong>が G#4 まで伸びた（過去最高音・半音上がり）</li><li><strong>cent 変動精度</strong>が 27 cent と最も良い（音程は取れている）</li><li><strong>ビブラート幅</strong>が 125 cent と洗練</li></ul>
 <p><strong>推定される状況</strong>：</p>
 <ul><li>曲のキーが少し高すぎた可能性（G#4 が最高音・普段の F4/F#4 より半音上）</li><li>息の支えが疲れ始めた後半録音</li><li>サビでキー無理していた可能性</li></ul>
 <p><strong>次回への提案</strong>： 1. この曲を <strong>半音下げて再挑戦</strong>（G#4 → G4 でサビの負担軽減） 2. サビの高音より <strong>サビ以外の中音域を先に伸ばす</strong>（短音率が下がる） 3. 低音ノイズ 47 → 20 台を目標に</p>
 <p><strong>次回の効果測定指標</strong>：</p>
-<ul><li>軸1：短音率 67% → <strong>50% 台</strong></li><li>軸5：低音ノイズ 47 → <strong>20 以下</strong></li><li>軸8：HNR 5.83 → <strong>10 以上</strong>・Shimmer 17.1% → <strong>13% 以下</strong></li></ul>
+<ul><li>軸1：短音率 67% → <strong>50% 台</strong></li><li>軸5：低音ノイズ 47 → <strong>20 以下</strong></li><li>軸8：HNR 10.73 → <strong>13 以上</strong>・Shimmer 13.9% → <strong>10% 以下</strong></li></ul>
 <hr>
 <h2>曲情報（Mits 2026-07-10 確定）</h2>
 <ul><li><strong>タイトル</strong>：Wherever you are</li><li><strong>アーティスト</strong>：ONE OK ROCK</li><li><strong>発表年</strong>：2011（アルバム『残響リファレンス』収録・シングル）</li><li><strong>原曲キー</strong>：E major（サビ最高音 G#4）</li><li><strong>難易度メモ</strong>：Taka（Vo）のサビは E4〜G#4 で押し通すバラード</li></ul>
@@ -1431,8 +1431,8 @@ footer.foot { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--l
     <div class="detail-body">
       <h1>メロディ（玉置浩二）v2 — 2回目・リベンジ解析</h1>
 <h2>v1 → v2 の改善（成長ハイライト）</h2>
-<table><thead><tr><th>指標</th><th>v1 (2026-07-10)</th><th>v2 (2026-07-12)</th><th>変化</th></tr></thead><tbody><tr><td>低音ノイズ</td><td>10 カ所</td><td><strong>4 カ所</strong></td><td><strong>-60% ⭐⭐</strong></td></tr><tr><td>HNR</td><td>6.56 dB</td><td><strong>7.76 dB</strong></td><td>+1.20 ⭐</td></tr><tr><td>Shimmer</td><td>17.38%</td><td><strong>14.31%</strong></td><td>-3.07 ⭐</td></tr><tr><td>Jitter</td><td>2.62%</td><td>2.33%</td><td>-0.29</td></tr><tr><td>cent 変動</td><td>39.3</td><td>37.6</td><td>-1.7</td></tr><tr><td>ロングトーン</td><td>3 本</td><td><strong>4 本</strong></td><td>+1 ⭐</td></tr><tr><td>ビブラート数</td><td>6</td><td><strong>13</strong></td><td>+7</td></tr><tr><td>装飾テクニック合計</td><td>32</td><td>60</td><td>+28</td></tr></tbody></table>
-<p><strong>総括</strong>：低音ノイズ 60%減・HNR 改善・Shimmer 改善・ビブラート数倍増。<strong>息の支え・声質・装飾テクニック全てで前進</strong>。</p>
+<table><thead><tr><th>指標</th><th>v1 (2026-07-10)</th><th>v2 (2026-07-12)</th><th>変化</th></tr></thead><tbody><tr><td>低音ノイズ</td><td>10 カ所</td><td><strong>4 カ所</strong></td><td><strong>-60% ⭐⭐</strong></td></tr><tr><td>HNR</td><td>12.7 dB</td><td><strong>10.07 dB</strong></td><td>-2.63</td></tr><tr><td>Shimmer</td><td>13.16%</td><td><strong>13.27%</strong></td><td>+0.11</td></tr><tr><td>Jitter</td><td>1.70%</td><td>2.14%</td><td>+0.44</td></tr><tr><td>cent 変動</td><td>39.3</td><td>37.6</td><td>-1.7</td></tr><tr><td>ロングトーン</td><td>3 本</td><td><strong>4 本</strong></td><td>+1 ⭐</td></tr><tr><td>ビブラート数</td><td>6</td><td><strong>13</strong></td><td>+7</td></tr><tr><td>装飾テクニック合計</td><td>32</td><td>60</td><td>+28</td></tr></tbody></table>
+<p><strong>総括</strong>：低音ノイズ 60%減・ビブラート数倍増（息の支え・装飾は前進）。ただし演奏除去後の音色は HNR 12.7→10.07・Shimmer ほぼ横ばい・Jitter やや上昇で、v1 からむしろ低下。※以前は演奏込みで「改善」と誤って出ていた。</p>
 <h2>変化なし</h2>
 <ul><li>短音率 57.6% → 57.7%（Mits の癖として維持）</li><li>音域 C2〜F4 → C2〜F#4（+1半音）</li><li>抑揚 7.20 → 6.82（僅かに減・でも「豊か」維持）</li></ul>
 <h2>CSV / JSON</h2>
@@ -1449,7 +1449,7 @@ footer.foot { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--l
 <h2>曲情報（Mits 2026-07-15 確定）</h2>
 <ul><li><strong>タイトル</strong>：乾杯</li><li><strong>アーティスト</strong>：長渕剛</li><li><strong>発表年</strong>：1980年（後にセルフカバーで広く知られる名曲・結婚式・卒業式定番）</li></ul>
 <h2>9 軸実測サマリ</h2>
-<ul><li>音域 <strong>C2〜A#4</strong>（34半音・約 2.8 オクターブ）</li><li>短音率 53.4%（Mits 通常値 57〜78% より低い＝バラード曲想）</li><li>判定：<strong>やや不安定</strong>（過去 6 曲中初の &quot;不安定&quot; 以外）</li><li><strong>ロングトーン 23 本</strong>（過去最多）← バラード的な長い音多用</li><li>HNR 6.21 dB（息漏れ多め）</li><li>Shimmer 17.0%（過去平均帯）</li><li><strong>ビブラート 37 回・こぶし 52 回</strong>（装飾豊富・バラード歌唱アプローチ）</li></ul>
+<ul><li>音域 <strong>C2〜A#4</strong>（34半音・約 2.8 オクターブ）</li><li>短音率 53.4%（Mits 通常値 57〜78% より低い＝バラード曲想）</li><li>判定：<strong>やや不安定</strong>（過去 6 曲中初の &quot;不安定&quot; 以外）</li><li><strong>ロングトーン 23 本</strong>（過去最多）← バラード的な長い音多用</li><li>HNR 8.72 dB（やや息漏れ）※演奏除去後の再測定値</li><li>Shimmer 14.88%（過去平均帯）</li><li><strong>ビブラート 37 回・こぶし 52 回</strong>（装飾豊富・バラード歌唱アプローチ）</li></ul>
 <h2>特徴的所見</h2>
 <p><strong>バラード的曲想が数値に現れる</strong>：</p>
 <ul><li>ロングトーン 23 本（メロディ 3-4 / 大空 8-12 / Wherever 9 / 旅姿六人衆 5-6 と比較して圧倒的多い）</li><li>短音率 53% は 6 曲中最低（音を伸ばす楽曲構造）</li><li>ビブラート 37 / こぶし 52 で装飾も豊富（バラード的表現）</li></ul>
@@ -1502,7 +1502,7 @@ footer.foot { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--l
 <hr>
 <h2>7. 音色／声質（軸8・新規）</h2>
 <p><strong>判定：やや息漏れ</strong></p>
-<ul><li>HNR（Harmonics-to-Noise Ratio）：<strong>10.22 dB</strong>（8〜15 の範囲で「やや息漏れ」）</li><li>Jitter：<strong>1.90%</strong>（正常上限 1.04% を超過・ピッチ周期の揺らぎ）</li><li>Shimmer：<strong>13.5%</strong>（正常上限 3.81% を大きく超過・振幅揺らぎが大きい）</li><li>フォルマント：F1=735Hz / F2=1696Hz / F3=2949Hz / F4=3988Hz（男性ボイス典型・母音「あ」に近い平均値）</li></ul>
+<ul><li>HNR（Harmonics-to-Noise Ratio）：<strong>13.89 dB</strong>（8〜15 の範囲で「やや息漏れ」・クリア域15に近い）※演奏除去後の再測定値</li><li>Jitter：<strong>1.28%</strong>（正常上限 1.04% をやや超過・ピッチ周期の揺らぎ）</li><li>Shimmer：<strong>10.9%</strong>（正常上限 3.81% を超過・振幅揺らぎが大きい）</li><li>フォルマント：F1=735Hz / F2=1696Hz / F3=2949Hz / F4=3988Hz（男性ボイス典型・母音「あ」に近い平均値）</li></ul>
 <p><strong>評価</strong>：Jitter/Shimmer の高さは低音の fry 区間・語尾のかすれ・カラオケ室のマイクゲイン設定などが総合的に効いている。「発声始点で息を先に流す」意識に加え、<strong>声を出す前に喉を「開く」（軟口蓋を上げる）</strong> ことで Shimmer を落とせる可能性。</p>
 <hr>
 <h2>8. 装飾／息継ぎ（軸9・新規）</h2>
@@ -1511,12 +1511,12 @@ footer.foot { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--l
 <p>しゃくり／こぶし／フォールは伝統演歌よりは少なめ・松山千春の楽曲としては自然な範囲。</p>
 <hr>
 <h2>総評</h2>
-<p>Mits の音域は B1〜F#4（実用 D3〜F#4）で、松山千春の男性キーは声域面で全く問題ない。<strong>最大の課題は短音率 57%</strong>（軸1）と <strong>Shimmer 13.5%</strong>（軸8・振幅揺らぎ） — この 2 つは同じ根っこ（<strong>息の支えが1音ずつ切れる</strong>）から来ている。</p>
+<p>Mits の音域は B1〜F#4（実用 D3〜F#4）で、松山千春の男性キーは声域面で全く問題ない。<strong>最大の課題は短音率 57%</strong>（軸1）と <strong>Shimmer 10.9%</strong>（軸8・振幅揺らぎ） — この 2 つは同じ根っこ（<strong>息の支えが1音ずつ切れる</strong>）から来ている。</p>
 <p>強みは既に確立されている：</p>
 <ul><li>サビ F#4 の 3〜4 秒ロングトーン 4 カ所（軸3）</li><li>エンディング E4 の 9 秒（軸3）</li><li>抑揚が「豊か」判定・RMS stdev 6.07 dB（軸6）</li><li>ビブラート 29 カ所・自然な 5.1 Hz（軸9）</li></ul>
-<p>次回の重点は「<strong>サビ以外で音を最後まで伸ばす</strong>」1 点で、短音率 57.2% → 40% 台・Shimmer 13.5% → 10% 以下 を同時に狙える。</p>
+<p>次回の重点は「<strong>サビ以外で音を最後まで伸ばす</strong>」1 点で、短音率 57.2% → 40% 台・Shimmer 10.9% → 9% 台 を同時に狙える。</p>
 <p>次回の効果測定指標：</p>
-<ul><li>軸1：短音率 57.2% → <strong>40% 台</strong></li><li>軸5：低音ノイズ数：3 → 0</li><li>軸8：Shimmer 13.5% → <strong>10% 以下</strong>・HNR 10.2 → <strong>13 以上</strong></li><li>軸9：ビブラート幅 154 cent → <strong>80 cent 前後</strong>（サビ限定で意識）</li></ul>
+<ul><li>軸1：短音率 57.2% → <strong>40% 台</strong></li><li>軸5：低音ノイズ数：3 → 0</li><li>軸8：Shimmer 10.9% → <strong>9% 台</strong>・HNR 13.89 → <strong>15 以上（クリア域）</strong></li><li>軸9：ビブラート幅 154 cent → <strong>80 cent 前後</strong>（サビ限定で意識）</li></ul>
 <hr>
 <h2>CSV / JSON</h2>
 <ul><li><code class="wl">inbox/20260710_164450_大空と大地の中で.csv</code></li><li><code class="wl">inbox/20260710_164450_大空と大地の中で_9axis.json</code>（9軸フル計測値）</li></ul>
@@ -1533,7 +1533,7 @@ footer.foot { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--l
 <table><thead><tr><th>項目</th><th>v1</th><th>v2</th><th>変化</th></tr></thead><tbody><tr><td>音域</td><td>B1〜F#4（31半音）</td><td><strong>B1〜E5（41半音）</strong></td><td><strong>+10 半音・+9 半音上に拡張</strong></td></tr><tr><td>最高音</td><td>F#4 (370 Hz)</td><td><strong>E5 (659 Hz)</strong></td><td><strong>+1 オクターブ弱</strong></td></tr><tr><td>一般男性リファレンス比較</td><td>歌唱域上限 G4 の +1 半音</td><td>訓練域裏声上限 D5 の +2 半音</td><td><strong>裏声域突破</strong></td></tr></tbody></table>
 <p><strong>推定</strong>：Mits がキー変更 or 意図的に高音挑戦した結果、原曲最高音 G#4/A4 相当を大幅に超えた E5 に到達。声域が明らかに広がっている。</p>
 <h2>v1 → v2 の比較</h2>
-<table><thead><tr><th>指標</th><th>v1</th><th>v2</th><th>変化</th></tr></thead><tbody><tr><td>短音率</td><td>57.2%</td><td>60.5%</td><td>+3.3% わずかに悪化</td></tr><tr><td>ロングトーン</td><td>12 本</td><td>8 本</td><td>-4</td></tr><tr><td>低音ノイズ</td><td>3</td><td>5</td><td>+2</td></tr><tr><td>HNR</td><td>10.22</td><td>9.00</td><td>-1.22</td></tr><tr><td>Shimmer</td><td>13.50%</td><td>14.32%</td><td>+0.82</td></tr><tr><td>抑揚判定</td><td>豊か</td><td>普通</td><td>悪化</td></tr></tbody></table>
+<table><thead><tr><th>指標</th><th>v1</th><th>v2</th><th>変化</th></tr></thead><tbody><tr><td>短音率</td><td>57.2%</td><td>60.5%</td><td>+3.3% わずかに悪化</td></tr><tr><td>ロングトーン</td><td>12 本</td><td>8 本</td><td>-4</td></tr><tr><td>低音ノイズ</td><td>3</td><td>5</td><td>+2</td></tr><tr><td>HNR</td><td>13.89</td><td>10.95</td><td>-2.94</td></tr><tr><td>Shimmer</td><td>10.94%</td><td>12.21%</td><td>+1.27</td></tr><tr><td>抑揚判定</td><td>豊か</td><td>普通</td><td>悪化</td></tr></tbody></table>
 <p><strong>トレードオフ</strong>：音域を大きく広げた代償に、コアな声質指標（短音率・ロング数・抑揚）は僅かに後退。E5 まで狙った結果、全体を丁寧に歌う余裕が減ったと推定。</p>
 <h2>CSV / JSON</h2>
 <ul><li><code class="wl">inbox/20260712_082033_大空と大地の中で_v2.csv</code></li><li><code class="wl">inbox/20260712_082033_大空と大地の中で_v2_9axis.json</code></li></ul>
@@ -1547,7 +1547,7 @@ footer.foot { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--l
     <div class="detail-body">
       <h1>大空と大地の中で（松山千春）v3 — 3 回目・トレンド確認</h1>
 <h2>v1 → v2 → v3 の推移</h2>
-<table><thead><tr><th>指標</th><th>v1</th><th>v2</th><th><strong>v3</strong></th><th>v1→v3</th></tr></thead><tbody><tr><td>音域</td><td>B1〜F#4 (31)</td><td>B1〜E5 (41)</td><td><strong>B1〜D5 (39)</strong></td><td>+8 半音</td></tr><tr><td><strong>stability</strong></td><td>不安定</td><td>不安定</td><td><strong>やや不安定</strong> ⭐</td><td><strong>判定 1 ランク上昇</strong></td></tr><tr><td><strong>短音率</strong></td><td>57.2%</td><td>60.5%</td><td><strong>52.7%</strong> ⭐</td><td>-4.5%</td></tr><tr><td><strong>cent 変動</strong></td><td>37.1</td><td>35.9</td><td><strong>32.7</strong> ⭐</td><td>-4.4</td></tr><tr><td>ロング数</td><td>12</td><td>8</td><td>10</td><td>回復</td></tr><tr><td>低音ノイズ</td><td>3</td><td>5</td><td>5</td><td>横ばい</td></tr><tr><td>HNR</td><td>10.22</td><td>9.00</td><td>7.54</td><td>悪化</td></tr><tr><td>Shimmer</td><td>13.50</td><td>14.32</td><td>16.76</td><td>悪化</td></tr><tr><td>ビブラート数</td><td>29</td><td>30</td><td><strong>41</strong> ⭐</td><td>+12</td></tr></tbody></table>
+<table><thead><tr><th>指標</th><th>v1</th><th>v2</th><th><strong>v3</strong></th><th>v1→v3</th></tr></thead><tbody><tr><td>音域</td><td>B1〜F#4 (31)</td><td>B1〜E5 (41)</td><td><strong>B1〜D5 (39)</strong></td><td>+8 半音</td></tr><tr><td><strong>stability</strong></td><td>不安定</td><td>不安定</td><td><strong>やや不安定</strong> ⭐</td><td><strong>判定 1 ランク上昇</strong></td></tr><tr><td><strong>短音率</strong></td><td>57.2%</td><td>60.5%</td><td><strong>52.7%</strong> ⭐</td><td>-4.5%</td></tr><tr><td><strong>cent 変動</strong></td><td>37.1</td><td>35.9</td><td><strong>32.7</strong> ⭐</td><td>-4.4</td></tr><tr><td>ロング数</td><td>12</td><td>8</td><td>10</td><td>回復</td></tr><tr><td>低音ノイズ</td><td>3</td><td>5</td><td>5</td><td>横ばい</td></tr><tr><td>HNR</td><td>13.89</td><td>10.95</td><td>10.96</td><td>低下（v1比）</td></tr><tr><td>Shimmer</td><td>10.94</td><td>12.21</td><td>14.24</td><td>悪化</td></tr><tr><td>ビブラート数</td><td>29</td><td>30</td><td><strong>41</strong> ⭐</td><td>+12</td></tr></tbody></table>
 <p><strong>成長ハイライト</strong>：</p>
 <ul><li><strong>音程 stability 判定が「不安定」→「やや不安定」に昇格</strong>（3 曲通じて初の判定改善）</li><li>短音率 -4.5% 改善（Mits の課題項目で明確な前進）</li><li>cent 変動 -4.4 改善（ピッチ精度上昇）</li><li>ビブラート 41 回・過去最多</li></ul>
 <p><strong>トレードオフ</strong>：</p>
@@ -1582,7 +1582,7 @@ footer.foot { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--l
 <hr>
 <h2>4. 改善ポイント</h2>
 <h3>①【最重要】音色の乱れ全指標が過去最悪</h3>
-<ul><li>HNR：<strong>3.75 dB</strong>（Wherever 5.83・大空 10.22・メロディ 6.56 の中で最低）</li><li>Shimmer：<strong>19.46%</strong>（過去最高）</li><li>Jitter：<strong>4.30%</strong>（Wherever 4.10 とほぼタイ）</li></ul>
+<ul><li>HNR：<strong>9.01 dB</strong>（Wherever 10.73・大空 13.89・メロディ 12.7 の中で最低）※演奏除去後の再測定値</li><li>Shimmer：<strong>16.96%</strong>（4曲中で最高）</li><li>Jitter：<strong>2.30%</strong>（Wherever 1.96 よりやや高い）</li></ul>
 <h3>② 低音ノイズ 34 箇所</h3>
 <ul><li>C2 帯の短音が頻発 → <strong>fry または pYIN オクターブ半減エラー</strong></li><li>サビ後・フレーズ末の息切れが 4 曲通じて改善していない</li></ul>
 <h3>③ ロングトーン ゼロ</h3>
@@ -1596,8 +1596,8 @@ footer.foot { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--l
 <ul><li>推定 BPM：<strong>119.9</strong>（原曲 BPM ~112 に近い・aubio 誤検出少なめ）</li><li>ビート間隔 σ：<strong>114.8 ms</strong>（判定：不安定）</li></ul>
 <hr>
 <h2>7. 音色／声質（軸8）</h2>
-<p><strong>判定：息漏れ多め・過去最悪</strong></p>
-<ul><li>HNR <strong>3.75 dB</strong>（正常 &gt;15・かなり乱れている）</li><li>Jitter <strong>4.30%</strong> / Shimmer <strong>19.5%</strong></li><li>フォルマント F1=867Hz（口の開きは中程度）</li></ul>
+<p><strong>判定：やや息漏れ（4曲中は音色が最も低い）</strong></p>
+<ul><li>HNR <strong>9.01 dB</strong>（正常 &gt;15・やや息漏れ）</li><li>Jitter <strong>2.30%</strong> / Shimmer <strong>17.0%</strong></li><li>フォルマント F1=867Hz（口の開きは中程度）</li></ul>
 <p><strong>評価</strong>：<strong>キーが高すぎた・喉で押し出した歌唱の典型</strong>。C#5 到達は達成だが、代償として声帯が悲鳴を上げている。</p>
 <hr>
 <h2>8. 装飾／息継ぎ（軸9）</h2>
@@ -1605,9 +1605,9 @@ footer.foot { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--l
 <p><strong>評価</strong>：装飾テクニックほぼゼロ・<strong>音程を追うので精一杯</strong>の状態。</p>
 <hr>
 <h2>総評</h2>
-<p><strong>4 曲中最も苦しい歌唱</strong>。C#5 到達という達成の代償に、音色系全指標（HNR / Jitter / Shimmer）が過去最悪。<strong>キーが高すぎた</strong>か、<strong>4 曲目で声帯が疲れきっていた</strong>か、または両方。</p>
+<p><strong>4 曲中で音色が最も低い</strong>。C#5 到達という達成の代償に、音色系（HNR / Jitter / Shimmer）が他曲より低い。<strong>キーが高すぎた</strong>か、<strong>4 曲目で声帯が疲れきっていた</strong>か、または両方。</p>
 <p><strong>4 曲通じて明確になった Mits の癖</strong>：</p>
-<ul><li>短音率：57.6 → 57.2 → 67.0 → <strong>78.4%</strong>（曲難易度に応じて悪化）</li><li>Shimmer：13.5 → 17.4 → 17.1 → <strong>19.5%</strong>（一貫して高い・振幅揺らぎが体質的）</li><li>低音ノイズ：10 → 3 → 47 → <strong>34</strong>（フレーズ末の fry 傾向）</li></ul>
+<ul><li>短音率：57.6 → 57.2 → 67.0 → <strong>78.4%</strong>（曲難易度に応じて悪化）</li><li>Shimmer：10.9 → 13.2 → 13.9 → <strong>17.0%</strong>（努努が最も高い・振幅揺らぎ）※演奏除去後</li><li>低音ノイズ：10 → 3 → 47 → <strong>34</strong>（フレーズ末の fry 傾向）</li></ul>
 <p><strong>4 曲比較で見えた最優先課題</strong>： 1. <strong>息の支えを一定に保つ</strong>（Shimmer 全曲高い理由） 2. <strong>キーの選択</strong>（YUMEYUME・Wherever のような C#5/G#4 系は 2-3 半音下げが安全） 3. <strong>1 音を最後まで支える</strong>（短音率が難曲で悪化）</p>
 <p><strong>次回への提案</strong>：</p>
 <ul><li>YUMEYUME を再挑戦する場合：<strong>-2〜-3 半音（キー下げ）</strong> で歌う</li><li>長め録音セッションの前半でバラード（メロディ/大空）を歌い声帯を温める</li><li>サビ以外のメロディ部分で音を最後まで伸ばす意識</li></ul>
@@ -1624,7 +1624,7 @@ footer.foot { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--l
     <div class="detail-body">
       <h1>努努（ONE OK ROCK）v2 — 2 回目・キー下げリベンジ</h1>
 <h2>v1 → v2 の推移（重要）</h2>
-<table><thead><tr><th>指標</th><th>v1</th><th><strong>v2</strong></th><th>変化</th></tr></thead><tbody><tr><td><strong>音域</strong></td><td>B1〜<strong>C#5</strong> (37半音)</td><td><strong>B1〜F4</strong> (30半音)</td><td><strong>-7 半音縮小</strong></td></tr><tr><td>最高音</td><td>C#5 (554 Hz)</td><td><strong>F4 (349 Hz)</strong></td><td>-7 半音（キー下げ推定）</td></tr><tr><td><strong>短音率</strong></td><td>78.4%</td><td><strong>69.9%</strong> ⭐</td><td><strong>-8.5% 改善</strong></td></tr><tr><td><strong>ロングトーン</strong></td><td>0 本</td><td><strong>3 本</strong> ⭐</td><td>+3</td></tr><tr><td><strong>抑揚判定</strong></td><td>普通</td><td><strong>豊か</strong> ⭐</td><td>判定改善</td></tr><tr><td>RMS σ</td><td>6.18</td><td>6.98</td><td>+0.80</td></tr><tr><td>HNR</td><td>3.75</td><td>3.73</td><td>横ばい</td></tr><tr><td>Jitter</td><td>4.30</td><td>3.58</td><td>-0.72 わずかに改善</td></tr><tr><td>Shimmer</td><td>19.46</td><td>19.59</td><td>横ばい</td></tr><tr><td>ビブラート</td><td>2</td><td>7</td><td>+5</td></tr><tr><td>こぶし</td><td>7</td><td>26</td><td>+19</td></tr></tbody></table>
+<table><thead><tr><th>指標</th><th>v1</th><th><strong>v2</strong></th><th>変化</th></tr></thead><tbody><tr><td><strong>音域</strong></td><td>B1〜<strong>C#5</strong> (37半音)</td><td><strong>B1〜F4</strong> (30半音)</td><td><strong>-7 半音縮小</strong></td></tr><tr><td>最高音</td><td>C#5 (554 Hz)</td><td><strong>F4 (349 Hz)</strong></td><td>-7 半音（キー下げ推定）</td></tr><tr><td><strong>短音率</strong></td><td>78.4%</td><td><strong>69.9%</strong> ⭐</td><td><strong>-8.5% 改善</strong></td></tr><tr><td><strong>ロングトーン</strong></td><td>0 本</td><td><strong>3 本</strong> ⭐</td><td>+3</td></tr><tr><td><strong>抑揚判定</strong></td><td>普通</td><td><strong>豊か</strong> ⭐</td><td>判定改善</td></tr><tr><td>RMS σ</td><td>6.18</td><td>6.98</td><td>+0.80</td></tr><tr><td>HNR</td><td>9.01</td><td>8.11</td><td>やや低下</td></tr><tr><td>Jitter</td><td>2.30</td><td>2.43</td><td>+0.13 ほぼ横ばい</td></tr><tr><td>Shimmer</td><td>16.96</td><td>17.52</td><td>わずかに悪化</td></tr><tr><td>ビブラート</td><td>2</td><td>7</td><td>+5</td></tr><tr><td>こぶし</td><td>7</td><td>26</td><td>+19</td></tr></tbody></table>
 <h2>🌟 大発見：キー戦略の効果検証</h2>
 <p><strong>推定</strong>：Mits は 努努 のキーを大幅下げて挑戦（音域縮小 -7 半音は原曲キーからの下げ推定）。</p>
 <p><strong>成果</strong>： 1. <strong>短音率 -8.5% 改善</strong>（前回 78.4% → 69.9%）← 「キーが楽になったのでフレーズを最後まで支えられた」 2. <strong>ロングトーン 0 → 3 本</strong>（前回不可能だった長音表現が可能に） 3. <strong>抑揚が「普通」→「豊か」に昇格</strong>（音量ダイナミクスの余裕） 4. <strong>装飾テクニック増加</strong>（ビブラート x3.5 / こぶし x3.7）</p>
@@ -1648,7 +1648,7 @@ footer.foot { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--l
 <h2>曲情報（Mits 2026-07-12 確定）</h2>
 <ul><li><strong>タイトル</strong>：旅姿六人衆</li><li><strong>アーティスト</strong>：サザンオールスターズ</li><li><strong>発表年</strong>：1983年</li><li><strong>収録</strong>：初期アルバム楽曲・民謡調/ノヴェルティ寄りのサザン楽曲</li></ul>
 <h2>9軸実測サマリ</h2>
-<ul><li>音域 <strong>C#2〜F#4</strong>（29半音・約 2.4 オクターブ）</li><li>短音率 58%（Mits の他曲と同傾向）</li><li>判定：不安定</li><li>HNR 7.26 dB（息漏れ多め）</li><li>Shimmer 15.89%（過去平均帯）</li><li>ビブラート <strong>24 回・幅 184 cent</strong>（深いビブラート＝民謡調に合致）</li><li>こぶし <strong>51 回・多め</strong>（民謡テクニック活用）</li></ul>
+<ul><li>音域 <strong>C#2〜F#4</strong>（29半音・約 2.4 オクターブ）</li><li>短音率 58%（Mits の他曲と同傾向）</li><li>判定：不安定</li><li>HNR 10.15 dB（やや息漏れ）※演奏除去後の再測定値</li><li>Shimmer 13.75%（過去平均帯）</li><li>ビブラート <strong>24 回・幅 184 cent</strong>（深いビブラート＝民謡調に合致）</li><li>こぶし <strong>51 回・多め</strong>（民謡テクニック活用）</li></ul>
 <h2>装飾テクニック豊富</h2>
 <ul><li>こぶし 51 / しゃくり 34 / フォール 22 / ビブラート 24 → 合計 131 発動</li><li><strong>曲想解釈</strong>：サザン初期の民謡調楽曲。桑田佳祐がユーモラスな民謡風に歌う曲想 → こぶし・ビブラート・しゃくりを意識的に多用するのは<strong>正解の歌唱アプローチ</strong></li><li>他 4 曲（ロック/バラード系）と比較して<strong>装飾テクニック密度が最も高い</strong>（曲想に合った歌唱を Mits が自然にできている）</li></ul>
 <h2>CSV / JSON</h2>
@@ -1663,10 +1663,10 @@ footer.foot { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--l
     <div class="detail-body">
       <h1>旅姿六人衆（サザンオールスターズ）v2 — 2 回目・音域拡張挑戦</h1>
 <h2>v1 → v2 の推移</h2>
-<table><thead><tr><th>指標</th><th>v1</th><th><strong>v2</strong></th><th>変化</th></tr></thead><tbody><tr><td>音域</td><td>C#2〜F#4 (29)</td><td><strong>B1〜E5 (41)</strong> ⭐</td><td><strong>+12 半音・大幅拡張</strong></td></tr><tr><td>最高音</td><td>F#4</td><td><strong>E5</strong></td><td>+10 半音（裏声域到達）</td></tr><tr><td>短音率</td><td>58%</td><td>64.3%</td><td>悪化</td></tr><tr><td>ロング数</td><td>5</td><td>6</td><td>+1</td></tr><tr><td>低音ノイズ</td><td>7</td><td><strong>29</strong></td><td><strong>+22（激増）</strong></td></tr><tr><td>HNR</td><td>7.26</td><td>5.92</td><td>悪化</td></tr><tr><td>Shimmer</td><td>15.89</td><td>18.22</td><td>悪化</td></tr><tr><td>ビブラート数</td><td>24</td><td>21</td><td>-3</td></tr></tbody></table>
+<table><thead><tr><th>指標</th><th>v1</th><th><strong>v2</strong></th><th>変化</th></tr></thead><tbody><tr><td>音域</td><td>C#2〜F#4 (29)</td><td><strong>B1〜E5 (41)</strong> ⭐</td><td><strong>+12 半音・大幅拡張</strong></td></tr><tr><td>最高音</td><td>F#4</td><td><strong>E5</strong></td><td>+10 半音（裏声域到達）</td></tr><tr><td>短音率</td><td>58%</td><td>64.3%</td><td>悪化</td></tr><tr><td>ロング数</td><td>5</td><td>6</td><td>+1</td></tr><tr><td>低音ノイズ</td><td>7</td><td><strong>29</strong></td><td><strong>+22（激増）</strong></td></tr><tr><td>HNR</td><td>10.15</td><td>9.76</td><td>やや低下</td></tr><tr><td>Shimmer</td><td>13.75</td><td>15.26</td><td>悪化</td></tr><tr><td>ビブラート数</td><td>24</td><td>21</td><td>-3</td></tr></tbody></table>
 <p><strong>明確な成長</strong>：音域 F#4 → E5（+10 半音）で <strong>裏声域到達</strong>。大空と大地の中で v2 と同じ音域拡張トレンド。</p>
 <p><strong>トレードオフ</strong>：</p>
-<ul><li>短音率悪化（サザンの民謡調で装飾多用しつつ音域も広げる高難易度化）</li><li>音色系全体悪化（HNR 5.92 は過去最低圏）</li><li>低音ノイズ 29 は 4 倍増（fry / 息漏れ多発）</li></ul>
+<ul><li>短音率悪化（サザンの民謡調で装飾多用しつつ音域も広げる高難易度化）</li><li>音色系やや悪化（HNR 9.76・演奏除去後）</li><li>低音ノイズ 29 は 4 倍増（fry / 息漏れ多発）</li></ul>
 <p><strong>推定</strong>：サビの高音を挑戦した代償で、フレーズ末の低音が疲れて崩壊。</p>
 <h2>CSV / JSON</h2>
 <ul><li><code class="wl">inbox/20260715_173300_旅姿六人衆_v2.csv</code></li><li><code class="wl">inbox/20260715_173300_旅姿六人衆_v2_9axis.json</code></li></ul>
