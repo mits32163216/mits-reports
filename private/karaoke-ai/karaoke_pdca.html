@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>効果検証ボード（PDCA）— カラオケ練習AI</title>
+<style>
+:root { --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+ --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans",sans-serif; --mono:"SF Mono",Menlo,monospace;
+ --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06); }
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+*{box-sizing:border-box;} html,body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);}
+body{padding:24px 28px 90px;max-width:1080px;margin:0 auto;}
+h1,h2,h3{font-family:var(--mincho);} h1{font-size:26px;margin:0 0 6px;} a{color:var(--gold);text-decoration:none;}
+.sub{font-family:var(--mono);font-size:12px;color:var(--muted);}
+.summary{margin:16px 0;padding:14px 18px;border-radius:12px;background:linear-gradient(135deg,rgba(212,168,91,0.12),rgba(122,155,126,0.06));border:1px solid var(--gold);font-size:14px;line-height:1.7;}
+.board{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:20px 0;}
+@media(max-width:820px){.board{grid-template-columns:1fr;}}
+.col{border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--sub-bg);}
+.col h3{margin:0 0 10px;font-size:16px;text-align:center;padding-bottom:8px;border-bottom:2px solid var(--line);}
+.col.sokkou h3{color:var(--sage);} .col.tsumi h3{color:var(--gold);} .col.kikanai h3{color:var(--rose);}
+.pcard{background:var(--card-bg);border:1px solid var(--line);border-left:4px solid var(--line);border-radius:8px;padding:9px 11px;margin-bottom:9px;font-size:12.5px;line-height:1.5;}
+.pcard.good{border-left-color:var(--sage);} .pcard.bad{border-left-color:var(--rose);}
+.pc-song{font-family:var(--mincho);font-weight:600;font-size:13px;} .pc-tr{font-family:var(--mono);font-size:10px;color:var(--muted);}
+.pc-intv{color:var(--gold);font-size:12px;margin:2px 0;} .pc-metric b{font-family:var(--mono);}
+.pc-arrow.good{color:var(--sage);} .pc-arrow.bad{color:var(--rose);}
+.empty{color:var(--muted);font-size:12px;text-align:center;padding:8px;}
+table.resp{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px;}
+table.resp td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+.m-name{font-family:var(--mincho);font-weight:600;} .m-desc{display:block;font-size:11px;color:var(--muted);font-weight:400;}
+.m-cls{white-space:nowrap;font-size:13px;} .m-note{color:var(--muted);font-size:12px;}
+.narrative{margin:20px 0;padding:16px 20px;border:1px solid var(--gold);border-radius:12px;background:var(--card-bg);line-height:1.8;}
+.narrative h2{margin-top:0;font-size:17px;color:var(--gold);} .narrative li{margin:5px 0;}
+.memo{margin:22px 0;padding:16px 20px;border:1px dashed var(--sage);border-radius:12px;background:var(--sub-bg);}
+.memo h2{margin:0 0 6px;font-size:16px;color:var(--sage);} .memo p{font-size:12.5px;color:var(--muted);margin:4px 0 10px;line-height:1.6;}
+.memo select,.memo textarea{width:100%;font-family:var(--sans);font-size:14px;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--card-bg);color:var(--fg);margin-bottom:8px;}
+.memo textarea{min-height:70px;resize:vertical;}
+.memo-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.memo button{font-family:var(--sans);font-size:13px;padding:7px 16px;border-radius:8px;border:1px solid var(--gold);background:var(--gold);color:#fff;cursor:pointer;}
+.memo button.ghost{background:transparent;color:var(--gold);}
+.memo-saved{font-size:12px;color:var(--sage);margin-top:6px;min-height:16px;}
+h2.sec{font-size:19px;border-bottom:1px solid var(--line);padding-bottom:6px;margin-top:30px;}
+footer{margin-top:40px;padding-top:18px;border-top:1px dashed var(--line);font-family:var(--mono);font-size:11px;color:var(--muted);text-align:center;}
+</style></head><body>
+
+<header><h1>🔁 効果検証ボード（PDCA）</h1>
+<div class="sub">何をしたら → 何が変わったか。介入と成果を因果で紐付け・🟢即効/🟡積み重ね/🔴効かない・代償 に分類（同一曲の複数バージョンが因果シグナル）</div></header>
+
+<section class="summary">
+📌 <strong>読み方</strong>：同じ曲を複数回歌った時の変化＝「その間に意識したこと（介入）の効果」。異なる曲同士は難易度が違うので比較しません。
+サンプルが増えるほど精度が上がる<strong>仮説ボード</strong>です。数値の正本は <a href="./dashboard.html">ダッシュボード</a> / <a href="./myp_voice_quality.html">声質スコアカード</a>。
+</section>
+
+<h2 class="sec">🎯 因果ボード</h2>
+<div class="board">
+  <div class="col sokkou"><h3>🟢 即効（1回で変わる）</h3><div class="pcard good"><div class="pc-song">メロディ <span class="pc-tr">v1→v2</span></div><div class="pc-intv">🎯 リベンジ・同キー再挑戦</div><div class="pc-metric">低音ノイズ: <b>10→4</b> <span class="pc-arrow good">改善</span></div></div>
+<div class="pcard good"><div class="pc-song">メロディ <span class="pc-tr">v1→v2</span></div><div class="pc-intv">🎯 リベンジ・同キー再挑戦</div><div class="pc-metric">ビブラート: <b>6→13回</b> <span class="pc-arrow good">改善</span></div></div>
+<div class="pcard good"><div class="pc-song">努努 <span class="pc-tr">v1→v2</span></div><div class="pc-intv">🎯 キー下げ(負担軽減)</div><div class="pc-metric">短音率: <b>78%→70%%</b> <span class="pc-arrow good">改善</span></div></div>
+<div class="pcard good"><div class="pc-song">努努 <span class="pc-tr">v1→v2</span></div><div class="pc-intv">🎯 キー下げ(負担軽減)</div><div class="pc-metric">ロングトーン: <b>0→3本</b> <span class="pc-arrow good">改善</span></div></div>
+<div class="pcard good"><div class="pc-song">努努 <span class="pc-tr">v1→v2</span></div><div class="pc-intv">🎯 キー下げ(負担軽減)</div><div class="pc-metric">ビブラート: <b>2→7回</b> <span class="pc-arrow good">改善</span></div></div>
+<div class="pcard good"><div class="pc-song">大空と大地の中で <span class="pc-tr">v2→v3</span></div><div class="pc-intv">🎯 継続挑戦 / 音域をやや下げる(D5)</div><div class="pc-metric">短音率: <b>60%→53%%</b> <span class="pc-arrow good">改善</span></div></div>
+<div class="pcard good"><div class="pc-song">大空と大地の中で <span class="pc-tr">v2→v3</span></div><div class="pc-intv">🎯 継続挑戦 / 音域をやや下げる(D5)</div><div class="pc-metric">音程ブレ: <b>35.90→32.70c</b> <span class="pc-arrow good">改善</span></div></div>
+<div class="pcard good"><div class="pc-song">大空と大地の中で <span class="pc-tr">v2→v3</span></div><div class="pc-intv">🎯 継続挑戦 / 音域をやや下げる(D5)</div><div class="pc-metric">ビブラート: <b>30→41回</b> <span class="pc-arrow good">改善</span></div></div>
+<div class="pcard good"><div class="pc-song">旅姿六人衆 <span class="pc-tr">v1→v2</span></div><div class="pc-intv">🎯 音域拡張(E5)</div><div class="pc-metric">音程ブレ: <b>39.30→32.20c</b> <span class="pc-arrow good">改善</span></div></div></div>
+  <div class="col tsumi"><h3>🔴 効かない（横ばい/悪化）</h3><div class="pcard bad"><div class="pc-song">メロディ <span class="pc-tr">v1→v2</span></div><div class="pc-intv">🎯 リベンジ・同キー再挑戦</div><div class="pc-metric">HNR: <b>12.70→10.07dB</b> <span class="pc-arrow bad">悪化</span></div></div>
+<div class="pcard bad"><div class="pc-song">努努 <span class="pc-tr">v1→v2</span></div><div class="pc-intv">🎯 キー下げ(負担軽減)</div><div class="pc-metric">音程ブレ: <b>32.20→37.50c</b> <span class="pc-arrow bad">悪化</span></div></div>
+<div class="pcard bad"><div class="pc-song">大空と大地の中で <span class="pc-tr">v1→v2</span></div><div class="pc-intv">🎯 高音を攻める(音域拡張E5)</div><div class="pc-metric">HNR: <b>13.89→10.95dB</b> <span class="pc-arrow bad">悪化</span></div></div>
+<div class="pcard bad"><div class="pc-song">大空と大地の中で <span class="pc-tr">v1→v2</span></div><div class="pc-intv">🎯 高音を攻める(音域拡張E5)</div><div class="pc-metric">低音ノイズ: <b>3→5</b> <span class="pc-arrow bad">悪化</span></div></div>
+<div class="pcard bad"><div class="pc-song">大空と大地の中で <span class="pc-tr">v1→v2</span></div><div class="pc-intv">🎯 高音を攻める(音域拡張E5)</div><div class="pc-metric">ロングトーン: <b>12→8本</b> <span class="pc-arrow bad">悪化</span></div></div>
+<div class="pcard bad"><div class="pc-song">大空と大地の中で <span class="pc-tr">v2→v3</span></div><div class="pc-intv">🎯 継続挑戦 / 音域をやや下げる(D5)</div><div class="pc-metric">Shimmer: <b>12.21→14.24%</b> <span class="pc-arrow bad">悪化</span></div></div>
+<div class="pcard bad"><div class="pc-song">旅姿六人衆 <span class="pc-tr">v1→v2</span></div><div class="pc-intv">🎯 音域拡張(E5)</div><div class="pc-metric">短音率: <b>58%→64%%</b> <span class="pc-arrow bad">悪化</span></div></div>
+<div class="pcard bad"><div class="pc-song">旅姿六人衆 <span class="pc-tr">v1→v2</span></div><div class="pc-intv">🎯 音域拡張(E5)</div><div class="pc-metric">Shimmer: <b>13.75→15.26%</b> <span class="pc-arrow bad">悪化</span></div></div>
+<div class="pcard bad"><div class="pc-song">旅姿六人衆 <span class="pc-tr">v1→v2</span></div><div class="pc-intv">🎯 音域拡張(E5)</div><div class="pc-metric">低音ノイズ: <b>7→29</b> <span class="pc-arrow bad">悪化</span></div></div></div>
+  <div class="col kikanai"><h3>⚖️ 代償（トレードオフ）</h3><div class="pcard bad"><div class="pc-song">メロディ <span class="pc-tr">v1→v2</span></div><div class="pc-intv">🎯 リベンジ・同キー再挑戦</div><div class="pc-metric">音域 F4→F#4 と引き換えに HNR が悪化</div></div>
+<div class="pcard bad"><div class="pc-song">大空と大地の中で <span class="pc-tr">v1→v2</span></div><div class="pc-intv">🎯 高音を攻める(音域拡張E5)</div><div class="pc-metric">音域 F#4→E5 と引き換えに HNR・低音ノイズ・ロングトーン が悪化</div></div>
+<div class="pcard bad"><div class="pc-song">旅姿六人衆 <span class="pc-tr">v1→v2</span></div><div class="pc-intv">🎯 音域拡張(E5)</div><div class="pc-metric">音域 F#4→E5 と引き換えに 短音率・Shimmer・低音ノイズ が悪化</div></div></div>
+</div>
+
+<h2 class="sec">📊 メトリクス別レスポンス（どの軸が即効/積み重ね/効かないか）</h2>
+<table class="resp"><tbody><tr><td class="m-name">短音率<span class="m-desc">フレーズの細切れ度（息支え）</span></td><td class="m-cls">⚖️文脈依存</td><td class="m-note">介入次第で改善も悪化もする</td></tr><tr><td class="m-name">HNR<span class="m-desc">澄んだ声↔息漏れ</span></td><td class="m-cls">🔴効かない/悪化</td><td class="m-note">介入しても横ばい/悪化のみ</td></tr><tr><td class="m-name">Shimmer<span class="m-desc">声の揺れ（振幅）</span></td><td class="m-cls">🔴効かない/悪化</td><td class="m-note">介入しても横ばい/悪化のみ</td></tr><tr><td class="m-name">低音ノイズ<span class="m-desc">声帯フライ（語尾の軋み）</span></td><td class="m-cls">⚖️文脈依存</td><td class="m-note">介入次第で改善も悪化もする</td></tr><tr><td class="m-name">ロングトーン<span class="m-desc">1秒超の伸ばし音</span></td><td class="m-cls">⚖️文脈依存</td><td class="m-note">介入次第で改善も悪化もする</td></tr><tr><td class="m-name">音程ブレ<span class="m-desc">ノート間の細かな揺れ</span></td><td class="m-cls">⚖️文脈依存</td><td class="m-note">介入次第で改善も悪化もする</td></tr><tr><td class="m-name">ビブラート<span class="m-desc">自然な震え</span></td><td class="m-cls">🟢即効</td><td class="m-note">介入で有意改善（悪化例なし）</td></tr></tbody></table>
+
+<div class="narrative">
+<h2>🤖 AI の分析と次のプラン更新提案</h2>
+<p><strong>今わかっている因果（仮説）</strong>：</p>
+<ul>
+<li>🟢 <strong>キー下げ</strong>は<strong>短音率に即効</strong>（努努 78%→70%）。高すぎるキーが息切れ＝細切れを生んでいた。</li>
+<li>⚖️ <strong>音域を上に攻める（E5/D5挑戦）</strong>と<strong>音色が代償</strong>で悪化（HNR↓・低音ノイズ増）。高音チャレンジ日と音色を磨く日は分けるべき。</li>
+<li>🟡 <strong>HNR・Shimmer（息漏れ系）は1-2回では動かない＝積み重ね</strong>。息支え(Phase B)・声帯閉鎖(Phase C)を継続する軸。</li>
+<li>🟢 <strong>ビブラート・低音ノイズ</strong>は比較的<strong>早く反応</strong>（メロディで低音ノイズ 10→4）。</li>
+</ul>
+<p><strong>次に試すと因果が取れる介入</strong>：<br>
+① 同じバラード（大空/メロディ）を<strong>「息を支える」だけ意識</strong>して1回 → HNR/短音率が動くか（積み重ね軸の検証）<br>
+② 高音曲は<strong>キー -2半音</strong>固定で歌い、音色が保てるか（代償の回避）<br>
+③ 各回<strong>1つだけ</strong>介入を変える（同時に複数変えると因果が混ざる）</p>
+<p class="sub">※ このセクションは新セッション追加のたびに私（AI）が更新します。</p>
+</div>
+
+<div class="memo">
+<h2>✍️ 練習メモ（今回意識したこと）</h2>
+<p>この回で<strong>意識した練習・体調</strong>を書く→「コピー」でAIに渡す（録音処理時にチャットへ貼る）／音声メモ・チャットで直接言うのも可。全部同じ intervention として記録されます。</p>
+<select id="memo-sess"><option value="2026-07-15_乾杯">2026-07-15 乾杯</option><option value="2026-07-15_努努_v2">2026-07-15 努努</option><option value="2026-07-15_大空と大地の中で_v3">2026-07-15 大空と大地の中で</option><option value="2026-07-15_旅姿六人衆_v2">2026-07-15 旅姿六人衆</option><option value="2026-07-12_メロディ_v2">2026-07-12 メロディ</option><option value="2026-07-12_大空と大地の中で_v2">2026-07-12 大空と大地の中で</option><option value="2026-07-12_旅姿六人衆">2026-07-12 旅姿六人衆</option><option value="2026-07-10_Wherever_you_are">2026-07-10 Wherever you are</option><option value="2026-07-10_メロディ">2026-07-10 メロディ</option><option value="2026-07-10_努努">2026-07-10 努努</option><option value="2026-07-10_大空と大地の中で">2026-07-10 大空と大地の中で</option><option value="__new__">＋ 次に歌う新しい回</option></select>
+<textarea id="memo-text" placeholder="例：今回は息を支えるのを意識した。喉は疲れ気味。キーは-2で。"></textarea>
+<div class="memo-btns">
+  <button onclick="saveMemo()">💾 保存</button>
+  <button class="ghost" onclick="copyMemo()">📋 AIに渡す用にコピー</button>
+</div>
+<div class="memo-saved" id="memo-saved"></div>
+</div>
+
+<footer>効果検証ボード（PDCA）／ 数値の正本は <a href="./dashboard.html">ダッシュボード</a>・<a href="./myp_voice_quality.html">声質スコアカード</a>／<a href="./index.html">← ホーム</a></footer>
+
+<script>
+var sel=document.getElementById('memo-sess'), txt=document.getElementById('memo-text'), saved=document.getElementById('memo-saved');
+function key(){return 'karaoke-memo:'+sel.value;}
+function load(){ txt.value=localStorage.getItem(key())||''; saved.textContent=txt.value?'（保存済みメモを表示中）':''; }
+sel.addEventListener('change',load);
+function saveMemo(){ localStorage.setItem(key(),txt.value); saved.textContent='✅ 保存しました（'+sel.options[sel.selectedIndex].text+'）'; }
+function copyMemo(){ var t='【練習メモ '+sel.options[sel.selectedIndex].text+'】'+txt.value; navigator.clipboard.writeText(t).then(function(){saved.textContent='📋 コピーしました。AIとのチャットに貼ってください';}); }
+load();
+</script>
+<script src="./nav.js"></script>
+</body></html>

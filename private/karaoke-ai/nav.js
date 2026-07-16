@@ -7,6 +7,7 @@
     { file: "index.html",              key: "index",      emoji: "🏠", label: "ホーム",   sub: "" },
     { file: "dashboard.html",          key: "dashboard",  emoji: "📊", label: "測る",     sub: "9軸実測" },
     { file: "myp_voice_quality.html",  key: "voice",      emoji: "🎯", label: "課題",     sub: "声質偏差値" },
+    { file: "karaoke_pdca.html",       key: "pdca",       emoji: "🔁", label: "検証",     sub: "効果PDCA" },
     { file: "curriculum_20260710.html",key: "curriculum", emoji: "📖", label: "計画",     sub: "ルーティン" },
     { file: "karaoke_diary.html",      key: "diary",      emoji: "📔", label: "日記",     sub: "練習ログ" },
     { file: "myp_basics.html",         key: "basics",     emoji: "🌱", label: "基礎30",   sub: "おすすめ順" },
