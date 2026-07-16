@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📘</text></svg>">
+<title>📖 教材ルート｜英語40日プログラム</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:24px 20px 110px; max-width:1000px; margin:0 auto; }
+h1,h2,h3 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; }
+h1 { font-size:22px; margin:18px 0 4px; }
+.tagline { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:20px; }
+a { color:var(--gold); text-decoration:none; }
+.step-section { margin:26px 0; padding:18px 22px; background:var(--sub-bg); border:1px solid var(--gold); border-radius:12px; }
+.step-section.priority { background:linear-gradient(135deg,rgba(199,123,112,0.08),rgba(212,168,91,0.05)); border-color:var(--rose); }
+.step-section h2 { font-size:16px; margin:0 0 10px; }
+.step-section.priority h2 { color:var(--rose); }
+.blk { margin:14px 0; }
+.blk h3 { font-size:13px; margin:0 0 8px; }
+.blk h3 .bno { font-family:var(--mono); font-size:11px; background:var(--gold); color:#fff; padding:1px 7px; border-radius:8px; margin-right:7px; }
+.chips { display:flex; flex-wrap:wrap; gap:7px; }
+label.uchk { display:inline-flex; align-items:center; gap:6px; cursor:pointer;
+  background:var(--card-bg); border:1px solid var(--line); border-radius:16px; padding:4px 11px 4px 6px; font-size:12px; transition:all 0.15s; position:relative; }
+label.uchk input { position:absolute; opacity:0; width:0; height:0; }
+.umark { display:inline-block; width:16px; height:16px; border-radius:4px; border:2px solid var(--line); background:var(--card-bg); position:relative; flex:0 0 auto; }
+label.uchk input:checked ~ .umark { background:var(--sage); border-color:var(--sage); }
+label.uchk input:checked ~ .umark::after { content:""; position:absolute; left:4px; top:1px; width:4px; height:8px; border:solid #fff; border-width:0 2px 2px 0; transform:rotate(45deg); }
+label.uchk.done { background:rgba(122,155,126,0.13); border-color:var(--sage); }
+label.uchk .uno { font-family:var(--mono); font-weight:700; color:var(--gold); }
+table { width:100%; border-collapse:collapse; font-size:12px; margin:8px 0; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; line-height:1.7; }
+th { background:rgba(212,168,91,0.14); font-family:var(--mincho); white-space:nowrap; }
+.ritual { background:var(--card-bg); border:1px solid var(--line); border-radius:10px; padding:12px 16px; font-size:13px; line-height:2; }
+.ritual b { color:var(--gold); }
+.watch-summary { position:fixed; bottom:16px; left:50%; transform:translateX(-50%); z-index:200;
+  display:flex; align-items:center; gap:14px; padding:10px 20px; background:var(--card-bg);
+  border:1px solid var(--gold); border-radius:24px; box-shadow:0 6px 20px rgba(15,27,46,0.18); font-size:13px; white-space:nowrap; }
+.watch-summary strong { color:var(--sage); font-size:15px; }
+footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+@media (max-width:600px){ body { padding:20px 14px 110px; } }
+</style>
+</head>
+<body>
+
+<h1>📖 教材ルート</h1>
+<div class="tagline">マーフィー113ユニットは「飛ばす」のではなく「順番を組み替える」─ 夏は51ユニット・残りは秋に回収</div>
+
+<!-- マーフィー選抜51 -->
+<div class="step-section">
+  <h2>📗 マーフィー選抜ルート（夏＝51ユニット）</h2>
+  <div class="blk"><h3><span class="bno">1</span>現在形（Unit 1〜9）── 1学期の復習＋2学期先取り</h3>
+    <div class="chips">
+      <label class="uchk"><input type="checkbox" data-ukey="unit-1"><span class="umark"></span><span class="uno">1</span> am/is/are</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-2"><span class="umark"></span><span class="uno">2</span> am/is/are 疑問文</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-3"><span class="umark"></span><span class="uno">3</span> 現在進行形</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-4"><span class="umark"></span><span class="uno">4</span> 進行形の疑問文</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-5"><span class="umark"></span><span class="uno">5</span> 一般動詞</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-6"><span class="umark"></span><span class="uno">6</span> 一般動詞の否定</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-7"><span class="umark"></span><span class="uno">7</span> Do you...?</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-8"><span class="umark"></span><span class="uno">8</span> 進行形と現在形</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-9"><span class="umark"></span><span class="uno">9</span> have / have got</label>
+    </div>
+  </div>
+  <div class="blk"><h3><span class="bno">2</span>過去形（Unit 10〜15）── 夏の山場</h3>
+    <div class="chips">
+      <label class="uchk"><input type="checkbox" data-ukey="unit-10"><span class="umark"></span><span class="uno">10</span> was/were</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-11"><span class="umark"></span><span class="uno">11</span> 過去形</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-12"><span class="umark"></span><span class="uno">12</span> 過去の否定・疑問</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-13"><span class="umark"></span><span class="uno">13</span> 過去進行形</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-14"><span class="umark"></span><span class="uno">14</span> 過去進行形と過去形</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-15"><span class="umark"></span><span class="uno">15</span> used to</label>
+    </div>
+  </div>
+  <div class="blk"><h3><span class="bno">3</span>動詞の形と未来（Unit 22〜26）</h3>
+    <div class="chips">
+      <label class="uchk"><input type="checkbox" data-ukey="unit-22"><span class="umark"></span><span class="uno">22</span> be/have/do</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-23"><span class="umark"></span><span class="uno">23</span> 規則・不規則動詞</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-24"><span class="umark"></span><span class="uno">24</span> 予定の現在進行形</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-25"><span class="umark"></span><span class="uno">25</span> be going to</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-26"><span class="umark"></span><span class="uno">26</span> will</label>
+    </div>
+  </div>
+  <div class="blk"><h3><span class="bno">4</span>助動詞・命令文・there（Unit 27〜37）</h3>
+    <div class="chips">
+      <label class="uchk"><input type="checkbox" data-ukey="unit-27"><span class="umark"></span><span class="uno">27</span> might</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-28"><span class="umark"></span><span class="uno">28</span> can / could</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-29"><span class="umark"></span><span class="uno">29</span> must</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-30"><span class="umark"></span><span class="uno">30</span> should</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-31"><span class="umark"></span><span class="uno">31</span> have to</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-32"><span class="umark"></span><span class="uno">32</span> Would you like?</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-33"><span class="umark"></span><span class="uno">33</span> I'd rather</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-34"><span class="umark"></span><span class="uno">34</span> 命令文</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-35"><span class="umark"></span><span class="uno">35</span> there is/are</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-36"><span class="umark"></span><span class="uno">36</span> there was/were</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-37"><span class="umark"></span><span class="uno">37</span> it</label>
+    </div>
+  </div>
+  <div class="blk"><h3><span class="bno">5</span>疑問文（Unit 42〜46）── 土台系</h3>
+    <div class="chips">
+      <label class="uchk"><input type="checkbox" data-ukey="unit-42"><span class="umark"></span><span class="uno">42</span> 疑問文1</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-43"><span class="umark"></span><span class="uno">43</span> 疑問文2</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-44"><span class="umark"></span><span class="uno">44</span> 疑問文3</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-45"><span class="umark"></span><span class="uno">45</span> What/Which/How</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-46"><span class="umark"></span><span class="uno">46</span> How long...?</label>
+    </div>
+  </div>
+  <div class="blk"><h3><span class="bno">6</span>代名詞・所有（Unit 57〜62）── 土台系</h3>
+    <div class="chips">
+      <label class="uchk"><input type="checkbox" data-ukey="unit-57"><span class="umark"></span><span class="uno">57</span> I/me・he/him</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-58"><span class="umark"></span><span class="uno">58</span> my/his/their</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-59"><span class="umark"></span><span class="uno">59</span> Whose / mine</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-60"><span class="umark"></span><span class="uno">60</span> I/me/my/mine</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-61"><span class="umark"></span><span class="uno">61</span> myself など</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-62"><span class="umark"></span><span class="uno">62</span> -'s 所有</label>
+    </div>
+  </div>
+  <div class="blk"><h3><span class="bno">7</span>語順（Unit 91〜92）── 土台系</h3>
+    <div class="chips">
+      <label class="uchk"><input type="checkbox" data-ukey="unit-91"><span class="umark"></span><span class="uno">91</span> 語順1</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-92"><span class="umark"></span><span class="uno">92</span> 頻度副詞</label>
+    </div>
+  </div>
+  <div class="blk"><h3><span class="bno">8</span>前置詞（Unit 101〜107）── 英検3級頻出の狙い目</h3>
+    <div class="chips">
+      <label class="uchk"><input type="checkbox" data-ukey="unit-101"><span class="umark"></span><span class="uno">101</span> at/on/in（時）</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-102"><span class="umark"></span><span class="uno">102</span> from...to / until</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-103"><span class="umark"></span><span class="uno">103</span> before/after</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-104"><span class="umark"></span><span class="uno">104</span> in/at/on（場所1）</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-105"><span class="umark"></span><span class="uno">105</span> in/at/on（場所2）</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-106"><span class="umark"></span><span class="uno">106</span> to/in/at（場所3）</label>
+      <label class="uchk"><input type="checkbox" data-ukey="unit-107"><span class="umark"></span><span class="uno">107</span> next to/between</label>
+    </div>
+  </div>
+</div>
+
+<!-- ALL IN ONE -->
+<div class="step-section">
+  <h2>📙 ALL IN ONE Basic 章ルート（夏＝7ブロック）</h2>
+  <table>
+    <tr><th>読む時期</th><th>章</th><th>ねらい</th><th>済</th></tr>
+    <tr><td>Week 1</td><td><b>Ch.1 品詞</b>（P25〜40）</td><td>名詞・形容詞・副詞の区分を最初に。この夏の合言葉</td><td><label class="uchk"><input type="checkbox" data-ukey="ch-1"><span class="umark"></span></label></td></tr>
+    <tr><td>Week 2</td><td><b>Ch.2 文の種類</b>（P41〜79）</td><td>疑問文・否定文・命令文の日本語側解説</td><td><label class="uchk"><input type="checkbox" data-ukey="ch-2"><span class="umark"></span></label></td></tr>
+    <tr><td>Week 2〜3</td><td><b>Ch.3 時制</b>（P80〜104）</td><td>現在・過去・進行形。<b>完了形のページは飛ばす</b></td><td><label class="uchk"><input type="checkbox" data-ukey="ch-3"><span class="umark"></span></label></td></tr>
+    <tr><td>Week 3</td><td><b>Ch.13 助動詞（現在形）</b>（P377〜402）</td><td>マーフィー Unit 27〜34 と同週にぶつける</td><td><label class="uchk"><input type="checkbox" data-ukey="ch-13"><span class="umark"></span></label></td></tr>
+    <tr><td>Week 3</td><td><b>Ch.16 形式語のit</b>（部分）</td><td>時間・天気のitだけ。it〜to構文は飛ばす</td><td><label class="uchk"><input type="checkbox" data-ukey="ch-16"><span class="umark"></span></label></td></tr>
+    <tr><td>Week 4〜5</td><td><b>Ch.4 文型(1)</b>（P105〜128）</td><td>品詞が入った後なら理解できる語順の土台</td><td><label class="uchk"><input type="checkbox" data-ukey="ch-4"><span class="umark"></span></label></td></tr>
+    <tr><td>Week 4〜</td><td><b>Part 2 リスニング・スピーキング編</b>（P485〜506）</td><td>5つの音声変化。フォニックス→リンキングの次に読む</td><td><label class="uchk"><input type="checkbox" data-ukey="ch-p2"><span class="umark"></span></label></td></tr>
+  </table>
+  <div class="ritual">
+    ✏️ <b>品詞マーキングの儀式</b>（Day 15〜・例文5本/日とセット）<br>
+    1. 例文の中の<b>名詞に○・形容詞に△・副詞に□</b>を鉛筆でつける（2〜3分）<br>
+    2. 知らなかった語だけ<b>品詞別3列ノート</b>（名詞｜形容詞｜副詞）に書き写す<br>
+    3. 翌日の復習で「<b>big─形容詞─大きい</b>」のように品詞名つきで音読<br>
+    → 例文419本＝単語2,100語がそのまま品詞分類つき単語帳になる。英検3級の語彙問題は「空所に入る品詞を見抜く」問題なので、この儀式がそのまま得点になる。
+  </div>
+</div>
+
+<!-- スキップ帯 -->
+<div class="step-section priority">
+  <h2>⛔ 夏はやらない（理由つき）</h2>
+  <table>
+    <tr><th>マーフィー</th><th>中身</th><th>やらない理由</th></tr>
+    <tr><td>Unit 16〜21</td><td>現在完了・受け身</td><td>過去形が未定着のまま触ると「went と have gone」で必ず溺れる。中3範囲</td></tr>
+    <tr><td>Unit 38〜41・47〜48</td><td>応答・間接疑問・伝聞</td><td>中3〜高校。接続する土台がまだない</td></tr>
+    <tr><td>Unit 49〜56</td><td>不定詞・動名詞・go/get/do</td><td>中2後半。秋の先頭グループ</td></tr>
+    <tr><td>Unit 63〜90</td><td>冠詞・限定詞・比較</td><td>概念は易しいが量が多い。秋に回す（63〜64だけDay 34で先食い可）</td></tr>
+    <tr><td>Unit 93〜100</td><td>関係代名詞・if・仮定法</td><td>中3〜高校</td></tr>
+    <tr><td>Unit 108〜113</td><td>残りの前置詞・句動詞</td><td>後回しで害がない</td></tr>
+    <tr><td>AIO Ch.5〜12・14〜15・17</td><td>文型(2)・受動態・不定詞・節・仮定法・比較</td><td>マーフィーのスキップ帯と同じ理由</td></tr>
+  </table>
+  <p style="font-size:12px; margin:8px 0 0;">🍂 <b>秋の回収ロードマップ</b>（2学期・週3日30分）：Unit 63〜74（冠詞）→ 83〜90（比較。学校の中2後半の直前）→ 49〜52（不定詞・動名詞）→ <b>16〜19（現在完了。過去形が体に入った後なら刺さる）</b> → 残り全部。「113ユニット完走」は冬までの目標。ALL IN ONE の残り例文324本は10本/日に増速して秋に1周完了。</p>
+</div>
+
+<div class="watch-summary">
+  <span id="watch-text">📗 <strong>0 / 51</strong> ユニット｜📙 <strong>0 / 7</strong> 章</span>
+</div>
+
+<footer>📘 英語40日プログラム｜マーフィー全113ユニット（Cambridge公式目次準拠）のうち夏は51を選抜｜チェックはこの端末のブラウザに保存されます</footer>
+
+<script>
+(function () {
+  var PREFIX = 'eng40-unit:';
+  var CH_PREFIX = 'eng40-ch:';
+  var chips = Array.prototype.slice.call(document.querySelectorAll('label.uchk input[data-ukey]'));
+  var textEl = document.getElementById('watch-text');
+  function keyFor(cb) {
+    var k = cb.getAttribute('data-ukey');
+    return (k.indexOf('ch-') === 0 ? CH_PREFIX : PREFIX) + k;
+  }
+  function update() {
+    var u = 0, c = 0;
+    chips.forEach(function (cb) {
+      if (!cb.checked) return;
+      if (cb.getAttribute('data-ukey').indexOf('ch-') === 0) c++; else u++;
+    });
+    textEl.innerHTML = '📗 <strong>' + u + ' / 51</strong> ユニット｜📙 <strong>' + c + ' / 7</strong> 章';
+  }
+  chips.forEach(function (cb) {
+    var key = keyFor(cb);
+    var lbl = cb.closest('label');
+    if (localStorage.getItem(key) === '1') { cb.checked = true; lbl.classList.add('done'); }
+    cb.addEventListener('change', function () {
+      if (cb.checked) { localStorage.setItem(key, '1'); lbl.classList.add('done'); }
+      else { localStorage.removeItem(key); lbl.classList.remove('done'); }
+      update();
+    });
+  });
+  update();
+})();
+</script>
+<script src="./nav.js"></script>
+</body>
+</html>

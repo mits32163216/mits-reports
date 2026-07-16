@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📘</text></svg>">
+<title>✅ 40日デイリーチェック｜英語40日プログラム</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:24px 20px 110px; max-width:1000px; margin:0 auto; }
+h1,h2,h3 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; }
+h1 { font-size:22px; margin:18px 0 4px; }
+.tagline { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:20px; }
+a { color:var(--gold); text-decoration:none; }
+/* フェーズセクション */
+.step-section { margin:26px 0; padding:18px 22px; background:var(--sub-bg); border:1px solid var(--gold); border-radius:12px; }
+.step-section h2 { font-size:16px; margin:0 0 4px; }
+.step-badge { font-family:var(--mono); font-size:12px; background:var(--gold); color:#fff; padding:2px 8px; border-radius:8px; margin-right:8px; vertical-align:2px; }
+.phase-range { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:10px; }
+/* 90分メニュー */
+.menu { background:var(--card-bg); border:1px solid var(--line); border-radius:10px; padding:10px 14px; font-size:12px; line-height:1.9; margin-bottom:14px; }
+.menu b { color:var(--gold); }
+/* Dayリスト */
+ul.day-list { list-style:none; margin:0; padding:0; }
+ul.day-list li { display:flex; align-items:flex-start; gap:10px; padding:9px 10px; border-bottom:1px dashed var(--line); border-radius:8px; }
+ul.day-list li:last-child { border-bottom:none; }
+ul.day-list li.watched { background:rgba(122,155,126,0.09); }
+.vchk { flex:0 0 auto; cursor:pointer; padding-top:1px; position:relative; }
+.vchk input { position:absolute; opacity:0; width:0; height:0; }
+.vchk-mark { display:inline-block; width:20px; height:20px; border-radius:5px; border:2px solid var(--line); background:var(--card-bg); transition:all 0.15s; position:relative; }
+.vchk input:checked + .vchk-mark { background:var(--sage); border-color:var(--sage); }
+.vchk input:checked + .vchk-mark::after { content:""; position:absolute; left:6px; top:2px; width:5px; height:10px; border:solid #fff; border-width:0 2.5px 2.5px 0; transform:rotate(45deg); }
+.dnum { flex:0 0 58px; font-family:var(--mono); font-size:12px; font-weight:700; color:var(--gold); padding-top:2px; }
+.dbody { flex:1 1 auto; font-size:13px; line-height:1.75; }
+.dbody .sub { display:block; font-size:11px; color:var(--muted); }
+.tag { display:inline-block; font-family:var(--mono); font-size:10px; padding:1px 7px; border-radius:8px; color:#fff; margin-left:6px; vertical-align:1px; }
+.tag.sokutei { background:var(--rose); }
+.tag.chousei { background:var(--sage); }
+/* 進捗ピル */
+.watch-summary { position:fixed; bottom:16px; left:50%; transform:translateX(-50%); z-index:200;
+  display:flex; align-items:center; gap:14px; padding:10px 20px; background:var(--card-bg);
+  border:1px solid var(--gold); border-radius:24px; box-shadow:0 6px 20px rgba(15,27,46,0.18); font-size:13px; white-space:nowrap; }
+.watch-summary strong { color:var(--sage); font-size:15px; }
+.watch-summary button { font-family:var(--sans); font-size:11px; border:1px solid var(--line); background:none; color:var(--muted); border-radius:12px; padding:3px 10px; cursor:pointer; }
+footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+@media (max-width:600px){ body { padding:20px 14px 110px; } .dnum { flex-basis:50px; } }
+</style>
+</head>
+<body>
+
+<h1>✅ 40日デイリーチェック</h1>
+<div class="tagline">やった日はチェック ─ 月〜土で進む・日曜は調整日 ─ 崩れた日は「15分デー」でOK（ゼロの日だけ作らない）</div>
+
+<!-- ===== PHASE 1 ===== -->
+<div class="step-section">
+  <h2><span class="step-badge">P1</span>音と現在・過去</h2>
+  <div class="phase-range">Day 1〜14｜フォニックスで音を作りながら、現在形→過去形へ</div>
+  <div class="menu">🕐 <b>毎日90分</b>：フォニックス動画15分（<b>必ず声に出す</b>）→ マーフィー2ユニット40分（左を読む→右を解く→丸付け・間違いに印）→ ALL IN ONE Ch.1〜3を読む15分 → 前日の復習10分　※例文の暗唱はまだやらない</div>
+  <ul class="day-list">
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-01"><span class="vchk-mark"></span></label><span class="dnum">Day 1</span><div class="dbody">測定日①：マーフィー巻末<b>診断テスト</b>＋<b>実力測定テスト①②</b><span class="tag sokutei">測定</span><span class="sub">結果は「📊 測る」に記録 → 最適化マップでスタート速度を決める</span></div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-02"><span class="vchk-mark"></span></label><span class="dnum">Day 2</span><div class="dbody">マーフィー <b>Unit 1〜2</b>（am/is/are）＋ ALL IN ONE <b>Ch.1 品詞</b>を読み始める<span class="sub">品詞（名詞・形容詞・副詞）はこの夏の合言葉</span></div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-03"><span class="vchk-mark"></span></label><span class="dnum">Day 3</span><div class="dbody"><b>英検3級 練習問題①</b>（約45分）＋フォニックスのみ<span class="tag sokutei">測定</span><span class="sub">eiken.or.jp の過去問・無料。点数を「📊 測る」へ</span></div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-04"><span class="vchk-mark"></span></label><span class="dnum">Day 4</span><div class="dbody">Unit <b>3〜4</b>（現在進行形）＋ Ch.1 つづき</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-05"><span class="vchk-mark"></span></label><span class="dnum">Day 5</span><div class="dbody">Unit <b>5〜6</b>（一般動詞）＋ Ch.1 つづき</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-06"><span class="vchk-mark"></span></label><span class="dnum">Day 6</span><div class="dbody">Unit <b>7〜9</b>（Do you...? / have）＋ <b>Ch.1 読了</b><span class="sub">現在形ブロック完了！</span></div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-07"><span class="vchk-mark"></span></label><span class="dnum">Day 7</span><div class="dbody">調整日（遅れ回収 or 完全休み）<span class="tag chousei">調整</span></div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-08"><span class="vchk-mark"></span></label><span class="dnum">Day 8</span><div class="dbody">Unit <b>10〜11</b>（was/were・過去形）＋ <b>Ch.2 文の種類</b> 開始<span class="sub">ここから夏の山場・過去形ブロック</span></div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-09"><span class="vchk-mark"></span></label><span class="dnum">Day 9</span><div class="dbody">Unit <b>12〜13</b>（過去の否定・疑問／過去進行形）＋ Ch.2</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-10"><span class="vchk-mark"></span></label><span class="dnum">Day 10</span><div class="dbody">Unit <b>14〜15</b>（過去進行形と過去形／used to）＋ Ch.2<span class="sub">過去形ブロック完了！</span></div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-11"><span class="vchk-mark"></span></label><span class="dnum">Day 11</span><div class="dbody">Unit <b>22〜23</b>（be/have/do・不規則動詞）＋ <b>Ch.3 時制</b>（完了形のページは飛ばす）</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-12"><span class="vchk-mark"></span></label><span class="dnum">Day 12</span><div class="dbody">Unit <b>24〜25</b>（未来：予定の言い方・be going to）＋ Ch.3</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-13"><span class="vchk-mark"></span></label><span class="dnum">Day 13</span><div class="dbody">Unit <b>26</b>（will）＋ 現在形ブロックの復習（間違い印だけ）</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-14"><span class="vchk-mark"></span></label><span class="dnum">Day 14</span><div class="dbody">調整日＋<b>フォニックス動画1周完了チェック</b><span class="tag chousei">調整</span><span class="sub">明日からリンキング編[#281]へ</span></div></li>
+  </ul>
+</div>
+
+<!-- ===== PHASE 2 ===== -->
+<div class="step-section">
+  <h2><span class="step-badge">P2</span>文法の幹と例文</h2>
+  <div class="phase-range">Day 15〜28｜助動詞・疑問文・代名詞＋ALL IN ONE例文スタート</div>
+  <div class="menu">🕐 <b>毎日90分</b>：リンキング[#281]＋苦手音の2周目15分 → マーフィー2ユニット40分 → <b>ALL IN ONE 例文5本</b>20分（聞く→音読3回→シャドーイング＋<b>品詞マーキング：名詞○・形容詞△・副詞□</b>→知らない語を品詞別ノートへ）→ 復習10分</div>
+  <ul class="day-list">
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-15"><span class="vchk-mark"></span></label><span class="dnum">Day 15</span><div class="dbody">Unit <b>27〜28</b>（might / can・could）＋ <b>Ch.13 助動詞</b>＋<b>例文5本/日 開始</b></div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-16"><span class="vchk-mark"></span></label><span class="dnum">Day 16</span><div class="dbody">Unit <b>29〜30</b>（must / should）＋ Ch.13</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-17"><span class="vchk-mark"></span></label><span class="dnum">Day 17</span><div class="dbody">Unit <b>31〜32</b>（have to / Would you like?）</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-18"><span class="vchk-mark"></span></label><span class="dnum">Day 18</span><div class="dbody">Unit <b>33〜34</b>（I'd rather / 命令文）</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-19"><span class="vchk-mark"></span></label><span class="dnum">Day 19</span><div class="dbody">Unit <b>35〜36</b>（there is/are）＋ <b>Ch.16 形式語のit</b>（時間・天気のところだけ）</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-20"><span class="vchk-mark"></span></label><span class="dnum">Day 20</span><div class="dbody">Unit <b>37</b>（it）＋ <b>折り返しチェック</b>：過去形の再テスト（巻末Additional Exercises）<span class="sub">選抜ルート前半31ユニット完了！</span></div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-21"><span class="vchk-mark"></span></label><span class="dnum">Day 21</span><div class="dbody">調整日<span class="tag chousei">調整</span></div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-22"><span class="vchk-mark"></span></label><span class="dnum">Day 22</span><div class="dbody">Unit <b>42〜43</b>（疑問文1・2）＋ <b>Ch.4 文型(1)</b> 開始＋ <b>Part 2 音声変化</b>を読む</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-23"><span class="vchk-mark"></span></label><span class="dnum">Day 23</span><div class="dbody">Unit <b>44〜45</b>（疑問文3・What/Which/How）</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-24"><span class="vchk-mark"></span></label><span class="dnum">Day 24</span><div class="dbody">Unit <b>46</b>（How long does it take?）＋ 疑問文ブロック復習</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-25"><span class="vchk-mark"></span></label><span class="dnum">Day 25</span><div class="dbody">Unit <b>57〜58</b>（I/me・my/his）</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-26"><span class="vchk-mark"></span></label><span class="dnum">Day 26</span><div class="dbody">Unit <b>59〜60</b>（Whose/mine・I/me/my/mine）</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-27"><span class="vchk-mark"></span></label><span class="dnum">Day 27</span><div class="dbody">Unit <b>61〜62</b>（myself・-'s所有）<span class="sub">代名詞ブロック完了！</span></div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-28"><span class="vchk-mark"></span></label><span class="dnum">Day 28</span><div class="dbody">調整日<span class="tag chousei">調整</span></div></li>
+  </ul>
+</div>
+
+<!-- ===== PHASE 3 ===== -->
+<div class="step-section">
+  <h2><span class="step-badge">P3</span>運用と測定</h2>
+  <div class="phase-range">Day 29〜40｜語順・前置詞＋2周目復習＋測定で締める</div>
+  <div class="menu">🕐 <b>毎日90分</b>：マーフィー新規＋間違い印の2周目30分 → ALL IN ONE 例文5本＋<b>ディクテーション1文</b>30分 → 復習・模試準備</div>
+  <ul class="day-list">
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-29"><span class="vchk-mark"></span></label><span class="dnum">Day 29</span><div class="dbody">Unit <b>91〜92</b>（語順・頻度副詞）</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-30"><span class="vchk-mark"></span></label><span class="dnum">Day 30</span><div class="dbody">Unit <b>101〜102</b>（at 8:00 / on Monday / from...to）</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-31"><span class="vchk-mark"></span></label><span class="dnum">Day 31</span><div class="dbody">Unit <b>103〜104</b>（before/after・場所のin/at/on 1）</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-32"><span class="vchk-mark"></span></label><span class="dnum">Day 32</span><div class="dbody">Unit <b>105〜106</b>（場所のin/at/on 2・to/in/at）</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-33"><span class="vchk-mark"></span></label><span class="dnum">Day 33</span><div class="dbody">Unit <b>107</b>（next to/between/under）＋ 前置詞ブロック復習<span class="sub">選抜51ユニット完走！🎉</span></div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-34"><span class="vchk-mark"></span></label><span class="dnum">Day 34</span><div class="dbody">予備日：遅れ回収 or Unit 63〜64（a/an・単数複数）を先食い</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-35"><span class="vchk-mark"></span></label><span class="dnum">Day 35</span><div class="dbody">調整日<span class="tag chousei">調整</span></div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-36"><span class="vchk-mark"></span></label><span class="dnum">Day 36</span><div class="dbody">2周目復習①（間違い印のユニットだけ）</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-37"><span class="vchk-mark"></span></label><span class="dnum">Day 37</span><div class="dbody"><b>英検3級 練習問題②</b>（①とは別の回）→ ①と点数比較<span class="tag sokutei">測定</span></div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-38"><span class="vchk-mark"></span></label><span class="dnum">Day 38</span><div class="dbody">2周目復習②</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-39"><span class="vchk-mark"></span></label><span class="dnum">Day 39</span><div class="dbody"><b>診断テスト再受験</b> → Day 1 と前後比較<span class="tag sokutei">測定</span></div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-40"><span class="vchk-mark"></span></label><span class="dnum">Day 40</span><div class="dbody">総仕上げ：秋の継続ルート決め＋<b>「夏にできるようになったこと」を自分の言葉で言う</b><span class="tag sokutei">測定</span></div></li>
+  </ul>
+</div>
+
+<div class="watch-summary">
+  <span id="watch-text">✅ <strong>0 / 40</strong> 日</span>
+  <button id="reset-btn" title="このページのチェックを全部消す">全リセット</button>
+</div>
+
+<footer>📘 英語40日プログラム｜チェックはこの端末のブラウザに保存されます</footer>
+
+<script>
+(function () {
+  var PREFIX = 'eng40-done:';
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('.vchk input[data-vkey]'));
+  var total = boxes.length;
+  var textEl = document.getElementById('watch-text');
+  function update() {
+    var n = document.querySelectorAll('ul.day-list li.watched').length;
+    textEl.innerHTML = '✅ <strong>' + n + ' / ' + total + '</strong> 日';
+  }
+  boxes.forEach(function (cb) {
+    var key = PREFIX + cb.getAttribute('data-vkey');
+    var li = cb.closest('li');
+    if (localStorage.getItem(key) === '1') { cb.checked = true; li.classList.add('watched'); }
+    cb.addEventListener('change', function () {
+      if (cb.checked) { localStorage.setItem(key, '1'); li.classList.add('watched'); }
+      else { localStorage.removeItem(key); li.classList.remove('watched'); }
+      update();
+    });
+  });
+  document.getElementById('reset-btn').addEventListener('click', function () {
+    if (!confirm('40日チェックを全部リセットします。いいですか？')) return;
+    boxes.forEach(function (cb) {
+      localStorage.removeItem(PREFIX + cb.getAttribute('data-vkey'));
+      cb.checked = false; cb.closest('li').classList.remove('watched');
+    });
+    update();
+  });
+  update();
+})();
+</script>
+<script src="./nav.js"></script>
+</body>
+</html>

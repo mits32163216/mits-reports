@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📘</text></svg>">
+<title>📘 英語40日プログラム｜ホーム</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06); --highlight:rgba(212,168,91,0.14);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); --highlight:rgba(212,168,91,0.18); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:24px 20px 100px; max-width:1000px; margin:0 auto; }
+h1,h2,h3 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; }
+h1 { font-size:24px; margin:18px 0 4px; }
+.tagline { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:20px; }
+a { color:var(--gold); text-decoration:none; }
+a:hover { text-decoration:underline; }
+/* ねらい */
+.status { margin:24px 0; padding:18px 22px; border-radius:14px;
+  background:linear-gradient(135deg,rgba(212,168,91,0.12),rgba(122,155,126,0.07)); border:1px solid var(--gold); }
+.status h2 { font-size:15px; margin:0 0 12px; color:var(--gold); }
+.status ol { margin:0; padding-left:22px; font-size:13.5px; line-height:2; }
+/* ステータスグリッド */
+.status-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:14px; }
+@media (max-width:640px){ .status-grid { grid-template-columns:repeat(2,1fr); } }
+.stat { background:var(--card-bg); border:1px solid var(--line); border-radius:10px; padding:12px 14px; text-align:center; }
+.stat .num { font-family:var(--mincho); font-size:24px; font-weight:700; line-height:1.1; }
+.stat .num strong { color:var(--sage); }
+.stat .lbl { font-family:var(--mono); font-size:10px; color:var(--muted); margin-top:4px; }
+/* ノードカード */
+.loop { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:20px 0; }
+@media (max-width:760px){ .loop { grid-template-columns:repeat(2,1fr); } }
+.node { display:flex; flex-direction:column; gap:8px; text-decoration:none; color:var(--fg);
+  background:var(--card-bg); border:1px solid var(--line); border-radius:14px; padding:18px 16px; transition:all 0.16s; }
+.node:hover { transform:translateY(-4px); border-color:var(--gold); box-shadow:0 10px 28px rgba(15,27,46,0.12); text-decoration:none; }
+.node .n-emoji { font-size:26px; }
+.node .n-title { font-family:var(--mincho); font-size:15px; font-weight:700; }
+.node .n-desc { font-size:11.5px; color:var(--muted); line-height:1.7; }
+/* 保険ルール */
+.step-section { margin:22px 0; padding:18px 22px; background:var(--sub-bg); border:1px solid var(--gold); border-radius:12px; }
+.step-section.priority { background:linear-gradient(135deg,rgba(199,123,112,0.08),rgba(212,168,91,0.05)); border-color:var(--rose); }
+.step-section h2 { font-size:15px; margin:0 0 10px; }
+.step-section.priority h2 { color:var(--rose); }
+.step-section ul { margin:0; padding-left:20px; font-size:13px; line-height:2; }
+.goal-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+@media (max-width:640px){ .goal-grid { grid-template-columns:1fr; } }
+.goal { background:var(--card-bg); border:1px solid var(--line); border-radius:10px; padding:12px 14px; font-size:12px; line-height:1.8; }
+.goal b { color:var(--gold); font-family:var(--mincho); }
+footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+</style>
+</head>
+<body>
+
+<h1>📘 英語40日プログラム</h1>
+<div class="tagline">中1・夏休み ─ 学校英語とは別レーン ─ 開始日：____月____日</div>
+
+<div class="status">
+  <h2>🎯 ねらい（3つだけ）</h2>
+  <ol>
+    <li><b>「音」を作る</b> ── 聞ける音は言える。言える音は聞ける。</li>
+    <li><b>中1の範囲にとらわれない</b> ── 過去形・助動詞・代名詞・前置詞まで、夏で約1年先へ。</li>
+    <li><b>現在位置を測る</b> ── 英検3級の練習問題を2回。受かる/受からないは目的にしない。</li>
+  </ol>
+  <div class="status-grid">
+    <div class="stat"><div class="num"><strong id="st-days">0</strong> / 40</div><div class="lbl">DAY 達成</div></div>
+    <div class="stat"><div class="num"><strong id="st-units">0</strong> / 51</div><div class="lbl">マーフィー UNIT</div></div>
+    <div class="stat"><div class="num"><strong id="st-ch">0</strong> / 7</div><div class="lbl">ALL IN ONE 章</div></div>
+    <div class="stat"><div class="num"><strong id="st-tests">0</strong> / 5</div><div class="lbl">測定 記録</div></div>
+  </div>
+</div>
+
+<h2 style="font-size:17px">毎日の回り方</h2>
+<div class="loop">
+  <a class="node" href="./program.html">
+    <span class="n-emoji">✅</span><span class="n-title">40日チェック</span>
+    <span class="n-desc">今日のDayカードを見て、やったらチェック。1日90分（フォニックス→マーフィー→例文→復習）。</span>
+  </a>
+  <a class="node" href="./route.html">
+    <span class="n-emoji">📖</span><span class="n-title">教材ルート</span>
+    <span class="n-desc">マーフィー選抜51ユニット＋ALL IN ONE章ルート。終えたユニットにチェック。</span>
+  </a>
+  <a class="node" href="./test.html">
+    <span class="n-emoji">📊</span><span class="n-title">測る</span>
+    <span class="n-desc">診断テスト・実力テスト・英検3級模試×2。点数を記録して伸びを見る。</span>
+  </a>
+  <a class="node" href="https://www.youtube.com/watch?v=ycpq5hKeSF0" target="_blank" rel="noopener">
+    <span class="n-emoji">🎧</span><span class="n-title">音の教材</span>
+    <span class="n-desc">『新！大人のフォニックス』56分（日本語解説）。毎日10〜15分・必ず声に出す。1周後は<a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">リンキング編 [#281]</a>。</span>
+  </a>
+</div>
+
+<div class="step-section priority">
+  <h2>🛟 保険ルール（続けるための4つ）</h2>
+  <ul>
+    <li><b>15分デー公認</b>：崩れた日はフォニックス（or 前日例文の聞き流し）だけでOK。「ゼロの日」を作らないことだけが必達。</li>
+    <li><b>3日連続で崩れたら</b>：マーフィー1ユニット/日に減速。ルートは変えない、速度だけ落とす。</li>
+    <li><b>最初の2週間は親が横に座る</b>：丸付けだけでも可。ここが完走率を決める。</li>
+    <li><b>模試・診断の点数で怒らない・落ちこまない</b>：測定であって評価ではない。</li>
+  </ul>
+</div>
+
+<div class="step-section">
+  <h2>🌅 40日後の到達見込み</h2>
+  <div class="goal-grid">
+    <div class="goal"><b>文法</b><br>過去形・助動詞・代名詞・前置詞まで体に入る（学校の約1年先。英検3級の文法主戦場をカバー）</div>
+    <div class="goal"><b>音</b><br>英語の44音＋リンキングの基礎＋シャドーイングの型</div>
+    <div class="goal"><b>測定</b><br>英検模試①→②の点数差＋診断テスト前後比較で伸びが数字で見える</div>
+  </div>
+</div>
+
+<footer>
+  📘 英語40日プログラム（中1・夏）｜教材：マーフィーのケンブリッジ英文法 初級編（選抜51/全113ユニット）／ALL IN ONE Basic Ver.2／あいうえおフォニックス<br>
+  チェックはこの端末のブラウザに保存されます
+</footer>
+
+<script>
+(function () {
+  function countPrefix(prefix) {
+    var n = 0;
+    for (var i = 0; i < localStorage.length; i++) {
+      var k = localStorage.key(i);
+      if (k && k.indexOf(prefix) === 0 && localStorage.getItem(k)) n++;
+    }
+    return n;
+  }
+  document.getElementById('st-days').textContent  = countPrefix('eng40-done:');
+  document.getElementById('st-units').textContent = countPrefix('eng40-unit:');
+  document.getElementById('st-ch').textContent    = countPrefix('eng40-ch:');
+  document.getElementById('st-tests').textContent = countPrefix('eng40-score:');
+})();
+</script>
+<script src="./nav.js"></script>
+</body>
+</html>

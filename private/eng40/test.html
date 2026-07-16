@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📘</text></svg>">
+<title>📊 測る｜英語40日プログラム</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:24px 20px 100px; max-width:1000px; margin:0 auto; }
+h1,h2,h3 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; }
+h1 { font-size:22px; margin:18px 0 4px; }
+.tagline { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:20px; }
+a { color:var(--gold); text-decoration:none; }
+.step-section { margin:26px 0; padding:18px 22px; background:var(--sub-bg); border:1px solid var(--gold); border-radius:12px; }
+.step-section h2 { font-size:16px; margin:0 0 12px; }
+.mcard { background:var(--card-bg); border:1px solid var(--line); border-radius:10px; padding:14px 16px; margin-bottom:12px; }
+.mcard .mtitle { font-family:var(--mincho); font-size:14px; font-weight:700; margin-bottom:4px; }
+.mcard .mtitle .when { font-family:var(--mono); font-size:10px; background:var(--rose); color:#fff; padding:1px 7px; border-radius:8px; margin-right:7px; vertical-align:2px; }
+.mcard .mdesc { font-size:11.5px; color:var(--muted); line-height:1.7; margin-bottom:8px; }
+.mrow { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.mrow label { font-size:12px; font-weight:600; }
+input.score { font-family:var(--mono); font-size:16px; width:90px; padding:6px 10px; border:1px solid var(--line); border-radius:8px; background:var(--bg); color:var(--fg); text-align:center; }
+input.score:focus { outline:none; border-color:var(--gold); }
+input.memo { font-family:var(--sans); font-size:12px; flex:1 1 200px; padding:6px 10px; border:1px solid var(--line); border-radius:8px; background:var(--bg); color:var(--fg); }
+.saved { font-family:var(--mono); font-size:10px; color:var(--sage); opacity:0; transition:opacity 0.3s; }
+.saved.show { opacity:1; }
+table { width:100%; border-collapse:collapse; font-size:12px; margin:8px 0; }
+th,td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; line-height:1.7; }
+th { background:rgba(212,168,91,0.14); font-family:var(--mincho); white-space:nowrap; }
+td.band { font-family:var(--mono); font-weight:700; white-space:nowrap; color:var(--gold); }
+footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+@media (max-width:600px){ body { padding:20px 14px 90px; } }
+</style>
+</head>
+<body>
+
+<h1>📊 測る ── 現在位置の記録</h1>
+<div class="tagline">点数は評価ではなく座標 ─ 2回目が1回目より上がっていればプログラムは機能している</div>
+
+<div class="step-section">
+  <h2>🧭 測定5点セット（点数を入れると自動保存）</h2>
+
+  <div class="mcard">
+    <div class="mtitle"><span class="when">Day 1</span>① マーフィー巻末 診断テスト（Study Guide）</div>
+    <div class="mdesc">本のp.257「Study Guide」。今の位置の記録。Day 39 に同じものをもう一度解いて伸びを見る。</div>
+    <div class="mrow"><label>正答数</label><input class="score" data-skey="shindan1" inputmode="numeric" placeholder="--"><span>問</span><input class="memo" data-mkey="shindan1" placeholder="メモ（弱かった分野など）"><span class="saved">✓ 保存</span></div>
+  </div>
+
+  <div class="mcard">
+    <div class="mtitle"><span class="when">Day 1</span>② 実力測定テスト（文法60＋リスニング40）</div>
+    <div class="mdesc">印刷して渡された2枚のテスト。合計点を下の「最適化マップ」に当ててスタート速度を決める。</div>
+    <div class="mrow"><label>合計</label><input class="score" data-skey="jitsuryoku" inputmode="numeric" placeholder="--"><span>／100</span><input class="memo" data-mkey="jitsuryoku" placeholder="内訳メモ（文法◯点・リスニング◯点・落とした大問）"><span class="saved">✓ 保存</span></div>
+  </div>
+
+  <div class="mcard">
+    <div class="mtitle"><span class="when">Day 3</span>③ 英検3級 練習問題 1回目</div>
+    <div class="mdesc"><a href="https://www.eiken.or.jp/eiken/exam/grade_3/solutions.html" target="_blank" rel="noopener">英検公式サイトの過去問</a>（無料・過去3回分）。受かる受からないは見ない。座標を取るだけ。</div>
+    <div class="mrow"><label>正答数</label><input class="score" data-skey="eiken1" inputmode="numeric" placeholder="--"><span>問</span><input class="memo" data-mkey="eiken1" placeholder="メモ（リーディング◯／リスニング◯）"><span class="saved">✓ 保存</span></div>
+  </div>
+
+  <div class="mcard">
+    <div class="mtitle"><span class="when">Day 37</span>④ 英検3級 練習問題 2回目</div>
+    <div class="mdesc">①とは別の回の過去問を使う。<b>Day 3 との差がこの夏の伸び</b>。</div>
+    <div class="mrow"><label>正答数</label><input class="score" data-skey="eiken2" inputmode="numeric" placeholder="--"><span>問</span><input class="memo" data-mkey="eiken2" placeholder="メモ"><span class="saved">✓ 保存</span></div>
+  </div>
+
+  <div class="mcard">
+    <div class="mtitle"><span class="when">Day 39</span>⑤ 診断テスト再受験</div>
+    <div class="mdesc">Day 1 の①と同じStudy Guideをもう一度。前後比較で「どの分野が伸びたか」まで見る。</div>
+    <div class="mrow"><label>正答数</label><input class="score" data-skey="shindan2" inputmode="numeric" placeholder="--"><span>問</span><input class="memo" data-mkey="shindan2" placeholder="メモ（Day 1 との差）"><span class="saved">✓ 保存</span></div>
+  </div>
+</div>
+
+<div class="step-section">
+  <h2>🗺 最適化マップ STEP 1｜実力テスト合計点 → スタート速度</h2>
+  <table>
+    <tr><th style="width:80px">合計点</th><th>マーフィーの進め方</th></tr>
+    <tr><td class="band">90〜100</td><td>Unit 1〜9（現在形）は<b>1日5ユニット</b>で高速通過 → Day 8 頃から過去形へ。浮いた時間で例文を15本/日に増量</td></tr>
+    <tr><td class="band">70〜89</td><td><b>標準プランどおり</b>：Unit 1 から2ユニット/日。変更なし</td></tr>
+    <tr><td class="band">50〜69</td><td>最初の1週間は Unit 1〜9 を<b>2周</b>（1周目=解説中心・2周目=演習だけ）。40日で51全部終わらなくてよい</td></tr>
+    <tr><td class="band">〜49</td><td><b>1〜2ユニット/日に減速</b>＋フォニックス20分に増量＋例文は3本/日。「音と現在形」を夏の勝ち筋にする（Unit 37 までで充分）</td></tr>
+  </table>
+</div>
+
+<div class="step-section">
+  <h2>🗺 最適化マップ STEP 2｜落とした大問 → 重点ユニット</h2>
+  <table>
+    <tr><th>半分以上落とした大問</th><th>弱点</th><th>差し込む重点</th></tr>
+    <tr><td>大問1・2（選択・書きかえ）</td><td>be動詞と一般動詞の区別</td><td>マーフィー <b>Unit 1, 2, 5, 6, 7</b>＋8 をもう1周</td></tr>
+    <tr><td>大問3（並べかえ）</td><td>語順</td><td><b>Unit 91, 92</b>＋42 を前倒し</td></tr>
+    <tr><td>大問4（疑問詞）</td><td>wh-疑問文</td><td><b>Unit 43〜46</b> を前倒し（Day 8 台へ）</td></tr>
+    <tr><td>大問5（英作文）</td><td>文を組み立てる力</td><td>ALL IN ONE 例文の<b>書き写し2文/日</b>を追加</td></tr>
+    <tr><td>大問6・7（リスニング）</td><td>音の聞き取り</td><td>フォニックスを「聞く→止める→声に出す」で丁寧に。シャドーイング最優先</td></tr>
+    <tr><td>大問8（書き取り）</td><td>音→文字の変換</td><td>毎日のメニューに<b>ディクテーション1文</b>を追加（英検リスニング対策の定石）</td></tr>
+  </table>
+</div>
+
+<footer>📘 英語40日プログラム｜記録はこの端末のブラウザに保存されます（消したいときは入力欄を空にする）</footer>
+
+<script>
+(function () {
+  var S_PREFIX = 'eng40-score:';
+  var M_PREFIX = 'eng40-memo:';
+  function bind(selector, attr, prefix) {
+    Array.prototype.slice.call(document.querySelectorAll(selector)).forEach(function (el) {
+      var key = prefix + el.getAttribute(attr);
+      var savedMark = el.closest('.mrow').querySelector('.saved');
+      var v = localStorage.getItem(key);
+      if (v) el.value = v;
+      el.addEventListener('input', function () {
+        if (el.value.trim()) localStorage.setItem(key, el.value.trim());
+        else localStorage.removeItem(key);
+        if (savedMark) {
+          savedMark.classList.add('show');
+          clearTimeout(savedMark._t);
+          savedMark._t = setTimeout(function () { savedMark.classList.remove('show'); }, 1200);
+        }
+      });
+    });
+  }
+  bind('input.score[data-skey]', 'data-skey', S_PREFIX);
+  bind('input.memo[data-mkey]', 'data-mkey', M_PREFIX);
+})();
+</script>
+<script src="./nav.js"></script>
+</body>
+</html>
