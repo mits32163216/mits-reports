@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📘</text></svg>">
+<title>📋 毎日の手順書｜英語40日プログラム</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:24px 20px 80px; max-width:1000px; margin:0 auto; }
+h1,h2,h3 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; }
+h1 { font-size:22px; margin:18px 0 4px; }
+.tagline { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:14px; }
+a { color:var(--gold); text-decoration:none; }
+a:hover { text-decoration:underline; }
+/* 今日バナー */
+.banner { margin:0 0 20px; padding:14px 18px; background:var(--sub-bg); border:1px solid var(--gold); border-radius:12px;
+  font-family:var(--mincho); font-size:16px; font-weight:600; line-height:1.8; }
+.banner .mini, .mini { display:block; font-family:var(--mono); font-size:11px; font-weight:400; color:var(--muted); margin-top:4px; }
+/* Dayカード */
+details.daycard { background:var(--card-bg); border:1px solid var(--line); border-radius:12px; margin:10px 0; scroll-margin-top:64px; }
+details.daycard[open] { border-color:var(--gold); }
+details.daycard.today { box-shadow:0 0 0 2px var(--gold); }
+summary { cursor:pointer; padding:13px 16px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; list-style:none; }
+summary::-webkit-details-marker { display:none; }
+summary::before { content:"▸"; color:var(--gold); font-size:13px; flex:0 0 auto; }
+details[open] summary::before { content:"▾"; }
+.sum-day { font-family:var(--mono); font-size:13px; font-weight:700; color:var(--gold); flex:0 0 auto; }
+.sum-title { font-family:var(--mincho); font-size:15px; font-weight:600; flex:1 1 auto; }
+.ddate { font-family:var(--mono); font-size:11px; color:var(--muted); flex:0 0 auto; }
+.tag { display:inline-block; font-family:var(--mono); font-size:10px; padding:1px 7px; border-radius:8px; color:#fff; flex:0 0 auto; }
+.tag.sokutei { background:var(--rose); }
+.tag.chousei { background:var(--sage); }
+.card-body { padding:4px 16px 16px; border-top:1px dashed var(--line); }
+/* 手順ステップ */
+.step { margin:14px 0; padding:12px 14px; background:var(--sub-bg); border:1px solid var(--line); border-radius:10px; }
+.step-head { display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-family:var(--mincho); font-size:15px; font-weight:600; margin-bottom:6px; }
+.stepnum { font-family:var(--mono); color:var(--gold); font-size:16px; }
+.time { margin-left:auto; font-family:var(--mono); font-size:11px; font-weight:400; background:var(--card-bg); border:1px solid var(--gold); color:var(--gold); border-radius:12px; padding:2px 10px; white-space:nowrap; }
+.step-body { font-size:15px; line-height:2; }
+.step-body b { color:var(--gold); }
+.done-line { margin-top:14px; padding:10px 14px; border:1px dashed var(--gold); border-radius:10px; font-size:14px; }
+.rest-note { margin-top:12px; padding:10px 14px; background:rgba(122,155,126,0.12); border:1px solid var(--sage); border-radius:10px; font-size:14px; line-height:1.9; }
+footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+@media (max-width:600px){ body { padding:20px 14px 80px; } .step-body { font-size:14px; } }
+</style>
+</head>
+<body>
+
+<h1>📋 毎日の手順書</h1>
+<div class="tagline">開いたら今日のカードが自動で開く ─ 上から順にやれば90分で終わる ─ 崩れた日は「15分デー」＝①フォニックス4分＋⑤単語テストだけでOK（ゼロの日だけ作らない）</div>
+
+<div class="banner" id="today-banner">読み込み中…</div>
+
+<details class="daycard" id="day-1">
+  <summary><span class="sum-day">Day 1</span><span class="sum-title">測定日①：診断テスト＋実力測定テスト①②</span><span class="tag sokutei">測定</span><span class="ddate" data-n="1"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>📗 マーフィー巻末の診断テストを解く<span class="time">約30分</span></div><div class="step-body">本の巻末にある<b>診断テスト（Study Guide）</b>を解く。分からない問題は飛ばしてOK（今できないことを知るためのテスト）。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📊 実力測定テスト①②を解く<span class="time">約30分</span></div><div class="step-body"><a href="./test.html">📊 測るページ</a>に書いてある<b>実力測定テスト①②</b>をやる。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>✏️ 結果を記録する<span class="time">約10分</span></div><div class="step-body">点数を <a href="./test.html">📊 測るページ</a>に記録 → 最適化マップでスタート速度が決まる。<b>今日は点が低くて当たり前</b>。40日後の自分と比べるための出発点。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 1</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-2">
+  <summary><span class="sum-day">Day 2</span><span class="sum-title">マーフィー Unit 1〜2（am/is/are）</span><span class="ddate" data-n="2"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践① A〜G）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=eqzUPQ1EgpI" target="_blank" rel="noopener">▶ 4:48・実践① A〜G を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 2 なので 実践① A〜G。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 ちぐさ理論：表情筋を起こす ─ A と「吐き続ける息」<span class="time">約10分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=0s" target="_blank" rel="noopener">▶ 0:00〜4:52 を視聴</a><br>観たあと<b>マネ直し5分</b>：今日習った口の形で、さっきの ayane実践の同じ音をもう一度言い直す。鏡かスマホのインカメラで口を見ながら。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>1〜2</b>（am/is/are）<span class="time">40分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：Ch.1 品詞 を読み始める（名詞・形容詞・副詞はこの夏の合言葉）<span class="time">15分</span></div><div class="step-body">読むだけでOK。知らなかった単語は⑤で登録する。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 2</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-3">
+  <summary><span class="sum-day">Day 3</span><span class="sum-title">英検3級 練習問題①（＋フォニックスのみ）</span><span class="tag sokutei">測定</span><span class="ddate" data-n="3"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践② H〜N）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=WhZZh7TDkYk" target="_blank" rel="noopener">▶ 5:24・実践② H〜N を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 3 なので 実践② H〜N。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 ちぐさ理論：曖昧母音（シュワ）と E<span class="time">約10分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=292s" target="_blank" rel="noopener">▶ 4:52〜8:25 を視聴</a><br>観たあと<b>マネ直し5分</b>：今日習った口の形で、さっきの ayane実践の同じ音をもう一度言い直す。鏡かスマホのインカメラで口を見ながら。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📝 英検3級 練習問題①を解く<span class="time">約45分</span></div><div class="step-body"><a href="https://www.eiken.or.jp/eiken/exam/grade_3/solutions.html" target="_blank" rel="noopener">英検公式サイト（eiken.or.jp）の過去問</a>から1回分を解く（無料）。時間を計って本番のつもりで。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>✏️ 点数を記録する<span class="time">約5分</span></div><div class="step-body">点数を <a href="./test.html">📊 測るページ</a>に記録。Day 37 の練習問題②と比べるための1回目。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。<span class="mini">今日はマーフィーお休みなので、テストだけでもOK。</span></div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 3</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-4">
+  <summary><span class="sum-day">Day 4</span><span class="sum-title">マーフィー Unit 3〜4（現在進行形）</span><span class="ddate" data-n="4"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践③ O〜U）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=fGK_Zho3LVs" target="_blank" rel="noopener">▶ 5:32・実践③ O〜U を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 4 なので 実践③ O〜U。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 ちぐさ理論：I ＋ 唇の筋肉スタート B<span class="time">約10分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=505s" target="_blank" rel="noopener">▶ 8:25〜12:50 を視聴</a><br>観たあと<b>マネ直し5分</b>：今日習った口の形で、さっきの ayane実践の同じ音をもう一度言い直す。鏡かスマホのインカメラで口を見ながら。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>3〜4</b>（現在進行形）<span class="time">40分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：Ch.1 のつづきを読む<span class="time">15分</span></div><div class="step-body">読むだけでOK。知らなかった単語は⑤で登録する。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 4</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-5">
+  <summary><span class="sum-day">Day 5</span><span class="sum-title">マーフィー Unit 5〜6（一般動詞）</span><span class="ddate" data-n="5"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践④ V〜Z）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=611NRuKlfH4" target="_blank" rel="noopener">▶ 4:02・実践④ V〜Z を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 5 なので 実践④ V〜Z。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 ちぐさ理論：P ＋ M（溜めて出す）<span class="time">約10分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=770s" target="_blank" rel="noopener">▶ 12:50〜16:56 を視聴</a><br>観たあと<b>マネ直し5分</b>：今日習った口の形で、さっきの ayane実践の同じ音をもう一度言い直す。鏡かスマホのインカメラで口を見ながら。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>5〜6</b>（一般動詞）<span class="time">40分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：Ch.1 のつづきを読む<span class="time">15分</span></div><div class="step-body">読むだけでOK。知らなかった単語は⑤で登録する。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 5</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-6">
+  <summary><span class="sum-day">Day 6</span><span class="sum-title">マーフィー Unit 7〜9（Do you...? / have）</span><span class="ddate" data-n="6"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践① A〜G）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=eqzUPQ1EgpI" target="_blank" rel="noopener">▶ 4:48・実践① A〜G を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 6 なので 実践① A〜G。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 ちぐさ理論：W・Q・F（突き出して脱力）<span class="time">約10分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=1016s" target="_blank" rel="noopener">▶ 16:56〜21:03 を視聴</a><br>観たあと<b>マネ直し5分</b>：今日習った口の形で、さっきの ayane実践の同じ音をもう一度言い直す。鏡かスマホのインカメラで口を見ながら。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>7〜9</b>（Do you...? / have）<span class="time">40分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：<b>Ch.1 読了</b>（現在形ブロック完了！）<span class="time">15分</span></div><div class="step-body">読むだけでOK。知らなかった単語は⑤で登録する。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 6</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-7">
+  <summary><span class="sum-day">Day 7</span><span class="sum-title">調整日（遅れ回収 or 休み）</span><span class="tag chousei">調整</span><span class="ddate" data-n="7"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践② H〜N）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=WhZZh7TDkYk" target="_blank" rel="noopener">▶ 5:24・実践② H〜N を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。休みの日でも、これだけは声を出す（4〜5分で終わる）。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 7 なので 実践② H〜N。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 ちぐさ理論：F の応用 ＋ V（しびれる音）<span class="time">約10分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=1263s" target="_blank" rel="noopener">▶ 21:03〜24:46 を視聴</a><br>観たあと<b>マネ直し5分</b>：今日習った口の形で、さっきの ayane実践の同じ音をもう一度言い直す。鏡かスマホのインカメラで口を見ながら。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>🔁 遅れ回収<span class="time">〜40分</span></div><div class="step-body">今週やり残したユニット・章があればここで追いつく。<b>遅れがなければこのステップは無し</b>。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📓 週まとめ単語テスト<span class="time">約15分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページ</a>で<b>その週の単語をまとめて再テスト</b>。<b>2回連続で言えた語は卒業</b>。</div></div>
+      <div class="rest-note">😌 ここまで終わったら（遅れがなければ最初から）<b>完全に休んでいい日</b>。遊びに行ってOK。</div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 7</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-8">
+  <summary><span class="sum-day">Day 8</span><span class="sum-title">マーフィー Unit 10〜11（was/were・過去形）</span><span class="ddate" data-n="8"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践③ O〜U）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=fGK_Zho3LVs" target="_blank" rel="noopener">▶ 5:32・実践③ O〜U を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 8 なので 実践③ O〜U。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 ちぐさ理論：舌の筋肉スタート ─ N を制する<span class="time">約10分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=1486s" target="_blank" rel="noopener">▶ 24:46〜29:00 を視聴</a><br>観たあと<b>マネ直し5分</b>：今日習った口の形で、さっきの ayane実践の同じ音をもう一度言い直す。鏡かスマホのインカメラで口を見ながら。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>10〜11</b>（was/were・過去形）<span class="time">40分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：<b>Ch.2 文の種類</b> を読み始める<span class="time">15分</span></div><div class="step-body">読むだけでOK。知らなかった単語は⑤で登録する。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 8</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-9">
+  <summary><span class="sum-day">Day 9</span><span class="sum-title">マーフィー Unit 12〜13（過去の否定・疑問／過去進行形）</span><span class="ddate" data-n="9"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践④ V〜Z）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=611NRuKlfH4" target="_blank" rel="noopener">▶ 4:02・実践④ V〜Z を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 9 なので 実践④ V〜Z。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 ちぐさ理論：L ＋ D（引き上げて止める）<span class="time">約10分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=1740s" target="_blank" rel="noopener">▶ 29:00〜34:04 を視聴</a><br>観たあと<b>マネ直し5分</b>：今日習った口の形で、さっきの ayane実践の同じ音をもう一度言い直す。鏡かスマホのインカメラで口を見ながら。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>12〜13</b>（過去の否定・疑問／過去進行形）<span class="time">40分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：Ch.2 のつづきを読む<span class="time">15分</span></div><div class="step-body">読むだけでOK。知らなかった単語は⑤で登録する。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 9</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-10">
+  <summary><span class="sum-day">Day 10</span><span class="sum-title">マーフィー Unit 14〜15（過去進行形と過去形／used to）</span><span class="ddate" data-n="10"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践① A〜G）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=eqzUPQ1EgpI" target="_blank" rel="noopener">▶ 4:48・実践① A〜G を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 10 なので 実践① A〜G。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 ちぐさ理論：T ＋ R（犬のうなり）<span class="time">約10分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=2044s" target="_blank" rel="noopener">▶ 34:04〜38:20 を視聴</a><br>観たあと<b>マネ直し5分</b>：今日習った口の形で、さっきの ayane実践の同じ音をもう一度言い直す。鏡かスマホのインカメラで口を見ながら。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>14〜15</b>（過去進行形と過去形／used to）<span class="time">40分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：Ch.2 のつづきを読む<span class="time">15分</span></div><div class="step-body">読むだけでOK。知らなかった単語は⑤で登録する。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 10</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-11">
+  <summary><span class="sum-day">Day 11</span><span class="sum-title">マーフィー Unit 22〜23（be/have/do・不規則動詞）</span><span class="ddate" data-n="11"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践② H〜N）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=WhZZh7TDkYk" target="_blank" rel="noopener">▶ 5:24・実践② H〜N を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 11 なので 実践② H〜N。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 ちぐさ理論：J・Y・X<span class="time">約10分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=2300s" target="_blank" rel="noopener">▶ 38:20〜42:33 を視聴</a><br>観たあと<b>マネ直し5分</b>：今日習った口の形で、さっきの ayane実践の同じ音をもう一度言い直す。鏡かスマホのインカメラで口を見ながら。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>22〜23</b>（be/have/do・不規則動詞）<span class="time">40分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：<b>Ch.3 時制</b> を読み始める（完了形のページは飛ばす）<span class="time">15分</span></div><div class="step-body">読むだけでOK。知らなかった単語は⑤で登録する。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 11</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-12">
+  <summary><span class="sum-day">Day 12</span><span class="sum-title">マーフィー Unit 24〜25（未来：予定の言い方・be going to）</span><span class="ddate" data-n="12"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践③ O〜U）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=fGK_Zho3LVs" target="_blank" rel="noopener">▶ 5:32・実践③ O〜U を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 12 なので 実践③ O〜U。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 ちぐさ理論：お腹の音 ─ C・K・G・O・U<span class="time">約10分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=2553s" target="_blank" rel="noopener">▶ 42:33〜46:56 を視聴</a><br>観たあと<b>マネ直し5分</b>：今日習った口の形で、さっきの ayane実践の同じ音をもう一度言い直す。鏡かスマホのインカメラで口を見ながら。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>24〜25</b>（未来：予定の言い方・be going to）<span class="time">40分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：Ch.3 のつづきを読む<span class="time">15分</span></div><div class="step-body">読むだけでOK。知らなかった単語は⑤で登録する。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 12</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-13">
+  <summary><span class="sum-day">Day 13</span><span class="sum-title">マーフィー Unit 26（will）</span><span class="ddate" data-n="13"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践④ V〜Z）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=611NRuKlfH4" target="_blank" rel="noopener">▶ 4:02・実践④ V〜Z を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 13 なので 実践④ V〜Z。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 ちぐさ理論：H・Z・S（かめはめ波と溜めるS）<span class="time">約10分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=2816s" target="_blank" rel="noopener">▶ 46:56〜50:56 を視聴</a><br>観たあと<b>マネ直し5分</b>：今日習った口の形で、さっきの ayane実践の同じ音をもう一度言い直す。鏡かスマホのインカメラで口を見ながら。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>26</b>（will）<span class="time">40分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。<br><b>現在形ブロックの復習（間違い印だけ）</b></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：Ch.3 のつづきを読む<span class="time">15分</span></div><div class="step-body">読むだけでOK。知らなかった単語は⑤で登録する。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 13</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-14">
+  <summary><span class="sum-day">Day 14</span><span class="sum-title">調整日＋フォニックス1周完了チェック</span><span class="tag chousei">調整</span><span class="ddate" data-n="14"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践① A〜G）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=eqzUPQ1EgpI" target="_blank" rel="noopener">▶ 4:48・実践① A〜G を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。休みの日でも、これだけは声を出す（4〜5分で終わる）。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 14 なので 実践① A〜G。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 ちぐさ理論：まとめ＋苦手音の総復習<span class="time">約10分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=3056s" target="_blank" rel="noopener">▶ 50:56〜52:16 を視聴</a><br>観たあと<b>マネ直し5分</b>：今日習った口の形で、さっきの ayane実践の同じ音をもう一度言い直す。鏡かスマホのインカメラで口を見ながら。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>🔁 遅れ回収<span class="time">〜40分</span></div><div class="step-body">今週やり残したユニット・章があればここで追いつく。<b>遅れがなければこのステップは無し</b>。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📓 週まとめ単語テスト<span class="time">約15分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページ</a>で<b>その週の単語をまとめて再テスト</b>。<b>2回連続で言えた語は卒業</b>。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>🎧 フォニックス1周完了チェック<span class="time">約5分</span></div><div class="step-body"><a href="./phonics.html">🎧 音のページ</a>の理論編13回のチェックが全部埋まっているか確認。<b>明日からは <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">▶ リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a> へ</b>。</div></div>
+      <div class="rest-note">😌 ここまで終わったら（遅れがなければ最初から）<b>完全に休んでいい日</b>。遊びに行ってOK。</div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 14</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-15">
+  <summary><span class="sum-day">Day 15</span><span class="sum-title">マーフィー Unit 27〜28（might / can・could）</span><span class="ddate" data-n="15"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践② H〜N）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=WhZZh7TDkYk" target="_blank" rel="noopener">▶ 5:24・実践② H〜N を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 15 なので 実践② H〜N。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 苦手音の再視聴 or リンキング<span class="time">約10分</span></div><div class="step-body"><a href="./phonics.html">🎧 音のページ</a>で自分の苦手な音の区間をもう一度観る、または <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">▶ リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a> を進める。<br>観たら<b>マネ直し5分</b>：口の形を作って声に出す。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>27〜28</b>（might / can・could）<span class="time">40分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：<b>Ch.13 助動詞</b> ＋ <b>例文5本/日 ここからスタート</b><span class="time">20分</span></div><div class="step-body">例文は <b>聞く → 音読3回 → シャドーイング</b> ＋ <b>品詞マーキング（名詞○・形容詞△・副詞□）</b>。知らなかった単語は⑤で登録する。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 15</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-16">
+  <summary><span class="sum-day">Day 16</span><span class="sum-title">マーフィー Unit 29〜30（must / should）</span><span class="ddate" data-n="16"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践③ O〜U）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=fGK_Zho3LVs" target="_blank" rel="noopener">▶ 5:32・実践③ O〜U を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 16 なので 実践③ O〜U。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 苦手音の再視聴 or リンキング<span class="time">約10分</span></div><div class="step-body"><a href="./phonics.html">🎧 音のページ</a>で自分の苦手な音の区間をもう一度観る、または <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">▶ リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a> を進める。<br>観たら<b>マネ直し5分</b>：口の形を作って声に出す。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>29〜30</b>（must / should）<span class="time">40分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：Ch.13 のつづき ＋ 例文5本<span class="time">20分</span></div><div class="step-body">例文は <b>聞く → 音読3回 → シャドーイング</b> ＋ <b>品詞マーキング（名詞○・形容詞△・副詞□）</b>。知らなかった単語は⑤で登録する。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 16</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-17">
+  <summary><span class="sum-day">Day 17</span><span class="sum-title">マーフィー Unit 31〜32（have to / Would you like?）</span><span class="ddate" data-n="17"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践④ V〜Z）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=611NRuKlfH4" target="_blank" rel="noopener">▶ 4:02・実践④ V〜Z を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 17 なので 実践④ V〜Z。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 苦手音の再視聴 or リンキング<span class="time">約10分</span></div><div class="step-body"><a href="./phonics.html">🎧 音のページ</a>で自分の苦手な音の区間をもう一度観る、または <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">▶ リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a> を進める。<br>観たら<b>マネ直し5分</b>：口の形を作って声に出す。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>31〜32</b>（have to / Would you like?）<span class="time">40分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：例文5本<span class="time">20分</span></div><div class="step-body">例文は <b>聞く → 音読3回 → シャドーイング</b> ＋ <b>品詞マーキング（名詞○・形容詞△・副詞□）</b>。知らなかった単語は⑤で登録する。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 17</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-18">
+  <summary><span class="sum-day">Day 18</span><span class="sum-title">マーフィー Unit 33〜34（I'd rather / 命令文）</span><span class="ddate" data-n="18"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践① A〜G）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=eqzUPQ1EgpI" target="_blank" rel="noopener">▶ 4:48・実践① A〜G を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 18 なので 実践① A〜G。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 苦手音の再視聴 or リンキング<span class="time">約10分</span></div><div class="step-body"><a href="./phonics.html">🎧 音のページ</a>で自分の苦手な音の区間をもう一度観る、または <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">▶ リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a> を進める。<br>観たら<b>マネ直し5分</b>：口の形を作って声に出す。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>33〜34</b>（I'd rather / 命令文）<span class="time">40分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：例文5本<span class="time">20分</span></div><div class="step-body">例文は <b>聞く → 音読3回 → シャドーイング</b> ＋ <b>品詞マーキング（名詞○・形容詞△・副詞□）</b>。知らなかった単語は⑤で登録する。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 18</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-19">
+  <summary><span class="sum-day">Day 19</span><span class="sum-title">マーフィー Unit 35〜36（there is/are）</span><span class="ddate" data-n="19"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践② H〜N）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=WhZZh7TDkYk" target="_blank" rel="noopener">▶ 5:24・実践② H〜N を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 19 なので 実践② H〜N。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 苦手音の再視聴 or リンキング<span class="time">約10分</span></div><div class="step-body"><a href="./phonics.html">🎧 音のページ</a>で自分の苦手な音の区間をもう一度観る、または <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">▶ リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a> を進める。<br>観たら<b>マネ直し5分</b>：口の形を作って声に出す。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>35〜36</b>（there is/are）<span class="time">40分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：<b>Ch.16 形式語のit</b>（時間・天気のところだけ）＋ 例文5本<span class="time">20分</span></div><div class="step-body">例文は <b>聞く → 音読3回 → シャドーイング</b> ＋ <b>品詞マーキング（名詞○・形容詞△・副詞□）</b>。知らなかった単語は⑤で登録する。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 19</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-20">
+  <summary><span class="sum-day">Day 20</span><span class="sum-title">マーフィー Unit 37（it）</span><span class="ddate" data-n="20"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践③ O〜U）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=fGK_Zho3LVs" target="_blank" rel="noopener">▶ 5:32・実践③ O〜U を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 20 なので 実践③ O〜U。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 苦手音の再視聴 or リンキング<span class="time">約10分</span></div><div class="step-body"><a href="./phonics.html">🎧 音のページ</a>で自分の苦手な音の区間をもう一度観る、または <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">▶ リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a> を進める。<br>観たら<b>マネ直し5分</b>：口の形を作って声に出す。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>37</b>（it）<span class="time">40分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。<br><b>折り返しチェック：過去形の再テスト（巻末Additional Exercises）</b></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：例文5本<span class="time">20分</span></div><div class="step-body">例文は <b>聞く → 音読3回 → シャドーイング</b> ＋ <b>品詞マーキング（名詞○・形容詞△・副詞□）</b>。知らなかった単語は⑤で登録する。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 20</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-21">
+  <summary><span class="sum-day">Day 21</span><span class="sum-title">調整日（遅れ回収 or 休み）</span><span class="tag chousei">調整</span><span class="ddate" data-n="21"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践④ V〜Z）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=611NRuKlfH4" target="_blank" rel="noopener">▶ 4:02・実践④ V〜Z を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。休みの日でも、これだけは声を出す（4〜5分で終わる）。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 21 なので 実践④ V〜Z。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>🔁 遅れ回収<span class="time">〜40分</span></div><div class="step-body">今週やり残したユニット・章があればここで追いつく。<b>遅れがなければこのステップは無し</b>。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📓 週まとめ単語テスト<span class="time">約15分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページ</a>で<b>その週の単語をまとめて再テスト</b>。<b>2回連続で言えた語は卒業</b>。</div></div>
+      <div class="rest-note">😌 ここまで終わったら（遅れがなければ最初から）<b>完全に休んでいい日</b>。遊びに行ってOK。</div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 21</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-22">
+  <summary><span class="sum-day">Day 22</span><span class="sum-title">マーフィー Unit 42〜43（疑問文1・2）</span><span class="ddate" data-n="22"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践① A〜G）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=eqzUPQ1EgpI" target="_blank" rel="noopener">▶ 4:48・実践① A〜G を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 22 なので 実践① A〜G。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 苦手音の再視聴 or リンキング<span class="time">約10分</span></div><div class="step-body"><a href="./phonics.html">🎧 音のページ</a>で自分の苦手な音の区間をもう一度観る、または <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">▶ リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a> を進める。<br>観たら<b>マネ直し5分</b>：口の形を作って声に出す。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>42〜43</b>（疑問文1・2）<span class="time">40分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：<b>Ch.4 文型(1)</b> 開始 ＋ <b>Part 2 音声変化</b> を読む ＋ 例文5本<span class="time">20分</span></div><div class="step-body">例文は <b>聞く → 音読3回 → シャドーイング</b> ＋ <b>品詞マーキング（名詞○・形容詞△・副詞□）</b>。知らなかった単語は⑤で登録する。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 22</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-23">
+  <summary><span class="sum-day">Day 23</span><span class="sum-title">マーフィー Unit 44〜45（疑問文3・What/Which/How）</span><span class="ddate" data-n="23"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践② H〜N）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=WhZZh7TDkYk" target="_blank" rel="noopener">▶ 5:24・実践② H〜N を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 23 なので 実践② H〜N。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 苦手音の再視聴 or リンキング<span class="time">約10分</span></div><div class="step-body"><a href="./phonics.html">🎧 音のページ</a>で自分の苦手な音の区間をもう一度観る、または <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">▶ リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a> を進める。<br>観たら<b>マネ直し5分</b>：口の形を作って声に出す。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>44〜45</b>（疑問文3・What/Which/How）<span class="time">40分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：例文5本<span class="time">20分</span></div><div class="step-body">例文は <b>聞く → 音読3回 → シャドーイング</b> ＋ <b>品詞マーキング（名詞○・形容詞△・副詞□）</b>。知らなかった単語は⑤で登録する。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 23</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-24">
+  <summary><span class="sum-day">Day 24</span><span class="sum-title">マーフィー Unit 46（How long does it take?）</span><span class="ddate" data-n="24"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践③ O〜U）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=fGK_Zho3LVs" target="_blank" rel="noopener">▶ 5:32・実践③ O〜U を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 24 なので 実践③ O〜U。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 苦手音の再視聴 or リンキング<span class="time">約10分</span></div><div class="step-body"><a href="./phonics.html">🎧 音のページ</a>で自分の苦手な音の区間をもう一度観る、または <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">▶ リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a> を進める。<br>観たら<b>マネ直し5分</b>：口の形を作って声に出す。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>46</b>（How long does it take?）<span class="time">40分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。<br><b>疑問文ブロック復習</b></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：例文5本<span class="time">20分</span></div><div class="step-body">例文は <b>聞く → 音読3回 → シャドーイング</b> ＋ <b>品詞マーキング（名詞○・形容詞△・副詞□）</b>。知らなかった単語は⑤で登録する。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 24</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-25">
+  <summary><span class="sum-day">Day 25</span><span class="sum-title">マーフィー Unit 57〜58（I/me・my/his）</span><span class="ddate" data-n="25"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践④ V〜Z）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=611NRuKlfH4" target="_blank" rel="noopener">▶ 4:02・実践④ V〜Z を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 25 なので 実践④ V〜Z。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 苦手音の再視聴 or リンキング<span class="time">約10分</span></div><div class="step-body"><a href="./phonics.html">🎧 音のページ</a>で自分の苦手な音の区間をもう一度観る、または <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">▶ リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a> を進める。<br>観たら<b>マネ直し5分</b>：口の形を作って声に出す。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>57〜58</b>（I/me・my/his）<span class="time">40分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：例文5本<span class="time">20分</span></div><div class="step-body">例文は <b>聞く → 音読3回 → シャドーイング</b> ＋ <b>品詞マーキング（名詞○・形容詞△・副詞□）</b>。知らなかった単語は⑤で登録する。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 25</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-26">
+  <summary><span class="sum-day">Day 26</span><span class="sum-title">マーフィー Unit 59〜60（Whose/mine・I/me/my/mine）</span><span class="ddate" data-n="26"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践① A〜G）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=eqzUPQ1EgpI" target="_blank" rel="noopener">▶ 4:48・実践① A〜G を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 26 なので 実践① A〜G。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 苦手音の再視聴 or リンキング<span class="time">約10分</span></div><div class="step-body"><a href="./phonics.html">🎧 音のページ</a>で自分の苦手な音の区間をもう一度観る、または <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">▶ リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a> を進める。<br>観たら<b>マネ直し5分</b>：口の形を作って声に出す。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>59〜60</b>（Whose/mine・I/me/my/mine）<span class="time">40分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：例文5本<span class="time">20分</span></div><div class="step-body">例文は <b>聞く → 音読3回 → シャドーイング</b> ＋ <b>品詞マーキング（名詞○・形容詞△・副詞□）</b>。知らなかった単語は⑤で登録する。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 26</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-27">
+  <summary><span class="sum-day">Day 27</span><span class="sum-title">マーフィー Unit 61〜62（myself・-'s所有）</span><span class="ddate" data-n="27"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践② H〜N）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=WhZZh7TDkYk" target="_blank" rel="noopener">▶ 5:24・実践② H〜N を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 27 なので 実践② H〜N。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 苦手音の再視聴 or リンキング<span class="time">約10分</span></div><div class="step-body"><a href="./phonics.html">🎧 音のページ</a>で自分の苦手な音の区間をもう一度観る、または <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">▶ リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a> を進める。<br>観たら<b>マネ直し5分</b>：口の形を作って声に出す。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>61〜62</b>（myself・-'s所有）<span class="time">40分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：例文5本<span class="time">20分</span></div><div class="step-body">例文は <b>聞く → 音読3回 → シャドーイング</b> ＋ <b>品詞マーキング（名詞○・形容詞△・副詞□）</b>。知らなかった単語は⑤で登録する。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 27</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-28">
+  <summary><span class="sum-day">Day 28</span><span class="sum-title">調整日（遅れ回収 or 休み）</span><span class="tag chousei">調整</span><span class="ddate" data-n="28"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践③ O〜U）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=fGK_Zho3LVs" target="_blank" rel="noopener">▶ 5:32・実践③ O〜U を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。休みの日でも、これだけは声を出す（4〜5分で終わる）。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 28 なので 実践③ O〜U。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>🔁 遅れ回収<span class="time">〜40分</span></div><div class="step-body">今週やり残したユニット・章があればここで追いつく。<b>遅れがなければこのステップは無し</b>。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📓 週まとめ単語テスト<span class="time">約15分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページ</a>で<b>その週の単語をまとめて再テスト</b>。<b>2回連続で言えた語は卒業</b>。</div></div>
+      <div class="rest-note">😌 ここまで終わったら（遅れがなければ最初から）<b>完全に休んでいい日</b>。遊びに行ってOK。</div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 28</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-29">
+  <summary><span class="sum-day">Day 29</span><span class="sum-title">マーフィー Unit 91〜92（語順・頻度副詞）</span><span class="ddate" data-n="29"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践④ V〜Z）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=611NRuKlfH4" target="_blank" rel="noopener">▶ 4:02・実践④ V〜Z を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 29 なので 実践④ V〜Z。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 苦手音の再視聴 or リンキング<span class="time">約10分</span></div><div class="step-body"><a href="./phonics.html">🎧 音のページ</a>で自分の苦手な音の区間をもう一度観る、または <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">▶ リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a> を進める。<br>観たら<b>マネ直し5分</b>：口の形を作って声に出す。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>91〜92</b>（語順・頻度副詞）<span class="time">30分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：例文5本<span class="time">30分</span></div><div class="step-body">例文は <b>聞く → 音読3回 → シャドーイング</b> ＋ <b>品詞マーキング（名詞○・形容詞△・副詞□）</b>。知らなかった単語は⑤で登録する。<br>仕上げに<b>ディクテーション1文</b>（1文だけ聞いて書き取る）。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 29</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-30">
+  <summary><span class="sum-day">Day 30</span><span class="sum-title">マーフィー Unit 101〜102（at 8:00 / on Monday / from...to）</span><span class="ddate" data-n="30"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践① A〜G）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=eqzUPQ1EgpI" target="_blank" rel="noopener">▶ 4:48・実践① A〜G を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 30 なので 実践① A〜G。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 苦手音の再視聴 or リンキング<span class="time">約10分</span></div><div class="step-body"><a href="./phonics.html">🎧 音のページ</a>で自分の苦手な音の区間をもう一度観る、または <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">▶ リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a> を進める。<br>観たら<b>マネ直し5分</b>：口の形を作って声に出す。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>101〜102</b>（at 8:00 / on Monday / from...to）<span class="time">30分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：例文5本<span class="time">30分</span></div><div class="step-body">例文は <b>聞く → 音読3回 → シャドーイング</b> ＋ <b>品詞マーキング（名詞○・形容詞△・副詞□）</b>。知らなかった単語は⑤で登録する。<br>仕上げに<b>ディクテーション1文</b>（1文だけ聞いて書き取る）。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 30</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-31">
+  <summary><span class="sum-day">Day 31</span><span class="sum-title">マーフィー Unit 103〜104（before/after・場所のin/at/on 1）</span><span class="ddate" data-n="31"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践② H〜N）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=WhZZh7TDkYk" target="_blank" rel="noopener">▶ 5:24・実践② H〜N を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 31 なので 実践② H〜N。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 苦手音の再視聴 or リンキング<span class="time">約10分</span></div><div class="step-body"><a href="./phonics.html">🎧 音のページ</a>で自分の苦手な音の区間をもう一度観る、または <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">▶ リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a> を進める。<br>観たら<b>マネ直し5分</b>：口の形を作って声に出す。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>103〜104</b>（before/after・場所のin/at/on 1）<span class="time">30分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：例文5本<span class="time">30分</span></div><div class="step-body">例文は <b>聞く → 音読3回 → シャドーイング</b> ＋ <b>品詞マーキング（名詞○・形容詞△・副詞□）</b>。知らなかった単語は⑤で登録する。<br>仕上げに<b>ディクテーション1文</b>（1文だけ聞いて書き取る）。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 31</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-32">
+  <summary><span class="sum-day">Day 32</span><span class="sum-title">マーフィー Unit 105〜106（場所のin/at/on 2・to/in/at）</span><span class="ddate" data-n="32"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践③ O〜U）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=fGK_Zho3LVs" target="_blank" rel="noopener">▶ 5:32・実践③ O〜U を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 32 なので 実践③ O〜U。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 苦手音の再視聴 or リンキング<span class="time">約10分</span></div><div class="step-body"><a href="./phonics.html">🎧 音のページ</a>で自分の苦手な音の区間をもう一度観る、または <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">▶ リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a> を進める。<br>観たら<b>マネ直し5分</b>：口の形を作って声に出す。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>105〜106</b>（場所のin/at/on 2・to/in/at）<span class="time">30分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：例文5本<span class="time">30分</span></div><div class="step-body">例文は <b>聞く → 音読3回 → シャドーイング</b> ＋ <b>品詞マーキング（名詞○・形容詞△・副詞□）</b>。知らなかった単語は⑤で登録する。<br>仕上げに<b>ディクテーション1文</b>（1文だけ聞いて書き取る）。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 32</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-33">
+  <summary><span class="sum-day">Day 33</span><span class="sum-title">マーフィー Unit 107（next to/between/under）</span><span class="ddate" data-n="33"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践④ V〜Z）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=611NRuKlfH4" target="_blank" rel="noopener">▶ 4:02・実践④ V〜Z を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 33 なので 実践④ V〜Z。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 苦手音の再視聴 or リンキング<span class="time">約10分</span></div><div class="step-body"><a href="./phonics.html">🎧 音のページ</a>で自分の苦手な音の区間をもう一度観る、または <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">▶ リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a> を進める。<br>観たら<b>マネ直し5分</b>：口の形を作って声に出す。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー Unit <b>107</b>（next to/between/under）<span class="time">30分</span></div><div class="step-body">進め方はいつも同じ：<b>左ページを読む → 右ページを解く → 丸付け → 間違えた問題に印</b>をつける。<br><b>前置詞ブロック復習</b></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：例文5本<span class="time">30分</span></div><div class="step-body">例文は <b>聞く → 音読3回 → シャドーイング</b> ＋ <b>品詞マーキング（名詞○・形容詞△・副詞□）</b>。知らなかった単語は⑤で登録する。<br>仕上げに<b>ディクテーション1文</b>（1文だけ聞いて書き取る）。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 33</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-34">
+  <summary><span class="sum-day">Day 34</span><span class="sum-title">予備日：遅れ回収 or Unit 63〜64 先食い</span><span class="ddate" data-n="34"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践① A〜G）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=eqzUPQ1EgpI" target="_blank" rel="noopener">▶ 4:48・実践① A〜G を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 34 なので 実践① A〜G。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 苦手音の再視聴 or リンキング<span class="time">約10分</span></div><div class="step-body"><a href="./phonics.html">🎧 音のページ</a>で自分の苦手な音の区間をもう一度観る、または <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">▶ リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a> を進める。<br>観たら<b>マネ直し5分</b>：口の形を作って声に出す。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 予備日：遅れ回収 or 先食い<span class="time">30分</span></div><div class="step-body">遅れているユニットがあれば回収。なければ <b>Unit 63〜64（a/an・単数複数）</b>を先食いしてOK。進め方はいつも同じ：左を読む→右を解く→丸付け→間違いに印。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：例文5本<span class="time">30分</span></div><div class="step-body">例文は <b>聞く → 音読3回 → シャドーイング</b> ＋ <b>品詞マーキング（名詞○・形容詞△・副詞□）</b>。知らなかった単語は⑤で登録する。<br>仕上げに<b>ディクテーション1文</b>（1文だけ聞いて書き取る）。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 34</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-35">
+  <summary><span class="sum-day">Day 35</span><span class="sum-title">調整日（遅れ回収 or 休み）</span><span class="tag chousei">調整</span><span class="ddate" data-n="35"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践② H〜N）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=WhZZh7TDkYk" target="_blank" rel="noopener">▶ 5:24・実践② H〜N を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。休みの日でも、これだけは声を出す（4〜5分で終わる）。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 35 なので 実践② H〜N。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>🔁 遅れ回収<span class="time">〜40分</span></div><div class="step-body">今週やり残したユニット・章があればここで追いつく。<b>遅れがなければこのステップは無し</b>。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📓 週まとめ単語テスト<span class="time">約15分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページ</a>で<b>その週の単語をまとめて再テスト</b>。<b>2回連続で言えた語は卒業</b>。</div></div>
+      <div class="rest-note">😌 ここまで終わったら（遅れがなければ最初から）<b>完全に休んでいい日</b>。遊びに行ってOK。</div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 35</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-36">
+  <summary><span class="sum-day">Day 36</span><span class="sum-title">2周目復習①（間違い印のユニットだけ）</span><span class="ddate" data-n="36"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践③ O〜U）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=fGK_Zho3LVs" target="_blank" rel="noopener">▶ 5:32・実践③ O〜U を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 36 なので 実践③ O〜U。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 苦手音の再視聴 or リンキング<span class="time">約10分</span></div><div class="step-body"><a href="./phonics.html">🎧 音のページ</a>で自分の苦手な音の区間をもう一度観る、または <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">▶ リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a> を進める。<br>観たら<b>マネ直し5分</b>：口の形を作って声に出す。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー2周目復習①<span class="time">30分</span></div><div class="step-body"><b>間違い印がついたユニットだけ</b>をもう一度解く。2回目で解けたら印を消してOK。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：例文5本<span class="time">30分</span></div><div class="step-body">例文は <b>聞く → 音読3回 → シャドーイング</b> ＋ <b>品詞マーキング（名詞○・形容詞△・副詞□）</b>。知らなかった単語は⑤で登録する。<br>仕上げに<b>ディクテーション1文</b>（1文だけ聞いて書き取る）。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。<span class="mini">明日は英検練習問題②。軽く昨日までの間違い語を見直しておく。</span></div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 36</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-37">
+  <summary><span class="sum-day">Day 37</span><span class="sum-title">英検3級 練習問題②（①と点数比較）</span><span class="tag sokutei">測定</span><span class="ddate" data-n="37"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践④ V〜Z）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=611NRuKlfH4" target="_blank" rel="noopener">▶ 4:02・実践④ V〜Z を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 37 なので 実践④ V〜Z。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 苦手音の再視聴 or リンキング<span class="time">約10分</span></div><div class="step-body"><a href="./phonics.html">🎧 音のページ</a>で自分の苦手な音の区間をもう一度観る、または <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">▶ リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a> を進める。<br>観たら<b>マネ直し5分</b>：口の形を作って声に出す。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📝 英検3級 練習問題②を解く<span class="time">約45分</span></div><div class="step-body"><a href="https://www.eiken.or.jp/eiken/exam/grade_3/solutions.html" target="_blank" rel="noopener">英検公式サイト（eiken.or.jp）の過去問</a>から<b>Day 3 とは別の回</b>を解く。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>✏️ Day 3 と点数比較<span class="time">約10分</span></div><div class="step-body">点数を <a href="./test.html">📊 測るページ</a>に記録して、<b>Day 3 の①と比べる</b>。伸びた分が34日分の成果。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 37</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-38">
+  <summary><span class="sum-day">Day 38</span><span class="sum-title">2周目復習②（間違い印のユニットだけ）</span><span class="ddate" data-n="38"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践① A〜G）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=eqzUPQ1EgpI" target="_blank" rel="noopener">▶ 4:48・実践① A〜G を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 38 なので 実践① A〜G。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 苦手音の再視聴 or リンキング<span class="time">約10分</span></div><div class="step-body"><a href="./phonics.html">🎧 音のページ</a>で自分の苦手な音の区間をもう一度観る、または <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">▶ リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a> を進める。<br>観たら<b>マネ直し5分</b>：口の形を作って声に出す。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 マーフィー2周目復習②<span class="time">30分</span></div><div class="step-body"><b>間違い印がついたユニットだけ</b>をもう一度解く。2回目で解けたら印を消してOK。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>📙 ALL IN ONE：例文5本<span class="time">30分</span></div><div class="step-body">例文は <b>聞く → 音読3回 → シャドーイング</b> ＋ <b>品詞マーキング（名詞○・形容詞△・副詞□）</b>。知らなかった単語は⑤で登録する。<br>仕上げに<b>ディクテーション1文</b>（1文だけ聞いて書き取る）。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 38</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-39">
+  <summary><span class="sum-day">Day 39</span><span class="sum-title">診断テスト再受験（Day 1 と前後比較）</span><span class="tag sokutei">測定</span><span class="ddate" data-n="39"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践② H〜N）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=WhZZh7TDkYk" target="_blank" rel="noopener">▶ 5:24・実践② H〜N を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 39 なので 実践② H〜N。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>📖 苦手音の再視聴 or リンキング<span class="time">約10分</span></div><div class="step-body"><a href="./phonics.html">🎧 音のページ</a>で自分の苦手な音の区間をもう一度観る、または <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">▶ リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a> を進める。<br>観たら<b>マネ直し5分</b>：口の形を作って声に出す。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>📗 診断テストをもう一度解く<span class="time">約40分</span></div><div class="step-body">Day 1 と同じ<b>マーフィー巻末の診断テスト</b>を解き直す。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>✏️ Day 1 と前後比較<span class="time">約10分</span></div><div class="step-body">点数を <a href="./test.html">📊 測るページ</a>に記録して、<b>Day 1 と前後比較</b>。どの文法が伸びたか・まだ弱いかを見る。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">⑤</span>📓 単語テスト＋新出語の登録<span class="time">10分</span></div><div class="step-body"><a href="./vocab.html">📓 単語ページを開く</a> → <b>「今日のテスト」を受ける（昨日の語が自動で出る）</b> → 今日マーフィー・ALL IN ONEで知らなかった語を<b>新出語として登録</b>する（目安8〜12語）。</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 39</b> にチェック！</div>
+  </div>
+</details>
+
+<details class="daycard" id="day-40">
+  <summary><span class="sum-day">Day 40</span><span class="sum-title">総仕上げ：秋ルート決め＋できるようになったこと</span><span class="tag sokutei">測定</span><span class="ddate" data-n="40"></span></summary>
+  <div class="card-body">
+      <div class="step"><div class="step-head"><span class="stepnum">①</span>🎙 ayane実践（実践③ O〜U）<span class="time">約5分</span></div><div class="step-body"><a href="https://www.youtube.com/watch?v=fGK_Zho3LVs" target="_blank" rel="noopener">▶ 5:32・実践③ O〜U を1本通しで視聴</a><br>動画と<b>一緒に声を出して</b>追いかけるだけ。一時停止はいらない。<span class="mini">ローテは ①→②→③→④→①…（4日で26音を1周）。今日は Day 40 なので 実践③ O〜U。</span></div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">②</span>🗺 秋の継続ルートを決める<span class="time">約30分</span></div><div class="step-body"><a href="./route.html">📖 教材ルート</a>と <a href="./test.html">📊 測るページ</a>の記録を見ながら、<b>秋に何を続けるか</b>を決める（マーフィー残りユニット・ALL IN ONE・リンキングなど）。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">③</span>🎤 「夏にできるようになったこと」を自分の言葉で言う<span class="time">約15分</span></div><div class="step-body"><b>声に出して</b>言う（例：「過去形で昨日のことが言える」「Nの音が出せる」）。40日前の自分ができなかったことを3つ以上。</div></div>
+      <div class="step"><div class="step-head"><span class="stepnum">④</span>✏️ 記録して締める<span class="time">約10分</span></div><div class="step-body"><a href="./test.html">📊 測るページ</a>に最終記録 → <a href="./program.html">✅ 40日ページ</a>で40個のチェックを眺める。おつかれさま！🎉</div></div>
+      <div class="done-line">🏁 全部終わったら <a href="./program.html">✅ 40日ページ</a>で <b>Day 40</b> にチェック！</div>
+  </div>
+</details>
+
+
+<footer>📘 英語40日プログラム｜手順の正本：<a href="./program.html">✅ 40日</a>・<a href="./phonics.html">🎧 音</a>・<a href="./vocab.html">📓 単語</a>・<a href="./test.html">📊 測る</a>｜チェックは40日ページに一本化</footer>
+
+<script>
+/* 今日のDay計算（program.html と同じ localStorage キー 'eng40-start'・ローカルDate処理） */
+function eng40ComputeDay(startVal, now) {
+  var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(startVal || '');
+  if (!m) return null;
+  // "YYYY-MM-DD" を new Date() に直接渡すとUTC解釈になるため自前でsplit（program.html と同じ方式）
+  var start = new Date(parseInt(m[1], 10), parseInt(m[2], 10) - 1, parseInt(m[3], 10));
+  var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return Math.round((today - start) / 86400000) + 1;
+}
+if (typeof module !== 'undefined') { module.exports = { eng40ComputeDay: eng40ComputeDay }; }
+</script>
+<script>
+(function () {
+  var KEY = 'eng40-start';
+  var WD = ['日', '月', '火', '水', '木', '金', '土'];
+  var banner = document.getElementById('today-banner');
+  var saved = localStorage.getItem(KEY);
+  function fmt(d) { return (d.getMonth() + 1) + '/' + d.getDate() + '(' + WD[d.getDay()] + ')'; }
+
+  if (!saved || !/^\d{4}-\d{2}-\d{2}$/.test(saved)) {
+    banner.innerHTML = '📅 開始日がまだ設定されていません。<a href="./program.html">✅ 40日ページ</a>の「📅 開始日」に日付を入れると、ここに<b>今日の手順</b>が自動で出ます。<span class="mini">それまでは下の Day 1〜40 から今日の分を開いてください。</span>';
+    return;
+  }
+  var p = saved.split('-');
+  // 各カードに実日付を表示
+  var dates = Array.prototype.slice.call(document.querySelectorAll('.ddate'));
+  dates.forEach(function (el) {
+    var n = parseInt(el.getAttribute('data-n'), 10);
+    var d = new Date(parseInt(p[0], 10), parseInt(p[1], 10) - 1, parseInt(p[2], 10) + (n - 1));
+    el.textContent = fmt(d);
+  });
+
+  var day = eng40ComputeDay(saved, new Date());
+  if (day >= 1 && day <= 40) {
+    var el = document.getElementById('day-' + day);
+    var d = new Date(parseInt(p[0], 10), parseInt(p[1], 10) - 1, parseInt(p[2], 10) + (day - 1));
+    banner.innerHTML = '📅 今日は <b>Day ' + day + '</b>（' + fmt(d) + '）<span class="mini">下の開いているカードを上から順にやれば今日は終わり。終わったら ✅40日ページでチェック。</span>';
+    el.open = true;
+    el.classList.add('today');
+    setTimeout(function () { el.scrollIntoView({ block: 'start' }); }, 0);
+  } else if (day < 1) {
+    banner.innerHTML = '📅 開始日（' + saved + '）まであと <b>' + (1 - day) + '日</b>。<span class="mini">始まったらここに今日の手順が自動で出ます。</span>';
+  } else {
+    banner.innerHTML = '🎉 40日プログラムは終了しています（開始日 ' + saved + '）。<span class="mini">秋の継続ルートは Day 40 のカードと 📖 教材ルートを見てください。</span>';
+  }
+})();
+</script>
+<script src="./nav.js"></script>
+</body>
+</html>

@@ -6,7 +6,9 @@
   var NAV = [
     { file: "index.html",   key: "index",   emoji: "🏠", label: "ホーム",     sub: "" },
     { file: "program.html", key: "program", emoji: "✅", label: "40日",       sub: "デイリー" },
+    { file: "daily.html",   key: "daily",   emoji: "📋", label: "手順書",     sub: "今日やること" },
     { file: "route.html",   key: "route",   emoji: "📖", label: "教材ルート", sub: "51ユニット" },
+    { file: "vocab.html",   key: "vocab",   emoji: "📓", label: "単語",       sub: "D+1テスト" },
     { file: "phonics.html", key: "phonics", emoji: "🎧", label: "音",         sub: "フォニックス13回" },
     { file: "test.html",    key: "test",    emoji: "📊", label: "測る",       sub: "テスト記録" },
   ];

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📘</text></svg>">
+<title>📓 単語D+1テスト｜英語40日プログラム</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:24px 20px 110px; max-width:1000px; margin:0 auto; }
+h1,h2,h3 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; }
+h1 { font-size:22px; margin:18px 0 4px; }
+.tagline { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:20px; }
+a { color:var(--gold); text-decoration:none; }
+/* 統計ヘッダ */
+.stats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:0 0 22px; }
+@media (max-width:640px){ .stats-grid { grid-template-columns:repeat(3,1fr); } }
+.stat { background:var(--card-bg); border:1px solid var(--line); border-radius:10px; padding:12px 10px; text-align:center; }
+.stat .num { font-family:var(--mincho); font-size:24px; font-weight:700; line-height:1.1; }
+.stat .num strong { color:var(--sage); }
+.stat .lbl { font-family:var(--mono); font-size:10px; color:var(--muted); margin-top:4px; }
+/* セクション */
+.step-section { margin:26px 0; padding:18px 22px; background:var(--sub-bg); border:1px solid var(--gold); border-radius:12px; }
+.step-section h2 { font-size:16px; margin:0 0 10px; }
+.section-hint { font-family:var(--mono); font-size:10px; color:var(--muted); margin:-4px 0 12px; }
+/* 登録フォーム */
+.vform { display:flex; flex-direction:column; gap:10px; }
+.vform input, .vform select {
+  font-family:var(--sans); font-size:16px; color:var(--fg); background:var(--card-bg);
+  border:1px solid var(--line); border-radius:10px; padding:12px 14px; width:100%; }
+.vform input:focus, .vform select:focus { outline:none; border-color:var(--gold); }
+.vform .row2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+@media (max-width:520px){ .vform .row2 { grid-template-columns:1fr; } }
+.btn { font-family:var(--sans); font-size:15px; font-weight:700; border:none; border-radius:12px;
+  padding:14px 18px; cursor:pointer; transition:all 0.15s; -webkit-tap-highlight-color:transparent; }
+.btn:active { transform:scale(0.97); }
+.btn-gold { background:var(--gold); color:#fff; }
+.btn-sage { background:var(--sage); color:#fff; }
+.btn-rose { background:var(--rose); color:#fff; }
+.btn-ghost { background:var(--card-bg); color:var(--fg); border:1px solid var(--line); }
+.reg-done { font-family:var(--mono); font-size:11px; color:var(--sage); min-height:16px; }
+/* テストカード */
+.tcard { background:var(--card-bg); border:1px solid var(--line); border-radius:14px; padding:26px 20px; text-align:center; }
+.tcard .t-remain { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:14px; }
+.tcard .t-ja { font-family:var(--mincho); font-size:26px; font-weight:700; line-height:1.5; margin:6px 0 4px; }
+.tcard .t-pos { display:inline-block; font-family:var(--mono); font-size:10px; color:#fff; background:var(--gold);
+  padding:2px 10px; border-radius:10px; margin-bottom:18px; }
+.tcard .t-en { font-family:var(--mono); font-size:28px; font-weight:700; color:var(--sage); margin:8px 0 20px; min-height:38px; }
+.tcard .t-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.tcard .t-btns .btn { flex:1 1 40%; max-width:220px; }
+.t-empty { text-align:center; font-size:14px; line-height:2; padding:18px 0; }
+.t-empty .big { font-family:var(--mincho); font-size:20px; font-weight:700; color:var(--sage); }
+/* 単語帳 */
+.ftabs { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:12px; }
+.ftab { font-family:var(--sans); font-size:12px; border:1px solid var(--line); background:var(--card-bg); color:var(--fg);
+  border-radius:16px; padding:6px 14px; cursor:pointer; }
+.ftab.on { background:var(--gold); color:#fff; border-color:var(--gold); }
+.gradtoggle { display:flex; align-items:center; gap:7px; font-size:12px; margin-bottom:12px; cursor:pointer; user-select:none; }
+.gradtoggle input { width:16px; height:16px; }
+ul.vlist { list-style:none; margin:0; padding:0; }
+ul.vlist li { display:flex; align-items:center; gap:10px; padding:10px 8px; border-bottom:1px dashed var(--line); }
+ul.vlist li:last-child { border-bottom:none; }
+ul.vlist li.grad { opacity:0.62; }
+.v-en { flex:0 0 auto; min-width:96px; font-family:var(--mono); font-size:14px; font-weight:700; color:var(--gold); word-break:break-all; }
+.v-ja { flex:1 1 auto; font-size:13px; line-height:1.5; }
+.v-pos { flex:0 0 auto; font-family:var(--mono); font-size:9px; color:var(--muted); border:1px solid var(--line); border-radius:8px; padding:1px 7px; white-space:nowrap; }
+.v-st { flex:0 0 auto; font-family:var(--mono); font-size:10px; white-space:nowrap; color:var(--muted); }
+.v-st.grad { color:var(--sage); font-weight:700; }
+.v-del { flex:0 0 auto; font-size:13px; border:none; background:none; color:var(--rose); cursor:pointer; padding:4px 6px; }
+.v-none { font-size:12px; color:var(--muted); padding:10px 0; }
+@media (max-width:520px){ .v-en { min-width:76px; font-size:13px; } .v-pos { display:none; } }
+/* 進捗ピル */
+.watch-summary { position:fixed; bottom:16px; left:50%; transform:translateX(-50%); z-index:200;
+  display:flex; align-items:center; gap:14px; padding:10px 20px; background:var(--card-bg);
+  border:1px solid var(--gold); border-radius:24px; box-shadow:0 6px 20px rgba(15,27,46,0.18); font-size:13px; white-space:nowrap; }
+.watch-summary strong { color:var(--sage); font-size:15px; }
+footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+@media (max-width:600px){ body { padding:20px 14px 110px; } }
+</style>
+</head>
+<body>
+
+<h1>📓 単語D+1テスト</h1>
+<div class="tagline">初見日に収集 → 翌日D+1テスト → 日曜D+7再テスト → 2回連続◯で卒業🎓 ─ 目標：定着300語</div>
+
+<div class="stats-grid">
+  <div class="stat"><div class="num"><strong id="st-total">0</strong></div><div class="lbl">収集した語</div></div>
+  <div class="stat"><div class="num"><strong id="st-grad">0</strong></div><div class="lbl">卒業（定着）</div></div>
+  <div class="stat"><div class="num">300</div><div class="lbl">目標</div></div>
+</div>
+
+<!-- 登録 -->
+<div class="step-section">
+  <h2>➕ 今日の新出語を登録</h2>
+  <div class="section-hint">マーフィー・ALL IN ONEで知らなかった語をここへ（目安8〜12語/日）。明日のテストに自動で出ます</div>
+  <form class="vform" id="reg-form" autocomplete="off">
+    <input type="text" id="in-en" placeholder="英単語（例：apple）" autocapitalize="none" autocorrect="off" spellcheck="false">
+    <div class="row2">
+      <input type="text" id="in-ja" placeholder="意味（例：りんご）">
+      <select id="in-pos">
+        <option value="名詞">名詞</option>
+        <option value="動詞">動詞</option>
+        <option value="形容詞">形容詞</option>
+        <option value="副詞">副詞</option>
+        <option value="その他">その他</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-gold">登録する（明日テストに出ます）</button>
+    <div class="reg-done" id="reg-done"></div>
+  </form>
+</div>
+
+<!-- 今日のテスト -->
+<div class="step-section">
+  <h2>📝 今日のテスト</h2>
+  <div class="section-hint">日本語を見て、英語を隠して言えるか。言えてから「答えを見る」</div>
+  <div id="test-area"></div>
+</div>
+
+<!-- 単語帳 -->
+<div class="step-section">
+  <h2>📚 単語帳</h2>
+  <div class="ftabs" id="ftabs">
+    <button type="button" class="ftab on" data-pos="">全部</button>
+    <button type="button" class="ftab" data-pos="名詞">名詞</button>
+    <button type="button" class="ftab" data-pos="動詞">動詞</button>
+    <button type="button" class="ftab" data-pos="形容詞">形容詞</button>
+    <button type="button" class="ftab" data-pos="副詞">副詞</button>
+    <button type="button" class="ftab" data-pos="その他">他</button>
+  </div>
+  <label class="gradtoggle"><input type="checkbox" id="show-grad">卒業済み🎓も表示する</label>
+  <ul class="vlist" id="vlist"></ul>
+  <div class="v-none" id="v-none" style="display:none;">まだ語がありません。上のフォームから登録してください</div>
+</div>
+
+<div class="watch-summary">
+  <span id="watch-text">📓 定着 <strong>0</strong> / 300</span>
+</div>
+
+<footer>📓 単語D+1システム｜初期は単語が最優先（最重要3,000語で会話の9割）｜データはこの端末のブラウザに保存されます</footer>
+
+<script>
+/*LOGIC-START*/
+var VOCAB_KEY = 'eng40-vocab';
+function pad2(n) { return (n < 10 ? '0' : '') + n; }
+function fmtDate(d) { return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
+function todayStr() { return fmtDate(new Date()); }
+// "YYYY-MM-DD" をローカルDateで＋n日（new Date(str)のUTC解釈を避ける・program.htmlと同流儀）
+function addDaysStr(s, n) {
+  var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+  return fmtDate(new Date(parseInt(m[1], 10), parseInt(m[2], 10) - 1, parseInt(m[3], 10) + n));
+}
+function newWord(en, ja, pos, today) {
+  return { en: en, ja: ja, pos: pos, added: today, streak: 0, graduated: false, nextDue: addDaysStr(today, 1) };
+}
+function isDue(w, today) { return !w.graduated && w.nextDue <= today; }
+// ◯言えた：streak+1、nextDue=+7日（D+7再テスト）、2回連続で卒業
+function markCorrect(w, today) {
+  w.streak += 1;
+  if (w.streak >= 2) { w.graduated = true; }
+  w.nextDue = addDaysStr(today, 7);
+  return w;
+}
+// ×言えなかった：streakリセット、明日もう一度
+function markWrong(w, today) {
+  w.streak = 0;
+  w.nextDue = addDaysStr(today, 1);
+  return w;
+}
+/*LOGIC-END*/
+</script>
+<script>
+(function () {
+  function load() {
+    try {
+      var a = JSON.parse(localStorage.getItem(VOCAB_KEY) || '[]');
+      return Array.isArray(a) ? a : [];
+    } catch (e) { return []; }
+  }
+  function save(words) { localStorage.setItem(VOCAB_KEY, JSON.stringify(words)); }
+
+  var words = load();
+  var posFilter = '';
+  var showGrad = false;
+
+  // ---- 統計 ----
+  function renderStats() {
+    var grad = words.filter(function (w) { return w.graduated; }).length;
+    document.getElementById('st-total').textContent = words.length;
+    document.getElementById('st-grad').textContent = grad;
+    document.getElementById('watch-text').innerHTML = '📓 定着 <strong>' + grad + '</strong> / 300';
+  }
+
+  // ---- 登録 ----
+  var form = document.getElementById('reg-form');
+  var inEn = document.getElementById('in-en');
+  var inJa = document.getElementById('in-ja');
+  var inPos = document.getElementById('in-pos');
+  var regDone = document.getElementById('reg-done');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var en = inEn.value.trim();
+    var ja = inJa.value.trim();
+    if (!en || !ja) { regDone.textContent = '英単語と意味を両方入れてください'; return; }
+    words.push(newWord(en, ja, inPos.value, todayStr()));
+    save(words);
+    regDone.textContent = '✅ 「' + en + '」を登録（' + words.length + '語目）';
+    inEn.value = ''; inJa.value = '';
+    inEn.focus();
+    renderStats(); renderList(); renderTest();
+  });
+
+  // ---- 今日のテスト ----
+  var testArea = document.getElementById('test-area');
+  var queue = [];
+  var doneCount = 0;
+  var started = false;
+  function buildQueue() {
+    var today = todayStr();
+    queue = words.filter(function (w) { return isDue(w, today); });
+    doneCount = 0;
+  }
+  function renderTest() {
+    if (!started) buildQueue();
+    if (queue.length === 0) {
+      testArea.innerHTML = '<div class="t-empty">' +
+        (started || doneCount > 0
+          ? '<span class="big">🎉 今日のテスト完了！</span><br>また明日。◯が2回続いた語は卒業🎓です'
+          : '今日のテスト対象はありません。<br>新出語を登録すると<b>明日</b>ここに出ます') +
+        '</div>';
+      started = false;
+      return;
+    }
+    var w = queue[0];
+    testArea.innerHTML =
+      '<div class="tcard">' +
+      '<div class="t-remain">残り ' + queue.length + ' 問（済 ' + doneCount + '）</div>' +
+      '<div class="t-ja">' + esc(w.ja) + '</div><br>' +
+      '<span class="t-pos">' + esc(w.pos) + '</span>' +
+      '<div class="t-en" id="t-en">？？？</div>' +
+      '<div class="t-btns" id="t-btns">' +
+      '<button type="button" class="btn btn-gold" id="btn-show">答えを見る</button>' +
+      '</div></div>';
+    document.getElementById('btn-show').addEventListener('click', function () {
+      document.getElementById('t-en').textContent = w.en;
+      document.getElementById('t-btns').innerHTML =
+        '<button type="button" class="btn btn-sage" id="btn-ok">◯ 言えた</button>' +
+        '<button type="button" class="btn btn-rose" id="btn-ng">× 言えなかった</button>';
+      document.getElementById('btn-ok').addEventListener('click', function () { answer(true); });
+      document.getElementById('btn-ng').addEventListener('click', function () { answer(false); });
+    });
+    function answer(ok) {
+      started = true;
+      var today = todayStr();
+      if (ok) { markCorrect(w, today); } else { markWrong(w, today); }
+      save(words);
+      queue.shift();
+      doneCount++;
+      renderStats(); renderList(); renderTest();
+    }
+  }
+
+  // ---- 単語帳 ----
+  var vlist = document.getElementById('vlist');
+  var vnone = document.getElementById('v-none');
+  function statusLabel(w) {
+    if (w.graduated) return '卒業🎓';
+    if (w.streak >= 1) return '◯1回（あと1回で卒業）';
+    return 'テスト待ち ' + w.nextDue.slice(5).replace('-', '/');
+  }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function renderList() {
+    var rows = words.map(function (w, i) { return { w: w, i: i }; }).filter(function (r) {
+      if (!showGrad && r.w.graduated) return false;
+      if (posFilter && r.w.pos !== posFilter) return false;
+      return true;
+    });
+    vlist.innerHTML = rows.map(function (r) {
+      return '<li' + (r.w.graduated ? ' class="grad"' : '') + '>' +
+        '<span class="v-en">' + esc(r.w.en) + '</span>' +
+        '<span class="v-ja">' + esc(r.w.ja) + '</span>' +
+        '<span class="v-pos">' + esc(r.w.pos) + '</span>' +
+        '<span class="v-st' + (r.w.graduated ? ' grad' : '') + '">' + statusLabel(r.w) + '</span>' +
+        '<button type="button" class="v-del" data-i="' + r.i + '" title="削除">✕</button>' +
+        '</li>';
+    }).join('');
+    vnone.style.display = rows.length ? 'none' : 'block';
+    Array.prototype.slice.call(vlist.querySelectorAll('.v-del')).forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var i = parseInt(btn.getAttribute('data-i'), 10);
+        var w = words[i];
+        if (!w) return;
+        if (!confirm('「' + w.en + '」を削除します。いいですか？')) return;
+        words.splice(i, 1);
+        save(words);
+        started = false;
+        renderStats(); renderList(); renderTest();
+      });
+    });
+  }
+  Array.prototype.slice.call(document.querySelectorAll('#ftabs .ftab')).forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      Array.prototype.slice.call(document.querySelectorAll('#ftabs .ftab')).forEach(function (t) { t.classList.remove('on'); });
+      tab.classList.add('on');
+      posFilter = tab.getAttribute('data-pos');
+      renderList();
+    });
+  });
+  document.getElementById('show-grad').addEventListener('change', function (e) {
+    showGrad = e.target.checked;
+    renderList();
+  });
+
+  renderStats(); renderList(); renderTest();
+})();
+</script>
+<script src="./nav.js"></script>
+</body>
+</html>
