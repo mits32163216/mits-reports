@@ -7,6 +7,7 @@
     { file: "index.html",   key: "index",   emoji: "🏠", label: "ホーム",     sub: "" },
     { file: "program.html", key: "program", emoji: "✅", label: "40日",       sub: "デイリー" },
     { file: "route.html",   key: "route",   emoji: "📖", label: "教材ルート", sub: "51ユニット" },
+    { file: "phonics.html", key: "phonics", emoji: "🎧", label: "音",         sub: "フォニックス13回" },
     { file: "test.html",    key: "test",    emoji: "📊", label: "測る",       sub: "テスト記録" },
   ];
 

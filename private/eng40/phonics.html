@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📘</text></svg>">
+<title>🎧 フォニックス13回｜英語40日プログラム</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:24px 20px 110px; max-width:1000px; margin:0 auto; }
+h1,h2,h3 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; }
+h1 { font-size:22px; margin:18px 0 4px; }
+.tagline { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:20px; }
+a { color:var(--gold); text-decoration:none; }
+a:hover { text-decoration:underline; }
+.step-section { margin:26px 0; padding:18px 22px; background:var(--sub-bg); border:1px solid var(--gold); border-radius:12px; }
+.step-section h2 { font-size:16px; margin:0 0 10px; }
+.ritual { background:var(--card-bg); border:1px solid var(--line); border-radius:10px; padding:12px 16px; font-size:13px; line-height:2; }
+.ritual b { color:var(--gold); }
+.day { margin:16px 0; padding:14px 18px; background:var(--card-bg); border:1px solid var(--line); border-radius:10px; }
+.day-head { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:6px; }
+.day-head h3 { font-size:14px; margin:0; flex:1 1 auto; }
+.day-head .dno { font-family:var(--mono); font-size:11px; background:var(--gold); color:#fff; padding:1px 8px; border-radius:8px; margin-right:6px; }
+.sounds { font-family:var(--mono); font-size:12px; color:var(--rose); font-weight:700; letter-spacing:0.06em; }
+.watch-link { display:inline-block; font-family:var(--mono); font-size:12px; padding:3px 10px; border:1px solid var(--gold); border-radius:14px; margin:4px 0 8px; }
+.day p { font-size:13px; line-height:1.9; margin:6px 0; }
+.day .words { font-size:12px; color:var(--muted); }
+.day .words b { color:var(--sage); }
+label.uchk { display:inline-flex; align-items:center; gap:6px; cursor:pointer;
+  background:var(--card-bg); border:1px solid var(--line); border-radius:16px; padding:4px 11px 4px 6px; font-size:12px; transition:all 0.15s; position:relative; }
+label.uchk input { position:absolute; opacity:0; width:0; height:0; }
+.umark { display:inline-block; width:16px; height:16px; border-radius:4px; border:2px solid var(--line); background:var(--card-bg); position:relative; flex:0 0 auto; }
+label.uchk input:checked ~ .umark { background:var(--sage); border-color:var(--sage); }
+label.uchk input:checked ~ .umark::after { content:""; position:absolute; left:4px; top:1px; width:4px; height:8px; border:solid #fff; border-width:0 2px 2px 0; transform:rotate(45deg); }
+label.uchk.done { background:rgba(122,155,126,0.13); border-color:var(--sage); }
+.watch-summary { position:fixed; bottom:16px; left:50%; transform:translateX(-50%); z-index:200;
+  display:flex; align-items:center; gap:14px; padding:10px 20px; background:var(--card-bg);
+  border:1px solid var(--gold); border-radius:24px; box-shadow:0 6px 20px rgba(15,27,46,0.18); font-size:13px; white-space:nowrap; }
+.watch-summary strong { color:var(--sage); font-size:15px; }
+footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+@media (max-width:600px){ body { padding:20px 14px 110px; } }
+</style>
+</head>
+<body>
+
+<h1>🎧 フォニックス13回メニュー</h1>
+<div class="tagline">『新！大人のフォニックス』56分（重森ちぐさ／NextepちぐさのYouTube英会話教室）を Day 2〜14 に分割 ─ 1回4〜5分だけ観て、口を動かす</div>
+
+<!-- 毎回共通の手順 -->
+<div class="step-section">
+  <h2>🔁 毎回共通の練習手順（3ステップ・約10分）</h2>
+  <div class="ritual">
+    1. <b>聞く</b>：その日の区間リンクを開き、まず通しで観る（4〜5分）<br>
+    2. <b>一時停止してマネる</b>：先生が単語を言うたびに止めて、<b>口の形（表情筋・唇・舌・お腹）をマネて3回声に出す</b>。鏡かスマホのインカメラで自分の口を見ながら<br>
+    3. <b>仕上げ</b>：その日の単語を見ずに言えたらチェックボックスを塗る<br>
+    → この動画の合言葉は「発音は知識じゃなくてコツ＝<b>筋肉と息の使い方</b>」。息はプツプツ切らず、吐き続けて終わる。
+  </div>
+</div>
+
+<!-- 13回メニュー -->
+<div class="step-section">
+  <h2>📅 Day 2〜14（13回）</h2>
+
+  <div class="day">
+    <div class="day-head"><h3><span class="dno">Day 2</span>表情筋を起こす ─ <span class="sounds">A</span> と「吐き続ける息」</h3>
+      <label class="uchk"><input type="checkbox" data-ukey="ph-02"><span class="umark"></span>済</label></div>
+    <a class="watch-link" href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=0s" target="_blank" rel="noopener">▶ 0:00〜4:52 を視聴</a>
+    <p>2つのコツ＝筋肉と息の使い方の説明→4つの筋肉（表情筋・唇・舌・お腹）→表情筋の鍛え方→A（ニコッと笑って口角を斜め上・顎だけ下げる）→日本語はプツプツ切れる息、英語は「出し続けて終わる」（急ブレーキではなくスーッと止まる車のイメージ）。</p>
+    <p class="words">練習語：<b>ask / match</b> など（Aの単語5つ）。ニコッをキープしたまま顎だけ下げる。</p>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><h3><span class="dno">Day 3</span>曖昧母音（シュワ）と <span class="sounds">E</span></h3>
+      <label class="uchk"><input type="checkbox" data-ukey="ph-03"><span class="umark"></span>済</label></div>
+    <a class="watch-link" href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=292s" target="_blank" rel="noopener">▶ 4:52〜8:25 を視聴</a>
+    <p>単語の母音はアクセントの1つだけしっかり発音し、残りは「曖昧な音」（お腹からゲップのように出す音）になる。pen・Japan で練習→E はスマイルのまま日本語の「え」を長めに伸ばす（日本語より圧倒的に長く）。</p>
+    <p class="words">練習語：<b>pen / Japan / egg / bed / ten</b> など。2つ目の母音を曖昧にできたか。</p>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><h3><span class="dno">Day 4</span><span class="sounds">I</span> ＋ 唇の筋肉スタート <span class="sounds">B</span></h3>
+      <label class="uchk"><input type="checkbox" data-ukey="ph-04"><span class="umark"></span>済</label></div>
+    <a class="watch-link" href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=505s" target="_blank" rel="noopener">▶ 8:25〜12:50 を視聴</a>
+    <p>I はスマイルして「潰れたイ」。舌の根元を奥歯の内側にギューッと押し出すイメージ。in / it / if / big の音が変わる→唇の筋肉に移り、B は唇を閉じるだけでなく<b>巻き込んで</b>お腹から息をポンと出す。</p>
+    <p class="words">練習語：<b>in / it / if / big / about / trouble / job</b> など。ティッシュが動けば息が出ている。</p>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><h3><span class="dno">Day 5</span><span class="sounds">P</span> ＋ <span class="sounds">M</span>（溜めて出す）</h3>
+      <label class="uchk"><input type="checkbox" data-ukey="ph-05"><span class="umark"></span>済</label></div>
+    <a class="watch-link" href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=770s" target="_blank" rel="noopener">▶ 12:50〜16:56 を視聴</a>
+    <p>P は B と同じ口の形で音がない（無声音）。P に気を取られて表情筋を忘れないこと→M は唇を巻き込み、口を閉じたまま鼻から「ンー」。日本語の「ん」（難波・サンバの ん）と同じ音なので実はできる。<b>溜めてから出す</b>と綺麗になる（money）。</p>
+    <p class="words">練習語：<b>airplane / money / seven / from</b> など。from の最後は唇を閉じたまま終わる。</p>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><h3><span class="dno">Day 6</span><span class="sounds">W・Q・F</span>（突き出して脱力）</h3>
+      <label class="uchk"><input type="checkbox" data-ukey="ph-06"><span class="umark"></span>済</label></div>
+    <a class="watch-link" href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=1016s" target="_blank" rel="noopener">▶ 16:56〜21:03 を視聴</a>
+    <p>W は唇をウッと突き出してから<b>脱力して終わる</b>。これも溜めてから出すと綺麗（what / was）→Q は W と同じ口の形で音を速く出す（question）→F は下唇に前歯を置き、お腹からの息をどこにも寄り道させずまっすぐ出す（無声音）。</p>
+    <p class="words">練習語：<b>what / was / wine / question / quiet</b> など。question の -tion は曖昧母音で「シェン」。</p>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><h3><span class="dno">Day 7</span>F の応用 ＋ <span class="sounds">V</span>（しびれる音）</h3>
+      <label class="uchk"><input type="checkbox" data-ukey="ph-07"><span class="umark"></span>済</label></div>
+    <a class="watch-link" href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=1263s" target="_blank" rel="noopener">▶ 21:03〜24:46 を視聴</a>
+    <p>family・famous・beautiful は日本語のカタカナにつられず、アクセント以外の母音を曖昧に。beautiful の ti は「D に近い音」→V は F と同じ口の形に音をつけ、唇が<b>しびれる音</b>が出れば正解。お腹から出す。</p>
+    <p class="words">練習語：<b>family / famous / beautiful / please / every</b> など。every は「エヴリ」と2拍で。</p>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><h3><span class="dno">Day 8</span>舌の筋肉スタート ─ <span class="sounds">N</span> を制する</h3>
+      <label class="uchk"><input type="checkbox" data-ukey="ph-08"><span class="umark"></span>済</label></div>
+    <a class="watch-link" href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=1486s" target="_blank" rel="noopener">▶ 24:46〜29:00 を視聴</a>
+    <p>「N を制したら発音が圧倒的に綺麗に変わる」回。N は口を閉じる「ん」ではなく、口を開けたまま舌を上につけて鼻から音を出す（「みんな」と言うときの ん）。banana は顎を2回動かさず、お腹から曖昧母音を出して舌だけ動かす。</p>
+    <p class="words">練習語：<b>nice / nine / banana / dictionary / station</b> など。最後の N で口を閉じていないか鏡で確認。</p>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><h3><span class="dno">Day 9</span><span class="sounds">L</span> ＋ <span class="sounds">D</span>（引き上げて止める）</h3>
+      <label class="uchk"><input type="checkbox" data-ukey="ph-09"><span class="umark"></span>済</label></div>
+    <a class="watch-link" href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=1740s" target="_blank" rel="noopener">▶ 29:00〜34:04 を視聴</a>
+    <p>L には2種類ある：語頭の L はしっかり、語尾の L は<b>曖昧に</b>発音（well はどちらでもOK）。日本語のラリルレロより深くお腹から→D は L と同じ舌の位置から下に弾く。語尾の D は「引き上げて止める」（grandchild / and）。カタカナの「ドクター」につられない。</p>
+    <p class="words">練習語：<b>well / hospital / doctor / grandchild / and</b> など。and は「エン」から引き上げる。</p>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><h3><span class="dno">Day 10</span><span class="sounds">T</span> ＋ <span class="sounds">R</span>（犬のうなり）</h3>
+      <label class="uchk"><input type="checkbox" data-ukey="ph-10"><span class="umark"></span>済</label></div>
+    <a class="watch-link" href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=2044s" target="_blank" rel="noopener">▶ 34:04〜38:20 を視聴</a>
+    <p>T は D と同じ口の形の無声音。語尾なら上げて止める、文が続くなら息を吐き出す（2種類の息の使い方）→R は唇を尖らせ、舌はどこにもつけない。巻きすぎ注意。犬が怒っている「ウー」の深い音をお腹から。W の音を少し入れて<b>溜めてから出す</b>と綺麗。</p>
+    <p class="words">練習語：<b>water / basketball / birthday / read / break</b> など。舌は1回だけ動かす。</p>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><h3><span class="dno">Day 11</span><span class="sounds">J・Y・X</span></h3>
+      <label class="uchk"><input type="checkbox" data-ukey="ph-11"><span class="umark"></span>済</label></div>
+    <a class="watch-link" href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=2300s" target="_blank" rel="noopener">▶ 38:20〜42:33 を視聴</a>
+    <p>J は舌先で上あごの奥をトンと叩く。顎を少し出す感じ（jacket / jam）→Y は舌の根元を上げて息を出し続け、上あごが少しかゆくなれば正解。「イヤー」ではなく摩擦の「イィ」から入る（year と ear の違いが分かるようになる）→X は「クス」。楽勝と思っても表情筋を忘れずに。</p>
+    <p class="words">練習語：<b>jacket / jam / yes / yellow / yesterday / year / box / six / taxi / textbook</b> など。</p>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><h3><span class="dno">Day 12</span>お腹の音 ─ <span class="sounds">C・K・G・O・U</span></h3>
+      <label class="uchk"><input type="checkbox" data-ukey="ph-12"><span class="umark"></span>済</label></div>
+    <a class="watch-link" href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=2553s" target="_blank" rel="noopener">▶ 42:33〜46:56 を視聴</a>
+    <p>C と K は同じ「ク」（無声音）。GE が続くと J の音に変化（college）→G は同じ口の形の有声音。お腹が動いているか確認（good / go）→O はお腹からまっすぐ出す「ア」寄りの音（octopus は母音を入れずに）→U は「あっ、忘れ物した！」の短い「ア」（umbrella / bug）。</p>
+    <p class="words">練習語：<b>catch / college / kick / talk / good / go / octopus / onion / umbrella / bug</b> など。</p>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><h3><span class="dno">Day 13</span><span class="sounds">H・Z・S</span>（かめはめ波と溜めるS）</h3>
+      <label class="uchk"><input type="checkbox" data-ukey="ph-13"><span class="umark"></span>済</label></div>
+    <a class="watch-link" href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=2816s" target="_blank" rel="noopener">▶ 46:56〜50:56 を視聴</a>
+    <p>H は息をかめはめ波のようにたくさん出す無声音（happy / have / has）→Z は歯と歯を合わせた間から濁った摩擦音。唇は脱力（力を入れると日本語の「ズ」になる）。jazz / prize は「吐きながら」→S は Z の無声版。溜めてから出すと綺麗。前が有声音の s は Z の音に変わる（dishes / is）。</p>
+    <p class="words">練習語：<b>happy / have / has / jazz / prize / say / socks / dishes / is</b> など。</p>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><h3><span class="dno">Day 14</span>まとめ＋苦手音の総復習</h3>
+      <label class="uchk"><input type="checkbox" data-ukey="ph-14"><span class="umark"></span>済</label></div>
+    <a class="watch-link" href="https://www.youtube.com/watch?v=ycpq5hKeSF0&amp;t=3056s" target="_blank" rel="noopener">▶ 50:56〜52:16 を視聴</a>
+    <p>まとめ：発音は知識ではなくスキル。ジムと同じで、真剣にやると表情筋もお腹も痛くなる（それが正解）。自転車のように<b>考えなくてもできる「自動化」まで</b>鏡を見て意識練習→視聴後、Day 2〜13 で一番苦手だった音を2つ選んで、その区間だけもう一度観てマネる。</p>
+    <p class="words">仕上げ：13個のチェックが全部埋まったら1周完了。下の「次の1本」へ。</p>
+  </div>
+</div>
+
+<!-- 1周後 -->
+<div class="step-section">
+  <h2>🚀 1周終わったら ─ 次の1本</h2>
+  <div class="ritual">
+    単語の音が出せるようになったら、次は<b>音のつなげ方（リンキング）</b>。<br>
+    ▶ <a href="https://youtu.be/oH6IA8gLEms" target="_blank" rel="noopener">リンキング編 [#281]（youtu.be/oH6IA8gLEms）</a><br>
+    ※動画内でも「この基本の形を身につける前にリンキング・リダクションを練習すると、カタカナっぽいリンキングになってしまう」と言っている。だから順番はフォニックス→リンキング。
+  </div>
+</div>
+
+<div class="watch-summary">
+  <span id="watch-text">🎧 <strong>0 / 13</strong> 回</span>
+</div>
+
+<footer>📘 英語40日プログラム｜フォニックス13回メニュー（『新！大人のフォニックス』56分を Day 2〜14 に分割）｜チェックはこの端末のブラウザに保存されます</footer>
+
+<script>
+(function () {
+  var PREFIX = 'eng40-ph:';
+  var chips = Array.prototype.slice.call(document.querySelectorAll('label.uchk input[data-ukey]'));
+  var textEl = document.getElementById('watch-text');
+  function update() {
+    var n = 0;
+    chips.forEach(function (cb) { if (cb.checked) n++; });
+    textEl.innerHTML = '🎧 <strong>' + n + ' / 13</strong> 回';
+  }
+  chips.forEach(function (cb) {
+    var key = PREFIX + cb.getAttribute('data-ukey');
+    var lbl = cb.closest('label');
+    if (localStorage.getItem(key) === '1') { cb.checked = true; lbl.classList.add('done'); }
+    cb.addEventListener('change', function () {
+      if (cb.checked) { localStorage.setItem(key, '1'); lbl.classList.add('done'); }
+      else { localStorage.removeItem(key); lbl.classList.remove('done'); }
+      update();
+    });
+  });
+  update();
+})();
+</script>
+<script src="./nav.js"></script>
+</body>
+</html>

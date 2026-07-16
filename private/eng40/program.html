@@ -20,6 +20,15 @@ h1,h2,h3 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; }
 h1 { font-size:22px; margin:18px 0 4px; }
 .tagline { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:20px; }
 a { color:var(--gold); text-decoration:none; }
+/* 開始日入力 */
+.start-date-box { display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin:0 0 22px; padding:12px 16px;
+  background:var(--card-bg); border:1px solid var(--gold); border-radius:10px; }
+.start-date-box label { font-family:var(--mincho); font-size:13px; font-weight:600; letter-spacing:0.04em; }
+.start-date-box input[type="date"] { font-family:var(--mono); font-size:13px; color:var(--fg); background:var(--sub-bg);
+  border:1px solid var(--line); border-radius:8px; padding:6px 10px; color-scheme:light dark; }
+.start-date-box .start-hint { font-family:var(--mono); font-size:10px; color:var(--muted); }
+.dday { display:block; font-family:var(--mono); font-size:10px; font-weight:400; color:var(--muted); margin-top:1px; }
+.dday.sun { color:var(--sage); }
 /* フェーズセクション */
 .step-section { margin:26px 0; padding:18px 22px; background:var(--sub-bg); border:1px solid var(--gold); border-radius:12px; }
 .step-section h2 { font-size:16px; margin:0 0 4px; }
@@ -58,6 +67,12 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 
 <h1>✅ 40日デイリーチェック</h1>
 <div class="tagline">やった日はチェック ─ 月〜土で進む・日曜は調整日 ─ 崩れた日は「15分デー」でOK（ゼロの日だけ作らない）</div>
+
+<div class="start-date-box">
+  <label for="start-date">📅 開始日</label>
+  <input type="date" id="start-date">
+  <span class="start-hint">入れると各Dayに実際の日付が出ます（この端末に保存）</span>
+</div>
 
 <!-- ===== PHASE 1 ===== -->
 <div class="step-section">
@@ -162,6 +177,38 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
     update();
   });
   update();
+})();
+</script>
+<script>
+(function () {
+  var KEY = 'eng40-start';
+  var input = document.getElementById('start-date');
+  var dnums = Array.prototype.slice.call(document.querySelectorAll('ul.day-list li .dnum'));
+  var WD = ['日', '月', '火', '水', '木', '金', '土'];
+  function render(val) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(val || '');
+    dnums.forEach(function (el, i) {
+      var old = el.querySelector('.dday');
+      if (old) old.parentNode.removeChild(old);
+      if (!m) return;
+      // ローカル日付で計算（"YYYY-MM-DD"をnew Date()に直接渡すとUTC解釈になるため自前でsplit）
+      var d = new Date(parseInt(m[1], 10), parseInt(m[2], 10) - 1, parseInt(m[3], 10) + i);
+      var s = document.createElement('span');
+      s.className = 'dday' + (d.getDay() === 0 ? ' sun' : '');
+      s.textContent = (d.getMonth() + 1) + '/' + d.getDate() + '(' + WD[d.getDay()] + ')';
+      el.appendChild(s);
+    });
+  }
+  function onInput() {
+    if (input.value) { localStorage.setItem(KEY, input.value); }
+    else { localStorage.removeItem(KEY); }
+    render(input.value);
+  }
+  var saved = localStorage.getItem(KEY);
+  if (saved) { input.value = saved; }
+  render(input.value);
+  input.addEventListener('change', onInput);
+  input.addEventListener('input', onInput);
 })();
 </script>
 <script src="./nav.js"></script>
