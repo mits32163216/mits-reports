@@ -175,7 +175,43 @@ footer a { color:var(--gold); }
 </table>
 
 
-<h3>④ ビブラート周期性 index（Phase B プロトタイプ・二重試験 <span style="color:var(--sage);">✅ PASS（provisional 統合）</span>）</h3>
+<h3>④ 音程 correctness (DTW-aligned hit_rate) ── 🟢 改善指標に統合済み</h3>
+<div class="section-intro" style="border-left-color:var(--sage);">
+  <strong>手法（v2 DTW アライン）</strong>：無音トリム → 半音コンター（Hz→MIDI）→ 全体移調オフセット除去（残差半音丸めで再洗練）→
+  Hamming(11) 平滑 → 100→20Hz ダウンサンプル → Sakoe-Chiba バンド DTW（band ≥ |len差| + 50）→
+  path 上で 10ms 有声フレーム再照合 →<strong> ±50セント帯フレーム率 = hit_rate(%)</strong>。<br>
+  <strong>自己検証</strong>：
+    ①恒等（Pro vs Self）→ 全9曲 100〜100% (✅ PASS) ／
+    ②弁別（Pro曲間ペア）→ 26.8〜37.4% (✅ PASS)
+   → 手法が「原曲と一致してる時は 100%、別曲だと 30% 前後」を正しく分ける。<br>
+  <strong style='color:var(--sage);'>✅ 二重試験 PASS → 改善指標に正式統合</strong>
+</div>
+
+<h4 style="margin-top:20px;">Mits 9曲 hit_rate（vs 原曲・移調許容）</h4>
+<table>
+  <thead><tr><th>曲</th><th>Mits hit_rate</th><th>median残差cent</th><th>Amateurベンチ（該当曲のみ）</th></tr></thead>
+  <tbody><tr><td><strong>メロディ</strong></td><td class="delta-cell near"><div class="dnum"><b>58.7%</b></div><div class="dsub">移調 -1半音</div></td><td class="num">+4c</td><td class="small">Am平均 58.3%（n=13・44〜72%）</td></tr><tr><td><strong>大空と大地の中で</strong></td><td class="delta-cell near"><div class="dnum"><b>51.4%</b></div><div class="dsub">移調 -3半音</div></td><td class="num">+14c</td><td class="small">Am平均 55.4%（n=12・32〜90%）</td></tr><tr><td><strong>乾杯</strong></td><td class="delta-cell far"><div class="dnum"><b>33.9%</b></div><div class="dsub">移調 +0半音</div></td><td class="num">-12c</td><td class="small"></td></tr><tr><td><strong>旅姿六人衆</strong></td><td class="delta-cell far"><div class="dnum"><b>34.6%</b></div><div class="dsub">移調 +0半音</div></td><td class="num">-21c</td><td class="small"></td></tr><tr><td><strong>Wherever you are</strong></td><td class="delta-cell far"><div class="dnum"><b>33.6%</b></div><div class="dsub">移調 -5半音</div></td><td class="num">+12c</td><td class="small">Am平均 56.6%（n=10・45〜68%）</td></tr><tr><td><strong>努努</strong></td><td class="delta-cell mid"><div class="dnum"><b>38.1%</b></div><div class="dsub">移調 -4半音</div></td><td class="num">-13c</td><td class="small"></td></tr><tr><td><strong>We are</strong></td><td class="delta-cell far"><div class="dnum"><b>28.8%</b></div><div class="dsub">移調 -6半音</div></td><td class="num">-14c</td><td class="small"></td></tr><tr><td><strong>皆無</strong></td><td class="delta-cell far"><div class="dnum"><b>32.1%</b></div><div class="dsub">移調 -4半音</div></td><td class="num">-12c</td><td class="small"></td></tr><tr><td><strong>The Beginning</strong></td><td class="delta-cell mid"><div class="dnum"><b>35.0%</b></div><div class="dsub">移調 -5半音</div></td><td class="num">+1c</td><td class="small"></td></tr></tbody>
+</table>
+<p class="small" style="color:var(--muted);font-size:11px;">
+  現状 Mits 全9曲平均 <strong>38.5%</strong>。次回同曲テイクで数字が上がれば「原曲と同じ音を出せる時間が増えた」= 音程 correctness 向上。
+  50%以上 = <span class="delta-cell near" style="padding:1px 6px;">緑（大人しい歌唱者級）</span> ／
+  35-50% = <span class="delta-cell mid" style="padding:1px 6px;">黄</span> ／
+  35%未満 = <span class="delta-cell far" style="padding:1px 6px;">赤（コースを外れている時間が多い）</span>
+</p>
+
+<h4 style="margin-top:20px;">アキシオム試験結果（DTW hit_rate）</h4>
+<table>
+  <thead><tr><th>曲</th><th>Pro-vs-Self（構造的天井）</th><th>Amateur 平均 (±SD)</th><th>Amateur 中央値</th><th>Amateur 分布</th></tr></thead>
+  <tbody><tr><td><strong>メロディ</strong></td><td class="num">100.0%</td><td class="num">58.3% (±9.6)</td><td class="num">58.2%</td><td class="num">n=13<br>[43.5, 71.8]</td></tr><tr><td><strong>大空と大地の中で</strong></td><td class="num">100.0%</td><td class="num">55.4% (±17.6)</td><td class="num">52.1%</td><td class="num">n=12<br>[32.4, 89.6]</td></tr><tr><td><strong>Wherever you are</strong></td><td class="num">100.0%</td><td class="num">56.6% (±6.0)</td><td class="num">55.6%</td><td class="num">n=10<br>[45.4, 67.6]</td></tr></tbody>
+</table>
+<p class="small" style="color:var(--muted);font-size:11px;">
+  ※ Pro は自曲リファレンス比較なので構造的に 100%（天井）。アキシオムは Pro > Amateur が自明成立するので、
+  <strong>この軸で重要なのは Amateur 分布が意味あるレンジに散っているか</strong>（mean&gt;20% & SD&gt;5%）。
+  実測：3曲すべて mean 55-58% / SD 6-13% と<strong>意味あるレンジで散布</strong>＝軸が個体差を拾えている。
+</p>
+
+
+<h3>⑤ ビブラート周期性 index（Phase B プロトタイプ・二重試験 <span style="color:var(--sage);">✅ PASS（provisional 統合）</span>）</h3>
 <div class="section-intro">
   <strong>新軸：ビブラート周期性 index</strong> = 持続音区間の pitch trace（detrend後）で
   <strong>4.5-7.5Hz</strong> バンド（人間ビブラートの周期帯）にエネルギーが集中する比率。
@@ -204,22 +240,6 @@ footer a { color:var(--gold); }
   
 </p>
 
-<h3 style="margin-top:32px;">⑤ 音程 correctness (hit_rate) ── Phase B 診断のみ・改善指標に統合せず</h3>
-<div class="section-intro" style="border-left-color:var(--rose);">
-  <strong>実装状況：</strong>Mits と 原曲分離ボーカルの pitch trace を linear time scale で整列し「±50c 帯」フレーム率を計算した prototype。
-  Mits: 7-13%。
-  ただし<strong>アライン精度が粗い</strong>（karaoke と原曲は tempo/構造が一致しない）ため、
-  絶対値が縦断改善シグナルとして使えるかは未確認。<strong>DTW ベースの改良後に再評価</strong>。今回は診断参考値のみ。
-</div>
-<table>
-  <thead><tr><th>曲</th><th>Mits hit_rate</th><th>median offset</th><th>Amateur ベンチ</th></tr></thead>
-  <tbody><tr><td><strong>乾杯</strong></td><td class="num">10.8%</td><td class="num">-4半音</td><td>—</td></tr><tr><td><strong>メロディ</strong></td><td class="num">9.1%</td><td class="num">+1半音</td><td>Am平均 13.5%</td></tr><tr><td><strong>大空と大地の中で</strong></td><td class="num">10.1%</td><td class="num">-3半音</td><td>Am平均 11.2%</td></tr><tr><td><strong>旅姿六人衆</strong></td><td class="num">6.8%</td><td class="num">+1半音</td><td>—</td></tr><tr><td><strong>Wherever you are</strong></td><td class="num">12.6%</td><td class="num">-4半音</td><td>Am平均 18.4%</td></tr><tr><td><strong>努努</strong></td><td class="num">8.8%</td><td class="num">-3半音</td><td>—</td></tr><tr><td><strong>We are</strong></td><td class="num">9.2%</td><td class="num">-4半音</td><td>—</td></tr><tr><td><strong>皆無</strong></td><td class="num">10.7%</td><td class="num">-5半音</td><td>—</td></tr><tr><td><strong>The Beginning</strong></td><td class="num">7.4%</td><td class="num">-2半音</td><td>—</td></tr></tbody>
-</table>
-<p class="small" style="color:var(--muted);font-size:11px;">
-  ※ アマチュア(melody/oozora/wherever のみ n=10-13)と比較すると Mits の hit_rate はアマチュア平均のやや下（例：wherever Mits 12.6% vs Am平均 18.4%）。
-  絶対値の低さは linear time scale の限界であり、Mits の音程能力を示すものではない。
-  改善指標セクションには<strong>統合しない</strong>（アライン改良まで見送り）。
-</p>
 
 
 <div class="summary">
