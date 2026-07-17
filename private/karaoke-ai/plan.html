@@ -237,6 +237,64 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
 }
 .zero-banner strong { color: var(--sage); }
 
+/* 成熟段階分類パネル（9曲比較テーブル用）*/
+.stage-panel {
+  margin: 12px 0 8px;
+  padding: 12px 16px;
+  border: 1px dashed var(--gold);
+  border-radius: 8px;
+  background: rgba(212,168,91,0.05);
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+  font-family: var(--sans); font-size: 13px;
+}
+.stage-panel .stage-title { font-family: var(--mincho); font-weight: 600; color: var(--gold); margin-right: 4px; }
+.stage-panel .stage-legend { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.stage-btn {
+  padding: 5px 12px;
+  font-family: var(--mono); font-size: 12px;
+  background: var(--card-bg); color: var(--fg);
+  border: 1px solid var(--gold); border-radius: 5px;
+  cursor: pointer; transition: all 0.15s;
+}
+.stage-btn:hover { background: var(--highlight); }
+.stage-btn.active { background: var(--gold); color: #fff; }
+.stage-count-badge {
+  padding: 3px 10px;
+  font-family: var(--mono); font-size: 12px;
+  background: var(--sage); color: #fff;
+  border-radius: 999px;
+}
+.stage-badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.03em;
+  vertical-align: middle;
+}
+.stage-badge.practice { background: var(--gold); color: #fff; }
+.stage-badge.memorizing { background: var(--muted); color: #fff; opacity: 0.85; }
+.compare th.song-th {
+  vertical-align: top;
+  padding-top: 6px;
+}
+.compare th.song-th .stage-check-row {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--mono); font-size: 10px;
+  color: var(--muted);
+}
+.compare th.song-th .stage-check {
+  vertical-align: middle;
+  margin: 0 3px 0 0;
+  accent-color: var(--sage);
+  cursor: pointer;
+}
+.compare th.song-th.excluded { opacity: 0.55; }
+.compare td.excluded { opacity: 0.35; }
+.compare th.avg-th { background: var(--highlight); border-left: 2px solid var(--gold); }
+.compare td.avg-td { background: rgba(212,168,91,0.08); border-left: 2px solid var(--gold); font-weight: 700; }
+
 /* prin */
 @media print {
   body { padding: 20px; max-width: none; }
@@ -289,36 +347,48 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
 
 <h3>9曲比較（7/17 クリーン全実測）</h3>
 
+<div class="stage-panel" id="stage-panel">
+  <span class="stage-title">🎼 成熟段階分類</span>
+  <span class="stage-legend">
+    <span class="stage-badge practice">🎯 練習曲</span>=覚えていて練習段階（準備期から歌っている6曲）
+    <span class="stage-badge memorizing">📝 記憶中</span>=歌詞・メロディをまだ覚えていない初挑戦（7/17新曲3本）
+  </span>
+  <button type="button" class="stage-btn" data-action="practice-only">練習曲のみ（記憶中OFF）</button>
+  <button type="button" class="stage-btn" data-action="all-on">全曲ON</button>
+  <span class="stage-count-badge" id="stage-count">— / 9 曲</span>
+  <span style="flex-basis:100%;font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:4px;">※ 各曲のチェックOFF＝平均から除外（数値は表示）。デフォルト＝練習曲6曲ON・記憶中3曲OFF（記憶中は歌唱以外の要因が混入するため既定で平均を汚さない）。<strong>設定はブラウザに保存</strong>。</span>
+</div>
+
 <div class="compare-wrap">
 <table class="compare">
 <thead><tr>
   <th>軸</th><th>指標</th>
-  <th>メロディ<br><small>玉置浩二</small></th>
-  <th>大空と大地<br><small>松山千春</small></th>
-  <th>乾杯<br><small>長渕剛</small></th>
-  <th>Wherever<br><small>ONE OK ROCK</small></th>
-  <th>The Beginning<br><small>ONE OK ROCK</small></th>
-  <th>We are<br><small>ONE OK ROCK</small></th>
-  <th>皆無<br><small>ONE OK ROCK</small></th>
-  <th>旅姿六人衆<br><small>サザン</small></th>
-  <th>努努<br><small>ONE OK ROCK</small></th>
-  <th>9曲平均</th>
+  <th class="song-th" data-slug="melody" data-stage="practice"><span class="stage-badge practice">🎯練習</span><br>メロディ<br><small>玉置浩二</small><span class="stage-check-row"><label><input type="checkbox" class="stage-check" data-slug="melody"> 平均に算入</label></span></th>
+  <th class="song-th" data-slug="oozora" data-stage="practice"><span class="stage-badge practice">🎯練習</span><br>大空と大地<br><small>松山千春</small><span class="stage-check-row"><label><input type="checkbox" class="stage-check" data-slug="oozora"> 平均に算入</label></span></th>
+  <th class="song-th" data-slug="kanpai" data-stage="practice"><span class="stage-badge practice">🎯練習</span><br>乾杯<br><small>長渕剛</small><span class="stage-check-row"><label><input type="checkbox" class="stage-check" data-slug="kanpai"> 平均に算入</label></span></th>
+  <th class="song-th" data-slug="wherever" data-stage="practice"><span class="stage-badge practice">🎯練習</span><br>Wherever<br><small>ONE OK ROCK</small><span class="stage-check-row"><label><input type="checkbox" class="stage-check" data-slug="wherever"> 平均に算入</label></span></th>
+  <th class="song-th" data-slug="thebeginning" data-stage="memorizing"><span class="stage-badge memorizing">📝記憶中</span><br>The Beginning<br><small>ONE OK ROCK</small><span class="stage-check-row"><label><input type="checkbox" class="stage-check" data-slug="thebeginning"> 平均に算入</label></span></th>
+  <th class="song-th" data-slug="weare" data-stage="memorizing"><span class="stage-badge memorizing">📝記憶中</span><br>We are<br><small>ONE OK ROCK</small><span class="stage-check-row"><label><input type="checkbox" class="stage-check" data-slug="weare"> 平均に算入</label></span></th>
+  <th class="song-th" data-slug="kaimu" data-stage="memorizing"><span class="stage-badge memorizing">📝記憶中</span><br>皆無<br><small>ONE OK ROCK</small><span class="stage-check-row"><label><input type="checkbox" class="stage-check" data-slug="kaimu"> 平均に算入</label></span></th>
+  <th class="song-th" data-slug="tabisugata" data-stage="practice"><span class="stage-badge practice">🎯練習</span><br>旅姿六人衆<br><small>サザン</small><span class="stage-check-row"><label><input type="checkbox" class="stage-check" data-slug="tabisugata"> 平均に算入</label></span></th>
+  <th class="song-th" data-slug="yumeyume" data-stage="practice"><span class="stage-badge practice">🎯練習</span><br>努努<br><small>ONE OK ROCK</small><span class="stage-check-row"><label><input type="checkbox" class="stage-check" data-slug="yumeyume"> 平均に算入</label></span></th>
+  <th class="avg-th" id="avg-col-header">平均</th>
 </tr></thead>
 <tbody>
-<tr><td>1</td><td>安定判定</td><td>不安定</td><td>やや不安定</td><td>やや不安定</td><td>やや不安定</td><td>不安定</td><td>不安定</td><td>不安定</td><td>やや不安定</td><td>不安定</td><td>—</td></tr>
-<tr><td>1</td><td>Tony cent 揺らぎ</td><td>52.1</td><td class="best">39.0 ← 最良</td><td>41.4</td><td>39.9</td><td>45.5</td><td>47.1</td><td>50.6</td><td>43.5</td><td>42.8</td><td class="worst">44.7 ← 弱点①</td></tr>
-<tr><td>1</td><td>短音率</td><td>0.453</td><td>0.488</td><td class="best">0.424 ← 最良</td><td>0.526</td><td>0.734</td><td>0.577</td><td>0.811</td><td>0.500</td><td>0.798</td><td class="worst">0.59 ← 弱点②</td></tr>
-<tr><td>1</td><td>低音ノイズ</td><td class="best">0</td><td class="best">0</td><td class="best">0</td><td class="best">0</td><td class="best">0</td><td class="best">0</td><td class="best">0</td><td class="best">0</td><td class="best">0</td><td class="best">全曲 0 ✨</td></tr>
-<tr><td>2</td><td>音域（低〜高）</td><td>E3-F4</td><td>E3-F#4</td><td>C3-D4</td><td>F#3-E4</td><td>D#3-D#4</td><td>C#3-F4</td><td class="best">F3-E5 ← 上限</td><td>D3-E4</td><td>G3-E4</td><td>C3-E5</td></tr>
-<tr><td>3</td><td>ロングトーン数</td><td class="best">28</td><td>16</td><td>15</td><td>26</td><td>8</td><td>21</td><td>1</td><td>15</td><td class="worst">0 ← 限界</td><td>14.4</td></tr>
-<tr><td>6</td><td>抑揚判定</td><td class="best">豊か</td><td class="best">豊か</td><td class="best">豊か</td><td class="best">豊か</td><td class="best">豊か</td><td class="best">豊か</td><td class="best">豊か</td><td class="best">豊か</td><td>普通</td><td>8/9 豊か</td></tr>
-<tr><td>7</td><td>リズム判定</td><td>不安定</td><td class="best">やや安定</td><td>不安定</td><td>不安定</td><td>不安定</td><td>不安定</td><td>不安定</td><td>不安定</td><td>不安定</td><td>—</td></tr>
-<tr><td>7</td><td>BPM</td><td>122.0</td><td>128.1</td><td>121.9</td><td>133.7</td><td>141.9</td><td>125.7</td><td>126.9</td><td>132.3</td><td>122.0</td><td>128.3</td></tr>
-<tr><td>8</td><td>HNR (声の澄み)</td><td>16.28</td><td>16.68</td><td>16.14</td><td>16.34</td><td>13.38</td><td>16.36</td><td>15.68</td><td class="best">17.26</td><td class="worst">9.72 ← 限界</td><td>15.32</td></tr>
-<tr><td>8</td><td>Jitter</td><td>0.789</td><td>0.751</td><td>0.801</td><td>0.827</td><td>1.335</td><td>1.016</td><td>1.154</td><td class="best">0.783</td><td class="worst">2.051</td><td>1.06</td></tr>
-<tr><td>8</td><td>Shimmer</td><td class="best">5.586</td><td>6.342</td><td>6.263</td><td>6.317</td><td>8.601</td><td>6.060</td><td>6.237</td><td>5.440</td><td class="worst">16.02</td><td>7.43</td></tr>
-<tr><td>—</td><td>深み αRatio</td><td class="best">-11.82 ← 玉置級</td><td>-9.10</td><td>-9.53</td><td>-7.91</td><td>-9.20</td><td>-8.93</td><td>-9.80</td><td>-10.62</td><td>-8.22</td><td>-9.46</td></tr>
-<tr><td>—</td><td>CREPE 半音偏差</td><td>23.16</td><td>23.47</td><td>23.33</td><td class="best">22.12</td><td>23.35</td><td>23.41</td><td>23.60</td><td>23.06</td><td>23.94</td><td>23.27</td></tr>
+<tr><td>1</td><td>安定判定</td><td data-slug="melody">不安定</td><td data-slug="oozora">やや不安定</td><td data-slug="kanpai">やや不安定</td><td data-slug="wherever">やや不安定</td><td data-slug="thebeginning">不安定</td><td data-slug="weare">不安定</td><td data-slug="kaimu">不安定</td><td data-slug="tabisugata">やや不安定</td><td data-slug="yumeyume">不安定</td><td class="avg-td" data-avg>—</td></tr>
+<tr data-numeric data-decimals="1"><td>1</td><td>Tony cent 揺らぎ</td><td data-slug="melody">52.1</td><td data-slug="oozora" class="best">39.0 ← 最良</td><td data-slug="kanpai">41.4</td><td data-slug="wherever">39.9</td><td data-slug="thebeginning">45.5</td><td data-slug="weare">47.1</td><td data-slug="kaimu">50.6</td><td data-slug="tabisugata">43.5</td><td data-slug="yumeyume">42.8</td><td class="avg-td" data-avg>—</td></tr>
+<tr data-numeric data-decimals="3"><td>1</td><td>短音率</td><td data-slug="melody">0.453</td><td data-slug="oozora">0.488</td><td data-slug="kanpai" class="best">0.424 ← 最良</td><td data-slug="wherever">0.526</td><td data-slug="thebeginning">0.734</td><td data-slug="weare">0.577</td><td data-slug="kaimu">0.811</td><td data-slug="tabisugata">0.500</td><td data-slug="yumeyume">0.798</td><td class="avg-td" data-avg>—</td></tr>
+<tr data-numeric data-decimals="1"><td>1</td><td>低音ノイズ</td><td data-slug="melody" class="best">0</td><td data-slug="oozora" class="best">0</td><td data-slug="kanpai" class="best">0</td><td data-slug="wherever" class="best">0</td><td data-slug="thebeginning" class="best">0</td><td data-slug="weare" class="best">0</td><td data-slug="kaimu" class="best">0</td><td data-slug="tabisugata" class="best">0</td><td data-slug="yumeyume" class="best">0</td><td class="avg-td" data-avg>—</td></tr>
+<tr><td>2</td><td>音域（低〜高）</td><td data-slug="melody">E3-F4</td><td data-slug="oozora">E3-F#4</td><td data-slug="kanpai">C3-D4</td><td data-slug="wherever">F#3-E4</td><td data-slug="thebeginning">D#3-D#4</td><td data-slug="weare">C#3-F4</td><td data-slug="kaimu" class="best">F3-E5 ← 上限</td><td data-slug="tabisugata">D3-E4</td><td data-slug="yumeyume">G3-E4</td><td class="avg-td" data-avg>—</td></tr>
+<tr data-numeric data-decimals="1"><td>3</td><td>ロングトーン数</td><td data-slug="melody" class="best">28</td><td data-slug="oozora">16</td><td data-slug="kanpai">15</td><td data-slug="wherever">26</td><td data-slug="thebeginning">8</td><td data-slug="weare">21</td><td data-slug="kaimu">1</td><td data-slug="tabisugata">15</td><td data-slug="yumeyume" class="worst">0 ← 限界</td><td class="avg-td" data-avg>—</td></tr>
+<tr><td>6</td><td>抑揚判定</td><td data-slug="melody" class="best">豊か</td><td data-slug="oozora" class="best">豊か</td><td data-slug="kanpai" class="best">豊か</td><td data-slug="wherever" class="best">豊か</td><td data-slug="thebeginning" class="best">豊か</td><td data-slug="weare" class="best">豊か</td><td data-slug="kaimu" class="best">豊か</td><td data-slug="tabisugata" class="best">豊か</td><td data-slug="yumeyume">普通</td><td class="avg-td" data-avg>—</td></tr>
+<tr><td>7</td><td>リズム判定</td><td data-slug="melody">不安定</td><td data-slug="oozora" class="best">やや安定</td><td data-slug="kanpai">不安定</td><td data-slug="wherever">不安定</td><td data-slug="thebeginning">不安定</td><td data-slug="weare">不安定</td><td data-slug="kaimu">不安定</td><td data-slug="tabisugata">不安定</td><td data-slug="yumeyume">不安定</td><td class="avg-td" data-avg>—</td></tr>
+<tr data-numeric data-decimals="1"><td>7</td><td>BPM</td><td data-slug="melody">122.0</td><td data-slug="oozora">128.1</td><td data-slug="kanpai">121.9</td><td data-slug="wherever">133.7</td><td data-slug="thebeginning">141.9</td><td data-slug="weare">125.7</td><td data-slug="kaimu">126.9</td><td data-slug="tabisugata">132.3</td><td data-slug="yumeyume">122.0</td><td class="avg-td" data-avg>—</td></tr>
+<tr data-numeric data-decimals="2"><td>8</td><td>HNR (声の澄み)</td><td data-slug="melody">16.28</td><td data-slug="oozora">16.68</td><td data-slug="kanpai">16.14</td><td data-slug="wherever">16.34</td><td data-slug="thebeginning">13.38</td><td data-slug="weare">16.36</td><td data-slug="kaimu">15.68</td><td data-slug="tabisugata" class="best">17.26</td><td data-slug="yumeyume" class="worst">9.72 ← 限界</td><td class="avg-td" data-avg>—</td></tr>
+<tr data-numeric data-decimals="2"><td>8</td><td>Jitter</td><td data-slug="melody">0.789</td><td data-slug="oozora">0.751</td><td data-slug="kanpai">0.801</td><td data-slug="wherever">0.827</td><td data-slug="thebeginning">1.335</td><td data-slug="weare">1.016</td><td data-slug="kaimu">1.154</td><td data-slug="tabisugata" class="best">0.783</td><td data-slug="yumeyume" class="worst">2.051</td><td class="avg-td" data-avg>—</td></tr>
+<tr data-numeric data-decimals="2"><td>8</td><td>Shimmer</td><td data-slug="melody" class="best">5.586</td><td data-slug="oozora">6.342</td><td data-slug="kanpai">6.263</td><td data-slug="wherever">6.317</td><td data-slug="thebeginning">8.601</td><td data-slug="weare">6.060</td><td data-slug="kaimu">6.237</td><td data-slug="tabisugata">5.440</td><td data-slug="yumeyume" class="worst">16.02</td><td class="avg-td" data-avg>—</td></tr>
+<tr data-numeric data-decimals="2"><td>—</td><td>深み αRatio</td><td data-slug="melody" class="best">-11.82 ← 玉置級</td><td data-slug="oozora">-9.10</td><td data-slug="kanpai">-9.53</td><td data-slug="wherever">-7.91</td><td data-slug="thebeginning">-9.20</td><td data-slug="weare">-8.93</td><td data-slug="kaimu">-9.80</td><td data-slug="tabisugata">-10.62</td><td data-slug="yumeyume">-8.22</td><td class="avg-td" data-avg>—</td></tr>
+<tr data-numeric data-decimals="2"><td>—</td><td>CREPE 半音偏差</td><td data-slug="melody">23.16</td><td data-slug="oozora">23.47</td><td data-slug="kanpai">23.33</td><td data-slug="wherever" class="best">22.12</td><td data-slug="thebeginning">23.35</td><td data-slug="weare">23.41</td><td data-slug="kaimu">23.60</td><td data-slug="tabisugata">23.06</td><td data-slug="yumeyume">23.94</td><td class="avg-td" data-avg>—</td></tr>
 </tbody></table>
 </div>
 <p style="font-family:var(--mono);font-size:11px;color:var(--muted);">※ 数値の正本は <a href="./measure.html">実測ダッシュボード</a>（Tony 軸 9本＋深み＋CREPE）と <a href="./profile.html">声質スコアカード</a>（原曲アーティスト実測基準の偏差値）。本表はカリキュラム設計用の抜粋。</p>
@@ -782,6 +852,163 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
   <div>元データ: 7/17 クリーン録音9曲（demucs 分離＋Praat＋openSMILE＋torchcrepe＋pypYIN）</div>
   <div>数値の正本: <a href="./measure.html">実測ダッシュ</a> ／ <a href="./profile.html">声質スコアカード</a></div>
 </div>
+
+<script>
+// ============================================================
+// 9曲比較テーブル：成熟段階分類＋ON/OFFチェック＋平均再計算
+// ============================================================
+(function stageFilterInit(){
+  var SONGS = [
+    { slug:'melody', stage:'practice', label:'メロディ' },
+    { slug:'oozora', stage:'practice', label:'大空と大地' },
+    { slug:'kanpai', stage:'practice', label:'乾杯' },
+    { slug:'wherever', stage:'practice', label:'Wherever' },
+    { slug:'thebeginning', stage:'memorizing', label:'The Beginning' },
+    { slug:'weare', stage:'memorizing', label:'We are' },
+    { slug:'kaimu', stage:'memorizing', label:'皆無' },
+    { slug:'tabisugata', stage:'practice', label:'旅姿六人衆' },
+    { slug:'yumeyume', stage:'practice', label:'努努' }
+  ];
+  var LS_PREFIX = 'karaoke-stage-include:';
+  var RESET_FLAG = 'karaoke-stage-reset:20260717';
+
+  // ---- 自己リセット（努努事故予防・measure.html build.js の resetStaleVisibility と同型）
+  // ハード再読み込みでは localStorage が消えないため、旧 slug 状態が残ると
+  // 曲が永久に平均から消える／永久にONで戻せない事故が起きる。
+  // 版フラグ未セット時に1度だけ全 LS_PREFIX* を消してデフォルト（練習曲6曲ON）に戻す。
+  (function resetStaleStage(){
+    try {
+      if (localStorage.getItem(RESET_FLAG)) return;
+      var toRemove = [];
+      for (var i=0; i<localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (k && k.indexOf(LS_PREFIX) === 0) toRemove.push(k);
+      }
+      toRemove.forEach(function(k){ localStorage.removeItem(k); });
+      localStorage.setItem(RESET_FLAG, '1');
+    } catch(e) { /* localStorage 不可環境は無視 */ }
+  })();
+
+  function isIncluded(slug){
+    try {
+      var v = localStorage.getItem(LS_PREFIX + slug);
+      if (v === '1') return true;
+      if (v === '0') return false;
+    } catch(e) {}
+    // デフォルト：練習曲=ON, 記憶中=OFF
+    var s = SONGS.filter(function(x){ return x.slug === slug; })[0];
+    return s && s.stage === 'practice';
+  }
+  function setIncluded(slug, on){
+    try { localStorage.setItem(LS_PREFIX + slug, on ? '1' : '0'); } catch(e) {}
+  }
+
+  function parseFirstNumber(txt){
+    if (txt == null) return null;
+    var m = String(txt).match(/-?\d+\.?\d*/);
+    if (!m) return null;
+    var n = parseFloat(m[0]);
+    return isNaN(n) ? null : n;
+  }
+
+  function recalc(){
+    var activeSlugs = SONGS.filter(function(s){ return isIncluded(s.slug); }).map(function(s){ return s.slug; });
+    var activeSet = {};
+    activeSlugs.forEach(function(sl){ activeSet[sl] = true; });
+
+    // 各行の平均再計算
+    var rows = document.querySelectorAll('table.compare tbody tr');
+    rows.forEach(function(tr){
+      var numeric = tr.hasAttribute('data-numeric');
+      var avgTd = tr.querySelector('td[data-avg]');
+      if (!avgTd) return;
+
+      // データセル（data-slug付き）に excluded クラスを付与
+      var cells = tr.querySelectorAll('td[data-slug]');
+      cells.forEach(function(td){
+        var sl = td.getAttribute('data-slug');
+        if (activeSet[sl]) td.classList.remove('excluded');
+        else td.classList.add('excluded');
+      });
+
+      if (numeric) {
+        var dec = parseInt(tr.getAttribute('data-decimals') || '2', 10);
+        var sum = 0, n = 0;
+        cells.forEach(function(td){
+          var sl = td.getAttribute('data-slug');
+          if (!activeSet[sl]) return;
+          var v = parseFirstNumber(td.textContent);
+          if (v != null) { sum += v; n++; }
+        });
+        avgTd.textContent = n > 0 ? (sum/n).toFixed(dec) : '—';
+      } else {
+        // テキスト行の平均は「集計不能」を明示
+        avgTd.textContent = '—';
+      }
+    });
+
+    // 曲ヘッダの excluded クラス＋チェックボックス同期
+    document.querySelectorAll('table.compare th.song-th').forEach(function(th){
+      var sl = th.getAttribute('data-slug');
+      if (activeSet[sl]) th.classList.remove('excluded');
+      else th.classList.add('excluded');
+      var cb = th.querySelector('input.stage-check');
+      if (cb) cb.checked = !!activeSet[sl];
+    });
+
+    // カウント表示＋列見出し
+    var cnt = document.getElementById('stage-count');
+    if (cnt) cnt.textContent = activeSlugs.length + ' / 9 曲';
+    var hdr = document.getElementById('avg-col-header');
+    if (hdr) {
+      var total = activeSlugs.length;
+      var practiceOnly = total === 6 && activeSlugs.every(function(sl){
+        var s = SONGS.filter(function(x){ return x.slug === sl; })[0];
+        return s && s.stage === 'practice';
+      });
+      if (total === 9) hdr.textContent = '平均（全9曲）';
+      else if (practiceOnly) hdr.textContent = '平均（練習曲 6曲）';
+      else if (total === 0) hdr.textContent = '平均（0曲）';
+      else hdr.textContent = '平均（選択 ' + total + '曲）';
+    }
+
+    // ボタンの active 表示
+    var btnPractice = document.querySelector('.stage-btn[data-action="practice-only"]');
+    var btnAll = document.querySelector('.stage-btn[data-action="all-on"]');
+    var isPracticeOnly = activeSlugs.length === 6 && activeSlugs.every(function(sl){
+      var s = SONGS.filter(function(x){ return x.slug === sl; })[0];
+      return s && s.stage === 'practice';
+    });
+    var isAllOn = activeSlugs.length === 9;
+    if (btnPractice) btnPractice.classList.toggle('active', isPracticeOnly);
+    if (btnAll) btnAll.classList.toggle('active', isAllOn);
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    // 個別チェックボックス
+    document.querySelectorAll('input.stage-check').forEach(function(cb){
+      var sl = cb.getAttribute('data-slug');
+      cb.checked = isIncluded(sl);
+      cb.addEventListener('change', function(){
+        setIncluded(sl, cb.checked);
+        recalc();
+      });
+    });
+    // クイックボタン
+    document.querySelectorAll('.stage-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var act = btn.getAttribute('data-action');
+        SONGS.forEach(function(s){
+          if (act === 'all-on') setIncluded(s.slug, true);
+          else if (act === 'practice-only') setIncluded(s.slug, s.stage === 'practice');
+        });
+        recalc();
+      });
+    });
+    recalc();
+  });
+})();
+</script>
 
 <script>
 // チェックリスト自動注入・localStorage 保存
