@@ -120,8 +120,8 @@ footer{margin-top:40px;padding-top:18px;border-top:1px dashed var(--line);font-f
 </div>
 
 <div class="memo">
-<h2>✍️ 練習メモ（今回意識したこと）</h2>
-<p>この回で<strong>意識した練習・体調</strong>を書く→「コピー」でAIに渡す（録音処理時にチャットへ貼る）／音声メモ・チャットで直接言うのも可。全部同じ intervention として記録されます。</p>
+<h2>✍️ 練習メモ（曲ごとに意識したこと）</h2>
+<p>その回で<strong>意識した練習・体調</strong>を書く→「コピー」でAIに渡す（録音処理時にチャットへ貼る）／音声メモ・チャットで直接言うのも可。全部同じ intervention として記録されます。</p>
 <select id="memo-sess"><option value="2026-07-17_The_Beginning">2026-07-17 The Beginning</option><option value="2026-07-17_We_are_v1">2026-07-17 We are</option><option value="2026-07-17_Wherever_you_are_v2">2026-07-17 Wherever you are</option><option value="2026-07-17_メロディ_v3">2026-07-17 メロディ</option><option value="2026-07-17_乾杯_v2">2026-07-17 乾杯</option><option value="2026-07-17_努努_v3">2026-07-17 努努</option><option value="2026-07-17_大空と大地の中で_v4">2026-07-17 大空と大地の中で</option><option value="2026-07-17_旅姿六人衆_v3">2026-07-17 旅姿六人衆</option><option value="2026-07-17_欲望に満ちた青年団">2026-07-17 欲望に満ちた青年団</option><option value="2026-07-17_皆無">2026-07-17 皆無</option><option value="__new__">＋ 次に歌う新しい回</option></select>
 <textarea id="memo-text" placeholder="例：今回は息を支えるのを意識した。喉は疲れ気味。キーは-2で。"></textarea>
 <div class="memo-btns">
@@ -131,9 +131,23 @@ footer{margin-top:40px;padding-top:18px;border-top:1px dashed var(--line);font-f
 <div class="memo-saved" id="memo-saved"></div>
 </div>
 
+<div class="memo daily">
+<h2>📅 その日全体のメモ</h2>
+<p>曲ごとの介入は<strong>上のドロップダウン</strong>へ。ここは<strong>「今日全体の体調・気づき・方針」を1つ</strong>書く欄（例：今日は喉が乾いていた／全体に息を支える意識ができた／高音がラクだった 等、曲をまたいだ全体の気づき）。</p>
+<label style="display:block;font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:4px;">日付</label>
+<input type="date" id="daily-date">
+<textarea id="daily-text" placeholder="例：今日は全体に喉が疲れ気味。ロック系は無理せず -2半音固定。バラードでは息支えを意識できた。"></textarea>
+<div class="memo-btns">
+  <button onclick="saveDaily()">💾 保存</button>
+  <button class="ghost" onclick="copyDaily()">📋 AIに渡す用にコピー</button>
+</div>
+<div class="memo-saved" id="daily-saved"></div>
+</div>
+
 <footer>サクセスファイル ／ 数値の正本は <a href="./measure.html">実測</a>・<a href="./profile.html">課題</a>／<a href="./index.html">← ホーム</a> ／ 旧: <a href="./junbi-kikan/karaoke_pdca.html">準備期間 PDCA</a></footer>
 
 <script>
+// --- 曲別メモ（localStorage: karaoke-memo:<session>） ---
 var sel=document.getElementById('memo-sess'), txt=document.getElementById('memo-text'), saved=document.getElementById('memo-saved');
 function key(){return 'karaoke-memo:'+sel.value;}
 function load(){ txt.value=localStorage.getItem(key())||''; saved.textContent=txt.value?'（保存済みメモを表示中）':''; }
@@ -141,6 +155,17 @@ sel.addEventListener('change',load);
 function saveMemo(){ localStorage.setItem(key(),txt.value); saved.textContent='✅ 保存しました（'+sel.options[sel.selectedIndex].text+'）'; }
 function copyMemo(){ var t='【練習メモ '+sel.options[sel.selectedIndex].text+'】'+txt.value; navigator.clipboard.writeText(t).then(function(){saved.textContent='📋 コピーしました。AIとのチャットに貼ってください';}); }
 load();
+
+// --- 日単位メモ（localStorage: karaoke-daily-memo:<YYYY-MM-DD>） ---
+var dateEl=document.getElementById('daily-date'), dailyTxt=document.getElementById('daily-text'), dailySaved=document.getElementById('daily-saved');
+function todayISO(){ var d=new Date(); var m=String(d.getMonth()+1).padStart(2,'0'); var day=String(d.getDate()).padStart(2,'0'); return d.getFullYear()+'-'+m+'-'+day; }
+dateEl.value = todayISO();  // 初期値＝当日（build時固定ではなくJSランタイム）
+function dailyKey(){ return 'karaoke-daily-memo:'+dateEl.value; }
+function loadDaily(){ dailyTxt.value=localStorage.getItem(dailyKey())||''; dailySaved.textContent=dailyTxt.value?'（'+dateEl.value+' の保存済みメモを表示中）':''; }
+dateEl.addEventListener('change', loadDaily);
+function saveDaily(){ localStorage.setItem(dailyKey(), dailyTxt.value); dailySaved.textContent='✅ 保存しました（'+dateEl.value+'）'; }
+function copyDaily(){ var t='【その日全体のメモ '+dateEl.value+'】'+dailyTxt.value; navigator.clipboard.writeText(t).then(function(){dailySaved.textContent='📋 コピーしました（'+dateEl.value+'）';}); }
+loadDaily();
 </script>
 <script src="./nav.js"></script>
 </body></html>
