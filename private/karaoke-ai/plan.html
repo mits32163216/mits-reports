@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>【Mits 専用】歌セルフ上達カリキュラム v5</title>
+<title>【Mits 専用】歌セルフ上達カリキュラム v6</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 :root {
@@ -81,13 +81,17 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
   margin: 14px 0;
 }
 .diag-title { font-family: var(--mincho); font-size: 17px; color: var(--gold); margin: 0 0 8px; }
+.diag.priority { border-left: 4px solid var(--rose); }
+.diag.priority .diag-title { color: var(--rose); }
+.diag.strength { border-left: 4px solid var(--sage); }
+.diag.strength .diag-title { color: var(--sage); }
 
 .tier-table td { vertical-align: top; }
 .tier-a { border-left: 4px solid var(--sage); }
 .tier-b { border-left: 4px solid var(--gold); }
 .tier-c { border-left: 4px solid var(--rose); }
 
-/* Phase セクション */
+/* STEP セクション */
 .phase-section {
   margin: 40px 0 20px;
   padding: 20px 24px;
@@ -95,6 +99,8 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
   border: 1px solid var(--gold);
   border-radius: 10px;
 }
+.phase-section.priority { border-color: var(--rose); background: linear-gradient(135deg, rgba(199,123,112,0.06), rgba(212,168,91,0.04)); }
+.phase-section.priority .phase-name { color: var(--rose); }
 .phase-header {
   display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
   margin-bottom: 6px; padding-bottom: 8px; border-bottom: 1px solid var(--line);
@@ -131,6 +137,7 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
   font-weight: 700;
   align-self: flex-start;
 }
+.phase-section.priority .lesson-num { background: var(--rose); }
 .lesson-title { font-family: var(--mincho); font-size: 17px; font-weight: 600; line-height: 1.4; margin: 2px 0 0; }
 .lesson-thumb {
   width: 100%;
@@ -218,574 +225,383 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
   display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
 }
 
-/* 戻るボタン（ダッシュボードへ） */
-.back-nav {
-  position: sticky; top: 0; z-index: 100;
-  background: var(--bg);
-  padding: 12px 0 10px;
-  margin: -40px -48px 24px;
-  padding-left: 48px; padding-right: 48px;
-  border-bottom: 1px solid var(--line);
-  backdrop-filter: blur(6px);
+.zero-banner {
+  margin: 18px 0 26px;
+  padding: 14px 20px;
+  background: rgba(122,155,126,0.09);
+  border: 1px solid var(--sage);
+  border-left: 4px solid var(--sage);
+  border-radius: 8px;
+  font-size: 13.5px;
+  line-height: 1.75;
 }
-.back-nav a {
-  display: inline-block;
-  padding: 6px 14px;
-  font-family: var(--mincho); font-size: 13px; font-weight: 600;
-  color: var(--gold);
-  background: rgba(212, 168, 91, 0.10);
-  border: 1px solid var(--gold);
-  border-radius: 6px;
-  text-decoration: none;
-  transition: all 0.2s;
-}
-.back-nav a:hover {
-  background: rgba(212, 168, 91, 0.22);
-  transform: translateX(-2px);
-  text-decoration: none;
-}
-.back-nav-bottom {
-  margin-top: 40px; text-align: center;
-  padding-top: 20px; border-top: 1px dashed var(--line);
-}
+.zero-banner strong { color: var(--sage); }
 
 /* prin */
 @media print {
   body { padding: 20px; max-width: none; }
   .lesson-card { break-inside: avoid; page-break-inside: avoid; }
-  .back-nav, .back-nav-bottom { display: none; }
-}
-
-/* 追記ボックス（2026-07-12〜） */
-.update-box {
-  margin: 20px 0;
-  padding: 16px 20px;
-  background: linear-gradient(135deg, rgba(122, 155, 126, 0.10), rgba(212, 168, 91, 0.06));
-  border: 1px solid var(--sage);
-  border-left: 4px solid var(--sage);
-  border-radius: 8px;
-}
-.update-tag {
-  display: inline-block;
-  padding: 3px 10px;
-  margin-bottom: 8px;
-  background: var(--sage);
-  color: white;
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 600;
-  border-radius: 12px;
-  letter-spacing: 0.05em;
-}
-.update-box h4 { color: var(--sage); margin-top: 0; }
-.update-box h3 { color: var(--gold); margin-top: 0; }
-.update-box ul { margin: 8px 0; padding-left: 20px; }
-.update-box li { line-height: 1.7; margin: 3px 0; }
-.update-box p { margin: 6px 0; }
-.update-box table { margin-top: 8px; font-size: 12px; }
-.update-box a { color: var(--gold); font-weight: 600; }
-
-.phase-progress { width: 100%; border-collapse: collapse; }
-.phase-progress th, .phase-progress td { padding: 6px 8px; border: 1px solid var(--line); text-align: center; font-size: 12px; }
-.phase-progress th { background: var(--highlight); font-family: var(--sans); }
-.phase-progress td:first-child { text-align: left; font-family: var(--mincho); font-weight: 600; }
-
-.dashboard-link-box {
-  margin: 12px 0 24px;
-  padding: 12px 20px;
-  background: rgba(212, 168, 91, 0.08);
-  border: 1px dashed var(--gold);
-  border-radius: 6px;
-  text-align: center;
 }
 </style>
 </head>
 <body>
 
-
-<nav class="back-nav">
-  <a href="./" title="カラオケ練習AI ダッシュボードに戻る">← カラオケ練習AI ダッシュボードに戻る</a>
-</nav>
-
 <header class="top">
   <div>
-    <h1>🎤 【Mits 専用】歌セルフ上達カリキュラム <span class="version">v4</span></h1>
-    <div class="sub">2026-07-10 作成 · 元データ: Notion 素材 DB 70本 + カラオケ練習AI 4曲9軸実測</div>
+    <h1>🎤 【Mits 専用】歌セルフ上達カリキュラム <span class="version">v6</span></h1>
+    <div class="sub">2026-07-17 全面書き直し ／ 元データ: 7/17 クリーン録音9曲（同一新条件）</div>
   </div>
 </header>
 
-<section class="overview">
-  <p><span class="label">対象</span>Mits（58歳・男性・バリトン〜フルテノールまで潜在音域あり）</p>
-  <p><span class="label">目的</span>独学で「1音を最後まで鳴らし切る」精度を上げ、3ヶ月で「不安定 → やや不安定」に到達する</p>
-  <p><span class="label">元データ</span>メロディ / 大空と大地 / Wherever you are / 努努 · 4曲全て9軸フル計測</p>
+<section class="zero-banner">
+  <strong>🆕 2026-07-17 = ゼロ地点</strong>：録音条件を刷新（iPhone 直イヤホンマイク・ガイドボーカル OFF・BGM 小音量）。<br>
+  旧版（〜7/15）は<strong>「準備期間」</strong>として <a href="./junbi-kikan/index.html">./junbi-kikan/</a> に凍結保存。当時の分析（旧 v5 curriculum）は捨てず、<strong>そこで学んだ計測法・分析方針を土台に、7/17クリーン9曲データで練習計画を書き直す</strong>。<br>
+  <strong>本ページは新録音条件を「基準点 v0」として、次回以降のセッション間差分で本当の上達を測る運用の見取り図</strong>。
 </section>
 
-<h2>ヒアリング所見（実測データ要約）</h2>
+<section class="overview">
+  <p><span class="label">対象</span>Mits（58歳・男性・バリトン寄り・7/17実測で C3〜E5 の3オクターブ強）</p>
+  <p><span class="label">目的</span>7/17 クリーン測定で判明した<strong>真の弱点2軸（① Tony ノート内 cent 揺らぎ 44.7 ／ ② 短音率 59%）</strong>を潰し、次のクリーン測定（同一新条件 v2 以降）で数値が動いたかを確認する（現在の総合偏差値＝<strong>60.9</strong>／クリーン9曲平均・6軸中5軸実測）</p>
+  <p><span class="label">元データ</span>7/17 クリーン録音9曲：メロディ／大空と大地／乾杯／Wherever you are／努努／The Beginning／We are／皆無／旅姿六人衆（欲望に満ちた青年団 は録音条件混在で分析除外）</p>
+  <p><span class="label">見取り図と本体の関係</span>本ページ＝カリキュラムの<strong>見取り図（診断・優先順位・週間ルーティン・計測サイクル）</strong>／全動画本体は <a href="./videos.html">🎬 全動画マップ（6 Phase 129本）</a>／おすすめ順の厳選プログラムは <a href="./basics.html">🌱 基礎レッスン29（STEP 1〜5）</a></p>
+</section>
+
+<h2>ヒアリング所見（7/17 クリーン9曲 実測要約）</h2>
 
 <h3>声域</h3>
 <ul>
-  <li>実用 D3〜F#4（約 2 オクターブ）・単発到達 <strong>C#5</strong>（努努）</li>
-  <li>最低〜最高 C2〜C#5（<strong>37 半音 ≒ 3 オクターブ強</strong>・4曲通算）</li>
-  <li>音域拡張は本編では扱わない。潜在音域は<strong>フルテノール〜カウンターテナー領域</strong>まで届く（常用は F#4 まで）</li>
+  <li>下限：<strong>C3</strong>（乾杯・7/17 v2 実測）</li>
+  <li>上限：<strong>E5</strong>（皆無・7/17 v1 実測 672.9 Hz）</li>
+  <li>9曲通算：<strong>C3〜E5（半音約27・約2オクターブ+3半音）</strong>／平均声域 A#3〜B3 帯</li>
+  <li><strong>旧版「常用 F#4 まで・高音は本編で扱わない」方針は撤回</strong>：7/17『皆無』で E5 到達を実測した以上、既に届いている高音を <strong>定着</strong> させるフェーズ（<a href="./basics.html">basics STEP 5</a> に高音導入4本新設・<a href="./videos.html">videos Phase 5</a>）</li>
 </ul>
 
-<h3>既に持っている強み</h3>
+<h3>既に持っている強み（7/17 クリーン9曲から再導出）</h3>
 <ul>
-  <li>サビ F#4 の 3〜4 秒ロングトーン × 4 カ所（大空と大地）</li>
-  <li>エンディング E4 の <strong>9.04 秒</strong> 保持</li>
-  <li>見せ場 F4 の <strong>3.94 秒</strong>（メロディ 64.48s）</li>
-  <li>Wherever エンディング F#4 <strong>2.23 秒</strong>、原曲キーで G#4 到達</li>
-  <li>抑揚判定<strong>「豊か」</strong>(4曲中3曲)・ダイナミックレンジ 36.8 dB（メロディ）</li>
-  <li>装飾テクニック意識あり: しゃくり/こぶし/フォールを 4 曲通じて安定使用</li>
-  <li>ビブラート幅の推移: 183 → 154 → 125 cent（狭く音楽的な方向へ成長中）</li>
+  <li><strong>HNR</strong>：バラード系（メロディ 16.28／大空 16.68／乾杯 16.14／旅姿 17.26／Wherever 16.34）＝<strong>教科書的にクリーンな 16 dB 台</strong>。玉置浩二原曲 21.6dB・松山千春 17.8dB との差は 1〜5dB。旧版で「唯一の明確な弱点」としていた息漏れHNR軸は測定汚染由来と判明・撤回</li>
+  <li><strong>低音ノイズ（low_noise_hits）</strong>：<strong>9曲すべて 0 発</strong>（フレーズ末の fry/息漏れが計測されない）</li>
+  <li><strong>深み αRatio（歌手フォルマント）</strong>：9曲平均 -9.46。メロディで <strong>-11.82</strong>＝原曲玉置 -16.3 の <strong>玉置級近似</strong>。旅姿 -10.62／皆無 -9.80／乾杯 -9.53 と、バラード全域で深い側</li>
+  <li><strong>抑揚判定</strong>：9曲中 8曲「豊か」（努努のみ「普通」＝限界曲）</li>
+  <li><strong>ロングトーン</strong>：メロディ 28本／Wherever 26本／We are 21本／大空 16本／乾杯 15本／旅姿 15本＝バラード群でロングトーンを刻む力はある</li>
+  <li><strong>E5 到達</strong>：皆無 v1 で実測（過去の常用 F#4 を大きく上回る）</li>
 </ul>
+<p style="font-family:var(--mono);font-size:11px;color:var(--muted);">※ 旧版に記載していた「F#4 3〜4秒×4カ所」「E4 9秒保持」「F4 3.94秒」「Wherever F#4 2.23秒／原曲キー G#4 到達」「ダイナミックレンジ数値」「ビブラート幅の推移 数値列」等は、7/17 クリーンデータから同条件で再導出できない派生値のため<strong>削除</strong>（捏造禁止・準備期間の凍結アーカイブに残置）。longtones_count のような同条件で再導出できる指標のみ本ページに記載する。</p>
 
-<h3>4曲比較（9軸フル実測）</h3>
+<h3>9曲比較（7/17 クリーン全実測）</h3>
 
 <div class="compare-wrap">
 <table class="compare">
 <thead><tr>
   <th>軸</th><th>指標</th>
-  <th>メロディ<br><small>(バラード・F#major)</small></th>
-  <th>大空と大地<br><small>(バラード)</small></th>
-  <th>Wherever<br><small>(ロック・Emajor)</small></th>
-  <th>努努<br><small>(ロック)</small></th>
-  <th>3ヶ月目標</th>
+  <th>メロディ<br><small>玉置浩二</small></th>
+  <th>大空と大地<br><small>松山千春</small></th>
+  <th>乾杯<br><small>長渕剛</small></th>
+  <th>Wherever<br><small>ONE OK ROCK</small></th>
+  <th>The Beginning<br><small>ONE OK ROCK</small></th>
+  <th>We are<br><small>ONE OK ROCK</small></th>
+  <th>皆無<br><small>ONE OK ROCK</small></th>
+  <th>旅姿六人衆<br><small>サザン</small></th>
+  <th>努努<br><small>ONE OK ROCK</small></th>
+  <th>9曲平均</th>
 </tr></thead>
 <tbody>
-<tr><td>1</td><td>音程安定性</td><td>不安定</td><td>不安定</td><td>不安定</td><td>不安定</td><td>やや不安定</td></tr>
-<tr><td>1</td><td>短音率</td><td>57.6%</td><td>57.2%</td><td>67.0%</td><td class="worst">78.4% ← 過去最悪</td><td>48% 前後</td></tr>
-<tr><td>1</td><td>cent 変動</td><td>39.3</td><td>37.1</td><td class="best">27</td><td>32.2</td><td>30 前後</td></tr>
-<tr><td>1</td><td>低音ノイズ</td><td>10</td><td class="best">3</td><td>47</td><td>34</td><td>0〜20</td></tr>
-<tr><td>2</td><td>最高音</td><td>F4</td><td>F#4</td><td>G#4</td><td class="best">C#5 ← 過去最高</td><td>―</td></tr>
-<tr><td>3</td><td>ロングトーン数</td><td>3本</td><td class="best">12本</td><td>9本</td><td class="worst">0本 ← 過去最少</td><td>―</td></tr>
-<tr><td>6</td><td>抑揚判定</td><td class="best">豊か</td><td>豊か(推定)</td><td>普通</td><td class="best">豊か</td><td>豊か維持</td></tr>
-<tr><td>6</td><td>ダイナミックレンジ</td><td class="best">36.8 dB</td><td>―</td><td>27.7 dB</td><td>29.8 dB</td><td>―</td></tr>
-<tr><td>7</td><td>リズム判定</td><td>不安定</td><td>不安定</td><td>不安定</td><td>不安定</td><td>やや安定</td></tr>
-<tr><td>7</td><td>BPM</td><td>118.8</td><td>128.8</td><td>138.2</td><td>119.9</td><td>―</td></tr>
-<tr><td>8</td><td>HNR (声の澄み)</td><td>6.56 dB</td><td class="best">10.22 dB</td><td>5.83 dB</td><td class="worst">3.75 dB ← 過去最悪</td><td>10 以上</td></tr>
-<tr><td>8</td><td>Jitter (周期揺らぎ)</td><td>2.62%</td><td class="best">1.90%</td><td>4.10%</td><td>4.30%</td><td>2% 以下</td></tr>
-<tr><td>8</td><td>Shimmer (振幅揺らぎ)</td><td>17.4%</td><td class="best">13.5%</td><td>17.1%</td><td class="worst">19.5% ← 過去最高</td><td>13% 以下</td></tr>
-<tr><td>9</td><td>ビブラート</td><td>6回/幅183c</td><td>―/幅154c</td><td>17回/幅125c</td><td class="worst">2回 ← 過去最少</td><td>幅維持</td></tr>
-<tr><td>9</td><td>しゃくり/こぶし/フォール</td><td>8/18/6</td><td>―</td><td>12/22/9</td><td>4/7/3</td><td>―</td></tr>
+<tr><td>1</td><td>安定判定</td><td>不安定</td><td>やや不安定</td><td>やや不安定</td><td>やや不安定</td><td>不安定</td><td>不安定</td><td>不安定</td><td>やや不安定</td><td>不安定</td><td>—</td></tr>
+<tr><td>1</td><td>Tony cent 揺らぎ</td><td>52.1</td><td class="best">39.0 ← 最良</td><td>41.4</td><td>39.9</td><td>45.5</td><td>47.1</td><td>50.6</td><td>43.5</td><td>42.8</td><td class="worst">44.7 ← 弱点①</td></tr>
+<tr><td>1</td><td>短音率</td><td>0.453</td><td>0.488</td><td class="best">0.424 ← 最良</td><td>0.526</td><td>0.734</td><td>0.577</td><td>0.811</td><td>0.500</td><td>0.798</td><td class="worst">0.59 ← 弱点②</td></tr>
+<tr><td>1</td><td>低音ノイズ</td><td class="best">0</td><td class="best">0</td><td class="best">0</td><td class="best">0</td><td class="best">0</td><td class="best">0</td><td class="best">0</td><td class="best">0</td><td class="best">0</td><td class="best">全曲 0 ✨</td></tr>
+<tr><td>2</td><td>音域（低〜高）</td><td>E3-F4</td><td>E3-F#4</td><td>C3-D4</td><td>F#3-E4</td><td>D#3-D#4</td><td>C#3-F4</td><td class="best">F3-E5 ← 上限</td><td>D3-E4</td><td>G3-E4</td><td>C3-E5</td></tr>
+<tr><td>3</td><td>ロングトーン数</td><td class="best">28</td><td>16</td><td>15</td><td>26</td><td>8</td><td>21</td><td>1</td><td>15</td><td class="worst">0 ← 限界</td><td>14.4</td></tr>
+<tr><td>6</td><td>抑揚判定</td><td class="best">豊か</td><td class="best">豊か</td><td class="best">豊か</td><td class="best">豊か</td><td class="best">豊か</td><td class="best">豊か</td><td class="best">豊か</td><td class="best">豊か</td><td>普通</td><td>8/9 豊か</td></tr>
+<tr><td>7</td><td>リズム判定</td><td>不安定</td><td class="best">やや安定</td><td>不安定</td><td>不安定</td><td>不安定</td><td>不安定</td><td>不安定</td><td>不安定</td><td>不安定</td><td>—</td></tr>
+<tr><td>7</td><td>BPM</td><td>122.0</td><td>128.1</td><td>121.9</td><td>133.7</td><td>141.9</td><td>125.7</td><td>126.9</td><td>132.3</td><td>122.0</td><td>128.3</td></tr>
+<tr><td>8</td><td>HNR (声の澄み)</td><td>16.28</td><td>16.68</td><td>16.14</td><td>16.34</td><td>13.38</td><td>16.36</td><td>15.68</td><td class="best">17.26</td><td class="worst">9.72 ← 限界</td><td>15.32</td></tr>
+<tr><td>8</td><td>Jitter</td><td>0.789</td><td>0.751</td><td>0.801</td><td>0.827</td><td>1.335</td><td>1.016</td><td>1.154</td><td class="best">0.783</td><td class="worst">2.051</td><td>1.06</td></tr>
+<tr><td>8</td><td>Shimmer</td><td class="best">5.586</td><td>6.342</td><td>6.263</td><td>6.317</td><td>8.601</td><td>6.060</td><td>6.237</td><td>5.440</td><td class="worst">16.02</td><td>7.43</td></tr>
+<tr><td>—</td><td>深み αRatio</td><td class="best">-11.82 ← 玉置級</td><td>-9.10</td><td>-9.53</td><td>-7.91</td><td>-9.20</td><td>-8.93</td><td>-9.80</td><td>-10.62</td><td>-8.22</td><td>-9.46</td></tr>
+<tr><td>—</td><td>CREPE 半音偏差</td><td>23.16</td><td>23.47</td><td>23.33</td><td class="best">22.12</td><td>23.35</td><td>23.41</td><td>23.60</td><td>23.06</td><td>23.94</td><td>23.27</td></tr>
 </tbody></table>
 </div>
+<p style="font-family:var(--mono);font-size:11px;color:var(--muted);">※ 数値の正本は <a href="./measure.html">実測ダッシュボード</a>（Tony 軸 9本＋深み＋CREPE）と <a href="./profile.html">声質スコアカード</a>（原曲アーティスト実測基準の偏差値）。本表はカリキュラム設計用の抜粋。</p>
 
-<h2>診断（4曲9軸データから見えた本質）</h2>
+<h2>診断（7/17 クリーン9曲から見えた本質）</h2>
 
-<div class="diag">
-  <div class="diag-title">1. 中核テーマは「息の支え」</div>
-  <p>短音率・低音ノイズ・HNR・Jitter・Shimmer は全部同じ根っこ = <strong>息の支え不足</strong>。Shimmer は 4 曲すべてで 13.5〜19.5%（体質的振幅揺らぎ）。バラードで大空 (HNR 10.22 / Jitter 1.90%) のように支えが利いた時のポテンシャルは高い。</p>
+<div class="diag priority">
+  <div class="diag-title">1. 中核テーマは「音程精度と息の配分」（旧「息の支え」から刷新）</div>
+  <p>7/17 クリーン測定の真の弱点は 2軸：<br>
+  ① <strong>Tony ノート内 cent 揺らぎ 44.7</strong>（ピッチセンター内の小刻みな揺れ・9曲平均）<br>
+  ② <strong>short_note_ratio 59%</strong>（フレーズ細切れ・息を使い切るのが速い・9曲平均）<br>
+  旧サイトの「息漏れHNR最優先」は<strong>録音条件汚染（ガイド ON＋BGM 大＋備え付けマイク）由来</strong>と判明。新条件バラード群 HNR は 16 dB 台でむしろ強み側。息の問題は<strong>「支え」ではなく「配分」</strong>にフレーム変更。</p>
+</div>
+
+<div class="diag strength">
+  <div class="diag-title">2. HNR は 4曲中 5曲で 16 dB 台＝クリーン発声の土台はある</div>
+  <p>メロディ 16.28／大空 16.68／乾杯 16.14／Wherever 16.34／We are 16.36／旅姿 17.26。原曲アンカー（バラード系3人平均 18.9dB）との差は 2〜3 dB。<strong>旧「息漏れHNR最優先」軸は撤回</strong>、STEP 3（声質・喉ケア）は保全用に3本まで縮小（<a href="./basics.html">basics STEP 3</a>）。</p>
+</div>
+
+<div class="diag strength">
+  <div class="diag-title">3. 深み αRatio は意外な強み（バラードで玉置級近似）</div>
+  <p>メロディ -11.82（玉置原曲 -16.3 の近似域）／旅姿 -10.62／皆無 -9.80／乾杯 -9.53。松山千春 -6.1・長渕剛 -7.9 より深い側。<strong>歌手フォルマント（声の鳴り）は既に出ている</strong>ので、Phase 内でわざわざ深みを追わなくてよい。この強みは息配分改善で更に活きる。</p>
+</div>
+
+<div class="diag priority">
+  <div class="diag-title">4. cent 揺らぎ 44.7 の直撃は「リズム・イヤトレ・母音口の開け」</div>
+  <p>ノート内の 44.7 cent 揺れは <strong>相対音感の着地精度</strong>と <strong>母音の口の形が定まらない</strong>ことに起因する。従来「音程」＝ピッチを合わせる練習と括られていたが、7/17 データはむしろ<strong>リズム基準の確立（拍の中に音を置き切る）</strong>と<strong>母音口形の統一</strong>が効くことを示す。<a href="./basics.html">basics STEP 4（音程とリズムの基礎・9本）</a> と <a href="./videos.html">videos Phase 1（音程精度）</a> が直撃 Phase。</p>
+</div>
+
+<div class="diag priority">
+  <div class="diag-title">5. 短音率 59% の直撃は「息の配分＋ロングトーン」</div>
+  <p>短音率＝ 0.3 秒未満のノート比率。9曲平均 0.59 は <strong>フレーズを細切れに切っている</strong>状態。腹式呼吸の量ではなく<strong>「息を配分する練習」</strong>＝ロングトーン延伸と息止めトレが効く。<a href="./basics.html">basics STEP 2（息を支える・6本）</a> と <a href="./videos.html">videos Phase 2（息支え）</a> が直撃 Phase。</p>
 </div>
 
 <div class="diag">
-  <div class="diag-title">2. 難易度で全指標が線形悪化</div>
-  <p>短音率: 57.6 → 57.2 → 67.0 → <strong>78.4%</strong>（難曲ほど悪化）／Shimmer: 17.4 → 13.5 → 17.1 → <strong>19.5%</strong>（一貫して高い・体質）／HNR: 6.56 → <strong>10.22</strong> → 5.83 → <strong>3.75 dB</strong>（大空ピーク・努努底）。→ <strong>キー選びが 3ヶ月の成長速度を決める</strong>。</p>
+  <div class="diag-title">6. リズムは 8/9 曲で「不安定」（大空のみ やや安定）</div>
+  <p>BPM 122〜142 全域で不安定。真の弱点① cent 揺らぎと連動する（拍が揺れる → 音の入りが遅れる → cent 揺れが大きくなる）。<strong>補講 S1 の「手拍子メソッド」は STEP 4 期間中の併走視聴として重要度を格上げ</strong>。</p>
 </div>
 
-<div class="diag">
-  <div class="diag-title">3. cent 変動は既に改善傾向</div>
-  <p>Wherever 27・努努 32.2。音程・耳のトレーニング（Phase D）の必要度は当初想定より低い。Phase D は日課化（Lesson 11）だけ残し、Phase B/C を厚くする。</p>
+<div class="diag strength">
+  <div class="diag-title">7. E5 到達で「高音は既に届いている」フェーズへ</div>
+  <p>皆無で E5（672.9 Hz）を実測。旧「高音は基礎終了後」方針は撤回。<a href="./basics.html">basics STEP 5</a> に基礎レベルの高音導入 4本を新設・<a href="./videos.html">videos Phase 5</a> にも 3本配置。<strong>拡張ではなく定着</strong>のフェーズとして扱う。</p>
 </div>
 
-<div class="diag">
-  <div class="diag-title">4. 装飾テクニックは曲難易度で発動量が変わる</div>
-  <p>バラード（メロディ）: ビブラート6/しゃくり8/こぶし18/フォール6 = 余裕あり／ロック挑戦キー（Wherever）: 17/12/22/9 = 意識的技術投入／ロック限界キー（努努）: 2/4/7/3 = <strong>音程を追うので精一杯</strong>。ビブラート幅の推移 183→154→125→173 cent = 支えが利く曲では洗練方向、限界曲では素朴に戻る。</p>
-</div>
-
-<div class="diag">
-  <div class="diag-title">5. 抑揚は 4 曲中 3 曲で「豊か」</div>
-  <p>声量コントロールの土台はある。抑揚系の教材優先度は低い。この強みは Phase B/C の「息の支え」改善で更に活きる。</p>
-</div>
-
-<div class="diag">
-  <div class="diag-title">6. リズムは全 4 曲で「不安定」</div>
-  <p>BPM 118〜138 全域で不安定。補講 S1（しらスタ手拍子）の重要度を格上げ、Phase A 併走で早めに取り入れる推奨。</p>
-</div>
-
-<h3>曲難易度 3 タイプ分類</h3>
+<h3>曲難易度 3 タイプ分類（7/17 クリーン9曲）</h3>
 <div class="compare-wrap">
 <table class="tier-table">
-<thead><tr><th>タイプ</th><th>該当曲</th><th>特徴</th><th>カリキュラム内での位置</th></tr></thead>
+<thead><tr><th>タイプ</th><th>該当曲</th><th>特徴（7/17実測）</th><th>カリキュラム内での位置</th></tr></thead>
 <tbody>
-<tr class="tier-a"><td class="mincho"><strong>A: バラード原曲キー</strong></td><td class="mincho">メロディ<br>大空と大地</td><td class="mincho">支えが利く時のポテンシャルが出る<br>(HNR 6.56〜10.22 / Shimmer 13.5〜17.4%)</td><td class="mincho"><strong>Phase A〜E の主戦場</strong><br>週次まねきねこの本命</td></tr>
-<tr class="tier-b"><td class="mincho"><strong>B: ロック挑戦キー</strong><br>(-2 半音以内)</td><td class="mincho">Wherever<br>(原曲 G#4)</td><td class="mincho">支え崩壊するが装飾は残せる<br>(HNR 5.83 / ビブラート17回)</td><td class="mincho"><strong>Phase C 完了後</strong> に<br>-1〜-2 半音下げで再挑戦</td></tr>
-<tr class="tier-c"><td class="mincho"><strong>C: ロック限界キー</strong><br>(-3 半音以上要)</td><td class="mincho">努努<br>(原曲 C#5)</td><td class="mincho">音程を追うので精一杯<br>装飾も抑揚もほぼゼロ寄り</td><td class="mincho"><strong>Phase E 完走 or 半年〜1年後</strong>の腕試し曲。<br>今週の練習には入れない</td></tr>
+<tr class="tier-a"><td class="mincho"><strong>A: バラード系（クリーン）</strong></td><td class="mincho">メロディ<br>大空と大地<br>乾杯<br>旅姿六人衆</td><td class="mincho">HNR 16-17 dB台・短音率 42-50%・低音ノイズ 0<br>抑揚豊か・深み -9.1〜-11.8<br><strong>Mits の主戦場</strong></td><td class="mincho"><strong>STEP 1〜5 の主評価軸</strong><br>毎週のまねきねこ本命</td></tr>
+<tr class="tier-b"><td class="mincho"><strong>B: ロック挑戦キー</strong></td><td class="mincho">Wherever you are<br>The Beginning<br>We are<br>皆無</td><td class="mincho">HNR 13-16 dB台・短音率 53-81%<br>皆無 は E5 実測到達・拡張型<br>The Beginning は BPM 141.9（速い）</td><td class="mincho"><strong>STEP 2〜4 完了後</strong>に原キー挑戦<br>皆無は STEP 5 の高音定着で活きる</td></tr>
+<tr class="tier-c"><td class="mincho"><strong>C: ロック限界キー</strong></td><td class="mincho">努努<br>(原曲最高音は E5 圏)</td><td class="mincho">HNR 9.72・Jitter 2.05・Shimmer 16.02<br>ロングトーン 0本・抑揚「普通」<br>音を追うので精一杯</td><td class="mincho"><strong>STEP 5 完走 or 半年後</strong>の腕試し曲<br>今のルーティンには入れない<br>-3半音下げ推奨</td></tr>
 </tbody></table>
 </div>
 
 <h2>週間ルーティン（サイクル）</h2>
 <div class="routine">
-<span class="day">月</span> : 今週のレッスン動画を見る（30分〜90分）<br>
+<span class="day">月</span> : 今週の STEP から動画を1〜2本見る（30〜90分）／<a href="./basics.html">basics 29本</a> or <a href="./videos.html">videos 129本</a> から選ぶ<br>
 <span class="day">火〜金</span> : 動画で言われた 1 個の意識を、話し声・鼻歌で実装<br>
-<span class="day">土 or 日</span> : まねきねこ 30〜60 分 → Tony CSV → 自作ダッシュボード確認<br>
-&nbsp;&nbsp;→ 短音率・低音ノイズ・cent 変動が動いたか目視
+<span class="day">土 or 日</span> : まねきねこ 30〜60 分（新録音条件：iPhone直イヤホンマイク・ガイドOFF・BGM小）<br>
+&nbsp;&nbsp;→ <a href="./measure.html">実測ダッシュ</a>で cent 揺らぎ／短音率／HNR が動いたか目視<br>
+&nbsp;&nbsp;→ v1 だけの曲は v2 を録るまで<a href="./success.html">サクセスFile</a>の右3レーンは空欄（因果ペア0件のまま・件数を水増ししない）
 </div>
 
-<!-- ============================== Phase 0 (v5 新設) ============================== -->
+<!-- ============================== STEP 1 ============================== -->
 <section class="phase-section">
   <div class="phase-header">
-    <h2 class="phase-name" style="margin:0; border:none; padding:0;">Phase 0 — 数値の意味を知る（Week 0・座学）★v5</h2>
-    <div class="phase-weeks">Week 0 / 9 本</div>
+    <h2 class="phase-name" style="margin:0; border:none; padding:0;">STEP 1 — 土台をつくる（姿勢・練習法・道具）</h2>
+    <div class="phase-weeks">Week 1-2 相当 / basics 7本</div>
   </div>
-  <p class="phase-desc">自作ダッシュボードの数値（短音率・低音ノイズ・cent 変動・HNR・Jitter・Shimmer）が「何を意味するか」を座学で理解してから Phase A へ入る週。全部視聴必須ではなく、興味のあるものから。</p>
+  <p class="phase-desc">歌う前の体と練習の土台。7/17クリーンでも土台は不変。ここが崩れると何をやっても伸びない。<a href="./basics.html#step-1">basics STEP 1 の全7本</a>を参照。以下はカリキュラム上の意味付け 2本。</p>
   <div class="lesson-grid">
 
-    <a class="lesson-card" href="https://www.youtube.com/watch?v=NgBp7c2X_t0" target="_blank">
-      <span class="lesson-num">L0-1</span>
-      <div class="lesson-title">【暴露】歌うまがやっていて初心者がやっていないこと｜ボイトレ講座</div>
-      <img class="lesson-thumb" src="https://i.ytimg.com/vi/NgBp7c2X_t0/maxresdefault.jpg" alt="">
-      <div class="lesson-meta"><span class="ch">岩井翔平のYoutube音楽学校</span><span>基礎理論</span><span>初心者</span></div>
+    <a class="lesson-card" href="https://www.youtube.com/watch?v=EOJQ4-mV16Q" target="_blank">
+      <span class="lesson-num">S1-1</span>
+      <div class="lesson-title">【ボイトレ基礎】歌が上手くなる最大の要素を教えます｜究極のボイトレ動画のはじまり</div>
+      <img class="lesson-thumb" src="https://i.ytimg.com/vi/EOJQ4-mV16Q/maxresdefault.jpg" alt="">
+      <div class="lesson-meta"><span class="ch">MYP</span><span>#1</span><span>基礎理論</span></div>
       <div class="lesson-section">
         <h5>なぜこれか</h5>
-        <p class="lesson-why">Mits 自身が発見。「歌うま vs 初心者」対比型のセルフチェック。Mits の実測値（短音率 57%・HNR 3-10dB・Shimmer 13-19%）が「初心者側にある」ことを客観化する起点。</p>
+        <p class="lesson-why">なぜ「発声」が全ての土台になるかの全体像。7/17 の HNR 16dB 台・低音ノイズ 0 の土台はここから来ている。旧「Phase A 現状の座標を掴む」の第一歩を、MYP 版で置換。</p>
       </div>
-      <div class="lesson-focus">今週の意識: 見て自分の位置を客観化するだけ</div>
+      <div class="lesson-focus">今週の意識: なし（見取り図の週）</div>
+    </a>
+
+    <a class="lesson-card" href="https://www.youtube.com/watch?v=I3laUw6uBJo" target="_blank">
+      <span class="lesson-num">S1-2</span>
+      <div class="lesson-title">歌唱力向上に欠かせないアプリ｜コレ無しで練習はNG</div>
+      <img class="lesson-thumb" src="https://i.ytimg.com/vi/I3laUw6uBJo/maxresdefault.jpg" alt="">
+      <div class="lesson-meta"><span class="ch">MYP</span><span>#21</span><span>録って測る</span></div>
+      <div class="lesson-section">
+        <h5>なぜこれか</h5>
+        <p class="lesson-why">「録って測る」＝Mits のカラオケ練習AI そのものの思想と一致。旧録音（測定汚染）から新条件（クリーン）に移行できたのは録って測ってきたから。</p>
+      </div>
+      <div class="lesson-focus">今週の意識: 新録音条件（iPhone直イヤホンマイク・ガイドOFF・BGM小）を維持</div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ============================== STEP 2 ============================== -->
+<section class="phase-section priority">
+  <div class="phase-header">
+    <h2 class="phase-name" style="margin:0; border:none; padding:0;">STEP 2 — 息を支える（配分） 🔴 short_note_ratio 59% 直撃</h2>
+    <div class="phase-weeks">Week 3-5 相当 / basics 6本</div>
+  </div>
+  <p class="phase-desc">7/17 弱点② short_note_ratio 59%（フレーズ細切れ・息の使い切りが速い）を直撃する STEP。旧「Phase B 短音率を殺す」の思想は継承しつつ、<strong>息の『続き』ではなく『配分』</strong>にフォーカス。息漏れHNR最優先軸は 7/17 バラード群 16dB台で解消したので削除。<a href="./basics.html#step-2">basics STEP 2 の全6本</a>を参照。以下はカリキュラム上の意味付け 3本。</p>
+  <div class="lesson-grid">
+
+    <a class="lesson-card" href="https://www.youtube.com/watch?v=Dpk5pfgxKfE" target="_blank">
+      <span class="lesson-num">S2-1</span>
+      <div class="lesson-title">下腹部で動かせない？本物の腹式呼吸を徹底解説｜ボイトレの第一歩</div>
+      <img class="lesson-thumb" src="https://i.ytimg.com/vi/Dpk5pfgxKfE/maxresdefault.jpg" alt="">
+      <div class="lesson-meta"><span class="ch">MYP</span><span>#6</span><span>息配分</span></div>
+      <div class="lesson-section">
+        <h5>なぜこれか</h5>
+        <p class="lesson-why">腹式呼吸の第一歩＝息配分の土台。9曲平均 短音率 59% を下げるには、まず息をどこに置くかを知る。</p>
+      </div>
+      <div class="lesson-focus">今週の意識: 話し声で 3 秒吐き切る前に 1 秒止められるか</div>
     </a>
 
     <a class="lesson-card" href="https://www.youtube.com/watch?v=-ApSPyWHHc8" target="_blank">
-      <span class="lesson-num">L0-2</span>
-      <div class="lesson-title">#108 ロングトーン練習で歌唱力向上｜プロ歌手へのボイトレ理論</div>
+      <span class="lesson-num">S2-2</span>
+      <div class="lesson-title">ロングトーン練習で歌唱力向上｜プロ歌手へのボイトレ理論</div>
       <img class="lesson-thumb" src="https://i.ytimg.com/vi/-ApSPyWHHc8/maxresdefault.jpg" alt="">
-      <div class="lesson-meta"><span>基礎理論</span><span>座学</span></div>
+      <div class="lesson-meta"><span class="ch">MYP</span><span>#108</span><span>ロングトーン</span></div>
       <div class="lesson-section">
         <h5>なぜこれか</h5>
-        <p class="lesson-why">ダッシュボードの「短音率 57-78%」の意味＝1音を伸ばせないと歌唱力が上がらない理論の裏付け。Phase B の全レッスンの前提知識。</p>
+        <p class="lesson-why">フレーズの続きを伸ばす本命＝ロングトーン。7/17 実測ではメロディ 28本・Wherever 26本と<strong>刻む力はある</strong>ので、次は 1 本の長さを伸ばす方向。</p>
       </div>
-      <div class="lesson-focus">今週の意識: なし（座学）</div>
+      <div class="lesson-focus">今週の意識: メロディの Aメロを録って longtones_count が上がるか</div>
     </a>
 
-    <a class="lesson-card" href="https://www.youtube.com/watch?v=BPVSCeUvMbU" target="_blank">
-      <span class="lesson-num">L0-3</span>
-      <div class="lesson-title">【ボイトレ】かすれ声・喉が詰まる感じが一瞬で消えます！通る声の出し方</div>
-      <img class="lesson-thumb" src="https://i.ytimg.com/vi/BPVSCeUvMbU/maxresdefault.jpg" alt="">
-      <div class="lesson-meta"><span>基礎理論</span><span>座学</span></div>
+    <a class="lesson-card" href="https://www.youtube.com/watch?v=1j612-0vYq4" target="_blank">
+      <span class="lesson-num">S2-3</span>
+      <div class="lesson-title">ボイトレ基礎は横隔膜トレーニング！【息止め】</div>
+      <img class="lesson-thumb" src="https://i.ytimg.com/vi/1j612-0vYq4/maxresdefault.jpg" alt="">
+      <div class="lesson-meta"><span class="ch">MYP</span><span>#15</span><span>支え筋</span></div>
       <div class="lesson-section">
         <h5>なぜこれか</h5>
-        <p class="lesson-why">ダッシュボードの「Shimmer 13.5-19.5%」の体感的な意味＝声帯閉鎖不全による息漏れ・振幅揺らぎ。Mits の 4 曲通じた体質的課題の原因理解。</p>
+        <p class="lesson-why">息を「配分」するには止められる筋力が要る。息止めトレで支え筋を作る。</p>
       </div>
-      <div class="lesson-focus">今週の意識: なし（座学）</div>
-    </a>
-
-    <a class="lesson-card" href="https://www.youtube.com/watch?v=be_EryVZq_M" target="_blank">
-      <span class="lesson-num">L0-4</span>
-      <div class="lesson-title">【ボイトレ】音程を合わせる方法【ピッチ】（Jitter 相当・代替）</div>
-      <img class="lesson-thumb" src="https://i.ytimg.com/vi/be_EryVZq_M/maxresdefault.jpg" alt="">
-      <div class="lesson-meta"><span class="ch">Maco</span><span>音程・耳</span></div>
-      <div class="lesson-section">
-        <h5>なぜこれか</h5>
-        <p class="lesson-why">Jitter（周期揺らぎ）の音声学的直接解説は日本語 YouTube に無いため、Maco の音程ピッチ精度講義で代替。Mits の cent 変動 27-39 の意味理解に直結。</p>
-      </div>
-      <div class="lesson-focus">今週の意識: なし（座学）</div>
-    </a>
-
-    <a class="lesson-card" href="https://www.youtube.com/watch?v=sHECxyr5Pk4" target="_blank">
-      <span class="lesson-num">L0-5</span>
-      <div class="lesson-title">歌う直前10秒、この呼吸やるだけ！プロ級に響く声になる！</div>
-      <img class="lesson-thumb" src="https://i.ytimg.com/vi/sHECxyr5Pk4/maxresdefault.jpg" alt="">
-      <div class="lesson-meta"><span class="ch">みんなのボイトレ</span><span>発声・呼吸</span></div>
-      <div class="lesson-section">
-        <h5>なぜこれか</h5>
-        <p class="lesson-why">小泉誠司先生（Sage Koizumi・Berklee 音大卒・ニューベリーサウンド代表）。「息の支え」＝ Mits の中核テーマに直結する呼吸ルーティン。カラオケ入場前 10 秒で即使える。</p>
-      </div>
-      <div class="lesson-focus">今週の意識: カラオケ前に毎回この呼吸法を試す</div>
-    </a>
-
-    <a class="lesson-card" href="https://www.youtube.com/watch?v=WypJck8Nnig" target="_blank">
-      <span class="lesson-num">L0-6</span>
-      <div class="lesson-title">身近なコレ使って練習すると、プロ級に通る声になる！</div>
-      <img class="lesson-thumb" src="https://i.ytimg.com/vi/WypJck8Nnig/maxresdefault.jpg" alt="">
-      <div class="lesson-meta"><span class="ch">みんなのボイトレ</span><span>発声・呼吸</span></div>
-      <div class="lesson-section">
-        <h5>なぜこれか</h5>
-        <p class="lesson-why">小泉先生の看板メソッド「通る声≠大声」= 声帯負担を減らして遠達性を上げる。Mits の「短音率」「Shimmer」体質的課題に直結・PDCA と親和。</p>
-      </div>
-      <div class="lesson-focus">今週の意識: 身近な道具でフィードバック</div>
-    </a>
-
-    <a class="lesson-card" href="https://www.youtube.com/watch?v=F3bvM6uCn30" target="_blank">
-      <span class="lesson-num">L0-7</span>
-      <div class="lesson-title">玉置浩二 / メロディーを歌おう！〜忘年会で使える！！〜</div>
-      <img class="lesson-thumb" src="https://i.ytimg.com/vi/F3bvM6uCn30/maxresdefault.jpg" alt="">
-      <div class="lesson-meta"><span class="ch">大人の歌ラボ</span><span>表現・歌い方</span></div>
-      <div class="lesson-section">
-        <h5>なぜこれか</h5>
-        <p class="lesson-why">Mits 直接指定。<strong>歌う場面（忘年会）</strong>を明確にする＝「音を場面で保持する意識」に直結。楽曲別副教材（M1-1〜M1-3）と併用推奨。</p>
-      </div>
-      <div class="lesson-focus">今週の意識: 場面を思い浮かべながらメロディを歌う</div>
-    </a>
-
-    <a class="lesson-card" href="https://www.youtube.com/watch?v=kdxShx2Vi_E" target="_blank">
-      <span class="lesson-num">L0-8</span>
-      <div class="lesson-title">【ボイトレ】中高年が簡単に歌が上手くなるコツとテクニック【初出し情報】</div>
-      <img class="lesson-thumb" src="https://i.ytimg.com/vi/kdxShx2Vi_E/maxresdefault.jpg" alt="">
-      <div class="lesson-meta"><span>練習法・メソッド</span><span>中高年向け</span></div>
-      <div class="lesson-section">
-        <h5>なぜこれか</h5>
-        <p class="lesson-why">58 歳男性・中級精度向上フェーズと年齢層一致。音域拡張不要でのクオリティ向上ガイド。</p>
-      </div>
-      <div class="lesson-focus">今週の意識: なし（参考視聴）</div>
-    </a>
-
-    <a class="lesson-card" href="https://www.youtube.com/watch?v=52FBqrlaU34" target="_blank">
-      <span class="lesson-num">L0-9</span>
-      <div class="lesson-title">中高年・シニア男性がカラオケで歌いやすい曲10選</div>
-      <img class="lesson-thumb" src="https://i.ytimg.com/vi/52FBqrlaU34/maxresdefault.jpg" alt="">
-      <div class="lesson-meta"><span class="ch">ゆみ先生</span><span>選曲ガイド</span></div>
-      <div class="lesson-section">
-        <h5>なぜこれか</h5>
-        <p class="lesson-why">バラード中心の Mits の好みに合う曲の代替候補ガイド。玉置浩二／松山千春以外のバラードで練習曲を広げたい時。<strong>⚠️ 保留判定待ち</strong>: ゆみ先生は既存 DB に 8 本収録済み（チャンネル被り）。</p>
-      </div>
-      <div class="lesson-focus">今週の意識: 選曲の参考</div>
+      <div class="lesson-focus">今週の意識: 毎日 5 分の息止めルーティン</div>
     </a>
 
   </div>
 </section>
 
-<!-- ============================== Phase A ============================== -->
+<!-- ============================== STEP 3 ============================== -->
 <section class="phase-section">
   <div class="phase-header">
-    <h2 class="phase-name" style="margin:0; border:none; padding:0;">Phase A — 現状の座標を掴む</h2>
-    <div class="phase-weeks">Week 1-2 / 2 本</div>
+    <h2 class="phase-name" style="margin:0; border:none; padding:0;">STEP 3 — 声質・喉のケア（保全）</h2>
+    <div class="phase-weeks">Week 6 相当 / basics 3本</div>
   </div>
-  <p class="phase-desc">自作ダッシュボードの用語と共通言語を作り、自分の音痴タイプを客観化する。</p>
+  <p class="phase-desc">7/17 クリーン測定で HNR バラード群 16 dB 台・low_noise_hits 全曲 0 を確認したため、<strong>旧「息漏れHNR最優先」軸は解消・保全用に 3本まで縮小</strong>。声帯閉鎖・響き・低音発声。<a href="./basics.html#step-3">basics STEP 3 の全3本</a>を参照。</p>
   <div class="lesson-grid">
 
-    <a class="lesson-card" href="https://www.youtube.com/watch?v=CE456g8qA_s" target="_blank">
-      <span class="lesson-num">Lesson 1</span>
-      <div class="lesson-title">歌が上手くなりたい人が絶対に知っておくべき７つの常識</div>
-      <img class="lesson-thumb" src="https://i.ytimg.com/vi/CE456g8qA_s/maxresdefault.jpg" alt="">
-      <div class="lesson-meta"><span class="ch">しらスタ</span><span>登録者 219万</span><span>基礎理論</span></div>
+    <a class="lesson-card" href="https://www.youtube.com/watch?v=9ezy4pJeadE" target="_blank">
+      <span class="lesson-num">S3-1</span>
+      <div class="lesson-title">声帯閉鎖がうまくできずハスキーになってしまう人へ</div>
+      <img class="lesson-thumb" src="https://i.ytimg.com/vi/9ezy4pJeadE/maxresdefault.jpg" alt="">
+      <div class="lesson-meta"><span class="ch">MYP</span><span>#42</span><span>声帯閉鎖</span></div>
       <div class="lesson-section">
         <h5>なぜこれか</h5>
-        <p class="lesson-why">Mits はすでに独学＋ダッシュボード運用で「客観視の姿勢」の準備は完璧。動画の①「自分の声を客観分析」と②「声を育てる」を、自作ダッシュボードの用語（短音率・cent 変動）と紐付けると、この後の 11 週の PDCA が言語化される。</p>
+        <p class="lesson-why">今のバラード HNR 16 dB 台を維持するための保全。声帯閉鎖が崩れると HNR は下がる。</p>
       </div>
-      <div class="lesson-focus">今週の意識: なし（宣言の週）</div>
-    </a>
-
-    <a class="lesson-card" href="https://www.youtube.com/watch?v=Yk-eXjZ82Ms" target="_blank">
-      <span class="lesson-num">Lesson 2</span>
-      <div class="lesson-title">音痴の治し方・音程を正確にとれない３つの原因</div>
-      <img class="lesson-thumb" src="https://i.ytimg.com/vi/Yk-eXjZ82Ms/maxresdefault.jpg" alt="">
-      <div class="lesson-meta"><span class="ch">しらスタ</span><span>音程・耳</span></div>
-      <div class="lesson-section">
-        <h5>なぜこれか</h5>
-        <p class="lesson-why">cent 変動 39 が「感受性・運動性・自虐」の 3 タイプのどれ由来か判別。Mits はロングトーン維持できる＝運動性は健全 → <strong>「運動性の中の着地精度」問題</strong>と切り分けるのが目的。</p>
-      </div>
-      <div class="lesson-focus">今週の意識: 自分がどのタイプかメモ</div>
+      <div class="lesson-focus">今週の意識: 保全（悪化させない）</div>
     </a>
 
   </div>
 </section>
 
-<!-- ============================== Phase B ============================== -->
+<!-- ============================== STEP 4 ============================== -->
+<section class="phase-section priority">
+  <div class="phase-header">
+    <h2 class="phase-name" style="margin:0; border:none; padding:0;">STEP 4 — 音程とリズムの基礎 🔴 Tony cent 揺らぎ 44.7 直撃</h2>
+    <div class="phase-weeks">Week 7-10 相当 / basics 9本</div>
+  </div>
+  <p class="phase-desc">7/17 真の弱点① Tony ノート内 cent 揺らぎ 44.7（ピッチセンター内の小刻み揺れ）を直撃する STEP。旧「Phase D cent 変動を絞る」を大幅拡張：<strong>リズム論全3編＋子音＋母音口形＋イヤトレ＋座学の9本構成</strong>。cent 揺らぎは音程練習より<strong>リズム基準の確立と母音口形の統一</strong>で潰れる。<a href="./basics.html#step-4">basics STEP 4 の全9本</a>を参照。以下はカリキュラム上の意味付け 3本。</p>
+  <div class="lesson-grid">
+
+    <a class="lesson-card" href="https://www.youtube.com/watch?v=UFqWMJDHp4U" target="_blank">
+      <span class="lesson-num">S4-1</span>
+      <div class="lesson-title">本物のリズム論で驚きの変化！【最強ボイトレリズム理論①】</div>
+      <img class="lesson-thumb" src="https://i.ytimg.com/vi/UFqWMJDHp4U/maxresdefault.jpg" alt="">
+      <div class="lesson-meta"><span class="ch">MYP</span><span>#37</span><span>リズム</span></div>
+      <div class="lesson-section">
+        <h5>なぜこれか</h5>
+        <p class="lesson-why">7/17 リズム判定 8/9 曲「不安定」（大空のみ やや安定）＝ cent 揺らぎと連動。まずリズム基準を確立する第一歩。</p>
+      </div>
+      <div class="lesson-focus">今週の意識: メトロノームで拍を数えながら鼻歌</div>
+    </a>
+
+    <a class="lesson-card" href="https://www.youtube.com/watch?v=cbWgekMizL8" target="_blank">
+      <span class="lesson-num">S4-2</span>
+      <div class="lesson-title">正しい発声の基礎となる口の開け方②【母音ごとの開け方】</div>
+      <img class="lesson-thumb" src="https://i.ytimg.com/vi/cbWgekMizL8/maxresdefault.jpg" alt="">
+      <div class="lesson-meta"><span class="ch">MYP</span><span>#31</span><span>母音口形</span></div>
+      <div class="lesson-section">
+        <h5>なぜこれか</h5>
+        <p class="lesson-why">母音口形が揺れると cent が揺れる。7/17 メロディ cent 52.1（9曲中最悪）は母音が定まっていない可能性大。</p>
+      </div>
+      <div class="lesson-focus">今週の意識: メロディの Aメロを母音だけで歌う録音</div>
+    </a>
+
+    <a class="lesson-card" href="https://www.youtube.com/watch?v=NJYLyAKXhFE" target="_blank">
+      <span class="lesson-num">S4-3</span>
+      <div class="lesson-title">【全部公開】このイヤートレーニングでズバ抜けた歌唱力を手に入れろ</div>
+      <img class="lesson-thumb" src="https://i.ytimg.com/vi/NJYLyAKXhFE/maxresdefault.jpg" alt="">
+      <div class="lesson-meta"><span class="ch">MYP</span><span>#121</span><span>イヤトレ</span></div>
+      <div class="lesson-section">
+        <h5>なぜこれか</h5>
+        <p class="lesson-why">cent 揺らぎは<strong>自分の揺れを聴き取れない</strong>ことに起因する。イヤトレでピッチセンターを察知する耳を作る。</p>
+      </div>
+      <div class="lesson-focus">今週の意識: 毎朝 5 分のイヤトレを3週間続けて cent を再計測</div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ============================== STEP 5 ============================== -->
 <section class="phase-section">
   <div class="phase-header">
-    <h2 class="phase-name" style="margin:0; border:none; padding:0;">Phase B — 短音率を殺す ★最優先課題</h2>
-    <div class="phase-weeks">Week 3-6 / 4 本</div>
+    <h2 class="phase-name" style="margin:0; border:none; padding:0;">STEP 5 — 高音・ミックス定着 🌱 E5到達実測を踏まえ新設</h2>
+    <div class="phase-weeks">Week 11-12 相当 / basics 4本</div>
   </div>
-  <p class="phase-desc">全課題の根っこ「息の支え」を土台から作る。喉開き → 共鳴 → 圧 → 発声全景の順で積む。</p>
+  <p class="phase-desc">7/17『皆無』で E5（672.9 Hz）到達を実測。<strong>旧「高音は基礎終了後」方針を撤回</strong>し、既に届いている高音の定着と拡張のため基礎レベルの高音導入 4本を新設。「拡張」ではなく「定着」フェーズ。<a href="./basics.html#step-5">basics STEP 5 の全4本</a>を参照。</p>
   <div class="lesson-grid">
 
-    <a class="lesson-card" href="https://www.youtube.com/watch?v=HUS8AaPGv9I" target="_blank">
-      <span class="lesson-num">Lesson 3</span>
-      <div class="lesson-title">喉を開いて歌う方法をボイストレーナーが徹底解説</div>
-      <img class="lesson-thumb" src="https://i.ytimg.com/vi/HUS8AaPGv9I/maxresdefault.jpg" alt="">
-      <div class="lesson-meta"><span class="ch">しらスタ</span><span>発声・呼吸</span></div>
+    <a class="lesson-card" href="https://www.youtube.com/watch?v=xb0PfpUg2XY" target="_blank">
+      <span class="lesson-num">S5-1</span>
+      <div class="lesson-title">高い声（ミックスボイス・ミドルボイス）高音発声への道筋</div>
+      <img class="lesson-thumb" src="https://i.ytimg.com/vi/xb0PfpUg2XY/maxresdefault.jpg" alt="">
+      <div class="lesson-meta"><span class="ch">MYP</span><span>#49</span><span>高音・ミックス</span></div>
       <div class="lesson-section">
         <h5>なぜこれか</h5>
-        <p class="lesson-why">短音率が高い＝喉が閉じて 1 音を鳴らし切る前に切ってる。まず声帯／喉仏／顎／軟口蓋／舌の 5 箇所を脱力する土台。</p>
+        <p class="lesson-why">E5 到達済（皆無）なので、次は「再現性のある高音」に。ミックスボイスの道筋。</p>
       </div>
-      <div class="lesson-focus">今週の意識: カラオケ入る前の 5 分でこの動画のストレッチをやってから 1 曲目</div>
-    </a>
-
-    <a class="lesson-card" href="https://www.youtube.com/watch?v=74cO73dkXdU" target="_blank">
-      <span class="lesson-num">Lesson 4</span>
-      <div class="lesson-title">本当の喉開け・全共鳴（29分）</div>
-      <img class="lesson-thumb" src="https://i.ytimg.com/vi/74cO73dkXdU/maxresdefault.jpg" alt="">
-      <div class="lesson-meta"><span class="ch">ゆみ先生</span><span>発声・呼吸</span></div>
-      <div class="lesson-section">
-        <h5>なぜこれか</h5>
-        <p class="lesson-why">Lesson 3 のしらスタ（現代ポップス系）と流派を変えたゆみ先生（声楽系）の骨太アプローチ。Mits のバリトン寄り声質にはこちらが刺さる可能性大。同じテーマを 2 流派で見て「自分の身体に合う方」が分かる。</p>
-      </div>
-      <div class="lesson-focus">今週の意識: 自宅の話し声で「胸に響かせる」感覚を試す</div>
-    </a>
-
-    <a class="lesson-card" href="https://www.youtube.com/watch?v=-1DWh-RDMgM" target="_blank">
-      <span class="lesson-num">Lesson 5</span>
-      <div class="lesson-title">声量をアップさせる声の圧のかけ方（20分）</div>
-      <img class="lesson-thumb" src="https://i.ytimg.com/vi/-1DWh-RDMgM/maxresdefault.jpg" alt="">
-      <div class="lesson-meta"><span class="ch">ひょっとこ歌唱研究</span><span>発声・呼吸</span></div>
-      <div class="lesson-section">
-        <h5>なぜこれか</h5>
-        <p class="lesson-why"><strong>「圧」= 1 音を最後まで押し続ける</strong> = 短音率下げる直接技術。Mits の見せ場ロングトーン（F#4 4秒）はすでに圧が立っている → それを<strong>サビ以外のメロ部分に横展開する</strong>概念言語化。</p>
-      </div>
-      <div class="lesson-focus">今週の意識: メロディの「サビじゃないメロ部分」を録音 → 短音率が動いたか確認</div>
-    </a>
-
-    <a class="lesson-card" href="https://www.youtube.com/watch?v=JRjHf38d_Wc" target="_blank">
-      <span class="lesson-num">Lesson 6</span>
-      <div class="lesson-title">本当に歌が上手い人の発声方法（13項目）</div>
-      <img class="lesson-thumb" src="https://i.ytimg.com/vi/JRjHf38d_Wc/maxresdefault.jpg" alt="">
-      <div class="lesson-meta"><span class="ch">Maco</span><span>発声・呼吸</span></div>
-      <div class="lesson-section">
-        <h5>なぜこれか</h5>
-        <p class="lesson-why">Phase B の総復習ポジション。13 項目（音量より倍音／喉仏の動き／息の量少なく／上顎の響き 等）を Mits の音源に当てはめて確認。<strong>Phase B 完走前のセルフチェックリスト</strong>として使う。</p>
-      </div>
-      <div class="lesson-focus">今週の意識: この動画のあとにメロディ再挑戦 → 短音率 55% を目指す（3% 下がれば成功）</div>
+      <div class="lesson-focus">今週の意識: 皆無を再度録音して E5 再現できるか</div>
     </a>
 
   </div>
 </section>
 
-<!-- ============================== Phase C ============================== -->
-<section class="phase-section">
-  <div class="phase-header">
-    <h2 class="phase-name" style="margin:0; border:none; padding:0;">Phase C — 低音ノイズを消す</h2>
-    <div class="phase-weeks">Week 7-8 / 2 本</div>
-  </div>
-  <p class="phase-desc">フレーズ末の fry/息漏れを、原理面と実技面の両方から潰す。</p>
-  <div class="lesson-grid">
+<!-- ============================== 楽曲別副教材 ============================== -->
+<h2>楽曲別副教材（7/17 クリーン9曲・攻略動画）</h2>
+<p>Mits がまねきねこで実際に歌った9曲について、トレーナーの歌ってみた／歌い方解説動画。<strong>STEP 1〜5 で身につけたことを実際の曲で試す時の副教材</strong>。カラオケ前に該当曲の1本を見てから挑戦する用途。</p>
 
-    <a class="lesson-card" href="https://www.youtube.com/watch?v=9vpi9Adaw20" target="_blank">
-      <span class="lesson-num">Lesson 7</span>
-      <div class="lesson-title">通る声・響く声の出し方（9分）</div>
-      <img class="lesson-thumb" src="https://i.ytimg.com/vi/9vpi9Adaw20/maxresdefault.jpg" alt="">
-      <div class="lesson-meta"><span class="ch">ひょっとこ歌唱研究</span><span>発声・呼吸</span></div>
-      <div class="lesson-section">
-        <h5>なぜこれか</h5>
-        <p class="lesson-why">低音ノイズ = 語尾で声帯が振動しきれず息だけ残る現象。<strong>「通る声」＝語尾まで振動を保つ</strong>の逆側から攻める。</p>
-      </div>
-      <div class="lesson-focus">今週の意識: メロディの 4.79s / 9.94s / 17.15s の 3 箇所を狙って再挑戦</div>
-    </a>
-
-    <a class="lesson-card" href="https://www.youtube.com/watch?v=6-YMsQumitY" target="_blank">
-      <span class="lesson-num">Lesson 8</span>
-      <div class="lesson-title">腹と喉の出し方の違い（10分）</div>
-      <img class="lesson-thumb" src="https://i.ytimg.com/vi/6-YMsQumitY/maxresdefault.jpg" alt="">
-      <div class="lesson-meta"><span class="ch">ゆみ先生</span><span>発声・呼吸</span></div>
-      <div class="lesson-section">
-        <h5>なぜこれか</h5>
-        <p class="lesson-why">低音ノイズ 10発の正体は「腹圧が抜けて喉だけで語尾を切ろうとしている」可能性大。<strong>フレーズ末を「声を切る」ではなく「腹圧はキープしたまま息だけ止める」感覚</strong>が AI 実測所見と直結する核心技術。</p>
-      </div>
-      <div class="lesson-focus">今週の意識: 6 箇所の低音ノイズ位置で全部この意識に切り替え。目標：メロディの低音ノイズを 10 → 5 に</div>
-    </a>
-
-  </div>
-
-</section>
-
-<!-- ============================== Phase D ============================== -->
-<section class="phase-section">
-  <div class="phase-header">
-    <h2 class="phase-name" style="margin:0; border:none; padding:0;">Phase D — cent 変動を絞る</h2>
-    <div class="phase-weeks">Week 9-11 / 3 本</div>
-  </div>
-  <p class="phase-desc">音程精度は既に改善傾向。座学 → 実技 → 日課化の 3 週で仕上げる。</p>
-  <div class="lesson-grid">
-
-    <a class="lesson-card" href="https://www.youtube.com/watch?v=0NMTj-bm9yA" target="_blank">
-      <span class="lesson-num">Lesson 9</span>
-      <div class="lesson-title">音程の取り方・音楽の基礎知識</div>
-      <img class="lesson-thumb" src="https://i.ytimg.com/vi/0NMTj-bm9yA/maxresdefault.jpg" alt="">
-      <div class="lesson-meta"><span class="ch">しらスタ</span><span>音程・耳</span></div>
-      <div class="lesson-section">
-        <h5>なぜこれか</h5>
-        <p class="lesson-why">cent 変動 39 は「相対音感が半音の中心を捉えきれてない」状態。まず理論で「半音の中心」を言語化するのが第一歩。</p>
-      </div>
-      <div class="lesson-focus">今週の意識: なし（座学の週）</div>
-    </a>
-
-    <a class="lesson-card" href="https://www.youtube.com/watch?v=GStQlcAQPzI" target="_blank">
-      <span class="lesson-num">Lesson 10</span>
-      <div class="lesson-title">音程正確率を劇的にアップさせる方法</div>
-      <img class="lesson-thumb" src="https://i.ytimg.com/vi/GStQlcAQPzI/maxresdefault.jpg" alt="">
-      <div class="lesson-meta"><span class="ch">MASAYAH</span><span>210万再生</span><span>音程・耳</span></div>
-      <div class="lesson-section">
-        <h5>なぜこれか</h5>
-        <p class="lesson-why">実技メソッド。しゃくり加点にも触れているのでカラオケ実戦向き。<strong>大空と大地の半音境界 3 箇所（02:08 C4→B3／00:59 C4→C#4／01:00 D#4→E4）を狙い撃ちで練習</strong>。</p>
-      </div>
-      <div class="lesson-focus">今週の意識: 上記 3 箇所を録音してダッシュボードで着地精度確認</div>
-    </a>
-
-    <a class="lesson-card" href="https://www.youtube.com/watch?v=2CL4fwqDp6Y" target="_blank">
-      <span class="lesson-num">Lesson 11</span>
-      <div class="lesson-title">有料級💫音程の取り方・コードトーンエクササイズ（35分・15チャプター）</div>
-      <img class="lesson-thumb" src="https://i.ytimg.com/vi/2CL4fwqDp6Y/maxresdefault.jpg" alt="">
-      <div class="lesson-meta"><span class="ch">翔てんてー</span><span>音程・耳</span></div>
-      <div class="lesson-section">
-        <h5>なぜこれか</h5>
-        <p class="lesson-why"><strong>毎日 5 分の日課化</strong>が cent 変動の恒常改善に一番効く。翔てんてーは 10 代で喉を壊した経験 → 科学的発声を体系化した講師なので、理論の裏付けが強い。</p>
-      </div>
-      <div class="lesson-focus">今週の意識: 毎朝 5 分。3 週間続けて cent 変動を再計測 → 30 前後を目指す</div>
-    </a>
-
-  </div>
-</section>
-
-<!-- ============================== Phase E ============================== -->
-<section class="phase-section">
-  <div class="phase-header">
-    <h2 class="phase-name" style="margin:0; border:none; padding:0;">Phase E — 助走音とロングトーン延伸</h2>
-    <div class="phase-weeks">Week 12 / 1 本</div>
-  </div>
-  <p class="phase-desc">F#4 サビの持続力延伸と、E4→F4 ジャンプ前の助走安定化を仕上げる。</p>
-  <div class="lesson-grid">
-
-    <a class="lesson-card" href="https://www.youtube.com/watch?v=cT1EEgYODoE" target="_blank">
-      <span class="lesson-num">Lesson 12</span>
-      <div class="lesson-title">高い声の出し方・ミックスボイス練習法（239万再生）</div>
-      <img class="lesson-thumb" src="https://i.ytimg.com/vi/cT1EEgYODoE/maxresdefault.jpg" alt="">
-      <div class="lesson-meta"><span class="ch">しらスタ</span><span>高音・音域拡張</span></div>
-      <div class="lesson-section">
-        <h5>なぜこれか</h5>
-        <p class="lesson-why">Mits の助走課題（E4→F4 ジャンプ前の 328Hz 揺れ）と、F#4 サビの持続力延伸の両方に効くのがミックスボイス制御。<strong>すでに 3-4 秒出せているので、あとは助走安定化と延伸だけ</strong>。</p>
-      </div>
-      <div class="lesson-focus">今週の意識: メロディ 32.03s の F4 助走 → F#4 サビの入りをこのメソッドで再構築。目標 F4 5 秒</div>
-    </a>
-
-  </div>
-</section>
-
-<!-- ============================== 楽曲別副教材 (v5 新設) ============================== -->
-<h2>楽曲別副教材（M1-1〜M4-2・実際に歌った 4 曲の攻略動画）★v5 新設</h2>
-<p>Mits がまねきねこで実際に歌った 4 曲について、トレーナーの歌ってみた/歌い方解説動画。<strong>本編カリキュラム（Phase A-E）で身につけたことを、実際の曲で試す時の副教材</strong>。カラオケ前に該当曲の 1 本を見てから挑戦する用途。</p>
-
-<h3>🎤 曲 1: メロディ（玉置浩二・F#major）</h3>
-<p><em>Mits 実測: F4 サビ 3.94 秒ロング成功・短音率 57.6%・低音ノイズ 10</em></p>
+<h3>🎤 曲 1: メロディ（玉置浩二）</h3>
+<p><em>7/17実測: E3-F4／HNR 16.28／cent 揺らぎ 52.1（9曲中最悪）／短音率 0.453（9曲中2番目に良）／深み -11.82（玉置級近似）／ロングトーン 28本</em></p>
 <div class="lesson-grid">
   <a class="lesson-card" href="https://www.youtube.com/watch?v=5c1NbZH3O0E" target="_blank">
     <span class="lesson-num">M1-1</span>
     <div class="lesson-title">名曲ドリル① 玉置浩二『メロディー』〜ひとつひとつの音に集中する(前編)〜</div>
     <img class="lesson-thumb" src="https://i.ytimg.com/vi/5c1NbZH3O0E/maxresdefault.jpg" alt="">
     <div class="lesson-meta"><span class="ch">Voice Lab.</span></div>
-    <div class="lesson-focus">狙い: 1音への集中＝Phase B「圧」の実曲適用</div>
+    <div class="lesson-focus">狙い: 1音への集中＝STEP 4「母音口形の統一」で cent 52.1 を下げる</div>
   </a>
   <a class="lesson-card" href="https://www.youtube.com/watch?v=U3YLY7fSjnk" target="_blank">
     <span class="lesson-num">M1-2</span>
     <div class="lesson-title">【歌い方】メロディー/玉置浩二【テクニックと表現を分析】</div>
     <img class="lesson-thumb" src="https://i.ytimg.com/vi/U3YLY7fSjnk/maxresdefault.jpg" alt="">
     <div class="lesson-meta"><span class="ch">篠田沙希 魂のボイトレ</span></div>
-    <div class="lesson-focus">狙い: 「量→質」への転換教材・F4 ロングトーンの延伸方向</div>
+    <div class="lesson-focus">狙い: 表現力方向・深み -11.82 の玉置級近似を維持</div>
   </a>
   <a class="lesson-card" href="https://www.youtube.com/watch?v=h2__zDvuKEY" target="_blank">
     <span class="lesson-num">M1-3</span>
     <div class="lesson-title">玉置浩二『メロディー』歌い方 神級表現力の秘密...</div>
     <img class="lesson-thumb" src="https://i.ytimg.com/vi/h2__zDvuKEY/maxresdefault.jpg" alt="">
     <div class="lesson-meta"><span class="ch">武原一史</span></div>
-    <div class="lesson-focus">狙い: 表現力方向・見せ場の芯を深める</div>
+    <div class="lesson-focus">狙い: 表現力・見せ場の芯を深める</div>
   </a>
 </div>
 
 <h3>🎤 曲 2: 大空と大地の中で（松山千春）</h3>
-<p><em>Mits 実測: F#4 サビ 3-4 秒×4 カ所・E4 9 秒エンディング成功・HNR 10.22 dB（4曲中最高）</em></p>
+<p><em>7/17実測: E3-F#4／HNR 16.68（9曲中2番目）／cent 揺らぎ 39.0（9曲中最良）／短音率 0.488／リズム やや安定（9曲中唯一）</em></p>
 <div class="lesson-grid">
   <a class="lesson-card" href="https://www.youtube.com/watch?v=zOZkzyb8BZs" target="_blank">
     <span class="lesson-num">M2-1</span>
     <div class="lesson-title">松山千春 - 大空と大地の中で テクニック解説</div>
     <img class="lesson-thumb" src="https://i.ytimg.com/vi/zOZkzyb8BZs/maxresdefault.jpg" alt="">
     <div class="lesson-meta"><span class="ch">ゆみ先生・40代美ボイス</span></div>
-    <div class="lesson-focus">狙い: 40代男性ペルソナ完全一致・E4 9秒エンディング応用</div>
+    <div class="lesson-focus">狙い: 40代男性ペルソナ完全一致・cent 39 の最良状態を全曲に横展開</div>
   </a>
   <a class="lesson-card" href="https://www.youtube.com/watch?v=Jq7wiw6RTPg" target="_blank">
     <span class="lesson-num">M2-2</span>
@@ -799,19 +615,19 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
     <div class="lesson-title">大空と大地の中で 歌い方＋リズム練習＆ソルフェージュ</div>
     <img class="lesson-thumb" src="https://i.ytimg.com/vi/GH6sEWj25RI/maxresdefault.jpg" alt="">
     <div class="lesson-meta"><span class="ch">塔子ボイストレーニング教室</span></div>
-    <div class="lesson-focus">狙い: リズム＋音程精度の統合俯瞰</div>
+    <div class="lesson-focus">狙い: リズム＋音程精度の統合（大空のリズム やや安定 を維持）</div>
   </a>
 </div>
 
-<h3>🎤 曲 3: Wherever you are（ONE OK ROCK・Emajor）</h3>
-<p><em>Mits 実測: G#4 到達（原曲キー）・HNR 5.83 dB・4曲中最も苦しい部類</em></p>
+<h3>🎤 曲 3: Wherever you are（ONE OK ROCK）</h3>
+<p><em>7/17実測: F#3-E4／HNR 16.34／cent 揺らぎ 39.9／短音率 0.526／ロングトーン 26本（9曲中2番目）</em></p>
 <div class="lesson-grid">
   <a class="lesson-card" href="https://www.youtube.com/watch?v=U-13MqIe2b8" target="_blank">
     <span class="lesson-num">M3-1</span>
     <div class="lesson-title">【歌い方】Wherever You Are / ONE OK ROCK（難易度S）</div>
     <img class="lesson-thumb" src="https://i.ytimg.com/vi/U-13MqIe2b8/maxresdefault.jpg" alt="">
     <div class="lesson-meta"><span class="ch">しらスタ</span></div>
-    <div class="lesson-focus">狙い: 曲固有攻略・難易度 S の裏付け</div>
+    <div class="lesson-focus">狙い: 曲固有攻略・7/17 では HNR 16 台にクリーン化</div>
   </a>
   <a class="lesson-card" href="https://www.youtube.com/watch?v=9bv6I8O61Do" target="_blank">
     <span class="lesson-num">M3-2</span>
@@ -830,7 +646,7 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
 </div>
 
 <h3>🎤 曲 4: 努努（ONE OK ROCK）</h3>
-<p><em>Mits 実測: C#5 到達（過去最高）・HNR 3.75 dB（過去最悪）・原曲キー挑戦は非推奨</em></p>
+<p><em>7/17実測: G3-E4／HNR 9.72（9曲中最悪）／Jitter 2.05／Shimmer 16.02／ロングトーン 0本／抑揚 普通／短音率 0.798（9曲中2番目に悪）＝限界曲</em></p>
 <div class="lesson-grid">
   <a class="lesson-card" href="https://www.youtube.com/watch?v=a6vGdb2fIAQ" target="_blank">
     <span class="lesson-num">M4-1</span>
@@ -844,7 +660,7 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
     <div class="lesson-title">ONE OK ROCK・TAKA 歌い方徹底分析 力強い高音やミックスボイスの秘密</div>
     <img class="lesson-thumb" src="https://i.ytimg.com/vi/ycYl6fTipQg/maxresdefault.jpg" alt="">
     <div class="lesson-meta"><span class="ch">シダパンのYouTube体育大学</span></div>
-    <div class="lesson-focus">狙い: 高音・ミックスの原理（Phase E とセット視聴）</div>
+    <div class="lesson-focus">狙い: 高音・ミックスの原理（STEP 5 とセット視聴）</div>
   </a>
   <div class="lesson-card" data-no-check="1" style="opacity:0.55; text-align:center; padding:32px 24px;">
     <span class="lesson-num" style="background:var(--muted);">M4-3</span>
@@ -853,8 +669,14 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
   </div>
 </div>
 
+<h3>🎤 曲 5-9: 7/17 追加5曲（副教材 未編纂）</h3>
+<div class="diag">
+  <p style="margin:0;">乾杯（長渕剛・C3-D4／HNR 16.14／cent 41.4／短音率 <strong>0.424 で 9曲中最良</strong>）・The Beginning（ONE OK ROCK・D#3-D#4／HNR 13.38／BPM 141.9 で 9曲中最速）・We are（ONE OK ROCK・C#3-F4／HNR 16.36／ロングトーン 21本）・皆無（ONE OK ROCK・F3-<strong>E5</strong>／9曲中唯一の E5 到達）・旅姿六人衆（サザン・D3-E4／HNR 17.26 で 9曲中最良／深み -10.62）。</p>
+  <p style="margin:8px 0 0;font-family:var(--mono);font-size:11px;color:var(--muted);">※ 5曲分の楽曲別副教材は<strong>未編纂（curation 未着手）</strong>。7/17 で新規に加わったため。捏造せず「未編纂」と明示する。M5〜M9 が揃うまでは STEP 1〜5 の一般教材で対応。</p>
+</div>
+
 <!-- ============================== 補講 ============================== -->
-<h2>補講枠（本編12週で足りない時 / 気分転換に）</h2>
+<h2>補講枠（本編で足りない時 / 気分転換に）</h2>
 <div class="lesson-grid">
 
   <a class="lesson-card supp-hot" href="https://www.youtube.com/watch?v=mPh3LqAi42E" target="_blank">
@@ -864,7 +686,7 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
     <div class="lesson-meta"><span class="ch">しらスタ</span><span>リズム・グルーブ</span></div>
     <div class="lesson-section">
       <h5>使いどころ</h5>
-      <p class="lesson-why"><strong>4 曲すべてリズム判定「不安定」だった</strong>（BPM 118〜138 全域）。カラオケ現場で即実践できる手拍子メソッド。<strong>Week 1〜2 の Phase A 期間中に併走視聴を推奨</strong>。バラードのタメ感を掴む＆息の支えのメトロノーム役として。</p>
+      <p class="lesson-why"><strong>9曲中 8曲でリズム判定「不安定」</strong>（BPM 122〜142 全域）。<strong>STEP 4 期間中に併走視聴を推奨</strong>。cent 揺らぎ 44.7 と連動する軸なので、リズム基準の確立が cent 直撃と並ぶ本命。</p>
     </div>
   </a>
 
@@ -875,7 +697,7 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
     <div class="lesson-meta"><span class="ch">しらスタ</span><span>基礎理論</span></div>
     <div class="lesson-section">
       <h5>使いどころ</h5>
-      <p class="lesson-why">「なぜ自分の声が芯なく聞こえるか」を理論理解したい時。倍音の視点で自分の声質を分解できる。</p>
+      <p class="lesson-why">7/17 バラード HNR 16dB 台の意味を理論理解したい時。倍音の視点で自分の声質を分解できる。</p>
     </div>
   </a>
 
@@ -886,7 +708,7 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
     <div class="lesson-meta"><span class="ch">Maco</span><span>リズム・グルーブ</span></div>
     <div class="lesson-section">
       <h5>使いどころ</h5>
-      <p class="lesson-why">バラードのサビでビート的な厚みを出したい時。三連符・ビート編・実践の実技的アプローチ。</p>
+      <p class="lesson-why">バラードのサビでビート的な厚みを出したい時。STEP 4 のリズム論3編とセットで。</p>
     </div>
   </a>
 
@@ -897,7 +719,7 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
     <div class="lesson-meta"><span class="ch">ココウィズ</span><span>発声・呼吸</span></div>
     <div class="lesson-section">
       <h5>使いどころ</h5>
-      <p class="lesson-why">Lesson 11 のコードトーンとは別の「発声のフィジカル基礎」を毎日 10 分で作りたい時（2 週間結果確約型）。</p>
+      <p class="lesson-why">STEP 1〜3 とは別の「発声のフィジカル基礎」を毎日 10 分で作りたい時（2 週間結果確約型）。</p>
     </div>
   </a>
 
@@ -905,69 +727,66 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
 
 <!-- ============================== 計測サイクル ============================== -->
 <h2>計測サイクル（3ヶ月後の目標・タイプ別）</h2>
+<p>「上達」の証拠は、<strong>同一新条件で v2 以降を録って cent 揺らぎ・短音率が動いたか</strong>で見る。1回だけの v1 で「良くなった／悪くなった」を判定しない（<a href="./success.html">サクセスFile</a>の運用ルール）。</p>
 
 <h3>A タイプ・バラード（本編の主評価軸）</h3>
 <table>
-<thead><tr><th>指標</th><th>Now (メロディ/大空)</th><th>3ヶ月後目標</th></tr></thead>
+<thead><tr><th>指標</th><th>Now（7/17 バラード4曲平均）</th><th>3ヶ月後目標</th></tr></thead>
 <tbody>
-<tr><td>短音率</td><td>57.2〜57.6%</td><td class="best">48% 前後</td></tr>
-<tr><td>低音ノイズ</td><td>10 / 3</td><td class="best">0〜2発</td></tr>
-<tr><td>cent 変動</td><td>37〜39</td><td class="best">30 前後（既に Wherever で 27 達成）</td></tr>
-<tr><td>F4 ロングトーン</td><td>3.94 秒</td><td class="best">5 秒</td></tr>
-<tr><td>E4 ロングトーン</td><td>9.04 秒</td><td class="best">10 秒</td></tr>
-<tr><td>総合判定</td><td>不安定</td><td class="best">やや不安定</td></tr>
+<tr><td>Tony cent 揺らぎ</td><td>44.0（メロディ 52.1／大空 39.0／乾杯 41.4／旅姿 43.5）</td><td class="best">35 前後</td></tr>
+<tr><td>短音率</td><td>0.466（メロディ 0.453／大空 0.488／乾杯 0.424／旅姿 0.500）</td><td class="best">0.40 前後</td></tr>
+<tr><td>HNR</td><td>16.6 dB（維持ライン）</td><td class="best">16 dB台 維持</td></tr>
+<tr><td>低音ノイズ</td><td>全曲 0（既に達成）</td><td class="best">0 維持</td></tr>
+<tr><td>ロングトーン数</td><td>15〜28本（維持ライン）</td><td class="best">全曲 20+</td></tr>
+<tr><td>リズム判定</td><td>3/4 曲 不安定・大空のみ やや安定</td><td class="best">3/4 曲 やや安定</td></tr>
 </tbody></table>
 
-<h3>B タイプ・ロック挑戦キー（Wherever・-1〜-2 半音下げ再挑戦時）</h3>
+<h3>B タイプ・ロック挑戦キー（Wherever/The Beginning/We are/皆無）</h3>
 <table>
-<thead><tr><th>指標</th><th>Now (原曲キー)</th><th>Phase C 完了後・半音下げ再挑戦の目標</th></tr></thead>
+<thead><tr><th>指標</th><th>Now（7/17 4曲平均）</th><th>3ヶ月後目標</th></tr></thead>
 <tbody>
-<tr><td>短音率</td><td>67.0%</td><td class="best">50% 台</td></tr>
-<tr><td>低音ノイズ</td><td>47発</td><td class="best">20 以下</td></tr>
-<tr><td>HNR</td><td>5.83 dB</td><td class="best">10 dB 以上</td></tr>
-<tr><td>Jitter</td><td>4.10%</td><td class="best">2% 以下</td></tr>
-<tr><td>Shimmer</td><td>17.1%</td><td class="best">13% 以下</td></tr>
+<tr><td>Tony cent 揺らぎ</td><td>45.8（Wherever 39.9／TB 45.5／We are 47.1／皆無 50.6）</td><td class="best">40 前後</td></tr>
+<tr><td>短音率</td><td>0.662（皆無 0.811 が引き上げ）</td><td class="best">0.55 前後</td></tr>
+<tr><td>HNR</td><td>15.4 dB（TB 13.38 が下限）</td><td class="best">TB を 15 dB台へ</td></tr>
+<tr><td>皆無 E5 再現</td><td>1回（7/17 実測）</td><td class="best">安定 3回再現</td></tr>
 </tbody></table>
 
 <h3>C タイプ・ロック限界キー（努努・腕試し用）</h3>
 <table>
-<thead><tr><th>指標</th><th>Now (原曲キー)</th><th>Phase E 完走後・-3 半音下げの目標</th></tr></thead>
+<thead><tr><th>指標</th><th>Now（7/17 原曲キー）</th><th>3ヶ月後・-3半音下げの目標</th></tr></thead>
 <tbody>
-<tr><td>短音率</td><td>78.4%</td><td class="best">60% 台</td></tr>
-<tr><td>ロングトーン</td><td>0 本</td><td class="best">3 本以上</td></tr>
-<tr><td>HNR</td><td>3.75 dB</td><td class="best">7 dB 以上</td></tr>
-<tr><td>Shimmer</td><td>19.5%</td><td class="best">15% 以下</td></tr>
-<tr><td>ビブラート</td><td>2 回</td><td class="best">6 回以上（装飾の余裕を取り戻す）</td></tr>
+<tr><td>短音率</td><td>0.798</td><td class="best">0.65 台</td></tr>
+<tr><td>ロングトーン</td><td>0本</td><td class="best">3本以上</td></tr>
+<tr><td>HNR</td><td>9.72 dB</td><td class="best">13 dB 以上</td></tr>
+<tr><td>Shimmer</td><td>16.02%</td><td class="best">12% 以下</td></tr>
+<tr><td>抑揚判定</td><td>普通</td><td class="best">豊か</td></tr>
 </tbody></table>
 
-<h3>キー戦略の原則（4曲データから確定）</h3>
+<h3>キー戦略の原則（7/17 9曲データから確定）</h3>
 <blockquote>
 <strong>1.</strong> その日の 1 曲目は必ず A タイプ（バラードで声帯を温めてから難曲へ）<br>
-<strong>2.</strong> B/C タイプは -2〜-3 半音下げから始める（原曲キー挑戦は Shimmer 崩壊・声質全乱れ）<br>
-<strong>3.</strong> 同セッションで 3 曲以上歌う日は最後の 1 曲を A タイプに戻す（クールダウン）
+<strong>2.</strong> 努努は -3 半音下げから始める（原曲キー挑戦は Shimmer 16% / HNR 10 割れで声帯負担大）<br>
+<strong>3.</strong> 同セッションで 3 曲以上歌う日は最後の 1 曲を A タイプに戻す（クールダウン）<br>
+<strong>4.</strong> 皆無の E5 は再現性がまだ 1回のみ。ウォームアップ後の 2〜3曲目に配置し、乱発しない
 </blockquote>
 
-<h3>曲選びの推奨</h3>
+<h3>曲選びの推奨（STEP との対応）</h3>
 <ul>
-<li><strong>Week 1〜7（Phase A〜B）</strong>: A タイプ主戦場（メロディ／大空と大地）で「息の支え」を作る</li>
-<li><strong>Week 8〜11（Phase C〜D）</strong>: A タイプで支えを固めつつ、B タイプ Wherever を -1〜-2 半音下げで試す</li>
-<li><strong>Week 12（Phase E）</strong>: F#4／G4 の助走安定＋ロングトーン延伸を A タイプで測る</li>
-<li><strong>Phase E 以降 or 半年〜1年後</strong>: C タイプ努努を -3 半音下げで腕試し（原曲キーは声帯保護の観点から今は非推奨）</li>
+<li><strong>STEP 1〜2 期間</strong>: A タイプ主戦場（メロディ／大空／乾杯／旅姿）で「息の配分」を作る</li>
+<li><strong>STEP 3〜4 期間</strong>: A タイプで cent 揺らぎ 44.7 の直撃を続けつつ、B タイプ Wherever/We are を -1半音下げで試す</li>
+<li><strong>STEP 5 期間</strong>: 皆無で E5 定着を測る（同曲 v2 以降のクリーン録音で再現性を確認）</li>
+<li><strong>STEP 5 以降 or 半年後</strong>: C タイプ努努を -3半音下げで腕試し（原曲キーは声帯保護の観点から今は非推奨）</li>
 </ul>
 
 <div class="footer">
-  <div>元データ: 歌の教材動画DB (Notion 89本) + カラオケ練習AI 4曲9軸実測</div>
-  <div>Notion DB: <a href="https://www.notion.so/80946514e5cb4cf1babdd01dfaf56edf" target="_blank">80946514...56edf</a></div>
-</div>
-
-<div class="back-nav-bottom">
-  <a href="./" style="display:inline-block; padding:10px 20px; font-family:var(--mincho); font-size:14px; font-weight:600; color:var(--gold); background:rgba(212,168,91,0.10); border:1px solid var(--gold); border-radius:6px; text-decoration:none;">← カラオケ練習AI ダッシュボードに戻る</a>
+  <div>元データ: 7/17 クリーン録音9曲（demucs 分離＋Praat＋openSMILE＋torchcrepe＋pypYIN）</div>
+  <div>数値の正本: <a href="./measure.html">実測ダッシュ</a> ／ <a href="./profile.html">声質スコアカード</a></div>
 </div>
 
 <script>
 // チェックリスト自動注入・localStorage 保存
 document.addEventListener('DOMContentLoaded', () => {
-  const STORAGE_PREFIX = 'karaoke-curriculum-v5:';
+  const STORAGE_PREFIX = 'karaoke-curriculum-v6:';
   const cards = document.querySelectorAll('.lesson-card');
   let totalCheckable = 0;
   const updateSummary = () => {
@@ -996,7 +815,6 @@ document.addEventListener('DOMContentLoaded', () => {
       updateSummary();
     };
     if (localStorage.getItem(key) === '1') setChecked(true);
-    // カード本体（<a>）への click 伝播を阻止
     div.addEventListener('click', e => { e.stopPropagation(); });
     cb.addEventListener('click', e => { e.stopPropagation(); });
     cb.addEventListener('change', () => {
@@ -1005,7 +823,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 画面下部の進捗サマリー
   const summary = document.createElement('div');
   summary.className = 'checklist-summary';
   summary.innerHTML = `
@@ -1016,8 +833,6 @@ document.addEventListener('DOMContentLoaded', () => {
   updateSummary();
 });
 </script>
-<script src="./nav.js"></script>
-
 <script src="./nav.js"></script>
 </body>
 </html>
