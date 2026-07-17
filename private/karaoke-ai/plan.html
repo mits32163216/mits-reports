@@ -185,6 +185,7 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
 }
 .lesson-check.checked { color: var(--sage); font-weight: 600; background: rgba(122, 155, 126, 0.08); }
 .lesson-check .lc-label { flex: 1; }
+.lesson-check .lc-date { color: var(--sage); font-family: var(--mono); font-size: 11px; opacity: 0.85; }
 .lesson-card.checked-card { border-color: var(--sage); }
 .checklist-summary {
   position: sticky; bottom: 0; z-index: 90;
@@ -1011,54 +1012,136 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
 </script>
 
 <script>
-// チェックリスト自動注入・localStorage 保存
-document.addEventListener('DOMContentLoaded', () => {
-  const STORAGE_PREFIX = 'karaoke-curriculum-v6:';
-  const cards = document.querySelectorAll('.lesson-card');
-  let totalCheckable = 0;
-  const updateSummary = () => {
-    const checked = document.querySelectorAll('.lesson-check.checked').length;
-    const s = document.getElementById('checklist-summary-text');
-    if (s) s.innerHTML = `📚 進捗: <strong>${checked} / ${totalCheckable} 本</strong> 視聴済み`;
-  };
-  cards.forEach((card, idx) => {
-    if (card.dataset.noCheck === '1') return;
-    totalCheckable++;
-    const numEl = card.querySelector('.lesson-num');
-    const num = numEl ? numEl.textContent.trim().split(' ')[0] : `card-${idx}`;
-    const chkId = 'chk-' + num.replace(/[^\w-]/g, '_');
-    const div = document.createElement('div');
-    div.className = 'lesson-check';
-    div.innerHTML = `<input type="checkbox" id="${chkId}"><span class="lc-label">見たらチェック</span>`;
-    card.appendChild(div);
-    const cb = div.querySelector('input');
-    const span = div.querySelector('.lc-label');
-    const key = STORAGE_PREFIX + chkId;
-    const setChecked = (v) => {
-      cb.checked = v;
-      div.classList.toggle('checked', v);
-      card.classList.toggle('checked-card', v);
-      span.textContent = v ? '✓ 見た！' : '見たらチェック';
+// ============================================================
+// lesson-card 視聴チェック：basics.html / videos.html と 3層 localStorage 共有
+//   PREFIX      = 'myp-watched:<youtube_id>'         boolean
+//   DATE_PREFIX = 'myp-watched-date:<youtube_id>'    "YYYY-MM-DD"
+//   LOG_PREFIX  = 'karaoke-watch-log:<YYYY-MM-DD>'   JSON配列 [vid,...]
+// 同じ動画をどのページで見ても同じキーで記録されるので連動する
+// ※ stage 機能の karaoke-stage-include:* とは別名前空間（混同禁止）
+// ============================================================
+(function () {
+  var PREFIX = 'myp-watched:';
+  var DATE_PREFIX = 'myp-watched-date:';
+  var LOG_PREFIX = 'karaoke-watch-log:';
+
+  function todayStr() {
+    var d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+  function fmtMD(s) {
+    var p = s.split('-'); if (p.length !== 3) return s;
+    return String(parseInt(p[1],10)) + '/' + String(parseInt(p[2],10));
+  }
+  function pushLog(dateStr, vid) {
+    var key = LOG_PREFIX + dateStr;
+    var arr = [];
+    try { arr = JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) { arr = []; }
+    if (arr.indexOf(vid) === -1) arr.push(vid);
+    localStorage.setItem(key, JSON.stringify(arr));
+  }
+  function removeLog(dateStr, vid) {
+    var key = LOG_PREFIX + dateStr;
+    var arr = [];
+    try { arr = JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) { arr = []; }
+    var i = arr.indexOf(vid);
+    if (i !== -1) arr.splice(i,1);
+    if (arr.length === 0) localStorage.removeItem(key);
+    else localStorage.setItem(key, JSON.stringify(arr));
+  }
+  function extractYid(url) {
+    if (!url) return null;
+    var m = url.match(/[?&]v=([\w-]{11})/);
+    return m ? m[1] : null;
+  }
+
+  var cardsMeta = []; // {card, yid, check, cb, labelEl, dateEl}
+
+  function paint(meta) {
+    var isOn = localStorage.getItem(PREFIX + meta.yid) === '1';
+    meta.cb.checked = isOn;
+    meta.check.classList.toggle('checked', isOn);
+    meta.card.classList.toggle('checked-card', isOn);
+    meta.labelEl.textContent = isOn ? '✓ 見た！' : '見たらチェック';
+    var d = localStorage.getItem(DATE_PREFIX + meta.yid);
+    if (!isOn) meta.dateEl.textContent = '';
+    else if (d) meta.dateEl.textContent = '👁 ' + fmtMD(d);
+    else meta.dateEl.textContent = '👁 日付未記録';
+  }
+
+  function updateSummary() {
+    var n = cardsMeta.filter(function(m){ return localStorage.getItem(PREFIX + m.yid) === '1'; }).length;
+    var s = document.getElementById('checklist-summary-text');
+    if (s) s.innerHTML = '📚 進捗: <strong>' + n + ' / ' + cardsMeta.length + ' 本</strong> 視聴済み（basics/videos と共有）';
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var cards = document.querySelectorAll('.lesson-card');
+    cards.forEach(function (card) {
+      if (card.dataset.noCheck === '1') return;
+      var url = card.getAttribute('href') || '';
+      var yid = extractYid(url);
+      if (!yid) return;
+
+      var div = document.createElement('div');
+      div.className = 'lesson-check';
+      div.innerHTML = '<input type="checkbox" id="chk-' + yid + '" data-vkey="' + yid + '"><span class="lc-label">見たらチェック</span><span class="lc-date"></span>';
+      card.appendChild(div);
+      var cb = div.querySelector('input');
+      var labelEl = div.querySelector('.lc-label');
+      var dateEl = div.querySelector('.lc-date');
+      var meta = { card: card, yid: yid, check: div, cb: cb, labelEl: labelEl, dateEl: dateEl };
+      cardsMeta.push(meta);
+
+      // クリック伝播阻止（card は <a> なので子クリックで飛ばないように）
+      div.addEventListener('click', function(e){ e.stopPropagation(); });
+      cb.addEventListener('click', function(e){ e.stopPropagation(); });
+
+      cb.addEventListener('change', function () {
+        if (cb.checked) {
+          var t = todayStr();
+          localStorage.setItem(PREFIX + yid, '1');
+          localStorage.setItem(DATE_PREFIX + yid, t);
+          pushLog(t, yid);
+        } else {
+          var prev = localStorage.getItem(DATE_PREFIX + yid);
+          localStorage.removeItem(PREFIX + yid);
+          if (prev) removeLog(prev, yid);
+          localStorage.removeItem(DATE_PREFIX + yid);
+        }
+        paint(meta);
+        updateSummary();
+      });
+
+      paint(meta);
+    });
+
+    // 進捗サマリー（sticky bottom）
+    var summary = document.createElement('div');
+    summary.className = 'checklist-summary';
+    summary.innerHTML =
+      '<span id="checklist-summary-text">📚 進捗: <strong>0 / ' + cardsMeta.length + ' 本</strong> 視聴済み</span>' +
+      '<button class="reset-btn" id="plan-watch-reset">全リセット</button>';
+    document.body.appendChild(summary);
+    document.getElementById('plan-watch-reset').addEventListener('click', function () {
+      if (!confirm('視聴済みチェックを全部リセットしますか？（basics/videos と共有の3種類の localStorage キーを全削除・全ページに反映）')) return;
+      Object.keys(localStorage).filter(function (k) {
+        return k.indexOf(PREFIX) === 0 || k.indexOf(DATE_PREFIX) === 0 || k.indexOf(LOG_PREFIX) === 0;
+      }).forEach(function (k) { localStorage.removeItem(k); });
+      cardsMeta.forEach(paint);
       updateSummary();
-    };
-    if (localStorage.getItem(key) === '1') setChecked(true);
-    div.addEventListener('click', e => { e.stopPropagation(); });
-    cb.addEventListener('click', e => { e.stopPropagation(); });
-    cb.addEventListener('change', () => {
-      localStorage.setItem(key, cb.checked ? '1' : '0');
-      setChecked(cb.checked);
+    });
+    updateSummary();
+
+    // ページ間ライブ連動：別タブで basics.html / videos.html が同じ myp-watched:<vid> を変更したら即反映
+    window.addEventListener('storage', function (e) {
+      if (!e.key) return;
+      if (e.key.indexOf(PREFIX) !== 0 && e.key.indexOf(DATE_PREFIX) !== 0 && e.key.indexOf(LOG_PREFIX) !== 0) return;
+      cardsMeta.forEach(paint);
+      updateSummary();
     });
   });
-
-  const summary = document.createElement('div');
-  summary.className = 'checklist-summary';
-  summary.innerHTML = `
-    <span id="checklist-summary-text">📚 進捗: <strong>0 / ${totalCheckable} 本</strong> 視聴済み</span>
-    <button class="reset-btn" onclick="if(confirm('全チェックをリセットしますか？')){Object.keys(localStorage).filter(k=>k.startsWith('${STORAGE_PREFIX}')).forEach(k=>localStorage.removeItem(k));location.reload();}">全リセット</button>
-  `;
-  document.body.appendChild(summary);
-  updateSummary();
-});
+})();
 </script>
 <script src="./nav.js"></script>
 </body>

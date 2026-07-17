@@ -665,6 +665,27 @@ footer a { color: var(--gold); }
     update();
   });
 
+  // ページ間ライブ連動：別タブで plan.html / basics.html が同じ myp-watched:<vid> を変更したら即反映
+  window.addEventListener('storage', function(e) {
+    if (!e.key) return;
+    if (e.key.indexOf(PREFIX) !== 0 && e.key.indexOf(DATE_PREFIX) !== 0 && e.key.indexOf(LOG_PREFIX) !== 0) return;
+    boxes.forEach(function(cb) {
+      var vid = cb.getAttribute('data-vkey');
+      var isOn = localStorage.getItem(PREFIX + vid) === '1';
+      cb.checked = isOn;
+      var li = cb.closest('li');
+      if (isOn) {
+        li.classList.add('watched');
+        var storedDate = localStorage.getItem(DATE_PREFIX + vid);
+        updateDateLabel(vid, storedDate ? storedDate : '__unknown__');
+      } else {
+        li.classList.remove('watched');
+        updateDateLabel(vid, null);
+      }
+    });
+    update();
+  });
+
   update();
 })();
 </script>
