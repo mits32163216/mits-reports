@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>MYP声質偏差値スコアカード（原曲実測基準）— カラオケ練習AI</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06); --highlight:rgba(212,168,91,0.14);
+}
+@media (prefers-color-scheme:dark) { :root { --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); --highlight:rgba(212,168,91,0.18); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:40px 48px 120px; max-width:1200px; margin:0 auto; }
+h1,h2,h3 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; }
+h1 { font-size:29px; margin:0 0 8px; }
+h2 { font-size:22px; margin:44px 0 14px; padding-bottom:8px; border-bottom:2px solid var(--gold); }
+a { color:var(--gold); text-decoration:none; } a:hover { text-decoration:underline; }
+table { border-collapse:collapse; width:100%; font-size:13px; margin:12px 0; }
+th,td { padding:9px 12px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+th { background:var(--highlight); font-weight:600; white-space:nowrap; }
+td.num { font-family:var(--mono); text-align:right; white-space:nowrap; }
+td.num.skilled { color:var(--sage); font-weight:700; }
+td.num.est { color:var(--muted); }
+td.mincho { font-family:var(--mincho); }
+.song-sub { font-family:var(--mono); font-size:10px; color:var(--muted); }
+tr.rock td { background:rgba(199,123,112,0.06); }
+.real { color:var(--sage); font-family:var(--mono); font-size:9px; font-weight:700; padding:1px 5px; background:rgba(122,155,126,0.15); border-radius:8px; }
+.est { color:var(--muted); font-family:var(--mono); font-size:9px; }
+
+.back-nav { position:sticky; top:0; z-index:100; background:var(--bg); padding:12px 0 10px; margin:-40px -48px 24px; padding-left:48px; padding-right:48px; border-bottom:1px solid var(--line); backdrop-filter:blur(6px); }
+.back-nav a { display:inline-block; padding:6px 14px; font-family:var(--mincho); font-size:13px; font-weight:600; color:var(--gold); background:rgba(212,168,91,0.10); border:1px solid var(--gold); border-radius:6px; margin-right:8px; transition:all 0.2s; }
+.back-nav a:hover { background:rgba(212,168,91,0.22); transform:translateX(-2px); text-decoration:none; }
+header.top .sub { font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:6px; }
+
+.overview { padding:20px 24px; background:linear-gradient(135deg,rgba(212,168,91,0.10),rgba(122,155,126,0.06)); border:1px solid var(--gold); border-radius:10px; margin:14px 0 28px; }
+.overview p { margin:6px 0; line-height:1.75; }
+.overview .label { font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:0.08em; margin-right:8px; }
+.legend { display:flex; gap:8px; flex-wrap:wrap; margin:14px 0 4px; font-family:var(--mono); font-size:11px; }
+.legend span { padding:4px 10px; border-radius:6px; border:1px solid var(--line); }
+.legend .l-ex { background:rgba(122,155,126,0.16); color:var(--sage); } .legend .l-st { background:rgba(212,168,91,0.12); color:var(--gold); } .legend .l-bad { background:rgba(199,123,112,0.16); color:var(--rose); }
+
+.insight { padding:16px 20px; background:linear-gradient(135deg,rgba(122,155,126,0.10),rgba(212,168,91,0.05)); border:1px solid var(--sage); border-radius:8px; margin:14px 0; }
+.insight h4 { margin:0 0 8px; color:var(--sage); font-family:var(--mincho); font-size:15px; }
+.insight p { margin:6px 0; line-height:1.7; font-size:13.5px; }
+
+.caveat { padding:16px 20px; background:var(--card-bg); border:1px dashed var(--rose); border-radius:8px; margin:16px 0 28px; }
+.caveat h4 { margin:0 0 8px; color:var(--rose); font-family:var(--mincho); font-size:15px; }
+.caveat ul { margin:6px 0; padding-left:20px; } .caveat li { line-height:1.7; margin:4px 0; font-size:13.5px; }
+
+.song-card { background:var(--sub-bg); border:1px solid var(--gold); border-radius:10px; padding:16px 20px; margin:16px 0; }
+.song-card.rock { border-color:var(--rose); border-style:dashed; }
+.song-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:4px; flex-wrap:wrap; }
+.song-name { font-size:19px; margin:0; color:var(--gold); }
+.artist-tag { font-family:var(--mono); font-size:11px; color:var(--muted); font-weight:400; }
+.song-total { font-family:var(--sans); font-size:14px; font-weight:600; padding:5px 14px; border-radius:20px; border:1px solid var(--line); }
+.song-total b { font-size:20px; }
+.song-total.excellent { background:rgba(122,155,126,0.16); color:var(--sage); border-color:var(--sage); }
+.song-total.good { background:rgba(122,155,126,0.10); color:var(--sage); border-color:var(--sage); }
+.song-total.standard { background:rgba(212,168,91,0.12); color:var(--gold); border-color:var(--gold); }
+.song-total.warn { background:rgba(199,123,112,0.12); color:var(--rose); border-color:var(--rose); }
+.song-total.bad { background:rgba(199,123,112,0.22); color:var(--rose); border-color:var(--rose); }
+.song-meta { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:10px; }
+.rock-note { font-size:12px; line-height:1.6; color:var(--rose); background:rgba(199,123,112,0.08); border-radius:6px; padding:8px 12px; margin-bottom:10px; }
+.axis-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:8px; }
+@media (max-width:820px) { .axis-grid { grid-template-columns:repeat(3,1fr); } }
+@media (max-width:480px) { .axis-grid { grid-template-columns:repeat(2,1fr); } }
+.axis-chip { border-radius:8px; padding:10px 8px; text-align:center; border:1px solid var(--line); background:var(--card-bg); }
+.ax-name { font-family:var(--mincho); font-size:12px; font-weight:600; margin-bottom:6px; line-height:1.3; }
+.ax-name .shared { font-family:var(--mono); font-size:9px; color:var(--muted); font-weight:400; }
+.ax-hensa { font-family:var(--sans); font-size:12px; font-weight:600; margin-bottom:4px; } .ax-hensa b { font-size:18px; }
+.ax-val { font-family:var(--mono); font-size:9.5px; color:var(--muted); }
+.axis-chip.excellent { background:rgba(122,155,126,0.16); border-color:var(--sage); } .axis-chip.excellent .ax-hensa { color:var(--sage); }
+.axis-chip.good { background:rgba(122,155,126,0.08); border-color:var(--sage); } .axis-chip.good .ax-hensa { color:var(--sage); }
+.axis-chip.standard { background:rgba(212,168,91,0.10); border-color:var(--gold); } .axis-chip.standard .ax-hensa { color:var(--gold); }
+.axis-chip.warn { background:rgba(199,123,112,0.10); border-color:var(--rose); } .axis-chip.warn .ax-hensa { color:var(--rose); }
+.axis-chip.bad { background:rgba(199,123,112,0.20); border-color:var(--rose); } .axis-chip.bad .ax-hensa { color:var(--rose); }
+.axis-chip.na { background:repeating-linear-gradient(45deg,var(--sub-bg),var(--sub-bg) 6px,transparent 6px,transparent 12px); border-style:dashed; } .axis-chip.na .ax-hensa { color:var(--muted); }
+.axis-chip.ref { border-style:dashed; border-color:var(--gold); } .axis-chip.ref .ax-hensa { color:var(--gold); }
+
+.profile { padding:20px 24px; background:linear-gradient(135deg,rgba(199,123,112,0.08),rgba(212,168,91,0.05)); border:1px solid var(--rose); border-radius:10px; margin:16px 0; }
+.profile h3 { margin:0 0 10px; color:var(--rose); }
+.profile .big { font-family:var(--mincho); font-size:16px; line-height:1.85; }
+.profile .metric-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; font-family:var(--mono); font-size:12px; }
+.profile .metric-row span { padding:6px 12px; background:var(--card-bg); border-radius:6px; border:1px solid var(--line); }
+
+footer { margin-top:60px; padding-top:24px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.8; }
+footer a { color:var(--gold); }
+@media (max-width:640px) { body { padding:20px 20px 80px; } .back-nav { margin:-20px -20px 20px; padding-left:20px; padding-right:20px; } }
+</style>
+</head>
+<body>
+
+<nav class="back-nav">
+  <a href="./videos.html">← 動画マップ</a>
+  <a href="./plan.html">← 計画</a>
+  <a href="./measure.html">← 実測</a>
+</nav>
+
+<header class="top">
+  <h1>🎙️ MYP声質偏差値スコアカード <span style="font-size:14px;color:var(--sage);">原曲アーティスト実測基準</span></h1>
+  <div class="sub">
+    MYP <a href="https://www.youtube.com/watch?v=JuoHBvrcHxo" target="_blank" rel="noopener">#68「良い歌声と悪い歌声」</a> の6項目を、<strong>原曲アーティスト6人の実測値</strong>を基準に偏差値化
+    ／Mitsも原曲も同一 Praat 測定（demucsでボーカル分離）／2026-07-16
+  </div>
+</header>
+
+<div class="overview">
+  <p><span class="label">アップグレード</span>文献の推定値ではなく、<strong>Mitsが歌った同じ6曲の原曲アーティスト（玉置浩二・松山千春・長渕剛・ONE OK ROCK・サザン）の歌をボーカル分離して同じ解析にかけた実測値</strong>を「上手な歌手」アンカーにした。HNR/jitter/shimmer は Mits と原曲を<strong>完全同一の Praat 手法</strong>で測っているので直接比較できる。</p>
+  <p><span class="label">🆕 2026-07-17 新ベースライン</span><strong>録音条件を刷新</strong>：iPhone直イヤホンマイク・ガイドボーカル OFF・BGM 小音量。旧録音（カラオケボックス備え付けマイク＋ガイド ON＋BGM 大）に混入していたガイド歌唱と伴奏残差が除去され、<strong>HNR が +7〜10dB / jitter・shimmer が大幅低下</strong>した。これは<strong>「上達」ではなく「測定汚染の除去」</strong>。本ページの偏差値は 2026-07-17 の新ベースライン v0 に基づく。過去の低数値は録音条件の産物であり、今後の上達は同一新条件のセッション間差分で測定する。</p>
+  <p><span class="label">2026-07-16 更新</span>Mits の録音も <strong>demucs で演奏を除去</strong>してから再測定（以前は演奏込みで HNR が 2〜5dB 低く出ていた）。これで Mits も原曲も「demucs分離→Praat」で完全に同じ土俵。</p>
+  <p><span class="label">軸の拡張</span>2026-07-16：ピッチを <strong>torchcrepe（ヘッドレス高精度）</strong> に、深みを <strong>openSMILE（歌手フォルマント αRatio）</strong> に統一。②安定が同一手法比較になり、⑤深みが「計測不能→実測」に昇格（6軸中5軸が数値化）。</p>
+  <p><span class="label">偏差値</span>50＝平均的歌唱者（推定）／65＝上手な歌手（<strong>実測</strong>：バラード系クリーン発声3人の平均）／70＝玉置浩二級。</p>
+  <div class="legend">
+    <span class="l-ex">65+ = 上手な歌手級 ✨</span><span class="l-ex">57-65 = 良い</span><span class="l-st">45-57 = 平均帯</span><span class="l-bad">37-45 = 苦手</span><span class="l-bad">37未満 = 要強化 ⚠️</span>
+  </div>
+</div>
+
+<h2>原曲アーティスト 実測プロ基準（demucs分離→同一Praat）</h2>
+<table>
+  <thead><tr><th>アーティスト / 曲</th><th>HNR<br>(dB)高◎</th><th>jitter<br>(%)低◎</th><th>shimmer<br>(%)低◎</th><th>系統</th></tr></thead>
+  <tbody><tr class="ballad"><td class="mincho"><strong>玉置浩二</strong><br><span class="song-sub">メロディ</span></td><td class="num">21.6</td><td class="num">0.77</td><td class="num">4.0</td><td>🎵 バラード/クリーン</td></tr><tr class="ballad"><td class="mincho"><strong>松山千春</strong><br><span class="song-sub">大空と大地の中で</span></td><td class="num">17.8</td><td class="num">0.79</td><td class="num">6.6</td><td>🎵 バラード/クリーン</td></tr><tr class="ballad"><td class="mincho"><strong>長渕剛</strong><br><span class="song-sub">乾杯</span></td><td class="num">17.3</td><td class="num">0.84</td><td class="num">6.3</td><td>🎵 バラード/クリーン</td></tr><tr class="ballad"><td class="mincho"><strong>ONE OK ROCK</strong><br><span class="song-sub">Wherever you are</span></td><td class="num">14.4</td><td class="num">0.94</td><td class="num">7.2</td><td>🎵 バラード/クリーン</td></tr><tr class="ballad"><td class="mincho"><strong>ONE OK ROCK</strong><br><span class="song-sub">欲望に満ちた青年団</span></td><td class="num">11.8</td><td class="num">1.62</td><td class="num">10.9</td><td>🎵 バラード/クリーン</td></tr><tr class="rock"><td class="mincho"><strong>ONE OK ROCK</strong><br><span class="song-sub">皆無</span></td><td class="num">9.6</td><td class="num">1.04</td><td class="num">9.4</td><td>🎸 ロック/シャウト</td></tr><tr class="rock"><td class="mincho"><strong>ONE OK ROCK</strong><br><span class="song-sub">We are</span></td><td class="num">9.2</td><td class="num">1.70</td><td class="num">12.3</td><td>🎸 ロック/シャウト</td></tr><tr class="rock"><td class="mincho"><strong>サザンオールスターズ</strong><br><span class="song-sub">旅姿六人衆</span></td><td class="num">7.8</td><td class="num">2.24</td><td class="num">15.6</td><td>🎸 ロック/シャウト</td></tr><tr class="rock"><td class="mincho"><strong>ONE OK ROCK</strong><br><span class="song-sub">The Beginning</span></td><td class="num">7.1</td><td class="num">2.03</td><td class="num">14.4</td><td>🎸 ロック/シャウト</td></tr><tr class="rock"><td class="mincho"><strong>ONE OK ROCK</strong><br><span class="song-sub">努努</span></td><td class="num">7.0</td><td class="num">2.25</td><td class="num">14.7</td><td>🎸 ロック/シャウト</td></tr></tbody>
+</table>
+
+<div class="insight">
+  <h4>🔑 実測して分かった重要事実：HNRは「曲の系統」で意味が変わる</h4>
+  <p><strong>バラード系（玉置浩二 HNR 21.6・松山千春 17.8・長渕剛 17.3）は教科書的にクリーン</strong>。声楽が言う「良い発声＝倍音が豊かで息漏れが少ない」がそのまま数値に出ている。</p>
+  <p>ところが<strong>ロック系（ONE OK ROCK 7.0・サザン 7.8）は原曲でも HNR 7 前後と低い</strong>。これは Taka や桑田が<strong>意図的にかすれ・シャウト系の発声</strong>をしているから。つまり HNR は「バラードでは優劣軸になるが、ロックでは優劣ではなく個性」。<strong>Mits の HNR 6.2 は、玉置浩二（21.6）と比べれば大きな伸びしろだが、努努（ONE OK ROCK 7.0）を歌う時はむしろ原曲に近い。</strong></p>
+</div>
+
+<h2>偏差値の基準（アンカー・上手ラインは実測）</h2>
+<table>
+  <thead><tr><th>指標</th><th>良い向き</th><th>平均的歌唱者<br>（偏差値50）</th><th>上手な歌手（偏差値65）</th></tr></thead>
+  <tbody><tr><td><strong>HNR（倍音/雑音比）</strong></td><td>高い◎</td><td class="num est">11.0dB</td><td class="num skilled">18.89dB <span class="real">実測</span></td></tr><tr><td><strong>jitter（周期の乱れ）</strong></td><td>低い◎</td><td class="num est">2.8%</td><td class="num skilled">0.80% <span class="real">実測</span></td></tr><tr><td><strong>shimmer（振幅の乱れ）</strong></td><td>低い◎</td><td class="num est">16.0%</td><td class="num skilled">5.60% <span class="real">実測</span></td></tr><tr><td><strong>cent 変動（CREPE・音程の揺れ）</strong></td><td>低い◎</td><td class="num est">28.0</td><td class="num skilled">20.61 <span class="real">実測</span></td></tr><tr><td><strong>深み（αRatio・歌手フォルマント）</strong></td><td>低い(負)◎</td><td class="num est">-4.0</td><td class="num skilled">-10.11 <span class="real">実測</span></td></tr></tbody>
+</table>
+<p style="font-family:var(--mono);font-size:11px;color:var(--muted);">※ <span class="real">実測</span>＝原曲アーティストの分離ボーカル実測（HNR/jitter/shimmer＝バラード系3人平均・cent＝6人平均・深み＝バラード系3人平均）。<span class="est">推定</span>＝平均的歌唱者ラインはアマチュア実測が無いための推定。<strong>2026-07-16：cent は CREPE、深み(αRatio)は openSMILE で Mits も原曲も同一手法に統一</strong>（以前の cent 方法違い・深み保留は解消）。</p>
+
+<h2>曲別 偏差値スコアカード（Mits最新版 vs 同曲の原曲アーティスト）</h2>
+
+    <div class="song-card">
+      <div class="song-head">
+        <h3 class="song-name">メロディ <span class="artist-tag">原曲: 玉置浩二</span></h3>
+        <div class="song-total good">総合偏差値 <b>63</b></div>
+      </div>
+      <div class="song-meta">2026-07-17 Mits最新版 vs 原曲アーティスト実測（HNR/jitter/shimmer 同一 Praat 測定）</div>
+      
+      <div class="axis-grid"><div class="axis-chip good"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>60</b></div><div class="ax-val">Mits 16.3 / 原曲 21.6dB</div></div><div class="axis-chip good"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">偏差値 <b>60</b></div><div class="ax-val">Mits 23.2 / 原曲 22.7</div></div><div class="axis-chip excellent"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">✨偏差値 <b>65</b></div><div class="ax-val">Mits 0.79 / 原曲 0.77%</div></div><div class="axis-chip good"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>63</b></div><div class="ax-val">Mits 5.6 / 原曲 4.0%</div></div><div class="axis-chip excellent"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">✨偏差値 <b>69</b></div><div class="ax-val">Mits -11.8 / 原曲 -16.3</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
+    </div>
+    <div class="song-card">
+      <div class="song-head">
+        <h3 class="song-name">大空と大地の中で <span class="artist-tag">原曲: 松山千春</span></h3>
+        <div class="song-total good">総合偏差値 <b>62</b></div>
+      </div>
+      <div class="song-meta">2026-07-17 Mits最新版 vs 原曲アーティスト実測（HNR/jitter/shimmer 同一 Praat 測定）</div>
+      
+      <div class="axis-grid"><div class="axis-chip good"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>61</b></div><div class="ax-val">Mits 16.7 / 原曲 17.8dB</div></div><div class="axis-chip good"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">偏差値 <b>59</b></div><div class="ax-val">Mits 23.5 / 原曲 20.9</div></div><div class="axis-chip excellent"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">✨偏差値 <b>65</b></div><div class="ax-val">Mits 0.75 / 原曲 0.79%</div></div><div class="axis-chip good"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>62</b></div><div class="ax-val">Mits 6.3 / 原曲 6.6%</div></div><div class="axis-chip good"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>63</b></div><div class="ax-val">Mits -9.1 / 原曲 -6.1</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
+    </div>
+    <div class="song-card">
+      <div class="song-head">
+        <h3 class="song-name">乾杯 <span class="artist-tag">原曲: 長渕剛</span></h3>
+        <div class="song-total good">総合偏差値 <b>62</b></div>
+      </div>
+      <div class="song-meta">2026-07-17 Mits最新版 vs 原曲アーティスト実測（HNR/jitter/shimmer 同一 Praat 測定）</div>
+      
+      <div class="axis-grid"><div class="axis-chip good"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>60</b></div><div class="ax-val">Mits 16.1 / 原曲 17.3dB</div></div><div class="axis-chip good"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">偏差値 <b>59</b></div><div class="ax-val">Mits 23.3 / 原曲 22.3</div></div><div class="axis-chip good"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">偏差値 <b>65</b></div><div class="ax-val">Mits 0.80 / 原曲 0.84%</div></div><div class="axis-chip good"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>62</b></div><div class="ax-val">Mits 6.3 / 原曲 6.3%</div></div><div class="axis-chip good"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>64</b></div><div class="ax-val">Mits -9.5 / 原曲 -7.9</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
+    </div>
+    <div class="song-card">
+      <div class="song-head">
+        <h3 class="song-name">Wherever you are <span class="artist-tag">原曲: ONE OK ROCK</span></h3>
+        <div class="song-total good">総合偏差値 <b>62</b></div>
+      </div>
+      <div class="song-meta">2026-07-17 Mits最新版 vs 原曲アーティスト実測（HNR/jitter/shimmer 同一 Praat 測定）</div>
+      
+      <div class="axis-grid"><div class="axis-chip good"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>60</b></div><div class="ax-val">Mits 16.3 / 原曲 14.4dB</div></div><div class="axis-chip good"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">偏差値 <b>62</b></div><div class="ax-val">Mits 22.1 / 原曲 15.3</div></div><div class="axis-chip good"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">偏差値 <b>65</b></div><div class="ax-val">Mits 0.83 / 原曲 0.94%</div></div><div class="axis-chip good"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>62</b></div><div class="ax-val">Mits 6.3 / 原曲 7.2%</div></div><div class="axis-chip good"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>60</b></div><div class="ax-val">Mits -7.9 / 原曲 -4.5</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
+    </div>
+    <div class="song-card rock">
+      <div class="song-head">
+        <h3 class="song-name">旅姿六人衆 <span class="artist-tag">原曲: サザンオールスターズ</span></h3>
+        <div class="song-total good">総合偏差値 <b>63</b></div>
+      </div>
+      <div class="song-meta">2026-07-17 Mits最新版 vs 原曲アーティスト実測（HNR/jitter/shimmer 同一 Praat 測定）</div>
+      <div class="rock-note">⚠️ この曲は<strong>ロック/シャウト系</strong>：原曲（サザンオールスターズ）も HNR 7.8dB と低い＝意図的なかすれ発声。この曲では ①響く・④芯 の偏差値は「優劣」ではなく「クリーン発声との距離」として読む（Mits は原曲に近い）。</div>
+      <div class="axis-grid"><div class="axis-chip good"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>62</b></div><div class="ax-val">Mits 17.3 / 原曲 7.8dB</div></div><div class="axis-chip good"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">偏差値 <b>60</b></div><div class="ax-val">Mits 23.1 / 原曲 23.1</div></div><div class="axis-chip excellent"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">✨偏差値 <b>65</b></div><div class="ax-val">Mits 0.78 / 原曲 2.24%</div></div><div class="axis-chip good"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>64</b></div><div class="ax-val">Mits 5.4 / 原曲 15.6%</div></div><div class="axis-chip excellent"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">✨偏差値 <b>66</b></div><div class="ax-val">Mits -10.6 / 原曲 -1.2</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
+    </div>
+    <div class="song-card rock">
+      <div class="song-head">
+        <h3 class="song-name">努努 <span class="artist-tag">原曲: ONE OK ROCK</span></h3>
+        <div class="song-total standard">総合偏差値 <b>54</b></div>
+      </div>
+      <div class="song-meta">2026-07-17 Mits最新版 vs 原曲アーティスト実測（HNR/jitter/shimmer 同一 Praat 測定）</div>
+      <div class="rock-note">⚠️ この曲は<strong>ロック/シャウト系</strong>：原曲（ONE OK ROCK）も HNR 7.0dB と低い＝意図的なかすれ発声。この曲では ①響く・④芯 の偏差値は「優劣」ではなく「クリーン発声との距離」として読む（Mits は原曲に近い）。</div>
+      <div class="axis-grid"><div class="axis-chip standard"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>48</b></div><div class="ax-val">Mits 9.7 / 原曲 7.0dB</div></div><div class="axis-chip good"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">偏差値 <b>58</b></div><div class="ax-val">Mits 23.9 / 原曲 23.0</div></div><div class="axis-chip standard"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">偏差値 <b>56</b></div><div class="ax-val">Mits 2.05 / 原曲 2.25%</div></div><div class="axis-chip standard"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>49</b></div><div class="ax-val">Mits 16.0 / 原曲 14.7%</div></div><div class="axis-chip good"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>60</b></div><div class="ax-val">Mits -8.2 / 原曲 -1.3</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
+    </div>
+    <div class="song-card rock">
+      <div class="song-head">
+        <h3 class="song-name">The Beginning <span class="artist-tag">原曲: ONE OK ROCK</span></h3>
+        <div class="song-total good">総合偏差値 <b>59</b></div>
+      </div>
+      <div class="song-meta">2026-07-17 Mits最新版 vs 原曲アーティスト実測（HNR/jitter/shimmer 同一 Praat 測定）</div>
+      <div class="rock-note">⚠️ この曲は<strong>ロック/シャウト系</strong>：原曲（ONE OK ROCK）も HNR 7.1dB と低い＝意図的なかすれ発声。この曲では ①響く・④芯 の偏差値は「優劣」ではなく「クリーン発声との距離」として読む（Mits は原曲に近い）。</div>
+      <div class="axis-grid"><div class="axis-chip standard"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>55</b></div><div class="ax-val">Mits 13.4 / 原曲 7.1dB</div></div><div class="axis-chip good"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">偏差値 <b>59</b></div><div class="ax-val">Mits 23.4 / 原曲 20.4</div></div><div class="axis-chip good"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">偏差値 <b>61</b></div><div class="ax-val">Mits 1.33 / 原曲 2.03%</div></div><div class="axis-chip good"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>58</b></div><div class="ax-val">Mits 8.6 / 原曲 14.4%</div></div><div class="axis-chip good"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>63</b></div><div class="ax-val">Mits -9.2 / 原曲 -2.4</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
+    </div>
+    <div class="song-card rock">
+      <div class="song-head">
+        <h3 class="song-name">We are <span class="artist-tag">原曲: ONE OK ROCK</span></h3>
+        <div class="song-total good">総合偏差値 <b>61</b></div>
+      </div>
+      <div class="song-meta">2026-07-17 Mits最新版 vs 原曲アーティスト実測（HNR/jitter/shimmer 同一 Praat 測定）</div>
+      <div class="rock-note">⚠️ この曲は<strong>ロック/シャウト系</strong>：原曲（ONE OK ROCK）も HNR 9.2dB と低い＝意図的なかすれ発声。この曲では ①響く・④芯 の偏差値は「優劣」ではなく「クリーン発声との距離」として読む（Mits は原曲に近い）。</div>
+      <div class="axis-grid"><div class="axis-chip good"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>60</b></div><div class="ax-val">Mits 16.4 / 原曲 9.2dB</div></div><div class="axis-chip good"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">偏差値 <b>59</b></div><div class="ax-val">Mits 23.4 / 原曲 15.3</div></div><div class="axis-chip good"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">偏差値 <b>63</b></div><div class="ax-val">Mits 1.02 / 原曲 1.70%</div></div><div class="axis-chip good"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>62</b></div><div class="ax-val">Mits 6.1 / 原曲 12.3%</div></div><div class="axis-chip good"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>62</b></div><div class="ax-val">Mits -8.9 / 原曲 1.4</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
+    </div>
+    <div class="song-card rock">
+      <div class="song-head">
+        <h3 class="song-name">皆無 <span class="artist-tag">原曲: ONE OK ROCK</span></h3>
+        <div class="song-total good">総合偏差値 <b>61</b></div>
+      </div>
+      <div class="song-meta">2026-07-17 Mits最新版 vs 原曲アーティスト実測（HNR/jitter/shimmer 同一 Praat 測定）</div>
+      <div class="rock-note">⚠️ この曲は<strong>ロック/シャウト系</strong>：原曲（ONE OK ROCK）も HNR 9.6dB と低い＝意図的なかすれ発声。この曲では ①響く・④芯 の偏差値は「優劣」ではなく「クリーン発声との距離」として読む（Mits は原曲に近い）。</div>
+      <div class="axis-grid"><div class="axis-chip good"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>59</b></div><div class="ax-val">Mits 15.7 / 原曲 9.6dB</div></div><div class="axis-chip good"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">偏差値 <b>59</b></div><div class="ax-val">Mits 23.6 / 原曲 21.4</div></div><div class="axis-chip good"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">偏差値 <b>62</b></div><div class="ax-val">Mits 1.15 / 原曲 1.04%</div></div><div class="axis-chip good"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>61</b></div><div class="ax-val">Mits 6.2 / 原曲 9.4%</div></div><div class="axis-chip good"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>64</b></div><div class="ax-val">Mits -9.8 / 原曲 -0.8</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
+    </div>
+
+<h2>Mits 声質プロフィール（全曲平均）</h2>
+<div class="profile">
+  <h3>総合偏差値 平均 = 61 ／ 最大の伸びしろ = ④「芯とハリ ⇔ かすれ」（対バラード系）</h3>
+  <p class="big">
+    Mits の HNR 平均 <strong>15.3dB → 偏差値 58</strong>。<strong>バラード（メロディ＝玉置 21.6 / 大空＝松山 17.8 / 乾杯＝長渕 17.3）を歌うなら、息漏れを減らすのが最大の伸びしろ</strong>。ここが MYP #68「悪い発声＝かすれ」に一致する明確な弱点軸。<br>
+    一方 ②安定（<strong>CREPE同一手法</strong>で cent 23.3 → 偏差値 60）は平均帯。以前 Tony とプロで測定法が違い「大きく劣る」ように見えていたが、同一手法だと<strong>音程の差は小さい</strong>と判明。<br>
+    さらに <strong>⑤深み（αRatio -9.5 → 偏差値 63）は意外な強み</strong>。松山千春・長渕剛より深い側で、歌手フォルマント（声の鳴り）は出ている。<br>
+    <strong>結論：Mits の唯一の明確な弱点は ④芯／息漏れ(HNR)の一点。バラードで「上手」に近づく最短ルートは息支え。カリキュラム Phase B（息支え）＋ 動画マップ Phase C（喉ケア・声帯閉鎖）が直撃。ロック曲は原曲もかすれ系なので無理にクリーンを目指さなくてよい。</strong>
+  </p>
+  <div class="metric-row">
+    <span>① 響く HNR：偏差値 58 🔴</span>
+    <span>② 安定 cent(CREPE)：偏差値 60</span>
+    <span>③ 丸さ jitter：偏差値 63</span>
+    <span>④ 芯 shimmer：偏差値 62 🔴</span>
+    <span>⑤ 深み αRatio：偏差値 63 ✨</span>
+  </div>
+</div>
+
+<div class="caveat">
+  <h4>⚠️ 正直な限界</h4>
+  <ul>
+    <li><strong>Mits 録音のガイドボーカル残存</strong>：練習初期のため Mits の録音にはガイド歌唱が入っている。demucs は「ボーカル vs 演奏」の分離で、ガイド歌手と Mits はどちらもボーカルなので分離できない。→ Mits の HNR はガイド分だけ本来より高めに出ている（真値はやや下）。完全に正確にするにはガイドOFF録音が必要。</li>
+    <li><strong>ボーカル分離（demucs）の残差</strong>：伴奏を AI 分離しているが、密度の高いロックミックスは分離しきれない残響/楽器が残り、HNR/shimmer をやや悪化させる。ロック系の低HNRには「発声の個性」＋「分離残差」の両方が含まれる。</li>
+    <li><strong>①響く と ④芯 は同じ HNR が駆動源</strong>（*HNR 印）。両者の偏差値は連動する。</li>
+    <li><strong>②安定（cent）は torchcrepe に統一</strong>（2026-07-16）：Mits も原曲も同じ CREPE で測定。ただし半音からのズレは意図的なビブラートも含むので純粋な「安定度」ではない（両者同条件）。</li>
+    <li><strong>⑤深み（αRatio）は openSMILE で実測化</strong>（2026-07-16）：以前「計測不能」としていたが、原曲6人のデータで「深いクルーナー vs ブライトなロック」を綺麗に分ける αRatio（歌手フォルマントの鳴り）を発見。ただしこれは6人から経験的に導いた軸で、Mits 値はガイド声混入でやや深く出ている可能性がある。</li>
+    <li><strong>⑥口から離れ は計測不能</strong>（前方定位の proxy 無し）。</li>
+    <li><strong>平均的歌唱者ライン（偏差値50）は推定</strong>：アマチュアの実測が無いため。ここに実データが入れば偏差値の精度が上がる。</li>
+  </ul>
+</div>
+
+<footer>
+  更新日 2026-07-16 ／ 評価軸出典 <a href="https://www.youtube.com/watch?v=JuoHBvrcHxo" target="_blank" rel="noopener">MYP #68</a>
+  ／基準：原曲アーティスト6人の分離ボーカル実測（demucs htdemucs → 同一 Praat）<br>
+  <a href="./videos.html">← MYP動画マップに戻る</a>
+</footer>
+
+<script src="./nav.js"></script>
+</body>
+</html>

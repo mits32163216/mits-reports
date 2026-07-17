@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>【Mits 専用】歌セルフ上達カリキュラム v5</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root {
+  --navy: #0F1B2E;
+  --ivory: #F5EFE1;
+  --gold: #D4A85B;
+  --sage: #7A9B7E;
+  --rose: #C77B70;
+  --mincho: "Hiragino Mincho ProN", "游明朝", serif;
+  --sans: "Hiragino Sans", "游ゴシック", sans-serif;
+  --mono: "SF Mono", "Menlo", monospace;
+  --bg: var(--ivory);
+  --fg: var(--navy);
+  --line: rgba(15, 27, 46, 0.12);
+  --card-bg: #ffffff;
+  --muted: rgba(15, 27, 46, 0.58);
+  --sub-bg: rgba(212, 168, 91, 0.06);
+  --highlight: rgba(212, 168, 91, 0.14);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: var(--navy);
+    --fg: var(--ivory);
+    --line: rgba(245, 239, 225, 0.14);
+    --card-bg: #17223a;
+    --muted: rgba(245, 239, 225, 0.62);
+    --sub-bg: rgba(212, 168, 91, 0.09);
+    --highlight: rgba(212, 168, 91, 0.18);
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); font-family: var(--sans); }
+body { padding: 40px 48px 120px; max-width: 1200px; margin: 0 auto; }
+h1, h2, h3, h4 { font-family: var(--mincho); font-weight: 600; letter-spacing: 0.02em; }
+h1 { font-size: 32px; margin: 0 0 8px; }
+h2 { font-size: 24px; margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--gold); }
+h3 { font-size: 19px; margin: 28px 0 10px; color: var(--gold); }
+h4 { font-size: 16px; margin: 18px 0 8px; }
+p { line-height: 1.75; margin: 8px 0; }
+a { color: var(--gold); text-decoration: none; }
+a:hover { text-decoration: underline; }
+hr { border: none; border-top: 1px solid var(--line); margin: 24px 0; }
+code { font-family: var(--mono); font-size: 0.9em; background: var(--highlight); padding: 1px 6px; border-radius: 3px; }
+strong { color: var(--gold); }
+blockquote { border-left: 3px solid var(--gold); padding: 4px 14px; margin: 12px 0; color: var(--muted); background: var(--sub-bg); border-radius: 4px; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; margin: 12px 0; }
+th, td { padding: 8px 12px; border-bottom: 1px solid var(--line); text-align: left; }
+th { background: var(--highlight); font-weight: 600; white-space: nowrap; font-family: var(--sans); }
+td { font-family: var(--mono); }
+td.mincho { font-family: var(--mincho); font-size: 14px; }
+
+header.top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+header.top .sub { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+header.top .version { display: inline-block; padding: 3px 10px; background: var(--gold); color: white; border-radius: 12px; font-family: var(--mono); font-size: 12px; font-weight: 600; margin-left: 10px; vertical-align: middle; }
+
+.overview {
+  padding: 20px 24px;
+  background: linear-gradient(135deg, rgba(212, 168, 91, 0.10), rgba(122, 155, 126, 0.06));
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+  margin: 12px 0 32px;
+}
+.overview p { margin: 4px 0; }
+.overview .label { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; margin-right: 8px; }
+
+.compare-wrap { overflow-x: auto; }
+.compare th, .compare td { padding: 7px 10px; }
+.compare .best { color: var(--sage); font-weight: 700; }
+.compare .worst { color: var(--rose); font-weight: 700; }
+
+.diag {
+  padding: 18px 22px;
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin: 14px 0;
+}
+.diag-title { font-family: var(--mincho); font-size: 17px; color: var(--gold); margin: 0 0 8px; }
+
+.tier-table td { vertical-align: top; }
+.tier-a { border-left: 4px solid var(--sage); }
+.tier-b { border-left: 4px solid var(--gold); }
+.tier-c { border-left: 4px solid var(--rose); }
+
+/* Phase セクション */
+.phase-section {
+  margin: 40px 0 20px;
+  padding: 20px 24px;
+  background: var(--sub-bg);
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+}
+.phase-header {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
+  margin-bottom: 6px; padding-bottom: 8px; border-bottom: 1px solid var(--line);
+}
+.phase-name { font-family: var(--mincho); font-size: 22px; margin: 0; color: var(--gold); }
+.phase-weeks { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.phase-desc { font-family: var(--mincho); font-size: 14px; color: var(--muted); margin: 8px 0 16px; }
+
+/* Lesson カード */
+.lesson-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin-top: 12px; }
+.lesson-card {
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 20px 22px;
+  display: flex; flex-direction: column; gap: 10px;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+  text-decoration: none; color: var(--fg);
+}
+.lesson-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--gold);
+  box-shadow: 0 8px 24px rgba(15, 27, 46, 0.10);
+  text-decoration: none;
+}
+.lesson-num {
+  display: inline-block;
+  padding: 3px 10px;
+  background: var(--gold);
+  color: white;
+  border-radius: 12px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  align-self: flex-start;
+}
+.lesson-title { font-family: var(--mincho); font-size: 17px; font-weight: 600; line-height: 1.4; margin: 2px 0 0; }
+.lesson-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 6px;
+  background: var(--muted);
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+.lesson-meta { display: flex; gap: 12px; font-family: var(--mono); font-size: 11px; color: var(--muted); flex-wrap: wrap; }
+.lesson-meta .ch { color: var(--sage); font-weight: 600; }
+.lesson-section { margin-top: 4px; }
+.lesson-section h5 {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+  color: var(--muted); margin: 6px 0 3px; text-transform: uppercase;
+}
+.lesson-why { font-family: var(--mincho); font-size: 13.5px; line-height: 1.65; margin: 0; color: var(--fg); }
+.lesson-focus {
+  font-family: var(--sans); font-size: 12.5px; padding: 8px 12px;
+  background: var(--sub-bg); border-radius: 4px; border-left: 3px solid var(--sage);
+  margin: 6px 0 0;
+}
+
+/* 補講 */
+.supp-title { color: var(--rose); }
+.supp-hot .lesson-num { background: var(--rose); }
+.supp-hot { border: 1px dashed var(--rose); }
+
+/* チェックリスト（localStorage 保存・全カード共通） */
+.lesson-check {
+  margin-top: auto;
+  padding: 10px 12px;
+  border-top: 1px dashed var(--line);
+  font-family: var(--mono); font-size: 12px;
+  display: flex; align-items: center; gap: 8px;
+  cursor: pointer;
+  color: var(--muted);
+  transition: color 0.15s, background 0.15s;
+  border-radius: 0 0 8px 8px;
+}
+.lesson-check:hover { color: var(--fg); background: var(--sub-bg); }
+.lesson-check input {
+  margin: 0; width: 16px; height: 16px;
+  cursor: pointer; accent-color: var(--sage);
+}
+.lesson-check.checked { color: var(--sage); font-weight: 600; background: rgba(122, 155, 126, 0.08); }
+.lesson-check .lc-label { flex: 1; }
+.lesson-card.checked-card { border-color: var(--sage); }
+.checklist-summary {
+  position: sticky; bottom: 0; z-index: 90;
+  margin: 24px -48px -120px; padding: 14px 48px;
+  background: var(--card-bg);
+  border-top: 2px solid var(--gold);
+  font-family: var(--mono); font-size: 13px;
+  display: flex; justify-content: space-between; align-items: center;
+  box-shadow: 0 -4px 12px rgba(15, 27, 46, 0.08);
+}
+.checklist-summary strong { color: var(--gold); }
+.checklist-summary .reset-btn {
+  padding: 4px 12px; font-size: 11px;
+  background: transparent; color: var(--muted);
+  border: 1px solid var(--line); border-radius: 4px;
+  cursor: pointer; font-family: var(--mono);
+  transition: all 0.15s;
+}
+.checklist-summary .reset-btn:hover { color: var(--rose); border-color: var(--rose); }
+
+/* 週間ルーティン */
+.routine {
+  font-family: var(--mono);
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-size: 13px;
+  line-height: 1.8;
+  margin: 12px 0;
+}
+.routine .day { color: var(--gold); font-weight: 700; }
+
+/* footer */
+.footer {
+  margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--line);
+  font-family: var(--mono); font-size: 11px; color: var(--muted);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+}
+
+/* 戻るボタン（ダッシュボードへ） */
+.back-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--bg);
+  padding: 12px 0 10px;
+  margin: -40px -48px 24px;
+  padding-left: 48px; padding-right: 48px;
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(6px);
+}
+.back-nav a {
+  display: inline-block;
+  padding: 6px 14px;
+  font-family: var(--mincho); font-size: 13px; font-weight: 600;
+  color: var(--gold);
+  background: rgba(212, 168, 91, 0.10);
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.back-nav a:hover {
+  background: rgba(212, 168, 91, 0.22);
+  transform: translateX(-2px);
+  text-decoration: none;
+}
+.back-nav-bottom {
+  margin-top: 40px; text-align: center;
+  padding-top: 20px; border-top: 1px dashed var(--line);
+}
+
+/* prin */
+@media print {
+  body { padding: 20px; max-width: none; }
+  .lesson-card { break-inside: avoid; page-break-inside: avoid; }
+  .back-nav, .back-nav-bottom { display: none; }
+}
+
+/* 追記ボックス（2026-07-12〜） */
+.update-box {
+  margin: 20px 0;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, rgba(122, 155, 126, 0.10), rgba(212, 168, 91, 0.06));
+  border: 1px solid var(--sage);
+  border-left: 4px solid var(--sage);
+  border-radius: 8px;
+}
+.update-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  margin-bottom: 8px;
+  background: var(--sage);
+  color: white;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 12px;
+  letter-spacing: 0.05em;
+}
+.update-box h4 { color: var(--sage); margin-top: 0; }
+.update-box h3 { color: var(--gold); margin-top: 0; }
+.update-box ul { margin: 8px 0; padding-left: 20px; }
+.update-box li { line-height: 1.7; margin: 3px 0; }
+.update-box p { margin: 6px 0; }
+.update-box table { margin-top: 8px; font-size: 12px; }
+.update-box a { color: var(--gold); font-weight: 600; }
+
+.phase-progress { width: 100%; border-collapse: collapse; }
+.phase-progress th, .phase-progress td { padding: 6px 8px; border: 1px solid var(--line); text-align: center; font-size: 12px; }
+.phase-progress th { background: var(--highlight); font-family: var(--sans); }
+.phase-progress td:first-child { text-align: left; font-family: var(--mincho); font-weight: 600; }
+
+.dashboard-link-box {
+  margin: 12px 0 24px;
+  padding: 12px 20px;
+  background: rgba(212, 168, 91, 0.08);
+  border: 1px dashed var(--gold);
+  border-radius: 6px;
+  text-align: center;
+}
+</style>
+
+<style>
+.diary-summary { margin:18px 0; padding:16px 20px; border-radius:12px; background:linear-gradient(135deg,rgba(212,168,91,0.12),rgba(122,155,126,0.06)); border:1px solid var(--gold); }
+.diary-summary h2 { margin:0 0 10px; font-size:15px; color:var(--gold); }
+.ds-grid { display:flex; flex-wrap:wrap; gap:20px; }
+.ds-grid .d { font-size:13px; } .ds-grid .d b { font-size:20px; color:var(--sage); display:block; font-family:var(--mincho); }
+.topics { margin:18px 0; } .topics h2 { font-size:15px; color:var(--gold); }
+.topics ul { padding-left:18px; } .topics li { line-height:1.8; }
+.diary-toc { margin:18px 0 26px; padding:14px 18px; border:1px dashed var(--line); border-radius:10px; }
+.diary-toc h2 { font-size:14px; margin:0 0 8px; color:var(--muted); font-family:var(--mono); letter-spacing:0.05em; }
+.diary-toc ul { list-style:none; margin:0; padding:0; }
+.diary-toc a { display:flex; gap:12px; align-items:baseline; padding:6px 8px; border-radius:6px; text-decoration:none; color:var(--fg); }
+.diary-toc a:hover { background:var(--sub-bg); }
+.toc-date { font-family:var(--mono); font-size:12px; color:var(--gold); font-weight:700; min-width:92px; }
+.toc-titles { flex:1; font-family:var(--mincho); font-size:13px; }
+.toc-n { font-family:var(--mono); font-size:11px; color:var(--muted); }
+.diary-day { margin:12px 0; border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+.diary-day summary { cursor:pointer; padding:12px 16px; background:var(--sub-bg); display:flex; gap:14px; align-items:baseline; list-style:none; }
+.diary-day summary::-webkit-details-marker { display:none; }
+.diary-day summary::before { content:'▸'; color:var(--gold); transition:transform 0.15s; }
+.diary-day[open] summary::before { transform:rotate(90deg); }
+.d-date { font-family:var(--mono); font-size:13px; font-weight:700; color:var(--gold); }
+.d-titles { flex:1; font-family:var(--mincho); font-size:13px; color:var(--fg); }
+.d-count { font-family:var(--mono); font-size:11px; color:var(--muted); }
+.diary-body { padding:8px 16px 4px; }
+</style>
+</head>
+<body>
+<header class="top"><div>
+  <h1>📔 カラオケ練習日記</h1>
+  <div class="sub">日々の実測・気づき・成長の記録（新しい順）／練習の"やり方"は <a href="./plan.html" style="color:var(--gold)">計画</a> へ</div>
+</div></header>
+
+<section class="diary-summary">
+  <h2>📌 現在地（— 時点）</h2>
+  <div class="ds-grid">
+    <div class="d"><b>54.9</b>総合偏差値（対上手歌手）</div>
+    <div class="d"><b>6曲 / 11回</b>解析セッション</div>
+    <div class="d"><b>息漏れ(HNR)</b>唯一の明確な弱点</div>
+    <div class="d"><b>②安定 / ⑤深み</b>実は強み</div>
+  </div>
+</section>
+
+<section class="topics">
+  <h2>🔖 今のトピック</h2>
+  <ul>
+    <li><strong>最優先＝息支え（Phase B）</strong>：短音率が高くフレーズが細切れ。1音を伸ばし切る練習が最短ルート。</li>
+    <li><strong>キー戦略が実証済み</strong>：ロック(努努/Wherever)は原曲もかすれ系。無理にクリーンを目指さず -2〜3半音で。</li>
+    <li><strong>音色は演奏除去(demucs)で再測定済み</strong>：数値の正本は <a href="./profile.html" style="color:var(--gold)">声質スコアカード</a>。</li>
+  </ul>
+</section>
+
+<section class="diary-toc">
+  <h2>■ 日付目次（新しい順）</h2>
+  <ul>
+
+  </ul>
+</section>
+
+
+
+<footer class="footer">
+  カラオケ練習日記 ／ 練習の"やり方"は <a href="./plan.html">計画</a>・数値は <a href="./measure.html">実測</a>／<a href="./index.html">← ホーム</a>
+</footer>
+<script src="./nav.js"></script>
+</body>
+</html>

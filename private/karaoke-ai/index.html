@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>カラオケ練習AI — ホーム（v1・7/17ゼロ地点）</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70; --sky:#6DA6C2;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06); --highlight:rgba(212,168,91,0.14);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); --highlight:rgba(212,168,91,0.18); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:24px 20px 100px; max-width:1000px; margin:0 auto; }
+h1,h2,h3 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; }
+a { color:var(--gold); text-decoration:none; }
+
+.hero { text-align:center; padding:24px 0 8px; }
+.hero h1 { font-size:30px; margin:0 0 6px; }
+.hero .tag { font-family:var(--mono); font-size:12px; color:var(--muted); }
+.hero .zero { display:inline-block; margin-top:6px; padding:3px 10px; border-radius:999px; background:var(--highlight); font-family:var(--mono); font-size:11px; color:var(--gold); border:1px solid var(--gold); }
+
+/* 今日のステータス */
+.status { margin:24px 0; padding:18px 22px; border-radius:14px;
+  background:linear-gradient(135deg,rgba(212,168,91,0.12),rgba(122,155,126,0.07)); border:1px solid var(--gold); }
+.status h2 { font-size:15px; margin:0 0 12px; color:var(--gold); }
+.status-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+@media (max-width:640px){ .status-grid { grid-template-columns:repeat(2,1fr); } }
+.stat { background:var(--card-bg); border:1px solid var(--line); border-radius:10px; padding:12px 14px; text-align:center; }
+.stat .num { font-family:var(--mincho); font-size:24px; font-weight:700; color:var(--fg); line-height:1.1; }
+.stat .num.rose { color:var(--rose); } .stat .num.sage { color:var(--sage); } .stat .num.sky { color:var(--sky); }
+.stat .lbl { font-family:var(--mono); font-size:10px; color:var(--muted); margin-top:4px; }
+.status-focus { margin-top:14px; font-family:var(--mincho); font-size:14px; line-height:1.75;
+  padding:12px 14px; background:rgba(199,123,112,0.08); border-left:3px solid var(--rose); border-radius:6px; }
+
+/* 基本方針カード */
+.principle { margin:26px 0; padding:16px 20px; border-radius:12px; background:var(--card-bg); border:1px solid var(--sky); }
+.principle h2 { font-size:16px; margin:0 0 10px; color:var(--sky); }
+.principle p { font-size:13.5px; line-height:1.75; margin:6px 0; }
+.principle .note { font-family:var(--mono); font-size:11px; color:var(--muted); margin-top:8px; }
+
+/* 練習ループ */
+.loop-title { text-align:center; font-size:16px; color:var(--muted); margin:36px 0 4px; font-family:var(--mincho); }
+.loop { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; align-items:stretch; margin:12px 0 6px; position:relative; }
+@media (max-width:760px){ .loop { grid-template-columns:repeat(2,1fr); } }
+.node { display:flex; flex-direction:column; gap:8px; text-decoration:none; color:var(--fg);
+  background:var(--card-bg); border:1px solid var(--line); border-radius:14px; padding:18px 16px; transition:all 0.16s; position:relative; }
+.node:hover { transform:translateY(-4px); border-color:var(--gold); box-shadow:0 10px 28px rgba(15,27,46,0.12); text-decoration:none; }
+.node .step { font-family:var(--mono); font-size:11px; color:var(--gold); font-weight:700; }
+.node .emoji { font-size:30px; }
+.node .name { font-family:var(--mincho); font-size:18px; font-weight:600; }
+.node .desc { font-size:12px; color:var(--muted); line-height:1.55; }
+.node .go { margin-top:auto; font-family:var(--mono); font-size:11px; color:var(--gold); }
+.node.priority { border-color:var(--rose); }
+.node.priority .step { color:var(--rose); }
+.loop-back { text-align:center; font-family:var(--mono); font-size:12px; color:var(--muted); margin:8px 0 0; }
+
+/* 補助リンク */
+.aux { margin-top:36px; display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+@media (max-width:640px){ .aux { grid-template-columns:1fr 1fr; } }
+.aux a { display:flex; flex-direction:column; gap:2px; padding:12px 14px; border-radius:10px; border:1px solid var(--line); background:var(--card-bg); color:var(--fg); text-decoration:none; transition:all 0.15s; }
+.aux a:hover { border-color:var(--gold); transform:translateY(-2px); text-decoration:none; }
+.aux .a-emoji { font-size:20px; }
+.aux .a-name { font-family:var(--mincho); font-size:14px; font-weight:600; }
+.aux .a-sub { font-family:var(--mono); font-size:10px; color:var(--muted); }
+
+/* 準備期間へのリンク（控えめ） */
+.junbi-link { margin:22px 0 0; padding:12px 16px; border:1px dashed var(--line); border-radius:10px; font-size:12.5px; color:var(--muted); line-height:1.7; }
+.junbi-link strong { color:var(--fg); font-family:var(--mincho); }
+.junbi-link a { color:var(--gold); }
+
+footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>🎤 カラオケ練習AI</h1>
+  <div class="tag">demucs 分離 × pypYIN 9軸 × 原曲アーティスト実測基準の偏差値 × MYP 129本カリキュラム</div>
+  <div class="zero">🆕 v1 ／ 2026-07-17 をゼロ地点に再構築</div>
+</div>
+
+<section class="status">
+  <h2>📌 今日のステータス（新ベースライン v0）</h2>
+  <div class="status-grid">
+    <div class="stat"><div class="num">60.9</div><div class="lbl">総合偏差値<br>（クリーン9曲平均・6軸中5軸）</div></div>
+    <div class="stat"><div class="num">9曲 / 9回</div><div class="lbl">クリーン録音<br>（7/17新条件・全 v1）</div></div>
+    <div class="stat"><div class="num sky" id="watched-num">— / 129</div><div class="lbl">動画 視聴済み</div></div>
+    <div class="stat"><div class="num sage">07-17</div><div class="lbl">直近セッション</div></div>
+  </div>
+  <div class="status-focus">
+    🆕 <strong>2026-07-17 新ベースライン v0</strong>：iPhone直イヤホンマイク・ガイド OFF・BGM 小に録音条件を刷新。旧記録（〜7/15）は測定汚染込みで、旧サイトが示していた「10曲/23回・偏差値61手打ち」は<strong>「上達」ではなく「測定の掃除」</strong>。ここから同一新条件のセッション間差分で本当の上達を測る。
+    <br>🎯 現弱点：<strong>HNR息漏れ（偏差58）</strong>と<strong>短音率</strong>。強み：<strong>②安定 cent・⑤深み αRatio（65+）</strong>。
+    → 詳細は <a href="./profile.html">課題（声質偏差値）</a>、次の一手は <a href="./success.html">検証（サクセスFile）</a> の🔬レーン。
+  </div>
+</section>
+
+<section class="principle">
+  <h2>🧭 基本方針（v1・一新）</h2>
+  <p><strong>7/17 = ゼロ地点</strong>。7/10〜7/15 の11本は「正しい測り方・分析・練習方針を確立するための<strong>準備期間</strong>」として価値を認めつつ、因果分析・偏差値集計からは切り離す。</p>
+  <p>各曲は <strong>#1（v1）</strong> からスタート。同じ曲・同じ新条件で v2 以降を録るまでは、サクセスファイルの右3レーンは意図的に空欄（クリーンデータ蓄積待ち）＝件数を水増ししない。</p>
+  <p>MYP 主軸（129本カリキュラム）は不変。動画再選定は 7/17 プロファイルに基づいて別途行う（Mits確認要）。</p>
+  <div class="note">※ 詳細な移行経緯とスナップショット：ページ下部「準備期間」リンクへ</div>
+</section>
+
+<div class="loop-title">— 練習ループ：測って → 課題を知って → 検証して → 計画して → 学ぶ → また測る —</div>
+<div class="loop">
+  <a class="node" href="./measure.html">
+    <span class="step">① 測る</span><span class="emoji">📊</span>
+    <span class="name">実測（ダッシュ）</span>
+    <span class="desc">demucs 分離＋pypYIN で 9 軸実測。音程・音域・音色・リズムのトレンド。</span>
+    <span class="go">開く →</span>
+  </a>
+  <a class="node priority" href="./profile.html">
+    <span class="step">② 課題を知る</span><span class="emoji">🎯</span>
+    <span class="name">課題（声質偏差値）</span>
+    <span class="desc">原曲アーティスト実測を基準にした偏差値。今どこが弱点かが数字で分かる。</span>
+    <span class="go">開く →</span>
+  </a>
+  <a class="node priority" href="./success.html">
+    <span class="step">③ 検証する</span><span class="emoji">✅</span>
+    <span class="name">検証（サクセスFile）</span>
+    <span class="desc">🔬検証中／✅サクセス／⏳積み重ね／⚖️代償 の4レーンで因果を紐付け。</span>
+    <span class="go">開く →</span>
+  </a>
+  <a class="node" href="./plan.html">
+    <span class="step">④ 何を練習するか</span><span class="emoji">📖</span>
+    <span class="name">計画（ルーティン）</span>
+    <span class="desc">Phase 0〜E の練習計画。追記式で成長方針をアップデート。</span>
+    <span class="go">開く →</span>
+  </a>
+</div>
+<div class="loop-back">↑ ④まで来たら、また①カラオケで歌って測る（循環）</div>
+
+<div class="aux">
+  <a href="./basics.html">
+    <span class="a-emoji">🌱</span>
+    <span class="a-name">基礎30（おすすめ順）</span>
+    <span class="a-sub">MYP 30本のプログラム</span>
+  </a>
+  <a href="./videos.html">
+    <span class="a-emoji">🎬</span>
+    <span class="a-name">全動画マップ（129本）</span>
+    <span class="a-sub">Phase 別・視聴チェック</span>
+  </a>
+  <a href="./log.html">
+    <span class="a-emoji">📔</span>
+    <span class="a-name">練習日記</span>
+    <span class="a-sub">日々の気づき（新しい順）</span>
+  </a>
+</div>
+
+<section class="junbi-link">
+  <strong>🗄 準備期間アーカイブ</strong>：7/17以前の旧サイト（旧命名・旧数値・旧録音）は
+  <a href="./junbi-kikan/index.html">./junbi-kikan/</a>
+  に凍結保存。中身は一文字も変えていない。当時どう見えていたかを振り返るための資料。
+</section>
+
+<footer>
+  カラオケ練習AI ／ 非公開（noindex）／ v1 build 2026-07-17<br>
+  データ元：demucs 分離ボーカル・pypYIN(pYIN HMM)・helper2.js（9軸）・Praat（timbre）・torchcrepe（cent）・openSMILE eGeMAPSv02（αRatio）
+</footer>
+
+<script src="./nav.js"></script>
+<script>
+// 視聴済み数を localStorage から反映
+(function(){
+  var n = Object.keys(localStorage).filter(function(k){ return k.indexOf('myp-watched:')===0; }).length;
+  var el = document.getElementById('watched-num');
+  if (el) el.textContent = n + ' / 129';
+})();
+</script>
+</body>
+</html>
