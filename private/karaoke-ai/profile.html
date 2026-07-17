@@ -113,7 +113,7 @@ footer a { color:var(--gold); }
   <p><span class="label">🆕 2026-07-17 新ベースライン</span><strong>録音条件を刷新</strong>：iPhone直イヤホンマイク・ガイドボーカル OFF・BGM 小音量。旧録音（カラオケボックス備え付けマイク＋ガイド ON＋BGM 大）に混入していたガイド歌唱と伴奏残差が除去され、<strong>HNR が +7〜10dB / jitter・shimmer が大幅低下</strong>した。これは<strong>「上達」ではなく「測定汚染の除去」</strong>。本ページの偏差値は 2026-07-17 の新ベースライン v0 に基づく。過去の低数値は録音条件の産物であり、今後の上達は同一新条件のセッション間差分で測定する。</p>
   <p><span class="label">2026-07-16 更新</span>Mits の録音も <strong>demucs で演奏を除去</strong>してから再測定（以前は演奏込みで HNR が 2〜5dB 低く出ていた）。これで Mits も原曲も「demucs分離→Praat」で完全に同じ土俵。</p>
   <p><span class="label">軸の拡張</span>2026-07-16：ピッチを <strong>torchcrepe（ヘッドレス高精度）</strong> に、深みを <strong>openSMILE（歌手フォルマント αRatio）</strong> に統一。②安定が同一手法比較になり、⑤深みが「計測不能→実測」に昇格（6軸中5軸が数値化）。</p>
-  <p><span class="label">🆕 ハイブリッド偏差値（2026-07-17 Mits確定・案B）</span><strong>偏差値50 = 一般カバー投稿者 n=35 の実測平均</strong>（yt-dlp → demucs → Praat/CREPE/openSMILE で 3曲×5〜7本ずつ・QC後採用）／<strong>偏差値75 = 玉置浩二（メロディ）</strong>（分布上の位置を天井にリマップ）。式：分布ベース T-score（<code>50 + 10 × dir × (x − mean) / SD</code>）→ Tamaki-remap（<code>50 + K × (raw − 50)</code>, K=<b>3.422</b>・玉置raw総合=57.31→75）→ [25, 75] クランプ。50 は不変（分布 mean = amateur 平均）。</p>
+  <p><span class="label">🧪 実験モード（2026-07-17 Mits指示）</span><strong>プロは採点から全部除外</strong>。偏差値は<strong>一般カバー投稿者 n=35 の実測分布のみ</strong>で算出する純T-score（<code>50 + 10 × dir × (x − mean) / SD</code> → [25, 75] クランプ）。<strong>50 = 投稿者平均・10 = 1SD</strong>。プロ（玉置・松山・長渕・TAKA・桑田）の実測値は下表に<strong>参考値として表示するのみで、スケールには一切使わない</strong>。理由：アキシオム検定（2026-07-17）で、現5軸は「クリーンさの位置」を測っておりプロを正しく順位付けできない（プロは曲の要求で位置を選ぶ）と判明したため。</p>
   <p><span class="label">📢 母集団の正直な注記</span>この 35 人は「YouTube にカバーを投稿する人」＝ 世間の全歌唱者よりやや上寄り（self-selection bias）。低視聴数（&lt;5k）を意図的に厚く採ったが、真の一般社会平均（カラオケボックスで歌う不特定多数）はさらに下と推定される。<strong>従って本ページの「偏差値50」は「投稿者分布での50」であって「全国民平均で50」ではない</strong>。真の世間比較なら Mits はここに出る値よりさらに上に位置する可能性がある。</p>
   <div class="legend">
     <span class="l-ex">65+ = 上手な歌手級 ✨</span><span class="l-ex">57-64 = 良い</span><span class="l-st">45-56 = 平均帯</span><span class="l-bad">37-44 = 苦手</span><span class="l-bad">36未満 = 要強化 ⚠️</span>
@@ -129,7 +129,7 @@ footer a { color:var(--gold); }
 <div class="insight">
   <h4>🔑 実測して分かった重要事実：HNRは「曲の系統」で意味が変わる</h4>
   <p><strong>バラード系（玉置浩二 HNR 21.6・松山千春 17.8・長渕剛 17.3）は教科書的にクリーン</strong>。声楽が言う「良い発声＝倍音が豊かで息漏れが少ない」がそのまま数値に出ている。</p>
-  <p>ところが<strong>ロック系（ONE OK ROCK 7.0・サザン 7.8）は原曲でも HNR 7 前後と低い</strong>。これは Taka や桑田が<strong>意図的にかすれ・シャウト系の発声</strong>をしているから。つまり HNR は「バラードでは優劣軸になるが、ロックでは優劣ではなく個性」。<strong>Mits の HNR 6.2 は、玉置浩二（21.6）と比べれば大きな伸びしろだが、努努（ONE OK ROCK 7.0）を歌う時はむしろ原曲に近い。</strong></p>
+  <p>ところが<strong>ロック系（ONE OK ROCK 7.0・サザン 7.8）は原曲でも HNR 7 前後と低い</strong>。これは Taka や桑田が<strong>意図的にかすれ・シャウト系の発声</strong>をしているから。つまり HNR は「バラードでは優劣軸になるが、ロックでは優劣ではなく個性」。<strong>Mits のバラード群 HNR 16 台は玉置浩二（21.6）にまだ届かないが、努努 v3 の HNR 9.7 は ONE OK ROCK（7.0）のロック域にほぼ着地＝意図一致の成功例。</strong></p>
 </div>
 
 <h2>偏差値の基準（アンカー・分布ベース実測）</h2>
@@ -137,36 +137,36 @@ footer a { color:var(--gold); }
   <thead><tr><th>指標</th><th>良い向き</th><th>偏差値50 = 一般カバー投稿者<br>実測平均（n=35）</th><th>1SD 幅<br>（±10偏差値）</th><th>参考：バラード3人平均<br><small>玉置/松山/長渕</small></th></tr></thead>
   <tbody><tr><td><strong>HNR（倍音/雑音比）</strong></td><td>高い◎</td><td class="num skilled">16.34dB <span class="real">n=35</span></td><td class="num est">SD 4.38dB</td><td class="num skilled">18.89dB <span class="real">実測</span></td></tr><tr><td><strong>jitter（周期の乱れ）</strong></td><td>低い◎</td><td class="num skilled">1.24% <span class="real">n=35</span></td><td class="num est">SD 0.58%</td><td class="num skilled">0.80% <span class="real">実測</span></td></tr><tr><td><strong>shimmer（振幅の乱れ）</strong></td><td>低い◎</td><td class="num skilled">8.57% <span class="real">n=35</span></td><td class="num est">SD 3.69%</td><td class="num skilled">5.60% <span class="real">実測</span></td></tr><tr><td><strong>cent 変動（CREPE・音程の揺れ）</strong></td><td>低い◎</td><td class="num skilled">20.44 <span class="real">n=35</span></td><td class="num est">SD 2.45</td><td class="num skilled">20.61 <span class="real">実測</span></td></tr><tr><td><strong>深み（αRatio・歌手フォルマント）</strong></td><td>低い(負)◎</td><td class="num skilled">-9.71 <span class="real">n=35</span></td><td class="num est">SD 4.96</td><td class="num skilled">-10.11 <span class="real">実測</span></td></tr></tbody>
 </table>
-<p style="font-family:var(--mono);font-size:11px;color:var(--muted);">※ <span class="real">n=35</span>＝YouTube 一般カバー投稿者パイロット実測（3曲×5〜7本ずつ・QC後採用・cent は 6曲原曲平均ではなく分布 mean）。<strong>2026-07-17 案B（Mits確定）：偏差値50=一般カバー投稿者実測平均・偏差値75=玉置浩二（メロディ）のハイブリッド</strong>。分布ベース T-score → Tamaki-remap（K=3.422） → [25,75] クランプ。50 と 75 の 2点アンカー方式。母集団の性質（YouTube 投稿者バイアス）は上部注記参照。</p>
+<p style="font-family:var(--mono);font-size:11px;color:var(--muted);">※ <span class="real">n=35</span>＝YouTube 一般カバー投稿者パイロット実測（3曲×5〜7本ずつ・QC後採用・cent は 6曲原曲平均ではなく分布 mean）。<strong>2026-07-17 実験モード（Mits指示）：プロ全除外・純アマチュア分布 T-score のみ</strong>（50=投稿者平均・10=1SD → [25,75] クランプ）。プロは参考実測のみで採点外。母集団の性質（YouTube 投稿者バイアス＝宅録加工の右汚染が残るため、Mits の値は実力よりやや低めに出る可能性）は上部注記参照。</p>
 
 <h2>曲別 偏差値スコアカード（Mits最新版 vs 同曲の原曲アーティスト）</h2>
 
     <div class="song-card">
       <div class="song-head">
         <h3 class="song-name">メロディ <span class="artist-tag">原曲: 玉置浩二</span></h3>
-        <div class="song-total standard">総合偏差値 <b>53</b></div>
+        <div class="song-total standard">総合偏差値 <b>51</b></div>
       </div>
       <div class="song-meta">2026-07-17 Mits最新版 vs 原曲アーティスト実測（HNR/jitter/shimmer 同一 Praat 測定）</div>
       
-      <div class="axis-grid"><div class="axis-chip standard"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>49</b></div><div class="ax-val">Mits 16.3 / 原曲 21.6dB</div></div><div class="axis-chip bad"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">⚠️偏差値 <b>25</b></div><div class="ax-val">Mits 23.2 / 原曲 22.7</div></div><div class="axis-chip excellent"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">✨偏差値 <b>75</b></div><div class="ax-val">Mits 0.79 / 原曲 0.77%</div></div><div class="axis-chip good"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>62</b></div><div class="ax-val">Mits 5.6 / 原曲 4.0%</div></div><div class="axis-chip good"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>65</b></div><div class="ax-val">Mits -11.8 / 原曲 -16.3</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
+      <div class="axis-grid"><div class="axis-chip standard"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>50</b></div><div class="ax-val">Mits 16.3 / 原曲 21.6dB</div></div><div class="axis-chip warn"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">偏差値 <b>39</b></div><div class="ax-val">Mits 23.2 / 原曲 22.7</div></div><div class="axis-chip good"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">偏差値 <b>58</b></div><div class="ax-val">Mits 0.79 / 原曲 0.77%</div></div><div class="axis-chip standard"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>54</b></div><div class="ax-val">Mits 5.6 / 原曲 4.0%</div></div><div class="axis-chip standard"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>54</b></div><div class="ax-val">Mits -11.8 / 原曲 -16.3</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
     </div>
     <div class="song-card">
       <div class="song-head">
         <h3 class="song-name">大空と大地の中で <span class="artist-tag">原曲: 松山千春</span></h3>
-        <div class="song-total standard">総合偏差値 <b>49</b></div>
+        <div class="song-total standard">総合偏差値 <b>50</b></div>
       </div>
       <div class="song-meta">2026-07-17 Mits最新版 vs 原曲アーティスト実測（HNR/jitter/shimmer 同一 Praat 測定）</div>
       
-      <div class="axis-grid"><div class="axis-chip standard"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>53</b></div><div class="ax-val">Mits 16.7 / 原曲 17.8dB</div></div><div class="axis-chip bad"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">⚠️偏差値 <b>25</b></div><div class="ax-val">Mits 23.5 / 原曲 20.9</div></div><div class="axis-chip excellent"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">✨偏差値 <b>75</b></div><div class="ax-val">Mits 0.75 / 原曲 0.79%</div></div><div class="axis-chip good"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>62</b></div><div class="ax-val">Mits 6.3 / 原曲 6.6%</div></div><div class="axis-chip standard"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>46</b></div><div class="ax-val">Mits -9.1 / 原曲 -6.1</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
+      <div class="axis-grid"><div class="axis-chip standard"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>51</b></div><div class="ax-val">Mits 16.7 / 原曲 17.8dB</div></div><div class="axis-chip warn"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">偏差値 <b>38</b></div><div class="ax-val">Mits 23.5 / 原曲 20.9</div></div><div class="axis-chip good"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">偏差値 <b>58</b></div><div class="ax-val">Mits 0.75 / 原曲 0.79%</div></div><div class="axis-chip standard"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>53</b></div><div class="ax-val">Mits 6.3 / 原曲 6.6%</div></div><div class="axis-chip standard"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>49</b></div><div class="ax-val">Mits -9.1 / 原曲 -6.1</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
     </div>
     <div class="song-card">
       <div class="song-head">
         <h3 class="song-name">乾杯 <span class="artist-tag">原曲: 長渕剛</span></h3>
-        <div class="song-total standard">総合偏差値 <b>49</b></div>
+        <div class="song-total standard">総合偏差値 <b>50</b></div>
       </div>
       <div class="song-meta">2026-07-17 Mits最新版 vs 原曲アーティスト実測（HNR/jitter/shimmer 同一 Praat 測定）</div>
       
-      <div class="axis-grid"><div class="axis-chip standard"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>48</b></div><div class="ax-val">Mits 16.1 / 原曲 17.3dB</div></div><div class="axis-chip bad"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">⚠️偏差値 <b>25</b></div><div class="ax-val">Mits 23.3 / 原曲 22.3</div></div><div class="axis-chip excellent"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">✨偏差値 <b>75</b></div><div class="ax-val">Mits 0.80 / 原曲 0.84%</div></div><div class="axis-chip good"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>60</b></div><div class="ax-val">Mits 6.3 / 原曲 6.3%</div></div><div class="axis-chip standard"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>49</b></div><div class="ax-val">Mits -9.5 / 原曲 -7.9</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
+      <div class="axis-grid"><div class="axis-chip standard"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>50</b></div><div class="ax-val">Mits 16.1 / 原曲 17.3dB</div></div><div class="axis-chip warn"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">偏差値 <b>38</b></div><div class="ax-val">Mits 23.3 / 原曲 22.3</div></div><div class="axis-chip good"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">偏差値 <b>58</b></div><div class="ax-val">Mits 0.80 / 原曲 0.84%</div></div><div class="axis-chip standard"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>53</b></div><div class="ax-val">Mits 6.3 / 原曲 6.3%</div></div><div class="axis-chip standard"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>50</b></div><div class="ax-val">Mits -9.5 / 原曲 -7.9</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
     </div>
     <div class="song-card">
       <div class="song-head">
@@ -175,69 +175,69 @@ footer a { color:var(--gold); }
       </div>
       <div class="song-meta">2026-07-17 Mits最新版 vs 原曲アーティスト実測（HNR/jitter/shimmer 同一 Praat 測定）</div>
       
-      <div class="axis-grid"><div class="axis-chip standard"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>50</b></div><div class="ax-val">Mits 16.3 / 原曲 14.4dB</div></div><div class="axis-chip bad"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">⚠️偏差値 <b>26</b></div><div class="ax-val">Mits 22.1 / 原曲 15.3</div></div><div class="axis-chip excellent"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">✨偏差値 <b>74</b></div><div class="ax-val">Mits 0.83 / 原曲 0.94%</div></div><div class="axis-chip good"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>60</b></div><div class="ax-val">Mits 6.3 / 原曲 7.2%</div></div><div class="axis-chip warn"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>38</b></div><div class="ax-val">Mits -7.9 / 原曲 -4.5</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
+      <div class="axis-grid"><div class="axis-chip standard"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>50</b></div><div class="ax-val">Mits 16.3 / 原曲 14.4dB</div></div><div class="axis-chip warn"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">偏差値 <b>43</b></div><div class="ax-val">Mits 22.1 / 原曲 15.3</div></div><div class="axis-chip good"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">偏差値 <b>57</b></div><div class="ax-val">Mits 0.83 / 原曲 0.94%</div></div><div class="axis-chip standard"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>53</b></div><div class="ax-val">Mits 6.3 / 原曲 7.2%</div></div><div class="axis-chip standard"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>46</b></div><div class="ax-val">Mits -7.9 / 原曲 -4.5</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
     </div>
     <div class="song-card rock">
       <div class="song-head">
         <h3 class="song-name">旅姿六人衆 <span class="artist-tag">原曲: サザンオールスターズ</span></h3>
-        <div class="song-total standard">総合偏差値 <b>54</b></div>
+        <div class="song-total standard">総合偏差値 <b>51</b></div>
       </div>
       <div class="song-meta">2026-07-17 Mits最新版 vs 原曲アーティスト実測（HNR/jitter/shimmer 同一 Praat 測定）</div>
       <div class="rock-note">⚠️ この曲は<strong>ロック/シャウト系</strong>：原曲（サザンオールスターズ）も HNR 7.8dB と低い＝意図的なかすれ発声。この曲では ①響く・④芯 の偏差値は「優劣」ではなく「クリーン発声との距離」として読む（Mits は原曲に近い）。</div>
-      <div class="axis-grid"><div class="axis-chip good"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>57</b></div><div class="ax-val">Mits 17.3 / 原曲 7.8dB</div></div><div class="axis-chip bad"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">⚠️偏差値 <b>25</b></div><div class="ax-val">Mits 23.1 / 原曲 23.1</div></div><div class="axis-chip excellent"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">✨偏差値 <b>75</b></div><div class="ax-val">Mits 0.78 / 原曲 2.24%</div></div><div class="axis-chip excellent"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">✨偏差値 <b>66</b></div><div class="ax-val">Mits 5.4 / 原曲 15.6%</div></div><div class="axis-chip standard"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>56</b></div><div class="ax-val">Mits -10.6 / 原曲 -1.2</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
+      <div class="axis-grid"><div class="axis-chip standard"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>52</b></div><div class="ax-val">Mits 17.3 / 原曲 7.8dB</div></div><div class="axis-chip warn"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">偏差値 <b>39</b></div><div class="ax-val">Mits 23.1 / 原曲 23.1</div></div><div class="axis-chip good"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">偏差値 <b>58</b></div><div class="ax-val">Mits 0.78 / 原曲 2.24%</div></div><div class="axis-chip standard"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>55</b></div><div class="ax-val">Mits 5.4 / 原曲 15.6%</div></div><div class="axis-chip standard"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>52</b></div><div class="ax-val">Mits -10.6 / 原曲 -1.2</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
     </div>
     <div class="song-card rock">
       <div class="song-head">
         <h3 class="song-name">努努 <span class="artist-tag">原曲: ONE OK ROCK</span></h3>
-        <div class="song-total bad">総合偏差値 <b>25</b></div>
+        <div class="song-total warn">総合偏差値 <b>37</b></div>
       </div>
       <div class="song-meta">2026-07-17 Mits最新版 vs 原曲アーティスト実測（HNR/jitter/shimmer 同一 Praat 測定）</div>
       <div class="rock-note">⚠️ この曲は<strong>ロック/シャウト系</strong>：原曲（ONE OK ROCK）も HNR 7.0dB と低い＝意図的なかすれ発声。この曲では ①響く・④芯 の偏差値は「優劣」ではなく「クリーン発声との距離」として読む（Mits は原曲に近い）。</div>
-      <div class="axis-grid"><div class="axis-chip bad"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">⚠️偏差値 <b>25</b></div><div class="ax-val">Mits 9.7 / 原曲 7.0dB</div></div><div class="axis-chip bad"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">⚠️偏差値 <b>25</b></div><div class="ax-val">Mits 23.9 / 原曲 23.0</div></div><div class="axis-chip bad"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">⚠️偏差値 <b>25</b></div><div class="ax-val">Mits 2.05 / 原曲 2.25%</div></div><div class="axis-chip bad"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">⚠️偏差値 <b>25</b></div><div class="ax-val">Mits 16.0 / 原曲 14.7%</div></div><div class="axis-chip warn"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>40</b></div><div class="ax-val">Mits -8.2 / 原曲 -1.3</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
+      <div class="axis-grid"><div class="axis-chip bad"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">⚠️偏差値 <b>35</b></div><div class="ax-val">Mits 9.7 / 原曲 7.0dB</div></div><div class="axis-chip bad"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">⚠️偏差値 <b>36</b></div><div class="ax-val">Mits 23.9 / 原曲 23.0</div></div><div class="axis-chip bad"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">⚠️偏差値 <b>36</b></div><div class="ax-val">Mits 2.05 / 原曲 2.25%</div></div><div class="axis-chip bad"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">⚠️偏差値 <b>32</b></div><div class="ax-val">Mits 16.0 / 原曲 14.7%</div></div><div class="axis-chip standard"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>47</b></div><div class="ax-val">Mits -8.2 / 原曲 -1.3</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
     </div>
     <div class="song-card rock">
       <div class="song-head">
         <h3 class="song-name">The Beginning <span class="artist-tag">原曲: ONE OK ROCK</span></h3>
-        <div class="song-total bad">総合偏差値 <b>33</b></div>
+        <div class="song-total standard">総合偏差値 <b>45</b></div>
       </div>
       <div class="song-meta">2026-07-17 Mits最新版 vs 原曲アーティスト実測（HNR/jitter/shimmer 同一 Praat 測定）</div>
       <div class="rock-note">⚠️ この曲は<strong>ロック/シャウト系</strong>：原曲（ONE OK ROCK）も HNR 7.1dB と低い＝意図的なかすれ発声。この曲では ①響く・④芯 の偏差値は「優劣」ではなく「クリーン発声との距離」として読む（Mits は原曲に近い）。</div>
-      <div class="axis-grid"><div class="axis-chip bad"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">⚠️偏差値 <b>27</b></div><div class="ax-val">Mits 13.4 / 原曲 7.1dB</div></div><div class="axis-chip bad"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">⚠️偏差値 <b>25</b></div><div class="ax-val">Mits 23.4 / 原曲 20.4</div></div><div class="axis-chip warn"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">偏差値 <b>45</b></div><div class="ax-val">Mits 1.33 / 原曲 2.03%</div></div><div class="axis-chip warn"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>38</b></div><div class="ax-val">Mits 8.6 / 原曲 14.4%</div></div><div class="axis-chip standard"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>46</b></div><div class="ax-val">Mits -9.2 / 原曲 -2.4</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
+      <div class="axis-grid"><div class="axis-chip warn"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>43</b></div><div class="ax-val">Mits 13.4 / 原曲 7.1dB</div></div><div class="axis-chip warn"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">偏差値 <b>38</b></div><div class="ax-val">Mits 23.4 / 原曲 20.4</div></div><div class="axis-chip standard"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">偏差値 <b>48</b></div><div class="ax-val">Mits 1.33 / 原曲 2.03%</div></div><div class="axis-chip standard"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>47</b></div><div class="ax-val">Mits 8.6 / 原曲 14.4%</div></div><div class="axis-chip standard"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>49</b></div><div class="ax-val">Mits -9.2 / 原曲 -2.4</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
     </div>
     <div class="song-card rock">
       <div class="song-head">
         <h3 class="song-name">We are <span class="artist-tag">原曲: ONE OK ROCK</span></h3>
-        <div class="song-total standard">総合偏差値 <b>46</b></div>
+        <div class="song-total standard">総合偏差値 <b>49</b></div>
       </div>
       <div class="song-meta">2026-07-17 Mits最新版 vs 原曲アーティスト実測（HNR/jitter/shimmer 同一 Praat 測定）</div>
       <div class="rock-note">⚠️ この曲は<strong>ロック/シャウト系</strong>：原曲（ONE OK ROCK）も HNR 9.2dB と低い＝意図的なかすれ発声。この曲では ①響く・④芯 の偏差値は「優劣」ではなく「クリーン発声との距離」として読む（Mits は原曲に近い）。</div>
-      <div class="axis-grid"><div class="axis-chip standard"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>50</b></div><div class="ax-val">Mits 16.4 / 原曲 9.2dB</div></div><div class="axis-chip bad"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">⚠️偏差値 <b>25</b></div><div class="ax-val">Mits 23.4 / 原曲 15.3</div></div><div class="axis-chip good"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">偏差値 <b>63</b></div><div class="ax-val">Mits 1.02 / 原曲 1.70%</div></div><div class="axis-chip good"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>62</b></div><div class="ax-val">Mits 6.1 / 原曲 12.3%</div></div><div class="axis-chip warn"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>45</b></div><div class="ax-val">Mits -8.9 / 原曲 1.4</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
+      <div class="axis-grid"><div class="axis-chip standard"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>50</b></div><div class="ax-val">Mits 16.4 / 原曲 9.2dB</div></div><div class="axis-chip warn"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">偏差値 <b>38</b></div><div class="ax-val">Mits 23.4 / 原曲 15.3</div></div><div class="axis-chip standard"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">偏差値 <b>54</b></div><div class="ax-val">Mits 1.02 / 原曲 1.70%</div></div><div class="axis-chip standard"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>53</b></div><div class="ax-val">Mits 6.1 / 原曲 12.3%</div></div><div class="axis-chip standard"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>48</b></div><div class="ax-val">Mits -8.9 / 原曲 1.4</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
     </div>
     <div class="song-card rock">
       <div class="song-head">
         <h3 class="song-name">皆無 <span class="artist-tag">原曲: ONE OK ROCK</span></h3>
-        <div class="song-total warn">総合偏差値 <b>43</b></div>
+        <div class="song-total standard">総合偏差値 <b>48</b></div>
       </div>
       <div class="song-meta">2026-07-17 Mits最新版 vs 原曲アーティスト実測（HNR/jitter/shimmer 同一 Praat 測定）</div>
       <div class="rock-note">⚠️ この曲は<strong>ロック/シャウト系</strong>：原曲（ONE OK ROCK）も HNR 9.6dB と低い＝意図的なかすれ発声。この曲では ①響く・④芯 の偏差値は「優劣」ではなく「クリーン発声との距離」として読む（Mits は原曲に近い）。</div>
-      <div class="axis-grid"><div class="axis-chip warn"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>45</b></div><div class="ax-val">Mits 15.7 / 原曲 9.6dB</div></div><div class="axis-chip bad"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">⚠️偏差値 <b>25</b></div><div class="ax-val">Mits 23.6 / 原曲 21.4</div></div><div class="axis-chip standard"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">偏差値 <b>55</b></div><div class="ax-val">Mits 1.15 / 原曲 1.04%</div></div><div class="axis-chip good"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>58</b></div><div class="ax-val">Mits 6.2 / 原曲 9.4%</div></div><div class="axis-chip standard"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>51</b></div><div class="ax-val">Mits -9.8 / 原曲 -0.8</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
+      <div class="axis-grid"><div class="axis-chip standard"><div class="ax-name">① 響く <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>48</b></div><div class="ax-val">Mits 15.7 / 原曲 9.6dB</div></div><div class="axis-chip warn"><div class="ax-name">② 安定 <span class="shared">CREPE</span></div><div class="ax-hensa">偏差値 <b>37</b></div><div class="ax-val">Mits 23.6 / 原曲 21.4</div></div><div class="axis-chip standard"><div class="ax-name">③ 丸い⇔トゲ</div><div class="ax-hensa">偏差値 <b>52</b></div><div class="ax-val">Mits 1.15 / 原曲 1.04%</div></div><div class="axis-chip standard"><div class="ax-name">④ 芯⇔かすれ <span class="shared">*HNR</span></div><div class="ax-hensa">偏差値 <b>52</b></div><div class="ax-val">Mits 6.2 / 原曲 9.4%</div></div><div class="axis-chip standard"><div class="ax-name">⑤ 深み <span class="shared">αRatio</span></div><div class="ax-hensa">偏差値 <b>50</b></div><div class="ax-val">Mits -9.8 / 原曲 -0.8</div></div><div class="axis-chip na"><div class="ax-name">⑥ 口から離れ</div><div class="ax-hensa">計測不能</div><div class="ax-val">—</div></div></div>
     </div>
 
 <h2>Mits 声質プロフィール（全曲平均）</h2>
 <div class="profile">
-  <h3>総合偏差値 平均 = 43 ／ 最大の伸びしろ = ②「安定 cent（音程内揺らぎ）」</h3>
+  <h3>総合偏差値 平均 = 48 ／ 最大の伸びしろ = ②「安定 cent（音程内揺らぎ）」</h3>
   <p class="big">
-    Mits の cent 平均 <strong>23.3 → 偏差値 25</strong>。一般カバー投稿者 n=35 の中で <strong>最も差が付いているのは音程内の細かい揺らぎ（cent 変動）</strong>。玉置浩二（メロディ）でも cent は 22.66 で分布上ほぼ平均帯（偏差値 41）＝この軸は「表現豊かな歌手ほど揺らぐ」性質があり、一意に伸ばすべき軸ではないが、Mits は現状 SD 1つ以上下振れ。<br>
-    ①響く HNR 平均 <strong>15.3dB → 偏差値 42</strong>。分布ベースだと平均帯（旧スケールでは弱点判定だったが、実測分布ではボーカル分離ボーカルの HNR は一般カバー投稿者でも 16.3 dB 中央）。<br>
-    <strong>⑤深み（αRatio -9.5 → 偏差値 48）は依然として維持ゾーン</strong>。松山千春 -6.1 / 長渕剛 -7.9 より深い側で、歌手フォルマント（声の鳴り）は出ている。<br>
+    Mits の cent 平均 <strong>23.3 → 偏差値 38</strong>。一般カバー投稿者 n=35 の中で <strong>最も差が付いているのは音程内の細かい揺らぎ（cent 変動）</strong>。玉置浩二（メロディ）でも cent は 22.66 で分布上ほぼ平均帯（偏差値 41）＝この軸は「表現豊かな歌手ほど揺らぐ」性質があり、一意に伸ばすべき軸ではないが、Mits は現状 SD 1つ以上下振れ。<br>
+    ①響く HNR 平均 <strong>15.3dB → 偏差値 48</strong>。分布ベースだと平均帯（旧スケールでは弱点判定だったが、実測分布ではボーカル分離ボーカルの HNR は一般カバー投稿者でも 16.3 dB 中央）。<br>
+    <strong>⑤深み（αRatio -9.5 → 偏差値 49）は依然として維持ゾーン</strong>。松山千春 -6.1 / 長渕剛 -7.9 より深い側で、歌手フォルマント（声の鳴り）は出ている。<br>
     <strong>結論：分布ベース切替（2026-07-17）で見え方が変わった。「HNR息漏れが唯一の弱点」→「実は cent（音程内揺らぎ）が最も下振れ」。ただし cent は「意図的表現の揺らぎ」も含み解釈に注意（玉置本人も分布上は平均帯）。次のクリーン測定 v2 での cent 動きが真の因果シグナル。</strong>
   </p>
   <div class="metric-row">
-    <span>① 響く HNR：偏差値 42</span>
-    <span>② 安定 cent(CREPE)：偏差値 25 🔴</span>
-    <span>③ 丸さ jitter：偏差値 61</span>
-    <span>④ 芯 shimmer：偏差値 61</span>
-    <span>⑤ 深み αRatio：偏差値 48</span>
+    <span>① 響く HNR：偏差値 48</span>
+    <span>② 安定 cent(CREPE)：偏差値 38 🔴</span>
+    <span>③ 丸さ jitter：偏差値 53</span>
+    <span>④ 芯 shimmer：偏差値 53</span>
+    <span>⑤ 深み αRatio：偏差値 49</span>
   </div>
 </div>
 
