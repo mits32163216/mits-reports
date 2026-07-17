@@ -10,7 +10,7 @@
     { file: "success.html", key: "success", emoji: "✅", label: "検証",    sub: "サクセスFile" },
     { file: "plan.html",    key: "plan",    emoji: "📖", label: "計画",    sub: "ルーティン" },
     { file: "log.html",     key: "log",     emoji: "📔", label: "日記",    sub: "練習ログ" },
-    { file: "basics.html",  key: "basics",  emoji: "🌱", label: "基礎29",  sub: "おすすめ順" },
+    { file: "basics.html",  key: "basics",  emoji: "🌱", label: "基礎",    sub: "おすすめ順" },
     { file: "videos.html",  key: "videos",  emoji: "🎬", label: "学ぶ",    sub: "全動画" },
     { file: "junbi-kikan/index.html", key: "junbi", emoji: "🗄", label: "準備期間", sub: "旧サイト" },
   ];

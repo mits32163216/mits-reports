@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>基礎レッスン29 — カラオケ練習AI</title>
+<title>基礎レッスン30 — カラオケ練習AI</title>
 <style>
 :root {
   --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
@@ -73,14 +73,15 @@ footer a { color:var(--gold); }
 <body>
 
 <header class="top">
-  <h1>🌱 基礎レッスン29</h1>
-  <div class="sub">トレーナー MYP 全129本から、<strong>Mits の 7/17 クリーン分析に基づく再選定</strong>で基礎29本を厳選・プログラム化（2026-07-17 案②刷新）</div>
+  <h1>🌱 基礎レッスン30</h1>
+  <div class="sub">トレーナー MYP 全129本から、<strong>Mits の 7/17 クリーン分析 + 7/18 二重試験</strong>を経た改善指標フレームで基礎30本を厳選・プログラム化（2026-07-18 三次刷新）</div>
 </header>
 
 <div class="overview">
-  <p><span class="label">組み方</span>番号順ではなく<strong>「Mits が今やるべき順」</strong>。7/17 クリーン測定で判明した真の課題＝<strong>Tony ノート内 cent 揺らぎ 44.7（音程精度）</strong>＋<strong>short_note_ratio 59%（息配分）</strong>を潰す順に STEP を組んだ。</p>
-  <p><span class="label">優先順位</span>STEP1 土台 → <strong>STEP2 息支え（本丸①・short_note_ratio対策）</strong> → STEP3 声質喉ケア（保全・旧最優先から縮小） → <strong>STEP4 音程リズム（本丸②・cent揺らぎ対策）</strong> → STEP5 高音・ミックス定着（🌱 E5到達実測を踏まえ新設）。</p>
-  <p><span class="label">高音扱いの変更</span>旧サイトは「高音は基礎を終えてからなのであえて入れていない」方針だったが、7/17『皆無』で <strong>E5（672.9 Hz）到達</strong>を実測。既に届いているため、旧方針を撤回し STEP5 に基礎レベルの高音導入4本を新設した。</p>
+  <p><span class="label">組み方</span>番号順ではなく<strong>「Mits が今やるべき順」</strong>。7/17 クリーン測定＋7/18 の「アキシオム×改善」二重試験を通した<strong>改善指標フレーム</strong>で組み直した。中核は ①音程 correctness（DTW 的中率 38.5%）／ ②ビブラート幅制御（190-210c → 50-120c）／ ④息配分（short_note_ratio 59%）。</p>
+  <p><span class="label">優先順位</span>STEP1 土台 → <strong>STEP2 息支え（改善指標④・息配分）</strong> → STEP3 声質喉ケア（HNR は状態指標に降格・保全枠） → <strong>STEP4 音程correctness とリズム（改善指標①・的中率）</strong> → <strong>STEP4b ビブラート幅制御（改善指標②）</strong> → STEP5 高音・ミックス定着（🌱 E5到達実測を踏まえ新設）。</p>
+  <p><span class="label">フレーム変更点</span>旧「Tony cent 揺らぎ 44.7 = 真の弱点」は撤回：7/18 検定でこの cent は Mits のビブラート幅（190-210c・rate 4.3-5.3Hz は正常帯）の代理変数と判明した。歌唱力の本丸は<strong>「狙った音を当てる correctness」と「幅の制御」</strong>の2軸。旧「息漏れHNR最優先」も撤回済み（状態指標に降格）。</p>
+  <p><span class="label">高音扱い</span>7/17『皆無』で <strong>E5（672.9 Hz）到達</strong>を実測。「あえて入れていない」旧方針は撤回し、STEP5 に基礎レベルの高音導入4本を新設。</p>
   <p><span class="label">使い方</span>上から順に。見たらチェック（右下に進捗）。<strong>視聴日も自動記録</strong>される（👁 M/D 表示）。チェックは<a href="./videos.html">全動画マップ</a>と同期する。</p>
 </div>
 <a class="full-link" href="./videos.html">→ Phase別の全129本マップを見る</a>
@@ -104,25 +105,25 @@ footer a { color:var(--gold); }
 </section>
 <section class="step-section priority">
   <div class="step-head">
-    <h2 class="step-name"><span class="step-badge">STEP 2</span> 息を支える <span class="step-sub">🔴 short_note_ratio 59% 直撃</span></h2>
+    <h2 class="step-name"><span class="step-badge">STEP 2</span> 息を支える <span class="step-sub">🔴 改善指標④：息配分（short_note_ratio 対策）</span></h2>
     <span class="step-count">6本</span>
   </div>
-  <p class="step-desc">Mits の 7/17 弱点＝ short_note_ratio 59%（フレーズ細切れ・息の使い切りが速い）を直撃する STEP。旧サイトの息漏れHNR最優先軸は7/17バラード16dB台で解消したので、息の『続き』ではなく『配分』にフォーカスして厳選6本。</p>
+  <p class="step-desc">改善指標④＝short_note_ratio（フレーズ細切れ・息の使い切りが速い比率・9曲平均59%）を下げる本命 STEP。息の『続き』ではなく『配分』にフォーカスして厳選6本。HNR（バラード群 16 dB台）は状態指標に降格した（優劣ではなく曲系統の個性）ためここでは触れず、息の使い切り方だけを扱う。</p>
   <ul class="video-list">
     <li data-vid="Dpk5pfgxKfE"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="Dpk5pfgxKfE"><span class="vchk-mark"></span></label><span class="rank">8</span><div class="vbody"><a href="https://www.youtube.com/watch?v=Dpk5pfgxKfE" target="_blank" rel="noopener"><span class="vnum">#6</span> 下腹部で動かせない？本物の腹式呼吸を徹底解説｜ボイトレの第一歩をこの動画から</a><div class="reason">腹式呼吸の第一歩＝息配分の土台</div></div><span class="vwatched-date" data-vid="Dpk5pfgxKfE"></span><span class="vdur">4分14秒</span></li>
     <li data-vid="Sp3zRzggfx4"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="Sp3zRzggfx4"><span class="vchk-mark"></span></label><span class="rank">9</span><div class="vbody"><a href="https://www.youtube.com/watch?v=Sp3zRzggfx4" target="_blank" rel="noopener"><span class="vnum">#5</span> Teaching authentic abdominal breathing | Voice training for beginners to professionals [Daily ...</a><div class="reason">初心者→プロの腹式呼吸の本命</div></div><span class="vwatched-date" data-vid="Sp3zRzggfx4"></span><span class="vdur">21分31秒</span></li>
     <li data-vid="4ubV1JDnTlk"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="4ubV1JDnTlk"><span class="vchk-mark"></span></label><span class="rank">10</span><div class="vbody"><a href="https://www.youtube.com/watch?v=4ubV1JDnTlk" target="_blank" rel="noopener"><span class="vnum">#63</span> 声量UPや正しい声帯閉鎖、究極の発声の基盤となる【横隔膜と腹圧理論】をわかりやすく解説</a><div class="reason">息支えの仕組み＝横隔膜と腹圧の理論</div></div><span class="vwatched-date" data-vid="4ubV1JDnTlk"></span><span class="vdur">11分29秒</span></li>
     <li data-vid="3LTpbsiIBJc"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="3LTpbsiIBJc"><span class="vchk-mark"></span></label><span class="rank">11</span><div class="vbody"><a href="https://www.youtube.com/watch?v=3LTpbsiIBJc" target="_blank" rel="noopener"><span class="vnum">#64 P1</span> 声量が激変！究極の発声の【腹圧と横隔膜】</a><div class="reason">声量が激変する腹圧と横隔膜の土台</div></div><span class="vwatched-date" data-vid="3LTpbsiIBJc"></span><span class="vdur">9分14秒</span></li>
     <li data-vid="1j612-0vYq4"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="1j612-0vYq4"><span class="vchk-mark"></span></label><span class="rank">12</span><div class="vbody"><a href="https://www.youtube.com/watch?v=1j612-0vYq4" target="_blank" rel="noopener"><span class="vnum">#15</span> ボイトレ基礎は横隔膜トレーニング！【毎日の歌唱力UPトレーニングその⑥息止め】歌がうまくなるボイトレの基本</a><div class="reason">支え筋を鍛える息止めトレ</div></div><span class="vwatched-date" data-vid="1j612-0vYq4"></span><span class="vdur">15分14秒</span></li>
-    <li data-vid="-ApSPyWHHc8"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="-ApSPyWHHc8"><span class="vchk-mark"></span></label><span class="rank">13</span><div class="vbody"><a href="https://www.youtube.com/watch?v=-ApSPyWHHc8" target="_blank" rel="noopener"><span class="vnum">#108</span> ロングトーン練習で歌唱力向上</a><div class="reason">フレーズの続きを伸ばす本命＝ロングトーン</div></div><span class="vwatched-date" data-vid="-ApSPyWHHc8"></span><span class="vdur">10分17秒</span></li>
+    <li data-vid="-ApSPyWHHc8"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="-ApSPyWHHc8"><span class="vchk-mark"></span></label><span class="rank">13</span><div class="vbody"><a href="https://www.youtube.com/watch?v=-ApSPyWHHc8" target="_blank" rel="noopener"><span class="vnum">#108</span> ロングトーン練習で歌唱力向上</a><div class="reason">フレーズの続きを伸ばす本命＝ロングトーン（幅制御にも直結）</div></div><span class="vwatched-date" data-vid="-ApSPyWHHc8"></span><span class="vdur">10分17秒</span></li>
   </ul>
 </section>
 <section class="step-section">
   <div class="step-head">
-    <h2 class="step-name"><span class="step-badge">STEP 3</span> 声質・喉のケア <span class="step-sub">保全（旧最優先から縮小）</span></h2>
+    <h2 class="step-name"><span class="step-badge">STEP 3</span> 声質・喉のケア <span class="step-sub">保全（HNR は状態指標に降格）</span></h2>
     <span class="step-count">3本</span>
   </div>
-  <p class="step-desc">7/17クリーン測定で HNR バラード群 16 dB台・low_noise_hits 全曲 0 を確認したため、旧サイトの『息漏れHNR最優先』軸は解消。保全用に3本に厳選（声帯閉鎖・響き・低音発声）。</p>
+  <p class="step-desc">7/17 クリーン測定で HNR バラード群 16 dB台・low_noise_hits 全曲 0 を確認。HNR は 7/18 二重試験（プロ横断＋改善縦断）で単独の改善指標としては失格＝状態指標に降格したため、ここは弱点ではなく保全枠。声帯閉鎖・共鳴・低音発声の3本に厳選。</p>
   <ul class="video-list">
     <li data-vid="9ezy4pJeadE"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="9ezy4pJeadE"><span class="vchk-mark"></span></label><span class="rank">14</span><div class="vbody"><a href="https://www.youtube.com/watch?v=9ezy4pJeadE" target="_blank" rel="noopener"><span class="vnum">#42</span> 声帯閉鎖がうまくできずハスキーになってしまう人へ</a><div class="reason">声帯閉鎖の基礎（ハスキー化防止）</div></div><span class="vwatched-date" data-vid="9ezy4pJeadE"></span><span class="vdur">4分30秒</span></li>
     <li data-vid="vtWtukz53No"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="vtWtukz53No"><span class="vchk-mark"></span></label><span class="rank">15</span><div class="vbody"><a href="https://www.youtube.com/watch?v=vtWtukz53No" target="_blank" rel="noopener"><span class="vnum">#41</span> 正しい声の響かせ方とは？【共鳴練習に警告】</a><div class="reason">響き＝共鳴の正しい響かせ方</div></div><span class="vwatched-date" data-vid="vtWtukz53No"></span><span class="vdur">4分50秒</span></li>
@@ -131,20 +132,30 @@ footer a { color:var(--gold); }
 </section>
 <section class="step-section priority">
   <div class="step-head">
-    <h2 class="step-name"><span class="step-badge">STEP 4</span> 音程とリズムの基礎 <span class="step-sub">🔴 Tony cent 揺らぎ 44.7 直撃</span></h2>
+    <h2 class="step-name"><span class="step-badge">STEP 4</span> 音程correctness とリズム <span class="step-sub">🔴 改善指標①：狙った音を当てる（DTW 的中率 38.5%）</span></h2>
     <span class="step-count">9本</span>
   </div>
-  <p class="step-desc">Mits の 7/17 真の弱点＝ Tony ノート内 cent 揺らぎ 44.7（ピッチセンター内の小刻みな揺れ）を直撃する STEP。リズム論全3編＋子音＋イヤトレ＋座学＋母音を9本で組む。</p>
+  <p class="step-desc">改善指標①＝音程 correctness（DTW 的中率・Mits 9曲平均 38.5%・アマ平均 56.6% に対して低め・特に記憶中3曲 Wherever 33.6 / We are 28.8 / 皆無 32.1 が最低群）を上げる本命 STEP。ノート内の cent 揺らぎ 44.7 は 7/18 の二重試験でビブラート幅の代理変数と判明し弱点扱いから撤回（Mits のビブラート幅 190-210c は個性帯で、狭めるのは STEP 4b 側）。ここは「狙った音に当てる」ための、リズム基準の確立＋子音のタイミング＋母音口形の統一＋耳で聴き分ける力＝9本で組む。</p>
   <ul class="video-list">
-    <li data-vid="K2mCKWDacHM"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="K2mCKWDacHM"><span class="vchk-mark"></span></label><span class="rank">17</span><div class="vbody"><a href="https://www.youtube.com/watch?v=K2mCKWDacHM" target="_blank" rel="noopener"><span class="vnum">#12</span> 音痴を治す方法は？ 【音がハズれる仕組み】を解説｜</a><div class="reason">音程がハズれる仕組みを知る</div></div><span class="vwatched-date" data-vid="K2mCKWDacHM"></span><span class="vdur">9分24秒</span></li>
-    <li data-vid="boR6sYUFMks"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="boR6sYUFMks"><span class="vchk-mark"></span></label><span class="rank">18</span><div class="vbody"><a href="https://www.youtube.com/watch?v=boR6sYUFMks" target="_blank" rel="noopener"><span class="vnum">#30</span> How to open your mouth properly: the foundation of proper vocalization! Improve your singing,...</a><div class="reason">母音の土台＝口の開け方</div></div><span class="vwatched-date" data-vid="boR6sYUFMks"></span><span class="vdur">7分32秒</span></li>
-    <li data-vid="cbWgekMizL8"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="cbWgekMizL8"><span class="vchk-mark"></span></label><span class="rank">19</span><div class="vbody"><a href="https://www.youtube.com/watch?v=cbWgekMizL8" target="_blank" rel="noopener"><span class="vnum">#31</span> 正しい発声の基礎となる口の開け方②【母音ごとの開け方】</a><div class="reason">音程・音色の土台＝母音ごとの開け方</div></div><span class="vwatched-date" data-vid="cbWgekMizL8"></span><span class="vdur">11分21秒</span></li>
-    <li data-vid="mBoDp7hfxFE"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="mBoDp7hfxFE"><span class="vchk-mark"></span></label><span class="rank">20</span><div class="vbody"><a href="https://www.youtube.com/watch?v=mBoDp7hfxFE" target="_blank" rel="noopener"><span class="vnum">#85</span> 【ボイトレ理論】子音で歌の上手さが変わる！？</a><div class="reason">子音で歌の上手さが変わる＝ピッチ精度直結</div></div><span class="vwatched-date" data-vid="mBoDp7hfxFE"></span><span class="vdur">8分21秒</span></li>
-    <li data-vid="UFqWMJDHp4U"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="UFqWMJDHp4U"><span class="vchk-mark"></span></label><span class="rank">21</span><div class="vbody"><a href="https://www.youtube.com/watch?v=UFqWMJDHp4U" target="_blank" rel="noopener"><span class="vnum">#37</span> 本物のリズム論で驚きの変化！【最強ボイトレリズム理論①】</a><div class="reason">リズムの入口＝最強リズム理論①</div></div><span class="vwatched-date" data-vid="UFqWMJDHp4U"></span><span class="vdur">11分51秒</span></li>
-    <li data-vid="1b-UP0OwWYU"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="1b-UP0OwWYU"><span class="vchk-mark"></span></label><span class="rank">22</span><div class="vbody"><a href="https://www.youtube.com/watch?v=1b-UP0OwWYU" target="_blank" rel="noopener"><span class="vnum">#38</span> 初心者もプロへ導く【最強ボイトレリズム理論②】リズムの捉え方と練習</a><div class="reason">リズムの捉え方と練習＝最強リズム理論②</div></div><span class="vwatched-date" data-vid="1b-UP0OwWYU"></span><span class="vdur">23分54秒</span></li>
-    <li data-vid="vLebDka6bns"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="vLebDka6bns"><span class="vchk-mark"></span></label><span class="rank">23</span><div class="vbody"><a href="https://www.youtube.com/watch?v=vLebDka6bns" target="_blank" rel="noopener"><span class="vnum">#39</span> あなたも一流のボーカルへ【最強ボイトレリズム理論③】リズムの捉え方と練習</a><div class="reason">リズムの捉え方と練習＝最強リズム理論③</div></div><span class="vwatched-date" data-vid="vLebDka6bns"></span><span class="vdur">22分22秒</span></li>
+    <li data-vid="K2mCKWDacHM"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="K2mCKWDacHM"><span class="vchk-mark"></span></label><span class="rank">17</span><div class="vbody"><a href="https://www.youtube.com/watch?v=K2mCKWDacHM" target="_blank" rel="noopener"><span class="vnum">#12</span> 音痴を治す方法は？ 【音がハズれる仕組み】を解説｜</a><div class="reason">音程がハズれる仕組みを知る（的中率の底上げ）</div></div><span class="vwatched-date" data-vid="K2mCKWDacHM"></span><span class="vdur">9分24秒</span></li>
+    <li data-vid="boR6sYUFMks"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="boR6sYUFMks"><span class="vchk-mark"></span></label><span class="rank">18</span><div class="vbody"><a href="https://www.youtube.com/watch?v=boR6sYUFMks" target="_blank" rel="noopener"><span class="vnum">#30</span> How to open your mouth properly: the foundation of proper vocalization! Improve your singing,...</a><div class="reason">母音の土台＝口の開け方（当てる音が定まる）</div></div><span class="vwatched-date" data-vid="boR6sYUFMks"></span><span class="vdur">7分32秒</span></li>
+    <li data-vid="cbWgekMizL8"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="cbWgekMizL8"><span class="vchk-mark"></span></label><span class="rank">19</span><div class="vbody"><a href="https://www.youtube.com/watch?v=cbWgekMizL8" target="_blank" rel="noopener"><span class="vnum">#31</span> 正しい発声の基礎となる口の開け方②【母音ごとの開け方】</a><div class="reason">母音ごとの開け方（狙った音を掴む）</div></div><span class="vwatched-date" data-vid="cbWgekMizL8"></span><span class="vdur">11分21秒</span></li>
+    <li data-vid="mBoDp7hfxFE"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="mBoDp7hfxFE"><span class="vchk-mark"></span></label><span class="rank">20</span><div class="vbody"><a href="https://www.youtube.com/watch?v=mBoDp7hfxFE" target="_blank" rel="noopener"><span class="vnum">#85</span> 【ボイトレ理論】子音で歌の上手さが変わる！？</a><div class="reason">子音のタイミング＝ピッチ的中率に直結</div></div><span class="vwatched-date" data-vid="mBoDp7hfxFE"></span><span class="vdur">8分21秒</span></li>
+    <li data-vid="UFqWMJDHp4U"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="UFqWMJDHp4U"><span class="vchk-mark"></span></label><span class="rank">21</span><div class="vbody"><a href="https://www.youtube.com/watch?v=UFqWMJDHp4U" target="_blank" rel="noopener"><span class="vnum">#37</span> 本物のリズム論で驚きの変化！【最強ボイトレリズム理論①】</a><div class="reason">拍の中に音を置き切る＝最強リズム理論①</div></div><span class="vwatched-date" data-vid="UFqWMJDHp4U"></span><span class="vdur">11分51秒</span></li>
+    <li data-vid="1b-UP0OwWYU"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="1b-UP0OwWYU"><span class="vchk-mark"></span></label><span class="rank">22</span><div class="vbody"><a href="https://www.youtube.com/watch?v=1b-UP0OwWYU" target="_blank" rel="noopener"><span class="vnum">#38</span> 初心者もプロへ導く【最強ボイトレリズム理論②】リズムの捉え方と練習</a><div class="reason">リズム基準を体で刻む＝最強リズム理論②</div></div><span class="vwatched-date" data-vid="1b-UP0OwWYU"></span><span class="vdur">23分54秒</span></li>
+    <li data-vid="vLebDka6bns"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="vLebDka6bns"><span class="vchk-mark"></span></label><span class="rank">23</span><div class="vbody"><a href="https://www.youtube.com/watch?v=vLebDka6bns" target="_blank" rel="noopener"><span class="vnum">#39</span> あなたも一流のボーカルへ【最強ボイトレリズム理論③】リズムの捉え方と練習</a><div class="reason">曲に合わせて動かす＝最強リズム理論③</div></div><span class="vwatched-date" data-vid="vLebDka6bns"></span><span class="vdur">22分22秒</span></li>
     <li data-vid="DSi2Mfyqi9o"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="DSi2Mfyqi9o"><span class="vchk-mark"></span></label><span class="rank">24</span><div class="vbody"><a href="https://www.youtube.com/watch?v=DSi2Mfyqi9o" target="_blank" rel="noopener"><span class="vnum">#46</span> 歌上達のために知るべき【音楽の4大要素】</a><div class="reason">座学の土台＝音楽の4大要素</div></div><span class="vwatched-date" data-vid="DSi2Mfyqi9o"></span><span class="vdur">7分53秒</span></li>
-    <li data-vid="NJYLyAKXhFE"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="NJYLyAKXhFE"><span class="vchk-mark"></span></label><span class="rank">25</span><div class="vbody"><a href="https://www.youtube.com/watch?v=NJYLyAKXhFE" target="_blank" rel="noopener"><span class="vnum">#121</span> 【全部公開】このイヤートレーニングでズバ抜けた歌唱力を手に入れろ！歌が上手くなるボイトレ</a><div class="reason">イヤートレ＝ピッチ聴き分けで揺らぎを察知</div></div><span class="vwatched-date" data-vid="NJYLyAKXhFE"></span><span class="vdur">19分06秒</span></li>
+    <li data-vid="NJYLyAKXhFE"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="NJYLyAKXhFE"><span class="vchk-mark"></span></label><span class="rank">25</span><div class="vbody"><a href="https://www.youtube.com/watch?v=NJYLyAKXhFE" target="_blank" rel="noopener"><span class="vnum">#121</span> 【全部公開】このイヤートレーニングでズバ抜けた歌唱力を手に入れろ！歌が上手くなるボイトレ</a><div class="reason">イヤートレ＝ピッチを聴き分けて的中率を底上げする</div></div><span class="vwatched-date" data-vid="NJYLyAKXhFE"></span><span class="vdur">19分06秒</span></li>
+  </ul>
+</section>
+<section class="step-section priority">
+  <div class="step-head">
+    <h2 class="step-name"><span class="step-badge">STEP 4b</span> ビブラート幅の制御 <span class="step-sub">🔴 改善指標②：190-210c → 50-120c に絞る</span></h2>
+    <span class="step-count">1本</span>
+  </div>
+  <p class="step-desc">改善指標②＝ビブラート幅（現状 Mits 190-210c／理想帯 50-120c）を制御する STEP。rate 4.3-5.3Hz は正常帯なので触らず、幅だけを狭める。cent 揺らぎ 44.7 の実体はここ＝弱点ではなく、幅を絞れば ①的中率にも波及する。MYP コーパス内でビブラート幅制御を直接扱うのは #126 の1本（他タグに該当なし・honest disclosure）。ロングトーン（STEP 2 の #108）を『幅制御用の土台』として併走視聴するのが定石。</p>
+  <ul class="video-list">
+    <li data-vid="0OktQ0vGR0I"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="0OktQ0vGR0I"><span class="vchk-mark"></span></label><span class="rank">26</span><div class="vbody"><a href="https://www.youtube.com/watch?v=0OktQ0vGR0I" target="_blank" rel="noopener"><span class="vnum">#126</span> How to do vibrato correctly | Professionals reveal easy practice methods! Improve your singing</a><div class="reason">ビブラートの正しい作り方＝幅を意識して細く均等に振る（190→50-120c 直撃）</div></div><span class="vwatched-date" data-vid="0OktQ0vGR0I"></span><span class="vdur">16分00秒</span></li>
   </ul>
 </section>
 <section class="step-section">
@@ -154,21 +165,21 @@ footer a { color:var(--gold); }
   </div>
   <p class="step-desc">7/17『皆無』で E5（672.9 Hz）到達を実測。旧サイトの『高音は基礎を終えてからなので、この30本にはあえて入れていない』方針を撤回し、既に届いている高音の定着と拡張のため基礎レベルの高音導入4本を新設。</p>
   <ul class="video-list">
-    <li data-vid="Z1bu6BFMATA"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="Z1bu6BFMATA"><span class="vchk-mark"></span></label><span class="rank">26</span><div class="vbody"><a href="https://www.youtube.com/watch?v=Z1bu6BFMATA" target="_blank" rel="noopener"><span class="vnum">#13</span> 高い声やミックスボイスを出したい人へ｜声が低い人が高音をマスターできたワケとは？歌が上手くなるボイトレの基本</a><div class="reason">低い声の人が高音マスターできたワケ</div></div><span class="vwatched-date" data-vid="Z1bu6BFMATA"></span><span class="vdur">10分43秒</span></li>
-    <li data-vid="xb0PfpUg2XY"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="xb0PfpUg2XY"><span class="vchk-mark"></span></label><span class="rank">27</span><div class="vbody"><a href="https://www.youtube.com/watch?v=xb0PfpUg2XY" target="_blank" rel="noopener"><span class="vnum">#49</span> 高い声（ミックスボイス・ミドルボイス）高音発声への道筋</a><div class="reason">高い声（ミックス／ミドル）高音発声への道筋</div></div><span class="vwatched-date" data-vid="xb0PfpUg2XY"></span><span class="vdur">9分44秒</span></li>
-    <li data-vid="v08gCf4Cs0o"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="v08gCf4Cs0o"><span class="vchk-mark"></span></label><span class="rank">28</span><div class="vbody"><a href="https://www.youtube.com/watch?v=v08gCf4Cs0o" target="_blank" rel="noopener"><span class="vnum">#79</span> 高い声やミックスボイスに効果のある喉のストレッチ</a><div class="reason">高い声やミックスに効果のある喉ストレッチ</div></div><span class="vwatched-date" data-vid="v08gCf4Cs0o"></span><span class="vdur">10分58秒</span></li>
-    <li data-vid="kRscscQOtzI"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="kRscscQOtzI"><span class="vchk-mark"></span></label><span class="rank">29</span><div class="vbody"><a href="https://www.youtube.com/watch?v=kRscscQOtzI" target="_blank" rel="noopener"><span class="vnum">#58</span> 歌唱力向上に必須！裏声の特徴と最適な練習タイミングは？</a><div class="reason">裏声の特徴と最適な練習タイミング</div></div><span class="vwatched-date" data-vid="kRscscQOtzI"></span><span class="vdur">5分19秒</span></li>
+    <li data-vid="Z1bu6BFMATA"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="Z1bu6BFMATA"><span class="vchk-mark"></span></label><span class="rank">27</span><div class="vbody"><a href="https://www.youtube.com/watch?v=Z1bu6BFMATA" target="_blank" rel="noopener"><span class="vnum">#13</span> 高い声やミックスボイスを出したい人へ｜声が低い人が高音をマスターできたワケとは？歌が上手くなるボイトレの基本</a><div class="reason">低い声の人が高音マスターできたワケ</div></div><span class="vwatched-date" data-vid="Z1bu6BFMATA"></span><span class="vdur">10分43秒</span></li>
+    <li data-vid="xb0PfpUg2XY"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="xb0PfpUg2XY"><span class="vchk-mark"></span></label><span class="rank">28</span><div class="vbody"><a href="https://www.youtube.com/watch?v=xb0PfpUg2XY" target="_blank" rel="noopener"><span class="vnum">#49</span> 高い声（ミックスボイス・ミドルボイス）高音発声への道筋</a><div class="reason">高い声（ミックス／ミドル）高音発声への道筋</div></div><span class="vwatched-date" data-vid="xb0PfpUg2XY"></span><span class="vdur">9分44秒</span></li>
+    <li data-vid="v08gCf4Cs0o"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="v08gCf4Cs0o"><span class="vchk-mark"></span></label><span class="rank">29</span><div class="vbody"><a href="https://www.youtube.com/watch?v=v08gCf4Cs0o" target="_blank" rel="noopener"><span class="vnum">#79</span> 高い声やミックスボイスに効果のある喉のストレッチ</a><div class="reason">高い声やミックスに効果のある喉ストレッチ</div></div><span class="vwatched-date" data-vid="v08gCf4Cs0o"></span><span class="vdur">10分58秒</span></li>
+    <li data-vid="kRscscQOtzI"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="kRscscQOtzI"><span class="vchk-mark"></span></label><span class="rank">30</span><div class="vbody"><a href="https://www.youtube.com/watch?v=kRscscQOtzI" target="_blank" rel="noopener"><span class="vnum">#58</span> 歌唱力向上に必須！裏声の特徴と最適な練習タイミングは？</a><div class="reason">裏声の特徴と最適な練習タイミング</div></div><span class="vwatched-date" data-vid="kRscscQOtzI"></span><span class="vdur">5分19秒</span></li>
   </ul>
 </section>
 
 <div class="watch-summary">
-  <span id="watch-text">🌱 基礎レッスン <strong>0 / 29 本</strong></span>
+  <span id="watch-text">🌱 基礎レッスン <strong>0 / 30 本</strong></span>
   <button class="watch-reset" id="watch-reset">全リセット</button>
 </div>
 
 <footer>
-  更新日 2026-07-17（案②刷新版・7/17クリーン分析ベース）／ 出典 <a href="https://www.youtube.com/@myp_channel/videos" target="_blank" rel="noopener">MYP Channel</a>
-  ／根拠：<a href="./profile.html">声質スコアカード</a>（7/17クリーン9曲）の分析（真の弱点＝ cent 揺らぎ 44.7 ＋ short_note_ratio 59% ／ E5 到達実測）<br>
+  更新日 2026-07-18（三次刷新版・改善指標フレーム／二重試験PASS）／ 出典 <a href="https://www.youtube.com/@myp_channel/videos" target="_blank" rel="noopener">MYP Channel</a>
+  ／根拠：<a href="./profile.html">声質スコアカード</a>（7/17クリーン9曲＋7/18二重試験）の改善指標＝ ① correctness 38.5% ／ ② ビブラート幅 190-210c ／ ④ 短音率 59% ／ E5 到達実測<br>
   <a href="./index.html">← ホーム</a> ／ <a href="./videos.html">全動画マップ</a>
 </footer>
 
