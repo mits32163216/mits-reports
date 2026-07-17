@@ -5,3 +5,9 @@
 .idea/
 .vscode/
 node_modules/
+
+# カラオケ練習AI のデータ正本（セッションMD・scripts・json・_pending_rename 等）
+# → 声のデータそのものが含まれるため Web に公開しない
+# → 公開用HTML（private/karaoke-ai/ 直下の *.html）は _wip 外なので追跡対象のまま
+private/karaoke-ai/_wip/
+
