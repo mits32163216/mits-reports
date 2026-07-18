@@ -1,18 +1,22 @@
-/* 英語40日プログラム クラウド同期レイヤ
+/* 英語40日プログラム クラウド同期レイヤ v2
  * ---------------------------------------------------------------------------
  * 目的：チェック入力は子どもの1端末でよいが、履歴・進捗は両親の別デバイスからも見たい。
  *       localStorage（端末ごとに分断）を Cloudflare Worker + KV で家族1 state に集約する。
  *
- * 使い方：各ページの <script src="./nav.js"> の直前に
- *         <script src="./sync.js"></script> を置くだけ。
+ * 使い方：各ページの <script src="./nav.js?v=2"> の直前に
+ *         <script src="./sync.js?v=2"></script> を置くだけ。
  *
- * 設計：
- *   - 起動時 GET /state → サーバが新しければ localStorage に反映し、1回だけ reload
- *   - 書き込み（setItem/removeItem/clear）を hook し、debounce 1.5s で POST（全state送信）
- *   - API 不通・オフラインでも localStorage のみで完全に動作継続（画面は絶対に壊さない）
- *   - ?view=parent なら閲覧モード（入力を全部 disable・書き込みを no-op）
+ * v2 の変更（モバイルで1件も届かない問題への対策）:
+ *   1. 離脱時 flush：visibilitychange(hidden) / pagehide / blur で即 flush。
+ *      送信は fetch(keepalive:true)。旧実装の sendBeacon(application/json) は
+ *      preflight が必要になり CORS で黙って落ちるため廃止。
+ *   2. debounce 1500ms → 600ms（モバイルはタイマーが凍結されやすい）。
+ *   3. サーバ時刻権威：updatedAt はサーバが刻む。端末の時計ずれで捨てられない。
+ *      拒否（409 empty_overwrite_blocked 等）は「同期できず」と可視化する。
+ *   4. デバッグ：同期ピルをタップすると直近の試行ログを表示。console にも
+ *      [eng40sync] prefix で全部出す。
  *
- * Worker: eng40-sync-worker/src/index.js
+ * Worker: worker/src/index.js
  * ---------------------------------------------------------------------------
  */
 (function () {
@@ -21,13 +25,14 @@
   // ==== 設定（同期先を変えるときはここだけ差し替える）====================
   var SYNC_URL   = 'https://eng40-sync.3216-fun.workers.dev/state';
   var SYNC_TOKEN = 'e5b16274f09ba16b29360d1270692031';
-  var PUSH_DEBOUNCE_MS = 1500;
+  var PUSH_DEBOUNCE_MS = 600;
   var FETCH_TIMEOUT_MS = 8000;
   // =======================================================================
 
-  var PREFIX    = 'eng40-';        // 同期対象キーの prefix
-  var META_AT   = 'eng40sync-updatedAt';  // ローカルの最終更新時刻（PREFIX 外＝同期対象外）
-  var RELOAD_FLAG = 'eng40sync-reloads';  // reload 暴走ガード（sessionStorage）
+  var PREFIX      = 'eng40-';               // 同期対象キーの prefix
+  var META_AT     = 'eng40sync-serverAt';   // 最後に把握したサーバ updatedAt（PREFIX 外＝同期対象外）
+  var META_DIRTY  = 'eng40sync-dirty';      // 未送信のローカル変更あり
+  var RELOAD_FLAG = 'eng40sync-reloads';    // reload 暴走ガード（sessionStorage）
   var MAX_RELOADS = 2;
 
   var VIEW_ONLY = /[?&]view=parent(?:&|$)/.test(location.search);
@@ -46,6 +51,7 @@
   var pushTimer = null;
   var statusEl = null;
   var lastSyncedAt = 0;
+  var inFlight = false;
 
   // ---- 素の localStorage メソッドを退避（hook 前に確保）----
   var rawSet, rawRemove, rawClear;
@@ -53,6 +59,40 @@
     rawSet    = LS.setItem.bind(LS);
     rawRemove = LS.removeItem.bind(LS);
     rawClear  = LS.clear.bind(LS);
+  }
+
+  // =====================================================================
+  // デバッグログ（モバイルで自己申告できるようにする）
+  // =====================================================================
+
+  var LOGS = [];
+  var MAX_LOGS = 30;
+
+  function clock(ts) {
+    var d = new Date(ts || Date.now());
+    function p(n) { return (n < 10 ? '0' : '') + n; }
+    return p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds());
+  }
+
+  function log(kind, detail) {
+    var line = clock() + ' ' + kind + (detail ? ' ' + detail : '');
+    LOGS.push(line);
+    if (LOGS.length > MAX_LOGS) LOGS.shift();
+    try { console.log('[eng40sync] ' + line); } catch (e) {}
+  }
+
+  function debugText() {
+    var head =
+      'eng40sync v2 デバッグ\n' +
+      'UA: ' + (navigator.userAgent || '').slice(0, 90) + '\n' +
+      'online: ' + (navigator.onLine === false ? 'NO' : 'yes') +
+      ' / localStorage: ' + (LS ? 'ok' : 'NG') +
+      ' / 閲覧モード: ' + (VIEW_ONLY ? 'YES' : 'no') + '\n' +
+      'ローカルキー数: ' + Object.keys(collectState()).length +
+      ' / 未送信: ' + (isDirty() ? 'あり' : 'なし') + '\n' +
+      'サーバ updatedAt: ' + (lastSyncedAt ? new Date(lastSyncedAt).toLocaleString() : '未取得') +
+      '\n\n--- 直近の同期試行 ---\n';
+    return head + (LOGS.length ? LOGS.join('\n') : '(まだ記録なし)');
   }
 
   // =====================================================================
@@ -71,14 +111,27 @@
     return state;
   }
 
-  function localUpdatedAt() {
+  function serverAtLocal() {
     if (!LS) return 0;
     return Number(LS.getItem(META_AT)) || 0;
   }
 
-  function markLocalUpdated(ts) {
+  function markServerAt(ts) {
     if (!LS) return;
     try { rawSet(META_AT, String(ts)); } catch (e) {}
+  }
+
+  function isDirty() {
+    if (!LS) return false;
+    try { return LS.getItem(META_DIRTY) === '1'; } catch (e) { return false; }
+  }
+
+  function setDirty(on) {
+    if (!LS) return;
+    try {
+      if (on) rawSet(META_DIRTY, '1');
+      else rawRemove(META_DIRTY);
+    } catch (e) {}
   }
 
   /* サーバ state をローカルに反映する。実際に値が変わったら true を返す。 */
@@ -123,61 +176,100 @@
     return ac.signal;
   }
 
-  function apiUrl() {
-    return SYNC_URL + '?key=' + encodeURIComponent(SYNC_TOKEN);
+  function apiUrl(extra) {
+    return SYNC_URL + '?key=' + encodeURIComponent(SYNC_TOKEN) + (extra || '');
   }
 
   function pull() {
-    if (typeof fetch !== 'function') return Promise.resolve(null);
+    if (typeof fetch !== 'function') {
+      log('GET skip', 'fetch 非対応');
+      return Promise.resolve(null);
+    }
     var opt = { method: 'GET', cache: 'no-store' };
     var sig = timeoutSignal();
     if (sig) opt.signal = sig;
+    log('GET →');
     return fetch(apiUrl(), opt)
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .catch(function () { return null; });
+      .then(function (r) {
+        var st = r.status;
+        return r.json().catch(function () { return null; }).then(function (j) {
+          log('GET ←', 'HTTP ' + st + ' keys=' +
+            (j && j.state ? Object.keys(j.state).length : '?') +
+            ' updatedAt=' + (j && j.updatedAt || 0));
+          return r.ok ? j : null;
+        });
+      })
+      .catch(function (e) {
+        log('GET ✗', String(e && e.message || e));
+        return null;
+      });
   }
 
-  function push() {
+  /* push 本体。keepalive:true でページ離脱後も送信を完了させる。 */
+  function push(reason) {
     if (!LS || typeof fetch !== 'function') return Promise.resolve(null);
     if (VIEW_ONLY) return Promise.resolve(null);   // 閲覧モードは絶対に書かない
 
+    var state = collectState();
+    var nKeys = Object.keys(state).length;
     var ts = Date.now();
-    var body = JSON.stringify({ state: collectState(), updatedAt: ts });
     var opt = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: body,
+      body: JSON.stringify({ state: state, updatedAt: ts }),
+      keepalive: true,          // ← モバイル離脱時の取りこぼし対策の要
+      cache: 'no-store',
     };
-    var sig = timeoutSignal();
-    if (sig) opt.signal = sig;
-
+    // keepalive と abort signal は併用しない（離脱直後に abort される事故を防ぐ）
+    inFlight = true;
     setStatus('sync');
+    log('POST →', (reason || '') + ' keys=' + nKeys);
+
     return fetch(apiUrl(), opt)
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (j) {
-        if (j && j.ok) {
-          markLocalUpdated(ts);
-          lastSyncedAt = ts;
-          setStatus('ok');
-        } else {
-          setStatus('off');
-        }
-        return j;
+      .then(function (r) {
+        var st = r.status;
+        return r.json().catch(function () { return null; }).then(function (j) {
+          inFlight = false;
+          if (r.ok && j && j.ok && j.saved) {
+            lastSyncedAt = Number(j.updatedAt) || ts;
+            markServerAt(lastSyncedAt);
+            setDirty(false);
+            setStatus('ok');
+            log('POST ←', 'HTTP ' + st + ' saved keys=' + (j.keys != null ? j.keys : nKeys));
+          } else {
+            // stale / empty_overwrite_blocked / その他の拒否は黙って成功に見せない
+            setStatus('reject');
+            log('POST ✗', 'HTTP ' + st + ' ' +
+              ((j && (j.error || (j.stale ? 'stale' : ''))) || 'rejected'));
+          }
+          return j;
+        });
       })
-      .catch(function () {
+      .catch(function (e) {
+        inFlight = false;
         setStatus('off');
+        log('POST ✗', 'network ' + String(e && e.message || e));
         return null;
       });
   }
 
   function schedulePush() {
     if (applying || VIEW_ONLY) return;
+    setDirty(true);
     if (pushTimer) clearTimeout(pushTimer);
     setStatus('pending');
     pushTimer = setTimeout(function () {
       pushTimer = null;
-      push();
+      push('debounce');
     }, PUSH_DEBOUNCE_MS);
+  }
+
+  /* 未送信分を即座に出し切る。モバイルの離脱イベントから呼ぶ。 */
+  function flush(reason) {
+    if (VIEW_ONLY || !LS) return;
+    if (!pushTimer && !isDirty()) return;   // 送るものが無い
+    if (pushTimer) { clearTimeout(pushTimer); pushTimer = null; }
+    push('flush:' + reason);
   }
 
   // =====================================================================
@@ -204,28 +296,19 @@
     define(LS, 'setItem', function (k, v) {
       if (VIEW_ONLY && String(k).indexOf(PREFIX) === 0) return;  // 閲覧モードは無視
       rawSet(k, v);
-      if (!applying && String(k).indexOf(PREFIX) === 0) {
-        markLocalUpdated(Date.now());
-        schedulePush();
-      }
+      if (!applying && String(k).indexOf(PREFIX) === 0) schedulePush();
     });
 
     define(LS, 'removeItem', function (k) {
       if (VIEW_ONLY && String(k).indexOf(PREFIX) === 0) return;
       rawRemove(k);
-      if (!applying && String(k).indexOf(PREFIX) === 0) {
-        markLocalUpdated(Date.now());
-        schedulePush();
-      }
+      if (!applying && String(k).indexOf(PREFIX) === 0) schedulePush();
     });
 
     define(LS, 'clear', function () {
       if (VIEW_ONLY) return;
       rawClear();
-      if (!applying) {
-        markLocalUpdated(Date.now());
-        schedulePush();
-      }
+      if (!applying) schedulePush();
     });
   }
 
@@ -241,8 +324,10 @@
       'background:rgba(245,239,225,0.94);color:#0F1B2E;' +
       'border:1px solid rgba(15,27,46,0.14);' +
       'box-shadow:0 2px 10px rgba(15,27,46,0.10);' +
-      'opacity:0.9;transition:opacity .2s;pointer-events:none;}' +
+      'opacity:0.9;transition:opacity .2s;cursor:pointer;' +
+      '-webkit-tap-highlight-color:transparent;}' +
     '.eng40-sync-pill.off{background:rgba(199,123,112,0.16);border-color:rgba(199,123,112,0.5);}' +
+    '.eng40-sync-pill.reject{background:rgba(199,123,112,0.28);border-color:rgba(199,123,112,0.75);}' +
     '.eng40-sync-pill.view{background:rgba(212,168,91,0.20);border-color:rgba(212,168,91,0.6);}' +
     '@media (prefers-color-scheme:dark){' +
       '.eng40-sync-pill{background:rgba(15,27,46,0.94);color:#F5EFE1;border-color:rgba(245,239,225,0.18);}}' +
@@ -262,7 +347,7 @@
 
   function setStatus(kind) {
     if (!statusEl) return;
-    statusEl.classList.remove('off', 'view');
+    statusEl.classList.remove('off', 'view', 'reject');
 
     if (VIEW_ONLY) {
       statusEl.classList.add('view');
@@ -277,6 +362,9 @@
       statusEl.textContent = '☁️ 同期中…';
     } else if (kind === 'pending') {
       statusEl.textContent = '✏️ 保存待ち…';
+    } else if (kind === 'reject') {
+      statusEl.classList.add('reject');
+      statusEl.textContent = '⚠️ 同期できず（タップで詳細）';
     } else {
       statusEl.classList.add('off');
       statusEl.textContent = '⚠️ オフライン（この端末に保存）';
@@ -292,6 +380,9 @@
       statusEl = document.createElement('div');
       statusEl.className = 'eng40-sync-pill';
       statusEl.textContent = '☁️ 同期中…';
+      statusEl.addEventListener('click', function () {
+        try { alert(debugText()); } catch (e) {}
+      });
       document.body.appendChild(statusEl);
 
       if (VIEW_ONLY) {
@@ -312,6 +403,7 @@
     try {
       var nodes = document.querySelectorAll('input, textarea, select, button');
       Array.prototype.forEach.call(nodes, function (el) {
+        if (el === statusEl) return;
         var t = (el.getAttribute('type') || '').toLowerCase();
         if (el.tagName === 'INPUT' && (t === 'checkbox' || t === 'radio')) {
           el.disabled = true;
@@ -354,14 +446,24 @@
       if (!res || !res.ok) { setStatus('off'); return; }
 
       var serverAt = Number(res.updatedAt) || 0;
-      var localAt  = localUpdatedAt();
+      var serverState = res.state || {};
+      var localKeys = Object.keys(collectState()).length;
 
-      // サーバが新しい（or ローカルが空）→ 取り込む
-      if (serverAt > localAt || (serverAt > 0 && localAt === 0)) {
-        var changed = applyState(res.state || {});
-        markLocalUpdated(serverAt);
+      // 未送信のローカル変更がある → こちらを優先して送る
+      // （サーバ時刻権威になったので、送れば必ず受理される）
+      if (isDirty() && localKeys > 0 && !VIEW_ONLY) {
+        log('boot', 'dirty あり → push');
+        push('boot-dirty');
+        return;
+      }
+
+      // サーバが新しい（= 前回把握した updatedAt より進んでいる）→ 取り込む
+      if (serverAt > serverAtLocal() || (serverAt > 0 && localKeys === 0)) {
+        var changed = applyState(serverState);
+        markServerAt(serverAt);
         lastSyncedAt = serverAt;
         setStatus('ok');
+        log('boot', 'サーバ反映 changed=' + changed);
 
         // 画面はすでに旧データで描画済み → 実際に値が変わったときだけ1回リロード
         if (changed && reloadCount() < MAX_RELOADS) {
@@ -371,14 +473,9 @@
         return;
       }
 
-      // ローカルが新しい → 送る（閲覧モードでは送らない）
-      if (localAt > serverAt && !VIEW_ONLY) {
-        push();
-        return;
-      }
-
       lastSyncedAt = serverAt || Date.now();
       setStatus('ok');
+      log('boot', '差分なし');
     });
   }
 
@@ -403,21 +500,29 @@
     lockInputs();
   });
 
-  // タブを閉じる / 離れる直前に未送信分を出し切る
-  window.addEventListener('pagehide', function () {
-    if (VIEW_ONLY || !pushTimer || !LS) return;
-    clearTimeout(pushTimer);
-    pushTimer = null;
-    try {
-      var ts = Date.now();
-      var blob = new Blob(
-        [JSON.stringify({ state: collectState(), updatedAt: ts })],
-        { type: 'application/json' }
-      );
-      if (navigator.sendBeacon) {
-        navigator.sendBeacon(apiUrl(), blob);
-        markLocalUpdated(ts);
-      }
-    } catch (e) {}
+  // =====================================================================
+  // 離脱時 flush（モバイルで1件も届かない主因への対策）
+  // ---------------------------------------------------------------------
+  // Android Chrome / iOS Safari はタブ切替・画面消灯で setTimeout が凍結され、
+  // debounce の POST が発火しないままセッションが終わる。
+  // hidden / pagehide / blur の3経路で pending を即 flush する。
+  // =====================================================================
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden') flush('hidden');
   });
+  window.addEventListener('pagehide', function () { flush('pagehide'); });
+  window.addEventListener('blur', function () { flush('blur'); });
+  // 復帰時、送れていなければ再送
+  window.addEventListener('online', function () { flush('online'); });
+
+  // 外から叩けるようにしておく（デバッグ用）
+  window.eng40sync = {
+    flush: flush,
+    push: push,
+    pull: pull,
+    logs: function () { return LOGS.slice(); },
+    debug: debugText,
+    state: collectState,
+  };
 })();
