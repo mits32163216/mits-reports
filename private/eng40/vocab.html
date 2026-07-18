@@ -145,7 +145,7 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
   <span id="watch-text">📓 定着 <strong>0</strong> / 300</span>
 </div>
 
-<footer>📓 単語D+1システム｜初期は単語が最優先（最重要3,000語で会話の9割）｜データはこの端末のブラウザに保存されます</footer>
+<footer>📓 単語D+1システム｜初期は単語が最優先（最重要3,000語で会話の9割）｜データはクラウドに保存され、家族の端末どこからでも見られます</footer>
 
 <script>
 /*LOGIC-START*/
@@ -326,6 +326,7 @@ function markWrong(w, today) {
   renderStats(); renderList(); renderTest();
 })();
 </script>
+<script src="./sync.js"></script>
 <script src="./nav.js"></script>
 </body>
 </html>

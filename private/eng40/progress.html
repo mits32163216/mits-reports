@@ -90,7 +90,7 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 <body>
 
 <h1>📈 記録の見える化</h1>
-<div class="tagline">40日の足あと ─ チェック・単語・スコアが全部ここに集まる（データはこの端末のブラウザに保存）</div>
+<div class="tagline">40日の足あと ─ チェック・単語・スコアが全部ここに集まる（データはクラウドに保存され家族で共有）</div>
 
 <div class="stats-grid">
   <div class="stat"><div class="num"><strong id="st-days">0</strong><span class="sm"> / 40</span></div><div class="lbl">達成した日</div></div>
@@ -127,7 +127,7 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
   <div id="score-area"></div>
 </div>
 
-<footer>📘 英語40日プログラム｜このページは表示専用（記録は各ページで）｜データはこの端末のブラウザに保存されます</footer>
+<footer>📘 英語40日プログラム｜このページは表示専用（記録は各ページで）｜データはクラウドに保存され、家族の端末どこからでも見られます</footer>
 
 <script>
 /*LOGIC-START*/
@@ -440,6 +440,7 @@ function buildVocabSeries(words, today) {
   })();
 })();
 </script>
+<script src="./sync.js"></script>
 <script src="./nav.js"></script>
 </body>
 </html>
