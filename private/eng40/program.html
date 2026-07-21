@@ -53,6 +53,7 @@ ul.day-list li.watched { background:rgba(122,155,126,0.09); }
 .tag { display:inline-block; font-family:var(--mono); font-size:10px; padding:1px 7px; border-radius:8px; color:#fff; margin-left:6px; vertical-align:1px; }
 .tag.sokutei { background:var(--rose); }
 .tag.chousei { background:var(--sage); }
+.tag.nini { background:var(--muted); }
 /* 進捗ピル */
 .watch-summary { position:fixed; bottom:16px; left:50%; transform:translateX(-50%); z-index:200;
   display:flex; align-items:center; gap:14px; padding:10px 20px; background:var(--card-bg);
@@ -80,12 +81,12 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
   <div class="phase-range">Day 1〜14｜フォニックスで音を作りながら、現在形→過去形へ</div>
   <div class="menu">🕐 <b>毎日90分</b>：フォニックス15分＝ayane実践4分＋ちぐさ理論編の今日の区間＋マネ直し（<b>必ず声に出す</b>）→ マーフィー2ユニット40分（左を読む→右を解く→丸付け・間違いに印）→ ALL IN ONE Ch.1〜3を読む15分 → 今日の新出語（マーフィー・ALL IN ONEで知らなかった語）を品詞別ノートの今日の欄に書く（目安8〜12語）→ 📓 <b>単語復習10分</b>：<b>昨日の新出語をテスト</b>（日本語→英語・隠して言えるか）＋マーフィー間違い直し　※例文の暗唱はまだやらない</div>
   <ul class="day-list">
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-01"><span class="vchk-mark"></span></label><span class="dnum">Day 1</span><div class="dbody">測定日①：マーフィー巻末<b>診断テスト</b>＋<b>実力測定テスト①②</b><span class="tag sokutei">測定</span><span class="sub">結果は「📊 測る」に記録 → 最適化マップでスタート速度を決める</span></div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-01"><span class="vchk-mark"></span></label><span class="dnum">Day 1</span><div class="dbody">測定日：<b>実力測定テスト①文法・②リスニング</b>（印刷済みのプリント）＋フォニックス実践1本<span class="tag sokutei">測定</span><span class="sub">結果は「📊 測る」に記録 → 最適化マップでスタート速度を決める／マーフィー巻末の診断テストは<b>任意</b>（やるなら中盤 Day 20 前後に1回・Day 39 にもう1回で前後比較）</span></div></li>
     <li><label class="vchk"><input type="checkbox" data-vkey="day-02"><span class="vchk-mark"></span></label><span class="dnum">Day 2</span><div class="dbody">マーフィー <b>Unit 1〜2</b>（am/is/are）＋ ALL IN ONE <b>Ch.1 品詞</b>を読み始める<span class="sub">品詞（名詞・形容詞・副詞）はこの夏の合言葉</span></div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-03"><span class="vchk-mark"></span></label><span class="dnum">Day 3</span><div class="dbody"><b>英検3級 練習問題①</b>（約45分）＋フォニックスのみ<span class="tag sokutei">測定</span><span class="sub">eiken.or.jp の過去問・無料。点数を「📊 測る」へ</span></div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-04"><span class="vchk-mark"></span></label><span class="dnum">Day 4</span><div class="dbody">Unit <b>3〜4</b>（現在進行形）＋ Ch.1 つづき</div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-05"><span class="vchk-mark"></span></label><span class="dnum">Day 5</span><div class="dbody">Unit <b>5〜6</b>（一般動詞）＋ Ch.1 つづき</div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-06"><span class="vchk-mark"></span></label><span class="dnum">Day 6</span><div class="dbody">Unit <b>7〜9</b>（Do you...? / have）＋ <b>Ch.1 読了</b><span class="sub">現在形ブロック完了！</span></div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-03"><span class="vchk-mark"></span></label><span class="dnum">Day 3</span><div class="dbody">マーフィー <b>Unit 3〜4</b>（現在進行形・進行形の疑問文）＋ Ch.1 つづき<span class="sub"><span class="tag nini">任意</span> ＋（任意）英検3級の練習問題をやるなら今日がおすすめ（eiken.or.jp の過去問・無料／点数は「📊 測る」へ）</span></div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-04"><span class="vchk-mark"></span></label><span class="dnum">Day 4</span><div class="dbody">Unit <b>5〜6</b>（一般動詞・一般動詞の否定）＋ Ch.1 つづき</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-05"><span class="vchk-mark"></span></label><span class="dnum">Day 5</span><div class="dbody">Unit <b>7〜8</b>（Do you...? / 進行形と現在形）＋ Ch.1 つづき</div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-06"><span class="vchk-mark"></span></label><span class="dnum">Day 6</span><div class="dbody">Unit <b>9</b>（have / have got）＋ 現在形ブロックまとめ（1〜9の間違い印だけ）＋ <b>Ch.1 読了</b><span class="sub">現在形ブロック完了！</span></div></li>
     <li><label class="vchk"><input type="checkbox" data-vkey="day-07"><span class="vchk-mark"></span></label><span class="dnum">Day 7</span><div class="dbody">調整日（遅れ回収 or 完全休み）＋その週の単語まとめ再テスト（2回連続で言えた語は卒業）<span class="tag chousei">調整</span></div></li>
     <li><label class="vchk"><input type="checkbox" data-vkey="day-08"><span class="vchk-mark"></span></label><span class="dnum">Day 8</span><div class="dbody">Unit <b>10〜11</b>（was/were・過去形）＋ <b>Ch.2 文の種類</b> 開始<span class="sub">ここから夏の山場・過去形ブロック</span></div></li>
     <li><label class="vchk"><input type="checkbox" data-vkey="day-09"><span class="vchk-mark"></span></label><span class="dnum">Day 9</span><div class="dbody">Unit <b>12〜13</b>（過去の否定・疑問／過去進行形）＋ Ch.2</div></li>
@@ -134,9 +135,9 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
     <li><label class="vchk"><input type="checkbox" data-vkey="day-34"><span class="vchk-mark"></span></label><span class="dnum">Day 34</span><div class="dbody">Unit <b>63〜64</b>（a/an・単数複数）<span class="sub">冠詞：数えられる名詞に a/the/-s を必ず付ける</span></div></li>
     <li><label class="vchk"><input type="checkbox" data-vkey="day-35"><span class="vchk-mark"></span></label><span class="dnum">Day 35</span><div class="dbody">調整日＋その週の単語まとめ再テスト（2回連続で言えた語は卒業）<span class="tag chousei">調整</span></div></li>
     <li><label class="vchk"><input type="checkbox" data-vkey="day-36"><span class="vchk-mark"></span></label><span class="dnum">Day 36</span><div class="dbody">2周目復習①（間違い印のユニットだけ）＋ Unit <b>65〜66</b>（数えられる/数えられない名詞）<span class="sub">冠詞：water/English は a も -s も付けない</span></div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-37"><span class="vchk-mark"></span></label><span class="dnum">Day 37</span><div class="dbody"><b>英検3級 練習問題②</b>（①とは別の回）→ ①と点数比較<span class="tag sokutei">測定</span></div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-38"><span class="vchk-mark"></span></label><span class="dnum">Day 38</span><div class="dbody">2周目復習②＋ Unit <b>67</b>（a/anとthe）<span class="sub">冠詞：a=初めての1つ / the=お互い分かる特定の1つ</span></div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-39"><span class="vchk-mark"></span></label><span class="dnum">Day 39</span><div class="dbody"><b>診断テスト再受験</b> → Day 1 と前後比較<span class="tag sokutei">測定</span></div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-37"><span class="vchk-mark"></span></label><span class="dnum">Day 37</span><div class="dbody">2周目復習②（間違い印のユニット総ざらい）＋ ALL IN ONE 例文5本<span class="sub"><span class="tag nini">任意</span> ＋（任意）英検3級の練習問題をやるなら今日がおすすめ（Day 3 とは別の回 → 点数を比較しやすい）</span></div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-38"><span class="vchk-mark"></span></label><span class="dnum">Day 38</span><div class="dbody">2周目復習③＋ Unit <b>67</b>（a/anとthe）<span class="sub">冠詞：a=初めての1つ / the=お互い分かる特定の1つ</span></div></li>
+    <li><label class="vchk"><input type="checkbox" data-vkey="day-39"><span class="vchk-mark"></span></label><span class="dnum">Day 39</span><div class="dbody">2周目復習④＋ 前置詞・冠詞の総ざらい<span class="sub"><span class="tag nini">任意</span> ＋（任意）診断テスト or 実力測定テストの再受験をやるなら今日がおすすめ（中盤 Day 20 前後にやっていれば前後比較できる）</span></div></li>
     <li><label class="vchk"><input type="checkbox" data-vkey="day-40"><span class="vchk-mark"></span></label><span class="dnum">Day 40</span><div class="dbody">総仕上げ：秋の継続ルート決め＋<b>「夏にできるようになったこと」を自分の言葉で言う</b><span class="tag sokutei">測定</span></div></li>
   </ul>
 </div>

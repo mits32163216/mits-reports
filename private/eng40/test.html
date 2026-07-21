@@ -25,6 +25,7 @@ a { color:var(--gold); text-decoration:none; }
 .mcard { background:var(--card-bg); border:1px solid var(--line); border-radius:10px; padding:14px 16px; margin-bottom:12px; }
 .mcard .mtitle { font-family:var(--mincho); font-size:14px; font-weight:700; margin-bottom:4px; }
 .mcard .mtitle .when { font-family:var(--mono); font-size:10px; background:var(--rose); color:#fff; padding:1px 7px; border-radius:8px; margin-right:7px; vertical-align:2px; }
+.mcard .mtitle .when.nini { background:var(--muted); }
 .mcard .mdesc { font-size:11.5px; color:var(--muted); line-height:1.7; margin-bottom:8px; }
 .mrow { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
 .mrow label { font-size:12px; font-weight:600; }
@@ -47,36 +48,37 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 <div class="tagline">点数は評価ではなく座標 ─ 2回目が1回目より上がっていればプログラムは機能している</div>
 
 <div class="step-section">
-  <h2>🧭 測定5点セット（点数を入れると自動保存）</h2>
+  <h2>🧭 必須1点（実力測定テスト①②）＋任意4点（診断テスト×2・英検×2）</h2>
+  <div class="mdesc" style="margin:-4px 0 12px">点数を入れると自動保存されます。<b>必須は②の実力測定テストだけ</b>──①③④⑤は<b>やらなくてもプログラムは成立する</b>（やれば伸びが数字で見えるオプション）。</div>
 
   <div class="mcard">
-    <div class="mtitle"><span class="when">Day 1</span>① マーフィー巻末 診断テスト（Study Guide）</div>
-    <div class="mdesc">本のp.257「Study Guide」。今の位置の記録。Day 39 に同じものをもう一度解いて伸びを見る。</div>
+    <div class="mtitle"><span class="when nini">任意</span>①（任意）マーフィー巻末 診断テスト（Study Guide）</div>
+    <div class="mdesc">本のp.257「Study Guide」。<b>初日にやる必要はない</b>（分量が重い）。様子を見て、やるなら<b>中盤（Day 20 前後）と Day 39 の2回</b>で比較する。</div>
     <div class="mrow"><label>正答数</label><input class="score" data-skey="shindan1" inputmode="numeric" placeholder="--"><span>問</span><input class="memo" data-mkey="shindan1" placeholder="メモ（弱かった分野など）"><span class="saved">✓ 保存</span></div>
   </div>
 
   <div class="mcard">
-    <div class="mtitle"><span class="when">Day 1</span>② 実力測定テスト（文法60＋リスニング40）</div>
-    <div class="mdesc">印刷して渡された2枚のテスト。合計点を下の「最適化マップ」に当ててスタート速度を決める。</div>
+    <div class="mtitle"><span class="when">Day 1・必須</span>② 実力測定テスト（文法60＋リスニング40）</div>
+    <div class="mdesc">印刷して渡された2枚のテスト。<b>このプログラムで必須の測定はこれだけ</b>。合計点を下の「最適化マップ」に当ててスタート速度を決める。</div>
     <div class="mrow"><label>合計</label><input class="score" data-skey="jitsuryoku" inputmode="numeric" placeholder="--"><span>／100</span><input class="memo" data-mkey="jitsuryoku" placeholder="内訳メモ（文法◯点・リスニング◯点・落とした大問）"><span class="saved">✓ 保存</span></div>
   </div>
 
   <div class="mcard">
-    <div class="mtitle"><span class="when">Day 3</span>③ 英検3級 練習問題 1回目</div>
-    <div class="mdesc"><a href="https://www.eiken.or.jp/eiken/exam/grade_3/solutions.html" target="_blank" rel="noopener">英検公式サイトの過去問</a>（無料・過去3回分）。受かる受からないは見ない。座標を取るだけ。</div>
+    <div class="mtitle"><span class="when nini">任意</span>③（任意）英検3級 練習問題 1回目</div>
+    <div class="mdesc"><b>やらなくてもプログラムは成立する。</b>やるなら <b>Day 3</b> と <b>Day 37</b> が推奨（比較しやすい）。<a href="https://www.eiken.or.jp/eiken/exam/grade_3/solutions.html" target="_blank" rel="noopener">英検公式サイトの過去問</a>（無料・過去3回分）。受かる受からないは見ない。座標を取るだけ。</div>
     <div class="mrow"><label>正答数</label><input class="score" data-skey="eiken1" inputmode="numeric" placeholder="--"><span>問</span><input class="memo" data-mkey="eiken1" placeholder="メモ（リーディング◯／リスニング◯）"><span class="saved">✓ 保存</span></div>
   </div>
 
   <div class="mcard">
-    <div class="mtitle"><span class="when">Day 37</span>④ 英検3級 練習問題 2回目</div>
-    <div class="mdesc">①とは別の回の過去問を使う。<b>Day 3 との差がこの夏の伸び</b>。</div>
+    <div class="mtitle"><span class="when nini">任意</span>④（任意）英検3級 練習問題 2回目</div>
+    <div class="mdesc"><b>やらなくてもプログラムは成立する。</b>やるなら <b>Day 37</b> が推奨（③とは別の回の過去問を使う）。<b>③との差がこの夏の伸び</b>。</div>
     <div class="mrow"><label>正答数</label><input class="score" data-skey="eiken2" inputmode="numeric" placeholder="--"><span>問</span><input class="memo" data-mkey="eiken2" placeholder="メモ"><span class="saved">✓ 保存</span></div>
   </div>
 
   <div class="mcard">
-    <div class="mtitle"><span class="when">Day 39</span>⑤ 診断テスト再受験</div>
-    <div class="mdesc">Day 1 の①と同じStudy Guideをもう一度。前後比較で「どの分野が伸びたか」まで見る。</div>
-    <div class="mrow"><label>正答数</label><input class="score" data-skey="shindan2" inputmode="numeric" placeholder="--"><span>問</span><input class="memo" data-mkey="shindan2" placeholder="メモ（Day 1 との差）"><span class="saved">✓ 保存</span></div>
+    <div class="mtitle"><span class="when nini">任意</span>⑤（任意）診断テスト再受験</div>
+    <div class="mdesc"><b>①をやった人だけ。</b>やるなら <b>Day 39</b> が推奨。①と同じStudy Guideをもう一度解いて、前後比較で「どの分野が伸びたか」まで見る。</div>
+    <div class="mrow"><label>正答数</label><input class="score" data-skey="shindan2" inputmode="numeric" placeholder="--"><span>問</span><input class="memo" data-mkey="shindan2" placeholder="メモ（①との差）"><span class="saved">✓ 保存</span></div>
   </div>
 </div>
 
