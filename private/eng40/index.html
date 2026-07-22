@@ -54,12 +54,35 @@ a:hover { text-decoration:underline; }
 .goal { background:var(--card-bg); border:1px solid var(--line); border-radius:10px; padding:12px 14px; font-size:12px; line-height:1.8; }
 .goal b { color:var(--gold); font-family:var(--mincho); }
 footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+/* 家族設定カード（マルチ家族対応） */
+.eng40-family-card { margin:20px 0; padding:18px 20px; border-radius:14px;
+  background:var(--card-bg); border:1px solid var(--gold); }
+.eng40-family-card.setup { background:linear-gradient(135deg,rgba(212,168,91,0.16),rgba(122,155,126,0.08)); border-width:2px; }
+.eng40-family-card h2 { font-size:15px; margin:0 0 8px; color:var(--gold); }
+.eng40-family-card p { font-size:13px; line-height:1.9; margin:0 0 12px; }
+.eng40-family-card .fam-note { font-size:11.5px; color:var(--muted); line-height:1.8; margin:12px 0 0; }
+.eng40-family-card .fam-id { font-family:var(--mono); font-size:11px; color:var(--muted); margin:0 0 12px; }
+.fam-btns { display:flex; flex-wrap:wrap; gap:10px; }
+.fam-btn { appearance:none; -webkit-appearance:none; cursor:pointer;
+  font-family:var(--sans); font-size:14px; font-weight:600; line-height:1.4;
+  min-height:48px; padding:12px 20px; border-radius:10px;
+  border:1px solid var(--gold); background:var(--gold); color:#fff;
+  -webkit-tap-highlight-color:transparent; transition:opacity .15s; }
+.fam-btn:hover { opacity:0.86; }
+.fam-btn.ghost { background:transparent; color:var(--fg); border-color:var(--line); }
+.fam-out { margin-top:14px; padding:12px 14px; border-radius:10px;
+  background:var(--sub-bg); border:1px dashed var(--gold); }
+.fam-out label { display:block; font-size:11.5px; color:var(--muted); margin-bottom:7px; }
+.fam-out input { width:100%; font-family:var(--mono); font-size:12px; padding:10px 12px;
+  border-radius:8px; border:1px solid var(--line); background:var(--card-bg); color:var(--fg); }
 </style>
 </head>
 <body>
 
 <h1>📘 英語40日プログラム</h1>
 <div class="tagline">中1・夏休み ─ 学校英語とは別レーン ─ 開始日：____月____日</div>
+
+<div id="family-card"></div>
 
 <div class="status">
   <h2>🎯 ねらい（3つだけ）</h2>
@@ -169,7 +192,108 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
   document.getElementById('st-tests').textContent = countPrefix('eng40-score:');
 })();
 </script>
-<script src="./sync.js?v=2"></script>
-<script src="./nav.js?v=2"></script>
+<script src="./sync.js?v=3"></script>
+<script>
+/* 家族設定カード（マルチ家族対応・sync.js の window.eng40family を使う）
+ * - 未設定の端末：「はじめに：家族を作る」→ ランダムIDを発行して ?f= 付きURLへ
+ * - 設定済みの端末：家族URLのコピー／友達に渡す別家族URLの発行
+ */
+(function () {
+  var fam = window.eng40family;
+  var host = document.getElementById('family-card');
+  if (!fam || !host) return;
+
+  function copyText(text, btn, okLabel) {
+    var orig = btn.textContent;
+    function done(ok) {
+      btn.textContent = ok ? (okLabel || '✅ コピーしました') : '⚠️ 長押しでコピーしてください';
+      setTimeout(function () { btn.textContent = orig; }, 2200);
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+        return;
+      }
+    } catch (e) {}
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      done(!!ok);
+    } catch (e2) { done(false); }
+  }
+
+  function showUrl(labelText, url) {
+    var box = document.getElementById('fam-out');
+    if (!box) return;
+    box.innerHTML = '';
+    box.style.display = 'block';
+    var lab = document.createElement('label');
+    lab.textContent = labelText;
+    var inp = document.createElement('input');
+    inp.type = 'text';
+    inp.readOnly = true;
+    inp.value = url;
+    inp.addEventListener('focus', function () { inp.select(); });
+    var btn = document.createElement('button');
+    btn.className = 'fam-btn';
+    btn.style.marginTop = '10px';
+    btn.textContent = '📋 このURLをコピー';
+    btn.addEventListener('click', function () { copyText(url, btn); });
+    box.appendChild(lab);
+    box.appendChild(inp);
+    box.appendChild(btn);
+  }
+
+  var NOTE = '家族URLを知っている人だけがその家族の記録を見られます。他の家族の記録は見えません。';
+
+  if (!fam.isSet()) {
+    host.innerHTML =
+      '<div class="eng40-family-card setup">' +
+        '<h2>👨‍👩‍👧 はじめに：家族を作る</h2>' +
+        '<p>この端末はまだどの家族にもつながっていません。' +
+        '「この家族で始める」を押すと専用のURLができて、チェックした記録が家族の端末どうしで共有されます。</p>' +
+        '<div class="fam-btns"><button class="fam-btn" id="fam-start">この家族で始める</button></div>' +
+        '<div class="fam-out" id="fam-out" style="display:none"></div>' +
+        '<p class="fam-note">' + NOTE + '</p>' +
+      '</div>';
+    document.getElementById('fam-start').addEventListener('click', function () {
+      fam.adopt(fam.generate());   // 保存して ?f= 付きURLへ置き換え
+    });
+    return;
+  }
+
+  host.innerHTML =
+    '<div class="eng40-family-card">' +
+      '<h2>👨‍👩‍👧 家族の設定</h2>' +
+      '<p class="fam-id">この端末の家族ID：****' + fam.tail() + '</p>' +
+      '<div class="fam-btns">' +
+        '<button class="fam-btn" id="fam-copy">家族URLをコピー</button>' +
+        '<button class="fam-btn ghost" id="fam-new">別の家族用URLを作る</button>' +
+      '</div>' +
+      '<div class="fam-out" id="fam-out" style="display:none"></div>' +
+      '<p class="fam-note">' + NOTE +
+        '<br>「家族URLをコピー」＝この家族の別の端末（お父さん・お母さんのスマホ）に渡すURL。' +
+        '<br>「別の家族用URLを作る」＝友達の家族に渡す新しいURL。この端末の家族は変わりません。</p>' +
+    '</div>';
+
+  document.getElementById('fam-copy').addEventListener('click', function () {
+    var url = fam.myUrl();
+    copyText(url, this);
+    showUrl('この家族のURL（家族の他の端末で開く）', url);
+  });
+
+  document.getElementById('fam-new').addEventListener('click', function () {
+    var url = fam.urlFor(fam.generate());
+    showUrl('友達の家族に渡すURL（この端末の記録とは別になります）', url);
+  });
+})();
+</script>
+<script src="./nav.js?v=3"></script>
 </body>
 </html>

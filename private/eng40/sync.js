@@ -1,4 +1,4 @@
-/* 英語40日プログラム クラウド同期レイヤ v2
+/* 英語40日プログラム クラウド同期レイヤ v3（マルチ家族対応）
  * ---------------------------------------------------------------------------
  * 目的：チェック入力は子どもの1端末でよいが、履歴・進捗は両親の別デバイスからも見たい。
  *       localStorage（端末ごとに分断）を Cloudflare Worker + KV で家族1 state に集約する。
@@ -15,6 +15,16 @@
  *      拒否（409 empty_overwrite_blocked 等）は「同期できず」と可視化する。
  *   4. デバッグ：同期ピルをタップすると直近の試行ログを表示。console にも
  *      [eng40sync] prefix で全部出す。
+ *
+ * v3 の変更（マルチ家族対応・2026-07-22）:
+ *   1. URL の ?f=<familyId> で家族を識別。API には &f= を必ず付ける。
+ *      familyId は localStorage["eng40cfg-family"] に保存（"eng40-" prefix では
+ *      ないので同期対象キーには絶対に入らない）。
+ *   2. ?f= が無ければ保存済み familyId を使う。どちらも無ければ「未設定」状態で
+ *      通信を一切行わず、セットアップ導線だけ出す（他家族のデータを読み書きしない）。
+ *   3. ?f= が保存済みと違う → 家族の切替とみなし、ローカルの eng40- キーを全消去
+ *      してから新しい家族を pull する（旧家族のデータを新家族へ混ぜないため）。
+ *   4. ?view=parent との併用（?f=xxx&view=parent）はそのまま動く。
  *
  * Worker: worker/src/index.js
  * ---------------------------------------------------------------------------
@@ -34,6 +44,14 @@
   var META_DIRTY  = 'eng40sync-dirty';      // 未送信のローカル変更あり
   var RELOAD_FLAG = 'eng40sync-reloads';    // reload 暴走ガード（sessionStorage）
   var MAX_RELOADS = 2;
+
+  // ---- 家族ID（マルチ家族対応 v3）----------------------------------------
+  // 'eng40cfg-family' は 'eng40-' で始まらない → 同期 state には絶対に載らない。
+  var FAMILY_KEY  = 'eng40cfg-family';
+  var FAMILY_RE   = /^[a-z0-9]{6,32}$/;
+  var LEGACY_FAMILY = 'mits';               // 旧 eng40:state の移行先（4文字だが常に有効）
+  var ID_CHARS    = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  var ID_LEN      = 16;
 
   var VIEW_ONLY = /[?&]view=parent(?:&|$)/.test(location.search);
 
@@ -83,16 +101,115 @@
 
   function debugText() {
     var head =
-      'eng40sync v2 デバッグ\n' +
+      'eng40sync v3 デバッグ\n' +
       'UA: ' + (navigator.userAgent || '').slice(0, 90) + '\n' +
       'online: ' + (navigator.onLine === false ? 'NO' : 'yes') +
       ' / localStorage: ' + (LS ? 'ok' : 'NG') +
       ' / 閲覧モード: ' + (VIEW_ONLY ? 'YES' : 'no') + '\n' +
+      '家族ID: ' + (FAMILY ? '…' + FAMILY.slice(-4) + '（設定済み）' : '未設定') + '\n' +
       'ローカルキー数: ' + Object.keys(collectState()).length +
       ' / 未送信: ' + (isDirty() ? 'あり' : 'なし') + '\n' +
       'サーバ updatedAt: ' + (lastSyncedAt ? new Date(lastSyncedAt).toLocaleString() : '未取得') +
       '\n\n--- 直近の同期試行 ---\n';
     return head + (LOGS.length ? LOGS.join('\n') : '(まだ記録なし)');
+  }
+
+  // =====================================================================
+  // 家族ID（マルチ家族対応）
+  // ---------------------------------------------------------------------
+  // 優先順： URL ?f=xxx  →  localStorage['eng40cfg-family']  →  未設定
+  // 未設定のときは通信を一切しない（他家族のデータを読まない・書かない）。
+  // =====================================================================
+
+  function validFamily(id) {
+    var s = String(id || '').toLowerCase();
+    if (!s) return '';
+    if (s === LEGACY_FAMILY) return s;
+    return FAMILY_RE.test(s) ? s : '';
+  }
+
+  function newFamilyId() {
+    var out = '', i;
+    var buf = null;
+    try {
+      if (window.crypto && window.crypto.getRandomValues) {
+        buf = new Uint8Array(ID_LEN);
+        window.crypto.getRandomValues(buf);
+      }
+    } catch (e) { buf = null; }
+    for (i = 0; i < ID_LEN; i++) {
+      var n = buf ? buf[i] : Math.floor(Math.random() * 256);
+      out += ID_CHARS.charAt(n % ID_CHARS.length);
+    }
+    return out;
+  }
+
+  function familyFromUrl() {
+    var m = /[?&]f=([^&#]*)/.exec(location.search);
+    if (!m) return '';
+    var raw = m[1];
+    try { raw = decodeURIComponent(raw); } catch (e) {}
+    return validFamily(raw);
+  }
+
+  function storedFamily() {
+    if (!LS) return '';
+    try { return validFamily(LS.getItem(FAMILY_KEY)); } catch (e) { return ''; }
+  }
+
+  function saveFamily(id) {
+    if (!LS) return;
+    try { rawSet(FAMILY_KEY, id); } catch (e) {}
+  }
+
+  /* 家族を切り替えるとき、旧家族のローカルデータを残すと新家族へ push されて
+   * 混ざる。PREFIX キーと同期メタを全消去してから新家族を pull する。 */
+  function wipeLocalFamilyData() {
+    if (!LS) return 0;
+    var doomed = [], i, k;
+    try {
+      for (i = 0; i < LS.length; i++) {
+        k = LS.key(i);
+        if (k && k.indexOf(PREFIX) === 0) doomed.push(k);
+      }
+      for (i = 0; i < doomed.length; i++) rawRemove(doomed[i]);
+      rawRemove(META_AT);
+      rawRemove(META_DIRTY);
+    } catch (e) {}
+    return doomed.length;
+  }
+
+  function resolveFamily() {
+    var fromUrl = familyFromUrl();
+    var saved   = storedFamily();
+    if (fromUrl) {
+      if (saved && saved !== fromUrl) {
+        var n = wipeLocalFamilyData();
+        try { console.log('[eng40sync] family switch: 旧データ ' + n + ' 件を消去'); } catch (e) {}
+      }
+      saveFamily(fromUrl);
+      return fromUrl;
+    }
+    return saved;   // '' なら未設定
+  }
+
+  var FAMILY = resolveFamily();
+
+  /* familyId 付きのサイトURL（家族の他の端末に渡す用） */
+  function familyUrl(id) {
+    var base = location.origin + location.pathname.replace(/[^/]*$/, 'index.html');
+    return base + '?f=' + encodeURIComponent(id);
+  }
+
+  /* この端末を id の家族として登録し、?f= 付きURLに置き換えて読み込み直す */
+  function adoptFamily(id) {
+    var v = validFamily(id);
+    if (!v) return false;
+    saveFamily(v);
+    var url = familyUrl(v);
+    if (VIEW_ONLY) url += '&view=parent';
+    try { location.replace(url); } catch (e) { location.href = url; }
+    return true;
   }
 
   // =====================================================================
@@ -177,10 +294,17 @@
   }
 
   function apiUrl(extra) {
-    return SYNC_URL + '?key=' + encodeURIComponent(SYNC_TOKEN) + (extra || '');
+    return SYNC_URL +
+      '?key=' + encodeURIComponent(SYNC_TOKEN) +
+      '&f=' + encodeURIComponent(FAMILY) +
+      (extra || '');
   }
 
   function pull() {
+    if (!FAMILY) {
+      log('GET skip', '家族ID 未設定');
+      return Promise.resolve(null);
+    }
     if (typeof fetch !== 'function') {
       log('GET skip', 'fetch 非対応');
       return Promise.resolve(null);
@@ -209,6 +333,11 @@
   function push(reason) {
     if (!LS || typeof fetch !== 'function') return Promise.resolve(null);
     if (VIEW_ONLY) return Promise.resolve(null);   // 閲覧モードは絶対に書かない
+    if (!FAMILY) {                                  // 家族未設定は誰のデータも書かない
+      log('POST skip', '家族ID 未設定');
+      setStatus('nofamily');
+      return Promise.resolve(null);
+    }
 
     var state = collectState();
     var nKeys = Object.keys(state).length;
@@ -329,6 +458,7 @@
     '.eng40-sync-pill.off{background:rgba(199,123,112,0.16);border-color:rgba(199,123,112,0.5);}' +
     '.eng40-sync-pill.reject{background:rgba(199,123,112,0.28);border-color:rgba(199,123,112,0.75);}' +
     '.eng40-sync-pill.view{background:rgba(212,168,91,0.20);border-color:rgba(212,168,91,0.6);}' +
+    '.eng40-sync-pill.nofamily{background:rgba(212,168,91,0.30);border-color:rgba(212,168,91,0.8);}' +
     '@media (prefers-color-scheme:dark){' +
       '.eng40-sync-pill{background:rgba(15,27,46,0.94);color:#F5EFE1;border-color:rgba(245,239,225,0.18);}}' +
     '@media (max-width:560px){.eng40-sync-pill{font-size:10px;padding:6px 9px;}}' +
@@ -347,8 +477,13 @@
 
   function setStatus(kind) {
     if (!statusEl) return;
-    statusEl.classList.remove('off', 'view', 'reject');
+    statusEl.classList.remove('off', 'view', 'reject', 'nofamily');
 
+    if (!FAMILY) {
+      statusEl.classList.add('nofamily');
+      statusEl.textContent = '👨‍👩‍👧 家族が未設定（この端末だけに保存）';
+      return;
+    }
     if (VIEW_ONLY) {
       statusEl.classList.add('view');
       statusEl.textContent = lastSyncedAt
@@ -391,6 +526,17 @@
         banner.textContent = '👀 閲覧モード（保護者用）— 記録の書き換えはできません';
         document.body.insertBefore(banner, document.body.firstChild);
       }
+
+      // 家族未設定 & ホーム以外 → ホームのセットアップへ誘導する
+      var page = location.pathname.split('/').pop() || 'index.html';
+      if (!FAMILY && page !== 'index.html') {
+        var nf = document.createElement('div');
+        nf.className = 'eng40-view-banner';
+        nf.innerHTML = '👨‍👩‍👧 家族がまだ設定されていません（記録はこの端末だけに保存中）　' +
+          '<a href="./index.html" style="color:inherit;text-decoration:underline;">ホームで家族を作る →</a>';
+        document.body.insertBefore(nf, document.body.firstChild);
+      }
+
       setStatus(VIEW_ONLY ? 'view' : 'pending');
     } catch (e) {
       statusEl = null;   // UI が作れなくても同期本体は動かす
@@ -404,6 +550,8 @@
       var nodes = document.querySelectorAll('input, textarea, select, button');
       Array.prototype.forEach.call(nodes, function (el) {
         if (el === statusEl) return;
+        // 家族設定カード（URLコピー等）は閲覧モードでも触れてよい
+        if (el.closest && el.closest('.eng40-family-card')) return;
         var t = (el.getAttribute('type') || '').toLowerCase();
         if (el.tagName === 'INPUT' && (t === 'checkbox' || t === 'radio')) {
           el.disabled = true;
@@ -442,6 +590,11 @@
   }
 
   function boot() {
+    if (!FAMILY) {
+      setStatus('nofamily');
+      log('boot', '家族ID 未設定 → 通信しない');
+      return;
+    }
     pull().then(function (res) {
       if (!res || !res.ok) { setStatus('off'); return; }
 
@@ -524,5 +677,16 @@
     logs: function () { return LOGS.slice(); },
     debug: debugText,
     state: collectState,
+  };
+
+  // 家族設定 UI（index.html の家族カード）から使う API
+  window.eng40family = {
+    id:       function () { return FAMILY; },
+    isSet:    function () { return !!FAMILY; },
+    tail:     function () { return FAMILY ? FAMILY.slice(-4) : ''; },
+    generate: newFamilyId,
+    urlFor:   familyUrl,
+    myUrl:    function () { return FAMILY ? familyUrl(FAMILY) : ''; },
+    adopt:    adoptFamily,     // この端末をその家族にして reload
   };
 })();
