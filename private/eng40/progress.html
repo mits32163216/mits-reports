@@ -22,7 +22,8 @@ h1 { font-size:22px; margin:18px 0 4px; }
 .tagline { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:20px; }
 a { color:var(--gold); text-decoration:none; }
 /* 統計ヘッダ */
-.stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:0 0 22px; }
+.stats-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin:0 0 22px; }
+@media (max-width:900px){ .stats-grid { grid-template-columns:repeat(3,1fr); } }
 @media (max-width:640px){ .stats-grid { grid-template-columns:repeat(2,1fr); } }
 .stat { background:var(--card-bg); border:1px solid var(--line); border-radius:10px; padding:12px 10px; text-align:center; }
 .stat .num { font-family:var(--mincho); font-size:24px; font-weight:700; line-height:1.1; }
@@ -40,17 +41,22 @@ a { color:var(--gold); text-decoration:none; }
 .day-cal { display:grid; grid-template-columns:repeat(8,1fr); gap:6px; }
 @media (max-width:640px){ .day-cal { grid-template-columns:repeat(5,1fr); } }
 .dc-cell { position:relative; background:var(--cell-bg); border:1px solid var(--line); border-radius:8px;
-  padding:6px 3px 5px; text-align:center; min-height:52px; }
+  padding:6px 3px 5px; text-align:center; min-height:63px; }
 .dc-cell .dc-num { font-family:var(--mono); font-size:11px; font-weight:700; line-height:1.2; }
 .dc-cell .dc-date { font-family:var(--mono); font-size:9px; color:var(--muted); line-height:1.3; min-height:11px; }
 .dc-cell .dc-mark { font-size:9px; line-height:1.3; min-height:11px; }
+.dc-cell .dc-frac { font-family:var(--mono); font-size:9px; line-height:1.3; min-height:11px; color:var(--muted); }
 .dc-cell.done { background:var(--sage); border-color:var(--sage); }
-.dc-cell.done .dc-num, .dc-cell.done .dc-date { color:#fff; }
+.dc-cell.done .dc-num, .dc-cell.done .dc-date, .dc-cell.done .dc-frac { color:#fff; }
 .dc-cell.done .dc-date { opacity:0.85; }
+.dc-cell.part { background:rgba(122,155,126,0.22); border-color:rgba(122,155,126,0.55); }
+.dc-cell.part .dc-frac { color:var(--sage); font-weight:700; }
 .dc-cell.today { border:2px solid var(--gold); box-shadow:0 0 0 2px rgba(212,168,91,0.25); }
 .cal-legend { display:flex; flex-wrap:wrap; gap:14px; margin-top:12px; font-family:var(--mono); font-size:10px; color:var(--muted); }
 .cal-legend .sw { display:inline-block; width:11px; height:11px; border-radius:3px; vertical-align:-1px; margin-right:4px; }
 .sw-done { background:var(--sage); }
+.sw-part { background:rgba(122,155,126,0.22); border:1px solid rgba(122,155,126,0.55); }
+.sw-none { background:var(--cell-bg); border:1px solid var(--line); }
 .sw-today { background:var(--cell-bg); border:2px solid var(--gold); }
 /* SVGチャート共通 */
 .chart-wrap { background:var(--card-bg); border:1px solid var(--line); border-radius:10px; padding:12px 8px 6px; }
@@ -93,8 +99,9 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 <div class="tagline">40日の足あと ─ チェック・単語・スコアが全部ここに集まる（データはクラウドに保存され家族で共有）</div>
 
 <div class="stats-grid">
-  <div class="stat"><div class="num"><strong id="st-days">0</strong><span class="sm"> / 40</span></div><div class="lbl">達成した日</div></div>
-  <div class="stat"><div class="num"><strong id="st-streak">0</strong><span class="sm"> 日</span></div><div class="lbl">いまの連続</div></div>
+  <div class="stat"><div class="num"><strong id="st-days">0</strong><span class="sm"> / 40</span></div><div class="lbl">完了した日</div></div>
+  <div class="stat"><div class="num"><strong id="st-started">0</strong><span class="sm"> / 40</span></div><div class="lbl">着手した日（1つでも）</div></div>
+  <div class="stat"><div class="num"><strong id="st-streak">0</strong><span class="sm"> 日</span></div><div class="lbl">いまの連続（1つでもやった日）</div></div>
   <div class="stat"><div class="num"><strong id="st-best">0</strong><span class="sm"> 日</span></div><div class="lbl">最長連続</div></div>
   <div class="stat"><div class="num"><strong id="st-vocab">0</strong><span class="sm"> / 300</span></div><div class="lbl">卒業（定着）語</div></div>
 </div>
@@ -102,7 +109,7 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 <!-- ① Day達成カレンダー -->
 <div class="step-section">
   <h2>🗓 Day達成カレンダー</h2>
-  <div class="section-hint">「✅ 40日」ページのチェックがそのまま塗られます｜📏=必須の測定日（Day 1・40）・🔄=調整日｜診断テスト・英検は任意なのでマーカーなし</div>
+  <div class="section-hint">「📋 手順書」ページの項目チェックがそのまま塗られます（濃い緑＝全部できた日／薄い緑＝一部できた日）｜📏=必須の測定日（Day 1・40）・🔄=調整日｜診断テスト・英検は任意なので分母に入りません</div>
   <div id="cal-area"></div>
 </div>
 
@@ -135,6 +142,28 @@ var TOTAL_DAYS = 40;
 var VOCAB_GOAL = 300;
 var SOKUTEI_DAYS = { 1: 1, 40: 1 };                       // 必須の測定日（Day 1 実力測定・Day 40 総仕上げ）
 var CHOUSEI_DAYS = { 7: 1, 14: 1, 21: 1, 28: 1, 35: 1 };  // 調整日
+/* Day別の必須ステップ数（📋手順書ページの手順項目のうち「任意」を除いた数・[0]=Day1）
+ * daily.html の data-tkey="dNN-S" と対応。program.html の ENG40_DAY_STEPS と同じ値。 */
+var DAY_STEPS = [3,5,5,5,5,5,4,5,5,5,5,5,5,5,5,5,5,5,5,5,3,5,5,5,5,5,5,3,5,5,5,5,5,5,3,5,5,5,4,4];
+var OPT_TASKS = { 'd01-4':1, 'd03-6':1, 'd37-6':1, 'd39-4':1 };
+/* localStorage を1回だけ走査して Day別の「チェック済み必須ステップ数」を返す（[0]=Day1） */
+function taskCounts() {
+  var out = [], i;
+  for (i = 0; i < TOTAL_DAYS; i++) out.push(0);
+  var P = 'eng40-task:';
+  for (i = 0; i < localStorage.length; i++) {
+    var k = localStorage.key(i);
+    if (!k || k.indexOf(P) !== 0) continue;
+    if (localStorage.getItem(k) !== '1') continue;
+    var id = k.slice(P.length);
+    if (OPT_TASKS[id]) continue;                  // 任意ステップは数えない
+    var m = /^d(\d{2})-\d+$/.exec(id);
+    if (!m) continue;
+    var d = parseInt(m[1], 10);
+    if (d >= 1 && d <= TOTAL_DAYS) out[d - 1]++;
+  }
+  return out;
+}
 function pad2(n) { return (n < 10 ? '0' : '') + n; }
 function fmtDate(d) { return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
 function todayStr() { return fmtDate(new Date()); }
@@ -159,6 +188,8 @@ function dayIndexOf(startStr, today) {
   return d === null ? null : d + 1;
 }
 // ストリーク計算（サプリトラッカー computeStats と同思想：今日が未チェックでも崩さない）
+// ★2026-07-22 定義変更：渡すのは「1項目でもやった日（着手日）」の配列。
+//   オールオアナッシングをやめ、ゼロの日だけが連続を切る。
 // done = 長さ40のbool配列（[0]=Day1）。todayIdx = 今日のDay番号（1〜・nullなら「最後のチェック日から遡る」）
 function computeStreak(done, todayIdx) {
   var best = 0, run = 0, i;
@@ -241,13 +272,23 @@ function buildVocabSeries(words, today) {
   var startOk = /^\d{4}-\d{2}-\d{2}$/.test(start);
   var todayIdx = startOk ? dayIndexOf(start, today) : null;
 
-  // ---- done配列 ----
-  var done = [], i;
+  // ---- done / 部分達成 / 着手 の3配列 ----
+  // done   = その日を完了（📋手順書の必須項目が全部 or ✅40日ページの手動チェック）
+  // part   = 1項目以上やったが全部ではない
+  // active = 1項目でもやった日（＝ストリークが切れない日）
+  var counts = taskCounts();
+  var done = [], part = [], active = [], i;
   for (i = 1; i <= TOTAL_DAYS; i++) {
-    done.push(localStorage.getItem('eng40-done:day-' + pad2(i)) === '1');
+    var m = DAY_STEPS[i - 1] || 0;
+    var n = Math.min(counts[i - 1], m);
+    var full = (localStorage.getItem('eng40-done:day-' + pad2(i)) === '1') || (m > 0 && n >= m);
+    done.push(full);
+    part.push(!full && n > 0);
+    active.push(full || n > 0);
   }
   var doneCount = done.filter(function (v) { return v; }).length;
-  var streak = computeStreak(done, (todayIdx !== null && todayIdx >= 1) ? todayIdx : null);
+  var startedCount = active.filter(function (v) { return v; }).length;
+  var streak = computeStreak(active, (todayIdx !== null && todayIdx >= 1) ? todayIdx : null);
 
   // ---- vocab ----
   var words = [];
@@ -259,6 +300,7 @@ function buildVocabSeries(words, today) {
 
   // ---- 統計ヘッダ ----
   document.getElementById('st-days').textContent = doneCount;
+  document.getElementById('st-started').textContent = startedCount;
   document.getElementById('st-streak').textContent = streak.current;
   document.getElementById('st-best').textContent = streak.best;
   document.getElementById('st-vocab').textContent = gradCount;
@@ -266,15 +308,16 @@ function buildVocabSeries(words, today) {
   // ============ ① Day達成カレンダー ============
   (function renderCal() {
     var area = document.getElementById('cal-area');
-    if (!startOk && doneCount === 0) {
+    if (!startOk && startedCount === 0) {
       area.innerHTML = '<div class="empty-state"><span class="big">まだ足あとがありません</span>' +
-        '「<a href="./program.html">✅ 40日</a>」ページで開始日を入れて、Day 1 にチェックを付けるとここが塗られていきます</div>';
+        '「<a href="./program.html">✅ 40日</a>」ページで開始日を入れて、「<a href="./daily.html">📋 手順書</a>」で今日の項目にチェックを付けるとここが塗られていきます</div>';
       return;
     }
     var html = '<div class="day-cal">';
     for (var d = 1; d <= TOTAL_DAYS; d++) {
       var cls = 'dc-cell';
       if (done[d - 1]) cls += ' done';
+      else if (part[d - 1]) cls += ' part';
       if (todayIdx === d) cls += ' today';
       var dateTxt = '';
       if (startOk) {
@@ -282,15 +325,21 @@ function buildVocabSeries(words, today) {
         dateTxt = (dt.getMonth() + 1) + '/' + dt.getDate();
       }
       var mark = SOKUTEI_DAYS[d] ? '📏' : (CHOUSEI_DAYS[d] ? '🔄' : '');
+      var mTot = DAY_STEPS[d - 1] || 0;
+      var nDone = Math.min(counts[d - 1], mTot);
+      var frac = (part[d - 1] || (done[d - 1] && nDone > 0)) ? (nDone + '/' + mTot) : '';
       html += '<div class="' + cls + '">' +
         '<div class="dc-num">D' + d + '</div>' +
         '<div class="dc-date">' + esc(dateTxt) + '</div>' +
         '<div class="dc-mark">' + mark + '</div>' +
+        '<div class="dc-frac">' + esc(frac) + '</div>' +
         '</div>';
     }
     html += '</div>';
     html += '<div class="cal-legend">' +
-      '<span><span class="sw sw-done"></span>やった日</span>' +
+      '<span><span class="sw sw-done"></span>完了した日（全項目）</span>' +
+      '<span><span class="sw sw-part"></span>一部できた日（3/5 のように表示）</span>' +
+      '<span><span class="sw sw-none"></span>やっていない日</span>' +
       '<span><span class="sw sw-today"></span>今日</span>' +
       '<span>📏 必須の測定日（Day 1・40）</span>' +
       '<span>🔄 調整日（Day 7・14・21・28・35）</span>' +

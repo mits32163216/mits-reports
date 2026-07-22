@@ -42,6 +42,10 @@ ul.day-list { list-style:none; margin:0; padding:0; }
 ul.day-list li { display:flex; align-items:flex-start; gap:10px; padding:9px 10px; border-bottom:1px dashed var(--line); border-radius:8px; }
 ul.day-list li:last-child { border-bottom:none; }
 ul.day-list li.watched { background:rgba(122,155,126,0.09); }
+ul.day-list li.partial { background:rgba(122,155,126,0.05); box-shadow:inset 3px 0 0 var(--sage); }
+.dprog { flex:0 0 auto; margin-left:8px; align-self:center; font-family:var(--mono); font-size:11px; color:var(--muted); white-space:nowrap; }
+.dprog.part { color:var(--sage); font-weight:700; }
+.dprog.full { color:var(--sage); }
 .vchk { flex:0 0 auto; cursor:pointer; padding-top:1px; position:relative; }
 .vchk input { position:absolute; opacity:0; width:0; height:0; }
 .vchk-mark { display:inline-block; width:20px; height:20px; border-radius:5px; border:2px solid var(--line); background:var(--card-bg); transition:all 0.15s; position:relative; }
@@ -67,7 +71,7 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 <body>
 
 <h1>✅ 40日デイリーチェック</h1>
-<div class="tagline">やった日はチェック ─ 月〜土で進む・日曜は調整日 ─ 崩れた日は「15分デー」でOK（ゼロの日だけ作らない）</div>
+<div class="tagline">項目ごとのチェックは<a href="./daily.html">📋 手順書</a>ページで。全部できた日はここが自動で✅になります ─ 月〜土で進む・日曜は調整日 ─ 崩れた日は「15分デー」でOK（ゼロの日だけ作らない）</div>
 
 <div class="start-date-box">
   <label for="start-date">📅 開始日</label>
@@ -150,15 +154,62 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 <footer>📘 英語40日プログラム｜チェックはクラウドに保存され、家族の端末どこからでも見られます</footer>
 
 <script>
+/* Day別の必須ステップ数（📋手順書ページの手順項目のうち「任意」を除いた数）
+ * daily.html の data-tkey="dNN-S" と対応。任意ステップは分母に入れない＝飛ばしても完了になる。 */
+var ENG40_DAY_STEPS = [3,5,5,5,5,5,4,5,5,5,5,5,5,5,5,5,5,5,5,5,3,5,5,5,5,5,5,3,5,5,5,5,5,5,3,5,5,5,4,4];
+var ENG40_OPT_TASKS = { 'd01-4':1, 'd03-6':1, 'd37-6':1, 'd39-4':1 };
+/* localStorage を1回だけ走査して Day別の「チェック済み必須ステップ数」を返す（[0]=Day1） */
+function eng40TaskCounts() {
+  var out = [], i;
+  for (i = 0; i < 40; i++) out.push(0);
+  var P = 'eng40-task:';
+  for (i = 0; i < localStorage.length; i++) {
+    var k = localStorage.key(i);
+    if (!k || k.indexOf(P) !== 0) continue;
+    if (localStorage.getItem(k) !== '1') continue;
+    var id = k.slice(P.length);
+    if (ENG40_OPT_TASKS[id]) continue;             // 任意ステップは数えない
+    var m = /^d(\d{2})-\d+$/.exec(id);
+    if (!m) continue;
+    var d = parseInt(m[1], 10);
+    if (d >= 1 && d <= 40) out[d - 1]++;
+  }
+  return out;
+}
+</script>
+<script>
 (function () {
   var PREFIX = 'eng40-done:';
+  var TPREFIX = 'eng40-task:';
   var boxes = Array.prototype.slice.call(document.querySelectorAll('.vchk input[data-vkey]'));
   var total = boxes.length;
   var textEl = document.getElementById('watch-text');
-  function update() {
-    var n = document.querySelectorAll('ul.day-list li.watched').length;
-    textEl.innerHTML = '✅ <strong>' + n + ' / ' + total + '</strong> 日';
+
+  // ---- 部分達成インジケータ（📋手順書ページの項目チェックから算出）----
+  function renderProgress() {
+    var counts = eng40TaskCounts();
+    boxes.forEach(function (cb) {
+      var li = cb.closest('li');
+      var day = parseInt((cb.getAttribute('data-vkey') || '').replace('day-', ''), 10);
+      if (!day) return;
+      var m = ENG40_DAY_STEPS[day - 1] || 0;
+      var n = Math.min(counts[day - 1], m);
+      var el = li.querySelector('.dprog');
+      if (!el) { el = document.createElement('span'); el.className = 'dprog'; li.appendChild(el); }
+      el.className = 'dprog' + (n >= m && m > 0 ? ' full' : (n > 0 ? ' part' : ''));
+      el.textContent = n > 0 ? (n + '/' + m) : '';
+      el.title = n > 0 ? ('📋手順書ページで ' + n + ' / ' + m + ' 項目チェック済み') : '';
+      if (n > 0 && n < m) li.classList.add('partial'); else li.classList.remove('partial');
+    });
+    return counts;
   }
+
+  function update() {
+    var doneN = document.querySelectorAll('ul.day-list li.watched').length;
+    var startedN = document.querySelectorAll('ul.day-list li.watched, ul.day-list li.partial').length;
+    textEl.innerHTML = '✅ 完了 <strong>' + doneN + ' / ' + total + '</strong> 日（着手 ' + startedN + ' 日）';
+  }
+
   boxes.forEach(function (cb) {
     var key = PREFIX + cb.getAttribute('data-vkey');
     var li = cb.closest('li');
@@ -169,14 +220,25 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
       update();
     });
   });
+
   document.getElementById('reset-btn').addEventListener('click', function () {
-    if (!confirm('40日チェックを全部リセットします。いいですか？')) return;
+    if (!confirm('40日チェックと、📋手順書ページの項目チェックを全部リセットします。いいですか？')) return;
     boxes.forEach(function (cb) {
       localStorage.removeItem(PREFIX + cb.getAttribute('data-vkey'));
       cb.checked = false; cb.closest('li').classList.remove('watched');
     });
+    // 項目チェック（eng40-task:）も一緒に消す（残すと部分達成表示だけ生き残るため）
+    var kill = [], i;
+    for (i = 0; i < localStorage.length; i++) {
+      var k = localStorage.key(i);
+      if (k && k.indexOf(TPREFIX) === 0) kill.push(k);
+    }
+    kill.forEach(function (k) { localStorage.removeItem(k); });
+    renderProgress();
     update();
   });
+
+  renderProgress();
   update();
 })();
 </script>
