@@ -104,7 +104,7 @@ html,body{width:100vw;height:100vh;overflow:hidden;background:#14182f;}
 <a class="back-to-list" href="./index.html">← 一覧に戻る</a>
 
 <div id="help">← / → / SPACE</div>
-<div id="counter"><span id="cur">1</span> / <span id="total">41</span></div>
+<div id="counter"><span id="cur">1</span> / <span id="total">45</span></div>
 <div id="progress"></div>
 
 <div id="slides">
@@ -515,6 +515,90 @@ html,body{width:100vw;height:100vh;overflow:hidden;background:#14182f;}
   </div>
   <div class="footer-meta">
     <span>Block 5 / Structure</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     BLOCK 5+ — ハーネスエンジニアリング（4 slides・v6追加）
+     ============================================================ -->
+
+<!-- Slide 5+-1 : ハーネスエンジニアリング（4月からずっと意識してきた・night） -->
+<section class="slide night">
+  <div class="eyebrow">Harness Engineering</div>
+  <h2 class="title smaller">4月からずっと意識してきた、<br>ハーネスエンジニアリング</h2>
+  <div class="body">
+    ハーネスとは <span class="serif">馬具</span> のこと。<br>
+    AIモデル<strong>以外の全部</strong> ── コンテキスト・ツール・ガードレール・監視・フィードバック ── を指す。
+  </div>
+  <div class="callout-line">
+    プロンプト改善よりも、<strong>環境設計</strong>のほうが成果に効く。
+  </div>
+  <div class="footer-meta">
+    <span>Block 5+ / Harness</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- Slide 5+-2 : 世界に3系統（default） -->
+<section class="slide">
+  <div class="eyebrow">Three Systems</div>
+  <h2 class="title smaller">ハーネス設計の 3 つの道</h2>
+  <div class="row-cards tri">
+    <div class="card">
+      <div class="card-num">System 01</div>
+      <div class="card-ttl">公式ハーネス</div>
+      <div class="card-desc">Anthropic Managed Agents（2026-04 launch）。REST API 直叩き前提の、開発者向けの正規ルート。</div>
+    </div>
+    <div class="card">
+      <div class="card-num">System 02</div>
+      <div class="card-ttl">エンジニア個人ハーネス</div>
+      <div class="card-desc">コードが書ける人が、自分の業務に合わせて自作する。柔軟だが、書ける人だけの世界。</div>
+    </div>
+    <div class="card">
+      <div class="card-num">System 03</div>
+      <div class="card-ttl">非エンジニアハーネス</div>
+      <div class="card-desc"><strong>僕らの道</strong>。CLAUDE.md と <code style="font-family:var(--font-mono);font-size:0.85em;">.claude/</code> フォルダに置くだけ。コードは書かない。</div>
+    </div>
+  </div>
+  <div class="footer-meta">
+    <span>Block 5+ / Harness</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- Slide 5+-3 : Anthropic 公式との答え合わせ（gold） -->
+<section class="slide gold">
+  <div class="eyebrow">Answer Sheet</div>
+  <h2 class="title smaller">Anthropic が公式化したのは、<br>僕らの手作りの構造そのもの</h2>
+  <div class="body">
+    <strong>脳と手の分離</strong>（高性能モデルが判断・軽量モデルが実行）<br>
+    <strong>家畜型運用</strong>（1体ずつ手管理ではなく大量並列）<br>
+    <strong>append-only Session Log</strong>（消さずに積み上げる記録）
+  </div>
+  <div class="callout-line">
+    これらは全部、ハーネスエンジニアリングの実装例。<br>
+    <strong>後付けで公式が追認</strong>してきた形。
+  </div>
+  <div class="footer-meta">
+    <span>Block 5+ / Harness</span>
+    <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- Slide 5+-4 : 復習教材誘導（default） -->
+<section class="slide">
+  <div class="eyebrow">Deep Dive</div>
+  <h2 class="title smaller">ハーネスエンジニアリング ──<br>20 スライドで復習</h2>
+  <div class="callout-line">
+    4 動画から統合。CLAUDE.md ＝ <strong>事業の家訓・憲法</strong>、実行役と判定役の分離、内側／外側ループ、<strong>Meta-Harness</strong> の 4 発見までを、日常業務のアナロジーで降ろす。
+  </div>
+  <div class="body" style="font-family:var(--font-mono);font-size:1.3vw;letter-spacing:0.05em;margin-top:3vh;">
+    reports.7years.life/2026-07-24_harness-engineering-non-engineer.html
+  </div>
+  <div class="sub" style="margin-top:2vh;">Discord にも貼っておきます。</div>
+  <div class="footer-meta">
+    <span>Block 5+ / Harness</span>
     <span>AI-AGENT MANAGEMENT / NISHIDA MITSUHIRO</span>
   </div>
 </section>
