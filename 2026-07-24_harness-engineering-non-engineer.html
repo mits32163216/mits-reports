@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ハーネスエンジニアリング｜統合ガイド</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700;800&family=Noto+Serif+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100vw;height:100vh;overflow:hidden;background:#14182f;}
+:root{
+  --navy:#14182f;--navy-2:#1e2340;--navy-3:#0f1226;
+  --gold:#8b7355;--gold-2:#a08966;--gold-3:#6f5a41;
+  --ivory:#f5f5f0;--ivory-2:#faf9f4;--ivory-3:#ece9df;
+  --ok:#3d6b48;--warn:#a04d3a;
+  --ink:#1a1a1a;--ink-2:#4a4a4a;--ink-3:#7a7a7a;
+  --bg-page:linear-gradient(180deg,#faf9f4 0%,#f5f5f0 100%);
+  --font-sans:"Inter","Noto Sans JP",sans-serif;
+  --font-serif:"Noto Serif JP",serif;
+  --font-mono:ui-monospace,"SF Mono",Menlo,monospace;
+}
+#slides{width:100vw;height:100vh;position:relative;}
+.slide{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:6vh 8vw;text-align:center;font-family:var(--font-sans);color:var(--ink);background:var(--bg-page);}
+.slide.active{display:flex;flex-direction:column;}
+.slide.night{background:radial-gradient(60% 100% at 15% 0%,rgba(139,115,85,0.22),transparent 65%),radial-gradient(50% 100% at 90% 100%,rgba(15,18,38,0.85),transparent 65%),#14182f;color:#f5f5f0;}
+.slide.gold{background:linear-gradient(180deg,#a08966 0%,#8b7355 50%,#6f5a41 100%);color:#f5f5f0;}
+.slide.ivory-cta{background:linear-gradient(180deg,#ece9df 0%,#f5f5f0 100%);color:var(--navy);}
+
+.eyebrow{font-family:var(--font-mono);font-size:1.3vw;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:3vh;}
+.slide.night .eyebrow,.slide.gold .eyebrow{color:rgba(245,245,240,0.75);}
+
+.title{font-family:var(--font-serif);font-weight:700;font-size:5vw;line-height:1.3;letter-spacing:0.02em;margin-bottom:3vh;color:var(--navy);}
+.slide.night .title,.slide.gold .title{color:#f5f5f0;}
+.title.smaller{font-size:3.6vw;}
+.title.large{font-size:6.2vw;}
+.title.sans{font-family:var(--font-sans);font-weight:800;}
+
+.serif{font-family:var(--font-serif);font-style:italic;font-weight:400;}
+.sub{font-family:var(--font-serif);font-style:italic;font-size:2.3vw;line-height:1.55;opacity:0.9;max-width:80vw;margin:1.5vh auto 0;color:var(--ink-2);}
+.slide.night .sub,.slide.gold .sub{color:rgba(245,245,240,0.9);}
+.body{font-size:2vw;line-height:1.65;max-width:75vw;margin:2vh auto 0;font-weight:500;color:var(--ink);}
+.slide.night .body,.slide.gold .body{color:#f5f5f0;}
+.body.left{text-align:left;}
+.body strong{color:var(--gold);font-weight:700;}
+.slide.night .body strong,.slide.gold .body strong{color:#e8d9b8;}
+.bullet{font-size:1.9vw;line-height:1.75;text-align:left;max-width:72vw;margin:2vh auto 0;list-style:none;}
+.bullet li{padding-left:1.5em;text-indent:-1.5em;margin-bottom:1.2vh;color:var(--ink);}
+.slide.night .bullet li,.slide.gold .bullet li{color:#f5f5f0;}
+.bullet li::before{content:"§ ";color:var(--gold);font-weight:700;font-family:var(--font-serif);}
+.slide.night .bullet li::before,.slide.gold .bullet li::before{color:#e8d9b8;}
+.bullet li strong{color:var(--navy);font-weight:700;}
+.slide.night .bullet li strong,.slide.gold .bullet li strong{color:#e8d9b8;}
+
+.big-num{font-family:var(--font-serif);font-style:italic;font-weight:400;font-size:14vw;line-height:1;color:var(--gold);margin:0 0 2vh 0;}
+.slide.night .big-num,.slide.gold .big-num{color:#f5f5f0;}
+
+.quote{font-family:var(--font-serif);font-style:italic;font-size:3vw;line-height:1.55;border-top:1px solid rgba(139,115,85,0.5);border-bottom:1px solid rgba(139,115,85,0.5);padding:3vh 0;max-width:78vw;margin:0 auto;color:var(--navy);}
+.slide.night .quote,.slide.gold .quote{border-color:rgba(245,245,240,0.4);color:#f5f5f0;}
+
+.roman-label{font-family:var(--font-serif);font-style:italic;color:var(--gold);font-size:2.5vw;line-height:1;margin-bottom:1vh;}
+.slide.night .roman-label,.slide.gold .roman-label{color:#e8d9b8;}
+
+.row-cards{display:grid;grid-template-columns:1fr 1fr;gap:2.5vw;max-width:82vw;margin:3vh auto 0;}
+.row-cards.tri{grid-template-columns:1fr 1fr 1fr;}
+.row-cards.six{grid-template-columns:1fr 1fr 1fr;gap:2vw 2vw;}
+.card{background:rgba(245,245,240,0.96);color:var(--ink);padding:2.5vh 2vw;border:1px solid rgba(139,115,85,0.25);border-top:3px solid var(--gold);border-radius:0.4vw;text-align:left;}
+.slide.night .card{background:rgba(245,245,240,0.94);}
+.card .card-num{font-family:var(--font-mono);font-size:0.9vw;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6vh;}
+.card .card-ttl{font-family:var(--font-serif);font-weight:700;font-size:1.6vw;color:var(--navy);margin-bottom:0.8vh;line-height:1.4;}
+.card .card-desc{font-size:1.1vw;line-height:1.6;color:var(--ink-2);}
+
+.step-flow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:0.7vw;max-width:80vw;margin:3vh auto;font-family:var(--font-mono);font-size:1.3vw;letter-spacing:0.05em;}
+.step{background:var(--ivory);border:1.5px solid var(--gold);color:var(--navy);padding:1vh 1.5vw;font-weight:700;line-height:1.4;border-radius:0.3vw;}
+.step.step-ng{background:rgba(160,77,58,0.12);border-color:var(--warn);color:var(--warn);text-decoration:line-through;}
+.step-arrow{color:var(--gold);font-weight:700;font-family:var(--font-serif);font-size:1.8vw;}
+.slide.night .step{background:rgba(245,245,240,0.95);}
+
+.matrix-3axis{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2vw;max-width:82vw;margin:3vh auto 0;}
+.axis-item{background:rgba(245,245,240,0.96);color:var(--ink);padding:3vh 2vw;border:1px solid rgba(139,115,85,0.25);border-top:3px solid var(--gold);text-align:center;}
+.axis-num{font-family:var(--font-serif);font-style:italic;font-size:3vw;color:var(--gold);line-height:1;margin-bottom:1vh;}
+.axis-ttl{font-family:var(--font-serif);font-weight:700;font-size:1.8vw;color:var(--navy);margin-bottom:1vh;line-height:1.4;}
+.axis-desc{font-size:1.2vw;line-height:1.6;color:var(--ink-2);}
+
+.week-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1.5vw;max-width:85vw;margin:3vh auto 0;}
+.week-card{background:rgba(245,245,240,0.96);color:var(--ink);padding:2vh 1.2vw;border:1px solid rgba(139,115,85,0.25);border-left:3px solid var(--gold);text-align:left;border-radius:0.3vw;}
+.week-tag{font-family:var(--font-mono);font-size:0.85vw;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6vh;}
+.week-ttl{font-family:var(--font-serif);font-weight:700;font-size:1.4vw;color:var(--navy);line-height:1.4;margin-bottom:0.6vh;}
+.week-desc{font-size:1vw;line-height:1.55;color:var(--ink-2);}
+
+.callout-line{font-family:var(--font-serif);font-style:italic;font-size:2.4vw;line-height:1.55;color:var(--navy);border-left:4px solid var(--gold);padding:2vh 3vw;background:rgba(139,115,85,0.06);max-width:80vw;margin:3vh auto 0;text-align:left;}
+.slide.night .callout-line,.slide.gold .callout-line{color:#f5f5f0;background:rgba(245,245,240,0.10);border-color:#e8d9b8;}
+
+.gloss{display:inline-block;font-family:var(--font-mono);font-size:0.85em;color:var(--gold-3);font-style:normal;font-weight:500;letter-spacing:0.02em;}
+.slide.night .gloss,.slide.gold .gloss{color:#e8d9b8;}
+
+.footer-meta{position:absolute;bottom:2vh;left:0;right:0;display:flex;justify-content:space-between;padding:0 3vw;font-family:var(--font-mono);font-size:0.9vw;color:rgba(20,24,47,0.35);letter-spacing:0.15em;text-transform:uppercase;}
+.slide.night .footer-meta,.slide.gold .footer-meta{color:rgba(245,245,240,0.45);}
+
+#progress{position:fixed;bottom:0;left:0;height:4px;background:var(--gold);width:0;transition:width 0.3s;z-index:99;}
+#help{position:fixed;top:1vh;right:1vw;font-family:var(--font-mono);font-size:0.8vw;color:rgba(245,245,240,0.5);background:rgba(20,24,47,0.55);padding:0.5vh 1vw;border-radius:0.3vw;z-index:99;letter-spacing:0.1em;}
+#counter{position:fixed;bottom:1.5vh;right:1.5vw;font-family:var(--font-mono);font-size:0.9vw;color:rgba(245,245,240,0.65);letter-spacing:0.15em;z-index:99;}
+.back-to-list{position:fixed;top:12px;left:12px;z-index:100;background:rgba(20,24,47,0.85);color:#f5f5f0;padding:8px 16px;font-size:12px;border-radius:4px;text-decoration:none;letter-spacing:0.05em;font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;}
+.back-to-list:hover{background:rgba(20,24,47,0.95);}
+</style>
+</head>
+<body>
+<a class="back-to-list" href="./index.html">← 一覧に戻る</a>
+
+<div id="help">← / → / SPACE</div>
+<div id="counter"><span id="cur">1</span> / <span id="total">23</span></div>
+<div id="progress"></div>
+
+<div id="slides">
+
+<!-- ============================================================
+     Slide 1 — Opening quote (night)
+     ============================================================ -->
+<section class="slide night">
+  <div class="quote">
+    AIの性能を決めているのは、<br>
+    <span class="serif">モデルそのもの</span>ではなく、<br>
+    <span class="serif">その周りを固める道具立て</span>である。
+  </div>
+  <div class="footer-meta">
+    <span>Opening</span>
+    <span>Harness Engineering / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     Slide 2 — Who is this for
+     ============================================================ -->
+<section class="slide">
+  <div class="eyebrow">Who is this for</div>
+  <div class="title smaller">こういう方に、向けた話です</div>
+  <ul class="bullet">
+    <li>プロンプトの工夫は<strong>やってきた</strong>。GPTsも触った</li>
+    <li>Claude Codeという名前は<strong>耳にする</strong>ようになった</li>
+    <li>「使いこなす」と「作り込む」の間で、どこまで自分でやればいいのか<strong>まだ見えていない</strong></li>
+    <li>エンジニアではないので、技術用語ばかりのYouTube動画に置いていかれる感覚がある</li>
+  </ul>
+  <div class="footer-meta">
+    <span>Opening</span>
+    <span>Harness Engineering / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     Slide 3 — Title (gold)
+     ============================================================ -->
+<section class="slide gold">
+  <div class="title large">ハーネスエンジニアリング</div>
+  <div class="sub">AIモデル本体ではなく、その周りを整える技術。<br>あなたが今すぐ触れる急所だけを抜き出す。</div>
+  <div class="footer-meta">
+    <span>Title</span>
+    <span>Harness Engineering / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     Slide 5 — 語源：馬具
+     ============================================================ -->
+<section class="slide">
+  <div class="eyebrow">Origin</div>
+  <div class="title smaller">ハーネスとは、もともと<br><span class="serif">馬に着ける道具立て</span>のこと</div>
+  <div class="body">
+    手綱、鞍、蹄鉄、あぶみ。<br>
+    馬そのものではなく、<strong>馬をどう走らせるかを決める周辺装備</strong>。<br><br>
+    高い馬を買ってきても、手綱の握り方と馬具の据え方が下手なら、走らない。<br>
+    <strong>AIエージェントに乗り換えた時に、まったく同じことが起きている。</strong>
+  </div>
+  <div class="footer-meta">
+    <span>Concept</span>
+    <span>Harness Engineering / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     Slide 6 — LLMは関数
+     ============================================================ -->
+<section class="slide night">
+  <div class="eyebrow">The core</div>
+  <div class="title smaller">AIモデル（LLM）は、実はこれだけ</div>
+  <div class="callout-line">
+    テキストを入れると、テキストを返す<strong>関数</strong>。<br>
+    それ以上でも、それ以下でもない。<br>
+    <span class="gloss">（LLM＝大規模言語モデル。GPTやClaudeの中身）</span>
+  </div>
+  <div class="sub">「AIが自分で調べて、書いて、直してくれる」という体験は、<br>
+    LLMの周りに乗せた道具立て、つまり<strong style="color:#e8d9b8;">ハーネス</strong>が作り出している。</div>
+  <div class="footer-meta">
+    <span>Concept</span>
+    <span>Harness Engineering / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     Slide 7 — ハーネスとは何を指すか（6要素）
+     ============================================================ -->
+<section class="slide">
+  <div class="eyebrow">What is a harness</div>
+  <div class="title smaller">ハーネス＝AIモデル以外の、全部</div>
+  <div class="row-cards six">
+    <div class="card">
+      <div class="card-num">01</div>
+      <div class="card-ttl">コンテキスト</div>
+      <div class="card-desc">AIが今読んでいる情報の全部。会話履歴・ルール書・過去のメモ。</div>
+    </div>
+    <div class="card">
+      <div class="card-num">02</div>
+      <div class="card-ttl">ツール（道具）</div>
+      <div class="card-desc">ファイル読み書き・検索・シェル実行など、AIに使わせる腕。</div>
+    </div>
+    <div class="card">
+      <div class="card-num">03</div>
+      <div class="card-ttl">入口のガード</div>
+      <div class="card-desc">怪しい入力・攻撃的な指示を止める関所。</div>
+    </div>
+    <div class="card">
+      <div class="card-num">04</div>
+      <div class="card-ttl">出口のガード</div>
+      <div class="card-desc">危険な出力・やってはいけない操作を止める関所。</div>
+    </div>
+    <div class="card">
+      <div class="card-num">05</div>
+      <div class="card-ttl">記憶</div>
+      <div class="card-desc">セッションをまたいで残す情報。忘れさせない仕組み。</div>
+    </div>
+    <div class="card">
+      <div class="card-num">06</div>
+      <div class="card-ttl">監視</div>
+      <div class="card-desc">今どのツールで何をしているか、暴走していないかを見張る目。</div>
+    </div>
+  </div>
+  <div class="footer-meta">
+    <span>Concept</span>
+    <span>Harness Engineering / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     Slide 8 — エレキギターの例え
+     ============================================================ -->
+<section class="slide gold">
+  <div class="eyebrow">Analogy</div>
+  <div class="title smaller">エレキギターと、アンプ</div>
+  <div class="body">
+    ギター本体（＝AIモデル）を高いのに買い替えても、<br>
+    <strong>アンプの設定</strong>――音量、音色、ひずみ、リバーブ――が下手なら、良い音は出ない。<br><br>
+    <strong>ハーネスエンジニアリングとは、アンプのつまみを回す仕事のこと。</strong><br>
+    ジャンルによって、場面によって、正解のつまみ位置は変わる。<br>
+    「唯一のベストプラクティス」は、存在しない。
+  </div>
+  <div class="footer-meta">
+    <span>Concept</span>
+    <span>Harness Engineering / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     Slide 9 — 2つの視座
+     ============================================================ -->
+<section class="slide">
+  <div class="eyebrow">Two perspectives</div>
+  <div class="title smaller">作る人と、使う人で、見え方が違う</div>
+  <div class="row-cards">
+    <div class="card">
+      <div class="card-num">Builder</div>
+      <div class="card-ttl">作る人（エージェント開発者）</div>
+      <div class="card-desc">ハーネス全体を設計する。エージェントの動く土台そのもの――ループの回し方、ツール一式、通信の仕組み――を組む。エンジニアの領域。</div>
+    </div>
+    <div class="card">
+      <div class="card-num">User</div>
+      <div class="card-ttl">使う人（Claude Codeのユーザー）</div>
+      <div class="card-desc">土台は既にある。触れるのはカスタマイズ領域だけ。設定・ルール書・スキル・記憶。あなたと私はこちら。</div>
+    </div>
+  </div>
+  <div class="callout-line">
+    使う人の主戦場は、実は<strong>コンテキストをどう組み立てるか</strong>にほぼ集約される。
+  </div>
+  <div class="footer-meta">
+    <span>Perspective</span>
+    <span>Harness Engineering / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     Slide 10 — 使う人が触れる5つの手段
+     ============================================================ -->
+<section class="slide night">
+  <div class="eyebrow">Five levers</div>
+  <div class="title smaller">使う人が、今すぐ触れる5つのつまみ</div>
+  <div class="row-cards six">
+    <div class="card">
+      <div class="card-num">Lever 01</div>
+      <div class="card-ttl">CLAUDE.md（家訓）</div>
+      <div class="card-desc">プロジェクトのルール・禁止事項をまとめた文書。AIが会話の前に必ず読む。</div>
+    </div>
+    <div class="card">
+      <div class="card-num">Lever 02</div>
+      <div class="card-ttl">フック（関所）</div>
+      <div class="card-desc">「この場面では必ずこれをやれ」を仕込む釘。<span class="gloss">（hook）</span></div>
+    </div>
+    <div class="card">
+      <div class="card-num">Lever 03</div>
+      <div class="card-ttl">履歴圧縮</div>
+      <div class="card-desc">会話が長くなったら要点だけに畳む機能。折るタイミングを自分で決められる。<span class="gloss">（compaction）</span></div>
+    </div>
+    <div class="card">
+      <div class="card-num">Lever 04</div>
+      <div class="card-ttl">砂場（隔離環境）</div>
+      <div class="card-desc">AIが暴れても外に被害が出ない、区切られた作業場所。<span class="gloss">（sandbox）</span></div>
+    </div>
+    <div class="card">
+      <div class="card-num">Lever 05</div>
+      <div class="card-ttl">権限設定</div>
+      <div class="card-desc">「この命令はやっていい／これは要確認／これは絶対禁止」の3段階。<span class="gloss">（permission）</span></div>
+    </div>
+    <div class="card" style="opacity:0.6;">
+      <div class="card-num">Lever 06+</div>
+      <div class="card-ttl">分岐（ブランチ）</div>
+      <div class="card-desc">今の会話履歴のまま、別の仕事に枝分かれさせる。片方は残す。</div>
+    </div>
+  </div>
+  <div class="footer-meta">
+    <span>Practice</span>
+    <span>Harness Engineering / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     Slide 11 — CLAUDE.md
+     ============================================================ -->
+<section class="slide">
+  <div class="eyebrow">Lever 01</div>
+  <div class="title smaller">CLAUDE.md は、事業の家訓</div>
+  <div class="body left">
+    <strong>CLAUDE.md は、事業の家訓。事業の家訓は、憲法。</strong><br><br>
+    毎回の会話の冒頭で、AIが必ず読む文書。<br><br>
+    ここに<strong>「うちの事業ではこう呼ぶ」「これは絶対に書かない」「参考にする資料はここ」</strong>と書いておくと、<br>
+    セッションごとに一から説明し直さなくて済む。<br><br>
+    新人が入社した時に渡す<strong>就業規則＋業務マニュアル＋顧客対応の口調ルール</strong>、<br>
+    それを1枚のファイルに落としたようなもの。
+  </div>
+  <div class="callout-line">
+    Webコンサル業務なら、まずここに<strong>顧客の呼び方・提案書の型・使わない業界用語のリスト</strong>を書く。
+  </div>
+  <div class="footer-meta">
+    <span>Practice / Lever 01</span>
+    <span>Harness Engineering / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     Slide 12 — フック
+     ============================================================ -->
+<section class="slide">
+  <div class="eyebrow">Lever 02</div>
+  <div class="title smaller">フックは、事務所の関所</div>
+  <div class="body left">
+    「この場面では、必ずこの手続きを通せ」を機械に仕込む仕組み。<br>
+    <span class="gloss">（技術用語では hook。AI業界だけでなく、昔からプログラム界隈で使われてきた言葉）</span><br><br>
+    たとえばこんな使い方――<br>
+  </div>
+  <ul class="bullet">
+    <li>シェルの命令文を実行する<strong>直前</strong>に「これは禁止コマンドか」を確認する</li>
+    <li>Claudeを起動した<strong>瞬間</strong>に、今日の作業リストを自動で読み込ませる</li>
+    <li>会話が圧縮された<strong>直後</strong>に、CLAUDE.mdを読み直させる</li>
+  </ul>
+  <div class="callout-line">
+    プロンプトの中で「〜してくださいね」とお願いする代わりに、<strong>必ずそこを通る通り道に釘を打つ</strong>。<br>
+    プロンプトは忘れられるが、フックは忘れられない。
+  </div>
+  <div class="footer-meta">
+    <span>Practice / Lever 02</span>
+    <span>Harness Engineering / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     Slide 13 — 全体像図
+     ============================================================ -->
+<section class="slide night">
+  <div class="eyebrow">Big picture</div>
+  <div class="title smaller">ハーネスの全体像</div>
+  <div class="step-flow">
+    <div class="step">人間</div>
+    <div class="step-arrow">→</div>
+    <div class="step">入口の関所</div>
+    <div class="step-arrow">→</div>
+    <div class="step">コンテキスト</div>
+    <div class="step-arrow">→</div>
+    <div class="step">AIモデル</div>
+    <div class="step-arrow">→</div>
+    <div class="step">出口の関所</div>
+    <div class="step-arrow">→</div>
+    <div class="step">結果</div>
+  </div>
+  <div class="body">
+    そしてこの流れの<strong>横</strong>に、ツール一式・記憶・監視、<br>
+    そして必要なら<strong>もう一人のAI</strong>（サブエージェント）が控えている。<br><br>
+    <strong>全部つないだ絵の総称が「ハーネス」。</strong>
+  </div>
+  <div class="footer-meta">
+    <span>Big picture</span>
+    <span>Harness Engineering / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     Slide 15 — OSアナロジー
+     ============================================================ -->
+<section class="slide">
+  <div class="eyebrow">Analogy 2</div>
+  <div class="title smaller">パソコンの中に例えると</div>
+  <div class="matrix-3axis">
+    <div class="axis-item">
+      <div class="axis-num">I</div>
+      <div class="axis-ttl">AIモデル</div>
+      <div class="axis-desc">計算する頭。<br>いわばCPU。<br>Claude Opus / GPT等。</div>
+    </div>
+    <div class="axis-item">
+      <div class="axis-num">II</div>
+      <div class="axis-ttl">コンテキスト</div>
+      <div class="axis-desc">今開いている作業机の広さ。<br>いわばメモリ（RAM）。<br>会話履歴・ルール書・過去メモ。</div>
+    </div>
+    <div class="axis-item">
+      <div class="axis-num">III</div>
+      <div class="axis-ttl">ハーネス</div>
+      <div class="axis-desc">CPUとメモリを繋いで動かす<br>OS（基本ソフト）。<br>Claude Code / Cursor 等。</div>
+    </div>
+  </div>
+  <div class="callout-line">
+    Windows 上でも同じCPUで動くソフトの<strong>快適さがまるで違う</strong>ように、<br>
+    ハーネスが変わればAIの性能はガラッと変わる。<br>
+    <strong>「モデルの性能」は、ハーネスに依存する。</strong>
+  </div>
+  <div class="footer-meta">
+    <span>Big picture</span>
+    <span>Harness Engineering / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     Slide 16 — 作り込むな、軽量に
+     ============================================================ -->
+<section class="slide gold">
+  <div class="eyebrow">Discipline</div>
+  <div class="title smaller">作り込みすぎるな。軽く。</div>
+  <div class="body">
+    <strong>Manus</strong>（有名なAIエージェント）は、半年で<strong>5回</strong>、ハーネスを根本的に組み直している。<br>
+    <strong>LangChain</strong>のディープリサーチ版は、1年で<strong>3回</strong>、まるごと作り直している。<br><br>
+    モデルが新しくなるたびに、うまく動くハーネスの形も変わる。<br>
+    <strong>今日の最強は、3ヶ月後には最強ではない。</strong>
+  </div>
+  <div class="callout-line">
+    だから、作り込みすぎない。<strong>いつでも捨てて組み直せる軽さ</strong>を残す。<br>
+    ――業務マニュアルの世界と、まったく同じ話。
+  </div>
+  <div class="footer-meta">
+    <span>Discipline</span>
+    <span>Harness Engineering / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     Slide 17 — 行番号の例（10倍改善）
+     ============================================================ -->
+<section class="slide">
+  <div class="eyebrow">Small change, big result</div>
+  <div class="title smaller">「行番号を振っただけ」で、10倍</div>
+  <div class="body left">
+    ある実験――AIにコードを直させる時、各行に<strong>短い印（数文字のタグ）</strong>を付けておいて、<br>
+    「この印の行を直して」と指示できるようにしただけで、<br>
+    同じAIモデルの成績が<strong>最大10倍</strong>に伸びた。<br><br>
+    <strong>モデルを取り替えたわけではない。</strong><br>
+    ハーネスの「指し示し方」を変えただけ。
+  </div>
+  <div class="callout-line">
+    Webコンサル業務でも同じ。<br>
+    <strong>顧客の資料の各段落に番号を振って渡す</strong>だけで、AIの返答の精度が変わる可能性は高い。
+  </div>
+  <div class="footer-meta">
+    <span>Small change</span>
+    <span>Harness Engineering / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     Slide 18 — ループエンジニアリング
+     ============================================================ -->
+<section class="slide night">
+  <div class="eyebrow">Loop engineering</div>
+  <div class="title smaller">人がプロンプトを毎回打つ時代の、終わり</div>
+  <div class="body">
+    今までは、こう。<br>
+    <strong>「これやって」→ AIが返す → 「じゃあ次はこれ」→ AIが返す → …</strong><br><br>
+    これから求められるのは、こう。<br>
+    <strong>機械がプロンプトを送り続けるループを、あなたが設計する。</strong><br><br>
+    Claude Code開発者の言葉――<br>
+    「私の仕事は、今やプロンプトを書くことではない。<strong>ループを書くこと</strong>である。」
+  </div>
+  <div class="footer-meta">
+    <span>Loop</span>
+    <span>Harness Engineering / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     Slide 19 — 内側と外側のループ
+     ============================================================ -->
+<section class="slide">
+  <div class="eyebrow">Two loops</div>
+  <div class="title smaller">内側のループと、外側のループ</div>
+  <div class="row-cards">
+    <div class="card">
+      <div class="card-num">Inner</div>
+      <div class="card-ttl">内側のループ（作業ループ）</div>
+      <div class="card-desc">「1つの仕事」を完了するまでAIが自分で繰り返す輪。実行役のAIと、判定役の別のAIを分けるのが要点。実行役に「これで終わったか？」を自分で判定させると、たいてい甘い判定を出す。</div>
+    </div>
+    <div class="card">
+      <div class="card-num">Outer</div>
+      <div class="card-ttl">外側のループ（起動ループ）</div>
+      <div class="card-desc">「そもそもいつAIを起動するか」の輪。定期実行、メール到着、顧客の問い合わせ着信――何をきっかけにAIに仕事を渡すか。ここを組めると、あなたが寝ている間もAIが動く。</div>
+    </div>
+  </div>
+  <div class="callout-line">
+    <strong>判定役を分ける</strong>――これは、営業に見積を検算させないのと同じ理屈。<br>
+    自分の仕事を自分で「OK」と言う人は、いつだって甘い。
+  </div>
+  <div class="footer-meta">
+    <span>Loop</span>
+    <span>Harness Engineering / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     Slide 20 — Meta-Harness の一言
+     ============================================================ -->
+<section class="slide">
+  <div class="eyebrow">The next horizon</div>
+  <div class="title smaller">AIがハーネスを、自分で作る時代</div>
+  <div class="body left">
+    2026年に出た論文――<strong>Meta-Harness</strong>。<br>
+    Claude Code が、既存のハーネスを参照して、<strong>新しいハーネスを設計・評価・改善する</strong>ループを回す。<br><br>
+    その結果、既存の人手のハーネスを性能で上回り、<strong>訓練で使わなかったデータにも、別のAIモデルにも通用</strong>した。<br><br>
+    論文が言った要点は、たった1つ――<br>
+    <strong>過去に何をやってどう失敗したかの「生の記録」に、AIが直接触れられる</strong>ようにすること。<br>
+    要約を渡してもダメ。生の履歴が要る。
+  </div>
+  <div class="callout-line">
+    人間の側でも、まったく同じ。<br>
+    <strong>失敗の要約</strong>ではなく、<strong>失敗した瞬間の生の会話</strong>を、AIに渡し続けなさい。
+  </div>
+  <div class="footer-meta">
+    <span>Horizon</span>
+    <span>Harness Engineering / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     Slide 21 — 明日から3ステップ
+     ============================================================ -->
+<section class="slide">
+  <div class="eyebrow">Tomorrow</div>
+  <div class="title smaller">明日から、この3つだけ</div>
+  <div class="matrix-3axis">
+    <div class="axis-item">
+      <div class="axis-num">I</div>
+      <div class="axis-ttl">CLAUDE.md を書く</div>
+      <div class="axis-desc">「事業の家訓」を1枚。呼び方・禁止事項・参考資料の在り処。長くていい。10分で第1版。</div>
+    </div>
+    <div class="card axis-item" style="border-top:3px solid var(--gold);">
+      <div class="axis-num">II</div>
+      <div class="axis-ttl">禁止だけ、フックにする</div>
+      <div class="axis-desc">「これは絶対やるな」を1つだけ、通り道の関所として仕込む。プロンプトでお願いするより確実。</div>
+    </div>
+    <div class="axis-item">
+      <div class="axis-num">III</div>
+      <div class="axis-ttl">完了条件を、先に決める</div>
+      <div class="axis-desc">「何をもって終わりとするか」を、AIに走らせる前に紙に書く。ここが甘いと、いくらループを回しても甘い成果しか出ない。</div>
+    </div>
+  </div>
+  <div class="callout-line">
+    どれも、<strong>AIの新機能を待つ必要がない</strong>。今日、あなたの手で始められる。
+  </div>
+  <div class="footer-meta">
+    <span>Action</span>
+    <span>Harness Engineering / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     Slide 22 — Closing quote (night)
+     ============================================================ -->
+<section class="slide night">
+  <div class="quote">
+    AIモデル本体ではなく、<br>
+    <span class="serif">その周りを整える技術</span>。<br>
+    ハーネスエンジニアリング。
+  </div>
+  <div class="sub">
+    速いAIが欲しいのではない。<br>
+    <strong>自分の事業に、正しく走るAIが欲しい。</strong>
+  </div>
+  <div class="footer-meta">
+    <span>Closing</span>
+    <span>Harness Engineering / NISHIDA MITSUHIRO</span>
+  </div>
+</section>
+
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+document.getElementById('total').textContent = total;
+let cur = 0;
+function show(i){
+  slides.forEach(s => s.classList.remove('active'));
+  slides[i].classList.add('active');
+  document.getElementById('cur').textContent = i + 1;
+  document.getElementById('progress').style.width = ((i + 1) / total * 100) + '%';
+}
+function next(){ if(cur < total - 1){ cur++; show(cur); } }
+function prev(){ if(cur > 0){ cur--; show(cur); } }
+document.addEventListener('keydown', e => {
+  if(e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+  else if(e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+});
+show(0);
+</script>
+</body>
+</html>
