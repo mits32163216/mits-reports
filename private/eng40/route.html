@@ -237,6 +237,23 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
   var unitToEntry = {};
   MURPHY_MAP.forEach(function (m) { m.u.forEach(function (n) { unitToEntry[n] = m; }); });
 
+  // ＜ALL IN ONE章 双方向連動＞ route 章(ch-N) ⇔ daily④(dNN-4)：多対一 AND-group（daily.html と同一表）
+  //  d22-4 は「Ch.4 ＋ Part 2」を1ステップで扱うため ch-4/ch-p2 の両方に属す（両章はこのタスクを共有し連動する）。
+  var AIO_MAP = [
+    {ch:"ch-1",  tasks:["d02-4","d03-4","d04-4","d05-4","d06-4"]},
+    {ch:"ch-2",  tasks:["d08-4","d09-4","d10-4"]},
+    {ch:"ch-3",  tasks:["d11-4","d12-4","d13-4"]},
+    {ch:"ch-13", tasks:["d15-4","d16-4"]},
+    {ch:"ch-16", tasks:["d19-4"]},
+    {ch:"ch-4",  tasks:["d22-4"]},
+    {ch:"ch-p2", tasks:["d22-4"]}
+  ];
+  var chToTasks = {}, tkeyToChs = {};
+  AIO_MAP.forEach(function (m) {
+    chToTasks[m.ch] = m.tasks;
+    m.tasks.forEach(function (tk) { (tkeyToChs[tk] = tkeyToChs[tk] || []).push(m.ch); });
+  });
+
   function lsOn(k) { return localStorage.getItem(k) === '1'; }
   function unitOn(n) { return lsOn(PREFIX + 'unit-' + n); }
 
@@ -263,6 +280,32 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
       var lbl = cb.closest('label');
       if (lbl) { if (on) lbl.classList.add('done'); else lbl.classList.remove('done'); }
     }
+  }
+
+  function setChapterDOM(ch, on) {
+    if (on) localStorage.setItem(CH_PREFIX + ch, '1'); else localStorage.removeItem(CH_PREFIX + ch);
+    var cb = document.querySelector('label.uchk input[data-ukey="' + ch + '"]');
+    if (cb) { cb.checked = on; var lbl = cb.closest('label'); if (lbl) { if (on) lbl.classList.add('done'); else lbl.classList.remove('done'); } }
+  }
+  // 章のチップ状態を「所属 daily④タスクが全部済か」で再計算（AND-group）
+  function refreshChapterChip(ch) {
+    var tasks = chToTasks[ch]; if (!tasks) return;
+    setChapterDOM(ch, tasks.every(function (tk) { return lsOn(TPREFIX + tk); }));
+  }
+  // route → daily：章 ch-N が変わったら、その章の daily④タスクを全部 ON/OFF（AND-group）
+  function pushChapterToTasks(ch, on) {
+    var tasks = chToTasks[ch]; if (!tasks) return;
+    tasks.forEach(function (tk) {
+      if (on) localStorage.setItem(TPREFIX + tk, '1'); else localStorage.removeItem(TPREFIX + tk);
+      // daily の DOM が同一ページに無ければ LS のみ（daily 側は開いた時にリコンサイル）
+      var tcb = document.querySelector('.tchk input[data-tkey="' + tk + '"]');
+      if (tcb) { tcb.checked = on; var st = tcb.closest('.step'); if (st) { if (on) st.classList.add('tdone'); else st.classList.remove('tdone'); } }
+    });
+    // 同じタスクを共有する他章のチップを再計算（例：d22-4 は ch-4 と ch-p2 に属す）
+    var seen = {};
+    tasks.forEach(function (tk) {
+      (tkeyToChs[tk] || []).forEach(function (sc) { if (!seen[sc]) { seen[sc] = 1; refreshChapterChip(sc); } });
+    });
   }
 
   // route → daily：unit-N が変わったら、その N を含むエントリの task を再計算
@@ -294,6 +337,10 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
         applying = true;
         pushUnitToTask(parseInt(uk.replace('unit-', ''), 10));
         applying = false;
+      } else if (uk.indexOf('ch-') === 0 && chToTasks[uk]) {
+        applying = true;
+        pushChapterToTasks(uk, cb.checked);
+        applying = false;
       }
       update();
     });
@@ -310,6 +357,18 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
     } else if (allUnits && !taskDone) {
       // 全ユニット済なのに task 未 → task を立てて daily と整合
       localStorage.setItem(TPREFIX + m.t, '1');
+    }
+  });
+  // ALL IN ONE 章 ⇔ daily④タスク（AND-group）OR-merge リコンサイル（追加方向のみ・チェックを消さない）
+  AIO_MAP.forEach(function (m) {
+    var chDone = lsOn(CH_PREFIX + m.ch);
+    var allTasks = m.tasks.every(function (tk) { return lsOn(TPREFIX + tk); });
+    if (chDone && !allTasks) {
+      // route で章済 → daily④タスクを全部立てる（消さずに揃える）
+      m.tasks.forEach(function (tk) { localStorage.setItem(TPREFIX + tk, '1'); });
+    } else if (allTasks && !chDone) {
+      // 全タスク済なのに章未 → 章を立てて daily と整合
+      setChapterDOM(m.ch, true);
     }
   });
   applying = false;

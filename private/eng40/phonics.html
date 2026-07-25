@@ -237,6 +237,26 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 <script>
 (function () {
   var PREFIX = 'eng40-ph:';
+  var TPREFIX = 'eng40-task:';
+  function lsOn(k) { return localStorage.getItem(k) === '1'; }
+
+  // ＜フォニックス理論 双方向連動＞ phonics 理論編(ph-0N) ⇔ daily②(dNN-2)：Day番号1:1（daily.html と同一表）
+  var PH_THEORY_MAP = [
+    {t:"d02-2",p:"ph-02"},{t:"d03-2",p:"ph-03"},{t:"d04-2",p:"ph-04"},{t:"d05-2",p:"ph-05"},
+    {t:"d06-2",p:"ph-06"},{t:"d07-2",p:"ph-07"},{t:"d08-2",p:"ph-08"},{t:"d09-2",p:"ph-09"},
+    {t:"d10-2",p:"ph-10"},{t:"d11-2",p:"ph-11"},{t:"d12-2",p:"ph-12"},{t:"d13-2",p:"ph-13"},
+    {t:"d14-2",p:"ph-14"}
+  ];
+  var phToTask = {};
+  PH_THEORY_MAP.forEach(function (m) { phToTask[m.p] = m.t; });
+
+  // 読込時 OR-merge リコンサイル（追加方向のみ・チェックを消さない）。チップ描画前に ph 側 LS を整えておく
+  PH_THEORY_MAP.forEach(function (m) {
+    var phOn = lsOn(PREFIX + m.p), taskOn = lsOn(TPREFIX + m.t);
+    if (taskOn && !phOn) localStorage.setItem(PREFIX + m.p, '1');
+    else if (phOn && !taskOn) localStorage.setItem(TPREFIX + m.t, '1');
+  });
+
   var chips = Array.prototype.slice.call(document.querySelectorAll('label.uchk input[data-ukey]'));
   var textEl = document.getElementById('watch-text');
   function update() {
@@ -254,6 +274,12 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
     cb.addEventListener('change', function () {
       if (cb.checked) { localStorage.setItem(key, '1'); lbl.classList.add('done'); }
       else { localStorage.removeItem(key); lbl.classList.remove('done'); }
+      // 理論編チップ（ph-0N）なら daily②タスク eng40-task:dNN-2 へ波及（1:1）。daily 表示中でなくても LS 経由で反映される
+      var uk = cb.getAttribute('data-ukey');
+      if (phToTask[uk]) {
+        var tk = TPREFIX + phToTask[uk];
+        if (cb.checked) localStorage.setItem(tk, '1'); else localStorage.removeItem(tk);
+      }
       update();
     });
   });

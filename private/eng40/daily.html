@@ -578,6 +578,8 @@ if (typeof module !== 'undefined') { module.exports = { eng40ComputeDay: eng40Co
   var TPREFIX = 'eng40-task:';
   var DPREFIX = 'eng40-done:day-';
   var UPREFIX = 'eng40-unit:';
+  var PHPREFIX = 'eng40-ph:';
+  var CHPREFIX = 'eng40-ch:';
   var applying = false;
   function pad2(n) { return (n < 10 ? '0' : '') + n; }
   function lsOn(k) { return localStorage.getItem(k) === '1'; }
@@ -594,6 +596,55 @@ if (typeof module !== 'undefined') { module.exports = { eng40ComputeDay: eng40Co
   ];
   var tkeyToUnits = {};
   MURPHY_MAP.forEach(function (m) { tkeyToUnits[m.t] = m.u; });
+
+  // ＜フォニックス理論 双方向連動＞ daily②(dNN-2) ⇔ phonics 理論編(ph-0N)：Day番号1:1
+  //  本文見出し（daily「ちぐさ理論：…」／phonics「Day N …」）を機械照合し 13件 完全一致を確認済み。
+  var PH_THEORY_MAP = [
+    {t:"d02-2",p:"ph-02"},{t:"d03-2",p:"ph-03"},{t:"d04-2",p:"ph-04"},{t:"d05-2",p:"ph-05"},
+    {t:"d06-2",p:"ph-06"},{t:"d07-2",p:"ph-07"},{t:"d08-2",p:"ph-08"},{t:"d09-2",p:"ph-09"},
+    {t:"d10-2",p:"ph-10"},{t:"d11-2",p:"ph-11"},{t:"d12-2",p:"ph-12"},{t:"d13-2",p:"ph-13"},
+    {t:"d14-2",p:"ph-14"}
+  ];
+  var tkeyToPh = {};
+  PH_THEORY_MAP.forEach(function (m) { tkeyToPh[m.t] = m.p; });
+
+  // ＜ALL IN ONE章 双方向連動＞ daily④(dNN-4) ⇔ route 章(ch-N)：多対一 AND-group
+  //  daily④本文の「Ch.N」表記を機械抽出。d22-4 は「Ch.4 ＋ Part 2」を1ステップで扱うため ch-4/ch-p2 の両方に属す。
+  var AIO_MAP = [
+    {ch:"ch-1",  tasks:["d02-4","d03-4","d04-4","d05-4","d06-4"]},
+    {ch:"ch-2",  tasks:["d08-4","d09-4","d10-4"]},
+    {ch:"ch-3",  tasks:["d11-4","d12-4","d13-4"]},
+    {ch:"ch-13", tasks:["d15-4","d16-4"]},
+    {ch:"ch-16", tasks:["d19-4"]},
+    {ch:"ch-4",  tasks:["d22-4"]},
+    {ch:"ch-p2", tasks:["d22-4"]}
+  ];
+  var tkeyToChs = {}, chToTasks = {};
+  AIO_MAP.forEach(function (m) {
+    chToTasks[m.ch] = m.tasks;
+    m.tasks.forEach(function (tk) { (tkeyToChs[tk] = tkeyToChs[tk] || []).push(m.ch); });
+  });
+  // daily④タスクの状態から章(ch-N)を再計算（全タスク済で章ON・1つでも欠ければOFF）＋ route DOM があれば反映
+  function recomputeChapterFromTasks(ch) {
+    var tasks = chToTasks[ch]; if (!tasks) return;
+    var all = tasks.every(function (tk) { return lsOn(TPREFIX + tk); });
+    if (all) localStorage.setItem(CHPREFIX + ch, '1'); else localStorage.removeItem(CHPREFIX + ch);
+    var ccb = document.querySelector('label.uchk input[data-ukey="' + ch + '"]');
+    if (ccb) { ccb.checked = all; var cl = ccb.closest('label'); if (cl) { if (all) cl.classList.add('done'); else cl.classList.remove('done'); } }
+  }
+
+  // 読込時 OR-merge リコンサイル（LS レベル・追加方向のみ・チェックを消さない）
+  PH_THEORY_MAP.forEach(function (m) {
+    var taskOn = lsOn(TPREFIX + m.t), phOn = lsOn(PHPREFIX + m.p);
+    if (taskOn && !phOn) localStorage.setItem(PHPREFIX + m.p, '1');
+    else if (phOn && !taskOn) localStorage.setItem(TPREFIX + m.t, '1');
+  });
+  AIO_MAP.forEach(function (m) {
+    var chOn = lsOn(CHPREFIX + m.ch);
+    var allTasks = m.tasks.every(function (tk) { return lsOn(TPREFIX + tk); });
+    if (allTasks && !chOn) localStorage.setItem(CHPREFIX + m.ch, '1');
+    else if (chOn && !allTasks) m.tasks.forEach(function (tk) { localStorage.setItem(TPREFIX + tk, '1'); });
+  });
 
   // daily → route：マーフィータスクが変わったら対応ユニットを全部 ON/OFF
   function pushTaskToUnits(tkey, on) {
@@ -678,12 +729,28 @@ if (typeof module !== 'undefined') { module.exports = { eng40ComputeDay: eng40Co
           pushTaskToUnits(tkey, cb.checked);
           applying = false;
         }
+        // フォニックス理論タスク（②）なら phonics 理論編チェックへ波及（1:1）
+        if (tkeyToPh[tkey]) {
+          applying = true;
+          var phk = PHPREFIX + tkeyToPh[tkey];
+          if (cb.checked) localStorage.setItem(phk, '1'); else localStorage.removeItem(phk);
+          var pcb = document.querySelector('label.uchk input[data-ukey="' + tkeyToPh[tkey] + '"]');
+          if (pcb) { pcb.checked = cb.checked; var pl = pcb.closest('label'); if (pl) { if (cb.checked) pl.classList.add('done'); else pl.classList.remove('done'); } }
+          applying = false;
+        }
+        // ALL IN ONE タスク（④）なら route 章へ波及（AND-group・共有タスクは属す全章を再計算）
+        if (tkeyToChs[tkey]) {
+          applying = true;
+          tkeyToChs[tkey].forEach(function (ch) { recomputeChapterFromTasks(ch); });
+          applying = false;
+        }
       });
     });
     renderBadge();
-    // リコンサイルでマーフィータスクが立ち、その結果 Day が全達成になった場合のみ done を追加
+    // リコンサイル（マーフィー／フォニックス理論／ALL IN ONE）でタスクが立ち Day が全達成になったら done を追加
     // （読込時に done を消して手動チェックを壊すことはしない＝追加方向のみ）
-    if (reconcileChanged && M > 0 && doneCount() >= M) localStorage.setItem(dayKey, '1');
+    void reconcileChanged;
+    if (M > 0 && doneCount() >= M && !lsOn(dayKey)) localStorage.setItem(dayKey, '1');
   });
 })();
 </script>
