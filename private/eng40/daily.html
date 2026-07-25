@@ -566,11 +566,51 @@ if (typeof module !== 'undefined') { module.exports = { eng40ComputeDay: eng40Co
  * キー: eng40-task:dNN-S（NN=Day2桁ゼロ埋め・S=そのDay内のステップ番号1〜）値は "1"
  * 任意ステップ（data-opt="1"）は「N/M 完了」の分母に入れない＝任意を飛ばしても Day は完了になる。
  * 必須ステップが全部チェックされたら eng40-done:day-NN を自動ON、1つでも外れたら自動OFF。
- * ※自動ON/OFFは「ユーザーが操作したとき」だけ。読み込み時は 40日ページの手動チェックを壊さない。 */
+ * ※自動ON/OFFは「ユーザーが操作したとき」だけ。読み込み時は 40日ページの手動チェックを壊さない。
+ *
+ * ＜マーフィー双方向連動＞（route.html と共通）
+ *  - daily → route：マーフィータスク dNN-S が変わったら、対応 units を全部 eng40-unit:unit-N = ON/OFF。
+ *  - route → daily：ユニット側で全ユニット揃ったら task ON、欠けたら OFF（route.html 側が LS を書く）。
+ *  - 読込時は OR-merge リコンサイル（route で全ユニット済ならタスクを立てる。片方向のみ同期した
+ *    クラウド差分を吸収。ユーザーのチェックを消さない）。
+ *  - MURPHY_MAP は daily.html の各Dayマーフィーステップ本文「Unit X〜Y」を機械抽出した対応表（route.html と同一）。 */
 (function () {
   var TPREFIX = 'eng40-task:';
   var DPREFIX = 'eng40-done:day-';
+  var UPREFIX = 'eng40-unit:';
+  var applying = false;
   function pad2(n) { return (n < 10 ? '0' : '') + n; }
+  function lsOn(k) { return localStorage.getItem(k) === '1'; }
+
+  var MURPHY_MAP = [
+    {t:"d02-3",u:[1,2]},{t:"d03-3",u:[3,4]},{t:"d04-3",u:[5,6]},{t:"d05-3",u:[7,8]},
+    {t:"d06-3",u:[9]},{t:"d08-3",u:[10,11]},{t:"d09-3",u:[12,13]},{t:"d10-3",u:[14,15]},
+    {t:"d11-3",u:[22,23]},{t:"d12-3",u:[24,25]},{t:"d13-3",u:[26]},{t:"d15-3",u:[27,28]},
+    {t:"d16-3",u:[29,30]},{t:"d17-3",u:[31,32]},{t:"d18-3",u:[33,34]},{t:"d19-3",u:[35,36]},
+    {t:"d20-3",u:[37]},{t:"d22-3",u:[42,43]},{t:"d23-3",u:[44,45]},{t:"d24-3",u:[46]},
+    {t:"d25-3",u:[57,58]},{t:"d26-3",u:[59,60]},{t:"d27-3",u:[61,62]},{t:"d29-3",u:[91,92]},
+    {t:"d30-3",u:[101,102]},{t:"d31-3",u:[103,104]},{t:"d32-3",u:[105,106]},{t:"d33-3",u:[107]},
+    {t:"d34-3",u:[63,64]},{t:"d36-3",u:[65,66]},{t:"d38-3",u:[67]}
+  ];
+  var tkeyToUnits = {};
+  MURPHY_MAP.forEach(function (m) { tkeyToUnits[m.t] = m.u; });
+
+  // daily → route：マーフィータスクが変わったら対応ユニットを全部 ON/OFF
+  function pushTaskToUnits(tkey, on) {
+    var units = tkeyToUnits[tkey];
+    if (!units) return;
+    units.forEach(function (n) {
+      var uk = UPREFIX + 'unit-' + n;
+      if (on) localStorage.setItem(uk, '1'); else localStorage.removeItem(uk);
+      // route の DOM が同一ページに無ければ LS のみ（route 側は開いた時にリコンサイル）
+      var ucb = document.querySelector('label.uchk input[data-ukey="unit-' + n + '"]');
+      if (ucb) {
+        ucb.checked = on;
+        var lbl = ucb.closest('label');
+        if (lbl) { if (on) lbl.classList.add('done'); else lbl.classList.remove('done'); }
+      }
+    });
+  }
 
   Array.prototype.forEach.call(document.querySelectorAll('details.daycard'), function (card) {
     var day = parseInt((card.id || '').replace('day-', ''), 10);
@@ -580,6 +620,7 @@ if (typeof module !== 'undefined') { module.exports = { eng40ComputeDay: eng40Co
     var boxes = Array.prototype.slice.call(card.querySelectorAll('.tchk input[data-tkey]'));
     var reqBoxes = boxes.filter(function (cb) { return cb.getAttribute('data-opt') !== '1'; });
     var M = reqBoxes.length;
+    var reconcileChanged = false;
 
     function paint(cb) {
       var step = cb.closest('.step');
@@ -601,10 +642,27 @@ if (typeof module !== 'undefined') { module.exports = { eng40ComputeDay: eng40Co
     }
 
     boxes.forEach(function (cb) {
-      var key = TPREFIX + cb.getAttribute('data-tkey');
-      if (localStorage.getItem(key) === '1') cb.checked = true;
+      var tkey = cb.getAttribute('data-tkey');
+      var key = TPREFIX + tkey;
+      var units = tkeyToUnits[tkey];
+      var stored = lsOn(key);
+
+      // 読込時 OR-merge リコンサイル（マーフィータスクのみ）
+      if (units) {
+        var allUnits = units.every(function (n) { return lsOn(UPREFIX + 'unit-' + n); });
+        if (allUnits && !stored) {
+          // route で全ユニット済 → task を立てる
+          stored = true; localStorage.setItem(key, '1'); reconcileChanged = true;
+        } else if (stored && !allUnits) {
+          // task 済なのにユニットが欠けている（片方向同期）→ ユニットを補完（消さずに揃える）
+          units.forEach(function (n) { localStorage.setItem(UPREFIX + 'unit-' + n, '1'); });
+        }
+      }
+      if (stored) cb.checked = true;
       paint(cb);
+
       cb.addEventListener('change', function () {
+        if (applying) return;
         if (cb.checked) localStorage.setItem(key, '1');
         else localStorage.removeItem(key);
         paint(cb);
@@ -614,9 +672,18 @@ if (typeof module !== 'undefined') { module.exports = { eng40ComputeDay: eng40Co
           if (doneCount() >= M) localStorage.setItem(dayKey, '1');
           else localStorage.removeItem(dayKey);
         }
+        // マーフィータスクなら route ユニットへ波及
+        if (tkeyToUnits[tkey]) {
+          applying = true;
+          pushTaskToUnits(tkey, cb.checked);
+          applying = false;
+        }
       });
     });
     renderBadge();
+    // リコンサイルでマーフィータスクが立ち、その結果 Day が全達成になった場合のみ done を追加
+    // （読込時に done を消して手動チェックを壊すことはしない＝追加方向のみ）
+    if (reconcileChanged && M > 0 && doneCount() >= M) localStorage.setItem(dayKey, '1');
   });
 })();
 </script>

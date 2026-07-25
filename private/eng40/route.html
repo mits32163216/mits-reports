@@ -212,9 +212,34 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 <footer>📘 英語40日プログラム｜マーフィー全113ユニット（Cambridge公式目次準拠）のうち夏は56を選抜｜チェックはクラウドに保存され、家族の端末どこからでも見られます</footer>
 
 <script>
+/* ＜マーフィー双方向連動＞（daily.html と共通）
+ *  - route → daily：ユニット unit-N が変わったら、その N を含むエントリの units が全部揃えば
+ *    対応マーフィータスク eng40-task:dNN-S = ON、1つでも欠ければ OFF。
+ *  - daily → route：マーフィータスクが変わると daily.html 側が units の LS を書く。
+ *  - 読込時は OR-merge リコンサイル（daily でマーフィー済ならユニットにチェックが付いて見える）。
+ *  - MURPHY_MAP は daily.html の各Dayマーフィーステップ本文「Unit X〜Y」を機械抽出した対応表（daily.html と同一）。 */
 (function () {
   var PREFIX = 'eng40-unit:';
   var CH_PREFIX = 'eng40-ch:';
+  var TPREFIX = 'eng40-task:';
+  var applying = false;
+
+  var MURPHY_MAP = [
+    {t:"d02-3",u:[1,2]},{t:"d03-3",u:[3,4]},{t:"d04-3",u:[5,6]},{t:"d05-3",u:[7,8]},
+    {t:"d06-3",u:[9]},{t:"d08-3",u:[10,11]},{t:"d09-3",u:[12,13]},{t:"d10-3",u:[14,15]},
+    {t:"d11-3",u:[22,23]},{t:"d12-3",u:[24,25]},{t:"d13-3",u:[26]},{t:"d15-3",u:[27,28]},
+    {t:"d16-3",u:[29,30]},{t:"d17-3",u:[31,32]},{t:"d18-3",u:[33,34]},{t:"d19-3",u:[35,36]},
+    {t:"d20-3",u:[37]},{t:"d22-3",u:[42,43]},{t:"d23-3",u:[44,45]},{t:"d24-3",u:[46]},
+    {t:"d25-3",u:[57,58]},{t:"d26-3",u:[59,60]},{t:"d27-3",u:[61,62]},{t:"d29-3",u:[91,92]},
+    {t:"d30-3",u:[101,102]},{t:"d31-3",u:[103,104]},{t:"d32-3",u:[105,106]},{t:"d33-3",u:[107]},
+    {t:"d34-3",u:[63,64]},{t:"d36-3",u:[65,66]},{t:"d38-3",u:[67]}
+  ];
+  var unitToEntry = {};
+  MURPHY_MAP.forEach(function (m) { m.u.forEach(function (n) { unitToEntry[n] = m; }); });
+
+  function lsOn(k) { return localStorage.getItem(k) === '1'; }
+  function unitOn(n) { return lsOn(PREFIX + 'unit-' + n); }
+
   var chips = Array.prototype.slice.call(document.querySelectorAll('label.uchk input[data-ukey]'));
   var textEl = document.getElementById('watch-text');
   function keyFor(cb) {
@@ -229,16 +254,66 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
     });
     textEl.innerHTML = '📗 <strong>' + u + ' / 56</strong> ユニット｜📙 <strong>' + c + ' / 7</strong> 章';
   }
+
+  function setUnitDOM(n, on) {
+    var cb = document.querySelector('label.uchk input[data-ukey="unit-' + n + '"]');
+    if (on) localStorage.setItem(PREFIX + 'unit-' + n, '1'); else localStorage.removeItem(PREFIX + 'unit-' + n);
+    if (cb) {
+      cb.checked = on;
+      var lbl = cb.closest('label');
+      if (lbl) { if (on) lbl.classList.add('done'); else lbl.classList.remove('done'); }
+    }
+  }
+
+  // route → daily：unit-N が変わったら、その N を含むエントリの task を再計算
+  function pushUnitToTask(n) {
+    var entry = unitToEntry[n];
+    if (!entry) return;
+    var all = entry.u.every(function (x) { return unitOn(x); });
+    var tkey = TPREFIX + entry.t;
+    if (all) localStorage.setItem(tkey, '1'); else localStorage.removeItem(tkey);
+    // daily の DOM が同一ページに無ければ LS のみ（daily 側は開いた時にリコンサイル）
+    var tcb = document.querySelector('.tchk input[data-tkey="' + entry.t + '"]');
+    if (tcb) {
+      tcb.checked = all;
+      var st = tcb.closest('.step');
+      if (st) { if (all) st.classList.add('tdone'); else st.classList.remove('tdone'); }
+    }
+  }
+
   chips.forEach(function (cb) {
     var key = keyFor(cb);
     var lbl = cb.closest('label');
     if (localStorage.getItem(key) === '1') { cb.checked = true; lbl.classList.add('done'); }
     cb.addEventListener('change', function () {
+      if (applying) return;
       if (cb.checked) { localStorage.setItem(key, '1'); lbl.classList.add('done'); }
       else { localStorage.removeItem(key); lbl.classList.remove('done'); }
+      var uk = cb.getAttribute('data-ukey');
+      if (uk.indexOf('unit-') === 0 && unitToEntry[parseInt(uk.replace('unit-', ''), 10)]) {
+        applying = true;
+        pushUnitToTask(parseInt(uk.replace('unit-', ''), 10));
+        applying = false;
+      }
       update();
     });
   });
+
+  // 読込時 OR-merge リコンサイル：daily の task 済／全ユニット済を突き合わせて両キーを整合
+  applying = true;
+  MURPHY_MAP.forEach(function (m) {
+    var taskDone = lsOn(TPREFIX + m.t);
+    var allUnits = m.u.every(function (n) { return unitOn(n); });
+    if (taskDone && !allUnits) {
+      // daily でマーフィー済 → ユニットにチェックを付ける（消さずに揃える）
+      m.u.forEach(function (n) { setUnitDOM(n, true); });
+    } else if (allUnits && !taskDone) {
+      // 全ユニット済なのに task 未 → task を立てて daily と整合
+      localStorage.setItem(TPREFIX + m.t, '1');
+    }
+  });
+  applying = false;
+
   update();
 })();
 </script>
