@@ -39,18 +39,21 @@ a { color:var(--gold); text-decoration:none; }
 .menu b { color:var(--gold); }
 /* Dayリスト */
 ul.day-list { list-style:none; margin:0; padding:0; }
-ul.day-list li { display:flex; align-items:flex-start; gap:10px; padding:9px 10px; border-bottom:1px dashed var(--line); border-radius:8px; }
+ul.day-list li { display:flex; align-items:flex-start; gap:10px; padding:9px 10px; border-bottom:1px dashed var(--line); border-radius:8px; cursor:pointer; transition:background 0.12s; }
 ul.day-list li:last-child { border-bottom:none; }
+ul.day-list li:hover { background:rgba(212,168,91,0.07); }
 ul.day-list li.watched { background:rgba(122,155,126,0.09); }
+ul.day-list li.watched:hover { background:rgba(122,155,126,0.14); }
 ul.day-list li.partial { background:rgba(122,155,126,0.05); box-shadow:inset 3px 0 0 var(--sage); }
 .dprog { flex:0 0 auto; margin-left:8px; align-self:center; font-family:var(--mono); font-size:11px; color:var(--muted); white-space:nowrap; }
 .dprog.part { color:var(--sage); font-weight:700; }
 .dprog.full { color:var(--sage); }
-.vchk { flex:0 0 auto; cursor:pointer; padding-top:1px; position:relative; }
-.vchk input { position:absolute; opacity:0; width:0; height:0; }
-.vchk-mark { display:inline-block; width:20px; height:20px; border-radius:5px; border:2px solid var(--line); background:var(--card-bg); transition:all 0.15s; position:relative; }
-.vchk input:checked + .vchk-mark { background:var(--sage); border-color:var(--sage); }
-.vchk input:checked + .vchk-mark::after { content:""; position:absolute; left:6px; top:2px; width:5px; height:10px; border:solid #fff; border-width:0 2.5px 2.5px 0; transform:rotate(45deg); }
+/* 状態マーカー（左端・手動チェックは無し／daily.html の項目チェックから自動算出） */
+.dstate { flex:0 0 22px; align-self:center; text-align:center; font-size:16px; line-height:1; }
+.dstate.done { color:var(--sage); }
+.dstate.blank::before { content:"·"; color:var(--line); font-size:20px; }
+.godaily { flex:0 0 auto; margin-left:8px; align-self:center; font-family:var(--mono); font-size:14px; color:var(--muted); opacity:0; transition:opacity 0.12s; }
+ul.day-list li:hover .godaily { opacity:0.9; color:var(--gold); }
 .dnum { flex:0 0 58px; font-family:var(--mono); font-size:12px; font-weight:700; color:var(--gold); padding-top:2px; }
 .dbody { flex:1 1 auto; font-size:13px; line-height:1.75; }
 .dbody .sub { display:block; font-size:11px; color:var(--muted); }
@@ -71,7 +74,7 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 <body>
 
 <h1>✅ 40日デイリーチェック</h1>
-<div class="tagline">項目ごとのチェックは<a href="./daily.html">📋 今日やること</a>ページで。全部できた日はここが自動で✅になります ─ 月〜土で進む・日曜は調整日 ─ 崩れた日は「15分デー」でOK（ゼロの日だけ作らない）</div>
+<div class="tagline">各日の状況の一覧です。チェックは<a href="./daily.html">📋 今日やること</a>で。全部できた日は自動で✅になります ─ 日をタップするとその日の手順へ ─ 月〜土で進む・日曜は調整日・崩れた日は「15分デー」でOK（ゼロの日だけ作らない）</div>
 
 <div class="start-date-box">
   <label for="start-date">📅 開始日</label>
@@ -85,20 +88,20 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
   <div class="phase-range">Day 1〜14｜フォニックスで音を作りながら、現在形→過去形へ</div>
   <div class="menu">🕐 <b>毎日90分</b>：フォニックス15分＝ayane実践4分＋ちぐさ理論編の今日の区間＋マネ直し（<b>必ず声に出す</b>）→ マーフィー2ユニット40分（左を読む→右を解く→丸付け・間違いに印）→ ALL IN ONE Ch.1〜3を読む15分 → 今日の新出語（マーフィー・ALL IN ONEで知らなかった語）を品詞別ノートの今日の欄に書く（目安8〜12語）→ 📓 <b>単語復習10分</b>：<b>昨日の新出語をテスト</b>（日本語→英語・隠して言えるか）＋マーフィー間違い直し　※例文の暗唱はまだやらない</div>
   <ul class="day-list">
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-01"><span class="vchk-mark"></span></label><span class="dnum">Day 1</span><div class="dbody">測定日：<b>実力測定テスト①文法・②リスニング</b>（印刷済みのプリント）＋フォニックス実践1本<span class="tag sokutei">測定</span><span class="sub">結果は「📊 測る」に記録 → 最適化マップでスタート速度を決める／マーフィー巻末の診断テストは<b>任意</b>（やるなら中盤 Day 20 前後に1回・Day 39 にもう1回で前後比較）</span></div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-02"><span class="vchk-mark"></span></label><span class="dnum">Day 2</span><div class="dbody">マーフィー <b>Unit 1〜2</b>（am/is/are）＋ ALL IN ONE <b>Ch.1 品詞</b>を読み始める<span class="sub">品詞（名詞・形容詞・副詞）はこの夏の合言葉</span></div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-03"><span class="vchk-mark"></span></label><span class="dnum">Day 3</span><div class="dbody">マーフィー <b>Unit 3〜4</b>（現在進行形・進行形の疑問文）＋ Ch.1 つづき<span class="sub"><span class="tag nini">任意</span> ＋（任意）英検3級の練習問題をやるなら今日がおすすめ（eiken.or.jp の過去問・無料／点数は「📊 測る」へ）</span></div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-04"><span class="vchk-mark"></span></label><span class="dnum">Day 4</span><div class="dbody">Unit <b>5〜6</b>（一般動詞・一般動詞の否定）＋ Ch.1 つづき</div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-05"><span class="vchk-mark"></span></label><span class="dnum">Day 5</span><div class="dbody">Unit <b>7〜8</b>（Do you...? / 進行形と現在形）＋ Ch.1 つづき</div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-06"><span class="vchk-mark"></span></label><span class="dnum">Day 6</span><div class="dbody">Unit <b>9</b>（have / have got）＋ 現在形ブロックまとめ（1〜9の間違い印だけ）＋ <b>Ch.1 読了</b><span class="sub">現在形ブロック完了！</span></div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-07"><span class="vchk-mark"></span></label><span class="dnum">Day 7</span><div class="dbody">調整日（遅れ回収 or 完全休み）＋その週の単語まとめ再テスト（2回連続で言えた語は卒業）<span class="tag chousei">調整</span></div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-08"><span class="vchk-mark"></span></label><span class="dnum">Day 8</span><div class="dbody">Unit <b>10〜11</b>（was/were・過去形）＋ <b>Ch.2 文の種類</b> 開始<span class="sub">ここから夏の山場・過去形ブロック</span></div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-09"><span class="vchk-mark"></span></label><span class="dnum">Day 9</span><div class="dbody">Unit <b>12〜13</b>（過去の否定・疑問／過去進行形）＋ Ch.2</div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-10"><span class="vchk-mark"></span></label><span class="dnum">Day 10</span><div class="dbody">Unit <b>14〜15</b>（過去進行形と過去形／used to）＋ Ch.2<span class="sub">過去形ブロック完了！</span></div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-11"><span class="vchk-mark"></span></label><span class="dnum">Day 11</span><div class="dbody">Unit <b>22〜23</b>（be/have/do・不規則動詞）＋ <b>Ch.3 時制</b>（完了形のページは飛ばす）</div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-12"><span class="vchk-mark"></span></label><span class="dnum">Day 12</span><div class="dbody">Unit <b>24〜25</b>（未来：予定の言い方・be going to）＋ Ch.3</div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-13"><span class="vchk-mark"></span></label><span class="dnum">Day 13</span><div class="dbody">Unit <b>26</b>（will）＋ 現在形ブロックの復習（間違い印だけ）</div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-14"><span class="vchk-mark"></span></label><span class="dnum">Day 14</span><div class="dbody">調整日＋<b>フォニックス動画1周完了チェック</b>＋その週の単語まとめ再テスト（2回連続で言えた語は卒業）<span class="tag chousei">調整</span><span class="sub">明日からリンキング編[#281]へ</span></div></li>
+    <li data-day="01"><span class="dstate"></span><span class="dnum">Day 1</span><div class="dbody">測定日：<b>実力測定テスト①文法・②リスニング</b>（印刷済みのプリント）＋フォニックス実践1本<span class="tag sokutei">測定</span><span class="sub">結果は「📊 測る」に記録 → 最適化マップでスタート速度を決める／マーフィー巻末の診断テストは<b>任意</b>（やるなら中盤 Day 20 前後に1回・Day 39 にもう1回で前後比較）</span></div></li>
+    <li data-day="02"><span class="dstate"></span><span class="dnum">Day 2</span><div class="dbody">マーフィー <b>Unit 1〜2</b>（am/is/are）＋ ALL IN ONE <b>Ch.1 品詞</b>を読み始める<span class="sub">品詞（名詞・形容詞・副詞）はこの夏の合言葉</span></div></li>
+    <li data-day="03"><span class="dstate"></span><span class="dnum">Day 3</span><div class="dbody">マーフィー <b>Unit 3〜4</b>（現在進行形・進行形の疑問文）＋ Ch.1 つづき<span class="sub"><span class="tag nini">任意</span> ＋（任意）英検3級の練習問題をやるなら今日がおすすめ（eiken.or.jp の過去問・無料／点数は「📊 測る」へ）</span></div></li>
+    <li data-day="04"><span class="dstate"></span><span class="dnum">Day 4</span><div class="dbody">Unit <b>5〜6</b>（一般動詞・一般動詞の否定）＋ Ch.1 つづき</div></li>
+    <li data-day="05"><span class="dstate"></span><span class="dnum">Day 5</span><div class="dbody">Unit <b>7〜8</b>（Do you...? / 進行形と現在形）＋ Ch.1 つづき</div></li>
+    <li data-day="06"><span class="dstate"></span><span class="dnum">Day 6</span><div class="dbody">Unit <b>9</b>（have / have got）＋ 現在形ブロックまとめ（1〜9の間違い印だけ）＋ <b>Ch.1 読了</b><span class="sub">現在形ブロック完了！</span></div></li>
+    <li data-day="07"><span class="dstate"></span><span class="dnum">Day 7</span><div class="dbody">調整日（遅れ回収 or 完全休み）＋その週の単語まとめ再テスト（2回連続で言えた語は卒業）<span class="tag chousei">調整</span></div></li>
+    <li data-day="08"><span class="dstate"></span><span class="dnum">Day 8</span><div class="dbody">Unit <b>10〜11</b>（was/were・過去形）＋ <b>Ch.2 文の種類</b> 開始<span class="sub">ここから夏の山場・過去形ブロック</span></div></li>
+    <li data-day="09"><span class="dstate"></span><span class="dnum">Day 9</span><div class="dbody">Unit <b>12〜13</b>（過去の否定・疑問／過去進行形）＋ Ch.2</div></li>
+    <li data-day="10"><span class="dstate"></span><span class="dnum">Day 10</span><div class="dbody">Unit <b>14〜15</b>（過去進行形と過去形／used to）＋ Ch.2<span class="sub">過去形ブロック完了！</span></div></li>
+    <li data-day="11"><span class="dstate"></span><span class="dnum">Day 11</span><div class="dbody">Unit <b>22〜23</b>（be/have/do・不規則動詞）＋ <b>Ch.3 時制</b>（完了形のページは飛ばす）</div></li>
+    <li data-day="12"><span class="dstate"></span><span class="dnum">Day 12</span><div class="dbody">Unit <b>24〜25</b>（未来：予定の言い方・be going to）＋ Ch.3</div></li>
+    <li data-day="13"><span class="dstate"></span><span class="dnum">Day 13</span><div class="dbody">Unit <b>26</b>（will）＋ 現在形ブロックの復習（間違い印だけ）</div></li>
+    <li data-day="14"><span class="dstate"></span><span class="dnum">Day 14</span><div class="dbody">調整日＋<b>フォニックス動画1周完了チェック</b>＋その週の単語まとめ再テスト（2回連続で言えた語は卒業）<span class="tag chousei">調整</span><span class="sub">明日からリンキング編[#281]へ</span></div></li>
   </ul>
 </div>
 
@@ -108,20 +111,20 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
   <div class="phase-range">Day 15〜28｜助動詞・疑問文・代名詞＋ALL IN ONE例文スタート</div>
   <div class="menu">🕐 <b>毎日90分</b>：リンキング[#281]＋ayane実践4分＋苦手音の2周目15分 → マーフィー2ユニット40分 → <b>ALL IN ONE 例文5本</b>20分（聞く→音読3回→シャドーイング＋<b>品詞マーキング：名詞○・形容詞△・副詞□</b>→知らない語を品詞別ノートへ）→ 📓 <b>単語復習10分</b>：<b>昨日の新出語をテスト</b>（日本語→英語・隠して言えるか）＋マーフィー間違い直し</div>
   <ul class="day-list">
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-15"><span class="vchk-mark"></span></label><span class="dnum">Day 15</span><div class="dbody">Unit <b>27〜28</b>（might / can・could）＋ <b>Ch.13 助動詞</b>＋<b>例文5本/日 開始</b></div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-16"><span class="vchk-mark"></span></label><span class="dnum">Day 16</span><div class="dbody">Unit <b>29〜30</b>（must / should）＋ Ch.13</div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-17"><span class="vchk-mark"></span></label><span class="dnum">Day 17</span><div class="dbody">Unit <b>31〜32</b>（have to / Would you like?）</div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-18"><span class="vchk-mark"></span></label><span class="dnum">Day 18</span><div class="dbody">Unit <b>33〜34</b>（I'd rather / 命令文）</div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-19"><span class="vchk-mark"></span></label><span class="dnum">Day 19</span><div class="dbody">Unit <b>35〜36</b>（there is/are）＋ <b>Ch.16 形式語のit</b>（時間・天気のところだけ）</div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-20"><span class="vchk-mark"></span></label><span class="dnum">Day 20</span><div class="dbody">Unit <b>37</b>（it）＋ <b>折り返しチェック</b>：過去形の再テスト（巻末Additional Exercises）<span class="sub">選抜ルート前半31ユニット完了！</span></div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-21"><span class="vchk-mark"></span></label><span class="dnum">Day 21</span><div class="dbody">調整日＋その週の単語まとめ再テスト（2回連続で言えた語は卒業）<span class="tag chousei">調整</span></div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-22"><span class="vchk-mark"></span></label><span class="dnum">Day 22</span><div class="dbody">Unit <b>42〜43</b>（疑問文1・2）＋ <b>Ch.4 文型(1)</b> 開始＋ <b>Part 2 音声変化</b>を読む</div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-23"><span class="vchk-mark"></span></label><span class="dnum">Day 23</span><div class="dbody">Unit <b>44〜45</b>（疑問文3・What/Which/How）</div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-24"><span class="vchk-mark"></span></label><span class="dnum">Day 24</span><div class="dbody">Unit <b>46</b>（How long does it take?）＋ 疑問文ブロック復習</div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-25"><span class="vchk-mark"></span></label><span class="dnum">Day 25</span><div class="dbody">Unit <b>57〜58</b>（I/me・my/his）</div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-26"><span class="vchk-mark"></span></label><span class="dnum">Day 26</span><div class="dbody">Unit <b>59〜60</b>（Whose/mine・I/me/my/mine）</div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-27"><span class="vchk-mark"></span></label><span class="dnum">Day 27</span><div class="dbody">Unit <b>61〜62</b>（myself・-'s所有）<span class="sub">代名詞ブロック完了！</span></div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-28"><span class="vchk-mark"></span></label><span class="dnum">Day 28</span><div class="dbody">調整日＋その週の単語まとめ再テスト（2回連続で言えた語は卒業）<span class="tag chousei">調整</span></div></li>
+    <li data-day="15"><span class="dstate"></span><span class="dnum">Day 15</span><div class="dbody">Unit <b>27〜28</b>（might / can・could）＋ <b>Ch.13 助動詞</b>＋<b>例文5本/日 開始</b></div></li>
+    <li data-day="16"><span class="dstate"></span><span class="dnum">Day 16</span><div class="dbody">Unit <b>29〜30</b>（must / should）＋ Ch.13</div></li>
+    <li data-day="17"><span class="dstate"></span><span class="dnum">Day 17</span><div class="dbody">Unit <b>31〜32</b>（have to / Would you like?）</div></li>
+    <li data-day="18"><span class="dstate"></span><span class="dnum">Day 18</span><div class="dbody">Unit <b>33〜34</b>（I'd rather / 命令文）</div></li>
+    <li data-day="19"><span class="dstate"></span><span class="dnum">Day 19</span><div class="dbody">Unit <b>35〜36</b>（there is/are）＋ <b>Ch.16 形式語のit</b>（時間・天気のところだけ）</div></li>
+    <li data-day="20"><span class="dstate"></span><span class="dnum">Day 20</span><div class="dbody">Unit <b>37</b>（it）＋ <b>折り返しチェック</b>：過去形の再テスト（巻末Additional Exercises）<span class="sub">選抜ルート前半31ユニット完了！</span></div></li>
+    <li data-day="21"><span class="dstate"></span><span class="dnum">Day 21</span><div class="dbody">調整日＋その週の単語まとめ再テスト（2回連続で言えた語は卒業）<span class="tag chousei">調整</span></div></li>
+    <li data-day="22"><span class="dstate"></span><span class="dnum">Day 22</span><div class="dbody">Unit <b>42〜43</b>（疑問文1・2）＋ <b>Ch.4 文型(1)</b> 開始＋ <b>Part 2 音声変化</b>を読む</div></li>
+    <li data-day="23"><span class="dstate"></span><span class="dnum">Day 23</span><div class="dbody">Unit <b>44〜45</b>（疑問文3・What/Which/How）</div></li>
+    <li data-day="24"><span class="dstate"></span><span class="dnum">Day 24</span><div class="dbody">Unit <b>46</b>（How long does it take?）＋ 疑問文ブロック復習</div></li>
+    <li data-day="25"><span class="dstate"></span><span class="dnum">Day 25</span><div class="dbody">Unit <b>57〜58</b>（I/me・my/his）</div></li>
+    <li data-day="26"><span class="dstate"></span><span class="dnum">Day 26</span><div class="dbody">Unit <b>59〜60</b>（Whose/mine・I/me/my/mine）</div></li>
+    <li data-day="27"><span class="dstate"></span><span class="dnum">Day 27</span><div class="dbody">Unit <b>61〜62</b>（myself・-'s所有）<span class="sub">代名詞ブロック完了！</span></div></li>
+    <li data-day="28"><span class="dstate"></span><span class="dnum">Day 28</span><div class="dbody">調整日＋その週の単語まとめ再テスト（2回連続で言えた語は卒業）<span class="tag chousei">調整</span></div></li>
   </ul>
 </div>
 
@@ -131,18 +134,18 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
   <div class="phase-range">Day 29〜40｜語順・前置詞＋冠詞・名詞（Unit 63〜67）＋2周目復習＋測定で締める</div>
   <div class="menu">🕐 <b>毎日90分</b>：マーフィー新規＋間違い印の2周目30分 → ALL IN ONE 例文5本＋<b>ディクテーション1文</b>30分 → 📓 <b>単語復習10分</b>：<b>昨日の新出語をテスト</b>（日本語→英語・隠して言えるか）＋マーフィー間違い直し・模試準備</div>
   <ul class="day-list">
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-29"><span class="vchk-mark"></span></label><span class="dnum">Day 29</span><div class="dbody">Unit <b>91〜92</b>（語順・頻度副詞）</div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-30"><span class="vchk-mark"></span></label><span class="dnum">Day 30</span><div class="dbody">Unit <b>101〜102</b>（at 8:00 / on Monday / from...to）</div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-31"><span class="vchk-mark"></span></label><span class="dnum">Day 31</span><div class="dbody">Unit <b>103〜104</b>（before/after・場所のin/at/on 1）</div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-32"><span class="vchk-mark"></span></label><span class="dnum">Day 32</span><div class="dbody">Unit <b>105〜106</b>（場所のin/at/on 2・to/in/at）</div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-33"><span class="vchk-mark"></span></label><span class="dnum">Day 33</span><div class="dbody">Unit <b>107</b>（next to/between/under）＋ 前置詞ブロック復習<span class="sub">選抜前半完了！🎉（残るは冠詞・名詞ブロック）</span></div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-34"><span class="vchk-mark"></span></label><span class="dnum">Day 34</span><div class="dbody">Unit <b>63〜64</b>（a/an・単数複数）<span class="sub">冠詞：数えられる名詞に a/the/-s を必ず付ける</span></div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-35"><span class="vchk-mark"></span></label><span class="dnum">Day 35</span><div class="dbody">調整日＋その週の単語まとめ再テスト（2回連続で言えた語は卒業）<span class="tag chousei">調整</span></div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-36"><span class="vchk-mark"></span></label><span class="dnum">Day 36</span><div class="dbody">2周目復習①（間違い印のユニットだけ）＋ Unit <b>65〜66</b>（数えられる/数えられない名詞）<span class="sub">冠詞：water/English は a も -s も付けない</span></div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-37"><span class="vchk-mark"></span></label><span class="dnum">Day 37</span><div class="dbody">2周目復習②（間違い印のユニット総ざらい）＋ ALL IN ONE 例文5本<span class="sub"><span class="tag nini">任意</span> ＋（任意）英検3級の練習問題をやるなら今日がおすすめ（Day 3 とは別の回 → 点数を比較しやすい）</span></div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-38"><span class="vchk-mark"></span></label><span class="dnum">Day 38</span><div class="dbody">2周目復習③＋ Unit <b>67</b>（a/anとthe）<span class="sub">冠詞：a=初めての1つ / the=お互い分かる特定の1つ</span></div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-39"><span class="vchk-mark"></span></label><span class="dnum">Day 39</span><div class="dbody">2周目復習④＋ 前置詞・冠詞の総ざらい<span class="sub"><span class="tag nini">任意</span> ＋（任意）診断テスト or 実力測定テストの再受験をやるなら今日がおすすめ（中盤 Day 20 前後にやっていれば前後比較できる）</span></div></li>
-    <li><label class="vchk"><input type="checkbox" data-vkey="day-40"><span class="vchk-mark"></span></label><span class="dnum">Day 40</span><div class="dbody">総仕上げ：秋の継続ルート決め＋<b>「夏にできるようになったこと」を自分の言葉で言う</b><span class="tag sokutei">測定</span></div></li>
+    <li data-day="29"><span class="dstate"></span><span class="dnum">Day 29</span><div class="dbody">Unit <b>91〜92</b>（語順・頻度副詞）</div></li>
+    <li data-day="30"><span class="dstate"></span><span class="dnum">Day 30</span><div class="dbody">Unit <b>101〜102</b>（at 8:00 / on Monday / from...to）</div></li>
+    <li data-day="31"><span class="dstate"></span><span class="dnum">Day 31</span><div class="dbody">Unit <b>103〜104</b>（before/after・場所のin/at/on 1）</div></li>
+    <li data-day="32"><span class="dstate"></span><span class="dnum">Day 32</span><div class="dbody">Unit <b>105〜106</b>（場所のin/at/on 2・to/in/at）</div></li>
+    <li data-day="33"><span class="dstate"></span><span class="dnum">Day 33</span><div class="dbody">Unit <b>107</b>（next to/between/under）＋ 前置詞ブロック復習<span class="sub">選抜前半完了！🎉（残るは冠詞・名詞ブロック）</span></div></li>
+    <li data-day="34"><span class="dstate"></span><span class="dnum">Day 34</span><div class="dbody">Unit <b>63〜64</b>（a/an・単数複数）<span class="sub">冠詞：数えられる名詞に a/the/-s を必ず付ける</span></div></li>
+    <li data-day="35"><span class="dstate"></span><span class="dnum">Day 35</span><div class="dbody">調整日＋その週の単語まとめ再テスト（2回連続で言えた語は卒業）<span class="tag chousei">調整</span></div></li>
+    <li data-day="36"><span class="dstate"></span><span class="dnum">Day 36</span><div class="dbody">2周目復習①（間違い印のユニットだけ）＋ Unit <b>65〜66</b>（数えられる/数えられない名詞）<span class="sub">冠詞：water/English は a も -s も付けない</span></div></li>
+    <li data-day="37"><span class="dstate"></span><span class="dnum">Day 37</span><div class="dbody">2周目復習②（間違い印のユニット総ざらい）＋ ALL IN ONE 例文5本<span class="sub"><span class="tag nini">任意</span> ＋（任意）英検3級の練習問題をやるなら今日がおすすめ（Day 3 とは別の回 → 点数を比較しやすい）</span></div></li>
+    <li data-day="38"><span class="dstate"></span><span class="dnum">Day 38</span><div class="dbody">2周目復習③＋ Unit <b>67</b>（a/anとthe）<span class="sub">冠詞：a=初めての1つ / the=お互い分かる特定の1つ</span></div></li>
+    <li data-day="39"><span class="dstate"></span><span class="dnum">Day 39</span><div class="dbody">2周目復習④＋ 前置詞・冠詞の総ざらい<span class="sub"><span class="tag nini">任意</span> ＋（任意）診断テスト or 実力測定テストの再受験をやるなら今日がおすすめ（中盤 Day 20 前後にやっていれば前後比較できる）</span></div></li>
+    <li data-day="40"><span class="dstate"></span><span class="dnum">Day 40</span><div class="dbody">総仕上げ：秋の継続ルート決め＋<b>「夏にできるようになったこと」を自分の言葉で言う</b><span class="tag sokutei">測定</span></div></li>
   </ul>
 </div>
 
@@ -179,27 +182,51 @@ function eng40TaskCounts() {
 </script>
 <script>
 (function () {
-  var PREFIX = 'eng40-done:';
+  var PREFIX = 'eng40-done:day-';
   var TPREFIX = 'eng40-task:';
-  var boxes = Array.prototype.slice.call(document.querySelectorAll('.vchk input[data-vkey]'));
-  var total = boxes.length;
+  var rows = Array.prototype.slice.call(document.querySelectorAll('ul.day-list li[data-day]'));
+  var total = rows.length;
   var textEl = document.getElementById('watch-text');
+  function pad2(n) { return (n < 10 ? '0' : '') + n; }
 
-  // ---- 部分達成インジケータ（📋手順書ページの項目チェックから算出）----
+  // 各Day行に「状態表示」を描画する（手動チェックは無し）。
+  // 状態は daily.html の項目チェック（eng40-task:）と自動連動フラグ（eng40-done:day-NN）から算出：
+  //   完了   = eng40-done:day-NN=1 または 必須ステップが全部（n>=M） → ✅＋薄sage背景
+  //   部分   = 必須ステップが1つ以上・全部でない（0<n<M）           → 「N/M」＋薄い帯
+  //   未着手 = n=0 かつ done フラグ無し                              → 何も塗らない
   function renderProgress() {
     var counts = eng40TaskCounts();
-    boxes.forEach(function (cb) {
-      var li = cb.closest('li');
-      var day = parseInt((cb.getAttribute('data-vkey') || '').replace('day-', ''), 10);
+    rows.forEach(function (li) {
+      var day = parseInt(li.getAttribute('data-day'), 10);
       if (!day) return;
       var m = ENG40_DAY_STEPS[day - 1] || 0;
       var n = Math.min(counts[day - 1], m);
-      var el = li.querySelector('.dprog');
-      if (!el) { el = document.createElement('span'); el.className = 'dprog'; li.appendChild(el); }
-      el.className = 'dprog' + (n >= m && m > 0 ? ' full' : (n > 0 ? ' part' : ''));
-      el.textContent = n > 0 ? (n + '/' + m) : '';
-      el.title = n > 0 ? ('📋今日やることページで ' + n + ' / ' + m + ' 項目チェック済み') : '';
-      if (n > 0 && n < m) li.classList.add('partial'); else li.classList.remove('partial');
+      var doneFlag = localStorage.getItem(PREFIX + pad2(day)) === '1';
+      var done = doneFlag || (m > 0 && n >= m);
+
+      var st = li.querySelector('.dstate');
+      var pr = li.querySelector('.dprog');
+      if (!pr) { pr = document.createElement('span'); pr.className = 'dprog'; li.appendChild(pr); }
+
+      if (done) {
+        li.classList.add('watched'); li.classList.remove('partial');
+        if (st) { st.className = 'dstate done'; st.textContent = '✅'; }
+        pr.className = 'dprog full';
+        pr.textContent = (m > 0 ? (m + '/' + m) : '');
+        pr.title = '完了（📋今日やることの必須項目が全部チェック済み）';
+      } else if (n > 0) {
+        li.classList.add('partial'); li.classList.remove('watched');
+        if (st) { st.className = 'dstate blank'; st.textContent = ''; }
+        pr.className = 'dprog part';
+        pr.textContent = n + '/' + m;
+        pr.title = '📋今日やることページで ' + n + ' / ' + m + ' 項目チェック済み';
+      } else {
+        li.classList.remove('watched'); li.classList.remove('partial');
+        if (st) { st.className = 'dstate blank'; st.textContent = ''; }
+        pr.className = 'dprog';
+        pr.textContent = '';
+        pr.title = '';
+      }
     });
     return counts;
   }
@@ -210,28 +237,33 @@ function eng40TaskCounts() {
     textEl.innerHTML = '✅ 完了 <strong>' + doneN + ' / ' + total + '</strong> 日（着手 ' + startedN + ' 日）';
   }
 
-  boxes.forEach(function (cb) {
-    var key = PREFIX + cb.getAttribute('data-vkey');
-    var li = cb.closest('li');
-    if (localStorage.getItem(key) === '1') { cb.checked = true; li.classList.add('watched'); }
-    cb.addEventListener('change', function () {
-      if (cb.checked) { localStorage.setItem(key, '1'); li.classList.add('watched'); }
-      else { localStorage.removeItem(key); li.classList.remove('watched'); }
-      update();
+  // 各Day行タップ → daily.html の同じ日の手順へ（ここでは直接チェックしない導線）
+  rows.forEach(function (li) {
+    var day = parseInt(li.getAttribute('data-day'), 10);
+    if (!li.querySelector('.godaily')) {
+      var arw = document.createElement('span');
+      arw.className = 'godaily'; arw.textContent = '›'; arw.setAttribute('aria-hidden', 'true');
+      li.appendChild(arw);
+    }
+    li.setAttribute('role', 'link');
+    li.setAttribute('tabindex', '0');
+    li.setAttribute('title', 'Day ' + day + ' の手順（📋今日やること）を開く');
+    function go() { location.href = './daily.html#day-' + day; }
+    li.addEventListener('click', go);
+    li.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
     });
   });
 
+  // 全リセット：40日の進捗（各日の項目チェック eng40-task: と完了フラグ eng40-done:）だけを消す。
+  // 単語(vocab)・スコア(score)・ユニット(unit)・章(ch)・音(ph)・開始日(start) は消さない（他ページの実データ巻き添え防止）。
   document.getElementById('reset-btn').addEventListener('click', function () {
-    if (!confirm('40日チェックと、📋手順書ページの項目チェックを全部リセットします。いいですか？')) return;
-    boxes.forEach(function (cb) {
-      localStorage.removeItem(PREFIX + cb.getAttribute('data-vkey'));
-      cb.checked = false; cb.closest('li').classList.remove('watched');
-    });
-    // 項目チェック（eng40-task:）も一緒に消す（残すと部分達成表示だけ生き残るため）
+    if (!confirm('40日の進捗（各日の項目チェックと完了状態）を全部リセットします。\n※単語カード・テストのスコア・教材ルート（ユニット）の記録は消しません。\nいいですか？')) return;
     var kill = [], i;
     for (i = 0; i < localStorage.length; i++) {
       var k = localStorage.key(i);
-      if (k && k.indexOf(TPREFIX) === 0) kill.push(k);
+      if (!k) continue;
+      if (k.indexOf('eng40-done:') === 0 || k.indexOf(TPREFIX) === 0) kill.push(k);
     }
     kill.forEach(function (k) { localStorage.removeItem(k); });
     renderProgress();
