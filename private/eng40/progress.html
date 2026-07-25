@@ -109,7 +109,7 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 <!-- ① Day達成カレンダー -->
 <div class="step-section">
   <h2>🗓 Day達成カレンダー</h2>
-  <div class="section-hint">「📋 手順書」ページの項目チェックがそのまま塗られます（濃い緑＝全部できた日／薄い緑＝一部できた日）｜📏=必須の測定日（Day 1・40）・🔄=調整日｜診断テスト・英検は任意なので分母に入りません</div>
+  <div class="section-hint">「📋 今日やること」ページの項目チェックがそのまま塗られます（濃い緑＝全部できた日／薄い緑＝一部できた日）｜📏=必須の測定日（Day 1・40）・🔄=調整日｜診断テスト・英検は任意なので分母に入りません</div>
   <div id="cal-area"></div>
 </div>
 
@@ -310,7 +310,7 @@ function buildVocabSeries(words, today) {
     var area = document.getElementById('cal-area');
     if (!startOk && startedCount === 0) {
       area.innerHTML = '<div class="empty-state"><span class="big">まだ足あとがありません</span>' +
-        '「<a href="./program.html">✅ 40日</a>」ページで開始日を入れて、「<a href="./daily.html">📋 手順書</a>」で今日の項目にチェックを付けるとここが塗られていきます</div>';
+        '「<a href="./program.html">✅ 40日</a>」ページで開始日を入れて、「<a href="./daily.html">📋 今日やること</a>」で今日の項目にチェックを付けるとここが塗られていきます</div>';
       return;
     }
     var html = '<div class="day-cal">';

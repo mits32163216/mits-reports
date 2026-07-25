@@ -71,7 +71,7 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 <body>
 
 <h1>✅ 40日デイリーチェック</h1>
-<div class="tagline">項目ごとのチェックは<a href="./daily.html">📋 手順書</a>ページで。全部できた日はここが自動で✅になります ─ 月〜土で進む・日曜は調整日 ─ 崩れた日は「15分デー」でOK（ゼロの日だけ作らない）</div>
+<div class="tagline">項目ごとのチェックは<a href="./daily.html">📋 今日やること</a>ページで。全部できた日はここが自動で✅になります ─ 月〜土で進む・日曜は調整日 ─ 崩れた日は「15分デー」でOK（ゼロの日だけ作らない）</div>
 
 <div class="start-date-box">
   <label for="start-date">📅 開始日</label>
@@ -198,7 +198,7 @@ function eng40TaskCounts() {
       if (!el) { el = document.createElement('span'); el.className = 'dprog'; li.appendChild(el); }
       el.className = 'dprog' + (n >= m && m > 0 ? ' full' : (n > 0 ? ' part' : ''));
       el.textContent = n > 0 ? (n + '/' + m) : '';
-      el.title = n > 0 ? ('📋手順書ページで ' + n + ' / ' + m + ' 項目チェック済み') : '';
+      el.title = n > 0 ? ('📋今日やることページで ' + n + ' / ' + m + ' 項目チェック済み') : '';
       if (n > 0 && n < m) li.classList.add('partial'); else li.classList.remove('partial');
     });
     return counts;
