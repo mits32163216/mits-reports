@@ -88,7 +88,7 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
   <div class="phase-range">Day 1〜14｜フォニックスで音を作りながら、現在形→過去形へ</div>
   <div class="menu">🕐 <b>毎日90分</b>：フォニックス15分＝ayane実践4分＋ちぐさ理論編の今日の区間＋マネ直し（<b>必ず声に出す</b>）→ マーフィー2ユニット40分（左を読む→右を解く→丸付け・間違いに印）→ ALL IN ONE Ch.1〜3を読む15分 → 今日の新出語（マーフィー・ALL IN ONEで知らなかった語）を品詞別ノートの今日の欄に書く（目安8〜12語）→ 📓 <b>単語復習10分</b>：<b>昨日の新出語をテスト</b>（日本語→英語・隠して言えるか）＋マーフィー間違い直し　※例文の暗唱はまだやらない</div>
   <ul class="day-list">
-    <li data-day="01"><span class="dstate"></span><span class="dnum">Day 1</span><div class="dbody">測定日：<b>実力測定テスト①文法・②リスニング</b>（印刷済みのプリント）＋フォニックス実践1本<span class="tag sokutei">測定</span><span class="sub">結果は「📊 測る」に記録 → 最適化マップでスタート速度を決める／マーフィー巻末の診断テストは<b>任意</b>（やるなら中盤 Day 20 前後に1回・Day 39 にもう1回で前後比較）</span></div></li>
+    <li data-day="01"><span class="dstate"></span><span class="dnum">Day 1</span><div class="dbody">測定日：<b>実力測定テスト①文法・②リスニング</b>（印刷済みのプリント）<span class="tag sokutei">測定</span><span class="sub">結果は「📊 測る」に記録 → 最適化マップでスタート速度を決める／マーフィー巻末の診断テストは<b>任意</b>（やるなら中盤 Day 20 前後に1回・Day 39 にもう1回で前後比較）</span></div></li>
     <li data-day="02"><span class="dstate"></span><span class="dnum">Day 2</span><div class="dbody">マーフィー <b>Unit 1〜2</b>（am/is/are）＋ ALL IN ONE <b>Ch.1 品詞</b>を読み始める<span class="sub">品詞（名詞・形容詞・副詞）はこの夏の合言葉</span></div></li>
     <li data-day="03"><span class="dstate"></span><span class="dnum">Day 3</span><div class="dbody">マーフィー <b>Unit 3〜4</b>（現在進行形・進行形の疑問文）＋ Ch.1 つづき<span class="sub"><span class="tag nini">任意</span> ＋（任意）英検3級の練習問題をやるなら今日がおすすめ（eiken.or.jp の過去問・無料／点数は「📊 測る」へ）</span></div></li>
     <li data-day="04"><span class="dstate"></span><span class="dnum">Day 4</span><div class="dbody">Unit <b>5〜6</b>（一般動詞・一般動詞の否定）＋ Ch.1 つづき</div></li>
@@ -159,7 +159,7 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 <script>
 /* Day別の必須ステップ数（📋手順書ページの手順項目のうち「任意」を除いた数）
  * daily.html の data-tkey="dNN-S" と対応。任意ステップは分母に入れない＝飛ばしても完了になる。 */
-var ENG40_DAY_STEPS = [3,5,5,5,5,5,4,5,5,5,5,5,5,5,5,5,5,5,5,5,3,5,5,5,5,5,5,3,5,5,5,5,5,5,3,5,5,5,4,4];
+var ENG40_DAY_STEPS = [2,5,5,5,5,5,4,5,5,5,5,5,5,5,5,5,5,5,5,5,3,5,5,5,5,5,5,3,5,5,5,5,5,5,3,5,5,5,4,4];
 var ENG40_OPT_TASKS = { 'd01-4':1, 'd03-6':1, 'd37-6':1, 'd39-4':1 };
 /* localStorage を1回だけ走査して Day別の「チェック済み必須ステップ数」を返す（[0]=Day1） */
 function eng40TaskCounts() {

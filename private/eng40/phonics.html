@@ -250,11 +250,26 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
   var phToTask = {};
   PH_THEORY_MAP.forEach(function (m) { phToTask[m.p] = m.t; });
 
+  // ＜ayane実践 双方向連動＞ phonics 実践編(phx-M) ⇔ daily①(dNN-1)：初回登場Dayのみ1:1（daily.html と同一表）
+  //  phx-M が daily で最初に登場する Day を機械抽出（phx-1=Day2/phx-2=Day3/phx-3=Day4/phx-4=Day5）。
+  //  ※Day1 は測定日で ayane 実践なし。A〜G の初回は Day2（d02-1）。
+  //  2周目以降の ayane（同一動画の2回目以降の登場Day）は連動対象外＝この表に入れない。
+  var AYANE_MAP = [
+    {t:"d02-1",p:"phx-1"},{t:"d03-1",p:"phx-2"},{t:"d04-1",p:"phx-3"},{t:"d05-1",p:"phx-4"}
+  ];
+  var phxToTask = {};
+  AYANE_MAP.forEach(function (m) { phxToTask[m.p] = m.t; });
+
   // 読込時 OR-merge リコンサイル（追加方向のみ・チェックを消さない）。チップ描画前に ph 側 LS を整えておく
   PH_THEORY_MAP.forEach(function (m) {
     var phOn = lsOn(PREFIX + m.p), taskOn = lsOn(TPREFIX + m.t);
     if (taskOn && !phOn) localStorage.setItem(PREFIX + m.p, '1');
     else if (phOn && !taskOn) localStorage.setItem(TPREFIX + m.t, '1');
+  });
+  AYANE_MAP.forEach(function (m) {
+    var phxOn = lsOn(PREFIX + m.p), taskOn = lsOn(TPREFIX + m.t);
+    if (taskOn && !phxOn) localStorage.setItem(PREFIX + m.p, '1');
+    else if (phxOn && !taskOn) localStorage.setItem(TPREFIX + m.t, '1');
   });
 
   var chips = Array.prototype.slice.call(document.querySelectorAll('label.uchk input[data-ukey]'));
@@ -279,6 +294,11 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
       if (phToTask[uk]) {
         var tk = TPREFIX + phToTask[uk];
         if (cb.checked) localStorage.setItem(tk, '1'); else localStorage.removeItem(tk);
+      }
+      // 実践編チップ（phx-M）なら daily①タスク eng40-task:dNN-1（初回登場Dayのみ）へ波及（1:1）
+      if (phxToTask[uk]) {
+        var xtk = TPREFIX + phxToTask[uk];
+        if (cb.checked) localStorage.setItem(xtk, '1'); else localStorage.removeItem(xtk);
       }
       update();
     });
