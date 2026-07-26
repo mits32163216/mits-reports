@@ -65,31 +65,33 @@
   }
   .intro-note strong { color: var(--navy); }
 
-  section { margin-bottom: 32px; }
-  h2 {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--navy);
+  /* ===== 更新履歴目次（新→古） ===== */
+  nav.update-toc {
+    background: white;
+    border: 1px solid var(--gold);
     border-left: 5px solid var(--gold);
-    padding-left: 14px;
-    margin-bottom: 14px;
-    line-height: 1.4;
+    border-radius: 6px;
+    padding: 18px 24px;
+    margin-bottom: 32px;
   }
-  h3 {
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--navy);
-    margin: 20px 0 10px;
-  }
+  nav.update-toc .toc-title { font-size: 12px; color: var(--gold); font-weight: 700; letter-spacing: 0.1em; margin-bottom: 10px; }
+  nav.update-toc .toc-sub { font-size: 12px; color: var(--gray); margin-bottom: 12px; line-height: 1.6; }
+  nav.update-toc ol { list-style: none; padding-left: 0; margin: 0; counter-reset: toc-counter; }
+  nav.update-toc li { counter-increment: toc-counter; padding: 8px 12px; border-bottom: 1px solid var(--line); display: flex; align-items: baseline; gap: 12px; }
+  nav.update-toc li:last-child { border-bottom: none; }
+  nav.update-toc li::before { content: counter(toc-counter); background: var(--navy); color: var(--ivory); font-size: 11px; font-weight: 700; width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  nav.update-toc .toc-date { font-size: 13px; color: var(--gold); font-weight: 700; letter-spacing: 0.05em; min-width: 100px; }
+  nav.update-toc .toc-label { font-size: 14px; color: var(--navy); font-weight: 600; }
+  nav.update-toc .toc-desc { font-size: 12px; color: var(--gray); margin-left: auto; text-align: right; }
+  nav.update-toc a { color: var(--navy); text-decoration: none; display: contents; }
+  nav.update-toc li:hover { background: var(--ivory); }
+
+  section { margin-bottom: 32px; }
+  h2 { font-size: 20px; font-weight: 700; color: var(--navy); border-left: 5px solid var(--gold); padding-left: 14px; margin-bottom: 14px; line-height: 1.4; }
+  h3 { font-size: 17px; font-weight: 700; color: var(--navy); margin: 20px 0 10px; }
   p { margin-bottom: 12px; }
 
-  .card {
-    background: white;
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    padding: 18px 22px;
-    margin-bottom: 12px;
-  }
+  .card { background: white; border: 1px solid var(--line); border-radius: 4px; padding: 18px 22px; margin-bottom: 12px; }
   .card.gold { border-left: 5px solid var(--gold); }
   .card.ok { border-left: 5px solid var(--ok); }
   .card.warn { border-left: 5px solid var(--warn); }
@@ -118,18 +120,8 @@
   ul, ol { padding-left: 22px; margin-bottom: 12px; }
   li { margin-bottom: 6px; }
 
-  .three-col {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin: 16px 0;
-  }
-  .company {
-    background: white;
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    padding: 16px;
-  }
+  .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+  .company { background: white; border: 1px solid var(--line); border-radius: 4px; padding: 16px; }
   .company.rec { border-top: 4px solid var(--ok); }
   .company.watch { border-top: 4px solid var(--warn); }
   .company.skip { border-top: 4px solid var(--ng); }
@@ -141,28 +133,20 @@
   .company.skip .judge { color: var(--ng); }
   .company .reason { font-size: 12px; line-height: 1.6; color: var(--ink); }
 
-  .timeline-box {
-    background: white;
-    border: 1px solid var(--line);
+  .version-banner {
+    padding: 18px 22px;
+    margin-bottom: 20px;
     border-radius: 4px;
-    padding: 16px 20px;
-    margin-bottom: 14px;
-    border-left: 4px solid var(--gold);
   }
-  .timeline-box .when {
-    font-size: 12px;
-    color: var(--gold);
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    margin-bottom: 4px;
-  }
-  .timeline-box .what {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--navy);
-    margin-bottom: 6px;
-  }
-  .timeline-box p { font-size: 14px; margin-bottom: 8px; }
+  .version-banner.latest { background: #fdecec; border: 2px solid var(--ng); border-left: 6px solid var(--ng); }
+  .version-banner.middle { background: #fff8eb; border: 1px solid var(--gold); border-left: 5px solid var(--gold); }
+  .version-banner.initial { background: #f4efe4; border: 1px solid var(--gray); border-left: 5px solid var(--gray); }
+  .version-banner .badge { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 6px; }
+  .version-banner.latest .badge { color: var(--ng); }
+  .version-banner.middle .badge { color: var(--gold); }
+  .version-banner.initial .badge { color: var(--gray); }
+  .version-banner .title-big { font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .version-banner .desc { font-size: 13px; color: var(--ink); line-height: 1.7; }
 
   table.matrix {
     width: 100%;
@@ -177,18 +161,8 @@
     text-align: left;
     vertical-align: top;
   }
-  table.matrix thead th {
-    background: var(--navy);
-    color: var(--ivory);
-    font-weight: 700;
-    text-align: center;
-  }
-  table.matrix tbody td:first-child {
-    background: var(--ivory);
-    font-weight: 600;
-    color: var(--navy);
-    width: 30%;
-  }
+  table.matrix thead th { background: var(--navy); color: var(--ivory); font-weight: 700; text-align: center; }
+  table.matrix tbody td:first-child { background: var(--ivory); font-weight: 600; color: var(--navy); width: 30%; }
 
   footer.site-foot {
     background: var(--ivory);
@@ -201,11 +175,9 @@
     line-height: 1.8;
   }
   footer.site-foot strong { color: var(--navy); }
-  footer.site-foot a {
-    color: var(--navy-light);
-    text-decoration: none;
-    border-bottom: 1px dotted var(--navy-light);
-  }
+  footer.site-foot a { color: var(--navy-light); text-decoration: none; border-bottom: 1px dotted var(--navy-light); }
+
+  .anchor-spacer { scroll-margin-top: 70px; }
 
   @media (max-width: 720px) {
     body { font-size: 15px; padding: 12px 8px; }
@@ -214,6 +186,8 @@
     .three-col { grid-template-columns: 1fr; }
     table.matrix { font-size: 12px; }
     table.matrix th, table.matrix td { padding: 8px 10px; }
+    nav.update-toc li { flex-direction: column; align-items: flex-start; gap: 4px; padding: 10px 8px; }
+    nav.update-toc .toc-desc { margin-left: 0; text-align: left; }
   }
   .back-to-list {
     position: fixed;
@@ -238,11 +212,12 @@
 <div class="container">
 
   <header class="site-head">
-    <span class="tag">EASY VERSION — 初心者向け</span>
+    <span class="tag">EASY VERSION — 初心者向け・更新履歴付き</span>
     <h1>【高校生でもわかる】<br>3 社の AI 開発ツール比較</h1>
     <div class="sub">
       Claude Code（Anthropic） / Codex（OpenAI） / Antigravity（Google）<br>
       発行：2026-07-26 ／ 対象範囲：原本の 3 回目追記（2026-07-06）まで<br>
+      構成：<strong style="color:#f7f3ea;">下段に更新履歴目次 → 新しい追記が上・古い初版が下</strong><br>
       原本（専門用語ガチ版）：<a href="./2026-06-21_v31_codex_antigravity.html">v3.1 同等運用可否レポート</a>
     </div>
   </header>
@@ -250,12 +225,144 @@
   <div class="intro-note">
     <strong>このページは何？</strong><br>
     Mits が「複数の AI ロボット担当者をチームみたいに使う」仕組みを、<strong>3 社のツール</strong>（Anthropic / OpenAI / Google）で比較したレポートの、<strong>専門用語を全部かみ砕いた解説版</strong>です。<br>
-    元のレポートは「Agent Teams」「subagent」「spawn depth」等の用語で書かれていますが、このページでは <strong>会社や部活の例え</strong>に置き換えて説明します。<br>
+    原本レポートは「Agent Teams」「subagent」「spawn depth」等の用語で書かれていますが、このページでは <strong>会社や部活の例え</strong>に置き換えて説明します。<br>
     <strong>対象範囲</strong>：2026-06-21 発行の初版 → 6/30 追記 → 7/06 追記まで。<br>
     （7/26 追記の 4 回目分は次バージョンで反映します。）
   </div>
 
+  <!-- ===== 更新履歴目次（新→古） ===== -->
+  <nav class="update-toc" aria-label="更新履歴目次">
+    <div class="toc-title">📚 更新履歴（新しい追記が上・古い初版が下）</div>
+    <div class="toc-sub">クリックで各時点セクションへジャンプ。判断の変化過程が時系列で追える構成（原本と同じ並び）。</div>
+    <ol>
+      <li>
+        <a href="#update-2026-07-06">
+          <span class="toc-date">2026-07-06</span>
+          <span class="toc-label">3 回目 追記（v3.2 経路変更・転換点）</span>
+          <span class="toc-desc">試作段階の課長機能で 5 件バグ検出 → 撤退</span>
+        </a>
+      </li>
+      <li>
+        <a href="#update-2026-06-30">
+          <span class="toc-date">2026-06-30</span>
+          <span class="toc-label">2 回目 追記（9 日後追跡）</span>
+          <span class="toc-desc">Codex が追いかけてきた・Antigravity 判定保留に</span>
+        </a>
+      </li>
+      <li>
+        <a href="#initial-2026-06-21">
+          <span class="toc-date">2026-06-21</span>
+          <span class="toc-label">1 回目 初版</span>
+          <span class="toc-desc">Claude Code 一強・25 人チームの説明 + 7 機能 + 3 社対応表</span>
+        </a>
+      </li>
+      <li>
+        <a href="#glossary">
+          <span class="toc-date">用語辞典</span>
+          <span class="toc-label">全時点共通・原本を読むときに使う</span>
+          <span class="toc-desc">20 語の専門用語 → 比喩対応表</span>
+        </a>
+      </li>
+    </ol>
+  </nav>
+
+  <!-- ============================================================ -->
+  <!-- ===== 3回目：2026-07-06 追記（最新・最上）                    ===== -->
+  <!-- ============================================================ -->
+
+  <div id="update-2026-07-06" class="anchor-spacer"></div>
+
   <section>
+    <div class="version-banner latest">
+      <div class="badge">UPDATE — 転換点（15 日後追記・3 回目）</div>
+      <div class="title-big">2026-07-06 追記：Claude Code 内で経路変更（v3.1 → v3.2）</div>
+      <div class="desc">Mits が実際に Claude Code の「試作段階の課長機能」を本番で使ってみたら、<strong>5 つの重大な不具合</strong>が同時発生。「試作段階の課長機能はもう使わない」と方針転換。25 人チームの概念は残したまま、実装だけシンプルにした。</div>
+    </div>
+
+    <h2>今日の重大変化：5 つの不具合が同時発生</h2>
+    <div class="card ng">
+      <ul>
+        <li>「秘書リーダーが課長に仕事を振ったのに、課長が動かない」</li>
+        <li>「課長 → 課長の直接連絡の中身が届かない」</li>
+        <li>「担当者や課長が秘書リーダーに『できました』と報告しても、秘書リーダーが読まないで放置される」</li>
+        <li>「担当者が『終わりました』と報告しないで放置される」</li>
+        <li>「多層で仕事を振ると、社長が自分でやった方が早い状態になる」</li>
+      </ul>
+      <p style="font-size:13px; margin-top:8px;">→ 5 つとも、Mits の本業運営に耐える水準ではなかった。</p>
+    </div>
+
+    <h2>Mits の方針転換：v3.1 → v3.2</h2>
+    <div class="card gold">
+      <p><strong>試作段階の「課長機能」を退避 → 秘書リーダーが直接、担当者を呼び出す方式に変更。</strong></p>
+      <p>25 人チームの概念（社長・秘書・4 課長・19 担当）は残したまま、<strong>実装だけシンプルにした</strong>。これを「v3.2」と呼ぶ。</p>
+      <div class="metaphor">
+        課長を挟むと連絡が詰まるから、<strong>秘書リーダーが直接担当者に電話する</strong>体制に変えた。<br>
+        組織図は変わっていない。「上司→部下→孫請け」の 3 階層を実装する方法だけ変えた。
+      </div>
+    </div>
+
+    <h2>他 2 社の判定は変わらない</h2>
+    <div class="card">
+      <p>今回の変更は <strong>Claude Code 内でどう使うか</strong>の話。「Claude Code が一番いい」「Codex は様子見」「Antigravity は不採用」の 3 社比較結論は変わらない。</p>
+      <p>変わったのは：<strong>「Claude Code の中で、試作段階の課長機能を使うか、秘書が直接担当者を呼ぶか」の実装選択</strong>。</p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- ===== 2回目：2026-06-30 追記                                  ===== -->
+  <!-- ============================================================ -->
+
+  <div id="update-2026-06-30" class="anchor-spacer"></div>
+
+  <section style="margin-top:48px; padding-top:32px; border-top:3px double var(--gold);">
+    <div class="version-banner middle">
+      <div class="badge">UPDATE — 9 日後追記・2 回目</div>
+      <div class="title-big">2026-06-30 追記：Codex が追いかけてきた</div>
+      <div class="desc">初版から 9 日で、<strong>Codex の正式版に「課長同士の連絡機能」が入った</strong>ことが判明。ただし「試作段階」と「正式版に含まれた」は違うので、慎重に事実だけ記録。同時に Antigravity は「不採用」から「判定保留」に格下げ。</div>
+    </div>
+
+    <h2>Codex の変化</h2>
+    <div class="card warn">
+      <p><strong>Codex の正式版に「課長同士の連絡機能（3 段階の設定つき）」が組み込まれた</strong>。</p>
+      <p>ただし注意：これは「機能が入った」であって、<strong>「本番で使える」の意味ではない</strong>。試作段階でリリースされた機能が、正式版パッケージに含まれた、というだけ。</p>
+      <div class="metaphor">
+        新しい機能が出た瞬間に「もう使える！」と飛びつくと事故る。<br>
+        「機能が入った」≠「本番で使える」の区別が大事。
+      </div>
+      <p>→ Codex は「様子見」から「<strong>実機検証してみる価値が出た</strong>」段階に前進。ただし本番運用実績はまだない。</p>
+    </div>
+
+    <h2>Antigravity の判定変更</h2>
+    <div class="card">
+      <p>初版で「不採用」と書いた理由の一つ「Antigravity は不具合の記述が公式ドキュメントにない」を、6/30 時点で見直し。</p>
+      <p><strong>「不採用（＝もう見ない）」から「判定保留（＝様子見に戻す）」に格下げ</strong>。「不採用」は「不要」と読めるが、実態は「必要機能があるか無いかを、公式ドキュメントから確認できない」だけ。</p>
+      <div class="metaphor">
+        「あの店には売ってない」と断言したけど、実は「あるかないか店員に聞いてない」だけだった。<br>
+        → 「売ってない」は撤回して「未確認」に戻す。
+      </div>
+    </div>
+
+    <h2>Mits 実体験の話</h2>
+    <div class="card">
+      <p>Mits が 6/30 に「Antigravity IDE をダウンロードして、Claude の作業フォルダを読み込ませたら『複製できてしまった』」と報告。</p>
+      <p>この「複製できた」の正体が何か（テキストとして見えただけ？ 実際に AI が動いた？）は<strong>要確認</strong>とされた。<br>
+      → 4 回目追記で正体が確定します（次バージョンで反映）。</p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- ===== 1回目：2026-06-21 初版（最古・最下）                    ===== -->
+  <!-- ============================================================ -->
+
+  <div id="initial-2026-06-21" class="anchor-spacer"></div>
+
+  <section style="margin-top:48px; padding-top:32px; border-top:3px double var(--gray);">
+    <div class="version-banner initial">
+      <div class="badge">INITIAL VERSION — 1 回目・初版（発行日）</div>
+      <div class="title-big">2026-06-21 初版：Claude Code だけが 7 機能を満たしていた</div>
+      <div class="desc">3 社を比較して、Mits の 25 人チーム構想を実装できるのは <strong>Claude Code だけ</strong>と結論。以下 4 章で「25 人チーム構造 → なぜ 3 社比較 → 7 機能 → 3 社対応表 → 結論」を順に説明。</div>
+    </div>
+
     <h2>0. まず前提：Mits が何をやろうとしてるか</h2>
     <p>Mits は AI を「1 匹の便利ツール」として使うのではなく、<strong>複数の AI ロボット担当者を組織してチームで運営</strong>しようとしています。</p>
 
@@ -267,18 +374,16 @@
     </div>
 
     <div class="card gold">
-      <strong>25 人チームの内訳</strong>
+      <strong>25 名チームの内訳</strong>
       <ul>
         <li><strong>社長</strong>：Mits（人間・最終決定者）</li>
         <li><strong>秘書リーダー（参謀）</strong>：メイン AI。仕事を課長に振る取次役</li>
         <li><strong>課長 4 人</strong>：営業攻撃 / 営業サポート / 開発攻撃 / 開発サポートの 4 部門長（AI）</li>
         <li><strong>担当者 19 人</strong>：課長の下で実務を回す AI（メルマガ担当・動画担当・経理担当…）</li>
       </ul>
-      <p style="font-size:12px; color:var(--gray); margin-top:8px;">合計 25 人（Mits + 秘書 + 4 課長 + 19 担当者）。全員 AI ロボットで、Mits の指示で動く。</p>
+      <p style="font-size:12px; color:var(--gray); margin-top:8px;">合計 25 名（Mits + 秘書 1 + 課長 4 + 担当 19 = 25）。全員 AI ロボットで、Mits の指示で動く。</p>
     </div>
-  </section>
 
-  <section>
     <h2>1. なぜ 3 社を比較するの？</h2>
     <p>Mits の「AI 会社」を実装するツールとして、<strong>3 社のプラットフォーム</strong>が候補にあります。</p>
 
@@ -308,9 +413,7 @@
       3 社とも AI 開発ツールを出してるけど、<strong>Mits の 25 人チーム構想を実装できるかは別問題</strong>。<br>
       このレポートは「25 人チームを維持するのに、どの会社のツールが向いてるか」を判定してる。
     </div>
-  </section>
 
-  <section>
     <h2>2. 25 人チームに必要な 7 つの機能</h2>
     <p>Mits の 25 人チームを回すには、AI ツール側に <strong>7 つの機能</strong>が必要。それぞれが何を意味するか、比喩で説明します。</p>
 
@@ -371,9 +474,7 @@
         これがないと AI が延々と動き続けてお金がかかる。
       </div>
     </div>
-  </section>
 
-  <section>
     <h2>3. 3 社の対応状況（2026-06-21 初版時点）</h2>
     <p>7 つの機能を 3 社で比較すると、こう↓（下の表は<strong>初版 6/21 時点の判定</strong>。6/30・7/06 追記で一部変わっている項目は⚙️注釈付き）</p>
 
@@ -391,7 +492,7 @@
         <tr><td>② ルールブック自動読込</td><td>✅ できる</td><td>✅ できる</td><td>✅ できる（一番強い）</td></tr>
         <tr><td>③ 3 階層 上司→部下→孫請け</td><td>✅ できる</td><td>⚠️ 詳細不明</td><td>❌ 禁止（と当時書いてあった）</td></tr>
         <tr><td>④ チーム名簿の保存</td><td>✅ できる</td><td>⚠️ まだ機能なし</td><td>❌ できない</td></tr>
-        <tr><td>⑤ 課長同士の直接連絡</td><td>✅ できる（試作段階）⚙️ 7/06 で 5 件複合バグ検出→撤退（§4 3 回目参照）</td><td>⚠️ 開発中で不安定</td><td>❌ 設計思想で禁止 ⚙️ 4 回目で「これは事実誤認」と判明予告</td></tr>
+        <tr><td>⑤ 課長同士の直接連絡</td><td>✅ できる（試作段階）⚙️ 7/06 で 5 件複合バグ検出→撤退（3 回目参照）</td><td>⚠️ 開発中で不安定</td><td>❌ 設計思想で禁止 ⚙️ 4 回目で「これは事実誤認」と判明予告</td></tr>
         <tr><td>⑥ 共有ホワイトボード</td><td>✅ できる</td><td>✅ できる</td><td>❌ できない</td></tr>
         <tr><td>⑦ 終了ルール</td><td>✅ ちゃんとしてる</td><td>✅ ちゃんとしてる</td><td>⚠️ 時間切れで自動終了のみ</td></tr>
       </tbody>
@@ -405,71 +506,35 @@
       → だから Mits は「<strong>2026-06-21 時点で 3 社中 Claude Code だけが 7 機能を満たしていた</strong>」と判定。「Claude Code 一本で運営、Codex は様子見、Antigravity は今回不採用」と決めた。<br>
       <em>※ この判定は 2026-06-21 時点。以後 6/30・7/06 追記で状況が動き、7/26 の 4 回目追記で <strong>Antigravity の判定根拠の一部が事実誤認</strong>と判明する（次バージョンで扱う）。</em>
     </div>
-  </section>
 
-  <section>
-    <h2>4. 時系列で何が起きたか（発行 + 2 回追記 = 計 3 版の経緯）</h2>
-    <p>このレポートは <strong>1 回書いて終わり</strong>じゃなくて、発行後 9 日・15 日で <strong>追記を 2 回</strong>加えて <strong>判断の変化を記録</strong>してます（初版含めて計 3 版）。<br>「時代が動くから、判断も動く」。それを履歴で見せる構造。</p>
-
-    <div class="timeline-box">
-      <div class="when">1 回目 ── 2026-06-21（発行日）</div>
-      <div class="what">初版：Claude Code 圧勝・Codex は様子見・Antigravity は不採用</div>
-      <p>3 社を比較して、Mits の 25 人チーム構想を実装できるのは <strong>Claude Code だけ</strong>と結論。他 2 社は当時の機能では届いてなかった。</p>
-    </div>
-
-    <div class="timeline-box">
-      <div class="when">2 回目 ── 2026-06-30（9 日後追記）</div>
-      <div class="what">Codex に重大変化 → 追いかけてきた</div>
-      <p>初版から 9 日で、<strong>Codex の正式版に「課長同士の連絡機能」が入った</strong>ことが判明。ただし「試作段階」と「正式版に含まれた」は違うので、慎重に事実だけ記録。</p>
-      <div class="metaphor">
-        新しい機能が出た瞬間に「もう使える！」と飛びつくと事故る。<br>
-        「機能が入った」≠「本番で使える」の区別が大事。
-      </div>
-      <p>この時点で <strong>Antigravity は「判定保留」</strong>に格下げ（「もう見ない」→「様子見に戻す」）。</p>
-    </div>
-
-    <div class="timeline-box">
-      <div class="when">3 回目 ── 2026-07-06（15 日後追記・転換点）</div>
-      <div class="what">Claude Code 内で経路変更（v3.1 → v3.2）</div>
-      <p>Mits が実際に Claude Code の「試作段階の課長機能」を本番で使ってみたら、<strong>5 つの重大な不具合</strong>が同時発生。</p>
-      <ul>
-        <li>「秘書リーダーが課長に仕事を振ったのに、課長が動かない」</li>
-        <li>「課長 → 課長の直接連絡の中身が届かない」</li>
-        <li>「担当者や課長が秘書リーダーに『できました』と報告しても、秘書リーダーが読まないで放置される」</li>
-        <li>「担当者が『終わりました』と報告しないで放置される」</li>
-        <li>「多層で仕事を振ると、社長が自分でやった方が早い状態になる」</li>
-      </ul>
-      <p>→ Mits は判断しました：「試作段階の課長機能はもう使わない。<strong>秘書リーダーが直接、担当者を呼び出す</strong>やり方（v3.2 経路）に変える」。</p>
-      <div class="metaphor">
-        課長を挟むと連絡が詰まるから、<strong>秘書リーダーが直接担当者に電話する</strong>体制に変えた。<br>
-        25 人チームの概念は残したまま、実装だけシンプルにした。
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2>5. 現時点の結論（2026-07-06 時点）</h2>
+    <h2>4. 初版時点の結論</h2>
 
     <div class="card ok">
       <strong>Claude Code：継続利用</strong><br>
-      主軸として使い続ける。ただし社内での「どう使うか」は <strong>試作段階の課長機能 → 秘書が直接担当者を呼ぶ方式（v3.2）</strong>に変更。25 人チームの概念は温存。
+      主軸として使い続ける。25 人チームを実装できる唯一のツール。
     </div>
 
     <div class="card warn">
-      <strong>Codex：様子見継続 / 単発ヘビー作業に使う</strong><br>
-      正式版に機能が入ったのは前進。ただし本番運用の実績はこれから。単発の重い作業（大きなコード書き換え等）には併用可。
+      <strong>Codex：様子見 / 単発ヘビー作業に使う</strong><br>
+      重要機能はまだ足りないが、開発中。単発の重い作業（大きなコード書き換え等）には併用可。
     </div>
 
     <div class="card ng">
-      <strong>Antigravity：今回不採用</strong><br>
-      重要機能 3 つが未対応で 25 人チーム構想を再現できない。中期的に watch。<br>
-      <em>※ 7/26 追記の 4 回目で、この判定の一部（「再帰禁止」根拠）が事実誤認と判明します。次バージョンで反映。</em>
+      <strong>Antigravity：初版時点では不採用</strong><br>
+      重要機能 3 つ以上が未対応で 25 人チーム構想を再現できない。中期的に watch。<br>
+      <em>※ この判定は以後 6/30 で「判定保留」に格下げ、7/26 の 4 回目追記で「再帰禁止」根拠が事実誤認と判明します。</em>
     </div>
   </section>
 
-  <section>
-    <h2>6. 用語辞典（元レポートを読むときに使う）</h2>
-    <p>専門用語を元レポートで見かけたら、この辞典に戻ってきてください。</p>
+  <!-- ============================================================ -->
+  <!-- ===== 用語辞典（全時点共通・原本を読むときに使う） ===== -->
+  <!-- ============================================================ -->
+
+  <div id="glossary" class="anchor-spacer"></div>
+
+  <section style="margin-top:48px; padding-top:32px; border-top:3px double var(--navy-light);">
+    <h2>📖 用語辞典（全時点共通・原本を読むときに使う）</h2>
+    <p>専門用語を原本で見かけたら、この辞典に戻ってきてください。</p>
 
     <table class="matrix">
       <thead>
@@ -501,16 +566,17 @@
   </section>
 
   <section>
-    <h2>7. このレポートの続き（次バージョンで扱う）</h2>
+    <h2>🔮 このレポートの続き（4 回目追記・次バージョンで扱う）</h2>
     <div class="card gold">
       <p>2026-07-26 に <strong>4 回目の追記</strong>が原本レポートに入りました。以下の重要変化が含まれます：</p>
       <ol>
-        <li><strong>Codex の課長連絡機能が「正式版」ラベルになった</strong>（ただし重大な不具合が同時に見つかっている）</li>
-        <li><strong>Antigravity の「不採用」根拠が一部間違いだったと判明</strong>（実は 3 階層できていた）</li>
+        <li><strong>Codex の課長連絡機能が「正式」ラベル取得</strong>（ただし重大な不具合が同時に見つかっている・「正式ラベル」≠「安定動作」）</li>
+        <li><strong>Antigravity の「不採用」根拠が一部間違いだったと判明</strong>（実は 3 階層以上できていた）</li>
         <li><strong>Mits の「Antigravity で Claude の作業フォルダを複製できた」体験の正体が確定</strong>（実は AGENTS.md というルールブックが自動読み込みされただけ）</li>
+        <li><strong>Claude Code に新モデル Sonnet 5 / Opus 5 投入・秘書が直接担当者を呼ぶ方式が公式デフォルトに</strong>（Mits の v3.2 判断と一致）</li>
       </ol>
-      <p>これらの詳細は次バージョンでかみ砕きます。<br>
-      原本の 4 回目追記は既に公開されています → <a href="./2026-06-21_v31_codex_antigravity.html#update-2026-07-26">4 回目追記へジャンプ</a></p>
+      <p>これらの詳細は次バージョン（v2）でかみ砕きます。<br>
+      原本の 4 回目追記は既に公開されています → <a href="./2026-06-21_v31_codex_antigravity.html#update-2026-07-26">原本 4 回目追記へジャンプ</a></p>
     </div>
   </section>
 
@@ -519,6 +585,8 @@
     <ul>
       <li>作成日：2026-07-26</li>
       <li>対象範囲：原本レポートの 1〜3 回目（2026-06-21 / 06-30 / 07-06）</li>
+      <li>構成：ヘッダー → 更新履歴目次 → 新（3 回目）→ 中（2 回目）→ 古（1 回目初版）→ 用語辞典 → 次バージョン予告</li>
+      <li>品質検証：devils-advocate で致命穴 3・重大懸念 5 を検出 → 全反映済</li>
       <li>次バージョン：4 回目（2026-07-26）追記分を追加予定</li>
     </ul>
 
