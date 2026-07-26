@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>【高校生でもわかる】3 社の AI 開発ツール比較 — Claude Code / Codex / Antigravity</title>
-<meta name="description" content="専門用語を比喩で置き換えた、初心者向け解説版。原本の 3 回目分まで（2026-06-21 / 06-30 / 07-06）を対象。">
+<title>【比喩で簡単理解】3 社の AI 開発ツール比較 — Claude Code / Codex / Antigravity</title>
+<meta name="description" content="専門用語を比喩で置き換えた、比喩・簡単理解版。原本の 4 回目追記（2026-06-21 / 06-30 / 07-06 / 07-26）まで反映済。">
 <style>
   :root {
     --navy: #1a3a52;
@@ -212,11 +212,11 @@
 <div class="container">
 
   <header class="site-head">
-    <span class="tag">EASY VERSION — 初心者向け・更新履歴付き</span>
-    <h1>【高校生でもわかる】<br>3 社の AI 開発ツール比較</h1>
+    <span class="tag">EASY VERSION — 比喩・簡単理解版・更新履歴付き</span>
+    <h1>【比喩で簡単理解】<br>3 社の AI 開発ツール比較</h1>
     <div class="sub">
       Claude Code（Anthropic） / Codex（OpenAI） / Antigravity（Google）<br>
-      発行：2026-07-26 ／ 対象範囲：原本の 3 回目追記（2026-07-06）まで<br>
+      発行：2026-07-26 ／ 対象範囲：原本の <strong style="color:#f7f3ea;">4 回目追記（2026-07-26）まで反映済</strong><br>
       構成：<strong style="color:#f7f3ea;">下段に更新履歴目次 → 新しい追記が上・古い初版が下</strong><br>
       原本（専門用語ガチ版）：<a href="./2026-06-21_v31_codex_antigravity.html">v3.1 同等運用可否レポート</a>
     </div>
@@ -226,8 +226,7 @@
     <strong>このページは何？</strong><br>
     Mits が「複数の AI ロボット担当者をチームみたいに使う」仕組みを、<strong>3 社のツール</strong>（Anthropic / OpenAI / Google）で比較したレポートの、<strong>専門用語を全部かみ砕いた解説版</strong>です。<br>
     原本レポートは「Agent Teams」「subagent」「spawn depth」等の用語で書かれていますが、このページでは <strong>会社や部活の例え</strong>に置き換えて説明します。<br>
-    <strong>対象範囲</strong>：2026-06-21 発行の初版 → 6/30 追記 → 7/06 追記まで。<br>
-    （7/26 追記の 4 回目分は次バージョンで反映します。）
+    <strong>対象範囲</strong>：2026-06-21 発行の初版 → 6/30 追記 → 7/06 追記 → <strong>7/26 4 回目追記まで反映済</strong>。
   </div>
 
   <!-- ===== 更新履歴目次（新→古） ===== -->
@@ -235,6 +234,13 @@
     <div class="toc-title">📚 更新履歴（新しい追記が上・古い初版が下）</div>
     <div class="toc-sub">クリックで各時点セクションへジャンプ。判断の変化過程が時系列で追える構成（原本と同じ並び）。</div>
     <ol>
+      <li>
+        <a href="#update-2026-07-26">
+          <span class="toc-date">2026-07-26</span>
+          <span class="toc-label">4 回目 追記（3 社総まくり・裏取り完了）</span>
+          <span class="toc-desc">Codex「正式」ラベル取得・Antigravity 事実誤認判明・Sonnet 5 / Opus 5 投入</span>
+        </a>
+      </li>
       <li>
         <a href="#update-2026-07-06">
           <span class="toc-date">2026-07-06</span>
@@ -267,7 +273,95 @@
   </nav>
 
   <!-- ============================================================ -->
-  <!-- ===== 3回目：2026-07-06 追記（最新・最上）                    ===== -->
+  <!-- ===== 4回目：2026-07-26 追記（最新・最上）                    ===== -->
+  <!-- ============================================================ -->
+
+  <div id="update-2026-07-26" class="anchor-spacer"></div>
+
+  <section>
+    <div class="version-banner latest">
+      <div class="badge">UPDATE — 3 社総まくり裏取り（20 日後追記・4 回目）</div>
+      <div class="title-big">2026-07-26 追記：3 社の判定を全部やり直した結果</div>
+      <div class="desc">3 回目追記（v3.2 経路変更）から 20 日。<strong>3 社とも大きく動いた</strong>。Codex は「正式」ラベル取得、Antigravity は過去の「不採用」根拠が事実誤認と判明、Claude Code は新モデル投入 + 秘書直接呼び方式が公式デフォルト化。過去 3 回分の判定を検証し直した。</div>
+    </div>
+
+    <h2>1. Codex：「正式」ラベル取得（ただし喜べない）</h2>
+    <div class="card warn">
+      <p>2 回目追記（6/30）時点で「試作段階の課長連絡機能が正式版パッケージに入った」と書いたやつが、<strong>今回「正式（stable）」ラベルを取得</strong>した。</p>
+      <div class="metaphor">
+        <strong>「正式ラベル取得」≠「安定して動く」</strong> — ここが今回の一番の落とし穴。<br>
+        「正式」ラベルは「開発ステージが1段上がった」だけ。<strong>会社が「これで安定動作します」と約束したわけではない</strong>。<br>
+        現に、正式ラベル取得と同時に「秘書リーダーが仕事を振ったのに、担当者が動かない」という<strong>重大不具合が今も報告中（未解決）</strong>で、Claude Code の 3 回目追記で見つかったのと同型の症状。
+      </div>
+      <p><strong>結論</strong>：Codex は「様子見」から「試す価値はある」に前進したが、<strong>本番運用は Claude Code 一択のまま</strong>。</p>
+    </div>
+
+    <h2>2. Antigravity：過去の「不採用」根拠が間違いだった</h2>
+    <div class="card ng">
+      <p>初版（6/21）で「Antigravity は上司→部下→孫請けの 3 階層が禁止」「課長同士の直接連絡が禁止」と書いた。<br>
+      <strong>今回、公式資料を見直したら、これは事実誤認だった</strong>と判明した。</p>
+      <ul>
+        <li>実際：Antigravity は <strong>最大 10 階層まで入れ子で AI を呼び出せる</strong>（Claude Code の当時の 3 階層より深い）</li>
+        <li>実際：AI 同士の直接連絡も <strong>相手の ID を知っていればできる</strong></li>
+      </ul>
+      <div class="metaphor">
+        「あの店には売ってない」と 6/21 に書いて、6/30 に「未確認」に格下げして、<strong>今回ちゃんと店員に聞いたら『あります』と言われた</strong>。<br>
+        じゃあ買うかというと <strong>別問題</strong> — 「チームの名簿を保存する機能」がやっぱり無いので、Mits の 25 人チームには今も使えない。事実だけ訂正して、判定（今回は不採用）は変わらない。
+      </div>
+      <p><strong>Mits の AGENTS.md 体験の正体が確定</strong>：6/30 に Mits が「Antigravity に Claude の作業フォルダを読ませたら『複製できてしまった』」と報告した件。<br>
+      → 実は Antigravity には <strong>「AGENTS.md というルールブックを自動で読み込む」機能</strong>があり、Mits が置いていた 22.6KB のルールブック（Claude 用に書いていたやつ）をそのまま読み込んだ、というのが正体だった。<br>
+      <strong>AI が動いてコピーしたわけではなく、ルールブックの読み込み機能が偶然かぶっただけ</strong>。</p>
+    </div>
+
+    <h2>3. Claude Code：新モデル投入 + v3.2 が公式に</h2>
+    <div class="card ok">
+      <p>3 回目追記（7/06）で「試作段階の課長機能を撤退、秘書リーダーが直接担当者を呼ぶ方式に変更」と書いたが、これが <strong>今回公式のデフォルトになった</strong>。</p>
+      <div class="metaphor">
+        Mits の 20 日前の判断（v3.2 に切り替え）と、Anthropic の公式方針が <strong>ほぼ同時に同じ方向に着地した</strong>。<br>
+        Mits が読みを外していなかった、ということ。
+      </div>
+      <ul>
+        <li><strong>新モデル 2 種投入</strong>：Sonnet 5（軽量・速い）と Opus 5（重量・賢い）が正式リリース</li>
+        <li><strong>秘書直接呼び方式が公式デフォルト</strong>：試作段階の課長機能は「複雑すぎる場合の選択肢」に格下げ、シンプルな秘書直接呼びが標準に</li>
+      </ul>
+    </div>
+
+    <h2>4. 判定サマリ（4 回目時点・2026-07-26）</h2>
+    <table class="matrix">
+      <thead>
+        <tr><th>ツール</th><th>4 回目時点の判定</th><th>初版からの変化</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🔵 Claude Code</td>
+          <td style="color:var(--ok); font-weight:700;">本命継続（v3.2 が公式デフォルトに）</td>
+          <td>初版 ✅ 一強 → 現在も ✅ 一強</td>
+        </tr>
+        <tr>
+          <td>🟠 Codex</td>
+          <td style="color:var(--warn); font-weight:700;">「正式」ラベル取得も本番運用は不可</td>
+          <td>初版 ⚠️ 様子見 → 前進したが本番使用はまだ</td>
+        </tr>
+        <tr>
+          <td>🟢 Antigravity</td>
+          <td style="color:var(--ng); font-weight:700;">機能訂正あるが判定は不採用のまま</td>
+          <td>初版 ❌ → 6/30 判定保留 → 4 回目 事実訂正の上で不採用</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="card gold">
+      <strong>今回の最大の学び</strong>：<br>
+      <ul>
+        <li><strong>「正式ラベル」を鵜呑みにしない</strong>（Codex の教訓）</li>
+        <li><strong>過去の判定根拠は定期的に見直す</strong>（Antigravity の事実誤認訂正）</li>
+        <li><strong>Mits の実運用判断（v3.2）と公式方針が一致した</strong>（Claude Code の追認）</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- ===== 3回目：2026-07-06 追記                                   ===== -->
   <!-- ============================================================ -->
 
   <div id="update-2026-07-06" class="anchor-spacer"></div>
@@ -565,29 +659,14 @@
     </table>
   </section>
 
-  <section>
-    <h2>🔮 このレポートの続き（4 回目追記・次バージョンで扱う）</h2>
-    <div class="card gold">
-      <p>2026-07-26 に <strong>4 回目の追記</strong>が原本レポートに入りました。以下の重要変化が含まれます：</p>
-      <ol>
-        <li><strong>Codex の課長連絡機能が「正式」ラベル取得</strong>（ただし重大な不具合が同時に見つかっている・「正式ラベル」≠「安定動作」）</li>
-        <li><strong>Antigravity の「不採用」根拠が一部間違いだったと判明</strong>（実は 3 階層以上できていた）</li>
-        <li><strong>Mits の「Antigravity で Claude の作業フォルダを複製できた」体験の正体が確定</strong>（実は AGENTS.md というルールブックが自動読み込みされただけ）</li>
-        <li><strong>Claude Code に新モデル Sonnet 5 / Opus 5 投入・秘書が直接担当者を呼ぶ方式が公式デフォルトに</strong>（Mits の v3.2 判断と一致）</li>
-      </ol>
-      <p>これらの詳細は次バージョン（v2）でかみ砕きます。<br>
-      原本の 4 回目追記は既に公開されています → <a href="./2026-06-21_v31_codex_antigravity.html#update-2026-07-26">原本 4 回目追記へジャンプ</a></p>
-    </div>
-  </section>
 
   <footer class="site-foot">
     <strong>このページについて</strong>
     <ul>
       <li>作成日：2026-07-26</li>
-      <li>対象範囲：原本レポートの 1〜3 回目（2026-06-21 / 06-30 / 07-06）</li>
-      <li>構成：ヘッダー → 更新履歴目次 → 新（3 回目）→ 中（2 回目）→ 古（1 回目初版）→ 用語辞典 → 次バージョン予告</li>
+      <li>対象範囲：原本レポートの 1〜4 回目（2026-06-21 / 06-30 / 07-06 / 07-26）</li>
+      <li>構成：ヘッダー → 更新履歴目次 → 新（4 回目 7/26）→ 3 回目 → 2 回目 → 古（1 回目初版）→ 用語辞典</li>
       <li>品質検証：devils-advocate で致命穴 3・重大懸念 5 を検出 → 全反映済</li>
-      <li>次バージョン：4 回目（2026-07-26）追記分を追加予定</li>
     </ul>
 
     <strong style="display:block; margin-top:12px;">原本レポート（専門用語ガチ版・4 回目追記済み）</strong>
