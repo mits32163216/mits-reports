@@ -60,6 +60,82 @@
     line-height: 1.7;
   }
 
+  /* ===== Update TOC (目次ナビ) ===== */
+  nav.update-toc {
+    background: white;
+    border: 1px solid var(--gold);
+    border-left: 5px solid var(--gold);
+    border-radius: 6px;
+    padding: 18px 24px;
+    margin-bottom: 32px;
+  }
+  nav.update-toc .toc-title {
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+  }
+  nav.update-toc .toc-sub {
+    font-size: 12px;
+    color: var(--gray);
+    margin-bottom: 12px;
+    line-height: 1.6;
+  }
+  nav.update-toc ol {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    counter-reset: toc-counter;
+  }
+  nav.update-toc li {
+    counter-increment: toc-counter;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  nav.update-toc li:last-child { border-bottom: none; }
+  nav.update-toc li::before {
+    content: counter(toc-counter);
+    background: var(--navy);
+    color: var(--ivory);
+    font-size: 11px;
+    font-weight: 700;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  nav.update-toc .toc-date {
+    font-size: 13px;
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    min-width: 100px;
+  }
+  nav.update-toc .toc-label {
+    font-size: 14px;
+    color: var(--navy);
+    font-weight: 600;
+  }
+  nav.update-toc .toc-desc {
+    font-size: 12px;
+    color: var(--gray);
+    margin-left: auto;
+    text-align: right;
+  }
+  nav.update-toc a {
+    color: var(--navy);
+    text-decoration: none;
+    display: contents;
+  }
+  nav.update-toc li:hover { background: var(--ivory); }
+
   /* ===== Section ===== */
   section { margin-bottom: 28px; }
   h2 {
@@ -316,6 +392,11 @@
   }
   footer.report-foot ul { padding-left: 20px; margin-top: 6px; }
 
+  /* ===== Section anchor spacer (sticky bar 分オフセット) ===== */
+  .anchor-spacer {
+    scroll-margin-top: 70px;
+  }
+
   /* ===== Mobile ===== */
   @media (max-width: 720px) {
     body { font-size: 14px; padding: 12px 8px; }
@@ -325,6 +406,13 @@
     .detail-grid { grid-template-columns: 1fr; }
     .matrix { font-size: 11px; }
     .matrix th, .matrix td { padding: 6px 8px; }
+    nav.update-toc li {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      padding: 10px 8px;
+    }
+    nav.update-toc .toc-desc { margin-left: 0; text-align: left; }
   }
   .back-to-list {
     position: fixed;
@@ -346,407 +434,209 @@
 </head>
 <body>
 <a class="back-to-list" href="./index.html">← 一覧に戻る</a>
-<a href="https://reports.7years.life/" style="display:block;background:#1a3a52;color:#f7f3ea;text-decoration:none;padding:10px 20px;font-size:13px;font-family:-apple-system,"Hiragino Sans","Yu Gothic","Noto Sans JP",sans-serif;letter-spacing:0.05em;border-bottom:2px solid #b89544;position:sticky;top:0;z-index:1000;">← Mits Reports（トップへ戻る）</a>
+<a href="https://reports.7years.life/" style="display:block;background:#1a3a52;color:#f7f3ea;text-decoration:none;padding:10px 20px;font-size:13px;font-family:-apple-system,'Hiragino Sans','Yu Gothic','Noto Sans JP',sans-serif;letter-spacing:0.05em;border-bottom:2px solid #b89544;position:sticky;top:0;z-index:1000;">← Mits Reports（トップへ戻る）</a>
 
 <div class="container">
 
-  <!-- ===== HEADER ===== -->
+  <!-- ===== HEADER（発行情報・全体タイトル）===== -->
   <header class="report-head">
-    <span class="tag">INTERNAL REPORT</span>
+    <span class="tag">INTERNAL REPORT — 更新履歴付き</span>
     <h1>v3.1 同等運用可否レポート<br>— Codex / Antigravity 比較</h1>
     <div class="meta">
-      発行: 2026-06-21 / 対象: keiei-project team v3.1（25ノード・FBAS分散型）<br>
-      検証: mits-researcher × 2 + devils-advocate × 2（公式 docs / GitHub / 実機 `codex features list`）
+      発行: 2026-06-21 ／ 最終更新: 2026-07-06（v3.2 経路変更）<br>
+      対象: keiei-project team v3.1（25ノード・FBAS分散型）<br>
+      構成: <strong style="color:#f7f3ea;">下段に更新履歴目次 → 新しい追記が上・古い初版が下</strong>
     </div>
   </header>
 
-  <!-- ===== CONCLUSION ===== -->
+  <!-- ===== 更新履歴目次ナビ ===== -->
+  <nav class="update-toc" aria-label="更新履歴目次">
+    <div class="toc-title">📚 更新履歴（新しい追記が上・古い初版が下）</div>
+    <div class="toc-sub">クリックで各時点セクションへジャンプ。判断の変化過程が時系列で追える構成。</div>
+    <ol>
+      <li>
+        <a href="#update-2026-07-26">
+          <span class="toc-date">2026-07-26</span>
+          <span class="toc-label">4回目 追記（20 日後追跡・6/21 判定訂正）</span>
+          <span class="toc-desc">Codex opt-in stable / Antigravity 10 levels 判明 / Mits 体験の正体確定</span>
+        </a>
+      </li>
+      <li>
+        <a href="#update-2026-07-06">
+          <span class="toc-date">2026-07-06</span>
+          <span class="toc-label">3回目 追記(v3.2 経路変更・転換点)</span>
+          <span class="toc-desc">Agent Teams バグ検出 → Agent tool 経路へ</span>
+        </a>
+      </li>
+      <li>
+        <a href="#update-2026-06-30">
+          <span class="toc-date">2026-06-30</span>
+          <span class="toc-label">2回目 追記（9 日後追跡）</span>
+          <span class="toc-desc">Codex v0.142.0 stable リリース・Mits 実体験</span>
+        </a>
+      </li>
+      <li>
+        <a href="#initial-2026-06-21">
+          <span class="toc-date">2026-06-21</span>
+          <span class="toc-label">1回目 初版</span>
+          <span class="toc-desc">v3.1 × 3社対照・7 機能マトリクス</span>
+        </a>
+      </li>
+    </ol>
+  </nav>
+
+  <!-- ============================================================ -->
+  <!-- ===== 4回目：2026-07-26 アップデート（最新・最上）           ===== -->
+  <!-- ============================================================ -->
+
+  <div id="update-2026-07-26" class="anchor-spacer"></div>
+
+  <section style="margin-top:24px;">
+    <div style="background:#fdecec; border:2px solid #b04848; border-left:6px solid #b04848; border-radius:4px; padding:20px 24px; margin-bottom:24px;">
+      <div style="font-size:11px; color:#b04848; font-weight:700; letter-spacing:0.1em; margin-bottom:6px;">UPDATE — 20 日後追跡・6/21 判定訂正</div>
+      <div style="font-size:20px; font-weight:700; color:#1a3a52; margin-bottom:8px;">2026-07-26 アップデート(4回目・20 日後追跡)</div>
+      <div style="font-size:13px; color:#2a2a2a; line-height:1.7;">
+        7/6 追記から 20 日経過。<strong style="color:#b04848;">3 社の直近アップデート + 6/21 判定「Antigravity 再帰禁止」の事実訂正 + Mits 実体験「複製できた」の正体確定</strong>。
+        <br><br>
+        <strong>本追記の位置づけ</strong>：本 4 層目追記は「7/6 以降の公開情報の静的テキスト差分レビュー + 実機ソースコード確認 + コミュニティ実運用評価」であり、Mits 環境での v3.1 実機再構築テストは含まない。「stable ラベル付与」等は事実として引用するが「実機検証済」の意味ではない。
+      </div>
+    </div>
+
+    <h2>今回の 3 大変化</h2>
+    <div class="conclusion" style="border-left-color: #b04848;">
+      <p class="lead">Codex に stable ラベル付与 / Antigravity 6/21 判定根拠が崩れた / Mits 体験の正体確定。</p>
+      <ol style="padding-left:22px;">
+        <li><strong style="color:#b04848;">Codex</strong>：<strong>PR #34383「Mark multi-agent v2 as stable」merged 2026-07-20 + v0.145.0（7/21 stable リリース）で opt-in stable ラベル付与</strong>。ただし Release blocker #32988（Claude Code 系プラグイン動かず）と Luna spawn regression #34700（v0.145.0 stable でも継続再現）が OPEN のまま。「stable ラベル = 実運用 stable」ではない</li>
+        <li><strong style="color:#b04848;">Antigravity</strong>：6/21 判定「再帰禁止・階層 spawn 不可」は 7/26 実機再確認で <strong>false 判明</strong>。公式 docs 直接引用「A maximum nesting depth of 10 levels is strictly enforced」+ peer 通信「Agents can communicate with parent agents, subagents, or peer agents whose ID is known」+ shutdown Running/Idle/Killed 3 状態 lifecycle 明文化。<strong>ただし team 永続化未対応が唯一の未対応根拠として残る</strong>（keiei-project 用途で致命）</li>
+        <li><strong style="color:#b04848;">Claude Code</strong>：v2.1.197 で Sonnet 5 / v2.1.219 で Opus 5 投入・default Opus 化。<strong>v2.1.198 で subagent が default background 化 → Mits の v3.2 経路（Agent tool + run_in_background）が Anthropic 公式 default 挙動と一致</strong>。Agent Teams バグ 5 件（#50779/#70087/#73489/#74113/#72611）は 7/26 時点で全 OPEN・merged PR なし・v3.2 移行判断は継続妥当</li>
+      </ol>
+    </div>
+  </section>
+
   <section>
-    <h2>結論先頭</h2>
-    <div class="conclusion">
-      <p class="lead">Claude Code 一本で v3.1 を維持するのが 2026-06-21 時点の最適解。</p>
-      <ul>
-        <li>Codex は v3.1 構造の主要パーツが実装済だが、複数機能が under development 段階</li>
-        <li>Antigravity は階層 spawn / peer 通信を設計思想として否定 → 移植不可</li>
-        <li>両社とも独自強みあり。watch 対象として続報を追う価値はある</li>
+    <h2>Mits 実体験「Antigravity IDE で Claude 作業フォルダを複製できた」の正体確定</h2>
+    <p style="font-size:13px; margin-bottom:12px;">6/30 追記時点で 4 選択肢を提示していたが、7/26 に AI 完結で全実機確認して <strong>(A) 一択に確定</strong>。</p>
+
+    <div class="detail-card full">
+      <div class="head">✅ 確定判定：(A) AGENTS.md 自動読み込み</div>
+      <ul style="padding-left:18px; font-size:13px; line-height:1.8;">
+        <li><strong>証拠</strong>：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/AGENTS.md</code>（22.6KB・実在確認済）が Mits の禁止事項①〜⑦・行動ルール・memory 参照ルール等を全記述</li>
+        <li>Antigravity IDE（VS Code fork）は AGENTS.md を <strong>自動 project context として読み込む仕様</strong>（Antigravity 公式 docs 明記）</li>
+        <li>Mits が Antigravity IDE で claude-nishida フォルダを開くと → AGENTS.md の内容が Antigravity agent の context に反映 → Mits には「複製された」と見えた</li>
+        <li><strong>実際は Skill 実体・agent 定義は動いていない</strong>。context 文字列として読み込まれただけ</li>
       </ul>
+    </div>
 
-      <div class="engines">
-        <div class="engine-card rec">
-          <div class="vendor">ANTHROPIC</div>
-          <div class="name">Claude Code</div>
-          <div class="judgement">✅ 維持（現行運用）</div>
-          <div class="reason">v3.1 全7機能対応・25ノード稼働中。<code>~/.claude/teams/keiei-project/</code></div>
-        </div>
-        <div class="engine-card watch">
-          <div class="vendor">OPENAI</div>
-          <div class="name">Codex</div>
-          <div class="judgement">⚠️ watch / 単発併用</div>
-          <div class="reason">multi_agent_v2 で実装済だが under development。重い単発タスクに併用可。</div>
-        </div>
-        <div class="engine-card skip">
-          <div class="vendor">GOOGLE</div>
-          <div class="name">Antigravity</div>
-          <div class="judgement">❌ 2026-06-21 時点 skip</div>
-          <div class="reason">peer 通信を設計思想で否定。v3.1 構造と根本的に不整合。</div>
-        </div>
-      </div>
+    <table class="matrix" style="margin-top:14px;">
+      <thead>
+        <tr>
+          <th class="func">6/30 提示の 4 選択肢</th>
+          <th>7/26 判定</th>
+          <th>実機根拠</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="func"><strong>(A) AGENTS.md 自動読み込み</strong></td>
+          <td><span class="status ok">✅</span><strong>実証</strong></td>
+          <td>AGENTS.md 22.6KB 実在（<code>find</code> + <code>wc -c</code>）・Antigravity docs 記述と整合</td>
+        </tr>
+        <tr>
+          <td class="func">(B) Antigravity IDE 内に Claude Code 拡張機能インストール済</td>
+          <td><span class="status ng">❌</span>false</td>
+          <td><code>~/.antigravity/extensions/</code> = argv.json のみ・agent 系空（<code>ls -la</code> 実行結果）</td>
+        </tr>
+        <tr>
+          <td class="func">(C) migration script 過去実行</td>
+          <td><span class="status ng">❌</span>false</td>
+          <td><code>.agent/</code> ディレクトリ全域なし・<code>migrate_claude*</code> スクリプト実行痕跡なし</td>
+        </tr>
+        <tr>
+          <td class="func">(D) 隠し自動変換機能</td>
+          <td><span class="status ng">❌</span>false</td>
+          <td>community 証言ゼロ（Antigravity researcher で発見できず）+ (A)(B)(C) 実機消去済</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>6/21 判定「Antigravity 再帰禁止」の事実訂正</h2>
+    <div class="detail-card full">
+      <div class="head">⚠️ 過去レポート整合性の破綻を訂正</div>
+      <p style="font-size:13px; line-height:1.7;">6/21 初版の Antigravity ❌ 判定は「公式『Subagents cannot call other subagents』」を引用根拠にしていた。7/26 実機再確認（curl で公式 docs 直接取得）で <strong>公式 docs は現在「A maximum nesting depth of 10 levels is strictly enforced」と真逆の記述</strong>と判明。</p>
+
+      <table class="matrix" style="margin-top:8px;">
+        <thead>
+          <tr>
+            <th class="func">時点</th>
+            <th>Antigravity 階層 spawn 判定</th>
+            <th>引用元</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="func">6/21 初版</td><td>❌ 再帰禁止「Subagents cannot call other subagents」</td><td>公式引用（出典特定は要追加調査）</td></tr>
+          <tr><td class="func">6/30 追記</td><td>🔍 公式 docs 記述なし（変化なし）</td><td>6/21 の断言から後退</td></tr>
+          <tr><td class="func">7/06 追記</td><td>判定保留位置づけ維持</td><td>変更なし</td></tr>
+          <tr><td class="func" style="background:#fdecec;"><strong>7/26 実機</strong></td><td><span class="status ok">✅</span><strong>10 levels nested 可能・peer 通信可能・shutdown 3 状態明文化</strong></td><td>Antigravity 公式 docs 直接 curl（実文取得）</td></tr>
+        </tbody>
+      </table>
+
+      <p style="font-size:13px; line-height:1.7; margin-top:12px;"><strong>考えられる原因（要追加調査・4 回目追記では特定せず）</strong>：</p>
+      <ol style="padding-left:22px; font-size:13px; line-height:1.7;">
+        <li>6/21 researcher が Gemini CLI 時代の docs を引用（Antigravity になって仕様変更）</li>
+        <li>6/21 researcher の誤読 or 出典誤り</li>
+        <li>Antigravity 側の仕様追加（6/21 以降に nested 対応が実装された）</li>
+      </ol>
     </div>
   </section>
 
-  <!-- ===== v3.1 Org Chart ===== -->
   <section>
-    <h2>v3.1 構造（25ノード・FBAS分散型）</h2>
-    <div class="org-chart-wrap">
-      <svg viewBox="0 0 980 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="v3.1組織図">
-        <defs>
-          <style>
-            .node-mits { fill: #1a3a52; }
-            .node-sanbo { fill: #2c5575; }
-            .node-fa { fill: #3b6e8f; }
-            .node-fs { fill: #4d8a64; }
-            .node-ba { fill: #b89544; }
-            .node-bs { fill: #8c5a8a; }
-            .node-text { fill: #fff; font-family: -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; font-weight: 600; text-anchor: middle; }
-            .node-sub { fill: #fff; font-size: 10px; text-anchor: middle; font-family: -apple-system, "Hiragino Sans", sans-serif; }
-            .link { stroke: #7a7a7a; stroke-width: 1.5; fill: none; }
-            .label { fill: #2a2a2a; font-size: 11px; font-family: -apple-system, "Hiragino Sans", sans-serif; text-anchor: middle; }
-            .header-band { fill: #1a3a52; }
-            .header-text { fill: #f7f3ea; font-size: 11px; font-weight: 700; text-anchor: middle; font-family: -apple-system, "Hiragino Sans", sans-serif; letter-spacing: 0.05em; }
-          </style>
-        </defs>
-
-        <!-- Mits CEO -->
-        <rect class="node-mits" x="430" y="10" width="120" height="40" rx="4"/>
-        <text class="node-text" x="490" y="28">Mits</text>
-        <text class="node-sub" x="490" y="42">CEO・最終決定</text>
-
-        <!-- 参謀 -->
-        <rect class="node-sanbo" x="410" y="80" width="160" height="40" rx="4"/>
-        <text class="node-text" x="490" y="98">参謀（メインClaude）</text>
-        <text class="node-sub" x="490" y="112">取次・コネクタ</text>
-
-        <line class="link" x1="490" y1="50" x2="490" y2="80"/>
-
-        <!-- 4 Leaders -->
-        <line class="link" x1="490" y1="120" x2="120" y2="160"/>
-        <line class="link" x1="490" y1="120" x2="380" y2="160"/>
-        <line class="link" x1="490" y1="120" x2="610" y2="160"/>
-        <line class="link" x1="490" y1="120" x2="850" y2="160"/>
-
-        <!-- FA -->
-        <rect class="node-fa" x="40" y="160" width="160" height="44" rx="4"/>
-        <text class="node-text" x="120" y="180">🔵 FA-leader</text>
-        <text class="node-sub" x="120" y="195">persona-reviewer</text>
-
-        <!-- FS -->
-        <rect class="node-fs" x="300" y="160" width="160" height="44" rx="4"/>
-        <text class="node-text" x="380" y="180">🟢 FS-leader</text>
-        <text class="node-sub" x="380" y="195">feedback-collector</text>
-
-        <!-- BA -->
-        <rect class="node-ba" x="530" y="160" width="160" height="44" rx="4"/>
-        <text class="node-text" x="610" y="180">🟡 BA-leader</text>
-        <text class="node-sub" x="610" y="195">strategist</text>
-
-        <!-- BS -->
-        <rect class="node-bs" x="770" y="160" width="160" height="44" rx="4"/>
-        <text class="node-text" x="850" y="180">🟣 BS-leader</text>
-        <text class="node-sub" x="850" y="195">knowledge-sync</text>
-
-        <!-- Sub agents bands -->
-        <line class="link" x1="120" y1="204" x2="120" y2="240"/>
-        <line class="link" x1="380" y1="204" x2="380" y2="240"/>
-        <line class="link" x1="610" y1="204" x2="610" y2="240"/>
-        <line class="link" x1="850" y1="204" x2="850" y2="240"/>
-
-        <!-- FA配下 (7体) -->
-        <rect class="node-fa" x="40" y="240" width="160" height="120" rx="4" opacity="0.85"/>
-        <text class="node-text" x="120" y="258">配下 7体</text>
-        <text class="node-sub" x="120" y="278">writer / dohga</text>
-        <text class="node-sub" x="120" y="293">curator / corpus</text>
-        <text class="node-sub" x="120" y="308">tonmana-reviewer</text>
-        <text class="node-sub" x="120" y="323">honshitsu-reviewer</text>
-        <text class="node-sub" x="120" y="338">anti-ai-slop</text>
-
-        <!-- FS配下 (3体) -->
-        <rect class="node-fs" x="300" y="240" width="160" height="80" rx="4" opacity="0.85"/>
-        <text class="node-text" x="380" y="258">配下 3体</text>
-        <text class="node-sub" x="380" y="278">skool-pm</text>
-        <text class="node-sub" x="380" y="293">cs-tracker</text>
-        <text class="node-sub" x="380" y="308">inquiry-router</text>
-
-        <!-- BA配下 (2体) -->
-        <rect class="node-ba" x="530" y="240" width="160" height="65" rx="4" opacity="0.85"/>
-        <text class="node-text" x="610" y="258">配下 2体</text>
-        <text class="node-sub" x="610" y="278">goal-tracker</text>
-        <text class="node-sub" x="610" y="293">researcher</text>
-
-        <!-- BS配下 (5体) -->
-        <rect class="node-bs" x="770" y="240" width="160" height="95" rx="4" opacity="0.85"/>
-        <text class="node-text" x="850" y="258">配下 5体</text>
-        <text class="node-sub" x="850" y="278">engineer / keiri</text>
-        <text class="node-sub" x="850" y="293">task-dispatch</text>
-        <text class="node-sub" x="850" y="308">morning-standup</text>
-        <text class="node-sub" x="850" y="323">local-support</text>
-
-        <!-- Hierarchy labels -->
-        <rect class="header-band" x="0" y="390" width="980" height="22"/>
-        <text class="header-text" x="490" y="406">3階層構造 + リーダー間 peer 通信 + 共有タスクボード + 永続 team config</text>
-
-        <text class="label" x="490" y="438">合計 25 ノード（Mits + 参謀 + 4リーダー + 19配下）</text>
-      </svg>
-      <div class="org-legend">
-        <span><span class="dot" style="background:#3b6e8f"></span>FA フロント・アタック</span>
-        <span><span class="dot" style="background:#4d8a64"></span>FS フロント・サポート</span>
-        <span><span class="dot" style="background:#b89544"></span>BA バック・アタック</span>
-        <span><span class="dot" style="background:#8c5a8a"></span>BS バック・サポート</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== Compatibility Matrix ===== -->
-  <section>
-    <h2>v3.1 必須機能 × 3エンジン対照</h2>
+    <h2>階層 spawn の 3 社対照（一次資料実引用）</h2>
     <table class="matrix">
       <thead>
         <tr>
-          <th class="func">v3.1 必須機能</th>
-          <th>Claude Code</th>
-          <th>Codex（OpenAI）</th>
-          <th>Antigravity（Google）</th>
+          <th class="func">エンジン</th>
+          <th>default</th>
+          <th>上限</th>
+          <th>出所</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td class="func">① カスタム agent 定義（25種規模）</td>
-          <td><span class="status ok">✅</span>無制限<span class="note">.claude/agents/*.md</span></td>
-          <td><span class="status ok">✅</span>無制限<span class="note">~/.codex/agents/*.toml</span></td>
-          <td><span class="status ok">✅</span>無制限<span class="note">.gemini/agents/*.md（YAML+MD）</span></td>
+          <td class="func">Claude Code</td>
+          <td>default 3（v2.1.219 で 1→3 に緩和）</td>
+          <td>release notes に上限明示なし・env <code>CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH</code> で変更可</td>
+          <td>[一次] v2.1.219 release notes 実引用「Subagents can now spawn nested subagents up to depth 3 by default (was 1)」</td>
         </tr>
         <tr>
-          <td class="func">② 永続コンテキスト</td>
-          <td><span class="status ok">✅</span>CLAUDE.md 階層</td>
-          <td><span class="status ok">✅</span>AGENTS.md 対応</td>
-          <td><span class="status ok">✅</span><strong>最強</strong>。3層階層 + 複数ファイル併用</td>
+          <td class="func">Codex V1</td>
+          <td><strong>default 1</strong></td>
+          <td><code>agents.max_depth</code> で変更可</td>
+          <td>[一次] <code>codex-rs/core/src/config/mod.rs</code> ソース「<code>pub(crate) const DEFAULT_AGENT_MAX_DEPTH: i32 = 1;</code>」</td>
         </tr>
         <tr>
-          <td class="func">③ 3階層 spawn（参謀→リーダー→配下）</td>
-          <td><span class="status ok">✅</span>3階層以上</td>
-          <td><span class="status warn">⚠️</span>並列数の公式値未公開<span class="note">再帰挙動も公式docs未記載</span></td>
-          <td><span class="status ng">❌</span>再帰禁止<span class="note">公式「Subagents cannot call other subagents」</span></td>
+          <td class="func">Codex V2（今回 stable ラベル付与）</td>
+          <td><strong style="color:#b04848;">max_depth 設定を無視（意図的仕様変更）</strong></td>
+          <td>実質制限なし or 別実装</td>
+          <td>[一次] source コメント「Maximum nesting depth for V1 agent threads. Ignored by V2.」+ PR #20180 テスト「multi_agent_v2_spawn_agent_ignores_configured_max_depth」</td>
         </tr>
         <tr>
-          <td class="func">④ team 単位の恒久構成</td>
-          <td><span class="status ok">✅</span><code>~/.claude/teams/&lt;name&gt;/config.json</code></td>
-          <td><span class="status warn">⚠️</span>team 概念未実装<span class="note">Issue #12047 で TUI 改善提案中・open</span></td>
-          <td><span class="status ng">❌</span>team 単位定義なし<span class="note">/teamwork-preview は Ultra $200/月・IDE版・preview・7ロール固定</span></td>
-        </tr>
-        <tr>
-          <td class="func">⑤ teammate 間 peer 通信（SendMessage / mailbox）</td>
-          <td><span class="status ok">✅</span>任意 agent 間</td>
-          <td><span class="status warn">⚠️</span>multi_agent_v2 で実装済<span class="note">PR #28368 / 2026-06-16 merged・under development</span></td>
-          <td><span class="status ng">❌</span>設計思想で否定<span class="note">公式「don't directly communicate — you are the coordinator」/ Issue #19430 open</span></td>
-        </tr>
-        <tr>
-          <td class="func">⑥ 共有タスクボード（self-claim）</td>
-          <td><span class="status ok">✅</span><code>~/.claude/tasks/&lt;team&gt;/</code></td>
-          <td><span class="status ok">✅</span><code>goals</code> 機能（stable）<span class="note">~/.codex/goals_1.sqlite / thread_goals テーブル</span></td>
-          <td><span class="status ng">❌</span>未対応<span class="note">ファイル経由間接共有のみ</span></td>
-        </tr>
-        <tr>
-          <td class="func">⑦ shutdown protocol</td>
-          <td><span class="status ok">✅</span>request → response</td>
-          <td><span class="status ok">✅</span>close_agent + wait_agent<span class="note">interrupt_agent にリネーム中</span></td>
-          <td><span class="status warn">⚠️</span>自動終了のみ<span class="note">timeout_mins:10 / max_turns:30 / request-response 型は未確認</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-
-  <!-- ===== Engine Details ===== -->
-  <section>
-    <h2>エンジン別 詳細</h2>
-    <div class="detail-grid">
-      <div class="detail-card full">
-        <div class="head">Claude Code Agent Teams（現行）</div>
-        <ul>
-          <li>v3.1 が <code>~/.claude/teams/keiei-project/</code> で稼働中・25ノード</li>
-          <li>全7機能対応・実績あり</li>
-          <li>制約：experimental（<code>CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS</code>）・team config が消えることがあるため起動時 <code>ls</code> 必須</li>
-        </ul>
-      </div>
-
-      <div class="detail-card">
-        <div class="head">Codex（OpenAI）— 実装済 / 未成熟</div>
-        <ul>
-          <li><strong>multi_agent v1</strong> = stable / true</li>
-          <li><strong>multi_agent_v2</strong> で spawn_agent / send_message / close_agent / wait_agent 実装済（under development）</li>
-          <li><strong>goals</strong> = stable / true・SQLite 永続のタスク管理</li>
-          <li>Claude Code → Codex 移行ツール <code>/import</code>（2026-06-09 リリース）</li>
-          <li>Mits 環境 v0.137・npm 最新 v0.141</li>
-        </ul>
-      </div>
-
-      <div class="detail-card">
-        <div class="head">Antigravity（Google）— 構造的不整合</div>
-        <ul>
-          <li>peer 通信を<strong>設計思想として否定</strong>（人間が調整役の前提）</li>
-          <li>再帰 spawn 禁止 → 参謀→リーダー→配下が物理的に作れない</li>
-          <li>team 永続構成も未実装</li>
-          <li>独自強み：3層階層コンテキスト・Google Workspace MCP 標準搭載・Managed Agents API（Linux Sandbox クラウド実行）</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== Action Timeline ===== -->
-  <section>
-    <h2>推奨アクション</h2>
-
-    <h3>短期（〜3ヶ月）</h3>
-    <div class="timeline">
-      <div class="item">
-        <div class="when">NOW</div>
-        <div class="what">Claude Code Agent Teams で v3.1 を維持</div>
-        <div class="why">現行が最も成熟・25ノード稼働中</div>
-      </div>
-      <div class="item">
-        <div class="when">必要時</div>
-        <div class="what">Codex は単発ヘビー作業の出先として併用</div>
-        <div class="why">Cloud Codex の非同期実行・LP HTML 量産・重い読み込みタスク</div>
-      </div>
-      <div class="item">
-        <div class="when">SKIP</div>
-        <div class="what">Antigravity は導入しない</div>
-        <div class="why">v3.1 構造と相性悪い・特化用途も Mits 業務に薄い</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== Watch Table ===== -->
-  <section>
-    <h2>中期 watch 項目（3〜6ヶ月）</h2>
-    <table class="watch-table">
-      <thead>
-        <tr>
-          <th>対象</th>
-          <th>watch 観点</th>
-          <th>アクション基準</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Codex <code>multi_agent_v2</code></td>
-          <td>feature flag が stable/true になるか</td>
-          <td>stable 化後に v3.1 サブセットで並行運用試験</td>
-        </tr>
-        <tr>
-          <td>Codex <code>goals</code> の team 連携</td>
-          <td>thread_goals が team 単位で共有可能になるか</td>
-          <td>共有可能化で v3.1 タスクボード代替候補</td>
-        </tr>
-        <tr>
-          <td>Antigravity Issue #19430</td>
-          <td>peer 通信の公式回答 or 実装 PR</td>
-          <td>動きあれば再評価</td>
-        </tr>
-        <tr>
-          <td>Codex CLI バージョン</td>
-          <td>v0.137 → v0.141+ アップデート</td>
-          <td>環境を v0.141 系へ・<code>codex features list</code> 再確認</td>
+          <td class="func">Antigravity</td>
+          <td>default 明示なし</td>
+          <td><strong>上限 10 levels（strictly enforced）</strong></td>
+          <td>[一次] Antigravity 公式 docs 直接 curl「A maximum nesting depth of 10 levels (layers of subagents beneath the primary agent) is strictly enforced」</td>
         </tr>
       </tbody>
     </table>
 
-    <h3>やらないこと</h3>
-    <div class="conclusion" style="border-left-color: var(--ng);">
-      <ul>
-        <li>Antigravity Desktop / CLI への乗り換え検討（v3.1 と構造非互換）</li>
-        <li>3社並行運用（保守コスト > 利得）</li>
-        <li>Mits 業務にコード refactor が無い以上、Codex の自走性を活かす場面は限定的</li>
-      </ul>
-    </div>
-  </section>
+    <p style="font-size:12px; color:#7a7a7a; margin-top:10px;">⚠️ 「default（日常運用値）」と「上限（絶対に超えられない天井）」は意味が違う。単純に数字並置（Antigravity 10 vs Claude 3）は apples-to-oranges で誤解を招く。上表は default / 上限を分離して記載。</p>
 
-  <!-- ===== Insurance Scenario ===== -->
-  <section>
-    <h2>別エンジンに保険として備える整備項目</h2>
-    <div class="conclusion">
-      <p>Claude Code に長期障害・価格急騰・サービス停止等が起きた場合に備えて、以下を整える：</p>
-      <ul>
-        <li><code>.claude/agents/*.md</code> の定期スナップショット</li>
-        <li>CLAUDE.md / context/ / memory/ の Git 管理（既存）</li>
-        <li>Codex 側で <code>/import</code> を1回試して移行できることを確認（agent カタログのみ移行・team 構造は手動再構築）</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- ===== Sources / Footer ===== -->
-  <footer class="report-foot">
-    <strong>一次資料</strong>
-    <ul>
-      <li>Codex 公式 changelog: <a href="https://developers.openai.com/codex/changelog">developers.openai.com/codex/changelog</a></li>
-      <li>Codex subagents docs: <a href="https://developers.openai.com/codex/subagents">developers.openai.com/codex/subagents</a></li>
-      <li>Codex /import docs: <a href="https://developers.openai.com/codex/import">developers.openai.com/codex/import</a></li>
-      <li>Gemini CLI subagents.md: <a href="https://github.com/google-gemini/gemini-cli/blob/main/docs/core/subagents.md">github.com/google-gemini/gemini-cli</a></li>
-      <li>Antigravity 移行 docs: <a href="https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/">developers.googleblog.com</a></li>
-      <li>Claude Code Agent Teams: <a href="https://code.claude.com/docs/en/agent-teams">code.claude.com/docs/en/agent-teams</a></li>
-    </ul>
-
-    <strong>GitHub Issue / PR（watch 対象）</strong>
-    <ul>
-      <li>openai/codex PR #28368（send_message・2026-06-16 merged）</li>
-      <li>openai/codex Issue #12047（multi-agent TUI 改善・open）</li>
-      <li>openai/codex Issue #27331（v0.137 multi_agent_v2 エラー・open）</li>
-      <li>google-gemini/gemini-cli Issue #19430（peer 通信要求・p2 open）</li>
-      <li>google-antigravity/antigravity-cli Issue #301（teamwork-preview 可観測性・open）</li>
-    </ul>
-
-    <strong>関連 memory</strong>
-    <ul>
-      <li>reference_agent_team_keiei_project.md（v3.1 構成・25ノード）</li>
-      <li>reference_codex_cli_and_vscode_extension.md（Codex 3形態構成・2026-06-07）</li>
-    </ul>
-
-    <strong style="display:block; margin-top:14px;">検証履歴</strong>
-    <ul>
-      <li>2026-06-20 mits-researcher 初期調査（Codex / Antigravity 公式 docs / 報道）</li>
-      <li>2026-06-20 devils-advocate 2回投入で Codex 主張の誤りを訂正（peer 通信 / shutdown / goals / 並列数）</li>
-      <li>2026-06-21 mits-researcher による Antigravity v3.1 同等機能調査（公式 docs 引用ベース）</li>
-      <li>2026-06-21 GUI 限定（CLI 不使用）追加調査・3社 GUI 比較表作成</li>
-      <li>2026-06-30 9 日後の追跡調査（次セクション参照）</li>
-    </ul>
-  </footer>
-
-  <!-- ============================================================ -->
-  <!-- ===== 2026-06-30 アップデートセクション（追記）           ===== -->
-  <!-- ============================================================ -->
-
-  <section style="margin-top:48px; padding-top:32px; border-top:3px double #b89544;">
-    <div style="background:#fff8eb; border:1px solid #b89544; border-left:5px solid #b04848; border-radius:4px; padding:18px 22px; margin-bottom:24px;">
-      <div style="font-size:11px; color:#b89544; font-weight:700; letter-spacing:0.1em; margin-bottom:6px;">UPDATE</div>
-      <div style="font-size:20px; font-weight:700; color:#1a3a52; margin-bottom:8px;">2026-06-30 アップデート（9 日後追跡）</div>
-      <div style="font-size:13px; color:#2a2a2a; line-height:1.7;">
-        6/21 発行から 9 日経過時点での再調査。<strong style="color:#b04848;">最新の重大変化は赤字太字で強調</strong>。既存 6/21 セクションはそのまま保持し、ここから下が追記。
-      </div>
-    </div>
-
-    <h2>結論の変化（6/21 → 6/30）</h2>
-    <div class="conclusion">
-      <p class="lead">主軸は Claude Code 維持で変わらず。ただし Codex に重大変化。</p>
-      <ul>
-        <li><strong style="color:#b04848;">Codex v0.142.0 stable リリース（2026-06-22）に multi-agent delegation の 3 段階設定（disabled / explicit-request-only / proactive）が搭載された</strong>。6/21 時点の「under development」評価は更新が必要</li>
-        <li>ただし「multi_agent_v2 が stable 化」とは公式に明記されていない。「stable リリースに機能が組み込まれた」が正確な事実</li>
-        <li>Claude Code Agent Teams は <strong style="color:#b04848;">引き続き experimental 維持</strong>（フラグ <code>CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS</code> 必須・6/15-30 で stable 化なし）</li>
-        <li>Antigravity の 3 階層 spawn / peer 通信 / team 永続化 / shutdown protocol は 6/15-30 で <strong>公式 docs に記述なし</strong>（実装有無は未確認 ≠ 未実装）</li>
-        <li>Mits 実体験「Antigravity IDE で Claude 作業フォルダを複製できた」の正体は <strong>要詳細確認</strong>（VS Code workspace としてテキスト閲覧した状態か / agent として動作したかで意味が異なる）</li>
-      </ul>
-    </div>
+    <p style="font-size:13px; line-height:1.7; margin-top:12px;"><strong>v3.1（3 階層）への適合</strong>：4 社とも階層数だけで見れば余裕。<strong>差別化は階層以外の 3 機能（team 永続化 / peer 通信の実装成熟度 / shutdown API）</strong>で決まる。</p>
   </section>
 
   <section>
-    <h2>7 機能対照表（2026-06-30 現在・6/21 差分明記）</h2>
+    <h2>7 機能対照表(2026-07-26 現在・6/21〜7/6 との差分明記)</h2>
     <table class="matrix">
       <thead>
         <tr>
@@ -759,116 +649,188 @@
       <tbody>
         <tr>
           <td class="func">① カスタム agent 定義</td>
-          <td><span class="status ok">✅</span>v2.1.178 で nested <code>.claude/skills</code> 対応・v2.1.186 で命名規約緩和（kebab/snake/camelCase）<span class="note">差分：柔軟性向上</span></td>
-          <td><span class="status ok">✅</span><strong style="color:#b04848;">PR #30274（6/26 merged）で AGENTS.md と skills が delegation 認可の入力ソースに</strong><span class="note">差分：認可制御強化</span></td>
-          <td><span class="status warn">⚠️</span>コミュニティ Gist のみ（公式移行機能なし）<span class="note">変化なし</span></td>
+          <td><span class="status ok">✅</span>v2.1.212 で spawn 上限 200 / v2.1.219 で spawn depth 1→3<span class="note">差分：spawn 制御強化</span></td>
+          <td><span class="status ok">✅</span><strong style="color:#b04848;">v0.145.0 で per-subagent model / reasoning / concurrency 正式化</strong>・PR #33550 で <code>[agents]</code> namespace 統一<span class="note">差分：設定の統一</span></td>
+          <td><span class="status ok">✅</span>agent.md markdown 対応 + <code>--agent</code> フラグ（CLI v1.1.1）<span class="note">差分：CLI 側改善</span></td>
         </tr>
         <tr>
-          <td class="func">② 永続コンテキスト（CLAUDE.md / AGENTS.md）</td>
+          <td class="func">② 永続コンテキスト</td>
           <td><span class="status ok">✅</span>CLAUDE.md 3層階層<span class="note">差分なし</span></td>
-          <td><span class="status ok">✅</span>PR #29810（6/25）で AGENTS.md が環境変化に動的反応<span class="note">差分：動的反応</span></td>
+          <td><span class="status ok">✅</span><code>[agents]</code> TOML namespace + AGENTS.md 動的反応<span class="note">差分：設定の TOML 統一</span></td>
           <td><span class="status ok">✅</span>ANTIGRAVITY.md + AGENTS.md<span class="note">差分なし</span></td>
         </tr>
         <tr>
-          <td class="func">③ 3 階層 spawn（参謀→4リーダー→19配下）</td>
-          <td><span class="status ok">✅</span>Agent Teams experimental・v2.1.181 で 5-level depth limit 遵守修正<span class="note">差分：depth 制御信頼性向上</span></td>
-          <td><span class="status ok">✅</span><strong style="color:#b04848;">PR #29736（6/24 merged）で AgentGraphStore を ThreadManager に注入・spawn/close/resume/subtree 全操作が SQLite 統一</strong>。ただし Issue #30692（6/30 open）で agents.max_depth=1 の fork/derive バイパスバグ報告<span class="note">差分：アーキテクチャ統一・既知バグあり</span></td>
-          <td><span class="status warn">🔍</span>公式 docs 記述なし（実装有無は未確認）<span class="note">変化なし</span></td>
+          <td class="func">③ 3 階層 spawn</td>
+          <td><span class="status ok">✅</span>default 3 / v2.1.217 で default 禁止に一時後退 → v2.1.219 で default 3 に緩和<span class="note">差分：default 制御の細分化</span></td>
+          <td><span class="status ok">✅</span><strong style="color:#b04848;">V2 で max_depth 無視（意図的仕様）= 実質制限なし</strong>・V1 は default 1<span class="note">差分：V2 で階層制御思想変更</span></td>
+          <td><span class="status ok">✅</span><strong style="color:#b04848;">上限 10 levels（6/21 判定訂正）</strong>・CLI v1.1.1 で grandchild 以深の表示対応<span class="note">差分：6/21「再帰禁止」判定を訂正</span></td>
         </tr>
         <tr>
           <td class="func">④ team 単位の恒久構成</td>
-          <td><span class="status ok">✅</span><code>~/.claude/teams/{team-name}/config.json</code>（session 揮発）+ <code>~/.claude/tasks/{team-name}/</code>（永続）。v2.1.178 で命名規約 docs 明記<span class="note">差分：仕様明文化</span></td>
-          <td><span class="status warn">⚠️</span>Issue #12047（multi-agent TUI overhaul・team.toml 未実装）依然 open・6/15-30 でコメント追加なし<span class="note">変化なし</span></td>
-          <td><span class="status warn">🔍</span>公式 docs 記述なし（実装有無は未確認）<span class="note">変化なし</span></td>
+          <td><span class="status ok">✅</span><code>~/.claude/teams/</code> + <code>~/.claude/tasks/</code><span class="note">変化なし</span></td>
+          <td><span class="status warn">⚠️</span>Issue #12047（team.toml 未実装）依然 open・7 月も進展なし<span class="note">変化なし</span></td>
+          <td><span class="status ng">❌</span><strong style="color:#b04848;">依然公式 docs 記述なし・唯一の未対応根拠として残る</strong><span class="note">Antigravity skip の残存根拠</span></td>
         </tr>
         <tr>
-          <td class="func">⑤ リーダー間 peer 通信（SendMessage / mailbox）</td>
-          <td><span class="status ok">✅</span>SendMessage（experimental・docs 仕様化「Teammates message each other directly」）<span class="note">差分：docs 明文化</span></td>
-          <td><span class="status ok">✅</span><strong style="color:#b04848;">v0.142.0 stable リリース（6/22）に multi-agent delegation の 3 段階設定（disabled / explicit-request-only / proactive）が搭載（#28685, #28792, #29324）</strong>。typed envelopes + join key 実装済。ただし v1 delegation prompt の guardrail を PR #30511（6/29）で復元 = prompt 調整は継続中<span class="note">差分：機能搭載・prompt 微調整中</span></td>
-          <td><span class="status warn">🔍</span>公式 docs 記述なし（実装有無は未確認）<span class="note">変化なし</span></td>
+          <td class="func">⑤ リーダー間 peer 通信</td>
+          <td><span class="status ok">✅</span>SendMessage（experimental・バグ #70087/#73489 open）<span class="note">差分：バグ継続</span></td>
+          <td><span class="status ok">✅</span><strong style="color:#b04848;">v0.145.0 で opt-in stable ラベル付与（PR #34383）</strong>・ただし Release blocker #32988 open<span class="note">差分：stable ラベル付与済だが Release blocker あり</span></td>
+          <td><span class="status ok">✅</span><strong style="color:#b04848;">公式 docs 明文化「peer agents whose ID is known」（6/21 判定訂正）</strong>・ID discovery 仕様は未確認<span class="note">差分：6/21「設計思想で否定」判定を訂正</span></td>
         </tr>
         <tr>
           <td class="func">⑥ 共有タスクボード</td>
-          <td><span class="status ok">✅</span><code>~/.claude/tasks/</code><span class="note">差分なし</span></td>
-          <td><span class="status ok">✅</span>goals stable・v0.140.0 で /goal 大テキスト保持・v0.142.0 で goal-first thread 永続化バグ修正（#28808）・composer 編集追加<span class="note">差分：UX 改善</span></td>
-          <td><span class="status warn">△</span>2.0 Manager View で並列 dispatch（共有タスクボードとしての記述は確認できず）<span class="note">変化なし</span></td>
+          <td><span class="status ok">✅</span><code>~/.claude/tasks/</code><span class="note">変化なし</span></td>
+          <td><span class="status ok">✅</span>goals stable<span class="note">変化なし</span></td>
+          <td><span class="status warn">△</span>Manager View で並列 dispatch（共有タスクボードとしての記述は依然なし）<span class="note">変化なし</span></td>
         </tr>
         <tr>
           <td class="func">⑦ shutdown protocol</td>
-          <td><span class="status ok">✅</span>docs 仕様化「approve / reject」・v2.1.191 で background agent 復活バグ修正<span class="note">差分：信頼性向上</span></td>
-          <td><span class="status ok">✅</span>PR #30314（6/27 merged）で JSON shutdown logs 構造化・PR #30173（6/26）で submission channel close 時の永続化<span class="note">差分：可観測性向上</span></td>
-          <td><span class="status warn">🔍</span>公式 docs 記述なし（実装有無は未確認）<span class="note">変化なし</span></td>
+          <td><span class="status ok">✅</span>approve/reject + v2.1.191 bg agent 復活バグ修正<span class="note">変化なし</span></td>
+          <td><span class="status ok">✅</span>JSON shutdown logs 構造化<span class="note">変化なし</span></td>
+          <td><span class="status warn">⚠️</span><strong style="color:#b04848;">Running/Idle/Killed 3 状態 lifecycle 明文化（6/21 判定訂正）</strong>・ただし状態表示レベル・shutdown 制御 API プリミティブは未定義<span class="note">差分：部分的明文化</span></td>
         </tr>
       </tbody>
     </table>
   </section>
 
   <section>
-    <h2>Codex の重大変化（一次資料引用）</h2>
-    <div class="detail-card full">
-      <div class="head">v0.142.0 release notes（2026-06-22 公開・stable リリース）</div>
-      <blockquote style="background:#fff8eb; border-left:4px solid #b89544; padding:14px 18px; margin:10px 0; font-size:13px; line-height:1.7; color:#2a2a2a; font-style:italic;">
-        "App-server clients can configure multi-agent delegation as <strong style="color:#b04848; font-style:normal;">disabled, explicit-request-only, or proactive</strong> at the thread and turn level. (#28685, #28792, #29324)"<br>
-        "Parent agents now receive terminal subagent errors instead of seeing failed work as an empty successful completion. (#28375)"<br>
-        "Goal-first threads are once again persisted and returned by thread/list and thread/search. (#28808)"
-      </blockquote>
-      <p style="font-size:13px; line-height:1.7;">出典：<a href="https://github.com/openai/codex/releases/tag/rust-v0.142.0" style="color:#2c5575; border-bottom:1px dotted #2c5575;">github.com/openai/codex/releases/tag/rust-v0.142.0</a>（取得：2026-06-30）</p>
-      <p style="font-size:13px; line-height:1.7; margin-top:10px;"><strong>判定根拠の限界</strong>：v0.142.0 は <code>Pre-release</code> タグなし = stable リリース系列。ただし release notes に「multi_agent_v2: stable」等の明示ラベルはない。「stable リリースに multi-agent delegation 機能が搭載」が正確な事実。「multi_agent_v2 が stable 化」と書くと過剰断定になる。</p>
-    </div>
-  </section>
+    <h2>各社の直近 20 日間の主要リリース</h2>
 
-  <section>
-    <h2>Mits 実体験「Antigravity IDE で Claude 作業フォルダを複製できた」の正体</h2>
-    <p>2026-06-30 に Mits が Antigravity IDE（macOS）を DL → <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/</code> を開いた → 「複製できてしまった」と報告。</p>
-    <div class="detail-grid" style="margin-top:14px;">
-      <div class="detail-card">
-        <div class="head">✅ 確認できる事実</div>
-        <ul>
-          <li>Antigravity IDE は VS Code fork → フォルダを開けば <code>.claude/</code> 配下は <strong>テキストファイルとして閲覧可能</strong></li>
-          <li>公式の Claude Code 移行機能は <strong>存在しない</strong>（公式 docs / changelog / GitHub releases いずれにも記載なし）</li>
-          <li>変換にはコミュニティ製 Gist スクリプト（<code>migrate_claude_to_antigravity.sh</code>）の実行が必要</li>
-          <li>Gist の変換対象：<code>.claude/skills/</code> → <code>.agent/skills/</code> / <code>.claude/agents/*.md</code> → <code>.agent/skills/[name]/SKILL.md</code> / <code>CLAUDE.md</code> → <code>.agent/skills/project-context/SKILL.md</code></li>
-          <li>変換対象外：hooks / MCP 設定 / <code>~/.claude/projects/.../memory/</code></li>
+    <div class="detail-grid">
+      <div class="detail-card full">
+        <div class="head">Claude Code：v2.1.197 → v2.1.220（24 リリース・7/6〜7/25）</div>
+        <ul style="padding-left:18px; font-size:13px; line-height:1.7;">
+          <li><strong>v2.1.197</strong>（7/6 頃）：Claude Sonnet 5 default 化・native 1M-token context</li>
+          <li><strong>v2.1.198</strong>：<strong style="color:#b04848;">Subagents run in the background by default</strong>（v3.2 経路の公式 default 化）</li>
+          <li><strong>v2.1.200</strong>：default permission mode Manual 化</li>
+          <li><strong>v2.1.212</strong>（7/17）：spawn 上限 200 / MCP 2 分超で自動 bg 化</li>
+          <li><strong>v2.1.217</strong>（7/21）：default nested spawn 禁止（一時後退）</li>
+          <li><strong>v2.1.219</strong>（7/24）：<strong style="color:#b04848;">Claude Opus 5 投入・default Opus 化 / spawn depth 1→3</strong></li>
         </ul>
       </div>
-      <div class="detail-card">
-        <div class="head"><strong style="color:#b04848;">⚠️ Mits 確認が必要な点</strong></div>
-        <ul>
-          <li>Mits の言う「複製」が何を指すか：
-            <ul>
-              <li>(A) ファイルツリーに <code>.claude/</code> 配下が表示されただけ</li>
-              <li>(B) Antigravity の agent として <strong>動作</strong> した（プロンプト・スキル等が活性化）</li>
-              <li>(C) <strong style="color:#b04848;">Antigravity が独自に Claude 設定を読み取って自動変換する機能を持っていた</strong>（公式 docs に未記載・実装されていれば重大変化）</li>
-            </ul>
-          </li>
-          <li>(C) が事実なら「公式 docs 未記載の隠し機能」になる → Mits の操作詳細（メニュー名・確認ダイアログの有無）の確認が必要</li>
+
+      <div class="detail-card full">
+        <div class="head">Codex：v0.143 → v0.145.0 stable + alpha 40 本超（7/8〜7/26）</div>
+        <ul style="padding-left:18px; font-size:13px; line-height:1.7;">
+          <li><strong>v0.143.0</strong>（7/8 stable）：remote plugins default ON・MCP tool search default</li>
+          <li><strong>v0.144.0</strong>（7/9 stable）：<code>writes</code> app-approval mode</li>
+          <li><strong>v0.145.0</strong>（7/21 stable）：<strong style="color:#b04848;">PR #34383「Mark multi-agent v2 as stable」merged + per-subagent model/reasoning/concurrency 正式化 + /import が Cursor + Claude Code の memories まで拡張</strong></li>
+          <li>alpha 系列 v0.146.0-alpha.10.1（7/25 UTC 進行中）</li>
+        </ul>
+      </div>
+
+      <div class="detail-card full">
+        <div class="head">Antigravity：CLI v1.1.0 → v1.1.7（8 リリース）+ Desktop v2.3.0 → v2.4.2（3 リリース・7/8〜7/24）</div>
+        <ul style="padding-left:18px; font-size:13px; line-height:1.7;">
+          <li><strong>CLI v1.1.0</strong>（7/8）：<code>/plan</code> mode 置換・execution mode cycling 公開</li>
+          <li><strong>CLI v1.1.1</strong>（7/10）：<code>--agent</code> フラグ + nested subagents grandchild 以深の表示対応</li>
+          <li><strong>Desktop v2.3.0</strong>（7/13）：queued messages・起動性能最適化</li>
+          <li><strong>Desktop v2.4.2</strong>（7/24）：preview tabs・MCP server 60秒 timeout・"Download Diagnostics" コマンド</li>
         </ul>
       </div>
     </div>
   </section>
 
   <section>
-    <h2>結論訂正（6/21 → 6/30）</h2>
+    <h2>コミュニティ実運用評価(公式レポ以外の裏取り)</h2>
+    <p style="font-size:13px; margin-bottom:12px;">GitHub Discussions / Reddit / HackerNews / Simon Willison / 個人ブログ / Google AI Developers Forum から実運用者の声を集約(mits-researcher 3 体並列・2026-07-26)。</p>
+
+    <div class="detail-grid">
+      <div class="detail-card full">
+        <div class="head">🔵 Claude Code — 実運用者の声</div>
+        <ul style="padding-left:18px; font-size:13px; line-height:1.7;">
+          <li><strong>Simon Willison（7/3 blog）</strong>：「Fable/Opus を orchestrator に、Sonnet を subagent に」= 素の subagent 経路推奨（<strong>Mits v3.2 と完全一致</strong>）</li>
+          <li><strong>Anthropic Thariq Shihipar（7/21 fireside chat）</strong>：workflows + subagent orchestration を推奨。Agent Teams への言及なし = <strong>Anthropic 自身も Agent Teams 経路を推してない</strong></li>
+          <li><strong>Addy Osmani</strong>：「The bottleneck is no longer generation. It's verification.」/ 「When you orchestrate 50 agents, vague thinking multiplies.」</li>
+          <li><strong>Agent Teams 追加バグ</strong>（Mits の 5 件以外）：#23620 context 圧縮で team lost / #32721 teammate identity 齟齬（<strong>Anthropic が Closed as not planned = 仕様と主張</strong>）/ #30140 shared channel 不在</li>
+        </ul>
+      </div>
+
+      <div class="detail-card full">
+        <div class="head">🟠 Codex — 実運用者の声</div>
+        <ul style="padding-left:18px; font-size:13px; line-height:1.7;">
+          <li><strong>Release blocker #32988</strong>（Lady-Lin 7/14）：「Multi-Agent V2 defaults on stable, the model-visible spawn_agent schema omits model and reasoning_effort. A schema-driven controller cannot reliably issue them.」</li>
+          <li><strong>Luna spawn regression #34700</strong>（enzopresbiteris-rgb 7/22・v0.145.0 stable 実機再現）：「Unknown model gpt-5.6-luna for spawn_agent. Available models: gpt-5.6-sol, gpt-5.6-terra」</li>
+          <li><strong>agents.max_depth ignored（PR #20180）</strong>：「バグではなく設計上の仕様変更」<strong>を community が確認</strong>（テスト名 <code>multi_agent_v2_spawn_agent_ignores_configured_max_depth</code>）</li>
+          <li><strong>Simon Willison 7/16「Bad Codex Bug」</strong>：GPT-5.6 が $HOME 環境変数を temp dir で上書き → <strong>$HOME 全削除事故</strong> → 「pretty gnarly Codex bug」</li>
+          <li>/import 好評だが実装バグ多発：#32351 timestamp 喪失 / #34656 compaction 履歴喪失 / #33283 macOS SIGTRAP crash</li>
+        </ul>
+      </div>
+
+      <div class="detail-card full">
+        <div class="head">🟡 Antigravity — 実運用者の声</div>
+        <ul style="padding-left:18px; font-size:13px; line-height:1.7;">
+          <li><strong>HN 48222529「Google's Antigravity bait and switch」</strong>：chat history 消失 / VS Code 拡張機能消失 / Windows+WSL 完全破損 / quota UI 削除</li>
+          <li><strong>RyJones（HN）</strong>：「unsubscribed from Google Ultra, moving to Claude Max」</li>
+          <li><strong>/teamwork-preview（Ultra $200 限定）は 7 月中旬全面停止</strong>：Fausto 7/18「no valid model found」/ JanVogelsang 7/19「worked 3 days ago and then suddenly stopped」/ Google 中の人 fix ETA なし</li>
+          <li>Desmack（6/5・Ultra 契約者）：「50 Markdown files dumped straight into working directory. destroyed my token count」</li>
+          <li>Mits 実体験「複製できた」に類似する community 一次報告：<strong>ゼロ</strong>（"開いただけで agent が動いた" の証言なし）</li>
+        </ul>
+      </div>
+
+      <div class="detail-card full">
+        <div class="head">3 者比較コミュニティ Consensus</div>
+        <p style="font-size:13px;"><strong>Burk（Medium・2026-07）</strong>：「Claude Code is the most reliable of the three, while Codex is the fast terminal alternative that gets very close. Antigravity finally works.」</p>
+        <p style="font-size:13px; margin-top:6px;"><strong>vexp.dev 集約</strong>：「start a session with Codex for structured predictable work, then bring in Claude Code when the problem gets genuinely hard」= <strong>2 択でなく併用が実務パターン</strong></p>
+        <p style="font-size:13px; margin-top:6px;"><strong>XDA Parth Shah</strong>：「surgical edit は Claude Code / 大型実装は Antigravity / 両方使うのがベター」</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>結論(6/21→6/30→7/06→7/26 の変化・wishful framing 排除)</h2>
     <div class="conclusion">
-      <p class="lead">主軸 Claude Code 維持。Codex は実機検証フェーズへ昇格。Antigravity は判定保留。</p>
-      <ul>
-        <li><strong>Claude Code</strong>：v3.1 全 7 機能対応（experimental 含む）・25 ノード稼働継続。Agent Teams stable 化は 6/15-30 でロードマップ含めて未公表</li>
-        <li><strong style="color:#b04848;">Codex</strong>：6/21「watch」→ <strong style="color:#b04848;">6/30「実機検証フェーズに昇格」</strong>。v0.142.0 stable リリースに multi-agent delegation 3 段階設定が搭載されたため、v3.1 構造を Codex で実機検証する価値が出た。ただし以下の留保あり：
-          <ul>
-            <li>「multi_agent_v2 が stable 化」とは公式に書かれていない。「stable リリースに搭載」が事実</li>
-            <li>④ team 永続化（Issue #12047）は依然 open = v3.1 の「恒久組織」を完全再現するには未だ不足</li>
-            <li>delegation の prompt 調整が継続中（PR #30511 で v1 prompt 復元・MAv2 prompt は据置）</li>
-            <li><strong>Mits 環境で 25 ノードの実機検証は未実施</strong></li>
-          </ul>
-        </li>
-        <li><strong>Antigravity</strong>：6/21「skip」→ 6/30「判定保留」に書き換え。「skip = 不要」と読まれる書き方は撤回。実態は「v3.1 必須機能の 4 機能（③④⑤⑦）について公式 docs に記述がなく、実装の有無自体が確認できない」状態。Mits 実体験の詳細確認次第で評価変動の余地あり</li>
+      <p class="lead">主軸 Claude Code v3.2 経路継続。Codex opt-in stable 段階だが Release blocker あり。Antigravity は skip 維持(team 永続化未対応が致命)。</p>
+
+      <table class="matrix" style="margin-top:14px;">
+        <thead>
+          <tr>
+            <th class="func">エンジン</th>
+            <th>6/21</th>
+            <th>6/30</th>
+            <th>7/06</th>
+            <th style="background:#b04848;">7/26</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="func">Claude Code</td>
+            <td>✅ 維持</td>
+            <td>✅ 維持</td>
+            <td>v3.2 経路移行(Agent Teams→Agent tool)</td>
+            <td style="background:#fdecec;">✅ v3.2 継続維持。<strong style="color:#b04848;">Anthropic 公式 default（subagent bg 既定化）が Mits v3.2 と一致・Simon Willison らも同経路推奨</strong></td>
+          </tr>
+          <tr>
+            <td class="func">Codex</td>
+            <td>⚠️ watch / 単発併用</td>
+            <td>実機検証フェーズに昇格</td>
+            <td>5-10% ニッチ運用候補</td>
+            <td style="background:#fdecec;"><strong style="color:#b04848;">opt-in stable ラベル付与済・ただし Release blocker #32988 + Luna regression #34700 が v0.145.0 stable でも継続</strong>。Mits 環境で 25 ノード実機検証は依然未実施。「stable ラベル = 実運用 stable」ではない</td>
+          </tr>
+          <tr>
+            <td class="func">Antigravity</td>
+            <td>❌ skip（再帰禁止）</td>
+            <td>判定保留</td>
+            <td>判定保留位置づけ維持</td>
+            <td style="background:#fdecec;"><strong style="color:#b04848;">skip 維持（team 永続化未対応が keiei-project 用途で致命）</strong>。ただし 6/21「再帰禁止」判定は事実訂正（実は 10 levels 対応・peer 通信可能・shutdown 3 状態明文化）。Mits 体験の正体は (A) AGENTS.md 自動読み込み確定</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top:16px;">devils-advocate review で訂正した推測断定</h3>
+      <ul style="padding-left:18px; font-size:13px; line-height:1.8;">
+        <li><strong>「multi_agent_v2 が stable 化」→</strong>「opt-in stable ラベル付与」に格下げ（default 無効・実験機能に stable ラベルを付けただけ）</li>
+        <li><strong>「Antigravity 再評価候補への格上げ」→</strong>「skip 維持」に戻す（team 永続化未対応 = keiei-project の最重要根拠が崩れていない）</li>
+        <li><strong>「実機検証フェーズに昇格」→</strong>「実機検証は未実施」を明記</li>
+        <li><strong>階層数値の apples-to-oranges 比較（10 vs 3）→</strong>「default / 上限」を分離して記載</li>
+        <li><strong>Mits 体験「未発生の可能性が高い」推測 →</strong>撤回・(A) AGENTS.md 自動読み込みで 100% 実証</li>
       </ul>
     </div>
   </section>
 
   <section>
-    <h2>主要マージ済 PR / Issue（6/15-30・実在確認済）</h2>
-    <p style="font-size:12px; color:#7a7a7a; margin-bottom:10px;">全件 <code>gh pr view / gh issue view</code> で 2026-06-30 に実在確認済（番号ハルシネーション防止）</p>
+    <h2>主要 PR / Issue(7/6〜7/26・実在確認済)</h2>
+    <p style="font-size:12px; color:#7a7a7a; margin-bottom:10px;">全件 <code>gh pr view / gh issue view</code> で 2026-07-26 に実在確認済（ハルシネーション防止）</p>
     <table class="matrix">
       <thead>
         <tr>
@@ -878,59 +840,69 @@
         </tr>
       </thead>
       <tbody>
-        <tr><td class="func">openai/codex #30511</td><td>Restore v1 delegation guidance</td><td>MERGED 2026-06-29</td></tr>
-        <tr><td class="func">openai/codex #30314</td><td>app-server: structure and test JSON shutdown logs</td><td>MERGED 2026-06-27</td></tr>
-        <tr><td class="func">openai/codex #30274</td><td>allow AGENTS.md and skills to authorize delegation</td><td>MERGED 2026-06-26</td></tr>
-        <tr><td class="func">openai/codex #30173</td><td>Close thread persistence when submission channel closes</td><td>MERGED 2026-06-26</td></tr>
-        <tr><td class="func">openai/codex #29810</td><td>core: make AGENTS.md react to environment changes</td><td>MERGED 2026-06-25</td></tr>
-        <tr><td class="func">openai/codex #29736</td><td>Inject agent graph store into ThreadManager</td><td>MERGED 2026-06-24</td></tr>
-        <tr><td class="func">openai/codex #29591</td><td>list descendant threads by ancestor</td><td>MERGED 2026-06-24</td></tr>
-        <tr><td class="func">openai/codex #29567</td><td>show external import result counts</td><td>MERGED 2026-06-24</td></tr>
-        <tr><td class="func">openai/codex #30692</td><td>agents.max_depth=1 does not limit derived/forked worker conversations</td><td>OPEN（既知バグ）</td></tr>
-        <tr><td class="func">openai/codex #12047</td><td>Multi-agent TUI overhaul: named agents, per-agent config, async orchestration</td><td>OPEN（変化なし）</td></tr>
-        <tr><td class="func">openai/codex #19430</td><td>Approved MCP tools still require repeated manual approval</td><td>OPEN（変化なし）</td></tr>
+        <tr><td class="func">openai/codex <strong>PR #34383</strong></td><td><strong>Mark multi-agent v2 as stable</strong></td><td>MERGED 2026-07-20</td></tr>
+        <tr><td class="func">openai/codex PR #33550</td><td>Unify multi-agent settings under [agents]</td><td>MERGED 2026-07-16</td></tr>
+        <tr><td class="func">openai/codex PR #33657</td><td>Restore agent roles when reloading v2 sub-agents</td><td>MERGED 2026-07-16</td></tr>
+        <tr><td class="func">openai/codex PR #34779</td><td>Use the live parent history mode when forking agents</td><td>MERGED 2026-07-22</td></tr>
+        <tr><td class="func">openai/codex Issue #32988</td><td><strong>[Release blocker]</strong> stable Codex breaks model-routed subagent plugins</td><td>OPEN</td></tr>
+        <tr><td class="func">openai/codex Issue #34700</td><td>v0.145.0 stable: spawn_agent rejects gpt-5.6-luna with multi_agent_v2 enabled</td><td>OPEN</td></tr>
+        <tr><td class="func">openai/codex Issue #34024</td><td>Regression: luna cannot be specified in spawn_agent tool model</td><td>OPEN</td></tr>
+        <tr><td class="func">openai/codex Issue #33447</td><td>agents.max_threads bypass by V2</td><td>OPEN</td></tr>
+        <tr><td class="func">openai/codex Issue #34656</td><td>Claude Code session imports lose compaction</td><td>OPEN</td></tr>
+        <tr><td class="func">anthropics/claude-code Issue #50779</td><td>Team lead inbox deferred injection</td><td>OPEN</td></tr>
+        <tr><td class="func">anthropics/claude-code Issue #70087</td><td>Peer message body 未配送</td><td>OPEN</td></tr>
+        <tr><td class="func">anthropics/claude-code Issue #73489</td><td>Main agent が sub agents からのメッセージ読み取り不可</td><td>OPEN</td></tr>
+        <tr><td class="func">anthropics/claude-code Issue #74113</td><td>Background agent idle without report</td><td>OPEN</td></tr>
+        <tr><td class="func">anthropics/claude-code Issue #72611</td><td>Multi-agent negative leverage</td><td>OPEN</td></tr>
       </tbody>
     </table>
   </section>
 
-  <section>
-    <h2>devils-advocate review で訂正した推測断定</h2>
-    <p>本セクションを Mits に返す前に devils-advocate を投入し、以下の致命的な穴を訂正：</p>
-    <ul style="font-size:13px; line-height:1.8;">
-      <li><strong>「multi_agent_v2 が stable 化」断定 →</strong> changelog に明示ラベルなし。「v0.142.0 stable リリースに multi-agent delegation 機能が搭載」に書き換え</li>
-      <li><strong>「理論上ほぼ移植可能」（wishful framing） →</strong> ④ team 永続化が未実装である事実を併記。「実機未検証」を明記</li>
-      <li><strong>Mits 体験を「未発生の可能性が高い」と推測で否定 →</strong> 撤回。「Mits 確認が必要」に書き換え</li>
-      <li><strong>Antigravity「公式 docs 記述なし」=「未対応」と読める →</strong> 「実装有無は未確認」と明記</li>
-      <li><strong>Issue/PR 番号のハルシネーション疑惑 →</strong> 全 14 件を <code>gh</code> で実在確認済（ハルシネーションなし）</li>
-    </ul>
-  </section>
-
   <footer class="report-foot" style="margin-top:36px;">
-    <strong>6/30 追記の一次資料</strong>
+    <strong>7/26 追記の一次資料</strong>
     <ul>
-      <li><a href="https://github.com/openai/codex/releases/tag/rust-v0.142.0">openai/codex v0.142.0 release notes</a>（取得：2026-06-30）</li>
-      <li><a href="https://developers.openai.com/codex/changelog">developers.openai.com/codex/changelog</a>（取得：2026-06-30）</li>
-      <li><a href="https://github.com/anthropics/claude-code/releases">anthropics/claude-code releases v2.1.178〜v2.1.196</a>（取得：2026-06-30）</li>
-      <li><a href="https://code.claude.com/docs/en/agent-teams">code.claude.com/docs/en/agent-teams</a>（experimental 維持を確認・2026-06-30）</li>
-      <li><a href="https://github.com/google-antigravity/antigravity-cli/releases">google-antigravity/antigravity-cli releases v1.0.10〜v1.0.12</a>（取得：2026-06-30）</li>
-      <li><a href="https://gist.github.com/iamadalek/523bc94c126ed50e76e2e7761358119e">コミュニティ製 Antigravity Migration Toolkit v4（iamadalek）</a>（取得：2026-06-30）</li>
-      <li><a href="https://gist.github.com/enachb/23539f29cb47a4e05b26ca41ec8ae8cd/">コミュニティ製 Migration Guide: Claude Code to Antigravity（enachb）</a>（取得：2026-06-30）</li>
+      <li><a href="https://github.com/openai/codex/releases/tag/rust-v0.145.0">openai/codex v0.145.0 release notes</a>（取得：2026-07-26）</li>
+      <li><a href="https://github.com/openai/codex/pull/34383">Codex PR #34383 Mark multi-agent v2 as stable</a>（MERGED 2026-07-20）</li>
+      <li><code>codex-rs/core/src/config/mod.rs</code> ソースコード「DEFAULT_AGENT_MAX_DEPTH: i32 = 1」「Ignored by V2」</li>
+      <li><a href="https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md">anthropics/claude-code CHANGELOG v2.1.197〜v2.1.220</a>（取得：2026-07-26）</li>
+      <li><a href="https://code.claude.com/docs/en/agent-teams">code.claude.com/docs/en/agent-teams</a>（experimental 継続確認・2026-07-26）</li>
+      <li><a href="https://antigravity.google/docs/subagents">antigravity.google/docs/subagents</a> — 「10 levels nesting」「peer agents whose ID is known」「Running/Idle/Killed 3 states」実文取得（2026-07-26）</li>
+      <li><a href="https://github.com/google-antigravity/antigravity-cli/releases">google-antigravity/antigravity-cli releases v1.1.0〜v1.1.7</a>（取得：2026-07-26）</li>
     </ul>
 
-    <strong style="display:block; margin-top:14px;">6/30 追記の検証履歴</strong>
+    <strong style="display:block; margin-top:14px;">7/26 追記のコミュニティ発信 source</strong>
     <ul>
-      <li>2026-06-30 mits-researcher 3 体並列調査（Claude Code / Codex / Antigravity 各社の 6/15-30 アップデート）</li>
-      <li>2026-06-30 devils-advocate 投入で「stable 化」断定・「理論上移植可能」断定・Mits 体験の推測否定を訂正</li>
-      <li>2026-06-30 GitHub <code>gh pr view / gh issue view</code> で 14 件全件実在確認（ハルシネーション疑惑を払拭）</li>
-      <li>2026-06-30 Codex v0.142.0 release notes 本文を一次資料として直接引用</li>
+      <li><a href="https://simonwillison.net/tags/claude-code/">Simon Willison Claude Code 7月タグ</a></li>
+      <li><a href="https://simonwillison.net/2026/Jul/16/bad-codex-bug/">Simon Willison "Bad Codex Bug"（7/16）</a></li>
+      <li><a href="https://news.ycombinator.com/item?id=48222529">HN "Google's Antigravity bait and switch"</a></li>
+      <li><a href="https://news.ycombinator.com/item?id=48196867">HN "Gemini CLI will stop working"</a></li>
+      <li><a href="https://discuss.ai.google.dev/t/teamwork-preview-command-not-working/175214">Google AI Forum /teamwork-preview 7月停止報告</a></li>
+      <li><a href="https://stories.byburk.net/antigravity-vs-claude-code-vs-codex-9ee4a6aac2d4">Burk Medium「Antigravity vs Claude Code vs Codex」（2026-07）</a></li>
+      <li><a href="https://ofox.ai/blog/migrate-claude-code-to-codex-2026/">Ofox「Migrate Claude Code to Codex: 12 Configs, 1 Dead End」（7/3）</a></li>
+      <li><a href="https://kapadiya.net/blog/codex-subagent-model-config/">Vikas Kapadiya Codex subagent model config（7/11）</a></li>
+      <li><a href="https://www.anthropic.com/news/introducing-claude-tag">Anthropic Claude Tag 発表（6/23 ベータ）</a></li>
+    </ul>
+
+    <strong style="display:block; margin-top:14px;">7/26 追記の検証履歴</strong>
+    <ul>
+      <li>2026-07-26 mits-researcher 3 体並列で 7/6-7/26 差分調査（Claude Code / Codex / Antigravity）</li>
+      <li>2026-07-26 4 経路裏取り（GitHub Issues / 公式 docs / 実機 CLI / 過去 session-log）</li>
+      <li>2026-07-26 Codex PR 29 件を <code>gh</code> で全件実在確認</li>
+      <li>2026-07-26 Antigravity 公式 docs 直接 curl で「10 levels」「peer agents whose ID is known」「Running/Idle/Killed」実文取得</li>
+      <li>2026-07-26 Codex ソースコード <code>codex-rs/core/src/config/mod.rs</code> 直接 curl で「DEFAULT_AGENT_MAX_DEPTH: i32 = 1」「Ignored by V2」確認</li>
+      <li>2026-07-26 mits-researcher 3 体並列で公式レポ以外（GitHub Discussions / Reddit / HN / Simon Willison / 個人ブログ）実運用評価収集</li>
+      <li>2026-07-26 Mits 実体験「複製できた」の 4 選択肢を AI 完結で全実機確認 → (A) AGENTS.md 22.6KB 実在で 100% 実証</li>
+      <li>2026-07-26 devils-advocate review で「stable 化」断定・「実機検証フェーズに昇格」wishful framing・「Antigravity 再評価候補」件数集計を訂正</li>
     </ul>
   </footer>
 
   <!-- ============================================================ -->
-  <!-- ===== 2026-07-06 アップデートセクション（追記）           ===== -->
+  <!-- ===== 3回目：2026-07-06 アップデート                         ===== -->
   <!-- ============================================================ -->
 
-  <section style="margin-top:48px; padding-top:32px; border-top:3px double #b04848;">
+  <div id="update-2026-07-06" class="anchor-spacer"></div>
+
+  <section style="margin-top:24px;">
     <div style="background:#fdecec; border:1px solid #b04848; border-left:5px solid #b04848; border-radius:4px; padding:18px 22px; margin-bottom:24px;">
       <div style="font-size:11px; color:#b04848; font-weight:700; letter-spacing:0.1em; margin-bottom:6px;">UPDATE — 転換点</div>
       <div style="font-size:20px; font-weight:700; color:#1a3a52; margin-bottom:8px;">2026-07-06 アップデート（v3.1 → v3.2 経路変更）</div>
@@ -1198,7 +1170,7 @@
       <div class="head">v3.2 経路変更に伴う運用ルール恒久化</div>
       <ul style="padding-left:18px; font-size:13px; line-height:1.7;">
         <li><code>feedback-incremental-parallel-spawn-pattern</code>：incremental 発注時は既走行分をそのまま維持し追加分のみ spawn（一括発注前提の v3.1 概念から脱却）</li>
-        <li><code>feedback-task-notification-immediate-report</code>：task-notification 到着ターンで Mits に自発報告（貯め込み禁止）</li>
+        <li><code>feedback-task-notification-immediate-report</code>：task-notification 到着ターンで Mits に自発報告(貯め込み禁止)</li>
         <li><code>feedback-worktree-only-for-shared-file-writes</code>：worktree は同一ファイル同時書き込み時のみ・デフォルト無し（cost 節約）</li>
         <li><code>feedback-skill-invocation-via-background-subagent</code>：長時間 skill は background subagent 経由で invoke（参謀の block 回避）</li>
         <li><code>feedback-background-progress-report-mandatory</code>：background 走行中は全ターン応答冒頭に進捗テーブル維持（Mits が常時把握可能に）</li>
@@ -1229,6 +1201,568 @@
       <li>2026-07-06 context/execution_rules.md §6 新設（判定 default = workflow + hook 中心）</li>
       <li>2026-07-06 subagent 停止時の自動再発注フローを Mits 明示指示で確立</li>
       <li>2026-07-06 hook 4 件追加 + 3 件修正でハーネス層を強化</li>
+    </ul>
+  </footer>
+
+  <!-- ============================================================ -->
+  <!-- ===== 2回目：2026-06-30 アップデート                         ===== -->
+  <!-- ============================================================ -->
+
+  <div id="update-2026-06-30" class="anchor-spacer"></div>
+
+  <section style="margin-top:48px; padding-top:32px; border-top:3px double #b89544;">
+    <div style="background:#fff8eb; border:1px solid #b89544; border-left:5px solid #b89544; border-radius:4px; padding:18px 22px; margin-bottom:24px;">
+      <div style="font-size:11px; color:#b89544; font-weight:700; letter-spacing:0.1em; margin-bottom:6px;">UPDATE</div>
+      <div style="font-size:20px; font-weight:700; color:#1a3a52; margin-bottom:8px;">2026-06-30 アップデート（9 日後追跡）</div>
+      <div style="font-size:13px; color:#2a2a2a; line-height:1.7;">
+        6/21 発行から 9 日経過時点での再調査。<strong style="color:#b04848;">最新の重大変化は赤字太字で強調</strong>。この追記が書かれた時点の判断であり、以後の追記（<a href="#update-2026-07-06" style="color:#b04848;">2026-07-06</a>）で更新されている。
+      </div>
+    </div>
+
+    <h2>結論の変化（6/21 → 6/30）</h2>
+    <div class="conclusion">
+      <p class="lead">主軸は Claude Code 維持で変わらず。ただし Codex に重大変化。</p>
+      <ul>
+        <li><strong style="color:#b04848;">Codex v0.142.0 stable リリース（2026-06-22）に multi-agent delegation の 3 段階設定（disabled / explicit-request-only / proactive）が搭載された</strong>。6/21 時点の「under development」評価は更新が必要</li>
+        <li>ただし「multi_agent_v2 が stable 化」とは公式に明記されていない。「stable リリースに機能が組み込まれた」が正確な事実</li>
+        <li>Claude Code Agent Teams は <strong style="color:#b04848;">引き続き experimental 維持</strong>（フラグ <code>CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS</code> 必須・6/15-30 で stable 化なし）</li>
+        <li>Antigravity の 3 階層 spawn / peer 通信 / team 永続化 / shutdown protocol は 6/15-30 で <strong>公式 docs に記述なし</strong>（実装有無は未確認 ≠ 未実装）</li>
+        <li>Mits 実体験「Antigravity IDE で Claude 作業フォルダを複製できた」の正体は <strong>要詳細確認</strong>（VS Code workspace としてテキスト閲覧した状態か / agent として動作したかで意味が異なる）</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>7 機能対照表（2026-06-30 現在・6/21 差分明記）</h2>
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th class="func">v3.1 必須機能</th>
+          <th>Claude Code</th>
+          <th>Codex（OpenAI）</th>
+          <th>Antigravity（Google）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="func">① カスタム agent 定義</td>
+          <td><span class="status ok">✅</span>v2.1.178 で nested <code>.claude/skills</code> 対応・v2.1.186 で命名規約緩和（kebab/snake/camelCase）<span class="note">差分：柔軟性向上</span></td>
+          <td><span class="status ok">✅</span><strong style="color:#b04848;">PR #30274（6/26 merged）で AGENTS.md と skills が delegation 認可の入力ソースに</strong><span class="note">差分：認可制御強化</span></td>
+          <td><span class="status warn">⚠️</span>コミュニティ Gist のみ（公式移行機能なし）<span class="note">変化なし</span></td>
+        </tr>
+        <tr>
+          <td class="func">② 永続コンテキスト（CLAUDE.md / AGENTS.md）</td>
+          <td><span class="status ok">✅</span>CLAUDE.md 3層階層<span class="note">差分なし</span></td>
+          <td><span class="status ok">✅</span>PR #29810（6/25）で AGENTS.md が環境変化に動的反応<span class="note">差分：動的反応</span></td>
+          <td><span class="status ok">✅</span>ANTIGRAVITY.md + AGENTS.md<span class="note">差分なし</span></td>
+        </tr>
+        <tr>
+          <td class="func">③ 3 階層 spawn（参謀→4リーダー→19配下）</td>
+          <td><span class="status ok">✅</span>Agent Teams experimental・v2.1.181 で 5-level depth limit 遵守修正<span class="note">差分：depth 制御信頼性向上</span></td>
+          <td><span class="status ok">✅</span><strong style="color:#b04848;">PR #29736（6/24 merged）で AgentGraphStore を ThreadManager に注入・spawn/close/resume/subtree 全操作が SQLite 統一</strong>。ただし Issue #30692（6/30 open）で agents.max_depth=1 の fork/derive バイパスバグ報告<span class="note">差分：アーキテクチャ統一・既知バグあり</span></td>
+          <td><span class="status warn">🔍</span>公式 docs 記述なし（実装有無は未確認）<span class="note">変化なし</span></td>
+        </tr>
+        <tr>
+          <td class="func">④ team 単位の恒久構成</td>
+          <td><span class="status ok">✅</span><code>~/.claude/teams/{team-name}/config.json</code>（session 揮発）+ <code>~/.claude/tasks/{team-name}/</code>（永続）。v2.1.178 で命名規約 docs 明記<span class="note">差分：仕様明文化</span></td>
+          <td><span class="status warn">⚠️</span>Issue #12047（multi-agent TUI overhaul・team.toml 未実装）依然 open・6/15-30 でコメント追加なし<span class="note">変化なし</span></td>
+          <td><span class="status warn">🔍</span>公式 docs 記述なし（実装有無は未確認）<span class="note">変化なし</span></td>
+        </tr>
+        <tr>
+          <td class="func">⑤ リーダー間 peer 通信（SendMessage / mailbox）</td>
+          <td><span class="status ok">✅</span>SendMessage（experimental・docs 仕様化「Teammates message each other directly」）<span class="note">差分：docs 明文化</span></td>
+          <td><span class="status ok">✅</span><strong style="color:#b04848;">v0.142.0 stable リリース（6/22）に multi-agent delegation の 3 段階設定（disabled / explicit-request-only / proactive）が搭載（#28685, #28792, #29324）</strong>。typed envelopes + join key 実装済。ただし v1 delegation prompt の guardrail を PR #30511（6/29）で復元 = prompt 調整は継続中<span class="note">差分：機能搭載・prompt 微調整中</span></td>
+          <td><span class="status warn">🔍</span>公式 docs 記述なし（実装有無は未確認）<span class="note">変化なし</span></td>
+        </tr>
+        <tr>
+          <td class="func">⑥ 共有タスクボード</td>
+          <td><span class="status ok">✅</span><code>~/.claude/tasks/</code><span class="note">差分なし</span></td>
+          <td><span class="status ok">✅</span>goals stable・v0.140.0 で /goal 大テキスト保持・v0.142.0 で goal-first thread 永続化バグ修正（#28808）・composer 編集追加<span class="note">差分：UX 改善</span></td>
+          <td><span class="status warn">△</span>2.0 Manager View で並列 dispatch（共有タスクボードとしての記述は確認できず）<span class="note">変化なし</span></td>
+        </tr>
+        <tr>
+          <td class="func">⑦ shutdown protocol</td>
+          <td><span class="status ok">✅</span>docs 仕様化「approve / reject」・v2.1.191 で background agent 復活バグ修正<span class="note">差分：信頼性向上</span></td>
+          <td><span class="status ok">✅</span>PR #30314（6/27 merged）で JSON shutdown logs 構造化・PR #30173（6/26）で submission channel close 時の永続化<span class="note">差分：可観測性向上</span></td>
+          <td><span class="status warn">🔍</span>公式 docs 記述なし（実装有無は未確認）<span class="note">変化なし</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Codex の重大変化（一次資料引用）</h2>
+    <div class="detail-card full">
+      <div class="head">v0.142.0 release notes（2026-06-22 公開・stable リリース）</div>
+      <blockquote style="background:#fff8eb; border-left:4px solid #b89544; padding:14px 18px; margin:10px 0; font-size:13px; line-height:1.7; color:#2a2a2a; font-style:italic;">
+        "App-server clients can configure multi-agent delegation as <strong style="color:#b04848; font-style:normal;">disabled, explicit-request-only, or proactive</strong> at the thread and turn level. (#28685, #28792, #29324)"<br>
+        "Parent agents now receive terminal subagent errors instead of seeing failed work as an empty successful completion. (#28375)"<br>
+        "Goal-first threads are once again persisted and returned by thread/list and thread/search. (#28808)"
+      </blockquote>
+      <p style="font-size:13px; line-height:1.7;">出典：<a href="https://github.com/openai/codex/releases/tag/rust-v0.142.0" style="color:#2c5575; border-bottom:1px dotted #2c5575;">github.com/openai/codex/releases/tag/rust-v0.142.0</a>（取得：2026-06-30）</p>
+      <p style="font-size:13px; line-height:1.7; margin-top:10px;"><strong>判定根拠の限界</strong>：v0.142.0 は <code>Pre-release</code> タグなし = stable リリース系列。ただし release notes に「multi_agent_v2: stable」等の明示ラベルはない。「stable リリースに multi-agent delegation 機能が搭載」が正確な事実。「multi_agent_v2 が stable 化」と書くと過剰断定になる。</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Mits 実体験「Antigravity IDE で Claude 作業フォルダを複製できた」の正体</h2>
+    <p>2026-06-30 に Mits が Antigravity IDE（macOS）を DL → <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/</code> を開いた → 「複製できてしまった」と報告。</p>
+    <div class="detail-grid" style="margin-top:14px;">
+      <div class="detail-card">
+        <div class="head">✅ 確認できる事実</div>
+        <ul>
+          <li>Antigravity IDE は VS Code fork → フォルダを開けば <code>.claude/</code> 配下は <strong>テキストファイルとして閲覧可能</strong></li>
+          <li>公式の Claude Code 移行機能は <strong>存在しない</strong>（公式 docs / changelog / GitHub releases いずれにも記載なし）</li>
+          <li>変換にはコミュニティ製 Gist スクリプト（<code>migrate_claude_to_antigravity.sh</code>）の実行が必要</li>
+          <li>Gist の変換対象：<code>.claude/skills/</code> → <code>.agent/skills/</code> / <code>.claude/agents/*.md</code> → <code>.agent/skills/[name]/SKILL.md</code> / <code>CLAUDE.md</code> → <code>.agent/skills/project-context/SKILL.md</code></li>
+          <li>変換対象外：hooks / MCP 設定 / <code>~/.claude/projects/.../memory/</code></li>
+        </ul>
+      </div>
+      <div class="detail-card">
+        <div class="head"><strong style="color:#b04848;">⚠️ Mits 確認が必要な点</strong></div>
+        <ul>
+          <li>Mits の言う「複製」が何を指すか：
+            <ul>
+              <li>(A) ファイルツリーに <code>.claude/</code> 配下が表示されただけ</li>
+              <li>(B) Antigravity の agent として <strong>動作</strong> した（プロンプト・スキル等が活性化）</li>
+              <li>(C) <strong style="color:#b04848;">Antigravity が独自に Claude 設定を読み取って自動変換する機能を持っていた</strong>（公式 docs に未記載・実装されていれば重大変化）</li>
+            </ul>
+          </li>
+          <li>(C) が事実なら「公式 docs 未記載の隠し機能」になる → Mits の操作詳細（メニュー名・確認ダイアログの有無）の確認が必要</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>結論訂正（6/21 → 6/30）</h2>
+    <div class="conclusion">
+      <p class="lead">主軸 Claude Code 維持。Codex は実機検証フェーズへ昇格。Antigravity は判定保留。</p>
+      <ul>
+        <li><strong>Claude Code</strong>：v3.1 全 7 機能対応（experimental 含む）・25 ノード稼働継続。Agent Teams stable 化は 6/15-30 でロードマップ含めて未公表</li>
+        <li><strong style="color:#b04848;">Codex</strong>：6/21「watch」→ <strong style="color:#b04848;">6/30「実機検証フェーズに昇格」</strong>。v0.142.0 stable リリースに multi-agent delegation 3 段階設定が搭載されたため、v3.1 構造を Codex で実機検証する価値が出た。ただし以下の留保あり：
+          <ul>
+            <li>「multi_agent_v2 が stable 化」とは公式に書かれていない。「stable リリースに搭載」が事実</li>
+            <li>④ team 永続化（Issue #12047）は依然 open = v3.1 の「恒久組織」を完全再現するには未だ不足</li>
+            <li>delegation の prompt 調整が継続中（PR #30511 で v1 prompt 復元・MAv2 prompt は据置）</li>
+            <li><strong>Mits 環境で 25 ノードの実機検証は未実施</strong></li>
+          </ul>
+        </li>
+        <li><strong>Antigravity</strong>：6/21「skip」→ 6/30「判定保留」に書き換え。「skip = 不要」と読まれる書き方は撤回。実態は「v3.1 必須機能の 4 機能（③④⑤⑦）について公式 docs に記述がなく、実装の有無自体が確認できない」状態。Mits 実体験の詳細確認次第で評価変動の余地あり</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>主要マージ済 PR / Issue（6/15-30・実在確認済）</h2>
+    <p style="font-size:12px; color:#7a7a7a; margin-bottom:10px;">全件 <code>gh pr view / gh issue view</code> で 2026-06-30 に実在確認済（番号ハルシネーション防止）</p>
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th class="func">番号</th>
+          <th>タイトル</th>
+          <th>state / merged</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="func">openai/codex #30511</td><td>Restore v1 delegation guidance</td><td>MERGED 2026-06-29</td></tr>
+        <tr><td class="func">openai/codex #30314</td><td>app-server: structure and test JSON shutdown logs</td><td>MERGED 2026-06-27</td></tr>
+        <tr><td class="func">openai/codex #30274</td><td>allow AGENTS.md and skills to authorize delegation</td><td>MERGED 2026-06-26</td></tr>
+        <tr><td class="func">openai/codex #30173</td><td>Close thread persistence when submission channel closes</td><td>MERGED 2026-06-26</td></tr>
+        <tr><td class="func">openai/codex #29810</td><td>core: make AGENTS.md react to environment changes</td><td>MERGED 2026-06-25</td></tr>
+        <tr><td class="func">openai/codex #29736</td><td>Inject agent graph store into ThreadManager</td><td>MERGED 2026-06-24</td></tr>
+        <tr><td class="func">openai/codex #29591</td><td>list descendant threads by ancestor</td><td>MERGED 2026-06-24</td></tr>
+        <tr><td class="func">openai/codex #29567</td><td>show external import result counts</td><td>MERGED 2026-06-24</td></tr>
+        <tr><td class="func">openai/codex #30692</td><td>agents.max_depth=1 does not limit derived/forked worker conversations</td><td>OPEN（既知バグ）</td></tr>
+        <tr><td class="func">openai/codex #12047</td><td>Multi-agent TUI overhaul: named agents, per-agent config, async orchestration</td><td>OPEN（変化なし）</td></tr>
+        <tr><td class="func">openai/codex #19430</td><td>Approved MCP tools still require repeated manual approval</td><td>OPEN（変化なし）</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>devils-advocate review で訂正した推測断定</h2>
+    <p>本セクションを Mits に返す前に devils-advocate を投入し、以下の致命的な穴を訂正：</p>
+    <ul style="font-size:13px; line-height:1.8;">
+      <li><strong>「multi_agent_v2 が stable 化」断定 →</strong> changelog に明示ラベルなし。「v0.142.0 stable リリースに multi-agent delegation 機能が搭載」に書き換え</li>
+      <li><strong>「理論上ほぼ移植可能」（wishful framing） →</strong> ④ team 永続化が未実装である事実を併記。「実機未検証」を明記</li>
+      <li><strong>Mits 体験を「未発生の可能性が高い」と推測で否定 →</strong> 撤回。「Mits 確認が必要」に書き換え</li>
+      <li><strong>Antigravity「公式 docs 記述なし」=「未対応」と読める →</strong> 「実装有無は未確認」と明記</li>
+      <li><strong>Issue/PR 番号のハルシネーション疑惑 →</strong> 全 14 件を <code>gh</code> で実在確認済（ハルシネーションなし）</li>
+    </ul>
+  </section>
+
+  <footer class="report-foot" style="margin-top:36px;">
+    <strong>6/30 追記の一次資料</strong>
+    <ul>
+      <li><a href="https://github.com/openai/codex/releases/tag/rust-v0.142.0">openai/codex v0.142.0 release notes</a>（取得：2026-06-30）</li>
+      <li><a href="https://developers.openai.com/codex/changelog">developers.openai.com/codex/changelog</a>（取得：2026-06-30）</li>
+      <li><a href="https://github.com/anthropics/claude-code/releases">anthropics/claude-code releases v2.1.178〜v2.1.196</a>（取得：2026-06-30）</li>
+      <li><a href="https://code.claude.com/docs/en/agent-teams">code.claude.com/docs/en/agent-teams</a>（experimental 維持を確認・2026-06-30）</li>
+      <li><a href="https://github.com/google-antigravity/antigravity-cli/releases">google-antigravity/antigravity-cli releases v1.0.10〜v1.0.12</a>（取得：2026-06-30）</li>
+      <li><a href="https://gist.github.com/iamadalek/523bc94c126ed50e76e2e7761358119e">コミュニティ製 Antigravity Migration Toolkit v4（iamadalek）</a>（取得：2026-06-30）</li>
+      <li><a href="https://gist.github.com/enachb/23539f29cb47a4e05b26ca41ec8ae8cd/">コミュニティ製 Migration Guide: Claude Code to Antigravity（enachb）</a>（取得：2026-06-30）</li>
+    </ul>
+
+    <strong style="display:block; margin-top:14px;">6/30 追記の検証履歴</strong>
+    <ul>
+      <li>2026-06-30 mits-researcher 3 体並列調査（Claude Code / Codex / Antigravity 各社の 6/15-30 アップデート）</li>
+      <li>2026-06-30 devils-advocate 投入で「stable 化」断定・「理論上移植可能」断定・Mits 体験の推測否定を訂正</li>
+      <li>2026-06-30 GitHub <code>gh pr view / gh issue view</code> で 14 件全件実在確認（ハルシネーション疑惑を払拭）</li>
+      <li>2026-06-30 Codex v0.142.0 release notes 本文を一次資料として直接引用</li>
+    </ul>
+  </footer>
+
+  <!-- ============================================================ -->
+  <!-- ===== 1回目：2026-06-21 初版（最古・最下部）                 ===== -->
+  <!-- ============================================================ -->
+
+  <div id="initial-2026-06-21" class="anchor-spacer"></div>
+
+  <section style="margin-top:48px; padding-top:32px; border-top:3px double #7a7a7a;">
+    <div style="background:#f4efe4; border:1px solid #7a7a7a; border-left:5px solid #7a7a7a; border-radius:4px; padding:18px 22px; margin-bottom:24px;">
+      <div style="font-size:11px; color:#7a7a7a; font-weight:700; letter-spacing:0.1em; margin-bottom:6px;">INITIAL VERSION — アーカイブ</div>
+      <div style="font-size:20px; font-weight:700; color:#1a3a52; margin-bottom:8px;">2026-06-21 初版</div>
+      <div style="font-size:13px; color:#2a2a2a; line-height:1.7;">
+        本レポートの最初の発行版。ここに記された判断は 2026-06-21 時点のもの。以後の追記（<a href="#update-2026-06-30" style="color:#b04848;">6/30</a>・<a href="#update-2026-07-06" style="color:#b04848;">7/06</a>）で更新されている。読み比べ用アーカイブとして保存。
+      </div>
+    </div>
+
+    <h2>結論先頭</h2>
+    <div class="conclusion">
+      <p class="lead">Claude Code 一本で v3.1 を維持するのが 2026-06-21 時点の最適解。</p>
+      <ul>
+        <li>Codex は v3.1 構造の主要パーツが実装済だが、複数機能が under development 段階</li>
+        <li>Antigravity は階層 spawn / peer 通信を設計思想として否定 → 移植不可</li>
+        <li>両社とも独自強みあり。watch 対象として続報を追う価値はある</li>
+      </ul>
+
+      <div class="engines">
+        <div class="engine-card rec">
+          <div class="vendor">ANTHROPIC</div>
+          <div class="name">Claude Code</div>
+          <div class="judgement">✅ 維持（現行運用）</div>
+          <div class="reason">v3.1 全7機能対応・25ノード稼働中。<code>~/.claude/teams/keiei-project/</code></div>
+        </div>
+        <div class="engine-card watch">
+          <div class="vendor">OPENAI</div>
+          <div class="name">Codex</div>
+          <div class="judgement">⚠️ watch / 単発併用</div>
+          <div class="reason">multi_agent_v2 で実装済だが under development。重い単発タスクに併用可。</div>
+        </div>
+        <div class="engine-card skip">
+          <div class="vendor">GOOGLE</div>
+          <div class="name">Antigravity</div>
+          <div class="judgement">❌ 2026-06-21 時点 skip</div>
+          <div class="reason">peer 通信を設計思想で否定。v3.1 構造と根本的に不整合。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>v3.1 構造（25ノード・FBAS分散型）</h2>
+    <div class="org-chart-wrap">
+      <svg viewBox="0 0 980 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="v3.1組織図">
+        <defs>
+          <style>
+            .node-mits { fill: #1a3a52; }
+            .node-sanbo { fill: #2c5575; }
+            .node-fa { fill: #3b6e8f; }
+            .node-fs { fill: #4d8a64; }
+            .node-ba { fill: #b89544; }
+            .node-bs { fill: #8c5a8a; }
+            .node-text { fill: #fff; font-family: -apple-system, "Hiragino Sans", sans-serif; font-size: 12px; font-weight: 600; text-anchor: middle; }
+            .node-sub { fill: #fff; font-size: 10px; text-anchor: middle; font-family: -apple-system, "Hiragino Sans", sans-serif; }
+            .link { stroke: #7a7a7a; stroke-width: 1.5; fill: none; }
+            .label { fill: #2a2a2a; font-size: 11px; font-family: -apple-system, "Hiragino Sans", sans-serif; text-anchor: middle; }
+            .header-band { fill: #1a3a52; }
+            .header-text { fill: #f7f3ea; font-size: 11px; font-weight: 700; text-anchor: middle; font-family: -apple-system, "Hiragino Sans", sans-serif; letter-spacing: 0.05em; }
+          </style>
+        </defs>
+
+        <rect class="node-mits" x="430" y="10" width="120" height="40" rx="4"/>
+        <text class="node-text" x="490" y="28">Mits</text>
+        <text class="node-sub" x="490" y="42">CEO・最終決定</text>
+
+        <rect class="node-sanbo" x="410" y="80" width="160" height="40" rx="4"/>
+        <text class="node-text" x="490" y="98">参謀(メインClaude)</text>
+        <text class="node-sub" x="490" y="112">取次・コネクタ</text>
+
+        <line class="link" x1="490" y1="50" x2="490" y2="80"/>
+
+        <line class="link" x1="490" y1="120" x2="120" y2="160"/>
+        <line class="link" x1="490" y1="120" x2="380" y2="160"/>
+        <line class="link" x1="490" y1="120" x2="610" y2="160"/>
+        <line class="link" x1="490" y1="120" x2="850" y2="160"/>
+
+        <rect class="node-fa" x="40" y="160" width="160" height="44" rx="4"/>
+        <text class="node-text" x="120" y="180">🔵 FA-leader</text>
+        <text class="node-sub" x="120" y="195">persona-reviewer</text>
+
+        <rect class="node-fs" x="300" y="160" width="160" height="44" rx="4"/>
+        <text class="node-text" x="380" y="180">🟢 FS-leader</text>
+        <text class="node-sub" x="380" y="195">feedback-collector</text>
+
+        <rect class="node-ba" x="530" y="160" width="160" height="44" rx="4"/>
+        <text class="node-text" x="610" y="180">🟡 BA-leader</text>
+        <text class="node-sub" x="610" y="195">strategist</text>
+
+        <rect class="node-bs" x="770" y="160" width="160" height="44" rx="4"/>
+        <text class="node-text" x="850" y="180">🟣 BS-leader</text>
+        <text class="node-sub" x="850" y="195">knowledge-sync</text>
+
+        <line class="link" x1="120" y1="204" x2="120" y2="240"/>
+        <line class="link" x1="380" y1="204" x2="380" y2="240"/>
+        <line class="link" x1="610" y1="204" x2="610" y2="240"/>
+        <line class="link" x1="850" y1="204" x2="850" y2="240"/>
+
+        <rect class="node-fa" x="40" y="240" width="160" height="120" rx="4" opacity="0.85"/>
+        <text class="node-text" x="120" y="258">配下 7体</text>
+        <text class="node-sub" x="120" y="278">writer / dohga</text>
+        <text class="node-sub" x="120" y="293">curator / corpus</text>
+        <text class="node-sub" x="120" y="308">tonmana-reviewer</text>
+        <text class="node-sub" x="120" y="323">honshitsu-reviewer</text>
+        <text class="node-sub" x="120" y="338">anti-ai-slop</text>
+
+        <rect class="node-fs" x="300" y="240" width="160" height="80" rx="4" opacity="0.85"/>
+        <text class="node-text" x="380" y="258">配下 3体</text>
+        <text class="node-sub" x="380" y="278">skool-pm</text>
+        <text class="node-sub" x="380" y="293">cs-tracker</text>
+        <text class="node-sub" x="380" y="308">inquiry-router</text>
+
+        <rect class="node-ba" x="530" y="240" width="160" height="65" rx="4" opacity="0.85"/>
+        <text class="node-text" x="610" y="258">配下 2体</text>
+        <text class="node-sub" x="610" y="278">goal-tracker</text>
+        <text class="node-sub" x="610" y="293">researcher</text>
+
+        <rect class="node-bs" x="770" y="240" width="160" height="95" rx="4" opacity="0.85"/>
+        <text class="node-text" x="850" y="258">配下 5体</text>
+        <text class="node-sub" x="850" y="278">engineer / keiri</text>
+        <text class="node-sub" x="850" y="293">task-dispatch</text>
+        <text class="node-sub" x="850" y="308">morning-standup</text>
+        <text class="node-sub" x="850" y="323">local-support</text>
+
+        <rect class="header-band" x="0" y="390" width="980" height="22"/>
+        <text class="header-text" x="490" y="406">3階層構造 + リーダー間 peer 通信 + 共有タスクボード + 永続 team config</text>
+
+        <text class="label" x="490" y="438">合計 25 ノード（Mits + 参謀 + 4リーダー + 19配下）</text>
+      </svg>
+      <div class="org-legend">
+        <span><span class="dot" style="background:#3b6e8f"></span>FA フロント・アタック</span>
+        <span><span class="dot" style="background:#4d8a64"></span>FS フロント・サポート</span>
+        <span><span class="dot" style="background:#b89544"></span>BA バック・アタック</span>
+        <span><span class="dot" style="background:#8c5a8a"></span>BS バック・サポート</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>v3.1 必須機能 × 3エンジン対照</h2>
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th class="func">v3.1 必須機能</th>
+          <th>Claude Code</th>
+          <th>Codex（OpenAI）</th>
+          <th>Antigravity（Google）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="func">① カスタム agent 定義（25種規模）</td>
+          <td><span class="status ok">✅</span>無制限<span class="note">.claude/agents/*.md</span></td>
+          <td><span class="status ok">✅</span>無制限<span class="note">~/.codex/agents/*.toml</span></td>
+          <td><span class="status ok">✅</span>無制限<span class="note">.gemini/agents/*.md（YAML+MD）</span></td>
+        </tr>
+        <tr>
+          <td class="func">② 永続コンテキスト</td>
+          <td><span class="status ok">✅</span>CLAUDE.md 階層</td>
+          <td><span class="status ok">✅</span>AGENTS.md 対応</td>
+          <td><span class="status ok">✅</span><strong>最強</strong>。3層階層 + 複数ファイル併用</td>
+        </tr>
+        <tr>
+          <td class="func">③ 3階層 spawn（参謀→リーダー→配下）</td>
+          <td><span class="status ok">✅</span>3階層以上</td>
+          <td><span class="status warn">⚠️</span>並列数の公式値未公開<span class="note">再帰挙動も公式docs未記載</span></td>
+          <td><span class="status ng">❌</span>再帰禁止<span class="note">公式「Subagents cannot call other subagents」</span></td>
+        </tr>
+        <tr>
+          <td class="func">④ team 単位の恒久構成</td>
+          <td><span class="status ok">✅</span><code>~/.claude/teams/&lt;name&gt;/config.json</code></td>
+          <td><span class="status warn">⚠️</span>team 概念未実装<span class="note">Issue #12047 で TUI 改善提案中・open</span></td>
+          <td><span class="status ng">❌</span>team 単位定義なし<span class="note">/teamwork-preview は Ultra $200/月・IDE版・preview・7ロール固定</span></td>
+        </tr>
+        <tr>
+          <td class="func">⑤ teammate 間 peer 通信（SendMessage / mailbox）</td>
+          <td><span class="status ok">✅</span>任意 agent 間</td>
+          <td><span class="status warn">⚠️</span>multi_agent_v2 で実装済<span class="note">PR #28368 / 2026-06-16 merged・under development</span></td>
+          <td><span class="status ng">❌</span>設計思想で否定<span class="note">公式「don't directly communicate — you are the coordinator」/ Issue #19430 open</span></td>
+        </tr>
+        <tr>
+          <td class="func">⑥ 共有タスクボード（self-claim）</td>
+          <td><span class="status ok">✅</span><code>~/.claude/tasks/&lt;team&gt;/</code></td>
+          <td><span class="status ok">✅</span><code>goals</code> 機能（stable）<span class="note">~/.codex/goals_1.sqlite / thread_goals テーブル</span></td>
+          <td><span class="status ng">❌</span>未対応<span class="note">ファイル経由間接共有のみ</span></td>
+        </tr>
+        <tr>
+          <td class="func">⑦ shutdown protocol</td>
+          <td><span class="status ok">✅</span>request → response</td>
+          <td><span class="status ok">✅</span>close_agent + wait_agent<span class="note">interrupt_agent にリネーム中</span></td>
+          <td><span class="status warn">⚠️</span>自動終了のみ<span class="note">timeout_mins:10 / max_turns:30 / request-response 型は未確認</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>エンジン別 詳細</h2>
+    <div class="detail-grid">
+      <div class="detail-card full">
+        <div class="head">Claude Code Agent Teams（現行）</div>
+        <ul>
+          <li>v3.1 が <code>~/.claude/teams/keiei-project/</code> で稼働中・25ノード</li>
+          <li>全7機能対応・実績あり</li>
+          <li>制約：experimental（<code>CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS</code>）・team config が消えることがあるため起動時 <code>ls</code> 必須</li>
+        </ul>
+      </div>
+
+      <div class="detail-card">
+        <div class="head">Codex（OpenAI）— 実装済 / 未成熟</div>
+        <ul>
+          <li><strong>multi_agent v1</strong> = stable / true</li>
+          <li><strong>multi_agent_v2</strong> で spawn_agent / send_message / close_agent / wait_agent 実装済（under development）</li>
+          <li><strong>goals</strong> = stable / true・SQLite 永続のタスク管理</li>
+          <li>Claude Code → Codex 移行ツール <code>/import</code>（2026-06-09 リリース）</li>
+          <li>Mits 環境 v0.137・npm 最新 v0.141</li>
+        </ul>
+      </div>
+
+      <div class="detail-card">
+        <div class="head">Antigravity（Google）— 構造的不整合</div>
+        <ul>
+          <li>peer 通信を<strong>設計思想として否定</strong>（人間が調整役の前提）</li>
+          <li>再帰 spawn 禁止 → 参謀→リーダー→配下が物理的に作れない</li>
+          <li>team 永続構成も未実装</li>
+          <li>独自強み：3層階層コンテキスト・Google Workspace MCP 標準搭載・Managed Agents API（Linux Sandbox クラウド実行）</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>推奨アクション</h2>
+
+    <h3>短期（〜3ヶ月）</h3>
+    <div class="timeline">
+      <div class="item">
+        <div class="when">NOW</div>
+        <div class="what">Claude Code Agent Teams で v3.1 を維持</div>
+        <div class="why">現行が最も成熟・25ノード稼働中</div>
+      </div>
+      <div class="item">
+        <div class="when">必要時</div>
+        <div class="what">Codex は単発ヘビー作業の出先として併用</div>
+        <div class="why">Cloud Codex の非同期実行・LP HTML 量産・重い読み込みタスク</div>
+      </div>
+      <div class="item">
+        <div class="when">SKIP</div>
+        <div class="what">Antigravity は導入しない</div>
+        <div class="why">v3.1 構造と相性悪い・特化用途も Mits 業務に薄い</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>中期 watch 項目（3〜6ヶ月）</h2>
+    <table class="watch-table">
+      <thead>
+        <tr>
+          <th>対象</th>
+          <th>watch 観点</th>
+          <th>アクション基準</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Codex <code>multi_agent_v2</code></td>
+          <td>feature flag が stable/true になるか</td>
+          <td>stable 化後に v3.1 サブセットで並行運用試験</td>
+        </tr>
+        <tr>
+          <td>Codex <code>goals</code> の team 連携</td>
+          <td>thread_goals が team 単位で共有可能になるか</td>
+          <td>共有可能化で v3.1 タスクボード代替候補</td>
+        </tr>
+        <tr>
+          <td>Antigravity Issue #19430</td>
+          <td>peer 通信の公式回答 or 実装 PR</td>
+          <td>動きあれば再評価</td>
+        </tr>
+        <tr>
+          <td>Codex CLI バージョン</td>
+          <td>v0.137 → v0.141+ アップデート</td>
+          <td>環境を v0.141 系へ・<code>codex features list</code> 再確認</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>やらないこと</h3>
+    <div class="conclusion" style="border-left-color: var(--ng);">
+      <ul>
+        <li>Antigravity Desktop / CLI への乗り換え検討（v3.1 と構造非互換）</li>
+        <li>3社並行運用（保守コスト > 利得）</li>
+        <li>Mits 業務にコード refactor が無い以上、Codex の自走性を活かす場面は限定的</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>別エンジンに保険として備える整備項目</h2>
+    <div class="conclusion">
+      <p>Claude Code に長期障害・価格急騰・サービス停止等が起きた場合に備えて、以下を整える：</p>
+      <ul>
+        <li><code>.claude/agents/*.md</code> の定期スナップショット</li>
+        <li>CLAUDE.md / context/ / memory/ の Git 管理（既存）</li>
+        <li>Codex 側で <code>/import</code> を1回試して移行できることを確認（agent カタログのみ移行・team 構造は手動再構築）</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="report-foot">
+    <strong>初版一次資料（2026-06-21）</strong>
+    <ul>
+      <li>Codex 公式 changelog: <a href="https://developers.openai.com/codex/changelog">developers.openai.com/codex/changelog</a></li>
+      <li>Codex subagents docs: <a href="https://developers.openai.com/codex/subagents">developers.openai.com/codex/subagents</a></li>
+      <li>Codex /import docs: <a href="https://developers.openai.com/codex/import">developers.openai.com/codex/import</a></li>
+      <li>Gemini CLI subagents.md: <a href="https://github.com/google-gemini/gemini-cli/blob/main/docs/core/subagents.md">github.com/google-gemini/gemini-cli</a></li>
+      <li>Antigravity 移行 docs: <a href="https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/">developers.googleblog.com</a></li>
+      <li>Claude Code Agent Teams: <a href="https://code.claude.com/docs/en/agent-teams">code.claude.com/docs/en/agent-teams</a></li>
+    </ul>
+
+    <strong>GitHub Issue / PR（初版 watch 対象）</strong>
+    <ul>
+      <li>openai/codex PR #28368（send_message・2026-06-16 merged）</li>
+      <li>openai/codex Issue #12047（multi-agent TUI 改善・open）</li>
+      <li>openai/codex Issue #27331（v0.137 multi_agent_v2 エラー・open）</li>
+      <li>google-gemini/gemini-cli Issue #19430（peer 通信要求・p2 open）</li>
+      <li>google-antigravity/antigravity-cli Issue #301（teamwork-preview 可観測性・open）</li>
+    </ul>
+
+    <strong>関連 memory</strong>
+    <ul>
+      <li>reference_agent_team_keiei_project.md（v3.1 構成・25ノード）</li>
+      <li>reference_codex_cli_and_vscode_extension.md（Codex 3形態構成・2026-06-07）</li>
+    </ul>
+
+    <strong style="display:block; margin-top:14px;">初版の検証履歴</strong>
+    <ul>
+      <li>2026-06-20 mits-researcher 初期調査（Codex / Antigravity 公式 docs / 報道）</li>
+      <li>2026-06-20 devils-advocate 2回投入で Codex 主張の誤りを訂正（peer 通信 / shutdown / goals / 並列数）</li>
+      <li>2026-06-21 mits-researcher による Antigravity v3.1 同等機能調査（公式 docs 引用ベース）</li>
+      <li>2026-06-21 GUI 限定（CLI 不使用）追加調査・3社 GUI 比較表作成</li>
+      <li>2026-06-30 9 日後の追跡調査 → <a href="#update-2026-06-30" style="color:#b04848;">2回目追記へ</a></li>
+      <li>2026-07-06 v3.2 経路変更 → <a href="#update-2026-07-06" style="color:#b04848;">3回目追記へ</a></li>
     </ul>
   </footer>
 
