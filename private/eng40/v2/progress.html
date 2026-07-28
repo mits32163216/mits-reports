@@ -37,9 +37,21 @@ a { color:var(--gold); text-decoration:none; }
 /* 空状態 */
 .empty-state { text-align:center; font-size:13px; line-height:2; padding:22px 10px; color:var(--muted); }
 .empty-state .big { display:block; font-family:var(--mincho); font-size:16px; font-weight:700; color:var(--fg); }
-/* Dayカレンダー */
-.day-cal { display:grid; grid-template-columns:repeat(8,1fr); gap:6px; }
-@media (max-width:640px){ .day-cal { grid-template-columns:repeat(5,1fr); } }
+/* Dayカレンダー（月曜始まり・週7列固定） */
+.day-cal { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:4px; }
+.dc-wday { font-family:var(--mono); font-size:10px; color:var(--muted); text-align:center; padding:2px 0 4px; }
+.dc-wday.sun { color:var(--rose); }
+.dc-wday.sat { color:var(--sage); }
+.dc-empty { background:transparent; border:1px dashed rgba(15,27,46,0.08); border-radius:6px; min-height:52px; opacity:0.4; }
+@media (max-width:640px){
+  .day-cal { gap:3px; }
+  .dc-cell { padding:4px 2px 3px !important; min-height:52px !important; }
+  .dc-cell .dc-num { font-size:10px !important; }
+  .dc-cell .dc-date { font-size:8.5px !important; }
+  .dc-cell .dc-mark { font-size:9px !important; }
+  .dc-cell .dc-frac { font-size:8.5px !important; }
+  .dc-empty { min-height:52px; }
+}
 .dc-cell { position:relative; background:var(--cell-bg); border:1px solid var(--line); border-radius:8px;
   padding:6px 3px 5px; text-align:center; min-height:63px; }
 .dc-cell .dc-num { font-family:var(--mono); font-size:11px; font-weight:700; line-height:1.2; }
@@ -97,6 +109,7 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 <body>
 
 <h1>📈 記録の見える化</h1>
+<div id="gamify-stockbar"></div>
 <div class="tagline">40日の足あと ─ チェック・単語・スコアが全部ここに集まる（データはクラウドに保存され家族で共有）</div>
 
 <div class="stats-grid">
@@ -110,7 +123,7 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 <!-- ① Day達成カレンダー -->
 <div class="step-section">
   <h2>🗓 Day達成カレンダー</h2>
-  <div class="section-hint">「📋 今日やること」ページの項目チェックがそのまま塗られます（濃い緑＝全部できた日／薄い緑＝一部できた日）｜📏=必須の測定日（Day 1・40）・🔄=調整日｜診断テスト・英検は任意なので分母に入りません</div>
+  <div class="section-hint">「📋 今日やること」ページの項目チェックがそのまま塗られます（濃い緑＝全部できた日／薄い緑＝一部できた日）｜📏=必須の測定日（Day 1・40）｜診断テスト・英検は任意なので分母に入りません</div>
   <div id="cal-area"></div>
 </div>
 
@@ -142,7 +155,6 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 var TOTAL_DAYS = 40;
 var VOCAB_GOAL = 300;
 var SOKUTEI_DAYS = { 1: 1, 40: 1 };                       // 必須の測定日（Day 1 実力測定・Day 40 総仕上げ）
-var CHOUSEI_DAYS = { 7: 1, 14: 1, 21: 1, 28: 1, 35: 1 };  // 調整日
 /* Day別の必須ステップ数（📋手順書ページの手順項目のうち「任意」を除いた数・[0]=Day1）
  * daily.html の data-tkey="dNN-S" と対応。program.html の ENG40_DAY_STEPS と同じ値。 */
 var DAY_STEPS = [2,5,5,5,5,5,4,5,5,5,5,5,5,5,5,5,5,5,5,5,3,5,5,5,5,5,5,3,5,5,5,5,5,5,3,5,5,5,4,4];
@@ -314,7 +326,24 @@ function buildVocabSeries(words, today) {
         '「<a href="./program.html">✅ 40日</a>」ページで開始日を入れて、「<a href="./daily.html">📋 今日やること</a>」で今日の項目にチェックを付けるとここが塗られていきます</div>';
       return;
     }
+    // 月曜始まり（月火水木金土日）に整列するためのオフセット計算
+    // Date.getDay(): 日=0, 月=1..土=6 → 月曜基準 (getDay()+6)%7 で 月=0..日=6
+    var WDAY_LABELS = ['月','火','水','木','金','土','日'];
+    var startOffset = 0;
+    if (startOk) {
+      var d0 = parseYmd(start);
+      startOffset = (d0.getDay() + 6) % 7;
+    }
     var html = '<div class="day-cal">';
+    // 週ヘッダ
+    for (var wi = 0; wi < 7; wi++) {
+      var wcls = 'dc-wday' + (wi === 5 ? ' sat' : (wi === 6 ? ' sun' : ''));
+      html += '<div class="' + wcls + '">' + WDAY_LABELS[wi] + '</div>';
+    }
+    // Day 1 の前を空セルで埋める
+    for (var ei = 0; ei < startOffset; ei++) {
+      html += '<div class="dc-empty"></div>';
+    }
     for (var d = 1; d <= TOTAL_DAYS; d++) {
       var cls = 'dc-cell';
       if (done[d - 1]) cls += ' done';
@@ -325,7 +354,7 @@ function buildVocabSeries(words, today) {
         var dt = parseYmd(addDaysStr(start, d - 1));
         dateTxt = (dt.getMonth() + 1) + '/' + dt.getDate();
       }
-      var mark = SOKUTEI_DAYS[d] ? '📏' : (CHOUSEI_DAYS[d] ? '🔄' : '');
+      var mark = SOKUTEI_DAYS[d] ? '📏' : '';
       var mTot = DAY_STEPS[d - 1] || 0;
       var nDone = Math.min(counts[d - 1], mTot);
       var frac = (part[d - 1] || (done[d - 1] && nDone > 0)) ? (nDone + '/' + mTot) : '';
@@ -343,7 +372,6 @@ function buildVocabSeries(words, today) {
       '<span><span class="sw sw-none"></span>やっていない日</span>' +
       '<span><span class="sw sw-today"></span>今日</span>' +
       '<span>📏 必須の測定日（Day 1・40）</span>' +
-      '<span>🔄 調整日（Day 7・14・21・28・35）</span>' +
       (startOk ? '' : '<span>※開始日未設定（「✅ 40日」ページで設定すると実日付と今日枠が出ます）</span>') +
       '</div>';
     area.innerHTML = html;

@@ -16,9 +16,9 @@
   var DAY_STEPS = [2, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 5, 5, 5, 5, 5, 5, 3, 5, 5, 5, 5, 5, 5, 3, 5, 5, 5, 4, 4];
   var OPT_TASKS = { 'd01-4': 1, 'd03-6': 1, 'd37-6': 1, 'd39-4': 1 };
   var MILESTONES = [
-    { day: 14, id: 'M14', icon: '🎧', title: '音の壁を越えた', body: 'フォニックス1周・26音の口の形が入りました。' },
-    { day: 20, id: 'M20', icon: '⚔️', title: '折り返し到達', body: '40日プログラムの中間点。ここから後半戦です。' },
-    { day: 40, id: 'M40', icon: '👑', title: '完走おめでとう', body: '40日プログラム全達成。この体験は一生残ります。' }
+    { day: 14, id: 'M14', icon: '', title: 'Day 14 到達', body: 'フォニックス1周完了。26音の口の形が入りました。' },
+    { day: 20, id: 'M20', icon: '', title: 'Day 20 到達', body: '半分（20日）達成。ここから後半戦です。' },
+    { day: 40, id: 'M40', icon: '', title: 'Day 40 到達', body: '40日完了。この体験は一生残ります。' }
   ];
 
   function pad2(n) { return (n < 10 ? '0' : '') + n; }
@@ -99,12 +99,59 @@
     var mcHtml = '';
     if (nm) {
       var remain = Math.max(0, nm.day - stats.done);
-      mcHtml = '<div class="milestone-card"><span class="ms-icon">' + nm.icon + '</span>' +
-        'あと <span class="ms-big">' + remain + '</span> 日で ' + nm.title + '（Day ' + nm.day + '）</div>';
+      mcHtml = '<div class="milestone-card">' +
+        'あと <span class="ms-big">' + remain + '</span> 日で ' + nm.title + '</div>';
     } else {
-      mcHtml = '<div class="milestone-card done"><span class="ms-icon">🎊</span>全マイルストーン達成！</div>';
+      mcHtml = '<div class="milestone-card done">Day 40 到達（全マイルストーン達成）</div>';
     }
     host.innerHTML = chipsHtml + warnHtml + mcHtml;
+  }
+
+  /* 📗 教材ストックバー：教材ルート(route.html) の unit/ch + 音(phonics.html) の ph チェック合計
+   * 分母は route.html + phonics.html の実測 checkbox 数を反映：
+   *   - eng40-unit:unit-N ×56（Murphy 選抜56ユニット）
+   *   - eng40-ch:ch-N ×7（AIO 7章：ch-1,2,3,4,13,16,p2）
+   *   - eng40-ph:phx-N ×4（Ayane 実践4）+ ph-NN ×13（Chigusa 理論13）
+   * 合計 max = 80
+   */
+  var STOCK_MAX_UNIT = 56;
+  var STOCK_MAX_CH = 7;
+  var STOCK_MAX_PH = 17;
+  var STOCK_MAX_TOTAL = STOCK_MAX_UNIT + STOCK_MAX_CH + STOCK_MAX_PH; // 80
+
+  function countChecked(prefix) {
+    var n = 0, len = localStorage.length;
+    for (var i = 0; i < len; i++) {
+      var k = localStorage.key(i);
+      if (!k || k.indexOf(prefix) !== 0) continue;
+      if (get(k) === '1') n++;
+    }
+    return n;
+  }
+
+  function stockStats() {
+    var u = Math.min(countChecked('eng40-unit:'), STOCK_MAX_UNIT);
+    var c = Math.min(countChecked('eng40-ch:'), STOCK_MAX_CH);
+    var p = Math.min(countChecked('eng40-ph:'), STOCK_MAX_PH);
+    var done = u + c + p;
+    var pct = STOCK_MAX_TOTAL > 0 ? Math.round(done / STOCK_MAX_TOTAL * 100) : 0;
+    return { unit: u, ch: c, ph: p, done: done, max: STOCK_MAX_TOTAL, pct: pct };
+  }
+
+  function renderStockbar(host) {
+    var s = stockStats();
+    host.className = 'gamify-stockbar';
+    host.innerHTML =
+      '<div class="sb-head">' +
+        '<span>📗 教材ストック <b style="font-family:\'SF Mono\',Menlo,monospace">' + s.done + '</b> / ' + s.max + '</span>' +
+        '<span class="sb-pct">' + s.pct + '%</span>' +
+      '</div>' +
+      '<div class="sb-track"><div class="sb-fill" style="width:' + s.pct + '%"></div></div>' +
+      '<div class="sb-sub">' +
+        '<span>📖 マーフィー <b>' + s.unit + '</b> / ' + STOCK_MAX_UNIT + '</span>' +
+        '<span>📙 ALL IN ONE 章 <b>' + s.ch + '</b> / ' + STOCK_MAX_CH + '</span>' +
+        '<span>🎧 音 <b>' + s.ph + '</b> / ' + STOCK_MAX_PH + '</span>' +
+      '</div>';
   }
 
   function fireParticles() {
@@ -157,9 +204,8 @@
     overlay.className = 'gmodal-overlay';
     overlay.innerHTML =
       '<div class="gmodal">' +
-        '<div class="gm-icon">' + nm.icon + '</div>' +
-        '<div class="gm-title">' + nm.title + '！</div>' +
-        '<div class="gm-body">Day <span class="gm-hl">' + nm.day + '</span> 達成！<br>' + nm.body + '<br><br>' +
+        '<div class="gm-title">' + nm.title + '</div>' +
+        '<div class="gm-body">' + nm.body + '<br><br>' +
           '完了 <span class="gm-hl">' + stats.done + '</span> 日 ／ 連続 <span class="gm-hl">' + streakN + '</span> 日' +
         '</div>' +
         '<button class="gm-close" type="button">続ける</button>' +
@@ -292,6 +338,8 @@
     var streakN = computeStreak(stats.active, tIdx);
 
     if (host) renderChips(host, stats, streakN);
+    var sbHost = document.getElementById('gamify-stockbar');
+    if (sbHost) renderStockbar(sbHost);
     weeklySnapshot(stats);
 
     // progress.html 拡張

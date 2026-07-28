@@ -85,6 +85,7 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 
 <div id="family-card"></div>
 <div id="gamify-banner-chips"></div>
+<div id="gamify-stockbar"></div>
 
 <div class="status">
   <h2>🎯 ねらい（3つだけ）</h2>
@@ -143,7 +144,8 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 
 <footer>
   📘 英語40日プログラム（中1・夏）｜教材：マーフィーのケンブリッジ英文法 初級編（選抜56/全113ユニット）／ALL IN ONE Basic Ver.2／『新！大人のフォニックス』（重森ちぐさ）＋リンキング編（あいうえおフォニックス）<br>
-  チェックはクラウドに保存され、家族の端末どこからでも見られます
+  チェックはクラウドに保存され、家族の端末どこからでも見られます<br>
+  <span id="family-footer-link" style="display:none">👨‍👩‍👧 <a href="#" id="fam-settings-link">家族の設定 →</a></span>
 </footer>
 
 <script>
@@ -197,71 +199,24 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 <script src="./sync.js?v=3"></script>
 <script>
 /* 家族設定カード（マルチ家族対応・sync.js の window.eng40family を使う）
- * - 未設定の端末：「はじめに：家族を作る」→ ランダムIDを発行して ?f= 付きURLへ
- * - 設定済みの端末：家族URLのコピー／友達に渡す別家族URLの発行
+ * - 未設定の端末：ここに「はじめに：家族を作る」の初期セットアップカードを表示
+ * - 設定済みの端末：ここは何も表示しない（家族の設定は footer の「家族の設定 →」リンクから family.html へ）
  */
 (function () {
   var fam = window.eng40family;
   var host = document.getElementById('family-card');
   if (!fam || !host) return;
 
-  function copyText(text, btn, okLabel) {
-    var orig = btn.textContent;
-    function done(ok) {
-      btn.textContent = ok ? (okLabel || '✅ コピーしました') : '⚠️ 長押しでコピーしてください';
-      setTimeout(function () { btn.textContent = orig; }, 2200);
-    }
-    try {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
-        return;
-      }
-    } catch (e) {}
-    try {
-      var ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      var ok = document.execCommand('copy');
-      document.body.removeChild(ta);
-      done(!!ok);
-    } catch (e2) { done(false); }
-  }
-
-  function showUrl(labelText, url) {
-    var box = document.getElementById('fam-out');
-    if (!box) return;
-    box.innerHTML = '';
-    box.style.display = 'block';
-    var lab = document.createElement('label');
-    lab.textContent = labelText;
-    var inp = document.createElement('input');
-    inp.type = 'text';
-    inp.readOnly = true;
-    inp.value = url;
-    inp.addEventListener('focus', function () { inp.select(); });
-    var btn = document.createElement('button');
-    btn.className = 'fam-btn';
-    btn.style.marginTop = '10px';
-    btn.textContent = '📋 このURLをコピー';
-    btn.addEventListener('click', function () { copyText(url, btn); });
-    box.appendChild(lab);
-    box.appendChild(inp);
-    box.appendChild(btn);
-  }
-
   var NOTE = '家族URLを知っている人だけがその家族の記録を見られます。他の家族の記録は見えません。';
 
   if (!fam.isSet()) {
+    // 未設定端末：初期セットアップカードを表示
     host.innerHTML =
       '<div class="eng40-family-card setup">' +
         '<h2>👨‍👩‍👧 はじめに：家族を作る</h2>' +
         '<p>この端末はまだどの家族にもつながっていません。' +
         '「この家族で始める」を押すと専用のURLができて、チェックした記録が家族の端末どうしで共有されます。</p>' +
         '<div class="fam-btns"><button class="fam-btn" id="fam-start">この家族で始める</button></div>' +
-        '<div class="fam-out" id="fam-out" style="display:none"></div>' +
         '<p class="fam-note">' + NOTE + '</p>' +
       '</div>';
     document.getElementById('fam-start').addEventListener('click', function () {
@@ -270,30 +225,14 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
     return;
   }
 
-  host.innerHTML =
-    '<div class="eng40-family-card">' +
-      '<h2>👨‍👩‍👧 家族の設定</h2>' +
-      '<p class="fam-id">この端末の家族ID：****' + fam.tail() + '</p>' +
-      '<div class="fam-btns">' +
-        '<button class="fam-btn" id="fam-copy">家族URLをコピー</button>' +
-        '<button class="fam-btn ghost" id="fam-new">別の家族用URLを作る</button>' +
-      '</div>' +
-      '<div class="fam-out" id="fam-out" style="display:none"></div>' +
-      '<p class="fam-note">' + NOTE +
-        '<br>「家族URLをコピー」＝この家族の別の端末（お父さん・お母さんのスマホ）に渡すURL。' +
-        '<br>「別の家族用URLを作る」＝友達の家族に渡す新しいURL。この端末の家族は変わりません。</p>' +
-    '</div>';
-
-  document.getElementById('fam-copy').addEventListener('click', function () {
-    var url = fam.myUrl();
-    copyText(url, this);
-    showUrl('この家族のURL（家族の他の端末で開く）', url);
-  });
-
-  document.getElementById('fam-new').addEventListener('click', function () {
-    var url = fam.urlFor(fam.generate());
-    showUrl('友達の家族に渡すURL（この端末の記録とは別になります）', url);
-  });
+  // 設定済み端末：カードは出さず、footer の小リンクを有効化
+  host.innerHTML = '';
+  var wrap = document.getElementById('family-footer-link');
+  var link = document.getElementById('fam-settings-link');
+  if (wrap && link) {
+    link.href = './family.html?f=' + encodeURIComponent(fam.id());
+    wrap.style.display = 'inline';
+  }
 })();
 </script>
 <script src="./nav.js?v=3"></script>

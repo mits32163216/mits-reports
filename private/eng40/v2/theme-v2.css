@@ -248,3 +248,21 @@ svg .sc-dot { fill: var(--v2-mint) !important; }
   .ba-hero .ba-nums { font-size: 30px; }
   .milestone-card { font-size: 12.5px; padding: 10px 12px; }
 }
+
+/* 📗 教材ストックバー（教材ルート + 音 チェック合計） */
+.gamify-stockbar { margin: 12px 0 18px; padding: 12px 14px; border-radius: 12px;
+  background: var(--v2-card); border: 1px solid var(--v2-line); }
+.gamify-stockbar .sb-head { display: flex; align-items: baseline; justify-content: space-between;
+  gap: 10px; margin-bottom: 8px; font-family: "Hiragino Mincho ProN","游明朝",serif; font-size: 13px;
+  color: var(--v2-fg); }
+.gamify-stockbar .sb-head .sb-pct { font-family: "SF Mono","Menlo",monospace; font-size: 12px;
+  color: var(--v2-mint); font-weight: 700; }
+.gamify-stockbar .sb-track { position: relative; height: 12px; border-radius: 6px;
+  background: rgba(94,200,255,0.10); overflow: hidden; }
+.gamify-stockbar .sb-fill { height: 100%; width: 0; border-radius: 6px;
+  background: linear-gradient(90deg, #ff7a6b 0%, #f5c74f 30%, #5ec8ff 65%, #4ff5c7 100%);
+  background-size: 200% 100%; background-position: 0 0;
+  transition: width 0.6s ease; }
+.gamify-stockbar .sb-sub { margin-top: 6px; font-family: "SF Mono","Menlo",monospace; font-size: 10px;
+  color: var(--v2-muted); display: flex; flex-wrap: wrap; gap: 12px; }
+.gamify-stockbar .sb-sub b { color: var(--v2-cyan); font-weight: 700; }
