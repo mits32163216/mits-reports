@@ -12,6 +12,7 @@
     { file: "phonics.html", key: "phonics", emoji: "🎧", label: "音",         sub: "フォニックス13回" },
     { file: "progress.html", key: "progress", emoji: "📈", label: "記録", sub: "見える化" },
     { file: "test.html",    key: "test",    emoji: "📊", label: "測る",       sub: "テスト記録" },
+    { file: "family.html",  key: "family",  emoji: "👨‍👩‍👧", label: "家族",       sub: "ID切替" },
   ];
 
   var path = location.pathname.split("/").pop() || "index.html";
@@ -73,9 +74,14 @@
     .kai-links a .kn-sub { display:none; }
     .kai-links a.kn-current { box-shadow:0 0 0 2px var(--kn-gold); }
   }
-  @media (max-width:380px){
+  @media (max-width:480px){
     .kai-brand { display:none; }
-    .kai-links a { padding:6px 2px; }
+    .kai-links a { padding:6px 3px; }
+    .kai-links a .kn-top { font-size:17px; }
+  }
+  @media (max-width:340px){
+    .kai-links a { padding:6px 1px; }
+    .kai-links a .kn-top { font-size:16px; }
   }
   `;
 
