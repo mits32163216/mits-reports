@@ -44,8 +44,18 @@ a:hover { text-decoration:underline; }
 .fam-divider { height:1px; background:var(--line); margin:22px -22px 0; }
 .fam-section-title { font-family:var(--mincho); font-weight:600; font-size:15px; margin:22px 0 12px; color:var(--gold); }
 .fam-mode { margin-top:14px; padding:14px 16px; border-radius:10px; background:var(--sub-bg); border:1px solid var(--line); }
+.fam-mode.warn { border:1.5px solid rgba(255,122,107,0.6); border-left:3px solid rgba(255,122,107,0.9); background:rgba(255,122,107,0.05); }
+.fam-mode.safe { border:1.5px solid rgba(79,245,199,0.5); border-left:3px solid rgba(79,245,199,0.9); background:rgba(79,245,199,0.06); }
 .fam-mode-title { font-family:var(--mincho); font-weight:600; font-size:14px; margin:0 0 6px; color:var(--fg); }
 .fam-mode-desc { font-size:12.5px; line-height:1.85; margin:0 0 10px; color:var(--muted); }
+.fam-mode .warn-msg { display:block; margin:8px 0 12px; padding:8px 10px; border-radius:6px; background:rgba(255,122,107,0.10); color:#c94a3a; font-size:12.5px; font-weight:600; line-height:1.7; }
+.fam-mode .safe-msg { display:block; margin:8px 0 12px; padding:8px 10px; border-radius:6px; background:rgba(79,245,199,0.12); color:#2a8a70; font-size:12.5px; font-weight:600; line-height:1.7; }
+@media (prefers-color-scheme:dark){
+  .fam-mode.warn { background:rgba(255,122,107,0.09); }
+  .fam-mode.safe { background:rgba(79,245,199,0.09); }
+  .fam-mode .warn-msg { color:#ff9b8c; background:rgba(255,122,107,0.15); }
+  .fam-mode .safe-msg { color:#7fead0; background:rgba(79,245,199,0.15); }
+}
 .back-link { display:inline-block; margin:4px 0 12px; font-family:var(--mono); font-size:12px; }
 footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
 </style>
@@ -142,18 +152,26 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
   host.innerHTML =
     '<div class="eng40-family-card">' +
       '<h2>👨‍👩‍👧 現在の家族設定</h2>' +
-      '<p class="fam-id">この端末の家族ID：****' + fam.tail() + '</p>' +
-      '<div class="fam-btns">' +
-        '<button class="fam-btn" id="fam-copy">家族URLをコピー</button>' +
+      '<p class="fam-id">📍 この端末の家族ID：****' + fam.tail() + '</p>' +
+
+      '<div class="fam-divider"></div>' +
+      '<div class="fam-section-title">📤 URL を渡す</div>' +
+
+      '<div class="fam-mode warn">' +
+        '<div class="fam-mode-title">🏠 自分の家族の別端末に渡す</div>' +
+        '<p class="fam-mode-desc">親御さんの iPhone・子どもの iPad など、<b>同じ家族の別端末</b>にこのURLを渡すと同じ記録が見られます。</p>' +
+        '<span class="warn-msg">⚠️ 自分の学習記録が丸ごと見えます。友達には絶対に渡さないでください。</span>' +
+        '<div class="fam-btns"><button class="fam-btn" id="fam-copy">📋 家族URLをコピー</button></div>' +
       '</div>' +
 
       '<div class="fam-divider"></div>' +
-      '<div class="fam-section-title">🆕 新しいURLを発行する</div>' +
+      '<div class="fam-section-title">🆕 新しく発行する</div>' +
 
-      '<div class="fam-mode">' +
-        '<div class="fam-mode-title">👨‍👩‍👧 家族で使う</div>' +
-        '<p class="fam-mode-desc">複数人（親子など）で <b>同じ記録を共有</b> します。家族の他の端末で同じURLを開けば、同じチェック記録が見えます。</p>' +
-        '<div class="fam-btns"><button class="fam-btn" id="fam-new-family">家族URLを新規発行</button></div>' +
+      '<div class="fam-mode safe">' +
+        '<div class="fam-mode-title">👥 友達の家族に空のURLを配る</div>' +
+        '<p class="fam-mode-desc">友達の家族に配るときは、こちらから発行してください。相手には<b>新しい空の40日プログラム</b>が渡ります。</p>' +
+        '<span class="safe-msg">✅ あなたの学習記録は一切見えません。安心して配れます。</span>' +
+        '<div class="fam-btns"><button class="fam-btn" id="fam-new-friend">友達用URLを発行</button></div>' +
       '</div>' +
 
       '<div class="fam-mode">' +
@@ -168,8 +186,8 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
       '<div class="fam-out" id="fam-out" style="display:none"></div>' +
 
       '<p class="fam-note">' + NOTE +
-        '<br>「家族URLをコピー」＝この家族の別の端末（お父さん・お母さんのスマホ）に渡すURL。' +
-        '<br>「家族URLを新規発行」＝別の家族（友達など）に渡す新しいURL。この端末の家族は変わりません。' +
+        '<br>「家族URLをコピー」＝この家族の別の端末（お父さん・お母さんのスマホ）に渡すURL。<b>自分の記録が見えるので友達に渡さない</b>。' +
+        '<br>「友達用URLを発行」＝別の家族（友達など）に渡す新しい空のURL。相手には空のプログラムが渡ります。' +
         '<br>「個人URLを発行」＝1人専用の新しいURLを作って渡す。この端末の家族は変わりません。' +
         '<br>「この端末を個人URLに切り替える」＝この端末自体を個人用に付け替える（現在の家族データはサーバに残るので、家族URLを開けば元に戻せます）。</p>' +
     '</div>';
@@ -177,12 +195,12 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
   document.getElementById('fam-copy').addEventListener('click', function () {
     var url = fam.myUrl();
     copyText(url, this);
-    showUrl('この家族のURL（家族の他の端末で開く）', url);
+    showUrl('この家族のURL（家族の他の端末で開く・⚠️自分の記録が見えます）', url);
   });
 
-  document.getElementById('fam-new-family').addEventListener('click', function () {
+  document.getElementById('fam-new-friend').addEventListener('click', function () {
     var url = fam.urlFor(fam.generate());
-    showUrl('新しい家族のURL（この端末の記録とは別になります）', url);
+    showUrl('友達用のURL（相手には空のプログラムが渡ります・あなたの記録は見えません）', url);
   });
 
   document.getElementById('fam-new-personal').addEventListener('click', function () {
