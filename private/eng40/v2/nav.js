@@ -4,7 +4,6 @@
  */
 (function () {
   var NAV = [
-    { file: "index.html",   key: "index",   emoji: "🏠", label: "ホーム",     sub: "" },
     { file: "program.html", key: "program", emoji: "✅", label: "40日",       sub: "デイリー" },
     { file: "daily.html",   key: "daily",   emoji: "📋", label: "今日やること", sub: "チェックはここ" },
     { file: "route.html",   key: "route",   emoji: "📖", label: "教材ルート", sub: "56ユニット" },
@@ -17,10 +16,13 @@
 
   var path = location.pathname.split("/").pop() || "index.html";
   if (path === "" || path === "/") path = "index.html";
-  var current = "index";
+  var current = "";
   for (var i = 0; i < NAV.length; i++) {
     if (NAV[i].file === path) { current = NAV[i].key; break; }
   }
+  var isHome = (path === "index.html");
+  // Preserve ?f=<familyId> when navigating to home
+  var brandHref = "index.html" + (location.search.indexOf("f=") >= 0 ? location.search : "");
 
   var css = `
   :root { --kn-navy:#0F1B2E; --kn-ivory:#F5EFE1; --kn-gold:#D4A85B; --kn-sage:#7A9B7E; }
@@ -42,8 +44,14 @@
   .kai-brand {
     font-family:"Hiragino Mincho ProN","游明朝",serif; font-weight:700; font-size:15px;
     color:var(--kn-gold); text-decoration:none; white-space:nowrap; flex:0 0 auto;
+    cursor:pointer; transition:opacity 0.15s, text-shadow 0.15s;
   }
   .kai-brand:hover { text-decoration:none; opacity:0.85; }
+  .kai-brand.kn-brand-current {
+    cursor:default;
+    text-shadow:0 0 8px rgba(212,168,91,0.35);
+  }
+  .kai-brand.kn-brand-current:hover { opacity:1; }
   .kai-links {
     display:flex; gap:4px; flex:1 1 auto;
   }
@@ -64,19 +72,22 @@
   }
   .kai-links a.kn-current .kn-sub { opacity:0.85; }
 
-  /* Hamburger button: hidden on desktop */
+  /* Hamburger button: hidden on desktop. White fill so it's visible on dark bg. */
   .kai-burger {
     display:none;
     width:44px; height:44px; padding:0; margin-left:auto;
-    background:transparent; border:1px solid rgba(15,27,46,0.18); border-radius:10px;
+    background:rgba(255,255,255,0.94); border:0; border-radius:10px;
     cursor:pointer; align-items:center; justify-content:center;
-    color:var(--kn-navy); font-size:22px; line-height:1;
+    color:#0a0e1a; font-size:22px; line-height:1; font-weight:700;
+    box-shadow:0 2px 8px rgba(0,0,0,0.3);
     -webkit-tap-highlight-color:transparent;
+    transition:background 0.15s, box-shadow 0.15s, transform 0.1s;
   }
   @media (prefers-color-scheme:dark){
-    .kai-burger { color:var(--kn-ivory); border-color:rgba(245,239,225,0.24); }
+    .kai-burger { background:#ffffff; color:#0a0e1a; box-shadow:0 2px 10px rgba(0,0,0,0.5); }
   }
-  .kai-burger:hover { background:rgba(212,168,91,0.14); }
+  .kai-burger:hover { background:#ffffff; box-shadow:0 3px 12px rgba(0,0,0,0.4); }
+  .kai-burger:active { transform:scale(0.96); }
   .kai-burger:focus-visible { outline:2px solid var(--kn-gold); outline-offset:2px; }
 
   /* Drawer + overlay: hidden by default */
@@ -171,16 +182,19 @@
            sub + '</a>';
   }).join("");
 
+  var brandAttrs = ' href="./' + brandHref + '" aria-label="ホーム（英語40日）"' +
+    (isHome ? ' aria-current="page" style="cursor:default;"' : '');
+
   var html =
     '<nav class="kai-nav"><div class="kai-nav-inner">' +
-      '<a class="kai-brand" href="./index.html">📘 英語40日</a>' +
+      '<a class="kai-brand' + (isHome ? ' kn-brand-current' : '') + '"' + brandAttrs + '>📘 英語40日</a>' +
       '<div class="kai-links">' + linksHtml + '</div>' +
       '<button class="kai-burger" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="kai-drawer">☰</button>' +
     '</div></nav>' +
     '<div class="kai-overlay" hidden></div>' +
     '<aside class="kai-drawer" id="kai-drawer" role="dialog" aria-modal="true" aria-label="ナビゲーションメニュー" hidden>' +
       '<div class="kai-drawer-head">' +
-        '<span>📘 英語40日</span>' +
+        '<a class="kai-brand' + (isHome ? ' kn-brand-current' : '') + '"' + brandAttrs + '>📘 英語40日</a>' +
         '<button class="kai-close" type="button" aria-label="メニューを閉じる">×</button>' +
       '</div>' +
       '<div class="kai-drawer-list">' + drawerLinksHtml + '</div>' +
