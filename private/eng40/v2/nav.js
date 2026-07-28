@@ -4,13 +4,13 @@
  */
 (function () {
   var NAV = [
+    { file: "phonics.html", key: "phonics", emoji: "🎧", label: "音",         sub: "フォニックス13回" },
+    { file: "route.html",   key: "route",   emoji: "📖", label: "教材ルート", sub: "56ユニット" },
+    { file: "test.html",    key: "test",    emoji: "📊", label: "測る",       sub: "テスト記録" },
     { file: "program.html", key: "program", emoji: "✅", label: "40日",       sub: "デイリー" },
     { file: "daily.html",   key: "daily",   emoji: "📋", label: "今日やること", sub: "チェックはここ" },
-    { file: "route.html",   key: "route",   emoji: "📖", label: "教材ルート", sub: "56ユニット" },
     { file: "vocab.html",   key: "vocab",   emoji: "📓", label: "単語",       sub: "D+1テスト" },
-    { file: "phonics.html", key: "phonics", emoji: "🎧", label: "音",         sub: "フォニックス13回" },
     { file: "progress.html", key: "progress", emoji: "📈", label: "記録", sub: "見える化" },
-    { file: "test.html",    key: "test",    emoji: "📊", label: "測る",       sub: "テスト記録" },
     { file: "family.html",  key: "family",  emoji: "👨‍👩‍👧", label: "家族",       sub: "ID切替" },
   ];
 
@@ -27,7 +27,7 @@
   var css = `
   :root { --kn-navy:#0F1B2E; --kn-ivory:#F5EFE1; --kn-gold:#D4A85B; --kn-sage:#7A9B7E; }
   .back-nav, .back-nav-bottom { display:none !important; }
-  html, body { max-width:100%; overflow-x:hidden; }
+  html { overflow-x:hidden; }
   body { padding-top:0 !important; }
   .kai-nav {
     position:sticky; top:0; z-index:900;
