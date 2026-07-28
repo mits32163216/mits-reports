@@ -25,6 +25,7 @@
   var css = `
   :root { --kn-navy:#0F1B2E; --kn-ivory:#F5EFE1; --kn-gold:#D4A85B; --kn-sage:#7A9B7E; }
   .back-nav, .back-nav-bottom { display:none !important; }
+  html, body { max-width:100%; overflow-x:hidden; }
   body { padding-top:0 !important; }
   .kai-nav {
     position:sticky; top:0; z-index:900;
@@ -44,10 +45,8 @@
   }
   .kai-brand:hover { text-decoration:none; opacity:0.85; }
   .kai-links {
-    display:flex; gap:4px; overflow-x:auto; flex:1 1 auto;
-    scrollbar-width:none; -webkit-overflow-scrolling:touch;
+    display:flex; gap:4px; flex:1 1 auto;
   }
-  .kai-links::-webkit-scrollbar { display:none; }
   .kai-links a {
     flex:0 0 auto; text-decoration:none;
     display:flex; flex-direction:column; align-items:center; gap:1px;
@@ -64,27 +63,93 @@
     background:var(--kn-gold); color:#fff; border-color:var(--kn-gold);
   }
   .kai-links a.kn-current .kn-sub { opacity:0.85; }
+
+  /* Hamburger button: hidden on desktop */
+  .kai-burger {
+    display:none;
+    width:44px; height:44px; padding:0; margin-left:auto;
+    background:transparent; border:1px solid rgba(15,27,46,0.18); border-radius:10px;
+    cursor:pointer; align-items:center; justify-content:center;
+    color:var(--kn-navy); font-size:22px; line-height:1;
+    -webkit-tap-highlight-color:transparent;
+  }
+  @media (prefers-color-scheme:dark){
+    .kai-burger { color:var(--kn-ivory); border-color:rgba(245,239,225,0.24); }
+  }
+  .kai-burger:hover { background:rgba(212,168,91,0.14); }
+  .kai-burger:focus-visible { outline:2px solid var(--kn-gold); outline-offset:2px; }
+
+  /* Drawer + overlay: hidden by default */
+  .kai-overlay {
+    position:fixed; inset:0; background:rgba(15,27,46,0.55);
+    opacity:0; pointer-events:none; transition:opacity 0.2s;
+    z-index:950;
+  }
+  .kai-drawer {
+    position:fixed; top:0; right:0; height:100dvh; width:min(84vw,320px);
+    background:var(--kn-ivory); color:var(--kn-navy);
+    box-shadow:-8px 0 32px rgba(15,27,46,0.28);
+    transform:translateX(100%); transition:transform 0.22s ease-out;
+    z-index:960; display:flex; flex-direction:column;
+    padding:0; overflow-y:auto; -webkit-overflow-scrolling:touch;
+  }
+  @media (prefers-color-scheme:dark){
+    .kai-drawer { background:#1a2740; color:var(--kn-ivory); }
+  }
+  .kai-drawer-head {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 16px; border-bottom:1px solid rgba(15,27,46,0.12);
+    font-family:"Hiragino Mincho ProN","游明朝",serif; font-weight:700;
+    color:var(--kn-gold); font-size:15px;
+  }
+  @media (prefers-color-scheme:dark){
+    .kai-drawer-head { border-bottom-color:rgba(245,239,225,0.14); }
+  }
+  .kai-close {
+    width:40px; height:40px; padding:0; background:transparent;
+    border:1px solid rgba(15,27,46,0.18); border-radius:8px;
+    cursor:pointer; font-size:20px; line-height:1;
+    color:inherit; -webkit-tap-highlight-color:transparent;
+  }
+  .kai-close:focus-visible { outline:2px solid var(--kn-gold); outline-offset:2px; }
+  .kai-drawer-list {
+    display:flex; flex-direction:column; gap:2px; padding:8px 8px 24px;
+  }
+  .kai-drawer-list a {
+    display:flex; align-items:center; gap:12px;
+    padding:14px 12px; border-radius:10px;
+    text-decoration:none; color:inherit;
+    border:1px solid transparent; font-size:15px; font-weight:600;
+    min-height:48px;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .kai-drawer-list a:hover { background:rgba(212,168,91,0.14); }
+  .kai-drawer-list a .kn-emoji { font-size:22px; line-height:1; flex:0 0 auto; width:28px; text-align:center; }
+  .kai-drawer-list a .kn-lbl { flex:1 1 auto; }
+  .kai-drawer-list a .kn-sub { font-size:11px; opacity:0.6; font-family:"SF Mono",Menlo,monospace; white-space:nowrap; }
+  .kai-drawer-list a.kn-current {
+    background:var(--kn-gold); color:#fff; border-color:var(--kn-gold);
+  }
+  .kai-drawer-list a.kn-current .kn-sub { opacity:0.85; }
+
+  /* Open state */
+  body.kai-drawer-open { overflow:hidden; }
+  body.kai-drawer-open .kai-overlay { opacity:1; pointer-events:auto; }
+  body.kai-drawer-open .kai-drawer { transform:translateX(0); }
+
+  /* Mobile: swap desktop nav for hamburger */
   @media (max-width:640px){
-    .kai-nav-inner { padding:6px 8px; gap:6px; }
-    .kai-brand { font-size:12px; }
-    .kai-links { gap:1px; overflow-x:visible; justify-content:space-between; width:100%; }
-    .kai-links a { padding:6px 4px; border-radius:8px; }
-    .kai-links a .kn-top { font-size:18px; line-height:1; }
-    .kai-links a .kn-lbl { display:none; }
-    .kai-links a .kn-sub { display:none; }
-    .kai-links a.kn-current { box-shadow:0 0 0 2px var(--kn-gold); }
+    .kai-nav-inner { padding:6px 12px; gap:8px; }
+    .kai-brand { font-size:13px; }
+    .kai-links { display:none; }
+    .kai-burger { display:inline-flex; }
   }
-  @media (max-width:480px){
-    .kai-brand { display:none; }
-    .kai-links a { padding:6px 3px; }
-    .kai-links a .kn-top { font-size:17px; }
-  }
-  @media (max-width:340px){
-    .kai-links a { padding:6px 1px; }
-    .kai-links a .kn-top { font-size:16px; }
+  @media (min-width:641px){
+    .kai-overlay, .kai-drawer { display:none !important; }
   }
   `;
 
+  // Desktop nav links (shown ≥641px)
   var linksHtml = NAV.map(function (n) {
     var cls = n.key === current ? "kn-current" : "";
     var sub = n.sub ? '<span class="kn-sub">' + n.sub + "</span>" : "";
@@ -95,11 +160,31 @@
            '</span>' + sub + "</a>";
   }).join("");
 
+  // Drawer list (shown ≤640px)
+  var drawerLinksHtml = NAV.map(function (n) {
+    var cls = n.key === current ? "kn-current" : "";
+    var sub = n.sub ? '<span class="kn-sub">' + n.sub + "</span>" : "";
+    var cur = n.key === current ? ' aria-current="page"' : '';
+    return '<a class="' + cls + '" href="./' + n.file + '"' + cur + '>' +
+           '<span class="kn-emoji" aria-hidden="true">' + n.emoji + '</span>' +
+           '<span class="kn-lbl">' + n.label + '</span>' +
+           sub + '</a>';
+  }).join("");
+
   var html =
     '<nav class="kai-nav"><div class="kai-nav-inner">' +
-    '<a class="kai-brand" href="./index.html">📘 英語40日</a>' +
-    '<div class="kai-links">' + linksHtml + "</div>" +
-    "</div></nav>";
+      '<a class="kai-brand" href="./index.html">📘 英語40日</a>' +
+      '<div class="kai-links">' + linksHtml + '</div>' +
+      '<button class="kai-burger" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="kai-drawer">☰</button>' +
+    '</div></nav>' +
+    '<div class="kai-overlay" hidden></div>' +
+    '<aside class="kai-drawer" id="kai-drawer" role="dialog" aria-modal="true" aria-label="ナビゲーションメニュー" hidden>' +
+      '<div class="kai-drawer-head">' +
+        '<span>📘 英語40日</span>' +
+        '<button class="kai-close" type="button" aria-label="メニューを閉じる">×</button>' +
+      '</div>' +
+      '<div class="kai-drawer-list">' + drawerLinksHtml + '</div>' +
+    '</aside>';
 
   function inject() {
     var style = document.createElement("style");
@@ -107,7 +192,56 @@
     document.head.appendChild(style);
     var wrap = document.createElement("div");
     wrap.innerHTML = html;
-    document.body.insertBefore(wrap.firstChild, document.body.firstChild);
+    // Insert all top-level children (nav + overlay + drawer) into body
+    var nodes = [];
+    for (var i = 0; i < wrap.children.length; i++) nodes.push(wrap.children[i]);
+    for (var j = nodes.length - 1; j >= 0; j--) {
+      document.body.insertBefore(nodes[j], document.body.firstChild);
+    }
+    wireDrawer();
+  }
+
+  function wireDrawer() {
+    var burger = document.querySelector(".kai-burger");
+    var overlay = document.querySelector(".kai-overlay");
+    var drawer = document.querySelector(".kai-drawer");
+    var closeBtn = drawer && drawer.querySelector(".kai-close");
+    if (!burger || !overlay || !drawer) return;
+
+    // Reveal (hidden attr was for no-JS fallback)
+    overlay.hidden = false;
+    drawer.hidden = false;
+
+    function open() {
+      document.body.classList.add("kai-drawer-open");
+      burger.setAttribute("aria-expanded", "true");
+      // Move focus into drawer for keyboard users
+      if (closeBtn) closeBtn.focus();
+    }
+    function close() {
+      document.body.classList.remove("kai-drawer-open");
+      burger.setAttribute("aria-expanded", "false");
+      burger.focus();
+    }
+
+    burger.addEventListener("click", function () {
+      if (document.body.classList.contains("kai-drawer-open")) close(); else open();
+    });
+    overlay.addEventListener("click", close);
+    if (closeBtn) closeBtn.addEventListener("click", close);
+    // Link tap → close (defer to allow navigation)
+    drawer.querySelectorAll(".kai-drawer-list a").forEach(function (a) {
+      a.addEventListener("click", function () {
+        document.body.classList.remove("kai-drawer-open");
+      });
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && document.body.classList.contains("kai-drawer-open")) close();
+    });
+    // If resized to desktop while open, force close
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 640 && document.body.classList.contains("kai-drawer-open")) close();
+    });
   }
 
   if (document.readyState === "loading") {
