@@ -42,6 +42,9 @@ a:hover { text-decoration:underline; }
 .node .n-emoji { font-size:26px; }
 .node .n-title { font-family:var(--mincho); font-size:15px; font-weight:700; }
 .node .n-desc { font-size:11.5px; color:var(--muted); line-height:1.7; }
+.node.recommend { position:relative; border:2.5px solid rgba(255,122,107,0.85); box-shadow:0 0 12px rgba(255,122,107,0.25); }
+.node.recommend:hover { border-color:rgba(255,122,107,0.95); box-shadow:0 10px 28px rgba(255,122,107,0.35); }
+.node .badge-osusume { position:absolute; top:-8px; right:12px; background:#ff7a6b; color:#fff; font-weight:700; font-size:11px; padding:3px 8px; border-radius:4px; letter-spacing:0.02em; box-shadow:0 2px 6px rgba(255,122,107,0.35); }
 /* 保険ルール */
 .step-section { margin:22px 0; padding:18px 22px; background:var(--sub-bg); border:1px solid var(--gold); border-radius:12px; }
 .step-section.priority { background:linear-gradient(135deg,rgba(199,123,112,0.08),rgba(212,168,91,0.05)); border-color:var(--rose); }
@@ -104,6 +107,11 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 
 <h2 style="font-size:17px">毎日の回り方</h2>
 <div class="loop">
+  <a class="node recommend" href="./phonics.html">
+    <span class="badge-osusume">⭐ 最初にやる</span>
+    <span class="n-emoji">🎧</span><span class="n-title">音（フォニックス13回）</span>
+    <span class="n-desc">ayane実践4分 ＋ ちぐさ理論編の今日の区間（Day 2〜14）</span>
+  </a>
   <a class="node" href="./program.html">
     <span class="n-emoji">✅</span><span class="n-title">40日チェック</span>
     <span class="n-desc">今日のDayカードを見て、やったらチェック。1日90分（フォニックス→マーフィー→例文→復習）。</span>
@@ -115,10 +123,6 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
   <a class="node" href="./test.html">
     <span class="n-emoji">📊</span><span class="n-title">測る</span>
     <span class="n-desc">実力測定テスト（必須）＋診断テスト・英検3級（任意）。点数を記録して伸びを見る。</span>
-  </a>
-  <a class="node" href="./phonics.html">
-    <span class="n-emoji">🎧</span><span class="n-title">音（フォニックス13回）</span>
-    <span class="n-desc">『新！大人のフォニックス』56分（重森ちぐさ）をDay 2〜14の13回に分割した練習メニュー。1回4〜5分・必ず声に出す。</span>
   </a>
 </div>
 
