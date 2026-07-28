@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📘</text></svg>">
+<title>📘 英語40日プログラム｜ホーム</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06); --highlight:rgba(212,168,91,0.14);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); --highlight:rgba(212,168,91,0.18); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:24px 20px 100px; max-width:1000px; margin:0 auto; }
+h1,h2,h3 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; }
+h1 { font-size:24px; margin:18px 0 4px; }
+.tagline { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:20px; }
+a { color:var(--gold); text-decoration:none; }
+a:hover { text-decoration:underline; }
+/* ねらい */
+.status { margin:24px 0; padding:18px 22px; border-radius:14px;
+  background:linear-gradient(135deg,rgba(212,168,91,0.12),rgba(122,155,126,0.07)); border:1px solid var(--gold); }
+.status h2 { font-size:15px; margin:0 0 12px; color:var(--gold); }
+.status ol { margin:0; padding-left:22px; font-size:13.5px; line-height:2; }
+/* ステータスグリッド */
+.status-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:14px; }
+@media (max-width:640px){ .status-grid { grid-template-columns:repeat(2,1fr); } }
+.stat { background:var(--card-bg); border:1px solid var(--line); border-radius:10px; padding:12px 14px; text-align:center; }
+.stat .num { font-family:var(--mincho); font-size:24px; font-weight:700; line-height:1.1; }
+.stat .num strong { color:var(--sage); }
+.stat .lbl { font-family:var(--mono); font-size:10px; color:var(--muted); margin-top:4px; }
+/* ノードカード */
+.loop { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:20px 0; }
+@media (max-width:760px){ .loop { grid-template-columns:repeat(2,1fr); } }
+.node { display:flex; flex-direction:column; gap:8px; text-decoration:none; color:var(--fg);
+  background:var(--card-bg); border:1px solid var(--line); border-radius:14px; padding:18px 16px; transition:all 0.16s; }
+.node:hover { transform:translateY(-4px); border-color:var(--gold); box-shadow:0 10px 28px rgba(15,27,46,0.12); text-decoration:none; }
+.node .n-emoji { font-size:26px; }
+.node .n-title { font-family:var(--mincho); font-size:15px; font-weight:700; }
+.node .n-desc { font-size:11.5px; color:var(--muted); line-height:1.7; }
+/* 保険ルール */
+.step-section { margin:22px 0; padding:18px 22px; background:var(--sub-bg); border:1px solid var(--gold); border-radius:12px; }
+.step-section.priority { background:linear-gradient(135deg,rgba(199,123,112,0.08),rgba(212,168,91,0.05)); border-color:var(--rose); }
+.step-section h2 { font-size:15px; margin:0 0 10px; }
+.step-section.priority h2 { color:var(--rose); }
+.step-section ul { margin:0; padding-left:20px; font-size:13px; line-height:2; }
+.goal-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+@media (max-width:760px){ .goal-grid { grid-template-columns:repeat(2,1fr); } }
+@media (max-width:640px){ .goal-grid { grid-template-columns:1fr; } }
+.goal { background:var(--card-bg); border:1px solid var(--line); border-radius:10px; padding:12px 14px; font-size:12px; line-height:1.8; }
+.goal b { color:var(--gold); font-family:var(--mincho); }
+footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+/* 家族設定カード（マルチ家族対応） */
+.eng40-family-card { margin:20px 0; padding:18px 20px; border-radius:14px;
+  background:var(--card-bg); border:1px solid var(--gold); }
+.eng40-family-card.setup { background:linear-gradient(135deg,rgba(212,168,91,0.16),rgba(122,155,126,0.08)); border-width:2px; }
+.eng40-family-card h2 { font-size:15px; margin:0 0 8px; color:var(--gold); }
+.eng40-family-card p { font-size:13px; line-height:1.9; margin:0 0 12px; }
+.eng40-family-card .fam-note { font-size:11.5px; color:var(--muted); line-height:1.8; margin:12px 0 0; }
+.eng40-family-card .fam-id { font-family:var(--mono); font-size:11px; color:var(--muted); margin:0 0 12px; }
+.fam-btns { display:flex; flex-wrap:wrap; gap:10px; }
+.fam-btn { appearance:none; -webkit-appearance:none; cursor:pointer;
+  font-family:var(--sans); font-size:14px; font-weight:600; line-height:1.4;
+  min-height:48px; padding:12px 20px; border-radius:10px;
+  border:1px solid var(--gold); background:var(--gold); color:#fff;
+  -webkit-tap-highlight-color:transparent; transition:opacity .15s; }
+.fam-btn:hover { opacity:0.86; }
+.fam-btn.ghost { background:transparent; color:var(--fg); border-color:var(--line); }
+.fam-out { margin-top:14px; padding:12px 14px; border-radius:10px;
+  background:var(--sub-bg); border:1px dashed var(--gold); }
+.fam-out label { display:block; font-size:11.5px; color:var(--muted); margin-bottom:7px; }
+.fam-out input { width:100%; font-family:var(--mono); font-size:12px; padding:10px 12px;
+  border-radius:8px; border:1px solid var(--line); background:var(--card-bg); color:var(--fg); }
+</style>
+<link rel="stylesheet" href="./theme-v2.css?v=1">
+</head>
+<body>
+
+<h1>📘 英語40日プログラム</h1>
+<div class="tagline">中1・夏休み ─ 学校英語とは別レーン ─ 開始日：____月____日</div>
+
+<div id="family-card"></div>
+<div id="gamify-banner-chips"></div>
+
+<div class="status">
+  <h2>🎯 ねらい（3つだけ）</h2>
+  <ol>
+    <li><b>「音」を作る</b> ── 聞ける音は言える。言える音は聞ける。</li>
+    <li><b>中1の範囲にとらわれない</b> ── 過去形・助動詞・代名詞・前置詞まで、夏で約1年先へ。</li>
+    <li><b>現在位置を測る</b> ── 必須は Day 1 の実力測定テストだけ。診断テスト・英検3級の練習問題は<b>（任意）</b>で、やれば伸びが数字で見える。</li>
+  </ol>
+  <div class="status-grid">
+    <div class="stat"><div class="num"><strong id="st-days">0</strong> / 40</div><div class="lbl">DAY 完了（着手 <span id="st-started">0</span>）</div></div>
+    <div class="stat"><div class="num"><strong id="st-units">0</strong> / 56</div><div class="lbl">マーフィー UNIT</div></div>
+    <div class="stat"><div class="num"><strong id="st-ch">0</strong> / 7</div><div class="lbl">ALL IN ONE 章</div></div>
+    <div class="stat"><div class="num"><strong id="st-tests">0</strong> / 5</div><div class="lbl">測定 記録（必須1＋任意4）</div></div>
+  </div>
+</div>
+
+<h2 style="font-size:17px">毎日の回り方</h2>
+<div class="loop">
+  <a class="node" href="./program.html">
+    <span class="n-emoji">✅</span><span class="n-title">40日チェック</span>
+    <span class="n-desc">今日のDayカードを見て、やったらチェック。1日90分（フォニックス→マーフィー→例文→復習）。</span>
+  </a>
+  <a class="node" href="./route.html">
+    <span class="n-emoji">📖</span><span class="n-title">教材ルート</span>
+    <span class="n-desc">マーフィー選抜56ユニット＋ALL IN ONE章ルート。終えたユニットにチェック。</span>
+  </a>
+  <a class="node" href="./test.html">
+    <span class="n-emoji">📊</span><span class="n-title">測る</span>
+    <span class="n-desc">実力測定テスト（必須）＋診断テスト・英検3級（任意）。点数を記録して伸びを見る。</span>
+  </a>
+  <a class="node" href="./phonics.html">
+    <span class="n-emoji">🎧</span><span class="n-title">音（フォニックス13回）</span>
+    <span class="n-desc">『新！大人のフォニックス』56分（重森ちぐさ）をDay 2〜14の13回に分割した練習メニュー。1回4〜5分・必ず声に出す。</span>
+  </a>
+</div>
+
+<div class="step-section priority">
+  <h2>🛟 保険ルール（続けるための4つ）</h2>
+  <ul>
+    <li><b>15分デー公認</b>：崩れた日はフォニックス（or 前日例文の聞き流し）だけでOK。「ゼロの日」を作らないことだけが必達。</li>
+    <li><b>3日連続で崩れたら</b>：マーフィー1ユニット/日に減速。ルートは変えない、速度だけ落とす。</li>
+    <li><b>最初の2週間は親が横に座る</b>：丸付けだけでも可。ここが完走率を決める。</li>
+    <li><b>模試・診断の点数で怒らない・落ちこまない</b>：測定であって評価ではない。</li>
+  </ul>
+</div>
+
+<div class="step-section">
+  <h2>🌅 40日後の到達見込み</h2>
+  <div class="goal-grid">
+    <div class="goal"><b>文法</b><br>過去形・助動詞・代名詞・前置詞＋冠詞（a/an/the）まで体に入る（学校の約1年先。英検3級の文法主戦場をカバー）</div>
+    <div class="goal"><b>語彙</b><br>新出350〜400語を収集し、D+1翌日テストで250〜300語の定着を見込む（中学1年分弱を夏で先取り）</div>
+    <div class="goal"><b>音</b><br>英語の44音＋リンキングの基礎＋シャドーイングの型</div>
+    <div class="goal"><b>測定</b><br>Day 1 の実力測定テストが出発点。任意で英検①→②の点数差・診断テストの前後比較をやれば、伸びが数字で見える</div>
+  </div>
+</div>
+
+<footer>
+  📘 英語40日プログラム（中1・夏）｜教材：マーフィーのケンブリッジ英文法 初級編（選抜56/全113ユニット）／ALL IN ONE Basic Ver.2／『新！大人のフォニックス』（重森ちぐさ）＋リンキング編（あいうえおフォニックス）<br>
+  チェックはクラウドに保存され、家族の端末どこからでも見られます
+</footer>
+
+<script>
+(function () {
+  function countPrefix(prefix) {
+    var n = 0;
+    for (var i = 0; i < localStorage.length; i++) {
+      var k = localStorage.key(i);
+      if (k && k.indexOf(prefix) === 0 && localStorage.getItem(k)) n++;
+    }
+    return n;
+  }
+  // Day別の必須ステップ数（📋手順書の手順項目のうち「任意」を除いた数・[0]=Day1）
+  // program.html / progress.html と同じ値
+  var DAY_STEPS = [2,5,5,5,5,5,4,5,5,5,5,5,5,5,5,5,5,5,5,5,3,5,5,5,5,5,5,3,5,5,5,5,5,5,3,5,5,5,4,4];
+  var OPT_TASKS = { 'd01-4':1, 'd03-6':1, 'd37-6':1, 'd39-4':1 };
+  function pad2(n) { return (n < 10 ? '0' : '') + n; }
+  function dayStats() {
+    var counts = [], i;
+    for (i = 0; i < 40; i++) counts.push(0);
+    var P = 'eng40-task:';
+    for (i = 0; i < localStorage.length; i++) {
+      var k = localStorage.key(i);
+      if (!k || k.indexOf(P) !== 0) continue;
+      if (localStorage.getItem(k) !== '1') continue;
+      var id = k.slice(P.length);
+      if (OPT_TASKS[id]) continue;
+      var m = /^d(\d{2})-\d+$/.exec(id);
+      if (!m) continue;
+      var d = parseInt(m[1], 10);
+      if (d >= 1 && d <= 40) counts[d - 1]++;
+    }
+    var doneN = 0, startedN = 0;
+    for (i = 1; i <= 40; i++) {
+      var need = DAY_STEPS[i - 1] || 0;
+      var got = Math.min(counts[i - 1], need);
+      var full = (localStorage.getItem('eng40-done:day-' + pad2(i)) === '1') || (need > 0 && got >= need);
+      if (full) doneN++;
+      if (full || got > 0) startedN++;
+    }
+    return { done: doneN, started: startedN };
+  }
+  var ds = dayStats();
+  document.getElementById('st-days').textContent  = ds.done;
+  document.getElementById('st-started').textContent = ds.started;
+  document.getElementById('st-units').textContent = countPrefix('eng40-unit:');
+  document.getElementById('st-ch').textContent    = countPrefix('eng40-ch:');
+  document.getElementById('st-tests').textContent = countPrefix('eng40-score:');
+})();
+</script>
+<script src="./sync.js?v=3"></script>
+<script>
+/* 家族設定カード（マルチ家族対応・sync.js の window.eng40family を使う）
+ * - 未設定の端末：「はじめに：家族を作る」→ ランダムIDを発行して ?f= 付きURLへ
+ * - 設定済みの端末：家族URLのコピー／友達に渡す別家族URLの発行
+ */
+(function () {
+  var fam = window.eng40family;
+  var host = document.getElementById('family-card');
+  if (!fam || !host) return;
+
+  function copyText(text, btn, okLabel) {
+    var orig = btn.textContent;
+    function done(ok) {
+      btn.textContent = ok ? (okLabel || '✅ コピーしました') : '⚠️ 長押しでコピーしてください';
+      setTimeout(function () { btn.textContent = orig; }, 2200);
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+        return;
+      }
+    } catch (e) {}
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      done(!!ok);
+    } catch (e2) { done(false); }
+  }
+
+  function showUrl(labelText, url) {
+    var box = document.getElementById('fam-out');
+    if (!box) return;
+    box.innerHTML = '';
+    box.style.display = 'block';
+    var lab = document.createElement('label');
+    lab.textContent = labelText;
+    var inp = document.createElement('input');
+    inp.type = 'text';
+    inp.readOnly = true;
+    inp.value = url;
+    inp.addEventListener('focus', function () { inp.select(); });
+    var btn = document.createElement('button');
+    btn.className = 'fam-btn';
+    btn.style.marginTop = '10px';
+    btn.textContent = '📋 このURLをコピー';
+    btn.addEventListener('click', function () { copyText(url, btn); });
+    box.appendChild(lab);
+    box.appendChild(inp);
+    box.appendChild(btn);
+  }
+
+  var NOTE = '家族URLを知っている人だけがその家族の記録を見られます。他の家族の記録は見えません。';
+
+  if (!fam.isSet()) {
+    host.innerHTML =
+      '<div class="eng40-family-card setup">' +
+        '<h2>👨‍👩‍👧 はじめに：家族を作る</h2>' +
+        '<p>この端末はまだどの家族にもつながっていません。' +
+        '「この家族で始める」を押すと専用のURLができて、チェックした記録が家族の端末どうしで共有されます。</p>' +
+        '<div class="fam-btns"><button class="fam-btn" id="fam-start">この家族で始める</button></div>' +
+        '<div class="fam-out" id="fam-out" style="display:none"></div>' +
+        '<p class="fam-note">' + NOTE + '</p>' +
+      '</div>';
+    document.getElementById('fam-start').addEventListener('click', function () {
+      fam.adopt(fam.generate());   // 保存して ?f= 付きURLへ置き換え
+    });
+    return;
+  }
+
+  host.innerHTML =
+    '<div class="eng40-family-card">' +
+      '<h2>👨‍👩‍👧 家族の設定</h2>' +
+      '<p class="fam-id">この端末の家族ID：****' + fam.tail() + '</p>' +
+      '<div class="fam-btns">' +
+        '<button class="fam-btn" id="fam-copy">家族URLをコピー</button>' +
+        '<button class="fam-btn ghost" id="fam-new">別の家族用URLを作る</button>' +
+      '</div>' +
+      '<div class="fam-out" id="fam-out" style="display:none"></div>' +
+      '<p class="fam-note">' + NOTE +
+        '<br>「家族URLをコピー」＝この家族の別の端末（お父さん・お母さんのスマホ）に渡すURL。' +
+        '<br>「別の家族用URLを作る」＝友達の家族に渡す新しいURL。この端末の家族は変わりません。</p>' +
+    '</div>';
+
+  document.getElementById('fam-copy').addEventListener('click', function () {
+    var url = fam.myUrl();
+    copyText(url, this);
+    showUrl('この家族のURL（家族の他の端末で開く）', url);
+  });
+
+  document.getElementById('fam-new').addEventListener('click', function () {
+    var url = fam.urlFor(fam.generate());
+    showUrl('友達の家族に渡すURL（この端末の記録とは別になります）', url);
+  });
+})();
+</script>
+<script src="./nav.js?v=3"></script>
+<script src="./gamify-v2.js?v=1"></script>
+</body>
+</html>

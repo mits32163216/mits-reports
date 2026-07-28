@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📘</text></svg>">
+<title>✅ 40日デイリーチェック｜英語40日プログラム</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:24px 20px 110px; max-width:1000px; margin:0 auto; }
+h1,h2,h3 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; }
+h1 { font-size:22px; margin:18px 0 4px; }
+.tagline { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:20px; }
+a { color:var(--gold); text-decoration:none; }
+/* 開始日入力 */
+.start-date-box { display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin:0 0 22px; padding:12px 16px;
+  background:var(--card-bg); border:1px solid var(--gold); border-radius:10px; }
+.start-date-box label { font-family:var(--mincho); font-size:13px; font-weight:600; letter-spacing:0.04em; }
+.start-date-box input[type="date"] { font-family:var(--mono); font-size:13px; color:var(--fg); background:var(--sub-bg);
+  border:1px solid var(--line); border-radius:8px; padding:6px 10px; color-scheme:light dark; }
+.start-date-box .start-hint { font-family:var(--mono); font-size:10px; color:var(--muted); }
+.dday { display:block; font-family:var(--mono); font-size:10px; font-weight:400; color:var(--muted); margin-top:1px; }
+.dday.sun { color:var(--sage); }
+/* フェーズセクション */
+.step-section { margin:26px 0; padding:18px 22px; background:var(--sub-bg); border:1px solid var(--gold); border-radius:12px; }
+.step-section h2 { font-size:16px; margin:0 0 4px; }
+.step-badge { font-family:var(--mono); font-size:12px; background:var(--gold); color:#fff; padding:2px 8px; border-radius:8px; margin-right:8px; vertical-align:2px; }
+.phase-range { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:10px; }
+/* 90分メニュー */
+.menu { background:var(--card-bg); border:1px solid var(--line); border-radius:10px; padding:10px 14px; font-size:12px; line-height:1.9; margin-bottom:14px; }
+.menu b { color:var(--gold); }
+/* Dayリスト */
+ul.day-list { list-style:none; margin:0; padding:0; }
+ul.day-list li { display:flex; align-items:flex-start; gap:10px; padding:9px 10px; border-bottom:1px dashed var(--line); border-radius:8px; cursor:pointer; transition:background 0.12s; }
+ul.day-list li:last-child { border-bottom:none; }
+ul.day-list li:hover { background:rgba(212,168,91,0.07); }
+ul.day-list li.watched { background:rgba(122,155,126,0.09); }
+ul.day-list li.watched:hover { background:rgba(122,155,126,0.14); }
+ul.day-list li.partial { background:rgba(122,155,126,0.05); box-shadow:inset 3px 0 0 var(--sage); }
+.dprog { flex:0 0 auto; margin-left:8px; align-self:center; font-family:var(--mono); font-size:11px; color:var(--muted); white-space:nowrap; }
+.dprog.part { color:var(--sage); font-weight:700; }
+.dprog.full { color:var(--sage); }
+/* 状態マーカー（左端・手動チェックは無し／daily.html の項目チェックから自動算出） */
+.dstate { flex:0 0 22px; align-self:center; text-align:center; font-size:16px; line-height:1; }
+.dstate.done { color:var(--sage); }
+.dstate.blank::before { content:"·"; color:var(--line); font-size:20px; }
+.godaily { flex:0 0 auto; margin-left:8px; align-self:center; font-family:var(--mono); font-size:14px; color:var(--muted); opacity:0; transition:opacity 0.12s; }
+ul.day-list li:hover .godaily { opacity:0.9; color:var(--gold); }
+.dnum { flex:0 0 58px; font-family:var(--mono); font-size:12px; font-weight:700; color:var(--gold); padding-top:2px; }
+.dbody { flex:1 1 auto; font-size:13px; line-height:1.75; }
+.dbody .sub { display:block; font-size:11px; color:var(--muted); }
+.tag { display:inline-block; font-family:var(--mono); font-size:10px; padding:1px 7px; border-radius:8px; color:#fff; margin-left:6px; vertical-align:1px; }
+.tag.sokutei { background:var(--rose); }
+.tag.chousei { background:var(--sage); }
+.tag.nini { background:var(--muted); }
+/* 進捗ピル */
+.watch-summary { position:fixed; bottom:16px; left:50%; transform:translateX(-50%); z-index:200;
+  display:flex; align-items:center; gap:14px; padding:10px 20px; background:var(--card-bg);
+  border:1px solid var(--gold); border-radius:24px; box-shadow:0 6px 20px rgba(15,27,46,0.18); font-size:13px; white-space:nowrap; }
+.watch-summary strong { color:var(--sage); font-size:15px; }
+.watch-summary button { font-family:var(--sans); font-size:11px; border:1px solid var(--line); background:none; color:var(--muted); border-radius:12px; padding:3px 10px; cursor:pointer; }
+footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+@media (max-width:600px){ body { padding:20px 14px 110px; } .dnum { flex-basis:50px; } }
+</style>
+<link rel="stylesheet" href="./theme-v2.css?v=1">
+</head>
+<body>
+
+<h1>✅ 40日デイリーチェック</h1>
+<div class="tagline">各日の状況の一覧です。チェックは<a href="./daily.html">📋 今日やること</a>で。全部できた日は自動で✅になります ─ 日をタップするとその日の手順へ ─ 月〜土で進む・日曜は調整日・崩れた日は「15分デー」でOK（ゼロの日だけ作らない）</div>
+
+<div class="start-date-box">
+  <label for="start-date">📅 開始日</label>
+  <input type="date" id="start-date">
+  <span class="start-hint">入れると各Dayに実際の日付が出ます（この端末に保存）</span>
+</div>
+
+<!-- ===== PHASE 1 ===== -->
+<div class="step-section">
+  <h2><span class="step-badge">P1</span>音と現在・過去</h2>
+  <div class="phase-range">Day 1〜14｜フォニックスで音を作りながら、現在形→過去形へ</div>
+  <div class="menu">🕐 <b>毎日90分</b>：フォニックス15分＝ayane実践4分＋ちぐさ理論編の今日の区間＋マネ直し（<b>必ず声に出す</b>）→ マーフィー2ユニット40分（左を読む→右を解く→丸付け・間違いに印）→ ALL IN ONE Ch.1〜3を読む15分 → 今日の新出語（マーフィー・ALL IN ONEで知らなかった語）を品詞別ノートの今日の欄に書く（目安8〜12語）→ 📓 <b>単語復習10分</b>：<b>昨日の新出語をテスト</b>（日本語→英語・隠して言えるか）＋マーフィー間違い直し　※例文の暗唱はまだやらない</div>
+  <ul class="day-list">
+    <li data-day="01"><span class="dstate"></span><span class="dnum">Day 1</span><div class="dbody">測定日：<b>実力測定テスト①文法・②リスニング</b>（印刷済みのプリント）<span class="tag sokutei">測定</span><span class="sub">結果は「📊 測る」に記録 → 最適化マップでスタート速度を決める／マーフィー巻末の診断テストは<b>任意</b>（やるなら中盤 Day 20 前後に1回・Day 39 にもう1回で前後比較）</span></div></li>
+    <li data-day="02"><span class="dstate"></span><span class="dnum">Day 2</span><div class="dbody">マーフィー <b>Unit 1〜2</b>（am/is/are）＋ ALL IN ONE <b>Ch.1 品詞</b>を読み始める<span class="sub">品詞（名詞・形容詞・副詞）はこの夏の合言葉</span></div></li>
+    <li data-day="03"><span class="dstate"></span><span class="dnum">Day 3</span><div class="dbody">マーフィー <b>Unit 3〜4</b>（現在進行形・進行形の疑問文）＋ Ch.1 つづき<span class="sub"><span class="tag nini">任意</span> ＋（任意）英検3級の練習問題をやるなら今日がおすすめ（eiken.or.jp の過去問・無料／点数は「📊 測る」へ）</span></div></li>
+    <li data-day="04"><span class="dstate"></span><span class="dnum">Day 4</span><div class="dbody">Unit <b>5〜6</b>（一般動詞・一般動詞の否定）＋ Ch.1 つづき</div></li>
+    <li data-day="05"><span class="dstate"></span><span class="dnum">Day 5</span><div class="dbody">Unit <b>7〜8</b>（Do you...? / 進行形と現在形）＋ Ch.1 つづき</div></li>
+    <li data-day="06"><span class="dstate"></span><span class="dnum">Day 6</span><div class="dbody">Unit <b>9</b>（have / have got）＋ 現在形ブロックまとめ（1〜9の間違い印だけ）＋ <b>Ch.1 読了</b><span class="sub">現在形ブロック完了！</span></div></li>
+    <li data-day="07"><span class="dstate"></span><span class="dnum">Day 7</span><div class="dbody">調整日（遅れ回収 or 完全休み）＋その週の単語まとめ再テスト（2回連続で言えた語は卒業）<span class="tag chousei">調整</span></div></li>
+    <li data-day="08"><span class="dstate"></span><span class="dnum">Day 8</span><div class="dbody">Unit <b>10〜11</b>（was/were・過去形）＋ <b>Ch.2 文の種類</b> 開始<span class="sub">ここから夏の山場・過去形ブロック</span></div></li>
+    <li data-day="09"><span class="dstate"></span><span class="dnum">Day 9</span><div class="dbody">Unit <b>12〜13</b>（過去の否定・疑問／過去進行形）＋ Ch.2</div></li>
+    <li data-day="10"><span class="dstate"></span><span class="dnum">Day 10</span><div class="dbody">Unit <b>14〜15</b>（過去進行形と過去形／used to）＋ Ch.2<span class="sub">過去形ブロック完了！</span></div></li>
+    <li data-day="11"><span class="dstate"></span><span class="dnum">Day 11</span><div class="dbody">Unit <b>22〜23</b>（be/have/do・不規則動詞）＋ <b>Ch.3 時制</b>（完了形のページは飛ばす）</div></li>
+    <li data-day="12"><span class="dstate"></span><span class="dnum">Day 12</span><div class="dbody">Unit <b>24〜25</b>（未来：予定の言い方・be going to）＋ Ch.3</div></li>
+    <li data-day="13"><span class="dstate"></span><span class="dnum">Day 13</span><div class="dbody">Unit <b>26</b>（will）＋ 現在形ブロックの復習（間違い印だけ）</div></li>
+    <li data-day="14"><span class="dstate"></span><span class="dnum">Day 14</span><div class="dbody">調整日＋<b>フォニックス動画1周完了チェック</b>＋その週の単語まとめ再テスト（2回連続で言えた語は卒業）<span class="tag chousei">調整</span><span class="sub">明日からリンキング編[#281]へ</span></div></li>
+  </ul>
+</div>
+
+<!-- ===== PHASE 2 ===== -->
+<div class="step-section">
+  <h2><span class="step-badge">P2</span>文法の幹と例文</h2>
+  <div class="phase-range">Day 15〜28｜助動詞・疑問文・代名詞＋ALL IN ONE例文スタート</div>
+  <div class="menu">🕐 <b>毎日90分</b>：リンキング[#281]＋ayane実践4分＋苦手音の2周目15分 → マーフィー2ユニット40分 → <b>ALL IN ONE 例文5本</b>20分（聞く→音読3回→シャドーイング＋<b>品詞マーキング：名詞○・形容詞△・副詞□</b>→知らない語を品詞別ノートへ）→ 📓 <b>単語復習10分</b>：<b>昨日の新出語をテスト</b>（日本語→英語・隠して言えるか）＋マーフィー間違い直し</div>
+  <ul class="day-list">
+    <li data-day="15"><span class="dstate"></span><span class="dnum">Day 15</span><div class="dbody">Unit <b>27〜28</b>（might / can・could）＋ <b>Ch.13 助動詞</b>＋<b>例文5本/日 開始</b></div></li>
+    <li data-day="16"><span class="dstate"></span><span class="dnum">Day 16</span><div class="dbody">Unit <b>29〜30</b>（must / should）＋ Ch.13</div></li>
+    <li data-day="17"><span class="dstate"></span><span class="dnum">Day 17</span><div class="dbody">Unit <b>31〜32</b>（have to / Would you like?）</div></li>
+    <li data-day="18"><span class="dstate"></span><span class="dnum">Day 18</span><div class="dbody">Unit <b>33〜34</b>（I'd rather / 命令文）</div></li>
+    <li data-day="19"><span class="dstate"></span><span class="dnum">Day 19</span><div class="dbody">Unit <b>35〜36</b>（there is/are）＋ <b>Ch.16 形式語のit</b>（時間・天気のところだけ）</div></li>
+    <li data-day="20"><span class="dstate"></span><span class="dnum">Day 20</span><div class="dbody">Unit <b>37</b>（it）＋ <b>折り返しチェック</b>：過去形の再テスト（巻末Additional Exercises）<span class="sub">選抜ルート前半31ユニット完了！</span></div></li>
+    <li data-day="21"><span class="dstate"></span><span class="dnum">Day 21</span><div class="dbody">調整日＋その週の単語まとめ再テスト（2回連続で言えた語は卒業）<span class="tag chousei">調整</span></div></li>
+    <li data-day="22"><span class="dstate"></span><span class="dnum">Day 22</span><div class="dbody">Unit <b>42〜43</b>（疑問文1・2）＋ <b>Ch.4 文型(1)</b> 開始＋ <b>Part 2 音声変化</b>を読む</div></li>
+    <li data-day="23"><span class="dstate"></span><span class="dnum">Day 23</span><div class="dbody">Unit <b>44〜45</b>（疑問文3・What/Which/How）</div></li>
+    <li data-day="24"><span class="dstate"></span><span class="dnum">Day 24</span><div class="dbody">Unit <b>46</b>（How long does it take?）＋ 疑問文ブロック復習</div></li>
+    <li data-day="25"><span class="dstate"></span><span class="dnum">Day 25</span><div class="dbody">Unit <b>57〜58</b>（I/me・my/his）</div></li>
+    <li data-day="26"><span class="dstate"></span><span class="dnum">Day 26</span><div class="dbody">Unit <b>59〜60</b>（Whose/mine・I/me/my/mine）</div></li>
+    <li data-day="27"><span class="dstate"></span><span class="dnum">Day 27</span><div class="dbody">Unit <b>61〜62</b>（myself・-'s所有）<span class="sub">代名詞ブロック完了！</span></div></li>
+    <li data-day="28"><span class="dstate"></span><span class="dnum">Day 28</span><div class="dbody">調整日＋その週の単語まとめ再テスト（2回連続で言えた語は卒業）<span class="tag chousei">調整</span></div></li>
+  </ul>
+</div>
+
+<!-- ===== PHASE 3 ===== -->
+<div class="step-section">
+  <h2><span class="step-badge">P3</span>運用と測定</h2>
+  <div class="phase-range">Day 29〜40｜語順・前置詞＋冠詞・名詞（Unit 63〜67）＋2周目復習＋測定で締める</div>
+  <div class="menu">🕐 <b>毎日90分</b>：マーフィー新規＋間違い印の2周目30分 → ALL IN ONE 例文5本＋<b>ディクテーション1文</b>30分 → 📓 <b>単語復習10分</b>：<b>昨日の新出語をテスト</b>（日本語→英語・隠して言えるか）＋マーフィー間違い直し・模試準備</div>
+  <ul class="day-list">
+    <li data-day="29"><span class="dstate"></span><span class="dnum">Day 29</span><div class="dbody">Unit <b>91〜92</b>（語順・頻度副詞）</div></li>
+    <li data-day="30"><span class="dstate"></span><span class="dnum">Day 30</span><div class="dbody">Unit <b>101〜102</b>（at 8:00 / on Monday / from...to）</div></li>
+    <li data-day="31"><span class="dstate"></span><span class="dnum">Day 31</span><div class="dbody">Unit <b>103〜104</b>（before/after・場所のin/at/on 1）</div></li>
+    <li data-day="32"><span class="dstate"></span><span class="dnum">Day 32</span><div class="dbody">Unit <b>105〜106</b>（場所のin/at/on 2・to/in/at）</div></li>
+    <li data-day="33"><span class="dstate"></span><span class="dnum">Day 33</span><div class="dbody">Unit <b>107</b>（next to/between/under）＋ 前置詞ブロック復習<span class="sub">選抜前半完了！🎉（残るは冠詞・名詞ブロック）</span></div></li>
+    <li data-day="34"><span class="dstate"></span><span class="dnum">Day 34</span><div class="dbody">Unit <b>63〜64</b>（a/an・単数複数）<span class="sub">冠詞：数えられる名詞に a/the/-s を必ず付ける</span></div></li>
+    <li data-day="35"><span class="dstate"></span><span class="dnum">Day 35</span><div class="dbody">調整日＋その週の単語まとめ再テスト（2回連続で言えた語は卒業）<span class="tag chousei">調整</span></div></li>
+    <li data-day="36"><span class="dstate"></span><span class="dnum">Day 36</span><div class="dbody">2周目復習①（間違い印のユニットだけ）＋ Unit <b>65〜66</b>（数えられる/数えられない名詞）<span class="sub">冠詞：water/English は a も -s も付けない</span></div></li>
+    <li data-day="37"><span class="dstate"></span><span class="dnum">Day 37</span><div class="dbody">2周目復習②（間違い印のユニット総ざらい）＋ ALL IN ONE 例文5本<span class="sub"><span class="tag nini">任意</span> ＋（任意）英検3級の練習問題をやるなら今日がおすすめ（Day 3 とは別の回 → 点数を比較しやすい）</span></div></li>
+    <li data-day="38"><span class="dstate"></span><span class="dnum">Day 38</span><div class="dbody">2周目復習③＋ Unit <b>67</b>（a/anとthe）<span class="sub">冠詞：a=初めての1つ / the=お互い分かる特定の1つ</span></div></li>
+    <li data-day="39"><span class="dstate"></span><span class="dnum">Day 39</span><div class="dbody">2周目復習④＋ 前置詞・冠詞の総ざらい<span class="sub"><span class="tag nini">任意</span> ＋（任意）診断テスト or 実力測定テストの再受験をやるなら今日がおすすめ（中盤 Day 20 前後にやっていれば前後比較できる）</span></div></li>
+    <li data-day="40"><span class="dstate"></span><span class="dnum">Day 40</span><div class="dbody">総仕上げ：秋の継続ルート決め＋<b>「夏にできるようになったこと」を自分の言葉で言う</b><span class="tag sokutei">測定</span></div></li>
+  </ul>
+</div>
+
+<div class="watch-summary">
+  <span id="watch-text">✅ <strong>0 / 40</strong> 日</span>
+  <button id="reset-btn" title="このページのチェックを全部消す">全リセット</button>
+</div>
+
+<footer>📘 英語40日プログラム｜チェックはクラウドに保存され、家族の端末どこからでも見られます</footer>
+
+<script>
+/* Day別の必須ステップ数（📋手順書ページの手順項目のうち「任意」を除いた数）
+ * daily.html の data-tkey="dNN-S" と対応。任意ステップは分母に入れない＝飛ばしても完了になる。 */
+var ENG40_DAY_STEPS = [2,5,5,5,5,5,4,5,5,5,5,5,5,5,5,5,5,5,5,5,3,5,5,5,5,5,5,3,5,5,5,5,5,5,3,5,5,5,4,4];
+var ENG40_OPT_TASKS = { 'd01-4':1, 'd03-6':1, 'd37-6':1, 'd39-4':1 };
+/* localStorage を1回だけ走査して Day別の「チェック済み必須ステップ数」を返す（[0]=Day1） */
+function eng40TaskCounts() {
+  var out = [], i;
+  for (i = 0; i < 40; i++) out.push(0);
+  var P = 'eng40-task:';
+  for (i = 0; i < localStorage.length; i++) {
+    var k = localStorage.key(i);
+    if (!k || k.indexOf(P) !== 0) continue;
+    if (localStorage.getItem(k) !== '1') continue;
+    var id = k.slice(P.length);
+    if (ENG40_OPT_TASKS[id]) continue;             // 任意ステップは数えない
+    var m = /^d(\d{2})-\d+$/.exec(id);
+    if (!m) continue;
+    var d = parseInt(m[1], 10);
+    if (d >= 1 && d <= 40) out[d - 1]++;
+  }
+  return out;
+}
+</script>
+<script>
+(function () {
+  var PREFIX = 'eng40-done:day-';
+  var TPREFIX = 'eng40-task:';
+  var rows = Array.prototype.slice.call(document.querySelectorAll('ul.day-list li[data-day]'));
+  var total = rows.length;
+  var textEl = document.getElementById('watch-text');
+  function pad2(n) { return (n < 10 ? '0' : '') + n; }
+
+  // 各Day行に「状態表示」を描画する（手動チェックは無し）。
+  // 状態は daily.html の項目チェック（eng40-task:）と自動連動フラグ（eng40-done:day-NN）から算出：
+  //   完了   = eng40-done:day-NN=1 または 必須ステップが全部（n>=M） → ✅＋薄sage背景
+  //   部分   = 必須ステップが1つ以上・全部でない（0<n<M）           → 「N/M」＋薄い帯
+  //   未着手 = n=0 かつ done フラグ無し                              → 何も塗らない
+  function renderProgress() {
+    var counts = eng40TaskCounts();
+    rows.forEach(function (li) {
+      var day = parseInt(li.getAttribute('data-day'), 10);
+      if (!day) return;
+      var m = ENG40_DAY_STEPS[day - 1] || 0;
+      var n = Math.min(counts[day - 1], m);
+      var doneFlag = localStorage.getItem(PREFIX + pad2(day)) === '1';
+      var done = doneFlag || (m > 0 && n >= m);
+
+      var st = li.querySelector('.dstate');
+      var pr = li.querySelector('.dprog');
+      if (!pr) { pr = document.createElement('span'); pr.className = 'dprog'; li.appendChild(pr); }
+
+      if (done) {
+        li.classList.add('watched'); li.classList.remove('partial');
+        if (st) { st.className = 'dstate done'; st.textContent = '✅'; }
+        pr.className = 'dprog full';
+        pr.textContent = (m > 0 ? (m + '/' + m) : '');
+        pr.title = '完了（📋今日やることの必須項目が全部チェック済み）';
+      } else if (n > 0) {
+        li.classList.add('partial'); li.classList.remove('watched');
+        if (st) { st.className = 'dstate blank'; st.textContent = ''; }
+        pr.className = 'dprog part';
+        pr.textContent = n + '/' + m;
+        pr.title = '📋今日やることページで ' + n + ' / ' + m + ' 項目チェック済み';
+      } else {
+        li.classList.remove('watched'); li.classList.remove('partial');
+        if (st) { st.className = 'dstate blank'; st.textContent = ''; }
+        pr.className = 'dprog';
+        pr.textContent = '';
+        pr.title = '';
+      }
+    });
+    return counts;
+  }
+
+  function update() {
+    var doneN = document.querySelectorAll('ul.day-list li.watched').length;
+    var startedN = document.querySelectorAll('ul.day-list li.watched, ul.day-list li.partial').length;
+    textEl.innerHTML = '✅ 完了 <strong>' + doneN + ' / ' + total + '</strong> 日（着手 ' + startedN + ' 日）';
+  }
+
+  // 各Day行タップ → daily.html の同じ日の手順へ（ここでは直接チェックしない導線）
+  rows.forEach(function (li) {
+    var day = parseInt(li.getAttribute('data-day'), 10);
+    if (!li.querySelector('.godaily')) {
+      var arw = document.createElement('span');
+      arw.className = 'godaily'; arw.textContent = '›'; arw.setAttribute('aria-hidden', 'true');
+      li.appendChild(arw);
+    }
+    li.setAttribute('role', 'link');
+    li.setAttribute('tabindex', '0');
+    li.setAttribute('title', 'Day ' + day + ' の手順（📋今日やること）を開く');
+    function go() { location.href = './daily.html#day-' + day; }
+    li.addEventListener('click', go);
+    li.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
+    });
+  });
+
+  // 全リセット：40日の進捗（各日の項目チェック eng40-task: と完了フラグ eng40-done:）だけを消す。
+  // 単語(vocab)・スコア(score)・ユニット(unit)・章(ch)・音(ph)・開始日(start) は消さない（他ページの実データ巻き添え防止）。
+  document.getElementById('reset-btn').addEventListener('click', function () {
+    if (!confirm('40日の進捗（各日の項目チェックと完了状態）を全部リセットします。\n※単語カード・テストのスコア・教材ルート（ユニット）の記録は消しません。\nいいですか？')) return;
+    var kill = [], i;
+    for (i = 0; i < localStorage.length; i++) {
+      var k = localStorage.key(i);
+      if (!k) continue;
+      if (k.indexOf('eng40-done:') === 0 || k.indexOf(TPREFIX) === 0) kill.push(k);
+    }
+    kill.forEach(function (k) { localStorage.removeItem(k); });
+    renderProgress();
+    update();
+  });
+
+  renderProgress();
+  update();
+})();
+</script>
+<script>
+(function () {
+  var KEY = 'eng40-start';
+  var input = document.getElementById('start-date');
+  var dnums = Array.prototype.slice.call(document.querySelectorAll('ul.day-list li .dnum'));
+  var WD = ['日', '月', '火', '水', '木', '金', '土'];
+  function render(val) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(val || '');
+    dnums.forEach(function (el, i) {
+      var old = el.querySelector('.dday');
+      if (old) old.parentNode.removeChild(old);
+      if (!m) return;
+      // ローカル日付で計算（"YYYY-MM-DD"をnew Date()に直接渡すとUTC解釈になるため自前でsplit）
+      var d = new Date(parseInt(m[1], 10), parseInt(m[2], 10) - 1, parseInt(m[3], 10) + i);
+      var s = document.createElement('span');
+      s.className = 'dday' + (d.getDay() === 0 ? ' sun' : '');
+      s.textContent = (d.getMonth() + 1) + '/' + d.getDate() + '(' + WD[d.getDay()] + ')';
+      el.appendChild(s);
+    });
+  }
+  function onInput() {
+    if (input.value) { localStorage.setItem(KEY, input.value); }
+    else { localStorage.removeItem(KEY); }
+    render(input.value);
+  }
+  var saved = localStorage.getItem(KEY);
+  if (saved) { input.value = saved; }
+  render(input.value);
+  input.addEventListener('change', onInput);
+  input.addEventListener('input', onInput);
+})();
+</script>
+<script src="./sync.js?v=3"></script>
+<script src="./nav.js?v=3"></script>
+<script src="./gamify-v2.js?v=1"></script>
+</body>
+</html>

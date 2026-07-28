@@ -1,0 +1,250 @@
+/* v2 ELSA式ダークテーマ（配色源：https://utage-system.com/page/v8pQL82x2Am1）
+ * ダーク固定・prefers-color-scheme無視・既存CSS変数を上書き
+ */
+:root {
+  --v2-bg: #0a0e1a;
+  --v2-card: #111726;
+  --v2-card-deep: #161d2e;
+  --v2-fg: #e8ecf1;
+  --v2-muted: rgba(232,236,241,0.62);
+  --v2-line: rgba(94,200,255,0.20);
+  --v2-mint: #4ff5c7;
+  --v2-cyan: #5ec8ff;
+  --v2-coral: #ff7a6b;
+  --v2-cta: linear-gradient(135deg, #4ff5c7 0%, #5ec8ff 100%);
+  /* 既存の palette 変数を全部上書き（!important でmedia queryにも勝つ） */
+  --navy: #0a0e1a !important;
+  --ivory: #e8ecf1 !important;
+  --gold: #4ff5c7 !important;
+  --sage: #4ff5c7 !important;
+  --rose: #ff7a6b !important;
+  --bg: #0a0e1a !important;
+  --fg: #e8ecf1 !important;
+  --line: rgba(94,200,255,0.20) !important;
+  --card-bg: #111726 !important;
+  --muted: rgba(232,236,241,0.62) !important;
+  --sub-bg: rgba(94,200,255,0.08) !important;
+  --highlight: rgba(79,245,199,0.18) !important;
+  --cell-bg: #161d2e !important;
+  --grid-line: rgba(94,200,255,0.10) !important;
+}
+/* prefers-color-scheme のライトも同じダーク値で上書き（v2はダーク固定） */
+@media (prefers-color-scheme: light) {
+  :root {
+    --navy: #0a0e1a !important;
+    --ivory: #e8ecf1 !important;
+    --bg: #0a0e1a !important;
+    --fg: #e8ecf1 !important;
+    --line: rgba(94,200,255,0.20) !important;
+    --card-bg: #111726 !important;
+    --muted: rgba(232,236,241,0.62) !important;
+    --sub-bg: rgba(94,200,255,0.08) !important;
+    --cell-bg: #161d2e !important;
+    --grid-line: rgba(94,200,255,0.10) !important;
+  }
+}
+html, body {
+  background: #0a0e1a !important;
+  color: #e8ecf1 !important;
+}
+/* 見出しにミントアクセント（LP準拠） */
+h1 { color: var(--v2-mint) !important; }
+.status h2, .step-section h2, .eng40-family-card h2, .status .num strong,
+.stat .num strong, .banner { color: var(--v2-mint) !important; }
+.step-section.priority h2 { color: var(--v2-coral) !important; }
+
+/* Nav：ダーク背景で見える色に */
+.kai-nav {
+  background: rgba(10,14,26,0.92) !important;
+  border-bottom: 1px solid var(--v2-line) !important;
+}
+.kai-brand { color: var(--v2-mint) !important; }
+.kai-links a { color: var(--v2-fg) !important; }
+.kai-links a:hover { background: rgba(79,245,199,0.14) !important; }
+.kai-links a.kn-current {
+  background: linear-gradient(135deg, #4ff5c7 0%, #5ec8ff 100%) !important;
+  color: #0a0e1a !important;
+  border-color: transparent !important;
+}
+.kai-links a.kn-current .kn-sub { color: #0a0e1a !important; opacity: 0.75 !important; }
+
+/* CTA/ボタン：CTAグラデを適用 */
+.fam-btn {
+  background: linear-gradient(135deg, #4ff5c7 0%, #5ec8ff 100%) !important;
+  color: #0a0e1a !important;
+  border: 1px solid transparent !important;
+  font-weight: 700 !important;
+}
+.fam-btn.ghost {
+  background: transparent !important;
+  color: var(--v2-fg) !important;
+  border: 1px solid var(--v2-line) !important;
+}
+
+/* チェック済みの視認性（白 → ダーク背景色） */
+.tchk input:checked + .tchk-mark { background: var(--v2-mint) !important; border-color: var(--v2-mint) !important; }
+.tchk input:checked + .tchk-mark::after { border-color: #0a0e1a !important; }
+.stepbadge.full { background: var(--v2-mint) !important; border-color: var(--v2-mint) !important; color: #0a0e1a !important; }
+.stepbadge.part { color: var(--v2-mint) !important; border-color: var(--v2-mint) !important; }
+.step.tdone { background: rgba(79,245,199,0.14) !important; border-color: var(--v2-mint) !important; }
+.rest-note { background: rgba(79,245,199,0.14) !important; border-color: var(--v2-mint) !important; }
+
+/* progress.html カレンダー */
+.dc-cell.done { background: var(--v2-mint) !important; border-color: var(--v2-mint) !important; }
+.dc-cell.done .dc-num, .dc-cell.done .dc-date, .dc-cell.done .dc-frac { color: #0a0e1a !important; }
+.dc-cell.part { background: rgba(79,245,199,0.20) !important; border-color: rgba(79,245,199,0.45) !important; }
+.dc-cell.part .dc-frac { color: var(--v2-mint) !important; }
+.dc-cell.today { border: 2px solid var(--v2-cyan) !important; box-shadow: 0 0 0 2px rgba(94,200,255,0.25) !important; }
+.sw-done { background: var(--v2-mint) !important; }
+.sw-part { background: rgba(79,245,199,0.20) !important; border: 1px solid rgba(79,245,199,0.45) !important; }
+.sw-today { border: 2px solid var(--v2-cyan) !important; }
+.bar-row .b-fill { background: var(--v2-mint) !important; }
+.bar-row .b-fill.full { background: linear-gradient(135deg, #4ff5c7 0%, #5ec8ff 100%) !important; }
+
+/* SVGチャート色 */
+svg .line-col, svg .dot-col { stroke: var(--v2-mint) !important; }
+svg .dot-col { fill: var(--v2-mint) !important; }
+svg .area-col { fill: var(--v2-mint) !important; opacity: 0.14 !important; stroke: none !important; }
+svg .line-grad, svg .dot-grad { stroke: var(--v2-cyan) !important; }
+svg .dot-grad { fill: var(--v2-cyan) !important; }
+svg .target, svg .target-lbl { stroke: var(--v2-coral) !important; fill: var(--v2-coral) !important; }
+svg .sc-line { stroke: var(--v2-cyan) !important; }
+svg .sc-dot { fill: var(--v2-mint) !important; }
+
+/* =============================
+ * ゲーミフィ v1 コンポーネント
+ * ============================= */
+.gamify-chips {
+  display: flex; gap: 10px; margin: 12px 0 8px; flex-wrap: nowrap;
+}
+.gchip {
+  flex: 1 1 0; min-width: 0;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 10px 8px; border-radius: 12px;
+  background: var(--v2-card-deep); border: 1px solid var(--v2-line);
+  text-align: center;
+}
+.gchip .g-emoji { font-size: 20px; line-height: 1; }
+.gchip .g-num {
+  font-family: "Hiragino Mincho ProN","游明朝",serif;
+  font-size: 22px; font-weight: 700; color: var(--v2-mint); line-height: 1.1;
+}
+.gchip .g-lbl {
+  font-family: "SF Mono","Menlo",monospace; font-size: 9.5px;
+  color: var(--v2-muted); white-space: nowrap;
+}
+.gchip.streak-hot { border-color: var(--v2-coral); }
+.gchip.streak-hot .g-num { color: var(--v2-coral); }
+.gchip-warn {
+  margin: 4px 0 8px; font-size: 11px; color: var(--v2-coral);
+  text-align: center; opacity: 0.85;
+  font-family: "SF Mono","Menlo",monospace;
+}
+.milestone-card {
+  margin: 8px 0 16px; padding: 12px 16px; border-radius: 12px;
+  background: linear-gradient(135deg, rgba(79,245,199,0.10), rgba(94,200,255,0.06));
+  border: 1px solid var(--v2-mint);
+  font-family: "Hiragino Sans","游ゴシック",sans-serif;
+  font-size: 13.5px; line-height: 1.7; color: var(--v2-fg);
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.milestone-card .ms-icon { font-size: 22px; }
+.milestone-card .ms-big { color: var(--v2-mint); font-weight: 700; font-size: 17px; margin: 0 2px; }
+.milestone-card.done {
+  background: linear-gradient(135deg, rgba(79,245,199,0.20), rgba(94,200,255,0.12));
+}
+
+/* Particles */
+.gpart-layer { position: fixed; pointer-events: none; z-index: 2000; inset: 0; overflow: hidden; }
+.gpart {
+  position: absolute; width: 10px; height: 10px; border-radius: 50%;
+  background: var(--v2-mint); box-shadow: 0 0 12px var(--v2-mint);
+  animation: gpartfly 1.2s ease-out forwards;
+}
+@keyframes gpartfly {
+  0% { transform: translate(0,0) scale(0.6); opacity: 1; }
+  100% { transform: translate(var(--dx,0), var(--dy,-60px)) scale(1.1); opacity: 0; }
+}
+/* Toast */
+.gtoast {
+  position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%);
+  background: linear-gradient(135deg, #4ff5c7 0%, #5ec8ff 100%);
+  color: #0a0e1a; padding: 12px 22px; border-radius: 999px;
+  font-family: "Hiragino Sans","游ゴシック",sans-serif; font-weight: 700; font-size: 14px;
+  box-shadow: 0 6px 24px rgba(79,245,199,0.35); z-index: 2001;
+  opacity: 0; transition: opacity 0.35s;
+  max-width: 90%; text-align: center;
+}
+.gtoast.show { opacity: 1; }
+
+/* Milestone modal */
+.gmodal-overlay {
+  position: fixed; inset: 0; background: rgba(10,14,26,0.88); backdrop-filter: blur(6px);
+  z-index: 3000; display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.gmodal {
+  background: var(--v2-card); border: 1px solid var(--v2-mint); border-radius: 16px;
+  padding: 28px 24px; max-width: 420px; width: 100%; text-align: center;
+  animation: gmodalpop 0.35s ease-out;
+  box-shadow: 0 20px 60px rgba(79,245,199,0.25);
+}
+@keyframes gmodalpop { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.gmodal .gm-icon { font-size: 64px; line-height: 1; margin-bottom: 4px; }
+.gmodal .gm-title {
+  font-family: "Hiragino Mincho ProN","游明朝",serif;
+  font-size: 22px; font-weight: 700; color: var(--v2-mint); margin: 8px 0 12px;
+}
+.gmodal .gm-body { font-size: 14px; line-height: 1.9; color: var(--v2-fg); margin-bottom: 20px; }
+.gmodal .gm-hl { color: var(--v2-mint); font-weight: 700; }
+.gmodal .gm-close {
+  appearance: none; -webkit-appearance: none; cursor: pointer;
+  font-family: "Hiragino Sans","游ゴシック",sans-serif; font-weight: 700; font-size: 14px;
+  padding: 12px 32px; border-radius: 999px; border: none;
+  background: linear-gradient(135deg, #4ff5c7 0%, #5ec8ff 100%);
+  color: #0a0e1a;
+}
+
+/* progress.html Before/After hero */
+.ba-hero {
+  margin: 6px 0 22px; padding: 20px 20px; border-radius: 14px;
+  background: linear-gradient(135deg, rgba(79,245,199,0.12), rgba(94,200,255,0.06));
+  border: 1px solid var(--v2-mint); text-align: center;
+}
+.ba-hero .ba-lbl {
+  font-family: "SF Mono","Menlo",monospace; font-size: 11px; color: var(--v2-muted);
+}
+.ba-hero .ba-nums {
+  font-family: "Hiragino Mincho ProN","游明朝",serif;
+  font-size: 38px; font-weight: 700; line-height: 1.2; margin: 6px 0;
+}
+.ba-hero .ba-before { color: var(--v2-muted); }
+.ba-hero .ba-arrow { color: var(--v2-mint); margin: 0 10px; }
+.ba-hero .ba-after { color: var(--v2-mint); }
+.ba-hero .ba-diff {
+  font-family: "SF Mono","Menlo",monospace; font-size: 13px;
+  color: var(--v2-mint); font-weight: 700; margin-top: 6px;
+}
+.ba-hero .ba-caption { font-size: 11.5px; color: var(--v2-muted); margin-top: 4px; }
+
+/* Snapshot diff */
+.snap-diff {
+  font-family: "SF Mono","Menlo",monospace; font-size: 10px;
+  color: var(--v2-mint); text-align: center;
+  margin: -14px 0 20px; opacity: 0.85;
+}
+
+/* Ring on stat card */
+.stat-ring-wrap { position: relative; }
+.stat-ring-wrap .p-ring { position: absolute; top: 6px; right: 6px; width: 26px; height: 26px; }
+.stat-ring-wrap .p-ring circle { fill: none; stroke-width: 3.5; transform: rotate(-90deg); transform-origin: 50% 50%; }
+.stat-ring-wrap .p-ring .bg { stroke: var(--v2-line); }
+.stat-ring-wrap .p-ring .fg { stroke: var(--v2-mint); transition: stroke-dashoffset 0.6s; }
+
+@media (max-width: 480px) {
+  .gchip .g-num { font-size: 18px; }
+  .gchip .g-emoji { font-size: 17px; }
+  .gchip .g-lbl { font-size: 9px; }
+  .ba-hero .ba-nums { font-size: 30px; }
+  .milestone-card { font-size: 12.5px; padding: 10px 12px; }
+}
