@@ -41,6 +41,11 @@ a:hover { text-decoration:underline; }
 .fam-out label { display:block; font-size:11.5px; color:var(--muted); margin-bottom:7px; }
 .fam-out input { width:100%; font-family:var(--mono); font-size:12px; padding:10px 12px;
   border-radius:8px; border:1px solid var(--line); background:var(--card-bg); color:var(--fg); }
+.fam-divider { height:1px; background:var(--line); margin:22px -22px 0; }
+.fam-section-title { font-family:var(--mincho); font-weight:600; font-size:15px; margin:22px 0 12px; color:var(--gold); }
+.fam-mode { margin-top:14px; padding:14px 16px; border-radius:10px; background:var(--sub-bg); border:1px solid var(--line); }
+.fam-mode-title { font-family:var(--mincho); font-weight:600; font-size:14px; margin:0 0 6px; color:var(--fg); }
+.fam-mode-desc { font-size:12.5px; line-height:1.85; margin:0 0 10px; color:var(--muted); }
 .back-link { display:inline-block; margin:4px 0 12px; font-family:var(--mono); font-size:12px; }
 footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
 </style>
@@ -129,18 +134,44 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
     return;
   }
 
+  // 個人ID：'p' 始まりの16文字（先頭 p + 残り15文字 [a-z0-9]）→ Worker validation /^[a-z0-9]{6,32}$/ 通過
+  function newPersonalId() {
+    return 'p' + fam.generate().slice(1);
+  }
+
   host.innerHTML =
     '<div class="eng40-family-card">' +
-      '<h2>👨‍👩‍👧 家族の設定</h2>' +
+      '<h2>👨‍👩‍👧 現在の家族設定</h2>' +
       '<p class="fam-id">この端末の家族ID：****' + fam.tail() + '</p>' +
       '<div class="fam-btns">' +
         '<button class="fam-btn" id="fam-copy">家族URLをコピー</button>' +
-        '<button class="fam-btn ghost" id="fam-new">別の家族用URLを作る</button>' +
       '</div>' +
+
+      '<div class="fam-divider"></div>' +
+      '<div class="fam-section-title">🆕 新しいURLを発行する</div>' +
+
+      '<div class="fam-mode">' +
+        '<div class="fam-mode-title">👨‍👩‍👧 家族で使う</div>' +
+        '<p class="fam-mode-desc">複数人（親子など）で <b>同じ記録を共有</b> します。家族の他の端末で同じURLを開けば、同じチェック記録が見えます。</p>' +
+        '<div class="fam-btns"><button class="fam-btn" id="fam-new-family">家族URLを新規発行</button></div>' +
+      '</div>' +
+
+      '<div class="fam-mode">' +
+        '<div class="fam-mode-title">👤 個人で使う</div>' +
+        '<p class="fam-mode-desc"><b>1人だけの記録</b> として使います。家族の共有記録には混ざりません（子どもが1人で使う・親が試しに使う場合など）。</p>' +
+        '<div class="fam-btns">' +
+          '<button class="fam-btn" id="fam-new-personal">個人URLを発行</button>' +
+          '<button class="fam-btn ghost" id="fam-switch-personal">この端末を個人URLに切り替える</button>' +
+        '</div>' +
+      '</div>' +
+
       '<div class="fam-out" id="fam-out" style="display:none"></div>' +
+
       '<p class="fam-note">' + NOTE +
         '<br>「家族URLをコピー」＝この家族の別の端末（お父さん・お母さんのスマホ）に渡すURL。' +
-        '<br>「別の家族用URLを作る」＝友達の家族に渡す新しいURL。この端末の家族は変わりません。</p>' +
+        '<br>「家族URLを新規発行」＝別の家族（友達など）に渡す新しいURL。この端末の家族は変わりません。' +
+        '<br>「個人URLを発行」＝1人専用の新しいURLを作って渡す。この端末の家族は変わりません。' +
+        '<br>「この端末を個人URLに切り替える」＝この端末自体を個人用に付け替える（現在の家族データはサーバに残るので、家族URLを開けば元に戻せます）。</p>' +
     '</div>';
 
   document.getElementById('fam-copy').addEventListener('click', function () {
@@ -149,9 +180,38 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
     showUrl('この家族のURL（家族の他の端末で開く）', url);
   });
 
-  document.getElementById('fam-new').addEventListener('click', function () {
+  document.getElementById('fam-new-family').addEventListener('click', function () {
     var url = fam.urlFor(fam.generate());
-    showUrl('友達の家族に渡すURL（この端末の記録とは別になります）', url);
+    showUrl('新しい家族のURL（この端末の記録とは別になります）', url);
+  });
+
+  document.getElementById('fam-new-personal').addEventListener('click', function () {
+    var url = fam.urlFor(newPersonalId());
+    showUrl('個人用のURL（1人専用の記録になります）', url);
+  });
+
+  document.getElementById('fam-switch-personal').addEventListener('click', function () {
+    var pid = newPersonalId();
+    var msg =
+      'この端末の家族設定を「個人用」に切り替えます。\n\n' +
+      '現在の家族（****' + fam.tail() + '）の記録とは完全に分離され、\n' +
+      'この端末では今後は個人用の空の記録から始まります。\n' +
+      '（現在の家族データはサーバに残っており、家族URLを開き直せば元に戻せます）\n\n' +
+      '続行しますか？';
+    if (!window.confirm(msg)) return;
+    // 旧家族の eng40- キーをローカルから消してから adopt。
+    // 消さないと新しい個人KVに旧家族のデータが押し出されて混ざる。
+    try {
+      var doomed = [], i, k;
+      for (i = 0; i < localStorage.length; i++) {
+        k = localStorage.key(i);
+        if (k && k.indexOf('eng40-') === 0) doomed.push(k);
+      }
+      for (i = 0; i < doomed.length; i++) localStorage.removeItem(doomed[i]);
+      localStorage.removeItem('eng40sync-serverAt');
+      localStorage.removeItem('eng40sync-dirty');
+    } catch (e) {}
+    fam.adopt(pid);
   });
 })();
 </script>
