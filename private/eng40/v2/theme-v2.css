@@ -49,6 +49,20 @@ html, body {
 }
 /* 見出しにミントアクセント（LP準拠） */
 h1 { color: var(--v2-mint) !important; }
+
+/* ブランドスローガン（H1直下・全ページ統一） */
+.slogan {
+  font-family: "Hiragino Mincho ProN","游明朝",serif;
+  font-size: 20px; font-weight: 700; line-height: 1.5;
+  margin: -6px 0 10px; letter-spacing: 0.02em;
+  background: linear-gradient(135deg, #4ff5c7 0%, #5ec8ff 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: var(--v2-mint);
+  text-shadow: 0 0 24px rgba(79,245,199,0.20);
+}
+@media (max-width: 480px) {
+  .slogan { font-size: 17px; }
+}
 .status h2, .step-section h2, .eng40-family-card h2, .status .num strong,
 .stat .num strong, .banner { color: var(--v2-mint) !important; }
 .step-section.priority h2 { color: var(--v2-coral) !important; }
