@@ -22,9 +22,8 @@ h1 { font-size:22px; margin:18px 0 4px; }
 .tagline { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:20px; }
 a { color:var(--gold); text-decoration:none; }
 /* 統計ヘッダ */
-.stats-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin:0 0 22px; }
-@media (max-width:900px){ .stats-grid { grid-template-columns:repeat(3,1fr); } }
-@media (max-width:640px){ .stats-grid { grid-template-columns:repeat(2,1fr); } }
+.stats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:0 0 22px; }
+@media (max-width:640px){ .stats-grid { grid-template-columns:repeat(3,1fr); } }
 .stat { background:var(--card-bg); border:1px solid var(--line); border-radius:10px; padding:12px 10px; text-align:center; }
 .stat .num { font-family:var(--mincho); font-size:24px; font-weight:700; line-height:1.1; }
 .stat .num strong { color:var(--sage); }
@@ -112,9 +111,9 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 <div id="gamify-stockbar"></div>
 <div class="tagline">40日の足あと ─ チェック・単語・スコアが全部ここに集まる（データはクラウドに保存され家族で共有）</div>
 
+<!-- ★2026-08-04：N/40 型「完了した日 / 着手した日」stat 2 枚撤廃（Mits様指示・未達強調表示を生む）。
+     連続日数 / 最長連続 / 卒業語 は「積み上がる正の絶対値」なので残す。 -->
 <div class="stats-grid">
-  <div class="stat"><div class="num"><strong id="st-days">0</strong><span class="sm"> / 40</span></div><div class="lbl">完了した日</div></div>
-  <div class="stat"><div class="num"><strong id="st-started">0</strong><span class="sm"> / 40</span></div><div class="lbl">着手した日（1つでも）</div></div>
   <div class="stat"><div class="num"><strong id="st-streak">0</strong><span class="sm"> 日</span></div><div class="lbl">いまの連続（1つでもやった日）</div></div>
   <div class="stat"><div class="num"><strong id="st-best">0</strong><span class="sm"> 日</span></div><div class="lbl">最長連続</div></div>
   <div class="stat"><div class="num"><strong id="st-vocab">0</strong><span class="sm"> / 300</span></div><div class="lbl">卒業（定着）語</div></div>
@@ -303,8 +302,8 @@ function buildVocabSeries(words, today) {
     part.push(!full && n > 0);
     active.push(full || n > 0);
   }
-  var doneCount = done.filter(function (v) { return v; }).length;
-  var startedCount = active.filter(function (v) { return v; }).length;
+  // ★2026-08-04：N/40 型 stat 撤廃に伴い doneCount / startedCount 廃止（Mits様指示）。
+  //   startedCount は cal-area の空状態判定にも使っていたため、下で active.some() に置換。
   var streak = computeStreak(active, (todayIdx !== null && todayIdx >= 1) ? todayIdx : null);
 
   // ---- vocab ----
@@ -316,8 +315,6 @@ function buildVocabSeries(words, today) {
   var gradCount = words.filter(function (w) { return w.graduated; }).length;
 
   // ---- 統計ヘッダ ----
-  document.getElementById('st-days').textContent = doneCount;
-  document.getElementById('st-started').textContent = startedCount;
   document.getElementById('st-streak').textContent = streak.current;
   document.getElementById('st-best').textContent = streak.best;
   document.getElementById('st-vocab').textContent = gradCount;
@@ -325,7 +322,7 @@ function buildVocabSeries(words, today) {
   // ============ ① Day達成カレンダー ============
   (function renderCal() {
     var area = document.getElementById('cal-area');
-    if (!startOk && startedCount === 0) {
+    if (!startOk && !active.some(function (v) { return v; })) {
       area.innerHTML = '<div class="empty-state"><span class="big">まだ足あとがありません</span>' +
         '「<a href="./program.html">✅ 40日</a>」ページで開始日を入れて、「<a href="./daily.html">📋 今日やること</a>」で今日の項目にチェックを付けるとここが塗られていきます</div>';
       return;
