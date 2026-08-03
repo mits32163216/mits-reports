@@ -91,7 +91,7 @@
     var chipsHtml =
       '<div class="gamify-chips">' +
         '<div class="gchip' + streakClass + '"><span class="g-emoji">🔥</span><span class="g-num">' + streakN + '</span><span class="g-lbl">連続日数</span></div>' +
-        '<div class="gchip"><span class="g-emoji">📗</span><span class="g-num">' + stats.done + '</span><span class="g-lbl">累計 完了日</span></div>' +
+        '<div class="gchip"><span class="g-emoji">📗</span><span class="g-num">' + stepStats().done + '</span><span class="g-lbl">チェック / ' + stepStats().max + '</span></div>' +
         '<div class="gchip"><span class="g-emoji">🎯</span><span class="g-num">' + goalRemain + '</span><span class="g-lbl">ゴールまで</span></div>' +
       '</div>';
     var warnHtml = streakN >= 7 ? '<div class="gchip-warn">連続を切らさないで！</div>' : '';
@@ -127,6 +127,27 @@
       if (get(k) === '1') n++;
     }
     return n;
+  }
+
+  /* 📗 チェック カウンタ：1つチェックするたびに +1 する即時報酬型指標
+   * 分子 = eng40-task:* + eng40-unit:* + eng40-ch:* + eng40-ph:* の '1' 件数
+   * 分母 = DAY_STEPS.sum(188) + OPT_TASKS(4) + STOCK_MAX_TOTAL(80) = 272
+   *   task_max: 全40日の必須ステップ合計 188 + オプション 4 = 192
+   *   stock_max: unit 56 + ch 7 + ph 17 = 80
+   */
+  function stepStats() {
+    var taskMax = 0;
+    for (var i = 0; i < DAY_STEPS.length; i++) taskMax += DAY_STEPS[i];
+    taskMax += Object.keys(OPT_TASKS).length;
+    var stockMax = STOCK_MAX_UNIT + STOCK_MAX_CH + STOCK_MAX_PH;
+    var max = taskMax + stockMax;
+    var t = Math.min(countChecked(TASK_P), taskMax);
+    var u = Math.min(countChecked('eng40-unit:'), STOCK_MAX_UNIT);
+    var c = Math.min(countChecked('eng40-ch:'), STOCK_MAX_CH);
+    var p = Math.min(countChecked('eng40-ph:'), STOCK_MAX_PH);
+    var done = t + u + c + p;
+    if (done > max) done = max;
+    return { done: done, max: max, task: t, unit: u, ch: c, ph: p };
   }
 
   function stockStats() {
