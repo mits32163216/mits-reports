@@ -38,16 +38,10 @@ ul.day-list { list-style:none; margin:0; padding:0; }
 ul.day-list li { display:flex; align-items:flex-start; gap:10px; padding:9px 10px; border-bottom:1px dashed var(--line); border-radius:8px; cursor:pointer; transition:background 0.12s; }
 ul.day-list li:last-child { border-bottom:none; }
 ul.day-list li:hover { background:rgba(212,168,91,0.07); }
-ul.day-list li.watched { background:rgba(122,155,126,0.09); }
-ul.day-list li.watched:hover { background:rgba(122,155,126,0.14); }
-ul.day-list li.partial { background:rgba(122,155,126,0.05); box-shadow:inset 3px 0 0 var(--sage); }
-.dprog { flex:0 0 auto; margin-left:8px; align-self:center; font-family:var(--mono); font-size:11px; color:var(--muted); white-space:nowrap; }
-.dprog.part { color:var(--sage); font-weight:700; }
-.dprog.full { color:var(--sage); }
-/* 状態マーカー（左端・手動チェックは無し／daily.html の項目チェックから自動算出） */
-.dstate { flex:0 0 22px; align-self:center; text-align:center; font-size:16px; line-height:1; }
-.dstate.done { color:var(--sage); }
-.dstate.blank::before { content:"·"; color:var(--line); font-size:20px; }
+/* ★2026-08-04：Day別の進捗表示（✅/部分達成の枠/N/M）は撤廃（Mits様指示）。
+ *  program.html はプラン一覧の俯瞰専用。進捗は index.html のチェック数チップと
+ *  progress.html のカレンダーで完結する。全 Day を同じ中立スタイルに統一。 */
+.dstate, .dprog { display:none !important; }
 .godaily { flex:0 0 auto; margin-left:8px; align-self:center; font-family:var(--mono); font-size:14px; color:var(--muted); opacity:0; transition:opacity 0.12s; }
 ul.day-list li:hover .godaily { opacity:0.9; color:var(--gold); }
 .dnum { flex:0 0 58px; font-family:var(--mono); font-size:12px; font-weight:700; color:var(--gold); padding-top:2px; }
@@ -57,12 +51,7 @@ ul.day-list li:hover .godaily { opacity:0.9; color:var(--gold); }
 .tag.sokutei { background:var(--rose); }
 .tag.chousei { background:var(--sage); }
 .tag.nini { background:var(--muted); }
-/* 進捗ピル */
-.watch-summary { position:fixed; bottom:16px; left:50%; transform:translateX(-50%); z-index:200;
-  display:flex; align-items:center; gap:14px; padding:10px 20px; background:var(--card-bg);
-  border:1px solid var(--gold); border-radius:24px; box-shadow:0 6px 20px rgba(15,27,46,0.18); font-size:13px; white-space:nowrap; }
-.watch-summary strong { color:var(--sage); font-size:15px; }
-.watch-summary button { font-family:var(--sans); font-size:11px; border:1px solid var(--line); background:none; color:var(--muted); border-radius:12px; padding:3px 10px; cursor:pointer; }
+/* ★2026-08-04：進捗ピル（.watch-summary）は撤廃（Mits様指示）。CSS も削除。*/
 footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
 @media (max-width:600px){ body { padding:20px 14px 110px; } .dnum { flex-basis:50px; } }
 </style>
@@ -146,10 +135,8 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
   </ul>
 </div>
 
-<div class="watch-summary">
-  <span id="watch-text">✅ <strong>0 / 40</strong> 日</span>
-  <button id="reset-btn" title="このページのチェックを全部消す">全リセット</button>
-</div>
+<!-- ★2026-08-04：進捗ピル（完了 N/40）は撤廃（Mits様指示）。
+     進捗数値は index.html のチェック数チップと progress.html のカレンダーで完結。 -->
 
 <footer>
   <div>📘 英語40日プログラム</div>
@@ -157,94 +144,14 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 </footer>
 
 <script>
-/* Day別の必須ステップ数（📋手順書ページの手順項目のうち「任意」を除いた数）
- * daily.html の data-tkey="dNN-S" と対応。任意ステップは分母に入れない＝飛ばしても完了になる。 */
-var ENG40_DAY_STEPS = [2,5,5,5,5,5,4,5,5,5,5,5,5,5,5,5,5,5,5,5,3,5,5,5,5,5,5,3,5,5,5,5,5,5,3,5,5,5,4,4];
-var ENG40_OPT_TASKS = { 'd01-4':1, 'd03-6':1, 'd37-6':1, 'd39-4':1 };
-/* localStorage を1回だけ走査して Day別の「チェック済み必須ステップ数」を返す（[0]=Day1） */
-function eng40TaskCounts() {
-  var out = [], i;
-  for (i = 0; i < 40; i++) out.push(0);
-  var P = 'eng40-task:';
-  for (i = 0; i < localStorage.length; i++) {
-    var k = localStorage.key(i);
-    if (!k || k.indexOf(P) !== 0) continue;
-    if (localStorage.getItem(k) !== '1') continue;
-    var id = k.slice(P.length);
-    if (ENG40_OPT_TASKS[id]) continue;             // 任意ステップは数えない
-    var m = /^d(\d{2})-\d+$/.exec(id);
-    if (!m) continue;
-    var d = parseInt(m[1], 10);
-    if (d >= 1 && d <= 40) out[d - 1]++;
-  }
-  return out;
-}
-</script>
-<script>
+/* ★2026-08-04：Day別進捗（✅/N/M/部分達成の枠）・完了ピル・全リセットボタンは全て撤廃（Mits様指示）。
+ *  program.html はプラン一覧の俯瞰専用。進捗の可視化は index.html のチェック数チップと
+ *  progress.html のカレンダー塗りで完結する。ここは Day タップ → daily.html への導線のみ残す。 */
 (function () {
-  var PREFIX = 'eng40-done:day-';
-  var TPREFIX = 'eng40-task:';
   var rows = Array.prototype.slice.call(document.querySelectorAll('ul.day-list li[data-day]'));
-  var total = rows.length;
-  var textEl = document.getElementById('watch-text');
-  function pad2(n) { return (n < 10 ? '0' : '') + n; }
-
-  // 各Day行に「状態表示」を描画する（手動チェックは無し）。
-  // 状態は daily.html の項目チェック（eng40-task:）だけを真実源にする：
-  //   完了   = 必須ステップが全部（n>=M）      → ✅＋薄sage背景
-  //   部分   = 必須ステップが1つ以上・全部でない（0<n<M）→ 「N/M」＋薄い帯
-  //   未着手 = n=0                             → 何も塗らない
-  // ※ 旧 eng40-done:day-NN フラグには依存しない。
-  //    理由：KV から done を消しても端末 LS に古いフラグが残ると sync 反映のタイミングによっては
-  //          ✅が消えないまま滞留し、実データ（task）と乖離する。task 数を唯一の真実源にする。
-  //    daily.html の Day 完了演出（fireParticles/vibrate/toast）は今まで通り done: フラグを立てるが、
-  //    program.html の ✅表示はそれを見ない。task が揃った瞬間 = done 演出発火 = このページも ✅
-  //    という自然な整合が取れる。
-  function renderProgress() {
-    var counts = eng40TaskCounts();
-    rows.forEach(function (li) {
-      var day = parseInt(li.getAttribute('data-day'), 10);
-      if (!day) return;
-      var m = ENG40_DAY_STEPS[day - 1] || 0;
-      var n = Math.min(counts[day - 1], m);
-      var done = (m > 0 && n >= m);
-
-      var st = li.querySelector('.dstate');
-      var pr = li.querySelector('.dprog');
-      if (!pr) { pr = document.createElement('span'); pr.className = 'dprog'; li.appendChild(pr); }
-
-      if (done) {
-        li.classList.add('watched'); li.classList.remove('partial');
-        if (st) { st.className = 'dstate done'; st.textContent = '✅'; }
-        pr.className = 'dprog full';
-        pr.textContent = (m > 0 ? (m + '/' + m) : '');
-        pr.title = '完了（📋今日やることの必須項目が全部チェック済み）';
-      } else if (n > 0) {
-        li.classList.add('partial'); li.classList.remove('watched');
-        if (st) { st.className = 'dstate blank'; st.textContent = ''; }
-        pr.className = 'dprog part';
-        pr.textContent = n + '/' + m;
-        pr.title = '📋今日やることページで ' + n + ' / ' + m + ' 項目チェック済み';
-      } else {
-        li.classList.remove('watched'); li.classList.remove('partial');
-        if (st) { st.className = 'dstate blank'; st.textContent = ''; }
-        pr.className = 'dprog';
-        pr.textContent = '';
-        pr.title = '';
-      }
-    });
-    return counts;
-  }
-
-  function update() {
-    var doneN = document.querySelectorAll('ul.day-list li.watched').length;
-    var startedN = document.querySelectorAll('ul.day-list li.watched, ul.day-list li.partial').length;
-    textEl.innerHTML = '✅ 完了 <strong>' + doneN + ' / ' + total + '</strong> 日（着手 ' + startedN + ' 日）';
-  }
-
-  // 各Day行タップ → daily.html の同じ日の手順へ（ここでは直接チェックしない導線）
   rows.forEach(function (li) {
     var day = parseInt(li.getAttribute('data-day'), 10);
+    if (!day) return;
     if (!li.querySelector('.godaily')) {
       var arw = document.createElement('span');
       arw.className = 'godaily'; arw.textContent = '›'; arw.setAttribute('aria-hidden', 'true');
@@ -259,24 +166,6 @@ function eng40TaskCounts() {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
     });
   });
-
-  // 全リセット：40日の進捗（各日の項目チェック eng40-task: と完了フラグ eng40-done:）だけを消す。
-  // 単語(vocab)・スコア(score)・ユニット(unit)・章(ch)・音(ph)・開始日(start) は消さない（他ページの実データ巻き添え防止）。
-  document.getElementById('reset-btn').addEventListener('click', function () {
-    if (!confirm('40日の進捗（各日の項目チェックと完了状態）を全部リセットします。\n※単語カード・テストのスコア・教材ルート（ユニット）の記録は消しません。\nいいですか？')) return;
-    var kill = [], i;
-    for (i = 0; i < localStorage.length; i++) {
-      var k = localStorage.key(i);
-      if (!k) continue;
-      if (k.indexOf('eng40-done:') === 0 || k.indexOf(TPREFIX) === 0) kill.push(k);
-    }
-    kill.forEach(function (k) { localStorage.removeItem(k); });
-    renderProgress();
-    update();
-  });
-
-  renderProgress();
-  update();
 })();
 </script>
 <script>
