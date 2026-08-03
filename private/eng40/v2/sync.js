@@ -600,13 +600,41 @@
 
       var serverAt = Number(res.updatedAt) || 0;
       var serverState = res.state || {};
+
+      // ★ 常にサーバ「削除」を反映する（dirty より前・serverAt 比較より前）：
+      //   KV から手動削除したキー（例：eng40-done:day-*）が LS に残り続ける事故を防ぐ。
+      //   追加/更新は下の applyState / dirty push フローに任せる（ここでは削除のみ）。
+      //   applying=true で hook をスルーさせ、この削除は schedulePush を発火させない。
+      var absentDeleted = 0;
+      if (LS && !VIEW_ONLY) {
+        applying = true;
+        try {
+          var snapshot = collectState();
+          Object.keys(snapshot).forEach(function (k) {
+            if (!Object.prototype.hasOwnProperty.call(serverState, k)) {
+              rawRemove(k);
+              absentDeleted++;
+            }
+          });
+        } catch (e) {} finally {
+          applying = false;
+        }
+        if (absentDeleted > 0) log('boot', 'サーバに無いキー ' + absentDeleted + ' 件を LS から削除');
+      }
+
       var localKeys = Object.keys(collectState()).length;
 
       // 未送信のローカル変更がある → こちらを優先して送る
-      // （サーバ時刻権威になったので、送れば必ず受理される）
+      // （サーバ時刻権威になったので、送れば必ず受理される。上で削除済みなので
+      //  「サーバで消したキー」を復活させることはない）
       if (isDirty() && localKeys > 0 && !VIEW_ONLY) {
-        log('boot', 'dirty あり → push');
+        log('boot', 'dirty あり → push（サーバ削除反映後）');
         push('boot-dirty');
+        // 削除で画面表示が変わる可能性あり → 1回だけリロード
+        if (absentDeleted > 0 && reloadCount() < MAX_RELOADS) {
+          bumpReload();
+          location.reload();
+        }
         return;
       }
 
@@ -619,7 +647,7 @@
         log('boot', 'サーバ反映 changed=' + changed);
 
         // 画面はすでに旧データで描画済み → 実際に値が変わったときだけ1回リロード
-        if (changed && reloadCount() < MAX_RELOADS) {
+        if ((changed || absentDeleted > 0) && reloadCount() < MAX_RELOADS) {
           bumpReload();
           location.reload();
         }
@@ -628,7 +656,12 @@
 
       lastSyncedAt = serverAt || Date.now();
       setStatus('ok');
-      log('boot', '差分なし');
+      log('boot', '差分なし（削除反映のみ ' + absentDeleted + '）');
+      // 削除だけあった場合も 1 回リロードして画面を新状態に揃える
+      if (absentDeleted > 0 && reloadCount() < MAX_RELOADS) {
+        bumpReload();
+        location.reload();
+      }
     });
   }
 

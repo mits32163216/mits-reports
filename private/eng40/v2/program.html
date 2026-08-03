@@ -190,10 +190,16 @@ function eng40TaskCounts() {
   function pad2(n) { return (n < 10 ? '0' : '') + n; }
 
   // 各Day行に「状態表示」を描画する（手動チェックは無し）。
-  // 状態は daily.html の項目チェック（eng40-task:）と自動連動フラグ（eng40-done:day-NN）から算出：
-  //   完了   = eng40-done:day-NN=1 または 必須ステップが全部（n>=M） → ✅＋薄sage背景
-  //   部分   = 必須ステップが1つ以上・全部でない（0<n<M）           → 「N/M」＋薄い帯
-  //   未着手 = n=0 かつ done フラグ無し                              → 何も塗らない
+  // 状態は daily.html の項目チェック（eng40-task:）だけを真実源にする：
+  //   完了   = 必須ステップが全部（n>=M）      → ✅＋薄sage背景
+  //   部分   = 必須ステップが1つ以上・全部でない（0<n<M）→ 「N/M」＋薄い帯
+  //   未着手 = n=0                             → 何も塗らない
+  // ※ 旧 eng40-done:day-NN フラグには依存しない。
+  //    理由：KV から done を消しても端末 LS に古いフラグが残ると sync 反映のタイミングによっては
+  //          ✅が消えないまま滞留し、実データ（task）と乖離する。task 数を唯一の真実源にする。
+  //    daily.html の Day 完了演出（fireParticles/vibrate/toast）は今まで通り done: フラグを立てるが、
+  //    program.html の ✅表示はそれを見ない。task が揃った瞬間 = done 演出発火 = このページも ✅
+  //    という自然な整合が取れる。
   function renderProgress() {
     var counts = eng40TaskCounts();
     rows.forEach(function (li) {
@@ -201,8 +207,7 @@ function eng40TaskCounts() {
       if (!day) return;
       var m = ENG40_DAY_STEPS[day - 1] || 0;
       var n = Math.min(counts[day - 1], m);
-      var doneFlag = localStorage.getItem(PREFIX + pad2(day)) === '1';
-      var done = doneFlag || (m > 0 && n >= m);
+      var done = (m > 0 && n >= m);
 
       var st = li.querySelector('.dstate');
       var pr = li.querySelector('.dprog');
@@ -306,7 +311,7 @@ function eng40TaskCounts() {
   input.addEventListener('input', onInput);
 })();
 </script>
-<script src="./sync.js?v=3"></script>
+<script src="./sync.js?v=4"></script>
 <script src="./nav.js?v=6"></script>
 <script src="./gamify-v2.js?v=3"></script>
 </body>
