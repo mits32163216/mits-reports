@@ -53,17 +53,36 @@
     return { counts: counts, full: full, active: active, done: doneN, started: startedN };
   }
 
-  function todayIdx() {
-    var start = get(START_KEY);
-    if (!start) return null;
-    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(start);
-    if (!m) return null;
-    var s = new Date(+m[1], +m[2] - 1, +m[3]);
-    var now = new Date();
-    var t = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    var days = Math.round((t - s) / 86400000);
-    return Math.max(1, Math.min(TOTAL, days + 1));
+  // ★2026-08-04：カレンダー日基準を廃止。完了ベースで「今日やること」= 最後に着手した Day + 1
+  //  参照キーは eng40-task:dNN-S のみ。route.html/phonics.html/daily.html が LS 層で双方向同期しているため
+  //  unit/ph/ch がチェックされても対応する task も同時に立つ。よってタスクの最大 Day を追えば十分。
+  //  eng40-start は progress.html カレンダーが実カレンダー表示に使うため裏で保持（本関数は参照しない）。
+  function lastProgressedDay() {
+    var max = 0, len = localStorage.length;
+    for (var i = 0; i < len; i++) {
+      var k = localStorage.key(i);
+      if (!k || k.indexOf(TASK_P) !== 0) continue;
+      if (get(k) !== '1') continue;
+      var m = /^d(\d{2})-\d+$/.exec(k.slice(TASK_P.length));
+      if (m) { var d = parseInt(m[1], 10); if (d > max && d <= TOTAL) max = d; }
+    }
+    return max; // 0 = 未着手
   }
+  function todayIdx() {
+    var lpd = lastProgressedDay();
+    return Math.max(1, Math.min(TOTAL, lpd + 1));
+  }
+  // ページ側から呼べるように公開（daily.html の today-banner 等）
+  window.eng40lastProgressedDay = lastProgressedDay;
+  window.eng40todayIdx = todayIdx;
+
+  // 予定日計算関数（開始日+N-1日）─ 現行UIでは使わないが将来UI再表示・分析用途で残す
+  window.eng40scheduledDate = function (n) {
+    var start = get(START_KEY);
+    var mm = /^(\d{4})-(\d{2})-(\d{2})$/.exec(start || '');
+    if (!mm) return null;
+    return new Date(+mm[1], +mm[2] - 1, +mm[3] + (n - 1));
+  };
 
   function computeStreak(active, tIdx) {
     var cur = 0, t;
@@ -86,7 +105,10 @@
   }
 
   function renderChips(host, stats, streakN) {
-    var goalRemain = TOTAL - stats.done;
+    // ★2026-08-04：ゴールまで／マイルストーン残日数は「lastProgressedDay」ベースに変更
+    //  カレンダー日ではなく完了ベースの残 Day 数（Mits様指示：カレンダーありきを撤廃）
+    var lpd = lastProgressedDay();
+    var goalRemain = Math.max(0, TOTAL - lpd);
     var streakClass = streakN >= 7 ? ' streak-hot' : '';
     var chipsHtml =
       '<div class="gamify-chips">' +
@@ -95,10 +117,10 @@
         '<div class="gchip"><span class="g-emoji">🎯</span><span class="g-num">' + goalRemain + '</span><span class="g-lbl">ゴールまで</span></div>' +
       '</div>';
     var warnHtml = streakN >= 7 ? '<div class="gchip-warn">連続を切らさないで！</div>' : '';
-    var nm = nextMilestone(stats.done);
+    var nm = nextMilestone(lpd);
     var mcHtml = '';
     if (nm) {
-      var remain = Math.max(0, nm.day - stats.done);
+      var remain = Math.max(0, nm.day - lpd);
       mcHtml = '<div class="milestone-card">' +
         'あと <span class="ms-big">' + remain + '</span> 日で ' + nm.title + '</div>';
     } else {

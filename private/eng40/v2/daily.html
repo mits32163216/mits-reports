@@ -35,7 +35,9 @@ summary::before { content:"▸"; color:var(--gold); font-size:13px; flex:0 0 aut
 details[open] summary::before { content:"▾"; }
 .sum-day { font-family:var(--mono); font-size:13px; font-weight:700; color:var(--gold); flex:0 0 auto; }
 .sum-title { font-family:var(--mincho); font-size:15px; font-weight:600; flex:1 1 auto; }
-.ddate { font-family:var(--mono); font-size:11px; color:var(--muted); flex:0 0 auto; }
+/* ★2026-08-04：予定日（開始日+N-1日）表示は UI 撤廃（Mits様指示・カレンダーありきを排除）。
+ *  要素と data-n 属性は将来の再表示・分析用途で残す（display:none で非表示のみ）。 */
+.ddate { display:none; }
 .tag { display:inline-block; font-family:var(--mono); font-size:10px; padding:1px 7px; border-radius:8px; color:#fff; flex:0 0 auto; }
 .tag.sokutei { background:var(--rose); }
 .tag.chousei { background:var(--sage); }
@@ -515,11 +517,11 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 </footer>
 
 <script>
-/* 今日のDay計算（program.html と同じ localStorage キー 'eng40-start'・ローカルDate処理） */
+/* 予定日計算関数（開始日+N-1日）─ 現行UIでは使わないが将来UI再表示・分析用途で残す
+ * 「今日のDay計算」は完了ベース（lastProgressedDay+1）に一本化したためカレンダー日計算は「今日やること」判定から撤廃。 */
 function eng40ComputeDay(startVal, now) {
   var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(startVal || '');
   if (!m) return null;
-  // "YYYY-MM-DD" を new Date() に直接渡すとUTC解釈になるため自前でsplit（program.html と同じ方式）
   var start = new Date(parseInt(m[1], 10), parseInt(m[2], 10) - 1, parseInt(m[3], 10));
   var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   return Math.round((today - start) / 86400000) + 1;
@@ -527,39 +529,41 @@ function eng40ComputeDay(startVal, now) {
 if (typeof module !== 'undefined') { module.exports = { eng40ComputeDay: eng40ComputeDay }; }
 </script>
 <script>
+/* ★2026-08-04：カレンダー日基準の Day jump を廃止・完了ベース（lastProgressedDay+1）で自動 open。
+ *  参照キーは eng40-task:dNN-S のみ（route.html/phonics.html が LS 層で task に反映するため十分）。
+ *  eng40-start は progress.html カレンダーが実カレンダー表示に使うため裏で保持（本 script は参照しない）。 */
 (function () {
-  var KEY = 'eng40-start';
-  var WD = ['日', '月', '火', '水', '木', '金', '土'];
   var banner = document.getElementById('today-banner');
-  var saved = localStorage.getItem(KEY);
-  function fmt(d) { return (d.getMonth() + 1) + '/' + d.getDate() + '(' + WD[d.getDay()] + ')'; }
+  if (!banner) return;
 
-  if (!saved || !/^\d{4}-\d{2}-\d{2}$/.test(saved)) {
-    banner.innerHTML = '📅 開始日がまだ設定されていません。<a href="./program.html">✅ 40日ページ</a>の「📅 開始日」に日付を入れると、ここに<b>今日の手順</b>が自動で出ます。<span class="mini">それまでは下の Day 1〜40 から今日の分を開いてください。</span>';
+  function lastProgressedDay() {
+    var max = 0, len = localStorage.length;
+    for (var i = 0; i < len; i++) {
+      var k = localStorage.key(i);
+      if (!k || k.indexOf('eng40-task:') !== 0) continue;
+      if (localStorage.getItem(k) !== '1') continue;
+      var m = /^eng40-task:d(\d{2})-\d+$/.exec(k);
+      if (m) { var d = parseInt(m[1], 10); if (d > max && d <= 40) max = d; }
+    }
+    return max;
+  }
+
+  var lpd = lastProgressedDay();
+  if (lpd >= 40) {
+    banner.innerHTML = '🎉 40日プログラム完了！<span class="mini">Day 40 まで到達済み。秋の継続ルートは Day 40 のカードと 📖 教材ルートを見てください。</span>';
     return;
   }
-  var p = saved.split('-');
-  // 各カードに実日付を表示
-  var dates = Array.prototype.slice.call(document.querySelectorAll('.ddate'));
-  dates.forEach(function (el) {
-    var n = parseInt(el.getAttribute('data-n'), 10);
-    var d = new Date(parseInt(p[0], 10), parseInt(p[1], 10) - 1, parseInt(p[2], 10) + (n - 1));
-    el.textContent = fmt(d);
-  });
-
-  var day = eng40ComputeDay(saved, new Date());
-  if (day >= 1 && day <= 40) {
-    var el = document.getElementById('day-' + day);
-    var d = new Date(parseInt(p[0], 10), parseInt(p[1], 10) - 1, parseInt(p[2], 10) + (day - 1));
-    banner.innerHTML = '📅 今日は <b>Day ' + day + '</b>（' + fmt(d) + '）<span class="mini">下の開いているカードを上から順にやれば今日は終わり。</span>';
-    el.open = true;
-    el.classList.add('today');
-    setTimeout(function () { el.scrollIntoView({ block: 'start' }); }, 0);
-  } else if (day < 1) {
-    banner.innerHTML = '📅 開始日（' + saved + '）まであと <b>' + (1 - day) + '日</b>。<span class="mini">始まったらここに今日の手順が自動で出ます。</span>';
+  var day = lpd + 1; // 未着手なら Day 1
+  var el = document.getElementById('day-' + day);
+  if (!el) return;
+  if (lpd === 0) {
+    banner.innerHTML = '📅 まずは <b>Day 1</b> から。<span class="mini">下の開いているカードを上から順にやれば今日は終わり。</span>';
   } else {
-    banner.innerHTML = '🎉 40日プログラムは終了しています（開始日 ' + saved + '）。<span class="mini">秋の継続ルートは Day 40 のカードと 📖 教材ルートを見てください。</span>';
+    banner.innerHTML = '📅 今日は <b>Day ' + day + '</b> を進める（前回 Day ' + lpd + ' まで着手）<span class="mini">下の開いているカードを上から順にやれば今日は終わり。</span>';
   }
+  el.open = true;
+  el.classList.add('today');
+  setTimeout(function () { el.scrollIntoView({ block: 'start' }); }, 0);
 })();
 </script>
 <script>
@@ -783,6 +787,6 @@ if (typeof module !== 'undefined') { module.exports = { eng40ComputeDay: eng40Co
 </script>
 <script src="./sync.js?v=3"></script>
 <script src="./nav.js?v=6"></script>
-<script src="./gamify-v2.js?v=2"></script>
+<script src="./gamify-v2.js?v=3"></script>
 </body>
 </html>

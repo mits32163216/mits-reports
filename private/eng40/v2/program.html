@@ -20,15 +20,11 @@ h1,h2,h3 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; }
 h1 { font-size:22px; margin:18px 0 4px; }
 .tagline { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:20px; }
 a { color:var(--gold); text-decoration:none; }
-/* 開始日入力 */
-.start-date-box { display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin:0 0 22px; padding:12px 16px;
-  background:var(--card-bg); border:1px solid var(--gold); border-radius:10px; }
-.start-date-box label { font-family:var(--mincho); font-size:13px; font-weight:600; letter-spacing:0.04em; }
-.start-date-box input[type="date"] { font-family:var(--mono); font-size:13px; color:var(--fg); background:var(--sub-bg);
-  border:1px solid var(--line); border-radius:8px; padding:6px 10px; color-scheme:light dark; }
-.start-date-box .start-hint { font-family:var(--mono); font-size:10px; color:var(--muted); }
-.dday { display:block; font-family:var(--mono); font-size:10px; font-weight:400; color:var(--muted); margin-top:1px; }
-.dday.sun { color:var(--sage); }
+/* ★2026-08-04：予定日/開始日は UI 撤廃（Mits様指示・カレンダーありきを排除）。
+ *  要素・JS 関数・LS/KV データ（eng40-start）は裏管理として残し、UI 表示のみ隠す。
+ *  progress.html カレンダーは実カレンダー表示用に eng40-start を引き続き参照する。 */
+.start-date-box { display:none !important; }
+.dday { display:none !important; }
 /* フェーズセクション */
 .step-section { margin:26px 0; padding:18px 22px; background:var(--sub-bg); border:1px solid var(--gold); border-radius:12px; }
 .step-section h2 { font-size:16px; margin:0 0 4px; }
@@ -312,6 +308,6 @@ function eng40TaskCounts() {
 </script>
 <script src="./sync.js?v=3"></script>
 <script src="./nav.js?v=6"></script>
-<script src="./gamify-v2.js?v=2"></script>
+<script src="./gamify-v2.js?v=3"></script>
 </body>
 </html>
