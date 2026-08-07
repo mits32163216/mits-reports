@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-MITS 診断ツール 配布準備完了レポート — Mits Reports</title>
+<meta name="description" content="1人型起業家向け AI 経営診断ツール『AI-MITS』の配布前チェックを完了。通信路のセキュリティを強化し、2種類の対話 AI を並行配置しました。">
+<meta property="og:title" content="AI-MITS 診断ツール 配布準備完了レポート">
+<meta property="og:description" content="1人型起業家向け AI 経営診断ツール『AI-MITS』の配布前チェックを完了。">
+<meta property="og:type" content="article">
+<style>
+  :root {
+    --navy: #1a3a52;
+    --navy-light: #2c5575;
+    --ivory: #f7f3ea;
+    --paper: #fbfaf5;
+    --ink: #2a2a2a;
+    --gray: #7a7a7a;
+    --line: #d8d4ca;
+    --ok: #2d8659;
+    --warn: #c89020;
+    --ng: #b04848;
+    --gold: #b89544;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.75;
+    font-size: 15px;
+    padding: 20px 16px;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  header.report-head {
+    background: var(--navy);
+    color: var(--ivory);
+    padding: 36px 40px;
+    border-radius: 6px;
+    margin-bottom: 24px;
+  }
+  header.report-head .tag {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 3px;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+  }
+  header.report-head h1 {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+  header.report-head .meta {
+    font-size: 13px;
+    color: rgba(247,243,234,0.7);
+    line-height: 1.7;
+  }
+
+  section { margin-bottom: 28px; }
+  h2 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--navy);
+    border-left: 4px solid var(--gold);
+    padding-left: 12px;
+    margin-bottom: 16px;
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 18px 0 10px;
+  }
+  p { margin-bottom: 10px; }
+  code { background: var(--ivory); padding: 1px 5px; border-radius: 2px; font-size: 13px; }
+
+  .conclusion {
+    background: white;
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--gold);
+    border-radius: 4px;
+    padding: 20px 24px;
+  }
+  .conclusion .lead {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+  .conclusion ul { padding-left: 22px; }
+  .conclusion li { margin-bottom: 6px; font-size: 14px; }
+
+  .engines {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 14px;
+  }
+  .engine-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px;
+    position: relative;
+  }
+  .engine-card.a { border-top: 4px solid var(--navy-light); }
+  .engine-card.b { border-top: 4px solid var(--gold); }
+  .engine-card .vendor { font-size: 11px; color: var(--gray); letter-spacing: 0.05em; margin-bottom: 4px; }
+  .engine-card .name { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .engine-card .judgement { font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--navy-light); }
+  .engine-card .reason { font-size: 13px; color: var(--ink); line-height: 1.7; }
+
+  .matrix {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    font-size: 13px;
+  }
+  .matrix th, .matrix td {
+    border: 1px solid var(--line);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .matrix thead th {
+    background: var(--navy);
+    color: var(--ivory);
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+  }
+  .matrix thead th.func { background: var(--navy-light); text-align: left; }
+  .matrix tbody td.func {
+    background: var(--ivory);
+    font-weight: 600;
+    color: var(--navy);
+    width: 30%;
+  }
+  .matrix .status { display: inline-block; font-weight: 700; margin-right: 4px; }
+  .status.ok { color: var(--ok); }
+  .status.warn { color: var(--warn); }
+  .status.ng { color: var(--ng); }
+  .matrix .note { font-size: 11px; color: var(--gray); line-height: 1.5; margin-top: 3px; display: block; }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .detail-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 16px;
+  }
+  .detail-card.full { grid-column: 1 / -1; }
+  .detail-card .head {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+  }
+  .detail-card ul { padding-left: 18px; font-size: 13px; line-height: 1.7; }
+  .detail-card li { margin-bottom: 4px; }
+
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+    border-left: 3px solid var(--navy);
+    margin-top: 14px;
+  }
+  .timeline .item { position: relative; padding: 6px 0 16px 12px; }
+  .timeline .item::before {
+    content: "";
+    position: absolute;
+    left: -36px;
+    top: 8px;
+    width: 14px;
+    height: 14px;
+    background: var(--gold);
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px var(--navy);
+  }
+  .timeline .when {
+    font-size: 11px;
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 3px;
+  }
+  .timeline .what { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+  .timeline .why { font-size: 12px; color: var(--ink); line-height: 1.6; }
+
+  .diagram-wrap {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    overflow-x: auto;
+  }
+  .diagram-wrap svg { max-width: 100%; height: auto; }
+
+  footer.report-foot {
+    background: var(--ivory);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px 22px;
+    font-size: 12px;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+  footer.report-foot strong { color: var(--navy); }
+  footer.report-foot a {
+    color: var(--navy-light);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--navy-light);
+  }
+  footer.report-foot ul { padding-left: 20px; margin-top: 6px; }
+
+  @media (max-width: 720px) {
+    body { font-size: 14px; padding: 12px 8px; }
+    header.report-head { padding: 24px 20px; }
+    header.report-head h1 { font-size: 21px; }
+    .engines { grid-template-columns: 1fr; }
+    .detail-grid { grid-template-columns: 1fr; }
+    .matrix { font-size: 11px; }
+    .matrix th, .matrix td { padding: 6px 8px; }
+  }
+
+  .back-to-list {
+    position: fixed; top: 12px; left: 12px; z-index: 1000;
+    background: var(--ivory); color: var(--navy);
+    padding: 8px 16px; font-size: 12px; border-radius: 4px;
+    text-decoration: none; letter-spacing: 0.05em;
+    border: 1px solid var(--navy);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  .back-to-list:hover { background: var(--gold); color: var(--navy); }
+  @media print { .back-to-list { display: none; } }
+</style>
+</head>
+<body>
+<a class="back-to-list" href="index.html">← Mits Reports 一覧に戻る</a>
+<div class="container">
+
+  <header class="report-head">
+    <span class="tag">REPORT / AI-MITS</span>
+    <h1>AI-MITS 診断ツール 配布準備完了レポート<br><span style="font-size:16px; font-weight:400; color:rgba(247,243,234,0.85);">— 通信路のセキュリティ強化と 2 種の対話 AI 並行配置</span></h1>
+    <div class="meta">
+      発行: 2026-08-07 / 対象: AI-MITS を試す 1 人型起業家（田中誠さんタイプ）<br>
+      検証: 配布前チェック 一気通貫デモ / 実測動作確認済
+    </div>
+  </header>
+
+  <section>
+    <h2>結論先頭</h2>
+    <div class="conclusion">
+      <p class="lead">配布前チェックが終わり、AI-MITS は「配布してよい状態」に到達しました。</p>
+      <ul>
+        <li>通信路のセキュリティを強化しました（暗号鍵をブラウザから撤去し、中継サーバー経由に一本化）</li>
+        <li>4 本の暗号鍵を全て刷新済み（旧鍵はしばらく併存させ、問題なければ削除）</li>
+        <li>2 種類の対話 AI（A: 検索型 / B: スキル型）を並行配置。配布後に「どちらが 1 人型起業家の答えとして刺さるか」を実データで比べます</li>
+        <li>入り口の会話 → 診断 → レポート表示 → 再来訪 の 円環動線を実機で確認済み</li>
+      </ul>
+
+      <div class="engines">
+        <div class="engine-card a">
+          <div class="vendor">対話 AI「A 群」</div>
+          <div class="name">検索して答えるタイプ（RAG）</div>
+          <div class="judgement">Mits の過去発言・書き起こしを検索して答える</div>
+          <div class="reason">Mits がこれまで話してきた事例・具体例をそのまま引いて返す型。「あのとき Mits はこう言っていた」という一次資料寄りの答え方に強い。</div>
+        </div>
+        <div class="engine-card b">
+          <div class="vendor">対話 AI「B 群」</div>
+          <div class="name">スキル化して答えるタイプ（Corpus2Skill）</div>
+          <div class="judgement">Mits の判断パターンを型化してから答える</div>
+          <div class="reason">Mits の考え方を「型」に落として、あなたの相談に合わせて型を選び直して返す。個別の状況に合わせて再構成する答え方に強い。</div>
+        </div>
+      </div>
+      <p style="font-size:13px; color:var(--gray); margin-top:10px;">※ どちらが優れているかは決めつけていません。配布後の実データで見極めます。</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>やったこと（配布前チェックの中身）</h2>
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 820 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="配布前チェックの流れ">
+        <rect x="20" y="30" width="150" height="60" rx="6" fill="#1a3a52"/>
+        <text x="95" y="58" fill="#f7f3ea" font-family="-apple-system,sans-serif" font-size="13" font-weight="700" text-anchor="middle">1. 実機デモ</text>
+        <text x="95" y="76" fill="#f7f3ea" font-family="-apple-system,sans-serif" font-size="11" text-anchor="middle">顧客動線を通しで</text>
+
+        <path d="M170 60 L200 60" stroke="#b89544" stroke-width="2" marker-end="url(#arrow)"/>
+
+        <rect x="200" y="30" width="180" height="60" rx="6" fill="#2c5575"/>
+        <text x="290" y="58" fill="#f7f3ea" font-family="-apple-system,sans-serif" font-size="13" font-weight="700" text-anchor="middle">2. 問題点の洗い出し</text>
+        <text x="290" y="76" fill="#f7f3ea" font-family="-apple-system,sans-serif" font-size="11" text-anchor="middle">7 件検出</text>
+
+        <path d="M380 60 L410 60" stroke="#b89544" stroke-width="2" marker-end="url(#arrow)"/>
+
+        <rect x="410" y="30" width="180" height="60" rx="6" fill="#2c5575"/>
+        <text x="500" y="58" fill="#f7f3ea" font-family="-apple-system,sans-serif" font-size="13" font-weight="700" text-anchor="middle">3. 並行修正</text>
+        <text x="500" y="76" fill="#f7f3ea" font-family="-apple-system,sans-serif" font-size="11" text-anchor="middle">7 件すべて解消</text>
+
+        <path d="M590 60 L620 60" stroke="#b89544" stroke-width="2" marker-end="url(#arrow)"/>
+
+        <rect x="620" y="30" width="180" height="60" rx="6" fill="#2d8659"/>
+        <text x="710" y="58" fill="#fff" font-family="-apple-system,sans-serif" font-size="13" font-weight="700" text-anchor="middle">4. 配布準備完了</text>
+        <text x="710" y="76" fill="#fff" font-family="-apple-system,sans-serif" font-size="11" text-anchor="middle">2026-08-07</text>
+
+        <rect x="20" y="140" width="770" height="90" rx="6" fill="#fbfaf5" stroke="#d8d4ca" stroke-width="1"/>
+        <text x="35" y="165" fill="#1a3a52" font-family="-apple-system,sans-serif" font-size="12" font-weight="700">セキュリティ強化の内訳</text>
+        <text x="35" y="188" fill="#2a2a2a" font-family="-apple-system,sans-serif" font-size="11">・ 生の暗号鍵をブラウザ HTML から撤去 → 中継サーバー経由に一本化</text>
+        <text x="35" y="205" fill="#2a2a2a" font-family="-apple-system,sans-serif" font-size="11">・ 4 本の暗号鍵を全て刷新（旧鍵はしばらく併存させ、問題なければ削除）</text>
+        <text x="35" y="222" fill="#2a2a2a" font-family="-apple-system,sans-serif" font-size="11">・ 配布用ページ 5 枚すべて中継サーバー経由に切替済み</text>
+
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+            <polygon points="0 0, 8 4, 0 8" fill="#b89544"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+  </section>
+
+  <section>
+    <h2>2 種類の対話 AI の使い分け</h2>
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th class="func">観点</th>
+          <th>A 群（検索型）</th>
+          <th>B 群（スキル型）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="func">答えの作り方</td>
+          <td><span class="status ok">✅</span>Mits の過去発言を検索して引用<span class="note">一次資料寄り・そのまま引く</span></td>
+          <td><span class="status ok">✅</span>Mits の判断パターンを型化して再構成<span class="note">相談内容に合わせて型を選ぶ</span></td>
+        </tr>
+        <tr>
+          <td class="func">得意な相談</td>
+          <td>「Mits はあのときどう言っていたか」<span class="note">事例・具体例</span></td>
+          <td>「私の場合はどう当てはめるか」<span class="note">個別事情への当てはめ</span></td>
+        </tr>
+        <tr>
+          <td class="func">配布後の役割</td>
+          <td>メアドで A 群に振り分けられた方の対話相手</td>
+          <td>メアドで B 群に振り分けられた方の対話相手</td>
+        </tr>
+        <tr>
+          <td class="func">回答の記録</td>
+          <td><span class="status ok">✅</span>診断終了後にレポート表示<span class="note">再来訪時も同じ会話を読み返せる</span></td>
+          <td><span class="status ok">✅</span>診断終了後にレポート表示<span class="note">再来訪時も同じ会話を読み返せる</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>顧客の体験の流れ</h2>
+    <div class="detail-grid">
+      <div class="detail-card full">
+        <div class="head">入り口 → 診断 → レポート → 再来訪の円環</div>
+        <ul>
+          <li><strong>入り口</strong>：LINE / メール からの導線でランディングページに到着</li>
+          <li><strong>メアド入力</strong>：メアドで A 群 / B 群 に自動振り分け（本人は違いを意識しない）</li>
+          <li><strong>診断対話（振り返り）</strong>：1 人型起業家として今どこにいるか・何に詰まっているかを対話で棚卸し（約 2 分）</li>
+          <li><strong>次の話題への遷移</strong>：Mits の判断軸に沿って「次に話すべきテーマ」を提示</li>
+          <li><strong>本編対話（A 群 or B 群）</strong>：提示されたテーマを 2 種のうち割り当てられた AI と深堀り</li>
+          <li><strong>診断完了</strong>：会話全体からサマリーを生成 → レポート表示</li>
+          <li><strong>再来訪</strong>：後日同じリンクで戻ると、前回のレポートをそのまま読み返せる（会話は蓄積）</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>セキュリティ強化の考え方</h2>
+    <div class="detail-grid">
+      <div class="detail-card">
+        <div class="head">Before（配布前チェック 前）</div>
+        <ul>
+          <li>ブラウザ内の HTML に暗号鍵が直接埋め込まれていた</li>
+          <li>技術的には第三者に盗み見られ悪用される余地があった</li>
+          <li>1 人型起業家向けサービスとして通用する水準では無かった</li>
+        </ul>
+      </div>
+      <div class="detail-card">
+        <div class="head">After（配布前チェック 後）</div>
+        <ul>
+          <li>暗号鍵をブラウザから撤去 → 中継サーバーだけが保持</li>
+          <li>4 本の暗号鍵を全て刷新済み（万一の漏れリスクを一度リセット）</li>
+          <li>顧客側で見えるのは「無害化された中継サーバー URL」だけ</li>
+          <li>1 人型起業家に安心して配布できる水準に到達</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>次のアクション</h2>
+    <div class="timeline">
+      <div class="item">
+        <div class="when">NOW（配布判定）</div>
+        <div class="what">試験配布の開始</div>
+        <div class="why">配布前チェックが完了したため、対象者リストへの案内を開始できる状態。配布規模と対象は Mits の判定。</div>
+      </div>
+      <div class="item">
+        <div class="when">配布後 1〜2 週間</div>
+        <div class="what">A 群 / B 群 の回答実データを観察</div>
+        <div class="why">「どちらの型が 1 人型起業家の相談に刺さるか」を実データで見極める。決めつけずに、実際の会話ログとレポートで判断する。</div>
+      </div>
+      <div class="item">
+        <div class="when">併存期間の終了時</div>
+        <div class="what">旧暗号鍵の完全削除</div>
+        <div class="why">現在は新旧の鍵を併存させ、万一の切戻しに備えている。運用が安定したら旧鍵を完全削除し、通信路を新鍵一本に統合。</div>
+      </div>
+      <div class="item">
+        <div class="when">継続</div>
+        <div class="what">回答品質の月次見直し</div>
+        <div class="why">A 群 / B 群 の実データを月次で振り返り、「AI-MITS がどこまで Mits の判断を再現できているか」を評価。改善点を次月に反映。</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>この配布で確かめたいこと</h2>
+    <div class="conclusion">
+      <p class="lead">「1 人型起業家の相談に対して、Mits の判断を AI がどこまで代替できるか」の一次データを取ります。</p>
+      <ul>
+        <li>Mits の 6 年 6000 セッション分のコンサル判断を、AI が本当に引き出せるか</li>
+        <li>「検索して引く」型と「型化して当てはめる」型のどちらが、1 人型起業家の相談に相性が良いか</li>
+        <li>2 分の振り返り → 深堀り対話 → レポート、の一連が「もう一度使いたい」と思える体験になっているか</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="report-foot">
+    <strong>裏付け</strong>
+    <ul>
+      <li>配布前チェック 一気通貫デモ：✅ 実機で通しの動線を確認済（2026-08-07）</li>
+      <li>暗号鍵刷新：✅ 4 本の刷新を完了・中継サーバー側の受け付け動作を実測で確認済</li>
+      <li>配布用ページ 5 枚の中継サーバー経由化：✅ 全ページ切替済み・生鍵の残存無しを確認</li>
+      <li>入り口 → 診断 → レポート → 再来訪 の円環：✅ 実機デモで確認</li>
+    </ul>
+
+    <strong style="display:block; margin-top:14px;">© 西田光弘個人事務所 / Mits Reports</strong>
+    <span style="display:block; margin-top:4px; color:var(--gray); font-size:11px;">本レポートは AI-MITS を試される方への配布前アナウンスです。運用状況によって次月以降の見直しが入る可能性があります。</span>
+  </footer>
+
+</div>
+</body>
+</html>

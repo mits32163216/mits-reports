@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>解決したのは1件だけでした — でも業務は1日も止まらなかった話｜受け皿の実運用レポート</title>
+<meta name="description" content="2026-07-14『AIツール本体の見えない障害モード3つ』のその後14日間。Anthropicが公式に直したのは6件中1件だけ。それでも受け皿を運用している側では『事故が起きても仕事は止まらない』が成立していた実運用記録。">
+<meta property="og:title" content="解決したのは1件だけでした — でも業務は1日も止まらなかった話">
+<meta property="og:description" content="Anthropicが直したのは6件中1件。それでも業務は止まらない。受け皿が実際に仕事をした2週間の実測記録。">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231a3a52'/%3E%3Ctext x='16' y='22' font-size='18' text-anchor='middle' fill='%23b89544' font-family='serif' font-weight='700'%3EM%3C/text%3E%3C/svg%3E">
+<style>
+  :root {
+    --navy: #1a3a52;
+    --navy-light: #2c5575;
+    --ivory: #f7f3ea;
+    --paper: #fbfaf5;
+    --ink: #2a2a2a;
+    --gray: #7a7a7a;
+    --line: #d8d4ca;
+    --ok: #2d8659;
+    --warn: #c89020;
+    --ng: #b04848;
+    --gold: #b89544;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.75;
+    font-size: 15px;
+    padding: 20px 16px;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  header.report-head {
+    background: var(--navy);
+    color: var(--ivory);
+    padding: 36px 40px;
+    border-radius: 6px;
+    margin-bottom: 24px;
+  }
+  header.report-head .tag {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 3px;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+  }
+  header.report-head h1 {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+  header.report-head .lead-one {
+    font-size: 15px;
+    color: rgba(247,243,234,0.9);
+    margin-bottom: 12px;
+    font-weight: 500;
+    line-height: 1.7;
+  }
+  header.report-head .meta {
+    font-size: 13px;
+    color: rgba(247,243,234,0.7);
+    line-height: 1.7;
+  }
+  header.report-head .meta a { color: rgba(247,243,234,0.85); }
+
+  section { margin-bottom: 28px; }
+  h2 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--navy);
+    border-left: 4px solid var(--gold);
+    padding-left: 12px;
+    margin-bottom: 16px;
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 18px 0 10px;
+  }
+  p { margin-bottom: 10px; }
+  code { background: var(--ivory); padding: 1px 5px; border-radius: 2px; font-size: 13px; }
+  strong { color: var(--navy); }
+
+  .conclusion {
+    background: white;
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--gold);
+    border-radius: 4px;
+    padding: 22px 26px;
+  }
+  .conclusion .lead {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+    line-height: 1.55;
+  }
+  .conclusion ul { padding-left: 22px; margin-top: 8px; }
+  .conclusion li { margin-bottom: 6px; font-size: 14px; }
+
+  /* Progress table */
+  .status-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 18px;
+    font-size: 13px;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .status-table thead th {
+    background: var(--navy);
+    color: var(--ivory);
+    text-align: left;
+    padding: 10px 14px;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.03em;
+  }
+  .status-table tbody td {
+    padding: 12px 14px;
+    border-top: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .status-table .num {
+    font-family: -apple-system, "SF Mono", monospace;
+    font-size: 12px;
+    color: var(--gray);
+    white-space: nowrap;
+  }
+  .status-table .status-pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+  .status-table .st-open { background: rgba(200,144,32,0.15); color: var(--warn); border: 1px solid var(--warn); }
+  .status-table .st-closed { background: rgba(45,134,89,0.13); color: var(--ok); border: 1px solid var(--ok); }
+  .status-table tbody tr:hover { background: var(--ivory); }
+  .status-table a { color: var(--navy-light); text-decoration: none; border-bottom: 1px dotted var(--navy-light); }
+
+  .table-footnote {
+    font-size: 12px;
+    color: var(--gray);
+    margin-top: 10px;
+    line-height: 1.65;
+  }
+
+  /* Receiver story block */
+  .receiver {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 22px 26px;
+    margin-bottom: 16px;
+  }
+  .receiver .r-num {
+    display: inline-block;
+    background: var(--ok);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+  }
+  .receiver h3 {
+    font-size: 18px;
+    margin: 0 0 14px 0;
+    line-height: 1.4;
+  }
+  .receiver .subhead {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+    background: var(--ivory);
+    padding: 6px 10px;
+    border-radius: 3px;
+    margin: 18px 0 10px;
+    display: block;
+  }
+  .receiver .evidence-box {
+    background: var(--ivory);
+    border-left: 3px solid var(--gold);
+    padding: 14px 18px;
+    margin: 10px 0;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+  .receiver .evidence-box .head {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+    letter-spacing: 0.03em;
+  }
+  .receiver .evidence-box .src {
+    display: block;
+    font-size: 11px;
+    color: var(--gray);
+    margin-top: 6px;
+  }
+  .receiver ul { padding-left: 22px; margin: 8px 0; }
+  .receiver ul li { margin-bottom: 5px; font-size: 14px; }
+  .receiver .takeaway {
+    background: #f0f7f3;
+    border: 1px solid var(--ok);
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin-top: 14px;
+  }
+  .receiver .takeaway .head {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ok);
+    margin-bottom: 8px;
+  }
+  .receiver .takeaway p { font-size: 13px; margin: 0; line-height: 1.7; }
+
+  .close-box {
+    background: white;
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    padding: 24px 28px;
+  }
+  .close-box p { font-size: 14px; margin-bottom: 12px; line-height: 1.8; }
+  .close-box p:last-child { margin-bottom: 0; }
+  .close-box .em {
+    background: var(--ivory);
+    padding: 14px 18px;
+    border-radius: 3px;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 14px 0;
+    font-size: 15px;
+  }
+  .close-box .drop-one {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    text-align: center;
+    padding: 8px 0;
+    letter-spacing: 0.02em;
+  }
+
+  footer.report-foot {
+    background: var(--ivory);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px 22px;
+    font-size: 12px;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+  footer.report-foot strong { color: var(--navy); display:block; margin-bottom: 6px; }
+  footer.report-foot a {
+    color: var(--navy-light);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--navy-light);
+    word-break: break-all;
+  }
+  footer.report-foot ul { padding-left: 20px; margin-top: 6px; margin-bottom: 12px; }
+  footer.report-foot li { margin-bottom: 4px; }
+
+  @media (max-width: 720px) {
+    body { font-size: 14px; padding: 12px 8px; }
+    header.report-head { padding: 24px 20px; }
+    header.report-head h1 { font-size: 20px; }
+    .receiver { padding: 18px 18px; }
+    .receiver h3 { font-size: 16px; }
+    .status-table { font-size: 12px; }
+    .status-table thead th, .status-table tbody td { padding: 8px 8px; }
+  }
+
+  /* 戻るボタン（Mits Reports 全レポート必須） */
+  .back-to-list {
+    position: fixed; top: 12px; left: 12px; z-index: 1000;
+    background: var(--ivory); color: var(--navy);
+    padding: 8px 16px; font-size: 12px; border-radius: 4px;
+    text-decoration: none; letter-spacing: 0.05em;
+    border: 1px solid var(--navy);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  .back-to-list:hover { background: var(--gold); color: var(--navy); }
+  @media print { .back-to-list { display: none; } }
+</style>
+</head>
+<body>
+<a class="back-to-list" href="index.html">← Mits Reports 一覧に戻る</a>
+<div class="container">
+
+  <header class="report-head">
+    <span class="tag">SESSION 3-4 副資料 ／ 続編</span>
+    <h1>解決したのは1件だけでした<br>— でも業務は1日も止まらなかった話</h1>
+    <div class="lead-one">2026-07-14『AIツール本体の見えない障害モード3つ』のその後、14日間の実運用レポート。</div>
+    <div class="meta">
+      発行: 2026-07-28 / 対象: BE-02 AIエージェント経営 2ヶ月グルコン メンバー<br>
+      関連: <a href="2026-07-14_ai-agent-harness-hidden-failures.html">2026-07-14 AIツール本体の見えない障害モード3つ</a> の続編／実運用検証編
+    </div>
+  </header>
+
+  <section>
+    <h2>結論先頭</h2>
+    <div class="conclusion">
+      <p class="lead">2週間経って、Anthropicが公式に直したのは6件中1件でした。<br>それでも、業務は1日も止まっていません。</p>
+
+      <p style="margin-top:14px; font-size:14px; line-height:1.85;">前号（2026-07-14）で、AI本体で起きる<strong>見えない障害モード3つ</strong>と、それを外側で受け止めるための<strong>受け皿3つ</strong>（バックアップ／安全装置の実機確認／使用量の定点観測）の話をしました。「AIを直すんじゃない、外側に受け皿を作るんです」で締めた回です。</p>
+
+      <p style="margin-top:10px; font-size:14px; line-height:1.85;">あの副資料に載せた GitHub Issue 6件を、2週間後の今日、もう一度全部見直しました。<strong>OPENのままが5件、CLOSEDに変わったのは1件</strong>。つまり、公式修正待ちの姿勢だった1人型起業家は、この2週間、ほぼ何も守られていなかったわけです。</p>
+
+      <p style="margin-top:10px; font-size:14px; line-height:1.85;">一方で、受け皿を先に作ってあった側は、事故が起きても<strong>「あ、受け皿が仕事したな」で終わっている</strong>。この対比を、実物のログで見せます。</p>
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <section>
+    <h2>Anthropic側の2週間の進捗表</h2>
+
+    <p style="font-size:14px; margin-bottom:8px;">前号で引いた GitHub Issue 6件、それぞれの状態を 2026-07-28 時点で全部見直しました。</p>
+
+    <table class="status-table">
+      <thead>
+        <tr>
+          <th style="width:20%;">Issue番号</th>
+          <th style="width:18%;">状態（2026-07-28 時点）</th>
+          <th style="width:62%;">中身（要旨）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="num"><a href="https://github.com/anthropics/claude-code/issues/62041" target="_blank" rel="noopener">#62041</a></td>
+          <td><span class="status-pill st-closed">CLOSED（2026-07-16）</span></td>
+          <td>起動時のお掃除処理でセッション書き起こしが2,300件一度に消える件。<strong>唯一、この2週間で直った案件。</strong></td>
+        </tr>
+        <tr>
+          <td class="num"><a href="https://github.com/anthropics/claude-code/issues/77268" target="_blank" rel="noopener">#77268</a></td>
+          <td><span class="status-pill st-open">OPEN</span></td>
+          <td>作業用の隔離フォルダ（worktree）が、他の生きているセッションのworktreeを含めて5回破壊された件。ロック済みも未コミットも巻き添え。</td>
+        </tr>
+        <tr>
+          <td class="num"><a href="https://github.com/anthropics/claude-code/issues/75275" target="_blank" rel="noopener">#75275</a></td>
+          <td><span class="status-pill st-open">OPEN</span></td>
+          <td>Windowsのお掃除処理がNTFSのフォルダ参照（junction）を辿って、隔離フォルダの外側の約800GBまで消してしまう件。</td>
+        </tr>
+        <tr>
+          <td class="num"><a href="https://github.com/anthropics/claude-code/issues/77212" target="_blank" rel="noopener">#77212</a></td>
+          <td><span class="status-pill st-open">OPEN</span></td>
+          <td>「実行前に必ず聞く」と設定した安全装置（hook）が、権限バイパスモードの下では黙って承認されてしまう件。「拒否」を返すhookは正しく動く。</td>
+        </tr>
+        <tr>
+          <td class="num"><a href="https://github.com/anthropics/claude-code/issues/72960" target="_blank" rel="noopener">#72960</a></td>
+          <td><span class="status-pill st-open">OPEN</span></td>
+          <td>AI本体が <code>dangerouslyDisableSandbox: true</code>（隔離環境を無効化する設定）を有効にしても、ユーザー側には何の表示も出ない件。</td>
+        </tr>
+        <tr>
+          <td class="num"><a href="https://github.com/anthropics/claude-code/issues/76147" target="_blank" rel="noopener">#76147</a></td>
+          <td><span class="status-pill st-open">OPEN</span></td>
+          <td>会話全体の使用率にまだ余裕がある段階で、文脈圧縮が数分内に何度も連続で走ってしまう件。圧縮のたびに課金される。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="table-footnote">
+      ※ 状態は 2026-07-28 に <code>gh issue view --json state,closedAt</code> で直接照会した結果。CLOSED は #62041 の1件のみで、他5件は OPEN のまま更新日付だけが動いている状態です。「議論はしている、まだ直っていない」。
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <section>
+    <h2>受け皿①：バックアップの物語（自動で回っていた話）</h2>
+
+    <div class="receiver">
+      <span class="r-num">RECEIVER 01</span>
+      <h3>AIツール本体が全ログを消しても、外側に本体があるから、業務が止まらない</h3>
+
+      <p>前号で書いた1つ目の受け皿は<strong>「業務データをAIツール本体の中に置きっぱなしにしない」</strong>でした。外側（Google Drive／GitHub／Notion）に必ず本体を置いておく。</p>
+
+      <p>これ、頭では「そりゃそうだよね」って話なんですよ。じゃあ、実際にやってあるかどうか。ここが分かれ道です。</p>
+
+      <span class="subhead">実際に回っていた記録（過去14日間）</span>
+
+      <div class="evidence-box">
+        <div class="head">▪ auto-backup コミット（2026-07-14 〜 2026-07-28）</div>
+        自動バックアップの仕組みが <strong>1時間ごと</strong> に走って、Google Drive上の全ワークスペースをローカルgitに固定していました。<br>
+        <strong>過去14日間で計49回、記録されています。</strong>
+        <span class="src">確認方法: <code>git log --since="2026-07-14" --grep="auto-backup" --oneline | wc -l</code></span>
+      </div>
+
+      <div class="evidence-box">
+        <div class="head">▪ 3層構成（Notionの原文の器／Obsidianの意味の器／ローカルの耐障害の器）</div>
+        前々号（2026-07-11）で提示した3層の消えない容器。この構成自体、<strong>AIツール本体（Claude Code）が全部消えても業務側の一次資料は1つも失われない</strong>ように組んであります。<br>
+        だからこの14日間、6件のうち5件がOPENのままでも、こちらは「守られている」状態が変わらなかった。
+        <span class="src">前々号: <a href="2026-07-11_ai-agent-backup-system.html">2026-07-11 AI社員の6つのAI癖と、それを防ぐ3層の消えない容器</a></span>
+      </div>
+
+      <span class="subhead">なぜ「作ってあってよかった」になるのか</span>
+
+      <p>受け皿を作る作業って、<strong>作った瞬間には何の見返りもない</strong>んですよ。1時間ごとに勝手にバックアップ走らせても、その日何も起きなければ「無駄骨」に見える。</p>
+
+      <p>ただ、これは<strong>保険と同じ構造</strong>なんです。無駄骨に見える期間は、実は「事故が起きていない期間」であって、これがまさに投資が回っている状態です。逆に「1回も発動しなかったから保険はいらなかった」と解約する人は、次に事故が起きたときに全損する。</p>
+
+      <p>この2週間、うちは<strong>Anthropic側で誰がどんなバグを踏んでいても、業務側は影響ゼロ</strong>で通しました。それは「作ってあったから」であって、「運が良かったから」じゃない。</p>
+
+      <div class="takeaway">
+        <div class="head">✅ 受け皿①のこの2週間の結論</div>
+        <p>Google Drive／GitHub／Notion のどれか1つでもいい。<strong>AIツール本体の外側に、業務データの一次コピー</strong>を置いてある状態を今日中に作ってください。「作った」で終わらせず、「1時間おきに動く」を仕込んで、動いた回数を月末に数える。数えた数字が受け皿の証拠です。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <section>
+    <h2>受け皿②：実機テストの物語（発火するかどうか、実際に試したか）</h2>
+
+    <div class="receiver">
+      <span class="r-num">RECEIVER 02</span>
+      <h3>「設定した」と「発火した」は違う。この2週間で、そこを分けた人だけが守られていた</h3>
+
+      <p>前号で書いた2つ目の受け皿は<strong>「安全装置（hook）を設定したら、必ず実機テストする」</strong>でした。わざと危険操作を試して、止まるか確認する。</p>
+
+      <p>ここ、多くの1人型起業家がやらないまま終わっている領域なんですよ。「設定は書いた、書いたから安心」で終わってしまう。書くのは頭の仕事、発火確認は手の仕事。ここが分離してるから、忘れる。</p>
+
+      <span class="subhead">Anthropic側で今も直っていない話（issue #77212）</span>
+
+      <div class="evidence-box">
+        <div class="head">▪ 権限バイパスモード下で hook 「ask」が黙って承認される件（2026-07-28 現在 OPEN）</div>
+        「実行前に必ず確認する」と設定した hook が、権限バイパスモードでは呼ばれずに黙ってYESと同じ結果になる。<br>
+        「拒否」を返すhookは正しく動く。<strong>つまり、危険な削除・書き込みの前に止めるはずの装置が、条件次第で無音でスルーされる状態。</strong>2週間前と全く同じ状態のままです。
+        <span class="src">出典: <a href="https://github.com/anthropics/claude-code/issues/77212" target="_blank" rel="noopener">GitHub Issues - claude-code #77212</a>（最終更新 2026-07-13、以降静止）</span>
+      </div>
+
+      <span class="subhead">こちらでやっている実機テスト運用</span>
+
+      <div class="evidence-box">
+        <div class="head">▪ hook を書いたら「わざと発火させる」が同日中の宿題</div>
+        こちらの運用では、hook を1本書いたら<strong>その日中に「本当に発火するか」の実テストを1本セット</strong>にしています。テストで発火しない hook は「書いてない」と同じ扱い。<br>
+        たとえば「危険な削除の前に確認する hook」を書いたら、危険じゃない<strong>テスト用のダミー削除コマンドを実際に流して</strong>、hook が止めに来るかを目で見て確認する。
+      </div>
+
+      <div class="evidence-box">
+        <div class="head">▪ 権限モードは「必要な瞬間だけ」にする</div>
+        バイパスモードは危険が承知でスピードを取りたい時だけ。それ以外は元に戻す。「常時バイパス」を癖にしない。<br>
+        これで #77212 のバグに引っかかる時間帯を、業務全体の中で意図的に短くしています。
+      </div>
+
+      <span class="subhead">なぜ「設定した」だけでは足りないのか</span>
+
+      <p>hook は<strong>「AIを止めるための装置」</strong>です。装置が正しく動くかどうかは、装置を書いた瞬間には確認できません。動かして初めてわかる。</p>
+
+      <p>これ、車のブレーキと同じなんですよ。買った直後にちゃんと停まるか一度踏んで確認する人はいる。買ってから何ヶ月も踏まないで、いざ交差点で踏んで停まらなかった、が最悪の事故です。</p>
+
+      <p>この2週間で #77212 のバグを踏んで大事故になった人がいるとしたら、それは<strong>「hookを書いた瞬間に安心してしまい、実機で発火確認をしなかった人」</strong>です。装置は書けば動く、じゃないんですよ。動かして初めて動くとわかる。</p>
+
+      <div class="takeaway">
+        <div class="head">✅ 受け皿②のこの2週間の結論</div>
+        <p>hook を書いたら、その日中に<strong>「わざと発火させるテスト」を1本セット</strong>で回す。発火しない hook は書いてないのと同じ扱い。バイパスモードは常用しない。この3つが揃っていれば、Anthropic側の #77212 バグが直る前でも、業務は止まりません。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <section>
+    <h2>受け皿③：定点観測の物語（週に1回、ダッシュボードを見たか）</h2>
+
+    <div class="receiver">
+      <span class="r-num">RECEIVER 03</span>
+      <h3>「翌月の請求書で気づく」を「翌週のダッシュボードで気づく」にずらしただけ</h3>
+
+      <p>前号で書いた3つ目の受け皿は<strong>「週1回、AIサービスの使用量ダッシュボードを見る癖」</strong>でした。月次予算の上限アラートも合わせて仕込む。</p>
+
+      <p>これ、地味なんですよ。派手さゼロ。でも、この2週間で一番効いた受け皿がこれでした。理由を書きます。</p>
+
+      <span class="subhead">Anthropic側で今も直っていない話（issue #76147）</span>
+
+      <div class="evidence-box">
+        <div class="head">▪ 短時間に文脈圧縮が連続発火する件（2026-07-28 現在 OPEN）</div>
+        本来は会話全体の使用率が高くなってから走る処理が、まだ余裕がある段階で数分内に何度も走る。<strong>圧縮のたびに課金される。</strong><br>
+        最終更新は 2026-07-09。2週間前より前から議論はされているが、直っていない状態。使っている最中は「ちょっと遅いな」以外の症状がないのが厄介。
+        <span class="src">出典: <a href="https://github.com/anthropics/claude-code/issues/76147" target="_blank" rel="noopener">GitHub Issues - claude-code #76147</a></span>
+      </div>
+
+      <span class="subhead">こちらでやっている定点観測の運用</span>
+
+      <div class="evidence-box">
+        <div class="head">▪ 使用量サマリの週1定点</div>
+        こちらは<strong>使用量のサマリを軽く見るコマンドを、週1回、決まった曜日に1回</strong>回しています。異常な突出があればその日に何があったかを振り返る。<br>
+        「翌月の請求書で初めて気づく」を「翌週のサマリで気づく」に前倒しするだけの話です。3〜4分の作業。
+      </div>
+
+      <div class="evidence-box">
+        <div class="head">▪ 「同じ話題を長時間引きずらない」の運用ルール</div>
+        用件が変わったら新しいセッションを開く。<strong>圧縮が走る回数自体を物理的に減らす。</strong><br>
+        これは #76147 バグへの直接対策ではないんですが、副次的に「異常発火に遭遇する確率」を下げます。
+      </div>
+
+      <span class="subhead">なぜ「派手じゃない受け皿」が一番効いたのか</span>
+
+      <p>①のバックアップは、事故が起きた時に「業務が止まらない」を守る受け皿。<br>
+      ②の実機テストは、事故が起きる前に「装置が仕事してる」を確認する受け皿。<br>
+      ③の定点観測は、事故が起きている最中に「まだ小さいうちに気づく」ための受け皿です。</p>
+
+      <p>気づくのが月末になると、事故は<strong>1ヶ月分に育っています</strong>。気づくのが週次になると、事故は<strong>1週間分で頭打ち</strong>。同じバグを踏んでも、被害の大きさが1/4になる。</p>
+
+      <p>大事なのは「見た結果を分析する」じゃなくて<strong>「見る癖そのもの」</strong>です。分析は異常があった時だけでいい。異常がない週は3〜4分で終わる。癖にしてしまえば負担にならない。</p>
+
+      <div class="takeaway">
+        <div class="head">✅ 受け皿③のこの2週間の結論</div>
+        <p>週1回、決まった曜日に、AIサービスの使用量ダッシュボードを開く。<strong>予算アラートを月次予算の80%到達で設定</strong>する。この2つだけで、#76147のような請求ショック系のバグは「翌週気づく」に前倒しできます。翌月まで気づかない状態を、意図的に潰す。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <section>
+    <h2>まとめ — 「作った」の次に、「回した」があります</h2>
+
+    <div class="close-box">
+      <p>前号（2026-07-14）で「AIを直すんじゃない。外側に受け皿を作る」の話をして、3つの受け皿を提示しました。</p>
+
+      <p>今号は、それから2週間、<strong>その受け皿が実際に仕事をした記録</strong>です。Anthropicが直したのは6件中1件。それでも業務が止まらなかったのは、受け皿が2週間、ちゃんと回っていたからです。</p>
+
+      <div class="em">
+        受け皿は、作ったら価値が出るんじゃないです。<br>
+        回して初めて価値が出ます。
+      </div>
+
+      <p>1時間ごとに動くバックアップ。書いたその日に発火確認をする hook。週1で開く使用量ダッシュボード。<strong>どれも派手さゼロです</strong>。派手じゃないから、後回しにされる。後回しにされると、事故が起きたときに何もない状態から慌てることになる。</p>
+
+      <p>この副資料を読んだあなたにお願いしたいのは、大きな仕組みを組むことじゃないんですよ。<strong>「今日1つ、受け皿を1つ動かす」</strong>。これだけです。</p>
+
+      <ul style="padding-left:22px; margin: 8px 0 14px;">
+        <li>①Google Driveに1個フォルダを作って、今書きかけの業務ファイルを1つそこに移す。それだけで「AIツール本体の外に一次コピー」が今日始まる。</li>
+        <li>②hook を1本書いた記憶があるなら、今日中に1回わざと発火させて、止まるか目で見る。</li>
+        <li>③使用量ダッシュボードを今週1回開く曜日を、今この場で決める。カレンダーに繰り返し予定を入れる。</li>
+      </ul>
+
+      <p>この3つを<strong>「今日中に1つ、今週中に3つ」</strong>で動かせば、次にAnthropic側で何が起きても、あなたの業務側では「あ、受け皿が仕事したな」で終わります。</p>
+
+      <div class="drop-one">直すのはAIじゃない、動かすのは受け皿。</div>
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <footer class="report-foot">
+    <strong>一次資料（GitHub Issues on anthropics/claude-code）</strong>
+    <ul>
+      <li>#62041 session transcript silent delete (2,300件): <a href="https://github.com/anthropics/claude-code/issues/62041" target="_blank" rel="noopener">https://github.com/anthropics/claude-code/issues/62041</a> — <strong style="color:#2d8659;">CLOSED 2026-07-16</strong></li>
+      <li>#77268 worktree recycled: <a href="https://github.com/anthropics/claude-code/issues/77268" target="_blank" rel="noopener">https://github.com/anthropics/claude-code/issues/77268</a> — OPEN</li>
+      <li>#75275 800GB junction loss: <a href="https://github.com/anthropics/claude-code/issues/75275" target="_blank" rel="noopener">https://github.com/anthropics/claude-code/issues/75275</a> — OPEN</li>
+      <li>#77212 hook 'ask' silent auto-approve bug: <a href="https://github.com/anthropics/claude-code/issues/77212" target="_blank" rel="noopener">https://github.com/anthropics/claude-code/issues/77212</a> — OPEN</li>
+      <li>#72960 dangerouslyDisableSandbox undocumented: <a href="https://github.com/anthropics/claude-code/issues/72960" target="_blank" rel="noopener">https://github.com/anthropics/claude-code/issues/72960</a> — OPEN</li>
+      <li>#76147 abnormal compaction (12分内3連続発火): <a href="https://github.com/anthropics/claude-code/issues/76147" target="_blank" rel="noopener">https://github.com/anthropics/claude-code/issues/76147</a> — OPEN</li>
+    </ul>
+
+    <strong>関連レポート</strong>
+    <ul>
+      <li>前号（本編の直前）: <a href="2026-07-14_ai-agent-harness-hidden-failures.html">2026-07-14 AIツール本体の見えない障害モード3つ</a></li>
+      <li>前々号（3層の消えない容器）: <a href="2026-07-11_ai-agent-backup-system.html">2026-07-11 AI社員の6つのAI癖と、それを防ぐ3層の消えない容器</a></li>
+      <li>本編（プレゼンスライド）: <a href="2026-07-05_ai-agent-management-slides.html">2026-07-05 AIエージェント経営 2ヶ月グループコンサルティング｜プレゼンスライド</a></li>
+      <li>シラバス: <a href="2026-07-05_ai-agent-management-syllabus.html">2026-07-05 シラバス</a></li>
+    </ul>
+
+    <strong style="margin-top: 6px;">© 西田光弘個人事務所 / Mits Reports</strong>
+    <div>本レポートは 2026-07-28 時点で公開されている GitHub Issues の状態（<code>gh issue view --json state,closedAt,updatedAt</code>で直接照会）と、Mits側の実運用ログ（Google Drive／git auto-backup コミット履歴／3層構成の運用実績）に基づく。</div>
+  </footer>
+
+</div>
+</body>
+</html>
