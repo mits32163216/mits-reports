@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>「%name% さま」が空欄で届く ― 置き換え文字の事故 — Mits Reports</title>
+<meta name="description" content="メール配信の置き換え文字が未置換のまま顧客に届く事故。原因は文字の書き間違いではなく読者の登録経路。見分け方と点検手順を実測でまとめました。">
+<meta property="og:title" content="「%name% さま」が空欄で届く ― 置き換え文字の事故">
+<meta property="og:description" content="未置換で届く原因の大半は書き間違いではなく登録経路。見分け方と点検手順。">
+<meta property="og:type" content="article">
+<style>
+  :root {
+    --navy: #1a3a52;
+    --navy-light: #2c5575;
+    --ivory: #f7f3ea;
+    --paper: #fbfaf5;
+    --ink: #2a2a2a;
+    --gray: #7a7a7a;
+    --line: #d8d4ca;
+    --ok: #2d8659;
+    --warn: #c89020;
+    --ng: #b04848;
+    --gold: #b89544;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.75;
+    font-size: 15px;
+    padding: 20px 16px;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  /* ===== Header ===== */
+  header.report-head {
+    background: var(--navy);
+    color: var(--ivory);
+    padding: 36px 40px;
+    border-radius: 6px;
+    margin-bottom: 24px;
+  }
+  header.report-head .tag {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 3px;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+  }
+  header.report-head h1 {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+  header.report-head .meta {
+    font-size: 13px;
+    color: rgba(247,243,234,0.7);
+    line-height: 1.7;
+  }
+
+  /* ===== Section ===== */
+  section { margin-bottom: 28px; }
+  h2 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--navy);
+    border-left: 4px solid var(--gold);
+    padding-left: 12px;
+    margin-bottom: 16px;
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 18px 0 10px;
+  }
+  p { margin-bottom: 10px; }
+  code { background: var(--ivory); padding: 1px 5px; border-radius: 2px; font-size: 13px; }
+
+  /* ===== Conclusion card ===== */
+  .conclusion {
+    background: white;
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--gold);
+    border-radius: 4px;
+    padding: 20px 24px;
+  }
+  .conclusion .lead {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+  .conclusion ul { padding-left: 22px; }
+  .conclusion li { margin-bottom: 6px; font-size: 14px; }
+
+  /* ===== 3-card horizontal layout ===== */
+  .engines {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .engine-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 16px;
+    position: relative;
+  }
+  .engine-card.rec { border-top: 4px solid var(--ok); }
+  .engine-card.watch { border-top: 4px solid var(--warn); }
+  .engine-card.skip { border-top: 4px solid var(--ng); }
+  .engine-card .vendor { font-size: 11px; color: var(--gray); letter-spacing: 0.05em; margin-bottom: 4px; }
+  .engine-card .name { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .engine-card .judgement { font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+  .engine-card.rec .judgement { color: var(--ok); }
+  .engine-card.watch .judgement { color: var(--warn); }
+  .engine-card.skip .judgement { color: var(--ng); }
+  .engine-card .reason { font-size: 12px; color: var(--ink); line-height: 1.6; }
+
+  /* ===== Matrix Table ===== */
+  .matrix {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    font-size: 13px;
+  }
+  .matrix th, .matrix td {
+    border: 1px solid var(--line);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .matrix thead th {
+    background: var(--navy);
+    color: var(--ivory);
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+  }
+  .matrix thead th.func { background: var(--navy-light); text-align: left; }
+  .matrix tbody td.func {
+    background: var(--ivory);
+    font-weight: 600;
+    color: var(--navy);
+    width: 28%;
+  }
+  .matrix .status { display: inline-block; font-weight: 700; margin-right: 4px; }
+  .status.ok { color: var(--ok); }
+  .status.warn { color: var(--warn); }
+  .status.ng { color: var(--ng); }
+  .matrix .note { font-size: 11px; color: var(--gray); line-height: 1.5; margin-top: 3px; display: block; }
+
+  /* ===== Detail blocks ===== */
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .detail-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 16px;
+  }
+  .detail-card.full { grid-column: 1 / -1; }
+  .detail-card .head {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+  }
+  .detail-card ul { padding-left: 18px; font-size: 13px; line-height: 1.7; }
+  .detail-card li { margin-bottom: 4px; }
+
+  /* ===== Timeline ===== */
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+    border-left: 3px solid var(--navy);
+    margin-top: 14px;
+  }
+  .timeline .item { position: relative; padding: 6px 0 16px 12px; }
+  .timeline .item::before {
+    content: "";
+    position: absolute;
+    left: -36px;
+    top: 8px;
+    width: 14px;
+    height: 14px;
+    background: var(--gold);
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px var(--navy);
+  }
+  .timeline .when {
+    font-size: 11px;
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 3px;
+  }
+  .timeline .what { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+  .timeline .why { font-size: 12px; color: var(--ink); line-height: 1.6; }
+
+  /* ===== SVG diagram wrap ===== */
+  .diagram-wrap {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    overflow-x: auto;
+  }
+  .diagram-wrap svg { max-width: 100%; height: auto; }
+
+  /* ===== Footer ===== */
+  footer.report-foot {
+    background: var(--ivory);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px 22px;
+    font-size: 12px;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+  footer.report-foot strong { color: var(--navy); }
+  footer.report-foot a {
+    color: var(--navy-light);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--navy-light);
+  }
+  footer.report-foot ul { padding-left: 20px; margin-top: 6px; }
+
+  /* ===== Mobile ===== */
+  @media (max-width: 720px) {
+    body { font-size: 14px; padding: 12px 8px; }
+    header.report-head { padding: 24px 20px; }
+    header.report-head h1 { font-size: 21px; }
+    .engines { grid-template-columns: 1fr; }
+    .detail-grid { grid-template-columns: 1fr; }
+    .matrix { font-size: 11px; }
+    .matrix th, .matrix td { padding: 6px 8px; }
+  }
+
+  /* ===== 戻るボタン（Mits Reports 全レポート必須・削除禁止） ===== */
+  .back-to-list {
+    position: fixed; top: 12px; left: 12px; z-index: 1000;
+    background: var(--ivory); color: var(--navy);
+    padding: 8px 16px; font-size: 12px; border-radius: 4px;
+    text-decoration: none; letter-spacing: 0.05em;
+    border: 1px solid var(--navy);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  .back-to-list:hover { background: var(--gold); color: var(--navy); }
+  @media print { .back-to-list { display: none; } }
+
+  /* ===== 本レポート用 追加 ===== */
+  .code-block{background:var(--navy);color:#e8e4d8;border-radius:4px;padding:14px 18px;margin:12px 0;
+    font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;line-height:1.9;overflow-x:auto}
+  .warn-box{background:#fdf6e6;border-left:5px solid var(--warn,#c89020);border-radius:4px;
+    padding:14px 18px;margin:14px 0;font-size:14px}
+  ul.plain-list{padding-left:22px;margin:10px 0}
+  ul.plain-list li{margin-bottom:8px}
+  ul.check-list{list-style:none;padding:0;margin:10px 0}
+  ul.check-list li{padding:8px 0 8px 30px;border-bottom:1px dashed var(--line);position:relative;font-size:14px}
+  ul.check-list li::before{content:"☐";position:absolute;left:6px;top:7px;color:var(--gold);font-weight:700}
+  .timeline .tl-item{position:relative;padding:6px 0 16px 12px;font-size:14px;line-height:1.7}
+  .timeline .tl-item::before{content:"";position:absolute;left:-36px;top:10px;width:14px;height:14px;
+    border-radius:50%;background:var(--gold);border:3px solid var(--paper)}
+  .timeline .tl-item strong{color:var(--navy)}
+</style>
+</head>
+<body>
+<!-- 戻るボタン（Mits Reports 全レポート必須・削除禁止） -->
+<a class="back-to-list" href="index.html">← Mits Reports 一覧に戻る</a>
+<div class="container">
+
+  <header class="report-head">
+    <span class="tag">REPORT</span>
+    <h1>「%name% さま」が空欄で届く<br>― 置き換え文字の事故は、名前の間違いではない</h1>
+    <div class="meta">
+      発行: 2026-08-15 / 対象: 配信スタンドでステップメール・リマインダを回している人<br>
+      検証: 配信アカウント1つ・メールとLINE 710通の全通点検 / 実配信テスト / 公式ヘルプ照合
+    </div>
+  </header>
+
+  <section>
+    <h2>結論先頭</h2>
+    <div class="conclusion">
+      <p class="lead">未置換で届く原因の大半は「文字の書き間違い」ではなく、「その読者がどの経路で登録されたか」です。</p>
+      <ul>
+        <li>置き換え文字には、<strong>誰にでも効くもの</strong>と、<strong>特定の登録経路を通った人にしか効かないもの</strong>の2種類がある</li>
+        <li>効く文字は値が無ければ<strong>空欄</strong>になる。効かない文字は<strong>文字がそのまま</strong>残る。この差が唯一の見分け方</li>
+        <li>テスト送信では判定できない。テスト宛先はイベント予約を持たないので、正規の文字まで未置換で出る</li>
+        <li>配信済みのメールは後から直せない。<strong>配信待ちのうちに潰す</strong>のが唯一の対処</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>何が起きるか</h2>
+    <p>顧客に届いたメールが、こうなります。</p>
+    <div class="code-block">▼開催日時<br>
+━━━━━━━━━━━━━━<br>
+%event_schedule%<br>
+━━━━━━━━━━━━━━<br>
+<br>
+▼参加URL<br>
+%event_url%</div>
+    <p>宛名が消えて1行目が空白で始まる、開催日時の欄が空欄のまま届く、というのも同じ事故です。顧客から見ると「日時が書いていない案内」になるので、問い合わせが来ます。</p>
+    <p>実例として、ある配信アカウントのメールとLINEを全部で710通点検したところ、<strong>103通</strong>に未置換になる文字が入っていました。そのうち101通はこれから届く予約配信でした。</p>
+  </section>
+
+  <section>
+    <h2>真因：置き換え文字は「登録経路」に依存する</h2>
+    <p>配信スタンドの置き換え文字は、大きく2種類あります。</p>
+    <table class="matrix">
+      <thead>
+        <tr><th class="func">種類</th><th>例</th><th>効く条件</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="func">読者項目に紐づくもの</td><td>お名前・メールアドレス・姓・名・電話番号・配信基準日時</td><td>どの読者にも効く（値が空なら空欄）</td></tr>
+        <tr><td class="func">イベント（予約）に紐づくもの</td><td>イベント名・日程・会場・参加用URL・ミーティングID・キャンセルページURL</td><td><strong>イベント・予約機能を経由して登録された読者にだけ</strong>効く</td></tr>
+      </tbody>
+    </table>
+    <p>ここが落とし穴です。同じイベントの案内でも、申込フォームを「イベント機能」で作ったか、ファネル側の「自動ウェビナー」フォームで作ったかで、後者はイベント系の文字が一切効きません。<span class="status ok">✅確認済</span>（配信スタンド公式ヘルプに明記）</p>
+    <p>つまり、文面をいくら直しても、<strong>登録経路が違えば同じ事故が再発します</strong>。</p>
+  </section>
+
+  <section>
+    <h2>見分け方：空欄か、文字が残るか</h2>
+    <div class="conclusion">
+      <p class="lead">有効な文字は「空欄」になる。無効な文字は「文字のまま」出る。</p>
+    </div>
+    <p>実配信テストで並べて確認した結果です。<span class="status ok">✅確認済</span></p>
+    <table class="matrix">
+      <thead>
+        <tr><th class="func">書いた文字</th><th>届いた姿</th><th>判定</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="func">お名前・メールアドレス</td><td>値が入った</td><td><span class="status ok">✅ 有効</span></td></tr>
+        <tr><td class="func">姓・名・イベント参加日</td><td>空欄</td><td><span class="status ok">✅ 有効</span>（値が無いだけ）</td></tr>
+        <tr><td class="func">一覧に存在しない自作の文字</td><td>文字がそのまま出た</td><td><span class="status ng">❌ 無効</span></td></tr>
+        <tr><td class="func">書式指定つき（縦棒で日付書式を指定）</td><td>「2026年8月14日 17:08」と整形された</td><td><span class="status ok">✅ 有効</span></td></tr>
+      </tbody>
+    </table>
+    <div class="warn-box">
+      <strong>テスト送信の落とし穴。</strong>テスト送信の宛先はイベント予約を持っていません。そのため<strong>正規のイベント系の文字も未置換のまま出ます</strong>。ここで「文字が残った＝無効だ」と判断すると、正しい文字を消してしまいます。実際にこの判定を誤り、有効な文字を全部消してから公式ヘルプで気づきました。判定するなら、実際に予約を持つ読者宛の配信結果を見るしかありません。
+    </div>
+  </section>
+
+  <section>
+    <h2>どの一覧を正本にするか</h2>
+    <p>置き換え文字の一覧は、複数の場所に、違う内容で存在します。ここを間違えると判断ごと狂います。</p>
+    <table class="matrix">
+      <thead>
+        <tr><th class="func">情報源</th><th>信頼度</th><th>理由</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="func">管理画面の「置き換え文字」ボタン</td><td><span class="status ok">✅ 正本</span></td><td>実際に使える基本項目がそのまま並ぶ</td></tr>
+        <tr><td class="func">公式ヘルプのイベント系一覧</td><td><span class="status ok">✅ 正本</span></td><td>管理画面に出ない条件付きの文字はここにしか無い</td></tr>
+        <tr><td class="func">開発者向けAPIが返す一覧</td><td><span class="status warn">⚠️ 参考</span></td><td>実配信で効かない文字も「使える」と返してくる</td></tr>
+        <tr><td class="func">過去の自社ドキュメント・AIの回答</td><td><span class="status ng">❌ 根拠にしない</span></td><td>出典のない文字が独り歩きしていることがある</td></tr>
+      </tbody>
+    </table>
+    <p>今回の調査で、社内の作業手順書に「この変数を使うこと」と書かれていた文字が、公式のどこにも存在しないことが分かりました。出典の記載が無いまま4ヶ月残り、それを見た担当が使い続けていました。<strong>手順書に置き換え文字を書くときは、必ず出典URLを添える</strong>のが再発防止になります。</p>
+  </section>
+
+  <section>
+    <h2>点検の手順</h2>
+    <div class="timeline">
+      <div class="tl-item"><strong>1. 全通を機械的に洗う</strong><br>目視で拾おうとしない。メールもLINEも、件名も本文も、`%〜%` の形をすべて抜き出して一覧にする。件数を数えてから直しに入る。</div>
+      <div class="tl-item"><strong>2. 正本の一覧と突き合わせる</strong><br>管理画面の一覧＋公式ヘルプのイベント系一覧。どちらにも無い文字は無効。</div>
+      <div class="tl-item"><strong>3. イベント系が使われている場合は登録経路を確認する</strong><br>そのシナリオの読者が、イベント・予約機能を通って入っているか。通っていなければイベント系は効かない。</div>
+      <div class="tl-item"><strong>4. 配信状態で仕分ける</strong><br>配信待ち・下書きは直せる。配信済みは直せない。直せるものから潰す。</div>
+      <div class="tl-item"><strong>5. 直したら投入後の本文を読み直す</strong><br>送った文字列と、システムが返してきた本文が一致しているかを1通ずつ確認する。改行コードが変わっていないかも見る。</div>
+      <div class="tl-item"><strong>6. 全通を取り直して再走査する</strong><br>直した気になっている分を潰すため、最後にもう一度ゼロから数える。</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>直し方の原則</h2>
+    <div class="conclusion">
+      <p class="lead">経路が混ざっているなら、置き換え文字より「直書き」が安全です。</p>
+    </div>
+    <ul class="plain-list">
+      <li><strong>イベント名</strong> — 直書きする。名前は年に何度も変わらない。</li>
+      <li><strong>開催日時</strong> — 読者ごとに違うなら読者項目の文字を使う。全員共通なら直書き。</li>
+      <li><strong>参加用URL</strong> — ここだけは分けて考える。全員が同じ部屋に入る形式なら直書き。予約枠ごとに別のURLが発行される個別相談の形式なら、絶対に直書きしてはいけない。全員を同じ部屋に集めることになり、空欄より悪い。</li>
+      <li><strong>事務局アドレス</strong> — 送信元の設定項目名を本文に書いても置き換わらない。アドレスをそのまま書く。</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>配信済みは直せない</h2>
+    <p>多くの配信スタンドは、送信中・配信済みのメッセージの更新を拒否します。実際に更新を試みると、こう返ります。<span class="status ok">✅確認済</span></p>
+    <div class="code-block">送信中または完了済みのメッセージは更新できません。</div>
+    <p>ここから導かれる運用は1つです。<strong>点検は「配信待ちがまだ多いうち」にやる。</strong>すでに送ってしまった分は、届いた人にとっては終わった話です。同じ文面が今後も使い回される雛形かどうかだけ確認して、雛形でなければ触らずに次へ進むほうが早い。</p>
+  </section>
+
+  <section>
+    <h2>ついでに直しておくと効くこと：管理名称</h2>
+    <p>今回の点検で、事故そのものより効いたのがこれでした。予約一覧の管理名称が記号だらけだと、点検も判断もできません。</p>
+    <table class="matrix">
+      <thead>
+        <tr><th class="func"></th><th>直す前</th><th>直した後</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="func">日程案内</td><td>日程通知 2026-08-22 A-0210日前</td><td>8/22 送信[10日前]｜9/1(火)18:00 の回｜…</td></tr>
+        <tr><td class="func">ステップ配信</td><td>v3 S4 mail</td><td>Day4 メール｜ワークシートを書く（内容が一言で分かる）</td></tr>
+      </tbody>
+    </table>
+    <p>記号は作った本人にしか読めません。「A-0210日前」は「A-02 の10日前」ですが、詰まっていると「210日前」に見えます。<strong>いつ送るのか・何を送るのか・誰向けかが、一覧の1行で読める</strong>ようにしておくと、次に点検する人（半年後の自分を含む）の作業時間が変わります。</p>
+  </section>
+
+  <section>
+    <h2>チェックリスト</h2>
+    <ul class="check-list">
+      <li>本文と件名から `%〜%` を全部抜き出して数えた</li>
+      <li>管理画面の一覧・公式ヘルプの一覧の2つと突き合わせた</li>
+      <li>イベント系を使っている場合、読者の登録経路を確認した</li>
+      <li>「文字が残った＝無効」とテスト送信だけで判断していない</li>
+      <li>配信待ちを先に直した</li>
+      <li>投入後の本文を読み直して確認した</li>
+      <li>最後に全通を取り直して再走査した</li>
+      <li>手順書に置き換え文字を書くときは出典URLを添えた</li>
+    </ul>
+  </section>
+
+  <footer class="report-foot">
+    <strong>出典</strong>
+    <ul>
+      <li>配信スタンド公式ヘルプ「メール・LINE配信で利用可能な置き換え文字」</li>
+      <li>配信スタンド公式ヘルプ「置き換え文字が置換されずに配信される条件」</li>
+      <li>実機検証：配信アカウント1つ・710通の全通走査／実配信テスト2回／配信済みメッセージの更新試行</li>
+    </ul>
+    <p>本レポートの数値は、2026年8月14日時点の1アカウントでの実測です。配信スタンドの仕様は変わることがあります。判断の前に、必ずご自身の管理画面の一覧を確認してください。</p>
+  </footer>
+
+</div>
+</body>
+</html>
