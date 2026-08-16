@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>カラオケ練習AI — 解析</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70; --sky:#6DA6C2;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06); --highlight:rgba(212,168,91,0.14);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); --highlight:rgba(212,168,91,0.18); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:24px 20px 100px; max-width:960px; margin:0 auto; }
+h1,h2,h3 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; }
+a { color:var(--gold); text-decoration:none; }
+a:hover { text-decoration:underline; }
+
+.hero { text-align:center; padding:20px 0 4px; }
+.hero h1 { font-size:28px; margin:0 0 6px; }
+.hero .tag { font-family:var(--mono); font-size:12px; color:var(--muted); }
+
+.card { margin:20px 0; padding:20px 22px; border-radius:14px; background:var(--card-bg); border:1px solid var(--line); }
+.card.accent { border-color:var(--gold); background:linear-gradient(135deg,rgba(212,168,91,0.10),rgba(122,155,126,0.05)); }
+.card h2 { font-size:16px; margin:0 0 12px; color:var(--gold); }
+.card p { font-size:13.5px; line-height:1.85; margin:8px 0; }
+.card .note { font-family:var(--mono); font-size:11px; color:var(--muted); line-height:1.7; }
+
+label { display:block; font-size:12.5px; font-weight:600; margin:14px 0 6px; }
+input[type=text], textarea, select {
+  width:100%; font-family:var(--sans); font-size:14px; padding:11px 13px;
+  border-radius:9px; border:1px solid var(--line); background:var(--bg); color:var(--fg); }
+textarea { min-height:70px; resize:vertical; line-height:1.7; }
+input[type=file] { width:100%; font-size:13px; padding:14px; border-radius:9px;
+  border:1px dashed var(--gold); background:var(--sub-bg); color:var(--fg); cursor:pointer; }
+
+.btn { font-family:var(--sans); font-size:14px; font-weight:600; cursor:pointer;
+  padding:13px 26px; border-radius:9px; border:1px solid var(--gold); background:var(--gold); color:#fff; transition:opacity 0.15s; }
+.btn:hover { opacity:0.86; }
+.btn:disabled { opacity:0.4; cursor:not-allowed; }
+.btn.ghost { background:transparent; color:var(--fg); border-color:var(--line); }
+
+.bar { height:9px; border-radius:999px; background:var(--line); overflow:hidden; margin:12px 0 6px; }
+.bar > i { display:block; height:100%; width:0%; background:var(--gold); transition:width 0.25s; }
+.bar-label { font-family:var(--mono); font-size:11.5px; color:var(--muted); }
+
+table { width:100%; border-collapse:collapse; margin:10px 0; font-size:13px; }
+th,td { padding:9px 11px; border:1px solid var(--line); text-align:left; line-height:1.65; }
+th { background:var(--sub-bg); font-weight:600; font-family:var(--mincho); font-size:12.5px; }
+td.num { font-family:var(--mono); text-align:right; white-space:nowrap; }
+td.delta { font-family:var(--mono); text-align:right; white-space:nowrap; font-weight:600; }
+.up { color:var(--sage); } .down { color:var(--rose); } .flat { color:var(--muted); }
+
+.group { margin:22px 0; }
+.group > h3 { font-size:15px; margin:0 0 6px; padding-bottom:7px; border-bottom:2px solid var(--gold); }
+.group.state > h3 { border-bottom-color:var(--sky); }
+.group.cant > h3 { border-bottom-color:var(--muted); }
+.group > .why { font-size:12.5px; color:var(--muted); line-height:1.8; margin:8px 0 4px; }
+
+.hist { margin:8px 0; padding:12px 15px; border-radius:10px; background:var(--card-bg); border:1px solid var(--line);
+  display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+.hist .h-song { font-family:var(--mincho); font-size:14px; font-weight:600; flex:1 1 auto; }
+.hist .h-date { font-family:var(--mono); font-size:11px; color:var(--muted); }
+.hist .h-memo { flex:1 1 100%; font-size:12.5px; color:var(--muted); line-height:1.7; }
+.hist .h-del { font-size:11px; color:var(--rose); cursor:pointer; border:1px solid var(--rose); background:transparent;
+  border-radius:6px; padding:4px 9px; }
+
+.must { margin:16px 0; padding:15px 19px; border-radius:12px; background:rgba(199,123,112,0.09); border-left:4px solid var(--rose); font-size:13px; line-height:1.85; }
+.good { margin:16px 0; padding:15px 19px; border-radius:12px; background:rgba(122,155,126,0.10); border-left:4px solid var(--sage); font-size:13px; line-height:1.85; }
+.hidden { display:none; }
+</style>
+<script src="./sync.js?v=7"></script>
+</head>
+<body>
+
+<div class="hero">
+  <h1>解析</h1>
+  <div class="tag">録音をブラウザの中だけで解析する — 声は外に出ません</div>
+</div>
+
+<div id="need-setup" class="card accent hidden">
+  <h2>先に個人IDを作ってください</h2>
+  <p>解析した結果を保存して前回と比べるには、個人IDが要ります。IDが無いと、この端末を消したときに記録が戻せません。</p>
+  <p style="margin-top:12px;">
+    <a class="btn" style="display:inline-block;" href="./setup.html">個人IDを作る</a>
+    <a class="btn ghost" style="display:inline-block;" href="./help.html">使い方を読む</a>
+  </p>
+</div>
+
+<div class="card">
+  <h2>録音を読み込む</h2>
+  <div class="good">
+    <strong>録音の条件を毎回そろえてください。</strong>ガイドボーカルは切る／伴奏は小さめ／イヤホンのマイクをスマホに直挿し。条件が変わると、歌が変わっていなくても数字が動きます。（<a href="./help.html#record">詳しく</a>）
+  </div>
+
+  <label for="file">録音ファイル（m4a / mp3 / wav / aac）</label>
+  <input type="file" id="file" accept="audio/*,.m4a,.mp3,.wav,.aac,.ogg,.flac">
+
+  <label for="song">曲名</label>
+  <input type="text" id="song" placeholder="例：大空と大地の中で" autocomplete="off">
+
+  <label for="memo">今回意識したこと（一行でよい）</label>
+  <textarea id="memo" placeholder="例：サビ前のブレスを深く取った"></textarea>
+
+  <div style="margin-top:18px;">
+    <button class="btn" id="run" disabled>解析する</button>
+  </div>
+
+  <div id="prog" class="hidden">
+    <div class="bar"><i id="prog-bar"></i></div>
+    <div class="bar-label" id="prog-label">準備中…</div>
+  </div>
+
+  <div id="err" class="must hidden"></div>
+</div>
+
+<div id="result" class="hidden"></div>
+
+<div class="card">
+  <h2>これまでの解析</h2>
+  <div id="history"></div>
+</div>
+
+<script src="./nav.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var KEY_PREFIX = 'karaoke-analysis:';
+
+  // ---- 軸の扱い ---------------------------------------------------------
+  // 2026-08-16 の校正（_wip/js_vs_python_calibration_20260816.md）に基づく。
+  // 合っていない軸を合っているように見せない、を最優先にする。
+  //   better: 'lower' = 小さいほど良い / 'higher' = 大きいほど良い / null = 良し悪しなし
+  var IMPROVE = [
+    { k:'crepe_intonation_cent',   label:'音程の安定',       unit:'cent', better:'lower',
+      hint:'正しい音からのズレ幅。小さいほど音程が合っている' },
+    { k:'vibrato_avg_extent_cent', label:'ビブラート幅',     unit:'cent', better:null,
+      hint:'揺れの大きさ。大きすぎると不安定に聞こえる' },
+    { k:'vibrato_avg_rate_hz',     label:'ビブラートの速さ', unit:'Hz',   better:null,
+      hint:'1秒あたりの揺れ回数' },
+    { k:'longtones_count',         label:'ロングトーン',     unit:'本',   better:'higher',
+      hint:'1秒以上伸ばした音の本数' },
+    { k:'short_note_ratio',        label:'短音率',           unit:'',     better:'lower',
+      hint:'ぶつ切りの音の割合。高いとフレーズが繋がっていない', pct:true }
+  ];
+
+  var STATE = [
+    { k:'depth_alpha_ratio',     label:'声の深み',       unit:'dB', hint:'低いほど太く落ち着いた響き' },
+    { k:'hnr_db',                label:'かすれにくさ',   unit:'dB', hint:'高いほど息漏れが少ない' },
+    { k:'rms_stdev_per_sec_db',  label:'抑揚',           unit:'dB', hint:'大きいほど強弱の幅がある' },
+    { k:'mean_hz_voiced',        label:'平均の高さ',     unit:'Hz', hint:'その曲で出していた声の高さの平均' },
+    { k:'avg_cent_variation',    label:'音の移り変わり', unit:'cent', hint:'隣り合う音の跳び幅' },
+    { k:'total_notes',           label:'音の数',         unit:'個', hint:'区切って数えた音の総数' }
+  ];
+
+  var CANT = [
+    ['音域（最低音・最高音）', '伴奏が少しでも残っていると、その音を声と取り違えます。誤った音域を出すより出さない方がよいと判断しました。伴奏を完全に切って録ると測れるようになる見込みです。'],
+    ['テンポ（BPM）', '拍を追う仕組みがブラウザ版には入っていません。'],
+    ['jitter・shimmer（声の細かい揺らぎ）', 'パソコン側の解析とは<strong>別の量</strong>を測ってしまうため、同じ名前で出すと判断を誤ります。']
+  ];
+
+  // ---- 小道具 -----------------------------------------------------------
+  var $ = function (id) { return document.getElementById(id); };
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+    });
+  }
+  function fmt(v, pct) {
+    if (v === null || v === undefined || (typeof v === 'number' && !isFinite(v))) return '—';
+    if (typeof v !== 'number') return esc(v);
+    if (pct) return (v * 100).toFixed(1) + '%';
+    return Math.abs(v) >= 100 ? v.toFixed(0) : v.toFixed(2);
+  }
+  function todayStr() {
+    var d = new Date();
+    function p(n) { return (n < 10 ? '0' : '') + n; }
+    return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+  }
+
+  function loadAll() {
+    var out = [];
+    try {
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (!k || k.indexOf(KEY_PREFIX) !== 0) continue;
+        try {
+          var rec = JSON.parse(localStorage.getItem(k));
+          if (rec && rec.values) { rec._key = k; out.push(rec); }
+        } catch (e) {}
+      }
+    } catch (e) {}
+    out.sort(function (a, b) { return String(b.at).localeCompare(String(a.at)); });
+    return out;
+  }
+
+  function prevOfSong(song, exceptKey) {
+    var all = loadAll();
+    for (var i = 0; i < all.length; i++) {
+      if (all[i].song === song && all[i]._key !== exceptKey) return all[i];
+    }
+    return null;
+  }
+
+  // ---- 結果の描画 -------------------------------------------------------
+  function deltaCell(spec, now, before) {
+    if (before === null || before === undefined || now === null || now === undefined) {
+      return '<td class="delta flat">—</td>';
+    }
+    var d = now - before;
+    var shown = (d > 0 ? '+' : '') + fmt(d, spec.pct);
+    var cls = 'flat';
+    if (Math.abs(d) > 1e-9 && spec.better) {
+      var improved = (spec.better === 'lower') ? d < 0 : d > 0;
+      cls = improved ? 'up' : 'down';
+    }
+    return '<td class="delta ' + cls + '">' + shown + '</td>';
+  }
+
+  function tableFor(list, values, prev) {
+    var rows = list.map(function (s) {
+      var now = values[s.k];
+      var before = prev ? prev.values[s.k] : null;
+      return '<tr>' +
+        '<td><strong>' + esc(s.label) + '</strong>' +
+          (s.unit ? ' <span class="note">' + esc(s.unit) + '</span>' : '') +
+          '<br><span class="note">' + s.hint + '</span></td>' +
+        '<td class="num">' + fmt(now, s.pct) + '</td>' +
+        '<td class="num">' + (before === undefined || before === null ? '—' : fmt(before, s.pct)) + '</td>' +
+        deltaCell(s, now, before) +
+      '</tr>';
+    }).join('');
+    return '<table><thead><tr><th>項目</th><th style="width:90px;">今回</th><th style="width:90px;">前回</th><th style="width:90px;">変化</th></tr></thead><tbody>' + rows + '</tbody></table>';
+  }
+
+  function renderResult(rec) {
+    var prev = prevOfSong(rec.song, rec._key);
+    var head = '<div class="card accent"><h2>' + esc(rec.song || '（曲名なし）') + '</h2>' +
+      '<p class="note">' + esc(rec.at) + ' ／ ' + esc(rec.values.duration_mmss || '') +
+      ' ／ 解析にかかった時間 ' + Math.round((rec.values._elapsed_ms_wall || 0) / 100) / 10 + ' 秒</p>' +
+      (rec.memo ? '<p>意識したこと：' + esc(rec.memo) + '</p>' : '') +
+      (prev ? '<p class="note">前回（' + esc(prev.at) + '）と比べています。</p>'
+            : '<p class="note">この曲は初めてです。次に同じ曲を解析すると変化が出ます。</p>') +
+      '</div>';
+
+    var g1 = '<div class="group"><h3>🟢 改善のものさし</h3>' +
+      '<p class="why">前回より良くなっていれば、その練習は効いたと言えます。色は良い方向に動いたかどうかを表します。</p>' +
+      tableFor(IMPROVE, rec.values, prev) + '</div>';
+
+    var g2 = '<div class="group state"><h3>🔵 いまの声の状態</h3>' +
+      '<p class="why">上げにいく数字ではありません。いまの立ち位置を知るためのものです。</p>' +
+      tableFor(STATE, rec.values, prev) + '</div>';
+
+    var g3 = '<div class="group cant"><h3>⚪ この解析では測っていないもの</h3>' +
+      '<p class="why">正しく測れないと分かっているものは、出しません。間違った数字を信じて練習を変える方が損だからです。</p><ul>' +
+      CANT.map(function (c) { return '<li style="font-size:13px;line-height:1.85;margin:6px 0;"><strong>' + c[0] + '</strong> — ' + c[1] + '</li>'; }).join('') +
+      '</ul></div>';
+
+    var note = '<div class="card"><p class="note">' +
+      'この数字はブラウザで計算したものです。パソコンで動かしている解析とは作りが違うため、' +
+      '<strong>同じこのページで測った回どうし</strong>を比べてください。' +
+      '見本ページ（<a href="./measure.html">実測</a>・<a href="./profile.html">課題</a>）の数値とは物差しが揃っていません。' +
+      '</p></div>';
+
+    $('result').innerHTML = head + g1 + g2 + g3 + note;
+    $('result').classList.remove('hidden');
+    $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function renderHistory() {
+    var all = loadAll();
+    if (!all.length) {
+      $('history').innerHTML = '<p class="note">まだ解析していません。上で録音を読み込んでください。</p>';
+      return;
+    }
+    $('history').innerHTML = all.map(function (r) {
+      return '<div class="hist">' +
+        '<span class="h-song">' + esc(r.song || '（曲名なし）') + '</span>' +
+        '<span class="h-date">' + esc(r.at) + '</span>' +
+        '<button class="h-del" data-key="' + esc(r._key) + '">消す</button>' +
+        (r.memo ? '<span class="h-memo">' + esc(r.memo) + '</span>' : '') +
+      '</div>';
+    }).join('');
+
+    Array.prototype.forEach.call($('history').querySelectorAll('.h-del'), function (b) {
+      b.addEventListener('click', function () {
+        var k = b.getAttribute('data-key');
+        if (!confirm('この回の解析結果を消します。元に戻せません。\n\n消しますか？')) return;
+        try { localStorage.removeItem(k); } catch (e) {}
+        renderHistory();
+      });
+    });
+  }
+
+  // ---- 解析の実行 -------------------------------------------------------
+  var fileEl = $('file'), songEl = $('song'), memoEl = $('memo'), runEl = $('run');
+
+  function refreshRunState() {
+    runEl.disabled = !(fileEl.files && fileEl.files.length);
+  }
+  fileEl.addEventListener('change', function () {
+    refreshRunState();
+    if (!songEl.value && fileEl.files && fileEl.files[0]) {
+      songEl.value = fileEl.files[0].name.replace(/\.[^.]+$/, '');
+    }
+  });
+
+  function showErr(msg) {
+    $('err').innerHTML = msg;
+    $('err').classList.remove('hidden');
+  }
+
+  var startedAt = 0;   // 解析にかかった時間は engine 任せにせずページ側で測る
+                       // （ファイル読み込み・デコードも含めた、利用者が待つ実時間）
+
+  runEl.addEventListener('click', function () {
+    var f = fileEl.files && fileEl.files[0];
+    if (!f) return;
+    startedAt = Date.now();
+    $('err').classList.add('hidden');
+    $('prog').classList.remove('hidden');
+    $('prog-bar').style.width = '2%';
+    $('prog-label').textContent = '音源を読み込んでいます…';
+    runEl.disabled = true;
+
+    var reader = new FileReader();
+    reader.onerror = function () {
+      showErr('ファイルを読み込めませんでした。別のファイルで試してください。');
+      runEl.disabled = false;
+    };
+    reader.onload = function () {
+      var Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) { showErr('このブラウザは音声の読み込みに対応していません。'); runEl.disabled = false; return; }
+      var ctx = new Ctx();
+      ctx.decodeAudioData(reader.result, function (buf) {
+        $('prog-label').textContent = '解析しています…';
+        var sr = buf.sampleRate;
+        var pcm;
+        if (buf.numberOfChannels > 1) {
+          var a = buf.getChannelData(0), b = buf.getChannelData(1);
+          pcm = new Float32Array(a.length);
+          for (var i = 0; i < a.length; i++) pcm[i] = (a[i] + b[i]) / 2;
+        } else {
+          pcm = new Float32Array(buf.getChannelData(0));
+        }
+        try { ctx.close(); } catch (e) {}
+        runWorker(pcm, sr);
+      }, function () {
+        showErr('この音源を読み込めませんでした。m4a / mp3 / wav をお試しください。');
+        runEl.disabled = false;
+        $('prog').classList.add('hidden');
+      });
+    };
+    reader.readAsArrayBuffer(f);
+  });
+
+  function runWorker(pcm, sr) {
+    var w;
+    try { w = new Worker('./analyzer.worker.js'); }
+    catch (e) { showErr('解析プログラムを起動できませんでした：' + esc(String(e))); runEl.disabled = false; return; }
+
+    w.onmessage = function (e) {
+      var d = e.data || {};
+      if (d.type === 'progress') {
+        $('prog-bar').style.width = Math.max(2, Math.round((d.fraction || 0) * 100)) + '%';
+        if (d.message) $('prog-label').textContent = d.message;
+        return;
+      }
+      if (d.type === 'error') {
+        showErr('解析中に問題が起きました。<br><span class="note">' + esc(d.error) + '</span>');
+        runEl.disabled = false;
+        $('prog').classList.add('hidden');
+        w.terminate();
+        return;
+      }
+      if (d.type === 'done') {
+        $('prog-bar').style.width = '100%';
+        $('prog-label').textContent = '完了';
+        save(d.result);
+        runEl.disabled = false;
+        w.terminate();
+      }
+    };
+    w.onerror = function (ev) {
+      showErr('解析プログラムを読み込めませんでした：' + esc(ev.message || ''));
+      runEl.disabled = false;
+      $('prog').classList.add('hidden');
+    };
+    w.postMessage({ pcm: pcm, sampleRate: sr, opts: {} }, [pcm.buffer]);
+  }
+
+  function save(result) {
+    // 表示する軸だけ残す。全部入れると保存領域を食う。
+    var keep = {};
+    IMPROVE.concat(STATE).forEach(function (s) { keep[s.k] = result[s.k]; });
+    keep.duration_mmss = result.duration_mmss;
+    keep.duration_seconds = result.duration_seconds;
+    keep._elapsed_ms_wall = startedAt ? (Date.now() - startedAt) : 0;
+    keep._engine = (result._engine_meta && result._engine_meta.version) || '';
+
+    var rec = {
+      song: (songEl.value || '').trim() || '（曲名なし）',
+      at: todayStr() + ' ' + new Date().toTimeString().slice(0, 5),
+      memo: (memoEl.value || '').trim(),
+      values: keep
+    };
+    var key = KEY_PREFIX + todayStr() + '_' + Date.now();
+    try {
+      localStorage.setItem(key, JSON.stringify(rec));
+    } catch (e) {
+      showErr('結果を保存できませんでした（保存領域がいっぱいの可能性があります）。古い解析を消してから試してください。');
+    }
+    rec._key = key;
+    renderResult(rec);
+    renderHistory();
+    memoEl.value = '';
+  }
+
+  // ---- 起動 -------------------------------------------------------------
+  var fam = window.karaokefamily;
+  if (!fam || !fam.isSet()) $('need-setup').classList.remove('hidden');
+  refreshRunState();
+  renderHistory();
+})();
+</script>
+</body>
+</html>

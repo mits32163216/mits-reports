@@ -69,6 +69,7 @@ footer { margin-top:40px; padding-top:20px; border-top:1px dashed var(--line); f
 footer a { color:var(--gold); }
 @media (max-width:600px){ body { padding:20px 16px 90px; } }
 </style>
+<script src="./sync.js?v=7"></script>
 </head>
 <body>
 
@@ -189,8 +190,8 @@ footer a { color:var(--gold); }
   //  - myp-watched:<vid>              boolean（既存・後方互換で温存）
   //  - myp-watched-date:<vid>         "YYYY-MM-DD"（チェックON時に new Date() で記録・上書き）
   //  - karaoke-watch-log:<YYYY-MM-DD> JSON配列 [vid,...]（日付逆引き・plan/success と共有）
-  var PREFIX = 'myp-watched:';
-  var DATE_PREFIX = 'myp-watched-date:';
+  var PREFIX = 'karaoke-watched:';
+  var DATE_PREFIX = 'karaoke-watched-date:';
   var LOG_PREFIX = 'karaoke-watch-log:';
 
   function todayStr() {

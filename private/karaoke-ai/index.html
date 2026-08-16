@@ -74,6 +74,7 @@ a { color:var(--gold); text-decoration:none; }
 
 footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
 </style>
+<script src="./sync.js?v=7"></script>
 </head>
 <body>
 
@@ -81,6 +82,16 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
   <h1>🎤 カラオケ練習AI</h1>
   <div class="tag">demucs 分離 × pypYIN 9軸 × 原曲アーティスト実測基準の偏差値 × MYP 129本カリキュラム</div>
   <div class="zero">🆕 v1 ／ 2026-07-17 をゼロ地点に再構築</div>
+</div>
+
+<div id="first-run" style="display:none; margin:22px 0; padding:18px 22px; border-radius:14px;
+  background:linear-gradient(135deg,rgba(212,168,91,0.14),rgba(109,166,194,0.07)); border:1px solid var(--gold);">
+  <h2 style="font-size:16px; margin:0 0 8px; color:var(--gold);">はじめての方へ</h2>
+  <p style="font-size:13.5px; line-height:1.85; margin:6px 0;">自分の歌を録音して読み込ませると、声を数値にして前回との変化を出します。録音のしかたと使い方を先に読んでください。</p>
+  <p style="margin:12px 0 0;">
+    <a href="./help.html" style="display:inline-block; margin-right:8px; padding:10px 18px; border-radius:9px; background:var(--gold); color:#fff; font-size:13.5px; font-weight:600;">使い方を読む</a>
+    <a href="./setup.html" style="display:inline-block; padding:10px 18px; border-radius:9px; border:1px solid var(--line); color:var(--fg); font-size:13.5px; font-weight:600;">個人IDを作る</a>
+  </p>
 </div>
 
 <section class="status">
@@ -166,9 +177,18 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 
 <script src="./nav.js"></script>
 <script>
+/* 個人ID 未設定の人にだけ、はじめての方へカードを出す */
+(function () {
+  var el = document.getElementById('first-run');
+  if (!el) return;
+  var fam = window.karaokefamily;
+  if (!fam || !fam.isSet()) el.style.display = 'block';
+})();
+</script>
+<script>
 // 視聴済み数を localStorage から反映
 (function(){
-  var n = Object.keys(localStorage).filter(function(k){ return k.indexOf('myp-watched:')===0; }).length;
+  var n = Object.keys(localStorage).filter(function(k){ return k.indexOf('karaoke-watched:')===0; }).length;
   var el = document.getElementById('watched-num');
   if (el) el.textContent = n + ' / 129';
 })();

@@ -405,6 +405,7 @@ td[data-hidden="1"], th[data-hidden="1"] { display: none; }
 /* 鍵盤の汚染バーは輪郭を dashed に */
 .kb-bar.kb-contaminated rect { stroke: currentColor; stroke-dasharray: 2 2; stroke-opacity: 0.5; }
 </style>
+<script src="./sync.js?v=7"></script>
 </head>
 <body>
 <a id="top"></a>
@@ -1986,5 +1987,24 @@ td[data-hidden="1"], th[data-hidden="1"] { display: none; }
 </script>
 
 <script src="./nav.js"></script>
+<script>
+/* 個人ID が 'mits' 以外の人には「このページは見本」と明示する。
+ * 実測ページは Python パイプラインで Mits の数値を焼き込んだ静的ページなので、
+ * 他の人が自分の記録と取り違えないようにする。 */
+(function () {
+  var fam = window.karaokefamily;
+  if (fam && fam.id() === 'mits') return;
+  var d = document.createElement('div');
+  d.style.cssText = 'position:sticky;top:44px;z-index:880;margin:0 0 14px;padding:10px 16px;' +
+    'background:rgba(109,166,194,0.14);border-left:4px solid #6DA6C2;border-radius:0 8px 8px 0;' +
+    'font-size:12.5px;line-height:1.7;font-family:"Hiragino Sans","游ゴシック",sans-serif;';
+  d.innerHTML = 'ℹ️ このページの数値は <strong>見本（Mits の実測）</strong>です。' +
+    'あなた自身の結果は <a href="./analyze.html" style="color:#6DA6C2;font-weight:600;">解析ページ</a> に出ます。';
+  var nav = document.querySelector('.kai-nav');
+  if (nav && nav.nextSibling) nav.parentNode.insertBefore(d, nav.nextSibling);
+  else document.body.insertBefore(d, document.body.firstChild);
+})();
+</script>
+
 </body>
 </html>

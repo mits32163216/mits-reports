@@ -5,6 +5,7 @@
 (function () {
   var NAV = [
     { file: "index.html",   key: "index",   emoji: "🏠", label: "ホーム",  sub: "" },
+    { file: "analyze.html", key: "analyze", emoji: "🎙", label: "解析",    sub: "録音をかける" },
     { file: "measure.html", key: "measure", emoji: "📊", label: "実測",    sub: "9軸ダッシュ" },
     { file: "profile.html", key: "profile", emoji: "🎯", label: "課題",    sub: "声質偏差値" },
     { file: "success.html", key: "success", emoji: "✅", label: "検証",    sub: "サクセスFile" },
@@ -12,6 +13,8 @@
     { file: "log.html",     key: "log",     emoji: "📔", label: "日記",    sub: "練習ログ" },
     { file: "basics.html",  key: "basics",  emoji: "🌱", label: "基礎",    sub: "おすすめ順" },
     { file: "videos.html",  key: "videos",  emoji: "🎬", label: "学ぶ",    sub: "全動画" },
+    { file: "help.html",    key: "help",    emoji: "❓", label: "使い方",  sub: "はじめに" },
+    { file: "setup.html",   key: "setup",   emoji: "⚙️", label: "設定",    sub: "個人ID" },
     { file: "junbi-kikan/index.html", key: "junbi", emoji: "🗄", label: "準備期間", sub: "旧サイト" },
   ];
 
@@ -85,7 +88,8 @@
   var prefix = (path.indexOf("/junbi-kikan/") >= 0) ? "../" : "./";
 
   var linksHtml = NAV.map(function (n) {
-    var cls = (n.key === current ? "kn-current " : "") + (n.key === "junbi" ? "kn-junbi" : "");
+    var util = (n.key === "junbi" || n.key === "help" || n.key === "setup");
+    var cls = (n.key === current ? "kn-current " : "") + (util ? "kn-junbi" : "");
     var sub = n.sub ? '<span class="kn-sub">' + n.sub + "</span>" : "";
     // 準備期間だけは常に junbi-kikan/index.html 相対、他は現在ディレクトリ相対
     var href;

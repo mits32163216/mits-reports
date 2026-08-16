@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>カラオケ練習AI — 設定（個人ID）</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70; --sky:#6DA6C2;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06); --highlight:rgba(212,168,91,0.14);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); --highlight:rgba(212,168,91,0.18); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:24px 20px 100px; max-width:760px; margin:0 auto; }
+h1,h2,h3 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; }
+a { color:var(--gold); text-decoration:none; }
+a:hover { text-decoration:underline; }
+
+.hero { text-align:center; padding:20px 0 4px; }
+.hero h1 { font-size:26px; margin:0 0 6px; }
+.hero .tag { font-family:var(--mono); font-size:12px; color:var(--muted); }
+
+.card { margin:22px 0; padding:20px 22px; border-radius:14px; background:var(--card-bg); border:1px solid var(--line); }
+.card.now { border-color:var(--gold); background:linear-gradient(135deg,rgba(212,168,91,0.10),rgba(122,155,126,0.05)); }
+.card h2 { font-size:16px; margin:0 0 12px; color:var(--gold); }
+.card p { font-size:13.5px; line-height:1.8; margin:8px 0; }
+.card .note { font-family:var(--mono); font-size:11px; color:var(--muted); line-height:1.7; }
+
+.idbox { font-family:var(--mono); font-size:15px; letter-spacing:0.08em; padding:12px 14px; border-radius:9px;
+  background:var(--sub-bg); border:1px dashed var(--gold); text-align:center; margin:10px 0; word-break:break-all; }
+
+.btns { display:flex; flex-wrap:wrap; gap:10px; margin:14px 0 4px; }
+.btn { font-family:var(--sans); font-size:13.5px; font-weight:600; cursor:pointer;
+  padding:11px 18px; border-radius:9px; border:1px solid var(--gold); background:var(--gold); color:#fff; transition:all 0.15s; }
+.btn:hover { opacity:0.86; }
+.btn.ghost { background:transparent; color:var(--fg); border-color:var(--line); }
+.btn.ghost:hover { border-color:var(--gold); }
+.btn.danger { background:transparent; color:var(--rose); border-color:var(--rose); }
+
+.urlrow { display:flex; gap:8px; margin:10px 0; }
+.urlrow input { flex:1 1 auto; min-width:0; font-family:var(--mono); font-size:12px; padding:10px 12px;
+  border-radius:9px; border:1px solid var(--line); background:var(--bg); color:var(--fg); }
+
+.steps { counter-reset:s; padding:0; margin:12px 0 0; list-style:none; }
+.steps li { counter-increment:s; position:relative; padding:8px 0 8px 34px; font-size:13.5px; line-height:1.8; border-bottom:1px solid var(--line); }
+.steps li:last-child { border-bottom:0; }
+.steps li::before { content:counter(s); position:absolute; left:0; top:9px; width:22px; height:22px; border-radius:50%;
+  background:var(--gold); color:#fff; font-family:var(--mono); font-size:11px; display:flex; align-items:center; justify-content:center; }
+
+.warn { margin:22px 0; padding:14px 18px; border-radius:11px; background:rgba(199,123,112,0.09); border-left:3px solid var(--rose); font-size:13px; line-height:1.8; }
+.ok { margin:22px 0; padding:14px 18px; border-radius:11px; background:rgba(122,155,126,0.10); border-left:3px solid var(--sage); font-size:13px; line-height:1.8; }
+.toast { position:fixed; left:50%; bottom:26px; transform:translateX(-50%); padding:11px 20px; border-radius:999px;
+  background:var(--navy); color:var(--ivory); font-size:13px; opacity:0; pointer-events:none; transition:opacity 0.2s; z-index:1200; }
+.toast.on { opacity:0.96; }
+</style>
+<script src="./sync.js?v=7"></script>
+</head>
+<body>
+
+<div class="hero">
+  <h1>設定</h1>
+  <div class="tag">個人ID — 記録を自分だけのものにする</div>
+</div>
+
+<div id="state-card"></div>
+
+<div class="card">
+  <h2>個人IDとは</h2>
+  <p>このサイトは誰でも開けますが、<strong>練習の記録は個人IDごとに完全に分かれています</strong>。自分のIDを知っている人だけが自分の記録を見られます。IDは16桁のランダムな文字列で、他人が当てることはできません。</p>
+  <p>IDを作ると、記録がこの端末の中だけでなくクラウドにも保存されます。スマホで解析してパソコンで見返す、といった使い方ができます。</p>
+  <div class="note">
+    保存されるもの：解析した数値・視聴チェック・練習メモ<br>
+    保存されないもの：<strong>音源そのもの</strong>（解析はブラウザの中だけで終わり、声はどこにも送られません）
+  </div>
+</div>
+
+<div class="card">
+  <h2>別の端末で同じ記録を見る</h2>
+  <ol class="steps">
+    <li>上の「自分のURLをコピー」を押す</li>
+    <li>そのURLを自分宛にメール／LINE などで送る</li>
+    <li>別の端末でそのURLを開く（1回開けば以後は普通に開くだけでよい）</li>
+  </ol>
+</div>
+
+<div class="card">
+  <h2>受け取ったURL・IDを入れる</h2>
+  <p>誰かからURLをもらった場合は、そのURLを開けば設定は終わりです。うまく開けないときは、URLかID（16桁）をここに貼ってください。</p>
+  <div class="urlrow">
+    <input id="adopt-input" type="text" placeholder="URL もしくは 16桁のID" autocomplete="off" spellcheck="false">
+    <button class="btn" id="adopt-btn">切り替える</button>
+  </div>
+  <div class="note">切り替えると、<strong>この端末に残っている前のIDの記録は消えます</strong>（クラウド側の前のIDの記録は残ります）。</div>
+</div>
+
+<div class="warn">
+  <strong>IDは無くさないでください。</strong>IDを控えていない状態でこの端末のデータを消すと、クラウドにある記録に辿り着けなくなります。復旧する手段はありません。上のURLをメモ帳やメールに保存しておいてください。
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="./nav.js"></script>
+<script>
+(function () {
+  var fam = window.karaokefamily;
+  var box = document.getElementById('state-card');
+  var toastEl = document.getElementById('toast');
+  var toastTimer = null;
+
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.classList.remove('on'); }, 2000);
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(
+        function () { toast('コピーしました'); },
+        function () { toast('コピーできませんでした（長押しで選択してください）'); }
+      );
+      return;
+    }
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); toast('コピーしました'); }
+    catch (e) { toast('コピーできませんでした'); }
+    document.body.removeChild(ta);
+  }
+
+  if (!fam) {
+    box.innerHTML = '<div class="card"><h2>読み込めませんでした</h2>' +
+      '<p>同期スクリプトが読み込めていません。ページを再読み込みしてください。</p></div>';
+    return;
+  }
+
+  function renderUnset() {
+    box.innerHTML =
+      '<div class="card now">' +
+        '<h2>まだ個人IDがありません</h2>' +
+        '<p>いまは記録がこの端末の中だけに保存されています。個人IDを作ると、記録がクラウドにも保存され、別の端末からも同じ記録を見られるようになります。</p>' +
+        '<div class="btns"><button class="btn" id="btn-start">自分のIDを作って始める</button></div>' +
+      '</div>';
+    document.getElementById('btn-start').addEventListener('click', function () {
+      fam.adopt(fam.generate());
+    });
+  }
+
+  function renderSet() {
+    var url = fam.myUrl();
+    box.innerHTML =
+      '<div class="card now">' +
+        '<h2>設定できています</h2>' +
+        '<p>あなたの個人IDは下記です。このURLを開けば、どの端末でも同じ記録が出ます。</p>' +
+        '<div class="idbox">' + fam.id() + '</div>' +
+        '<div class="urlrow"><input id="my-url" type="text" readonly value="' + url + '"></div>' +
+        '<div class="btns">' +
+          '<button class="btn" id="btn-copy">自分のURLをコピー</button>' +
+          '<button class="btn ghost" id="btn-new-other">別の人のURLを発行</button>' +
+          '<button class="btn danger" id="btn-reset">この端末の設定を外す</button>' +
+        '</div>' +
+        '<div class="note">「別の人のURLを発行」は、家族や友人に渡すための<strong>まっさらな新しいID</strong>を作ります。この端末の設定は変わりません。</div>' +
+      '</div>';
+
+    document.getElementById('my-url').addEventListener('focus', function () { this.select(); });
+    document.getElementById('btn-copy').addEventListener('click', function () { copyText(fam.myUrl()); });
+
+    document.getElementById('btn-new-other').addEventListener('click', function () {
+      var newUrl = fam.urlFor(fam.generate());
+      copyText(newUrl);
+      var d = document.createElement('div');
+      d.className = 'ok';
+      d.innerHTML = '新しいURLを発行してコピーしました。この人に渡してください。<br>' +
+        '<span style="font-family:var(--mono);font-size:11px;word-break:break-all;">' + newUrl + '</span>';
+      box.appendChild(d);
+    });
+
+    document.getElementById('btn-reset').addEventListener('click', function () {
+      if (!confirm('この端末から個人IDを外します。\n\nクラウド側の記録は残るので、URLを控えてあれば戻せます。\n控えていない場合は二度と開けません。\n\n外しますか？')) return;
+      try { localStorage.removeItem('karaokecfg-family'); } catch (e) {}
+      location.href = './setup.html';
+    });
+  }
+
+  function extractId(raw) {
+    var s = String(raw || '').trim();
+    var m = /[?&]f=([a-zA-Z0-9]{4,32})/.exec(s);
+    if (m) return m[1].toLowerCase();
+    if (/^[a-zA-Z0-9]{6,32}$/.test(s)) return s.toLowerCase();
+    return '';
+  }
+
+  document.getElementById('adopt-btn').addEventListener('click', function () {
+    var id = extractId(document.getElementById('adopt-input').value);
+    if (!id) { toast('URL か 16桁のID を入れてください'); return; }
+    if (fam.isSet() && id === fam.id()) { toast('すでにこのIDです'); return; }
+    if (fam.isSet() && !confirm('別のIDに切り替えます。\nこの端末に残っている今の記録は消えます。\n\n切り替えますか？')) return;
+    if (!fam.adopt(id)) toast('このIDは使えません');
+  });
+
+  if (fam.isSet()) renderSet(); else renderUnset();
+})();
+</script>
+</body>
+</html>

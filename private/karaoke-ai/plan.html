@@ -302,6 +302,7 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
   .lesson-card { break-inside: avoid; page-break-inside: avoid; }
 }
 </style>
+<script src="./sync.js?v=7"></script>
 </head>
 <body>
 
@@ -1022,8 +1023,8 @@ header.top .version { display: inline-block; padding: 3px 10px; background: var(
 // ※ stage 機能の karaoke-stage-include:* とは別名前空間（混同禁止）
 // ============================================================
 (function () {
-  var PREFIX = 'myp-watched:';
-  var DATE_PREFIX = 'myp-watched-date:';
+  var PREFIX = 'karaoke-watched:';
+  var DATE_PREFIX = 'karaoke-watched-date:';
   var LOG_PREFIX = 'karaoke-watch-log:';
 
   function todayStr() {

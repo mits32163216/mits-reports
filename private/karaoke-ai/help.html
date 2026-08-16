@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>カラオケ練習AI — 使い方</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70; --sky:#6DA6C2;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06); --highlight:rgba(212,168,91,0.14);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); --highlight:rgba(212,168,91,0.18); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:24px 20px 100px; max-width:860px; margin:0 auto; }
+h1,h2,h3 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; }
+a { color:var(--gold); text-decoration:none; }
+a:hover { text-decoration:underline; }
+
+.hero { text-align:center; padding:20px 0 4px; }
+.hero h1 { font-size:28px; margin:0 0 6px; }
+.hero .tag { font-family:var(--mono); font-size:12px; color:var(--muted); }
+
+.toc { margin:24px 0; padding:16px 20px; border-radius:12px; background:var(--sub-bg); border:1px solid var(--line); }
+.toc ol { margin:0; padding-left:20px; }
+.toc li { font-size:13.5px; line-height:2; }
+
+section { margin:34px 0; }
+section > h2 { font-size:19px; margin:0 0 4px; padding-bottom:8px; border-bottom:2px solid var(--gold); }
+section > .lead { font-size:13.5px; color:var(--muted); line-height:1.8; margin:10px 0 16px; }
+
+.card { margin:16px 0; padding:18px 22px; border-radius:13px; background:var(--card-bg); border:1px solid var(--line); }
+.card h3 { font-size:15px; margin:0 0 10px; color:var(--gold); }
+.card p { font-size:13.5px; line-height:1.85; margin:8px 0; }
+
+.steps { counter-reset:s; padding:0; margin:10px 0 0; list-style:none; }
+.steps li { counter-increment:s; position:relative; padding:11px 0 11px 36px; font-size:13.5px; line-height:1.85; border-bottom:1px solid var(--line); }
+.steps li:last-child { border-bottom:0; }
+.steps li::before { content:counter(s); position:absolute; left:0; top:12px; width:24px; height:24px; border-radius:50%;
+  background:var(--gold); color:#fff; font-family:var(--mono); font-size:11px; display:flex; align-items:center; justify-content:center; }
+.steps li strong { color:var(--fg); }
+
+table { width:100%; border-collapse:collapse; margin:12px 0; font-size:13px; }
+th,td { padding:10px 12px; border:1px solid var(--line); text-align:left; line-height:1.7; vertical-align:top; }
+th { background:var(--sub-bg); font-weight:600; font-family:var(--mincho); }
+td.axis { font-family:var(--mono); font-size:12px; white-space:nowrap; }
+
+.must { margin:16px 0; padding:16px 20px; border-radius:12px; background:rgba(199,123,112,0.09); border-left:4px solid var(--rose); }
+.must h3 { font-size:14px; margin:0 0 8px; color:var(--rose); }
+.must p, .must li { font-size:13.5px; line-height:1.85; }
+.must ul { margin:6px 0; padding-left:20px; }
+
+.good { margin:16px 0; padding:16px 20px; border-radius:12px; background:rgba(122,155,126,0.10); border-left:4px solid var(--sage); }
+.good h3 { font-size:14px; margin:0 0 8px; color:var(--sage); }
+.good p, .good li { font-size:13.5px; line-height:1.85; }
+.good ul { margin:6px 0; padding-left:20px; }
+
+.qa { margin:12px 0; padding:14px 18px; border-radius:11px; background:var(--card-bg); border:1px solid var(--line); }
+.qa .q { font-family:var(--mincho); font-size:14px; font-weight:600; margin:0 0 6px; }
+.qa .a { font-size:13.5px; line-height:1.85; margin:0; color:var(--muted); }
+
+.cta { display:inline-block; margin:8px 8px 0 0; padding:11px 20px; border-radius:9px;
+  background:var(--gold); color:#fff; font-size:13.5px; font-weight:600; }
+.cta:hover { opacity:0.86; text-decoration:none; }
+.cta.ghost { background:transparent; color:var(--fg); border:1px solid var(--line); }
+</style>
+<script src="./sync.js?v=7"></script>
+</head>
+<body>
+
+<div class="hero">
+  <h1>使い方</h1>
+  <div class="tag">はじめての設定と、毎回の流れ</div>
+</div>
+
+<div class="toc">
+  <ol>
+    <li><a href="#what">これは何をするものか</a></li>
+    <li><a href="#setup">はじめての設定（1回だけ）</a></li>
+    <li><a href="#record">録音のしかた（ここが一番大事）</a></li>
+    <li><a href="#use">毎回の流れ</a></li>
+    <li><a href="#read">数字の読み方</a></li>
+    <li><a href="#trouble">つまずいたとき</a></li>
+  </ol>
+</div>
+
+<section id="what">
+  <h2>1. これは何をするものか</h2>
+  <p class="lead">自分の歌を録音して読み込ませると、声を数値にして、前回からどう変わったかを出します。上手い下手を採点する道具ではなく、<strong>練習でやったことが効いたかどうかを確かめる道具</strong>です。</p>
+
+  <div class="card">
+    <h3>やること</h3>
+    <p>歌う → 録音を読み込ませる → 数字が出る → 前回と比べる → 次に何をやるか決める。この輪を回します。</p>
+  </div>
+
+  <div class="good">
+    <h3>声はどこにも送られません</h3>
+    <p>解析はすべて自分のブラウザの中で終わります。録音そのものがネットに出ることはありません。保存されるのは<strong>解析後の数値と、自分で書いたメモだけ</strong>です。</p>
+  </div>
+</section>
+
+<section id="setup">
+  <h2>2. はじめての設定（1回だけ）</h2>
+  <p class="lead">記録は「個人ID」ごとに完全に分かれています。他の人からは見えません。</p>
+
+  <ol class="steps">
+    <li><strong>誰かからURLをもらった場合</strong>：そのURLを開くだけで設定は終わりです。何もしなくて構いません。</li>
+    <li><strong>自分で始める場合</strong>：<a href="./setup.html">設定ページ</a>を開いて「自分のIDを作って始める」を押します。</li>
+    <li><strong>URLを控えておく</strong>：設定ページの「自分のURLをコピー」を押して、メールやメモ帳に貼って保存します。</li>
+    <li><strong>別の端末でも見たいとき</strong>：控えたURLをその端末で1回開けば、以後は同じ記録が出ます。</li>
+  </ol>
+
+  <div class="must">
+    <h3>URLは必ず控えてください</h3>
+    <p>IDを控えないまま端末のデータを消すと、それまでの記録に辿り着けなくなります。復旧する手段はありません。</p>
+  </div>
+
+  <p><a class="cta" href="./setup.html">設定ページを開く</a></p>
+</section>
+
+<section id="record">
+  <h2>3. 録音のしかた（ここが一番大事）</h2>
+  <p class="lead">数字は録音の条件に強く引きずられます。<strong>毎回同じ条件で録る</strong>ことが、正しく比べるための前提です。条件が変わると、歌が変わっていなくても数字が動いてしまいます。</p>
+
+  <div class="must">
+    <h3>この3つを必ず守る</h3>
+    <ul>
+      <li><strong>ガイドボーカルは切る</strong> — お手本の歌声が混ざると、それを自分の声として測ってしまいます。</li>
+      <li><strong>伴奏（BGM）の音量は小さめ</strong> — 伴奏が大きいと声の細かい部分が埋もれます。</li>
+      <li><strong>イヤホンのマイクをスマホに直挿しして録る</strong> — カラオケ店のマイクや部屋の反響を通すと、声そのものではなく部屋を測ることになります。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>具体的な手順</h3>
+    <ol class="steps">
+      <li>マイク付きイヤホンをスマホに挿す</li>
+      <li>スマホの録音アプリ（ボイスメモ等）を録音状態にする</li>
+      <li>カラオケ側でガイドボーカルを切り、伴奏の音量を下げる</li>
+      <li>歌う（曲の頭から終わりまで通しで録る）</li>
+      <li>録音を止めて、ファイルを保存する</li>
+    </ol>
+  </div>
+
+  <div class="good">
+    <h3>2回目以降で気をつけること</h3>
+    <p>マイクの種類・伴奏の音量・部屋を変えると、前回と比べられなくなります。<strong>条件を変えたときは、そのことをメモに残してください</strong>。数字が動いた理由が歌なのか条件なのか、後から分からなくなるのを防げます。</p>
+  </div>
+</section>
+
+<section id="use">
+  <h2>4. 毎回の流れ</h2>
+
+  <ol class="steps">
+    <li><strong>録音する</strong>（上の条件で）</li>
+    <li><strong><a href="./analyze.html">解析</a></strong> を開いて、録音ファイルを選ぶ。曲名を入れて解析を押す。<strong>5分の曲でおよそ50秒</strong>かかります（機種によって前後します）。</li>
+    <li><strong><a href="./measure.html">実測</a></strong> で数字の全体を見る。<strong><a href="./profile.html">課題</a></strong> でいまの立ち位置を見る。</li>
+    <li><strong><a href="./log.html">日記</a></strong> に、その日やったこと・意識したことを書く。</li>
+    <li><strong><a href="./success.html">検証</a></strong> で、やったことと数字の変化がつながったかを確かめる。</li>
+    <li>次にやることを <strong><a href="./plan.html">計画</a></strong> と <strong><a href="./basics.html">基礎</a></strong> から選ぶ。</li>
+  </ol>
+
+  <div class="card">
+    <h3>メモを書くのを飛ばさない</h3>
+    <p>数字だけ貯めても、なぜ動いたのかが分かりません。<strong>「今回はここを意識した」を一行書いておく</strong>だけで、後から効果を確かめられるようになります。</p>
+  </div>
+</section>
+
+<section id="read">
+  <h2>5. 数字の読み方</h2>
+  <p class="lead">出てくる数字は2種類あります。この2つを混ぜて見ると判断を間違えます。</p>
+
+  <table>
+    <thead>
+      <tr><th style="width:120px;">種類</th><th>意味</th><th>見方</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="axis">🟢 改善指標</td>
+        <td>上がったら歌が上手くなったと言い切れる数字</td>
+        <td><strong>これを追いかける。</strong>前回より良くなっていれば、その練習は効いた。</td>
+      </tr>
+      <tr>
+        <td class="axis">🔵 状態指標</td>
+        <td>いまの声がどういう状態かを説明する数字</td>
+        <td><strong>上げにいかない。</strong>今の立ち位置を知るためのもので、良し悪しではない。</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="card">
+    <h3>偏差値について</h3>
+    <p>50 が平均です。実際に歌っている人たちの録音を集めて分布を作り、その中での位置を出しています。<strong>数字が低くても悪いという意味ではありません</strong>。どこが自分の伸びしろかを見るためのものです。</p>
+    <p>そして、比べる相手は他人ではなく<strong>前回の自分</strong>です。偏差値そのものより、前回からどちらへ動いたかを見てください。</p>
+  </div>
+
+  <div class="must">
+    <h3>1回の結果で判断しない</h3>
+    <p>その日の喉の調子、録音条件、曲を覚えているかどうかで数字は動きます。<strong>同じ曲を何回か録って、傾向で見てください</strong>。1回だけ良かった／悪かったは、まだ何も意味しません。</p>
+  </div>
+</section>
+
+<section id="trouble">
+  <h2>6. つまずいたとき</h2>
+
+  <div class="qa">
+    <p class="q">解析が終わらない／固まる</p>
+    <p class="a">曲が長いと数分かかります。画面を閉じずに待ってください。5分以上戻らないときは、ページを再読み込みしてもう一度試してください。</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">別の端末で開いたら記録が空だった</p>
+    <p class="a">その端末にまだ個人IDが入っていません。<a href="./setup.html">設定ページ</a>で「自分のURL」を貼って切り替えてください。</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">数字が急に悪くなった</p>
+    <p class="a">まず録音条件を疑ってください。マイク・伴奏の音量・部屋のどれかが前回と違うと、歌が同じでも数字は動きます。条件が同じなら、その日の調子か、覚えていない曲を歌ったかのどちらかであることが多いです。</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">はじめて歌う曲を混ぜてよいか</p>
+    <p class="a">録っても構いませんが、歌詞も曲調も覚えていない段階の録音を平均に入れると全体が歪みます。<a href="./measure.html">実測</a>ページで、その曲を集計から外す切り替えができます。</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">画面の隅に「同期できず」が出たまま消えない</p>
+    <p class="a">記録をすべて消した直後に出ます。クラウド側は、端末のデータが不意に飛んだときに巻き込まれないよう、<strong>空の状態では上書きしない</strong>ようになっているためです。全部消したのが意図どおりなら、解析を1回すれば元に戻ります。心当たりが無いのに出ている場合は、まだ記録が残っている可能性があるので、この端末のデータを消さずに<a href="./setup.html">設定ページ</a>で個人IDを確認してください。</p>
+  </div>
+
+  <div class="qa">
+    <p class="q">記録を他の人に見せたい</p>
+    <p class="a">自分のURLの末尾に <span style="font-family:var(--mono);">&amp;view=guest</span> を付けて渡すと、相手は見るだけで書き換えできない状態になります。</p>
+  </div>
+
+  <p style="margin-top:20px;">
+    <a class="cta" href="./analyze.html">解析をはじめる</a>
+    <a class="cta ghost" href="./index.html">ホームへ</a>
+  </p>
+</section>
+
+<script src="./nav.js"></script>
+</body>
+</html>
