@@ -117,6 +117,24 @@ a:hover { text-decoration:underline; }
     toastTimer = setTimeout(function () { toastEl.classList.remove('on'); }, 2000);
   }
 
+  /* eng40 family.html 221-232行と同じ処理。
+   * 新しいIDを作る／別のIDへ移る前に、この端末に残っている記録を消す。
+   * 消さないと、新しいIDのクラウド領域へ前の記録が押し出されて混ざる。
+   * （sync.js 側にも同じ守りを入れてあるが、eng40 と同様に画面側にも置く） */
+  function wipeLocalBeforeAdopt() {
+    try {
+      var doomed = [], i, k;
+      for (i = 0; i < localStorage.length; i++) {
+        k = localStorage.key(i);
+        if (k && k.indexOf('karaoke-') === 0) doomed.push(k);
+      }
+      for (i = 0; i < doomed.length; i++) localStorage.removeItem(doomed[i]);
+      localStorage.removeItem('karaokesync-serverAt');
+      localStorage.removeItem('karaokesync-dirty');
+      localStorage.removeItem('karaokecfg-pending-remove');
+    } catch (e) {}
+  }
+
   function copyText(text) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(
@@ -150,6 +168,9 @@ a:hover { text-decoration:underline; }
         '<div class="btns"><button class="btn" id="btn-start">自分のIDを作って始める</button></div>' +
       '</div>';
     document.getElementById('btn-start').addEventListener('click', function () {
+      // eng40 family.html と同じ手順：新しいIDを作る前に、この端末に残っている
+      // 記録を消す。消さないと、新しいIDへ前の記録が押し出されて混ざる。
+      wipeLocalBeforeAdopt();
       fam.adopt(fam.generate());
     });
   }
@@ -202,7 +223,8 @@ a:hover { text-decoration:underline; }
     var id = extractId(document.getElementById('adopt-input').value);
     if (!id) { toast('URL か 16桁のID を入れてください'); return; }
     if (fam.isSet() && id === fam.id()) { toast('すでにこのIDです'); return; }
-    if (fam.isSet() && !confirm('別のIDに切り替えます。\nこの端末に残っている今の記録は消えます。\n\n切り替えますか？')) return;
+    if (!confirm('このIDに切り替えます。\n\nこの端末に残っている今の記録は消えます。\n（クラウド側の記録は残るので、元のURLを開けば戻せます）\n\n切り替えますか？')) return;
+    wipeLocalBeforeAdopt();
     if (!fam.adopt(id)) toast('このIDは使えません');
   });
 

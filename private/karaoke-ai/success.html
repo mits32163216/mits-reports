@@ -1,172 +1,424 @@
 <!DOCTYPE html>
-<html lang="ja"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>サクセスファイル — カラオケ練習AI</title>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✅</text></svg>">
+<title>✅ 検証（同曲デルタで効果を測る）｜カラオケ練習AI</title>
 <style>
-:root { --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70; --sky:#6DA6C2;
- --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans",sans-serif; --mono:"SF Mono",Menlo,monospace;
- --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06); }
-@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
-*{box-sizing:border-box;} html,body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);}
-body{padding:24px 28px 90px;max-width:1180px;margin:0 auto;}
-h1,h2,h3{font-family:var(--mincho);} h1{font-size:26px;margin:0 0 6px;} a{color:var(--gold);text-decoration:none;}
-.sub{font-family:var(--mono);font-size:12px;color:var(--muted);}
-.summary{margin:16px 0;padding:14px 18px;border-radius:12px;background:linear-gradient(135deg,rgba(212,168,91,0.12),rgba(122,155,126,0.06));border:1px solid var(--gold);font-size:14px;line-height:1.7;}
-.summary b{color:var(--gold);}
+/* eng40/v2/progress.html のカード・empty-state 骨格を写経。
+   旧 success.html の 4レーン概念（🔬検証中 / ✅サクセス / ⏳積み重ね / ⚖️代償）は
+   「因果を紐付ける読み方の枠組み」として残す（＝特定個人の曲名・数値・仮説は削除して
+   "空の枠と読み方だけ" を残す）。実物カードは記録から動的に描画する。 */
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70; --steel:#5C7A9E; --sky:#6DA6C2;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06); --highlight:rgba(212,168,91,0.14);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); --highlight:rgba(212,168,91,0.18); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:24px 20px 100px; max-width:1180px; margin:0 auto; }
+h1,h2,h3 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; }
+h1 { font-size:22px; margin:18px 0 4px; }
+.tagline { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:20px; }
+a { color:var(--gold); text-decoration:none; } a:hover { text-decoration:underline; }
+h2 { font-size:16px; margin:26px 0 10px; padding-bottom:6px; border-bottom:2px solid var(--gold); }
 
-/* 4レーン */
-.board{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:14px;margin:20px 0;}
-.lane{border:1px solid var(--line);border-radius:12px;padding:14px 14px 10px;background:var(--sub-bg);}
-.lane h3{margin:0 0 12px;font-size:15px;text-align:center;padding-bottom:8px;border-bottom:2px solid var(--line);}
-.lane .lane-sub{font-size:10px;color:var(--muted);font-family:var(--mono);text-align:center;margin-top:-8px;margin-bottom:10px;}
-.lane-kensho h3{color:var(--sky);}
-.lane-success h3{color:var(--sage);}
-.lane-step h3{color:var(--gold);}
-.lane-daisho h3{color:var(--rose);}
+/* 読み方カード（4レーンの概念説明・固定コンテンツ・個人データを含まない） */
+.frame { padding:16px 20px; background:linear-gradient(135deg,rgba(212,168,91,0.10),rgba(122,155,126,0.05));
+  border:1px solid var(--gold); border-radius:12px; margin:12px 0 22px; line-height:1.85; font-size:13.5px; }
+.frame b { color:var(--gold); }
+.frame .row { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:10px; }
+@media (max-width:820px){ .frame .row { grid-template-columns:1fr 1fr; } }
+@media (max-width:520px){ .frame .row { grid-template-columns:1fr; } }
+.frame .lane { padding:10px 12px; background:var(--card-bg); border:1px solid var(--line); border-radius:8px; }
+.frame .lane h4 { margin:0 0 4px; font-family:var(--mincho); font-size:13px; }
+.frame .lane p { margin:0; font-size:12px; color:var(--muted); line-height:1.7; }
+.frame .lane.k h4 { color:var(--sky); } .frame .lane.s h4 { color:var(--sage); }
+.frame .lane.t h4 { color:var(--gold); } .frame .lane.d h4 { color:var(--rose); }
 
-/* 🔬 検証中カード（左=原因/右=対策） */
-.kcard{display:grid;grid-template-columns:1fr 24px 1fr;gap:8px;align-items:stretch;background:var(--card-bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:12.5px;line-height:1.55;}
-.k-cause,.k-action{padding:4px 6px;}
-.k-arrow{display:flex;align-items:center;justify-content:center;color:var(--sky);font-size:20px;font-weight:700;}
-.k-head{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:0.05em;margin-bottom:4px;}
-.k-body strong{color:var(--sky);display:block;margin-bottom:4px;}
-.k-body p{margin:2px 0 0;color:var(--fg);font-size:12px;}
+/* section-intro（比較ボード導入） */
+.section-intro { padding:12px 16px; background:var(--sub-bg); border-left:4px solid var(--sage); border-radius:6px;
+  margin:10px 0 16px; font-size:13px; line-height:1.8; }
 
-/* ✅ サクセス / ⚖️ 代償 カード */
-.pcard{background:var(--card-bg);border:1px solid var(--line);border-left:4px solid var(--line);border-radius:8px;padding:9px 11px;margin-bottom:9px;font-size:12.5px;line-height:1.5;}
-.pcard.good{border-left-color:var(--sage);} .pcard.bad{border-left-color:var(--rose);}
-.pc-song{font-family:var(--mincho);font-weight:600;font-size:13px;} .pc-tr{font-family:var(--mono);font-size:10px;color:var(--muted);}
-.pc-intv{color:var(--gold);font-size:12px;margin:2px 0;} .pc-metric b{font-family:var(--mono);}
-.pc-arrow.good{color:var(--sage);} .pc-arrow.bad{color:var(--rose);}
-.empty{color:var(--muted);font-size:12px;text-align:center;padding:14px 8px;font-style:italic;background:transparent;}
+/* 比較カード：同曲の直近2テイクを並べる（前 → 後） */
+.compare-list { display:grid; gap:14px; }
+.compare-card { padding:14px 16px; background:var(--card-bg); border:1px solid var(--line); border-radius:10px; }
+.cc-head { display:flex; align-items:baseline; justify-content:space-between; gap:8px; flex-wrap:wrap;
+  padding-bottom:8px; margin-bottom:10px; border-bottom:1px solid var(--line); }
+.cc-title { font-family:var(--mincho); font-size:16px; font-weight:600; margin:0; }
+.cc-title .count { color:var(--gold); font-size:12px; font-weight:400; margin-left:8px; }
+.cc-eng { font-family:var(--mono); font-size:10px; color:var(--muted); background:rgba(92,122,158,0.10); padding:2px 8px; border-radius:6px; }
+.cc-eng.mixed { background:rgba(199,123,112,0.14); color:var(--rose); font-weight:600; }
 
-/* ⏳ 積み重ね：段階フセン */
-.step-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
-.step-chip{flex:0 0 auto;min-width:140px;border:1px solid var(--line);border-radius:8px;padding:7px 9px;background:var(--sub-bg);}
-.chip-trans{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--gold);}
-.chip-intv{font-size:10px;color:var(--muted);margin:2px 0 4px;}
-.chip-deltas{display:flex;flex-wrap:wrap;gap:3px;}
-.chip-metric{font-family:var(--mono);font-size:10px;padding:2px 5px;border-radius:4px;background:var(--card-bg);border:1px solid var(--line);}
-.chip-metric.good{color:var(--sage);border-color:var(--sage);}
-.chip-metric.bad{color:var(--rose);border-color:var(--rose);}
+.pair { display:grid; grid-template-columns:1fr 30px 1fr; gap:8px; align-items:stretch; }
+@media (max-width:640px){ .pair { grid-template-columns:1fr; } .pair .arrow { transform:rotate(90deg); text-align:center; } }
+.side { padding:10px 12px; background:var(--sub-bg); border-radius:8px; border:1px solid var(--line); }
+.side .h { font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:0.05em; margin-bottom:4px; }
+.side .h b { color:var(--fg); font-family:var(--sans); font-size:11px; }
+.side .h .date { font-family:var(--mono); font-size:10px; color:var(--muted); }
+.arrow { display:flex; align-items:center; justify-content:center; color:var(--gold); font-size:20px; font-weight:700; }
 
-/* メトリクス別表 */
-table.resp{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px;}
-table.resp td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
-.m-name{font-family:var(--mincho);font-weight:600;} .m-desc{display:block;font-size:11px;color:var(--muted);font-weight:400;}
-.m-cls{white-space:nowrap;font-size:13px;} .m-note{color:var(--muted);font-size:12px;}
+/* 4改善軸のデルタ表 */
+.deltas { display:grid; grid-template-columns:1fr 1fr 1fr; gap:2px 8px; font-size:11.5px; margin-top:4px; }
+.deltas .k { color:var(--muted); }
+.deltas .v { font-family:var(--mono); font-weight:600; text-align:right; }
+.deltas .d { font-family:var(--mono); font-weight:700; text-align:right; }
+.deltas .d.good { color:var(--sage); }
+.deltas .d.bad { color:var(--rose); }
+.deltas .d.flat { color:var(--muted); }
 
-/* narrative & memo */
-.narrative{margin:20px 0;padding:16px 20px;border:1px solid var(--gold);border-radius:12px;background:var(--card-bg);line-height:1.8;}
-.narrative h2{margin-top:0;font-size:17px;color:var(--gold);} .narrative li{margin:5px 0;}
-.memo{margin:22px 0;padding:16px 20px;border:1px dashed var(--sage);border-radius:12px;background:var(--sub-bg);}
-.memo h2{margin:0 0 6px;font-size:16px;color:var(--sage);} .memo p{font-size:12.5px;color:var(--muted);margin:4px 0 10px;line-height:1.6;}
-.memo select,.memo textarea{width:100%;font-family:var(--sans);font-size:14px;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--card-bg);color:var(--fg);margin-bottom:8px;}
-.memo textarea{min-height:70px;resize:vertical;}
-.memo-btns{display:flex;gap:8px;flex-wrap:wrap;}
-.memo button{font-family:var(--sans);font-size:13px;padding:7px 16px;border-radius:8px;border:1px solid var(--gold);background:var(--gold);color:#fff;cursor:pointer;}
-.memo button.ghost{background:transparent;color:var(--gold);}
-.memo-saved{font-size:12px;color:var(--sage);margin-top:6px;min-height:16px;}
-h2.sec{font-size:19px;border-bottom:1px solid var(--line);padding-bottom:6px;margin-top:30px;}
-footer{margin-top:40px;padding-top:18px;border-top:1px dashed var(--line);font-family:var(--mono);font-size:11px;color:var(--muted);text-align:center;}
+/* テイクごとのメモ */
+.memo-pair { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px; }
+@media (max-width:640px){ .memo-pair { grid-template-columns:1fr; } }
+.memo-side { padding:8px 10px; background:var(--card-bg); border-left:3px solid var(--sage); border-radius:6px;
+  font-size:12.5px; line-height:1.7; white-space:pre-wrap; }
+.memo-side.empty { color:var(--muted); font-style:italic; border-left-color:var(--line); font-size:11.5px; }
+.memo-side .h { font-family:var(--mono); font-size:10px; color:var(--sage); margin-bottom:3px; letter-spacing:0.05em; }
 
-@media (max-width:820px){ .board{grid-template-columns:1fr;} .kcard{grid-template-columns:1fr;} .k-arrow{transform:rotate(90deg);height:16px;} }
-</style><script src="./sync.js?v=7"></script>
-</head><body>
+/* engine mismatch 注意 */
+.mixed-note { margin-top:10px; padding:8px 12px; background:rgba(199,123,112,0.10); border-left:3px solid var(--rose);
+  border-radius:6px; font-size:11.5px; color:var(--rose); line-height:1.7; }
 
-<header><h1>✅ サクセスファイル（練習の効果検証）</h1>
-<div class="sub">2026-07-17 新ベースライン以降のクリーン録音で因果を紐付ける4レーン方式。件数を水増しせず、確定は少数でスタートする。</div></header>
+/* 空状態 */
+.step-section { margin:22px 0; padding:18px 22px; background:var(--sub-bg); border:1px solid var(--gold); border-radius:12px; }
+.empty-state { text-align:center; font-size:13px; line-height:2; padding:22px 10px; color:var(--muted); }
+.empty-state .big { display:block; font-family:var(--mincho); font-size:16px; font-weight:700; color:var(--fg); }
 
-<section class="summary">
-📌 <strong>読み方</strong>：<b>🔬検証中</b>＝現弱点と AI 提案の対策・<b>✅サクセス</b>＝クリーンな同曲v1→v2以降で有意改善が確認できた回・<b>⏳積み重ね</b>＝同曲の段階変化を並べたフセン・<b>⚖️代償</b>＝音域と音色のトレードオフ。<br>
-現在のクリーン対象は <b>9曲 / 因果ペア 0件</b>。旧録音（測定汚染）は <a href="./junbi-kikan/index.html">準備期間</a> に隔離済みで因果対象から除外。同曲v2以降の新条件録音が発生するたびに右3レーンにカードが増える。数値の正本は <a href="./measure.html">実測</a> / <a href="./profile.html">課題</a>。
-</section>
+/* engine 注記 */
+.engine-note { padding:10px 14px; margin:14px 0; border-radius:8px; background:rgba(92,122,158,0.08); border-left:3px solid var(--steel); font-size:12px; line-height:1.7; color:var(--muted); }
+.engine-note b { color:var(--fg); }
 
-<h2 class="sec">🎯 因果ボード（4レーン）</h2>
-<div class="board">
-  <div class="lane lane-kensho"><h3>🔬 検証中（現弱点→AI対策）</h3>
-    <div class="lane-sub">現時点の仮説と、次の1回で試す介入</div>
-    <div class="kcard"><div class="k-cause"><div class="k-head">🔎 現状の弱点/仮説</div><div class="k-body"><strong>① 息漏れ HNR（偏差値 58）</strong><p>新録音条件で汚染除去済みだが、バラード原曲アーティスト（玉置21.6 / 松山17.8 / 長渕17.3）比では依然明確な伸びしろ。同条件のv2以降で改善が測れるか未検証。</p></div></div><div class="k-arrow">→</div><div class="k-action"><div class="k-head">🤖 AIが考える次の1手</div><div class="k-body"><strong>同じバラード（メロディ / 大空 / 乾杯）を「息を最後まで支える」だけ意識して1回</strong><p>介入は1つだけ変える（他条件固定）。次回録音後、HNR がデルタで動けば🟢サクセスへ・動かなければ🟡積み重ねへ分類。</p></div></div></div>
-<div class="kcard"><div class="k-cause"><div class="k-head">🔎 現状の弱点/仮説</div><div class="k-body"><strong>② 短音率（Phase B・息支え）</strong><p>旧記録（努努 78%→70% でキー下げ即効）は測定汚染込みの参考値。新条件で v2 がまだ揃わず本当の短音率レスポンスは未確認。</p></div></div><div class="k-arrow">→</div><div class="k-action"><div class="k-head">🤖 AIが考える次の1手</div><div class="k-body"><strong>1曲を <strong>キー -2半音固定</strong> で歌い、フレーズ末尾まで息を残せるか</strong><p>対象＝バラード優先（メロディ / 大空 / 乾杯）。同曲2回目以降で短音率デルタが -5% を超えれば「キー戦略が新条件でも有効」を証明。</p></div></div></div>
-<div class="kcard"><div class="k-cause"><div class="k-head">🔎 現状の弱点/仮説</div><div class="k-body"><strong>③ 高音チャレンジ vs 音色（トレードオフ検証）</strong><p>旧記録で音域を上に攻めると HNR↓・低音ノイズ↑の代償が観測されていた。新条件でも成立するか未検証。</p></div></div><div class="k-arrow">→</div><div class="k-action"><div class="k-head">🤖 AIが考える次の1手</div><div class="k-body"><strong>同曲を「原キー」と「-2半音」の2回で歌い比べる（介入=キーだけ・他固定）</strong><p>音域と音色のクロス比較。⚖️代償レーンに移せるか、それとも新条件では代償が消えているか判定する。</p></div></div></div>
-<div class="kcard"><div class="k-cause"><div class="k-head">🔎 現状の弱点/仮説</div><div class="k-body"><strong>④ 深み αRatio（強み・維持）</strong><p>偏差値48 相当（分布×玉置=75天井ハイブリッド・松山千春 -6.1 / 長渕剛 -7.9 より深い側 Mits 平均 -9.7）。強みだが「新条件でも維持できるか」は継続監視要。</p></div></div><div class="k-arrow">→</div><div class="k-action"><div class="k-head">🤖 AIが考える次の1手</div><div class="k-body"><strong>特別な介入は不要。全曲で深み αRatio が -8〜-13 の範囲を維持できているか毎回チェック</strong><p>落ちてきたら（-4 に近づいたら）声の共鳴を意識する Phase D 動画を挟む。強みを潰さない運用。</p></div></div></div>
+/* メモ入力欄（曲は動的抽出・その日全体メモは日付単位） */
+.memo-box { margin:22px 0; padding:16px 20px; border:1px dashed var(--sage); border-radius:12px; background:var(--sub-bg); }
+.memo-box h3 { margin:0 0 6px; font-size:15px; color:var(--sage); }
+.memo-box p { font-size:12.5px; color:var(--muted); margin:4px 0 10px; line-height:1.7; }
+.memo-box select, .memo-box textarea, .memo-box input[type=date] {
+  width:100%; font-family:var(--sans); font-size:14px; padding:9px 11px; border:1px solid var(--line); border-radius:8px;
+  background:var(--card-bg); color:var(--fg); margin-bottom:8px;
+}
+.memo-box textarea { min-height:70px; resize:vertical; line-height:1.7; }
+.memo-btns { display:flex; gap:8px; flex-wrap:wrap; }
+.memo-box button { font-family:var(--sans); font-size:13px; padding:7px 16px; border-radius:8px;
+  border:1px solid var(--gold); background:var(--gold); color:#fff; cursor:pointer; }
+.memo-box button.ghost { background:transparent; color:var(--gold); }
+.memo-saved { font-size:12px; color:var(--sage); margin-top:6px; min-height:16px; }
+
+footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+@media (max-width:600px){ body { padding:20px 14px 80px; } }
+</style>
+<script src="./sync.js?v=7"></script>
+</head>
+<body>
+
+<h1>✅ 検証（同曲デルタで効果を測る）</h1>
+<div class="tagline">同じ曲の「前回テイク → 今回テイク」で数字がどう動いたかを並べる（1回だけの曲は比べる相手がいないので空欄）</div>
+
+<!-- 4レーン読み方フレーム（旧 success.html の概念だけ残す・個人データ削除） -->
+<div class="frame">
+  📌 <b>読み方</b>：練習の効果は「1回の絶対値」では言えない。同じ曲を同じ計測方法で2回以上録って、<b>数字がどう動いたか</b>と<b>その回で意識したこと</b>を突き合わせて初めて「効いた／効かなかった」が言えます。以下は同曲デルタを4方向に分けて読むための枠組みです。
+  <div class="row">
+    <div class="lane k"><h4>🔬 検証中</h4><p>今の弱点と、次に試したい1つの介入。同じ曲で v2 を録るまで結果は出ない。</p></div>
+    <div class="lane s"><h4>✅ サクセス</h4><p>同曲デルタで改善指標が緑方向に有意に動いた回。この画面の中央に集める。</p></div>
+    <div class="lane t"><h4>⏳ 積み重ね</h4><p>動いてはいるが小さい・別方向にも動いた回。判定を保留して次回まで待つ。</p></div>
+    <div class="lane d"><h4>⚖️ 代償</h4><p>音域を上に攻めたら音色が落ちた等のトレードオフ。片方だけ見て喜ばない。</p></div>
   </div>
-  <div class="lane lane-success"><h3>✅ サクセス（1回で因果確認）</h3>
-    <div class="lane-sub">同曲クリーンデルタで有意改善が観測された回</div>
-    <p class="empty">クリーンデータ蓄積待ち（同一曲v2以降・新条件録音がまだ発生していない）</p>
+</div>
+
+<h2>🎯 同曲比較（前回テイク → 今回テイク）</h2>
+<div class="section-intro">同じ曲で2回以上の記録がある場合、直近の2テイクを並べます。数字の緑=改善方向／赤=悪化方向は各改善指標の「良い向き」で機械判定しています（音程ズレ・短音率＝下がると緑／ロングトーン＝上がると緑／ビブラート幅＝目標帯50-120cへの接近を緑）。</div>
+
+<div id="compare-body"></div>
+
+<!-- テイクメモ入力（曲リストは記録から動的抽出・特定のセッションIDは書かない） -->
+<div class="memo-box">
+  <h3>✍️ 練習メモ（テイクごとに意識したこと）</h3>
+  <p>その回で意識した練習・体調・キー設定を書きます。ここは書き置き用（<a href="./analyze.html">解析</a>ページで録音時に書いた memo は自動で <a href="./log.html">日記</a> と上の比較カードに反映されます）。曲を選ぶと以前書いた同じキーのメモがロードされます（karaoke-memo:&lt;セッションキー&gt;）。</p>
+  <select id="memo-sess"><option value="">— テイクを選択 —</option></select>
+  <textarea id="memo-text" placeholder="例：今回は息を最後まで支えることだけ意識した。他は前回と同条件。"></textarea>
+  <div class="memo-btns">
+    <button onclick="saveMemo()">💾 保存</button>
+    <button class="ghost" onclick="copyMemo()">📋 AI に渡す用にコピー</button>
   </div>
-  <div class="lane lane-step"><h3>⏳ 積み重ね（段階フセン）</h3>
-    <div class="lane-sub">同曲 v1→v2→… の各回変化を横並び</div>
-    <p class="empty">クリーンデータ蓄積待ち（同一曲を新条件で2回以上録音すると段階フセンが出る）</p>
+  <div class="memo-saved" id="memo-saved"></div>
+</div>
+
+<div class="memo-box" style="border-color:var(--gold);">
+  <h3 style="color:var(--gold);">📅 その日全体のメモ</h3>
+  <p>曲をまたいだ「今日の体調・気づき・方針」を1日1つ書く欄。日付ごとに保存され、<a href="./log.html">日記</a> ページの各日カードに一緒に表示されます（karaoke-daily-memo:&lt;YYYY-MM-DD&gt;）。</p>
+  <input type="date" id="daily-date">
+  <textarea id="daily-text" placeholder="例：今日は全体に喉が乾いていた。バラードでは息支えを意識できた。"></textarea>
+  <div class="memo-btns">
+    <button onclick="saveDaily()">💾 保存</button>
+    <button class="ghost" onclick="copyDaily()">📋 AI に渡す用にコピー</button>
   </div>
-  <div class="lane lane-daisho"><h3>⚖️ 代償（トレードオフ）</h3>
-    <div class="lane-sub">音域拡張 × 音色悪化 の同時観測</div>
-    <p class="empty">クリーンデータ蓄積待ち（音域拡張×音色悪化の同時観測に同曲v2以降が必要）</p>
-  </div>
+  <div class="memo-saved" id="daily-saved"></div>
 </div>
 
-<h2 class="sec">📊 メトリクス別レスポンス（どの軸が即効/積み重ね/効かないか）</h2>
-<table class="resp"><tbody><tr><td class="m-name">短音率<span class="m-desc">フレーズの細切れ度（息支え）</span></td><td class="m-cls">—</td><td class="m-note">クリーンデータ蓄積待ち</td></tr><tr><td class="m-name">HNR<span class="m-desc">澄んだ声↔息漏れ</span></td><td class="m-cls">—</td><td class="m-note">クリーンデータ蓄積待ち</td></tr><tr><td class="m-name">Shimmer<span class="m-desc">声の揺れ（振幅）</span></td><td class="m-cls">—</td><td class="m-note">クリーンデータ蓄積待ち</td></tr><tr><td class="m-name">低音ノイズ<span class="m-desc">声帯フライ（語尾の軋み）</span></td><td class="m-cls">—</td><td class="m-note">クリーンデータ蓄積待ち</td></tr><tr><td class="m-name">ロングトーン<span class="m-desc">1秒超の伸ばし音</span></td><td class="m-cls">—</td><td class="m-note">クリーンデータ蓄積待ち</td></tr><tr><td class="m-name">音程ブレ<span class="m-desc">ノート間の細かな揺れ</span></td><td class="m-cls">—</td><td class="m-note">クリーンデータ蓄積待ち</td></tr><tr><td class="m-name">ビブラート<span class="m-desc">自然な震え</span></td><td class="m-cls">—</td><td class="m-note">クリーンデータ蓄積待ち</td></tr></tbody></table>
-
-<div class="narrative">
-<h2>🤖 AI の分析と次のプラン更新提案</h2>
-<p><strong>現在地（7/18・改善指標 vs 状態指標 分離版）</strong>：<a href="./profile.html">声質スコアカード</a>の <strong>主指標＝意図一致距離 |Δ|SD 合算 = 4.30 SD/曲</strong>（クリーン9曲平均・下がるほど原曲の意図に近い＝上達）。副記：音程 correctness (DTW hit_rate 平均) = <b>38.5%</b>（改善指標に統合済み・二重試験PASS）／ ビブラート周期性（改善指標に統合済み・二重試験PASS）／ 状態指標 T-avg = <b>48.4</b>（クリーンさの位置・上下は優劣ではない）。旧「総合偏差値 47.8」は「軸の二重受け入れ試験」でプロを正しく順位付けできなかったため位置指標へ降格。旧11本は測定汚染込みで因果対象から除外、クリーン対象は9曲×v1のみ。同曲2回目以降が揃わないと ✅/⏳/⚖️ の右3レーンにはカードが増えない設計。</p>
-<p><strong>次に因果が取れる介入（優先順）</strong>：<br>
-① <strong>バラード（メロディ / 大空 / 乾杯）を「息を最後まで支える」だけ意識してv2録音</strong>。HNR デルタが +1.5dB を超えれば🟢サクセス・小さければ🟡積み重ね。<br>
-② <strong>1曲を原キーと -2半音の2回で歌い比べ</strong>、短音率デルタで「キー戦略が新条件でも有効か」を検証。<br>
-③ <strong>各回1つだけ介入を変える</strong>（同時に複数変えると因果が混ざる）。</p>
-<p><strong>右3レーンの空欄について</strong>：現時点で「クリーンデータ蓄積待ち」表示が出ているのは、新録音条件に切り替えた 2026-07-17 以降まだv1しか無いためで、正常。カードを水増しせず「まだ言えないことは言わない」で運用する。</p>
-<p class="sub">※ このセクションは新セッション追加のたびに私（AI）が更新します。</p>
-</div>
-
-<div class="memo">
-<h2>✍️ 練習メモ（曲ごとに意識したこと）</h2>
-<p>その回で<strong>意識した練習・体調</strong>を書く→「コピー」でAIに渡す（録音処理時にチャットへ貼る）／音声メモ・チャットで直接言うのも可。全部同じ intervention として記録されます。</p>
-<select id="memo-sess"><option value="2026-07-17_The_Beginning">2026-07-17 The Beginning</option><option value="2026-07-17_We_are_v1">2026-07-17 We are</option><option value="2026-07-17_Wherever_you_are_v2">2026-07-17 Wherever you are</option><option value="2026-07-17_メロディ_v3">2026-07-17 メロディ</option><option value="2026-07-17_乾杯_v2">2026-07-17 乾杯</option><option value="2026-07-17_努努_v3">2026-07-17 努努</option><option value="2026-07-17_大空と大地の中で_v4">2026-07-17 大空と大地の中で</option><option value="2026-07-17_旅姿六人衆_v3">2026-07-17 旅姿六人衆</option><option value="2026-07-17_欲望に満ちた青年団">2026-07-17 欲望に満ちた青年団</option><option value="2026-07-17_皆無">2026-07-17 皆無</option><option value="__new__">＋ 次に歌う新しい回</option></select>
-<textarea id="memo-text" placeholder="例：今回は息を支えるのを意識した。喉は疲れ気味。キーは-2で。"></textarea>
-<div class="memo-btns">
-  <button onclick="saveMemo()">💾 保存</button>
-  <button class="ghost" onclick="copyMemo()">📋 AIに渡す用にコピー</button>
-</div>
-<div class="memo-saved" id="memo-saved"></div>
-</div>
-
-<div class="memo daily">
-<h2>📅 その日全体のメモ</h2>
-<p>曲ごとの介入は<strong>上のドロップダウン</strong>へ。ここは<strong>「今日全体の体調・気づき・方針」を1つ</strong>書く欄（例：今日は喉が乾いていた／全体に息を支える意識ができた／高音がラクだった 等、曲をまたいだ全体の気づき）。</p>
-<label style="display:block;font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:4px;">日付</label>
-<input type="date" id="daily-date">
-<textarea id="daily-text" placeholder="例：今日は全体に喉が疲れ気味。ロック系は無理せず -2半音固定。バラードでは息支えを意識できた。"></textarea>
-<div class="memo-btns">
-  <button onclick="saveDaily()">💾 保存</button>
-  <button class="ghost" onclick="copyDaily()">📋 AIに渡す用にコピー</button>
-</div>
-<div class="memo-saved" id="daily-saved"></div>
-</div>
-
-<footer>サクセスファイル ／ 数値の正本は <a href="./measure.html">実測</a>・<a href="./profile.html">課題</a>／<a href="./index.html">← ホーム</a> ／ 旧: <a href="./junbi-kikan/karaoke_pdca.html">準備期間 PDCA</a></footer>
+<footer>
+  <div>🎤 カラオケ練習AI</div>
+  <div>数値の正本は <a href="./measure.html">📊 実測</a> ／ 課題は <a href="./profile.html">🎯 課題</a> ／ 日記は <a href="./log.html">📔 日記</a></div>
+</footer>
 
 <script>
-// --- 曲別メモ（localStorage: karaoke-memo:<session>） ---
-var sel=document.getElementById('memo-sess'), txt=document.getElementById('memo-text'), saved=document.getElementById('memo-saved');
-function key(){return 'karaoke-memo:'+sel.value;}
-function load(){ txt.value=localStorage.getItem(key())||''; saved.textContent=txt.value?'（保存済みメモを表示中）':''; }
-sel.addEventListener('change',load);
-function saveMemo(){ localStorage.setItem(key(),txt.value); saved.textContent='✅ 保存しました（'+sel.options[sel.selectedIndex].text+'）'; }
-function copyMemo(){ var t='【練習メモ '+sel.options[sel.selectedIndex].text+'】'+txt.value; navigator.clipboard.writeText(t).then(function(){saved.textContent='📋 コピーしました。AIとのチャットに貼ってください';}); }
-load();
+var KEY_PREFIX = 'karaoke-analysis:';
+var MEMO_PREFIX = 'karaoke-memo:';
+var DAILY_MEMO_PREFIX = 'karaoke-daily-memo:';
 
-// --- 日単位メモ（localStorage: karaoke-daily-memo:<YYYY-MM-DD>） ---
-var dateEl=document.getElementById('daily-date'), dailyTxt=document.getElementById('daily-text'), dailySaved=document.getElementById('daily-saved');
-function todayISO(){ var d=new Date(); var m=String(d.getMonth()+1).padStart(2,'0'); var day=String(d.getDate()).padStart(2,'0'); return d.getFullYear()+'-'+m+'-'+day; }
-dateEl.value = todayISO();  // 初期値＝当日（build時固定ではなくJSランタイム）
-function dailyKey(){ return 'karaoke-daily-memo:'+dateEl.value; }
-function loadDaily(){ dailyTxt.value=localStorage.getItem(dailyKey())||''; dailySaved.textContent=dailyTxt.value?'（'+dateEl.value+' の保存済みメモを表示中）':''; }
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+    return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+  });
+}
+function fmt(v, pct) {
+  if (v === null || v === undefined || (typeof v === 'number' && !isFinite(v))) return '—';
+  if (typeof v !== 'number') return esc(v);
+  if (pct) return (v * 100).toFixed(1) + '%';
+  return Math.abs(v) >= 100 ? v.toFixed(0) : v.toFixed(2);
+}
+function fmtDelta(d, pct) {
+  if (!isFinite(d)) return '—';
+  var s = (d >= 0 ? '+' : '') + (pct ? (d * 100).toFixed(1) + 'pt' : (Math.abs(d) >= 100 ? d.toFixed(0) : d.toFixed(2)));
+  return s;
+}
+function loadAll() {
+  var out = [];
+  try {
+    for (var i = 0; i < localStorage.length; i++) {
+      var k = localStorage.key(i);
+      if (!k || k.indexOf(KEY_PREFIX) !== 0) continue;
+      try {
+        var rec = JSON.parse(localStorage.getItem(k));
+        if (rec && rec.values) { rec._key = k; out.push(rec); }
+      } catch (e) {}
+    }
+  } catch (e) {}
+  return out;
+}
+
+/* デルタ判定：改善指標の「良い方向」を軸ごとに宣言しておき、後 - 前 の符号で緑/赤/フラットを付ける */
+var AXES = [
+  { k:'crepe_intonation_cent',   label:'音程ズレ',       unit:'c',   better:'lower',  pct:false },
+  { k:'vibrato_avg_extent_cent', label:'ビブラート幅',   unit:'c',   better:'target', pct:false, target:[50,120] },
+  { k:'longtones_count',         label:'ロング',         unit:'本', better:'higher', pct:false },
+  { k:'short_note_ratio',        label:'短音率',         unit:'',    better:'lower',  pct:true }
+];
+function judgeDir(axis, prev, cur) {
+  if (!isFinite(prev) || !isFinite(cur)) return 'flat';
+  var d = cur - prev;
+  if (Math.abs(d) < 1e-6) return 'flat';
+  if (axis.better === 'lower')  return d < 0 ? 'good' : 'bad';
+  if (axis.better === 'higher') return d > 0 ? 'good' : 'bad';
+  if (axis.better === 'target') {
+    /* 目標帯 [lo,hi] への距離が縮んだら緑 */
+    var lo = axis.target[0], hi = axis.target[1];
+    function dist(v) { if (v < lo) return lo - v; if (v > hi) return v - hi; return 0; }
+    var dp = dist(prev), dc = dist(cur);
+    if (Math.abs(dp - dc) < 1e-6) return 'flat';
+    return dc < dp ? 'good' : 'bad';
+  }
+  return 'flat';
+}
+
+(function renderCompare() {
+  var all = loadAll();
+  var host = document.getElementById('compare-body');
+
+  if (!all.length) {
+    host.innerHTML = '<div class="step-section"><div class="empty-state">' +
+      '<span class="big">まだ記録がありません</span>' +
+      '「<a href="./analyze.html">🎙 解析</a>」ページで同じ曲を2回以上録音すると、ここに比較カードが並びます' +
+      '</div></div>';
+    return;
+  }
+
+  /* engine 混在の注記 */
+  var engines = {};
+  all.forEach(function (r) { engines[(r.values && r.values._engine) || '?'] = 1; });
+  var engineNames = Object.keys(engines);
+  var engNote = '';
+  if (engineNames.length > 1) {
+    engNote = '<div class="engine-note">この個人IDには <b>' + engineNames.length +
+      ' 種類の計測方法</b>（' + esc(engineNames.join(' / ')) +
+      '）が混在。<b>engine が違う2テイクは同じ軸でもデルタが意味を持たない</b>ため、下の比較カードで engine 表示が違う場合はデルタ色を鵜呑みにしないでください（cards の右上に注意表示を出しています）。</div>';
+  }
+
+  /* 曲別グループ化 → 記録数2以上の曲のみ抽出 → 直近2テイクを並べる（at 昇順の下から2件） */
+  var bySong = {};
+  all.forEach(function (r) {
+    var s = r.song || '（曲名なし）';
+    (bySong[s] = bySong[s] || []).push(r);
+  });
+
+  var songsWithPair = [];
+  var songsSingle = [];
+  Object.keys(bySong).forEach(function (s) {
+    var arr = bySong[s].slice().sort(function (a, b) { return String(a.at).localeCompare(String(b.at)); });
+    if (arr.length >= 2) songsWithPair.push({ song: s, takes: arr });
+    else songsSingle.push({ song: s, takes: arr });
+  });
+
+  /* 表示順：直近の後テイクが新しい順 */
+  songsWithPair.sort(function (a, b) {
+    var la = a.takes[a.takes.length - 1].at || '';
+    var lb = b.takes[b.takes.length - 1].at || '';
+    return String(lb).localeCompare(String(la));
+  });
+
+  var html = engNote;
+
+  if (!songsWithPair.length) {
+    html += '<div class="step-section"><div class="empty-state">' +
+      '<span class="big">同じ曲で2回以上の記録がまだありません</span>' +
+      '記録は <b>' + Object.keys(bySong).length + ' 曲・全' + all.length + 'テイク</b> ありますが、比べる相手（同曲 v2 以降）を待っている状態です' +
+      '</div></div>';
+  } else {
+    html += '<div class="compare-list">';
+    songsWithPair.forEach(function (grp) {
+      var takes = grp.takes;
+      var prev = takes[takes.length - 2];
+      var cur  = takes[takes.length - 1];
+      var pv = prev.values || {}, cv = cur.values || {};
+      var engPrev = pv._engine || '?', engCur = cv._engine || '?';
+      var engMixed = engPrev !== engCur;
+
+      html += '<div class="compare-card">';
+      html += '<div class="cc-head">' +
+        '<h3 class="cc-title">' + esc(grp.song) +
+          '<span class="count">全' + takes.length + '回・直近2回を比較</span></h3>' +
+        '<span class="cc-eng' + (engMixed ? ' mixed' : '') + '">engine: ' +
+          (engMixed ? esc(engPrev) + ' → ' + esc(engCur) + '（不一致）' : esc(engCur)) +
+        '</span>' +
+      '</div>';
+
+      html += '<div class="pair">';
+      html += '<div class="side">' +
+        '<div class="h"><b>前</b> <span class="date">' + esc(String(prev.at || '').slice(0, 10)) + '</span>' +
+          (prev.version ? ' <span class="date">' + esc(prev.version) + '</span>' : '') + '</div>';
+      html += '<div class="deltas">';
+      AXES.forEach(function (a) {
+        html += '<div class="k">' + esc(a.label) + '</div>' +
+          '<div class="v">' + fmt(pv[a.k], a.pct) + esc(a.unit) + '</div>' +
+          '<div class="v">' + fmt(cv[a.k], a.pct) + esc(a.unit) + '</div>';
+      });
+      html += '</div></div>';
+
+      html += '<div class="arrow">→</div>';
+
+      html += '<div class="side">' +
+        '<div class="h"><b>後</b> <span class="date">' + esc(String(cur.at || '').slice(0, 10)) + '</span>' +
+          (cur.version ? ' <span class="date">' + esc(cur.version) + '</span>' : '') + '</div>';
+      html += '<div class="deltas">';
+      AXES.forEach(function (a) {
+        var d = (isFinite(pv[a.k]) && isFinite(cv[a.k])) ? (cv[a.k] - pv[a.k]) : NaN;
+        var cls = engMixed ? 'flat' : judgeDir(a, pv[a.k], cv[a.k]);
+        html += '<div class="k">Δ ' + esc(a.label) + '</div>' +
+          '<div class="d ' + cls + '">' + fmtDelta(d, a.pct) + '</div>' +
+          '<div class="k" style="font-size:10px; color:var(--muted);">' +
+            (a.better === 'lower' ? '↓緑' : a.better === 'higher' ? '↑緑' : '50-120c 内が緑') +
+          '</div>';
+      });
+      html += '</div></div>';
+      html += '</div>';
+
+      /* メモ横並び */
+      html += '<div class="memo-pair">' +
+        (prev.memo && prev.memo.trim()
+          ? '<div class="memo-side"><div class="h">前回メモ</div>' + esc(prev.memo) + '</div>'
+          : '<div class="memo-side empty">前回のメモ：（空）</div>') +
+        (cur.memo && cur.memo.trim()
+          ? '<div class="memo-side"><div class="h">今回メモ</div>' + esc(cur.memo) + '</div>'
+          : '<div class="memo-side empty">今回のメモ：（空）</div>') +
+      '</div>';
+
+      if (engMixed) {
+        html += '<div class="mixed-note">⚠️ この2テイクは engine が違います（' + esc(engPrev) + ' vs ' + esc(engCur) + '）。同じ軸名でも別量なのでデルタ色は表示していません（フラット扱い）。同じ engine で v2 を録り直すと色が付きます。</div>';
+      }
+
+      html += '</div>';
+    });
+    html += '</div>';
+
+    if (songsSingle.length) {
+      html += '<div class="engine-note" style="margin-top:22px;">記録が1回だけの曲：<b>' +
+        songsSingle.map(function (g) { return esc(g.song); }).join(' / ') +
+        '</b>（' + songsSingle.length + '曲）。v2 を録ると比較カードに合流します。</div>';
+    }
+  }
+
+  host.innerHTML = html;
+})();
+
+/* ─── メモ入力：曲リストは記録から動的抽出（特定のセッション名等はハードコードしない） ─── */
+(function initMemoBox() {
+  var all = loadAll();
+  var sel = document.getElementById('memo-sess');
+  var seen = {};
+  all.slice().sort(function (a, b) { return String(b.at).localeCompare(String(a.at)); })
+    .forEach(function (r) {
+      /* セッションキーは analyze.html と揃える形式：<日付>_<song>_<version> */
+      var d = String(r.at || '').slice(0, 10);
+      var song = (r.song || 'nosong').replace(/\s+/g, '_');
+      var ver = r.version || 'v1';
+      var key = d + '_' + song + '_' + ver;
+      if (seen[key]) return;
+      seen[key] = 1;
+      var opt = document.createElement('option');
+      opt.value = key;
+      opt.textContent = d + ' ' + (r.song || '（曲名なし）') + (r.version ? ' ' + r.version : '');
+      sel.appendChild(opt);
+    });
+})();
+
+var sel = document.getElementById('memo-sess');
+var txt = document.getElementById('memo-text');
+var saved = document.getElementById('memo-saved');
+function memoKey() { return MEMO_PREFIX + sel.value; }
+function loadMemo() {
+  if (!sel.value) { txt.value = ''; saved.textContent = ''; return; }
+  txt.value = localStorage.getItem(memoKey()) || '';
+  saved.textContent = txt.value ? '（保存済みメモを表示中）' : '';
+}
+sel.addEventListener('change', loadMemo);
+function saveMemo() {
+  if (!sel.value) { saved.textContent = '⚠️ 先にテイクを選択してください'; return; }
+  localStorage.setItem(memoKey(), txt.value);
+  saved.textContent = '✅ 保存しました（' + sel.options[sel.selectedIndex].text + '）';
+}
+function copyMemo() {
+  if (!sel.value) { saved.textContent = '⚠️ 先にテイクを選択してください'; return; }
+  var t = '【練習メモ ' + sel.options[sel.selectedIndex].text + '】' + txt.value;
+  navigator.clipboard.writeText(t).then(function () { saved.textContent = '📋 コピーしました'; });
+}
+loadMemo();
+
+/* ─── その日全体のメモ ─── */
+var dateEl = document.getElementById('daily-date');
+var dTxt = document.getElementById('daily-text');
+var dSaved = document.getElementById('daily-saved');
+function todayISO() {
+  var d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+dateEl.value = todayISO();
+function dailyKey() { return DAILY_MEMO_PREFIX + dateEl.value; }
+function loadDaily() {
+  dTxt.value = localStorage.getItem(dailyKey()) || '';
+  dSaved.textContent = dTxt.value ? '（' + dateEl.value + ' の保存済みメモを表示中）' : '';
+}
 dateEl.addEventListener('change', loadDaily);
-function saveDaily(){ localStorage.setItem(dailyKey(), dailyTxt.value); dailySaved.textContent='✅ 保存しました（'+dateEl.value+'）'; }
-function copyDaily(){ var t='【その日全体のメモ '+dateEl.value+'】'+dailyTxt.value; navigator.clipboard.writeText(t).then(function(){dailySaved.textContent='📋 コピーしました（'+dateEl.value+'）';}); }
+function saveDaily() {
+  localStorage.setItem(dailyKey(), dTxt.value);
+  dSaved.textContent = '✅ 保存しました（' + dateEl.value + '）';
+}
+function copyDaily() {
+  var t = '【その日全体のメモ ' + dateEl.value + '】' + dTxt.value;
+  navigator.clipboard.writeText(t).then(function () { dSaved.textContent = '📋 コピーしました（' + dateEl.value + '）'; });
+}
 loadDaily();
 </script>
 <script src="./nav.js"></script>
-</body></html>
+</body>
+</html>

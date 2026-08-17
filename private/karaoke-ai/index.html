@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>カラオケ練習AI — ホーム（v1・7/17ゼロ地点）</title>
+<title>カラオケ練習AI — ホーム</title>
 <style>
 :root {
   --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70; --sky:#6DA6C2;
@@ -80,8 +80,8 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 
 <div class="hero">
   <h1>🎤 カラオケ練習AI</h1>
-  <div class="tag">demucs 分離 × pypYIN 9軸 × 原曲アーティスト実測基準の偏差値 × MYP 129本カリキュラム</div>
-  <div class="zero">🆕 v1 ／ 2026-07-17 をゼロ地点に再構築</div>
+  <div class="tag">録音を数値にして、前回からの変化を見る</div>
+  
 </div>
 
 <div id="first-run" style="display:none; margin:22px 0; padding:18px 22px; border-radius:14px;
@@ -95,26 +95,24 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 </div>
 
 <section class="status">
-  <h2>📌 今日のステータス（新ベースライン v0）</h2>
+  <h2>📌 いまの記録</h2>
   <div class="status-grid">
-    <div class="stat"><div class="num">4.30<span style="font-size:14px;">SD</span></div><div class="lbl">主指標｜意図一致距離<br>（|Δ|SD 合算・クリーン9曲平均・下がる=上達／副記：状態指標T-avg 48.4・音程correctness 38.5%）</div></div>
-    <div class="stat"><div class="num">9曲 / 9回</div><div class="lbl">クリーン録音<br>（7/17新条件・全 v1）</div></div>
+    <div class="stat"><div class="num" id="home-songs">—</div><div class="lbl">これまでに解析した曲</div></div>
+    <div class="stat"><div class="num" id="home-takes">—</div><div class="lbl">解析の総回数</div></div>
     <div class="stat"><div class="num sky" id="watched-num">— / 129</div><div class="lbl">動画 視聴済み</div></div>
-    <div class="stat"><div class="num sage">07-17</div><div class="lbl">直近セッション</div></div>
+    <div class="stat"><div class="num sage" id="home-last">—</div><div class="lbl">最後の解析日</div></div>
   </div>
   <div class="status-focus">
-    🆕 <strong>2026-07-17 新ベースライン v0</strong>：iPhone直イヤホンマイク・ガイド OFF・BGM 小に録音条件を刷新。旧記録（〜7/15）は測定汚染込みで、旧サイトが示していた「10曲/23回・偏差値61手打ち」は<strong>「上達」ではなく「測定の掃除」</strong>。ここから同一新条件のセッション間差分で本当の上達を測る。
-    <br>🎯 現弱点：<strong>②安定 cent（偏差25・音程内揺らぎ／クランプ下限）</strong>と<strong>短音率</strong>。強み：<strong>⑤深み αRatio（偏差48・松山/長渕より深い側）・jitter/shimmer（偏差61）</strong>（分布ベース×玉置=75天井ハイブリッド）。
-    → 詳細は <a href="./profile.html">課題（声質偏差値）</a>、次の一手は <a href="./success.html">検証（サクセスFile）</a> の🔬レーン。
+    🎯 <strong>録音の条件をそろえるのが先</strong>：ガイドボーカルは切る／伴奏は小さめ／イヤホンのマイクをスマホに直挿し。条件が変わると、歌が変わっていなくても数字が動きます。
+    <br>→ 自分の弱いところは <a href="./profile.html">課題</a>、次の一手は <a href="./success.html">検証</a> で確認できます。まだ記録が無ければ <a href="./analyze.html">解析</a> から始めてください。
   </div>
 </section>
 
 <section class="principle">
-  <h2>🧭 基本方針（v1・一新）</h2>
-  <p><strong>7/17 = ゼロ地点</strong>。7/10〜7/15 の11本は「正しい測り方・分析・練習方針を確立するための<strong>準備期間</strong>」として価値を認めつつ、因果分析・偏差値集計からは切り離す。</p>
-  <p>各曲は <strong>#1（v1）</strong> からスタート。同じ曲・同じ新条件で v2 以降を録るまでは、サクセスファイルの右3レーンは意図的に空欄（クリーンデータ蓄積待ち）＝件数を水増ししない。</p>
-  <p>MYP 主軸（129本カリキュラム）は不変。動画再選定は 7/17 プロファイルに基づいて別途行う（Mits確認要）。</p>
-  <div class="note">※ 詳細な移行経緯とスナップショット：ページ下部「準備期間」リンクへ</div>
+  <h2>🧭 基本方針</h2> <p><strong>録音の条件をそろえた回だけを比べる。</strong>マイク・伴奏の音量・ガイドボーカルの有無が変わると、歌が変わっていなくても数字が動く。条件を変えた回はメモに残す。</p>
+  <p>同じ曲を同じ条件でもう一度録るまで、変化は出ない。<strong>比べられるのは同じ曲どうしだけ。</strong></p>
+  <p>練習動画（129本）は誰にとっても共通の教材。自分の弱い軸に合わせて選ぶ。</p>
+  
 </section>
 
 <div class="loop-title">— 練習ループ：測って → 課題を知って → 検証して → 計画して → 学ぶ → また測る —</div>
@@ -164,11 +162,7 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
   </a>
 </div>
 
-<section class="junbi-link">
-  <strong>🗄 準備期間アーカイブ</strong>：7/17以前の旧サイト（旧命名・旧数値・旧録音）は
-  <a href="./junbi-kikan/index.html">./junbi-kikan/</a>
-  に凍結保存。中身は一文字も変えていない。当時どう見えていたかを振り返るための資料。
-</section>
+
 
 <footer>
   カラオケ練習AI ／ 非公開（noindex）／ v1 build 2026-07-17<br>
@@ -186,11 +180,29 @@ footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line); f
 })();
 </script>
 <script>
-// 視聴済み数を localStorage から反映
+// 視聴済み数と解析の実績を、この端末の個人IDに紐づく記録から反映。
+// HTML には誰の数字も焼き込まない（他の人が開いても自分の数字しか出ない）。
 (function(){
   var n = Object.keys(localStorage).filter(function(k){ return k.indexOf('karaoke-watched:')===0; }).length;
   var el = document.getElementById('watched-num');
   if (el) el.textContent = n + ' / 129';
+
+  var songs = {}, takes = 0, last = '';
+  Object.keys(localStorage).forEach(function (k) {
+    if (k.indexOf('karaoke-analysis:') !== 0) return;
+    try {
+      var r = JSON.parse(localStorage.getItem(k));
+      if (!r || !r.values) return;
+      takes++;
+      if (r.song) songs[r.song] = 1;
+      var d = String(r.at || '').slice(0, 10);
+      if (d > last) last = d;
+    } catch (e) {}
+  });
+  function put(id, v) { var e = document.getElementById(id); if (e) e.textContent = v; }
+  put('home-songs', takes ? Object.keys(songs).length + ' 曲' : '—');
+  put('home-takes', takes ? takes + ' 回' : '—');
+  put('home-last',  last || '—');
 })();
 </script>
 </body>

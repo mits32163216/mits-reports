@@ -303,16 +303,16 @@ footer a { color: var(--gold); }
   <h1>🎬 MYPチャンネル 練習動画マップ</h1>
   <div class="sub">
     トレーナー <a href="https://www.youtube.com/@myp_channel/videos" target="_blank" rel="noopener">Mitsuhiro Yamashita Project</a>
-    ／全 129 本を 7/17 課題体系 6 Phase に再割当（2026-07-17 刷新）
+    ／全 129 本を課題体系 6 Phase に割当
   </div>
 </header>
 
 <div class="overview">
-  <p><span class="label">目的</span>Mits のカラオケ練習AI（7/17クリーン基準）の課題体系 6 Phase に、トレーナー動画を配属。「今週どの Phase を強化するか」を決めたら、その Phase のリストから動画を選ぶ運用。</p>
-  <p><span class="label">7/17-18 基準</span>音程 correctness（DTW 的中率・9曲平均）<strong>38.5%</strong>／short_note_ratio <strong>59%</strong>／ビブラート幅 <strong>190-210c</strong>（理想 50-120c）／音域 <strong>C3〜E5</strong>（皆無で E5 到達実測）／HNR バラード群 <strong>16 dB台</strong>（状態指標に降格）／low_noise_hits <strong>全曲 0</strong>。改善指標＝ ①correctness ／ ②ビブラート幅制御 ／ ③バラードのビブラート周期性 ／ ④息配分 ／ ⑤Δ収縮。</p>
-  <p><span class="label">最優先</span><strong>Phase 1（音程 correctness）</strong>と <strong>Phase 2（息支え）</strong>が Mits の改善指標①・④を直撃する Phase。装飾軸の <strong>Phase 5</strong> は改善指標②（ビブラート幅制御 190→50-120c）の位置づけを兼ねる。</p>
+  <p><span class="label">目的</span>課題体系 6 Phase に、トレーナー動画を配属。「今週どの Phase を強化するか」を決めたら、その Phase のリストから動画を選ぶ運用。</p>
+  <p><span class="label">見る順の決め方</span>改善指標＝ ①音程 correctness ／ ②ビブラート幅の制御 ／ ③ビブラートの周期性 ／ ④息配分 ／ ⑤原曲との距離の縮小。<strong>自分がどれで弱いかは <a href="./measure.html">実測</a> と <a href="./profile.html">課題</a> で確認</strong>してから Phase を選ぶ。</p>
+  <p><span class="label">最優先</span><strong>Phase 1（音程 correctness）</strong>と <strong>Phase 2（息支え）</strong>が改善指標①・④を直撃する。装飾軸の <strong>Phase 5</strong> は改善指標②（ビブラート幅の制御・理想帯 50-120c）を兼ねる。</p>
   <p><span class="label">分類方針</span>各動画は primary Phase を 1 個割当（複数 Phase 該当時は最も強い訴求先）。並びは各 Phase 内で動画 # 順（トレーナーの理論構築順）。</p>
-  <p style="margin-top:12px;"><a href="./profile.html" style="display:inline-block; padding:8px 16px; background:var(--gold); color:white; border-radius:6px; font-weight:600; text-decoration:none;">🎙️ 声質スコアカード（7/17クリーン9曲） →</a></p>
+  <p style="margin-top:12px;"><a href="./profile.html" style="display:inline-block; padding:8px 16px; background:var(--gold); color:white; border-radius:6px; font-weight:600; text-decoration:none;">🎙️ 声質スコアカード →</a></p>
 </div>
 
 <section class="summary-bars">
@@ -361,7 +361,7 @@ footer a { color: var(--gold); }
     <h2 class="phase-name">Phase 0 — 土台・座学 <span class="phase-count">〈30本〉</span></h2>
     
   </div>
-  <p class="phase-desc">姿勢・練習法・道具・アプリ・食事・座学。歌う前のセットアップと基礎理論。Mits の 7/17クリーン測定でも土台は不変。</p>
+  <p class="phase-desc">姿勢・練習法・道具・アプリ・食事・座学。歌う前のセットアップと基礎理論。ここは誰にとっても土台。</p>
   <ul class="video-list">
     <li data-vid="EOJQ4-mV16Q"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="EOJQ4-mV16Q"><span class="vchk-mark"></span></label><a href="https://www.youtube.com/watch?v=EOJQ4-mV16Q" target="_blank" rel="noopener"><span class="vnum">#1</span> 【ボイトレ基礎】歌が上手くなる最大の要素を教えます｜究極のボイトレ動画のはじまり</a><span class="vwatched-date" data-vid="EOJQ4-mV16Q"></span><span class="vdur">9分11秒</span></li>
     <li data-vid="YawtBF9-Eh8"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="YawtBF9-Eh8"><span class="vchk-mark"></span></label><a href="https://www.youtube.com/watch?v=YawtBF9-Eh8" target="_blank" rel="noopener"><span class="vnum">#2</span> ズバ抜けて歌が上手くなる発声 6つのポイント【ボイトレの基礎・基本】</a><span class="vwatched-date" data-vid="YawtBF9-Eh8"></span><span class="vdur">9分32秒</span></li>
@@ -398,9 +398,9 @@ footer a { color: var(--gold); }
 <section id="phase-1" class="phase-section priority">
   <div class="phase-header">
     <h2 class="phase-name">Phase 1 — 音程 correctness（狙った音を当てる） <span class="phase-count">〈11本〉</span></h2>
-    <span class="priority-badge">🔴 Mitsの最優先</span>
+    <span class="priority-badge">🔴 最優先</span>
   </div>
-  <p class="phase-desc">リズム論5編＋子音＋イヤトレ＋音痴仕組み。改善指標①＝音程 correctness（DTW 的中率・Mits 9曲平均 38.5%・記憶中3曲 Wherever 33.6/We are 28.8/皆無 32.1 が最低群）を上げる本命 Phase。旧「Tony cent 揺らぎ 44.7 = 弱点」フレームは 7/18 の二重試験（プロ横断×改善縦断）で撤回：cent はビブラート幅の代理変数と判明した。ここは『狙った音を当てる』ためのリズム基準＋子音タイミング＋耳の力を組む。</p>
+  <p class="phase-desc">リズム論5編＋子音＋イヤトレ＋音痴仕組み。改善指標①＝音程 correctness（原曲と同じ音を通れているか）を上げる本命 Phase。<strong>覚えきっていない曲ほど低く出る</strong>。ノート内の cent 揺らぎはビブラート幅の言い換えなので、弱点として扱わない。ここは『狙った音を当てる』ためのリズム基準＋子音タイミング＋耳の力を組む。</p>
   <ul class="video-list">
     <li data-vid="K2mCKWDacHM"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="K2mCKWDacHM"><span class="vchk-mark"></span></label><a href="https://www.youtube.com/watch?v=K2mCKWDacHM" target="_blank" rel="noopener"><span class="vnum">#12</span> 音痴を治す方法は？ 【音がハズれる仕組み】を解説｜</a><span class="vwatched-date" data-vid="K2mCKWDacHM"></span><span class="vdur">9分24秒</span></li>
     <li data-vid="cbWgekMizL8"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="cbWgekMizL8"><span class="vchk-mark"></span></label><a href="https://www.youtube.com/watch?v=cbWgekMizL8" target="_blank" rel="noopener"><span class="vnum">#31</span> 正しい発声の基礎となる口の開け方②【母音ごとの開け方】</a><span class="vwatched-date" data-vid="cbWgekMizL8"></span><span class="vdur">11分21秒</span></li>
@@ -418,9 +418,9 @@ footer a { color: var(--gold); }
 <section id="phase-2" class="phase-section priority">
   <div class="phase-header">
     <h2 class="phase-name">Phase 2 — 息支え <span class="phase-count">〈23本〉</span></h2>
-    <span class="priority-badge">🔴 Mitsの最優先</span>
+    <span class="priority-badge">🔴 最優先</span>
   </div>
-  <p class="phase-desc">腹式呼吸・腹圧・横隔膜・ブレス・ロングトーン。Mits の 7/17 実測 short_note_ratio 59%（フレーズ細切れ・息の使い切りが速い）を直撃する Phase。</p>
+  <p class="phase-desc">腹式呼吸・腹圧・横隔膜・ブレス・ロングトーン。短音率が高い（フレーズが細切れ・息の使い切りが速い）人を直撃する Phase。</p>
   <ul class="video-list">
     <li data-vid="Sp3zRzggfx4"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="Sp3zRzggfx4"><span class="vchk-mark"></span></label><a href="https://www.youtube.com/watch?v=Sp3zRzggfx4" target="_blank" rel="noopener"><span class="vnum">#5</span> Teaching authentic abdominal breathing | Voice training for beginners to professionals [Daily ...</a><span class="vwatched-date" data-vid="Sp3zRzggfx4"></span><span class="vdur">21分31秒</span></li>
     <li data-vid="Dpk5pfgxKfE"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="Dpk5pfgxKfE"><span class="vchk-mark"></span></label><a href="https://www.youtube.com/watch?v=Dpk5pfgxKfE" target="_blank" rel="noopener"><span class="vnum">#6</span> 下腹部で動かせない？本物の腹式呼吸を徹底解説｜ボイトレの第一歩をこの動画から</a><span class="vwatched-date" data-vid="Dpk5pfgxKfE"></span><span class="vdur">4分14秒</span></li>
@@ -452,7 +452,7 @@ footer a { color: var(--gold); }
     <h2 class="phase-name">Phase 3 — 声質・喉ケア <span class="phase-count">〈15本〉</span></h2>
     
   </div>
-  <p class="phase-desc">声帯閉鎖・喉ケア・力み解消・共鳴・低音発声。7/17 クリーン測定で HNR バラード群 16 dB台・low_noise_hits 全曲 0 と改善済のため、緊急度は下がった保全 Phase。</p>
+  <p class="phase-desc">声帯閉鎖・喉ケア・力み解消・共鳴・低音発声。息漏れ（HNR）は上げにいく数字ではないので、ここは緊急度より保全の Phase。</p>
   <ul class="video-list">
     <li data-vid="Uzfvnff2ZLY"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="Uzfvnff2ZLY"><span class="vchk-mark"></span></label><a href="https://www.youtube.com/watch?v=Uzfvnff2ZLY" target="_blank" rel="noopener"><span class="vnum">#4</span> Do you know about body resonance? Explaining the vocal techniques of the world&#x27;s top singers |...</a><span class="vwatched-date" data-vid="Uzfvnff2ZLY"></span><span class="vdur">14分47秒</span></li>
     <li data-vid="a8Uo8oDiQg4"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="a8Uo8oDiQg4"><span class="vchk-mark"></span></label><a href="https://www.youtube.com/watch?v=a8Uo8oDiQg4" target="_blank" rel="noopener"><span class="vnum">#22</span> 衝撃！プロも喉声？本物の正しい発声教えます｜歌が上手くなる方法</a><span class="vwatched-date" data-vid="a8Uo8oDiQg4"></span><span class="vdur">21分08秒</span></li>
@@ -476,7 +476,7 @@ footer a { color: var(--gold); }
     <h2 class="phase-name">Phase 4 — 高音・ミックス定着 <span class="phase-count">〈19本〉</span></h2>
     
   </div>
-  <p class="phase-desc">ミックス／ミドル／ヘッド／裏声／換声点／高音発声。7/17 皆無で E5（672.9 Hz）到達実測を確認したため、旧サイトの『あえて除外』方針を撤回。定着と拡張のフェーズへ。</p>
+  <p class="phase-desc">ミックス／ミドル／ヘッド／裏声／換声点／高音発声。<strong>すでに出ている高音を定着させて広げる</strong>フェーズ。</p>
   <ul class="video-list">
     <li data-vid="Cf8w8Hyr8b4"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="Cf8w8Hyr8b4"><span class="vchk-mark"></span></label><a href="https://www.youtube.com/watch?v=Cf8w8Hyr8b4" target="_blank" rel="noopener"><span class="vnum">#11</span> Get a high-pitched voice in one go! Extremely effective stretches for high-pitched vocalizati...</a><span class="vwatched-date" data-vid="Cf8w8Hyr8b4"></span><span class="vdur">6分19秒</span></li>
     <li data-vid="Z1bu6BFMATA"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="Z1bu6BFMATA"><span class="vchk-mark"></span></label><a href="https://www.youtube.com/watch?v=Z1bu6BFMATA" target="_blank" rel="noopener"><span class="vnum">#13</span> 高い声やミックスボイスを出したい人へ｜声が低い人が高音をマスターできたワケとは？歌が上手くなるボイトレの基本</a><span class="vwatched-date" data-vid="Z1bu6BFMATA"></span><span class="vdur">10分43秒</span></li>
@@ -504,7 +504,7 @@ footer a { color: var(--gold); }
     <h2 class="phase-name">Phase 5 — 装飾・表現（含 ビブラート幅制御） <span class="phase-count">〈3本〉</span></h2>
     
   </div>
-  <p class="phase-desc">ビブラート・こぶし・しゃくり・フェイク・感情表現。7/17 実測で vibrato/kobushi/shakuri の『発生』は既に豊か（rate 4.3-5.3Hz は正常帯）だが、改善指標②＝ビブラート幅の制御（現状 Mits 190-210c → 理想帯 50-120c）が別軸で必要。ここでは装飾を『抑制方向に整える』フェーズとして位置づけ、#126 が幅制御の直撃教材。</p>
+  <p class="phase-desc">ビブラート・こぶし・しゃくり・フェイク・感情表現。装飾が「出ている」ことと「制御できている」ことは別。改善指標②＝ビブラート幅の制御（理想帯 50-120c）はここで扱う。ここでは装飾を『抑制方向に整える』フェーズとして位置づけ、#126 が幅制御の直撃教材。</p>
   <ul class="video-list">
     <li data-vid="YNSy5zVvi1k"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="YNSy5zVvi1k"><span class="vchk-mark"></span></label><a href="https://www.youtube.com/watch?v=YNSy5zVvi1k" target="_blank" rel="noopener"><span class="vnum">#105</span> 実力派テク【フェイク】これだけで歌が上手くなる</a><span class="vwatched-date" data-vid="YNSy5zVvi1k"></span><span class="vdur">12分15秒</span></li>
     <li data-vid="wMn21BIKUmA"><label class="vchk" title="視聴済みチェック"><input type="checkbox" data-vkey="wMn21BIKUmA"><span class="vchk-mark"></span></label><a href="https://www.youtube.com/watch?v=wMn21BIKUmA" target="_blank" rel="noopener"><span class="vnum">#114</span> 本物の歌うまのテクニック教えます｜歌の感情表現｜歌が上手くなるボイトレ理論</a><span class="vwatched-date" data-vid="wMn21BIKUmA"></span><span class="vdur">14分15秒</span></li>
@@ -550,8 +550,8 @@ footer a { color: var(--gold); }
 </section>
 
 <footer>
-  更新日 2026-07-17（案②刷新版・7/17課題体系）／ 取得元 <a href="https://www.youtube.com/@myp_channel/videos" target="_blank" rel="noopener">MYP Channel /videos</a><br>
-  ビルド：yt-dlp --flat-playlist → tag_map（`_wip/myp_video_tags.json`）→ 7/17 6 Phase 再割当 → 単一 HTML<br>
+  取得元 <a href="https://www.youtube.com/@myp_channel/videos" target="_blank" rel="noopener">MYP Channel /videos</a><br>
+  ビルド：yt-dlp --flat-playlist → tag_map → 6 Phase 割当 → 単一 HTML<br>
   <a href="./plan.html">← 計画に戻る</a>
 </footer>
 

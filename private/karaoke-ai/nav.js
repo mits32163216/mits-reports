@@ -15,16 +15,12 @@
     { file: "videos.html",  key: "videos",  emoji: "🎬", label: "学ぶ",    sub: "全動画" },
     { file: "help.html",    key: "help",    emoji: "❓", label: "使い方",  sub: "はじめに" },
     { file: "setup.html",   key: "setup",   emoji: "⚙️", label: "設定",    sub: "個人ID" },
-    { file: "junbi-kikan/index.html", key: "junbi", emoji: "🗄", label: "準備期間", sub: "旧サイト" },
-  ];
+    ];
 
   // 現在ページ判定
-  //   /junbi-kikan/ 配下のときも「junbi」として扱う（旧サイトを見ているときも現在地表示）
   var path = location.pathname;
   var current = "index";
-  if (path.indexOf("/junbi-kikan/") >= 0) {
-    current = "junbi";
-  } else {
+  {
     var leaf = path.split("/").pop() || "index.html";
     if (leaf === "" || leaf === "/") leaf = "index.html";
     for (var i = 0; i < NAV.length; i++) {
@@ -84,20 +80,13 @@
   }
   `;
 
-  // Root-relative へ変換：現在が junbi-kikan/ 配下なら "../" を前置
-  var prefix = (path.indexOf("/junbi-kikan/") >= 0) ? "../" : "./";
+  var prefix = "./";
 
   var linksHtml = NAV.map(function (n) {
     var util = (n.key === "junbi" || n.key === "help" || n.key === "setup");
     var cls = (n.key === current ? "kn-current " : "") + (util ? "kn-junbi" : "");
     var sub = n.sub ? '<span class="kn-sub">' + n.sub + "</span>" : "";
-    // 準備期間だけは常に junbi-kikan/index.html 相対、他は現在ディレクトリ相対
-    var href;
-    if (n.key === "junbi") {
-      href = prefix + "junbi-kikan/index.html";
-    } else {
-      href = prefix + n.file;
-    }
+    var href = prefix + n.file;
     return '<a class="' + cls.trim() + '" href="' + href + '">' +
            '<span class="kn-top">' + n.emoji + " " + n.label + "</span>" + sub + "</a>";
   }).join("");

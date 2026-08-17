@@ -323,6 +323,14 @@
   function adoptFamily(id) {
     var v = validFamily(id);
     if (!v) return false;
+    // ★ 先に saveFamily すると、遷移先の resolveFamily が「同じID」と判断して
+    //   切替時の消去が走らない。結果、手元に残っていた前のIDのデータが
+    //   新しいIDへ送られる（2026-08-16 実データで発生）。先に消す。
+    var prev = storedFamily();
+    if (prev && prev !== v) {
+      var n = wipeLocalFamilyData();
+      log('切替', '旧ID のデータ ' + n + ' 件を退避して消去（新ID へ持ち込まない）');
+    }
     saveFamily(v);
     var url = familyUrl(v);
     if (VIEW_ONLY) url += '&view=guest';
