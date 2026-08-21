@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIに任せた仕事、どこにありますか？｜git を「机・保管庫・棚」で理解する — Mits Reports</title>
+<meta name="description" content="AIに頼んだ仕事の成果物は、あなたの机の上には届かない。安全上の理由で本流に直接置かないから。gitを「机（Mac）／保管庫（GitHub）／棚（ブランチ）」の3空間で理解し直し、静かに壊れる事故（Silent Failure）を仕組みで防ぐ実話。">
+<meta property="og:title" content="AIに任せた仕事、どこにありますか？｜git を「机・保管庫・棚」で理解する">
+<meta property="og:description" content="成果物は、あなたの机の上には届かない。受け取るまでが仕事。">
+<meta property="og:type" content="article">
+<style>
+  :root {
+    --navy: #1a3a52;
+    --navy-light: #2c5575;
+    --ivory: #f7f3ea;
+    --paper: #fbfaf5;
+    --ink: #2a2a2a;
+    --gray: #7a7a7a;
+    --line: #d8d4ca;
+    --ok: #2d8659;
+    --warn: #c89020;
+    --ng: #b04848;
+    --gold: #b89544;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.75;
+    font-size: 15px;
+    padding: 20px 16px;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  header.report-head {
+    background: var(--navy);
+    color: var(--ivory);
+    padding: 36px 40px;
+    border-radius: 6px;
+    margin-bottom: 24px;
+  }
+  header.report-head .tag {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 3px;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+  }
+  header.report-head h1 {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+  header.report-head .meta {
+    font-size: 13px;
+    color: rgba(247,243,234,0.7);
+    line-height: 1.7;
+  }
+
+  section { margin-bottom: 28px; }
+  h2 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--navy);
+    border-left: 4px solid var(--gold);
+    padding-left: 12px;
+    margin-bottom: 16px;
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 18px 0 10px;
+  }
+  p { margin-bottom: 10px; }
+  code { background: var(--ivory); padding: 1px 5px; border-radius: 2px; font-size: 13px; }
+  strong { color: var(--navy); }
+
+  .conclusion {
+    background: white;
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--gold);
+    border-radius: 4px;
+    padding: 20px 24px;
+  }
+  .conclusion .lead {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  .conclusion p { font-size: 14px; }
+
+  .slide {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 20px 22px;
+    margin-bottom: 18px;
+  }
+  .slide .page-num {
+    display: inline-block;
+    background: var(--navy-light);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+  }
+  .slide h3 {
+    font-size: 17px;
+    margin: 0 0 12px 0;
+    line-height: 1.5;
+  }
+  .slide .img-wrap {
+    background: var(--ivory);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 6px;
+    margin: 10px 0 14px;
+    text-align: center;
+  }
+  .slide img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 2px;
+  }
+  .slide .caption {
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.75;
+  }
+  .slide .caption p { margin-bottom: 8px; }
+  .slide .caption p:last-child { margin-bottom: 0; }
+  .slide .em-line {
+    background: var(--ivory);
+    border-left: 3px solid var(--gold);
+    padding: 10px 14px;
+    margin-top: 12px;
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 14px;
+  }
+
+  .glossary {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 20px 22px;
+  }
+  .glossary table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .glossary th, .glossary td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .glossary th {
+    background: var(--ivory);
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    width: 32%;
+  }
+  .glossary tr:last-child th, .glossary tr:last-child td { border-bottom: none; }
+
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .principle-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--gold);
+    border-radius: 4px;
+    padding: 18px 18px;
+  }
+  .principle-card .num {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.06em;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .principle-card .headline {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .principle-card .body {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+
+  .compare {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 20px 22px;
+  }
+  .compare table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .compare th, .compare td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .compare th {
+    background: var(--ivory);
+    color: var(--navy);
+    font-weight: 700;
+    text-align: left;
+  }
+  .compare th.axis { width: 24%; }
+  .compare .loud { color: var(--ng); font-weight: 700; font-size: 12px; letter-spacing: 0.03em; }
+  .compare .silent { color: var(--warn); font-weight: 700; font-size: 12px; letter-spacing: 0.03em; }
+
+  .close-box {
+    background: white;
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    padding: 22px 26px;
+  }
+  .close-box p { font-size: 14px; margin-bottom: 10px; }
+  .close-box p:last-child { margin-bottom: 0; }
+  .close-box .em {
+    background: var(--ivory);
+    padding: 12px 16px;
+    border-radius: 3px;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 12px 0;
+  }
+
+  footer.report-foot {
+    background: var(--ivory);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px 22px;
+    font-size: 12px;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+  footer.report-foot strong { color: var(--navy); display:block; margin-bottom: 6px; }
+
+  @media (max-width: 720px) {
+    body { font-size: 14px; padding: 12px 8px; }
+    header.report-head { padding: 24px 20px; }
+    header.report-head h1 { font-size: 20px; }
+    .slide { padding: 14px 14px; }
+    .slide h3 { font-size: 15px; }
+    .glossary th { width: 40%; font-size: 12px; }
+    .glossary td { font-size: 13px; }
+    .principles { grid-template-columns: 1fr; }
+    .compare { padding: 14px 12px; }
+    .compare th, .compare td { padding: 8px 8px; font-size: 12px; }
+    .conclusion .lead { font-size: 17px; }
+  }
+
+  .back-to-list {
+    position: fixed; top: 12px; left: 12px; z-index: 1000;
+    background: var(--ivory); color: var(--navy);
+    padding: 8px 16px; font-size: 12px; border-radius: 4px;
+    text-decoration: none; letter-spacing: 0.05em;
+    border: 1px solid var(--navy);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  .back-to-list:hover { background: var(--gold); color: var(--navy); }
+  @media print { .back-to-list { display: none; } }
+</style>
+</head>
+<body>
+<a class="back-to-list" href="index.html">← Mits Reports 一覧に戻る</a>
+<div class="container">
+
+  <header class="report-head">
+    <span class="tag">GIT を「机・保管庫・棚」で理解する</span>
+    <h1>AIに任せた仕事、どこにありますか？<br>— 成果物は、あなたの机の上には届かない</h1>
+    <div class="meta">
+      発行: 2026-08-21 / 対象: AIに仕事を任せている1人型起業家<br>
+      形式: 13ページのスライド解説（イラストは Google Gemini 生成）
+    </div>
+  </header>
+
+  <section>
+    <h2>結論</h2>
+    <div class="conclusion">
+      <p class="lead">成果物は、あなたの机の上には届かない。<br>受け取るまでが仕事。</p>
+      <p>AIから「終わりました！」と返事が来た。手元のフォルダを開く。──無い。</p>
+      <p>これはAIが嘘をついたのではありません。AIは<strong>安全上の理由で本流に直接置かないように作られている</strong>。だから成果物は必ず「別の場所」に置かれ、あなたが受け取りに行くまで、あなたの机には現れない。</p>
+      <p>この資料は、その「別の場所」の全体像を、専門用語を使わずに13枚の絵で説明したものです。使う道具は<strong>git（ギット）</strong>という、AI時代の受け取り作業の共通言語です。</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>ページ 1 — AIに任せた仕事、どこにありますか？</h2>
+    <div class="slide">
+      <span class="page-num">PAGE 01</span>
+      <div class="img-wrap"><img src="images/2026-08-21_where-ai-hides-results/page-01.jpg" alt="ページ1：AIに任せた仕事、どこにありますか？"></div>
+      <div class="caption">
+        <p>「終わりました！」とAIから返事が来た。よし、確認しよう、と手元のフォルダを開く。──無い。あるはずの成果物が、机の上には現れていない。</p>
+        <p>この現象は、AIに仕事を任せ始めた人がほぼ全員通る入口です。あなたのミスでも、AIの嘘でもありません。<strong>置き場所の理解がまだ揃っていないだけ</strong>です。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>ページ 2 — 成果物は、あなたの机の上には届かない</h2>
+    <div class="slide">
+      <span class="page-num">PAGE 02</span>
+      <div class="img-wrap"><img src="images/2026-08-21_where-ai-hides-results/page-02.jpg" alt="ページ2：成果物は机の上には届かない"></div>
+      <div class="caption">
+        <p>AIは安全上の理由から、<strong>あなたの本流に直接ファイルを置かない</strong>作りになっています。上書きで大事なファイルを潰してしまうのを避けるためです。</p>
+        <p>だから、成果物は必ず「別の場所」に置かれます。あなたが取りに行くまで、机には現れない。</p>
+        <div class="em-line">受け取るまでが仕事。「終わりました」は「置きました」であって「届きました」ではない。</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>ページ 3 — 3つの空間と、gitの用語</h2>
+    <div class="slide">
+      <span class="page-num">PAGE 03</span>
+      <div class="img-wrap"><img src="images/2026-08-21_where-ai-hides-results/page-03.jpg" alt="ページ3：3つの空間と用語"></div>
+      <div class="caption">
+        <p>登場人物は3つの空間です。</p>
+        <p><strong>手元の机（Mac）</strong>── あなたが今日ファイルを開いて作業する場所。<br>
+        <strong>ネット上の保管庫（GitHub）</strong>── 全員が共有できる正本の置き場。<br>
+        <strong>AIの作業場（Cloud）</strong>── AIが実行を走らせる、あなたには見えない部屋。</p>
+        <p>成果物はこの3空間を行き来します。gitはそのやり取りの共通言語です。以下の対応表を1枚だけ覚えておくと、話がほぼ全部通ります。</p>
+      </div>
+    </div>
+
+    <div class="glossary">
+      <table>
+        <tr><th>gitの用語</th><td>身近な言葉に置き換えると</td></tr>
+        <tr><th>リポジトリ (repository)</th><td>書類一式が入った<strong>箱</strong>。プロジェクト1つ = 箱1つ。</td></tr>
+        <tr><th>ブランチ (branch)</th><td>箱の中の<strong>棚</strong>。作業ごとに棚を分けられる。</td></tr>
+        <tr><th>main / master</th><td><strong>本棚</strong>。正式版が置かれる、みんなが見にくる棚。</td></tr>
+        <tr><th>コミット (commit)</th><td><strong>記録として確定する</strong>。「この状態を残す」と印を押す動作。</td></tr>
+        <tr><th>プッシュ (push)</th><td>手元から保管庫へ<strong>送る</strong>。</td></tr>
+        <tr><th>プル / フェッチ (pull / fetch)</th><td>保管庫から手元へ<strong>取り寄せる</strong>。</td></tr>
+        <tr><th>PR (Pull Request)</th><td>棚から本棚へ<strong>合流させてほしい、と出す申請書</strong>。</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>ページ 4 — 30分ごとに、無意識のループが回っている</h2>
+    <div class="slide">
+      <span class="page-num">PAGE 04</span>
+      <div class="img-wrap"><img src="images/2026-08-21_where-ai-hides-results/page-04.jpg" alt="ページ4：30分ごとの自動保存"></div>
+      <div class="caption">
+        <p>設定次第で、手元の作業は<strong>30分ごとに勝手に「記録として確定」され、保管庫の本棚に送られる</strong>ようになっています。「自動保存」の中身です。</p>
+        <p>普段は意識しなくていい。意識しなくていいから、<strong>止まったときに気づけない</strong>。この後の話につながる伏線です。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>ページ 5 — AIは気遣いから「隣の棚」に置く</h2>
+    <div class="slide">
+      <span class="page-num">PAGE 05</span>
+      <div class="img-wrap"><img src="images/2026-08-21_where-ai-hides-results/page-05.jpg" alt="ページ5：AIは隣の棚に置く"></div>
+      <div class="caption">
+        <p>AIが成果物を作ったとき、多くの場合それは<strong>本棚（main）ではなく、隣の棚（別ブランチ）</strong>に置かれます。本棚を勝手に上書きしないための気遣いです。</p>
+        <p>これは正しい設計です。悪意ではない。ただし──「隣の棚に置いた」ことを、あなたが認識しているかどうかは、別の問題です。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>ページ 6 — 運命の分かれ道</h2>
+    <div class="slide">
+      <span class="page-num">PAGE 06</span>
+      <div class="img-wrap"><img src="images/2026-08-21_where-ai-hides-results/page-06.jpg" alt="ページ6：運命の分かれ道"></div>
+      <div class="caption">
+        <p>あるとき、画面に選択肢が出ます。「手元で切り替えて作業を続けますか？」──良かれと思って「はい」を押す。</p>
+        <p>この瞬間、あなたの手元はその<strong>隣の棚に固定</strong>されます。以後、30分ごとに走っていた自動保存は、ずっと隣の棚の方だけを更新し続ける。<strong>本棚への更新は、ここで完全に止まる</strong>。</p>
+        <div class="em-line">画面には何のエラーも出ない。保存は毎回「成功」と表示される。だから誰も気づけない。</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>ページ 7 — 5週間。549件。誰一人、気づかないまま。</h2>
+    <div class="slide">
+      <span class="page-num">PAGE 07</span>
+      <div class="img-wrap"><img src="images/2026-08-21_where-ai-hides-results/page-07.jpg" alt="ページ7：5週間549件"></div>
+      <div class="caption">
+        <p>実際に起きました。</p>
+        <p><strong>5週間。549件の記録が、本棚ではなく隣の棚に積み上がっていた。</strong>関係者は誰一人、その間ズレていることに気づかなかった。</p>
+        <p>毎日、机の上ではファイルが更新されていた。保存は成功していた。エラーは1件も出ていなかった。──それでも、本棚には何も届いていなかった。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>ページ 8 — 普通の事故と、今回の事故</h2>
+    <div class="slide">
+      <span class="page-num">PAGE 08</span>
+      <div class="img-wrap"><img src="images/2026-08-21_where-ai-hides-results/page-08.jpg" alt="ページ8：普通の事故と今回の事故の対比"></div>
+      <div class="caption">
+        <p>普通の事故は「うるさい」んです。エラーが出る、赤い文字が出る、動かなくなる。だから気づける。</p>
+        <p>今回の事故は逆でした。<strong>静かで、成功し続けていた</strong>。</p>
+      </div>
+
+      <div class="compare" style="margin-top: 12px;">
+        <table>
+          <tr>
+            <th class="axis">観点</th>
+            <th><span class="loud">普通の事故（うるさい失敗）</span></th>
+            <th><span class="silent">今回の事故（静かな失敗）</span></th>
+          </tr>
+          <tr>
+            <td>保存の表示</td>
+            <td>「失敗」と出る</td>
+            <td>「成功」と出続ける</td>
+          </tr>
+          <tr>
+            <td>ファイルの見え方</td>
+            <td>消える・壊れる</td>
+            <td>全部そこにある</td>
+          </tr>
+          <tr>
+            <td>エラーメッセージ</td>
+            <td>赤で出る</td>
+            <td>1件も出ない</td>
+          </tr>
+          <tr>
+            <td>今日の画面</td>
+            <td>昨日と違う（気づける）</td>
+            <td>昨日と全く同じ</td>
+          </tr>
+          <tr>
+            <td>気づき方</td>
+            <td>その場で気づく</td>
+            <td>5週間後、他人の指摘で気づく</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="em-line" style="margin-top:14px;">壊れていないように見えることが、この事故の一番の異常性。</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>ページ 9 — 人の注意力に頼るのをやめる</h2>
+    <div class="slide">
+      <span class="page-num">PAGE 09</span>
+      <div class="img-wrap"><img src="images/2026-08-21_where-ai-hides-results/page-09.jpg" alt="ページ9：仕掛けで防ぐ"></div>
+      <div class="caption">
+        <p>この事故を根本で止めるには、「気をつけよう」ではダメです。5週間気づかなかった事故に対して、精神論では勝てない。</p>
+        <p>やることは1つ。<strong>起動のたびに「今、本棚を見ているのか、隣の棚を見ているのか」を自動で確認する仕掛けを置く</strong>。ズレていたら黙って引き戻す、または大きな警告を出す。人の注意力の外側に、機械の目を置きます。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>ページ 10 — 過去の記録が、次のAIを止めた</h2>
+    <div class="slide">
+      <span class="page-num">PAGE 10</span>
+      <div class="img-wrap"><img src="images/2026-08-21_where-ai-hides-results/page-10.jpg" alt="ページ10：記録がAIを止めた"></div>
+      <div class="caption">
+        <p>この事故が終わった後、記録として1行残しました。「本棚ではなく隣の棚に549件ズレて、5週間放置した」と。</p>
+        <p>その後、別のAIが似た案内を出しかけた瞬間、この記録を読んで<strong>自ら案内を撤回した</strong>んです。「以前、同じ形の事故があった。この提案は取り下げます」と。</p>
+        <p>記録は自分のためだけじゃない。<strong>次の作業者（人でもAIでも）が同じ穴に落ちないための、置き手紙</strong>になります。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>ページ 11 — AIと共に働くための3つの原則</h2>
+    <div class="slide">
+      <span class="page-num">PAGE 11</span>
+      <div class="img-wrap"><img src="images/2026-08-21_where-ai-hides-results/page-11.jpg" alt="ページ11：3つの原則"></div>
+      <div class="caption">
+        <p>13枚のうち、これだけは覚えて帰ってください。</p>
+      </div>
+
+      <div class="principles">
+        <div class="principle-card">
+          <div class="num">原則 01</div>
+          <div class="headline">AIの成果物は<br>必ず「別の場所」に置かれる</div>
+          <div class="body">これは仕様であって、事故ではない。「終わりました」は「置きました」であって、あなたの机には届いていない。取りに行く動作を、業務手順に組み込む。</div>
+        </div>
+        <div class="principle-card">
+          <div class="num">原則 02</div>
+          <div class="headline">静かに壊れるものが、<br>一番危ない</div>
+          <div class="body">エラーが出るものは、その日のうちに気づける。エラーが出ないまま5週間ズレたものは、他人の指摘まで気づけない。「今日も昨日と同じ画面」は、正常の証拠ではない。</div>
+        </div>
+        <div class="principle-card">
+          <div class="num">原則 03</div>
+          <div class="headline">一度やった失敗は、<br>仕組みに変えて置いておく</div>
+          <div class="body">記憶に置かない。ファイルに1行書き残す。次の自分と、次のAIが、同じ穴に落ちないための置き手紙になる。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>ページ 12 — 自動化とAIの、4つの誤解</h2>
+    <div class="slide">
+      <span class="page-num">PAGE 12</span>
+      <div class="img-wrap"><img src="images/2026-08-21_where-ai-hides-results/page-12.jpg" alt="ページ12：自動化とAIの誤解"></div>
+      <div class="caption">
+        <p>「自動化しておけば安心」「AIに任せておけば大丈夫」──ここに、今回の事故の遠因がありました。</p>
+      </div>
+
+      <div class="compare" style="margin-top: 12px;">
+        <table>
+          <tr>
+            <th class="axis">よくある誤解</th>
+            <th>実際はこう</th>
+          </tr>
+          <tr>
+            <td>自動化 = 見なくていい</td>
+            <td>自動化 = <strong>見る場所が変わる</strong>。ダッシュボードの1点は必ず見る。</td>
+          </tr>
+          <tr>
+            <td>エラーが出なければ正常</td>
+            <td>「エラーが出ない状態で壊れる」がある。<strong>期待値と実測を突き合わせる</strong>まで正常とは言えない。</td>
+          </tr>
+          <tr>
+            <td>AIが「成功」と言ったから成功</td>
+            <td>AIが返した「成功」は<strong>実行の成功</strong>で、<strong>あなたの目的が達成された成功ではない</strong>。目的側から確認する。</td>
+          </tr>
+          <tr>
+            <td>誰か気づくだろう</td>
+            <td>5週間、誰も気づかなかった。<strong>気づく責任を人に持たせない</strong>。仕掛けに持たせる。</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>ページ 13 — あなたの仕事環境では、どこが「隣の棚」ですか？</h2>
+    <div class="slide">
+      <span class="page-num">PAGE 13</span>
+      <div class="img-wrap"><img src="images/2026-08-21_where-ai-hides-results/page-13.jpg" alt="ページ13：あなたの隣の棚はどこか"></div>
+      <div class="caption">
+        <p>ここまでは、gitという道具の話に見えたかもしれません。ただ、本質はもっと広い。</p>
+        <p>あなたの仕事の中にも、<strong>「気遣いで置かれた隣の棚」</strong>が必ずあります。</p>
+        <ul style="padding-left: 22px; margin: 10px 0;">
+          <li>下書きフォルダに溜まっていくメール。送るまで、届いていない。</li>
+          <li>クラウド上の共有スプレッドシートに保存された数字。誰かが開いて確認するまで、意思決定に届いていない。</li>
+          <li>AIが提案してくれた改善案。あなたが承認するまで、本流には合流していない。</li>
+        </ul>
+        <p><strong>「置いた」と「届いた」は別。受け取るまでが仕事。</strong>この1行を、明日の朝の自分に渡して、この資料を閉じてください。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>まとめ — 3つの空間と、3つの原則</h2>
+    <div class="close-box">
+      <p>AIに仕事を任せると、成果物は必ず「別の場所」に置かれます。それは<strong>手元の机（Mac）／ネット上の保管庫（GitHub）／AIの作業場（Cloud）</strong>という3空間の間を行き来する仕組みで、その共通言語が git です。</p>
+      <div class="em">箱（リポジトリ）の中に、棚（ブランチ）があって、本棚（main）に合流する。<br>AIは気遣いで隣の棚に置く。だから、あなたが本棚に取り込むまで、成果物はあなたの本流には反映されない。</div>
+      <p>そして、この構造が生む一番怖い事故が<strong>静かに壊れる失敗（Silent Failure）</strong>です。エラーも出ず、保存も成功し続け、画面は昨日と同じで、それでも本棚は5週間更新されていなかった。──精神論では止まりません。<strong>仕掛けで止める</strong>しかない。</p>
+      <p>持ち帰るのは3つの原則です。①成果物は必ず「別の場所」に置かれる、②静かに壊れるものが一番危ない、③一度やった失敗は仕組みに変えて置いておく。</p>
+    </div>
+  </section>
+
+  <footer class="report-foot">
+    <strong>出典・補足</strong>
+    本レポートはスライド原本（13ページ・Google Gemini Notebook で作成）を Web 化したものです。イラストがこの資料の中心的な価値のため、13枚をそのまま画像として掲載しています。<br>
+    「549件・5週間」の数字は実測値です。事故の詳細は運用ログに記録済み。<br>
+    発行: 西田光弘個人事務所 / Mits Reports
+  </footer>
+
+</div>
+</body>
+</html>
