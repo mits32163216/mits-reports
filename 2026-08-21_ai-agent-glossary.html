@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIエージェント 用語集 — Mits Reports</title>
+<meta name="description" content="AIエージェントの用語を、大卒文系の理解力で読める言葉に置き換えた用語集。組織向けに見える用語も、ひとりで働く人にどう置き換わるかまで書いた。">
+<meta property="og:title" content="AIエージェント 用語集">
+<meta property="og:description" content="AIエージェントの用語を、大卒文系の理解力で読める言葉に置き換えた用語集。組織向けに見える用語も、ひとりで働く人にどう置き換わるかまで書いた。">
+<meta property="og:type" content="article">
+<style>
+  :root {
+    --navy: #1a3a52;
+    --navy-light: #2c5575;
+    --ivory: #f7f3ea;
+    --paper: #fbfaf5;
+    --ink: #2a2a2a;
+    --gray: #7a7a7a;
+    --line: #d8d4ca;
+    --ok: #2d8659;
+    --warn: #c89020;
+    --ng: #b04848;
+    --gold: #b89544;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.75;
+    font-size: 15px;
+    padding: 20px 16px;
+  }
+  .container { max-width: 1080px; margin: 0 auto; }
+  html { scroll-behavior: smooth; }
+
+  /* ===== Header ===== */
+  header.report-head {
+    background: var(--navy);
+    color: var(--ivory);
+    padding: 36px 40px;
+    border-radius: 6px;
+    margin-bottom: 24px;
+  }
+  header.report-head .tag {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 3px;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+  }
+  header.report-head h1 {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+  header.report-head .meta {
+    font-size: 13px;
+    color: rgba(247,243,234,0.7);
+    line-height: 1.7;
+  }
+
+  /* ===== Section ===== */
+  section { margin-bottom: 28px; }
+  h2 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--navy);
+    border-left: 4px solid var(--gold);
+    padding-left: 12px;
+    margin-bottom: 16px;
+  }
+  h3 { font-size: 16px; font-weight: 700; color: var(--navy); margin: 18px 0 10px; }
+  p { margin-bottom: 10px; }
+  code { background: var(--ivory); padding: 1px 5px; border-radius: 2px; font-size: 13px; }
+  strong { color: var(--navy); }
+
+  /* ===== Conclusion card ===== */
+  .conclusion {
+    background: white;
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--gold);
+    border-radius: 4px;
+    padding: 20px 24px;
+  }
+  .conclusion .lead { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+  .conclusion ul { padding-left: 22px; }
+  .conclusion li { margin-bottom: 6px; font-size: 14px; }
+
+  /* ===== 目次 ===== */
+  .toc {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 16px 24px;
+    margin-bottom: 24px;
+  }
+  .toc h3 { margin: 0 0 8px; font-size: 14px; letter-spacing: .06em; }
+  .toc ol { padding-left: 22px; margin: 0; }
+  .toc li { margin-bottom: 4px; font-size: 14px; }
+  .toc a { color: var(--navy-light); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; color: var(--gold); }
+
+  /* ===== 用語カード ===== */
+  .term {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 14px 20px;
+    margin-bottom: 10px;
+  }
+  .term h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+    line-height: 1.5;
+  }
+  .term h4 .en { font-size: 12px; color: var(--gray); font-weight: 400; margin-left: .4em; }
+  .term p { font-size: 14px; margin-bottom: 8px; }
+  .term p:last-child { margin-bottom: 0; }
+  .term dl { font-size: 14px; margin-bottom: 8px; }
+  .term dt { font-weight: 700; color: var(--navy-light); margin-top: 6px; }
+  .term dd { margin: 0; }
+
+  /* ひとり型の欄 */
+  .solo {
+    background: var(--ivory);
+    border-radius: 3px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    font-size: 14px;
+  }
+  .solo::before {
+    content: "ひとりで働く人の場合";
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: .08em;
+    margin-bottom: 2px;
+  }
+
+  /* 実例 */
+  .case {
+    background: white;
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--ng);
+    border-radius: 4px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .case h4 { font-size: 15px; color: var(--navy); margin-bottom: 8px; }
+  .case ul { padding-left: 20px; }
+  .case li { font-size: 14px; margin-bottom: 5px; }
+  .case.found { border-top-color: var(--ok); }
+
+  .status { font-weight: 700; }
+  .status.ok { color: var(--ok); }
+  .status.warn { color: var(--warn); }
+  .status.ng { color: var(--ng); }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 3px;
+    letter-spacing: .05em;
+    background: var(--ok);
+    color: #fff;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  mark { background: #fbf1cf; padding: 0 .2em; }
+
+  /* ===== 表 ===== */
+  .matrix-wrap { overflow-x: auto; }
+  table.matrix { border-collapse: collapse; width: 100%; min-width: 560px; background: #fff; font-size: 14px; }
+  table.matrix th, table.matrix td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+  table.matrix thead th { background: var(--navy); color: var(--ivory); font-weight: 600; }
+  table.matrix tbody td:first-child { background: var(--ivory); font-weight: 700; color: var(--navy); }
+
+  .totop { display: inline-block; font-size: 12px; color: var(--navy-light); text-decoration: none; margin-top: 4px; }
+  .totop:hover { color: var(--gold); }
+
+  /* ===== Footer ===== */
+  footer.report-foot {
+    background: var(--ivory);
+    border-radius: 4px;
+    padding: 18px 24px;
+    font-size: 12px;
+    color: var(--gray);
+    line-height: 1.8;
+  }
+  footer.report-foot a { color: var(--navy-light); }
+
+  .back-to-list {
+    position: fixed; top: 12px; left: 12px; z-index: 1000;
+    background: var(--ivory); color: var(--navy);
+    padding: 8px 16px; font-size: 12px; border-radius: 4px;
+    text-decoration: none; letter-spacing: 0.05em;
+    border: 1px solid var(--navy);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  .back-to-list:hover { background: var(--gold); color: var(--navy); }
+  @media print { .back-to-list { display: none; } }
+
+  @media (max-width: 720px) {
+    body { font-size: 15px; padding: 16px 12px; }
+    header.report-head { padding: 56px 20px 24px; }
+    header.report-head h1 { font-size: 21px; }
+    h2 { font-size: 17px; }
+    .term { padding: 12px 14px; }
+    .conclusion, .toc, .case, footer.report-foot { padding: 14px 16px; }
+    table.matrix { min-width: 460px; font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+<!-- 戻るボタン（Mits Reports 全レポート必須・削除禁止・memory feedback_report_back_button_mandatory.md 参照） -->
+<a class="back-to-list" href="index.html">← Mits Reports 一覧に戻る</a>
+<div class="container">
+
+  <!-- ===== HEADER ===== -->
+  <header class="report-head">
+    <span class="tag">REPORT</span>
+    <h1>AIエージェント 用語集<br>——「難しい言葉」を全部ほどく</h1>
+    <div class="meta">
+      発行: 2026-08-21 / 対象: AIを仕事の道具として使いたい人（プログラムを書かない人を含む）<br>
+      出典: 対談「コーディングAIエージェントブームは終わった」（牛尾剛さん／NewsPicks）
+    </div>
+  </header>
+
+  <!-- ===== CONCLUSION ===== -->
+  <section>
+    <h2>はじめに</h2>
+    <div class="conclusion">
+      <p class="lead">難しい言葉は、たいてい「規模が大きい会社の話」の顔をして出てきます。中身をほどくと、ひとりで働く人にも同じ形で当てはまります。</p>
+      <ul>
+        <li>大卒文系の理解力で読める言葉に置き換えました。<strong>専門用語は1つも飛ばしていません</strong></li>
+        <li>切り捨ての線は「組織か、ひとりか」ではありません。<strong>「作る側か、使う側か」</strong>です。作る側の実装だけが不要で、使う側の原理は規模を問わず効きます</li>
+        <li>置き換えが効く用語には「ひとりで働く人の場合」の欄を付けました</li>
+        <li>第5章には、<strong>実際に起きた事故を2件</strong>載せています <span class="badge">✅確認済</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== 目次 ===== -->
+  <nav class="toc">
+    <h3>目次</h3>
+    <ol>
+      <li><a href="#s1">土台の語</a></li>
+      <li><a href="#s2">エージェント関連</a></li>
+      <li><a href="#s3">開発の道具</a></li>
+      <li><a href="#s4">安全と権限</a></li>
+      <li><a href="#s5">障害対応 —— 実例つきで、ひとりの現場に置き換える</a></li>
+      <li><a href="#s6">基盤と設計</a></li>
+      <li><a href="#s7">仕事論</a></li>
+      <li><a href="#s8">対談全体の骨</a></li>
+    </ol>
+  </nav>
+
+  <!-- ===== 1 ===== -->
+  <section id="s1">
+    <h2>1. 土台の語</h2>
+    <p>上から順に積み上がる並びです。ここが分かれば、あとは全部この応用になります。</p>
+
+    <div class="term"><h4>生成AI</h4>
+      <p>文章・画像・音声などを新しく作り出すAIの総称。「判別するAI」（迷惑メールか否かを分ける等）と区別するための言い方。</p></div>
+
+    <div class="term"><h4>モデル</h4>
+      <p>AIの頭脳そのもの。会社ごと・世代ごとに別物で、賢さと値段が違います。「高性能なモデル」「安いモデル」「新しいモデルが出た」は全部これを指します。</p></div>
+
+    <div class="term"><h4>LLM<span class="en">Large Language Model／大規模言語モデル</span></h4>
+      <p>モデルのうち、言葉を扱うもの。大量の文章を読み込んで「次に来る言葉」を確率で当て続ける仕組みです。</p></div>
+
+    <div class="term"><h4>学習（訓練）</h4>
+      <p>モデルを作るときに、大量の文章を読ませて中身を作り込む工程。<strong>使う側が会話した内容は、原則この学習には入りません。</strong>「うちの会社の事情は学習しようがない」と言われるのはこの意味です。</p></div>
+
+    <div class="term"><h4>推論</h4>
+      <p>学習済みのモデルに質問して答えを出させること。私たちが日常でAIを使っている行為は、全部こちらです。</p></div>
+
+    <div class="term"><h4>自然言語</h4>
+      <p>プログラム言語ではない、普通の人間の言葉。「所詮は自然言語だから簡単」＝<strong>日本語で書けるから誰でも作れる</strong>、という意味です。</p></div>
+
+    <div class="term"><h4>プロンプト</h4>
+      <p>AIへの指示文。人間が打ち込む「これやって」の一文です。</p></div>
+
+    <div class="term"><h4>トークン<span class="en">※2つの全く別の意味で使われます</span></h4>
+      <p><span class="status ng">混同が最大の事故源です。</span></p>
+      <dl>
+        <dt>料金の単位としてのトークン</dt>
+        <dd>文章を細かく割った最小単位。日本語で1〜2文字ほど。<strong>AIの利用料はこの個数で決まります。</strong></dd>
+        <dt>鍵としてのトークン</dt>
+        <dd>本人確認のための文字列。<strong>合鍵そのものです。</strong>料金とは何の関係もありません。</dd>
+      </dl>
+      <p><mark>「トークンが高い」なら料金、「トークンを渡す」「トークンが違う」なら鍵の話</mark>です。</p></div>
+
+    <div class="term"><h4>クレデンシャル</h4>
+      <p>認証情報の総称。合鍵・身分証にあたるもの全般（ID、パスワード、鍵としてのトークン）。</p></div>
+
+    <div class="term"><h4>コンテキスト（コンテキストウィンドウ）</h4>
+      <p>AIが今この瞬間に見えている情報の範囲。人間で言えば机の上に広げてある資料です。<strong>ここに載っていない情報は、AIにとって無いのと同じ。</strong>そして容量に上限があり、超えると古いものから押し出されます。</p></div>
+
+    <div class="term"><h4>API<span class="en">Application Programming Interface</span></h4>
+      <p>機械同士が話すための窓口。人間が画面をクリックする代わりに、プログラムが直接AIに注文を出す入り口です。「窓口の作りが世代交代して、自分で作業を続けるAIに向いた形になった」という話が対談に出てきます。</p></div>
+
+    <div class="term"><h4>ハルシネーション</h4>
+      <p>AIが、もっともらしい嘘を自信たっぷりに答えること。「100%正しいとは限らない」「意外と抜けている」はこれを指しています。</p></div>
+
+    <div class="term"><h4>ローカル／クラウド</h4>
+      <p>自分のパソコンの中で動かすか／向こう側のサーバーで動かすか。<strong>対談の最大の対立軸</strong>です。</p></div>
+
+    <div class="term"><h4>サーバー</h4>
+      <p>常時動いていて、頼まれた仕事を処理する機械。自分のパソコンと違い、閉じたり持ち歩いたりしません。</p></div>
+
+    <div class="term"><h4>CLI／GUI</h4>
+      <p>文字を打って操作する画面（CLI）と、マウスで押して操作する画面（GUI）。エンジニアが好むのは前者で、速く、自動化しやすいためです。</p></div>
+
+    <div class="term"><h4>ヘッドレス</h4>
+      <p>画面を一切出さずに動かすこと。人間が見ていないところで、裏で黙々と走っている状態です。</p></div>
+    <a class="totop" href="#s1">▲ 目次へ</a>
+  </section>
+
+  <!-- ===== 2 ===== -->
+  <section id="s2">
+    <h2>2. エージェント関連</h2>
+
+    <div class="term"><h4>エージェント</h4>
+      <p>指示を1回受けたら、あとは自分で考え、道具を使い、何度も試し、最後までやりきるAI。<strong>「答えるAI」ではなく「作業するAI」</strong>です。</p></div>
+
+    <div class="term"><h4>コーディングエージェント</h4>
+      <p>そのうちプログラム作成に特化したもの。</p></div>
+
+    <div class="term"><h4>サブエージェント</h4>
+      <p>エージェントが自分の下請けとして呼び出す、もう一段下のAI。細かい作業を担当させ、安いモデルを割り当てて費用を下げる使い方をします。</p></div>
+
+    <div class="term"><h4>スキル</h4>
+      <p>AIに渡す「うちのやり方マニュアル」。プログラムではなく普通の日本語の文書です。</p>
+      <div class="solo">AIは世界の一般知識を持っていても、<strong>あなたの商売の作法だけは持っていません</strong>。ここだけが人間にしか作れない資産で、普通の言葉で書いてあるので引っ越しも一度で済みます。</div></div>
+
+    <div class="term"><h4>エージェント定義</h4>
+      <p>そのAIが何者で、何を担当し、何をしてはいけないかを書いた設定文書。スキルが「やり方」なら、こちらは「役割」です。</p></div>
+
+    <div class="term"><h4>スキルレジストリ</h4>
+      <p>作ったスキルを、みんなが探して使えるように登録しておく置き場。</p>
+      <div class="solo">ひとりでも要ります。<strong>半年前の自分は他人</strong>で、探せない資産は無いのと同じだからです。</div></div>
+
+    <div class="term"><h4>アセット</h4>
+      <p>資産。この対談では具体的に<strong>溜め込んだスキルとエージェント定義</strong>を指します。</p></div>
+
+    <div class="term"><h4>MCP</h4>
+      <p>AIを外部サービス（保存先・記録・連絡手段など）に繋ぐための共通の差込口の規格。USB端子の規格にあたるものです。</p>
+      <div class="solo">繋ぐほど、資料を毎回貼り付ける手間が消えます。まず保存先とメールの2つで十分です。</div></div>
+
+    <div class="term"><h4>ハーネス</h4>
+      <p>直訳は馬具。AIに道具を使わせ、暴走を防ぐための囲いと土台です。</p>
+      <div class="solo"><strong>唯一、自分で作らなくてよい項目。</strong>既製品がすでに土台です。理由は規模ではなく「買えるものを作るのは損だから」。</div></div>
+
+    <div class="term"><h4>エージェントワークフロー</h4>
+      <p>複数の作業を順番に並べてAIに流させる仕組み。</p></div>
+
+    <div class="term"><h4>十徳ナイフ（たとえ）</h4>
+      <p>1本で何でもやろうとする道具。「料理するなら包丁を使う」＝<strong>用途ごとに最適な道具を選べ</strong>、という主張です。</p></div>
+
+    <div class="term"><h4>文房具（たとえ）</h4>
+      <p>騒ぐ対象ではなく、必要なときに手に取る当たり前の道具になった、という意味です。</p></div>
+    <a class="totop" href="#s1">▲ 目次へ</a>
+  </section>
+
+  <!-- ===== 3 ===== -->
+  <section id="s3">
+    <h2>3. 開発の道具</h2>
+    <p>対談で前提として飛び交う語です。意味を知らないと会話の半分が読めません。</p>
+
+    <div class="term"><h4>エディター</h4>
+      <p>プログラムを書くための画面。「AIはエディターと同じくらい当たり前になった」の比較対象です。</p></div>
+
+    <div class="term"><h4>リポジトリ／クローン</h4>
+      <p>プログラムの保管庫（履歴つきで管理される）／それを丸ごと手元に複製すること。</p></div>
+
+    <div class="term"><h4>プルリクエスト／マージ</h4>
+      <p>「この修正を取り込んでください」という申請／それを実際に取り込むこと。<strong>AIが自分の間違いに気づいて、自分の手順書の修正案を出してくる</strong>——これが対談で言う学習の輪の完成形です。</p></div>
+
+    <div class="term"><h4>Git／GitHub</h4>
+      <p>Gitはプログラムの版を管理する仕組み。GitHubはそれをみんなで共有する場所。<strong>最初は各自の手元だけだったものが、共有の場所に集約されていった</strong>という歴史が、「AIも同じ道を辿る」の根拠に使われています。</p></div>
+
+    <div class="term"><h4>コンテナ／公開の倉庫</h4>
+      <p>プログラムを実行環境ごと箱詰めして、どこでも同じように動かす仕組みと、その箱を配っている公開の置き場。</p></div>
+
+    <div class="term"><h4>内部の倉庫／検査</h4>
+      <p>外部の公開倉庫から直接取らず、いったん社内に置いた検査済みの倉庫からだけ取る仕組みと、その検査。</p></div>
+
+    <div class="term"><h4>デプロイ</h4>
+      <p>作ったものを実際に動く場所へ配置して稼働させること。</p></div>
+
+    <div class="term"><h4>プレビュー</h4>
+      <p>正式公開の前の試験提供。一部の利用者が先に触れる段階です。</p></div>
+    <a class="totop" href="#s1">▲ 目次へ</a>
+  </section>
+
+  <!-- ===== 4 ===== -->
+  <section id="s4">
+    <h2>4. 安全と権限</h2>
+    <p>組織向けに見えますが、<strong>ひとりで働く人にも「見せてよい相手／悪い相手」は実在します</strong>。外注のライター、外注のデザイナー、そしてAIです。</p>
+
+    <div class="term"><h4>ユーザートークン</h4>
+      <p>本人がログインして使う、権限の強い合鍵。人間が手で操作する前提の強さがあり、AIに渡すのが危険とされる理由です。</p>
+      <div class="solo">AIにこの鍵を握らせない。乗っ取られたら<strong>自分にできること全部</strong>がやられます。</div></div>
+
+    <div class="term"><h4>役割ごとの権限分離<span class="en">RBAC</span></h4>
+      <p>「この役割の人はここまで」と、見える範囲・触れる範囲を役割単位で切る仕組み。</p>
+      <div class="solo">外注さんに見せない顧客情報を、AIには見せていないか。サービスごとに権限を絞った鍵を発行して渡します。</div></div>
+
+    <div class="term"><h4>自動処理専用の身分証<span class="en">managed identity</span></h4>
+      <p>人間用ではなく、機械が自動で動くために発行された、最初から権限の狭い鍵。</p>
+      <div class="solo">自動で走らせる処理は、本人ログインに頼らない。<strong>本人ログインは期限切れで黙って止まります。</strong></div></div>
+
+    <div class="term"><h4>部品経由の攻撃<span class="en">サプライチェーンアタック</span></h4>
+      <p>AIが外から拾ってきた部品に毒が仕込まれている型の攻撃。</p>
+      <div class="solo">素性の知れない拡張機能・接続部品を入れない。判断する人が自分しかいません。</div></div>
+
+    <div class="term"><h4>認証／認可／アイデンティティ</h4>
+      <p>認証＝本人であることの確認。認可＝その人に何を許すかの判定。アイデンティティ＝誰であるかの情報そのもの。<strong>3つは別物</strong>で、対談で「ここが大きな問題」と言われている箇所です。</p></div>
+
+    <div class="term"><h4>サンドボックス</h4>
+      <p>使い捨ての隔離部屋。中で何が起きても外に影響せず、終われば消えます。</p></div>
+
+    <div class="term"><h4>乗っ取られる</h4>
+      <p>AIが細工された指示を読まされて、攻撃者の言うことを聞いてしまう状態。</p></div>
+
+    <div class="term"><h4>統制／把握されていない道具</h4>
+      <p>誰が何をどこまでやってよいかの管理／会社が把握していないところで勝手に道具が使われている状態。</p></div>
+    <a class="totop" href="#s1">▲ 目次へ</a>
+  </section>
+
+  <!-- ===== 5 ===== -->
+  <section id="s5">
+    <h2>5. 障害対応 —— 実例つきで、ひとりの現場に置き換える</h2>
+    <p>この章は<strong>全部の語がそのまま置き換わりました</strong>。ひとりで働く人の障害とは、申込フォームが動かない・配信メールが飛ばない・決済が通らない・ページが崩れる・自動処理が黙って止まる、です。</p>
+    <p><span class="status ng">規模が小さいのではありません。誰も見ていないぶん重い。</span></p>
+
+    <div class="case">
+      <h4>実例①：同じメールが7通届いた（2026-08-18） <span class="badge">✅確認済</span></h4>
+      <ul>
+        <li><strong>何が起きたか</strong>：朝8:00〜8:01、同じメールが受信箱に7通</li>
+        <li><strong>原因</strong>：10日前の夕方、ページの動作確認でテスト用アドレス4種を計10回登録。読者データが10個でき、10日後に届く設定のメールが読者ごとに1通ずつ発火した</li>
+        <li><strong>気づいたきっかけ</strong>：自分が受信者だったから。監視でも通報でもない</li>
+        <li><mark><strong>気づくまで10日。止めるまで即日。</strong></mark></li>
+      </ul>
+    </div>
+
+    <div class="case">
+      <h4>実例②：差し込み文字が置き換わらないまま103通届いた（2026-08-14） <span class="badge">✅確認済</span></h4>
+      <ul>
+        <li><strong>何が起きたか</strong>：本文の差し込み文字（お名前や日程を自動で入れる記号）が、記号のまま顧客に届いた</li>
+        <li><strong>原因</strong>：AIが根拠なく作り出した記号名だった。手順書に出典なしで書かれ、4ヶ月のあいだ誰も検証しないまま残っていた</li>
+        <li><strong>気づいたきっかけ</strong>：<span class="status ng">顧客からの指摘</span></li>
+        <li><strong>制約</strong>：配信し終えたものは後から直せない。潰せるのは配信待ちのものだけ</li>
+      </ul>
+    </div>
+
+    <div class="term"><h4>インシデント</h4>
+      <p>障害・トラブルの発生。</p>
+      <div class="solo">上記2件そのもの。<strong>顧客の受信箱に直接届く型</strong>なので、被害が即時です。</div></div>
+
+    <div class="term"><h4>SRE<span class="en">落とさず動かし続ける専門職</span></h4>
+      <p>サービスを止めないことを専門にする職種・分野。</p>
+      <div class="solo"><strong>この役を誰も持っていません。</strong>役として時間を先に確保しない限り、永久に後回しになる領域です。</div></div>
+
+    <div class="term"><h4>一次窓口</h4>
+      <p>世界中から上がった障害をまず調べ、手に負えないものだけを開発チームへ回す部門。</p>
+      <div class="solo">実例①は自分の受信箱、②は顧客の指摘が一次窓口でした。<strong>2件とも一次窓口が人間。</strong>ここを自動の見張りにしていれば、①は当日に分かっていました。</div></div>
+
+    <div class="term"><h4>オンコール<span class="en">待機当番</span></h4>
+      <p>夜中でも呼び出しに応じる担当。</p>
+      <div class="solo">交代相手がいないので<strong>常時当番</strong>になります。だからこそ「何が起きたら呼ばれるか」を決めておかないと、24時間気が休まらない。<mark>決めることは、休むための作業</mark>です。</div></div>
+
+    <div class="term"><h4>根本原因の特定<span class="en">RCA</span></h4>
+      <p>「なぜ落ちたか」の犯人捜し。</p>
+      <div class="solo">直して終わりにしがちです。原因を書き残さないので、半年後に同じことが起きて、また同じ時間を使います。実例②の真の原因は「記号名の間違い」ではなく<strong>登録の経路の違い</strong>でした。表面で止めていたら再発します。</div></div>
+
+    <div class="term"><h4>ミティゲート<span class="en">応急処置で血を止める</span></h4>
+      <p>原因の完全解決ではなく、まず被害を止めること。原因究明とは<strong>別工程</strong>として先に行います。</p>
+      <div class="solo"><mark>この分離が最大の応用です。</mark>原因を調べている間に顧客は離れる。順番は<strong>「まず止める、それから調べる」</strong>。混ぜると両方遅れます。</div></div>
+
+    <div class="term"><h4>止まるまでの時間<span class="en">time to mitigate</span></h4>
+      <p>発生から血が止まるまでの時間。短縮すべき指標です。</p>
+      <div class="solo">測るのは2つ。<strong>気づくまでの時間</strong>と<strong>止めるまでの時間</strong>。実例①は10日と即日でした。<mark>削るべきは後者ではなく前者。桁が違います。</mark></div></div>
+
+    <div class="term"><h4>担当の付け替え</h4>
+      <p>自分の領域ではないものを、別の担当へ回すこと。</p>
+      <div class="solo">抱え込まない判定。外注・道具の提供元・専門家のうち<strong>誰の領域か</strong>を、最初の5分で切り分けます。</div></div>
+
+    <div class="term"><h4>エスカレーション</h4>
+      <p>上位・別担当へ引き上げること。</p>
+      <div class="solo">投げ先を<strong>事前に</strong>決めておく。起きてから探すと、そこで数時間が消えます。</div></div>
+
+    <div class="term"><h4>記録を掘る検索</h4>
+      <p>膨大な記録から「その瞬間に何が起きていたか」を掘り出すための検索。昔のAIはこれを書くのが苦手でした。</p>
+      <div class="solo">配信履歴・アクセス記録・決済履歴・実行記録。<strong>「何が起きたらどこを見るか」を先に決めておく</strong>のが、この語の実体です。</div></div>
+
+    <div class="term"><h4>ヒューマン・イン・ザ・ループ<span class="en">人の確認を挟む設計</span></h4>
+      <p>全自動にせず、要所で人が判を押す形。</p>
+      <div class="solo"><strong>顧客に届く直前だけ自分が見る。</strong>それ以外は通す。ここを決めないと、自動化しても結局全部見ることになります。実例②は、確認の置き場所が間違っていた事例です。</div></div>
+
+    <div class="term"><h4>確信度の数値</h4>
+      <p>AIが自分の答えにどれくらい自信があるかを数値で出したもの。低いものだけ人間が見る振り分けに使います。</p>
+      <div class="solo"><strong>判断の回数を減らす道具。</strong>AIに「これは自信が低い」と言わせ、それだけ自分が見ます。</div></div>
+
+    <div class="term"><h4>部分的に正解<span class="en">partially correct</span></h4>
+      <p>完全な答えではないが、犯人がここまで絞れている状態。対談では5割が正解、3割がこれで、<strong>合計8割が役に立つ</strong>という数字が出ています。</p>
+      <div class="solo"><mark>完璧でないことを理由に自動化をやめない</mark>根拠。8割絞れていれば、2時間が数分になります。</div></div>
+
+    <div class="term"><h4>絞り込み</h4>
+      <p>候補を狭めること。</p>
+      <div class="solo">原因の候補が3つまで絞れた時点で、もう価値が出ています。</div></div>
+
+    <div class="term"><h4>解決済み</h4>
+      <p>ここで初めて「AIの答えは正しかったのか」が判明するため、学習の起点になります。</p>
+      <div class="solo"><strong>事故の瞬間には正解が分かりません。</strong>解決した瞬間が、記録を残す唯一の好機です。</div></div>
+
+    <div class="term"><h4>学習サイクル</h4>
+      <p>解決後にAIが自分の答え合わせをし、外していたら<strong>自分で手順書の修正案を出してくる</strong>流れ。この対談の実装上の核心です。</p>
+      <div class="solo">直した後、手順書に1行足す。これだけで<strong>大企業が作っているものと構造は同じ</strong>になります。</div></div>
+
+    <div class="case found">
+      <h4>この2件が示していること</h4>
+      <p><strong>残っている穴は1つだけです。一次窓口が人間であること。</strong></p>
+      <p>応急処置と原因究明の分離、事後の答え合わせ、記録の蓄積は、すでに実行されていました。実例①の10日間は、見張りが1本あれば消えていました。</p>
+    </div>
+    <a class="totop" href="#s1">▲ 目次へ</a>
+  </section>
+
+  <!-- ===== 6 ===== -->
+  <section id="s6">
+    <h2>6. 基盤と設計</h2>
+    <p>対談の後半。<strong>費用と、途中で落ちない仕組み</strong>の話です。</p>
+
+    <div class="term"><h4>サーバーレス／使っていない間はゼロ円</h4>
+      <p>サーバーの管理を全部任せ、自分は中身だけ書く方式。使っていない間は規模がゼロ、つまり<strong>料金がかかりません</strong>。</p>
+      <div class="solo"><mark>固定費を増やさずに自動化できる。</mark>固定費の増加を最も恐れる立場に、最も効く話です。</div></div>
+
+    <div class="term"><h4>イベント駆動／時刻での起動</h4>
+      <p>人間が開始を押すのではなく、何かが起きた瞬間に勝手に動き出す方式。障害の発生・時刻の到来・申込の着信などが引き金になります。</p>
+      <div class="solo"><strong>自分のパソコンを起点にしない</strong>の実装。持ち歩いている間も仕事が進みます。</div></div>
+
+    <div class="term"><h4>途中で落ちても続きから／長時間の処理</h4>
+      <p>機械が壊れても再開できる仕組みと、何時間・何日もかかる処理を落ちずに走らせ続けること。「2日後に返ってきてもいい」。</p></div>
+
+    <div class="term"><h4>手順の図<span class="en">DAG</span></h4>
+      <p>「AをやってからBとCを並行、両方終わったらD」という手順の図。1つ1つの作業が点で、失敗したものだけやり直せます。AIに<strong>先にこの図を描かせてから走らせる</strong>と、無駄な試行錯誤が減って費用が下がります。</p>
+      <div class="solo"><mark>いきなり書かせず、まず構成を出させる。</mark>費用も品質も改善する、最も安い一手です。</div></div>
+
+    <div class="term"><h4>従量課金／上限設定</h4>
+      <p>使った分だけ払う方式と、使いすぎを止める上限。</p></div>
+
+    <div class="term"><h4>引っ越し<span class="en">マイグレーション</span></h4>
+      <p>別の環境へ移すこと。<strong>スキルは普通の言葉で書いてあるので、引っ越しが一度で済む</strong>のが利点です。</p></div>
+
+    <div class="term"><h4>中身を隠して入口だけ使わせる設計</h4>
+      <p>昔のAIに検索文を書かせるのが難しかったので、この形で逃げた、という話です。</p></div>
+
+    <div class="term"><h4>使うAIの振り分け</h4>
+      <p>難易度に応じて、高性能な高いAIと安いAIを自動で使い分けること。「これを人間が毎回選ぶのが面倒」という問題提起が対談に出てきます。</p>
+      <div class="solo">自作はしない。ただし<strong>軽い仕事に高いAIを使わない</strong>判断は今日からできます。</div></div>
+    <a class="totop" href="#s1">▲ 目次へ</a>
+  </section>
+
+  <!-- ===== 7 ===== -->
+  <section id="s7">
+    <h2>7. 仕事論</h2>
+
+    <div class="term"><h4>ROI<span class="en">投資対効果</span></h4>
+      <p>かけた金と時間に対して、どれだけ返ってきたか。</p></div>
+
+    <div class="term"><h4>優先度（P0／P1／P2）</h4>
+      <p>P0が最重要。「優先度の低い仕事をたくさん並列でこなしても価値が薄い」という文脈で使われます。</p></div>
+
+    <div class="term"><h4>ボトルネック</h4>
+      <p>全体の速度を決めてしまう、一番狭い箇所。この対談では<strong>人間の判断</strong>がそれだとされています。</p>
+      <div class="solo">判断する人が1人しかいないため、<strong>大きな組織より効きます</strong>。</div></div>
+
+    <div class="term"><h4>レバレッジ</h4>
+      <p>てこ。少ない力で大きな結果を出す効き方。「本体を鍛えるほうが効く」。</p></div>
+
+    <div class="term"><h4>コモディティ化</h4>
+      <p>誰でもできる当たり前の技能になり、価値が下がること。<strong>並列でたくさん回す能力は、これになる</strong>というのが対談の読みです。</p></div>
+
+    <div class="term"><h4>並列で走らせる</h4>
+      <p>AIを何本も同時に動かすこと。</p>
+      <div class="solo">並べても、<strong>判断する自分が追いつきません</strong>。並べる前に、判断が要らない形に直すのが先です。</div></div>
+
+    <div class="term"><h4>その分野の固有知識</h4>
+      <p>その業界・その会社に固有の事情と勘所。<strong>AIが最も苦手とする領域</strong>で、唯一の資産になる場所です。</p></div>
+
+    <div class="term"><h4>車輪の再発明</h4>
+      <p>すでにあるものを知らずに一から作り直す無駄。</p>
+      <div class="solo">ひとりでも起きます。<strong>半年前の自分が同じものを作っている。</strong></div></div>
+
+    <div class="term"><h4>アジャイル／スクラム</h4>
+      <p>短い期間で作って直すことを繰り返す進め方と、その代表的な型。<mark>「導入すれば10倍の生産性。ただし駄目な人は10倍の速さで駄目なものを作る」</mark>という逸話の出どころです。</p></div>
+
+    <div class="term"><h4>一次情報／二次情報</h4>
+      <p>本人が直接得た情報／誰かがまとめ直した情報。<strong>AIが出すものは常に後者</strong>、というのが対談の最後の主張です。</p></div>
+
+    <div class="term"><h4>本体力</h4>
+      <p>AIという増幅装置にかける前の、自分自身の実力。</p></div>
+    <a class="totop" href="#s1">▲ 目次へ</a>
+  </section>
+
+  <!-- ===== 8 ===== -->
+  <section id="s8">
+    <h2>8. 対談全体の骨</h2>
+    <div class="matrix-wrap">
+      <table class="matrix">
+        <thead><tr><th style="width:24%">主張</th><th>中身</th></tr></thead>
+        <tbody>
+          <tr><td>ブームは終わった</td><td>「使わなくなった」ではなく<strong>「珍しくなくなった」</strong>。あって当たり前の文房具になった</td></tr>
+          <tr><td>自分のパソコン起点をやめる</td><td>危ない（合鍵をAIに渡している）／面倒くさい（なぜ自分が最初の一言を打ち、パソコンを開けたままにするのか）／バラバラになる（学んだ教訓が合流しない）</td></tr>
+          <tr><td>唯一の財産は手順書</td><td>AIは世界の知識を持っていても、<strong>あなたの作法だけは学べない</strong>。普通の言葉で書けるので、引っ越しも一度で済む</td></tr>
+          <tr><td>本体力</td><td>AIは10倍の増幅装置。元が100の人は1万に、マイナス3の人はマイナス300になる。<strong>空いた時間は量産ではなく、自分を鍛えることに使う</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>タイトルの真意</h3>
+    <div class="conclusion">
+      <p class="lead">本の題は『部下としてのAI』。中身は「上司としての人間」の話です。</p>
+      <p>AIは知識が無限で速い。それでいて「テスト通りました」と言いながら実は実行していない、といった抜け方をする部下です。<strong>それを転がして使えるかどうかは、上司側の実力次第。</strong></p>
+    </div>
+    <a class="totop" href="#s1">▲ 目次へ</a>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="report-foot">
+    <strong>出典</strong><br>
+    ・対談「【牛尾剛が断言】コーディングAIエージェントブームは終わった」（NewsPicks）<a href="https://www.youtube.com/watch?v=btXfJGRJ9Tk" target="_blank" rel="noopener">https://www.youtube.com/watch?v=btXfJGRJ9Tk</a><br>
+    ・第5章の実例2件は、2026-08-14 および 2026-08-18 に実際に起きた事故の記録に基づく <span class="badge">✅確認済</span><br>
+    <br>
+    発行 2026-08-21 ／ Mits Reports
+  </footer>
+
+</div>
+</body>
+</html>
