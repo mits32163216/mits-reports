@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIは動くようになった。なのに、楽になっていない。</title>
+<style>
+:root{
+  --navy:#1a3a52; --navy-l:#2c5575; --ivory:#f7f3ea; --paper:#fbfaf5;
+  --gold:#b89544; --ok:#2d8659; --warn:#c89020; --ng:#b04848;
+  --ink:#26221c; --ink-2:#4a453c; --ink-3:#6b6558; --line:#ddd6c6;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:-apple-system,"Hiragino Sans","Yu Gothic","Noto Sans JP",sans-serif;
+  font-size:15px;line-height:1.78;}
+.wrap{max-width:1000px;margin:0 auto;padding:0 24px 80px;}
+header.head{background:var(--navy);color:#fff;padding:48px 24px 40px;margin-bottom:38px;}
+header.head .inner{max-width:1000px;margin:0 auto;}
+header.head .tag{display:inline-block;background:var(--gold);color:#1a1a1a;font-size:.72em;
+  font-weight:700;letter-spacing:.08em;padding:4px 12px;border-radius:2px;margin-bottom:16px;}
+header.head h1{margin:0 0 14px;font-size:1.86em;line-height:1.42;font-weight:700;}
+header.head .sub{font-size:1em;color:#dfe8ef;line-height:1.8;margin-bottom:14px;}
+header.head .meta{font-size:.78em;color:#a8bccb;line-height:1.9;}
+h2{font-size:1.3em;margin:48px 0 16px;padding-left:12px;border-left:5px solid var(--gold);line-height:1.5;}
+h3{font-size:1.08em;margin:30px 0 10px;color:var(--navy);}
+p{margin:0 0 15px;}
+ul,ol{margin:0 0 16px;padding-left:1.4em;}
+li{margin-bottom:8px;}
+.conclusion{background:var(--ivory);border-left:5px solid var(--gold);padding:22px 26px;margin:0 0 32px;}
+.conclusion p:last-child{margin-bottom:0;}
+.conclusion .big{font-size:1.15em;font-weight:700;line-height:1.72;}
+.symptom{background:#fff;border:1px solid var(--line);border-radius:4px;padding:22px 26px;margin:0 0 24px;}
+.symptom ul{margin-bottom:0;list-style:none;padding-left:0;}
+.symptom li{padding-left:26px;position:relative;margin-bottom:11px;font-size:1.02em;}
+.symptom li:before{content:"□";position:absolute;left:0;color:var(--gold);font-weight:700;font-size:1.1em;}
+table{width:100%;border-collapse:collapse;margin:0 0 24px;font-size:.93em;}
+th{background:var(--navy);color:#fff;text-align:left;padding:10px 12px;font-weight:600;border:1px solid var(--navy-l);}
+td{padding:10px 12px;border:1px solid var(--line);vertical-align:top;}
+tr:nth-child(even) td{background:#fdfcf8;}
+.quote{border-left:3px solid var(--line);padding:6px 0 6px 18px;margin:14px 0 20px;
+  color:var(--ink-2);font-size:.94em;}
+.quote .src{display:block;margin-top:7px;font-size:.85em;color:var(--ink-3);}
+.dougu{background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden;margin-bottom:22px;}
+.dougu .cap{background:var(--navy);color:#fff;padding:11px 20px;font-weight:700;font-size:1.02em;}
+.dougu .cap .n{display:inline-block;background:var(--gold);color:#1a1a1a;width:22px;height:22px;
+  line-height:22px;text-align:center;border-radius:50%;font-size:.82em;margin-right:9px;}
+.dougu .body{padding:18px 22px;}
+.dougu .body p:last-child{margin-bottom:0;}
+.dougu .moto{background:var(--ivory);padding:11px 22px;font-size:.9em;color:var(--ink-3);
+  border-bottom:1px solid var(--line);}
+.aizu{background:#fdf9ee;border:1px solid #e8dcc0;border-radius:3px;padding:11px 16px;
+  margin-top:14px;font-size:.93em;}
+.aizu b{color:var(--gold);}
+.note{background:#fdfcf8;border:1px dashed var(--line);padding:15px 20px;font-size:.92em;
+  color:var(--ink-2);margin:0 0 20px;}
+footer.foot{background:var(--ivory);margin-top:60px;padding:28px 24px;font-size:.84em;color:var(--ink-3);}
+footer.foot .inner{max-width:1000px;margin:0 auto;}
+footer.foot a{color:var(--navy-l);}
+@media (max-width:720px){
+  body{font-size:14px;}
+  .wrap{padding:0 16px 60px;}
+  header.head{padding:32px 16px 26px;}
+  header.head h1{font-size:1.4em;}
+  .tbl-scroll{overflow-x:auto;}
+  table{font-size:.86em;min-width:520px;}
+  th,td{padding:8px 9px;}
+  .dougu .cap,.dougu .body,.dougu .moto{padding-left:15px;padding-right:15px;}
+}
+
+.back-to-list{position:fixed;top:12px;left:12px;z-index:1000;
+  background:var(--ivory);color:var(--navy);padding:8px 16px;font-size:12px;
+  border-radius:4px;text-decoration:none;letter-spacing:.05em;
+  border:1px solid var(--navy);box-shadow:0 2px 6px rgba(0,0,0,.15);}
+.back-to-list:hover{background:var(--gold);color:var(--navy);}
+@media print{.back-to-list{display:none;}}
+@media (max-width:720px){.back-to-list{position:static;display:inline-block;margin:12px 0 0 16px;}}
+</style>
+</head>
+<body>
+<a class="back-to-list" href="index.html">← Mits Reports 一覧に戻る</a>
+
+<header class="head">
+<div class="inner">
+<span class="tag">AIを触っている人へ</span>
+<h1>AIは動くようになった。<br>なのに、楽になっていない。</h1>
+<p class="sub">色々自分で触ってみて、それなりに使えるようにはなった。<br>
+でも、何かがおかしい。忙しさは減っていない。──その正体と、直し方。</p>
+<div class="meta">2026-08-21 ／ 西田光弘</div>
+</div>
+</header>
+
+<div class="wrap">
+
+<h2>まず、当てはまるものにチェックを</h2>
+
+<div class="symptom">
+<ul>
+<li>毎回、同じ前置きから説明し直している</li>
+<li>AIに任せたのに、結局こちらが最後に判定している</li>
+<li>同じような直しを、何度もやっている</li>
+<li>ファイルやフォルダが増えて、どこに何があるか分からなくなった</li>
+<li>指示の文章が、前より長くなっている</li>
+<li>返ってきたものが「惜しい」。言いたいことは分かるはずなのに、と思う</li>
+<li>時間は使っている。でも、何が積み上がったかを聞かれると答えにくい</li>
+</ul>
+</div>
+
+<div class="conclusion">
+<p class="big">2つ以上ついたなら、あなたは「使えない」段階を、もう通り過ぎています。</p>
+<p>使えないうちは、こうはなりません。この症状は<b>指示が通るようになった人にだけ出る</b>ものです。通るから、頼む量が増える。増えるから、自分の頭の中が追いつかなくなる。</p>
+<p>つまりこれは、後退ではなく<b>次の段階の入口</b>です。そして、ここを抜ける道具は、もう50年前から存在しています。</p>
+</div>
+
+<h2>この詰まりは、プログラマーが50年かけて解いた問題と同じもの</h2>
+
+<p>プログラミングを学べ、という話ではありません。<b>プログラマーが機械を相手にするときに使っている考え方が、そのまま効く</b>という話です。</p>
+
+<p>なぜ効くのか。相手が同じだからです。人間なら、こちらが言い足りなくても察してくれる。機械は察しません。AIは人間の言葉を話しますが、<b>察しない側</b>です。だから、機械を相手にしてきた人たちの型が当たります。</p>
+
+<div class="quote">
+思うように動いてくれなかった場合は、<b>十中八九、命令している側に原因・責任があります。</b>人ばかりを相手にしていると、こういう発想にはならない。指示を出した部下や下請けが思うように動かない、こういう時ついつい「あいつは無能だ」と決めつけてしまいます。<br><br>
+プログラミングを始めると、<b>正しく指示すれば正しく動く</b>という、ごく当たり前でシンプルな思考の基盤を身につけることができます。
+<span class="src">『プログラマーは世界をどう見ているのか』（ひろゆき）解説より</span>
+</div>
+
+<p>以下、6つの道具を並べます。どれも1つずつ独立して効きます。上のチェックで当てはまったものから読んでください。</p>
+
+<h2>6つの道具</h2>
+
+<div class="dougu">
+<div class="cap"><span class="n">1</span>「アレ」「ソレ」に、名前をつけて置いておく</div>
+<div class="moto">元の考え方：<b>変数</b> ── 値に名前をつけて、後から呼び出せるようにすること</div>
+<div class="body">
+<p>毎回同じ説明をしているなら、それは<b>名前がついていない</b>からです。</p>
+<p>「うちのお客さん」「いつもの形式」「例のあれ」──これは人間相手なら通じます。AIには通じません。通じないから、毎回説明する。説明するたびに少しずつ言い方が変わり、AIは別のものとして扱います。</p>
+<p><b>やること：</b>自分の仕事で繰り返し出てくる言葉を書き出して、呼び名を1つに決めて、AIが毎回読む場所に書いておく。次からは、その言葉を出すだけで通ります。</p>
+<div class="aizu"><b>合図：</b>同じ説明を2回した言葉が、名前をつけるべき言葉です。</div>
+</div>
+</div>
+
+<div class="dougu">
+<div class="cap"><span class="n">2</span>毎回している判断を、条件の形で書いて渡す</div>
+<div class="moto">元の考え方：<b>条件分岐</b> ── もしAならB、そうでなければC</div>
+<div class="body">
+<p>AIに任せたはずなのに、最後に自分が見て決めている。これが積もると、AIを使う前より疲れます。<b>作業は減ったが、判断は増えた</b>状態です。</p>
+<p>判断が残るのは、判断の基準が自分の頭の中にしかないからです。頭の中にある限り、毎回そこに取りに行くことになる。しかも、日によって答えがブレます。</p>
+<p><b>やること：</b>自分が繰り返している判定を、条件の形にして書く。「◯◯なら出す、そうでなければ止める」「◯◯を満たしたら自分がやる、それ以外は任せる」。書けば、AIが同じ判定をします。書かないうちは、永遠に自分が判定係です。</p>
+<div class="aizu"><b>合図：</b>「毎回ちょっと考える」ものが全部これです。考える時間が短いものほど、書いた効果が大きい。</div>
+</div>
+</div>
+
+<div class="dougu">
+<div class="cap"><span class="n">3</span>2回やった手順は、その場で外に出す</div>
+<div class="moto">元の考え方：<b>繰り返し</b> ── 同じ処理を何度も書かず、1箇所にまとめること</div>
+<div class="body">
+<p>うまくいった手順を「覚えている」つもりでいると、3回目に「前どうやったっけ」で探し始めます。探す時間は、やり直す時間とほぼ同じです。</p>
+<p>まとめておく価値は、時間の節約だけではありません。<b>1箇所直せば、全部が直る</b>ようになることです。バラバラに書いてあると、直すたびに全部を探して回ることになります。</p>
+<p><b>やること：</b>2回目をやった瞬間に、手順を外に出す。置き場所を1つに決める。次からはそこだけ直す。</p>
+<div class="aizu"><b>合図：</b>「前もこれやったな」と思った瞬間が、まとめる時です。<b>3回目を待たない。</b></div>
+</div>
+</div>
+
+<div class="dougu">
+<div class="cap"><span class="n">4</span>分け方は「目的」で決まる。先に正解の分け方はない</div>
+<div class="moto">元の考え方：<b>分解</b> ── 大きなものを、目的に合わせて小さく分けること</div>
+<div class="body">
+<div class="quote" style="margin-top:0;">
+分解とは、<b>目的に合わせて分けること</b>だよ。<br>
+（今日の夜ご飯はカレーライス。必要な食材は？ → 肉・じゃがいも・にんじん・玉ねぎ・ルー、そしてお米）<br>
+分解の考え方が育つと、問題の要素がはっきりしたり、問題解決の見通しが持てたりするんだ。
+<span class="src">みやプロGo！学習動画（分解）より</span>
+</div>
+<p>ここで大事なのは<b>「目的に合わせて」</b>の方です。同じカレーでも、作るのが目的なら食材で分ける。買い物を早く済ませるのが目的なら、売り場で分ける。目的が違えば、正解の分け方が違います。</p>
+<p>ファイルやフォルダが崩れるのは、分け方を間違えたからではありません。<b>目的が変わったのに、分け方が前のまま</b>だからです。最初は「試す」ための置き方でよかった。いまは「探す」ための置き方が要る。中身が変わったのではなく、目的が変わった。</p>
+<p><b>やること：</b>並べ直す前に、「いま何のために分けるのか」を1行で書く。書ければ、分け方は自動で決まります。</p>
+<p><b>やらないこと：</b>他人の分け方をそのまま借りること。それはその人の目的の写しであって、あなたの目的の写しではありません。</p>
+<div class="aizu"><b>合図：</b>「どこに置けばいいか分からない」は、置き場の問題ではなく、<b>目的が言えていない</b>合図です。</div>
+</div>
+</div>
+
+<div class="dougu">
+<div class="cap"><span class="n">5</span>「細かく言え」は、半分しか正しくない</div>
+<div class="moto">元の考え方：<b>指示の最小単位</b> ── どこまで分けるかは、相手が何を持っているかで決まる</div>
+<div class="body">
+<p>ここが一番効きます。</p>
+<div class="quote">
+「売れる商品の企画書を書け」という指示は、ベテランの主任クラスに対してなら適切かもしれません。推測した上で実行できるからです。しかし新入社員であれば、期待した結果を出すのは難しい。<b>指示を、相手に合わせた最小単位に分けていくんです。</b><br><br>
+機械への指示の最小単位は、<b>その相手が持っている命令</b>です。ロボットに「チョキを出せ」という命令があれば、「チョキを出せ」と書くだけで済む。無い場合は、親指を曲げろ・人差し指を伸ばせ・中指を伸ばせ……と細分化しなければなりません。
+<span class="src">『プログラマーは世界をどう見ているのか』（ひろゆき）解説より</span>
+</div>
+<p>AIに慣れた人ほど、指示が長くなっていきます。丁寧になった、と思っている。実際は違います。<b>相手に持たせていないから、毎回その場で分解している</b>だけです。</p>
+<p>持たせてあるものに対しては、一言で通ります。持たせていないものは、どこまでも説明が要る。<b>指示の長さは、あなたがどれだけ持たせたかの目盛り</b>です。長くなり続けているなら、渡し方が悪いのではなく、渡しっぱなしにしていない。</p>
+<p><b>やること：</b>指示が長くなったと感じたら、その中の「毎回書いている部分」を切り出して、AIが常に読む場所に置く。次から、指示は短くなります。</p>
+<div class="aizu"><b>合図：</b>同じ前置きを3回書いたら、それは持たせるべきものです。</div>
+</div>
+</div>
+
+<div class="dougu">
+<div class="cap"><span class="n">6</span>返ってきたものが「惜しい」時ほど、自分の文章を読み返す</div>
+<div class="moto">元の考え方：<b>動かないのは、命令が悪いせい</b></div>
+<div class="body">
+<p>使い始めのころは、返ってきたものが的外れです。的外れだと、自分の言い方を疑いやすい。</p>
+<p>慣れてくると、返ってくるものが<b>惜しく</b>なります。7割合っている。だから「言いたいことは分かるはずなのに」と思う。ここが分かれ目です。<b>「分かるはず」と思った時点で、それは言っていない</b>のです。</p>
+<p><b>やること：</b>惜しい出力を捨てる前に、自分が渡した文章を読み返す。たいてい、書いていません。書いていないものは、相手の中には無い。</p>
+<p>この違いは、時間が経つほど開きます。AIを責める人は、そこで止まる。自分の指示を読み返す人は、指示が上手くなり続ける。1年後には別の場所にいます。</p>
+<div class="aizu"><b>合図：</b>「なんで分からないんだ」と思った瞬間が、読み返す時です。</div>
+</div>
+</div>
+
+<h2>ここまでは道具の話。最後の1つは、違う</h2>
+
+<p>1〜6 は、全部「どう使うか」の話です。これを揃えると、確実に楽になります。ただ、楽になった先で、もう一つの問題が出てきます。</p>
+
+<div class="quote">
+ただ漠然と勉強することはお勧めしません。<b>作りたいものを決めて、それに向かって進めていく。</b>作りたいものを決めると、「これって何でやっているんだっけ」と疑問に持たずに済み、挫折しにくくなります。<br><br>
+一方、作りたいものを描かずに学習をすると、挫折する可能性が高いと思います。<b>私自身、これで一度挫折しました。</b>
+<span class="src">プログラミング学習のはじめ方（キノコード）より</span>
+</div>
+
+<p>道具が揃うと、たいていのことは頼めるようになります。頼めるようになると、今度は<b>何を頼むか</b>で差がつきます。ここから先は、道具の性能の話ではありません。</p>
+
+<p>そしてもう一つ。効率化で時間が浮いたとき、その時間の使い方で結果が変わります。</p>
+
+<div class="quote">
+生産性を上げる方法は3つあります。<b>同じ仕事を短い時間で終わらせること。同じ時間でたくさんの量を終わらせること。同じ時間でその仕事の質を高めること。</b>
+<span class="src">プログラミング学習のはじめ方（キノコード）より</span>
+</div>
+
+<p>浮いた時間を<b>「もう1日分の同じ仕事」</b>に注ぎ足すのが、一番もったいない使い方です。それは1番目しか使っていない。浮いた時間は、<b>これまで手をつけられていなかったこと</b>に充てる。何年も後回しにしてきたものが、たいてい1つや2つあるはずです。</p>
+
+<h2>症状から引く一覧</h2>
+
+<div class="tbl-scroll">
+<table>
+<tr><th style="width:44%">こうなっている</th><th style="width:20%">使う道具</th><th>最初の一手</th></tr>
+<tr><td>毎回、同じ前置きから説明し直している</td><td><b>1</b> 名前をつける</td><td>2回説明した言葉を書き出し、呼び名を1つに決めて置く</td></tr>
+<tr><td>結局こちらが最後に判定している</td><td><b>2</b> 条件で書く</td><td>「◯◯なら／それ以外は」を1つ書いてみる</td></tr>
+<tr><td>同じような直しを何度もやっている</td><td><b>3</b> 外に出す</td><td>2回やった手順を、置き場所を決めて書き出す</td></tr>
+<tr><td>どこに何があるか分からなくなった</td><td><b>4</b> 目的で分ける</td><td>並べ直す前に「何のために分けるか」を1行書く</td></tr>
+<tr><td>指示の文章が前より長くなっている</td><td><b>5</b> 持たせる</td><td>長い指示の中の「毎回書く部分」を切り出す</td></tr>
+<tr><td>返ってくるものが「惜しい」</td><td><b>6</b> 読み返す</td><td>捨てる前に、自分が渡した文章を読む</td></tr>
+<tr><td>時間は使っているが、何が積み上がったか言えない</td><td>道具ではない</td><td>次に何を作るかを決める</td></tr>
+</table>
+</div>
+
+<div class="conclusion">
+<p class="big">上から順にやる必要はありません。1つやれば、1つ軽くなります。</p>
+<p>どれも、AIの新しい機能を覚える話ではありません。<b>相手が察しない、ということを前提に置き直すだけ</b>です。置き直せば、あとは同じ道具が何年でも使えます。ツールが変わっても、この6つは変わりません。</p>
+</div>
+
+</div>
+
+<footer class="foot">
+<div class="inner">
+本文中の引用は、以下の公開動画・書籍解説からそのまま引いたものです（言い換えていません）。<br>
+・<a href="https://www.youtube.com/watch?v=lPNmJY5OsaM" target="_blank" rel="noopener">【14分で解説】プログラマーは世界をどう見ているのか（ひろゆき）</a><br>
+・<a href="https://www.youtube.com/watch?v=DYs1TvwFUvQ" target="_blank" rel="noopener">プログラミング学習のはじめ方｜初心者が何から始めればいいか解説します（キノコード）</a><br>
+・<a href="https://www.youtube.com/watch?v=SsBFIbsYm0U" target="_blank" rel="noopener">みやプロＧｏ！学習動画（分解）</a><br>
+・<a href="https://www.youtube.com/watch?v=3Dwr-NLflfs" target="_blank" rel="noopener">みんなで実践！「プログラミング的思考」を体験</a><br>
+・<a href="https://www.youtube.com/watch?v=-eDLv1hzZZ4" target="_blank" rel="noopener">【20分】初めてのプログラミング思考！プロが教える超入門講座</a><br>
+・<a href="https://www.youtube.com/watch?v=M8TOZ9D451k" target="_blank" rel="noopener">効率的に問題を解決！リアルで役立つプログラミング的思考</a>
+</div>
+</footer>
+
+</body>
+</html>
