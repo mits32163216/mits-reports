@@ -81,6 +81,45 @@ footer.foot a{color:var(--navy-l);}
 .back-to-list:hover{background:var(--gold);color:var(--navy);}
 @media print{.back-to-list{display:none;}}
 @media (max-width:720px){.back-to-list{position:static;display:inline-block;margin:12px 0 0 16px;}}
+
+/* ── 理解度チェック（10問） ───────────────────────────── */
+.qz{background:#fff;border:1px solid var(--line);border-radius:4px;padding:0;margin:0 0 24px;}
+.qz-head{background:var(--navy);color:#fff;padding:14px 22px;}
+.qz-head b{font-size:1.06em;}
+.qz-head .qz-lead{display:block;margin-top:5px;font-size:.86em;color:#cfdce6;line-height:1.7;}
+.qz-body{padding:20px 22px 4px;}
+.qz-item{border-top:1px solid var(--line);padding:20px 0 4px;}
+.qz-item:first-child{border-top:0;padding-top:4px;}
+.qz-no{display:inline-block;background:var(--ivory);color:var(--ink-3);font-size:.76em;
+  padding:2px 9px;border-radius:2px;letter-spacing:.06em;margin-bottom:9px;}
+.qz-q{font-weight:700;line-height:1.68;margin:0 0 13px;}
+.qz-opt{display:block;width:100%;text-align:left;background:#fdfcf8;border:1px solid var(--line);
+  border-radius:3px;padding:11px 14px;margin:0 0 8px;font-family:inherit;font-size:.97em;
+  line-height:1.68;color:var(--ink);cursor:pointer;}
+.qz-opt:hover:not(:disabled){background:var(--ivory);border-color:var(--gold);}
+.qz-opt:disabled{cursor:default;}
+.qz-opt .qz-mk{color:var(--ink-3);font-weight:700;margin-right:8px;}
+.qz-opt .qz-ex{display:none;margin-top:7px;font-size:.9em;color:var(--ink-2);line-height:1.7;}
+.qz-done .qz-opt .qz-ex{display:block;}
+.qz-done .qz-opt.qz-right{background:#eef7f0;border-color:var(--ok);}
+.qz-done .qz-opt.qz-right .qz-mk{color:var(--ok);}
+.qz-done .qz-opt.qz-picked-wrong{background:#fdf0f0;border-color:var(--ng);}
+.qz-done .qz-opt.qz-picked-wrong .qz-mk{color:var(--ng);}
+.qz-verdict{display:none;font-weight:700;font-size:.94em;margin:2px 0 9px;}
+.qz-done .qz-verdict{display:block;}
+.qz-verdict.qz-o{color:var(--ok);}
+.qz-verdict.qz-x{color:var(--ng);}
+.qz-foot{border-top:1px solid var(--line);padding:16px 22px 20px;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.qz-score{font-size:.95em;color:var(--ink-2);}
+.qz-score b{color:var(--navy);font-size:1.25em;}
+.qz-reset{background:var(--ivory);border:1px solid var(--line);border-radius:3px;
+  padding:8px 18px;font-family:inherit;font-size:.9em;color:var(--navy);cursor:pointer;}
+.qz-reset:hover{background:var(--gold);color:#1a1a1a;border-color:var(--gold);}
+@media (max-width:720px){
+  .qz-head,.qz-body,.qz-foot{padding-left:15px;padding-right:15px;}
+  .qz-opt{padding:10px 12px;}
+}
 </style>
 </head>
 <body>
@@ -266,6 +305,159 @@ footer.foot a{color:var(--navy-l);}
 <p class="big">上から順にやる必要はありません。1つやれば、1つ軽くなります。</p>
 <p>どれも、AIの新しい機能を覚える話ではありません。<b>相手が察しない、ということを前提に置き直すだけ</b>です。置き直せば、あとは同じ道具が何年でも使えます。ツールが変わっても、この6つは変わりません。</p>
 </div>
+
+<h2>理解度チェック（10問）</h2>
+<div class="qz" id="qz">
+<div class="qz-head"><b>読んだあとに、1問ずつ。</b><span class="qz-lead">選ぶと、その場で答えと解説が出ます。間違えた問題の番号が、あなたがいま手をつけるべき道具です。</span></div>
+<div class="qz-body">
+<div class="qz-item" data-a="3">
+<span class="qz-no">Q1 / 10</span>
+<p class="qz-q">AIに指示が通るようになったのに、なぜか以前より忙しく感じてしまう現象の主な原因として、本文で述べられていることはどれですか？</p>
+<p class="qz-verdict"></p>
+<button type="button" class="qz-opt" data-i="0"><span class="qz-mk">A.</span>最新のAIツールを使いこなすための学習に、膨大な時間を奪われているから。<span class="qz-ex">本文は新しいツールの学習ではなく、既存の道具をプログラミング的な視点でどう使いこなすかという「考え方」に焦点を当てています。</span></button>
+<button type="button" class="qz-opt" data-i="1"><span class="qz-mk">B.</span>AIが指示を完璧に理解できず、的外れな回答ばかりを返すから。<span class="qz-ex">本文では「指示が通るようになった人」にこそ、頼む量が増えて自分の頭が追いつかなくなる症状が出ると説明されています。</span></button>
+<button type="button" class="qz-opt" data-i="2"><span class="qz-mk">C.</span>AIの処理能力が向上し、人間がチェックするスピードが追いつかなくなったから。<span class="qz-ex">AIの処理速度の問題ではなく、人間側の「指示の出し方」や「管理の仕方」という思考の整理に焦点が当てられています。</span></button>
+<button type="button" class="qz-opt" data-i="3"><span class="qz-mk">D.</span>指示が通るようになったことで依頼する量が増え、自分の認知負荷が限界を超えているから。<span class="qz-ex">指示が通るからこそ依頼量が増加し、その結果、管理すべき情報が自分の思考スピードを上回ってしまうことが原因とされています。</span></button>
+</div>
+<div class="qz-item" data-a="0">
+<span class="qz-no">Q2 / 10</span>
+<p class="qz-q">AIに「毎回同じ説明をしている」と感じたとき、プログラミングの「変数」の考え方を応用した対処法として適切なものはどれですか？</p>
+<p class="qz-verdict"></p>
+<button type="button" class="qz-opt" data-i="0"><span class="qz-mk">A.</span>よく使う概念に独自の「名前」をつけ、その定義をAIが常に参照できる場所に置いておく。<span class="qz-ex">概念に名前をつけて固定することで、次からはその言葉を出すだけで共通認識として通じるようになります。</span></button>
+<button type="button" class="qz-opt" data-i="1"><span class="qz-mk">B.</span>AIの記憶力が良くなるまで、根気強く何度も同じ説明を繰り返す。<span class="qz-ex">同じ説明を繰り返すことは時間の浪費であり、AIが「察する」ことを期待するのは機械の性質に反します。</span></button>
+<button type="button" class="qz-opt" data-i="2"><span class="qz-mk">C.</span>人間相手のときと同じように、曖昧な表現を使ってAIの「察する能力」を鍛える。<span class="qz-ex">AIは「察しない側」の存在であるため、人間と同じコミュニケーション手法を期待するのは適切ではありません。</span></button>
+<button type="button" class="qz-opt" data-i="3"><span class="qz-mk">D.</span>指示の文章をより詳細に、かつ長くすることで誤解の余地をなくす。<span class="qz-ex">指示が長くなるのは「相手に持たせていない」証拠であり、効率化の逆を行く行為であると本文では指摘されています。</span></button>
+</div>
+<div class="qz-item" data-a="2">
+<span class="qz-no">Q3 / 10</span>
+<p class="qz-q">冒頭のチェックリストに2つ以上当てはまった人を、本文はどう位置づけていますか？</p>
+<p class="qz-verdict"></p>
+<button type="button" class="qz-opt" data-i="0"><span class="qz-mk">A.</span>AIの使い方を根本から間違えているので、基礎からやり直す段階にある。<span class="qz-ex">本文はこれを後退とは扱っていません。使えないうちは、この症状自体が出ないとしています。</span></button>
+<button type="button" class="qz-opt" data-i="1"><span class="qz-mk">B.</span>AIへの依存度が高すぎるので、いったん使う量を減らすべき段階にある。<span class="qz-ex">本文は使う量を減らせとは述べていません。増えた依頼を扱う道具を持つ話です。</span></button>
+<button type="button" class="qz-opt" data-i="2"><span class="qz-mk">C.</span>「使えない」段階をすでに通り過ぎており、次の段階の入口に立っている。<span class="qz-ex">この症状は指示が通るようになった人にだけ出るもので、後退ではなく次の段階の入口だと本文は述べています。</span></button>
+<button type="button" class="qz-opt" data-i="3"><span class="qz-mk">D.</span>向き不向きの問題なので、別のツールに乗り換えるのが早い段階にある。<span class="qz-ex">本文はツールの乗り換えではなく、ツールが変わっても使える6つの道具を示しています。</span></button>
+</div>
+<div class="qz-item" data-a="3">
+<span class="qz-no">Q4 / 10</span>
+<p class="qz-q">「AIに任せたのに、結局こちらが最後に判定している」状態が続く理由として、本文が挙げているものはどれですか？</p>
+<p class="qz-verdict"></p>
+<button type="button" class="qz-opt" data-i="0"><span class="qz-mk">A.</span>AIの判断精度が人間に及ばず、最終確認が構造的に避けられないから。<span class="qz-ex">本文は精度の問題としていません。基準が渡っていない状態を問題にしています。</span></button>
+<button type="button" class="qz-opt" data-i="1"><span class="qz-mk">B.</span>依頼する作業量が多すぎて、AIが処理しきれていないから。<span class="qz-ex">量ではなく、判定基準が外に出ていないことが原因とされています。</span></button>
+<button type="button" class="qz-opt" data-i="2"><span class="qz-mk">C.</span>判断を任せると責任の所在が曖昧になるため、意図的に残しているから。<span class="qz-ex">本文は責任論ではなく、「作業は減ったが判断は増えた」状態の構造を説明しています。</span></button>
+<button type="button" class="qz-opt" data-i="3"><span class="qz-mk">D.</span>判断の基準が自分の頭の中にしかなく、書き出されていないから。<span class="qz-ex">頭の中にある限り毎回そこへ取りに行くことになり、しかも日によって答えがブレる、と本文は述べています。</span></button>
+</div>
+<div class="qz-item" data-a="0">
+<span class="qz-no">Q5 / 10</span>
+<p class="qz-q">うまくいった手順を外に書き出すタイミングとして、本文が指定しているのはいつですか？</p>
+<p class="qz-verdict"></p>
+<button type="button" class="qz-opt" data-i="0"><span class="qz-mk">A.</span>2回目をやった、その瞬間。<span class="qz-ex">「前もこれやったな」と思った瞬間がまとめる時で、3回目を待たない、と本文は述べています。</span></button>
+<button type="button" class="qz-opt" data-i="1"><span class="qz-mk">B.</span>3回目に同じ手順をやったとき。<span class="qz-ex">本文は「3回目を待たない」と明記しています。</span></button>
+<button type="button" class="qz-opt" data-i="2"><span class="qz-mk">C.</span>その手順が完全に固まって、二度と変わらないと確信できたとき。<span class="qz-ex">まとめる価値は固定化ではなく、1箇所直せば全部が直る状態を作ることにあります。</span></button>
+<button type="button" class="qz-opt" data-i="3"><span class="qz-mk">D.</span>月末など、まとめて振り返る時間を取ったとき。<span class="qz-ex">後回しにすると3回目に「前どうやったっけ」と探す時間が発生します。探す時間は、やり直す時間とほぼ同じです。</span></button>
+</div>
+<div class="qz-item" data-a="2">
+<span class="qz-no">Q6 / 10</span>
+<p class="qz-q">ファイルやフォルダの分け方が崩れる理由として、本文が挙げているものはどれですか？</p>
+<p class="qz-verdict"></p>
+<button type="button" class="qz-opt" data-i="0"><span class="qz-mk">A.</span>最初の分類設計が甘く、分ける細かさを間違えたから。<span class="qz-ex">本文は「分け方を間違えたからではありません」と明言しています。</span></button>
+<button type="button" class="qz-opt" data-i="1"><span class="qz-mk">B.</span>扱う情報量が増え、どんな分け方でも破綻する規模になったから。<span class="qz-ex">規模ではなく、目的と分け方のずれが原因とされています。</span></button>
+<button type="button" class="qz-opt" data-i="2"><span class="qz-mk">C.</span>目的が変わったのに、分け方が前のままだから。<span class="qz-ex">最初は「試す」ための置き方でよかった。いまは「探す」ための置き方が要る。中身ではなく目的が変わった、と本文は述べています。</span></button>
+<button type="button" class="qz-opt" data-i="3"><span class="qz-mk">D.</span>一般に正しいとされる分類法を採用していなかったから。<span class="qz-ex">本文は「先に正解の分け方はない」「他人の分け方をそのまま借りない」としています。</span></button>
+</div>
+<div class="qz-item" data-a="0">
+<span class="qz-no">Q7 / 10</span>
+<p class="qz-q">AIに慣れた人ほど指示の文章が長くなっていくことについて、本文の見方はどれですか？</p>
+<p class="qz-verdict"></p>
+<button type="button" class="qz-opt" data-i="0"><span class="qz-mk">A.</span>相手に持たせていないから、毎回その場で分解しているということ。<span class="qz-ex">指示の長さは、あなたがどれだけ持たせたかの目盛りである、と本文は述べています。</span></button>
+<button type="button" class="qz-opt" data-i="1"><span class="qz-mk">B.</span>丁寧になった証拠であり、誤解が減るので望ましい変化である。<span class="qz-ex">本文は「丁寧になった、と思っている。実際は違います」と否定しています。</span></button>
+<button type="button" class="qz-opt" data-i="2"><span class="qz-mk">C.</span>扱う仕事が高度になった結果であり、避けようがない。<span class="qz-ex">毎回書いている部分を切り出して常に読む場所へ置けば、指示は短くなると本文は述べています。</span></button>
+<button type="button" class="qz-opt" data-i="3"><span class="qz-mk">D.</span>AI側の仕様変更に合わせて説明を足す必要が出ているということ。<span class="qz-ex">本文はツールの仕様ではなく、渡し方の問題として説明しています。</span></button>
+</div>
+<div class="qz-item" data-a="1">
+<span class="qz-no">Q8 / 10</span>
+<p class="qz-q">「指示の最小単位」について、本文が引いている考え方はどれですか？</p>
+<p class="qz-verdict"></p>
+<button type="button" class="qz-opt" data-i="0"><span class="qz-mk">A.</span>指示は常に、できる限り細かく分けたほうがよい。<span class="qz-ex">「細かく言え」は半分しか正しくない、というのが本文の立場です。持たせてあるものには一言で通ります。</span></button>
+<button type="button" class="qz-opt" data-i="1"><span class="qz-mk">B.</span>どこまで分けるかは、その相手が何を持っているかで決まる。<span class="qz-ex">ロボットに「チョキを出せ」という命令があれば一言で済み、無ければ指を1本ずつ指示することになる、という引用で説明されています。</span></button>
+<button type="button" class="qz-opt" data-i="2"><span class="qz-mk">C.</span>相手の経験年数に比例して、指示を長くしていけばよい。<span class="qz-ex">本文が問題にしているのは年数ではなく、相手が持っている命令の有無です。</span></button>
+<button type="button" class="qz-opt" data-i="3"><span class="qz-mk">D.</span>最小単位は相手によらず一定で、標準の書式に従えばよい。<span class="qz-ex">本文は「相手に合わせた最小単位に分けていく」と述べています。</span></button>
+</div>
+<div class="qz-item" data-a="3">
+<span class="qz-no">Q9 / 10</span>
+<p class="qz-q">返ってきたものが「惜しい」と感じたとき、本文が勧める最初の一手はどれですか？</p>
+<p class="qz-verdict"></p>
+<button type="button" class="qz-opt" data-i="0"><span class="qz-mk">A.</span>惜しい出力を捨てて、別の言い方で指示をやり直す。<span class="qz-ex">捨てる前に、自分が渡した文章を読み返す、というのが本文の順序です。</span></button>
+<button type="button" class="qz-opt" data-i="1"><span class="qz-mk">B.</span>別のAIに同じ指示を出して、出力を比べる。<span class="qz-ex">本文は道具の比較ではなく、自分の指示を読み返す習慣の差を問題にしています。</span></button>
+<button type="button" class="qz-opt" data-i="2"><span class="qz-mk">C.</span>AIの理解力の限界と考えて、その部分は自分でやる。<span class="qz-ex">AIを責める人はそこで止まり、指示を読み返す人は上手くなり続ける、と本文は述べています。</span></button>
+<button type="button" class="qz-opt" data-i="3"><span class="qz-mk">D.</span>自分が渡した文章を読み返す。<span class="qz-ex">「分かるはず」と思った時点で、それは言っていない。書いていないものは相手の中には無い、と本文は述べています。</span></button>
+</div>
+<div class="qz-item" data-a="2">
+<span class="qz-no">Q10 / 10</span>
+<p class="qz-q">効率化で時間が浮いたとき、本文が「一番もったいない使い方」としているのはどれですか？</p>
+<p class="qz-verdict"></p>
+<button type="button" class="qz-opt" data-i="0"><span class="qz-mk">A.</span>これまで手をつけられていなかったことに充てる。<span class="qz-ex">本文が勧めている使い方です。何年も後回しにしてきたものが、たいてい1つや2つあるはずだとしています。</span></button>
+<button type="button" class="qz-opt" data-i="1"><span class="qz-mk">B.</span>同じ時間で、その仕事の質を高めることに使う。<span class="qz-ex">生産性を上げる3つの方法の1つとして、本文が挙げているものです。</span></button>
+<button type="button" class="qz-opt" data-i="2"><span class="qz-mk">C.</span>同じ仕事を、もう1日分そこに注ぎ足す。<span class="qz-ex">それは3つのうち1番目（同じ仕事を短い時間で終わらせる）しか使っていない、と本文は述べています。</span></button>
+<button type="button" class="qz-opt" data-i="3"><span class="qz-mk">D.</span>次に何を作るかを決めることに使う。<span class="qz-ex">道具が揃うと「何を頼むか」で差がつく、と本文が述べている方向です。</span></button>
+</div>
+</div>
+<div class="qz-foot"><span class="qz-score">回答 <b id="qz-n">0</b> / 10　正解 <b id="qz-c">0</b></span><button type="button" class="qz-reset" id="qz-reset">もう一度やる</button></div>
+</div>
+<script>
+(function(){
+  var box = document.getElementById('qz');
+  if(!box) return;
+  var items = box.querySelectorAll('.qz-item');
+  var nEl = document.getElementById('qz-n'), cEl = document.getElementById('qz-c');
+  function tally(){
+    var n = 0, c = 0;
+    items.forEach(function(it){
+      if(it.classList.contains('qz-done')){
+        n++;
+        if(it.dataset.ok === '1') c++;
+      }
+    });
+    nEl.textContent = n; cEl.textContent = c;
+  }
+  items.forEach(function(it){
+    var ans = parseInt(it.dataset.a, 10);
+    var opts = it.querySelectorAll('.qz-opt');
+    var vd = it.querySelector('.qz-verdict');
+    opts.forEach(function(op){
+      op.addEventListener('click', function(){
+        if(it.classList.contains('qz-done')) return;
+        var pick = parseInt(op.dataset.i, 10);
+        var ok = (pick === ans);
+        it.classList.add('qz-done');
+        it.dataset.ok = ok ? '1' : '0';
+        vd.textContent = ok ? '正解です！' : '違います。正しいのは ' + 'ABCD'[ans] + ' です。';
+        vd.className = 'qz-verdict ' + (ok ? 'qz-o' : 'qz-x');
+        opts.forEach(function(o){
+          o.disabled = true;
+          var i = parseInt(o.dataset.i, 10);
+          if(i === ans) o.classList.add('qz-right');
+          else if(i === pick) o.classList.add('qz-picked-wrong');
+        });
+        tally();
+      });
+    });
+  });
+  document.getElementById('qz-reset').addEventListener('click', function(){
+    items.forEach(function(it){
+      it.classList.remove('qz-done');
+      delete it.dataset.ok;
+      it.querySelector('.qz-verdict').textContent = '';
+      it.querySelectorAll('.qz-opt').forEach(function(o){
+        o.disabled = false;
+        o.classList.remove('qz-right','qz-picked-wrong');
+      });
+    });
+    tally();
+    box.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+  tally();
+})();
+</script>
 
 </div>
 
