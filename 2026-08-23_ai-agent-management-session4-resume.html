@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BE-02 第4回：100時間からのAI社員の経営応用・活用｜レジュメ v8（シラバス ver2 整合）</title>
+<style>
+.lp-root *{margin:0;padding:0;box-sizing:border-box;}
+.lp-root{
+  --text-xs:11px;--text-sm:14.4px;--text-md:18px;--text-lg:22.5px;--text-xl:28px;--text-2xl:32px;--text-3xl:38px;
+  --text-h1:34px;--text-header-sub:22px;
+  --lh-md:29.7px;--lh-lg:37.1px;
+  --sp-1:8px;--sp-2:16px;--sp-3:24px;--sp-4:32px;--sp-5:36px;--sp-6:48px;--sp-8:64px;--sp-10:88px;
+  --ink:rgb(33,37,41);--ink-2:#555;--ink-3:#888;--ink-4:#aaa;
+  --bg-page:#f5f5f0;--bg-card:#fff;--font-mono:ui-monospace,"SF Mono",Menlo,monospace;
+  --font-serif:"Hiragino Mincho ProN","Yu Mincho",serif;
+  --navy:#14182f;--navy-2:#1e2340;--gold:#8b7355;--rule:#d4d0c8;
+  font-family:'Hiragino Sans','Noto Sans JP',sans-serif;font-size:var(--text-md);line-height:var(--lh-md);color:var(--ink);letter-spacing:0.02em;background:var(--bg-page);
+}
+body{font-family:'Hiragino Sans','Noto Sans JP',sans-serif;font-size:var(--text-md);line-height:var(--lh-md);color:var(--ink);letter-spacing:0.02em;background:var(--bg-page);}
+.sec-wrap{padding-left:50px;padding-right:50px;}
+.sec-1100{max-width:1100px;margin:0 auto;}
+.sec{margin-bottom:var(--sp-3);}
+.pt60{padding-top:var(--sp-10);}
+.pb20{padding-bottom:var(--sp-2);}
+.pb60{padding-bottom:var(--sp-10);}
+.header-block{position:relative;width:100vw;background:var(--navy);min-height:380px;display:flex;align-items:center;overflow:hidden;
+  background-image:linear-gradient(180deg,rgba(20,24,47,0.78) 0%,rgba(20,24,47,0.55) 45%,rgba(10,13,31,0.88) 100%);
+  border-bottom:6px double rgba(139,115,85,0.5);}
+.header-inner{position:relative;z-index:1;width:100%;padding:var(--sp-10) 0 var(--sp-6) 0;max-width:1100px;margin:0 auto;}
+.header-block .sec-wrap{padding-top:18px;padding-bottom:var(--sp-3);text-align:left;}
+.course-number{font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:0.25em;text-transform:uppercase;color:rgba(212,180,155,0.9);margin-bottom:var(--sp-2);}
+.header-course-name{font-family:var(--font-serif);font-size:16px;font-weight:400;color:rgba(255,255,255,0.75);letter-spacing:0.06em;margin-bottom:var(--sp-2);}
+.header-h1{font-family:var(--font-serif);font-size:var(--text-h1);font-weight:500;line-height:1.45;color:#fff;margin-bottom:var(--sp-3);}
+.header-h1 strong{color:#fff;font-weight:700;}
+.header-sub{font-family:var(--font-serif);font-style:italic;font-size:var(--text-header-sub);line-height:1.7;color:rgba(255,255,255,0.75);border-top:1px solid rgba(255,255,255,0.28);border-bottom:1px solid rgba(255,255,255,0.28);padding:var(--sp-2) 0;margin-top:var(--sp-3);max-width:820px;}
+.meta-strip{display:block;background:var(--navy-2);border-top:1px solid rgba(255,255,255,0.1);width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;padding:var(--sp-3) 50px;}
+.meta-strip-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;align-items:center;}
+.meta-cell{padding:8px 16px;border-right:1px solid rgba(255,255,255,0.12);min-width:0;}
+.meta-cell:last-child{border-right:none;}
+.meta-cell:first-child{padding-left:0;}
+.meta-label{font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(212,180,155,0.8);margin-bottom:6px;white-space:nowrap;}
+.meta-value{font-family:var(--font-serif);font-size:var(--text-md);color:#fff;line-height:1.5;font-weight:500;white-space:nowrap;}
+.lp-root p{margin-bottom:var(--sp-2);color:var(--ink);}
+.lp-root p:last-child{margin-bottom:0;}
+.lp-root strong{font-weight:700;color:var(--navy);}
+.sec-h2{font-family:var(--font-serif);font-size:var(--text-2xl);font-weight:700;line-height:1.4;color:var(--navy);margin-bottom:var(--sp-1);}
+.sec-h2-label{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:var(--sp-1);display:block;}
+.sec-h2-block{border-bottom:2px solid var(--navy);padding-bottom:var(--sp-3);margin-bottom:var(--sp-5);}
+.sec-lead{font-size:var(--text-md);color:var(--ink-2);line-height:var(--lh-md);margin-bottom:var(--sp-3);}
+.toc-card{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--gold);padding:var(--sp-4) var(--sp-5);}
+.toc-title{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:var(--sp-2);}
+.toc-list{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;}
+.toc-list li{font-size:14.4px;line-height:1.7;padding-left:1.6em;position:relative;}
+.toc-list li::before{content:"§";position:absolute;left:0;color:var(--gold);font-weight:700;font-family:var(--font-serif);}
+.toc-list a{color:var(--navy);text-decoration:none;border-bottom:1px dotted var(--rule);}
+.toc-list a:hover{border-bottom:1px solid var(--navy);}
+.overview-card{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--navy);padding:var(--sp-5) var(--sp-6);}
+.overview-card p{font-size:var(--text-md);line-height:var(--lh-md);color:var(--ink);}
+.overview-card p + p{margin-top:var(--sp-2);}
+.overview-card ol,.overview-card ul{padding-left:1.5em;margin-top:var(--sp-1);}
+.overview-card li{font-size:var(--text-md);line-height:var(--lh-md);color:var(--ink);margin-bottom:6px;}
+.reg-box{background:var(--bg-card);border:1px solid var(--rule);border-top:4px solid var(--navy);padding:var(--sp-4);margin:var(--sp-3) 0;}
+.time-table{width:100%;border-collapse:collapse;font-size:14.4px;}
+.time-table th,.time-table td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top;}
+.time-table th{background:#efece4;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);}
+.time-table td:nth-child(1){font-family:var(--font-serif);font-weight:700;color:var(--navy);white-space:nowrap;width:22%;}
+.time-table td:nth-child(2){font-family:var(--font-mono);font-weight:700;color:var(--navy);white-space:nowrap;width:12%;}
+.time-table tr.total td{background:#f2efe6;font-weight:700;color:var(--navy);border-top:2px solid var(--navy);}
+.block-wrap{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--navy);padding:var(--sp-5) var(--sp-6);margin-bottom:var(--sp-4);}
+.block-head{display:flex;align-items:baseline;gap:var(--sp-3);border-bottom:1px solid var(--rule);padding-bottom:var(--sp-2);margin-bottom:var(--sp-3);flex-wrap:wrap;}
+.block-num{font-family:var(--font-serif);font-size:var(--text-3xl);font-weight:700;color:var(--navy);line-height:1;font-style:italic;}
+.block-title-wrap{flex:1;min-width:280px;}
+.block-title{font-family:var(--font-serif);font-size:var(--text-xl);font-weight:700;color:var(--navy);line-height:1.4;}
+.block-meta{font-family:var(--font-mono);font-size:11px;color:var(--gold);letter-spacing:0.2em;text-transform:uppercase;margin-top:6px;font-weight:700;}
+.mits-quote{background:none;border-top:1px solid var(--navy);border-bottom:1px solid var(--navy);font-family:var(--font-serif);font-style:italic;font-size:18px;line-height:1.85;padding:var(--sp-3) var(--sp-3);margin:var(--sp-2) 0;color:var(--navy);}
+.mits-quote p{margin-bottom:var(--sp-2);color:var(--navy);}
+.mits-quote p:last-child{margin-bottom:0;}
+.mits-quote strong{font-weight:700;color:var(--navy);font-style:normal;}
+.mess-forbid{background:var(--navy);color:#fff;padding:var(--sp-3) var(--sp-4);margin:var(--sp-3) 0;border-radius:2px;}
+.mess-forbid-label{font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:rgba(212,180,155,0.9);margin-bottom:6px;}
+.mess-forbid-body{font-family:var(--font-serif);font-size:var(--text-md);line-height:1.75;color:#fff;}
+.mess-forbid-body strong{color:#fff;font-weight:700;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:4px;}
+.member-item{background:var(--bg-card);border:1px solid var(--rule);border-left:3px solid var(--gold);padding:var(--sp-3) var(--sp-4);margin-bottom:var(--sp-2);}
+.member-item p{color:var(--navy);}
+.member-item strong{color:var(--navy);font-weight:700;}
+.qa-item{background:var(--bg-card);border:1px solid var(--rule);border-left:3px solid var(--navy);padding:var(--sp-3) var(--sp-4);margin-bottom:var(--sp-2);}
+.assign-item{background:var(--bg-card);border:1px solid var(--rule);border-top:3px solid var(--gold);padding:var(--sp-3) var(--sp-4);margin-bottom:var(--sp-2);}
+.principle-item{background:var(--bg-card);border:1px solid var(--rule);border-top:4px solid var(--navy);padding:var(--sp-2) var(--sp-3);margin-bottom:var(--sp-1);}
+.principle-item p{color:var(--ink-2);}
+.principle-item strong{color:var(--navy);font-weight:700;}
+.conflict-item{background:var(--bg-card);border:1px solid var(--rule);border-left:3px solid #a94d4d;padding:var(--sp-2) var(--sp-3);margin-bottom:var(--sp-2);}
+.conflict-item p{color:var(--ink-2);}
+.conflict-item strong{color:var(--navy);font-weight:700;}
+.knowledge-layer{background:var(--bg-card);border:1px solid var(--rule);border-left:6px solid var(--gold);padding:var(--sp-3) var(--sp-4);margin-bottom:var(--sp-1);}
+.knowledge-layer p{color:var(--navy);}
+.knowledge-layer strong{color:var(--navy);font-weight:700;}
+.skill-item{background:var(--bg-card);border:1px solid var(--rule);padding:var(--sp-3);border-top:3px solid #3d6b48;margin-bottom:var(--sp-2);}
+.skill-item p{color:var(--navy);}
+.skill-item strong{color:var(--navy);font-weight:700;}
+.showa-block{background:var(--bg-card);border:1px solid var(--rule);border-left:4px solid var(--navy);padding:var(--sp-3) var(--sp-4);margin-bottom:var(--sp-2);}
+.ref-block{background:var(--bg-card);border:1px solid var(--rule);padding:var(--sp-3);margin-bottom:var(--sp-2);}
+.ref-block code{font-family:var(--font-mono);font-size:12.5px;background:#eee8e0;padding:2px 6px;color:var(--navy);word-break:break-all;}
+.lp-footer{background:var(--navy);color:white;padding:32px 50px;text-align:center;border-top:6px double rgba(139,115,85,0.5);width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;}
+.lp-footer .copyright{font-family:var(--font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-top:8px;}
+.back-to-list{position:fixed;top:12px;left:12px;z-index:100;background:rgba(20,24,47,0.85);color:#f5f5f0;padding:8px 16px;font-size:12px;border-radius:4px;text-decoration:none;letter-spacing:0.05em;}
+.hero-num{background:linear-gradient(90deg,rgba(139,115,85,0.10),transparent);border-left:6px solid var(--gold);padding:var(--sp-2) var(--sp-3);margin:var(--sp-2) 0;}
+.hero-num strong{color:var(--navy);font-weight:700;}
+@media (max-width:900px){
+  .sec-wrap{padding-left:20px;padding-right:20px;}
+  .header-h1{font-size:24px;}
+  .sec-h2{font-size:22px;}
+  .meta-strip-inner{grid-template-columns:1fr;gap:var(--sp-1);}
+  .meta-cell{padding:10px 12px;border-right:none;border-bottom:1px solid rgba(255,255,255,0.1);}
+  .toc-list{grid-template-columns:1fr;}
+  .block-wrap{padding:var(--sp-3) var(--sp-3);}
+  .time-table{font-size:13px;}
+  .time-table th,.time-table td{padding:8px 8px;}
+}
+@media print{
+  .back-to-list{display:none;}
+  .lp-root{background:#fff;}
+  .header-block{background:#fff;color:var(--navy);border-bottom:2px solid var(--navy);}
+  .header-h1,.header-sub,.course-number,.header-course-name{color:var(--navy);}
+  .meta-strip{background:#f2efe6;}
+  .meta-value,.meta-label{color:var(--navy);}
+  .mess-forbid{background:#f2efe6;color:var(--navy);border:1px solid var(--navy);}
+  .mess-forbid-body,.mess-forbid-label{color:var(--navy);}
+  .block-wrap,.qa-item,.assign-item,.member-item,.skill-item,.showa-block,.ref-block,.overview-card,.toc-card,.principle-item,.knowledge-layer,.conflict-item{page-break-inside:avoid;}
+  .lp-footer{background:#fff;color:var(--navy);}
+}
+
+/* ── URL をクリックで飛べるように（2026-08-21 追加） ── */
+a[href^="http"]{color:#1a3a52;text-decoration:underline;text-decoration-color:#b89544;
+  text-decoration-thickness:1px;text-underline-offset:2px;}
+a[href^="http"]:hover{background:#f3ecdb;}
+a[href^="http"] code{color:inherit;}
+@media print{a[href^="http"]{text-decoration:none;color:#1a3a52;}}
+</style>
+</head>
+<body>
+<a class="back-to-list" href="./index.html">← 一覧に戻る</a>
+<div class="lp-root">
+
+<!-- HEADER -->
+<div class="header-block">
+  <div class="header-inner">
+    <div class="sec-wrap">
+      <div class="course-number">Course Resume ／ Session 4 of 4</div>
+      <div class="header-course-name">AIエージェント経営 2ヶ月グループコンサルティング</div>
+      <h1 class="header-h1">
+        IV. 100時間からのAI社員の経営応用・活用<br>
+        <strong>── たった90日、毎日 1〜2時間で AI社員が育つ</strong>
+      </h1>
+      <div class="header-sub">
+        僕は同じ90日で1000時間かけた。皆さんはその10分の1でいい。<br>
+        今日は 92日中 54日目。100時間に届くかどうかの地点。あと36日。
+      </div>
+      <div style="margin-top:var(--sp-3);padding:var(--sp-2) 0;border-top:1px dashed rgba(212,180,155,0.35);">
+        <div style="font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:rgba(212,180,155,0.9);margin-bottom:6px;">Mits 独自語彙 ／ 4 words（通奏低音）</div>
+        <div style="font-family:var(--font-serif);font-style:italic;font-size:15.5px;line-height:1.7;color:rgba(255,255,255,0.82);">
+          § 後先順位 ／ § マドリング・スルー ／ <strong style="color:#fff;font-style:normal;font-weight:700;">§ 暗黙知の形式知化</strong> ／ § ハーネスエンジニアリング
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="meta-strip">
+  <div class="meta-strip-inner">
+    <div class="meta-cell">
+      <div class="meta-label">Session ／ 開催</div>
+      <div class="meta-value">Session 4 / 全4回</div>
+    </div>
+    <div class="meta-cell">
+      <div class="meta-label">Full Duration ／ 尺</div>
+      <div class="meta-value">2026-08-23 10:00-12:00 ／ 120 分</div>
+    </div>
+    <div class="meta-cell">
+      <div class="meta-label">Speaker ／ 講師</div>
+      <div class="meta-value">西田 光弘</div>
+    </div>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="sec-wrap pt60 pb20">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Table of Contents</span>
+      <h2 class="sec-h2">目次</h2>
+    </div>
+    <div class="toc-card">
+      <div class="toc-title">Contents ／ 全14セクション</div>
+      <ul class="toc-list">
+        <li><a href="#meta">メタ情報・到達目標・通奏低音</a></li>
+        <li><a href="#time">時間配分（120分）</a></li>
+        <li><a href="#nitoryu">ブロック1：【新設・冒頭】二刀流（何をやるか）（13 分）</a></li>
+        <li><a href="#hook">ブロック2：Hook（15 分）</a></li>
+        <li><a href="#benefit">ブロック3：Benefit（15 分）</a></li>
+        <li><a href="#advantage">ブロック4：Advantage（32 分）</a></li>
+        <li><a href="#feature">ブロック5：Feature 実演（16 分）</a></li>
+        <li><a href="#qa">ブロック6：Q&amp;A（6 分）</a></li>
+        <li><a href="#five">ブロック7：今だから効く5つ・総まとめ＋置き場所（12 分）</a></li>
+        <li><a href="#four">ブロック8：4つの道（誰と一緒にやるか・仮置き）（7 分）</a></li>
+        <li><a href="#homework">ブロック9：宿題（4 分）</a></li>
+        <li><a href="#skills">獲得スキル</a></li>
+        <li><a href="#backbone">第4回の背骨（v8・恒久土台）</a></li>
+        <li><a href="#refs">参照ソース／版履歴</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- メタ -->
+<div class="sec-wrap pb60" id="meta">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Session Meta ／ 到達目標</span>
+      <h2 class="sec-h2">メタ情報・到達目標・通奏低音</h2>
+    </div>
+    <div class="overview-card">
+      <p><strong>開催日</strong>：2026年8月23日（日）10:00-12:00（120 分・実運用も 120 分）</p>
+      <p><strong>前提</strong>：第3回終了（8/9）・宿題（skill 2本・memory 週2回・hook 1本・衝突1回 memory 化・git commit 10回・branch 1回・第4回のあとの道の仮決め）を各人の進度で持ち込み</p>
+      <p><strong>第4回の位置づけ</strong>：<strong>8/23 は 92日中 54日目・100時間に届くかどうかの地点。あと36日で届くか届かないかが分かる位置</strong>で、ここから先に使う道具一式を受け取る回。前半では渡さなかった・渡しても使えなかった道具を、今日、渡します。</p>
+
+      <div class="hero-num">
+        <p><strong>物差しは「合計100時間」。期間ではなく積み上げ。</strong></p>
+        <p><strong>たった90日、毎日 1〜2時間で AI社員が育つ</strong>（3ヶ月プラン・ほとんどの受講生がこれ）。<br>
+        2ヶ月プランは<strong>毎日 2〜3時間で60日</strong>。</p>
+        <p><strong>僕（Mits）は同じ90日で 1000時間かけた。皆さんは、その10分の1でいい。</strong>これが「出遅れたと思っている人」への答え。</p>
+        <p><strong>8/23＝92日中 54日目。毎日 1〜2時間なら、この時点で 54〜108時間。ちょうど100時間に届くかどうかの地点。あと36日で届くか届かないかが分かる。</strong></p>
+      </div>
+
+      <p><strong>到達目標</strong>（シラバス ver2 と同じ）：</p>
+      <ol>
+        <li><strong>100時間からのAI社員の経営応用・活用として、4つの道から1つを自身で選択できる状態</strong>（A/B/C/D は仮置き）</li>
+        <li><strong>経営判断の3軸マトリックス</strong>（安全性／カスタマイズ度／人間関係価値）で仕事を「自分でやる／AI に任せる／外部に委ねる」の3つに切り分け、A（自分でやる）を <strong>CLAUDE.md の「経営者専権のタスク」節に書き残せる</strong></li>
+        <li>AI 組織を継続教育のサイクルに乗せる骨格を手元に置ける</li>
+        <li>「前半では要らなかった／今だから効く」5つの道具を、共通の形で受け取れる</li>
+      </ol>
+      <p><strong>通奏低音</strong>：</p>
+      <ul>
+        <li><strong>物差しは合計100時間。</strong>「たった90日、毎日 1〜2時間で AI社員が育つ」。僕は同じ90日で1000時間、皆さんはその10分の1でいい</li>
+        <li>「前半では要らなかった／書けなかった。今、渡す」──5つの道具に共通する形</li>
+        <li>「AI か・自分か」の2択でなく「AI か・自分か・外部か」の3択で切る（3軸マトリックス）</li>
+        <li>「時間が溶ける」は入口・浮いた時間は「値上げの準備」と「仕組み化」に投じる</li>
+        <li><strong>AI社員を電源と切り離す</strong>（event dispatcher としての Cloudflare）</li>
+        <li>4つの道どれも正解・選択肢を持つのが自由・A/B/C/D は今日時点の<strong>仮置き</strong></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 時間配分 -->
+<div class="sec-wrap pb60" id="time">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Time Allocation</span>
+      <h2 class="sec-h2">時間配分（120 分・実運用も 120 分）</h2>
+    </div>
+    <div class="reg-box">
+      <table class="time-table">
+        <thead>
+          <tr><th>ブロック</th><th>分数</th><th>内容</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>1. 【新設・冒頭】二刀流（何をやるか）</strong></td><td><strong>13 分</strong></td><td><strong>順番の宣言「①二刀流＝何をやるか → ②4 つの道＝誰と一緒にやるか」2 分</strong> ／ 前振り 1 分（講座の最初に、これを置く・大高さん／杉浦さんとのセッションでも話してきた・100時間の先、業務効率化の続きだけだと2年で行き詰まる） ／ <strong>Mits様の『AI時代の二刀流戦略 v2 統合版』スライド画面共有・Mits様がその場で説明 10 分</strong>〈目安：表紙 → 全体像（脳/腹/手）→ 6タイプで自分の像を仮決め → 導入期〜成長期のど真ん中・2 年がリミット・倍かかっても4 年 → 1 勝 9 敗 → 4 つの C（キャッシュ／コンテンツ／カスタマー／クリエイティビティ）→ 二刀流はこの2つに尽きる（脳の外部化・AI 商品の高速化）→ 右上で量産多売＆右下で自分 AI を育てる → 最後にもう一度〉／ 締め＋杉浦さん・大高さん実例で受講生の現在地に接続 は 10 分に内包</td></tr>
+          <tr><td>2. Hook</td><td>15 分</td><td>冒頭 3 分（二刀流の後を受けて本題に入る導入＋テーマ宣言＋5 つ道具予告＋ブレイクアウト導入）＋ ブレイクアウト 10 分（3〜4 人・各自の 2 週間と止まった場所と A/B/C/D）＋ 全体で 1〜2 件拾う 2 分</td></tr>
+          <tr><td>3. Benefit</td><td>15 分</td><td><strong>「100時間・90日・毎日 1〜2 時間・僕は 1000時間・皆さんは 1/10」の数字提示＋8/23＝54 日目の位置＋AI時間で自分の積み上げを見る 3 分</strong> ／ 「時間が溶ける」を入口として認める＋浮いた時間の再投資先 3 分 ／ <strong>「前半では要らなかった／今だから効く」共通の形の宣言（5 つの道具の予告）3 分</strong> ／ 受講者名指し 3 分 ／ 3 軸・4 つの道・event dispatcher の予告 3 分</td></tr>
+          <tr><td>4. Advantage</td><td>32 分</td><td>継続教育こそ経営 2 分 ／ 知識の置き場は 3 層（1 行運用）1 分 ／ 4 つの継続教育レバー 3 分 ／ コンパクション運用 2 分 ／ PC・メモリ・クラウドの前提 3 分 ／ <strong>経営判断の 3 軸マトリックス</strong>（中核）8 分 ／ <strong>エンジニア向けを 1 人型に当てはめる</strong>（作る側/使う側・障害対応 3 原則＋実例 2 件・判断の体力）7 分 ／ <strong>event dispatcher としての Cloudflare</strong>（2 段構え）5 分 ／ ハーネス総括 1 分</td></tr>
+          <tr><td>5. Feature 実演</td><td>16 分</td><td>①memory 週次整理＋doublecheck 3 分 ／ <strong>②3 軸で振り分けて CLAUDE.md に書く</strong>（コンテキスト設計ワークシート配布）6 分 ／ ③session-log 自動保存 2 分 ／ ④コンパクション運用 1 分 ／ <strong>⑤AI時間 の手渡し</strong>（配布済み道具の確認）3 分 ／ 締め 1 分</td></tr>
+          <tr><td>6. Q&amp;A</td><td>6 分</td><td>第3回持ち越し3件（AI-MITS 正式公開版 URL 提示含む）3 分 ＋ その場の質問 3 分</td></tr>
+          <tr><td>7. 今だから効く 5 つ・総まとめ＋置き場所</td><td>12 分</td><td>共通の形を再度 1 分 ／ 道具1（シラバス点検）3 分 ／ 道具4（F1-03）3 分 ／ 道具2・3・5 の背骨振り返り 2 分 ／ <strong>置き場所は答えを配らない・崩れた景色を見る</strong>（<code>シラバス点検</code> で測る）2 分 ／ 全体の 1 行 1 分</td></tr>
+          <tr><td><strong>8. 4つの道（誰と一緒にやるか・仮置き）</strong></td><td><strong>7 分</strong></td><td>呼び名切替（『BE-02 のあとの道』→『100時間からのAI社員の経営応用・活用』）＋仮置き宣言＋「冒頭で宣言した②、ここに戻ってきます」1 分 ／ 4 つの道 A/B/C/D の説明 4 分 ／ 移動可能・仮決めで OK 1 分 ／ 継続サポートの中身が決まったら差し替える 1 分</td></tr>
+          <tr><td>9. 宿題</td><td>4 分</td><td>5 つの道具のうち1つを次に触る宣言・二刀流の「自分の像」仮決め・A/B/C/D の仮決め</td></tr>
+          <tr class="total"><td><strong>合計</strong></td><td><strong>120 分</strong></td><td>13＋15＋15＋32＋16＋6＋12＋7＋4 ＝ 120</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="overview-card" style="margin-top:var(--sp-3);">
+      <p><strong>削り候補（時間が押した時に切る順）</strong>：</p>
+      <ul>
+        <li>Advantage「ハーネス総括」1 分 → 30 秒</li>
+        <li>Feature 実演の「締め」1 分 → 30 秒（宿題ブロックと重複するので圧縮）</li>
+        <li>冒頭ブロック1 二刀流の画面共有 10 分 → 8 分（見せるページを 6 タイプ／成長期／4 つの C／二刀流の2つに絞る）</li>
+        <li>4 つの道 A/B/C/D の説明 4 分 → 3 分（仮置きの旨だけ残して詳細は Discord 案内に回す）</li>
+      </ul>
+      <p><strong>削らない</strong>：Benefit 冒頭「100時間・90日・1/10・54日目・あと36日」の数字提示 3 分／Advantage「3 軸マトリックス」8 分／「event dispatcher としての Cloudflare」5 分／Feature ②「3 軸で振り分けて CLAUDE.md に書く」6 分／⑤「AI時間 の手渡し」3 分／5 つの道具総まとめ内「置き場所は答えを配らない」2 分／障害対応の Mits 実例 2 件／<strong>冒頭ブロック1 二刀流の前振り 1 分・締め（杉浦さん・大高さん実例接続）</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- ブロック1 【新設・冒頭】二刀流（何をやるか） -->
+<div class="sec-wrap pb60" id="nitoryu">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Block 1 ／ 【新設・冒頭】二刀流（何をやるか）（13 分）</span>
+      <h2 class="sec-h2">ブロック1：大事な話を1本、忘れてました。二刀流。</h2>
+    </div>
+
+    <div class="block-wrap" style="border-left-color:var(--gold);">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">順番の宣言（口火・2 分）</h3>
+      <p>はい、BE-02、第4回、始めます。<strong>いきなりですが、大事な話を、1本、置きます</strong>。</p>
+      <div class="mess-forbid"><div class="mess-forbid-label">Order</div><div class="mess-forbid-body"><strong>大事な話を1本、忘れてました。二刀流。</strong><br>今日、このブロックで、2つの話を、順番に扱います。<br><strong>① 二刀流＝『何を、やるか』（事業の話）→ ② 4 つの道＝『誰と、一緒にやるか』（支えの話）</strong>。<strong>4 つの道は、講座の最後にやります</strong>。<strong>何をやるかが先。誰と一緒にやるかが後。</strong>この順で聞いてください。</div></div>
+      <p>今、皆さんは100時間、積み上げてる最中。<strong>その先、業務効率化の続きだけ、をやっていくと、2年で行き詰まります</strong>。<strong>もう1本、刀を持ちませんか</strong>、って話。<strong>この講座の第4回に、抜けていた</strong>。<strong>今日、講座の一番最初に、ここに置きます</strong>。</p>
+    </div>
+
+    <div class="block-wrap" style="border-left-color:var(--gold);">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">前振り（1 分・講座の最初に、これを置く）</h3>
+      <p><strong>大高さんとのセッションでも、杉浦さんとのセッションでも、僕、この話を、してきました</strong>。<strong>BE-02 の受講生にだけ、渡していなかった</strong>。<strong>それを、今日、渡します</strong>。</p>
+      <p>ここから10分、<strong>スライドを画面共有します。僕（Mits）が、その場で説明します</strong>。<strong>皆さんは、聞いてください。手は動かさなくていい</strong>。<strong>今日の残りの2時間の、前提</strong>として、頭に置いて聞いてもらう。それだけです。</p>
+    </div>
+
+    <div class="block-wrap" style="border-left-color:var(--gold);">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">画面共有（10 分・『AI時代の二刀流戦略 v2 統合版』スライド／Mits が説明）</h3>
+      <div class="mess-forbid"><div class="mess-forbid-label">Screen Share</div><div class="mess-forbid-body">ここで <strong>『AI時代の二刀流戦略 v2 統合版』</strong>スライドを画面共有します。中身は Mits様がその場で説明されます。以下は台本側に置く<strong>目安ページ表</strong>（外せない5枚：<strong>二刀流とは／6タイプ／S字カーブ＝2年がリミット／4つのC／二刀流はこの2つに尽きる</strong>）。</div></div>
+
+      <div class="reg-box" style="margin-top:var(--sp-3);">
+        <table class="time-table">
+          <thead><tr><th>目安</th><th>何を見せるか</th><th>どこを強調するか</th></tr></thead>
+          <tbody>
+            <tr><td>表紙</td><td>AI時代の二刀流戦略</td><td><strong>『脳はAIに委ねよ、腹と手は人間にしか残らない』</strong>の1行</td></tr>
+            <tr><td>全体の構成</td><td>5章（破壊／地政学／市場／戦略／実装）</td><td><strong>『抽象度は高め、前提の話』</strong>という枠を先に置く</td></tr>
+            <tr><td>破壊の出発点</td><td>顧客もAIを買っている（78%）</td><td><strong>『僕らもAIを買っている、それをお客さんもやっている』</strong>の1行</td></tr>
+            <tr><td>二刀流とは</td><td>答えを分解すると二刀流</td><td><strong>『1本目＝AIを使いこなす／脳の解放』／『2本目＝人間しかできない／腹と手』／『両方使う』</strong></td></tr>
+            <tr><td>脳・腹・手</td><td>論理はAIへ／腹は人間／手も人間</td><td><strong>『脳は明け渡していい。これが出発点』</strong></td></tr>
+            <tr><td>6タイプ</td><td>1人型起業家を6タイプに分けた</td><td><strong>『同じ1人型でも、AI時代に残るキャラは違う。自分がどの像で立つか、仮決め』</strong></td></tr>
+            <tr><td>生き残り像</td><td>6タイプ×残るキャラクター</td><td>守護神・導き手・<strong>参謀</strong>・橋渡し役・設計者・安定家</td></tr>
+            <tr><td>価値の落下</td><td>ダイヤモンドマトリックス</td><td><strong>『右下は永住地じゃない。右上に落ちる』</strong></td></tr>
+            <tr><td>S字カーブ</td><td>いま、成長期のど真ん中</td><td><strong>『これは5年10年じゃない。2年、倍かかっても4年』</strong></td></tr>
+            <tr><td>1勝9敗</td><td>成長期は「みんなと同じ」でよい</td><td><strong>『量産多売、1勝9敗でいい』</strong></td></tr>
+            <tr><td>4つのC</td><td>貯めるのは4つのC</td><td><strong>キャッシュ／コンテンツ／カスタマー／クリエイティビティ</strong>（読みを先に・英語は併記まで）</td></tr>
+            <tr><td>右上で稼ぎ・右下を仕込む</td><td>2年で 4C を貯めながら次の独自性を仕込む</td><td><strong>『右上で稼いで4Cを貯めて、右下＝次の独自性を準備する』</strong></td></tr>
+            <tr><td>二刀流はこの2つに尽きる</td><td>一、脳の外部化／二、AI商品の高速化</td><td><strong>『これだけでいい。「高速」が肝』</strong></td></tr>
+            <tr><td>脳の外部化・実物</td><td>全文書き起こし → Notion → Obsidian → AI-Mits</td><td><strong>『これで、誰かが普通のAIで参照するのと、差異が生まれる』</strong></td></tr>
+            <tr><td>右上で量産多売＆右下で自分AI</td><td>2×2 の右2マス</td><td><strong>『今と同じやり方でだけやらない』</strong></td></tr>
+            <tr><td>最後にもう一度</td><td>AI時代は、脳をAIに委ね、腹と手で勝つ</td><td><strong>『① 脳の外部化、② AI商品の高速化、この2つを統合するのが二刀流の実践』</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 style="font-family:var(--font-serif);color:var(--navy);margin:var(--sp-3) 0 var(--sp-2);">締め＋受講生の現在地に接続（10 分の最後 1 分に挿し込む）</h4>
+      <p><strong>杉浦さん</strong>、8月18日、あなたが言われたこと、<strong>『建築業界では、多くの人が、ChatGPTを活用していない』</strong>。<strong>あなた、その業界の中で、今、ここにいる</strong>。<strong>成長期の、みんなと同じことをやっていい区間、そのど真ん中</strong>。<strong>建築 × AI で、今、何を出すかを決めれば、業界の1番手になれる場所</strong>。1勝9敗、その1勝の場所が、あなたには、見えている。</p>
+      <p><strong>大高さん</strong>、8月12日、あなたが言葉にされたこと、<strong>『プロジェクト拡張に伴う労力増加とサポート体制不足』『スケール時の関係性維持』『AIカンパニーが機能する実感の形成支援』</strong>。<strong>これは、二刀流の右上に出た後で、必ず来る壁</strong>。<strong>あなたは、その壁に、先に、触っている</strong>。だから、二刀流の後半、AI-Mits みたいに『自分をAIにする』話が、他の人より、早く効く場所にいます。</p>
+      <p><strong>二刀流、今日、ここに置きました</strong>。中身は、これから僕（Mits）が、目の前のハウツーとして、バシバシ出していきます。<strong>今日は、前提だけ、頭に置いて、残りの2時間を聞いてください</strong>。<strong>もう1本の刀の話は、講座の最後にやる『4つの道』とセット</strong>です。<strong>『何をやるか』は今のこれ。『誰と一緒にやるか』は最後</strong>。</p>
+    </div>
+    <p style="text-align:right;font-family:var(--font-mono);font-size:12px;color:var(--ink-3);margin-top:var(--sp-2);">（二刀流 終了・13 分経過）</p>
+  </div>
+</div>
+
+<!-- ブロック2 Hook -->
+<div class="sec-wrap pb60" id="hook">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Block 2 ／ Hook（15 分）</span>
+      <h2 class="sec-h2">ブロック2：Hook</h2>
+    </div>
+
+    <div class="block-wrap">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">冒頭 3 分（口火）</h3>
+      <p>じゃあ、二刀流の話は、頭の隅に置いたまま、ここから今日の本題に入ります。</p>
+      <p><strong>今日のテーマは、『100時間からのAI社員の経営応用・活用』</strong>。第1回で <strong>魂</strong>、第2回で <strong>組織</strong>、第3回で <strong>道具</strong>、今日、<strong>回し続ける仕組み</strong>。前回、第3回で <strong>『同じ失敗を、2回、させない』</strong>、これが今日の起点。</p>
+      <p>今日は、<strong>前半では渡さなかった道具を、5つ、渡します</strong>。<strong>渡さなかった理由は1つ</strong>。<strong>渡しても、使えなかったから</strong>。触ってない人に地図を渡しても、地図の意味が分からない。<strong>皆さんは今日、触った人になった</strong>。だから、渡す。</p>
+    </div>
+
+    <div class="block-wrap">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">ブレイクアウト（10 分）</h3>
+      <p>宿題の運用結果、今日は <strong>受講生同士で話してもらう時間</strong>。<strong>3〜4人ずつの部屋</strong> に分かれてもらいます。部屋の中で、1人 <strong>2分ずつ</strong>、この3つを話してください。</p>
+      <ol>
+        <li><strong>この2週間で何を回したか</strong>。skill でも memory でも hook でも、動かしたやつを1個</li>
+        <li><strong>どこで止まったか</strong>。動かなかった・詰まった・時間だけ溶けた、そこを正直に。失敗の方が金の資料</li>
+        <li><strong>いま自分は A / B / C / D のどれにいるつもりか</strong>。<strong>A〜D は今の時点では仮置き</strong>なので、口に出しておくのは今の気分で OK</li>
+      </ol>
+      <p>戻ってきたら、<strong>全体で1〜2件だけ拾います</strong>。全員に個別に返す形は今日は取りません。</p>
+    </div>
+    <p style="text-align:right;font-family:var(--font-mono);font-size:12px;color:var(--ink-3);margin-top:var(--sp-2);">（Hook 終了・28 分経過）</p>
+  </div>
+</div>
+
+<!-- ブロック3 Benefit -->
+<div class="sec-wrap pb60" id="benefit">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Block 3 ／ Benefit（15 分）</span>
+      <h2 class="sec-h2">ブロック3：Benefit</h2>
+    </div>
+
+    <div class="block-wrap" style="border-left-color:var(--gold);">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">100時間の物差しと、8/23 の位置（3 分・冒頭）</h3>
+      <p>本題に入る前に、まず<strong>物差しの話</strong>、させてください。この講座、期間で見るのをやめて、<strong>合計100時間で見ています</strong>。<strong>100時間、AI を触ったかどうか</strong>。<strong>期間じゃなくて、積み上げ</strong>。</p>
+      <p>出遅れたと思っている人、いますよね。<strong>その人ほど、聞いてください</strong>。</p>
+      <div class="mess-forbid"><div class="mess-forbid-label">Catchphrase</div><div class="mess-forbid-body"><strong>『たった 90 日、毎日 1〜2 時間で AI社員が育つ』</strong></div></div>
+      <p>これが3ヶ月プランの目安です。<strong>90日 × 毎日 1〜2 時間 で 90〜180 時間</strong>。<strong>100時間、届く</strong>。ほとんどの人がこの3ヶ月プランを選んでます。2ヶ月プランは<strong>毎日 2〜3 時間で60日</strong>。<strong>60日 × 2〜3 時間 で 120〜180 時間</strong>。こちらは余裕を持って100時間を超えます。</p>
+      <p><strong>僕は、同じ90日で 1000 時間かけました</strong>。Claude Code に本格的に移すまでの90日で、僕の側では1000時間。<strong>皆さんは、その 10 分の 1 でいい</strong>。<strong>1000時間じゃなくて、100時間</strong>。<strong>同じ90日を、10分の1の濃さで通ればいい</strong>。これが、<strong>出遅れたと思っている人への答え</strong>です。</p>
+      <p><strong>今日は 8月23日</strong>。この講座は <strong>7/1 に始まって 9/30 で 92 日</strong>。<strong>8/23 は 54 日目</strong>。<strong>毎日 1〜2 時間の3ヶ月ペースなら、この時点で 54〜108 時間</strong>。<strong>ちょうど 100 時間に届くかどうかの地点</strong>。<strong>あと 36 日で、届くか届かないかが分かる</strong>位置です。</p>
+      <p>自分が今、何時間か。<strong><code>AI時間</code></strong> っていう道具、皆さんに配ってあります。Claude Code に <code>AI時間</code> って打つと、<strong>時間と使用量の2軸で、『100時間目標の何割か』『このままだとあと何日か』</strong>が出る。<strong>後で Feature 実演の中で1回、この画面を目の前で出します</strong>。<strong>今、108時間側にいる人、54時間の下にいる人、まだ数字が動いてない人、それぞれいるはず</strong>。<strong>まず自分の数字を見る</strong>、これが今日の起点です。</p>
+    </div>
+
+    <div class="block-wrap">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">「時間が溶ける」を入口として認める＋浮いた時間の再投資先（3 分）</h3>
+      <p>皆さん、この2ヶ月、AI いじってて <strong>『時間が溶けた』</strong> 経験、ありますよね。あれ、<strong>否定しません</strong>。<strong>入口としては、それが正しい</strong>。触って、遊んで、時間が溶ける。<strong>AI と手が馴染む最短経路</strong>。触らないで理論だけ読んでる人は、この段階を飛ばして次に進めない。ただし、<strong>入口で止まると趣味で終わる</strong>。<strong>入口を通り抜けて、経営の仕事に移して、初めて本番</strong>。会計でもいい、顧客対応でもいい、商品設計でもいい。ここに移せた瞬間、<strong>時間が溶けた投資が、事業の資産に変わる</strong>。</p>
+      <p><strong>8時間かかっていた仕事が4時間で終わるようになった時、残り4時間で何をするか</strong>。<strong>一番損なのは、『もう1日分のアウトプット』に注ぎ足すこと</strong>。<strong>残り4時間は、『値上げの準備』と『仕組み化』に充ててください</strong>。皆さん、6年、7年やってきて、この2つに手をつけられていないはず。<strong>まさにその2つに、今日、時間が空くという設計にする</strong>。</p>
+    </div>
+
+    <div class="block-wrap" style="border-left-color:var(--gold);">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">「前半では要らなかった／今だから効く」共通の形の宣言（3 分・背骨）</h3>
+      <p>今日、<strong>5つ、道具を渡します</strong>。<strong>5つに共通する形が1個</strong>あります。</p>
+      <div class="mess-forbid"><div class="mess-forbid-label">Backbone</div><div class="mess-forbid-body"><strong>『前半では要らなかった。書けなかった。使えなかった。今、渡す』</strong></div></div>
+      <p><strong>5つ、順番に予告</strong>します。中身は Advantage と Feature 実演と後半のまとめで、それぞれ降ります。</p>
+      <ol>
+        <li><strong>道具1：シラバスで自分の到達を点検する</strong>（<code>シラバス点検</code>）</li>
+        <li><strong>道具2：自分が AI を触った時間を測る</strong>（<code>AI時間</code>）</li>
+        <li><strong>道具3：エンジニア向けの話を1人型に当てはめる</strong>（作る側／使う側で切る・障害対応3原則・判断の体力を守る）</li>
+        <li><strong>道具4：プログラミング的思考 入門（F1-03）</strong></li>
+        <li><strong>道具5：コンテキスト設計ワークシート</strong></li>
+      </ol>
+      <p><strong>前半では要らなかった、って言い方、大事</strong>。<strong>渡しても、意味が届かなかった</strong>。<strong>今日、皆さんは触った人になった</strong>。だから、渡す。<strong>これから何度、この講座を回しても、この背骨は変わりません</strong>。</p>
+    </div>
+
+    <div class="block-wrap">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">受講者名指し（3 分）</h3>
+      <div class="member-item">
+        <p><strong>足立さん</strong>（PC 壁）：PC のアップグレード、<strong>AI エージェント経営を回すなら経費</strong>、って話は Advantage で扱います。<strong>PC を経費で計上する判断も、経営の会計判断</strong>ですから、後の Advantage で数字も一緒に置きます。</p>
+      </div>
+      <div class="member-item">
+        <p><strong>棚原さん</strong>（CLAUDE.md 階層）：あなたの <strong>マッチョエージェントに CLAUDE.md を付与して階層化する</strong> 戦略、今日は <strong>3軸マトリックスで振り分けた結果を CLAUDE.md に降ろす</strong> 運用へつなげます。あなたの発表は BE-02 の資産として残ります。</p>
+      </div>
+      <div class="member-item">
+        <p><strong>富田さん</strong>（スタジオの理念・講師/生徒のルール）：スタジオの理念・制度・講師・生徒、これ、<strong>3軸マトリックスに通すと『どこを講師に任せ、どこを AI に任せ、どこを外部に出すか』が一発で切れます</strong>。今日、切り方を持って帰ってください。</p>
+      </div>
+    </div>
+
+    <div class="block-wrap">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">3軸・4つの道・event dispatcher の予告（3 分）</h3>
+      <p>Advantage の中核に <strong>『経営判断の3軸マトリックス』</strong>。<strong>安全性・カスタマイズ度・人間関係価値</strong>。この3軸で切ると、<strong>『自分でやる／AI に任せる／外部に出す』</strong> の3つにきれいに分かれます。<strong>『外部に出す』が入ってるのがポイント</strong>。</p>
+      <p>Advantage の後半で <strong>『AI社員を電源と切り離す』</strong> 話をします。開発の世界では <strong>event dispatcher（イベント・ディスパッチャ）</strong> と呼ばれてる考え方で、<strong>その役を Cloudflare がやります</strong>。<strong>この講座の案内メールが実際にこの仕組みで届いてます</strong>。</p>
+      <p>講座の一番最後のブロック8で、<strong>『100時間からのAI社員の経営応用・活用（4つの道）＝誰と一緒にやるか』</strong>を仮決めして帰ります。<strong>順番は「冒頭ブロック1で置いた①二刀流＝何をやるか → ラストのブロック8で②4つの道＝誰と一緒にやるか」</strong>。<strong>A/B/C/D は現段階では仮置き</strong>なので、<strong>今日は今の気分で仮決め</strong>で OK。</p>
+    </div>
+    <p style="text-align:right;font-family:var(--font-mono);font-size:12px;color:var(--ink-3);margin-top:var(--sp-2);">（Benefit 終了・43 分経過）</p>
+  </div>
+</div>
+
+<!-- ブロック4 Advantage -->
+<div class="sec-wrap pb60" id="advantage">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Block 4 ／ Advantage（32 分）</span>
+      <h2 class="sec-h2">ブロック4：Advantage</h2>
+    </div>
+
+    <div class="block-wrap">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">継続教育こそ経営（口火・2 分）</h3>
+      <p><strong>AI 経営、これから何をやるかというと、『育てる』ではなく『継続教育する』</strong>。『育てる』は最初の2ヶ月・皆さんが今やってきたこと。『継続教育する』は、この2ヶ月が終わった後の一生。1回教えて終わり、はAI 相手だと3ヶ月で全部忘れます。<strong>継続教育の仕組みを作らないと、あなたの2ヶ月の投資が消える</strong>。</p>
+      <p>昭和の会社、新入社員が3年後にベテランになる、なんで？<strong>継続教育があるから</strong>。毎月の朝礼、四半期の研修、年1回の面談。AI 社員も同じ。</p>
+    </div>
+
+    <div class="block-wrap">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">知識の置き場は3層（1 分・1行運用）</h3>
+      <p><strong>全量は Notion、地図は Obsidian、控えは session-log</strong>。詳細は第1回。今日は、この3層の上に3軸マトリックスを乗せる、って話に進みます。</p>
+    </div>
+
+    <div class="block-wrap">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">4つの継続教育レバー（3 分・後先順位）</h3>
+      <ol>
+        <li><strong>レバー1：memory 週次整理（毎週金曜）</strong> ── 一番先に置く</li>
+        <li><strong>レバー2：doublecheck（週1回・AI 組織の健康診断）</strong></li>
+        <li><strong>レバー3：session-log（毎セッション自動保存・3層のうちの控え）</strong></li>
+        <li><strong>レバー4：リソースインデックス</strong> ── フィードバック・失敗・原則の索引</li>
+      </ol>
+      <p><strong>『後先順位』の実装</strong>。加算じゃなくて引き算。memory 週次整理を先に置く。</p>
+    </div>
+
+    <div class="block-wrap">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">コンパクション運用（2 分）</h3>
+      <p><strong>メモリ使用量が 650K を超える、あるいは 70〜80% を超えたら実行</strong>。放置すると『おバカさん』状態。Feature 実演④で目の前で見せます。</p>
+    </div>
+
+    <div class="block-wrap">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">PC・メモリ・クラウド（継続教育の前提条件・3 分・足立さん直撃）</h3>
+      <p>継続教育を回すには、<strong>PC の余裕が要る</strong>。足立さん第3回の共有：<strong>16GB が限界・見積 45〜60万</strong>。<strong>AI エージェント経営を回すなら PC は経費</strong>。減価償却で回収する対象。<strong>週20時間任せるなら、月次で見れば数万円</strong>。<strong>固定資産→減価償却</strong>で自然に組み込まれます。</p>
+      <p>選択肢は2つ。<strong>手元 PC の強化（デスクトップ推奨）</strong> または <strong>クラウドコンピューティング（AWS / GCP に Claude Code を立てる）</strong>。両方併用も可。<strong>壁が見えたら数字で判断する</strong>。</p>
+    </div>
+
+    <div class="block-wrap" style="border-left-color:var(--gold);">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">経営判断の3軸マトリックス（中核・8 分）</h3>
+      <p>今日の中核。<strong>『何を自分で判断して、何を AI に任せて、何を外部に委ねるか』</strong>。<strong>3つの軸</strong> で言語化します。</p>
+
+      <h4 style="font-family:var(--font-serif);color:var(--navy);margin:var(--sp-2) 0;">軸1：安全性軸 ── 誤りが起きた時、被害はどれだけ大きいか</h4>
+      <ul>
+        <li><strong>高い</strong>：値上げの通知メール本文の最終決裁／契約書の送付／請求書の金額最終確認／顧客への謝罪文／決済フローの変更。<strong>間違えたら1件で数万〜数十万飛ぶ・信用が飛ぶ</strong></li>
+        <li><strong>低い</strong>：ブログの下書き／社内メモ／会議録の要約／URL 収集／参考文献の探索</li>
+      </ul>
+
+      <h4 style="font-family:var(--font-serif);color:var(--navy);margin:var(--sp-2) 0;">軸2：カスタマイズ度軸 ── あなたの業種・顧客文脈にどれだけ寄せる必要があるか</h4>
+      <ul>
+        <li><strong>高い</strong>：Obsidian の地図に降りている『あなたの判断の型』 ── 商品設計／ペルソナ設計／値付けの根拠／既存顧客ごとの提案の切り口／コンサルの返し方</li>
+        <li><strong>低い</strong>：領収書の仕訳／日程調整／参考記事の要約／テンプレの整形／公開情報の下調べ</li>
+      </ul>
+
+      <h4 style="font-family:var(--font-serif);color:var(--navy);margin:var(--sp-2) 0;">軸3：人間関係価値軸 ── 対面／人間関与が代替不可能か</h4>
+      <ul>
+        <li><strong>高い</strong>：初回の面談／コンサルセッション／大口顧客への謝罪／講座本編の登壇／雑談の中で信頼を作る場面</li>
+        <li><strong>低い</strong>：メルマガの下書き／SNS 投稿の生成／決済完了メール／動作確認のテスト送信／受付の1次応答テンプレ</li>
+      </ul>
+
+      <h4 style="font-family:var(--font-serif);color:var(--navy);margin:var(--sp-2) 0;">3軸を通したら、あなたの仕事は3つに分かれます</h4>
+      <div class="knowledge-layer"><p><strong>A：自分でやる</strong>（3軸のうち少なくとも1軸が高い）── 値付けの最終判断／既存顧客への値上げの決裁／コンサル本編／契約書の最終確認／面談の登壇。判断の跡は Obsidian の地図に残す・次回、判断し直さない。</p></div>
+      <div class="knowledge-layer"><p><strong>B：AI に任せる</strong>（3軸すべて低い、かつあなたの型を通す部分は下書き止まり）── メルマガ下書き／議事録要約／参考記事の探索／参考データの整形／テンプレの整形／URL 収集／日程候補の抽出。<strong>決裁は自分・下書きは AI</strong>。</p></div>
+      <div class="knowledge-layer"><p><strong>C：外部に委ねる</strong>（安全性は高いがカスタマイズ度は低い ── または、あなたの時間を守るために任せる仕事）── 領収書の仕訳を税理士事務所へ／動画編集を外注／Web 更新を外注／法人登記の変更を司法書士へ／確定申告を税理士へ。<strong>『AI に全部やらせる』は最短では無い</strong>。</p></div>
+
+      <div class="mess-forbid"><div class="mess-forbid-label">One Line</div><div class="mess-forbid-body"><strong>『AI か・自分か』の2択で考えるから疲弊するんです。『AI か・自分か・外部か』の3択で考える</strong></div></div>
+
+      <p><strong>CLAUDE.md への書き込み</strong>：3軸で切って A（自分でやる）に分類された仕事、これを <strong>CLAUDE.md に『経営者専権のタスク』として書き残します</strong>。書き残すまでやって、初めて3軸が運用に乗る。Feature 実演②で目の前で書き込みます。</p>
+    </div>
+
+    <div class="block-wrap" style="border-left-color:var(--gold);">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">エンジニア向けを1人型に当てはめる（7 分・道具3の展開）</h3>
+      <p>ここが <strong>道具3</strong> の中身。<strong>エンジニア向けの話を、1人型に当てはめる</strong>。3軸マトリックスもこの道具の1つ。加えて、もう3本。</p>
+
+      <h4 style="font-family:var(--font-serif);color:var(--navy);margin:var(--sp-2) 0;">手元に置いておく 2 つ（用語集＋動画の見どころ）</h4>
+      <p><strong>用語集</strong>：<a href="https://reports.7years.life/2026-08-21_ai-agent-glossary.html" target="_blank" rel="noopener"><code>https://reports.7years.life/2026-08-21_ai-agent-glossary.html</code></a></p>
+      <p><strong>動画の見どころ</strong>（牛尾剛さん Microsoft × Mits 対談・元動画 55:09）：<a href="https://www.youtube.com/watch?v=btXfJGRJ9Tk" target="_blank" rel="noopener"><code>https://www.youtube.com/watch?v=btXfJGRJ9Tk</code></a></p>
+      <p><strong>必ず見る 5 本（合計およそ 7 分）</strong>：06:18–07:30 ／ 08:25–09:25 ／ 29:24–30:29 ／ 41:20–43:24 ／ 48:52–50:56。<strong>飛ばしてよい 2 区間（合計およそ 19 分）</strong>：09:30–20:30 ／ 33:00–41:20。<strong>この 2 区間を飛ばすと、55 分が実質 13 分になります</strong>。</p>
+
+      <h4 style="font-family:var(--font-serif);color:var(--navy);margin:var(--sp-2) 0;">1. 作る側か使う側かで切る（2 分）</h4>
+      <p>僕が別の場で <strong>エンジニア向けの必須スキル 12 項目</strong> を全部並べて、1人型にどう入るか、翻訳し直した。<strong>本当に不要だったのは1項目だけ</strong>。理由は<strong>『買えるものを、自分で作るのは損だから』</strong>。</p>
+      <div class="mess-forbid"><div class="mess-forbid-label">Rule</div><div class="mess-forbid-body"><strong>『作る側の話か、使う側の話か』で切る</strong></div></div>
+      <p>作る側は 1 人型は基本 <strong>買う側</strong>。<strong>使う側</strong>（権限管理・監視・同じものを 2 回作らない）は、<strong>1 人型こそ重い</strong>。<strong>組織なら誰かが気づく</strong>。<strong>1 人型は、誰も気づかない</strong>。</p>
+
+      <h4 style="font-family:var(--font-serif);color:var(--navy);margin:var(--sp-2) 0;">2. 障害対応を1人型に移す・3原則＋実例2件（3 分）</h4>
+      <p>皆さんの現場でも起きてる：申込フォームが動かない／ステップメールが飛ばない／決済が通らない／AI に任せた自動処理が黙って止まる。<strong>全部、障害対応の話</strong>。</p>
+      <div class="principle-item"><p><strong>原則1：削るのは『気づくまでの時間』</strong>。1 人型は誰も見ていないので、気づくまでが桁違いに長い。<strong>先に見張りを置く</strong>。</p></div>
+      <div class="principle-item"><p><strong>原則2：まず止める、それから調べる</strong>。<strong>フォームが変なら、まず止めて『メンテ中』を出す。原因は、その後</strong>。</p></div>
+      <div class="principle-item"><p><strong>原則3：一次窓口を、お客さんにさせない</strong>。<strong>クレームが第一報になっている状態は、すでに手遅れの合図</strong>。</p></div>
+      <div class="conflict-item"><p><strong>実例1</strong>（2026-08-18）：同じメールが受信箱に <strong>7 通</strong>。原因は 8/8 の動作確認でテスト用アドレスに <strong>10 回、登録操作</strong>。読者が 10 個できて、ステップメールが読者の数だけ発火。<strong>気づくまで 10 日／止めるまで即日</strong>（原則1）。</p></div>
+      <div class="conflict-item"><p><strong>実例2</strong>（2026-08-14）：置き換え文字が未置換のまま <strong>103 通</strong>。原因は <strong>根拠なく発明された変数名が 4 ヶ月未検証で残っていた</strong>こと。<strong>気づいたきっかけ：お客さんからのクレーム</strong>（原則3の違反例）。<strong>配信済み 103 通は修正不可</strong>。</p></div>
+      <p><strong>原則3つを先に決めておけば、被害はここまで大きくならない</strong>。</p>
+
+      <h4 style="font-family:var(--font-serif);color:var(--navy);margin:var(--sp-2) 0;">3. 判断の体力を守る（2 分）</h4>
+      <ul>
+        <li><strong>変わる</strong>：作る速度、調べる速度、下書きの質</li>
+        <li><strong>変わらない</strong>：何を作るかの判断、値付け、誰と組むか</li>
+        <li><strong>悪化する</strong>：判断の回数が、増える</li>
+      </ul>
+      <p><strong>守るのは、時間じゃなくて『判断の体力』</strong>。判断しなくていいことは判断しない／一度した判断は CLAUDE.md か Obsidian に降ろす／AI に選択肢を出させたら、二択に絞らせてから、あなたが選ぶ。</p>
+    </div>
+
+    <div class="block-wrap" style="border-left-color:var(--gold);">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">event dispatcher としての Cloudflare（新設・5 分・AI社員を電源と切り離す）</h3>
+      <p><strong>まず言葉から</strong>。<strong>『出来事が起きたら、それを待っている側に配る役』を、開発の世界では event dispatcher（イベント・ディスパッチャ）と呼びます</strong>。<strong>特定の製品名じゃありません</strong>。<strong>言語や道具を問わず使われている、普通の言葉</strong>。<strong>この言葉を1つ持っておくと、AI に『こういう仕組みを作りたい』と伝えるときに一言で済む</strong>。相手（AI）に通じる語彙を1つ増やすこと、これが AI社員に指示を出す 1人型起業家の武器になります。</p>
+      <p><strong>その役を、Cloudflare がやります</strong>。<strong>自分のパソコンを点けっぱなしにしなくても、決まった時刻に、あるいは出来事を受けて、AI社員が動き続ける</strong>。100時間積み上げた『AI社員』を、<strong>電源と切り離して働かせる段階</strong>に入ります。<strong>Windows のタスクスケジューラや常駐の仕組みは、Cloudflare を使うときは考えなくていい</strong>。</p>
+      <p><strong>動き方は 2 つ</strong>。<strong>(1) 時刻で動く</strong>（毎朝この時刻に／毎時0分に）／ <strong>(2) 出来事で動く</strong>（誰かが入ってきたら／フォームが送られたら／支払いが済んだら）。</p>
+      <p><strong>この講座の実稼働例</strong>：</p>
+      <ul>
+        <li><strong>時刻で動く側</strong>：<strong>この講座の日程の案内メール、決まった時刻に自動で届いてます</strong>。皆さんが受け取ってきたやつが、まさにこの仕組み</li>
+        <li><strong>出来事で動く側</strong>：<strong>Discord に誰かが入ってきたのを受けて、招待の追跡と参加者への役割の付与が自動で回ってます</strong>（毎時0分の点検も併用）</li>
+        <li><strong>両方の橋渡し</strong>：AI-MITS のレポート機能では、外部サービスへの鍵を表に出さないための中継役としても使ってます</li>
+      </ul>
+      <p><strong>今日、この言葉と、この役割の絵、1つずつ持って帰ってください</strong>。細かい設定は今日はやりません。皆さんが AI に『こういう仕組みが欲しい』と伝えるときの、<strong>共通言語</strong>として持ち帰るのが今日の目的です。</p>
+      <div class="mess-forbid"><div class="mess-forbid-label">Companion Read</div><div class="mess-forbid-body"><strong>自動で動く仕組みを入れたら、『動いていることをどう確認するか』の窓を、必ずセットで作ってください。</strong>動いてるつもりで、止まっているのに気づかない事故が一番怖い。今週、これに近い事故を1本、記事にしました。<br>URL：<a href="https://reports.7years.life/2026-08-21_where-ai-hides-results.html" target="_blank" rel="noopener"><code>https://reports.7years.life/2026-08-21_where-ai-hides-results.html</code></a></div></div>
+    </div>
+
+    <div class="block-wrap">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">ハーネスエンジニアリングの総括（1 分）</h3>
+      <p>第2回・第3回で組んできた <strong>ハーネスエンジニアリング</strong> に、今日 <strong>『3軸マトリックス』『エンジニア向けを1人型に当てはめる3本』『event dispatcher としての Cloudflare』</strong> が入って完成。<strong>判断を降ろす配線 + 障害を早く掴む見張り + 3軸で切る判別軸 + 電源と切り離す配線</strong>。ここで初めて、ハーネスが <strong>回る道具</strong> になります。</p>
+    </div>
+    <p style="text-align:right;font-family:var(--font-mono);font-size:12px;color:var(--ink-3);margin-top:var(--sp-2);">（Advantage 終了・75 分経過）</p>
+  </div>
+</div>
+
+<!-- ブロック5 Feature -->
+<div class="sec-wrap pb60" id="feature">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Block 5 ／ Feature 実演（16 分）</span>
+      <h2 class="sec-h2">ブロック5：Feature 実演</h2>
+    </div>
+
+    <div class="assign-item">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">実演①：memory 週次整理 + doublecheck（3 分）</h3>
+      <p>毎週金曜21:00 に僕は自分でやってます。参謀を呼び出して、<strong>『今週の memory 追記、整理して。重複統合・古い記述削除・矛盾検出』</strong>。続けて <strong>doublecheck</strong>：<strong>『subagent の稼働状況、7日以内に発火した／発火してないを出して』</strong>。金曜夜、20〜30分で AI 組織の週次点検が完了。</p>
+    </div>
+
+    <div class="assign-item" style="border-top-color:var(--gold);">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">実演②：3軸で振り分けて CLAUDE.md に書き込む（コンテキスト設計ワークシートを通す・6 分・道具5の配布）</h3>
+      <p>今日の中核。<strong>3軸マトリックスで振り分けた結果を CLAUDE.md に書き込む</strong>。<strong>道具5：コンテキスト設計ワークシート</strong>を渡します。URL：<a href="https://reports.7years.life/2026-07-05_ai-agent-context-worksheet.html" target="_blank" rel="noopener"><code>https://reports.7years.life/2026-07-05_ai-agent-context-worksheet.html</code></a></p>
+      <p><strong>画面共有</strong>：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/CLAUDE.md</code>。参謀に頼む：<strong>『いま僕の仕事を3軸で振り分けたい。安全性・カスタマイズ度・人間関係価値の3軸で、僕が今週触った仕事12個を切って、「自分でやる／AI に任せる／外部に委ねる」の3つに分けて、A のリストを CLAUDE.md の「経営者専権のタスク」節に追記してください。追記の前に、必ず僕に一覧を出して、僕が OK と言ってから書き込んで』</strong>。</p>
+      <ul>
+        <li>ポイント1：OK 承認前の書き込みを禁じる</li>
+        <li>ポイント2：C（外部に委ねる）のリストも同時に出させる</li>
+        <li>ポイント3：A は『経営者専権のタスク』として明示的に書き残す</li>
+      </ul>
+      <p><strong>暗黙知の形式知化の完成形</strong>。降ろした瞬間、AI 社員が同じ判断を再現できる。</p>
+    </div>
+
+    <div class="assign-item">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">実演③：session-log 自動保存 hook（2 分）</h3>
+      <p>Claude に頼む：<strong>『セッションが終わる時に、要約を Notion の DB に自動保存する hook を組んでください』</strong>。<strong>hook の中身は Claude が書きます</strong>。あなたは shell を書かなくていい。</p>
+    </div>
+
+    <div class="assign-item">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">実演④：コンパクション運用（1 分）</h3>
+      <p><strong>650K を超えたら、あるいは 70〜80% を超えたら、<code>/compact</code> と打つ</strong>。手動が面倒なら hook 化：<strong>『実行前に「圧縮します・OK なら Enter」の1秒待ちを入れて』</strong>。<strong>AI が先に動いて、確認が必要なときだけ人間に聞きにくる状態（エージェンティックという言い方をします）</strong>の1つの実装。</p>
+    </div>
+
+    <div class="assign-item" style="border-top-color:var(--gold);">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">実演⑤：<code>AI時間</code> の手渡し（3 分・道具2の確認）</h3>
+      <p><strong>すでに配布済みの道具</strong>を、今日、改めて手渡します。<strong>画面で1回、目の前で叩きます</strong>。Claude Code に <code>AI時間</code> と打つだけ。</p>
+      <p><strong>出るもの</strong>：日次・週次で積み上がった時間と、<strong>「100時間目標の何割か」「このままだとあと何日か」</strong>。</p>
+      <p><strong>8/23 は 92日中 54日目</strong>。<strong>毎日 1〜2 時間の3ヶ月ペースなら、54〜108 時間の位置</strong>。<strong>ちょうど100時間に届くかどうか</strong>。<strong>あと36日で届くか届かないかが分かる</strong>、そういう地点。<strong>自分の数字は 100時間側にいるか、まだ下にいるか</strong>。<strong>まず、数字を見る</strong>。</p>
+      <p><strong>あなたが何時間を目指すかは、あなたが決める</strong>。ただし、<strong>測っていない状態から測っている状態に移す、その1点だけは今日のうちにやってください</strong>。</p>
+    </div>
+
+    <div class="assign-item">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">実演の締め・今日中の作業4つ（1 分）</h3>
+      <ol>
+        <li><strong>memory 週次整理</strong>と<strong>doublecheck</strong>を Google カレンダー金曜21:00／19:00 に予約</li>
+        <li><strong>3軸マトリックスで今週の仕事12個を振り分けて『経営者専権のタスク』節を CLAUDE.md に追記</strong></li>
+        <li><strong><code>AI時間</code> を Claude Code で1回叩く</strong>（自分の数字を見る・その1回だけでいい）</li>
+        <li><strong>二刀流の「自分の像」を6タイプから仮決め</strong>＋<strong>100時間からのAI社員の経営応用・活用（4つの道）A/B/C/D の仮決め</strong>（両方とも仮置きなので今の気分で OK）</li>
+      </ol>
+      <p><strong>全部やらなくていい</strong>。<strong>1つだけでいい</strong>。マドリング・スルー。</p>
+    </div>
+    <p style="text-align:right;font-family:var(--font-mono);font-size:12px;color:var(--ink-3);margin-top:var(--sp-2);">（Feature 実演終了・91 分経過）</p>
+  </div>
+</div>
+
+<!-- ブロック6 Q&A -->
+<div class="sec-wrap pb60" id="qa">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Block 6 ／ Q&amp;A（6 分）</span>
+      <h2 class="sec-h2">ブロック6：Q&amp;A</h2>
+    </div>
+
+    <div class="qa-item">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">AI-MITS プロトタイプ（第3回持ち越し・正式公開版の入口）</h3>
+      <p>今、Dify + HeyGen + Cloudflare Worker で動いてます。<strong>正式公開版の入口</strong>：<a href="https://change.7years.life/p/V3A9LG00dL2S" target="_blank" rel="noopener"><code>https://change.7years.life/p/V3A9LG00dL2S</code></a>。メールアドレスを入れて始める形。</p>
+    </div>
+
+    <div class="qa-item">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">9月以降のスケジュール</h3>
+      <p>9月以降、<strong>火曜夕方 と 水曜昼</strong> の枠で定期的なセッションを開きます。<strong>9月クラスの立ち上げ</strong>と <strong>BE-02 受講生向けの継続の場</strong>、両方併走。詳細は今週中に Discord とメールで送ります。</p>
+    </div>
+
+    <div class="qa-item">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">次のクラスの募集</h3>
+      <p>BE-02 の次のクラスの募集、今週中に告知します。皆さんは <strong>次のクラスの第1回・第2回を1回だけ再受講する権利</strong>があります。9月の第1回・第2回を再受講するのは無料です。</p>
+    </div>
+
+    <div class="qa-item">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">その場の質問受付（3 分）</h3>
+      <p><strong>川田さん・田中さん・Momoko さん・読書凡人さん</strong>、手元の状況、先に聞かせてください。<strong><code>AI時間</code> で自分の数字、何時間になってますか</strong>。3軸のどこで詰まってますか。それとも、5つの道具のどれ？</p>
+    </div>
+    <p style="text-align:right;font-family:var(--font-mono);font-size:12px;color:var(--ink-3);margin-top:var(--sp-2);">（Q&amp;A 終了・97 分経過）</p>
+  </div>
+</div>
+
+<!-- ブロック7 今だから効く5つ -->
+<div class="sec-wrap pb60" id="five">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Block 7 ／ 今だから効く 5つの道具・総まとめ＋置き場所（12 分）</span>
+      <h2 class="sec-h2">ブロック7：今だから効く 5つの道具・総まとめ＋置き場所</h2>
+    </div>
+
+    <div class="block-wrap" style="border-left-color:var(--gold);">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">5つに共通する形を、もう一度（1 分）</h3>
+      <div class="mess-forbid"><div class="mess-forbid-label">Backbone</div><div class="mess-forbid-body"><strong>『前半では要らなかった。書けなかった。使えなかった。今、渡す』</strong></div></div>
+      <p><strong>触った人にだけ意味を持つ道具</strong>。今後どの回でも、同じ言い方で扱います。</p>
+    </div>
+
+    <div class="block-wrap">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">道具1：シラバスで自分の到達を点検する（3 分・森田さん名指し）</h3>
+      <p>スキル名は <strong><code>シラバス点検</code></strong>（配布済み）。URL：<a href="https://reports.7years.life/2026-07-05_ai-agent-management-syllabus.html" target="_blank" rel="noopener"><code>https://reports.7years.life/2026-07-05_ai-agent-management-syllabus.html</code></a></p>
+      <p><strong>森田さん</strong>が Discord で共有してくれた方法。<strong>シラバスの各回の項目を、自分の Claude に渡して『どこまでできている？』と聞く</strong>。<strong>できていないものを、そのまま『やって』と渡す</strong>。森田さん：<strong>『裏技っぽいんですけど、実は正攻法』</strong>。</p>
+      <p><strong>積み重ねが無いうちは、点検しても何も出てこない</strong>。<strong>3ヶ月ごとにこの点検を回すと、忘却が可視化される</strong>。継続教育のサイクルに1本足してください。</p>
+    </div>
+
+    <div class="block-wrap">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">道具4：プログラミング的思考 入門（F1-03）（3 分）</h3>
+      <p>URL：<a href="https://change.7years.life/members/mxjeSnXmJDbO/course/DtjV1SnKvYNR" target="_blank" rel="noopener"><code>https://change.7years.life/members/mxjeSnXmJDbO/course/DtjV1SnKvYNR</code></a>。3グループ：<strong>📋ガイド／🌱概念編／🔷実践初級編</strong>。<strong>『全体設計なき学習は迷子になる』『業務改善への接続 ─ 3つの絵』</strong>。</p>
+      <p><strong>触った後だから、『さっき自分がやっていた作業に、この考え方が必要だった』と繋がる</strong>。エンジニアにならなくていい。<strong>『使う側』としての入口</strong>です。</p>
+    </div>
+
+    <div class="block-wrap">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">道具2・3・5 の背骨振り返り（2 分）</h3>
+      <div class="skill-item">
+        <p><strong>道具2：<code>AI時間</code></strong>（Feature 実演⑤で手渡し済み）── なぜ前半では効かなかったか：<strong>触っていない人の数字は動かない</strong>。</p>
+      </div>
+      <div class="skill-item">
+        <p><strong>道具3：エンジニア向けの話を1人型に当てはめる</strong>（Advantage で展開済み）── 3軸マトリックス／作る側か使う側かで切る／障害対応3原則／判断の体力を守る。なぜ前半では効かなかったか：<strong>触る前は他人事にしかならない</strong>。</p>
+      </div>
+      <div class="skill-item">
+        <p><strong>道具5：コンテキスト設計ワークシート</strong>（Feature 実演②で配布済み）── なぜ前半では効かなかったか：<strong>書くべき中身を持っていない人に型を渡しても書けない</strong>。</p>
+      </div>
+    </div>
+
+    <div class="block-wrap" style="border-left-color:var(--gold);">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">置き場所は答えを配らない・崩れた景色を見る（2 分）</h3>
+      <p>ここで、もう1個だけ、大事な話。<strong>フォルダ・ファイルの置き場所</strong>の話です。</p>
+      <div class="mess-forbid"><div class="mess-forbid-label">Rule</div><div class="mess-forbid-body"><strong>答えは配りません。『こう並べなさい』の一覧も、命名規則も、今日は渡しません。</strong></div></div>
+      <p>理由は1つだけ。<strong>フォルダの設計は、その人の頭の中の写しだから</strong>。事業の頭の中は、一人ひとり違います。<strong>先に正解を配ると、それが自分の頭の中じゃなくて、僕の頭の中の写しになる</strong>。</p>
+      <p><strong>今日、8/23、皆さんの手元、増えてますよね</strong>。ファイルも、フォルダも、skill も、memory も。<strong>見通しが悪くなっているなら、それは失敗じゃなくて、通るところを通ったってこと</strong>。<strong>崩れた景色を、まず、そのまま見る</strong>。先に型を決めていたら、この景色は見られなかった。</p>
+      <p><strong>測る道具は <code>シラバス点検</code></strong>（配布済み）。<strong>手で書き出す自己申告じゃなくて、実際に何がいくつあるかを数える</strong>。数えてから、自分の言葉で並べ直す。<strong>並べ直したものが、その人の正解</strong>になります。</p>
+      <p><strong>触って事故って、痛い目見ないとありがたみが分からない</strong>、これは今日の教え方の中心です。</p>
+    </div>
+
+    <div class="block-wrap">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">全体の1行（1 分）</h3>
+      <p>5つ全部、<strong>『触った皆さんの背中にだけ乗る道具』</strong>。順番は、<strong><code>AI時間</code> で数字を見る → 3軸マトリックス → CLAUDE.md への書き込み → <code>シラバス点検</code> → F1-03</strong>。マドリング・スルー。</p>
+    </div>
+    <p style="text-align:right;font-family:var(--font-mono);font-size:12px;color:var(--ink-3);margin-top:var(--sp-2);">（今だから効く5つ＋置き場所 終了・109 分経過）</p>
+  </div>
+</div>
+
+<!-- ブロック8 4つの道（誰と一緒にやるか・仮置き） -->
+<div class="sec-wrap pb60" id="four">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Block 8 ／ 4 つの道（誰と一緒にやるか・仮置き）（7 分）</span>
+      <h2 class="sec-h2">ブロック8：4つの道（誰と一緒にやるか・仮置き）</h2>
+    </div>
+
+    <div class="block-wrap" style="border-left-color:var(--gold);">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">呼び名切替＋仮置き宣言＋「冒頭で宣言した②、ここに戻ってきます」（口火・1 分）</h3>
+      <p>じゃあ、最後のブロック。呼び名から先に、そろえます。『BE-02 のあとの道』とか『修了後の道』って言い方、今日から、</p>
+      <div class="mess-forbid"><div class="mess-forbid-label">Rename</div><div class="mess-forbid-body"><strong>『100時間からのAI社員の経営応用・活用』</strong></div></div>
+      <p>に統一します。<strong>BE-02 が終わってから、じゃなくて、100時間を過ぎた先</strong>、って見方です。</p>
+      <div class="mess-forbid"><div class="mess-forbid-label">Callback</div><div class="mess-forbid-body"><strong>冒頭で宣言した②、ここに戻ってきます。</strong>冒頭のブロック1で <strong>①二刀流＝『何をやるか』</strong>を置きました。この最後のブロックが <strong>②『誰と、一緒にやるか』</strong>の話です。<strong>何をやるかが先で、誰と一緒にやるかが後</strong>、この順で置いてきました。</div></div>
+      <div class="mess-forbid"><div class="mess-forbid-label">Provisional</div><div class="mess-forbid-body"><strong>A・B・C・D の中身は、今の時点では仮置きです。継続サポートの中身が決まり次第、差し替えます。</strong>今日は今の気分で仮決めで OK。</div></div>
+    </div>
+
+    <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin:var(--sp-3) 0 var(--sp-2);">4つの道 A/B/C/D の説明（4 分）</h3>
+    <div class="assign-item">
+      <p><strong>A. 自走できる人</strong>（仮置きの案）：BE-02 受講生向けの <strong>継続の場</strong>（Discord + 月次オンライン議論）に参加。「自分で回せる自信ある人。相談したい時に来る場所として活用」</p>
+    </div>
+    <div class="assign-item">
+      <p><strong>B. ゆっくり育つ人</strong>（仮置きの案）：継続の場に <strong>時々戻る</strong>。「1週間で1歩でOK。他の人の投稿を見ているだけでも学びは続く」自分のペース。</p>
+    </div>
+    <div class="assign-item">
+      <p><strong>C. 低空飛行で諦めない人</strong>（仮置きの案）：<strong>無料の入門クラス（Skool のオープンエリア）</strong> で回遊。「消えなくていい。無料で残っていて、気が向いたら戻ってきて」<strong>1年後にまた来ればいい</strong>。</p>
+    </div>
+    <div class="assign-item">
+      <p><strong>D. 加速したい人</strong>（仮置きの案）：<strong>AI 業務の個別支援</strong>（別途相談）。詳細は職員室相談日で個別に。</p>
+    </div>
+
+    <div class="block-wrap">
+      <h3 style="font-family:var(--font-serif);font-size:var(--text-lg);color:var(--navy);margin-bottom:var(--sp-2);">移動可能・仮決めで OK（1 分）／継続サポート差し替え（1 分）</h3>
+      <p>これはあくまで <strong>今日時点の仮決め</strong>。<strong>A → B → C → D の間を移動していい</strong>。<strong>選択肢を持つのが自由</strong>。<strong>選択肢を持ちつつ、判断は1回で済ませる</strong>。</p>
+      <p><strong>A/B/C/D の中身は、まだ動きます</strong>。<strong>継続サポートの中身が固まり次第、差し替えて、Discord とメールで告知します</strong>。今日、皆さんに持って帰ってほしいのは、<strong>講座の一番最初に置いた二刀流の前提1つ＋『4つの道がある・自分は今どれに足を置いているか・それは移動できる』、この4つ</strong>です。</p>
+    </div>
+    <p style="text-align:right;font-family:var(--font-mono);font-size:12px;color:var(--ink-3);margin-top:var(--sp-2);">（4つの道 終了・116 分経過）</p>
+  </div>
+</div>
+
+<!-- ブロック9 宿題 -->
+<div class="sec-wrap pb60" id="homework">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Block 9 ／ 宿題（4 分）</span>
+      <h2 class="sec-h2">ブロック9：宿題</h2>
+    </div>
+    <div class="assign-item">
+      <ol>
+        <li><strong>memory 週次整理</strong>を Google カレンダー金曜21:00 に予約／<strong>doublecheck</strong>を金曜19:00 に予約</li>
+        <li><strong>3軸マトリックスで今週の仕事を振り分け、A（自分でやる）を CLAUDE.md の『経営者専権のタスク』節に書き込む</strong>（今日の中核）</li>
+        <li><strong><code>AI時間</code> を今日中に1回叩く</strong>（自分の数字を見る・8/23 は 92日中 54日目・毎日 1〜2 時間の3ヶ月ペースなら 54〜108 時間・100時間に届くかどうかの地点・あと36日で届くか届かないかが分かる）</li>
+        <li><strong><code>シラバス点検</code> を今日か次のセッションまでに1回叩く</strong>（自分の環境が今どうなっているか、実物で数える）</li>
+        <li><strong>5つの道具のうち1つを次に触る、を Discord か LINE で宣言</strong>（9/6 まで・仮決めで OK・100時間からのAI社員の経営応用・活用の4つの道 A/B/C/D の仮決めも同時に）</li>
+      </ol>
+      <p>5つ。<strong>全部やる必要はない</strong>。<strong>1つだけでいい</strong>。順序は宿題2（3軸マトリックス→ CLAUDE.md）から。<strong>後先順位</strong> です。<strong>マドリング・スルー</strong>。</p>
+    </div>
+    <p style="text-align:right;font-family:var(--font-mono);font-size:12px;color:var(--ink-3);margin-top:var(--sp-2);">（宿題 終了・120 分経過・時間ちょうど）</p>
+  </div>
+</div>
+
+<!-- 獲得スキル -->
+<div class="sec-wrap pb60" id="skills">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Skills Acquired</span>
+      <h2 class="sec-h2">獲得スキル（受講後に「できる」項目）</h2>
+    </div>
+    <div class="skill-item"><p>1. <strong>100時間の物差しで自分の位置を数字で言える</strong>（<code>AI時間</code> で積み上げを見る・8/23＝92日中54日目の位置に対して自分の数字を照らす・毎日 1〜2 時間の3ヶ月ペースなら 54〜108 時間・100時間に届くかどうかの地点）</p></div>
+    <div class="skill-item"><p>2. <strong>経営判断の3軸マトリックス</strong>（安全性／カスタマイズ度／人間関係価値）で仕事を「自分でやる／AI に任せる／外部に委ねる」の3つに切り分ける</p></div>
+    <div class="skill-item"><p>3. <strong>3軸で切った結果を CLAUDE.md の『経営者専権のタスク』節に書き込み</strong>、次回セッションから AI が自動で振る舞いを変える状態を作る</p></div>
+    <div class="skill-item"><p>4. <strong><code>シラバス点検</code> で自分の到達を測る</strong>（Claude に「どこまでできている？」を聞き、できていないものを「やって」と渡す）</p></div>
+    <div class="skill-item"><p>5. <strong>memory 週次整理</strong>（毎週金曜・重複統合・古い記述削除・矛盾検出）</p></div>
+    <div class="skill-item"><p>6. <strong>doublecheck</strong>（週次で AI 組織の健康診断）</p></div>
+    <div class="skill-item"><p>7. <strong>session-log 自動保存</strong>（3層の控えとして Notion に全会話履歴保存・hook で発火）</p></div>
+    <div class="skill-item"><p>8. <strong>コンパクション運用</strong>（650K 超・70〜80% 超で <code>/compact</code>・AI が先に動いて確認が必要なときだけ人間に聞きにくる形〈エージェンティックという言い方をします〉の1つの実装）</p></div>
+    <div class="skill-item"><p>9. <strong>障害対応3原則</strong>（気づく時間を短くする／まず止めて後で調べる／一次窓口を顧客にさせない）</p></div>
+    <div class="skill-item"><p>10. <strong>event dispatcher（Cloudflare）の共通言語を持つ</strong>（AI に「時刻で動く／出来事で動く仕組みが欲しい」と一言で伝えられる状態・自分の PC の電源と切り離す）</p></div>
+    <div class="skill-item"><p>11. <strong>100時間からのAI社員の経営応用・活用（4つの道）を自分で仮決めできる</strong>（A/B/C/D は仮置き・移動可）</p></div>
+  </div>
+</div>
+
+<!-- 背骨まとめ -->
+<div class="sec-wrap pb60" id="backbone">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">Backbone ／ 第4回の恒久土台</span>
+      <h2 class="sec-h2">第4回の背骨（v8・基礎講座の土台として恒久使用）</h2>
+    </div>
+    <div class="showa-block">
+      <h3 style="font-family:var(--font-serif);color:var(--navy);">物差しと共通の形</h3>
+      <p><strong>物差しは合計100時間。</strong>期間ではなく積み上げ。<strong>たった90日、毎日 1〜2 時間で AI社員が育つ</strong>（3ヶ月プラン）／2ヶ月プランは<strong>毎日 2〜3 時間で60日</strong>。<strong>僕は同じ90日で1000時間かけた。皆さんはその10分の1でいい</strong>（「出遅れたと思っている人」への答え）。</p>
+      <p><strong>触った人にだけ意味を持つ 5つの道具</strong>：<strong>『前半では要らなかった。書けなかった。使えなかった。今、渡す』</strong>。</p>
+      <h3 style="font-family:var(--font-serif);color:var(--navy);">5つの道具と「なぜ前半では効かなかったか」</h3>
+      <ol>
+        <li><strong>シラバスで自分の到達を点検する（<code>シラバス点検</code>）</strong> ── 積み重ねが無いと点検の対象が無い</li>
+        <li><strong>AI を触った時間を測る（<code>AI時間</code>）</strong> ── 触っていない人の数字は動かない</li>
+        <li><strong>エンジニア向けの話を1人型に当てはめる</strong> ── 触る前は他人事にしか聞こえない</li>
+        <li><strong>プログラミング的思考 入門（F1-03）</strong> ── 触る前は抽象語の羅列に聞こえる</li>
+        <li><strong>コンテキスト設計ワークシート</strong> ── 書くべき中身を持っていない人に型を渡しても書けない</li>
+      </ol>
+      <h3 style="font-family:var(--font-serif);color:var(--navy);">電源と切り離す配線</h3>
+      <p><strong>event dispatcher としての Cloudflare</strong>（時刻で動く／出来事で動く・自分の PC の電源と関係なく AI社員が動く）</p>
+      <h3 style="font-family:var(--font-serif);color:var(--navy);">置き場所は答えを配らない</h3>
+      <p><strong>『こう並べなさい』の一覧・命名規則は渡さない</strong>。フォルダの設計はその人の頭の中の写しだから。<strong>崩れた景色を、まず、そのまま見る</strong>。測る道具は <code>シラバス点検</code>。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 参照ソース -->
+<div class="sec-wrap pb60" id="refs">
+  <div class="sec-1100">
+    <div class="sec-h2-block">
+      <span class="sec-h2-label">References</span>
+      <h2 class="sec-h2">参照ソース／版履歴</h2>
+    </div>
+    <div class="ref-block">
+      <h3 style="font-family:var(--font-serif);color:var(--navy);">公開シラバス（v8 の出所・シラバス ver2 と一致）</h3>
+      <p><a href="https://reports.7years.life/2026-07-05_ai-agent-management-syllabus.html" target="_blank" rel="noopener"><code>https://reports.7years.life/2026-07-05_ai-agent-management-syllabus.html</code></a></p>
+
+      <h3 style="font-family:var(--font-serif);color:var(--navy);">今だから効く5つの道具（v8・出所と配布物）</h3>
+      <ul>
+        <li>道具1（<code>シラバス点検</code>）：配布済み・入口 URL は<a href="https://reports.7years.life/2026-07-05_ai-agent-management-syllabus.html" target="_blank" rel="noopener"><code>https://reports.7years.life/2026-07-05_ai-agent-management-syllabus.html</code></a></li>
+        <li>道具2（<code>AI時間</code>）：Claude Code に <code>AI時間</code> と打つ・配布済み</li>
+        <li>道具3（エンジニア向けを1人型に当てはめる）：2026-08-18 セッション「AI時代のエンジニア必須スキル」の Mits 4素材</li>
+        <li>道具4（プログラミング的思考 入門 F1-03）：<a href="https://change.7years.life/members/mxjeSnXmJDbO/course/DtjV1SnKvYNR" target="_blank" rel="noopener"><code>https://change.7years.life/members/mxjeSnXmJDbO/course/DtjV1SnKvYNR</code></a></li>
+        <li>道具5（コンテキスト設計ワークシート）：<a href="https://reports.7years.life/2026-07-05_ai-agent-context-worksheet.html" target="_blank" rel="noopener"><code>https://reports.7years.life/2026-07-05_ai-agent-context-worksheet.html</code></a></li>
+      </ul>
+
+      <h3 style="font-family:var(--font-serif);color:var(--navy);">event dispatcher としての Cloudflare（実稼働例＋節末尾に差した記事）</h3>
+      <ul>
+        <li>時刻で動く：この講座の日程の案内メール</li>
+        <li>出来事で動く：Discord に人が入ったときの招待追跡と役割付与</li>
+        <li>両方の橋渡し：AI-MITS のレポート機能での外部サービス鍵の中継</li>
+        <li>節末尾に差した公開記事（3原則の2番目「動いていることの確認窓」）：<a href="https://reports.7years.life/2026-08-21_where-ai-hides-results.html" target="_blank" rel="noopener"><code>https://reports.7years.life/2026-08-21_where-ai-hides-results.html</code></a></li>
+      </ul>
+
+      <h3 style="font-family:var(--font-serif);color:var(--navy);">二刀流（Block 7 新設・v8 第3稿）</h3>
+      <ul>
+        <li>画面共有スライド実物（Mits様手元）：<code>/Users/nishidamitsuhiro/Downloads/二刀流v2　統合版.pdf</code>（58ページ・全角スペース入りパス）</li>
+        <li>原典テキスト：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/references/concepts/ダイヤモンドマトリックス×CPF.txt</code></li>
+        <li>受講生現在地との接続材料：杉浦さん（2026-08-18・建築業界でChatGPT未活用＝成長期の実例）／大高さん（2026-08-12・スケール時の関係性維持＝攻めに出た後に来る壁）</li>
+      </ul>
+
+      <h3 style="font-family:var(--font-serif);color:var(--navy);">Mits 参照ファイル（Feature 実演で画面共有する実物）</h3>
+      <p><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/CLAUDE.md</code>（実演②）</p>
+
+      <h3 style="font-family:var(--font-serif);color:var(--navy);">版履歴</h3>
+      <p><strong>v8（2026-08-21・第2稿・シラバス ver2 整合）</strong>：講義名を「100時間からのAI社員の経営応用・活用」に統一（Block 7 の呼び名も同じに）／背骨に<strong>「合計100時間・たった90日毎日1〜2時間・僕は同じ90日で1000時間・皆さんはその10分の1でいい・8/23＝92日中54日目・100時間に届くかどうかの地点・あと36日」</strong>を組み込み（Benefit 冒頭 3 分・Feature 実演⑤ で <code>AI時間</code> を目の前で叩く）／event dispatcher としての Cloudflare を Advantage に新設（2 段構え・一般名詞→Cloudflare がその役・実稼働例3件）／5つの道具・総まとめに「置き場所は答えを配らない・崩れた景色を見る・<code>シラバス点検</code> で測る」節を追加／A/B/C/D は現段階では仮置きである旨を Block 7 と Benefit の予告に明示／実現しなかった案の呼び名を削除（Mits様確定）／時間配分を 120 分（実運用も 120 分）に組み直し（Advantage 32 分／Feature 22 分／Q&amp;A 8 分／5 つの道具＋置き場所 12 分／4 つの道 12 分）／Feature ⑥「Cloudflare での案内メール実物 1件だけ画面共有」を追加。</p>
+      <p><strong>v8（2026-08-21・第4稿・二刀流を講座冒頭へ移動）</strong>：Block 7 前半にあった二刀流13分を、講座の一番最初（Block 1）に移動（Mits様指示 2026-08-21：予告ではなく本編そのものを冒頭に置く）／冒頭 Hook から予告3行を削除（大事な話1本／2年で行き詰まる／今日の最後にやります）・「大事な話を1本、忘れてました。二刀流」は新設冒頭ブロック1の見出し（h2）として使う／Block 1（二刀流）の前振りを「回収」→「講座の最初に、これを置く」立ち上がりに書き換え／残りブロック7（4つの道）の呼び名切替の冒頭に「冒頭で宣言した②、ここに戻ってきます」を1行追加／時間再配分（120分維持）：新Block 1（二刀流）13分／Block 2（Hook）15分（予告1分を「二刀流の後を受けて本題に入る導入」で吸収）／以下 Benefit・Advantage・Feature・Q&amp;A・5つの道具＋置き場所 は据え置き／Block 7（旧・二刀流＋4つの道）20分を分解し新Block 8（4つの道のみ）7分に圧縮（呼び名切替1分＋説明4分＋移動可能1分＋差替1分）／Block 9（宿題）4分／合計 13+15+15+32+16+6+12+7+4=120／ブロック番号を1本ずつ繰り下げ（旧1→新2 Hook・旧2→新3 Benefit・旧3→新4 Advantage・旧4→新5 Feature・旧5→新6 Q&amp;A・旧6→新7 5つの道具・旧7→新8 4つの道・旧8→新9 宿題）／時間経過マーカーを 13/28/43/75/91/97/109/116/120 に振り直し。</p>
+      <p><strong>v8（2026-08-21・第3稿・二刀流の追加＋git 記事の追加）</strong>：<strong>Block 7 の冒頭に『二刀流（何をやるか）』11 分を新設</strong>（『AI時代の二刀流戦略 v2 統合版』スライドの画面共有主体・目安ページ表を台本に置く・全 58 枚から外せない 5 枚を明示：<strong>二刀流とは／6タイプ／S字カーブ＝2年がリミット／4つのC／二刀流はこの2つに尽きる</strong>）／順番宣言「①二刀流＝何をやるか → ②4 つの道＝誰と一緒にやるか」／杉浦さん・大高さん実例を二刀流の締めに接続／時間再配分（120 分維持）：Feature 22→16 分（⑥ Cloudflare 案内メール実物削除／① 4→3／③ 3→2／④ 2→1／締め 2→1＝-6分）・Q&amp;A 8→6 分（その場質問 5→3 分）・Block 7 12→20 分（二刀流+8 分）／Advantage の Cloudflare 節末尾に <a href="https://reports.7years.life/2026-08-21_where-ai-hides-results.html" target="_blank" rel="noopener"><code>https://reports.7years.life/2026-08-21_where-ai-hides-results.html</code></a> を 30 秒紹介として差し込み（自動で動く仕組みは「動いていることの確認窓」をセットで作る旨）／Cloudflare 案内メール実物の画面共有は Feature から削除。</p>
+    </div>
+  </div>
+</div>
+
+<div class="lp-footer">
+  <div class="copyright">Course Resume ／ Session 4 of 4 ／ 20260821-v8（シラバス ver2 整合）</div>
+</div>
+
+</div>
+</body>
+</html>
