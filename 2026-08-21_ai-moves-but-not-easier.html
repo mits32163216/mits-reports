@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AIは動くようになった。なのに、楽になっていない。</title>
+<title>プログラミング的思考</title>
 <style>
 :root{
   --navy:#1a3a52; --navy-l:#2c5575; --ivory:#f7f3ea; --paper:#fbfaf5;
@@ -115,6 +115,15 @@ footer.foot a{color:var(--navy-l);}
 .qz-score b{color:var(--navy);font-size:1.25em;}
 .qz-reset{background:var(--ivory);border:1px solid var(--line);border-radius:3px;
   padding:8px 18px;font-family:inherit;font-size:.9em;color:var(--navy);cursor:pointer;}
+.qz-copy{background:var(--navy);border:1px solid var(--navy);border-radius:3px;
+  padding:8px 18px;font-family:inherit;font-size:.9em;color:#fff;cursor:pointer;}
+.qz-copy:hover{background:var(--navy-l);border-color:var(--navy-l);}
+.qz-copy:disabled{opacity:.45;cursor:default;}
+.qz-out{display:none;width:100%;margin-top:12px;padding:12px 14px;border:1px solid var(--line);
+  border-radius:3px;background:#fdfcf8;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:.86em;line-height:1.8;color:var(--ink);white-space:pre-wrap;}
+.qz-out.on{display:block;}
+.qz-msg{font-size:.86em;color:var(--ok);margin-left:10px;}
 .qz-reset:hover{background:var(--gold);color:#1a1a1a;border-color:var(--gold);}
 @media (max-width:720px){
   .qz-head,.qz-body,.qz-foot{padding-left:15px;padding-right:15px;}
@@ -401,7 +410,7 @@ footer.foot a{color:var(--navy-l);}
 <button type="button" class="qz-opt" data-i="3"><span class="qz-mk">D.</span>次に何を作るかを決めることに使う。<span class="qz-ex">道具が揃うと「何を頼むか」で差がつく、と本文が述べている方向です。</span></button>
 </div>
 </div>
-<div class="qz-foot"><span class="qz-score">回答 <b id="qz-n">0</b> / 10　正解 <b id="qz-c">0</b></span><button type="button" class="qz-reset" id="qz-reset">もう一度やる</button></div>
+<div class="qz-foot"><span class="qz-score">回答 <b id="qz-n">0</b> / 10　正解 <b id="qz-c">0</b><span class="qz-msg" id="qz-msg"></span></span><span><button type="button" class="qz-copy" id="qz-copy" disabled>結果を控える</button><button type="button" class="qz-reset" id="qz-reset" style="margin-left:8px;">もう一度やる</button></span><div class="qz-out" id="qz-out"></div></div>
 </div>
 <script>
 (function(){
@@ -418,6 +427,8 @@ footer.foot a{color:var(--navy-l);}
       }
     });
     nEl.textContent = n; cEl.textContent = c;
+    var cb = document.getElementById('qz-copy');
+    if(cb) cb.disabled = (n === 0);
   }
   items.forEach(function(it){
     var ans = parseInt(it.dataset.a, 10);
@@ -442,6 +453,40 @@ footer.foot a{color:var(--navy-l);}
       });
     });
   });
+  var copyBtn = document.getElementById('qz-copy');
+  var outEl = document.getElementById('qz-out');
+  var msgEl = document.getElementById('qz-msg');
+  function buildText(){
+    var wrong = [], c = 0, n = 0;
+    items.forEach(function(it, i){
+      if(!it.classList.contains('qz-done')) return;
+      n++;
+      if(it.dataset.ok === '1') c++; else wrong.push('Q' + (i + 1));
+    });
+    var d = new Date();
+    var ymd = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+    return '理解度チェック（10問）\n'
+         + '正解 ' + c + ' / ' + n + ' 問（全10問）\n'
+         + '落とした問題：' + (wrong.length ? wrong.join('・') : 'なし')
+         + '\n' + ymd;
+  }
+  copyBtn.addEventListener('click', function(){
+    var txt = buildText();
+    outEl.textContent = txt;
+    outEl.classList.add('on');
+    function done(){ msgEl.textContent = 'コピーしました'; setTimeout(function(){ msgEl.textContent = ''; }, 2600); }
+    function fallback(){
+      try{
+        var ta = document.createElement('textarea');
+        ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); document.body.removeChild(ta); done();
+      }catch(e){ msgEl.textContent = '下の枠から選んでコピーしてください'; }
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(done, fallback);
+    } else { fallback(); }
+  });
   document.getElementById('qz-reset').addEventListener('click', function(){
     items.forEach(function(it){
       it.classList.remove('qz-done');
@@ -453,6 +498,7 @@ footer.foot a{color:var(--navy-l);}
       });
     });
     tally();
+    outEl.classList.remove('on'); outEl.textContent = ''; msgEl.textContent = '';
     box.scrollIntoView({behavior:'smooth', block:'start'});
   });
   tally();
