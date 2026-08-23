@@ -235,6 +235,71 @@
   .compare .loud { color: var(--ng); font-weight: 700; font-size: 12px; letter-spacing: 0.03em; }
   .compare .silent { color: var(--warn); font-weight: 700; font-size: 12px; letter-spacing: 0.03em; }
 
+  .qa-box {
+    background: white;
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    padding: 20px 24px;
+  }
+  .qa-box .q {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .qa-box p { font-size: 14px; }
+  .qa-box .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 14px 0 4px;
+  }
+  .qa-box .half {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 14px 16px;
+  }
+  .qa-box .half.no { border-top: 4px solid var(--ok); }
+  .qa-box .half.yes { border-top: 4px solid var(--warn); }
+  .qa-box .half .label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+  }
+  .qa-box .half.no .label { color: var(--ok); }
+  .qa-box .half.yes .label { color: var(--warn); }
+  .qa-box .half .headline {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.55;
+    margin-bottom: 8px;
+  }
+  .qa-box .half ul { margin: 8px 0 0 18px; font-size: 13px; line-height: 1.7; }
+  .qa-box .half li { margin-bottom: 5px; }
+  .qa-box .half p { font-size: 13px; line-height: 1.7; margin-bottom: 0; }
+  .qa-box .em-line {
+    background: var(--ivory);
+    border-left: 3px solid var(--gold);
+    padding: 10px 14px;
+    margin-top: 14px;
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 14px;
+  }
+  .note-line {
+    background: var(--ivory);
+    border-left: 3px solid var(--navy-light);
+    padding: 10px 14px;
+    margin-top: 14px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+
   .close-box {
     background: white;
     border: 1px solid var(--line);
@@ -273,6 +338,9 @@
     .glossary th { width: 40%; font-size: 12px; }
     .glossary td { font-size: 13px; }
     .principles { grid-template-columns: 1fr; }
+    .qa-box { padding: 14px 14px; }
+    .qa-box .split { grid-template-columns: 1fr; }
+    .qa-box .q { font-size: 15px; }
     .compare { padding: 14px 12px; }
     .compare th, .compare td { padding: 8px 8px; font-size: 12px; }
     .conclusion .lead { font-size: 17px; }
@@ -466,6 +534,38 @@
   </section>
 
   <section>
+    <h2>ここで、よく出る質問 — 「私はいつも本棚で作業しています。関係ない話ですよね？」</h2>
+    <div class="qa-box">
+      <div class="q">「隣の棚に切り替えますか？」に、はいと答えたことがない。だったら自分には起きない事故では？</div>
+      <p>半分は、その通りです。ただし半分は、棚がどこであっても残ります。分けて説明します。</p>
+
+      <div class="split">
+        <div class="half no">
+          <div class="label">起きなくなるもの</div>
+          <div class="headline">ページ6・7 の事故そのもの</div>
+          <p>手元がずっと本棚（main）にあるなら、「隣の棚に固定されて、自動保存がそちらだけを更新し続ける」は発生しません。5週間・549件のズレは、あの分かれ道で「はい」を押したことが入口でした。押していなければ、この入口は通っていません。</p>
+        </div>
+        <div class="half yes">
+          <div class="label">それでも残るもの</div>
+          <div class="headline">原則01 と 原則02 は、棚に関係なく残る</div>
+          <p>本棚に立ったままでも、成果物が「別の場所」で止まる経路は他にもあります。</p>
+          <ul>
+            <li>AIがAIの作業場（Cloud）で走らせた分 — 手元の棚とは無関係の部屋にある</li>
+            <li>申請書（PR）として出された変更 — 合流させるまで本棚には入らない</li>
+            <li>手元に作られたが、まだ記録として確定していないファイル — 机の上にあるだけで、保管庫には無い</li>
+            <li>確定はしたが、保管庫へ送る動作が通っていない — 画面にはエラーが出ない</li>
+          </ul>
+        </div>
+      </div>
+
+      <p style="margin-top:14px;">つまり、<strong>ページ6は「棚の話」ですが、原則01は「置き場所の話」</strong>です。棚を1つしか使っていなくても、机・保管庫・AIの作業場という3つの空間は消えません。「置きました」と「届きました」が別である以上、取りに行く動作は残ります。</p>
+      <p>原則02も同じです。本棚だけで作業していても、「保存は成功と出続けているのに、保管庫には届いていない」は起こります。送信が通っていない、自動保存そのものが止まっている──どちらもエラーを出しません。<strong>静かに壊れる形は、ブランチの話に限らない</strong>ということです。</p>
+
+      <div class="em-line">確認することは1つ。「今どこの棚にいるか」と「手元に、まだ送られていないものが残っていないか」。この2点を、起動のたびに機械に言わせる。</div>
+    </div>
+  </section>
+
+  <section>
     <h2>ページ 9 — 人の注意力に頼るのをやめる</h2>
     <div class="slide">
       <span class="page-num">PAGE 09</span>
@@ -498,6 +598,8 @@
       <div class="caption">
         <p>13枚のうち、これだけは覚えて帰ってください。</p>
       </div>
+
+      <div class="note-line">この3つは、<strong>棚（ブランチ）の使い方に関係なく当てはまります</strong>。ずっと本棚（main）だけで作業している人にも、3つともそのまま残ります。棚の切り替えで起きる事故は、ページ6・7 の話です。</div>
 
       <div class="principles">
         <div class="principle-card">
