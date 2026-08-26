@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📋</text></svg>">
 <title>経営の運転台 実装トラッカー（2026-08-26）</title>
 <style>
 :root{
@@ -13,7 +12,7 @@
   --done:#a09788;
 }
 *{box-sizing:border-box}
-body{margin:0;padding:52px 16px 90px;background:var(--bg);color:var(--tx);
+body{margin:0;padding:26px 16px 90px;background:var(--bg);color:var(--tx);
   font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;
   line-height:1.55;-webkit-font-smoothing:antialiased}
 .wrap{max-width:1080px;margin:0 auto}
@@ -65,10 +64,29 @@ h1{margin:0 0 4px;font-size:22px;letter-spacing:.02em}
 .item.lv-done{background:rgba(79,111,82,.07);border-left-color:#9db09e;opacity:.6}
 .item.lv-done .lbl{color:#6c7a6c}
 
-/* ▼ 完了の見える化：チェックしたら 取消線＋薄く */
-.item.checked{opacity:.45;background:rgba(0,0,0,.02);border-left-color:#c9c0ae}
-.item.checked .lbl{text-decoration:line-through;color:var(--done);font-weight:400}
-.item.checked .lbl small{color:#b3aa9b;text-decoration:none}
+/* ▼ 3つの状態（2026-08-26 Mits様指示）
+   押すたび 未着手 → いま進めている → 済 と変わる。いつ変わったかを日付で出す。 */
+.item .mark{width:19px;height:19px;flex-shrink:0;margin-top:2px;border-radius:5px;
+  border:1.5px solid #c3bba9;background:#fff;cursor:pointer;font-size:11px;line-height:1;
+  color:#fff;display:flex;align-items:center;justify-content:center;padding:0;font-family:inherit}
+.item .mark:hover{border-color:var(--amber)}
+
+/* いま進めている：琥珀で目立たせる。薄くしない（作業中なので読ませたい） */
+.item.doing{background:rgba(139,102,32,.07);border-left-color:var(--amber)}
+.item.doing .mark{background:var(--amber);border-color:var(--amber)}
+.item.doing .lbl{color:#5c4412;font-weight:700}
+.tag-doing{display:inline-block;margin-left:8px;font-size:10.5px;font-weight:700;
+  background:var(--amber);color:#fff;border-radius:999px;padding:1px 9px;vertical-align:1px;white-space:nowrap}
+
+/* 済：取消線＋薄く（Mits様の最初のご指定どおり） */
+.item.done{opacity:.45;background:rgba(0,0,0,.02);border-left-color:#c9c0ae}
+.item.done .mark{background:var(--good);border-color:var(--good)}
+.item.done .lbl{text-decoration:line-through;color:var(--done);font-weight:400}
+.item.done .lbl small{color:#b3aa9b;text-decoration:none}
+.tag-done{display:inline-block;margin-left:8px;font-size:10.5px;
+  background:rgba(79,111,82,.14);color:#5a7a5a;border:1px solid rgba(79,111,82,.3);
+  border-radius:999px;padding:1px 9px;vertical-align:1px;text-decoration:none;white-space:nowrap}
+.item.done .tag-done{text-decoration:none}
 
 .actions{position:sticky;bottom:0;background:linear-gradient(to top,var(--bg) 78%,transparent);
   padding:12px 0 2px;margin-top:14px;display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
@@ -80,21 +98,17 @@ h1{margin:0 0 4px;font-size:22px;letter-spacing:.02em}
 code{background:rgba(115,107,96,.1);padding:1px 5px;border-radius:4px;font-size:11.5px;
   font-family:"SF Mono",Menlo,monospace}
 .dropped{font-size:12.5px;color:var(--sub);padding:8px 11px}
-.back-to-list{position:fixed;top:12px;left:12px;z-index:1000;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-size:12px;color:var(--sub);text-decoration:none;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.back-to-list:hover{background:#f2ecdf;color:var(--tx)}
-@media(max-width:780px){.back-to-list{position:static;display:inline-block;margin-bottom:12px}}
 </style>
 </head>
 <body>
-<a class="back-to-list" href="https://reports.7years.life/private/">← プライベート・ダッシュボードに戻る</a>
 <div class="wrap">
 
 <h1>📋 経営の運転台 実装トラッカー</h1>
-<div class="sub">2026年8月26日 ／ 要件の台帳27件をコードに当てて数え直したもの。チェックはこのブラウザに残ります。</div>
+<div class="sub">要件の台帳をコードに当てて数え直したもの。印はこのブラウザに残ります。<b>日をまたいでも、いつ変えたかが横に出ます。</b></div>
 
 <div class="legend">
   <span><b>記号</b>：🔴 いま（無いと配れない）　🟡 近いうち　🔵 あればいい　⚪ 控え　🟣 Mits様の判断待ち　🟢 もう入っている</span>
-  <span><b>使い方</b>：終わったら四角を押す。取消線が引かれて薄くなります。</span>
+  <span><b>使い方</b>：四角を押すたびに <b>未着手 → ▶ いま進めている → ✓ 済</b> と変わります。変えた日付が横に出ます。</span>
 </div>
 
 <div class="summary">
@@ -148,25 +162,27 @@ const GROUPS = [
     {id:"m1", lvl:"🔴", label:"月ごとの数字をアプリに取り込む",
      sub:"分析画面の数字を、見本からあなたの数字に入れ替える。取り込みの口はいま「今期の累計1本」だけで、月ごとの時系列を持っていない（<code>src-tauri/src/mf.rs</code> に推移表を叩く処理は0件＝実測）。<b>他の🔴の前提</b>。"},
     {id:"m2", lvl:"🔴", label:"新しい人が登録を終えられるようにする",
-     sub:"すでに登録がある人はその場で通ることを実機で確認済み（8/26 13:23）。新しい人は「確認メールを送りました」で止まったままになる。中継の仕組みがメールを下書きのまま置いていて、送っていないため。"},
+     sub:"すでに登録がある人はその場で通ることを実機で確認済み（8/26 13:23）。新しい人は「確認メールを送りました」で止まったままになる。中継の仕組みがメールを下書きのまま置いていて、送っていないため。<br><b>着手の順序：AI-MITS Web版のバグ修正が終わってから。</b>"},
     {id:"m3", lvl:"🟣", label:"【判断待ち】登録をメール不要の口に切り替えるか",
-     sub:"中継の仕組みにメールを使わずその場で登録を完了させる口（<code>/register-and-signin</code>）がすでにある。もう一方は下書きのまま止めている設定を「配信する」に変える手だが、AI-MITSの本番に影響が及ぶ可能性がある。8/26、参謀が実装を発注した直後にMits様が「この件はタスクとして残して」で停止。<b>作業は止めたまま</b>。"},
+     sub:"中継の仕組みにメールを使わずその場で登録を完了させる口（<code>/register-and-signin</code>）がすでにある。もう一方は下書きのまま止めている設定を「配信する」に変える手だが、AI-MITSの本番に影響が及ぶ可能性がある。8/26、参謀が実装を発注した直後にMits様が「この件はタスクとして残して」で停止。<b>作業は止めたまま</b>。<br><b>着手の順序：AI-MITS Web版のバグ修正が終わってから。</b>"},
     {id:"m4", lvl:"🔴", label:"配布版にAppleの正式な署名を入れる（年99米ドル）",
      sub:"署名が無いと金庫（Keychain）の許可が毎回無効になり、確認の窓が出続ける。Mac版を人に渡す前の必須条件。お金が動くので契約はMits様の手・手前の準備はこちらで。"}
   ]},
 
 { id:"g1", title:"🟡 近いうち — 次の弾で", meta:"6件",
   items:[
-    {id:"n1", lvl:"🟡", label:"参謀（AI-MITS）の画面を、Web版と同じ配色にする",
-     sub:"Web版の色は実機で測ってある（背景 #ffffff／淡い面 #f7f8fc／本文 #212529／見出し #1a1a2e／強調 #11159f）。運転台の中でも同じ見え方にする。"},
+    {id:"n1", lvl:"🟡", init:{s:"done", at:"2026-08-26"}, label:"参謀（AI-MITS）の画面を、Web版と同じ配色にする",
+     sub:"<b>8/26 完了。</b>明るい版そのものをWeb版の入口LPと同じ白地・濃紺・金に入れ替えたので、参謀の画面も同じ見え方になった。色だけでなく書体・角丸・ボタンの形も揃えてある。12画面1,272箇所を測って読めない箇所は0件。"},
     {id:"n2", lvl:"🟡", label:"登録を求める位置を「入口」から「価値の一歩手前」へ移す",
-     sub:"AI-MITSのWeb版と同じ順序にする。相談は名前を聞かずに受けられて、終わったあと「レポートが欲しい」でメールアドレスを預かる。次に戻ってくるための道でもある、という筋にそろえる。Notionの設計を確認済みで、保留の前提は解けている。"},
+     sub:"AI-MITSのWeb版と同じ順序にする。相談は名前を聞かずに受けられて、終わったあと「レポートが欲しい」でメールアドレスを預かる。次に戻ってくるための道でもある、という筋にそろえる。Notionの設計を確認済みで、保留の前提は解けている。<br><b>AI-MITS Web版と連動。Web版のバグ修正が終わってから。</b>"},
     {id:"n3", lvl:"🟡", label:"目標のシミュレーション画面（STRACからの逆算）",
      sub:"長い目標・人生の目標・＠の目標・STRACの面積図からの逆算を、1本の流れに通す画面。原典のPDF2枚の構造は記録済み。"},
     {id:"n4", lvl:"🟡", label:"新しい版が出たときの入れ替え",
      sub:"アプリの中に「再起動して更新 v0.x.x」の帯を出して、押すと入れ替わって立ち上がり直す形（Claude Codeのデスクトップ版と同じ置き方）。いまは仕組みそのものが入っていない（<code>updater</code> の記述0件＝実測）。"},
     {id:"n5", lvl:"🟡", label:"入れ方の手引き・アプリの中の助け・使い方の動画",
      sub:"Windows機に自分で入れて顧客役で一周したときに「分かりづらい」と感じた所を、そのまま手引きにする。先に一周するのが順序。想像で書かない。"},
+    {id:"n7", lvl:"🟡", init:{s:"done", at:"2026-08-26"}, label:"設定の中に左メニューを付ける",
+     sub:"<b>8/26 完了。</b>設定が8ブロックで縦に長すぎたので、5つの束（会計をつなぐ／お金の分け方／事業者の情報／見た目／アプリの設定）に分けて左から選ぶ形にした。Claude Codeのデスクトップと同じ置き方。どの束を開いていたかも覚える。"},
     {id:"n6", lvl:"🟡", label:"freee との連携",
      sub:"会計の口の差し替え1号。公開された口があり認証の方式も確認済み。変換器を1本足すだけで通る。"}
   ]},
@@ -187,6 +203,8 @@ const GROUPS = [
   items:[
     {id:"c1", lvl:"⚪", label:"各計器に「参謀に相談」ボタン",
      sub:"ChromeのGeminiボタン、NotionのNotion AIボタンと同じ置き方で、どの画面からでもその場で参謀を呼べるようにする。"},
+    {id:"c3", lvl:"⚪", label:"文字の設定（書体と大きさ）を、配色の切り替えと同じ場所に置く",
+     sub:"設定の「見た目」の束に、書体と大きさ（小さめ／ふつう／大きめ）を足す。作りは配色と同じでよいが、大きさは全体を組み直す必要があるのでそこだけ手が要る。<b>目が疲れる人・老眼の人が最初に触るのがここ。</b>"},
     {id:"c2", lvl:"⚪", label:"用語に小さな「i」を付けて、その場で意味が出る",
      sub:"押すと一言の説明が出て、さらに教材の該当レッスンへ飛べる。西田語21語のうち14語が、いまの用語集に載っていない（実測）。半分以上が書き起こしになる。"}
   ]},
@@ -205,37 +223,85 @@ const GROUPS = [
     {id:"d10", lvl:"🟢", label:"登録の口（すでに登録がある人）", sub:"メールを踏まずにその場で通る。8/26に実機で確認。"},
     {id:"d11", lvl:"🟢", label:"参謀の裏側（相談の送受信・記録）", sub:"Difyを叩いて答えを持ち帰り、記録を残すところまで動いている。"},
     {id:"d12", lvl:"🟢", label:"Windows版の組み立て", sub:"GitHub Actions で組み立てが通っている。"},
+    {id:"d14", lvl:"🟢", label:"参謀の答えの見た目を整える（8/26）",
+     sub:"Web版で「**強調**」の星印が生のまま出ていたのを、運転台では太字に直して出すようにした。行頭の <code>-</code> も「・」に置き換える。"},
+    {id:"d15", lvl:"🟢", label:"相談を締めると「今日の整理」が1枚出る（8/26）",
+     sub:"やりとり全文・やること・期限・次に報告する約束を1枚にまとめて、そのまま印刷できる。Web版で相談後に何も残らなかった問題への答え。"},
+    {id:"d16", lvl:"🟢", label:"参謀が「つながりませんでした」で止まる不具合を直した（8/26）",
+     sub:"原因は相談の記録を入れる表が作られていなかったこと。画面側からデータベースを開いた時しか作られない作りだったのを、アプリを開くたびに確かめて作る形にした。"},
     {id:"d13", lvl:"🟢", label:"会計の連携（今期の累計）", sub:"MFから今期の売上・粗利・経費を取ってくる。"}
   ]}
 ];
 
 const KEY = "untendai_tracker_20260826";
+
+// 状態は3つ。未着手 → いま進めている → 済 → 未着手 …と回る。
+// 2026-08-26 Mits様指示：「仕掛かり中、で今、実行中なら、それもなんらかマークを
+// 理由　日をまたいでの完了もあるので私が覚えていないこともあり得る」
+// → いつ変わったかを日付で残し、画面に出す。
 let state = {};
 try { state = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e) { state = {}; }
+// 前の形（true だけ）で保存されていたものを、新しい形に読み替える
+Object.keys(state).forEach(k => { if (state[k] === true) state[k] = {s:"done", at:""}; });
+
+// このファイルを配った時点で分かっている状態（項目の init）を、初めて開いた時だけ入れる。
+// 一度入れた項目は二度と入れ直さない（Mits様が未着手に戻したものを勝手に済へ戻さないため）。
+const SEED_KEY = "untendai_tracker_seeded";
+let seeded = {};
+try { seeded = JSON.parse(localStorage.getItem(SEED_KEY) || "{}"); } catch(e) { seeded = {}; }
+GROUPS.forEach(g => g.items.forEach(it => {
+  if (it.init && !seeded[it.id]) { state[it.id] = { s: it.init.s, at: it.init.at }; seeded[it.id] = 1; }
+}));
+try {
+  localStorage.setItem(SEED_KEY, JSON.stringify(seeded));
+  localStorage.setItem(KEY, JSON.stringify(state));
+} catch(e){}
+
 let hideDone = false;
 
 const LV = {"🔴":"lv-p0","🟡":"lv-p1","🔵":"lv-p2","⚪":"lv-p3","🟣":"lv-wait","🟢":"lv-done"};
 
 function esc(s){ return s; } // 中身は自分で書いた固定文字列（HTMLタグを効かせたいのでそのまま）
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} }
+function st(id){ return (state[id] && state[id].s) || "todo"; }
+function at(id){ return (state[id] && state[id].at) || ""; }
+function today(){
+  const d = new Date();
+  return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+}
+function mmdd(iso){
+  if (!iso) return "";
+  const p = iso.split("-");
+  return p.length === 3 ? (Number(p[1]) + "/" + Number(p[2])) : iso;
+}
+function setState(id, s){
+  if (s === "todo") delete state[id];
+  else state[id] = { s: s, at: today() };
+  save();
+}
 
 function render(){
   const host = document.getElementById("groups");
   host.innerHTML = GROUPS.map(g => {
-    const items = g.items.filter(it => !(hideDone && state[it.id]));
+    const items = g.items.filter(it => !(hideDone && st(it.id) === "done"));
     const inner = items.map(it => {
-      const on = state[it.id];
-      return `<label class="item ${LV[it.lvl]||""} ${on?"checked":""}" data-id="${it.id}">
-        <input type="checkbox" ${on?"checked":""}>
+      const s = st(it.id), d = mmdd(at(it.id));
+      const badge = s === "doing" ? `<span class="tag-doing">いま進めている${d?" ／ "+d+" から":""}</span>`
+                  : s === "done"  ? `<span class="tag-done">済${d?" ／ "+d:""}</span>` : "";
+      return `<div class="item ${LV[it.lvl]||""} ${s}" data-id="${it.id}">
+        <button class="mark" data-act="cycle" title="押すたび 未着手 → いま進めている → 済 と変わります">${
+          s === "done" ? "✓" : s === "doing" ? "▶" : ""}</button>
         <div class="lbl">
-          <span class="lvl">${it.lvl}</span><span>${esc(it.label)}</span>
+          <span class="lvl">${it.lvl}</span><span>${esc(it.label)}</span>${badge}
           ${it.sub?`<small>${it.sub}</small>`:""}
         </div>
-      </label>`;
+      </div>`;
     }).join("");
-    const doneN = g.items.filter(it=>state[it.id]).length;
+    const doneN  = g.items.filter(it=>st(it.id)==="done").length;
+    const doingN = g.items.filter(it=>st(it.id)==="doing").length;
     return `<div class="group">
-      <div class="head"><h2>${g.title}</h2><span class="meta">${g.meta}　済 ${doneN} 件</span></div>
-      ${inner || '<div class="dropped">この束は全部チェック済みです。</div>'}
+      <div class="head"><h2>${g.title}</h2><span class="meta">${g.meta}　済 ${doneN} 件${doingN?"　いま進めている "+doingN+" 件":""}</span></div>
+      ${inner || '<div class="dropped">この束は全部済みです。</div>'}
     </div>`;
   }).join("");
   bind();
@@ -243,14 +309,12 @@ function render(){
 }
 
 function bind(){
-  document.querySelectorAll(".item input[type=checkbox]").forEach(cb=>{
-    cb.addEventListener("change", e=>{
-      const lab = e.target.closest(".item");
-      const id = lab.dataset.id;
-      if (e.target.checked) { state[id] = true; lab.classList.add("checked"); }
-      else { delete state[id]; lab.classList.remove("checked"); }
-      localStorage.setItem(KEY, JSON.stringify(state));
-      if (hideDone) render(); else updateKPI();
+  document.querySelectorAll(".item .mark").forEach(b=>{
+    b.addEventListener("click", e=>{
+      const id = e.target.closest(".item").dataset.id;
+      const now = st(id);
+      setState(id, now === "todo" ? "doing" : now === "doing" ? "done" : "todo");
+      render();
     });
   });
 }
@@ -258,25 +322,29 @@ function bind(){
 function updateKPI(){
   const all = GROUPS.flatMap(g=>g.items);
   const nokori = all.filter(it => it.lvl !== "🟢");           // もう入っているものは分母から外す
-  const doneN  = nokori.filter(it => state[it.id]).length;
+  const doneN  = nokori.filter(it => st(it.id) === "done").length;
+  const doingN = nokori.filter(it => st(it.id) === "doing").length;
   const p0     = all.filter(it => it.lvl === "🔴" || it.lvl === "🟣");
-  const p0done = p0.filter(it => state[it.id]).length;
+  const p0done = p0.filter(it => st(it.id) === "done").length;
 
   document.getElementById("kAll").textContent  = doneN;
   document.getElementById("kAllT").textContent = nokori.length;
   document.getElementById("kP0").textContent   = p0done;
   document.getElementById("kP0T").textContent  = p0.length;
 
-  const nokoriP = nokori.length ? Math.round(doneN/nokori.length*100) : 0;
-  const p0P     = p0.length ? Math.round(p0done/p0.length*100) : 0;
-  document.getElementById("bAll").style.width = nokoriP + "%";
-  document.getElementById("bP0").style.width  = p0P + "%";
+  document.getElementById("bAll").style.width = (nokori.length ? Math.round(doneN/nokori.length*100) : 0) + "%";
+  document.getElementById("bP0").style.width  = (p0.length ? Math.round(p0done/p0.length*100) : 0) + "%";
 
-  const cnt = lv => all.filter(it => it.lvl===lv && !state[it.id]).length;
+  const cnt = lv => all.filter(it => it.lvl===lv && st(it.id) !== "done").length;
   document.getElementById("kAllD").textContent =
-    `残り ${nokori.length-doneN} 件（🟡 ${cnt("🟡")} ／ 🔵 ${cnt("🔵")} ／ ⚪ ${cnt("⚪")}）　もう入っているもの ${all.length-nokori.length} 件は分母の外`;
+    `残り ${nokori.length-doneN} 件（🟡 ${cnt("🟡")} ／ 🔵 ${cnt("🔵")} ／ ⚪ ${cnt("⚪")}）` +
+    (doingN ? `　▶ いま進めている ${doingN} 件` : "") +
+    `　もう入っているもの ${all.length-nokori.length} 件は分母の外`;
+  const p0doing = p0.filter(it=>st(it.id)==="doing").length;
   document.getElementById("kP0D").textContent =
-    p0done === p0.length ? "全部片づきました" : `残り ${p0.length-p0done} 件（うち判断待ち ${all.filter(it=>it.lvl==="🟣"&&!state[it.id]).length} 件）`;
+    p0done === p0.length ? "全部片づきました"
+    : `残り ${p0.length-p0done} 件（うち判断待ち ${p0.filter(it=>it.lvl==="🟣"&&st(it.id)!=="done").length} 件` +
+      (p0doing ? `／いま進めている ${p0doing} 件` : "") + "）";
 }
 
 document.getElementById("btnHide").addEventListener("click", e=>{
@@ -286,18 +354,21 @@ document.getElementById("btnHide").addEventListener("click", e=>{
   render();
 });
 document.getElementById("btnReset").addEventListener("click", ()=>{
-  if(!confirm("チェックを全部外しますか？")) return;
+  if(!confirm("全部の印を消しますか？（いま進めているの印も消えます）")) return;
   state = {};
-  localStorage.setItem(KEY, JSON.stringify(state));
+  save();
   render();
 });
 document.getElementById("btnExport").addEventListener("click", ()=>{
-  const rows = GROUPS.flatMap(g=>g.items).map(it =>
-    `${state[it.id]?"[x]":"[ ]"} ${it.lvl} ${it.label}`).join("\n");
-  const blob = new Blob([`経営の運転台 実装トラッカー 2026-08-26\n\n${rows}\n`], {type:"text/plain;charset=utf-8"});
+  const rows = GROUPS.flatMap(g=>g.items).map(it => {
+    const s = st(it.id), d = at(it.id);
+    const m = s === "done" ? "[済]" : s === "doing" ? "[進行中]" : "[  ]";
+    return `${m} ${it.lvl} ${it.label}${d ? "  （" + d + "）" : ""}`;
+  }).join("\n");
+  const blob = new Blob([`経営の運転台 実装トラッカー\n書き出した日：${today()}\n\n${rows}\n`], {type:"text/plain;charset=utf-8"});
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = "untendai_tracker_20260826.txt";
+  a.download = "untendai_tracker_" + today().replace(/-/g,"") + ".txt";
   a.click();
 });
 
