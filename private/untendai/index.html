@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📋</text></svg>">
+<title>経営の運転台 実装トラッカー（2026-08-26）</title>
+<style>
+:root{
+  --bg:#f4efe4; --card:#fbf8f1; --line:#e2d9c6; --tx:#2c2620; --sub:#6f665a; --dim:#736b60;
+  --amber:#8b6620; --good:#4f6f52; --bad:#ad522d; --info:#3f4f7a; --purple:#6e3f5f;
+  --done:#a09788;
+}
+*{box-sizing:border-box}
+body{margin:0;padding:52px 16px 90px;background:var(--bg);color:var(--tx);
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;
+  line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto}
+h1{margin:0 0 4px;font-size:22px;letter-spacing:.02em}
+.sub{color:var(--sub);font-size:13px;margin-bottom:16px}
+
+.legend{display:flex;flex-wrap:wrap;gap:7px 16px;font-size:12px;color:var(--sub);
+  background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:16px}
+.legend b{color:var(--tx)}
+
+.summary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+@media(max-width:780px){.summary{grid-template-columns:1fr}}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.kpi h3{margin:0 0 6px;font-size:12px;color:var(--sub);font-weight:600}
+.kpi .num{font-size:20px;font-weight:700;color:var(--good)}
+.kpi .det{font-size:11.5px;color:var(--dim);margin-top:4px}
+.bar{height:8px;background:#e9e1d2;border-radius:6px;overflow:hidden;margin-top:7px}
+.bar > i{display:block;height:100%;background:var(--good);width:0%;transition:width .25s}
+.bar.b0 > i{background:var(--bad)}
+
+.next{background:var(--card);border:2px solid var(--amber);border-radius:12px;padding:14px 18px;margin:0 0 20px}
+.next h3{margin:0 0 5px;font-size:15px;color:var(--amber)}
+.next .body{font-size:13.5px}
+
+.group{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 14px 6px;margin:14px 0}
+.group > .head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px;gap:10px;flex-wrap:wrap}
+.group > .head h2{margin:0;font-size:16px;letter-spacing:.02em}
+.group > .head .meta{font-size:12px;color:var(--dim)}
+
+.item{display:flex;align-items:flex-start;gap:9px;padding:9px 11px;border-radius:9px;
+  margin-bottom:3px;border-left:3px solid transparent;cursor:pointer}
+.item:hover{background:rgba(0,0,0,.028)}
+.item input[type=checkbox]{margin-top:4px;width:16px;height:16px;cursor:pointer;flex-shrink:0;accent-color:var(--good)}
+.lbl{font-size:14px}
+.lbl small{display:block;color:var(--sub);font-size:11.5px;margin-top:4px;line-height:1.55}
+.lvl{display:inline-block;font-size:11px;margin-right:5px}
+.meta{font-size:11px;color:var(--dim);margin-left:6px}
+
+.item.lv-p0{background:rgba(173,82,45,.08);border-left-color:var(--bad)}
+.item.lv-p0 .lbl{color:#7a3418;font-weight:600}
+.item.lv-p1{background:rgba(139,102,32,.08);border-left-color:var(--amber)}
+.item.lv-p1 .lbl{color:#6b4d14;font-weight:600}
+.item.lv-p2{background:rgba(63,79,122,.07);border-left-color:var(--info)}
+.item.lv-p2 .lbl{color:#33406a}
+.item.lv-p3{background:rgba(115,107,96,.07);border-left-color:var(--dim)}
+.item.lv-p3 .lbl{color:#5f584e}
+.item.lv-wait{background:rgba(110,63,95,.08);border-left-color:var(--purple)}
+.item.lv-wait .lbl{color:#5c3350;font-weight:600}
+.item.lv-done{background:rgba(79,111,82,.07);border-left-color:#9db09e;opacity:.6}
+.item.lv-done .lbl{color:#6c7a6c}
+
+/* ▼ 完了の見える化：チェックしたら 取消線＋薄く */
+.item.checked{opacity:.45;background:rgba(0,0,0,.02);border-left-color:#c9c0ae}
+.item.checked .lbl{text-decoration:line-through;color:var(--done);font-weight:400}
+.item.checked .lbl small{color:#b3aa9b;text-decoration:none}
+
+.actions{position:sticky;bottom:0;background:linear-gradient(to top,var(--bg) 78%,transparent);
+  padding:12px 0 2px;margin-top:14px;display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.btn{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:7px 13px;
+  font-size:12.5px;cursor:pointer;color:var(--tx);font-family:inherit}
+.btn:hover{background:#f2ecdf}
+.btn.on{background:var(--amber);color:#fff;border-color:var(--amber)}
+.foot{margin-top:28px;color:var(--dim);font-size:11.5px;border-top:1px solid var(--line);padding-top:12px}
+code{background:rgba(115,107,96,.1);padding:1px 5px;border-radius:4px;font-size:11.5px;
+  font-family:"SF Mono",Menlo,monospace}
+.dropped{font-size:12.5px;color:var(--sub);padding:8px 11px}
+.back-to-list{position:fixed;top:12px;left:12px;z-index:1000;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-size:12px;color:var(--sub);text-decoration:none;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.back-to-list:hover{background:#f2ecdf;color:var(--tx)}
+@media(max-width:780px){.back-to-list{position:static;display:inline-block;margin-bottom:12px}}
+</style>
+</head>
+<body>
+<a class="back-to-list" href="https://reports.7years.life/private/">← プライベート・ダッシュボードに戻る</a>
+<div class="wrap">
+
+<h1>📋 経営の運転台 実装トラッカー</h1>
+<div class="sub">2026年8月26日 ／ 要件の台帳27件をコードに当てて数え直したもの。チェックはこのブラウザに残ります。</div>
+
+<div class="legend">
+  <span><b>記号</b>：🔴 いま（無いと配れない）　🟡 近いうち　🔵 あればいい　⚪ 控え　🟣 Mits様の判断待ち　🟢 もう入っている</span>
+  <span><b>使い方</b>：終わったら四角を押す。取消線が引かれて薄くなります。</span>
+</div>
+
+<div class="summary">
+  <div class="kpi">
+    <h3>全体</h3>
+    <div><span class="num" id="kAll">0</span> <span style="font-size:13px;color:var(--sub)">/ <span id="kAllT">0</span> 件</span></div>
+    <div class="det" id="kAllD">─</div>
+    <div class="bar"><i id="bAll"></i></div>
+  </div>
+  <div class="kpi">
+    <h3>🔴 いま必要なもの</h3>
+    <div><span class="num" id="kP0" style="color:var(--bad)">0</span> <span style="font-size:13px;color:var(--sub)">/ <span id="kP0T">0</span> 件</span></div>
+    <div class="det" id="kP0D">─</div>
+    <div class="bar b0"><i id="bP0"></i></div>
+  </div>
+</div>
+
+<div class="next">
+  <h3>次の一手は1つです</h3>
+  <div class="body"><b>マネーフォワードから月ごとの数字をアプリの中に取り込む。</b>
+  いま分析の折れ線はHTMLに直接書いた数字で、データベースへの問い合わせは0件です。
+  取り方はもう分かっていて、<code>getReportsTransitionProfitLoss</code> を1回叩けば12ヶ月分が科目の内訳ごと返ります。
+  ここが済むと🔴が3件まとめて前に進みます。</div>
+</div>
+
+<div id="groups"></div>
+
+<div class="group">
+  <div class="head"><h2>要件から落としたもの</h2></div>
+  <div class="dropped"><b>教材の動画をアプリの中に埋め込む</b> — 会員サイトの認証が、外の枠の中ではログイン状態を保てない作りでした（実測）。埋め込むと視聴の記録も会員サイト側に残りません。<b>飛ばす（外のブラウザで開く）で確定</b>。</div>
+</div>
+
+<div class="actions">
+  <button class="btn" id="btnHide">済みを隠す</button>
+  <button class="btn" id="btnExport">状態を書き出す</button>
+  <button class="btn" id="btnReset">チェックを全部外す</button>
+</div>
+
+<div class="foot">
+  台帳の正本：<code>/Users/nishidamitsuhiro/.claude/plans/beta-idempotent-raven.md</code>（要件バックログ27件）<br>
+  アプリ本体：<code>/Users/nishidamitsuhiro/untendai/</code>
+</div>
+
+</div>
+
+<script>
+// ===== 中身 =====
+const GROUPS = [
+{ id:"g0", title:"🔴 いま — これが無いと配れない・使えない", meta:"4件",
+  items:[
+    {id:"m1", lvl:"🔴", label:"月ごとの数字をアプリに取り込む",
+     sub:"分析画面の数字を、見本からあなたの数字に入れ替える。取り込みの口はいま「今期の累計1本」だけで、月ごとの時系列を持っていない（<code>src-tauri/src/mf.rs</code> に推移表を叩く処理は0件＝実測）。<b>他の🔴の前提</b>。"},
+    {id:"m2", lvl:"🔴", label:"新しい人が登録を終えられるようにする",
+     sub:"すでに登録がある人はその場で通ることを実機で確認済み（8/26 13:23）。新しい人は「確認メールを送りました」で止まったままになる。中継の仕組みがメールを下書きのまま置いていて、送っていないため。"},
+    {id:"m3", lvl:"🟣", label:"【判断待ち】登録をメール不要の口に切り替えるか",
+     sub:"中継の仕組みにメールを使わずその場で登録を完了させる口（<code>/register-and-signin</code>）がすでにある。もう一方は下書きのまま止めている設定を「配信する」に変える手だが、AI-MITSの本番に影響が及ぶ可能性がある。8/26、参謀が実装を発注した直後にMits様が「この件はタスクとして残して」で停止。<b>作業は止めたまま</b>。"},
+    {id:"m4", lvl:"🔴", label:"配布版にAppleの正式な署名を入れる（年99米ドル）",
+     sub:"署名が無いと金庫（Keychain）の許可が毎回無効になり、確認の窓が出続ける。Mac版を人に渡す前の必須条件。お金が動くので契約はMits様の手・手前の準備はこちらで。"}
+  ]},
+
+{ id:"g1", title:"🟡 近いうち — 次の弾で", meta:"6件",
+  items:[
+    {id:"n1", lvl:"🟡", label:"参謀（AI-MITS）の画面を、Web版と同じ配色にする",
+     sub:"Web版の色は実機で測ってある（背景 #ffffff／淡い面 #f7f8fc／本文 #212529／見出し #1a1a2e／強調 #11159f）。運転台の中でも同じ見え方にする。"},
+    {id:"n2", lvl:"🟡", label:"登録を求める位置を「入口」から「価値の一歩手前」へ移す",
+     sub:"AI-MITSのWeb版と同じ順序にする。相談は名前を聞かずに受けられて、終わったあと「レポートが欲しい」でメールアドレスを預かる。次に戻ってくるための道でもある、という筋にそろえる。Notionの設計を確認済みで、保留の前提は解けている。"},
+    {id:"n3", lvl:"🟡", label:"目標のシミュレーション画面（STRACからの逆算）",
+     sub:"長い目標・人生の目標・＠の目標・STRACの面積図からの逆算を、1本の流れに通す画面。原典のPDF2枚の構造は記録済み。"},
+    {id:"n4", lvl:"🟡", label:"新しい版が出たときの入れ替え",
+     sub:"アプリの中に「再起動して更新 v0.x.x」の帯を出して、押すと入れ替わって立ち上がり直す形（Claude Codeのデスクトップ版と同じ置き方）。いまは仕組みそのものが入っていない（<code>updater</code> の記述0件＝実測）。"},
+    {id:"n5", lvl:"🟡", label:"入れ方の手引き・アプリの中の助け・使い方の動画",
+     sub:"Windows機に自分で入れて顧客役で一周したときに「分かりづらい」と感じた所を、そのまま手引きにする。先に一周するのが順序。想像で書かない。"},
+    {id:"n6", lvl:"🟡", label:"freee との連携",
+     sub:"会計の口の差し替え1号。公開された口があり認証の方式も確認済み。変換器を1本足すだけで通る。"}
+  ]},
+
+{ id:"g2", title:"🔵 あればいい — 器だけ先に", meta:"4件",
+  items:[
+    {id:"a1", lvl:"🔵", label:"相談の記録をタブ式で開く",
+     sub:"下に積み上げていく形ではなく、タブを触って切り替える形（TimeWaverの画面をMits様が提示）。裏側（記録の保存・読み出し・案件の単位）はすでに動いていて、<b>足りないのは見せ方だけ</b>。"},
+    {id:"a2", lvl:"🔵", label:"目標設定ページの部品を1つずつ足す",
+     sub:"全体の器と＠の逆算は入っている。残りは粗利のギネス3段・逆算表・無給4問など。器を見ながら1つずつ。"},
+    {id:"a3", lvl:"🔵", label:"エクセルで会計している人向けの取り込み",
+     sub:"会計ソフトを使っていない人のための最後の口。様式の見本と、列の割り当て画面。"},
+    {id:"a4", lvl:"🔵", label:"弥生との連携",
+     sub:"口が公開されているかの確認が先。当面はCSVの取り込みで代用できる。"}
+  ]},
+
+{ id:"g3", title:"⚪ 控え — 着手しない", meta:"2件",
+  items:[
+    {id:"c1", lvl:"⚪", label:"各計器に「参謀に相談」ボタン",
+     sub:"ChromeのGeminiボタン、NotionのNotion AIボタンと同じ置き方で、どの画面からでもその場で参謀を呼べるようにする。"},
+    {id:"c2", lvl:"⚪", label:"用語に小さな「i」を付けて、その場で意味が出る",
+     sub:"押すと一言の説明が出て、さらに教材の該当レッスンへ飛べる。西田語21語のうち14語が、いまの用語集に載っていない（実測）。半分以上が書き起こしになる。"}
+  ]},
+
+{ id:"g9", title:"🟢 もう入っているもの", meta:"13件",
+  items:[
+    {id:"d1", lvl:"🟢", label:"12画面すべての中身（第7版）", sub:"左バーの12画面が全部つながっていて、押すと中身がある。"},
+    {id:"d2", lvl:"🟢", label:"配色の切り替え（暗い／明るい）", sub:"明るい側はMits様指定のベージュ。10画面でコントラスト4.5未満0件を実測。"},
+    {id:"d3", lvl:"🟢", label:"未来費の科目えらび", sub:"MFの勘定科目から、何を未来費と見なすかを自分で選ぶ。"},
+    {id:"d4", lvl:"🟢", label:"変動費の科目えらび", sub:"広告宣伝費・荷造運賃を初期値で変動費に。税の分け方と経営判断の分け方は別、という考えを画面に書いた。"},
+    {id:"d5", lvl:"🟢", label:"補助科目まで分けて選べる", sub:"支払手数料のうちPAYPALとstripeだけ変動費、利息等は固定費、といった分け方ができる。"},
+    {id:"d6", lvl:"🟢", label:"事業者の情報（設定画面）", sub:"法人/個人・事業者名・決算期。MF連携済みなら自動で取れる。"},
+    {id:"d7", lvl:"🟢", label:"目標設定ページの器（①〜⑨）", sub:"④〜⑨は見本の数字で計算まで動く。"},
+    {id:"d8", lvl:"🟢", label:"＠の逆算ブロック", sub:"目標＠とスタッフ数から、必要な粗利を逆算する。"},
+    {id:"d9", lvl:"🟢", label:"移動平均の期間切替の表示", sub:"利用N ヶ月目で主軸の線が変わる（1〜6ヶ月＝3ヶ月・7〜12ヶ月＝6ヶ月・13ヶ月〜＝12ヶ月）。実データとの接続はこれから。"},
+    {id:"d10", lvl:"🟢", label:"登録の口（すでに登録がある人）", sub:"メールを踏まずにその場で通る。8/26に実機で確認。"},
+    {id:"d11", lvl:"🟢", label:"参謀の裏側（相談の送受信・記録）", sub:"Difyを叩いて答えを持ち帰り、記録を残すところまで動いている。"},
+    {id:"d12", lvl:"🟢", label:"Windows版の組み立て", sub:"GitHub Actions で組み立てが通っている。"},
+    {id:"d13", lvl:"🟢", label:"会計の連携（今期の累計）", sub:"MFから今期の売上・粗利・経費を取ってくる。"}
+  ]}
+];
+
+const KEY = "untendai_tracker_20260826";
+let state = {};
+try { state = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e) { state = {}; }
+let hideDone = false;
+
+const LV = {"🔴":"lv-p0","🟡":"lv-p1","🔵":"lv-p2","⚪":"lv-p3","🟣":"lv-wait","🟢":"lv-done"};
+
+function esc(s){ return s; } // 中身は自分で書いた固定文字列（HTMLタグを効かせたいのでそのまま）
+
+function render(){
+  const host = document.getElementById("groups");
+  host.innerHTML = GROUPS.map(g => {
+    const items = g.items.filter(it => !(hideDone && state[it.id]));
+    const inner = items.map(it => {
+      const on = state[it.id];
+      return `<label class="item ${LV[it.lvl]||""} ${on?"checked":""}" data-id="${it.id}">
+        <input type="checkbox" ${on?"checked":""}>
+        <div class="lbl">
+          <span class="lvl">${it.lvl}</span><span>${esc(it.label)}</span>
+          ${it.sub?`<small>${it.sub}</small>`:""}
+        </div>
+      </label>`;
+    }).join("");
+    const doneN = g.items.filter(it=>state[it.id]).length;
+    return `<div class="group">
+      <div class="head"><h2>${g.title}</h2><span class="meta">${g.meta}　済 ${doneN} 件</span></div>
+      ${inner || '<div class="dropped">この束は全部チェック済みです。</div>'}
+    </div>`;
+  }).join("");
+  bind();
+  updateKPI();
+}
+
+function bind(){
+  document.querySelectorAll(".item input[type=checkbox]").forEach(cb=>{
+    cb.addEventListener("change", e=>{
+      const lab = e.target.closest(".item");
+      const id = lab.dataset.id;
+      if (e.target.checked) { state[id] = true; lab.classList.add("checked"); }
+      else { delete state[id]; lab.classList.remove("checked"); }
+      localStorage.setItem(KEY, JSON.stringify(state));
+      if (hideDone) render(); else updateKPI();
+    });
+  });
+}
+
+function updateKPI(){
+  const all = GROUPS.flatMap(g=>g.items);
+  const nokori = all.filter(it => it.lvl !== "🟢");           // もう入っているものは分母から外す
+  const doneN  = nokori.filter(it => state[it.id]).length;
+  const p0     = all.filter(it => it.lvl === "🔴" || it.lvl === "🟣");
+  const p0done = p0.filter(it => state[it.id]).length;
+
+  document.getElementById("kAll").textContent  = doneN;
+  document.getElementById("kAllT").textContent = nokori.length;
+  document.getElementById("kP0").textContent   = p0done;
+  document.getElementById("kP0T").textContent  = p0.length;
+
+  const nokoriP = nokori.length ? Math.round(doneN/nokori.length*100) : 0;
+  const p0P     = p0.length ? Math.round(p0done/p0.length*100) : 0;
+  document.getElementById("bAll").style.width = nokoriP + "%";
+  document.getElementById("bP0").style.width  = p0P + "%";
+
+  const cnt = lv => all.filter(it => it.lvl===lv && !state[it.id]).length;
+  document.getElementById("kAllD").textContent =
+    `残り ${nokori.length-doneN} 件（🟡 ${cnt("🟡")} ／ 🔵 ${cnt("🔵")} ／ ⚪ ${cnt("⚪")}）　もう入っているもの ${all.length-nokori.length} 件は分母の外`;
+  document.getElementById("kP0D").textContent =
+    p0done === p0.length ? "全部片づきました" : `残り ${p0.length-p0done} 件（うち判断待ち ${all.filter(it=>it.lvl==="🟣"&&!state[it.id]).length} 件）`;
+}
+
+document.getElementById("btnHide").addEventListener("click", e=>{
+  hideDone = !hideDone;
+  e.target.textContent = hideDone ? "済みも出す" : "済みを隠す";
+  e.target.classList.toggle("on", hideDone);
+  render();
+});
+document.getElementById("btnReset").addEventListener("click", ()=>{
+  if(!confirm("チェックを全部外しますか？")) return;
+  state = {};
+  localStorage.setItem(KEY, JSON.stringify(state));
+  render();
+});
+document.getElementById("btnExport").addEventListener("click", ()=>{
+  const rows = GROUPS.flatMap(g=>g.items).map(it =>
+    `${state[it.id]?"[x]":"[ ]"} ${it.lvl} ${it.label}`).join("\n");
+  const blob = new Blob([`経営の運転台 実装トラッカー 2026-08-26\n\n${rows}\n`], {type:"text/plain;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "untendai_tracker_20260826.txt";
+  a.click();
+});
+
+render();
+</script>
+</body>
+</html>
