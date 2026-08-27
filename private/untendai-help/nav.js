@@ -11,8 +11,8 @@
     [7,  '仕事の計器',       'K6EydhZVQ0mX'],
     [8,  '参謀（AI-Mits）',  'DUCVSYbs8ur7'],
     [9,  '経営カレンダー',    'OZ1oLJNULjJf'],
-    [10, '月次決算',         'bngMQ8kc5c7D']
-    /* 11_設定 は接続を戻してから足します */
+    [10, '月次決算',         'bngMQ8kc5c7D'],
+    [11, '設定',            'PPSyd4LWOVtX']
   ];
   var cur = document.currentScript;
   var self = cur && cur.dataset ? parseInt(cur.dataset.self, 10) : 0;
@@ -29,6 +29,14 @@
       li.appendChild(a);
       ol.appendChild(li);
     });
+    var box = document.getElementById('nav');
+    if (box && !box.querySelector('.tolist')) {
+      var p = document.createElement('div');
+      p.className = 'tolist';
+      p.style.cssText = 'margin-top:12px;padding-top:12px;border-top:1px solid #e6e2d9';
+      p.innerHTML = '<a href="https://change.7years.life/page/f07BcqK4zqsd" style="color:#11159f;font-weight:700;text-decoration:none">＜ 使い方トップへ</a>';
+      box.appendChild(p);
+    }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build);
   else build();
