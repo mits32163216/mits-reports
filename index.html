@@ -130,6 +130,12 @@
     margin-top: 8px;
   }
 
+  .sec-lead { font-size: 13px; color: var(--gray); margin: -8px 0 14px; }
+  ul.report-list .sub-list { border-top: 1px dashed var(--line); margin-top: 12px; padding-top: 10px; }
+  ul.report-list .sub-list a { font-size: 13px; color: var(--navy-light); padding: 3px 0 3px 16px; position: relative; }
+  ul.report-list .sub-list a::before { content: "└"; position: absolute; left: 0; color: var(--gold); }
+  ul.report-list .sub-list .s-date { color: var(--gray); font-size: 11px; margin-left: 8px; }
+
   footer.site-foot {
     background: var(--ivory);
     border: 1px solid var(--line);
@@ -166,282 +172,185 @@
 
   <div class="intro">
     1人型起業家のための経営とAI活用に関するレポートを不定期で公開しています。<br>
-    内容は調査時点のものであり、最新情報とは異なる場合があります。
+    内容は調査時点のものであり、最新情報とは異なる場合があります。<br>
+    <b>並び順は日付ではなく「読む順」です。</b>はじめての方は一番上から。
   </div>
 
-  <h2 class="section-title">最新レポート</h2>
-
+  <h2 class="section-title">はじめての方へ ― 読む順</h2>
+  <p class="sec-lead">上から順に読むと、AI に仕事を任せる話がひと通りつながります。</p>
   <ul class="report-list">
-
-    <li>
-      <a href="2026-08-23_ai-agent-management-syllabus-v2.html">
-        <div class="date">2026-08-23</div>
-        <div class="title">AIエージェント経営｜シラバス ver2</div>
-        <div class="summary">
-          2ヶ月グループコンサルで扱う内容の一覧（全4回）。<b>物差しは期間ではなく「合計100時間」</b>。動画で話している内容はそのまま残し、そのあとに変わったこと・足したことを行間に重ねた3層構造にしてある。<strong>13領域101項目</strong>の実践事例（それぞれに「何ができるようになるか」つき）も掲載。
-        </div>
-        <span class="tag">AIエージェント経営</span>
-        <span class="tag">シラバス</span>
-      </a>
-    </li>
-
-    <li>
-      <a href="2026-08-22_ai-keiei-support.html">
-        <div class="date">2026-08-22</div>
-        <div class="title">The Innovation　AI経営サポート</div>
-        <div class="summary">
-          <b>成長期の2年を、誰とやるか。</b>「自社×AI」の小さな商品を1本ずつ60点で出し続け、<strong>9敗1勝</strong>で回して、お金・作ったもの・顧客名簿・生み出す力の4つを自分の会社に貯める。やることは同じで、違うのは<strong>自分でやる（AI経営PRO）か、みんなとやる（AI経営MAX）か</strong>。無料・PRO・MAX で得られる権利を1枚の表にした。
-        </div>
-        <span class="tag">AI経営サポート</span>
-        <span class="tag">料金・権利</span>
-      </a>
-    </li>
-
     <li>
       <a href="2026-08-21_ai-moves-but-not-easier.html">
-        <div class="date">2026-08-21</div>
+        <div class="date">1本目 ／ 2026-08-21</div>
         <div class="title">AIは動くようになった。なのに、楽になっていない。</div>
-        <div class="summary">
-          <b>8分44秒の解説動画つき。</b>自分で色々触ってみて、それなりに使えるようになった。なのに忙しさが減っていない――その正体を7つの症状から特定し、直し方を6つの道具に整理した。<strong>毎回同じ前置きから説明し直す／結局こちらが最後に判定している／指示の文章が前より長くなっている／返ってくるものが「惜しい」</strong>。この症状は「使えない人」には出ない。指示が通るようになった人にだけ出る。相手が察しない側だという前提に置き直せば、プログラマーが50年使ってきた型がそのまま効く。<strong>「細かく言え」は半分しか正しくない</strong>――指示の長さは、相手にどれだけ持たせたかの目盛り。
-        </div>
+        <div class="summary"><b>まずこれを読んでください。</b>それなりに使えるようになったのに忙しさが減っていない――その正体を7つの症状から特定し、直し方を6つの道具に整理しました。<strong>8分44秒の解説動画つき。最後に理解度チェック10問</strong>があります。</div>
         <span class="tag">AI活用</span>
-        <span class="tag">仕組み化</span>
         <span class="tag">プログラミング的思考</span>
-      </a>
+        <span class="tag">動画つき</span>
+        </a>
+      
     </li>
-
-    <li>
-      <a href="2026-08-21_where-ai-hides-results.html">
-        <div class="date">2026-08-21</div>
-        <div class="title">AIに任せた仕事、どこにありますか？｜git を「机・保管庫・棚」で理解する</div>
-        <div class="summary">
-          AIから「終わりました」と返事が来たのに、手元のフォルダに無い──を出発点に、gitという道具を「<strong>手元の机（Mac）／ネット上の保管庫（GitHub）／AIの作業場（Cloud）</strong>」の3空間で解き直した13ページのスライド解説。実際に起きた事故（本棚ではなく隣の棚に549件・5週間ズレて誰も気づかなかった）を軸に、「静かに壊れる失敗（Silent Failure）」の見分け方と、人の注意力ではなく仕掛けで止める設計を提示。持ち帰る3原則付き。
-        </div>
-        <span class="tag">git</span>
-        <span class="tag">1人型起業家</span>
-        <span class="tag">障害対応</span>
-        <span class="tag">事故防止</span>
-        <span class="tag">実運用検証</span>
-      </a>
-    </li>
-
     <li>
       <a href="2026-08-21_ai-agent-glossary.html">
-        <div class="date">2026-08-21</div>
+        <div class="date">2本目 ／ 2026-08-21</div>
         <div class="title">AIエージェント 用語集 ― 「難しい言葉」を全部ほどく</div>
-        <div class="summary">
-          AIの話に出てくる専門用語を、大卒文系の理解力で読める言葉に置き換えた用語集。88語を1つも飛ばさずに収録しました。切り捨ての線は「組織か、ひとりか」ではなく<strong>「作る側か、使う側か」</strong>です。組織向けに見える用語も、ひとりで働く人にどう置き換わるかまで書きました。障害対応の章には、実際に起きた事故2件（同じメールが7通届いた／差し込み文字が置き換わらず103通届いた）を載せています。
-        </div>
+        <div class="summary">読んでいて言葉で詰まったらここへ。AIの話に出てくる専門用語88語を、大卒文系の理解力で読める言葉に置き換えました。切り分けの線は「組織か、ひとりか」ではなく<strong>「作る側か、使う側か」</strong>です。</div>
         <span class="tag">用語集</span>
         <span class="tag">AIエージェント</span>
-        <span class="tag">ひとりビジネス</span>
-        <span class="tag">障害対応</span>
-      </a>
+        </a>
+      
     </li>
+    <li>
+      <a href="2026-08-21_where-ai-hides-results.html">
+        <div class="date">3本目 ／ 2026-08-21</div>
+        <div class="title">AIに任せた仕事、どこにありますか？（GitHub）</div>
+        <div class="summary">AIから「終わりました」と返事が来たのに手元のフォルダに無い――を出発点に、git を<strong>「手元の机／ネット上の保管庫／AIの作業場」の3空間</strong>で解き直した13ページのスライド解説。実際に起きた事故（549件が5週間ズレて誰も気づかなかった）つき。</div>
+        <span class="tag">git</span>
+        <span class="tag">事故防止</span>
+        </a>
+      
+    </li>
+    <li>
+      <a href="2026-07-24_harness-engineering-non-engineer.html">
+        <div class="date">4本目 ／ 2026-07-24</div>
+        <div class="title">AIに任せるための「土台」の作り方（非エンジニア向け20枚）</div>
+        <div class="summary">AIモデル以外の全部――何を覚えさせるか・どの道具を持たせるか・どこで止めるか・どう見張るか。<strong>CLAUDE.md ＝ 事業の家訓</strong>という位置づけ、実行役と判定役の分離まで。</div>
+        <span class="tag">土台づくり</span>
+        <span class="tag">1人型起業家</span>
+        </a>
+      
+    </li>
+    <li>
+      <a href="2026-07-09_claude-usage-cowork-to-code-8x.html">
+        <div class="date">5本目 ／ 2026-07-09</div>
+        <div class="title">同じ1人・同じ1時間で、生産量が8.91倍になった実測</div>
+        <div class="summary">西田自身の4ヶ月・18週間の利用データを3段階（自分で使う → 半分任せる → 丸ごと任せる）に分けて可視化。<strong>何が8.91倍にしたのか</strong>を数字で。</div>
+        <span class="tag">ケーススタディ</span>
+        <span class="tag">実測</span>
+        </a>
+      
+    </li>
+  </ul>
 
+  <h2 class="section-title">実際に起きた事故と、その直し方</h2>
+  <p class="sec-lead">自分の現場で起きたことを、原因と直し方まで書いた記録です。</p>
+  <ul class="report-list">
     <li>
       <a href="2026-08-15_mail-placeholder-failures.html">
         <div class="date">2026-08-15</div>
-        <div class="title">「%name% さま」が空欄で届く ― 置き換え文字の事故は、名前の間違いではない</div>
-        <div class="summary">
-          メール配信の置き換え文字が未置換のまま顧客に届く事故。原因の大半は書き間違いではなく、<strong>その読者がどの経路で登録されたか</strong>でした。効く文字は値が無ければ空欄になり、効かない文字は文字がそのまま残る。この差が唯一の見分け方です。710通を全通点検して103通の混入を見つけた実測から、見分け方・点検手順・直し方の原則、そしてテスト送信で判定してはいけない理由をまとめました。
-        </div>
+        <div class="title">「%name% さま」が空欄で届く ― 置き換え文字の事故</div>
+        <div class="summary">原因の大半は書き間違いではなく<strong>その読者がどの経路で登録されたか</strong>でした。710通を全通点検して103通の混入を見つけた実測から、見分け方・点検手順・直し方まで。</div>
         <span class="tag">メール配信</span>
-        <span class="tag">置き換え文字</span>
         <span class="tag">運用点検</span>
-        <span class="tag">事故防止</span>
-      </a>
+        </a>
+      
     </li>
-
-    <li>
-      <a href="2026-08-07_aimits-abtest-distribution-ready.html">
-        <div class="date">2026-08-07 <span style="color:#2d8659; font-weight:700;">／ 配布準備完了レポート</span></div>
-        <div class="title">AI-MITS 診断ツール 配布準備完了レポート — 通信路のセキュリティ強化と 2 種の対話 AI 並行配置</div>
-        <div class="summary">
-          1 人型起業家向け AI 経営診断ツール『AI-MITS』の配布前チェックが完了。<strong>通信路のセキュリティを強化</strong>（暗号鍵をブラウザから撤去し中継サーバー経由に一本化・4 本の暗号鍵を全て刷新）し、<strong>2 種類の対話 AI（A: 検索型 RAG / B: スキル型 Corpus2Skill）を並行配置</strong>。配布後に「1 人型起業家の相談にどちらが刺さるか」を実データで見極める。入り口 → 診断 → レポート → 再来訪 の円環動線は実機デモで確認済。
-        </div>
-        <span class="tag">AI-MITS</span>
-        <span class="tag">配布準備完了</span>
-        <span class="tag">セキュリティ強化</span>
-        <span class="tag">ABテスト</span>
-      </a>
-    </li>
-
-    <li>
-      <a href="2026-07-28_receiver-worked-two-weeks.html">
-        <div class="date">2026-07-28 <span style="color:#2d8659; font-weight:700;">／ 続編・実運用検証編</span></div>
-        <div class="title">解決したのは1件だけでした — でも業務は1日も止まらなかった話｜受け皿の実運用レポート</div>
-        <div class="summary">
-          2026-07-14『AIツール本体の見えない障害モード3つ』のその後14日間。Anthropicが公式に直したのは6件中1件だけ（<code>gh issue view</code>で全件直接照会・OPEN/CLOSED表付き）。それでも業務は1日も止まらなかった実運用記録。3つの受け皿（バックアップ／実機テスト／定点観測）が2週間で実際に何をしていたかを、auto-backup 49回分の実測ログとissue最終更新日で提示。まとめ「作ったら価値が出るんじゃない、回して初めて価値が出る」。
-        </div>
-        <span class="tag">AIエージェント経営</span>
-        <span class="tag">シラバス副資料</span>
-        <span class="tag">実運用検証</span>
-        <span class="tag">続編</span>
-      </a>
-    </li>
-
-    <li>
-      <a href="2026-07-26_v31_easy_v1.html">
-        <div class="date">2026-07-26 <span style="color:#b04848; font-weight:700;">／ 比喩・簡単理解版 v1（4 回目追記反映済）</span></div>
-        <div class="title">【比喩で簡単理解】3 社の AI 開発ツール比較 — Claude Code / Codex / Antigravity</div>
-        <div class="summary">
-          原本レポート「v3.1 同等運用可否レポート」の <strong>専門用語を全部かみ砕いた解説版</strong>。「AI エージェント 25 人組織」「秘書リーダー→課長→担当者の 3 階層」等の比喩で 3 社比較を解説。<strong>原本の 1〜4 回目（6/21・6/30・7/06・7/26）を全反映済</strong>。用語辞典付き。
-        </div>
-        <span class="tag">比喩・簡単理解版</span>
-        <span class="tag">AIエージェント</span>
-        <span class="tag">比較</span>
-        <span class="tag">解説版</span>
-      </a>
-    </li>
-
-    <li>
-      <a href="2026-07-24_harness-engineering-non-engineer.html">
-        <div class="date">2026-07-24</div>
-        <div class="title">ハーネスエンジニアリング — 非エンジニア向け統合ガイド</div>
-        <div class="summary">
-          AIモデル以外の全部（コンテキスト・ツール・ガードレール・監視・フィードバック）を設計する「ハーネスエンジニアリング」を、1人型起業家（Webコンサル・非エンジニア）向けに20スライドで統合。CLAUDE.md ＝ 事業の家訓＝憲法という位置づけ、実行役と判定役の分離、内側／外側ループ、Meta-Harness の4発見までを日常業務のアナロジーで降ろす。
-        </div>
-        <span class="tag">ハーネスエンジニアリング</span>
-        <span class="tag">AIエージェント</span>
-        <span class="tag">1人型起業家</span>
-      </a>
-    </li>
-
-    <li>
-      <a href="2026-07-14_ai-agent-harness-hidden-failures.html">
-        <div class="date">2026-07-14</div>
-        <div class="title">AIツール本体の見えない障害モード3つ｜AIエージェント経営シラバス Session 3-4 副資料</div>
-        <div class="summary">
-          Session 3-4 の「6つのAI癖と3層の消えない容器」の続編副資料。AI癖を直しても防げない、AIツール本体側で起きる3つの障害モード（自動お掃除でのデータ消失／安全装置の実装バグですり抜け／セッション内部の異常圧縮で請求急増）を、2026年に世界中で報告された実事例（GitHub Issues原文引用）で解説。1人型起業家の自己対処法（バックアップ／安全装置の実機確認／使用量の定点観測）を併記。
-        </div>
-        <span class="tag">AIエージェント経営</span>
-        <span class="tag">シラバス副資料</span>
-        <span class="tag">障害モード</span>
-        <span class="tag">1人型起業家</span>
-      </a>
-    </li>
-
     <li>
       <a href="2026-07-11_ai-agent-backup-system.html">
-        <div class="date">2026-07-11</div>
-        <div class="title">AI社員の6つのAI癖と、それを防ぐ3層の消えない容器｜AIエージェント経営シラバス Session 3-4 副資料</div>
-        <div class="summary">
-          AIエージェントを「社員」として雇うなら、まず知るべきAIの6つの慢性癖（着手癖／完了癖／捏造癖／偽証癖／逆委任癖／健忘症）と、それを封じ込めるためにMitsが仕込んだ3層の「消えない容器」（Notion＝原文の器／Obsidian＝意味の器／ローカル＝耐障害の器）を、図解・キャラクター・マンガ・時計盤で一枚絵化した副資料スライド。「AIの記憶を鍛える方法」ではなく「AIが記憶しなくても大丈夫な仕組みの作り方」の全体像。
-        </div>
-        <span class="tag">AIエージェント経営</span>
-        <span class="tag">シラバス副資料</span>
-        <span class="tag">Notion×Obsidian</span>
-        <span class="tag">1人型起業家</span>
-      </a>
+        <div class="date">連載3本 ／ 2026-07-11 〜 07-28</div>
+        <div class="title">AI社員の6つの癖と、消えない容器の作り方（全3回）</div>
+        <div class="summary"><b>第1回</b>：AIの6つの慢性癖（着手／完了／捏造／偽証／逆委任／健忘）と、それを封じ込める3層の容器。<b>第2回</b>：癖を直しても防げない、AIツール本体側の障害3つ。<b>第3回</b>：その後14日間の実運用記録――公式が直したのは6件中1件だけ、それでも業務は1日も止まらなかった。</div>
+        <span class="tag">AIの癖</span>
+        <span class="tag">障害対応</span>
+        <span class="tag">連載</span>
+        </a>
+      <div class="sub-list"><a href="2026-07-14_ai-agent-harness-hidden-failures.html">第2回：AIツール本体の見えない障害モード3つ<span class="s-date">2026-07-14</span></a><a href="2026-07-28_receiver-worked-two-weeks.html">第3回：解決したのは1件だけ。でも業務は止まらなかった<span class="s-date">2026-07-28</span></a></div>
     </li>
-
     <li>
-      <a href="2026-07-09_claude-usage-cowork-to-code-8x.html">
-        <div class="date">2026-07-09</div>
-        <div class="title">Cowork → CODE でリアルエージェント化、8.91倍になった｜Mits自身のClaude利用量ケーススタディ（W1〜W18・3/2〜6/30）</div>
-        <div class="summary">
-          2026年3月に Gemini で Claude Code を知ってから4ヶ月間の実利用データを、3フェーズ（Cowork/非エージェント → 疑似エージェント → リアルエージェント）に分けて時間対トークン効率を可視化。同じ1人・同じ椅子・同じ1時間で、生産量が 8.91倍になった実測（Cowork期 24.9 K/h → リアルエージェント期 221.5 K/h）。時間はむしろ 75.7h/週 → 64.5h/週 に減少。1時間あたり11の仕事から100の仕事へ、村の比喩付き。
-        </div>
-        <span class="tag">ケーススタディ</span>
-        <span class="tag">Claude Code</span>
-        <span class="tag">Agent Teams</span>
-        <span class="tag">1人型起業家</span>
-      </a>
+      <a href="2026-07-26_v31_easy_v1.html">
+        <div class="date">2026-07-26（原本 2026-06-21）</div>
+        <div class="title">3社のAI開発ツール比較 ― Claude Code / Codex / Antigravity</div>
+        <div class="summary">専門用語を全部かみ砕いた解説版。「AIエージェント25人の組織」「秘書リーダー→課長→担当者の3階層」の比喩で3社を比較。<strong>一次資料つきの原本</strong>も下に置いてあります。</div>
+        <span class="tag">ツール比較</span>
+        <span class="tag">解説版</span>
+        </a>
+      <div class="sub-list"><a href="2026-06-21_v31_codex_antigravity.html">原本：v3.1 同等運用可否レポート（7機能で対照検証・102KB）<span class="s-date">2026-06-21</span></a></div>
     </li>
-
     <li>
-      <a href="2026-07-05_ai-agent-management-slides.html">
-        <div class="date">2026-07-05</div>
-        <div class="title">AIエージェント経営 2ヶ月グループコンサルティング｜プレゼンスライド</div>
-        <div class="summary">
-          講義当日に画面共有するプレゼンスライド 30 枚。全体像・teach-flow（AIに魂を入れる → 判断だけが仕事になる → 経営が深まる）・6つのAI癖（着手/完了/捏造/偽証/逆委任/健忘）・西田の問題解決5段階（対症療法禁止 → 原因究明 → 解決 → 対策 → 再発防止 → 実施）・4回骨格・経営判断3軸マトリックス・コンテキスト設計ワークシートの要旨・修了後の4つの道を一気通貫で提示。矢印キーで進行。
-        </div>
-        <span class="tag">AIエージェント経営</span>
-        <span class="tag">プレゼンスライド</span>
-        <span class="tag">1人型起業家</span>
-      </a>
+      <a href="2026-08-07_aimits-abtest-distribution-ready.html">
+        <div class="date">2026-08-07</div>
+        <div class="title">AI経営診断ツール『AI-MITS』配布準備完了レポート</div>
+        <div class="summary">配布前チェックの記録。通信路のセキュリティ強化（暗号鍵をブラウザから撤去・4本を全て刷新）と、2種類の対話AIの並行配置まで。</div>
+        <span class="tag">AI-MITS</span>
+        <span class="tag">セキュリティ</span>
+        </a>
+      
     </li>
+  </ul>
 
+  <h2 class="section-title">講座を受ける方へ</h2>
+  <p class="sec-lead">2ヶ月グループコンサルティングの資料です。</p>
+  <ul class="report-list">
     <li>
-      <a href="2026-07-05_ai-agent-management-syllabus.html">
-        <div class="date">2026-07-05</div>
-        <div class="title">AIエージェント経営 2ヶ月グループコンサルティング｜シラバス</div>
-        <div class="summary">
-          1人型起業家（本人＋スタッフ2人までの最大3人体制）を対象とした、AIエージェントを用いた事業経営の実践指導講義シラバス。全4回×2時間＝合計8時間の講義構成、履修前提、各回シラバス、教材、担当講師情報を体系化して掲載。
-        </div>
-        <span class="tag">AIエージェント経営</span>
+      <a href="2026-08-23_ai-agent-management-syllabus-v2.html">
+        <div class="date">2026-08-23（最新版）</div>
+        <div class="title">AIエージェント経営 2ヶ月グループコンサルティング｜シラバス ver2</div>
+        <div class="summary">全4回で扱う内容の一覧。<strong>物差しは期間ではなく「合計100時間」</strong>。動画で話している内容はそのまま残し、そのあとに変わったこと・足したことを行間に重ねてあります。<strong>13領域101項目</strong>の実践事例つき。</div>
         <span class="tag">シラバス</span>
-        <span class="tag">1人型起業家</span>
-      </a>
+        <span class="tag">AIエージェント経営</span>
+        </a>
+      <div class="sub-list"><a href="2026-07-05_ai-agent-management-syllabus.html">旧版：シラバス ver1（動画で話している内容そのまま）<span class="s-date">2026-07-05</span></a><a href="2026-07-05_ai-agent-management-slides.html">当日のプレゼンスライド 30枚<span class="s-date">2026-07-05</span></a><a href="2026-08-23_ai-agent-management-session4-resume.html">第4回のレジュメ<span class="s-date">2026-08-23</span></a></div>
     </li>
-
     <li>
       <a href="2026-07-05_ai-agent-context-worksheet.html">
         <div class="date">2026-07-05</div>
         <div class="title">1人型起業家のためのコンテキスト設計ワークシート</div>
-        <div class="summary">
-          AIエージェントに事業を渡すための補助資料。26問6ブロック（自分の魂と顧客の言語化）× 8ステップ表（業務プロセス分解）の併記型で、自身の事業を「AIが読める形」に翻訳する。入力サンプル・白紙テンプレート付き。
-        </div>
-        <span class="tag">コンテキスト設計</span>
+        <div class="summary">自分の事業を「AIが読める形」に翻訳するための書き込み式。26問6ブロック（自分の魂と顧客の言語化）＋8ステップ表（仕事の分解）。入力サンプルと白紙つき。</div>
         <span class="tag">ワークシート</span>
-        <span class="tag">AIエージェント経営</span>
-      </a>
+        <span class="tag">コンテキスト設計</span>
+        </a>
+      
     </li>
+  </ul>
 
+  <h2 class="section-title">サービスのご案内</h2>
+  <p class="sec-lead"></p>
+  <ul class="report-list">
+    <li>
+      <a href="2026-08-22_ai-keiei-support.html">
+        <div class="date">2026-08-22</div>
+        <div class="title">The Innovation　AI経営サポート（無料・PRO・MAX）</div>
+        <div class="summary"><b>成長期の2年を、誰とやるか。</b>「自社×AI」の小さな商品を1本ずつ60点で出し続け、<strong>9敗1勝</strong>で回して、お金・作ったもの・顧客名簿・生み出す力の4つを自分の会社に貯める。やることは同じで、違うのは<strong>自分でやるか、みんなとやるか</strong>。得られる権利を1枚の表にしました。</div>
+        <span class="tag">サービス案内</span>
+        <span class="tag">料金・権利</span>
+        </a>
+      
+    </li>
+  </ul>
+
+  <h2 class="section-title">これまでの運営記録</h2>
+  <p class="sec-lead">その時々の運営の記録です。今の内容とは異なる場合があります。</p>
+  <ul class="report-list">
     <li>
       <a href="2026-06-27_discord-wishlist-and-roadmap.html">
-        <div class="date">2026-06-27 / 6-30 更新</div>
-        <div class="title">みんなの「やりたいこと」一覧と、これから作る動画ロードマップ — BE-02 メンバー向け</div>
-        <div class="summary">
-          Discord「The Innovation」でメンバーが書いた「やりたいこと・困りごと・要望」を全55メッセージから抽出し、13テーマに整理。AI講座でこれから作る動画24本のロードマップに反映。<strong>6/30 アップデート：新メンバー2名合流／LINE 自動化・SEO 自動化の実装が完成。</strong>
-        </div>
+        <div class="date">2026-06-27</div>
+        <div class="title">みんなの「やりたいこと」一覧と、動画ロードマップ</div>
+        <div class="summary">Discord に書かれた全55メッセージから13テーマを抽出し、作る動画24本のロードマップに反映した記録。</div>
         <span class="tag">Discord</span>
-        <span class="tag">ロードマップ</span>
-        <span class="tag">BE-02</span>
-      </a>
+        <span class="tag">記録</span>
+        </a>
+      
     </li>
-
     <li>
       <a href="2026-06-22_discord-tutorial-slides.html">
         <div class="date">2026-06-22</div>
-        <div class="title">Discord導入チュートリアル — BE-02 2ヶ月AIグルコンメンバー向け</div>
-        <div class="summary">
-          Discord初心者向けの導入ガイド。アカウント作成からサーバー参加、メッセージ送信、DM送信まで全11スライド・9枚のスクリーンショット付きで解説。
-        </div>
+        <div class="title">Discord 導入チュートリアル（全11スライド）</div>
+        <div class="summary">アカウント作成からサーバー参加・メッセージ送信・DM まで、スクリーンショット9枚つき。</div>
         <span class="tag">Discord</span>
-        <span class="tag">チュートリアル</span>
-        <span class="tag">BE-02</span>
-      </a>
+        <span class="tag">使い方</span>
+        </a>
+      
     </li>
-
     <li>
       <a href="2026-06-21_discord-group-tool-comparison.html">
         <div class="date">2026-06-21</div>
-        <div class="title">グループコミュニケーションツール比較 — Discord / Facebook / Slack / Chatwork</div>
-        <div class="summary">
-          少人数グループ講座に最適なコミュニケーションツールを4候補・15項目で比較。過去ログ保持・音声通話・スレッド・AI連携の観点から検証し、Discordを推奨。
-        </div>
-        <span class="tag">Discord</span>
+        <div class="title">グループ用の連絡ツール比較 ― Discord / Facebook / Slack / Chatwork</div>
+        <div class="summary">少人数グループ講座に向くツールを4候補・15項目で比較。過去ログ・音声・スレッド・AI連携の観点から Discord を選んだ理由。</div>
         <span class="tag">ツール比較</span>
-        <span class="tag">グループ講座</span>
-      </a>
+        <span class="tag">記録</span>
+        </a>
+      
     </li>
-
-    <li>
-      <a href="2026-06-21_v31_codex_antigravity.html">
-        <div class="date">2026-06-21 <span style="color:#b04848; font-weight:700;">／ 6/30・7/06・2026-07-26 追記（4回目）</span></div>
-        <div class="title">v3.1 同等運用可否レポート — Codex / Antigravity 比較</div>
-        <div class="summary">
-          Anthropic Claude Code Agent Teams で稼働中の 25 ノード分散型エージェント構成（v3.1）を、OpenAI Codex / Google Antigravity に移植可能かを 7 機能で対照検証。一次資料と GitHub Issue を引用して結論を提示。<strong style="color:#b04848;">7/26 追記（4回目）：Codex multi_agent_v2 opt-in stable ラベル付与（PR #34383）だが Release blocker + Luna regression 継続。Antigravity は 6/21「再帰禁止」判定を訂正（実は 10 levels 対応）だが team 永続化未対応で skip 維持。Mits 実体験「複製できた」の正体を AI 完結実機確認で (A) AGENTS.md 自動読み込みと 100% 実証。Claude Code は Sonnet 5 / Opus 5 投入・subagent bg 既定化で v3.2 経路が公式 default と一致。</strong>
-        </div>
-        <span class="tag">AI Agent</span>
-        <span class="tag">Codex</span>
-        <span class="tag">Antigravity</span>
-        <span class="tag">Claude Code</span>
-      </a>
-    </li>
-
   </ul>
 
   <footer class="site-foot">
