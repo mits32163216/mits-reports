@@ -61,3 +61,23 @@ footer .in{max-width:1180px;margin:0 auto}
  .side{position:static;margin-top:40px}
  h1{font-size:23px} h2{font-size:19px}
 }
+
+/* ── 使い方トップ（freee の「カテゴリーから探す」型） ── */
+.hero{background:#eef1fb;padding:52px 20px 46px;text-align:center;margin-bottom:44px}
+.hero h1{font-size:30px;margin:0 0 10px;font-weight:800;color:#11159f}
+.hero p{margin:0;color:#4a5568;font-size:15px}
+.cats{max-width:1180px;margin:0 auto;padding:0 20px 80px}
+.cats h2{text-align:center;border:0;font-size:22px;margin:0 0 30px;color:#11159f}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.cat{border:1px solid #e6e2d9;border-radius:10px;padding:22px 22px 18px;background:#fff}
+.cat .h{font-weight:800;font-size:16.5px;margin:0 0 14px;color:#11159f;
+  display:flex;align-items:center;gap:8px}
+.cat .h .ic{font-size:19px}
+.cat ul{list-style:none;margin:0;padding:0}
+.cat li{margin:0;border-top:1px solid #f0eee8}
+.cat li:first-child{border-top:0}
+.cat a{display:block;padding:10px 2px;color:#1d2430;text-decoration:none;font-size:14.5px}
+.cat a:hover{color:#11159f}
+.cat a::after{content:"›";float:right;color:#c3c8d2}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.grid{grid-template-columns:1fr}.hero h1{font-size:23px}}
