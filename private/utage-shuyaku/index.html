@@ -39,8 +39,18 @@ ul{margin:6px 0 6px 20px;padding:0}li{margin:4px 0}
 
 <h1>🚧 UTAGE 入口の集約 ── 改善プランと、集約先の全一覧</h1>
 <div class="sub">2026-08-29。41ファネル・210ページを実データで走査した結果にもとづく修正案。<br>
-数字は 2026-02-28〜08-29 の半年（<code>funnel_stats_get</code>）。ページの生死は <code>funnel_page_list</code> の <code>is_archived</code> 実測。<br>
+<b>数字は 2026-07-01〜08-29 の過去2ヶ月</b>（<code>funnel_stats_get</code> を期間指定で再取得）。
+半年（02-28〜08-29）の数字は参考として括弧で添えています。ページの生死は <code>funnel_page_list</code> の <code>is_archived</code> 実測。<br>
 <b>🔴 まだ実装していません。</b></div>
+
+<div class="box r">
+<b>なぜ2ヶ月で見るのか</b>（Mits様 2026-08-29）：「<b>過去のアクセスはメルマガ等でリンクを告知してある意味こちらが良いとして募集した数字だから</b>」。<br>
+半年で見ると、こちらが過去に送り込んだぶんが混ざって<b>いま生きている面が分からなくなる</b>。<br>
+<b>入れ替わったこと</b>：半年では F1-01 Cowork LP <code>RTTV177XQk1Y</code> の 892PV が最大だったが、
+<b>過去2ヶ月では 0PV</b>。302 <code>SSj4Cl5UgRaf</code> の 417PV も <b>2PV</b> に落ちる。
+いま本当に人が来ているのは別の2枚だった（下の一覧①）。<br>
+<b>全体</b>：総PV 6,358 →（2ヶ月）<b>1,518</b>。アクセスのあるページ 118枚 →（2ヶ月）<b>86枚</b>。
+</div>
 
 <div class="box k">
 <b>ゴール</b>：AI 3つの利用と、アプリ（運転台）のダウンロード。<br>
@@ -53,10 +63,10 @@ ul{margin:6px 0 6px 20px;padding:0}li{margin:4px 0}
 <div class="tw"><table>
 <tr><th>段</th><th>やること</th><th>件数・量</th><th>直し方</th></tr>
 <tr><td><span class="step">0</span></td><td><b class="big">計器を先に立てる</b><br>登録経路（トラッキング）を、入口ハブ と AI-Mits ファネルに付ける</td><td>2本</td><td>302 に前例が5本ある。同じ形で作る</td></tr>
-<tr><td><span class="step">1</span></td><td><b>閉じた版に来ている人を、生きた面へ送る</b>（リダイレクト）</td><td>7枚<br>約1,347PV</td><td>ページ単位のリダイレクト</td></tr>
-<tr><td><span class="step">2</span></td><td><b>1つのステップの中で、生きたページを1枚に絞る</b></td><td>7ステップ</td><td>余分な枚をアーカイブへ（リダイレクトでは直らない）</td></tr>
-<tr><td><span class="step">3</span></td><td><b>ファネルをまたいだ同じLPを1本に寄せる</b></td><td>3か所＋α</td><td>リダイレクト</td></tr>
-<tr><td><span class="step">4</span></td><td><b>④「ないほうがいい」の面を入口ハブへ送る</b></td><td>14本<br>881PV</td><td>ファネル単位のリダイレクト</td></tr>
+<tr><td><span class="step">1</span></td><td><b>閉じた版に来ている人を、生きた面へ送る</b>（リダイレクト）</td><td>4枚<br>206PV</td><td>ページ単位のリダイレクト</td></tr>
+<tr><td><span class="step">2</span></td><td><b>1つのステップの中で、生きたページを1枚に絞る</b></td><td>9ステップ</td><td>余分な枚をアーカイブへ（リダイレクトでは直らない）</td></tr>
+<tr><td><span class="step">3</span></td><td><b>ファネルをまたいだ同じLPを1本に寄せる</b></td><td>3か所<br>控えに45PV</td><td>リダイレクト</td></tr>
+<tr><td><span class="step">4</span></td><td><b>④「ないほうがいい」の面を入口ハブへ送る</b></td><td>14本<br>2ヶ月で計9PV</td><td>ファネル単位のリダイレクト</td></tr>
 <tr><td><span class="step">5</span></td><td><b>集約したリンクを、いろんな入口に貼り直す</b><br>（メルマガ・LINE・Skool・YouTube 概要欄・紹介リンク）</td><td>―</td><td>手作業</td></tr>
 <tr><td><span class="step">6</span></td><td><b>A/B を始める</b>（ヘッダー・レターの長短）</td><td>―</td><td>それまで<b>放置で動いている A/B は止める</b></td></tr>
 </table></div>
@@ -81,144 +91,165 @@ F0-01 <code>wxjxoJwlZlQ6</code> → 0件／301 <code>xoJowIp1Dxns</code> → 0�
 </table></div>
 <div class="lead">名前は<b>「どこから来たか」で分けてあります</b>（ハウスリスト／メルマガクリック／会員サイト扉／AB）。入口ハブと AI-Mits にも、この分け方で立てます。</div>
 
-<h2>2. 集約の一覧① ── 閉じた版 → 生きた面（リダイレクト・7枚）</h2>
+<h2>2. 集約の一覧① ── 閉じた版 → 生きた面（リダイレクト）</h2>
 <div class="lead">
 UTAGE の「アーカイブ」は、<b>ステップの表示から外すだけで、そのページ自身の <code>/page/&lt;ID&gt;</code> は生きたまま</b>です。
-昔メール・LINE・他人のブログに貼ったリンクが、いまも開けています。<b>これが「リダイレクトを入れる」対象そのもの</b>です。
+昔メール・LINE・他人のブログに貼ったリンクが、いまも開けています。<b>これが「リダイレクトを入れる」対象</b>です。
 </div>
 <div class="tw"><table>
-<tr><th>寄せ元（閉じているのに人が来ている）</th><th class="n">PV</th><th class="n">登録</th><th>寄せ先</th></tr>
-<tr><td><span class="nm">F1-01 Cowork LP</span> <code>RTTV177XQk1Y</code></td><td class="n big">892</td><td class="n big">67</td><td>F1-01 Cowork のステップ「ClaudeCowork」 <code>/p/JoyHRYpJuuQY</code><br><span style="color:var(--sub)">※ 一覧②の手当てと同時に要る</span></td></tr>
-<tr><td><span class="nm">AI-Mits 旧入口（メアドゲート版 v2）</span> <code>i50uCEKjqC9Q</code></td><td class="n">133</td><td class="n big">49</td><td>AI-Mits ファネルのステップ「0_入口_案内と同意」 <code>/p/V3A9LG00dL2S</code></td></tr>
-<tr><td><span class="nm">F0-01 The Innovation Sing upサインナップ_New</span> <code>MVdtAjhd4ylq</code></td><td class="n">128</td><td class="n">0</td><td>F0-01 サインナップ LP v7（AB-A） <code>jmsVxBi9ZL3g</code></td></tr>
-<tr><td><span class="nm">BE-02 AI cool_ver1</span> <code>cRGkve6IayiO</code></td><td class="n">98</td><td class="n">1</td><td>BE-02 フォーム+QA <code>v8pQL82x2Am1</code></td></tr>
-<tr><td><span class="nm">302 オプトーライブセミナーに参加登録 リスト紹介用</span> <code>hpEna0QAXLHy</code></td><td class="n">42</td><td class="n">9</td><td>入口ハブ 総合案内 <code>H1Aq1ExxPLQP</code></td></tr>
-<tr><td><span class="nm">F1-07 メインLP_本番_pmm</span> <code>592yJtZnaPmm</code></td><td class="n">39</td><td class="n">0</td><td>F1-07 AIエージェント講座 <code>9CfRGEAo2BXV</code></td></tr>
-<tr><td><span class="nm">F1-07_LP</span> <code>pFRxTew7PHds</code></td><td class="n">15</td><td class="n">0</td><td>F1-07 AIエージェント講座 <code>9CfRGEAo2BXV</code></td></tr>
+<tr><th>寄せ元（閉じているのに人が来ている）</th><th class="n">2ヶ月PV</th><th class="n">登録</th><th class="n">半年PV</th><th>寄せ先</th></tr>
+<tr><td><span class="nm">AI-Mits 旧入口（メアドゲート版 v2）</span> <code>i50uCEKjqC9Q</code></td><td class="n big">102</td><td class="n big">41</td><td class="n">133</td><td>AI-Mits ファネルのステップ「0_入口_案内と同意」 <code>/p/V3A9LG00dL2S</code></td></tr>
+<tr><td><span class="nm">BE-02 AI cool_ver1</span> <code>cRGkve6IayiO</code></td><td class="n big">98</td><td class="n">1</td><td class="n">98</td><td>BE-02 フォーム+QA <code>v8pQL82x2Am1</code></td></tr>
+<tr><td><span class="nm">F1-07 メインLP_本番_pmm</span> <code>592yJtZnaPmm</code></td><td class="n">5</td><td class="n">0</td><td class="n">39</td><td>F1-07 AIエージェント講座 <code>9CfRGEAo2BXV</code></td></tr>
+<tr><td><span class="nm">F0-01 The Innovation Sing upサインナップ_New</span> <code>MVdtAjhd4ylq</code></td><td class="n">1</td><td class="n">0</td><td class="n">128</td><td>F0-01 サインナップ LP v7（AB-A） <code>jmsVxBi9ZL3g</code></td></tr>
+<tr><td><span class="nm">F1-01 Cowork LP</span> <code>RTTV177XQk1Y</code></td><td class="n">0</td><td class="n">0</td><td class="n">892（登録67）</td><td>いま来ていない。<b>過去の数字</b>。転送は不要</td></tr>
+<tr><td><span class="nm">302 オプトーライブセミナーに参加登録 リスト紹介用</span> <code>hpEna0QAXLHy</code></td><td class="n">0</td><td class="n">0</td><td class="n">42</td><td>いま来ていない。転送は不要</td></tr>
+<tr><td><span class="nm">F1-07_LP</span> <code>pFRxTew7PHds</code></td><td class="n">0</td><td class="n">0</td><td class="n">15</td><td>いま来ていない。転送は不要</td></tr>
 </table></div>
 <div class="box r">
-🔴 <b>いちばん重いのは F1-01 Cowork LP <code>RTTV177XQk1Y</code></b>。
-半年で 892PV・登録67 と<b>単独で最大の面</b>なのに、ステップの表示からは外れています。
-<b>いま外から来ている人は、閉じたページで登録している</b>状態です。
+🔴 <b>いちばん重いのは AI-Mits 旧入口 <code>i50uCEKjqC9Q</code></b>。
+2ヶ月で 102PV・<b>登録41</b>。8/28 に新しいお試し版 <code>UgSfW8MCzHqv</code>（2ヶ月 16PV・登録0）へ切り替えたのに、
+<b>いまも旧のほうへ6倍の人が来ています</b>。ここを直さないと、切り替えた意味が出ません。<br><br>
+🔴 <b>2番目は BE-02 AI cool_ver1 <code>cRGkve6IayiO</code></b>。98PV は<b>全部この2ヶ月ぶん</b>（半年も98）。
+閉じているのに、いま現に人が来ている面です。<br><br>
+⚪ <b>転送が要らないと分かったもの3枚</b>：F1-01 Cowork LP（892PV）・302 ライブセミナー（42PV）・F1-07_LP（15PV）。
+半年では大きく見えましたが、<b>過去2ヶ月は 0PV</b>。こちらが過去に送り込んだぶんでした。
 </div>
 
-<h2>3. 集約の一覧② ── 1ステップの中を1枚に絞る（7ステップ）</h2>
+<h2>3. 集約の一覧② ── 1ステップの中を1枚に絞る</h2>
 <div class="lead">
-同じ <code>/p/&lt;ステップID&gt;</code> に生きたページが複数ぶら下がると、UTAGE が来訪者を割り振ります（A/Bテストの形）。
-<b>リダイレクトでは直りません。1枚に絞る</b>のが直し方です。
+同じ <code>/p/&lt;ステップID&gt;</code> に生きたページが複数ぶら下がると、UTAGE が来訪者を割り振ります。
+<b>リダイレクトでは直りません。1枚に絞る</b>のが直し方です。数字は過去2ヶ月。
 </div>
 <div class="tw"><table>
-<tr><th>ステップ</th><th>いま生きているページ</th><th class="n">枚</th><th>残す1枚（案）</th></tr>
-<tr><td>301 広告メイン／ステップ「1.オプトイン」<br><code>/p/LaDR46HtSYgq</code></td>
-<td>オプトインひとりーテキストベース <code>KxfR1Rwlsk6i</code> 224PV（<b class="big">登録0</b>）／
-オプトイン動画ver <code>6e1MELmfDhDv</code> 36／
-オプトイン動画ver サロン→ひとり起業家向け <code>jDAtNV7STEQj</code> 17／
-opt_価格交渉 <code>SyQhRQ8crAjG</code> 1／
-オプトイン動画 リスト紹介用 <code>r9cY6aq3THfF</code> 0</td><td class="n big">5</td><td>④なので畳んで<b>入口ハブへ</b></td></tr>
-<tr class="sei"><td>入口ハブ／ステップ「入り口ハブのページ」<br><code>/p/I0DhTHFyevVP</code></td>
-<td>総合案内（公開中） <code>H1Aq1ExxPLQP</code> 191／総合案内（もう1枚） <code>GbmmFJvKklbb</code> 56</td><td class="n">2</td>
-<td><b>総合案内（公開中） <code>H1Aq1ExxPLQP</code></b><br><span style="color:var(--sub)">`/p/` が出しているのはこちら。中身は8/28に両方直してある</span></td></tr>
+<tr><th>ステップ</th><th>いま来ているページ（2ヶ月PV／登録）</th><th>残す1枚（案）</th></tr>
+<tr class="sei"><td>BE-02 グルコン／ステップ「BE-02 メインレターVer.2」<br><code>/p/xswhmpKSJJH0</code></td>
+<td>BE-02_フォーム+QA <code>v8pQL82x2Am1</code> <b>291</b>／登録4<br>
+BE-02_AI cool_ver1 <code>cRGkve6IayiO</code> <b>98</b>／登録1（<b>閉じている</b>）</td>
+<td>フォーム+QA <code>v8pQL82x2Am1</code><br><span style="color:var(--sub)">いちばん大きい面。閉じた側の98PVを転送</span></td></tr>
+<tr class="sei"><td>AI-Mits ファネル／ステップ「0_入口_案内と同意」<br><code>/p/V3A9LG00dL2S</code></td>
+<td>0_入口 旧（メアドゲート版 v2） <code>i50uCEKjqC9Q</code> <b>102</b>／<b>登録41</b>（<b>閉じている</b>）<br>
+お試し版（NORMAL固定・15分） <code>UgSfW8MCzHqv</code> 16／登録0</td>
+<td>お試し版 <code>UgSfW8MCzHqv</code><br><span style="color:var(--sub)"><b>旧に6倍来ている。ここが最優先</b></span></td></tr>
 <tr><td>F0-04 サポマニュDL／ステップ「オプトイン」<br><code>/p/049rNE5VNedS</code></td>
-<td>A：long版 <code>JoyjT9whcbJX</code> 93（登録3）／B：short版 <code>rqOVO7oScQJ5</code> 46／
-<b class="big">空白のページ <code>fRZiU73pqQvD</code> 13（登録2）</b></td><td class="n">3</td>
-<td>A：long版 <code>JoyjT9whcbJX</code><br><span style="color:var(--sub)">空白のページに登録2件が付いている</span></td></tr>
-<tr><td>F0-01 サインナップ／ステップ「サインナップフォーム」<br><code>/p/r2C3gsMB8Nqh</code></td>
-<td>LP v7（AB-A・通常順） <code>jmsVxBi9ZL3g</code> 252（登録28）／
-LP v7（AB-B・動画ファーストビュー peek） <code>zEbP81s9zyNs</code> 18</td><td class="n">2</td>
-<td>AB-A <code>jmsVxBi9ZL3g</code><br><span style="color:var(--sub)">4/23 から放置の A/B。止める</span></td></tr>
-<tr><td>302 広告以外／ステップ「1.オプトイン」<br><code>/p/N9KpMjQ6Ui3A</code></td>
-<td>オプトイン動画 リスト紹介用 <code>50HFVyd4MmsI</code> 71（登録22）／
-オプトインひとりーテキストベース <code>FLpNAcZoWeHU</code> 53（登録3）</td><td class="n">2</td>
-<td>④なので畳んで<b>入口ハブへ</b><br><span style="color:var(--sub)">ただし登録22は生きている</span></td></tr>
-<tr><td>BE-01 2ヶ月コンサル／ステップ「2ヶ月コンサル（原本）」<br><code>/p/BGbwhpyuyXB7</code></td>
-<td>参照元・ひな形 <code>C0KpHEpunK2k</code> 71（登録2）／
-2ヶ月コンサル LP v1（新デザイン v7） <code>fS1KJ8kjAsXO</code> 17</td><td class="n">2</td>
-<td><b>要判断</b>（新デザインが半分以下しか見られていない）</td></tr>
+<td>A：long版 <code>JoyjT9whcbJX</code> 60／登録3<br>
+B：short版 <code>rqOVO7oScQJ5</code> 23／登録0<br>
+<b class="big">空白のページ <code>fRZiU73pqQvD</code> 13／登録2</b></td>
+<td>A：long版 <code>JoyjT9whcbJX</code><br><span style="color:var(--sub)">空白のページに、いまも登録2件が付いている</span></td></tr>
+<tr><td>F1-07 入門／ステップ「メインLP」<br><code>/p/u3udc3efeLF9</code></td>
+<td>F1-07_AIエージェント講座 <code>9CfRGEAo2BXV</code> 60／登録0<br>
+メインLP_本番_pmm <code>592yJtZnaPmm</code> 5／登録0（閉じている）</td>
+<td>AIエージェント講座 <code>9CfRGEAo2BXV</code></td></tr>
+<tr><td>入口ハブ／ステップ「入り口ハブのページ」<br><code>/p/I0DhTHFyevVP</code></td>
+<td>総合案内（公開中） <code>H1Aq1ExxPLQP</code> 37／登録0<br>
+総合案内（もう1枚） <code>GbmmFJvKklbb</code> 17／登録0</td>
+<td><b>総合案内（公開中） <code>H1Aq1ExxPLQP</code></b><br><span style="color:var(--sub)">`/p/` が出しているのはこちら</span></td></tr>
 <tr><td>F1-01 Cowork／ステップ「ClaudeCowork」<br><code>/p/JoyHRYpJuuQY</code></td>
-<td>F1-01_LP 学習ロードマップ <code>bLDmAvkNhWVG</code> 47／
-<b class="big">セミナーLP v5 <code>2UQEUQQElTH2</code> 36 ＝ 二刀流セミナーの中身</b></td><td class="n">2</td>
-<td>学習ロードマップ <code>bLDmAvkNhWVG</code><br><b>セミナーLP v5 は外す（別商品）</b></td></tr>
+<td><b class="big">セミナーLP v5 <code>2UQEUQQElTH2</code> 15</b>（＝二刀流セミナーの中身）<br>
+F1-01_LP 学習ロードマップ <code>bLDmAvkNhWVG</code> 5</td>
+<td>学習ロードマップ <code>bLDmAvkNhWVG</code><br><b>別商品のLPのほうが3倍見られている</b></td></tr>
+<tr><td>BE-01 2ヶ月コンサル／ステップ「2ヶ月コンサル（原本）」<br><code>/p/BGbwhpyuyXB7</code></td>
+<td>LP v1（新デザイン v7） <code>fS1KJ8kjAsXO</code> 12<br>
+参照元・ひな形 <code>C0KpHEpunK2k</code> 3</td>
+<td>新デザイン <code>fS1KJ8kjAsXO</code><br><span style="color:var(--sub)">2ヶ月では新デザインが上回った（半年は逆）</span></td></tr>
+<tr><td>F0-01 サインナップ／ステップ「サインナップフォーム」<br><code>/p/r2C3gsMB8Nqh</code></td>
+<td>LP v7（AB-A・通常順） <code>jmsVxBi9ZL3g</code> 12／登録2<br>
+Sing upサインナップ_New <code>MVdtAjhd4ylq</code> 1（閉じている）</td>
+<td>AB-A <code>jmsVxBi9ZL3g</code><br><span style="color:var(--sub)">AB-B <code>zEbP81s9zyNs</code> は2ヶ月で0PV</span></td></tr>
+<tr><td>301 広告メイン／ステップ「1.オプトイン」<br><code>/p/LaDR46HtSYgq</code></td>
+<td>オプトイン動画ver <code>6e1MELmfDhDv</code> 3／オプトインひとりーテキストベース <code>KxfR1Rwlsk6i</code> 3</td>
+<td>④なので畳んで<b>入口ハブへ</b><br><span style="color:var(--sub)">半年では5分割・224PV だったが、2ヶ月は計6PV</span></td></tr>
 </table></div>
 <div class="box r">
-🔴 <b>F1-01 Cowork は二重事故</b>です。最大の面（892PV）が閉じられていて、
-いま生きている2枚のうち1枚は Cowork ではなく<b>二刀流セミナーの LP</b> でした。
+🔴 <b>F1-01 Cowork のステップには、いまも二刀流セミナーの LP がぶら下がっています。</b>
+2ヶ月で 15PV と、本来の学習ロードマップ（5PV）の3倍見られています。
 </div>
 
 <h2>4. 集約の一覧③ ── ファネルをまたいだ同じLP</h2>
-<h3>セミナーLP v5 が3か所にある</h3>
+<h3>セミナーLP v5 が3か所にある（数字は2ヶ月／括弧は半年）</h3>
 <div class="tw"><table>
-<tr><th>場所</th><th class="n">PV</th><th class="n">登録</th><th>扱い</th></tr>
-<tr class="sei"><td>F1-08 AI戦略の二刀流セミナー／セミナーLP v5 <code>UTj5KBcd8545</code></td><td class="n">379</td><td class="n">17</td><td><b>正。ここへ寄せる</b></td></tr>
-<tr><td>F1-08 二刀流セミナー（アーカイブ）／セミナーLP v5 <code>ey0elAgNiVUx</code></td><td class="n">98</td><td class="n">0</td><td>→ 上へリダイレクト</td></tr>
-<tr><td>F1-01 Cowork／セミナーLP v5 <code>2UQEUQQElTH2</code></td><td class="n">36</td><td class="n">0</td><td>→ 上へリダイレクト</td></tr>
+<tr><th>場所</th><th class="n">2ヶ月PV</th><th class="n">登録</th><th class="n">半年PV</th><th>扱い</th></tr>
+<tr><td>F1-08 二刀流セミナー（アーカイブ）／セミナーLP v5 <code>ey0elAgNiVUx</code></td><td class="n big">30</td><td class="n">0</td><td class="n">98</td><td>→ 本体へリダイレクト</td></tr>
+<tr><td>F1-01 Cowork／セミナーLP v5 <code>2UQEUQQElTH2</code></td><td class="n">15</td><td class="n">0</td><td class="n">36</td><td>→ 本体へ。<b>Cowork のステップからは外す</b></td></tr>
+<tr class="sei"><td>F1-08 AI戦略の二刀流セミナー／セミナーLP v5 <code>UTj5KBcd8545</code></td><td class="n">8</td><td class="n">1</td><td class="n">379（登録17）</td><td><b>正。ここへ寄せる</b></td></tr>
 </table></div>
-<div class="lead"><b class="big">134PV が、登録の付いていない側に流れています。</b></div>
+<div class="box r">
+🔴 <b>この2ヶ月は、正しい本体より控えのほうに人が来ています</b>（アーカイブ30 ＋ Cowork 15 ＝ 45PV に対し、本体は 8PV）。
+半年で見ると本体が 379PV で最大なので、<b>期間を変えると結論が逆になる典型</b>です。
+いま貼られているリンクが、控えのほうを指しているということです。
+</div>
 <h3>301 と 302 のあいだの同名ページ</h3>
 <div class="lead">
-<b>オプトインひとりーテキストベース</b>（301 <code>KxfR1Rwlsk6i</code> ／ 302 <code>FLpNAcZoWeHU</code>）、
-<b>オプトイン動画 リスト紹介用</b>（301 <code>r9cY6aq3THfF</code> ／ 302 <code>50HFVyd4MmsI</code>）ほか。
-どちらも④なので、個別に寄せず<b>まとめて入口ハブへ</b>。
+半年では両方に人が来ていましたが、<b>過去2ヶ月では 301 が計7PV・302 が計2PV</b>。
+個別に寄せる価値はありません。<b>まとめて入口ハブへ</b>。
 </div>
 
-<h2>5. 集約の一覧④ ── 41ファネル 全部の行き先</h2>
+<h2>5. 集約の一覧④ ── 41ファネル 全部の行き先（2ヶ月PVの多い順）</h2>
 <div class="tw"><table>
-<tr><th>段階</th><th>ファネル</th><th class="n">PV</th><th>行き先</th></tr>
-<tr class="sei"><td>🔴①</td><td>AI-Mitsファネル <code>1QtzdExbynBp</code></td><td class="n">175</td><td><b>ここが着地点。動かさない</b>（お試し版→運転台のDL）</td></tr>
-<tr class="sei"><td>🔴①</td><td>入口ハブ <code>wj83rNovzGOk</code></td><td class="n">247</td><td><b>トールゲート本体。ここに全部を寄せる</b></td></tr>
-<tr><td>🔴①</td><td>AI-Mits 利用規約・プライバシーポリシー <code>5dw6GuNzcPZg</code></td><td class="n">3</td><td>そのまま（お試し版からのリンク先）</td></tr>
-<tr><td>🔴①</td><td>特商法・プライバシーポリシー <code>Iy4zLiN2k4kc</code></td><td class="n">47</td><td>そのまま。<b>同名2枚を1枚に</b>／0アクセス4枚は外す</td></tr>
-<tr><td>🟡②</td><td>BE-02 AIエージェント経営 2ヶ月グルコン <code>h4u4ymLB6NMl</code></td><td class="n">1,039</td><td>通路にする。2枚→1枚。締めに<b>運転台のDLを足す</b></td></tr>
-<tr><td>🟡②</td><td>F1-01 Claude Cowork <code>RsVZOUk7ngS2</code></td><td class="n">984</td><td>通路。<b>閉じた892PVを転送＋別商品LPを外す</b></td></tr>
-<tr><td>🟡②</td><td>F0-01 経営イノベーション_サインナップ <code>wxjxoJwlZlQ6</code></td><td class="n">517</td><td>通路。<b>A/Bを止めてAに一本化</b>＋閉じた128PVを転送</td></tr>
-<tr><td>🟡②</td><td>F1-07 AIエージェント_入門 <code>RvTmcP3sEoRJ</code></td><td class="n">391</td><td>通路。閉じた2枚（54PV）を講座LPへ</td></tr>
-<tr><td>🟡②</td><td>F1-08 AI戦略の二刀流セミナー <code>dkyggmGgIKL2</code></td><td class="n">379</td><td><b>セミナーLP v5 の正</b>。他2か所をここへ</td></tr>
-<tr><td>🟡②</td><td>勉強会ファネル <code>fdYYWY0Of6ks</code></td><td class="n">312</td><td>通路。割れていない</td></tr>
-<tr><td>🟡②</td><td>BE-01 2ヶ月コンサル <code>AkNQYfhpvdgI</code></td><td class="n">230</td><td>通路。2枚→1枚（どちらを残すか要判断）</td></tr>
-<tr><td>🟡②</td><td>F0-03 Claude Code 無料体験会 <code>D5lsFe9s3xPx</code></td><td class="n">196</td><td>通路。割れていない</td></tr>
-<tr><td>🟡②</td><td>F0-04 AIサポマニュ無料DL <code>ITXrzQTAcshE</code></td><td class="n">165</td><td>通路。3枚→1枚（空白のページを外す）</td></tr>
-<tr><td>🟡②</td><td>★STEP3 有料クライアント用個別コンサル予約リマインダ <code>pin4VbixcXEi</code></td><td class="n">107</td><td>そのまま（既存客用・入口ではない）</td></tr>
-<tr><td>🟡②</td><td>devils-advocate α版 モニター募集 <code>1Q1YGFG98fXb</code></td><td class="n">106</td><td>そのまま（いま動いている募集）</td></tr>
-<tr><td>🟡②</td><td>F1-04 Claude Code 入門 <code>JMYz3cl4Sul2</code></td><td class="n">54</td><td rowspan="5" style="vertical-align:middle">通路。<b>各講座の末尾に運転台のDLを足す</b><br>（The Library の5講座・計176PV）</td></tr>
-<tr><td>🟡②</td><td>F1-06 Obsidian 入門 <code>zeiOkBGO9J87</code></td><td class="n">53</td></tr>
-<tr><td>🟡②</td><td>F1-05 サブエージェント実践講座 <code>tWx2YrYCNwhg</code></td><td class="n">44</td></tr>
-<tr><td>🟡②</td><td>F1-03 プログラミング的思考 入門 <code>OLxTEoopRRHa</code></td><td class="n">14</td></tr>
-<tr><td>🟡②</td><td>F1-02 Claude Win インストール解決ガイド <code>FQL9fHzwa5V9</code></td><td class="n">11</td></tr>
-<tr><td>🔵③</td><td>F1-08 二刀流セミナー（アーカイブ） <code>VWW3j6GngM1Z</code></td><td class="n">98</td><td><b>本体 F1-08 へリダイレクト</b>（同じLP・登録0）</td></tr>
-<tr><td>🔵③</td><td>1人フェス期間中のセミナー選び <code>JwoLw5N7ZTYo</code></td><td class="n">141</td><td><b>入口ハブへ</b>（終わったイベント・14枚）</td></tr>
-<tr><td>🔵③</td><td>1人フェス current <code>DrK9SIXp7g2Z</code></td><td class="n">134</td><td><b>入口ハブへ</b>（終わったイベント）</td></tr>
-<tr><td>🔵③</td><td>F0-02 AI波動をwebinarで毎時開催 <code>9BFQgSiVSShz</code></td><td class="n">23</td><td>入口ハブへ</td></tr>
-<tr><td>🔵③</td><td>振り子LPプレビュー <code>EoBqYTJRxDaj</code></td><td class="n">6</td><td>閉じる</td></tr>
-<tr><td>🔵③</td><td>【テスト】経営の運転台_紹介 <code>3pTiCrBCST6M</code></td><td class="n">1</td><td><b>育てる</b>（ゴールに関わる面）or 閉じる</td></tr>
-<tr><td>🔵③</td><td>━━━━━━━━━━（区切り線） <code>TQ3OXMVFvSfA</code></td><td class="n">0</td><td>そのまま（管理画面の見出し）</td></tr>
-<tr><td>⚪④</td><td>302 お金が残る経営の仕組みとは?広告以外 <code>SSj4Cl5UgRaf</code></td><td class="n big">417</td><td><b>入口ハブへ</b>。生きた11枚を畳んでから。<b>登録経路5本はここに付いている</b></td></tr>
-<tr><td>⚪④</td><td>301 広告「お金が残る経営の仕組みとは」メイン <code>xoJowIp1Dxns</code></td><td class="n big">380</td><td><b>入口ハブへ</b>。オプトイン5分割を先に畳む</td></tr>
-<tr><td>⚪④</td><td>Active_〈その他〉クレジット審査ファネル <code>i1r0vECfyotU</code></td><td class="n">80</td><td><b>入口ハブへ</b>（10ヶ月放置）</td></tr>
-<tr><td>⚪④</td><td>ライフビジョン年末年始専用セミナｰ <code>MbBqQ2UyMRSA</code></td><td class="n">3</td><td>入口ハブへ</td></tr>
-<tr><td>⚪④</td><td>新スタイルコンサルティング <code>kcEwYtP5fyJy</code></td><td class="n">1</td><td>入口ハブへ（BE-01・BE-02 に置き換わっている）</td></tr>
-<tr><td>⚪④</td><td>303〈教養〉ウェビナー登録→LINE登録（非公開） <code>1ih2NQTftVcq</code></td><td class="n">0</td><td rowspan="9" style="vertical-align:middle"><b>そのままアーカイブ</b><br>来ている人がいないので転送も要らない</td></tr>
-<tr><td>⚪④</td><td>_〈教養〉旧教養への投資コンセプトファネル <code>Al8kUlNxQFjP</code></td><td class="n">0</td></tr>
-<tr><td>⚪④</td><td>_〈教養〉CFから奥の細道コピーファネル <code>mUMaZhEoI7hO</code></td><td class="n">0</td></tr>
-<tr><td>⚪④</td><td>_Funnel Building Master Class <code>HIWWNQDQnDwl</code></td><td class="n">0</td></tr>
-<tr><td>⚪④</td><td>Active_〈メルマガ〉メルマガ登録フォームファネル <code>wKLsYzUxw5Eh</code></td><td class="n">0</td></tr>
-<tr><td>⚪④</td><td>〈リサーチ〉興味教えてファネル <code>1Ml3NthWC31w</code></td><td class="n">0</td></tr>
-<tr><td>⚪④</td><td>プロミネンスプログラムファネル <code>byF7ZxeGPOpG</code></td><td class="n">0</td></tr>
-<tr><td>⚪④</td><td>もろもろ倉庫 <code>XYoNACreGy0M</code></td><td class="n">0</td></tr>
-<tr><td>⚪④</td><td>臨時2ヶ月集める <code>ajvogP0UzU5S</code></td><td class="n">0</td></tr>
+<tr><th>段階</th><th>ファネル</th><th class="n">2ヶ月PV</th><th class="n">登録</th><th>行き先</th></tr>
+<tr class="sei"><td>🔴①</td><td>AI-Mitsファネル <code>1QtzdExbynBp</code></td><td class="n">144</td><td class="n">41</td><td><b>ここが着地点。動かさない</b>（お試し版→運転台のDL）。<b>登録41は旧入口に付いている</b></td></tr>
+<tr class="sei"><td>🔴①</td><td>入口ハブ <code>wj83rNovzGOk</code></td><td class="n">54</td><td class="n">0</td><td><b>トールゲート本体。ここに全部を寄せる</b></td></tr>
+<tr><td>🔴①</td><td>AI-Mits 利用規約・プライバシーポリシー <code>5dw6GuNzcPZg</code></td><td class="n">3</td><td class="n">0</td><td>そのまま（お試し版からのリンク先）</td></tr>
+<tr><td>🔴①</td><td>特商法・プライバシーポリシー <code>Iy4zLiN2k4kc</code></td><td class="n">10</td><td class="n">0</td><td>そのまま。同名2枚を1枚に</td></tr>
+<tr class="sei"><td>🟡②</td><td>BE-02 AIエージェント経営 2ヶ月グルコン <code>h4u4ymLB6NMl</code></td><td class="n">626</td><td class="n">12</td><td><b>いま最大の面。</b>閉じた <code>cRGkve6IayiO</code> 98PV を転送。締めに<b>運転台のDLを足す</b></td></tr>
+<tr><td>🟡②</td><td>F0-04 AIサポマニュ無料DL <code>ITXrzQTAcshE</code></td><td class="n">108</td><td class="n">5</td><td>通路。3枚→1枚（<b>空白のページを外す</b>）</td></tr>
+<tr><td>🟡②</td><td>devils-advocate α版 モニター募集 <code>1Q1YGFG98fXb</code></td><td class="n">106</td><td class="n">22</td><td>そのまま（いま動いている募集・2ヶ月で登録22）</td></tr>
+<tr><td>🟡②</td><td>F1-07 AIエージェント_入門 <code>RvTmcP3sEoRJ</code></td><td class="n">87</td><td class="n">2</td><td>通路。閉じた <code>592yJtZnaPmm</code> を講座LPへ</td></tr>
+<tr><td>🟡②</td><td>F0-03 Claude Code 無料体験会 <code>D5lsFe9s3xPx</code></td><td class="n">69</td><td class="n">1</td><td>通路。割れていない</td></tr>
+<tr><td>🟡②</td><td>BE-01 2ヶ月コンサル <code>AkNQYfhpvdgI</code></td><td class="n">67</td><td class="n">0</td><td>通路。2枚→1枚（<b>新デザインが上回った</b>）</td></tr>
+<tr><td>🔵③</td><td>1人フェス期間中のセミナー選び <code>JwoLw5N7ZTYo</code></td><td class="n">55</td><td class="n">0</td><td><b>入口ハブへ</b>（終わったイベントに、いまも人が来ている）</td></tr>
+<tr><td>🟡②</td><td>F0-01 経営イノベーション_サインナップ <code>wxjxoJwlZlQ6</code></td><td class="n">23</td><td class="n">3</td><td>通路。A/Bを止めて AB-A に一本化</td></tr>
+<tr><td>🔵③</td><td>F1-08 二刀流セミナー（アーカイブ） <code>VWW3j6GngM1Z</code></td><td class="n">30</td><td class="n">0</td><td><b>本体 F1-08 へリダイレクト</b>（本体の4倍来ている）</td></tr>
+<tr><td>🔵③</td><td>1人フェス current <code>DrK9SIXp7g2Z</code></td><td class="n">26</td><td class="n">0</td><td><b>入口ハブへ</b>（終わったイベント）</td></tr>
+<tr><td>🟡②</td><td>F1-01 Claude Cowork <code>RsVZOUk7ngS2</code></td><td class="n">20</td><td class="n">0</td><td>通路。<b>別商品のセミナーLPを外す</b></td></tr>
+<tr><td>🟡②</td><td>F1-06 Obsidian 入門 <code>zeiOkBGO9J87</code></td><td class="n">18</td><td class="n">1</td><td>通路。末尾に運転台のDLを足す</td></tr>
+<tr><td>🟡②</td><td>F1-05 サブエージェント実践講座 <code>tWx2YrYCNwhg</code></td><td class="n">13</td><td class="n">1</td><td>通路。末尾に運転台のDLを足す</td></tr>
+<tr><td>🟡②</td><td>★STEP3 有料クライアント用個別コンサル予約リマインダ <code>pin4VbixcXEi</code></td><td class="n">12</td><td class="n">3</td><td>そのまま（既存客用・入口ではない）</td></tr>
+<tr><td>🟡②</td><td>F1-08 AI戦略の二刀流セミナー <code>dkyggmGgIKL2</code></td><td class="n">8</td><td class="n">1</td><td><b>セミナーLP v5 の正</b>。他2か所をここへ</td></tr>
+<tr><td>🟡②</td><td>F1-04 Claude Code 入門 <code>JMYz3cl4Sul2</code></td><td class="n">7</td><td class="n">0</td><td>通路。末尾に運転台のDLを足す</td></tr>
+<tr><td>⚪④</td><td>301 広告「お金が残る経営の仕組みとは」メイン <code>xoJowIp1Dxns</code></td><td class="n">7</td><td class="n">0</td><td><b>入口ハブへ</b>（半年380PV → 2ヶ月7PV）</td></tr>
+<tr><td>🟡②</td><td>勉強会ファネル <code>fdYYWY0Of6ks</code></td><td class="n">6</td><td class="n">0</td><td>通路。割れていない</td></tr>
+<tr><td>⚪④</td><td>Active_〈その他〉クレジット審査ファネル <code>i1r0vECfyotU</code></td><td class="n">6</td><td class="n">0</td><td><b>入口ハブへ</b>（10ヶ月放置）</td></tr>
+<tr><td>🟡②</td><td>F1-03 プログラミング的思考 入門 <code>OLxTEoopRRHa</code></td><td class="n">5</td><td class="n">0</td><td>通路。末尾に運転台のDLを足す</td></tr>
+<tr><td>🟡②</td><td>F1-02 Claude Win インストール解決ガイド <code>FQL9fHzwa5V9</code></td><td class="n">5</td><td class="n">0</td><td>通路。末尾に運転台のDLを足す</td></tr>
+<tr><td>⚪④</td><td>302 お金が残る経営の仕組みとは?広告以外 <code>SSj4Cl5UgRaf</code></td><td class="n">2</td><td class="n">0</td><td><b>入口ハブへ</b>（半年417PV → <b>2ヶ月2PV</b>）。<b>登録経路5本はここに付いている</b></td></tr>
+<tr><td>🔵③</td><td>【テスト】経営の運転台_紹介 <code>3pTiCrBCST6M</code></td><td class="n">1</td><td class="n">0</td><td><b>育てる</b>（ゴールに関わる面）or 閉じる</td></tr>
+<tr><td>🔵③</td><td>F0-02 AI波動をwebinarで毎時開催 <code>9BFQgSiVSShz</code></td><td class="n">0</td><td class="n">0</td><td rowspan="14" style="vertical-align:middle"><b>そのままアーカイブ</b><br>過去2ヶ月 0PV。来ている人がいないので転送も要らない</td></tr>
+<tr><td>🔵③</td><td>振り子LPプレビュー <code>EoBqYTJRxDaj</code></td><td class="n">0</td><td class="n">0</td></tr>
+<tr><td>🔵③</td><td>━━━━━━━━━━（区切り線） <code>TQ3OXMVFvSfA</code></td><td class="n">0</td><td class="n">0</td></tr>
+<tr><td>⚪④</td><td>ライフビジョン年末年始専用セミナｰ <code>MbBqQ2UyMRSA</code></td><td class="n">0</td><td class="n">0</td></tr>
+<tr><td>⚪④</td><td>新スタイルコンサルティング <code>kcEwYtP5fyJy</code></td><td class="n">0</td><td class="n">0</td></tr>
+<tr><td>⚪④</td><td>303〈教養〉ウェビナー登録→LINE登録（非公開） <code>1ih2NQTftVcq</code></td><td class="n">0</td><td class="n">0</td></tr>
+<tr><td>⚪④</td><td>_〈教養〉旧教養への投資コンセプトファネル <code>Al8kUlNxQFjP</code></td><td class="n">0</td><td class="n">0</td></tr>
+<tr><td>⚪④</td><td>_〈教養〉CFから奥の細道コピーファネル <code>mUMaZhEoI7hO</code></td><td class="n">0</td><td class="n">0</td></tr>
+<tr><td>⚪④</td><td>_Funnel Building Master Class <code>HIWWNQDQnDwl</code></td><td class="n">0</td><td class="n">0</td></tr>
+<tr><td>⚪④</td><td>Active_〈メルマガ〉メルマガ登録フォームファネル <code>wKLsYzUxw5Eh</code></td><td class="n">0</td><td class="n">0</td></tr>
+<tr><td>⚪④</td><td>〈リサーチ〉興味教えてファネル <code>1Ml3NthWC31w</code></td><td class="n">0</td><td class="n">0</td></tr>
+<tr><td>⚪④</td><td>プロミネンスプログラムファネル <code>byF7ZxeGPOpG</code></td><td class="n">0</td><td class="n">0</td></tr>
+<tr><td>⚪④</td><td>もろもろ倉庫 <code>XYoNACreGy0M</code></td><td class="n">0</td><td class="n">0</td></tr>
+<tr><td>⚪④</td><td>臨時2ヶ月集める <code>ajvogP0UzU5S</code></td><td class="n">0</td><td class="n">0</td></tr>
 </table></div>
+<div class="box r">
+🔴 <b>2ヶ月で見ると「④に PV がある」問題はほぼ消えます。</b>
+302 は 417→<b>2PV</b>、301 は 380→<b>7PV</b>。半年の 797PV は、こちらが過去に告知して送り込んだぶんでした。<br>
+代わりに前へ出てくるのが <b>BE-02（626PV）</b>と <b>AI-Mits ファネル（144PV・登録41）</b>です。
+</div>
 
 <h2>6. 要点</h2>
 <div class="box g">
 <ul>
 <li><b>①の4本は動かさない</b> ── AI-Mits ファネル＝着地点、入口ハブ＝トールゲート本体、規約、特商法</li>
 <li><b>②の16本は「通路」にする</b> ── 残すが着地点にしない。BE-02・Cowork・The Library の5講座には<b>運転台のダウンロードを足す</b></li>
-<li><b>③④の21本は入口ハブへ送るか閉じる</b>。ただし0アクセスの9本は転送も要らない</li>
+<li><b>③④の21本は入口ハブへ送るか閉じる</b>。ただし<b>2ヶ月で0PVの14本</b>は転送も要らない</li>
+<li><b>期間を2ヶ月にして、優先順位が入れ替わった</b> ── 1位は AI-Mits 旧入口（102PV・登録41）、2位は BE-02 AI cool_ver1（98PV）。
+半年で最大だった F1-01 Cowork LP の 892PV は、2ヶ月では 0PV だった</li>
 <li><b>計器は「立て方が分からない」のではない。</b>302 に5本ある。生きている面に付いていないだけ</li>
 </ul>
 </div>
 
 <div class="foot">
 この1枚：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/UTAGE集約_改善プラン_20260829.html</code><br>
-関連：<code>UTAGE入口の集約_4段階_20260829.html</code>（41ファネルの4段階仕分け・生データ）／
+関連：<code>UTAGE入口の集約_4段階_20260829.html</code>（41ファネルの4段階仕分け）／生データ <code>utage_zenpage_2ka_getsu_20260829.json</code>（2ヶ月・210行）と <code>utage_zenpage_20260829.json</code>（半年）／
 <code>ビジネスモデル_ビフォア_アフター_20260829.html</code>（untendai の前と後）<br>
 🔴 実装はしていません。整理の資料です。
 </div>
