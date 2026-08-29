@@ -65,7 +65,12 @@ Mits様（2026-08-29）：「<b>調査数字が目視と全然あっていなく
 </div>
 
 <div class="box p">
-<b>PV は名寄せできません。</b>誰が見たかの記録が無いので、私たちが設定を直すために開いたぶんを取り除けません。
+<b>ページの PV は名寄せできません。</b>誰が見たかの記録が無いので、私たちが設定を直すために開いたぶんを取り除けません
+（UTAGE の tool 166本を走査。PV を返すのは <code>funnel_stats_get</code>・<code>funnel_stats_daily</code>・<code>funnel_tracking_stats</code> の3本で、
+どれも集計値のみ）。<br>
+<b>ただしメールのクリックは人単位で追えます</b> ── <code>message_reader_click_list</code>（読者のクリック履歴）・
+<code>message_reader_open_list</code>（開封履歴）。集約したあと「どの入口から来たか」を見る手段は、
+登録経路（トラッキング）のほかにこの1本があります。
 特に <b>AI-Mits ファネルの 49PV は、同じ期間に32回のテスト送信をしている</b>ので、ほぼ私たちの作業ぶんです。<br>
 <b>したがって、この版では「お客様の実人数」を主に見て、PV は参考として並べます。</b>
 </div>
