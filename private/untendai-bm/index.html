@@ -1,0 +1,319 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+<title>ビジネスモデル ビフォア／アフター（運転台の前と後）</title>
+<style>
+:root{--bg:#f4efe4;--card:#fbf8f1;--line:#e2d9c6;--tx:#2c2620;--sub:#6f665a;--dim:#736b60;
+ --amber:#8b6620;--good:#4f6f52;--bad:#ad522d;--info:#3f4f7a;--purple:#6e3f5f}
+*{box-sizing:border-box}
+body{margin:0;padding:26px 16px 90px;background:var(--bg);color:var(--tx);
+ font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;line-height:1.7}
+.wrap{max-width:1120px;margin:0 auto}
+h1{margin:0 0 4px;font-size:25px}
+.sub{color:var(--sub);font-size:16px;margin-bottom:18px}
+h2{font-size:21px;margin:30px 0 8px;padding-bottom:6px;border-bottom:2px solid var(--line)}
+h3{font-size:18px;margin:20px 0 6px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:12px 0}
+.box.q{border:2px solid var(--purple)}
+.box.k{border:2px solid var(--amber)}
+table{border-collapse:collapse;width:100%;font-size:15px;margin:10px 0}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#efe9db;font-size:14.5px}
+code{background:rgba(115,107,96,.1);padding:1px 5px;border-radius:4px;font-size:13.5px}
+.fig{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;margin:14px 0;overflow-x:auto}
+svg{display:block;min-width:900px}
+ul{margin:6px 0 6px 20px;padding:0}
+li{margin:4px 0}
+.note{font-size:14.5px;color:var(--sub)}
+.foot{margin-top:30px;border-top:1px solid var(--line);padding-top:12px;font-size:14.5px;color:var(--dim)}
+</style></head><body><div class="wrap">
+
+<h1>ビジネスモデル ── 運転台の前（ビフォア）と後（アフター）</h1>
+<div class="sub">2026-08-29。Mits様の手書きホワイトボードを書き起こしたものと、untendai ありきで組み直した図。<br>
+Mits様：「<b>untendai アプリができる前から AI-Mits はあった</b>けれども、この untendai アプリで<b>大きくビジネスモデルが修正されて、その方向にチューニングしていく</b>」</div>
+
+<div class="box k">
+<b>この1枚の役目</b>：手書きの設計図は <b>untendai が出てくる前</b>の全体像。捨てない。<b>ビフォアとして残す。</b><br>
+そのうえで、untendai を着地点に置いたときに<b>何が変わり、何が変わらないか</b>を分けて書く。<br>
+その差分が、そのまま UTAGE の入口集約（トールゲート式）の設計になる。
+</div>
+
+<h2>1. ビフォア ── 手書き設計図の書き起こし</h2>
+<div class="note">読み取れた文字をそのまま。読めなかった3か所は「§4 読めなかったところ」に出しています。</div>
+
+<div class="fig">
+<svg viewBox="0 0 1120 620" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,Hiragino Sans,sans-serif">
+<defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6 z" fill="#6f665a"/></marker></defs>
+<g font-size="13" fill="#2c2620">
+
+<rect x="14" y="30" width="150" height="76" rx="7" fill="#fff" stroke="#8b6620" stroke-width="1.6"/>
+<text x="26" y="52" font-weight="700">広告</text>
+<text x="26" y="71">AIエージェント</text>
+<text x="26" y="88">マーケティング</text>
+
+<rect x="14" y="126" width="150" height="58" rx="7" fill="#fff" stroke="#8b6620" stroke-width="1.6"/>
+<text x="26" y="150" font-weight="700">YouTube ▶</text>
+<text x="26" y="172" font-size="11.5" fill="#6f665a">ペルソナ・マーケティング・戦略</text>
+
+<rect x="200" y="30" width="96" height="200" rx="7" fill="#fff" stroke="#3f4f7a" stroke-width="1.6"/>
+<text x="212" y="54" font-weight="700">各</text><text x="212" y="72" font-weight="700">オプトイン</text>
+<text x="212" y="98" font-size="11.5" fill="#6f665a">入口が</text>
+<text x="212" y="114" font-size="11.5" fill="#6f665a">1本ずつ</text>
+<text x="212" y="130" font-size="11.5" fill="#6f665a">別々に</text>
+<text x="212" y="146" font-size="11.5" fill="#6f665a">立っている</text>
+
+<rect x="330" y="30" width="140" height="200" rx="7" fill="#fff" stroke="#3f4f7a" stroke-width="1.6"/>
+<text x="342" y="54" font-weight="700">SKOOL サイト</text>
+<line x1="330" y1="66" x2="470" y2="66" stroke="#e2d9c6"/>
+<text x="342" y="90" font-weight="700">AI-MITS</text><text x="342" y="107">コンサルボット</text>
+<line x1="330" y1="120" x2="470" y2="120" stroke="#e2d9c6"/>
+<text x="342" y="142">etc</text>
+
+<rect x="510" y="30" width="150" height="200" rx="7" fill="#fff" stroke="#4f6f52" stroke-width="1.6"/>
+<text x="522" y="24" font-size="12" fill="#4f6f52" font-weight="700">フロント</text>
+<text x="522" y="56">フリー系</text><text x="522" y="74" font-weight="700">白書</text>
+<line x1="510" y1="88" x2="660" y2="88" stroke="#e2d9c6"/>
+<text x="522" y="112">有料系</text><text x="522" y="132" font-weight="700">AI系</text><text x="522" y="152" font-weight="700">非AI系</text>
+
+<rect x="700" y="30" width="160" height="200" rx="7" fill="#fff" stroke="#4f6f52" stroke-width="1.6"/>
+<text x="712" y="56" font-weight="700">無料体験</text><text x="712" y="74">or 有料セミナー</text>
+<ellipse cx="780" cy="112" rx="62" ry="17" fill="none" stroke="#ad522d" stroke-width="1.4"/>
+<text x="742" y="117" text-anchor="middle" font-weight="700" fill="#ad522d">個別相談</text>
+<line x1="780" y1="130" x2="780" y2="150" stroke="#6f665a" marker-end="url(#a)"/>
+<text x="712" y="172">2ヶ月AIグルコン</text><text x="712" y="192">2ヶ月コンサル</text>
+
+<rect x="900" y="30" width="150" height="200" rx="7" fill="#fff" stroke="#4f6f52" stroke-width="1.6"/>
+<text x="912" y="90" font-weight="700">6ヶ月コンサル</text>
+<text x="912" y="112">or</text>
+<text x="912" y="134" font-weight="700">AIコンサル</text>
+
+<line x1="164" y1="66" x2="196" y2="66" stroke="#6f665a" marker-end="url(#a)"/>
+<line x1="164" y1="152" x2="196" y2="90" stroke="#6f665a" marker-end="url(#a)"/>
+<line x1="296" y1="90" x2="326" y2="90" stroke="#6f665a" marker-end="url(#a)"/>
+<line x1="470" y1="110" x2="506" y2="110" stroke="#6f665a" marker-end="url(#a)"/>
+
+<ellipse cx="248" cy="300" rx="46" ry="17" fill="#fff" stroke="#3f4f7a" stroke-width="1.6"/>
+<rect x="202" y="300" width="92" height="42" fill="#fff" stroke="#3f4f7a" stroke-width="1.6"/>
+<ellipse cx="248" cy="342" rx="46" ry="17" fill="#fff" stroke="#3f4f7a" stroke-width="1.6"/>
+<text x="248" y="328" text-anchor="middle" font-weight="700">リスト</text>
+<line x1="248" y1="232" x2="248" y2="278" stroke="#6f665a" marker-end="url(#a)"/>
+<line x1="380" y1="232" x2="300" y2="285" stroke="#6f665a" marker-end="url(#a)"/>
+
+<rect x="360" y="278" width="220" height="76" rx="10" fill="#fff" stroke="#6f665a" stroke-width="1.6"/>
+<ellipse cx="418" cy="298" rx="26" ry="9" fill="#fff" stroke="#3f4f7a"/>
+<rect x="392" y="298" width="52" height="30" fill="#fff" stroke="#3f4f7a"/>
+<ellipse cx="418" cy="328" rx="26" ry="9" fill="#fff" stroke="#3f4f7a"/>
+<ellipse cx="500" cy="298" rx="26" ry="9" fill="#fff" stroke="#3f4f7a"/>
+<rect x="474" y="298" width="52" height="30" fill="#fff" stroke="#3f4f7a"/>
+<ellipse cx="500" cy="328" rx="26" ry="9" fill="#fff" stroke="#3f4f7a"/>
+<text x="470" y="374" text-anchor="middle" font-size="12" font-weight="700" fill="#3f4f7a">DB ＝ 配信リスト</text>
+
+<text x="330" y="410" font-weight="700" font-size="15">SKOOL</text>
+<text x="470" y="410" font-weight="700" font-size="15">LP</text>
+<text x="580" y="410" font-weight="700" font-size="15">UTAGE ＋ Discord</text>
+<ellipse cx="358" cy="405" rx="52" ry="14" fill="none" stroke="#6f665a"/>
+<ellipse cx="483" cy="405" rx="34" ry="14" fill="none" stroke="#6f665a"/>
+<ellipse cx="628" cy="405" rx="72" ry="14" fill="none" stroke="#6f665a"/>
+<text x="700" y="386" font-size="14" font-weight="700" fill="#4f6f52">会員サイト</text>
+<path d="M690,392 L668,392 L668,402" fill="none" stroke="#4f6f52" stroke-width="1.4"/>
+
+<rect x="14" y="286" width="160" height="150" rx="7" fill="#fff" stroke="#8b6620" stroke-width="1.6"/>
+<text x="26" y="308">・サポート</text><text x="26" y="330">・二刀流</text>
+<text x="26" y="352">・3日アレンジ</text><text x="26" y="374" font-weight="700">・経営</text>
+<text x="26" y="396">・ペルソナ</text><text x="26" y="418">・コンサル</text>
+<text x="60" y="462" font-weight="700" fill="#ad522d">回流</text>
+<path d="M96,452 L96,440" fill="none" stroke="#ad522d" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="200" y="400" font-size="11.5" fill="#6f665a" transform="rotate(90 200 400)">コンテンツ配信 push</text>
+
+<rect x="330" y="440" width="150" height="150" rx="7" fill="#fff" stroke="#3f4f7a" stroke-width="1.6"/>
+<text x="342" y="462" font-weight="700">会員フリー</text>
+<rect x="342" y="470" width="86" height="22" fill="#f2f0ea" stroke="#e2d9c6"/>
+<text x="350" y="486" font-size="12">コミュニティ</text>
+<text x="342" y="512" font-size="12">クラスルーム</text>
+<text x="342" y="528" font-size="12">フリービデオ</text>
+<text x="342" y="546" font-size="12">・AI系　・経営系</text>
+<rect x="342" y="556" width="120" height="24" fill="#f2f0ea" stroke="#e2d9c6"/>
+<text x="350" y="572" font-size="12">コンサルナレッジ</text>
+
+<rect x="510" y="440" width="150" height="150" rx="7" fill="#fff" stroke="#4f6f52" stroke-width="1.6"/>
+<text x="522" y="462" font-size="12">・フリー系 白書など</text>
+<text x="522" y="492" font-weight="700" font-size="12.5">・有料フロント</text>
+<text x="522" y="510" font-size="12">　・AI系　・AI以外</text>
+<text x="522" y="536" font-size="12">2ヶ月AIグルコン</text>
+<rect x="522" y="546" width="104" height="34" fill="#f2f0ea" stroke="#e2d9c6"/>
+<text x="530" y="566" font-size="12">2ヶ月コンサル</text>
+
+<rect x="690" y="440" width="150" height="150" rx="7" fill="#fff" stroke="#6f665a" stroke-width="1.4"/>
+<text x="700" y="434" font-size="12" fill="#6f665a" font-weight="700">コンテンツ納品</text>
+<text x="700" y="462" font-size="12">フリー系・白書・etc</text>
+<text x="700" y="486" font-size="12">有料単品</text>
+<text x="700" y="508" font-size="12">講座系</text>
+<line x1="770" y1="452" x2="770" y2="452" stroke="#e2d9c6"/>
+<text x="700" y="536" font-size="12">・セミナーアーカイブ</text>
+<text x="700" y="556" font-size="12">・コンサル用</text>
+<text x="700" y="576" font-size="12">　THE CORE GOLD</text>
+
+<rect x="880" y="440" width="170" height="150" rx="7" fill="#fff" stroke="#4f6f52" stroke-width="1.6"/>
+<text x="892" y="434" font-size="12" fill="#4f6f52" font-weight="700">BE（バックエンド）</text>
+<text x="892" y="464" font-size="12">・経営合宿</text>
+<text x="892" y="486" font-size="12">・AIコンサル</text>
+<text x="892" y="508" font-size="12">・6ヶ月コンサル</text>
+<text x="892" y="530" font-size="12">・THE BIBLE</text>
+<text x="892" y="552" font-size="12">・教養講座</text>
+
+<rect x="690" y="286" width="360" height="46" rx="7" fill="#fff" stroke="#6e3f5f" stroke-width="1.4"/>
+<text x="702" y="306" font-size="12.5" fill="#2c2620"><tspan font-weight="700">全員</tspan> ＝ 旧フリートライアル に 経営系</text>
+<text x="702" y="324" font-size="11.5" fill="#6f665a">（有料フロントへ矢印）</text>
+<line x1="686" y1="470" x2="666" y2="470" stroke="#6f665a" marker-end="url(#a)"/>
+<line x1="690" y1="310" x2="664" y2="440" stroke="#6e3f5f" stroke-dasharray="4 3" marker-end="url(#a)"/>
+</g></svg>
+</div>
+
+<h3>ビフォアの骨格（読み取ったまま・4段）</h3>
+<table>
+<tr><th>段</th><th>中身</th></tr>
+<tr><td>① 集める</td><td>広告（AIエージェント／マーケティング／〔不明〕）・YouTube → <b>各オプトイン</b>（入口が1本ずつ別々）→ リスト</td></tr>
+<tr><td>② 触れさせる</td><td>SKOOL サイト／<b>AI-MITS コンサルボット（untendai より前から在る）</b>／etc。ここから会員フリー（コミュニティ・クラスルーム・フリービデオ AI系/経営系・コンサルナレッジ）</td></tr>
+<tr><td>③ フロント</td><td>フリー系＝白書／有料系＝AI系・非AI系。無料体験 or 有料セミナー → <b>個別相談</b> → 2ヶ月AIグルコン・2ヶ月コンサル</td></tr>
+<tr><td>④ BE</td><td>6ヶ月コンサル or AIコンサル／経営合宿・THE BIBLE・教養講座。納品物＝セミナーアーカイブ・THE CORE GOLD</td></tr>
+</table>
+<p class="note">土台は3つ ── <b>SKOOL ／ LP ／ UTAGE＋Discord</b>（会員サイト）。左の箱（サポート・二刀流・3日アレンジ・経営・ペルソナ・コンサル）から<b>回流</b>で戻す設計。</p>
+
+<h2>2. 何が変わったか ── untendai が入って裏返った4点</h2>
+<div class="box">
+<table>
+<tr><th>#</th><th>ビフォア</th><th>アフター（untendai ありき）</th></tr>
+<tr><td>1</td><td><b>着地点は「会員サイト」</b>。SKOOL・LP・UTAGE＋Discord の3つの面にお客様を置く</td><td><b>着地点は「その人のパソコンの中」</b>。運転台を入れて毎日使ってもらう。会員サイトはその手前の通路になる</td></tr>
+<tr><td>2</td><td><b>AI-MITS コンサルボット</b>は入口に並ぶ1つの部品（SKOOL の中の1行）</td><td><b>AI は3つ（A/B/C）</b>になり、運転台の中に入った。<b>B・C が商品</b>で、A は無償の入口</td></tr>
+<tr><td>3</td><td>入口は<b>各オプトインが1本ずつ</b>。数字は面ごとに分かれる</td><td><b>トールゲート式</b>。入口を1つに集約し、登録経路でどこから来たかを見る</td></tr>
+<tr><td>4</td><td>売るものは<b>コンテンツと場</b>（白書・講座・アーカイブ・コミュニティ）</td><td>道具（計器盤13画面・コード）は<b>無償で開ける</b>。売るのは<b>判断</b>（B・C／The Library／コンサル）＝Red Hat 型</td></tr>
+</table>
+</div>
+
+<h3>変わらなかったもの</h3>
+<ul>
+<li><b>個別相談 → 2ヶ月 → 6ヶ月</b>の段は、そのまま生きている（BE-01・BE-02・6ヶ月コンサル）</li>
+<li><b>回流</b>の考え方（出した先から戻す）も生きている。戻す先が「会員サイト」から「運転台」に変わっただけ</li>
+<li>YouTube・SKOOL・メルマガ・LINE といった<b>入口の顔ぶれ</b>は変わっていない。<b>集約のしかた</b>が変わった</li>
+</ul>
+
+<h2>3. アフター ── untendai を着地点に置いた図</h2>
+<div class="fig">
+<svg viewBox="0 0 1120 470" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,Hiragino Sans,sans-serif">
+<defs><marker id="b" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6 z" fill="#4f6f52"/></marker>
+<marker id="c" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6 z" fill="#8b6620"/></marker></defs>
+<g font-size="13" fill="#2c2620">
+
+<text x="20" y="26" font-weight="700" fill="#6f665a">① いろんな入口（顔ぶれは変えない）</text>
+<rect x="14" y="38" width="150" height="196" rx="7" fill="#fff" stroke="#6f665a" stroke-width="1.4"/>
+<text x="26" y="62">広告</text><text x="26" y="86">YouTube</text><text x="26" y="110">メルマガ</text>
+<text x="26" y="134">SKOOL の投稿</text><text x="26" y="158">LINE</text><text x="26" y="182">紹介リンク</text>
+<text x="26" y="212" font-size="11.5" fill="#6f665a">BE-02／Cowork／</text>
+<text x="26" y="228" font-size="11.5" fill="#6f665a">The Library の各LP</text>
+
+<text x="230" y="26" font-weight="700" fill="#ad522d">② トールゲート（料金所は1つ）</text>
+<rect x="224" y="38" width="180" height="196" rx="10" fill="#fff" stroke="#ad522d" stroke-width="2.4"/>
+<text x="236" y="66" font-weight="700" font-size="14">入口ハブ</text>
+<text x="236" y="86" font-size="11.5" fill="#6f665a">総合案内・1枚に集約</text>
+<line x1="236" y1="98" x2="392" y2="98" stroke="#e2d9c6"/>
+<text x="236" y="120" font-size="12">重複ページは</text>
+<text x="236" y="138" font-size="12">ここへリダイレクト</text>
+<line x1="236" y1="150" x2="392" y2="150" stroke="#e2d9c6"/>
+<text x="236" y="172" font-weight="700" font-size="12.5" fill="#ad522d">登録経路で</text>
+<text x="236" y="190" font-weight="700" font-size="12.5" fill="#ad522d">どこから来たかを見る</text>
+<text x="236" y="214" font-size="11.5" fill="#6f665a">→ そのあと A/B テスト</text>
+<line x1="168" y1="136" x2="218" y2="136" stroke="#4f6f52" stroke-width="2" marker-end="url(#b)"/>
+
+<text x="440" y="26" font-weight="700" fill="#4f6f52">③ 触る（無償の入口）</text>
+<rect x="434" y="38" width="170" height="196" rx="7" fill="#fff" stroke="#4f6f52" stroke-width="1.8"/>
+<text x="446" y="64" font-weight="700">お試し版</text>
+<text x="446" y="82" font-size="11.5" fill="#6f665a">15分・NORMAL固定</text>
+<line x1="446" y1="94" x2="592" y2="94" stroke="#e2d9c6"/>
+<text x="446" y="118" font-weight="700">AI 3つ</text>
+<text x="446" y="138" font-size="12">A 素のLLM　＝無償</text>
+<text x="446" y="158" font-size="12">B コーパス　＝会員</text>
+<text x="446" y="178" font-size="12">C 西田メソッド＝会員</text>
+<text x="446" y="204" font-size="11.5" fill="#6f665a">濃度 A＜C＜B</text>
+<text x="446" y="220" font-size="11.5" fill="#6f665a">速さ A＞C＞B</text>
+<line x1="408" y1="136" x2="428" y2="136" stroke="#4f6f52" stroke-width="2" marker-end="url(#b)"/>
+
+<text x="640" y="26" font-weight="700" fill="#8b6620">④ 着地点（ここが新しい）</text>
+<rect x="634" y="38" width="180" height="196" rx="10" fill="#fff" stroke="#8b6620" stroke-width="2.8"/>
+<text x="646" y="66" font-weight="700" font-size="15">運転台をダウンロード</text>
+<text x="646" y="86" font-size="11.5" fill="#6f665a">その人のパソコンの中へ</text>
+<line x1="646" y1="98" x2="802" y2="98" stroke="#e2d9c6"/>
+<text x="646" y="122" font-size="12">計器盤13画面＝無償・公開</text>
+<text x="646" y="142" font-size="12">＠・余裕度・赤道日が</text>
+<text x="646" y="160" font-size="12">毎日その人の目に入る</text>
+<line x1="646" y1="172" x2="802" y2="172" stroke="#e2d9c6"/>
+<text x="646" y="194" font-weight="700" font-size="12.5" fill="#8b6620">ここまでの人数を数える</text>
+<text x="646" y="212" font-size="11.5" fill="#6f665a">＝この整理のゴール</text>
+<line x1="608" y1="136" x2="628" y2="136" stroke="#8b6620" stroke-width="2" marker-end="url(#c)"/>
+
+<text x="850" y="26" font-weight="700" fill="#4f6f52">⑤ 商売（判断を売る）</text>
+<rect x="844" y="38" width="180" height="196" rx="7" fill="#fff" stroke="#4f6f52" stroke-width="1.8"/>
+<text x="856" y="64" font-weight="700">B・C を使う＝会員</text>
+<line x1="856" y1="76" x2="1012" y2="76" stroke="#e2d9c6"/>
+<text x="856" y="100" font-size="12">The Library の教材</text>
+<text x="856" y="122" font-size="12">BE-02 2ヶ月AIグルコン</text>
+<text x="856" y="144" font-size="12">BE-01 2ヶ月コンサル</text>
+<text x="856" y="166" font-size="12">6ヶ月コンサル・AIコンサル</text>
+<text x="856" y="188" font-size="12">経営合宿・THE BIBLE</text>
+<text x="856" y="212" font-size="11.5" fill="#6f665a">＝ ビフォアのまま生きている段</text>
+<line x1="818" y1="136" x2="838" y2="136" stroke="#4f6f52" stroke-width="2" marker-end="url(#b)"/>
+
+<rect x="224" y="288" width="800" height="120" rx="10" fill="#fff" stroke="#6e3f5f" stroke-width="1.8"/>
+<text x="240" y="314" font-weight="700" fill="#6e3f5f">循環（ビフォアの「回流」が、ここに変わった）</text>
+<text x="240" y="340" font-size="12.5">運転台が広まる　→　＠・余裕度・赤道日という言葉が広まる　→　相談したくなる人が増える</text>
+<text x="240" y="362" font-size="12.5">→　会員収入　→　労働集約が減る　→　Mits様の可処分時間が増える</text>
+<text x="240" y="384" font-size="12.5">→　知見の更新が速くなる　→　深さが開く　→　真似られても写した時点で止まる</text>
+<path d="M724,240 L724,282" fill="none" stroke="#6e3f5f" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#b)"/>
+<path d="M224,348 L120,348 L120,250" fill="none" stroke="#6e3f5f" stroke-width="1.6" stroke-dasharray="5 4"/>
+<path d="M120,250 L120,240" fill="none" stroke="#6e3f5f" stroke-width="1.6" marker-end="url(#b)"/>
+<text x="30" y="290" font-size="11.5" fill="#6e3f5f">入口へ戻る</text>
+</g></svg>
+</div>
+
+<h2>4. 読めなかった3か所（2026-08-29 Mits様に確認・確定）</h2>
+<div class="box k">
+<table>
+<tr><th>箇所</th><th>Mits様の回答</th><th>図への反映</th></tr>
+<tr><td>左上「広告」の箱の3語目</td><td><b>不要</b></td><td>読み取らず、図から外した</td></tr>
+<tr><td>中央「丸2つが入った箱」</td><td><b>円柱の図。円柱は DB ＝ 配信リスト</b></td><td>円柱2本として描き直し、「DB ＝ 配信リスト」と明記</td></tr>
+<tr><td>右中央の帯の1字目</td><td><b>「全員」</b></td><td><b>全員 ＝ 旧フリートライアル に 経営系</b> と確定</td></tr>
+</table>
+<p class="note" style="margin-top:8px">
+「リスト」の円柱と、その右の <b>DB（配信リスト）</b> は別の器として描かれています。
+広告・YouTube・各オプトイン・SKOOL から入ったものが溜まり、そこから<b>コンテンツ配信 push</b> が出ていく形です。<br>
+帯の「<b>全員</b>」は、<b>旧フリートライアルを経営系に作り替えたものを、リスト全員に出す</b>という読みです。矢印は有料フロントへ向いています。
+</p>
+</div>
+
+<h2>5. これを UTAGE の導線設計にどう使うか</h2>
+<table>
+<tr><th>ビフォアの段</th><th>untendai ありきで、どこに置き換わるか</th></tr>
+<tr><td>各オプトイン（入口が1本ずつ）</td><td><b>入口ハブ1枚に集約</b>。既存の各LPは、そのハブへ送る側にまわす</td></tr>
+<tr><td>SKOOL／LP／UTAGE＋Discord の3つの面</td><td>3つとも残す。ただし<b>着地点ではなく通路</b>にする。着地点は運転台のダウンロード</td></tr>
+<tr><td>AI-MITS コンサルボット（入口の1部品）</td><td><b>お試し版</b>（15分）＝無償の入口。その先に B・C＝会員</td></tr>
+<tr><td>フリー系 白書／有料フロント</td><td>そのまま。ただし<b>白書を配って終わりにしない</b>。運転台のダウンロードまで繋ぐ</td></tr>
+<tr><td>個別相談 → 2ヶ月 → 6ヶ月</td><td><b>変えない。</b>ここは今も生きている（BE-01・BE-02・6ヶ月）</td></tr>
+<tr><td>回流（出した先から戻す）</td><td><b>循環に置き換わる</b>。戻す先は会員サイトではなく運転台</td></tr>
+</table>
+
+<div class="box k">
+<b>順番（Mits様原文どおり）</b>：① 重複を整理して入口を1つに集約 → ② 集約したリンクをいろんな入口に貼る →
+③ 登録経路でどこから来たかを見る → ④ ファネルマップの A/B でヘッダーやレターの長短を試す →
+⑤ AI 3つを使った人が、どれだけダウンロードして自分のパソコンで使うようになるかを数値で取る。
+</div>
+
+<div class="foot">
+この1枚：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/ビジネスモデル_ビフォア_アフター_20260829.html</code><br>
+関連：同フォルダ <code>UTAGE入口の集約_4段階_20260829.html</code>（41ファネルの仕分けと割付表）／
+memory <code>project_untendai_daihoshin.md</code>（運転台の大きな方向性）<br>
+🔴 実装はしていません。整理の資料です。
+</div>
+</div></body></html>
