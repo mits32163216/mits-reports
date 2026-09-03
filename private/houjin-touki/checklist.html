@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚖️</text></svg>">
+<title>会社設立 却下回避チェックリスト</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap">
+
+<style>
+:root{
+  --paper:#f6f6f2;
+  --card:#fffffd;
+  --ink:#191b1d;
+  --ink-2:#585d63;
+  --ink-3:#8b8f94;
+  --kon:#27374f;
+  --kon-soft:#e5e9f0;
+  --shu:#b2352a;
+  --shu-soft:#f7e7e4;
+  --rule:#dedcd4;
+  --rule-2:#ebe9e2;
+  --lv0-bg:#eceae2; --lv0-fg:#5a5750;
+  --lv1-bg:#e8c98a; --lv1-fg:#4a3811;
+  --lv2-bg:#cf7d4e; --lv2-fg:#2e1607;
+  --lv3-bg:#9a2620; --lv3-fg:#fdf2f0;
+  --mincho:"Shippori Mincho B1",'Hiragino Mincho ProN',serif;
+  --gothic:"Zen Kaku Gothic New",'Hiragino Sans','Yu Gothic',system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#15171a; --card:#1c1f23;
+    --ink:#e9e7e1; --ink-2:#a4a8ae; --ink-3:#7c8188;
+    --kon:#93accf; --kon-soft:#232c3a;
+    --shu:#e2796a; --shu-soft:#33211f;
+    --rule:#31353a; --rule-2:#26292e;
+    --lv0-bg:#2b2f34; --lv0-fg:#b0b4ba;
+    --lv1-bg:#5c4a22; --lv1-fg:#f0d9a4;
+    --lv2-bg:#6e3a20; --lv2-fg:#f6cdb4;
+    --lv3-bg:#8d2b23; --lv3-fg:#fde4e0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#15171a; --card:#1c1f23;
+  --ink:#e9e7e1; --ink-2:#a4a8ae; --ink-3:#7c8188;
+  --kon:#93accf; --kon-soft:#232c3a;
+  --shu:#e2796a; --shu-soft:#33211f;
+  --rule:#31353a; --rule-2:#26292e;
+  --lv0-bg:#2b2f34; --lv0-fg:#b0b4ba;
+  --lv1-bg:#5c4a22; --lv1-fg:#f0d9a4;
+  --lv2-bg:#6e3a20; --lv2-fg:#f6cdb4;
+  --lv3-bg:#8d2b23; --lv3-fg:#fde4e0;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--gothic);font-size:16px;line-height:1.9;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:980px;margin:0 auto;padding:44px 20px 96px}
+
+.mast{border-bottom:2px solid var(--ink);padding-bottom:20px;margin-bottom:30px}
+.eyebrow{font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--shu);font-weight:700;margin-bottom:12px}
+h1{font-family:var(--mincho);font-weight:700;font-size:clamp(1.7rem,5.2vw,2.5rem);line-height:1.35;margin:0 0 14px;text-wrap:balance;letter-spacing:.02em}
+.standfirst{font-size:.95rem;color:var(--ink-2);margin:0;max-width:62ch}
+.meta{font-family:var(--mono);font-size:.72rem;color:var(--ink-3);margin-top:16px;line-height:1.8}
+
+.phase{margin-top:46px}
+.phead{
+  display:flex;align-items:baseline;gap:.75em;flex-wrap:wrap;
+  border-bottom:1px solid var(--ink);padding-bottom:8px;margin-bottom:6px;
+}
+.pnum{
+  font-family:var(--mono);font-weight:700;font-size:.78rem;
+  background:var(--kon);color:var(--paper);padding:2px 9px;border-radius:2px;
+  letter-spacing:.06em;flex:none;
+}
+.ptitle{font-family:var(--mincho);font-weight:700;font-size:clamp(1.12rem,3.2vw,1.34rem);margin:0;line-height:1.4}
+.pnote{font-family:var(--mono);font-size:.7rem;color:var(--ink-3);margin-left:auto}
+h3{font-family:var(--mincho);font-weight:700;font-size:1rem;margin:28px 0 4px;color:var(--kon)}
+
+section > h2{
+  font-family:var(--mincho);font-weight:700;
+  font-size:clamp(1.18rem,3.4vw,1.42rem);margin:52px 0 0;
+  border-bottom:1px solid var(--ink);padding-bottom:8px;
+}
+
+p{margin:0 0 14px;max-width:66ch}
+p:last-child{margin-bottom:0}
+.fine{font-size:.85rem;color:var(--ink-2);line-height:1.85}
+
+.panel{background:var(--card);border:1px solid var(--rule);border-radius:3px;padding:20px 22px;margin:18px 0;display:flex;flex-direction:column;gap:12px}
+.panel > *{margin:0}
+.stop{
+  background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--shu);
+  border-radius:2px;padding:18px 22px;margin:26px 0 6px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.stop > *{margin:0;max-width:none}
+.stop .label{
+  font-family:var(--mono);font-size:.7rem;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--shu);
+}
+.stop .t{font-family:var(--mincho);font-weight:700;font-size:1.06rem;line-height:1.5}
+
+.scroll{overflow-x:auto;margin:14px 0;border:1px solid var(--rule);border-radius:3px;background:var(--card)}
+table{width:100%;border-collapse:collapse;font-size:.88rem;line-height:1.72}
+th,td{border-bottom:1px solid var(--rule-2);padding:9px 12px;text-align:left;vertical-align:top}
+th{background:var(--kon-soft);font-weight:700;font-size:.78rem;letter-spacing:.04em;white-space:nowrap;border-bottom:1px solid var(--rule)}
+tr:last-child td{border-bottom:none}
+td.ck{width:1%;text-align:center;font-family:var(--mono);font-size:1.05rem;color:var(--ink-3)}
+td.k{font-family:var(--mono);font-weight:700;color:var(--shu);white-space:nowrap;width:1%;font-size:.82rem}
+tr.mark td{background:var(--shu-soft)}
+
+.lv{
+  display:inline-block;font-family:var(--mono);font-size:.66rem;font-weight:700;
+  padding:2px 8px;border-radius:10px;white-space:nowrap;letter-spacing:.03em;
+}
+.lv0{background:var(--lv0-bg);color:var(--lv0-fg)}
+.lv1{background:var(--lv1-bg);color:var(--lv1-fg)}
+.lv2{background:var(--lv2-bg);color:var(--lv2-fg)}
+.lv3{background:var(--lv3-bg);color:var(--lv3-fg)}
+
+ul,ol{padding-left:1.35em;margin:0 0 14px;max-width:66ch}
+li{margin-bottom:6px}
+li:last-child{margin-bottom:0}
+a{color:var(--kon);text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--shu);outline-offset:2px}
+
+footer{margin-top:64px;border-top:2px solid var(--ink);padding-top:22px;font-size:.8rem;color:var(--ink-2);line-height:1.9}
+footer h4{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--shu);margin:20px 0 8px;font-weight:700}
+footer h4:first-child{margin-top:0}
+footer ul{padding-left:1.1em;max-width:none}
+footer li{margin-bottom:4px}
+@media (max-width:560px){
+  body{font-size:15px}
+  .wrap{padding:32px 15px 72px}
+  th,td{padding:8px 9px}
+  .pnote{margin-left:0;width:100%}
+}
+
+.sitenav{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid var(--rule);
+  display:flex;gap:0;align-items:stretch;margin:-44px -20px 30px;padding:0 20px;flex-wrap:wrap}
+.sitenav a{font-family:var(--mono);font-size:.72rem;letter-spacing:.05em;padding:11px 14px 10px;
+  text-decoration:none;color:var(--ink-2);border-bottom:2px solid transparent}
+.sitenav a:hover{color:var(--ink)}
+.sitenav a[aria-current="page"]{color:var(--shu);border-bottom-color:var(--shu);font-weight:700}
+.sitenav .home{margin-right:auto;color:var(--ink-3)}
+@media (max-width:560px){.sitenav{margin:-32px -15px 22px;padding:0 8px}.sitenav a{padding:10px 9px;font-size:.68rem}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+<nav class="sitenav">
+<a class="home" href="https://reports.7years.life/private/">← 一覧</a>
+<a href="index.html">却下事例集</a>
+<a href="checklist.html" aria-current="page">チェックリスト</a>
+</nav>
+
+
+<header class="mast">
+  <div class="eyebrow">Phase 0 → 10 / 不可逆点 5箇所</div>
+  <h1>会社設立 却下回避チェックリスト</h1>
+  <p class="standfirst">株式会社（発起設立）を基準に、申請の時系列で並べました。各段階に「戻せなさ」を付けてあります。戻せなくなる直前が、そのチェックを打つ最後の地点です。</p>
+  <div class="meta">
+    2026-09-03 作成／合同会社の差分は各段階に併記<br>
+    却下事由の番号（①-1、③-6 等）は「法人登記 却下事例集」の分類に対応
+  </div>
+</header>
+
+<div class="panel">
+<p style="font-family:var(--mincho);font-weight:700">戻せなさの4段階</p>
+<p style="line-height:2.5"><span class="lv lv0">戻せる</span> 書き直せば済む。費用も時間も追加なし<br>
+<span class="lv lv1">費用が出る</span> 戻せるが、手数料・実費が再度かかる<br>
+<span class="lv lv2">日付が動く</span> 戻せるが、成立日・効力発生日がずれる<br>
+<span class="lv lv3">戻せない</span> 別の登記手続でしか直せない</p>
+</div>
+
+<div class="panel">
+<p style="font-family:var(--mincho);font-weight:700">不可逆ポイントは全部で5つ</p>
+<div class="scroll" style="margin:0">
+<table>
+<tr><th></th><th>不可逆点</th><th>越えると</th><th>段階</th></tr>
+<tr><td class="k">1</td><td>定款の認証</td><td>定款を1文字でも直すと再認証。認証手数料が再度発生</td><td>Phase 3</td></tr>
+<tr><td class="k">2</td><td>出資の払込</td><td>通帳に記録が残る。金額を変えるなら払込のやり直し。定款認証より前の払込は使えない</td><td>Phase 4</td></tr>
+<tr><td class="k">3</td><td>登録免許税の納付</td><td>受付時に消印。還付は税務署経由で数週間。再使用証明は<strong>同じ登記所・1年以内</strong>限定</td><td>Phase 7</td></tr>
+<tr><td class="k">4</td><td>登記の申請（受付）</td><td>申請中は登記事項証明書が取れない。取下げ・却下なら<strong>会社の成立日が動く</strong>（会社法49条）</td><td>Phase 8</td></tr>
+<tr><td class="k">5</td><td>登記の完了</td><td><strong>取下げができない</strong>（準則54条2項）。更正の申請（132条）か抹消の申請（134条）しかない</td><td>Phase 10</td></tr>
+</table>
+</div>
+</div>
+
+<!-- P0 -->
+<div class="phase">
+<div class="phead"><span class="pnum">PHASE 0</span><h2 class="ptitle">ヒアリング</h2><span class="pnote">却下事由に触れる前</span></div>
+<div class="scroll">
+<table>
+<tr><th></th><th>チェック</th><th>落とすと当たる却下事由</th><th>戻せなさ</th></tr>
+<tr><td class="ck">☐</td><td>株式会社か合同会社か。設立費用と機関設計の違いを説明した</td><td>—</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>発起人・出資者の全員を確定した。全員が印鑑証明書を取れる状態か</td><td>③-4</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr class="mark"><td class="ck">☐</td><td><strong>外国人・外国法人が発起人または役員に入るか</strong>を最初に聞いた</td><td>③-6・④-5</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr class="mark"><td class="ck">☐</td><td><strong>現物出資があるか</strong>を最初に聞いた</td><td>③-8／検査役の要否</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr class="mark"><td class="ck">☐</td><td>役員に成年被後見人・被保佐人がいるか</td><td>③-4・③-6（規則61条4項・7項）</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td><strong>いつまでに設立が要るか</strong>を数字で押さえた（許認可の申請予定日・取引先の締切・決算期の設計）</td><td>Phase 8の不可逆点に直結</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>許認可が要る業種か。要るなら所管庁と要件（専任技術者・営業所・資本金要件）を確認した</td><td>⑨-5／目的の文言</td><td><span class="lv lv0">戻せる</span></td></tr>
+</table>
+</div>
+<p class="fine">この4つ（外国人・現物出資・成年被後見人・目的25個以上）は、設立代行の現場でも「事前相談が必要な複雑ケース」として区別されています。<strong>Phase 0で拾えなければ、Phase 3以降で必ず費用が出ます。</strong></p>
+</div>
+
+<!-- P1 -->
+<div class="phase">
+<div class="phead"><span class="pnum">PHASE 1</span><h2 class="ptitle">商号・本店・目的の確定</h2><span class="pnote">却下事由の最大の発生源</span></div>
+
+<h3>商号</h3>
+<div class="scroll">
+<table>
+<tr><th></th><th>チェック</th><th>却下事由</th><th>戻せなさ</th></tr>
+<tr class="mark"><td class="ck">☐</td><td><strong>本店の所在場所に、同一の商号が既に登記されていないか</strong>を登記所で調査した（バーチャルオフィス・シェアオフィスは特に）</td><td>②-1（27条・24条12号）</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>法令で使用を禁止された名称を使っていない（銀行・信託・保険等）</td><td>②-2（24条13号）</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>符号は指定の6種のみ ──「&amp;」「'」「，」「‐」「．」「・」。それ以外は使えない</td><td>②-3（規則50条・平成14年告示）</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>符号を商号の<strong>先頭・末尾</strong>に置いていない（ピリオドのみ、省略を表すものとして末尾に置ける）</td><td>②-4</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr class="mark"><td class="ck">☐</td><td><strong>スペースを入れた箇所が「ローマ字のみ」で構成されているか。</strong>数字が混ざる語の間にスペースを入れない</td><td>②-5（「MORI２ AGENT」で認められなかった実例）</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>「株式会社」「合同会社」の位置（前株・後株）を確定した</td><td>—</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>商標の先行登録を調べた（登記は通っても差止・損害賠償のリスクは別）</td><td>登記外</td><td><span class="lv lv0">戻せる</span></td></tr>
+</table>
+</div>
+
+<h3>本店</h3>
+<div class="scroll">
+<table>
+<tr><th></th><th>チェック</th><th>却下事由</th><th>戻せなさ</th></tr>
+<tr><td class="ck">☐</td><td>住居表示か地番か、どちらの表記かを確定した</td><td>⑨-2</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td><strong>丁目は漢数字、それ以下はアラビア数字。</strong>「1-2-3」の省略形を使っていない</td><td>⑨-2</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>その所在地を管轄する登記所を確定した</td><td>⑤-1（24条1号）</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>賃貸借契約・使用承諾で、その住所を本店として登記してよいことを確認した</td><td>登記外</td><td><span class="lv lv0">戻せる</span></td></tr>
+</table>
+</div>
+
+<h3>事業目的 ── 4要件に1本ずつ当てる</h3>
+<div class="scroll">
+<table>
+<tr><th></th><th>チェック</th><th>却下事由</th><th>戻せなさ</th></tr>
+<tr><td class="ck">☐</td><td><strong>適法性</strong>：強行法規・公序良俗に反しないか。資格者の業務独占（弁護士・司法書士・税理士等）に触れていないか</td><td>①-1（昭35.11.26 民甲2966：債権の取立業務は弁護士法72条抵触）①-4・①-5</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td><strong>営利性</strong>：利益が発生する可能性のある事業か。出費・寄附・献金・ボランティアの類を入れていないか</td><td>①-2・①-3（昭40.7.22 民四242）①-6</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td><strong>明確性</strong>：一般の人が読んで何の事業か分かるか。専門用語は括弧書きで語義を添えたか</td><td>①-7</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr class="mark"><td class="ck">☐</td><td><strong>具体性</strong>：会社法施行後も審査は継続している。法務省は基準の法令化を見送り「登記官に一定の裁量を与えざるを得ない」としている</td><td>①-8</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>許認可業種は、<strong>所管庁の様式・審査基準に合う文言</strong>にした（登記が通っても許認可で跳ねられれば同じ）</td><td>⑨-5</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>末尾に「前各号に附帯関連する一切の事業」を置いた</td><td>—</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td><strong>目的が25個を超えていないか。</strong>超えるなら1本ずつ上の4要件に当て直す</td><td>①全般</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>迷う目的は<strong>公証役場・法務局に事前照会</strong>した（この段階なら無料で直せる）</td><td>①全般</td><td><span class="lv lv0">戻せる</span></td></tr>
+</table>
+</div>
+</div>
+
+<!-- P2 -->
+<div class="phase">
+<div class="phead"><span class="pnum">PHASE 2</span><h2 class="ptitle">定款の作成</h2><span class="pnote">認証前が最後の無料修正地点</span></div>
+<div class="scroll">
+<table>
+<tr><th></th><th>チェック</th><th>却下事由</th><th>戻せなさ</th></tr>
+<tr><td class="ck">☐</td><td>絶対的記載事項が揃っている（目的・商号・本店の所在地・設立に際して出資される財産の価額またはその最低額・発起人の氏名住所）</td><td>③-1</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>発行可能株式総数を定めた（または設立時までに定める建て付けにした）</td><td>③-1</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>機関設計が会社法の組合せとして成立している（取締役会設置なら監査役等の要否）</td><td>⑦</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td><strong>事業年度を決めた</strong>（設立日から1年を超えない。消費税の免税期間を意識するなら設立月との関係を確認）</td><td>税務</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr class="mark"><td class="ck">☐</td><td>発起人の氏名住所を<strong>印鑑証明書のとおり</strong>に書いた（番地の表記まで一致）</td><td>③-4・⑨-3</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>現物出資があるなら変態設立事項として定款に記載した。検査役の選任を省く要件（500万円以下／市場価格のある有価証券／弁護士等の証明）のどれで行くか決めた</td><td>③-8・⑦</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>設立時役員を定款で定めるか、発起人の議決で定めるかを決めた</td><td>③-4</td><td><span class="lv lv0">戻せる</span></td></tr>
+</table>
+</div>
+
+<h3>電子定款で進めるなら</h3>
+<div class="scroll">
+<table>
+<tr><th></th><th>チェック</th><th>却下事由</th><th>戻せなさ</th></tr>
+<tr class="mark"><td class="ck">☐</td><td><strong>電子証明書の有効期限が、署名時点で切れていない</strong></td><td>④-4（準則52条の2第3項4号）</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>電子証明書が失効・保留になっていない</td><td>④-4</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>文書の<strong>作成者として表示された者と、電子署名をした者が一致</strong>している</td><td>④-3</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>署名後にファイルを一切編集していない（編集すると改ざん検知で落ちる）</td><td>④-2</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>使う電子証明書が商業登記規則36条4項各号に該当するものである</td><td>④-6</td><td><span class="lv lv0">戻せる</span></td></tr>
+</table>
+</div>
+<p class="fine">合同会社は<strong>定款認証が不要</strong>。Phase 3 を飛ばして Phase 4 へ進みます。したがって合同会社では不可逆点1が存在せず、定款の直しがずっと軽い。</p>
+</div>
+
+<div class="stop">
+<div class="label">不可逆点 1</div>
+<p class="t">定款の認証（Phase 3）</p>
+<p>ここを越えると、定款を1文字でも直すのに再認証が要り、認証手数料がもう一度かかります。<strong>Phase 1・Phase 2 のチェックは、公証役場に嘱託する前に全部終わらせる。</strong>迷いが1つでも残っているなら、先に公証人へ照会する。</p>
+</div>
+
+<!-- P3 -->
+<div class="phase">
+<div class="phead"><span class="pnum">PHASE 3</span><h2 class="ptitle">定款の認証（株式会社のみ）</h2><span class="pnote">越えると 費用が出る</span></div>
+<div class="scroll">
+<table>
+<tr><th></th><th>チェック</th><th>却下事由</th><th>戻せなさ</th></tr>
+<tr><td class="ck">☐</td><td>公証役場に事前に案文を送り、目的の適法性・明確性について確認を取った</td><td>①全般（公証人段階で止まれば法務局まで行かない）</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>発起人全員の印鑑証明書を用意した</td><td>—</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>実質的支配者となるべき者の申告をした</td><td>—</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr class="mark"><td class="ck">☐</td><td>認証を受けた</td><td>—</td><td><span class="lv lv1">費用が出る</span></td></tr>
+<tr><td class="ck">☐</td><td>認証後の定款（同一情報の提供／謄本）を受け取った</td><td>③-1</td><td><span class="lv lv1">費用が出る</span></td></tr>
+</table>
+</div>
+</div>
+
+<div class="stop">
+<div class="label">不可逆点 2</div>
+<p class="t">出資の払込（Phase 4）</p>
+<p>通帳に記録が残るため、あとから金額や日付を書き換えることはできません。<strong>払込は「定款の認証後」かつ「設立時発行株式の引受け後」の日付であること。</strong>この順序を誤ると、通帳をやり直すしかありません。</p>
+</div>
+
+<!-- P4 -->
+<div class="phase">
+<div class="phead"><span class="pnum">PHASE 4</span><h2 class="ptitle">出資の払込</h2><span class="pnote">越えると 日付が動く</span></div>
+<div class="scroll">
+<table>
+<tr><th></th><th>チェック</th><th>却下事由</th><th>戻せなさ</th></tr>
+<tr class="mark"><td class="ck">☐</td><td><strong>払込の日付が、定款の認証日より後</strong>である</td><td>⑦（9号）</td><td><span class="lv lv2">日付が動く</span></td></tr>
+<tr class="mark"><td class="ck">☐</td><td><strong>払込の日付が、設立時発行株式の引受けより後</strong>である</td><td>⑦（9号）</td><td><span class="lv lv2">日付が動く</span></td></tr>
+<tr><td class="ck">☐</td><td>振込人の名義が<strong>発起人本人</strong>である（誰がいくら払ったかが通帳で追える）</td><td>③-8・⑦</td><td><span class="lv lv2">日付が動く</span></td></tr>
+<tr><td class="ck">☐</td><td>払込金額の合計が、定款の「設立に際して出資される財産の価額」以上である</td><td>③-8</td><td><span class="lv lv2">日付が動く</span></td></tr>
+<tr><td class="ck">☐</td><td>通帳の<strong>表紙・見開き（支店名・口座番号・名義）・該当明細</strong>の3点をコピーした</td><td>③-8</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>払込証明書を作成し、代表者印を押した</td><td>③-8</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>資本金の額が会社法・会社計算規則に従って計上されたことを証する書面を作成した（現物出資がある場合は必須）</td><td>③-8（規則61条9項）</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>資本金1,000万円未満に収めるか（消費税の免税判定）を確認した</td><td>税務</td><td><span class="lv lv2">日付が動く</span></td></tr>
+</table>
+</div>
+</div>
+
+<!-- P5 -->
+<div class="phase">
+<div class="phead"><span class="pnum">PHASE 5</span><h2 class="ptitle">設立時役員の選任・調査</h2><span class="pnote">戻せる</span></div>
+<div class="scroll">
+<table>
+<tr><th></th><th>チェック</th><th>却下事由</th><th>戻せなさ</th></tr>
+<tr><td class="ck">☐</td><td>設立時取締役・設立時監査役を選任した（定款または発起人の議決）</td><td>⑦</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>就任承諾書を全員分そろえた</td><td>③-4</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr class="mark"><td class="ck">☐</td><td><strong>就任承諾書の氏名・住所が、印鑑証明書／本人確認証明書と一字一句一致</strong>している</td><td>③-6（規則61条7項は「同一の氏名及び住所が記載されている」証明書を要求）</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>設立時取締役（取締役会設置会社なら設立時代表取締役・設立時代表執行役）の就任承諾書に押した印鑑の<strong>市区町村長作成の証明書</strong>を用意した</td><td>③-4（規則61条4項・5項）</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>印鑑証明書を付けない役員には<strong>本人確認証明書</strong>を用意した（住民票記載事項証明書・戸籍の附票等）</td><td>③-6（規則61条7項）</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>設立時取締役による調査（払込の完了・現物出資の価額）を終え、調査報告書を作成した</td><td>⑦</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>設立時代表取締役の選定を、機関設計に合った方法で行った（互選／取締役会決議／定款）</td><td>③-5（規則61条6項）</td><td><span class="lv lv0">戻せる</span></td></tr>
+</table>
+</div>
+</div>
+
+<!-- P6 -->
+<div class="phase">
+<div class="phead"><span class="pnum">PHASE 6</span><h2 class="ptitle">申請書と添付書面の組み立て</h2><span class="pnote">司法書士の持ち場</span></div>
+<div class="scroll">
+<table>
+<tr><th></th><th>チェック</th><th>却下事由</th><th>戻せなさ</th></tr>
+<tr><td class="ck">☐</td><td>申請書に申請人または代表者・代理人の<strong>記名押印</strong>がある</td><td>⑨-1（17条2項）</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>登記すべき事項の内容が、定款・議事録・就任承諾書と<strong>すべて一致</strong>している</td><td>⑨-3（24条8号）</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>登記事項でないものを登記しようとしていない</td><td>⑨-4（24条2号）</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>官庁の許可を要する登記なら、<strong>許可書の到達年月日</strong>を申請書に記載した</td><td>⑨-5（17条2項5号）</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>代理人申請なら委任状に押印がある</td><td>⑥-2（24条4号後段）</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr class="mark"><td class="ck">☐</td><td>添付書面を規則61条の各項に照らして数え上げた（定款／株主全員の同意／株主リスト／印鑑証明／本人確認証明／資本金計上証明）</td><td>③-1〜③-9</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>原本還付を受けたい書面にコピーを添え、原本還付の旨を記載した</td><td>—</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>申請先の登記所が、本店所在地の<strong>管轄</strong>である</td><td>⑤-1（24条1号）</td><td><span class="lv lv0">戻せる</span></td></tr>
+</table>
+</div>
+
+<h3>印鑑届</h3>
+<div class="scroll">
+<table>
+<tr><th></th><th>チェック</th><th>根拠</th><th>戻せなさ</th></tr>
+<tr><td class="ck">☐</td><td>会社実印を作成した（辺の長さ1cmの正方形に収まるもの・3cmの正方形に収まらないものは不可）</td><td>規則9条3項</td><td><span class="lv lv1">費用が出る</span></td></tr>
+<tr><td class="ck">☐</td><td>印影が照合に適する（かすれ・欠けがない）</td><td>規則9条4項</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr class="mark"><td class="ck">☐</td><td><strong>印鑑届書に添える市区町村長作成の証明書が「作成後3月以内」</strong>である</td><td>③-10（規則9条5項1号）</td><td><span class="lv lv0">戻せる</span></td></tr>
+</table>
+</div>
+</div>
+
+<div class="stop">
+<div class="label">不可逆点 3</div>
+<p class="t">登録免許税の納付（Phase 7）</p>
+<p>印紙を貼って受付されると、受付時に消印されます（準則45条1項）。現金還付は税務署経由で数週間。再使用証明を受けても、使えるのは<strong>その登記所での登記に、却下または取下げの日から1年以内</strong>に限られます（登録免許税法31条3項・4項）。</p>
+</div>
+
+<!-- P7 -->
+<div class="phase">
+<div class="phead"><span class="pnum">PHASE 7</span><h2 class="ptitle">登録免許税</h2><span class="pnote">越えると 費用が出る</span></div>
+<div class="scroll">
+<table>
+<tr><th></th><th>チェック</th><th>却下事由</th><th>戻せなさ</th></tr>
+<tr><td class="ck">☐</td><td>株式会社：資本金の額×1000分の7と<strong>15万円</strong>を比べ、大きいほうを納める</td><td>⑧-1・⑧-2</td><td><span class="lv lv1">費用が出る</span></td></tr>
+<tr><td class="ck">☐</td><td>合同会社：資本金の額×1000分の7と<strong>6万円</strong>を比べ、大きいほうを納める</td><td>⑧-1・⑧-2</td><td><span class="lv lv1">費用が出る</span></td></tr>
+<tr><td class="ck">☐</td><td>同時に申請する他の登記（支店設置等）の課税区分を分けて数えた</td><td>⑧-3</td><td><span class="lv lv1">費用が出る</span></td></tr>
+<tr><td class="ck">☐</td><td>印紙を貼付する用紙を申請書に綴った</td><td>⑧-1（24条15号）</td><td><span class="lv lv1">費用が出る</span></td></tr>
+</table>
+</div>
+<p class="fine">不足だけなら却下ではなく<strong>納付不足額通知</strong>（登録免許税法28条1項・準則75条）で追納できます。無納付が15号の却下事由です。</p>
+</div>
+
+<div class="stop">
+<div class="label">不可逆点 4</div>
+<p class="t">登記の申請・受付（Phase 8）</p>
+<p>受付されると、<strong>完了まで登記事項証明書が取得できません</strong>。ここで取下げ・却下になると、再申請日が新たな<strong>会社の成立日</strong>になります（会社法49条：株式会社は設立の登記によって成立する）。「◯月1日設立」を狙っているなら、この一点だけで日程が崩れます。</p>
+<p><strong>申請日は逆算して決める。</strong>許認可の申請予定日・取引先への提示日・決算期の設計から引き算し、補正が1回入っても間に合う余裕を取る。</p>
+</div>
+
+<!-- P8 -->
+<div class="phase">
+<div class="phead"><span class="pnum">PHASE 8</span><h2 class="ptitle">申請</h2><span class="pnote">越えると 日付が動く</span></div>
+<div class="scroll">
+<table>
+<tr><th></th><th>チェック</th><th>根拠</th><th>戻せなさ</th></tr>
+<tr class="mark"><td class="ck">☐</td><td>申請日＝会社の成立日でよいか、依頼者と最終確認した</td><td>会社法49条</td><td><span class="lv lv2">日付が動く</span></td></tr>
+<tr><td class="ck">☐</td><td>登記完了予定日を確認し、依頼者に伝えた</td><td>—</td><td><span class="lv lv2">日付が動く</span></td></tr>
+<tr><td class="ck">☐</td><td>申請中は登記事項証明書が取れないことを依頼者に伝えた（金融機関・入札の締切と衝突しないか）</td><td>—</td><td><span class="lv lv2">日付が動く</span></td></tr>
+<tr><td class="ck">☐</td><td>オンライン申請なら、送信後に<strong>「補正のお知らせ」</strong>が届く経路（登記・供託オンライン申請システム）を毎日見る体制にした</td><td>準則52条</td><td><span class="lv lv2">日付が動く</span></td></tr>
+<tr><td class="ck">☐</td><td>受領証の交付を請求するか決めた</td><td>準則44条</td><td><span class="lv lv0">戻せる</span></td></tr>
+</table>
+</div>
+</div>
+
+<!-- P9 -->
+<div class="phase">
+<div class="phead"><span class="pnum">PHASE 9</span><h2 class="ptitle">補正・取下げ・却下の分岐</h2><span class="pnote">最後の分岐点</span></div>
+<p>不備を指摘されたら、<strong>補正期限を最初に確認する</strong>。準則52条により、登記官は「補正を要する事項」「補正期限の年月日」「期限内に補正がされなければ申請を却下する旨」「補正の方法」の4つを告知します。</p>
+<div class="scroll">
+<table>
+<tr><th></th><th>判断</th><th>選ぶ道</th><th>戻せなさ</th></tr>
+<tr><td class="ck">☐</td><td>期限内に直せる不備か</td><td><strong>補正</strong>。受付番号は維持され、成立日は動かない</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="ck">☐</td><td>直せないが、書類を作り直せば通るか</td><td><strong>取下げ</strong>。取下書に受付年月日・受付番号を記載。再使用証明を受けるなら取下げと<strong>同時に</strong>申出</td><td><span class="lv lv2">日付が動く</span></td></tr>
+<tr><td class="ck">☐</td><td>複数の登記を1通で申請していて、一部だけ落とせば残りが通るか</td><td><strong>一部取下げ</strong>（準則54条8項）</td><td><span class="lv lv2">日付が動く</span></td></tr>
+<tr><td class="ck">☐</td><td>登記官の判断に納得できないか</td><td>却下決定を受けたうえで<strong>審査請求</strong>（142条・143条：登記官を経由）。ただし実務は再申請のほうが早い</td><td><span class="lv lv3">戻せない</span></td></tr>
+</table>
+</div>
+<p class="fine">補正期限を過ぎると、準則52条3項により却下されます。<strong>期限内に補正も取下げもしないという選択だけは、絶対に取らない。</strong></p>
+
+<h3>取り下げる／却下されたときの後始末</h3>
+<div class="scroll">
+<table>
+<tr><th></th><th>チェック</th><th>根拠</th></tr>
+<tr><td class="ck">☐</td><td>登録免許税を<strong>現金還付</strong>にするか<strong>再使用証明</strong>にするか、その場で決めた</td><td>登録免許税法31条1項・3項・4項</td></tr>
+<tr class="mark"><td class="ck">☐</td><td>再使用証明にするなら、<strong>同じ登記所で・1年以内に</strong>再申請する見込みがあることを確認した</td><td>登録免許税法31条3項</td></tr>
+<tr><td class="ck">☐</td><td>やはり使わないと決めたら、<strong>証明のあった日から1年を経過した日までに</strong>還付の申出をした</td><td>登録免許税法31条5項／準則78条</td></tr>
+<tr><td class="ck">☐</td><td>還付された申請書・添付書面を受け取り、次の申請に使えるものを仕分けした</td><td>準則54条5項</td></tr>
+<tr><td class="ck">☐</td><td>印鑑届書を再提出する準備をした</td><td>—</td></tr>
+<tr><td class="ck">☐</td><td>成立日がずれることを依頼者に連絡し、許認可・取引先・決算期への影響を再計算した</td><td>会社法49条</td></tr>
+</table>
+</div>
+</div>
+
+<div class="stop">
+<div class="label">不可逆点 5</div>
+<p class="t">登記の完了（Phase 10）</p>
+<p>「申請の取下げは、登記完了後は、することができない。」（準則54条2項）。誤りに気づいても取り下げられません。残る道は<strong>更正の申請</strong>（商業登記法132条：登記に錯誤又は遺漏があるとき）か<strong>抹消の申請</strong>（同134条）だけで、いずれも登記簿に履歴が残ります。</p>
+</div>
+
+<!-- P10 -->
+<div class="phase">
+<div class="phead"><span class="pnum">PHASE 10</span><h2 class="ptitle">完了後</h2><span class="pnote">戻せない</span></div>
+<div class="scroll">
+<table>
+<tr><th></th><th>チェック</th><th>期限</th></tr>
+<tr class="mark"><td class="ck">☐</td><td>登記事項証明書・印鑑証明書・印鑑カードを取得し、登記事項を<strong>1項目ずつ定款と突き合わせた</strong></td><td>完了直後</td></tr>
+<tr><td class="ck">☐</td><td>誤りがあれば更正の申請（132条）／抹消の申請（134条）を検討した</td><td>気づき次第</td></tr>
+<tr><td class="ck">☐</td><td>法人設立届出書を税務署・都道府県・市町村へ提出した</td><td>各所定期限</td></tr>
+<tr><td class="ck">☐</td><td>青色申告の承認申請書を提出した</td><td>設立から3か月以内または最初の事業年度終了日の早いほう</td></tr>
+<tr><td class="ck">☐</td><td>給与支払事務所等の開設届出書を提出した</td><td>開設から1か月以内</td></tr>
+<tr><td class="ck">☐</td><td>社会保険（健康保険・厚生年金）の新規適用届を提出した</td><td>所定期限</td></tr>
+<tr><td class="ck">☐</td><td>許認可の申請に着手した（登記事項証明書が要るものはここから）</td><td>—</td></tr>
+<tr><td class="ck">☐</td><td>法人口座の開設に着手した</td><td>—</td></tr>
+</table>
+</div>
+</div>
+
+<section>
+<h2>1枚まとめ ── 時系列と戻せなさ</h2>
+<div class="scroll">
+<table>
+<tr><th>Phase</th><th>やること</th><th>ここで確定するもの</th><th>戻せなさ</th></tr>
+<tr><td class="k">0</td><td>ヒアリング</td><td>複雑ケース4つの有無、期限</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="k">1</td><td>商号・本店・目的</td><td>却下事由の最大の発生源</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="k">2</td><td>定款作成</td><td>電子署名の前提</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr class="mark"><td class="k">3</td><td>定款認証</td><td>定款の内容</td><td><span class="lv lv1">費用が出る</span></td></tr>
+<tr class="mark"><td class="k">4</td><td>払込</td><td>資本金・払込日</td><td><span class="lv lv2">日付が動く</span></td></tr>
+<tr><td class="k">5</td><td>役員選任・調査</td><td>就任承諾・本人確認</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr><td class="k">6</td><td>申請書・添付書面・印鑑届</td><td>規則61条の充足</td><td><span class="lv lv0">戻せる</span></td></tr>
+<tr class="mark"><td class="k">7</td><td>登録免許税</td><td>納付・消印</td><td><span class="lv lv1">費用が出る</span></td></tr>
+<tr class="mark"><td class="k">8</td><td>申請（受付）</td><td>会社の成立日</td><td><span class="lv lv2">日付が動く</span></td></tr>
+<tr><td class="k">9</td><td>補正／取下げ／却下</td><td>成立日を守れるかの分岐</td><td><span class="lv lv2">日付が動く</span></td></tr>
+<tr class="mark"><td class="k">10</td><td>完了</td><td>登記簿の記載</td><td><span class="lv lv3">戻せない</span></td></tr>
+</table>
+</div>
+</section>
+
+<footer>
+<h4>一次資料</h4>
+<ul>
+<li>商業登記法（昭和38年法律第125号）— <a href="https://laws.e-gov.go.jp/law/338AC0000000125">e-Gov</a>（17条・24条・27条・52条・132条・134条・142〜146条）</li>
+<li>商業登記規則（昭和39年法務省令第23号）— <a href="https://laws.e-gov.go.jp/law/339M50000010023">e-Gov</a>（9条・36条4項・50条・61条）</li>
+<li>登録免許税法（昭和42年法律第35号）— <a href="https://laws.e-gov.go.jp/law/342AC0000000035">e-Gov</a>（28条・31条）</li>
+<li>商業登記等事務取扱手続準則（平成17年3月2日付け法務省民商第500号民事局長通達）— <a href="https://www.moj.go.jp/content/001406310.pdf">法務省</a>（40条4項・44条・45条・52条・52条の2・53条・54条・75〜79条）</li>
+<li>商号にローマ字等を用いることについて（平成14年7月31日法務省告示）— <a href="https://www.moj.go.jp/MINJI/minji44.html">法務省</a></li>
+<li>「会社法施行後の会社の目的における具体性の審査の在り方」に関する意見募集の実施結果 — <a href="https://www.moj.go.jp/MINJI/public_minji65_result_minji65.html">法務省</a></li>
+</ul>
+
+<h4>裏取りが済んでいない箇所</h4>
+<p>先例3件（昭和35年11月26日民甲2966／昭和40年7月22日民四242／昭和30年5月10日民四100）は実務解説経由で日付・番号を確認したもので、法務省の一次公表文には当たれていません。引用時は登記先例集で原文確認を推奨します。<br>
+Phase 10 の税務・社会保険の期限は一般的な取扱いによるもので、一次資料に当たっていません。実際の期限は税務署・年金事務所で確認してください。</p>
+</footer>
+
+</div>
+
+</body>
+</html>

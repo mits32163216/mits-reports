@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚖️</text></svg>">
+<title>法人登記 却下事例集</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap">
+
+<style>
+:root{
+  --paper:#f6f6f2;
+  --card:#fffffd;
+  --ink:#191b1d;
+  --ink-2:#585d63;
+  --ink-3:#8b8f94;
+  --kon:#27374f;
+  --kon-soft:#e5e9f0;
+  --shu:#b2352a;
+  --shu-soft:#f7e7e4;
+  --rule:#dedcd4;
+  --rule-2:#ebe9e2;
+  --mincho:"Shippori Mincho B1",'Hiragino Mincho ProN',serif;
+  --gothic:"Zen Kaku Gothic New",'Hiragino Sans','Yu Gothic',system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#15171a;
+    --card:#1c1f23;
+    --ink:#e9e7e1;
+    --ink-2:#a4a8ae;
+    --ink-3:#7c8188;
+    --kon:#93accf;
+    --kon-soft:#232c3a;
+    --shu:#e2796a;
+    --shu-soft:#33211f;
+    --rule:#31353a;
+    --rule-2:#26292e;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#15171a;
+  --card:#1c1f23;
+  --ink:#e9e7e1;
+  --ink-2:#a4a8ae;
+  --ink-3:#7c8188;
+  --kon:#93accf;
+  --kon-soft:#232c3a;
+  --shu:#e2796a;
+  --shu-soft:#33211f;
+  --rule:#31353a;
+  --rule-2:#26292e;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--gothic);
+  font-size:16px;
+  line-height:1.95;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:960px;margin:0 auto;padding:44px 20px 96px;display:flex;flex-direction:column;gap:0}
+
+/* ---- masthead ---- */
+.mast{border-bottom:2px solid var(--ink);padding-bottom:20px;margin-bottom:34px}
+.eyebrow{
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--shu);font-weight:700;margin-bottom:12px;
+}
+h1{
+  font-family:var(--mincho);font-weight:700;
+  font-size:clamp(1.7rem,5.2vw,2.5rem);
+  line-height:1.35;margin:0 0 14px;text-wrap:balance;letter-spacing:.02em;
+}
+.standfirst{font-size:.95rem;color:var(--ink-2);margin:0;max-width:62ch}
+.meta{
+  font-family:var(--mono);font-size:.72rem;color:var(--ink-3);
+  margin-top:16px;line-height:1.8;
+}
+
+/* ---- sections ---- */
+section{margin-top:52px}
+h2{
+  font-family:var(--mincho);font-weight:700;
+  font-size:clamp(1.18rem,3.4vw,1.42rem);
+  line-height:1.45;margin:0 0 6px;text-wrap:balance;
+  display:flex;align-items:baseline;gap:.7em;
+}
+h2 .num{
+  font-family:var(--mono);font-size:.7em;color:var(--shu);
+  font-weight:700;flex:none;
+}
+.h2rule{height:1px;background:var(--ink);opacity:.85;margin:0 0 22px}
+h3{
+  font-family:var(--mincho);font-weight:700;font-size:1.03rem;
+  margin:34px 0 4px;color:var(--kon);text-wrap:balance;
+}
+h3 + p, h3 + .scroll{margin-top:8px}
+p{margin:0 0 14px;max-width:66ch}
+p:last-child{margin-bottom:0}
+.lede{font-size:1rem}
+
+/* ---- blocks ---- */
+.panel{
+  background:var(--card);border:1px solid var(--rule);
+  border-radius:3px;padding:20px 22px;margin:18px 0;
+  display:flex;flex-direction:column;gap:12px;
+}
+.panel > *{margin:0}
+.flag{
+  background:var(--card);border:1px solid var(--rule);
+  border-left:3px solid var(--shu);
+  border-radius:2px;padding:18px 22px;margin:20px 0;
+  display:flex;flex-direction:column;gap:10px;
+}
+.flag > *{margin:0}
+.flag strong{color:var(--shu)}
+.quote{
+  font-family:var(--mincho);font-style:normal;
+  color:var(--ink-2);border-left:2px solid var(--rule);
+  padding-left:14px;margin:0;font-size:.94rem;
+}
+.fine{font-size:.85rem;color:var(--ink-2);line-height:1.85}
+
+/* ---- tables ---- */
+.scroll{overflow-x:auto;margin:16px 0;border:1px solid var(--rule);border-radius:3px;background:var(--card)}
+table{width:100%;border-collapse:collapse;font-size:.88rem;line-height:1.75;min-width:100%}
+caption{
+  text-align:left;padding:12px 14px 10px;font-weight:700;
+  font-family:var(--mincho);font-size:.95rem;border-bottom:1px solid var(--rule);
+}
+th,td{border-bottom:1px solid var(--rule-2);padding:9px 13px;text-align:left;vertical-align:top}
+th{
+  background:var(--kon-soft);color:var(--ink);font-weight:700;
+  font-size:.78rem;letter-spacing:.04em;white-space:nowrap;
+  border-bottom:1px solid var(--rule);
+}
+tr:last-child td{border-bottom:none}
+td.k{
+  font-family:var(--mono);font-weight:700;color:var(--shu);
+  white-space:nowrap;width:1%;font-size:.82rem;
+}
+td.c{text-align:center;font-family:var(--mono);font-size:.95rem;width:1%}
+tr.mark td{background:var(--shu-soft)}
+:root[data-theme="dark"] tr.mark td,
+:root:not([data-theme="light"]) tr.mark td{background:var(--shu-soft)}
+
+/* ---- source tags ---- */
+.tag{
+  display:inline-block;font-family:var(--mono);font-size:.66rem;
+  font-weight:700;letter-spacing:.06em;padding:1px 6px;border-radius:2px;
+  white-space:nowrap;vertical-align:1px;
+}
+.t1{background:var(--kon);color:var(--paper)}
+.t2{background:transparent;color:var(--ink-2);border:1px solid var(--rule)}
+.t3{background:transparent;color:var(--ink-3);border:1px dashed var(--rule)}
+
+ul,ol{padding-left:1.35em;margin:0 0 14px;max-width:66ch}
+li{margin-bottom:6px}
+li:last-child{margin-bottom:0}
+a{color:var(--kon);text-underline-offset:2px}
+a:focus-visible,:focus-visible{outline:2px solid var(--shu);outline-offset:2px}
+code{font-family:var(--mono);font-size:.85em;background:var(--kon-soft);padding:1px 5px;border-radius:2px}
+
+footer{
+  margin-top:64px;border-top:2px solid var(--ink);padding-top:22px;
+  font-size:.8rem;color:var(--ink-2);line-height:1.9;
+}
+footer h4{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--shu);margin:20px 0 8px;font-weight:700;
+}
+footer h4:first-child{margin-top:0}
+footer ul{padding-left:1.1em;max-width:none}
+footer li{margin-bottom:4px}
+@media (max-width:560px){
+  body{font-size:15px}
+  .wrap{padding:32px 15px 72px}
+  th,td{padding:8px 10px}
+}
+
+.sitenav{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid var(--rule);
+  display:flex;gap:0;align-items:stretch;margin:-44px -20px 30px;padding:0 20px;flex-wrap:wrap}
+.sitenav a{font-family:var(--mono);font-size:.72rem;letter-spacing:.05em;padding:11px 14px 10px;
+  text-decoration:none;color:var(--ink-2);border-bottom:2px solid transparent}
+.sitenav a:hover{color:var(--ink)}
+.sitenav a[aria-current="page"]{color:var(--shu);border-bottom-color:var(--shu);font-weight:700}
+.sitenav .home{margin-right:auto;color:var(--ink-3)}
+@media (max-width:560px){.sitenav{margin:-32px -15px 22px;padding:0 8px}.sitenav a{padding:10px 9px;font-size:.68rem}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+<nav class="sitenav">
+<a class="home" href="https://reports.7years.life/private/">← 一覧</a>
+<a href="index.html" aria-current="page">却下事例集</a>
+<a href="checklist.html">チェックリスト</a>
+</nav>
+
+
+<header class="mast">
+  <div class="eyebrow">商業登記法 24 条 / 9分類 42事例</div>
+  <h1>法人登記 却下事例集</h1>
+  <p class="standfirst">登記官が申請を却下する事由は限定列挙です。実際に却下された事例を、条文の15の箱に割り付けて整理しました。設立代行で行政書士が先に潰せる範囲を意識しています。</p>
+  <div class="meta">
+    2026-09-03 作成<br>
+    一次資料 — 商業登記法（昭和38年法律第125号）／商業登記規則（昭和39年法務省令第23号）／商業登記等事務取扱手続準則（平成17年3月2日付け法務省民商第500号民事局長通達）／登録免許税法（昭和42年法律第35号）／法務省民事局長回答
+  </div>
+</header>
+
+<div class="flag">
+  <p><strong>業際について先に1点。</strong>登記申請とその代理は司法書士の専管業務（司法書士法3条1項1号・73条）、行政書士が担うのは定款作成・電子定款・議事録等の書類作成と許認可です。ただし<strong>却下事由の過半は「定款と添付書面の段階」で作り込まれる</strong>ため、行政書士側で潰せる範囲は広い。本書はその境界を意識して整理しています。</p>
+</div>
+
+<!-- 1 -->
+<section>
+<h2><span class="num">01</span>まず前提 — 却下はめったに出ない</h2>
+<div class="h2rule"></div>
+
+<p class="lede">却下は登記官の一方的な処分で、決定書が作成・交付されます（準則53条1項）。しかも却下事由が簡単明瞭な場合を除き、<strong>登記官は決定書の謄本を添えて法務局長・地方法務局長に報告しなければならない</strong>（同5項）。登記官の側にも負荷がかかります。</p>
+<p>そのため実務は次の順路で流れ、却下決定に到達する前にほとんどが消えます。</p>
+
+<div class="scroll">
+<table>
+<tr><th>段階</th><th>内容</th><th>根拠</th></tr>
+<tr><td class="k">①補正</td><td>登記官が定めた相当の期間内に申請人が不備を直せば却下しない。補正を要する事項・補正期限・期限内に補正しなければ却下する旨・補正の方法を告知する。</td><td>商業登記法24条ただし書／準則52条</td></tr>
+<tr><td class="k">②取下げ</td><td>「登記の申請を却下しなければならない場合であっても、登記官が相当と認めるときは、事前にその旨を申請人又はその代理人に告げ、その申請の取下げの機会を設けることができる。」</td><td>準則40条4項</td></tr>
+<tr><td class="k">③却下</td><td>「補正期限内に補正されず、又は取り下げられなかった申請は、当該期限の経過後に却下するものとする。」</td><td>準則52条3項</td></tr>
+</table>
+</div>
+
+<p class="fine">→ 「却下された事例」として表に出てくるものは、①②を蹴ってなお通らなかったもの＝<strong>補正で治せない性質の不備</strong>に偏ります。以下の分類は、そこに焦点を当てています。</p>
+</section>
+
+<!-- 2 -->
+<section>
+<h2><span class="num">02</span>却下事由の法定 — 商業登記法24条 全15号</h2>
+<div class="h2rule"></div>
+
+<p>却下事由は<strong>限定列挙</strong>です。24条各号に当たらない限り登記官は登記しなければならない。逆に言えば、却下事例はすべてこの15の箱のどれかに入ります。</p>
+
+<div class="scroll">
+<table>
+<tr><th>号</th><th>却下事由（原文）</th><th>補正</th></tr>
+<tr><td class="k">一</td><td>申請に係る当事者の営業所の所在地が当該申請を受けた登記所の管轄に属しないとき。</td><td class="c">×</td></tr>
+<tr><td class="k">二</td><td>申請が登記すべき事項以外の事項の登記を目的とするとき。</td><td class="c">△</td></tr>
+<tr><td class="k">三</td><td>申請に係る登記がその登記所において既に登記されているとき。</td><td class="c">×</td></tr>
+<tr><td class="k">四</td><td>申請の権限を有しない者の申請によるとき、又は申請の権限を有する者であることの証明がないとき。</td><td class="c">△</td></tr>
+<tr><td class="k">五</td><td>第21条3項に規定する場合において、当該申請に係る登記をすることにより同項の登記の申請書のうち他の申請書に係る登記をすることができなくなるとき。</td><td class="c">×</td></tr>
+<tr><td class="k">六</td><td>申請書がこの法律に基づく命令又はその他の法令の規定により定められた方式に適合しないとき。</td><td class="c">○</td></tr>
+<tr><td class="k">七</td><td>申請書に必要な書面（19条の2の電磁的記録を含む）を添付しないとき。</td><td class="c">○</td></tr>
+<tr><td class="k">八</td><td>申請書又はその添付書面の記載又は記録が、申請書の添付書面又は登記簿の記載又は記録と合致しないとき。</td><td class="c">△</td></tr>
+<tr><td class="k">九</td><td>登記すべき事項につき無効又は取消しの原因があるとき。</td><td class="c">×</td></tr>
+<tr><td class="k">十</td><td>申請につき経由すべき登記所を経由しないとき。</td><td class="c">×</td></tr>
+<tr><td class="k">十一</td><td>同時にすべき他の登記の申請を同時にしないとき。</td><td class="c">×</td></tr>
+<tr><td class="k">十二</td><td>申請が27条の規定により登記することができない商号の登記を目的とするとき。</td><td class="c">×</td></tr>
+<tr><td class="k">十三</td><td>申請が法令の規定により使用を禁止された商号の登記を目的とするとき。</td><td class="c">×</td></tr>
+<tr><td class="k">十四</td><td>商号の登記を抹消されている会社が商号の登記をしないで他の登記を申請したとき。</td><td class="c">×</td></tr>
+<tr><td class="k">十五</td><td>登録免許税を納付しないとき。</td><td class="c">△</td></tr>
+</table>
+</div>
+
+<p class="fine">24条本文ただし書「当該申請の不備が補正することができるものである場合において、登記官が定めた相当の期間内に、申請人がこれを補正したときは、この限りでない。」／25条：登記すべき事項につき訴えをもってのみ主張できる無効・取消原因があり、提訴期間内に訴えが提起されなかったときは9号を適用しない。</p>
+</section>
+
+<!-- 3 -->
+<section>
+<h2><span class="num">03</span>却下事例の分類 — 9分類 42事例</h2>
+<div class="h2rule"></div>
+
+<div class="panel">
+<p style="font-weight:700;font-family:var(--mincho)">出所タグの凡例</p>
+<p class="fine"><span class="tag t1">一次</span> 条文・規則・準則・法務省告示・法務省民事局長回答（先例）に明記<br>
+<span class="tag t2">二次</span> 法務局の解説、または司法書士・実務家の解説に実例として記載<br>
+<span class="tag t3">推論</span> 条文の却下事由から本書が導いた類型。実例の裏取りは未了</p>
+</div>
+
+<h3>① 目的（24条2号）— 先例が最も蓄積している領域</h3>
+<p>会社の目的は<strong>適法性・営利性・明確性・具体性</strong>の4要件で審査されます。ここは法務省民事局長回答が残っており、「実際に登記できないとされた事例」がそのまま拾えます。</p>
+
+<div class="scroll">
+<table>
+<tr><th></th><th>却下された目的</th><th>理由</th><th>先例・根拠</th><th>出所</th></tr>
+<tr class="mark"><td class="k">①-1</td><td>債権の取立業務</td><td>弁護士法72条（非弁行為）に抵触。適法性を欠く</td><td>昭和35年11月26日 民甲2966</td><td><span class="tag t1">一次</span></td></tr>
+<tr class="mark"><td class="k">①-2</td><td>社会福祉への出費ならびに永勤退職従業員の扶助</td><td>利益を得る可能性がない。営利性を欠く</td><td>昭和40年7月22日 民四242</td><td><span class="tag t1">一次</span></td></tr>
+<tr class="mark"><td class="k">①-3</td><td>会社および業界利益のための出費ならびに政治献金</td><td>同上。営利性を欠く</td><td>昭和40年7月22日 民四242</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">①-4</td><td>弁護士業・司法書士業・税理士業など資格者の独占業務</td><td>会社が主体となれない。適法性を欠く</td><td>各業法の名称・業務独占規定</td><td><span class="tag t2">二次</span></td></tr>
+<tr><td class="k">①-5</td><td>賭博場の運営／詐欺の請負／窃盗の代理／覚せい剤の販売</td><td>強行法規・公序良俗違反</td><td>適法性の一般基準</td><td><span class="tag t2">二次</span></td></tr>
+<tr><td class="k">①-6</td><td>ボランティア活動</td><td>営利性を欠く</td><td>営利性の一般基準</td><td><span class="tag t2">二次</span></td></tr>
+<tr><td class="k">①-7</td><td>専門用語辞典にしかない語をそのまま用いた目的</td><td>取引の相手方が何の事業か理解できない。括弧書きで語義を添えれば可</td><td>明確性の一般基準</td><td><span class="tag t2">二次</span></td></tr>
+<tr><td class="k">①-8</td><td>具体性を欠く目的</td><td>会社法施行後も<strong>具体性の審査は継続</strong>。法務省は意見募集の結果、基準の法令化を見送りつつ「取引に支障が生ずるおそれ」を理由に審査継続の方針を示し、登記官に一定の裁量が残るとした</td><td>法務省「会社法施行後の会社の目的における具体性の審査の在り方」意見募集結果</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">①-9</td><td>参考・認められた例 — 産婦人科病院の経営を目的とする株式会社の設立</td><td>適法性・営利性を認めた</td><td>昭和30年5月10日 民四100</td><td><span class="tag t1">一次</span></td></tr>
+</table>
+</div>
+
+<p class="fine">設立代行の実例サイトが「事前相談が必要な複雑ケース」として<strong>事業目的25個以上</strong>を挙げているのは、目的が増えるほど①-4〜①-8に触れる確率が上がり、公証役場・法務局の双方で止まりやすくなるためです。</p>
+
+<h3>② 商号（24条12号・13号、規則50条）</h3>
+<div class="scroll">
+<table>
+<tr><th></th><th>却下される商号</th><th>理由</th><th>根拠</th><th>出所</th></tr>
+<tr><td class="k">②-1</td><td>同一の所在場所に、既に登記された同一の商号がある</td><td>「商号の登記は、その商号が他人の既に登記した商号と同一であり、かつ、その営業所（会社にあつては、本店）の所在場所が当該他人の商号の登記に係る営業所の所在場所と同一であるときは、することができない。」</td><td>商業登記法27条・24条12号</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">②-2</td><td>法令で使用を禁止された名称（銀行・信託・保険等、会社でない者の「会社」の文字）</td><td>13号</td><td>商業登記法24条13号＋各業法</td><td><span class="tag t1">一次</span></td></tr>
+<tr class="mark"><td class="k">②-3</td><td>指定外の符号を用いた商号</td><td>使えるのは ①ローマ字（大文字・小文字） ②アラビヤ数字 ③「&amp;」「'」「，」「‐」「．」「・」のみ</td><td>商業登記規則50条＋平成14年7月31日法務省告示</td><td><span class="tag t1">一次</span></td></tr>
+<tr class="mark"><td class="k">②-4</td><td>③の符号を商号の<strong>先頭または末尾</strong>に用いた</td><td>「字句（日本文字を含む。）を区切る際の符号として使用する場合に限り用いることができます。したがって、商号の先頭又は末尾に用いることはできません。」ただしピリオドは省略を表すものとして末尾に置ける</td><td>同上</td><td><span class="tag t1">一次</span></td></tr>
+<tr class="mark"><td class="k">②-5</td><td>ローマ字と数字が混在した部分でスペースを使った<br><span class="fine">実例「株式会社MORI２　AGENT　FIRM」</span></td><td>告示は「ローマ字を用いて複数の単語を表記する場合に限り、当該単語の間を区切るために空白を用いることもできます」。法務局はこれを<strong>ローマ字のみを用いる場合</strong>と文理解釈し、数字を含む「MORI２」は対象外としてスペースを認めなかった</td><td>同上／実務例</td><td><span class="tag t1">一次</span> <span class="tag t2">二次</span></td></tr>
+<tr><td class="k">②-6</td><td>商号の登記を抹消されている会社が、商号の登記をしないで他の登記を申請</td><td>14号</td><td>商業登記法24条14号</td><td><span class="tag t1">一次</span></td></tr>
+</table>
+</div>
+
+<h3>③ 添付書面の欠缺（24条7号）— 規則61条が根拠のかたまり</h3>
+<p>商業登記規則61条は、添付が要る書面を項ごとに定めています。ここを落とすと7号（実務上は補正指示が先）。</p>
+<div class="scroll">
+<table>
+<tr><th></th><th>落とすと止まる書面</th><th>根拠</th><th>出所</th></tr>
+<tr><td class="k">③-1</td><td>定款または裁判所の許可書（定款の定め・裁判所の許可がなければ無効・取消原因が生じる申請）</td><td>規則61条1項</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">③-2</td><td>株主全員・種類株主全員の同意を証する書面</td><td>規則61条2項</td><td><span class="tag t1">一次</span></td></tr>
+<tr class="mark"><td class="k">③-3</td><td><strong>株主リスト</strong>（株主総会・種類株主総会の決議を要する場合。議決権割合が上位の株主につき、10名か、割合を加算して3分の2に達するまでの人数の、いずれか<strong>少ない人数</strong>）</td><td>規則61条3項</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">③-4</td><td>設立時取締役（取締役会設置会社では設立時代表取締役・設立時代表執行役）の就任承諾書に押した印鑑の市区町村長作成の証明書。取締役の就任（再任を除く）も同じ</td><td>規則61条4項・5項</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">③-5</td><td>代表取締役・代表執行役の就任時の、議事録等に押印した印鑑の証明書（株主総会決議／取締役の互選／取締役会決議の区分ごと）。変更前の代表者の届出印と同一なら不要</td><td>規則61条6項</td><td><span class="tag t1">一次</span></td></tr>
+<tr class="mark"><td class="k">③-6</td><td><strong>本人確認証明書</strong>（設立、または取締役・監査役・執行役の就任〈再任を除く〉。就任承諾書記載の氏名住所と<strong>同一の氏名住所</strong>が記載された、市区町村長その他の公務員が職務上作成した証明書）。③-4・③-5の印鑑証明書を付ける場合は不要</td><td>規則61条7項</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">③-7</td><td>代表取締役等の<strong>辞任</strong>時の、辞任届に押印した印鑑の証明書。届出印と同一なら不要</td><td>規則61条8項</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">③-8</td><td>資本金の額が会社法・会社計算規則に従って計上されたことを証する書面（設立・増資・減資）</td><td>規則61条9項</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">③-9</td><td>分配可能額・欠損額の存在を証する書面</td><td>規則61条10項</td><td><span class="tag t1">一次</span></td></tr>
+<tr class="mark"><td class="k">③-10</td><td>印鑑届書に添える市区町村長作成の証明書が<strong>作成後3月以内</strong>でない</td><td>規則9条5項1号</td><td><span class="tag t1">一次</span></td></tr>
+</table>
+</div>
+
+<h3>④ 電子申請・電磁的記録（24条7号）</h3>
+<p>準則52条の2第3項は、電子署名の検証結果が次に該当すれば<strong>24条7号該当として却下しなければならない</strong>と明示しています。オンライン申請・電子定款を扱う以上、ここは直撃します。</p>
+<div class="scroll">
+<table>
+<tr><th></th><th>却下される状態</th><th>出所</th></tr>
+<tr><td class="k">④-1</td><td>コンピュータ・ウイルスが検出された</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">④-2</td><td>電子署名の検証の結果、記録された情報が改ざんされていることが検知された（検証に失敗した）</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">④-3</td><td>情報の作成者として表示された者と、電子署名をした者として表示された者が異なる</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">④-4</td><td>電子証明書が、署名を行った時に不存在・有効期限切れ・失効・保留だった（委任状情報を除く）</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">④-5</td><td>委任状情報の電子証明書が、申請の受付時に不存在・期限切れ・失効・保留だった</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">④-6</td><td>電子証明書が商業登記規則36条4項各号に規定するものでない</td><td><span class="tag t1">一次</span></td></tr>
+</table>
+</div>
+<p class="fine">④-4・④-5には救済の但書があります。先行する登記の申請受付のみを理由に保留されていた場合で、結果として登記事項に変更が生じなかったときは却下不要。委任状情報について、外国会社の日本における代表者の住所が検証結果と異なっても、同一人と確認できる情報が提供され登記官が相当と認めれば却下不要。</p>
+
+<h3>⑤ 管轄・経由・同時申請（24条1号・10号・11号）</h3>
+<div class="scroll">
+<table>
+<tr><th></th><th>却下される場面</th><th>根拠</th><th>出所</th></tr>
+<tr><td class="k">⑤-1</td><td>本店所在地の管轄外の登記所に申請した</td><td>24条1号</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">⑤-2</td><td>経由すべき登記所を経由しなかった（管轄外本店移転）</td><td>24条10号</td><td><span class="tag t1">一次</span></td></tr>
+<tr class="mark"><td class="k">⑤-3</td><td>管轄外本店移転で、旧所在地・新所在地の申請のいずれかに24条各号の事由があるとき — 旧所在地の登記所は<strong>これらの申請を共に却下しなければならない</strong></td><td>商業登記法52条1項</td><td><span class="tag t1">一次</span></td></tr>
+<tr class="mark"><td class="k">⑤-4</td><td>新所在地の登記所が申請を却下したときは、<strong>旧所在地における申請も却下されたものとみなす</strong></td><td>商業登記法52条5項</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">⑤-5</td><td>新設合併の設立登記と消滅会社の解散登記、新設分割の設立登記と分割会社の変更登記などを同時に申請しなかった</td><td>24条11号（82条3項・87条2項・91条2項）</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">⑤-6</td><td>21条3項（2以上の申請書を同時に受け取った／前後が不明）の場面で、当該登記をすると他の申請が登記できなくなる</td><td>24条5号</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">⑤-7</td><td>同一内容が既に登記されている（二重申請）</td><td>24条3号</td><td><span class="tag t1">一次</span></td></tr>
+</table>
+</div>
+
+<h3>⑥ 権限・本人性（24条4号、23条の2）</h3>
+<div class="scroll">
+<table>
+<tr><th></th><th>却下される場面</th><th>根拠</th><th>出所</th></tr>
+<tr><td class="k">⑥-1</td><td>申請の権限を有しない者の申請</td><td>24条4号前段</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">⑥-2</td><td>権限を有する者であることの証明がない（資格証明・委任状の欠缺）</td><td>24条4号後段</td><td><span class="tag t1">一次</span></td></tr>
+<tr class="mark"><td class="k">⑥-3</td><td>登記官が「申請人となるべき者以外の者が申請していると疑うに足りる相当な理由がある」と認め、出頭・質問・文書提示等による調査を行った結果、申請権限が確認できない</td><td>商業登記法23条の2</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">⑥-4</td><td>偽造された書類その他の不正な登記の申請に用いられた疑いのある書類 — 取り下げても<strong>還付されない</strong></td><td>準則54条5項ただし書</td><td><span class="tag t1">一次</span></td></tr>
+</table>
+</div>
+
+<h3>⑦ 実体の無効・取消原因（24条9号）</h3>
+<div class="scroll">
+<table>
+<tr><th></th><th>却下される場面</th><th>出所</th></tr>
+<tr><td class="k">⑦-1</td><td>株主総会・取締役会の決議が実は成立していない（定足数不足、招集手続の瑕疵）</td><td><span class="tag t3">推論</span></td></tr>
+<tr><td class="k">⑦-2</td><td>効力発生日が未到来のまま組織再編の登記を申請した</td><td><span class="tag t3">推論</span></td></tr>
+<tr><td class="k">⑦-3</td><td>就任承諾・辞任の意思表示に瑕疵がある</td><td><span class="tag t3">推論</span></td></tr>
+<tr><td class="k">⑦-4</td><td>前提となる契約（合併契約・分割契約）が解除されている</td><td><span class="tag t3">推論</span></td></tr>
+</table>
+</div>
+<p class="fine">9号には25条の例外があります。登記すべき事項につき<strong>訴えをもってのみ主張できる</strong>無効・取消原因があり、その訴えが提起期間内に提起されなかったときは9号を適用しない。会社設立無効の訴え・株主総会決議取消しの訴えなどが該当します。</p>
+
+<h3>⑧ 登録免許税（24条15号）</h3>
+<div class="scroll">
+<table>
+<tr><th></th><th>場面</th><th>扱い</th><th>出所</th></tr>
+<tr><td class="k">⑧-1</td><td>登録免許税を納付しない</td><td>15号で却下</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">⑧-2</td><td>納付額が不足している</td><td>却下ではなく<strong>納付不足額通知</strong>（登録免許税法28条1項／準則75条、別記第46号様式）で追納</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">⑧-3</td><td>課税区分・件数の数え違い</td><td>不足なら⑧-2、無納付なら⑧-1</td><td><span class="tag t3">推論</span></td></tr>
+</table>
+</div>
+
+<h3>⑨ 申請書の方式・記載（24条6号・8号・2号）</h3>
+<div class="scroll">
+<table>
+<tr><th></th><th>場面</th><th>出所</th></tr>
+<tr><td class="k">⑨-1</td><td>申請書の記名押印がない（商業登記法17条2項）</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">⑨-2</td><td>本店・住所の表記誤り（「1-2-3」の省略形、丁目とそれ以下の数字表記の取り違え、住居表示と地番の混同）</td><td><span class="tag t2">二次</span></td></tr>
+<tr><td class="k">⑨-3</td><td>申請書と添付書面・登記簿の記載が合致しない（議事録の日付と申請書の変更年月日のずれ、氏名の字体の相違）</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">⑨-4</td><td>登記事項でないものを登記しようとした（内部規律の記載など）</td><td><span class="tag t1">一次</span></td></tr>
+<tr><td class="k">⑨-5</td><td>官庁の許可を要する登記で、許可書の到達年月日を記載していない／許可が未了（商業登記法17条2項5号）</td><td><span class="tag t1">一次</span></td></tr>
+</table>
+</div>
+
+<div class="panel">
+<p style="font-weight:700;font-family:var(--mincho)">出所の内訳（42事例）</p>
+<div class="scroll" style="margin:0">
+<table>
+<tr><th>出所</th><th>件数</th><th>内訳</th></tr>
+<tr><td><span class="tag t1">一次</span>を含む</td><td class="c">34</td><td>①-1〜3・①-8・①-9、②-1〜②-6、③-1〜③-10、④-1〜④-6、⑤-1〜⑤-7、⑥-1〜⑥-4、⑧-1・⑧-2、⑨-1・⑨-3・⑨-4・⑨-5</td></tr>
+<tr><td><span class="tag t2">二次</span>のみ</td><td class="c">5</td><td>①-4、①-5、①-6、①-7、⑨-2</td></tr>
+<tr><td><span class="tag t3">推論</span>のみ</td><td class="c">5</td><td>⑦-1〜⑦-4、⑧-3</td></tr>
+</table>
+</div>
+<p class="fine">34＋5＋5＝44 と数が合わないのは、②-5 が一次と二次の両方に、①-9 が「認められた例」として一次に入るためで、実事例の総数は42です。推論のみの5件（⑦の実体瑕疵、⑧-3）は9号・15号の解釈から導いたもので、公表された却下事例での裏取りは済んでいません。</p>
+</div>
+</section>
+
+<!-- 4 -->
+<section>
+<h2><span class="num">04</span>却下されたときに何が起きるか</h2>
+<div class="h2rule"></div>
+
+<div class="scroll">
+<table>
+<tr><th>項目</th><th>内容</th><th>根拠</th></tr>
+<tr><td>決定書</td><td>登記官は決定書を作成し申請人に交付。代理人による申請なら代理人への交付で足りる。送付による交付も可</td><td>準則53条1項・2項</td></tr>
+<tr><td>様式・保存</td><td>別記第30号様式。申請人交付分のほか登記所保存分を1通作成。決定原本つづり込み帳に綴る</td><td>準則53条3項・4項</td></tr>
+<tr><td>局長への報告</td><td>決定書の謄本を添えて法務局長・地方法務局長に報告。<strong>却下事由が簡単で明瞭なものである場合を除く</strong></td><td>準則53条5項</td></tr>
+<tr><td>記録</td><td>受付帳に「却下」と記録し、申請書に却下した旨を記載して申請書類つづり込み帳に綴る</td><td>準則53条6項</td></tr>
+<tr><td>決定書の返送</td><td>所在不明等で返送されても<strong>何らの措置を要しない</strong>。返送された決定書を申請書と共に綴る</td><td>準則53条7項</td></tr>
+<tr><td>登録免許税</td><td>納付済みなら、登記機関が納税地の所轄税務署長へ<strong>還付通知</strong>（再使用証明をする場合を除く）</td><td>登録免許税法31条1項1号</td></tr>
+<tr class="mark"><td>再使用証明</td><td>却下に伴い申請書を返付する場合、登記機関が適当と認めれば<strong>却下の日から1年以内</strong>の再使用を認める証明ができる</td><td>登録免許税法31条4項（3項準用）</td></tr>
+<tr><td>再使用をやめたとき</td><td>証明のあった日から1年を経過した日までに申し出れば、証明を無効として現金還付に切り替えられる</td><td>登録免許税法31条5項／準則78条</td></tr>
+<tr><td>受付番号</td><td>却下により、その受付番号での申請は消える。再申請は新たな受付番号になる</td><td><span class="tag t2">二次</span></td></tr>
+</table>
+</div>
+
+<h3>不服申立て</h3>
+<div class="scroll">
+<table>
+<tr><th>手段</th><th>内容</th><th>根拠</th></tr>
+<tr><td>審査請求</td><td>登記官の処分に不服がある者は、当該登記官を監督する法務局長・地方法務局長に審査請求ができる</td><td>商業登記法142条</td></tr>
+<tr class="mark"><td>経由</td><td><strong>審査請求は登記官を経由してしなければならない</strong></td><td>商業登記法143条</td></tr>
+<tr><td>登記官の再考</td><td>登記官が理由ありと認めれば、自ら相当の処分をする</td><td>商業登記法144条</td></tr>
+<tr><td>局長へ送付</td><td>そうでなければ<strong>審査請求の日から3日内</strong>に意見を付して局長へ送付。局長は審理員に送付</td><td>商業登記法145条</td></tr>
+<tr><td>認容</td><td>局長が理由ありと認めれば登記官に相当の処分を命じ、審査請求人および登記上の利害関係人に通知</td><td>商業登記法146条</td></tr>
+<tr><td>訴訟</td><td>却下処分の取消訴訟を提起することもできる（審査請求を経ずに直接提起可）</td><td><span class="tag t2">二次</span></td></tr>
+</table>
+</div>
+<p class="fine">実務では、審査請求で争うより、却下の理由を潰して再申請するほうが早いのが通常です。争点になりうるのは登記官の裁量が残る領域 — とくに<strong>目的の具体性の審査</strong>（法務省が「登記官に一定の裁量を与えざるを得ない」と明言している箇所）です。</p>
+</section>
+
+<!-- 5 -->
+<section>
+<h2><span class="num">05</span>設立代行の実務での当て方</h2>
+<div class="h2rule"></div>
+
+<p>行政書士＋司法書士の分業型で設立代行を回す場合、却下事由の落ちる場所は次のように分かれます。</p>
+<div class="scroll">
+<table>
+<tr><th>工程</th><th>担い手</th><th>ここで潰す却下事由</th></tr>
+<tr><td>商号の決定</td><td>行政書士</td><td>②-1（同一所在場所の同一商号）②-2（禁止名称）②-3〜②-5（符号・スペース）</td></tr>
+<tr class="mark"><td>事業目的の設計</td><td>行政書士</td><td>①-1〜①-8 すべて。<strong>ここが最大の山</strong></td></tr>
+<tr><td>定款作成・電子定款</td><td>行政書士</td><td>④-1〜④-6（電子署名・電子証明書）③-1（定款の添付）</td></tr>
+<tr><td>公証役場での認証</td><td>行政書士</td><td>目的の適法性・明確性は公証人段階でも審査される。ここで止まれば法務局まで行かない</td></tr>
+<tr><td>払込・出資</td><td>依頼者＋行政書士</td><td>③-8（資本金計上証明）</td></tr>
+<tr><td>登記申請書・添付書面</td><td>司法書士</td><td>③-3〜③-7・③-10、⑤、⑥、⑨</td></tr>
+<tr><td>登録免許税</td><td>司法書士</td><td>⑧</td></tr>
+</table>
+</div>
+
+<h3>「複雑ケース」との対応</h3>
+<p>設立代行の事例として示された <a href="https://kaisha-kakuyasu.com/">会社法人センター（司法書士・行政書士の共同事務所）</a> は、事前相談が必要な複雑ケースを4つ挙げています。いずれも却下リスクの高い類型と重なります。</p>
+<div class="scroll">
+<table>
+<tr><th>複雑ケース</th><th>対応する却下リスク</th><th>先に確認すること</th></tr>
+<tr><td>事業目的25個以上</td><td>①-4〜①-8。数が増えるほど適法性・明確性・具体性のどれかに触れる</td><td>許認可業種が混じっていないか、資格者の独占業務でないか、語義が一般に通じるか</td></tr>
+<tr><td>現物出資</td><td>③-8（資本金の額の計上を証する書面）。検査役の要否、価額の相当性</td><td>500万円以下・市場価格ある有価証券・弁護士等の証明のいずれで検査役を省くか</td></tr>
+<tr><td>外国人発起人</td><td>③-6（本人確認証明書の氏名住所の同一性）、④-5（外国会社の日本における代表者の委任状情報）</td><td>サイン証明・宣誓供述書の取得経路、住所表記の統一</td></tr>
+<tr><td>成年被後見人の取締役</td><td>③-4・③-6（成年後見人・保佐人が本人に代わって就任を承諾する場合の建て付け）</td><td>規則61条4項・7項の括弧書きの手当て</td></tr>
+</table>
+</div>
+<p class="fine">規則61条4項・7項は「成年後見人又は保佐人が本人に代わつて承諾する場合にあつては、当該成年後見人又は保佐人が本人に代わつて就任を承諾したこと」を明文で織り込んでいます。条文が既に手当てしているので、書面の建て方を間違えなければ通ります。</p>
+</section>
+
+<!-- 6 -->
+<section>
+<h2><span class="num">06</span>却下・取下げ・補正の対比</h2>
+<div class="h2rule"></div>
+<div class="scroll">
+<table>
+<tr><th></th><th>補正</th><th>取下げ</th><th>却下</th></tr>
+<tr><td>誰が</td><td>申請人が直す</td><td>申請人が引く</td><td>登記官が処分する</td></tr>
+<tr><td>受付番号</td><td>維持される</td><td>消える</td><td>消える</td></tr>
+<tr><td>書面</td><td>—</td><td>還付（偽造の疑いがあるものを除く）</td><td>返付。決定書が交付される</td></tr>
+<tr><td>登録免許税</td><td>—</td><td>還付／再使用証明（取下げの日から1年）</td><td>還付／再使用証明（却下の日から1年）</td></tr>
+<tr><td>記録</td><td>—</td><td>受付帳に「取下げ」</td><td>受付帳に「却下」。局長へ報告（簡単明瞭な事由を除く）</td></tr>
+<tr><td>不服申立て</td><td>—</td><td>—</td><td>審査請求（142条）・取消訴訟</td></tr>
+<tr><td>根拠</td><td>24条ただし書／準則52条</td><td>準則54条</td><td>24条／準則53条</td></tr>
+</table>
+</div>
+</section>
+
+<footer>
+<h4>一次資料</h4>
+<ul>
+<li>商業登記法（昭和38年法律第125号）— <a href="https://laws.e-gov.go.jp/law/338AC0000000125">e-Gov 法令検索</a></li>
+<li>商業登記規則（昭和39年法務省令第23号）— <a href="https://laws.e-gov.go.jp/law/339M50000010023">e-Gov 法令検索</a></li>
+<li>登録免許税法（昭和42年法律第35号）— <a href="https://laws.e-gov.go.jp/law/342AC0000000035">e-Gov 法令検索</a></li>
+<li>商業登記等事務取扱手続準則（平成17年3月2日付け法務省民商第500号民事局長通達）— <a href="https://www.moj.go.jp/content/001406310.pdf">法務省</a></li>
+<li>商号にローマ字等を用いることについて（平成14年7月31日法務省告示）— <a href="https://www.moj.go.jp/MINJI/minji44.html">法務省</a></li>
+<li>「会社法施行後の会社の目的における具体性の審査の在り方」に関する意見募集の実施結果 — <a href="https://www.moj.go.jp/MINJI/public_minji65_result_minji65.html">法務省</a></li>
+<li>添付書面としての本人確認証明書及び旧氏の併記について — <a href="https://www.moj.go.jp/MINJI/minji06_00085.html">法務省</a></li>
+</ul>
+
+<h4>先例</h4>
+<p>昭和35年11月26日 民甲2966／昭和40年7月22日 民四242／昭和30年5月10日 民四100 — いずれも実務解説（新日本法規／司法書士事務所の解説）経由で日付・番号を確認したもので、法務省の一次公表文そのものには当たれていません。引用する場合は登記先例集で原文の確認をお勧めします。</p>
+
+<h4>参考</h4>
+<ul>
+<li><a href="https://www.sn-hoki.co.jp/articles/article095304/">会社の目的はどの程度具体的にすべきか（新日本法規）</a></li>
+<li><a href="https://shiodome.co.jp/js/blog/815">会社の事業目的と登記（RSM汐留パートナーズ司法書士法人）</a></li>
+<li><a href="https://note.com/moritaro_hanashi/n/n2fcd8fc69a79">商業登記失敗事例〜商号編〜（商号中のスペースが認められなかった実例）</a></li>
+<li><a href="https://www.tooyama-sihoushosi.jp/cont7/41.html">登記申請における補正、取下げ及び却下（遠山司法書士事務所）</a></li>
+<li><a href="https://kaisha-kakuyasu.com/">設立代行の実例：会社法人センター</a></li>
+</ul>
+</footer>
+
+</div>
+
+</body>
+</html>
