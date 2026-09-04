@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="うちなーぐち">
+<meta name="robots" content="noindex, nofollow">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#1b2a4a">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<title>うちなーぐち辞書</title>
+<style>
+:root{--navy:#1b2a4a;--ivory:#faf8f3;--gold:#b8933f;--line:#e3ddd0;--ink:#2b2b2b;--gray:#6b6b6b;--card:#fff}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{background:var(--ivory);color:var(--ink);font-family:"Hiragino Sans","Yu Gothic",system-ui,sans-serif;line-height:1.7;padding-bottom:90px}
+header{position:sticky;top:0;z-index:20;background:var(--navy);padding:10px 12px calc(10px + env(safe-area-inset-top,0)) ;padding-top:calc(10px + env(safe-area-inset-top,0))}
+.sb{display:flex;gap:8px;align-items:center}
+#q{flex:1;font-size:17px;padding:11px 13px;border:0;border-radius:9px;background:#fff;color:var(--ink);outline:none}
+#clr{background:none;border:0;color:#fff;font-size:20px;padding:4px 8px;opacity:.75}
+.hint{color:#c9d2e2;font-size:11.5px;margin-top:6px}
+.wrap{max-width:820px;margin:0 auto;padding:12px}
+.cnt{color:var(--gray);font-size:12px;margin:8px 2px}
+.it{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:12px 14px;margin:9px 0;cursor:pointer}
+.it:active{background:#f6f2e8}
+.hd{font-size:19px;font-weight:700;color:var(--navy);letter-spacing:.02em}
+.rm{font-size:12px;color:var(--gray);margin-left:8px;font-weight:400}
+.sub{font-size:14.5px;margin-top:3px}
+.badge{display:inline-block;font-size:10.5px;padding:1px 8px;border-radius:10px;margin-right:6px;vertical-align:2px}
+.b-o{background:#e8eef8;color:#2c4a7c}
+.b-j{background:#f4ecd8;color:#8a6a1f}
+.b-c{background:var(--gold);color:#fff}
+.b-mine{background:#e6f2e6;color:#2f6b2f}
+.b-alt{background:#f0e6f2;color:#6b2f6b}
+dialog{border:0;border-radius:14px;padding:0;max-width:640px;width:94%;background:var(--card);box-shadow:0 12px 44px rgba(0,0,0,.3)}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+.dh{background:var(--navy);color:#fff;padding:15px 18px;position:sticky;top:0}
+.dh .hd{color:#fff}
+.db{padding:16px 18px;max-height:66vh;overflow:auto}
+.df{padding:11px 18px;border-top:1px solid var(--line);text-align:right}
+button.x{background:var(--navy);color:#fff;border:0;border-radius:8px;padding:9px 20px;font-size:14px}
+button.g{background:#fff;color:var(--navy);border:1px solid var(--line)}
+.t{display:inline-block;font-size:10px;padding:1px 6px;border-radius:9px;white-space:nowrap}
+.t-d{background:#dbe6f6;color:#25467e}.t-e{background:#e0efe0;color:#2c6b2c}.t-g{background:#f4ecd8;color:#8a6a1f}
+h4.grp{margin:20px 2px 6px;font-size:12.5px;color:var(--navy);border-left:4px solid var(--gold);padding-left:9px;font-weight:700}
+h4.grp .n{color:var(--gray);font-weight:400;font-size:11.5px}
+h4.fold{cursor:pointer;background:#f2eee4;border-radius:7px;padding:7px 9px;border-left:4px solid var(--line)}
+h4{margin:17px 0 7px;font-size:13px;color:var(--navy);border-left:4px solid var(--gold);padding-left:9px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+th{background:#f2eee4;color:var(--navy);white-space:nowrap;font-weight:600}
+td.empty{color:#b9b2a2}
+.note{color:var(--gray);font-size:12px}
+ol,ul{padding-left:20px;margin:5px 0}
+li{margin:3px 0}
+#add{position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom,0));width:56px;height:56px;border-radius:28px;background:var(--gold);color:#fff;border:0;font-size:28px;box-shadow:0 5px 16px rgba(0,0,0,.28);z-index:30}
+input.f,textarea.f{width:100%;font-size:15px;padding:9px 11px;border:1px solid var(--line);border-radius:8px;margin:3px 0 10px;font-family:inherit}
+label{font-size:12.5px;color:var(--navy);font-weight:600}
+.empty-msg{text-align:center;color:var(--gray);padding:34px 16px;font-size:14px}
+.src{font-size:11px;color:var(--gray);border-top:1px solid var(--line);margin-top:26px;padding:12px 2px}
+mark{background:#fdf0c0;padding:0 1px}
+</style>
+</head>
+<body>
+<header>
+  <div class="sb">
+    <input id="q" type="search" placeholder="うちなーぐち でも 共通語 でも" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <button id="clr">✕</button>
+  </div>
+  <div class="hint">かな・カナ・ローマ字・漢字 どれで打っても、両方向から引きます</div>
+</header>
+
+<div class="wrap">
+  <div class="cnt" id="cnt"></div>
+  <div id="res"></div>
+  <div class="src" id="src"></div>
+  <div class="note" id="off" style="padding:0 2px 8px"></div>
+</div>
+
+<button id="add" title="語を足す">＋</button>
+
+<dialog id="dlg"><div class="dh"><div class="hd" id="dhd"></div><div id="dsub" style="font-size:13px;opacity:.85"></div></div>
+<div class="db" id="dbd"></div><div class="df"><button class="x" onclick="dlg.close()">閉じる</button></div></dialog>
+
+<dialog id="adlg"><div class="dh"><div class="hd">語を足す</div></div>
+<div class="db">
+  <label>うちなーぐち（かな）</label><input class="f" id="a_k" placeholder="にふぇーでーびる">
+  <label>共通語</label><input class="f" id="a_m" placeholder="ありがとうございます">
+  <label>例文（うちなーぐち／共通語　1行に1本）</label><textarea class="f" id="a_e" rows="3" placeholder="いっぺー にふぇーでーびる／本当にありがとうございます"></textarea>
+  <label>なりたち（元の形・働いた決まり）</label><input class="f" id="a_g" placeholder="きよら（清ら）→ 口蓋化・3母音化 → ちゅら">
+  <label>覚え書き（誰から・いつ・どの場面で）</label><input class="f" id="a_n" placeholder="2026-09-04 那覇の市場で">
+</div>
+<div class="df"><button class="x g" onclick="adlg.close()">やめる</button>
+<button class="x g" id="a_exp">書き出す</button>
+<button class="x" id="a_ok">入れる</button></div></dialog>
+
+<script src="dict.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+const D=window.DICT, E=D.e, X=D.x;
+const LS="uchinaaguchi_mine_v1";
+let MINE=[]; try{MINE=JSON.parse(localStorage.getItem(LS)||"[]")}catch(e){MINE=[]}
+let FILE_MINE=[];   /* local/mine.json ＝ Mac で直せる自分の語。端末に貯めた語より先に出す */
+
+/* 引くための均し（build_dict.py の norm と同じ考え方） */
+const KATA=s=>s.replace(/[\u30a1-\u30f6]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x60));
+const SMALL={"ぁ":"あ","ぃ":"い","ぅ":"う","ぇ":"え","ぉ":"お","っ":"つ","ゃ":"や","ゅ":"ゆ","ょ":"よ","ゎ":"わ","ゐ":"い","ゑ":"え"};
+const DAK={"が":"か","ぎ":"き","ぐ":"く","げ":"け","ご":"こ","ざ":"さ","じ":"し","ず":"す","ぜ":"せ","ぞ":"そ","だ":"た","ぢ":"ち","づ":"つ","で":"て","ど":"と","ば":"は","び":"ひ","ぶ":"ふ","べ":"へ","ぼ":"ほ","ぱ":"は","ぴ":"ひ","ぷ":"ふ","ぺ":"へ","ぽ":"ほ","ゔ":"う"};
+function norm(s){
+  if(!s) return "";
+  s=KATA(String(s).toLowerCase());
+  s=s.replace(/[ぁぃぅぇぉっゃゅょゎゐゑ]/g,c=>SMALL[c]);
+  s=s.replace(/[ー〜~\-–—・,，、。\.\s'"?\]］=（）()]/g,"");
+  s=s.replace(/[がぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽゔ]/g,c=>DAK[c]);
+  return s;
+}
+/* 打ったローマ字も、かな寄りに均して当てる（辞典の音素表記に寄せる） */
+function romaFold(s){
+  return String(s).toLowerCase()
+   .replace(/shi/g,"si").replace(/sh/g,"s")
+   .replace(/chi/g,"ci").replace(/ch/g,"c").replace(/tsu/g,"tu")
+   .replace(/ji/g,"zi").replace(/fu/g,"hu").replace(/f/g,"hw")
+   .replace(/cc/g,"c").replace(/ss/g,"s").replace(/tt/g,"t")
+   .replace(/y/g,"j")
+   .replace(/[^a-z]/g,"");
+}
+
+function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function hl(t,q){ if(!q) return esc(t); const i=esc(t), n=esc(q);
+  try{return i.replace(new RegExp(n.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"gi"),m=>"<mark>"+m+"</mark>")}catch(e){return i} }
+
+/* ---- 引く（辞書の引き方：先頭から。語中に含むものは畳む）----
+   群1 うちなーぐちの見出しが前方一致
+   群2 共通語の見出しが前方一致
+   群3 うちなーぐちの見出しに含む（畳む）
+   群4 意味・例文の中に出てくる（畳む）                                   */
+function search(raw){
+  const q=raw.trim(); if(!q) return null;
+  const n=norm(q), r=romaFold(q);
+  const isRoma=/^[a-zA-Z?'\-\s]+$/.test(q);
+  const g1=[],g2=[],g3=[],g4=[];
+
+  for(const e of E){
+    const nb=e.nb||"", n2=e.n2||"", nr2=e.nr2||"";
+    const ex = e.n===n || n2===n || (isRoma&&r&&(e.nr===r||nb===r||nr2===r));
+    if(ex){ g1.push({t:"e",d:e,sc:3,why:"okinawa"}); continue; }
+    if(e.n.startsWith(n) || (n2&&n2.startsWith(n)) ||
+       (isRoma&&r&&(e.nr.startsWith(r)||nb.startsWith(r)||(nr2&&nr2.startsWith(r))))){
+      g1.push({t:"e",d:e,sc:2,why:"okinawa"}); continue; }
+    const mm=(e.m||[]).join(" ／ ");
+    const m1=String((e.m||[])[0]||"").replace(/^[0-9]+\./,"");   /* 「1.飲む。」→「飲む。」 */
+    if(m1===q||m1===q+"。"){ g2.push({t:"e",d:e,sc:3,why:"ja"}); continue; }
+    if(mm.startsWith(q)||m1.startsWith(q)){ g2.push({t:"e",d:e,sc:2,why:"ja"}); continue; }
+    if(n.length>1 && e.n.includes(n)){ g3.push({t:"e",d:e,sc:1,why:"okinawa"}); continue; }
+    if(q.length>1 && mm.includes(q)){ g4.push({t:"e",d:e,sc:1,why:"ja"}); }
+  }
+  for(const x of X){
+    const kj=(x.kj||"").replace(/[〔〕（）()]/g,"");   /* 〔飲む〕→ 飲む */
+    if(x.n===n||kj===q){ g2.push({t:"x",d:x,sc:3,why:"ja"}); continue; }
+    if(x.n.startsWith(n)||(q.length>0&&kj.startsWith(q))){ g2.push({t:"x",d:x,sc:2,why:"ja"}); continue; }
+    if(q.length>1 && ((x.kj&&x.kj.includes(q))||(x.n.includes(n)))){ g4.push({t:"x",d:x,sc:1,why:"ja"}); }
+  }
+  for(const m of MINE){
+    const keys=[m.k,m.kata,m.m].filter(Boolean).map(norm);
+    if(keys.some(k=>k===n)) g1.push({t:"m",d:m,sc:4,why:"mine"});
+    else if(keys.some(k=>k.startsWith(n))) g1.push({t:"m",d:m,sc:3,why:"mine"});
+    else if(n.length>1&&keys.some(k=>k.includes(n))) g3.push({t:"m",d:m,sc:1,why:"mine"});
+  }
+  const key=o=>String(o.d.k||o.d.w||o.d.r||"");
+  const srt=a=>a.sort((x,y)=>y.sc-x.sc || key(x).length-key(y).length || key(x).localeCompare(key(y),"ja"));
+  [g1,g2,g3,g4].forEach(srt);
+
+  /* 先頭一致が0件のときだけ「もしかして」を作る：後ろを1〜2文字削って引き直す */
+  let sug=[];
+  if(!g1.length && !g2.length && n.length>=2){
+    for(let cut=1; cut<=2 && sug.length<6; cut++){
+      const short=n.slice(0,n.length-cut); if(short.length<1) break;
+      for(const e of E){ if(e.n.startsWith(short)){ sug.push(e); if(sug.length>=6) break; } }
+    }
+  }
+  return {q,g1,g2,g3,g4,sug};
+}
+
+function card(o,q){
+  if(o.t==="e"){const e=o.d;
+    return `<div class="it" data-t="e" data-i="${E.indexOf(e)}">
+      <span class="badge ${o.why==="ja"?"b-j":"b-o"}">${o.why==="ja"?"共通語から":"うちなーぐち"}</span>
+      ${e.cj?'<span class="badge b-c">活用</span>':''}
+      <div class="hd">${hl(e.k2||e.k,q)}<span class="rm">${esc(e.bk2||e.bk||e.r)}</span>${e.bk2?'<span class="badge b-alt">辞典は '+esc(e.k)+'</span>':''}</div>
+      <div class="sub">${hl((e.m||[]).join(" / ").slice(0,110),q)}</div></div>`}
+  if(o.t==="x"){const x=o.d;
+    return `<div class="it" data-t="x" data-i="${X.indexOf(x)}">
+      <span class="badge b-j">共通語から</span>
+      <div class="hd">${hl(x.w,q)}${x.kj?'<span class="rm">'+esc(x.kj)+'</span>':''}</div>
+      <div class="sub">${esc(x.d)} ${hl(String(x.c).slice(0,110),q)}</div></div>`}
+  const m=o.d;
+  return `<div class="it" data-t="m" data-i="${MINE.indexOf(m)}">
+    <span class="badge b-mine">自分で足した</span>
+    <div class="hd">${hl(m.k,q)}${m.kata?'<span class="rm">'+esc(m.kata)+'</span>':''}</div>
+    <div class="sub">${hl(m.m,q)}</div></div>`;
+}
+
+function render(R,q){
+  const res=$("#res");
+  if(!q){ res.innerHTML=recent(); $("#cnt").textContent=""; return; }
+  if(!R){ res.innerHTML=""; $("#cnt").textContent=""; return; }
+  const {g1,g2,g3,g4,sug}=R;
+  const head=g1.length+g2.length;
+  let h="";
+
+  if(g1.length) h+=`<h4 class="grp">「${esc(q)}」で始まる 見出し語　<span class="n">${g1.length}件</span></h4>`
+                 + g1.slice(0,120).map(o=>card(o,q)).join("");
+  if(g2.length) h+=`<h4 class="grp">「${esc(q)}」から引く（共通語の見出し）　<span class="n">${g2.length}件</span></h4>`
+                 + g2.slice(0,120).map(o=>card(o,q)).join("");
+
+  if(!head){
+    h+=`<div class="empty-msg">「${esc(q)}」で始まる語はありません。</div>`;
+    if(sug.length){
+      h+=`<h4 class="grp">もしかして</h4>`+sug.map(e=>
+        `<div class="it" data-t="e" data-i="${E.indexOf(e)}">
+         <span class="badge b-o">うちなーぐち</span>
+         <div class="hd">${esc(e.k)}<span class="rm">${esc(e.r)}</span></div>
+         <div class="sub">${esc((e.m||[]).join(" / ").slice(0,90))}</div></div>`).join("");
+    }
+  }
+
+  const more=(g,id,label)=>{ if(!g.length) return "";
+    const open = !head;   // 先頭一致が0件のときは最初から開く
+    return `<h4 class="grp fold" data-fold="${id}">${open?"▾":"▸"} ${label}　<span class="n">${g.length}件</span></h4>
+      <div id="${id}" style="display:${open?"block":"none"}">${g.slice(0,120).map(o=>card(o,q)).join("")}</div>`; };
+  h+=more(g3,"g3",`「${esc(q)}」を語の途中に含む`);
+  h+=more(g4,"g4",`意味・例文の中に「${esc(q)}」が出てくる`);
+
+  $("#cnt").textContent = head? `先頭一致 ${head}件` : (g3.length+g4.length? `先頭一致 0件（下に ${g3.length+g4.length}件）`:"");
+  res.innerHTML=h;
+}
+
+/* ---- 活用表 ----
+   西岡敏・仲原穣『沖縄語の入門 たのしいウチナーグチ』の体系に合わせる。
+   動詞は 基本語幹・連用語幹・音便語幹 の3つから形を作る。
+   辞典（沖縄語辞典）から直接取れるのは 否定形・終止形・テ形 の3つ＝各語幹の代表形。
+   残りは本の語尾を語幹に付けて作る。作った形にはその印を付ける。          */
+const HON=[
+ ["基本語幹","g1",[
+   ["否定形","aN","持たない",""],
+   ["志向形（未然形）","a","持とう","リユン〈〜れる,られる〉スン〈〜させる〉に続く"],
+   ["命令形","i","持て",""],
+   ["命令形","ee","持て",""],
+   ["禁止形","una","持つな",""],
+   ["条件形","ee","持てば",""],
+   ["条件形","aa","持つなら",""]]],
+ ["連用語幹","g2",[
+   ["終止形","uN","持つ",""],
+   ["連用形","i","持ち","ミシェーン〈〜なさる〉ギサン〈〜そうだ〉ブサン〈〜したい〉ユースン〈〜できる〉に続く"],
+   ["連体形","uru","持つ","名詞に続く"],
+   ["尾略形","u","持つ","クトゥ〈から〉シガ〈けれども〉シ〈の〉ガ・ミ〈〜か〉に続く"],
+   ["推量形","ura","持つだろう",""],
+   ["丁寧形","abiiN","持ちます",""],
+   ["アーニ形","aani","持って",""],
+   ["シヨッタ形","utaN","持ったよ",""],
+   ["条件形","iinee","持つと","連用形＋(i)nee"]]],
+ ["音便語幹","g3",[
+   ["テ形","i","持って","クィミシェービリ／クィミソーリ〈〜してください〉ネーン／ネーラン〈〜してしまった〉に続く"],
+   ["過去形","aN","持った",""],
+   ["過去・連体形","aru","持った","名詞に続く"],
+   ["過去・尾略形","a","持った","クトゥ・シガ・ガ・ミに続く"],
+   ["過去・推量形","ara","持ったろう",""],
+   ["継続形","ooN","持っている",""]]]];
+/* 共通語の学校文法の順（Mits様の見方）と、本の形名の対応 */
+const GAKKOU=[["未然","書かない","否定形","g1","aN"],["連用","書きます","連用形","g2","i"],
+              ["終止","書く","終止形","g2","uN"],["連体","書く時","連体形","g2","uru"],
+              ["仮定","書けば","条件形","g1","ee"],["命令","書け","命令形","g1","i"]];
+const HEADSET=new Set();  /* 辞典の見出しに実在する綴り（作った形の裏取りに使う） */
+E.forEach(e=>HEADSET.add(e.r.replace(/[=\]］]/g,"")));
+
+
+/* サ形容詞の活用（本 21・22・48頁）。サ語幹＝終止形から -N を除いた形 */
+const SA=[["終止形","N","高い","",21],["連体形","ru","高い","名詞に続く",21],
+          ["ヌ形","nu","高いから／高くて","沖縄語独特の形",22],
+          ["推量形","ra","高いだろう","",182],["丁寧形","ibiiN","高いです","サ語幹＋イビーン",48],
+          ["過去形","taN","高かった","",182]];
+function saTable(e){
+  if(!e.sa) return "";
+  const g=e.sa.gokan;
+  let h=`<h4>活用（サ形容詞）</h4>
+   <p class="note">サ語幹 <b>${esc(kanaOf(g))} ${esc(toBook(g))}</b>
+   （終止形から -N を除いた形）。本では、この「〜サ」で終わる形から色々な表現を作ります。</p>
+   <table><tr><th>形</th><th>共通語（高い）</th><th>うちなーぐち</th><th>出どころ</th></tr>`;
+  for(const [nm,suf,ja,tsu,pg] of SA){
+    const v=g+suf;
+    const isD = (v===e.r);
+    h+=`<tr><td>【${nm}】${tsu?'<br><span class="note">'+tsu+'</span>':''}</td><td>${ja}</td>
+        <td>${esc(kanaOf(v))} <b>${esc(toBook(v))}</b><br><span class="note">辞典 ${esc(v)}</span></td>
+        <td>${isD?'<span class="t t-d">辞典</span>':'<span class="t t-g">本 '+pg+'頁の規則で作った形</span>'}</td></tr>`;
+  }
+  h+=`</table><p class="note">連用形は「〜ク」または「〜シク」（アマク 'amaku／ハジカシク hajikashiku・本22頁）。
+   語によって形が変わるので、ここでは作っていません。</p>`;
+  return h;
+}
+
+function conjTable(e){
+  if(!e.cj) return "";
+  const c=e.cj;
+  const direct={}; direct[c.mizen]=1; direct[c.shushi]=1; direct[c.renyo]=1; if(c.mizen2)direct[c.mizen2]=1;
+  const cell=v=>{
+    const inDict=HEADSET.has(v.replace(/[=\]］]/g,""));
+    const tag = direct[v] ? '<span class="t t-d">辞典</span>'
+              : inDict   ? '<span class="t t-e">本の規則／辞典にも在り</span>'
+                         : '<span class="t t-g">本の規則で作った形</span>';
+    return `<td>${esc(kanaOf(v))} <b>${esc(toBook(v))}</b><br><span class="note">辞典 ${esc(v)}</span></td><td>${tag}</td>`;
+  };
+
+  let h=`<h4>活用（共通語の順で見る）</h4><table>
+   <tr><th>活用形</th><th>共通語（書く）</th><th>うちなーぐち</th><th>出どころ</th></tr>`;
+  for(const [nm,ja,hon,g,suf] of GAKKOU){
+    const v=c[g]?c[g]+suf:"";
+    h+=`<tr><td>${nm}<br><span class="note">本では【${hon}】</span></td><td>${ja}</td>`
+      + (v?cell(v):'<td class="empty" colspan="2">─</td>')+`</tr>`;
+  }
+  h+=`</table>`;
+
+  h+=`<h4>活用（本の体系：3つの語幹から作る）</h4>
+   <p class="note">語幹　基本 <b>${esc(c.g1)}-</b>　連用 <b>${esc(c.g2)}-</b>　音便 <b>${esc(c.g3)}-</b>
+   　（辞典の品詞欄 ${esc(e.p)} から取り出しました）</p>`;
+  for(const [gname,g,forms] of HON){
+    if(!c[g]) continue;
+    h+=`<table><tr><th colspan="4">${gname} ${esc(c[g])}- から作る形</th></tr>
+        <tr><th>形</th><th>共通語（持つ）</th><th>うちなーぐち</th><th>出どころ</th></tr>`;
+    for(const [nm,suf,ja,tsuzuki] of forms){
+      const v=c[g]+suf;
+      h+=`<tr><td>【${nm}】${tsuzuki?'<br><span class="note">'+esc(tsuzuki)+'</span>':''}</td><td>${ja}</td>`+cell(v)+`</tr>`;
+    }
+    h+=`</table>`;
+  }
+  h+=`<p class="note"><b>出どころの読み方</b>　
+   <span class="t t-d">辞典</span>＝『沖縄語辞典』にその形が書かれている（否定形・終止形・テ形の3つ）。
+   <span class="t t-e">辞典にも在り</span>＝本の語尾で作った形が、辞典の見出しにも別項で立っている。
+   <span class="t t-g">作った形</span>＝語幹に本の語尾を付けただけで、まだ現物で確かめていない。
+   <br>型（${esc(e.p)}）によっては本の例（ムチュン muchuN）と語尾の付き方が変わることがあります。</p>`;
+  return h;
+}
+
+/* 表示用の簡易ローマ字→かな（build と同じ考え方の縮小版） */
+const T2={kja:"きゃ",kju:"きゅ",kjo:"きょ",gja:"ぎゃ",gju:"ぎゅ",gjo:"ぎょ",sja:"しゃ",sju:"しゅ",sjo:"しょ",sje:"しぇ",zja:"じゃ",zju:"じゅ",zjo:"じょ",tja:"ちゃ",tju:"ちゅ",tjo:"ちょ",nja:"にゃ",nju:"にゅ",njo:"にょ",hja:"ひゃ",hju:"ひゅ",hjo:"ひょ",bja:"びゃ",bju:"びゅ",bjo:"びょ",pja:"ぴゃ",pju:"ぴゅ",pjo:"ぴょ",mja:"みゃ",mju:"みゅ",mjo:"みょ",rja:"りゃ",rju:"りゅ",rjo:"りょ",hwa:"ふぁ",hwi:"ふぃ",hwe:"ふぇ",hwo:"ふぉ",kwa:"くぁ",kwi:"くぃ",kwe:"くぇ",gwa:"ぐぁ",gwi:"ぐぃ",gwe:"ぐぇ"};
+const T1={ka:"か",ki:"き",ku:"く",ke:"け",ko:"こ",ga:"が",gi:"ぎ",gu:"ぐ",ge:"げ",go:"ご",sa:"さ",si:"し",su:"す",se:"せ",so:"そ",za:"ざ",zi:"じ",zu:"ず",ze:"ぜ",zo:"ぞ",ta:"た",ti:"てぃ",tu:"とぅ",te:"て",to:"と",da:"だ",di:"でぃ",du:"どぅ",de:"で",do:"ど",na:"な",ni:"に",nu:"ぬ",ne:"ね",no:"の",ha:"は",hi:"ひ",hu:"ふ",he:"へ",ho:"ほ",ba:"ば",bi:"び",bu:"ぶ",be:"べ",bo:"ぼ",pa:"ぱ",pi:"ぴ",pu:"ぷ",pe:"ぺ",po:"ぽ",ma:"ま",mi:"み",mu:"む",me:"め",mo:"も",ja:"や",ji:"い",ju:"ゆ",je:"いぇ",jo:"よ",ra:"ら",ri:"り",ru:"る",re:"れ",ro:"ろ",wa:"わ",wi:"うぃ",wu:"う",we:"うぇ",wo:"を",ca:"ちゃ",ci:"ち",cu:"ちゅ",ce:"ちぇ",co:"ちょ",Ca:"ちゃ",Ci:"ち",Cu:"ちゅ",Ce:"ちぇ",Co:"ちょ",Sa:"しゃ",Si:"し",Su:"しゅ",Se:"しぇ",So:"しょ",Za:"じゃ",Zi:"じ",Zu:"じゅ",Ze:"じぇ",Zo:"じょ",a:"あ",i:"い",u:"う",e:"え",o:"お"};
+const VOW={"a":"あ","i":"い","u":"う","e":"え","o":"お"};
+const LASTV={"あ":"a","か":"a","が":"a","さ":"a","ざ":"a","た":"a","だ":"a","な":"a","は":"a","ば":"a","ぱ":"a","ま":"a","や":"a","ら":"a","わ":"a","ゃ":"a","ぁ":"a","い":"i","き":"i","ぎ":"i","し":"i","じ":"i","ち":"i","に":"i","ひ":"i","び":"i","ぴ":"i","み":"i","り":"i","ぃ":"i","う":"u","く":"u","ぐ":"u","す":"u","ず":"u","ぬ":"u","ふ":"u","ぶ":"u","ぷ":"u","む":"u","ゆ":"u","る":"u","ゅ":"u","ぅ":"u","え":"e","け":"e","げ":"e","せ":"e","ぜ":"e","て":"e","で":"e","ね":"e","へ":"e","べ":"e","ぺ":"e","め":"e","れ":"e","ぇ":"e","お":"o","こ":"o","ご":"o","そ":"o","ぞ":"o","と":"o","ど":"o","の":"o","ほ":"o","ぼ":"o","ぽ":"o","も":"o","よ":"o","ろ":"o","ょ":"o","ぉ":"o"};
+function kanaOf(s){
+  if(!s) return ""; s=String(s).replace(/[\]］='"]/g,"");
+  let o=[],i=0;
+  while(i<s.length){
+    const c=s[i];
+    if(c==="?"){i++;continue}
+    if(c==="Q"){o.push("っ");i++;continue}
+    if(c==="N"){o.push("ん");i++;continue}
+    if(c==="-"){o.push("・");i++;continue}
+    if(T2[s.slice(i,i+3)]){o.push(T2[s.slice(i,i+3)]);i+=3}
+    else if(T1[s.slice(i,i+2)]){o.push(T1[s.slice(i,i+2)]);i+=2}
+    else if(T1[c]){o.push(T1[c]);i++}
+    else {o.push(c);i++}
+    if(i<s.length&&VOW[s[i]]&&o.length&&LASTV[o[o.length-1].slice(-1)]===s[i]){o.push("ー");i++}
+  }
+  return o.join("");
+}
+window.ROMA2KANA=kanaOf;
+/* 辞典の表記 → 本（西岡・仲原『沖縄語の入門』）の表記。本の36形で検算済み */
+function toBook(s){
+  if(!s) return "";
+  s=String(s).replace(/[\]］=]/g,"");
+  let o=[],i=0;
+  while(i<s.length){
+    const c=s[i];
+    if(c==="?"){o.push("'");i++;continue}
+    if(c==="'"){i++;continue}
+    if(c==="Q"){const n=s[i+1]||"";
+      if(n==="c"||n==="C"){o.push("c");i++;continue}
+      if(n==="s"||n==="S"){o.push("s");i++;continue}
+      o.push(n);i++;continue}
+    if(c==="c"||c==="C"){o.push("ch");i++;continue}
+    if(c==="S"){o.push("sh");i++;continue}
+    if(c==="s"){ if(s[i+1]==="i"){o.push("sh");i++;continue}
+                 if(s[i+1]==="j"){o.push("sh");i+=2;continue}
+                 o.push("s");i++;continue}
+    if(c==="Z"){o.push("j");i++;continue}
+    if(c==="z"){ if(s[i+1]==="i"){o.push("j");i++;continue} o.push("z");i++;continue}
+    if(c==="j"){o.push("y");i++;continue}
+    o.push(c);i++;
+  }
+  return o.join("");
+}
+window.TOBOOK=toBook;
+
+/* ---- 詳細 ---- */
+function openE(e){
+  $("#dhd").innerHTML=esc(e.k2||e.k)+' <span class="rm" style="color:#c9d2e2">'+esc(e.bk2||e.bk||e.r)+'</span>'
+    + (e.bk&&e.bk!==e.r?' <span class="rm" style="color:#8fa3c4;font-size:11px">辞典 '+esc(e.r)+'</span>':'');
+  $("#dsub").textContent=[e.p,e.a?("アクセント "+e.a):""].filter(Boolean).join(" ／ ");
+  let h="";
+  h+="<h4>意味</h4><ol>"+(e.m||[]).map(m=>"<li>"+esc(m)+"</li>").join("")+"</ol>";
+  if(e.g) h+="<h4>補足</h4><p>"+esc(e.g)+"</p>";
+  if(e.b) h+="<h4>備考</h4><p>"+esc(e.b)+"</p>";
+  if(e.bk2) h+='<h4>言い方が分かれています</h4><table>'
+    +'<tr><th>どこ</th><th>終止形</th></tr>'
+    +'<tr><td>本（西岡・仲原『沖縄語の入門』）</td><td>'+esc(e.k2)+' <b>'+esc(e.bk2)+'</b></td></tr>'
+    +'<tr><td>『沖縄語辞典』（1963年・首里方言）</td><td>'+esc(e.k)+' <b>'+esc(e.bk)+'</b></td></tr></table>'
+    +'<p class="note">マ行の動詞は、辞典では終止形の m が n に寄っています（yumuN → yunuN）。'
+    +'否定形（'+esc(toBook(e.cj.mizen))+'）とテ形（'+esc(toBook(e.cj.renyo))+'）では m が残るので、'
+    +'語幹は m です。<b>どちらも消さずに残しています。</b>同じ形の語が辞典に102語あります。</p>';
+  h+=conjTable(e);
+  h+=saTable(e);
+  const gen=(e.m||[]).join(" ").match(/[^,。]*?(の転|語源|より出|に由来|の変化|古語)[^。]*。/);
+  h+="<h4>なりたち</h4>"+(gen?"<p>"+esc(gen[0])+"</p><p class=\"note\">辞典の意味の文の中にあった記述です。</p>"
+     :"<p class=\"empty\">─</p><p class=\"note\">この辞典に語源だけの欄はありません（14,549語のうち42語だけ、意味の文の中に書かれています）。ここは原典（首里方言の音の決まりの研究・船津好明『沖縄口さびらー』ほか）に当たって埋めます。<br>例：ちゅら ← きよら（清ら）。「き」が「ち」に寄る（口蓋化）＋「お」が「う」になる（3母音化）。</p>");
+  h+='<h4>出典</h4><p class="note">'+esc(D.meta.src)+'（辞書 '+esc(e.pg)+' ページ）<br>かな見出しは<b>ローマ字からの機械変換で、まだ検証していません</b>。読み方の凡例は書籍の解説篇にあります。</p>';
+  $("#dbd").innerHTML=h; $("#dlg").showModal();
+}
+function openX(x){
+  $("#dhd").innerHTML=esc(x.w)+(x.kj?' <span class="rm" style="color:#c9d2e2">'+esc(x.kj)+'</span>':'');
+  $("#dsub").textContent="共通語から引く（索引篇）"+(x.d?" ／ "+x.d:"");
+  const parts=String(x.c).split(/[，,]/).map(s=>s.trim()).filter(Boolean);
+  let h="<h4>うちなーぐちの言い方</h4><table><tr><th>ローマ字（辞典）</th><th>かな（機械変換）</th></tr>"+
+    parts.map(p=>{const m=p.split("/");return "<tr><td>"+esc(m[0])+"</td><td>"+esc(kanaOf(m[0].replace(/～/g,"")))+"</td></tr>"+
+      (m.length>1?'<tr><td colspan="2" class="note">例：'+esc(m.slice(1).join(" / "))+"</td></tr>":"")}).join("")+"</table>";
+  h+='<p class="note">言い方が複数あるものは<b>1つに絞らず全部出しています</b>。どれを使うかは場面で決まります。</p>';
+  h+='<h4>出典</h4><p class="note">'+esc(D.meta.src)+'（索引篇 '+esc(x.pg)+' ページ）</p>';
+  $("#dbd").innerHTML=h; $("#dlg").showModal();
+}
+function openM(m){
+  $("#dhd").innerHTML=esc(m.k)+(m.kata?' <span class="rm" style="color:#c9d2e2">'+esc(m.kata)+'</span>':'');
+  $("#dsub").textContent="自分で足した語"+(m.src?"（"+m.src+"）":"");
+  let h="<h4>共通語</h4><p>"+esc(m.m)+"</p>";
+  if(m.e) h+="<h4>例文</h4><ul>"+String(m.e).split("\n").filter(Boolean).map(l=>"<li>"+esc(l)+"</li>").join("")+"</ul>";
+  if(m.g) h+="<h4>なりたち</h4><p>"+esc(m.g)+"</p>";
+  if(m.n) h+="<h4>覚え書き</h4><p>"+esc(m.n)+"</p>";
+  if(m.rel){const t=E.find(x=>x.r===m.rel);
+    if(t) h+='<h4>辞典での言い方</h4><div class="it" onclick="dlg.close();setTimeout(()=>openE(E['+E.indexOf(t)+']),80)">'+
+      '<span class="badge b-o">うちなーぐち</span><div class="hd">'+esc(t.k)+'<span class="rm">'+esc(t.r)+'</span></div>'+
+      '<div class="sub">'+esc((t.m||[]).join(" / ").slice(0,80))+'</div></div>'+
+      '<p class="note">言い方が分かれています。<b>どちらも消さずに残しています。</b></p>';}
+  h+='<p class="note">入れた日：'+esc(m.at)+'</p>';
+  $("#dbd").innerHTML=h; $("#dlg").showModal();
+}
+
+/* ---- 動き ---- */
+let tmr=null;
+$("#q").addEventListener("input",e=>{clearTimeout(tmr);const v=e.target.value;tmr=setTimeout(()=>render(search(v),v.trim()),110)});
+$("#clr").onclick=()=>{$("#q").value="";render(null,"");$("#q").focus()};
+$("#res").addEventListener("click",ev=>{
+  const f=ev.target.closest(".fold");
+  if(f){const b=document.getElementById(f.dataset.fold); const o=b.style.display==="none";
+        b.style.display=o?"block":"none"; f.textContent=f.textContent.replace(o?"▸":"▾",o?"▾":"▸"); return}
+  const it=ev.target.closest(".it"); if(!it) return;
+  if(it.dataset.q){$("#q").value=it.dataset.q;render(search(it.dataset.q),it.dataset.q);return}
+  const t=it.dataset.t,i=+it.dataset.i;
+  const q=$("#q").value.trim();
+  if(q){let r=JSON.parse(localStorage.getItem("uchi_recent")||"[]");r=[q,...r.filter(x=>x!==q)].slice(0,20);localStorage.setItem("uchi_recent",JSON.stringify(r))}
+  if(t==="e")openE(E[i]); else if(t==="x")openX(X[i]); else openM(MINE[i]);
+});
+$("#add").onclick=()=>{$("#a_k").value=$("#q").value.trim();$("#adlg").showModal()};
+$("#a_ok").onclick=()=>{
+  const k=$("#a_k").value.trim(), m=$("#a_m").value.trim();
+  if(!k&&!m){$("#adlg").close();return}
+  MINE.push({k,m,e:$("#a_e").value.trim(),g:$("#a_g").value.trim(),n:$("#a_n").value.trim(),at:new Date().toISOString().slice(0,10)});
+  localStorage.setItem(LS,JSON.stringify(MINE));
+  ["a_k","a_m","a_e","a_g","a_n"].forEach(id=>$("#"+id).value="");
+  $("#adlg").close(); const q=$("#q").value.trim(); render(q?search(q):null,q);
+};
+$("#a_exp").onclick=()=>{
+  const blob=new Blob([JSON.stringify(MINE,null,2)],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);
+  a.download="uchinaaguchi_mine_"+new Date().toISOString().slice(0,10).replace(/-/g,"")+".json";
+  document.body.appendChild(a);a.click();a.remove();
+};
+fetch("mine.json").then(r=>r.ok?r.json():[]).then(j=>{
+  FILE_MINE=j||[]; MINE=[...FILE_MINE,...MINE];
+  const q=$("#q").value.trim(); render(q?search(q):null,q);
+}).catch(()=>{});
+$("#src").innerHTML="出典①（語義・見出し・活用の3代表形）："+esc(D.meta.src)+"（"+D.meta.url+"） クリエイティブ・コモンズ 表示 4.0 国際<br>"+
+  "出典②（活用の体系・3語幹と各形の語尾）：西岡敏・仲原穣『沖縄語の入門 たのしいウチナーグチ』（伊狩典子・中島由美 協力）182ページ ムチュン muchuN の活用のまとめ<br>"+
+  "収録：本文篇 "+E.length.toLocaleString()+"語／索引篇 "+X.length.toLocaleString()+"行／活用の取れた語 "+E.filter(e=>e.cj).length.toLocaleString()+"語<br>"+
+  "かな見出しはローマ字からの機械変換で未検証。首里方言。台帳を組んだ日 "+esc(D.meta.built);
+render(null,"");
+
+/* 電波が無くても引けるようにする（ホーム画面に置いたとき用）。
+   取り込めたかどうかを画面に出す。出ていなければ取り込めていない。 */
+(function(){
+  const el=document.getElementById("off");
+  const say=(t,c)=>{ if(el){ el.textContent=t; el.style.color=c||"var(--gray)"; } };
+  if(!("serviceWorker" in navigator)){ say("この端末は取り込みに対応していません（電波が要ります）"); return; }
+  if(location.protocol==="file:"){ say("ファイルを直接開いているため取り込めません"); return; }
+  say("この端末に取り込んでいます…");
+  navigator.serviceWorker.register("sw.js").then(reg=>{
+    const done=()=>caches.has("uchinaaguchi-v1").then(ok=>
+      say(ok?"✓ この端末に取り込み済み。電波が無くても引けます。"
+            :"取り込みの途中です。もう一度開くと仕上がります。", ok?"#2f6b2f":null));
+    if(reg.active) done(); else navigator.serviceWorker.ready.then(done);
+    setTimeout(done, 4000);
+  }).catch(e=>{ say("取り込めませんでした（電波が要ります）："+String(e.message||e).slice(0,60), "#8a3a3a"); });
+})();
+</script>
+</body>
+</html>
