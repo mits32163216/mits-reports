@@ -203,6 +203,23 @@ function card(o,q){
     <div class="sub">${hl(m.m,q)}</div></div>`;
 }
 
+/* 入力欄が空のときに出すもの：自分で足した語 と 最近引いた語 */
+function recent(){
+  let r=[]; try{ r=JSON.parse(localStorage.getItem("uchi_recent")||"[]").slice(0,8) }catch(e){}
+  let h="";
+  if(MINE.length) h+=`<h4 class="grp">自分で足した語　<span class="n">${MINE.length}件</span></h4>`
+    + MINE.slice(-8).reverse().map(m=>
+      `<div class="it" data-t="m" data-i="${MINE.indexOf(m)}"><span class="badge b-mine">自分で足した</span>
+       <div class="hd">${esc(m.k)}${m.kata?'<span class="rm">'+esc(m.kata)+'</span>':''}</div>
+       <div class="sub">${esc(m.m)}</div></div>`).join("");
+  if(r.length) h+=`<h4 class="grp">最近引いた語</h4>`
+    + r.map(w=>`<div class="it" data-q="${esc(w)}"><div class="hd">${esc(w)}</div></div>`).join("");
+  h+=`<div class="empty-msg">「ありがとう」でも「にふぇー」でも「nifee」でも引けます。<br>
+    本の書き方（kachuN・muchuN）でも当たります。<br>
+    <span class="note">うちなーぐち ${E.length.toLocaleString()}語 ／ 共通語からの見出し ${X.length.toLocaleString()}件</span></div>`;
+  return h;
+}
+
 function render(R,q){
   const res=$("#res");
   if(!q){ res.innerHTML=recent(); $("#cnt").textContent=""; return; }
@@ -492,8 +509,8 @@ render(null,"");
   if(!("serviceWorker" in navigator)){ say("この端末は取り込みに対応していません（電波が要ります）"); return; }
   if(location.protocol==="file:"){ say("ファイルを直接開いているため取り込めません"); return; }
   say("この端末に取り込んでいます…");
-  navigator.serviceWorker.register("sw.js").then(reg=>{
-    const done=()=>caches.has("uchinaaguchi-v1").then(ok=>
+  navigator.serviceWorker.register("sw.js?v=2").then(reg=>{
+    const done=()=>caches.keys().then(ks=>ks.some(k=>k.startsWith("uchinaaguchi"))).then(ok=>
       say(ok?"✓ この端末に取り込み済み。電波が無くても引けます。"
             :"取り込みの途中です。もう一度開くと仕上がります。", ok?"#2f6b2f":null));
     if(reg.active) done(); else navigator.serviceWorker.ready.then(done);
