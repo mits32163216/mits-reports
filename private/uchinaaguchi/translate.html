@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>うちなーぐち 文の言い換え</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1b2a41">
+<style>
+:root{--navy:#1b2a41;--gold:#b8912f;--paper:#faf8f4;--ink:#1a1a1a;--gray:#6b6b6b;--line:#e2ded6;}
+*{box-sizing:border-box;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);
+ font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;
+ font-size:16px;line-height:1.7;padding-bottom:40px}
+header{background:var(--navy);color:#fff;padding:10px 12px calc(10px + env(safe-area-inset-top));
+ position:sticky;top:0;z-index:10}
+.tabs{display:flex;gap:8px;margin-bottom:8px}
+.tabs a{flex:1;text-align:center;padding:7px 0;border-radius:8px;text-decoration:none;
+ font-size:14px;background:rgba(255,255,255,.12);color:#fff}
+.tabs a.on{background:var(--gold);color:#fff;font-weight:700}
+textarea{width:100%;min-height:84px;font-size:17px;padding:10px;border-radius:10px;
+ border:2px solid var(--gold);background:#fff;color:var(--ink);font-family:inherit;line-height:1.6}
+.dir{display:flex;gap:8px;margin:8px 0 4px}
+.dir button{flex:1;padding:8px 0;border-radius:8px;border:0;font-size:14px;font-family:inherit;
+ background:rgba(255,255,255,.12);color:#fff}
+.dir button.on{background:#fff;color:var(--navy);font-weight:700}
+.go{width:100%;margin-top:8px;padding:11px 0;border:0;border-radius:10px;background:var(--gold);
+ color:#fff;font-size:16px;font-weight:700;font-family:inherit}
+main{padding:12px}
+.out{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px}
+.out .big{font-size:21px;line-height:1.9;font-weight:700;letter-spacing:.02em}
+.out .roma{font-size:15px;color:var(--gray);margin-top:6px;word-break:break-word}
+.ng{color:#8a3a3a;border-bottom:2px dotted #8a3a3a}
+h3{font-size:15px;margin:18px 0 8px;padding-left:8px;border-left:4px solid var(--gold)}
+table{width:100%;border-collapse:collapse;font-size:14px;background:#fff}
+th,td{border:1px solid var(--line);padding:6px 7px;text-align:left;vertical-align:top}
+th{background:#f3efe7;font-weight:700;white-space:nowrap}
+.note{font-size:12.5px;color:var(--gray);line-height:1.6}
+.t{display:inline-block;font-size:11px;padding:1px 6px;border-radius:9px;white-space:nowrap}
+.t-d{background:#e7eef7;color:#2a4a7a}
+.t-e{background:#e8f2e8;color:#2f6b2f}
+.t-g{background:#fdf2df;color:#8a6a1f}
+.t-x{background:#f7e7e7;color:#8a3a3a}
+.src{font-size:12px;color:var(--gray);border-top:1px solid var(--line);margin-top:22px;padding-top:10px}
+.ex{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.ex button{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:14px;
+ padding:5px 11px;font-size:13px;font-family:inherit}
+.empty{text-align:center;color:var(--gray);padding:26px 10px;font-size:15px}
+</style>
+</head>
+<body>
+<header>
+  <div class="tabs"><a href="index.html">辞書を引く</a><a class="on" href="translate.html">文を言い換える</a></div>
+  <textarea id="q" placeholder="文をそのまま入れてください（例：わたしは水を飲みました）"></textarea>
+  <div class="dir">
+    <button id="d1" class="on">共通語 → うちなーぐち</button>
+    <button id="d2">うちなーぐち → 共通語</button>
+  </div>
+  <button class="go" id="go">言い換える</button>
+</header>
+<main>
+  <div class="ex" id="ex"></div>
+  <div id="out"><div class="empty">文を入れて「言い換える」を押してください。</div></div>
+  <div class="src" id="src"></div>
+  <div class="note" id="off" style="padding:6px 2px 8px"></div>
+</main>
+
+<script src="dict.js"></script>
+<script>
+"use strict";
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const D=window.DICT, E=D.e, X=D.x;
+
+/* ───── 辞典の綴り → 本（西岡敏・仲原穣『沖縄語の入門』）の綴り ───── */
+function toBook(s){
+  if(!s) return "";
+  s=s.replace(/[\]］=＝]/g,""); let o="",i=0;
+  while(i<s.length){ const c=s[i], n=s[i+1]||"";
+    if(c==="?"){o+="'";i++;continue;}
+    if(c==="'"){i++;continue;}
+    if(c==="Q"){ if(n==="c"||n==="C"){o+="c";i++;continue;}
+                 if(n==="s"||n==="S"){o+="s";i++;continue;} o+=n;i++;continue;}
+    if(c==="c"||c==="C"){o+="ch";i++;continue;}
+    if(c==="S"){o+="sh";i++;continue;}
+    if(c==="s"){ if(n==="i"){o+="sh";i++;continue;} if(n==="j"){o+="sh";i+=2;continue;} o+="s";i++;continue;}
+    if(c==="Z"){o+="j";i++;continue;}
+    if(c==="z"){ if(n==="i"){o+="j";i++;continue;} o+="z";i++;continue;}
+    if(c==="j"){o+="y";i++;continue;}
+    o+=c;i++;
+  }
+  return o;
+}
+/* 辞典の綴り → かな（辞書ページと同じ表・機械変換で未検証） */
+const T2={kja:"きゃ",kju:"きゅ",kjo:"きょ",gja:"ぎゃ",gju:"ぎゅ",gjo:"ぎょ",sja:"しゃ",sju:"しゅ",sjo:"しょ",sje:"しぇ",zja:"じゃ",zju:"じゅ",zjo:"じょ",tja:"ちゃ",tju:"ちゅ",tjo:"ちょ",nja:"にゃ",nju:"にゅ",njo:"にょ",hja:"ひゃ",hju:"ひゅ",hjo:"ひょ",bja:"びゃ",bju:"びゅ",bjo:"びょ",pja:"ぴゃ",pju:"ぴゅ",pjo:"ぴょ",mja:"みゃ",mju:"みゅ",mjo:"みょ",rja:"りゃ",rju:"りゅ",rjo:"りょ",hwa:"ふぁ",hwi:"ふぃ",hwe:"ふぇ",hwo:"ふぉ",kwa:"くぁ",kwi:"くぃ",kwe:"くぇ",gwa:"ぐぁ",gwi:"ぐぃ",gwe:"ぐぇ"};
+const T1={ka:"か",ki:"き",ku:"く",ke:"け",ko:"こ",ga:"が",gi:"ぎ",gu:"ぐ",ge:"げ",go:"ご",sa:"さ",si:"し",su:"す",se:"せ",so:"そ",za:"ざ",zi:"じ",zu:"ず",ze:"ぜ",zo:"ぞ",ta:"た",ti:"てぃ",tu:"とぅ",te:"て",to:"と",da:"だ",di:"でぃ",du:"どぅ",de:"で",do:"ど",na:"な",ni:"に",nu:"ぬ",ne:"ね",no:"の",ha:"は",hi:"ひ",hu:"ふ",he:"へ",ho:"ほ",ba:"ば",bi:"び",bu:"ぶ",be:"べ",bo:"ぼ",pa:"ぱ",pi:"ぴ",pu:"ぷ",pe:"ぺ",po:"ぽ",ma:"ま",mi:"み",mu:"む",me:"め",mo:"も",ja:"や",ji:"い",ju:"ゆ",je:"いぇ",jo:"よ",ra:"ら",ri:"り",ru:"る",re:"れ",ro:"ろ",wa:"わ",wi:"うぃ",wu:"う",we:"うぇ",wo:"を",ca:"ちゃ",ci:"ち",cu:"ちゅ",ce:"ちぇ",co:"ちょ",Ca:"ちゃ",Ci:"ち",Cu:"ちゅ",Ce:"ちぇ",Co:"ちょ",Sa:"しゃ",Si:"し",Su:"しゅ",Se:"しぇ",So:"しょ",Za:"じゃ",Zi:"じ",Zu:"じゅ",Ze:"じぇ",Zo:"じょ",a:"あ",i:"い",u:"う",e:"え",o:"お"};
+const VOW={"a":"あ","i":"い","u":"う","e":"え","o":"お"};
+const LASTV={"あ":"a","か":"a","が":"a","さ":"a","ざ":"a","た":"a","だ":"a","な":"a","は":"a","ば":"a","ぱ":"a","ま":"a","や":"a","ら":"a","わ":"a","ゃ":"a","ぁ":"a","い":"i","き":"i","ぎ":"i","し":"i","じ":"i","ち":"i","に":"i","ひ":"i","び":"i","ぴ":"i","み":"i","り":"i","ぃ":"i","う":"u","く":"u","ぐ":"u","す":"u","ず":"u","ぬ":"u","ふ":"u","ぶ":"u","ぷ":"u","む":"u","ゆ":"u","る":"u","ゅ":"u","ぅ":"u","え":"e","け":"e","げ":"e","せ":"e","ぜ":"e","て":"e","で":"e","ね":"e","へ":"e","べ":"e","ぺ":"e","め":"e","れ":"e","ぇ":"e","お":"o","こ":"o","ご":"o","そ":"o","ぞ":"o","と":"o","ど":"o","の":"o","ほ":"o","ぼ":"o","ぽ":"o","も":"o","よ":"o","ろ":"o","ょ":"o","ぉ":"o"};
+function kanaOf(s){
+  if(!s) return ""; s=String(s).replace(/[\]］='"]/g,"");
+  let o=[],i=0;
+  while(i<s.length){
+    const c=s[i];
+    if(c==="?"){i++;continue}
+    if(c==="Q"){o.push("っ");i++;continue}
+    if(c==="N"){o.push("ん");i++;continue}
+    if(c==="-"){o.push("・");i++;continue}
+    if(T2[s.slice(i,i+3)]){o.push(T2[s.slice(i,i+3)]);i+=3}
+    else if(T1[s.slice(i,i+2)]){o.push(T1[s.slice(i,i+2)]);i+=2}
+    else if(T1[c]){o.push(T1[c]);i++}
+    else {o.push(c);i++}
+    if(i<s.length&&VOW[s[i]]&&o.length&&LASTV[o[o.length-1].slice(-1)]===s[i]){o.push("ー");i++}
+  }
+  return o.join("");
+}
+function show(v){ return kanaOf(v)+"（"+toBook(v)+"）"; }
+
+/* ───── 辞典の見出しの集合（作った形の裏取り用） ───── */
+const HEAD=new Set(); E.forEach(e=>HEAD.add(e.r.replace(/[=\]］＝]/g,"")));
+const BYR=new Map();  /* = を外した綴り → 見出し（活用を引くため） */
+E.forEach(e=>{ const k=e.r.replace(/[=\]］＝]/g,""); if(!BYR.has(k)) BYR.set(k,e); });
+
+/* ───── 本の活用（3語幹＋語尾）。辞書ページの活用表と同じ規則 ───── */
+const OKI={
+  "終止形":["g2","uN"], "否定形":["g1","aN"], "丁寧形":["g2","abiiN"],
+  "過去形":["g3","aN"], "テ形":["g3","i"], "継続形":["g3","ooN"],
+  "条件形":["g1","ee"], "命令形":["g1","i"], "志向形":["g1","a"],
+  "連体形":["g2","uru"], "禁止形":["g1","una"], "推量形":["g2","ura"],
+  "丁寧・過去形":["g2","abitaN"], "丁寧・否定形":["g2","abiraN"]
+};
+function okiVerb(e, form){
+  if(!e || !e.cj) return null;
+  const r=OKI[form]; if(!r) return null;
+  const stem=e.cj[r[0]]; if(!stem) return null;
+  return stem+r[1];
+}
+/* サ形容詞（本 21・22・48・182頁） */
+const OKISA={ "終止形":"N", "過去形":"taN", "丁寧形":"ibiiN", "ヌ形":"nu", "連体形":"ru", "推量形":"ra" };
+function okiSa(e, form){
+  if(!e || !e.sa) return null;
+  const suf=OKISA[form]; if(!suf) return null;
+  return e.sa.gokan+suf;
+}
+
+/* ───── 助詞（辞典 索引篇の「(助詞)」行から第一候補。「は」だけは本より） ───── */
+const JOSHI=[
+  ["は","'ja","や","本（助詞ヤ）"],
+  ["を","-ju","ゆ","索引篇（助詞）"],
+  ["が","-ga","が","索引篇（助詞）"],
+  ["の","-nu","ぬ","索引篇（助詞）"],
+  ["に","-Nkai","んかい","索引篇（助詞）"],
+  ["で","-saani","さーに","索引篇（助詞）"],
+  ["と","-tu","とぅ","索引篇（助詞）"],
+  ["から","-kara","から","索引篇（助詞）"],
+  ["まで","-madi","までぃ","索引篇（助詞）"],
+  ["も","-N","ん","索引篇（助詞）"],
+  ["へ","-Nkai","んかい","索引篇（助詞・に と同じ）"],
+  ["や","-tu","とぅ","索引篇（並べる「と」と同じ）"]
+];
+const JMAP=new Map(JOSHI.map(r=>[r[0],r]));
+
+/* ───── 索引篇（共通語 → 沖縄語）を引ける形にする ───── */
+/* c 欄は「第一候補，別の候補／～用例」の形。第一候補だけを採る */
+function firstOki(c){
+  if(!c) return "";
+  let s=c.split("/")[0];
+  for(const p of s.split("，")){
+    const v=p.trim();
+    if(!v || v.startsWith("→")) continue;
+    if(v.startsWith("(")) continue;              /* (敬語) 等の注記付きは後回し */
+    return v.replace(/^-/,"").replace(/-+$/,"").trim();
+  }
+  const g=s.split("，")[0].trim();
+  return g.replace(/^\(.*?\)/,"").replace(/^[-→]/,"");
+}
+/* 共通語の見出し（漢字があれば漢字・無ければかな）→ 索引行 */
+const JA=new Map();       /* 表記 → {row, oki} */
+function addJa(k,row){ if(k && !JA.has(k)) JA.set(k,row); }
+X.forEach(row=>{
+  const oki=firstOki(row.c); if(!oki) return;
+  row._o=oki;
+  const kj=(row.kj||"").replace(/[〔〕]/g,"");
+  if(kj){ for(const one of kj.split("・")) addJa(one.trim(),row); }
+  addJa(row.w,row);
+});
+
+/* ───── 共通語の動詞・形容詞の活用を作って逆引きにする ───── */
+const GO={"く":"かきくけこ","ぐ":"がぎぐげご","す":"さしすせそ","つ":"たちつてと","ぬ":"なにぬねの",
+          "ぶ":"ばびぶべぼ","む":"まみむめも","る":"らりるれろ","う":"わいうえお"};
+const ONBIN={"く":["いた","いて"],"ぐ":["いだ","いで"],"す":["した","して"],"つ":["った","って"],
+             "ぬ":["んだ","んで"],"ぶ":["んだ","んで"],"む":["んだ","んで"],"る":["った","って"],
+             "う":["った","って"]};
+/* 共通語の形 → 沖縄語の形 */
+function jaVerbForms(dic){
+  const out=[];                       /* [表記, 形の名前] */
+  const last=dic.slice(-1), st=dic.slice(0,-1);
+  const push=(s,f)=>out.push([s,f]);
+  if(dic==="する"||dic.endsWith("する")){
+    const b=dic.slice(0,-2);
+    push(b+"する","終止形"); push(b+"しない","否定形"); push(b+"します","丁寧形");
+    push(b+"しました","丁寧・過去形"); push(b+"しません","丁寧・否定形");
+    push(b+"した","過去形"); push(b+"して","テ形"); push(b+"している","継続形");
+    push(b+"してる","継続形"); push(b+"すれば","条件形"); push(b+"しろ","命令形"); push(b+"しよう","志向形");
+    return out;
+  }
+  if(dic==="来る"||dic==="くる"){
+    push("来る","終止形");push("くる","終止形");push("来ない","否定形");push("こない","否定形");
+    push("来ます","丁寧形");push("きます","丁寧形");push("来ました","丁寧・過去形");push("きました","丁寧・過去形");
+    push("来た","過去形");push("きた","過去形");push("来て","テ形");push("きて","テ形");
+    push("来ている","継続形");push("きている","継続形");push("来れば","条件形");push("来い","命令形");
+    return out;
+  }
+  if(!GO[last]) return out;
+  const row=GO[last], ob=ONBIN[last];
+  /* 五段 */
+  push(dic,"終止形");
+  push(st+row[0]+"ない","否定形"); push(st+row[1]+"ます","丁寧形");
+  push(st+row[1]+"ました","丁寧・過去形"); push(st+row[1]+"ません","丁寧・否定形");
+  push(st+ob[0],"過去形"); push(st+ob[1],"テ形");
+  push(st+ob[1]+"いる","継続形"); push(st+ob[1]+"る","継続形");
+  push(st+row[3]+"ば","条件形"); push(st+row[3],"命令形"); push(st+row[4]+"う","志向形");
+  /* 「〜る」で終わる語は一段の可能性もあるので、その形も候補に入れる */
+  if(last==="る"){
+    push(st+"ない","否定形"); push(st+"ます","丁寧形"); push(st+"ました","丁寧・過去形");
+    push(st+"ません","丁寧・否定形"); push(st+"た","過去形"); push(st+"て","テ形");
+    push(st+"ている","継続形"); push(st+"てる","継続形");
+    push(st+"れば","条件形"); push(st+"ろ","命令形"); push(st+"よう","志向形");
+  }
+  return out;
+}
+function jaAdjForms(dic){        /* 「高い」型 */
+  if(!dic.endsWith("い")) return [];
+  const st=dic.slice(0,-1);
+  return [[dic,"終止形"],[st+"かった","過去形"],[st+"いです","丁寧形"],
+          [st+"くて","ヌ形"],[st+"いから","ヌ形"],[st+"く","連用形"],
+          [st+"くない","打ち消し"],[st+"ければ","条件形"]];
+}
+
+/* 逆引き表：共通語の活用形 → {索引行, 形の名前} */
+const CONJ=new Map();
+X.forEach(row=>{
+  if(!row._o) return;
+  const kj=(row.kj||"").replace(/[〔〕]/g,"");
+  const heads=[]; if(kj) kj.split("・").forEach(s=>heads.push(s.trim())); heads.push(row.w);
+  const e=BYR.get(row._o.replace(/[=\]］＝]/g,""));
+  if(!e) return;
+  const isV = /自|他/.test(e.p||"");           /* 活用が載っていない不規則動詞も入れる */
+  const isA = /形/.test(e.p||"");
+  if(!isV && !isA) return;
+  for(const h of heads){
+    if(!h) continue;
+    const fs = isV ? jaVerbForms(h) : jaAdjForms(h);
+    for(const [s,f] of fs){
+      if(s.length<2) continue;
+      if(!CONJ.has(s)) CONJ.set(s,{row,e,form:f,dic:h,kind:isV?"動":"形"});
+    }
+  }
+});
+
+/* ───── 文を切る ───── */
+const MAXW=12;
+const MARK=/[\s、。，．,.！!？?「」『』（）()・…]/;
+/* 文末の言い方。助詞の「で」に食われないよう、いちばん強く見る。
+   辞典（索引篇・本文篇）で裏の取れた形だけを載せる。取れなかった「ですか」「でしょう」
+   「ください」「ではない」は、ここには入れず、語と助詞に分けて訳す。 */
+const COPULA=[
+  ["でございます","dajabiru","辞典 dajabiru〈です。であります〉平民の言い方。士族は deebiru",""],
+  ["でした","deebiru","辞典 deebiru〈です〉。過去の形は「あまり用いない」と辞典にあるため、そのままの形",""],
+  ["です","deebiru","辞典 deebiru〈です。でございます〉索引篇（敬語）",""],
+  ["である","'jaN","辞典 'jaN〈だ。である〉",""],
+  ["だった","'jaN","辞典 'jaN〈だ。である〉。過去の形は辞典に無いため、そのままの形",""],
+  ["だ","'jaN","辞典 'jaN〈だ。である〉",""]
+];
+const CMAP=new Map(COPULA.map(r=>[r[0],r]));
+const HASKJ=/[\u4e00-\u9fff\u30a0-\u30ff]/;   /* 漢字・カタカナを含むか */
+/* 日本語は分かち書きしないので、長さだけで切ると「今日は」の「は」が「はい」に飲まれる。
+   長さ・漢字を含むか・直前が語かどうかで重みを付けて選ぶ。 */
+function cut(text){
+  const out=[]; let i=0, prevWord=false;
+  while(i<text.length){
+    const ch=text[i];
+    if(MARK.test(ch)){ out.push({t:ch,kind:"mark"}); i++; prevWord=false; continue; }
+    let best=null;
+    const put=o=>{ if(!best || o.sc>best.sc) best=o; };
+    for(let L=Math.min(MAXW,text.length-i); L>=1; L--){
+      const s=text.substr(i,L), kj=HASKJ.test(s)?6:0;
+      if(CMAP.has(s))  put({t:s,kind:"copula",v:CMAP.get(s), sc:L*10+200});
+      if(CONJ.has(s))  put({t:s,kind:"conj", v:CONJ.get(s), sc:L*10+kj+8});
+      if(JMAP.has(s))  put({t:s,kind:"joshi",v:JMAP.get(s), sc:L*10+(prevWord?100:0)});
+      if(JA.has(s))    put({t:s,kind:"word", v:JA.get(s),  sc:L*10+kj+2});
+    }
+    if(best){ out.push(best); i+=best.t.length; prevWord=(best.kind!=="joshi"); }
+    else { out.push({t:ch,kind:"none"}); i++; prevWord=false; }
+  }
+  const m=[];                       /* 訳せなかった字は隣どうしでまとめる */
+  for(const p of out){
+    const last=m[m.length-1];
+    if(p.kind==="none" && last && last.kind==="none") last.t+=p.t; else m.push(p);
+  }
+  return m;
+}
+
+/* ───── 共通語 → うちなーぐち ───── */
+function toOki(text){
+  const parts=cut(text);
+  const kana=[], roma=[], rows=[];
+  for(const p of parts){
+    if(p.kind==="mark"){ kana.push(p.t); roma.push(p.t); continue; }
+    if(p.kind==="copula"){
+      const [ja,r,why]=p.v;
+      kana.push(kanaOf(r)); roma.push(toBook(r));
+      const ee=BYR.get(r.replace(/[=\]］＝]/g,""));
+      rows.push([p.t,show(r),why,'<span class="t t-d">辞典</span>',ee?ee.i:""]);
+      continue;
+    }
+    if(p.kind==="joshi"){
+      const [ja,r,ka,src]=p.v;
+      kana.push(ka); roma.push(toBook(r));
+      rows.push([p.t,ka+"（"+toBook(r)+"）","助詞",'<span class="t t-d">'+esc(src)+"</span>",""]);
+      continue;
+    }
+    if(p.kind==="conj"){
+      const {row,e,form,dic,kind}=p.v;
+      const v = kind==="動" ? okiVerb(e,form) : okiSa(e,form);
+      if(v){
+        kana.push(kanaOf(v)); roma.push(toBook(v));
+        const inD=HEAD.has(v.replace(/[=\]］＝]/g,""));
+        const tag = inD ? '<span class="t t-e">本の規則／辞典にも在り</span>'
+                        : '<span class="t t-g">本の規則で作った形</span>';
+        rows.push([p.t,show(v),kind+"・"+form+"（もとの形 "+dic+"）",tag,e.i]);
+      }else{
+        kana.push(kanaOf(row._o)); roma.push(toBook(row._o));
+        rows.push([p.t,show(row._o),kind+"・"+form+"（辞典にこの語の活用の形が載っていないため、終止形を出しています）",
+          '<span class="t t-d">索引篇</span>',e?e.i:""]);
+      }
+      continue;
+    }
+    if(p.kind==="word"){
+      const row=p.v, v=row._o;
+      kana.push(kanaOf(v)); roma.push(toBook(v));
+      const e=BYR.get(v.replace(/[=\]］＝]/g,""));
+      rows.push([p.t,show(v),(row.kj||"")+(row.d||""),'<span class="t t-d">索引篇 '+esc(row.pg)+"頁</span>",e?e.i:""]);
+      continue;
+    }
+    kana.push('<span class="ng">'+esc(p.t)+"</span>"); roma.push(p.t);
+    rows.push([p.t,"—","辞典に見つかりませんでした",'<span class="t t-x">訳せていません</span>',""]);
+  }
+  return {kana:kana.join(""),roma:roma.join(" ").replace(/\s+([、。，．,.！!？?])/g,"$1"),rows};
+}
+
+/* ───── うちなーぐち → 共通語 ───── */
+/* 打った文字を均す（辞書ページと同じ規則） */
+function fold(x){
+  if(!x) return "";
+  x=x.toLowerCase();
+  [["shi","si"],["sh","s"],["chi","ci"],["ch","c"],["tsu","tu"],["ji","zi"],
+   ["fu","hu"],["f","hw"],["cc","c"],["ss","s"],["tt","t"],["y","j"]].forEach(p=>{
+    x=x.split(p[0]).join(p[1]);
+  });
+  return x.replace(/[^a-z]/g,"");
+}
+function normKana(s){
+  if(!s) return "";
+  s=s.replace(/[ァ-ヶ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x60));
+  const sm={"ぁ":"あ","ぃ":"い","ぅ":"う","ぇ":"え","ぉ":"お","ゃ":"や","ゅ":"ゆ","ょ":"よ","っ":"つ"};
+  s=s.replace(/[ぁぃぅぇぉゃゅょっ]/g,c=>sm[c]);
+  return s.replace(/[ー・\s]/g,"");
+}
+const OKANA=new Map(), OROMA=new Map();
+E.forEach(e=>{
+  const k=normKana(e.k||""); if(k && !OKANA.has(k)) OKANA.set(k,e);
+  const r=fold(e.bk||e.r); if(r && !OROMA.has(r)) OROMA.set(r,e);
+  if(e.cj){                                  /* 活用形からも引けるようにする */
+    for(const f in OKI){
+      const v=okiVerb(e,f); if(!v) continue;
+      const vk=normKana(kanaOf(v)), vr=fold(toBook(v));
+      if(vk && !OKANA.has(vk)) OKANA.set(vk,{e,form:f});
+      if(vr && !OROMA.has(vr)) OROMA.set(vr,{e,form:f});
+    }
+  }
+  if(e.sa){
+    for(const f in OKISA){
+      const v=okiSa(e,f); if(!v) continue;
+      const vk=normKana(kanaOf(v)), vr=fold(toBook(v));
+      if(vk && !OKANA.has(vk)) OKANA.set(vk,{e,form:f});
+      if(vr && !OROMA.has(vr)) OROMA.set(vr,{e,form:f});
+    }
+  }
+});
+const JOSHI_O=new Map();  /* うちなーぐちの助詞 → 共通語 */
+JOSHI.forEach(([ja,r,ka])=>{
+  const k=normKana(ka); if(k && !JOSHI_O.has(k)) JOSHI_O.set(k,ja);
+  const f=fold(toBook(r)); if(f && !JOSHI_O.has(f)) JOSHI_O.set(f,ja);
+});
+/* 語義の頭に付く「1.」「①」を落とす */
+function meanOf(e){
+  let s=(e.m&&e.m[0])||"";
+  s=s.replace(/^\s*[0-9０-９]+[.．]\s*/,"").replace(/^[①-⑳]\s*/,"");
+  return s.split("。")[0];
+}
+
+function toJa(text){
+  const isRoma=/^[\x20-\x7e]+$/.test(text.trim());
+  const src = isRoma ? text.split(/[\s、。,.]+/).filter(Boolean)
+                     : text.split(/([、。，．,.！!？?\s]+)/).filter(Boolean);
+  const outJa=[], rows=[];
+  for(const raw of src){
+    if(/^[、。，．,.！!？?\s]+$/.test(raw)){ outJa.push(raw.trim()); continue; }
+    const key = isRoma ? fold(raw) : normKana(raw);
+    const map = isRoma ? OROMA : OKANA;
+    if(JOSHI_O.has(key)){                       /* 助詞そのものは助詞として読む */
+      outJa.push("（"+JOSHI_O.get(key)+"）");
+      rows.push([raw,"助詞「"+JOSHI_O.get(key)+"」","",'<span class="t t-d">索引篇（助詞）</span>',""]);
+      continue;
+    }
+    let hit=map.get(key), used=raw, form="";
+    if(!hit){                                  /* 後ろを1字ずつ削って当てる（助詞が付いた形） */
+      for(let L=key.length-1; L>=2 && !hit; L--){
+        const h=map.get(key.slice(0,L));
+        if(h){ hit=h; used=raw.slice(0,L); const tail=isRoma?key.slice(L):normKana(raw).slice(L);
+               form=JOSHI_O.has(tail)?("＋助詞「"+JOSHI_O.get(tail)+"」"):""; }
+      }
+    }
+    if(!hit){ outJa.push('<span class="ng">'+esc(raw)+"</span>");
+      rows.push([raw,"—","辞典に見つかりませんでした",'<span class="t t-x">訳せていません</span>',""]); continue; }
+    const e = hit.e || hit, fm = hit.form || "";
+    const mean=meanOf(e);
+    outJa.push(mean + (fm?"〈"+fm+"〉":"") + (form?form.replace("＋助詞「","（").replace("」","）"):""));
+    rows.push([used+(fm?"（"+fm+"）":"")+form, mean+(fm?"〈"+fm+"〉":""),
+      ((e.m&&e.m[0])||"").slice(0,120),
+      '<span class="t t-d">本文篇 '+esc(e.pg)+"頁</span>", e.i]);
+  }
+  return {kana:outJa.join(" "),roma:"",rows};
+}
+
+/* ───── 画面に出す ───── */
+let DIR=1;
+function run(){
+  const t=$("#q").value.trim();
+  if(!t){ $("#out").innerHTML='<div class="empty">文を入れて「言い換える」を押してください。</div>'; return; }
+  const r = DIR===1 ? toOki(t) : toJa(t);
+  let h='<div class="out"><div class="big">'+r.kana+"</div>";
+  if(r.roma) h+='<div class="roma">'+esc(r.roma)+"</div>";
+  h+="</div>";
+  h+="<h3>語ごとの内訳</h3><table><tr><th>入れた語</th><th>当てた語</th><th>中身</th><th>出どころ</th></tr>";
+  for(const [a,b,c,tag,idx] of r.rows){
+    const link = idx===""||idx==null ? "" :
+      ' <a href="index.html#i'+idx+'" style="font-size:12px">辞書</a>';
+    h+="<tr><td>"+esc(a)+"</td><td><b>"+b+"</b>"+link+"</td><td class=note>"+esc(c)+"</td><td>"+tag+"</td></tr>";
+  }
+  h+="</table>";
+  h+='<p class="note" style="margin-top:12px">語を1つずつ置き換えた形です。'
+   + '沖縄語も共通語と同じ「主語→目的語→動詞」の並びなので、そのままで概ね通じます。'
+   + '言い回しとしての自然さまでは保証していません。'
+   + '赤い点線の語は辞典に見つからなかったところで、直していません。</p>';
+  $("#out").innerHTML=h;
+}
+$("#go").onclick=run;
+$("#q").addEventListener("keydown",ev=>{ if(ev.key==="Enter"&&(ev.metaKey||ev.ctrlKey)) run(); });
+$("#d1").onclick=()=>{ DIR=1; $("#d1").className="on"; $("#d2").className="";
+  $("#q").placeholder="文をそのまま入れてください（例：わたしは水を飲みました）"; setEx(); run(); };
+$("#d2").onclick=()=>{ DIR=2; $("#d2").className="on"; $("#d1").className="";
+  $("#q").placeholder="うちなーぐちの文を入れてください（かな・ローマ字どちらでも）"; setEx(); run(); };
+
+const EX1=["わたしは水を飲みました","今日はいい天気です","この本を読んでいる","はやく行こう","ありがとう"];
+const EX2=["わんや みじ ゆ ぬまびたん","'waN 'ja miji nunuN","にふぇーでーびる"];
+function setEx(){
+  const list = DIR===1?EX1:EX2;
+  $("#ex").innerHTML = list.map(s=>'<button data-s="'+esc(s)+'">'+esc(s)+"</button>").join("");
+  $("#ex").querySelectorAll("button").forEach(b=>b.onclick=()=>{ $("#q").value=b.dataset.s; run(); });
+}
+setEx();
+
+$("#src").innerHTML =
+  "出典①（語義・見出し・活用の3代表形／共通語からの索引）："+esc(D.meta.src)+"（"+D.meta.url+"） クリエイティブ・コモンズ 表示 4.0 国際<br>"+
+  "出典②（活用の体系・3語幹と各形の語尾・助詞ヤ）：西岡敏・仲原穣『沖縄語の入門 たのしいウチナーグチ』（伊狩典子・中島由美 協力）21・22・48・182ページ<br>"+
+  "言い換えに使った語：索引篇 "+X.length.toLocaleString()+"行／本文篇 "+E.length.toLocaleString()+"語／活用を当てられる語 "+CONJ.size.toLocaleString()+"形<br>"+
+  "かな表記はローマ字からの機械変換で未検証。首里方言。台帳を組んだ日 "+esc(D.meta.built);
+
+(function(){
+  const el=document.getElementById("off");
+  const say=(t,c)=>{ if(el){ el.textContent=t; el.style.color=c||"var(--gray)"; } };
+  if(!("serviceWorker" in navigator)){ say("この端末は取り込みに対応していません（電波が要ります）"); return; }
+  if(location.protocol==="file:"){ say("ファイルを直接開いているため取り込めません"); return; }
+  say("この端末に取り込んでいます…");
+  navigator.serviceWorker.register("sw.js?v=3").then(reg=>{
+    const done=()=>caches.keys().then(ks=>ks.some(k=>k.startsWith("uchinaaguchi"))).then(ok=>
+      say(ok?"✓ この端末に取り込み済み。電波が無くても使えます。"
+            :"取り込みの途中です。もう一度開くと仕上がります。", ok?"#2f6b2f":null));
+    if(reg.active) done(); else navigator.serviceWorker.ready.then(done);
+    setTimeout(done,4000);
+  }).catch(e=>{ say("取り込めませんでした（電波が要ります）："+String(e.message||e).slice(0,60),"#8a3a3a"); });
+})();
+</script>
+</body>
+</html>
