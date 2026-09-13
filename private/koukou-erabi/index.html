@@ -76,6 +76,15 @@ ol.rulers li p{color:var(--sub)}
 .step:last-child{padding-bottom:0}
 .step::before{content:"";position:absolute;left:-8px;top:8px;width:13px;height:13px;border-radius:50%;background:var(--paper);border:3px solid var(--accent)}
 .step .when{font-weight:700;color:var(--accent)}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+.tbl table{border-collapse:collapse;width:100%;min-width:460px;font-size:15px}
+.tbl th,.tbl td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.tbl tr:last-child th,.tbl tr:last-child td{border-bottom:0}
+.tbl thead th{background:var(--tint);font-family:"Zen Maru Gothic",sans-serif;font-weight:700}
+.tbl tbody th{font-weight:500;color:var(--sub);white-space:nowrap}
+.tbl td.n{text-align:right;font-variant-numeric:tabular-nums}
+.tbl .grp th{background:var(--tint);color:var(--ink);font-weight:700;font-size:14px}
+.note{font-size:13px;color:var(--sub)}
 .src{font-size:13px;color:var(--sub);display:flex;flex-direction:column;gap:6px}
 .src a{color:var(--accent);word-break:break-all}
 .src a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -153,6 +162,38 @@ ol.rulers li p{color:var(--sub)}
     </div>
   </section>
 
+  <section aria-labelledby="midori">
+    <h2 id="midori">光陵と横浜緑ケ丘をくらべる</h2>
+    <p>いま考えている横浜緑ケ丘高校は、道B（外部の受験）で入る高校です。道Aの光陵と横に並べました。</p>
+    <div class="tbl">
+      <table>
+        <thead><tr><th scope="col"></th><th scope="col">光陵</th><th scope="col">横浜緑ケ丘</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">場所</th><td>保土ケ谷区・東戸塚駅</td><td>中区本牧・山手駅から歩いて13分</td></tr>
+          <tr><th scope="row">偏差値</th><td>65</td><td>71</td></tr>
+          <tr><th scope="row">入り方</th><td>連携枠（レポートと面接・発表）<br>または一般の入試</td><td>一般の入試だけ</td></tr>
+          <tr><th scope="row">一般の入試の配点</th><td>内申4：学力検査6：特色検査1</td><td>内申4：学力検査6：特色検査2</td></tr>
+          <tr><th scope="row">学校の特徴</th><td>附属横浜中と6年間を見通した連携</td><td>校則がほとんどない自由な校風。国の「スーパーサイエンスハイスクール」、県の「学力向上進学重点校」に指定</td></tr>
+          <tr class="grp"><th scope="row" colspan="3">2025年の大学合格者数（人）</th></tr>
+          <tr><th scope="row">東京大学</th><td class="n">—</td><td class="n">1</td></tr>
+          <tr><th scope="row">一橋大学</th><td class="n">—</td><td class="n">3</td></tr>
+          <tr><th scope="row">横浜国立大学</th><td class="n">21</td><td class="n">18</td></tr>
+          <tr><th scope="row">早稲田大学</th><td class="n">25</td><td class="n">68</td></tr>
+          <tr><th scope="row">慶應義塾大学</th><td class="n">21</td><td class="n">48</td></tr>
+          <tr><th scope="row">上智大学</th><td class="n">8</td><td class="n">23</td></tr>
+          <tr><th scope="row">東京理科大学</th><td class="n">34</td><td class="n">27</td></tr>
+          <tr><th scope="row">明治大学</th><td class="n">119</td><td class="n">170</td></tr>
+          <tr><th scope="row">青山学院大学</th><td class="n">67</td><td class="n">79</td></tr>
+          <tr><th scope="row">立教大学</th><td class="n">49</td><td class="n">68</td></tr>
+          <tr><th scope="row">中央大学</th><td class="n">66</td><td class="n">61</td></tr>
+          <tr><th scope="row">法政大学</th><td class="n">105</td><td class="n">84</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">偏差値と合格者数は「みんなの高校情報」の数字です。合格者数は、1人で何校も受かった分を全部数えた人数です。「—」はその年の数字が載っていないところです。</p>
+    <p>早稲田・慶應・上智は緑ケ丘が2〜3倍、横浜国立大学はほぼ同じです。緑ケ丘に入るには、中2・中3の内申を高く保つことと、特色検査（考える力を見る試験）の対策が要ります。</p>
+  </section>
+
   <section aria-labelledby="rulers">
     <h2 id="rulers">選ぶときのものさし</h2>
     <p>大事な順に並べています。</p>
@@ -192,6 +233,10 @@ ol.rulers li p{color:var(--sub)}
     <a href="https://yokochu.ynu.ac.jp/alignment/">中高大連携（横浜国立大学教育学部附属横浜中学校）</a>
     <a href="https://www.minkou.jp/junior/school/8341/">横浜国立大学附属横浜中学校（みんなの中学校情報）</a>
     <a href="https://www.rinkaiseminar.co.jp/es/sho/kokudai.html">国大附属横浜中 内部進学クラス（臨海セミナー）</a>
+    <a href="https://www.minkou.jp/hischool/school/university/1332/">横浜緑ケ丘高校の進学実績（みんなの高校情報）</a>
+    <a href="https://www.minkou.jp/hischool/school/university/1241/">光陵高校の進学実績（みんなの高校情報）</a>
+    <a href="https://www.shozemi.com/column/highexam/34332/">横浜緑ケ丘高校の選考比率（湘南ゼミナール）</a>
+    <a href="https://ja.wikipedia.org/wiki/%E7%A5%9E%E5%A5%88%E5%B7%9D%E7%9C%8C%E7%AB%8B%E6%A8%AA%E6%B5%9C%E7%B7%91%E3%82%B1%E4%B8%98%E9%AB%98%E7%AD%89%E5%AD%A6%E6%A0%A1">神奈川県立横浜緑ケ丘高等学校（Wikipedia）</a>
     <a href="https://stepnet.co.jp/stepblog/?p=16670">2026年度 神奈川県公立高校 入試日程と選考基準（ステップ）</a>
   </footer>
 </div>
