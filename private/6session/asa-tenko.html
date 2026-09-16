@@ -55,7 +55,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-16 16:38 ／ 写した時刻 2026-09-16 16:51</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-16 17:12 ／ 写した時刻 2026-09-16 17:12</p>
 <h3 id="2026-09-16-朝の点呼">2026-09-16 朝の点呼</h3>
 <p>（初回。予約タスク asa-tenko-6session を 12:05 に手で走らせた分。前日＝2026-09-15）</p>
 <table>
@@ -160,6 +161,30 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
   <li><strong>顧客の画面には1件も出ない。</strong>コメント（<code>&lt;!-- --&gt;</code>・<code>/* */</code>・<code>//</code>）を落としたコピーを作って数え直した ── 元12 → 落としたあと0</li>
   <li>untendai-asa-tenken/SKILL.md の2件は、依頼が届いた時点で既に0件（前日に「呼び出し札 → 申し送り」で④に当てて置換済み・md5 e69f0c443badd7abef70ce924a388072・146行・申し送り6件）</li>
 <li><strong>運転台マーケへ</strong>：haishin.rs の9件はそちらの持ち場。中身を見たうえで①②③④のどれに当たるかを判定してください。運転台側と同じ「小さな表示」の意味なら、同じく据え置きになります</li>
+</ul>
+<hr>
+<h3 id="2026-09-16-昼の定時報告-6回目・17-0x-に予約タスクを手で走らせた分">2026-09-16 昼の定時報告（6回目・17:0x に予約タスクを手で走らせた分）</h3>
+<pre><code>
+AI-Mits 登録  総計 29件 ／ 直近30日 25件 ／ 直近7日 14件 ／ 前日 1件
+</code></pre>
+<p>（UTAGE XU7Gfd7XoiCQ を直接数えた。総計は meta.total の 29。直近30日・7日・前日の3つは Mits様・AI のアドレス1件を除いた 28件から数えた。今日 09-16 の登録は 0件）</p>
+<p>（走った時刻は 17:09。18:30台の前なので、5回目と同じ扱いで「昼」の遅れ分として書く。数えたのは 5回目（16:10）からの差分＝<strong>09-16 16:10〜17:09 の59分</strong>だけ。18:34 に自動で立つ回が「夕」になる）</p>
+<table>
+<tr><th>セッション</th><th>最後に動いた時刻</th><th>前日やったこと</th><th>受けた連絡</th><th>送った連絡</th><th>止まっている日数</th></tr>
+<tr><td>司令塔</td><td>09-16 17:09</td><td>「HTML の壊れ ── 直しました」── 写す道具で svg の図が文字に化けていたのと、URL が途中で切れていたのを直した</td><td>5通（AI-Mits-チューニング 2／メール配信・計測・自動化 2／運転台マーケ 1）</td><td>6通</td><td>0日</td></tr>
+<tr><td>メール配信・計測・自動化</td><td>09-16 16:32</td><td>「『札』を、この持ち場から0件にしました」── 配信スキル・配信タスク・夜の測定タスクの「札」を「追跡の印」に置き換えた</td><td>1通（司令塔 (fork)）</td><td>2通</td><td>0日</td></tr>
+<tr><td>運転台マーケ</td><td>09-16 16:58</td><td>「更新しました」── マーケ開発版 /Applications/untendai-mkt.app を更新ボタン入りの組み立て（16:55）に入れ替えた。前の版はAI作業ゴミ箱に控え</td><td>1通（司令塔 (fork)）</td><td>1通</td><td>0日</td></tr>
+<tr><td>運転台改善</td><td>09-16 16:48</td><td>「v1.73.0 を世に出しました」── GitHub の Release が Latest（16:46）・お客様に「新しい版があります」が出る状態</td><td>2通（司令塔 (fork)）</td><td>2通</td><td>0日</td></tr>
+<tr><td>AI-Mits-チューニング</td><td>09-16 16:29</td><td>「裏に回っていた調べが終わりました」── 計測の口の Worker 名が untendai-update であることの裏付け。手順書は直した形のまま</td><td>1通（司令塔 (fork)）</td><td>2通</td><td>0日</td></tr>
+<tr><td>伽藍とバザールの実現</td><td>09-16 16:19</td><td>「『札』0件の根拠」── SKILL.md の「札」0件・56行・md5 d1e07718… を再掲</td><td>1通（司令塔 (fork)）</td><td>1通</td><td>0日</td></tr>
+</table>
+<ul>
+<li>決定の記録の末尾3件（ファイルの並び順）：2026-09-16 17:3x ／ 司令塔（記録の中の「札」は触らない・5つ目の意味の候補を出す）（どのセッションで：司令塔／宛先：6つとも）・2026-09-16 16:46 ／ Mits様（v1.73.0 を世に出した）（どのセッションで：運転台改善／宛先：6つとも）・41. 社内レポートの HTML の壊れを直した／予約タスクは数分遅れて立つ（17:0x・司令塔／宛先：6つぜんぶ）。<strong>この59分で5件増えた</strong>（17:2x 運転台改善「札」5つ目の意味／16:5x 運転台改善 手順書の突き合わせ／上の3件）。見出しの時刻が並び順と前後している（17:3x の後ろに 16:46）</li>
+<li>この59分に更新された司令塔フォルダのファイル：決定台帳_6セッション共通.md（16:53）／shanai_report_md5.json（16:53）／shanai_report_utsusu.py（16:51）／社内レポート_載せるもの一覧.csv（16:43）／asa_tenko.md（16:38）／soushin_machi.json（16:38）／マーケ経路_決まったこと台帳_20260912.md（16:37）／全体設計図_20260912.html・全体設計図_済_20260912.html・untendai_marketing_hikiwatashi.md・発注書_3-4_端末と読者のひも付け_20260914.md（いずれも 16:29）／yobidashi.md（16:15）／renrakusaki.md（16:13）の13本</li>
+<li>24時間動いていないセッション：無し</li>
+<li>申し送りに足した行：0行。止まり0件で、4つの朝の時計の書き出し先にも 2026-09-16 の行が入っている（untendai_tenken_nisshi.md 12:26／aimits_mainichi_keisoku.csv 12:30／keiki_maiasa_kensan.md 14:13／nakama_boshu_zairyo_shuji.md 12:30）</li>
+<li>宛先表 renrakusaki.md：<code>list_sessions</code> と <code>ListAgents</code> を実測。ID 6件・名前 6件とも変わっておらず、実測時刻の記載だけ 17:1x に直した</li>
+<li>数え方：5回目と同じ（送り主＋本文の頭200字で重複を除く・司令塔は記録3本を合算）</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
