@@ -52,7 +52,7 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
 <div class="meta-head"><div><b>元のファイル</b>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/決定台帳_6セッション共通.md</div><div><b>最後に更新された日時</b>2026-09-16 13:40 JST</div></div>
 <h1>決定の記録</h1>
-<h1 id="62026-09-14">決定台帳（6セッション共通・2026-09-14 起票）</h1>
+<h1 id="62026-09-14">決定の記録（6セッション共通・2026-09-14 起票）</h1>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。<br />
 書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
 <h2 id="1">1件の書式</h2>
@@ -248,6 +248,43 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>内容：<strong>取消</strong> ── 「予約タスクの回からは他のチャットへ連絡を送れない」は誤り。断られるのは <code>mcp__ccd_session_mgmt__send_message</code>（session_id で送る道具）だけで、<code>SendMessage</code>（<code>to</code> に ListAgents の名前で送る道具）は予約タスクの回でも届いている。<strong>新しい行</strong> ── 送る道具を窓で使い分ける。チャットの窓＝<code>mcp__ccd_session_mgmt__send_message</code>（local_ のID）／予約タスクの窓＝<code>SendMessage</code>（ListAgents が返す名前）。呼び出し札の伝言は、送れなかったときの控えに戻す。</li>
 <li>直した先：宛先表 renrakusaki.md に「予約タスクの窓から送るときの名前」の列を追加（3,271バイト）／点呼の手順書に「ListAgents を呼んでその欄を埋める」を追加（78行・md5 a586898ac6aafe92ffdf4fa56ba04c0b）／運転台マーケへ、共有 memory feedback_yoyaku_task_kara_session_soshin_wa_dekinai.md を道具1つの話に狭めるよう連絡（28800d40）</li>
 </ul>
+<h2 id="2026-09-16-14-5x-jst-mits">2026-09-16 14:5x JST ／ Mits様</h2>
+<ul>
+<li>出典：Mits様原文（2026-09-16）「点呼、呼び出し札、決定台帳、、、これらの単語がしっくりこない、意図に合った他の候補を出して」→ 候補を出したのち「定時報告　申し送り　決定の記録」</li>
+<li>どのセッションで：6つとも</li>
+<li>内容：呼び名を3つ変える。<strong>点呼 → 定時報告</strong>／<strong>呼び出し札 → 申し送り</strong>／<strong>決定台帳 → 決定の記録</strong>。文章の中の語だけを変え、<strong>ファイル名と絶対パスは変えない</strong>（asa_tenko.md・yobidashi.md・決定台帳_6セッション共通.md のまま。8本の手順書と社内レポート28枚から参照されているため、名前を変えると全部切れる）。司令塔の側は済み（定時報告の手順書19語／宛先表4語／申し送り4語／司令塔 CLAUDE.md 7語／社内レポートの一覧8語／講座資料39語）。</li>
+</ul>
+<h2 id="2026-09-16-15-2x-jst">2026-09-16 15:2x JST ／ 司令塔（呼び名の置き換えの検収）</h2>
+<ul>
+<li>出典：司令塔が8本の手順書と司令塔の紙6本、社内レポート28枚を <code>md5 -q</code>・<code>grep -c &#x27;&#x27;</code>・<code>grep -o</code> で数え直した実測</li>
+<li>どのセッションで：6つとも</li>
+<li>内容：呼び名の置き換えが<strong>8本とも通った</strong>。文章の中の旧語は全部0。残る「決定台帳」は全部<strong>ファイル名の中</strong>（数がパスの数と一致）。壊れたパス <code>決定の記録_6セッション共通.md</code> は<strong>0本</strong>。asa-tenko-6session 84行 82c86a9e8b1c8dfe62785ef5110779a5／untendai-asa-tenken 134行 ee35cbf7f915bb39f4b428c79d7ce7b1／aimits-mainichi-keisoku 78行 4d7b19aeb739a7f8b1a7d2008a99793f／keiki-kensan 93行 4d4ab4dd2ceb63f0dd537210550f9fec／nakama-boshu-zairyo-shuji 55行 6a386d07e88f310fdb1a29444f219fcc／merumaga-keisoku-36h-asa 107行 f0dd6d36f88dd9e8cb8bfc29ee9960ba／mainichi-merumaga-21-24 416行 292c524d54064830b7113c216c4e1df6／mainichi-merumaga-mihari-2310 123行 32bbbc0a617181c616454f94febb263e</li>
+<li><strong>一括置換がパスを壊す</strong>：AI-Mits-チューニングが最初の一括置換で <code>決定台帳_6セッション共通.md</code> を <code>決定の記録_6セッション共通.md</code> に変えてしまい、その場で気付いて戻した。語を置き換えるときは<strong>パスの中のファイル名を先に避ける</strong>（長い語から順に、パスを含む行を除外してから置換する）</li>
+<li><strong>社内レポートの題も新しい呼び名にした</strong>：目次のカード3つと、3枚の title と h1 だけ（朝の定時報告／申し送り／決定の記録）。<strong>中の記録の見出しと本文は当時のまま残す</strong>（済んだ記録は書き換えない決まり2に合わせる）。コミット 54d9309・origin/main へ push 済み・実機で3枚とも新しい題を確認</li>
+</ul>
+<h2 id="2026-09-16-15-3x-jst">2026-09-16 15:3x JST ／ 司令塔（数の食い違いの始末・数え方を揃える）</h2>
+<ul>
+<li>出典：運転台マーケとメール配信から「そちらの実測と食い違う」と報告が来たので、司令塔が実機で両方の数え方を並べた</li>
+<li>どのセッションで：6つとも</li>
+<li>内容：<strong>同じか違うかは md5 で見る。行数と語の数は、物差しの名前を添えて渡す。</strong></li>
+  <li><strong>語の数</strong>：<code>grep -o &lt;語&gt; | grep -c &#x27;&#x27;</code> ＝ 語の出た回数。<code>grep -c &lt;語&gt;</code> ＝ 語の出た行の数。<strong>1行に2回出る行があると差が出る</strong>（keiki-kensan の実測：定時報告は 語の回数4／出た行数1・L11 L16 L70 に2回出る行が実在）。司令塔が5つに送った数は「出た行数」、持ち場が返した数は「語の回数」だった。中身の食い違いではない</li>
+  <li><strong>行数</strong>：<code>wc -l</code> は<strong>最終行が改行で終わっていないと1少なく出る</strong>。共有 memory <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/feedback_gyosu_wa_wc_l_de_kazoeru.md</code> に既に書いてある（「末尾が \n でないなら行数は wc -l + 1」）。keiki-kensan は改行で終わっていないので <strong>93行が実際</strong>（wc -l は92）。mainichi-merumaga-21-24 も同型で <strong>416行が実際</strong>（wc -l は415）。<code>tail -c 1 &lt;file&gt; | od -c</code> で末尾を見てから渡す</li>
+<li>6本とも md5 は一致していたので、食い違いはすべて物差しの差で、中身は同じだった</li>
+</ul>
+<h2 id="2026-09-16-15-5x-jst-mits-1">2026-09-16 15:5x JST ／ Mits様（決定に「宛先」を書く・この節がその第1号）</h2>
+<ul>
+<li>出典：Mits様原文（2026-09-16）「もしくは決定したことの中に各セッションが『この決定は●●のセッションに必要』と注意書きをいれて、それを●●のセッションが定時で読めば結果は同じになる。帰って持ち場どうしよりも全体共有＋特定持ち場での理解なのでいいかもしれない」</li>
+<li>どのセッションで：司令塔（出どころ）</li>
+<li><strong>宛先：6つとも</strong></li>
+<li>内容：<strong>決定を書くときは「宛先」の行を必ず入れる。</strong>書く形は <code>- 宛先：&lt;読んでほしい持ち場の名前&gt;／&lt;名前&gt;</code>（誰にも要らないなら <code>宛先：なし</code>）。</li>
+  <li><strong>「どのセッションで」は出どころ。「宛先」は読んでほしい相手。</strong>2つは別の行にする。いまの決定の記録は31節のうち30節に「どのセッションで」があるが、これは出どころなので、宛先の代わりにはならない</li>
+  <li><strong>書き手が書く。</strong>いままでは読み手が「これは自分に関係あるか」を毎朝考える形だった（例：keiki-kensan の手順書「ほかの持ち場に関わるものがあれば、その持ち場へ1通送る」）。書き手は決定の中身を一番分かっているので、読み手が推測するより正確になる</li>
+  <li>各持ち場は毎日の時計の冒頭で、決定の記録の前日ぶんを開き、<strong>宛先に自分の名前がある行だけ</strong>を読んで片づける</li>
+  <li><strong>横に直接1通送るより、この形を上に置く。</strong>送ると、その2人しか知らない。決定の記録なら全員が見える上で、名指しされた人が動き、後から入った持ち場も追える。実測：2026-09-16 の連絡87通のうち、持ち場から持ち場へは0通・全部が司令塔あて（道はあったが使われていない）</li>
+  <li>急ぐもの（その日のうちに動かないと事故になるもの）だけ、宛先を書いたうえで1通も送る</li>
+<li>直す先：司令塔 CLAUDE.md に決まり 2-1 として入れた（8,559バイト・51行・L29）。<strong>決定の記録を読む行が入っていない手順書が3本ある</strong>（merumaga-keisoku-36h-asa 0／mainichi-merumaga-21-24 0／mainichi-merumaga-mihari-2310 0）。ここに宛先を書いても届かないので、メール配信・計測・自動化へ足すよう連絡する</li>
+</ul>
+
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
 </body>
 </html>
