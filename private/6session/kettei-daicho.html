@@ -53,7 +53,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-16 16:16 ／ 写した時刻 2026-09-16 16:17</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-16 16:30 ／ 写した時刻 2026-09-16 16:30</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -315,6 +316,43 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>数えた結果（2026-09-16 16:2x 実測）：手順書8本で14件（asa-tenko 8／untendai-asa-tenken 2／aimits 1／nakama 2／mainichi-merumaga-21-24 1）／司令塔のフォルダ29件／講座資料2件／社内レポート28枚で98件</li>
 <li><strong>触らないもの</strong>：決定の記録の過去の行（決まり2・末尾追記のみ）と、asa_tenko.md の済んだ回の記録。済んだ記録は当時の語のまま残す</li>
 <li>社内レポート28枚は正本から写るので、正本を直して写す道具を回せば消える</li>
+</ul>
+<h4 id="2026-09-16-16-4x-JST-司令塔-取消-ev-count-は生きていた">2026-09-16 16:4x JST ／ 司令塔（取消 ── /ev/count は生きていた）</h4>
+<ul>
+<li>出典：AI-Mits-チューニングの実測（2026-09-16）と、司令塔が Worker 8本すべてを叩き直した結果</li>
+<li>どのセッションで：司令塔（出どころ）</li>
+<li><strong>宛先：6つとも</strong></li>
+<li>内容：<strong>取消</strong> ── 「AI-Mits の登録数を取る経路は本番にも手元のコードにも設計書にも存在しない」は誤り。<strong>経路は生きていて、叩く先（ホスト）が違っていた。</strong></li>
+  <li><code>untendai-update.3216-fun.workers.dev/ev/count?days=30</code> → <strong>HTTP 200</strong>（since 2026-08-17 ／ total 744 ／ counted 597 ／ page_view 397・chat_send 228・gate_submit 11・to_dl 4・reg_submit 1）</li>
+  <li>コードにも有る：<code>/Users/nishidamitsuhiro/untendai-seiri/updater/index.js</code> L137 <code>url.pathname === &quot;/ev&quot;</code>・L169 <code>url.pathname === &quot;/ev/count&quot;</code>。wrangler.toml の name は <code>untendai-update</code></li>
+  <li>手元のコードは2本ある（<code>untendai-marketing/updater/index.js</code> と <code>untendai-seiri/updater/index.js</code>）。司令塔は片方も見ていなかった</li>
+<li><strong>Worker 8本を全部叩いた結果</strong>（範囲を切らない数え方の見本）：aimits-report-proxy 404／discord-invite-tracker 404／be02-scheduler-worker 404／be02-scheduler-worker-staging 404／eng40-sync 404／saikyou-dashboard-proxy 404／karaoke-sync 404／<strong>untendai-update 200</strong>。<strong>8本のうち7本が404で1本が200。司令塔は404の1本だけを叩いて8本ぶんの結論を出していた</strong></li>
+<li><strong>新しい行 ── 数字の意味の区別</strong>（AI-Mits-チューニングの指摘）：<strong>UTAGE の登録29件＝登録が成立した人／<code>reg_submit</code> 1件＝お試し版の窓で「確認のメールを送る」を押した回。</strong>別のものを数えている。定時報告の頭に出すのは UTAGE の実数。AI-Mits の CSV の列はそのまま使う</li>
+<li><strong>同じ形の誤りが、この日だけで5回</strong>：①予約タスクから連絡を送れない（2回）②登録数を取る経路が無い ③AI作業ゴミ箱に控えが無い ④中継に count の口が無い。<strong>5回とも「1つだけ叩いて、全部の結論を出した」形。</strong>直し方は1つ ── 「無い」と言う前に<strong>範囲を宣言して、その範囲を全部叩く</strong></li>
+</ul>
+<h4 id="2026-09-16-18-0x-JST-Mits様">2026-09-16 18:0x JST ／ Mits様</h4>
+<ul>
+<li>Mits様原文：「端末の番号　相談の利用者名　経路の印を付ける　最後に付いていた印　申し送り（Mits様が 2026-09-16 に確定済み）」</li>
+<li>出典：AI-Mits-チューニング セッション（Mits様の直接のご指示。前の発言「このセッションでも大量に札があり、同じ単語で違う意味は将来あやまちの元、このセッションでも修正する」を受けた確定）</li>
+<li>どのセッションで：AI-Mits-チューニング</li>
+<li>宛先：司令塔／メール配信・計測・自動化／運転台マーケ／運転台改善</li>
+<li>内容：「札」を意味ごとに別の言葉へ分ける。① 端末につく番号（計測系 aimits_uid・認証系 anon_uid）＝<strong>端末の番号</strong> ② Dify が会話を分ける利用者名（try-…／untendai-…・localStorage の aimits_try_user）＝<strong>相談の利用者名</strong> ③ メールのリンクに付ける経路の印（utm_source・utm_campaign）＝<strong>経路の印を付ける／印つきで来た／印なしで来た</strong>、直近のものは<strong>最後に付いていた印</strong> ④ 定時報告の申し送り1行＝<strong>申し送り</strong>。1語にまとめない（指すものが別のため）。AI-Mits-チューニングの持ち場は済み：aimits-report-proxy/src/index.js 3件（L1100・L1157・L1162）、aimits_otameshi_3mado_shiyou_20260912.html 3件（L127・L128・L144 の列名は「端末の番号」）、予約タスク aimits-mainichi-keisoku/SKILL.md は先に0件。控えは /Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20260916_fuda_iikae_mae/。共通のファイル（全体設計図12件・本記録10件・決まったこと台帳8件・運転台の画面8件・済分の設計図5件・asa_tenko.md 3件ほか）は司令塔の持ち場なので、この対応表で司令塔が直す。ファイル名とパスは変えない。</li>
+</ul>
+<hr>
+<h4 id="2026-09-16-17-0x-JST-Mits様-札-の言い換えを4つに分ける">2026-09-16 17:0x JST ／ Mits様（「札」の言い換えを4つに分ける）</h4>
+<ul>
+<li>出典：Mits様原文（2026-09-16）「端末の番号　相談の利用者名　経路の印を付ける　最後に付いていた印　申し送り」。AI-Mits-チューニング経由で届いた</li>
+<li>どのセッションで：AI-Mits-チューニング（出どころ）</li>
+<li><strong>宛先：6つとも</strong></li>
+<li>内容：<strong>「札」を1語にまとめない。指すものが別なので4つに分ける。</strong></li>
+  <li>① 端末につく番号（計測系 aimits_uid・認証系 anon_uid）→ <strong>端末の番号</strong></li>
+  <li>② Dify が会話を分ける利用者名（try-…／untendai-…・localStorage の aimits_try_user）→ <strong>相談の利用者名</strong></li>
+  <li>③ メールのリンクに付ける経路の印（utm_source・utm_campaign）→ <strong>経路の印を付ける／印つきで来た／印なしで来た</strong>、直近のものは <strong>最後に付いていた印</strong></li>
+  <li>④ 定時報告の申し送り1行 → <strong>申し送り</strong></li>
+<li>🛑 <strong>一括置換をかけない。</strong>同じ「札」が①と③で混ざっている（全体設計図の「端末の札（uid）」は①、「札を付ける」「札なしで来た登録」は③）。<strong>行ごとに①②③④を見分けてから当てる</strong></li>
+<li>司令塔の分は済み（52件）：全体設計図 17／全体設計図（済）19／マーケ経路の台帳 10／引き渡しの記録 5／発注書3-4 1 → すべて0件。控えは /Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20260916_fuda_iikae_shireito_mae/</li>
+<li><strong>触らないもの</strong>：決定の記録の過去の行10件（決まり2）／済んだ回の記録3件／控えファイル 全体設計図_20260912_控え_20260914.html 17件</li>
+<li>残っている持ち場のもの（AI-Mits-チューニングの実測）：運転台_画面_index_20260912.html 8／運転台_配信計測_haishin_20260912.rs 1／soushin_machi.json 1／共有 memory project_untendai_daihoshin.md 2 ほか5本に各1〜2件</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>

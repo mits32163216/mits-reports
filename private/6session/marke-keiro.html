@@ -51,7 +51,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <body>
 <div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-13 22:07 ／ 写した時刻 2026-09-16 16:02</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-16 16:29 ／ 写した時刻 2026-09-16 16:30</p>
 <h2 id="マーケ経路で決まったこと-運転台-marketing-枝が実装する側の写し">マーケ経路で決まったこと（運転台 marketing 枝が実装する側の写し）</h2>
 <p>Mits様（2026-09-08）「メルマガ経路関係で決まったことは、untendai マーケティングがアプリに実装していくので、常に P2P で共有する」。</p>
 <p>正本はセッション「メール配信と計測と自動化」の</p>
@@ -60,7 +61,7 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <table>
 <tr><th>日付</th><th>正本の節</th><th>決まったこと</th><th>運転台で触る場所</th><th>実装した版</th></tr>
 <tr><td>2026-09-08</td><td>11</td><td>経路の印は UTM。<code>?utm_source=&lt;スタンド&gt;&amp;utm_medium=email&amp;utm_campaign=&lt;配信日YYYYMMDD&gt;</code>。utm_source は utage / magmag / spro / test（増えたら note / x / youtube）。UTAGE の集計は funnel_stats_get / funnel_stats_daily の utm_* 絞り込み、登録者ごとは funnel_subscriber_list の utm_* 5列（utm_source / utm_medium / utm_campaign / utm_term / utm_content・応答24列中・2026-09-08 実測・いまは全員 null）</td><td><code>src-tauri/src/utage.rs</code> parse_subscriber（いまは mail/sei/mei/name/kana/created_at/common_reader_id だけ読む）に utm_* を足す。customer 表は <code>inflow_source</code>（001_init.sql 72行）1列のみ</td><td>未</td></tr>
-<tr><td>2026-09-08</td><td>9（seiri 実装済）</td><td><strong>DL の数え方が決まり動いている。</strong>Worker <code>untendai-update</code>（<code>/Users/nishidamitsuhiro/untendai-seiri/updater/index.js</code>）が <code>/get/</code> を押した瞬間に KV <code>untendai_download_log</code>（binding DLLOG）へ1件ずつ置く（ゴールページは作らない・足し引きしない）。1件の形：ts / os(mac,windows) / which(latest,prev) / version / from(utm_source か from=) / utm{source,medium,campaign,content,term} / ref / country / ua。読む口 <code><a href="https://un">https://un</a>tendai-update.3216-fun.workers.dev/count</code>（<code>?detail=1</code>・<code>?from=YYYY-MM-DD</code>・<code>days</code> 既定30）→ since / total / by_day / by_os / by_from / by_version / by_campaign。🚨 KV list は反映に最大60秒。<code>(不明)</code> は札の無い経路（エラーではない）。2026-09-08 時点の記録 0件（動作確認分は消した・2026-09-09 の3スタンド配信が最初の実データ）。<strong>CVR の分母は UTAGE</strong>：funnel_stats_get（funnel 1QtzdExbynBp・start_date/end_date）の PV/UU。9/7〜9/8 実測：1_入口_案内と同意 PV90/UU29、2_運転台のダウンロード PV145/UU67</td><td>配信計測の画面に「分母（UTAGE の PV/UU）」と「分子（/count の by_from）」を1枚に並べる。列は上の1件の形をそのまま使う</td><td>未</td></tr>
+<tr><td>2026-09-08</td><td>9（seiri 実装済）</td><td><strong>DL の数え方が決まり動いている。</strong>Worker <code>untendai-update</code>（<code>/Users/nishidamitsuhiro/untendai-seiri/updater/index.js</code>）が <code>/get/</code> を押した瞬間に KV <code>untendai_download_log</code>（binding DLLOG）へ1件ずつ置く（ゴールページは作らない・足し引きしない）。1件の形：ts / os(mac,windows) / which(latest,prev) / version / from(utm_source か from=) / utm{source,medium,campaign,content,term} / ref / country / ua。読む口 <code><a href="https://un">https://un</a>tendai-update.3216-fun.workers.dev/count</code>（<code>?detail=1</code>・<code>?from=YYYY-MM-DD</code>・<code>days</code> 既定30）→ since / total / by_day / by_os / by_from / by_version / by_campaign。🚨 KV list は反映に最大60秒。<code>(不明)</code> は印の無い経路（エラーではない）。2026-09-08 時点の記録 0件（動作確認分は消した・2026-09-09 の3スタンド配信が最初の実データ）。<strong>CVR の分母は UTAGE</strong>：funnel_stats_get（funnel 1QtzdExbynBp・start_date/end_date）の PV/UU。9/7〜9/8 実測：1_入口_案内と同意 PV90/UU29、2_運転台のダウンロード PV145/UU67</td><td>配信計測の画面に「分母（UTAGE の PV/UU）」と「分子（/count の by_from）」を1枚に並べる。列は上の1件の形をそのまま使う</td><td>未</td></tr>
 <tr><td>2026-09-08</td><td>9</td><td>DL の記録（untendai-seiri の Worker untendai-update・/count）の <code>from</code> は utm_source の値そのまま。DL ボタンがページ URL の utm_source を読んで写す作りを seiri へ依頼済み</td><td>main 側（Worker）。この枝では触らない</td><td>─</td></tr>
 <tr><td>2026-09-08</td><td>10</td><td>計測から Mits様と AI の分を除外：ac_nishida@spro01.com / 3216.fun@gmail.com / dai@3216.fun、bs-* / dup-test-* / +dup1 型、IP 103.100.190.110（変わり得る）、UA curl/*、utm_source=test。生データは残し除外前後の両方を持つ。除外条件は <code>配信計測_生データ/除外リスト.md</code> に1本</td><td>配信計測の画面で「除外前／除外後」の両方を出す。除外条件はアプリに焼き付けない（利用者ごとに違う・Mits様の実データを商品に入れない）</td><td>未</td></tr>
 <tr><td>2026-09-08</td><td>12</td><td>パートナー制度（準備中）：紹介者の印は紹介リンクの <code>?ftid=&lt;パートナー固有コード&gt;</code>。台帳の「経路」列に <code>partner:&lt;ftid&gt;</code>。成約は管理画面の CSV（MCP にパートナー関連ツールは 0本）</td><td>ftid は funnel_subscriber_list の応答（24列・2026-09-08 実測）に<strong>出ない</strong>。出るのは管理画面「成約状況」の CSV（案件名／パートナー／ステータス／報酬額／種別／成約日時）だけ。MCP にパートナー関連ツール 0本（178本中）。→ customer 表の ftid 列は当面 CSV 取り込みで埋める。読者側 API に出るかは成約1件できてから（あちらが確かめて送る）</td><td>未</td></tr>
@@ -368,19 +369,19 @@ aDqCF  : fNOl_rFrNCg_2191 2
 </code></pre>
 <p>DL は積み上がる数なので、<strong>「押してくれた人のうち 39.08%」は厳密な比ではない。</strong></p>
 <p>3分の1という桁は動かないが、正確な比が出るのは<strong>同じ時刻で揃う 9/12 以降の行</strong>から。</p>
-<h4 id="ダウンロードの-0-は-測れた-0-件-ただし-札の付いた押下が-0-件-の意味">ダウンロードの 0 は「測れた 0 件」── ただし「札の付いた押下が 0 件」の意味</h4>
+<h4 id="ダウンロードの-0-は-測れた-0-件-ただし-印の付いた押下が-0-件-の意味">ダウンロードの 0 は「測れた 0 件」── ただし「印の付いた押下が 0 件」の意味</h4>
 <p><code>0</code> は本当に 0 件であって、測れなかったのではない。</p>
 <p>開封・クリックの空欄（そもそも測る手立てが無い）とは別もの。</p>
 <p>🛑 <strong>ただし「全部の経路を拾う」は言い過ぎだった</strong>（2026-09-12 あちらの訂正）。</p>
-<p>拾えるのは<strong>札（<code>utm_source</code>）が付いて押された分だけ</strong>。札が落ちた分は <code>(不明)</code> に入る。</p>
+<p>拾えるのは<strong>印（<code>utm_source</code>）が付いて押された分だけ</strong>。印が落ちた分は <code>(不明)</code> に入る。</p>
 <pre><code>
 by_from: spro 37 / utage 14 / (不明) 11 / magmag 2 / aDqCF 2
 </code></pre>
 <p><strong>66件中 11件（6分の1）が経路不明。</strong>だから <code>ダウンロード数 0</code> の正しい読みは</p>
-<p>「その経路の<strong>札が付いた</strong>押下が 0 件」であって、「その経路から誰も来ていない」ではない。</p>
-<p>札が落ちる心当たり3つ ── メールソフトが <code>?</code> 以降を落とす／読者が URL を手で打ち直す／</p>
-<p>札を入れ忘れたリンク（過去の号）。次の号から、原稿側で全リンクの札を数えてから出す。</p>
-<p><strong>39.08% も同じ性質を持つ。</strong>分子の utage 6 は札付きのみなので、</p>
+<p>「その経路の<strong>印が付いた</strong>押下が 0 件」であって、「その経路から誰も来ていない」ではない。</p>
+<p>印が落ちる心当たり3つ ── メールソフトが <code>?</code> 以降を落とす／読者が URL を手で打ち直す／</p>
+<p>印を入れ忘れたリンク（過去の号）。次の号から、原稿側で全リンクの印を数えてから出す。</p>
+<p><strong>39.08% も同じ性質を持つ。</strong>分子の utage 6 は印つきのみなので、</p>
 <p>実際の到達は 6 より多い可能性がある。<strong>3分の1は下限寄りの数字。</strong></p>
 <p>運転台の実測（<code>d6ce765</code> でテストに固定）：</p>
 <pre><code>
@@ -421,7 +422,7 @@ ID:5127  数字を見せて相談できる相手       2026-09-08 22:16:36  3825
 <p>クリックも2便とも空欄。</p>
 <h4 id="幅を過ぎて測った行-事後91h・事後41h-の扱い-そのまま入れてよい">幅を過ぎて測った行（事後91h・事後41h）の扱い ── そのまま入れてよい</h4>
 <p>経過ラベルは鍵と見出しにしか使っていない（数として読む所は1つも無い）ので、</p>
-<p><code>事後91h</code> のような札でも通る。1回しか測っていない配信は</p>
+<p><code>事後91h</code> のような印でも通る。1回しか測っていない配信は</p>
 <p>「送ったあとの伸び」に出ない（2回以上の測定が要るため）。テストで固定した。</p>
 <h4 id="2026-09-13-21-52-の-spro-2行-解除の-351-を配信停止の累計の列に移し">2026-09-13 21:52 の spro 2行 ── 解除の 351 を配信停止の累計の列に移した</h4>
 <p>理由：累計が1本ごとの列に入っていたため。CSV の移し替えそのものは BS-engineer が行う。</p>

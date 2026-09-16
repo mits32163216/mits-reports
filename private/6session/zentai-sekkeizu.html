@@ -51,7 +51,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <body>
 <div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-14 19:27 ／ 写した時刻 2026-09-16 16:02</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-16 16:29 ／ 写した時刻 2026-09-16 16:30</p>
 
 <div class="wrap">
 
@@ -117,7 +118,7 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
   </g>
   <g font-size="11.5" fill="#98a8b6">
     <text x="150" y="232">utm_campaign ＋ utm_source</text>
-    <text x="150" y="248">/ev に「最後の札」も（4-25）</text>
+    <text x="150" y="248">/ev に「最後の印」も（4-25）</text>
     <text x="337" y="232">登録時に aimits_uid→anon_uid</text>
     <text x="337" y="248">を1件書く（3-3）</text>
     <text x="524" y="232">utm を読者項目 free29・30 へ</text>
@@ -147,8 +148,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 <table>
 <tr><th style="white-space:nowrap">つなぎ目</th><th style="white-space:nowrap">2026-09-12 時点</th><th>2026-09-14 00時</th><th>残っていること</th></tr>
-<tr><td style="white-space:nowrap">① → ②</td><td>通っている</td><td>通っている。お試し版の /ev に、開いた URL の札とは別に「最後に札付きで来た値」（saved_utm_source・saved_utm_campaign）と from を分けて送る（4-25）</td><td>—</td></tr>
-<tr><td style="white-space:nowrap">② → ③</td><td>端末の札が2体系（計測系 base36・認証系 UUID v4）</td><td>体系は2つのまま。お試し版が登録の本文に aimits_uid を足し、中継が両方来たときだけ uid2anon:&lt;aimits_uid&gt; を書く（3-3・デプロイ 49356bb4）</td><td>本物の登録で1件書かれるかの通し試験（1-4・試験用アドレス待ち）</td></tr>
+<tr><td style="white-space:nowrap">① → ②</td><td>通っている</td><td>通っている。お試し版の /ev に、開いた URL の印とは別に「最後に付いていた印」（saved_utm_source・saved_utm_campaign）と from を分けて送る（4-25）</td><td>—</td></tr>
+<tr><td style="white-space:nowrap">② → ③</td><td>端末の番号が2体系（計測系 base36・認証系 UUID v4）</td><td>体系は2つのまま。お試し版が登録の本文に aimits_uid を足し、中継が両方来たときだけ uid2anon:&lt;aimits_uid&gt; を書く（3-3・デプロイ 49356bb4）</td><td>本物の登録で1件書かれるかの通し試験（1-4・試験用アドレス待ち）</td></tr>
 <tr><td style="white-space:nowrap">② → ④</td><td>中継が mail しか渡さない</td><td>中継が utm_source・utm_campaign を読者項目 free29・free30 に入れる。既に居る読者は空欄だけ埋める（1-1・1-2・デプロイ edf943fe）</td><td>本物の登録での通し試験（1-4）。2つとも UTAGE では絞り込みに使えないので、数えるときは読者を全件取って手元で分ける</td></tr>
 <tr><td style="white-space:nowrap">④ の中</td><td>（見えていなかった）</td><td>認証メールを2回以上受けた8人のうち7人が、リンクを押したのに登録を押し直していた。中継が /verify の結果を verify_result: に残し始めた（4-24・4-32・デプロイ 22e0856e）</td><td>1回目に押したとき何が起きたか。お試し版の verify_done・verify_giveup（★AI-Mits 作業中）と時刻で並べて確かめる</td></tr>
 <tr><td style="white-space:nowrap">④ → ⑤</td><td>契約者を数える口が無い</td><td>変わらず</td><td>2nd stage なので今は扱わない</td></tr>
@@ -196,7 +197,7 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 <p>4つの持ち場のデータを、号（＝1回の配信）を単位にして1枚の表へ集める手順です。<strong>0から6までを、1号につき1周。</strong></p>
 
-<h3>0. 出す前 ── 札を付ける</h3>
+<h3>0. 出す前 ── 印を付ける</h3>
 <p>3スタンドに同じ号を出すとき、<code>utm_source</code>（utage / spro / magmag）＋ <code>utm_medium=email</code> ＋ <code>utm_campaign</code>（<code>YYYYMMDD_&lt;短い名前&gt;</code>）を全部のリンクに付ける。<strong>ここを飛ばすと、この工程は以降どこでも繋がりません。</strong>自分のテストは <code>utm_source=test</code> で出す。</p>
 
 <h3>1. 集める ── どこから何を取るか</h3>
@@ -223,7 +224,7 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <table>
 <tr><th>何をつなぐ</th><th>鍵</th><th>いまの状態</th></tr>
 <tr><td>① 配信 ↔ ② 着地</td><td><code>utm_campaign</code> × <code>utm_source</code></td><td class="ok">繋がる</td></tr>
-<tr><td>② 着地 ↔ ③ 相談</td><td>端末の札（uid）</td><td class="ng">切れている（体系が2つ）</td></tr>
+<tr><td>② 着地 ↔ ③ 相談</td><td>端末の番号（uid）</td><td class="ng">切れている（体系が2つ）</td></tr>
 <tr><td>④ 登録 ↔ ⑤ 有料</td><td>メールアドレス／<code>common_reader_id</code></td><td class="ng">切れている</td></tr>
 </table>
 <p>切れている2つは、<strong>いまは号単位の合計でしか繋げません</strong>（同じ号の期間に起きた件数どうしを並べる）。人を追う形にするには L節の直しが要ります。</p>
@@ -247,7 +248,7 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <h2>D. 段ごとの中身</h2>
 
 <h3>① 配信（3スタンド）</h3>
-<p>UTAGE／spro／まぐまぐへ同じ号を出す。札の付け方は 2026-09-08 確定。<code>utm_source</code>（utage / spro / magmag / test）＋ <code>utm_medium=email</code> ＋ <code>utm_campaign</code>。これから出すものは <code>YYYYMMDD_&lt;短い名前&gt;</code> に揃える。過去3つは書き換えない。</p>
+<p>UTAGE／spro／まぐまぐへ同じ号を出す。経路の印の付け方は 2026-09-08 確定。<code>utm_source</code>（utage / spro / magmag / test）＋ <code>utm_medium=email</code> ＋ <code>utm_campaign</code>。これから出すものは <code>YYYYMMDD_&lt;短い名前&gt;</code> に揃える。過去3つは書き換えない。</p>
 
 <table>
 <tr><th></th><th>UTAGE</th><th>spro</th><th>まぐまぐ</th></tr>
@@ -330,7 +331,7 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <table>
 <tr><th>つなぎ目</th><th>鍵</th><th>状態</th></tr>
 <tr><td>① → ②</td><td><code>utm_campaign</code> ＋ <code>utm_source</code></td><td class="ok">通っている。台帳の経路別と押下の実測が一致</td></tr>
-<tr><td>② → ③</td><td>端末の札（uid）</td><td class="ng">切れている。計測系は base36 16文字、認証系は UUID v4 しか通さない（<code>index.js</code> L55 の <code>UUID_V4_RE</code> が L867・L1203・L1383・L1556 で効く）</td></tr>
+<tr><td>② → ③</td><td>端末の番号（uid）</td><td class="ng">切れている。計測系は base36 16文字、認証系は UUID v4 しか通さない（<code>index.js</code> L55 の <code>UUID_V4_RE</code> が L867・L1203・L1383・L1556 で効く）</td></tr>
 <tr><td>② → ④</td><td>道②に UTM を渡す口</td><td class="ng">切れている。中継が <code>mail</code> しか渡さない</td></tr>
 <tr><td>④ → ⑤</td><td>メールアドレス → Stripe</td><td class="ng">切れている。契約者を数える口が無い</td></tr>
 </table>
@@ -356,7 +357,7 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>色は文字だけ。<strong>塗らない・囲まない</strong></li>
 <li><strong>割合の決め打ちを、お客様に見える場所に書かない。</strong>比べる相手は自分の平均だけ</li>
 <li>測れないものは「<strong>測れません</strong>」と書く。<strong>測れた 0 件と、測れないものを分ける</strong>（実装は <code>pf()</code> が <code>== null</code> だけを「測れません」にし、測れた 0 は 0.00% と出す）。項目が無い経路のグラフは描かない（0% の線は嘘になる）</li>
-<li><strong>「その経路の札が付いた押下が0件」と「誰も来ていない」は別。</strong>実測：Worker の押下 66件のうち spro 37／utage 14／<strong>札が落ちた不明 11（16.7%）</strong>／magmag 2／utm_source でない値 2。経路別の比較は下限寄りになる</li>
+<li><strong>「その経路の印が付いた押下が0件」と「誰も来ていない」は別。</strong>実測：Worker の押下 66件のうち spro 37／utage 14／<strong>印が落ちた不明 11（16.7%）</strong>／magmag 2／utm_source でない値 2。経路別の比較は下限寄りになる</li>
 <li><strong>スタンド側の計測が0でも、着地（ダウンロード）には積まれる。</strong>実測：spro <strong>5127</strong>（9/8便・<code>{{htmlkaifu}}</code> の入れ忘れ）は spro の開封ユニーク0 だが DL 到達16件。（5129 は開封もクリックも取れた便なので、例に使わない）①の開封・クリックと②の着地は別の経路の計測で、片方が空でももう片方は使える（まぐまぐの評価が DL だけになるのはこのため）</li>
 <li><strong>特定のサービス名を画面にも並び順にも焼かない</strong></li>
 <li>送信数と読者数を同じ線・同じ列に混ぜない（横軸が違う）</li>
@@ -424,13 +425,13 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
   <div class="head"><input type="checkbox" disabled> <span class="t">3　②→③の ID の体系を揃える</span></div>
   <div class="sub">
     <div class="note">i3 の済みは <a href="全体設計図_済_20260912.html#i3">全体設計図_済_20260912.html</a></div>
-    <div class="note">決めた理由：既存の213キー、Dify の名札の頭（try-／untendai-）、運転台アプリ2本のどれにも触らずに済むのはこの形だけ。対応表は中継の KV aimits_identity に置く（登録の瞬間を受けるのが中継なので、別 Worker の untendai-update には触らない）。過去の未登録の訪問が繋がらないのは、3つの形のどれでも同じ。</div>
-    <div id="i3-4"><input type="checkbox" disabled> <span class="t">（09-14 17:05・お試し版の分も本番に入った：★AI-Mits が 17:05:10 に1回書き込み（104,311 bytes・/register の本文2か所に try_user）。参謀が 17:05:56 に公開ページを取り直して確認：HTTP 200・U+FFFD 0・e472bc1f 1・try_user 4（本文2か所ほか）。残り：本番の通し試験で uid2reader: +1・try2reader: +1）（09-14 16:07・中継の分は本番に入った：BS-engineer が commit 6bc08ded（src/index.js だけ・+31行）・出し込み 83b4d4fb。参謀が 16:09 に取り直して確認：本番のコードに uid2reader 1件・try2reader 1件・banned_users 1件、/health 200、KV は uid2anon: 0・anon2reader: 4・fin: 2・verify_result: 4 のまま（本番で登録は叩いていない）、uid2reader:・try2reader: はまだ 0件。残り：お試し版の分（★AI-Mits）と、本番の通し試験で uid2reader: +1・try2reader: +1）（09-14 16時台・Mits様「発注GO　3-4と4-36」。中継の分は BS-engineer、お試し版の分は ★AI-Mits セッション（4-36 と同じ1回の書き込み）に発注した）（09-14 15:4x・参謀が決めた形。発注書は /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/発注書_3-4_端末と読者のひも付け_20260914.md。発注GO 待ち・通し試験 3216.fun+tsushi20260914c が終わるまで /register は触らない）3-4　3-3 の uid2anon: は、このままでは1件も書かれない。本番のお試し版（https://change.7years.life/p/V3A9LG00dL2S を 15:4x に取り直し）は /register に email・aimits_uid・utm しか送らず、anon_uid は0か所。KV の uid2anon: は0件・anon2reader: は4件のまま（15:38 実測）。Dify の名札 try-…（localStorage aimits_try_user）も /register に来ないので、18回の人が登録したかも確かめられない。直す形：①中継の /register が、aimits_uid が来て reader_id が取れたら anon_uid が無くても uid2reader:&lt;aimits_uid&gt; を1件書く ②お試し版が /register の本文（2か所）に try_user を足し、中継が try2reader:&lt;try_user&gt; を1件書く。既存のキーには触らない。理由：登録の瞬間に reader_id を知っているのは中継だけで、お試し版は anon_uid を持っていないため。検収の線：通し試験1回で uid2reader: +1・try2reader: +1、どちらも値の reader_id が読者と一致</span><span class="who">BS-engineer（中継）・★AI-Mits（お試し版）</span></div>
+    <div class="note">決めた理由：既存の213キー、Dify の 相談の利用者名 の頭（try-／untendai-）、運転台アプリ2本のどれにも触らずに済むのはこの形だけ。対応表は中継の KV aimits_identity に置く（登録の瞬間を受けるのが中継なので、別 Worker の untendai-update には触らない）。過去の未登録の訪問が繋がらないのは、3つの形のどれでも同じ。</div>
+    <div id="i3-4"><input type="checkbox" disabled> <span class="t">（09-14 17:05・お試し版の分も本番に入った：★AI-Mits が 17:05:10 に1回書き込み（104,311 bytes・/register の本文2か所に try_user）。参謀が 17:05:56 に公開ページを取り直して確認：HTTP 200・U+FFFD 0・e472bc1f 1・try_user 4（本文2か所ほか）。残り：本番の通し試験で uid2reader: +1・try2reader: +1）（09-14 16:07・中継の分は本番に入った：BS-engineer が commit 6bc08ded（src/index.js だけ・+31行）・出し込み 83b4d4fb。参謀が 16:09 に取り直して確認：本番のコードに uid2reader 1件・try2reader 1件・banned_users 1件、/health 200、KV は uid2anon: 0・anon2reader: 4・fin: 2・verify_result: 4 のまま（本番で登録は叩いていない）、uid2reader:・try2reader: はまだ 0件。残り：お試し版の分（★AI-Mits）と、本番の通し試験で uid2reader: +1・try2reader: +1）（09-14 16時台・Mits様「発注GO　3-4と4-36」。中継の分は BS-engineer、お試し版の分は ★AI-Mits セッション（4-36 と同じ1回の書き込み）に発注した）（09-14 15:4x・参謀が決めた形。発注書は /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/発注書_3-4_端末と読者のひも付け_20260914.md。発注GO 待ち・通し試験 3216.fun+tsushi20260914c が終わるまで /register は触らない）3-4　3-3 の uid2anon: は、このままでは1件も書かれない。本番のお試し版（https://change.7years.life/p/V3A9LG00dL2S を 15:4x に取り直し）は /register に email・aimits_uid・utm しか送らず、anon_uid は0か所。KV の uid2anon: は0件・anon2reader: は4件のまま（15:38 実測）。Dify の 相談の利用者名 try-…（localStorage aimits_try_user）も /register に来ないので、18回の人が登録したかも確かめられない。直す形：①中継の /register が、aimits_uid が来て reader_id が取れたら anon_uid が無くても uid2reader:&lt;aimits_uid&gt; を1件書く ②お試し版が /register の本文（2か所）に try_user を足し、中継が try2reader:&lt;try_user&gt; を1件書く。既存のキーには触らない。理由：登録の瞬間に reader_id を知っているのは中継だけで、お試し版は anon_uid を持っていないため。検収の線：通し試験1回で uid2reader: +1・try2reader: +1、どちらも値の reader_id が読者と一致</span><span class="who">BS-engineer（中継）・★AI-Mits（お試し版）</span></div>
     <div class="note"><strong>4 測れていない所・直しにくい作り（絶対的ゴールの③・見つけたら足す）</strong></div>
     <div class="note">i4 の済みは <a href="全体設計図_済_20260912.html#i4">全体設計図_済_20260912.html</a></div>
     <div class="note">中継の担当の付け替え（2026-09-13 22時台）：untendai-seiri が今夜の発注を1通も読まずに止まっているため、4-1 と 4-20 は参謀が BS-engineer に出した。2-1・3-3（中継の分）・4-20 の直しは、4-1 のあと同じ BS-engineer に続けて出した（2026-09-13 23時台）。1-1（UTAGE の読者項目）は ★AI-Mits に付け替えた。1-2 は 1-1 のあとで BS-engineer に出す。4-2（503）は BS-engineer に足した。<br>2-3 は入れないと決めた（2026-09-13）：運転台アプリ2本（untendai-seiri・untendai-marketing）にも「やることを決めて終える」はある（seiri index.html 5503行・12411行、marketing 4394行・11558行）。ただし押すと本人がやることと期限を書く窓が開き、手元の台帳に保存するだけで、AI には送らない（sanbo.rs 569〜594行 finish_incident）。押した記録はもう手元に残っている。お客様のアプリから中継へ記録を送る口を足すと、買った人の操作がこちらに届く作りになるので足さない。1st stage の登録は WEB版で数える。同じファイルを2か所で書かないよう、untendai-seiri には中継を触らないよう伝えた。</div>
     <div id="i4-3"><input type="checkbox" disabled> <span class="t">（09-14 追記・/ev で外すもの：uid untendai-test0913・utm_source test・page app。★AI-Mits 側の BS-engineer が Origin を偽った curl で本番に1件送った）（2026-09-13 23時前追記・/ev で外すもの：uid mtzv7h7bbd3gfoij・utm_source test・2026-09-13T13:49〜13:54Z（JST 22:49〜22:54）。FS-utage-pm が 4-23・4-25 の試験で送った）（2026-09-13 23時前追記・Dify で外すもの：「経路テスト invalid 20260913」1件・user try-avmly40ymtse7oc2。★AI-Mits が30秒の窓を開けるために送った）（2026-09-13 23時台追記・UTAGE の認証メールで外すもの：UuHTkQoY3wgW「AI-MITS メール認証（aimits-test-20260913-utm@example.com）」09-13 21:59:17 と Ziz0XVMOtURj（3-3 の試験で2通）、test-devils@example.com 宛 09-12 19:16:58、ac_nishida+steptest 宛の2件 09-11 19:30・19:32、3216.fun と ac_nishida 宛 09-05〜09-08。★AI-Mits が XU7Gfd7XoiCQ の message_list 58件を全部見て出した）（09-14 訂正・Dify のテストは消す。Mits様：2026-09-12 21:26 JST「テストは用事が終わったら消す」、2026-09-14 14:01 JST「difyのテストは全部削除して」（★AI-Mits セッション・一覧 /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/mits_kettei_ichiran_20260912ikou.md #9・#38）。下の「Dify からは消さない」は、この判断がこのセッションに届く前に参謀が書いたもの。消す作業は ★AI-Mits セッションが持っていて、14:57 JST の時点では BS-engineer の洗い出しの一覧を待っている。お客様の相談と Mits様の実データは消さない。UTAGE の読者・/ev の記録は、この判断の対象に入っていないので、今までどおり数えるときに外す）4-3　Dify の相談記録にテストの送信が混ざっている（2026-09-12「経路テスト 20260912 窓の確認2」）。<span style="color:#888">Dify からは消さない。数えるときに外す（生データは残し、除外前と除外後の両方を持つ決まり）。</span>外すテストの一覧：通し試験のアドレス 3216.fun+tsushi1@gmail.com・3216.fun+tsushi2@gmail.com（「+tsushi」を含むもの）／aimits-test-20260913-utm@example.com／Dify の user try-avmly40ymtse7oc2（2026-09-13 21:59「経路テスト 20260913 fin」と続く締めの相談）。試験で作る UTAGE の読者は example.com のアドレスにそろえ、数えるときに外す（UTAGE の読者は API では消せないので、画面から外す）</span><span class="who">数える側</span></div>
-    <div id="i4-4"><input type="checkbox" disabled> <span class="t">4-4　お試し版で登録しても、前の相談の続きに戻れない。Dify に渡す名札が登録の前後で別になり、同じ人が別人として数えられる。3-3 の対応表で、登録した時点からは繋がる。名札の作り方を直すのは今回の範囲の外</span><span class="who">あとで割り当て</span></div>
+    <div id="i4-4"><input type="checkbox" disabled> <span class="t">4-4　お試し版で登録しても、前の相談の続きに戻れない。Dify に渡す 相談の利用者名が登録の前後で別になり、同じ人が別人として数えられる。3-3 の対応表で、登録した時点からは繋がる。相談の利用者名の作り方を直すのは今回の範囲の外</span><span class="who">あとで割り当て</span></div>
     <div id="i4-24"><input type="checkbox" disabled> <span class="t">（23時台追記・send_count が0の通は0件で、認証メールは32通すべて出ている。2回以上の8人のうち7人は、1回目のメールのリンクを押した（click 1）のに、また登録を押している。1回目を押さずに押し直したのは1人だけ。23人のうちリンクを押した人は17人。登録の壁は「メールを押さない」より「押したあと」にあるかもしれない。押したあと中継の /verify が成功したか、お試し版の窓が閉じたかは、どこにも記録されていない → 4-32）（途中・★AI-Mits の数え：2026-09-08 00:00 JST 以降、試験・社内の宛先と題が空の下書きを除いた本物の認証メールは32通・23人。2回以上が8人で17通（2回7人・3回1人）、1回だけが15人で15通、17＋15＝32。3回の人は 09-10 08:28:01 → 08:31:32 → 09-13 09:39:50。send_count は FS-utage-pm が一覧を取り直して突き合わせてから32通すべて取る）4-24　同じ人に認証メールが2〜3回出ている（★AI-Mits が見つけた・2026-09-13）。09-08 以降の本物のアドレスで8人（2回が7人・3回が1人）。間隔は数分〜1日。「認証メールを送った数」を登録しようとした人数にすると多く数えてしまうので、人数はアドレスごとにまとめて数える。1回目で済まなかった人の割合は「登録の壁」の大きさだが、今はどこでも数えていない。まず各メールの send_count を見て、1回目が届いていなかったのかを分ける</span><span class="who">★AI-Mits（調べ）</span></div>
     <div id="i4-32"><input type="checkbox" disabled> <span class="t">（09-14 追記・お試し版の分も本番に入った：verify_done 3か所、verify_giveup 4か所（理由は restart・timeout・closed が各1か所）。参謀が本番を取り直して件数を確認。closed の道は手元でも未確認。本物のページから届くかは /ev/count で後から見る）（23時台・中継の分は済：デプロイ 22e0856e・コミット 4fc450d1。/verify の結果を success／expired_or_not_found／other で KV verify_result: に30日、UA の先頭80文字つきで残す。参謀が本番で /health 200・verify_result: 1件（試験）・未コミット0件を確認。③の調べ：印（verified_at）を新しく付けるのは /verify の1経路だけ（合言葉を決める口は触らない）。人8・人3・人6は印の28〜68秒後に合言葉を決めていて、翌日にリンクを押して通った形。人2は合言葉を決めていない。認証メールは UTAGE が送るときにリンクをクリック計測の短縮 URL に書き換える設定（shorten_type shorten_url）。BS-engineer の見立て「メールソフトの下見が先にリンクを開いてトークンを使い切る」は、今の記録と合わない：下見が /verify まで通ればその時刻に印が付くはずだが、4人とも1回目の時刻に印が無い。1回目に何が起きたかは未確定のまま。これからは verify_result で確かめる。お試し版の verify_done・verify_giveup は ★AI-Mits が作業中）（23時台・①の途中結果：認証の印は KV reader:&lt;reader_id&gt; の verified_at で、最初に /verify が成功したときに一度だけ付く。トークンの寿命は15分で使い切り。5人とも印は付いている。ただし人2・人6・人8・人3の4人は、印の時刻が2回目のメールから12〜24時間後（例：人2はメール 09-10 08:28・08:31 で、印は 09-11 07:10）。UTAGE では1回目のリンクが押されているのに、その時刻に印が付いていない。人7は 08-08 に登録済みの人だった。1回目のリンクを押したときに何が起きたかは今の記録では分からない → ②の記録と、印を付ける経路の洗い出しを BS-engineer に出した）（23時台・②のお試し版の分だけ入れる。アプリ版には入れない：4-23 と同じ理由）4-32　認証メールのリンクを押したあと、登録が済んだか・お試し版の窓が閉じたかが記録されていない（4-24 から）。①調べ：押し直した人のうち5人（人2 09-10 08:28〜08:31、人7 09-09 16:46〜16:55、人8 09-08 20:36〜20:46、人3 09-12 15:01〜15:05、人6 09-10 08:39〜08:48）について、中継の verify のトークンと verified_at が1回目の後に付いたか2回目の後かを KV で見る（BS-engineer・読むだけ）。②直し：中継の /verify が成功・期限切れ・見つからないのどれで返したかを記録に残す（BS-engineer）。お試し版が「登録済み」を受け取って窓を閉じたときと、待つのをあきらめたときを /ev に送る（★AI-Mits・アプリ版にも）</span><span class="who">BS-engineer（調べ・中継）・★AI-Mits（お試し版）</span></div>
     <div id="i4-36"><input type="checkbox" disabled> <span class="t">（09-14 17:05・本番に入った：3-4 と同じ1回の書き込み。参謀が 17:05:56 に公開ページで reason=reopen 1・__aimitsEv('verify_done' の呼び出し 2・tab_closed 2 を確認。残り：開き直しの道で登録が済んだ最初の1件で /ev/count に verify_done が出るか）（09-14 16時台・Mits様「発注GO　3-4と4-36」で ★AI-Mits セッションに発注。3-4 のお試し版の分と同じ1回の書き込み）4-36タブを閉じてから開き直して登録が済んだ人は、/ev に何も残らない（09-14 tsushi3 で見つかった）。4-35 の直しで、開き直したときに /resolve で登録済みになり、窓も出ず相談も締めまで進んだが、/ev/count の verify_done は 0 のまま（参謀が 15:50:55 に取り直し：by_name の verify を含む名前は verify_giveup 1 だけ）。参謀が 15:5x に公開ページを取り直して読んだ：/ev に送る所は7か所（chat_send_fail 2・verify_giveup 4・verify_done 1）で、verify_done は L1016 の1か所だけ。それは同じタブで10秒ごとに /resolve を聞く waitVerified（L992-1023）の中にあり、開き直したときの /resolve から setAuthed（L973・待ちの控えを消す L976）に進む道には、/ev に送る所が無い。4-32 で押し直していた8人中7人と同じ道なので、直さないと、いちばん多い登録の形が計測に出ない。直す形：開き直したときや窓を出す前の /resolve で登録済みになったら、verify_done を理由 reopen をつけて1回送る（同じ uid では1回だけ）。KV の verify_result: success と、人の数が合うかで検収する。発注は発注GO 待ち</span><span class="who">★AI-Mits（お試し版）</span></div>
@@ -439,7 +440,7 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 </div>
 
 </div>
-<p class="note"><strong>受け渡しの取り決め（4セッション共通）</strong>：お試し版は URL の <code>utm_source</code>／<code>utm_medium</code>／<code>utm_campaign</code> を <code>localStorage</code> の <code>aimits_utm</code> に保存（札付きで来たら上書き・札なしで来たら残す＝登録直前に踏んだ号に結びつける）。<code>/register</code> の本文に <code>utm_source</code>・<code>utm_medium</code>・<code>utm_campaign</code> を足す（空でも登録は通す）。押した回は <code>POST /track/fin</code> に <code>session_id</code>・<code>utm_source</code>・<code>utm_campaign</code>。<code>utm_source=test</code> も生のまま残し、外すのは集計のとき。<strong>綴りは計器に揃える</strong>：<code>utm_source</code> は小文字の <code>utage</code>／<code>spro</code>／<code>magmag</code>／<code>test</code>、<code>utm_campaign</code> は来た値をそのまま（<code>20260912_guinness</code> の形）。大文字にしたり言い換えたりしない。<strong>札なしで来た登録は空欄のまま</strong>にし、<code>direct</code>・<code>unknown</code> を入れない（そういう経路があるように数えてしまうため）。<code>/register</code> を呼ぶ所はお試し版に2か所ある（30秒の窓と keep ゲート）。両方に入れる。中継は <strong>untendai-seiri だけ</strong>、お試し版は <strong>★AI-Mits だけ</strong>が書く（同じファイルを2つのセッションが触らない）。アプリの登録画面の utm は今回の対象外。</p>
+<p class="note"><strong>受け渡しの取り決め（4セッション共通）</strong>：お試し版は URL の <code>utm_source</code>／<code>utm_medium</code>／<code>utm_campaign</code> を <code>localStorage</code> の <code>aimits_utm</code> に保存（印つきで来たら上書き・印なしで来たら残す＝登録直前に踏んだ号に結びつける）。<code>/register</code> の本文に <code>utm_source</code>・<code>utm_medium</code>・<code>utm_campaign</code> を足す（空でも登録は通す）。押した回は <code>POST /track/fin</code> に <code>session_id</code>・<code>utm_source</code>・<code>utm_campaign</code>。<code>utm_source=test</code> も生のまま残し、外すのは集計のとき。<strong>綴りは計器に揃える</strong>：<code>utm_source</code> は小文字の <code>utage</code>／<code>spro</code>／<code>magmag</code>／<code>test</code>、<code>utm_campaign</code> は来た値をそのまま（<code>20260912_guinness</code> の形）。大文字にしたり言い換えたりしない。<strong>印なしで来た登録は空欄のまま</strong>にし、<code>direct</code>・<code>unknown</code> を入れない（そういう経路があるように数えてしまうため）。<code>/register</code> を呼ぶ所はお試し版に2か所ある（30秒の窓と keep ゲート）。両方に入れる。中継は <strong>untendai-seiri だけ</strong>、お試し版は <strong>★AI-Mits だけ</strong>が書く（同じファイルを2つのセッションが触らない）。アプリの登録画面の utm は今回の対象外。</p>
 <p class="note">この3つが終わると、H の表の ①〜④ の行が上から下まで数字で埋まる。いま埋まるのは ①〜② の行だけ。</p>
 
 <footer>
