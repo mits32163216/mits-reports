@@ -62,14 +62,14 @@ label{font-size:12.5px;color:var(--navy);font-weight:600}
 .empty-msg{text-align:center;color:var(--gray);padding:34px 16px;font-size:14px}
 .src{font-size:11px;color:var(--gray);border-top:1px solid var(--line);margin-top:26px;padding:12px 2px}
 mark{background:#fdf0c0;padding:0 1px}
-.tabs{display:flex;gap:8px;margin-bottom:8px}
-.tabs a{flex:1;text-align:center;padding:7px 0;border-radius:8px;text-decoration:none;font-size:14px;background:rgba(255,255,255,.12);color:#fff}
+.tabs{display:flex;gap:6px;margin-bottom:8px}
+.tabs a{flex:1;text-align:center;padding:7px 0;border-radius:8px;text-decoration:none;font-size:13px;background:rgba(255,255,255,.12);color:#fff;white-space:nowrap}
 .tabs a.on{background:var(--gold);color:#fff;font-weight:700}
 </style>
 </head>
 <body>
 <header>
-  <div class="tabs"><a class="on" href="index.html">辞書を引く</a><a href="translate.html">文を言い換える</a></div>
+  <div class="tabs"><a class="on" href="index.html">辞書</a><a href="translate.html">言い換え</a><a href="phrases.html">30フレーズ</a><a href="rireki.html">履歴</a></div>
   <div class="sb">
     <input id="q" type="search" placeholder="うちなーぐち でも 共通語 でも" autocomplete="off" autocapitalize="off" spellcheck="false">
     <button id="clr">✕</button>
@@ -102,6 +102,7 @@ mark{background:#fdf0c0;padding:0 1px}
 <button class="x" id="a_ok">入れる</button></div></dialog>
 
 <script src="dict.js"></script>
+<script src="hist.js"></script>
 <script>
 const $=s=>document.querySelector(s);
 const D=window.DICT, E=D.e, X=D.x;
@@ -209,14 +210,14 @@ function card(o,q){
 
 /* 入力欄が空のときに出すもの：自分で足した語 と 最近引いた語 */
 function recent(){
-  let r=[]; try{ r=JSON.parse(localStorage.getItem("uchi_recent")||"[]").slice(0,8) }catch(e){}
+  let r=[]; try{ const seen=new Set(); r=histLoad().filter(x=>x.p!=="言い換え").map(x=>x.q).filter(q=>!seen.has(q)&&seen.add(q)).slice(0,8) }catch(e){}
   let h="";
   if(MINE.length) h+=`<h4 class="grp">自分で足した語　<span class="n">${MINE.length}件</span></h4>`
     + MINE.slice(-8).reverse().map(m=>
       `<div class="it" data-t="m" data-i="${MINE.indexOf(m)}"><span class="badge b-mine">自分で足した</span>
        <div class="hd">${esc(m.k)}${m.kata?'<span class="rm">'+esc(m.kata)+'</span>':''}</div>
        <div class="sub">${esc(m.m)}</div></div>`).join("");
-  if(r.length) h+=`<h4 class="grp">最近引いた語</h4>`
+  if(r.length) h+=`<h4 class="grp">最近引いた語　<a class="n" href="rireki.html">履歴をすべて見る ›</a></h4>`
     + r.map(w=>`<div class="it" data-q="${esc(w)}"><div class="hd">${esc(w)}</div></div>`).join("");
   h+=`<div class="empty-msg">「ありがとう」でも「にふぇー」でも「nifee」でも引けます。<br>
     本の書き方（kachuN・muchuN）でも当たります。<br>
@@ -467,7 +468,10 @@ function openM(m){
 
 /* ---- 動き ---- */
 let tmr=null;
-$("#q").addEventListener("input",e=>{clearTimeout(tmr);const v=e.target.value;tmr=setTimeout(()=>render(search(v),v.trim()),110)});
+let htmr=null;
+$("#q").addEventListener("input",e=>{clearTimeout(tmr);clearTimeout(htmr);const v=e.target.value;tmr=setTimeout(()=>render(search(v),v.trim()),110);
+  /* 打つ手が1.5秒止まったら履歴に残す */
+  htmr=setTimeout(()=>{ if(v.trim()) histAdd(v,"辞書"); },1500)});
 $("#clr").onclick=()=>{$("#q").value="";render(null,"");$("#q").focus()};
 $("#res").addEventListener("click",ev=>{
   const f=ev.target.closest(".fold");
@@ -477,7 +481,9 @@ $("#res").addEventListener("click",ev=>{
   if(it.dataset.q){$("#q").value=it.dataset.q;render(search(it.dataset.q),it.dataset.q);return}
   const t=it.dataset.t,i=+it.dataset.i;
   const q=$("#q").value.trim();
-  if(q){let r=JSON.parse(localStorage.getItem("uchi_recent")||"[]");r=[q,...r.filter(x=>x!==q)].slice(0,20);localStorage.setItem("uchi_recent",JSON.stringify(r))}
+  if(q){ clearTimeout(htmr);
+    const nm = t==="e" ? (E[i].k2||E[i].k) : t==="x" ? (X[i].w+(X[i].kj||"")) : (MINE[i]&&MINE[i].k);
+    histAdd(q,"辞書",{open:nm}); }
   if(t==="e")openE(E[i]); else if(t==="x")openX(X[i]); else openM(MINE[i]);
 });
 $("#add").onclick=()=>{$("#a_k").value=$("#q").value.trim();$("#adlg").showModal()};
@@ -503,7 +509,7 @@ $("#src").innerHTML="出典①（語義・見出し・活用の3代表形）："
   "出典②（活用の体系・3語幹と各形の語尾）：西岡敏・仲原穣『沖縄語の入門 たのしいウチナーグチ』（伊狩典子・中島由美 協力）182ページ ムチュン muchuN の活用のまとめ<br>"+
   "収録：本文篇 "+E.length.toLocaleString()+"語／索引篇 "+X.length.toLocaleString()+"行／活用の取れた語 "+E.filter(e=>e.cj).length.toLocaleString()+"語<br>"+
   "かな見出しはローマ字からの機械変換で未検証。首里方言。台帳を組んだ日 "+esc(D.meta.built);
-render(null,"");
+{ const q0=qParam(); if(q0){ $("#q").value=q0; render(search(q0),q0.trim()); } else render(null,""); }
 
 /* 電波が無くても引けるようにする（ホーム画面に置いたとき用）。
    取り込めたかどうかを画面に出す。出ていなければ取り込めていない。 */
@@ -513,7 +519,7 @@ render(null,"");
   if(!("serviceWorker" in navigator)){ say("この端末は取り込みに対応していません（電波が要ります）"); return; }
   if(location.protocol==="file:"){ say("ファイルを直接開いているため取り込めません"); return; }
   say("この端末に取り込んでいます…");
-  navigator.serviceWorker.register("sw.js?v=3").then(reg=>{
+  navigator.serviceWorker.register("sw.js?v=4").then(reg=>{
     const done=()=>caches.keys().then(ks=>ks.some(k=>k.startsWith("uchinaaguchi"))).then(ok=>
       say(ok?"✓ この端末に取り込み済み。電波が無くても引けます。"
             :"取り込みの途中です。もう一度開くと仕上がります。", ok?"#2f6b2f":null));

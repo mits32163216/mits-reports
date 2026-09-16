@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>うちなーぐち 履歴</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1b2a41">
+<style>
+:root{--navy:#1b2a41;--gold:#b8912f;--paper:#faf8f4;--ink:#1a1a1a;--gray:#6b6b6b;--line:#e2ded6;}
+*{box-sizing:border-box;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;font-size:16px;line-height:1.7;padding-bottom:40px}
+header{background:var(--navy);color:#fff;padding:10px 12px calc(10px + env(safe-area-inset-top));position:sticky;top:0;z-index:10}
+.tabs{display:flex;gap:6px;margin-bottom:8px}
+.tabs a{flex:1;text-align:center;padding:7px 0;border-radius:8px;text-decoration:none;font-size:13px;background:rgba(255,255,255,.12);color:#fff;white-space:nowrap}
+.tabs a.on{background:var(--gold);color:#fff;font-weight:700}
+input[type=search]{width:100%;font-size:17px;padding:9px 10px;border-radius:10px;border:2px solid var(--gold);background:#fff;color:var(--ink);font-family:inherit}
+main{padding:12px}
+.note{font-size:12.5px;color:var(--gray);line-height:1.6}
+.t{display:inline-block;font-size:11px;padding:1px 7px;border-radius:9px;white-space:nowrap}
+.t-d{background:#e7eef7;color:#2a4a7a} .t-e{background:#e8f2e8;color:#2f6b2f} .t-g{background:#fdf2df;color:#8a6a1f} .t-x{background:#f7e7e7;color:#8a3a3a}
+.empty{text-align:center;color:var(--gray);padding:26px 10px;font-size:15px}
+</style>
+<style>
+.day{font-size:13px;font-weight:700;color:var(--navy);margin:16px 0 6px;padding-left:8px;border-left:4px solid var(--gold)}
+.row{display:flex;gap:10px;align-items:baseline;background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px;margin-bottom:6px;text-decoration:none;color:var(--ink)}
+.tm{font-size:12.5px;color:var(--gray);min-width:40px}
+.q{flex:1;font-size:16px;word-break:break-word}
+.pg{font-size:11px;padding:1px 7px;border-radius:9px;background:#f3efe7;color:#6b5a2f;white-space:nowrap}
+.cnt{font-size:12.5px;color:var(--gray);margin:8px 2px}
+</style>
+</head>
+<body>
+<header>
+  <div class="tabs"><a href="index.html">辞書</a><a href="translate.html">言い換え</a><a href="phrases.html">30フレーズ</a><a class="on" href="rireki.html">履歴</a></div>
+  <input id="f" type="search" placeholder="履歴の中を探す" autocomplete="off">
+</header>
+<main>
+  <div class="cnt" id="cnt"></div>
+  <div id="list"></div>
+  <p class="note">履歴はこの端末の中にだけ残ります（最大 2,000件）。押すと、その語をもう一度引きます。<br>
+  打っている途中の形（「あ」「あり」「ありが」）は1件にまとめています。</p>
+</main>
+<script src="hist.js"></script>
+<script>
+"use strict";
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const PAGE={"辞書":"index.html","言い換え":"translate.html","30フレーズ":"phrases.html"};
+const WD="日月火水木金土";
+function draw(q){
+  q=(q||"").trim();
+  const h=histLoad().filter(x=>!q || x.q.includes(q) || (x.open||"").includes(q));
+  document.getElementById("cnt").textContent = h.length ? `${h.length.toLocaleString()}件（新しい順）` : "";
+  if(!h.length){ document.getElementById("list").innerHTML='<div class="empty">'+(q?"当てはまる履歴がありません。":"まだ履歴がありません。辞書で語を引くとここに残ります。")+'</div>'; return; }
+  let out="", day="";
+  for(const x of h){
+    let d="日時の記録が無い頃の履歴", tm="";
+    if(x.t){ const D=new Date(x.t);
+      d=`${D.getFullYear()}年${D.getMonth()+1}月${D.getDate()}日（${WD[D.getDay()]}）`;
+      tm=String(D.getHours()).padStart(2,"0")+":"+String(D.getMinutes()).padStart(2,"0"); }
+    if(d!==day){ out+=`<div class="day">${d}</div>`; day=d; }
+    const href=(PAGE[x.p]||"index.html")+"?q="+encodeURIComponent(x.q);
+    out+=`<a class="row" href="${href}"><span class="tm">${tm}</span>
+      <span class="q">${esc(x.q)}${x.open?'<br><span class="note">開いた語：'+esc(x.open)+'</span>':''}</span>
+      <span class="pg">${esc(x.p||"辞書")}</span></a>`;
+  }
+  document.getElementById("list").innerHTML=out;
+}
+const f=document.getElementById("f");
+f.addEventListener("input",()=>draw(f.value));
+draw("");
+</script>
+<script>if("serviceWorker" in navigator&&location.protocol!=="file:")navigator.serviceWorker.register("sw.js?v=4").catch(()=>{});</script>
+</body>
+</html>

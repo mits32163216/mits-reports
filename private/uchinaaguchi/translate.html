@@ -17,9 +17,8 @@ body{margin:0;background:var(--paper);color:var(--ink);
  font-size:16px;line-height:1.7;padding-bottom:40px}
 header{background:var(--navy);color:#fff;padding:10px 12px calc(10px + env(safe-area-inset-top));
  position:sticky;top:0;z-index:10}
-.tabs{display:flex;gap:8px;margin-bottom:8px}
-.tabs a{flex:1;text-align:center;padding:7px 0;border-radius:8px;text-decoration:none;
- font-size:14px;background:rgba(255,255,255,.12);color:#fff}
+.tabs{display:flex;gap:6px;margin-bottom:8px}
+.tabs a{flex:1;text-align:center;padding:7px 0;border-radius:8px;text-decoration:none;font-size:13px;background:rgba(255,255,255,.12);color:#fff;white-space:nowrap}
 .tabs a.on{background:var(--gold);color:#fff;font-weight:700}
 textarea{width:100%;min-height:84px;font-size:17px;padding:10px;border-radius:10px;
  border:2px solid var(--gold);background:#fff;color:var(--ink);font-family:inherit;line-height:1.6}
@@ -53,7 +52,7 @@ th{background:#f3efe7;font-weight:700;white-space:nowrap}
 </head>
 <body>
 <header>
-  <div class="tabs"><a href="index.html">辞書を引く</a><a class="on" href="translate.html">文を言い換える</a></div>
+  <div class="tabs"><a href="index.html">辞書</a><a class="on" href="translate.html">言い換え</a><a href="phrases.html">30フレーズ</a><a href="rireki.html">履歴</a></div>
   <textarea id="q" placeholder="文をそのまま入れてください（例：わたしは水を飲みました）"></textarea>
   <div class="dir">
     <button id="d1" class="on">共通語 → うちなーぐち</button>
@@ -69,6 +68,7 @@ th{background:#f3efe7;font-weight:700;white-space:nowrap}
 </main>
 
 <script src="dict.js"></script>
+<script src="hist.js"></script>
 <script>
 "use strict";
 const $=s=>document.querySelector(s);
@@ -441,6 +441,7 @@ let DIR=1;
 function run(){
   const t=$("#q").value.trim();
   if(!t){ $("#out").innerHTML='<div class="empty">文を入れて「言い換える」を押してください。</div>'; return; }
+  histAdd(t,"言い換え");
   const r = DIR===1 ? toOki(t) : toJa(t);
   let h='<div class="out"><div class="big">'+r.kana+"</div>";
   if(r.roma) h+='<div class="roma">'+esc(r.roma)+"</div>";
@@ -473,6 +474,7 @@ function setEx(){
   $("#ex").querySelectorAll("button").forEach(b=>b.onclick=()=>{ $("#q").value=b.dataset.s; run(); });
 }
 setEx();
+{ const q0=qParam(); if(q0){ $("#q").value=q0; if(/^[\x20-\x7e]+$/.test(q0)) $("#d2").onclick(); else run(); } }
 
 $("#src").innerHTML =
   "出典①（語義・見出し・活用の3代表形／共通語からの索引）："+esc(D.meta.src)+"（"+D.meta.url+"） クリエイティブ・コモンズ 表示 4.0 国際<br>"+
@@ -486,7 +488,7 @@ $("#src").innerHTML =
   if(!("serviceWorker" in navigator)){ say("この端末は取り込みに対応していません（電波が要ります）"); return; }
   if(location.protocol==="file:"){ say("ファイルを直接開いているため取り込めません"); return; }
   say("この端末に取り込んでいます…");
-  navigator.serviceWorker.register("sw.js?v=3").then(reg=>{
+  navigator.serviceWorker.register("sw.js?v=4").then(reg=>{
     const done=()=>caches.keys().then(ks=>ks.some(k=>k.startsWith("uchinaaguchi"))).then(ok=>
       say(ok?"✓ この端末に取り込み済み。電波が無くても使えます。"
             :"取り込みの途中です。もう一度開くと仕上がります。", ok?"#2f6b2f":null));

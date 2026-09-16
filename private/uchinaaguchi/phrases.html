@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>うちなーぐち 30フレーズ</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1b2a41">
+<style>
+:root{--navy:#1b2a41;--gold:#b8912f;--paper:#faf8f4;--ink:#1a1a1a;--gray:#6b6b6b;--line:#e2ded6;}
+*{box-sizing:border-box;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;font-size:16px;line-height:1.7;padding-bottom:40px}
+header{background:var(--navy);color:#fff;padding:10px 12px calc(10px + env(safe-area-inset-top));position:sticky;top:0;z-index:10}
+.tabs{display:flex;gap:6px;margin-bottom:8px}
+.tabs a{flex:1;text-align:center;padding:7px 0;border-radius:8px;text-decoration:none;font-size:13px;background:rgba(255,255,255,.12);color:#fff;white-space:nowrap}
+.tabs a.on{background:var(--gold);color:#fff;font-weight:700}
+input[type=search]{width:100%;font-size:17px;padding:9px 10px;border-radius:10px;border:2px solid var(--gold);background:#fff;color:var(--ink);font-family:inherit}
+main{padding:12px}
+.note{font-size:12.5px;color:var(--gray);line-height:1.6}
+.t{display:inline-block;font-size:11px;padding:1px 7px;border-radius:9px;white-space:nowrap}
+.t-d{background:#e7eef7;color:#2a4a7a} .t-e{background:#e8f2e8;color:#2f6b2f} .t-g{background:#fdf2df;color:#8a6a1f} .t-x{background:#f7e7e7;color:#8a3a3a}
+.empty{text-align:center;color:var(--gray);padding:26px 10px;font-size:15px}
+</style>
+<style>
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.no{display:inline-block;min-width:26px;font-weight:700;color:var(--gold)}
+.ja{font-size:15px;color:var(--gray)}
+.ok{font-size:22px;font-weight:700;line-height:1.6;margin:4px 0 2px}
+.bk{font-size:15px;color:#2a4a7a;word-break:break-word}
+.more{margin-top:6px}
+.more summary{font-size:12.5px;color:var(--gray);cursor:pointer}
+.more div{font-size:12.5px;color:var(--gray);margin-top:4px;line-height:1.6}
+.legend{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+</style>
+</head>
+<body>
+<header>
+  <div class="tabs"><a href="index.html">辞書</a><a href="translate.html">言い換え</a><a class="on" href="phrases.html">30フレーズ</a><a href="rireki.html">履歴</a></div>
+  <input id="f" type="search" placeholder="30フレーズの中を絞り込む（例：どこ・ください）" autocomplete="off">
+</header>
+<main>
+  <div class="legend">
+    <span class="t t-d">辞典の用例そのまま</span><span class="t t-e">辞典の用例の型</span>
+    <span class="t t-g">辞典の語で組み立て</span><span class="t t-x">辞典に無い語を言い換え</span>
+  </div>
+  <div id="list"></div>
+  <p class="note">○○ のところに語を入れて使います。語は「辞書」タブで引けます。<br>
+  上の言い方は、国立国語研究所『沖縄語辞典』（1963刊/2001改訂・首里方言・CC BY 4.0）の用例と語、
+  西岡敏・仲原穣『沖縄語の入門 たのしいウチナーグチ』の活用の規則から組み立てたものです。
+  出どころの札が黄色・赤のものは、辞典に同じ文が載っていない言い方です。
+  かなはローマ字からの機械変換です。</p>
+</main>
+<script src="hist.js"></script>
+<script src="phrases.js"></script>
+<script>
+"use strict";
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function draw(q){
+  q=(q||"").trim();
+  const rows=PHRASES.map((p,i)=>[p,i]).filter(([p])=>!q || p.ja.includes(q) || kanaOf(p.r).includes(q) || toBook(p.r).toLowerCase().includes(q.toLowerCase()));
+  if(!rows.length){ document.getElementById("list").innerHTML='<div class="empty">当てはまるフレーズがありません。</div>'; return; }
+  document.getElementById("list").innerHTML=rows.map(([p,i])=>{
+    const tg=PH_TAG[p.k];
+    return `<div class="card">
+      <div class="ja"><span class="no">${i+1}</span>${esc(p.ja)}</div>
+      <div class="ok">${esc(kanaOf(p.r))}</div>
+      <div class="bk">${esc(toBook(p.r))}</div>
+      <details class="more"><summary><span class="t ${tg[0]}">${tg[1]}</span>　出どころ</summary>
+        <div>${esc(p.src)}<br>辞典の綴り：${esc(p.r)}</div></details>
+    </div>`;
+  }).join("");
+}
+const f=document.getElementById("f");
+let tm=null;
+f.addEventListener("input",()=>{ clearTimeout(tm); draw(f.value); tm=setTimeout(()=>{ if(f.value.trim()) histAdd(f.value,"30フレーズ"); },1500); });
+draw(qParam()); if(qParam()) f.value=qParam();
+</script>
+<script>if("serviceWorker" in navigator&&location.protocol!=="file:")navigator.serviceWorker.register("sw.js?v=4").catch(()=>{});</script>
+</body>
+</html>
