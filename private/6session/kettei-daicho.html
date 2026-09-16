@@ -55,7 +55,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-16 16:34 ／ 写した時刻 2026-09-16 16:34</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-16 16:48 ／ 写した時刻 2026-09-16 16:50</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -132,7 +133,7 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>どのセッションで：司令塔（検証は devils-advocate）</li>
 <li>内容：予約タスクの実行の中では、セッション間の連絡の道具 mcp__ccd_session_mgmt__send_message が<strong>道具の一覧から外れており呼べない</strong>（Claude デスクトップ 1.46388.1 以降。GitHub #92249 closed・#82501 open）。2026-07-21 には動いた実機の記録があり、7/30 に拒否に変わっている＝デスクトップの更新で挙動が変わる項目。公式文書 desktop-scheduled-tasks にも「can&#x27;t send or receive messages between your desktop sessions through the desktop app&#x27;s session surface」と記載。</li>
 </ul>
-<p>  <a href="https://code.c">https://code.c</a>laude.com/docs/en/desktop-scheduled-tasks</p>
+<p>  <a href="https://code.claude.com/docs/en/desktop-scheduled-tasks">https://code.claude.com/docs/en/desktop-scheduled-tasks</a></p>
 <ul>
 <li>影響：予約タスクからは他のセッションを起こせない。23:10 の見張りも、朝の点呼も、結果をファイルと実行記録の要約に書き、人か常駐セッションが読んで動かす形にする（両方ともその作りになっている）</li>
 <li>代わりの経路（必要になった時の候補）：Chatwork・Slack・Gmail・Notion・Google Drive への書き込み／fireAt を1分後にした一回きりの予約タスクを新しく作る</li>
@@ -391,6 +392,19 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>内容2：<strong>「札」には5つ目の意味がある</strong>（運転台改善が発見）。運転台の画面の中の小さい表示（「見本の札を外す」「数字のとなりに置く小さい札」）。①〜⑥のどれでもない。運転台改善は「5つ目の語を参謀が勝手に作らない」と判断して置き換えていない（顧客の画面には1件も出ない・HTML コメントと <code>//</code> の中だけ・8件）</li>
 <li><strong>司令塔が出した候補（Mits様の判定待ち）</strong>：<strong>目印</strong>（推し・「見本の目印を外す」「数字のとなりに置く小さい目印」。③の「追跡の印」はリンクに付く見えない印、⑦の「目印」は画面に見える印、と役割が分かれる）／<strong>見本の表示</strong>（誰が読んでも分かるが長い）／<strong>状態の表示</strong>（種類・区分にも使っていると合わない）</li>
 <li>言い換えの表の正本：/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/reference_fuda_no_iikae_ichiran.md（6つ＋⑦は判定待ち・<strong>一括置換をかけない</strong>・直す範囲と直さない範囲もここに書いた）</li>
+</ul>
+<hr>
+<h4 id="2026-09-16-16-46-JST-Mits様-v1-73-0-を世に出した">2026-09-16 16:46 JST ／ Mits様（v1.73.0 を世に出した）</h4>
+<ul>
+<li>出典：Mits様原文「世に出して」（2026-09-16）</li>
+<li>どのセッションで：運転台改善</li>
+<li><strong>宛先：6つとも</strong></li>
+<li>内容：<strong>運転台 v1.73.0 を世に出した。</strong>お客様全員に「新しい版があります」が出る状態になった。世に出ていた最新は v1.72.2（2026-09-14）で、溜まっていたのは v1.73.0 の1本だけ</li>
+<li>入ったもの：伴走の1枚「現状を、正しく写せていますか」（顧客と一緒に見る点検の1枚。直す順に6行・作り手の言葉を出さない）</li>
+<li>お客様に見えるお知らせの文：<code>現状を、正しく写せていますか ── 直す順に並べた1枚を足しました（自社データにする → 取り込むデータの一覧 から開けます）</code></li>
+<li>使った道具：<code>bash tools/release.sh 1.73.0 &quot;&lt;要約&gt;&quot;</code>（<code>--自分だけ</code> を付けない形）。手1・2・4 は <code>--自分だけ</code> の回で済んでいるため飛び、手3 タグの push・手5 Windows の組み立て・手6 Release 作成・手7 latest.json・手8 開発版・手9 数え、が走った</li>
+<li>参謀が自分で測り直した実測：GitHub の Release v1.73.0 が Latest（2026-09-16T07:46:52Z）／資産4本（untendai.app.tar.gz 8,293,504 bytes・.sig 408・untendai_1.73.0_x64-setup.exe 5,615,464 bytes・.sig 420）／latest.json が version 1.73.0・お知らせの文も一致・platforms は darwin-aarch64 と windows-x86_64 の2つ／Mac の2本とも 1.73.0（untendai.app・untendai-dev.app）</li>
+<li>変更の記録 CHANGELOG.md の v1.73.0 の行（commit 0cc2091）は他の版と同じ形で既に入っており、直しは要らなかった</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>

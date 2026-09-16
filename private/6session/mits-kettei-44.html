@@ -51,7 +51,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <body>
 <div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-14 15:13 ／ 写した時刻 2026-09-16 16:02</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-14 15:13 ／ 写した時刻 2026-09-16 16:50</p>
 <h2 id="Mits様が-2026-09-12-以降に決めたこと-AI-Mits-計測・除外・数え方・お試し">Mits様が 2026-09-12 以降に決めたこと（AI-Mits 計測・除外・数え方・お試し版挙動）</h2>
 <p>作成：2026-09-14（BS-knowledge-sync）</p>
 <p>範囲：セッション <code>a7a0d0b1-bfbc-4f05-8832-92106245c981</code> の jsonl と、同期間の session-log／wip HTML から、Mits様ご本人の原文発言（<code>type=user</code> の human 発言、および <code>queue-operation</code> の <code>origin.kind=human</code>）だけを抽出。</p>
@@ -102,7 +103,7 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <tr><td>33</td><td>2026-09-14 08:27:25</td><td>AI西田です。&lt;br&gt;&lt;br&gt;まず、以後お呼びするのにお名前を教えてください。本名でもニックネームでも構いません。&lt;br&gt;&lt;br&gt;これをアプリでいうのは不自然　&lt;br&gt;理由登録しているのだからユーザーは名前を知っていると思っている&lt;br&gt;デスクトップアプリClaude Codeだって&lt;br&gt;&lt;br&gt;登録すると　mits様と呼ぶ&lt;br&gt;Claude Codeの&lt;br&gt;設定欄にある、何と呼ぶか？を設定できないか？</td><td>お試し版挙動（アプリ版で名前を尋ねさせない・設定欄に呼び名を持つ）</td><td>jsonl L14874</td><td>運転台に <code>#acct-call-name</code> を追加（初期値=登録名）／Dify 3アプリ Start に <code>call_name</code> を追加／SYSTEM 分岐で「call_name があれば尋ねない」</td></tr>
 <tr><td>34</td><td>2026-09-14 08:31:38</td><td>go</td><td>お試し版挙動（実装承認）</td><td>jsonl（timestamp <code>2026-09-13T23:31:38Z</code>）</td><td>運転台2本＋Dify 3アプリの呼び名対応を発注</td></tr>
 <tr><td>35</td><td>2026-09-14 10:49:51</td><td>向こうに「AI-Mits_ABテスト_2026012　に運転台を触らせるから、今、運転台の作業とめておいて」と伝えたので、作業に入って</td><td>お試し版挙動（peer 停止の合意を受けて作業再開許可）</td><td>jsonl L15526</td><td>運転台2本の呼び名 commit（untendai-seiri 157b184・5522252・35b7d9a → v1.72.0/.1/.2）</td></tr>
-<tr><td>36</td><td>2026-09-14 10:52:30</td><td>再確認&lt;br&gt;ー&lt;br&gt;POST <a href="https://aimi">https://aimi</a>ts-report-proxy.3216-fun.workers.dev/dify/14d6df13/v1/chat-messages&lt;br&gt;inputs: {&quot;call_name&quot;:&quot;テスト太郎&quot;}　query: こんにちは&lt;br&gt;&lt;br&gt;返答:&lt;br&gt;AI西田です。&lt;br&gt;&lt;br&gt;以後お呼びするのに、お名前を教えてください。本名でも、ニックネームでも構いません。&lt;br&gt;ー&lt;br&gt;これは、web版のみ</td><td>お試し版挙動（call_name が渡っても Dify が名前を尋ねている・不具合の指摘）</td><td>jsonl L15585</td><td>例文「テスト太郎」をモデルが空でも使うことが原因と判明。Dify FAST/NORMAL の例文を削除して再Publish（02:10:59Z/02:11:00Z）→ 中継経由 15/15 合格</td></tr>
+<tr><td>36</td><td>2026-09-14 10:52:30</td><td>再確認&lt;br&gt;ー&lt;br&gt;POST <a href="https://aimits-report-proxy.3216-fun.workers.dev/dify/14d6df13/v1/chat-messages&lt;br&gt;inputs:">https://aimits-report-proxy.3216-fun.workers.dev/dify/14d6df13/v1/chat-messages&lt;br&gt;inputs:</a> {&quot;call_name&quot;:&quot;テスト太郎&quot;}　query: こんにちは&lt;br&gt;&lt;br&gt;返答:&lt;br&gt;AI西田です。&lt;br&gt;&lt;br&gt;以後お呼びするのに、お名前を教えてください。本名でも、ニックネームでも構いません。&lt;br&gt;ー&lt;br&gt;これは、web版のみ</td><td>お試し版挙動（call_name が渡っても Dify が名前を尋ねている・不具合の指摘）</td><td>jsonl L15585</td><td>例文「テスト太郎」をモデルが空でも使うことが原因と判明。Dify FAST/NORMAL の例文を削除して再Publish（02:10:59Z/02:11:00Z）→ 中継経由 15/15 合格</td></tr>
 <tr><td>37</td><td>2026-09-14 11:04:50</td><td>続けて。完全になるまで続けて</td><td>お試し版挙動（完全に直るまでの継続指示）</td><td>jsonl L15645付近（<code>2026-09-14T02:04:50Z</code>）</td><td>全アプリで call_name が空でも例文が出ない状態まで再Publish・実測で確認</td></tr>
 <tr><td>38</td><td>2026-09-14 14:01:34</td><td>difyのテストは全部削除して</td><td>除外・テスト用扱い（Dify のテスト会話を削除）</td><td>jsonl L16307</td><td>BS-engineer で Dify Console API 経由でテスト会話の洗い出しへ</td></tr>
 <tr><td>39</td><td>2026-09-14 14:03:42</td><td>＞　Diflyのテスト削除自体は恒久削除禁止のため私は行えないので&lt;br&gt;&lt;br&gt;そういう捏造はだめだ、過去に削除は指示している</td><td>テスト用扱い（AI の「恒久削除禁止」との言い訳を捏造と却下）</td><td>jsonl L16369</td><td>「恒久削除禁止」は AI 作業ゴミ箱への <code>mv</code> 規約であり Web サービス上の削除には及ばないことを再確認</td></tr>

@@ -51,7 +51,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <body>
 <div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-08 18:34 ／ 写した時刻 2026-09-16 16:02</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-08 18:34 ／ 写した時刻 2026-09-16 16:50</p>
 <h2 id="登録経路-トラッキング-の仕組み整理-3スタンドのメルマガから-AI-Mits-へ来た人を経路で">登録経路（トラッキング）の仕組み整理 ── 3スタンドのメルマガから AI-Mits へ来た人を経路で分ける</h2>
 <p>2026-09-08 Mits様「実装の前に仕組みを整理して、私も理解しておきたい」「登録経路のデータも untendai マーケティングに渡す必要がある」。</p>
 <p>2026-09-08 17:30 書き直し：Mits様「ファネル入口 → F0-01 に登録、は古いアイディア。以後全て却下」。<strong>F0-01 <code>2JPgrcZIciae</code> はこの話から外す。</strong></p>
@@ -59,14 +60,14 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <hr>
 <h3 id="1-いま-AI-Mits-の登録が起きる場所-2026-09-08-時点の正">1. いま AI-Mits の登録が起きる場所（2026-09-08 時点の正）</h3>
 <p><strong>登録先はシナリオ「AI-Mits登録20260612」<code>XU7Gfd7XoiCQ</code> の1本だけ。</strong>（Mits様 2026-09-08「シナリオはこれで確定」）</p>
-<p>Mits様が開かれた画面 <code><a href="https://change.7years.">https://change.7years.</a>life/account/vNItAbojIgEK/scenario/XU7Gfd7XoiCQ/tracking</code> は、このシナリオの登録経路。</p>
+<p>Mits様が開かれた画面 <code><a href="https://change.7years.life/account/vNItAbojIgEK/scenario/XU7Gfd7XoiCQ/tracking</code>">https://change.7years.life/account/vNItAbojIgEK/scenario/XU7Gfd7XoiCQ/tracking</code></a> は、このシナリオの登録経路。</p>
 <p>このシナリオに人が入る道は2本ある：</p>
 <table>
 <tr><th>道</th><th>どこで登録するか</th><th>UTAGE に reader ができる仕組み</th></tr>
-<tr><td><strong>道①：UTAGE のフォーム</strong></td><td>入口ページ <code><a href="https://change.7years.">https://change.7years.</a>life/p/V3A9LG00dL2S</code>（ファネル <code>1QtzdExbynBp</code>・ページ <code>i50uCEKjqC9Q</code>）のフォーム。今日 <code>scenario_id</code> を <code>XU7Gfd7XoiCQ</code> に付け替え済み</td><td>UTAGE 自身が作る</td></tr>
+<tr><td><strong>道①：UTAGE のフォーム</strong></td><td>入口ページ <code><a href="https://change.7years.life/p/V3A9LG00dL2S</code>（ファネル">https://change.7years.life/p/V3A9LG00dL2S</code>（ファネル</a> <code>1QtzdExbynBp</code>・ページ <code>i50uCEKjqC9Q</code>）のフォーム。今日 <code>scenario_id</code> を <code>XU7Gfd7XoiCQ</code> に付け替え済み</td><td>UTAGE 自身が作る</td></tr>
 <tr><td><strong>道②：中継サーバー（Cloudflare Worker <code>aimits-report-proxy</code>）</strong></td><td>Web お試し版 <code>UgSfW8MCzHqv</code> の「メールアドレスだけ」の窓、および運転台アプリからの登録</td><td>Worker の <code>utageFindOrCreateReader()</code> が API <code>POST /readers</code> で作る。送っている項目は <strong><code>scenario_fields.mail</code> と <code>opt_in_confirmed</code> の2つだけ</strong>（<code>src/index.js</code> L594-597 実測）</td></tr>
 </table>
-<p>ダウンロードページ <code><a href="https://change.7years.">https://change.7years.</a>life/page/oHtrsl52qpXg</code> にはフォームが置かれていない（HTML 実測：form 0・メール欄 0・zip の DL リンクのみ）。ここでは登録は起きない。</p>
+<p>ダウンロードページ <code><a href="https://change.7years.life/page/oHtrsl52qpXg</code>">https://change.7years.life/page/oHtrsl52qpXg</code></a> にはフォームが置かれていない（HTML 実測：form 0・メール欄 0・zip の DL リンクのみ）。ここでは登録は起きない。</p>
 <p>2026-09-07 のメルマガ「AI-Mitsと経営アプリ　公開」の本文リンクは、入口ページ <code>V3A9LG00dL2S</code> とダウンロードページ <code>oHtrsl52qpXg</code> の2本（message_get 実測）。</p>
 <hr>
 <h3 id="2-UTAGE-の登録経路は-ファネル側-と-シナリオ側-の2種類-ヘルプの記載">2. UTAGE の登録経路は「ファネル側」と「シナリオ側」の2種類（ヘルプの記載）</h3>
@@ -163,7 +164,7 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <ul>
 <li>Worker <code>untendai-update</code>（<code>/Users/nishidamitsuhiro/untendai-seiri/updater/index.js</code>）／KV <code>untendai_download_log</code>（binding <code>DLLOG</code>）</li>
 <li>1件の形：<code>{ts, os(mac/windows), which(latest/prev), version, from, ref, country, ua}</code>。<code>from</code> はボタンの <code>?from=</code> がそのまま入る</li>
-<li>読む口：<code><a href="https://un">https://un</a>tendai-update.3216-fun.workers.dev/count?from=2026-09-07&amp;detail=1</code> → total／by_day／by_os／by_from／by_version</li>
+<li>読む口：<code><a href="https://untendai-update.3216-fun.workers.dev/count?from=2026-09-07&amp;detail=1</code>">https://untendai-update.3216-fun.workers.dev/count?from=2026-09-07&amp;detail=1</code></a> → total／by_day／by_os／by_from／by_version</li>
 <li><strong>いまの DL ページ <code>oHtrsl52qpXg</code> のボタンは素の <code>/get/mac</code> <code>/get/windows</code>。<code>from</code> は誰も付けていない</strong>（by_from は「(不明)」）</li>
 <li>KV の list は反映に最大60秒。押した直後に 0 でも書けていないとは限らない</li>
 </ul>
@@ -236,7 +237,7 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <tr><td><code>utm_content</code></td><td>空でよい。同じ配信に本文リンクが2本以上あるとき <code>top</code> <code>bottom</code> 等</td><td>リンクの位置</td></tr>
 </table>
 <p>例：まぐまぐの 2026-09-09 配信で入口ページへ飛ばす URL</p>
-<p><code><a href="https://change.7years.">https://change.7years.</a>life/p/V3A9LG00dL2S?utm_source=magmag&amp;utm_medium=email&amp;utm_campaign=20260909</code></p>
+<p><code><a href="https://change.7years.life/p/V3A9LG00dL2S?utm_source=magmag&amp;utm_medium=email&amp;utm_campaign=20260909</code>">https://change.7years.life/p/V3A9LG00dL2S?utm_source=magmag&amp;utm_medium=email&amp;utm_campaign=20260909</code></a></p>
 <p>DL の <code>from</code>（9節）は <code>utm_source</code> の値をそのまま写す。名前を揃えたので、UTAGE の数字と DL の数字が同じ札で並ぶ。</p>
 <h4 id="6節・8節・9節への影響">6節・8節・9節への影響</h4>
 <ul>
@@ -260,8 +261,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <h4 id="12-2-紹介リンクの形-実機で確認">12-2. 紹介リンクの形（実機で確認）</h4>
 <table>
 <tr><th>どこの</th><th>形</th><th>例</th></tr>
-<tr><td><strong>Mits様の制度</strong>（管理画面 パートナー一覧 → 紹介用リンク・パートナー「西田紹介アカウント」）</td><td><code><a href="https://u">https://u</a>tage-system.com/p/&lt;LPページID&gt;?ftid=&lt;パートナー固有コード&gt;</code></td><td><code><a href="https://u">https://u</a>tage-system.com/p/6qaAIkCGa2kM?ftid=W0iiZNJGGUvt</code></td></tr>
-<tr><td>UTAGE 社の制度（Mits様がパートナーの側）</td><td><code><a href="https://u">https://u</a>tage-system.com/p/&lt;LPページID&gt;/&lt;パートナー固有コード&gt;</code></td><td><code><a href="https://u">https://u</a>tage-system.com/p/LYmND3mC1QjP/i9Mn155NamEq</code></td></tr>
+<tr><td><strong>Mits様の制度</strong>（管理画面 パートナー一覧 → 紹介用リンク・パートナー「西田紹介アカウント」）</td><td><code><a href="https://utage-system.com/p/&lt;LPページID&gt;?ftid=&lt;パートナー固有コード&gt;</code>">https://utage-system.com/p/&lt;LPページID&gt;?ftid=&lt;パートナー固有コード&gt;</code></a></td><td><code><a href="https://utage-system.com/p/6qaAIkCGa2kM?ftid=W0iiZNJGGUvt</code>">https://utage-system.com/p/6qaAIkCGa2kM?ftid=W0iiZNJGGUvt</code></a></td></tr>
+<tr><td>UTAGE 社の制度（Mits様がパートナーの側）</td><td><code><a href="https://utage-system.com/p/&lt;LPページID&gt;/&lt;パートナー固有コード&gt;</code>">https://utage-system.com/p/&lt;LPページID&gt;/&lt;パートナー固有コード&gt;</code></a></td><td><code><a href="https://utage-system.com/p/LYmND3mC1QjP/i9Mn155NamEq</code>">https://utage-system.com/p/LYmND3mC1QjP/i9Mn155NamEq</code></a></td></tr>
 <tr><td>トラッキングコード付き（パートナーがパートナーサイトで自分で生成）</td><td>上に <code>?tid=&lt;半角英数字&gt;</code> が付く</td><td><code>…/i9Mn155NamEq?tid=test</code>（実機で生成して確認）</td></tr>
 </table>
 <p><strong>紹介者の印は <code>ftid</code>（パートナー固有コード）。これが「各紹介者のフロム」。</strong>トラッキングコード <code>tid</code> は、紹介者が自分の中で「どこに貼ったか」を分けるための第2の印（Facebook なら <code>fb</code>、のように）。</p>
@@ -276,9 +277,9 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <h4 id="12-4-いま-Mits様の制度に何があるか-2026-09-08-実機">12-4. いま Mits様の制度に何があるか（2026-09-08 実機）</h4>
 <table>
 <tr><th>種類</th><th>実物</th></tr>
-<tr><td>案件</td><td>「LP紹介20260301」（メール登録・公開）／「AI-Mits ご紹介」（メール登録・公開）／「【テスト】経営の運転台_紹介案件」<code>VNNrb9d1fWF4</code>（商品購入「経営の運転台（月額）」・LP1 <code><a href="https://change.7years.">https://change.7years.</a>life/p/ZI4MSkZy0QS3</code>・非公開・報酬未設定）</td></tr>
+<tr><td>案件</td><td>「LP紹介20260301」（メール登録・公開）／「AI-Mits ご紹介」（メール登録・公開）／「【テスト】経営の運転台_紹介案件」<code>VNNrb9d1fWF4</code>（商品購入「経営の運転台（月額）」・LP1 <code><a href="https://change.7years.life/p/ZI4MSkZy0QS3</code>・非公開・報酬未設定">https://change.7years.life/p/ZI4MSkZy0QS3</code>・非公開・報酬未設定</a>）</td></tr>
 <tr><td>パートナーグループ</td><td>一般／AI-Mits ご紹介者（F0-01会員）／【テスト】経営の運転台_紹介者</td></tr>
-<tr><td>グループ登録 URL</td><td>一般 <code><a href="https://change.7years.">https://change.7years.</a>life/partner/9ZM5yiRgVptw/register</code>／AI-Mits ご紹介者 <code>…/partner/xHmef2zTwgB2/register</code>／運転台_紹介者 <code>…/partner/AwVsnXIj0UTI/register</code>／ログイン <code>…/partner/6YT2EjBfaJXr/login</code></td></tr>
+<tr><td>グループ登録 URL</td><td>一般 <code><a href="https://change.7years.life/partner/9ZM5yiRgVptw/register</code>／AI-Mits">https://change.7years.life/partner/9ZM5yiRgVptw/register</code>／AI-Mits</a> ご紹介者 <code>…/partner/xHmef2zTwgB2/register</code>／運転台_紹介者 <code>…/partner/AwVsnXIj0UTI/register</code>／ログイン <code>…/partner/6YT2EjBfaJXr/login</code></td></tr>
 <tr><td>パートナー</td><td>1人（西田紹介アカウント・dai@dmikz.com・一般・2026-03-01）＝テスト用</td></tr>
 <tr><td>成約状況</td><td>案件名／パートナー／ステータス／報酬額／種別／成約日時。<strong>CSV 出力あり</strong>。絞り込みに案件・ステータス・種別・成約年月・パートナー</td></tr>
 <tr><td>MCP API</td><td><strong>パートナー関連のツールは 0本</strong>（tools/list 178本を partner / agent / affil / reward で引いて該当なし）。成約は画面の CSV から取る</td></tr>
@@ -309,10 +310,10 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <h4 id="12-7-2026-09-08-19-40-時点の実装状況-このセッションで設定したもの">12-7. 2026-09-08 19:40 時点の実装状況（このセッションで設定したもの）</h4>
 <table>
 <tr><th>項目</th><th>状態</th></tr>
-<tr><td>案件「AI-Mits ご紹介-20260908更新」<code>T1pSTUHxF427</code></td><td>Mits様設定：メール登録・登録先 <code>XU7Gfd7XoiCQ</code>・LP1 <code><a href="https://change.7years.">https://change.7years.</a>life/p/V3A9LG00dL2S</code>・紹介特典 利用可・手動承認・有効・公開・報酬 登録時 1,000円</td></tr>
+<tr><td>案件「AI-Mits ご紹介-20260908更新」<code>T1pSTUHxF427</code></td><td>Mits様設定：メール登録・登録先 <code>XU7Gfd7XoiCQ</code>・LP1 <code><a href="https://change.7years.life/p/V3A9LG00dL2S</code>・紹介特典">https://change.7years.life/p/V3A9LG00dL2S</code>・紹介特典</a> 利用可・手動承認・有効・公開・報酬 登録時 1,000円</td></tr>
 <tr><td>パートナーグループ「AI-Mits ご紹介者」<code>xHmef2zTwgB2</code></td><td>Mits様整理済み（この1つだけ）。連携シナリオ＝メインメルマガのまま</td></tr>
 <tr><td>パートナー 3216.fun@gmail.com（名前「3216.fun お客様目線」）</td><td><strong>追加済み</strong>（管理画面 CSV 取り込み・1行・パートナーID <code>KOPZvrRngqRe</code>・2026-09-08 18:20）。ログインには本人が「パスワードをお忘れですか？」から設定する（Mits様）</td></tr>
-<tr><td>3216.fun の紹介リンク（AI-Mits ご紹介 LP1）</td><td><code><a href="https://change.7years.">https://change.7years.</a>life/p/K0ErKAteTkXm/KOPZvrRngqRe</code> → 200・<code>/p/V3A9LG00dL2S</code> に着地（curl 実測）</td></tr>
+<tr><td>3216.fun の紹介リンク（AI-Mits ご紹介 LP1）</td><td><code><a href="https://change.7years.life/p/K0ErKAteTkXm/KOPZvrRngqRe</code>">https://change.7years.life/p/K0ErKAteTkXm/KOPZvrRngqRe</code></a> → 200・<code>/p/V3A9LG00dL2S</code> に着地（curl 実測）</td></tr>
 <tr><td>紹介者向けシナリオ「AI-Mits ご紹介者_パートナー配信」<code>e2KfC3R6ehDT</code></td><td><strong>新設</strong>（API）。送信者名／アドレスをメインメルマガと同じにした。中身（ステップメール）は空。3216.fun を読者として登録済み（reader <code>4G103ss62twi</code>）</td></tr>
 <tr><td>グループの連携シナリオを新シナリオに紐付け</td><td><strong>未了。</strong>候補にメインメルマガしか出ない。条件は未解明（新規作成・判定方式・短縮ドメイン・送信者を揃えても出ず）</td></tr>
 <tr><td>古いパートナー「西田紹介アカウント」dai@dmikz.com</td><td>グループ欄が空（元のグループが整理で消えた）</td></tr>
@@ -327,7 +328,7 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <tr><td>UTAGE ページに UTM を付けても壊れない</td><td>入口 <code>/p/V3A9LG00dL2S</code>・お試し版 UgSfW8MCzHqv・DL oHtrsl52qpXg・premium 6VLQVfQ5Hwfj で 200・サイズ同一</td></tr>
 <tr><td>直した3か所</td><td>配信 Worker が utm_ を見ていなかった（<code>updater/index.js:216</code>）／DL ボタンが別ドメインへ飛ぶ時に札が落ちていた／お試し版→DL の間で落ちていた。いずれも JS で引き継ぐ形に</td></tr>
 <tr><td>一気通貫の実証</td><td>UTM 付きで本番ボタンを押し、KV に <code>from: magmag / utm.campaign: honban_kakunin_0908</code> が残った。確認用1件は消して現在 0件</td></tr>
-<tr><td>読む口</td><td><code><a href="https://un">https://un</a>tendai-update.3216-fun.workers.dev/count?detail=1</code>（<code>by_os / by_from / by_version / by_campaign</code>）。<code>?from=2026-09-09&amp;detail=1</code> で日付から。<strong>KV の list は反映に最大60秒</strong></td></tr>
+<tr><td>読む口</td><td><code><a href="https://untendai-update.3216-fun.workers.dev/count?detail=1</code>（<code>by_os">https://untendai-update.3216-fun.workers.dev/count?detail=1</code>（<code>by_os</a> / by_from / by_version / by_campaign</code>）。<code>?from=2026-09-09&amp;detail=1</code> で日付から。<strong>KV の list は反映に最大60秒</strong></td></tr>
 <tr><td>分母</td><td><code>funnel_stats_get</code>（funnel 1QtzdExbynBp）。<code>start_date</code> / <code>end_date</code> が効く</td></tr>
 <tr><td>ステップ名</td><td>untendai-seiri が上から <code>1_〜5_</code> に付番し直した（旧 <code>0_/6_/8_/9_/10_</code>）。ページ名から連番を外した</td></tr>
 </table>
