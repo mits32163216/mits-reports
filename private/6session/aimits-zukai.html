@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+<title>AI-Mits の図解 ／ 6セッション社内レポート</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:20px 20px 80px; max-width:1000px; margin:0 auto; line-height:1.7; }
+h1,h2,h3,h4,h5,h6 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; color:var(--fg); }
+h1 { font-size:26px; margin:12px 0 18px; padding-bottom:10px; border-bottom:1px solid var(--line); }
+h2 { font-size:20px; margin:32px 0 12px; padding-left:10px; border-left:4px solid var(--gold); }
+h3 { font-size:16px; margin:24px 0 10px; }
+p { margin:10px 0; }
+a { color:var(--gold); text-decoration:none; }
+a:hover { text-decoration:underline; }
+code { font-family:var(--mono); background:var(--sub-bg); padding:2px 5px; border-radius:3px; font-size:0.9em; }
+pre { font-family:var(--mono); background:var(--sub-bg); padding:14px 16px; border-radius:8px; overflow-x:auto; border:1px solid var(--line); font-size:0.85em; line-height:1.5; }
+pre code { background:transparent; padding:0; }
+blockquote { border-left:3px solid var(--gold); padding:6px 14px; margin:14px 0; color:var(--muted); background:var(--sub-bg); border-radius:0 6px 6px 0; }
+ul,ol { padding-left:22px; }
+li { margin:4px 0; }
+table { border-collapse:collapse; width:100%; margin:14px 0; font-size:0.9em; }
+th,td { border:1px solid var(--line); padding:6px 10px; text-align:left; vertical-align:top; }
+th { background:var(--sub-bg); font-family:var(--mincho); font-weight:600; }
+hr { border:0; border-top:1px dashed var(--line); margin:24px 0; }
+img { max-width:100%; height:auto; }
+
+.nav-back { display:inline-block; margin:0 0 12px; font-family:var(--mono); font-size:12px; color:var(--muted); }
+.nav-back a { color:var(--muted); }
+.nav-back a:hover { color:var(--gold); }
+
+.meta-head { background:var(--sub-bg); border:1px dashed var(--line); border-radius:6px; padding:8px 12px; margin:8px 0 18px; font-family:var(--mono); font-size:11px; color:var(--muted); line-height:1.7; }
+.meta-head b { color:var(--fg); font-weight:600; margin-right:4px; }
+
+.embed-html { border-top:1px dashed var(--line); padding-top:16px; margin-top:8px; }
+.embed-html iframe { width:100%; border:0; min-height:80vh; background:var(--card-bg); border-radius:8px; }
+
+footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+</style>
+</head>
+<body>
+<div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
+<div class="meta-head"><div><b>元のファイル</b>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_zukai_20260911.html</div><div><b>最後に更新された日時</b>2026-09-11 15:08 JST</div></div>
+<h1>AI-Mits の図解</h1><div class="embed-html"><style>
+  :root{
+    --ink:#1a1f36; --sub:#5b6478; --line:#d8dee9; --bg:#f7f9fc; --card:#ffffff;
+    --navy:#1c3d6e; --gold:#b8860b; --red:#c0392b; --green:#1e8449; --gray:#8a94a6;
+    --warn-bg:#fff6e5; --warn-line:#e6b34a; --bad-bg:#fdeded; --bad-line:#e0a0a0;
+    --ok-bg:#eef7f0; --ok-line:#9dc9ab;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:0; background:var(--bg); color:var(--ink);
+    font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+    font-size:16px; line-height:1.85;
+  }
+  .wrap{max-width:1080px; margin:0 auto; padding:40px 24px 80px;}
+  header{border-bottom:3px solid var(--navy); padding-bottom:18px; margin-bottom:36px;}
+  h1{font-size:26px; margin:0 0 8px; color:var(--navy); letter-spacing:.02em;}
+  .lead{color:var(--sub); font-size:14px; margin:0;}
+  h2{
+    font-size:19px; margin:52px 0 16px; color:var(--navy);
+    border-left:5px solid var(--gold); padding-left:12px;
+  }
+  h3{font-size:16px; margin:28px 0 10px; color:var(--ink);}
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:10px;
+    padding:22px 24px; margin:16px 0;
+  }
+  .kekka{
+    background:var(--warn-bg); border:2px solid var(--warn-line); border-radius:10px;
+    padding:20px 24px; margin:20px 0; font-size:17px;
+  }
+  .kekka strong{color:var(--red);}
+  table{border-collapse:collapse; width:100%; margin:14px 0; font-size:14.5px;}
+  th,td{border:1px solid var(--line); padding:9px 12px; text-align:left; vertical-align:top;}
+  th{background:#eef2f7; font-weight:600; color:var(--navy);}
+  td.num{text-align:right; font-variant-numeric:tabular-nums;}
+  tr.hi td{background:var(--bad-bg);}
+  tr.hi td.num{font-weight:700; color:var(--red);}
+  .dim{color:var(--gray);}
+  .quote{
+    border-left:4px solid var(--line); padding:4px 0 4px 16px; margin:12px 0;
+    color:#333; font-size:15px; background:#fbfcfe;
+  }
+  .quote em{font-style:normal; background:#ffe9e9; padding:1px 3px; font-weight:600;}
+  code{
+    background:#eef2f7; padding:1px 6px; border-radius:4px;
+    font-family:"SF Mono",Menlo,Consolas,monospace; font-size:13px;
+  }
+  .scroll{overflow-x:auto;}
+  ul{padding-left:22px;} li{margin:5px 0;}
+  .tag{
+    display:inline-block; font-size:12px; padding:2px 9px; border-radius:11px;
+    border:1px solid var(--line); background:#fff; color:var(--sub); margin-right:5px;
+  }
+  .tag.ng{background:var(--bad-bg); border-color:var(--bad-line); color:var(--red);}
+  .tag.ok{background:var(--ok-bg); border-color:var(--ok-line); color:var(--green);}
+  footer{margin-top:64px; padding-top:18px; border-top:1px solid var(--line);
+         color:var(--sub); font-size:13px;}
+</style>
+
+<div class="wrap">
+
+<header>
+  <h1>AI-Mits ── いま何が起きているか</h1>
+  <p class="lead">2026-09-11 実測／設定はどこも触らず、読み取りだけで確かめたもの</p>
+</header>
+
+<div class="kekka">
+  <strong>チューニングしてきた先と、お客様が触っていた先が、別でした。</strong><br>
+  8/27 に作って手入れしてきたのが「西田メソッド」のアプリ。<br>
+  9/8 に公開したお試し版がつないでいたのは、放置と決めた「v2」のアプリ。
+</div>
+
+<h2>1. 配管図 ── どこからどこへ流れているか</h2>
+
+<div class="card scroll">
+<svg viewBox="0 0 1000 470" width="100%" style="max-width:1000px;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="お試し版からv2へ流れ、西田メソッドには誰も来ていないことを示す図">
+  <defs>
+    <marker id="ar" markerWidth="11" markerHeight="11" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L9,4 L0,8 z" fill="#c0392b"/>
+    </marker>
+    <marker id="ag" markerWidth="11" markerHeight="11" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L9,4 L0,8 z" fill="#8a94a6"/>
+    </marker>
+  </defs>
+
+  <!-- 左：入口 -->
+  <text x="30" y="34" font-size="14" fill="#5b6478" font-weight="600">入口（お客様が触る所）</text>
+
+  <rect x="30" y="50" width="230" height="92" rx="9" fill="#fff" stroke="#e0a0a0" stroke-width="2"/>
+  <text x="45" y="76" font-size="14" fill="#1a1f36" font-weight="700">お試し版のページ</text>
+  <text x="45" y="98" font-size="12" fill="#5b6478">名前は「NORMAL固定」</text>
+  <text x="45" y="118" font-size="12" fill="#c0392b" font-weight="600">中身は v2 を呼んでいる</text>
+  <text x="45" y="134" font-size="11" fill="#8a94a6">UgSfW8MCzHqv・2026-09-08 公開</text>
+
+  <rect x="30" y="176" width="230" height="70" rx="9" fill="#fff" stroke="#d8dee9" stroke-width="1.5"/>
+  <text x="45" y="202" font-size="14" fill="#1a1f36" font-weight="700">運転台のアプリ</text>
+  <text x="45" y="224" font-size="12" fill="#5b6478">3つを選べる（既定は FAST）</text>
+
+  <!-- 中：中継 -->
+  <text x="330" y="34" font-size="14" fill="#5b6478" font-weight="600">中継サーバー</text>
+  <rect x="330" y="50" width="150" height="196" rx="9" fill="#f2f6fb" stroke="#b9c6d8" stroke-width="1.5"/>
+  <text x="345" y="78" font-size="13" fill="#1c3d6e" font-weight="700">通り道</text>
+  <text x="345" y="100" font-size="11.5" fill="#5b6478">鍵があれば</text>
+  <text x="345" y="118" font-size="11.5" fill="#5b6478">どれでも通す</text>
+  <text x="345" y="146" font-size="11.5" fill="#c0392b">v2 の鍵も入っている</text>
+  <text x="345" y="180" font-size="13" fill="#1c3d6e" font-weight="700">レポート集め</text>
+  <text x="345" y="202" font-size="11.5" fill="#5b6478">3つだけ見る</text>
+  <text x="345" y="220" font-size="11.5" fill="#1e8449">v2 は外してある</text>
+
+  <!-- 右：4アプリ -->
+  <text x="560" y="34" font-size="14" fill="#5b6478" font-weight="600">Dify のアプリ</text>
+
+  <rect x="560" y="50" width="410" height="72" rx="9" fill="#fdeded" stroke="#c0392b" stroke-width="2.5"/>
+  <text x="578" y="76" font-size="14.5" fill="#1a1f36" font-weight="700">AI-MITS v2</text>
+  <text x="578" y="98" font-size="12" fill="#c0392b" font-weight="600">お客様の相談 27件・9/8以降 21件（全部ここ）</text>
+  <text x="578" y="114" font-size="11" fill="#8a94a6">放置して止めると 8/27 に決めたアプリ</text>
+
+  <rect x="560" y="140" width="410" height="72" rx="9" fill="#fff" stroke="#b8860b" stroke-width="2.5"/>
+  <text x="578" y="166" font-size="14.5" fill="#1a1f36" font-weight="700">AI-MITS(M) 西田メソッド　＝ NORMAL</text>
+  <text x="578" y="188" font-size="12" fill="#b8860b" font-weight="600">お客様の相談 0件（手入れしてきたのはここ）</text>
+  <text x="578" y="204" font-size="11" fill="#8a94a6">8/27 作成・材料が届く形にした・8/28 モデル最適化</text>
+
+  <rect x="560" y="230" width="196" height="62" rx="9" fill="#fff" stroke="#d8dee9" stroke-width="1.5"/>
+  <text x="578" y="254" font-size="13.5" fill="#1a1f36" font-weight="700">AI-MITS(R) ＝ FAST</text>
+  <text x="578" y="276" font-size="11.5" fill="#5b6478">お客様の相談 0件</text>
+
+  <rect x="774" y="230" width="196" height="62" rx="9" fill="#fff" stroke="#d8dee9" stroke-width="1.5"/>
+  <text x="792" y="254" font-size="13.5" fill="#1a1f36" font-weight="700">AI-MITS (C) ＝ DEEP</text>
+  <text x="792" y="276" font-size="11.5" fill="#5b6478">お客様の相談 0件</text>
+
+  <!-- 線 -->
+  <path d="M260,96 L330,96" stroke="#c0392b" stroke-width="3" marker-end="url(#ar)" fill="none"/>
+  <path d="M480,96 L560,88" stroke="#c0392b" stroke-width="3" marker-end="url(#ar)" fill="none"/>
+  <text x="492" y="72" font-size="12" fill="#c0392b" font-weight="700">お客様はここへ流れている</text>
+
+  <path d="M260,210 L330,180" stroke="#8a94a6" stroke-width="1.8" marker-end="url(#ag)" fill="none" stroke-dasharray="5,4"/>
+  <path d="M480,170 L560,172" stroke="#8a94a6" stroke-width="1.8" marker-end="url(#ag)" fill="none" stroke-dasharray="5,4"/>
+  <path d="M480,190 L560,254" stroke="#8a94a6" stroke-width="1.8" marker-end="url(#ag)" fill="none" stroke-dasharray="5,4"/>
+  <path d="M480,200 L774,258" stroke="#8a94a6" stroke-width="1.8" marker-end="url(#ag)" fill="none" stroke-dasharray="5,4"/>
+
+  <!-- 下段の注記 -->
+  <rect x="30" y="330" width="940" height="110" rx="9" fill="#fff6e5" stroke="#e6b34a" stroke-width="1.5"/>
+  <text x="52" y="360" font-size="14" fill="#1a1f36" font-weight="700">なぜこうなったか</text>
+  <text x="52" y="388" font-size="13" fill="#333">8/27 に「振り分けは廃止／v2 は放置して止める」と決め、中継の レポート集め からは v2 を外した。</text>
+  <text x="52" y="410" font-size="13" fill="#333">ところが 9/8 に書き換えたお試し版は、v2 を呼んだまま公開された。決めたことが片側にしか入っていない。</text>
+  <text x="52" y="430" font-size="12" fill="#8a94a6">通り道のほうは鍵さえあれば何でも通す作りなので、誰も気づかずに繋がり続けた。</text>
+</svg>
+</div>
+
+<h2>2. 数字 ── 全期間で数え直した</h2>
+
+<p class="dim" style="font-size:14px;">Dify の一覧は初期が「直近7日」で止まっている。絞り込みを外して全ページめくって数えたもの。</p>
+
+<div class="scroll">
+<table>
+<thead>
+<tr>
+  <th>アプリ（Dify の今の名前）</th>
+  <th>運転台での呼び名</th>
+  <th class="num">総件数</th>
+  <th class="num">お客様<br><span class="dim">（お試し版から）</span></th>
+  <th class="num">9/8 以降</th>
+  <th>最初</th>
+  <th>最後</th>
+</tr>
+</thead>
+<tbody>
+<tr class="hi">
+  <td>AI-MITS v2<br><span class="dim">e472bc1f</span></td>
+  <td>3択のどれでもない</td>
+  <td class="num">166</td>
+  <td class="num">27</td>
+  <td class="num">21</td>
+  <td>2026-04-13</td>
+  <td>2026-09-10</td>
+</tr>
+<tr>
+  <td>AI-MITS(M) 西田メソッド<br><span class="dim">43d47f25</span></td>
+  <td><strong>NORMAL</strong></td>
+  <td class="num">64</td>
+  <td class="num">0</td>
+  <td class="num">1</td>
+  <td>2026-08-27</td>
+  <td>2026-09-09</td>
+</tr>
+<tr>
+  <td>AI-MITS(R)<br><span class="dim">14d6df13</span></td>
+  <td>FAST</td>
+  <td class="num">72</td>
+  <td class="num">0</td>
+  <td class="num">1</td>
+  <td>2026-06-14</td>
+  <td>2026-09-09</td>
+</tr>
+<tr>
+  <td>AI-MITS (C)<br><span class="dim">1a8d8b9c</span></td>
+  <td>DEEP</td>
+  <td class="num">71</td>
+  <td class="num">0</td>
+  <td class="num">1</td>
+  <td>2026-05-10</td>
+  <td>2026-09-10</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="card">
+<h3>読み取れること</h3>
+<ul>
+  <li><strong>9/8 以降にお試し版から来た相談は21件。全部が v2 に入っている。</strong></li>
+  <li>西田メソッド・FAST・DEEP の3つは、直近に来たのが運転台アプリから1件ずつ。</li>
+  <li>西田メソッドの64件は、その大半が運転台アプリからの26件と、8/27〜8/28 の検査用の呼び出し。</li>
+  <li>画面で見えた FAST の「6件」は直近7日の分で、全期間では<strong>72件</strong>。</li>
+  <li>v2 の166件のうち<strong>121件が0往復</strong>（開いただけで話さず離脱）。話した45件の往復は中央値3回・最長29回。</li>
+</ul>
+</div>
+
+<h2>3. 出ていた不具合 ── 人称が3つともずれている</h2>
+
+<div class="card">
+<h3><span class="tag ng">①</span>お客様を「Mitsさん」と呼んでいる</h3>
+<p class="dim" style="font-size:13px;margin:0;">2026-09-10 10:49・お試し版のお客様との会話</p>
+<div class="quote">
+  <em>Mitsさんが好きなのは</em>、たぶん稼ぎを義理のために使った人ですよね。稼ぎを自分の格上げに使った人が嫌なんです。
+</div>
+<div class="quote">
+  <em>Mitsさんは今</em>、稼ぎたくないというより「稼ぎたいと言うこと」に抵抗があるように聞こえるんですけど、そこにあるのは何ですか。
+</div>
+
+<h3 style="margin-top:30px;"><span class="tag ng">②</span>西田さんを第三者として扱っている</h3>
+<p class="dim" style="font-size:13px;margin:0;">2026-09-09 21:57・12往復の会話</p>
+<p style="font-size:14px;margin:10px 0 4px;">お客様「今日買います！MITSさん、凄すぎます。なぜ、何を聞いてもそんなにわかるのですか？」</p>
+<div class="quote">
+  全部知ってるわけじゃないです。今日も<em>「西田さんが何を学んでるか」は分からないと最初に言いましたよね。</em><br>
+  <em>僕</em>がやってるのは、さっき言った20個の構造を当てにいってるだけです。
+</div>
+
+<div style="background:#fdeded;border:1px solid #e0a0a0;border-radius:8px;padding:14px 18px;margin-top:22px;">
+  <strong>自分を「僕」／お客様を「あなた」／西田を「第三者」</strong>。
+  AI-Mits は Mits様の分身として答える役なので、3つとも向きが逆になっている。
+</div>
+</div>
+
+<h2>4. ここまでの経緯</h2>
+
+<div class="scroll">
+<table>
+<thead>
+<tr><th style="width:96px;">日付</th><th>Mits様が確定なさったこと</th><th>実装したこと</th></tr>
+</thead>
+<tbody>
+<tr><td>2026-03-29</td><td>主目的は会話履歴を貯めること</td><td>v1 稼働・ナレッジDB 投入</td></tr>
+<tr><td>2026-04-13</td><td>最初に作った時の設計に戻って</td><td><strong>AI-MITS v2 を公開</strong></td></tr>
+<tr><td>06-12〜16</td><td>終わり方のルール（R1〜R5）</td><td>本測定・Corpus2Skill 修復・分類を97件に付与</td></tr>
+<tr><td>08-07〜18</td><td>—</td><td>中継サーバー本番稼働・鍵4本を入れ替え</td></tr>
+<tr><td>08-26</td><td>—</td><td>A ページを自前のチャット画面に</td></tr>
+<tr class="hi"><td>08-27</td><td><strong>振り分けは廃止／v2 は放置、untendai を公開したら止める</strong></td><td><strong>西田メソッドのアプリを新規作成</strong>（材料が届く形に）<br>中継のレポート集めから v2 を外した</td></tr>
+<tr><td>08-28</td><td>ABC それぞれのモデルを最適化</td><td>opus-5 に・検証役の LLM を廃止・終わり方ルール統合・鍵の入れ替え</td></tr>
+<tr><td>09-05</td><td>名前を FAST に／既定を fast に</td><td>運転台のエンジン定義を更新</td></tr>
+<tr><td>09-06</td><td>FAST／NORMAL／DEEP でアプリ版も WEB版も統一</td><td>名前を揃えた</td></tr>
+<tr class="hi"><td>09-08</td><td>C案の実装と実機 go／制限も無くそう</td><td><strong>お試し版のページを3段書き換え（v2 のまま公開）</strong></td></tr>
+<tr><td>09-11</td><td>事実確認が先・いきなり触るな</td><td>触らずに実測（この資料）</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>5. 記録と実物の食い違い</h2>
+
+<div class="card">
+<table>
+<thead><tr><th style="width:32%;">何について</th><th>書いてあること</th><th>実物</th></tr></thead>
+<tbody>
+<tr>
+  <td>お試し版のページ名</td>
+  <td>お試し版（AI-Mits・<strong>NORMAL固定</strong>・15分と25分に声かけ）</td>
+  <td>中身は v2 を呼んでいる</td>
+</tr>
+<tr>
+  <td>中継サーバーのコード内の注記</td>
+  <td>v2 は対象外（<strong>鍵も未登録</strong>）</td>
+  <td>鍵は登録済み。<code>/dify/e472bc1f/v1/…</code> が 200 で通る</td>
+</tr>
+<tr>
+  <td>索引 RESOURCE_INDEX.md:154</td>
+  <td>秘密は4本（西田メソッドの鍵は無い）</td>
+  <td>5本。<code>dify_app_key_43d47f25: true</code></td>
+</tr>
+<tr>
+  <td>設計書 aimits_full_design L320</td>
+  <td>v2.1（14d6df13）／v3（1a8d8b9c）</td>
+  <td>今は FAST／DEEP。3段階の改名を経ている</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h2>6. 実装したが、効いているか測っていないもの</h2>
+
+<div class="card">
+<p style="margin-top:0;">13件。</p>
+<ul>
+  <li>対策 5・7・8・9・12・13・14</li>
+  <li>OpenAI のキー投入（埋め込みが credits を食っている件）</li>
+  <li>ペルソナの追記</li>
+  <li>運転台のエンジン切替窓の実機確認</li>
+  <li>Dify 4アプリの名前付け替え</li>
+  <li>お試し版の向き先</li>
+  <li>DEEP の10.6秒の沈黙対策</li>
+</ul>
+</div>
+
+<h2>7. 向け直す場合に触るのは1行</h2>
+
+<div class="card">
+<p style="margin-top:0;">お試し版のページ（UTAGE・ファネル 1QtzdExbynBp／ステップ V3A9LG00dL2S／ページ UgSfW8MCzHqv）の中の1行。</p>
+<pre style="background:#f2f6fb;border:1px solid #b9c6d8;border-radius:8px;padding:16px;font-size:14px;overflow-x:auto;margin:0;">var APP = 'e472bc1f';   →   var APP = '43d47f25';</pre>
+<p style="margin-bottom:0;font-size:14px;">お客様が触る入口なので、切り替えは Mits様のご指示があってから行います。</p>
+</div>
+
+<h2>8. Dify の名前を付け替える（案 ── まだ反映していません）</h2>
+
+<div class="card">
+<p style="margin-top:0;">Mits様のご指定の形は「<strong>頭の括弧（中身で何をしているか）＋ 番号 ＋ FAST／NORMAL／DEEP</strong>」。
+括弧の中身は<strong>今の中身に合わせて付け直す</strong>（2026-09-11 Mits様）。</p>
+
+<div class="scroll">
+<table>
+<thead><tr><th style="width:8%;"></th><th style="width:34%;">今の名前</th><th>付け替え後</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>AI-MITS(R)</td><td><code>AI-MITS(ナレッジ無し) 14d6df13 FAST-APP</code></td></tr>
+<tr><td>2</td><td>AI-MITS(M) 西田メソッド</td><td><code>AI-MITS(RAG) 43d47f25 NORMAL-APP</code></td></tr>
+<tr><td>3</td><td>AI-MITS (C)</td><td><code>AI-MITS (Corpus2Skill) 1a8d8b9c DEEP-APP</code></td></tr>
+<tr class="hi"><td>4</td><td>AI-MITS v2</td><td><code>AI-MITS v2 e472bc1f NORMAL-WEB</code></td></tr>
+</tbody>
+</table>
+</div>
+
+<ul style="font-size:14px;">
+  <li>区切りは半角スペース1つ</li>
+  <li><strong>括弧の中身は「今そのアプリが何をしているか」に合わせる</strong>（2026-09-11 Mits様）。
+      頭文字1文字（<code>(M)</code> <code>(R)</code> <code>(C)</code>）では中身が分からないため、開いた言葉に置き換える</li>
+  <li><code>AI-MITS (Corpus2Skill)</code> は、今の名前どおり <code>AI-MITS</code> と <code>(</code> の間に半角スペースを1つ残す。
+      他の2つは今の名前どおりスペース無し</li>
+  <li>アイコン（🧭 💬）は Dify が名前とは別に持っているので、名前の欄だけを書き換える</li>
+  <li><strong>末尾で繋ぎ先を分ける</strong>（2026-09-11 Mits様）── 運転台アプリ側の3つは <code>-APP</code>、WEB（お試し版）が向いている v2 は <code>-WEB</code></li>
+</ul>
+
+<div class="card" style="background:#f7fafd;">
+<p style="margin-top:0;font-size:14px;"><strong>括弧の中身が入れ替わった経緯（2026-09-11 のやり取り）</strong></p>
+<ul style="font-size:14px;margin-bottom:0;">
+  <li>今の名前の <code>(R)</code> は <strong>RAG</strong>、<code>(C)</code> は <strong>Corpus2Skill</strong> の頭文字</li>
+  <li>ところが <code>(R)</code> が付いている <code>14d6df13</code> は、いま <strong>RAG をしていない</strong>（箱3個・ナレッジ検索の箱が無い）。
+      実際に RAG をしているのは <code>43d47f25</code> のほう（箱4個・dataset <code>11963425</code> を引いている）</li>
+  <li>そこで <strong><code>(RAG)</code> は 43d47f25 へ、14d6df13 は <code>(ナレッジ無し)</code> へ</strong>と付け直した。
+      名前を見れば中身が分かる状態にするのが目的</li>
+</ul>
+</div>
+</div>
+
+<h3>なぜ「ナレッジ無し」を FAST だけに付けるか</h3>
+
+<div class="scroll">
+<table>
+<thead><tr><th style="width:30%;"></th><th>箱の数</th><th>ナレッジ検索の箱</th><th><code>{{#context#}}</code></th><th>材料は入るか</th></tr></thead>
+<tbody>
+<tr><td><strong>FAST（14d6df13）</strong></td><td><strong>3個</strong></td><td><strong>無</strong></td><td><strong>無</strong></td><td><span class="tag ng">入らない</span></td></tr>
+<tr><td>NORMAL（43d47f25）</td><td>4個</td><td>有（dataset <code>11963425</code>）</td><td>有</td><td><span class="tag ok">入る</span></td></tr>
+<tr><td>DEEP（1a8d8b9c）</td><td>13個</td><td>無（Notion API を直に叩く）</td><td>無（USER 欄で渡す）</td><td><span class="tag ok">入る</span></td></tr>
+</tbody>
+</table>
+</div>
+
+<p style="font-size:14px;">DEEP にもナレッジ検索の箱は無いが、あちらは Notion を直に叩いて台帳を全部たどる作り。<strong>材料が入らないのは FAST だけ</strong>。</p>
+
+<div class="card" style="background:#f7fafd;">
+<p style="margin-top:0;font-size:14px;"><strong>これは不具合ではなく、決めてそうしたもの。</strong></p>
+<p style="font-size:14px;margin-bottom:6px;">2026-08-27 Mits様（原文）：</p>
+<blockquote style="margin:0 0 10px 0;padding-left:14px;border-left:3px solid #b9c6d8;font-size:14px;">
+今のAI-MITSは素のLLMを呼び出しているに過ぎないことがわかった。<br>
+しかしこれを利用して、A　素のLLM　Bのコーパス　これから作るCが私のナレッジを呼び出すもの
+</blockquote>
+<p style="font-size:14px;margin-bottom:0;">2026-08-28 06:52 に Mits様が FAST の脇へ記入されたのが「<strong>4.4秒・いちばん速い・西田の知見は入らない</strong>」。
+同じ日の却下記録に「A の回答LLM にも材料を渡す → それは C と同じ物になり、3択の A ではなくなる」とある。
+今回の「ナレッジ無し」は、この位置づけを<strong>名前の側にも出す</strong>もの。</p>
+</div>
+
+<h2>付録 ── 後から突き合わせるための記録</h2>
+
+<p class="dim" style="font-size:14px;">ここから下は、次に見る人（人でも AI でも）が同じ手順を踏んで同じ数字に辿り着けるように、実際に叩いたものと生の出力をそのまま残したもの。</p>
+
+<h3>A. 名前と番号の対応（これが引き当ての鍵）</h3>
+
+<div class="scroll">
+<table>
+<thead><tr><th>Dify の今の名前</th><th>app_id（全桁）</th><th>運転台での呼び名</th><th>旧称</th></tr></thead>
+<tbody>
+<tr><td>AI-MITS v2</td><td><code>e472bc1f-055c-400b-ab80-a5a568f724e4</code></td><td>3択のどれでもない</td><td>Mitsトーク系</td></tr>
+<tr><td>AI-MITS(M) 西田メソッド</td><td><code>43d47f25-13bb-45c5-b262-9d37f0bd1f65</code></td><td>NORMAL</td><td>C群</td></tr>
+<tr><td>AI-MITS(R)</td><td><code>14d6df13-b81e-4eba-b0f2-356528e97ac3</code></td><td>FAST（既定）</td><td>A群／v2.1</td></tr>
+<tr><td>AI-MITS (C)</td><td><code>1a8d8b9c-8d3d-4df8-8893-b767be48d862</code></td><td>DEEP</td><td>B群／v3</td></tr>
+<tr><td>AI-Mits 振り返り</td><td><code>b732635c-c696-4115-a1c6-514190519154</code></td><td>—</td><td>—</td></tr>
+<tr><td>AI-MITS Report Generator</td><td><code>7c6bee73-e742-48cf-b4f1-762ba8eb21be</code></td><td>—</td><td>—</td></tr>
+</tbody>
+</table>
+</div>
+
+<p style="font-size:14px;">呼び名は3段階で変わっている。<strong>v2.1／v3 → A群／B群／C群 → FAST／NORMAL／DEEP</strong>。古い資料はどの段階の呼び名かを見てから読む。</p>
+
+<h3>B. 使ったものと、返ってきたそのままの値</h3>
+
+<div class="card">
+<p style="margin-top:0;"><strong>B-1　お試し版のページの中身</strong></p>
+<pre style="background:#f2f6fb;border:1px solid #b9c6d8;border-radius:8px;padding:14px;font-size:13px;overflow-x:auto;">funnel_page_get
+  funnel_id: 1QtzdExbynBp
+  step_id:   V3A9LG00dL2S
+  page_id:   UgSfW8MCzHqv
+
+返ってきた項目（これが全部・他に差し込み欄は無い）
+  id / content_type / title / page_title / step_url / page_url
+  html_source / order / is_archived / created_at / updated_at
+
+html_source の中身（該当行）
+  var WORKERS_BASE = 'https://aimits-report-proxy.3216-fun.workers.dev';
+  var APP = 'e472bc1f';                       /* v2-2 */
+  var DL_URL = 'https://change.7years.life/p/nPC0MfBNagSy';
+
+全項目を結合して数えた出現回数
+  43d47f25 : 0
+  14d6df13 : 0
+  1a8d8b9c : 0
+  e472bc1f : 1</pre>
+
+<p><strong>B-2　中継サーバーの鍵</strong></p>
+<pre style="background:#f2f6fb;border:1px solid #b9c6d8;border-radius:8px;padding:14px;font-size:13px;overflow-x:auto;">curl -s https://aimits-report-proxy.3216-fun.workers.dev/health
+
+"secrets_status":{
+  "utage_api_key":true,
+  "dify_api_key":true,
+  "line_channel_token":false,
+  "dify_app_key_b732635c":true,
+  "dify_app_key_14d6df13":true,
+  "dify_app_key_1a8d8b9c":true,
+  "dify_app_key_7c6bee73":true,
+  "dify_app_key_43d47f25":true
+}</pre>
+<p style="font-size:14px;">この health は5本しか見に行かない作りなので、<strong>ここに出ていないこと＝無いこと、にはならない</strong>。v2 の鍵は出ていないが、次の B-3 で通ることが分かる。</p>
+
+<p><strong>B-3　中継が v2 を通すかどうか（実際に叩いた）</strong></p>
+<pre style="background:#f2f6fb;border:1px solid #b9c6d8;border-radius:8px;padding:14px;font-size:13px;overflow-x:auto;">curl "https://aimits-report-proxy.3216-fun.workers.dev/dify/e472bc1f/v1/parameters?user=…"
+→ HTTP 200   {"opening_statement":"","suggested_questions":[], … }   本物の設定が返る
+
+curl "https://aimits-report-proxy.3216-fun.workers.dev/dify/deadbeef/v1/parameters?user=…"
+→ HTTP 404   {"error":"app_id_not_provisioned","app_id_prefix":"deadbeef"}</pre>
+<p style="font-size:14px;">でたらめな番号は 404 で弾かれ、v2 は 200 で通る。<strong>v2 の鍵は本番の中継に実在する。</strong></p>
+
+<p><strong>B-4　中継のコード（レポート集めの側）</strong></p>
+<pre style="background:#f2f6fb;border:1px solid #b9c6d8;border-radius:8px;padding:14px;font-size:13px;overflow-x:auto;">src/index.js  L372-379
+
+// ※ v2（E472BC1F）は Mits様確定「v2は放置、untendaiを公開したら止める」により
+//   対象外（鍵も未登録）。          ← この「鍵も未登録」が B-3 と食い違う
+const REPORT_APP_PREFIXES = [
+  '1A8D8B9C', // B群 Corpus2Skill
+  '14D6DF13', // A群 素のLLM
+  '43D47F25'  // C群 西田メソッド（2026-08-27 追加）
+];</pre>
+<p style="font-size:14px;"><strong>通り道（<code>proxyDify</code>）はこの一覧を見ていない。</strong>8桁の形さえ合っていて鍵があれば通す。だから「一覧から外した」ことと「繋がらなくなる」ことが別になっている。</p>
+
+<p><strong>B-5　Logs の数え方</strong></p>
+<pre style="background:#f2f6fb;border:1px solid #b9c6d8;border-radius:8px;padding:14px;font-size:13px;overflow-x:auto;">https://cloud.dify.ai/app/&lt;app_id&gt;/logs
+
+① 「Last 7 Days」の × を押して 全期間 にする   ← ここを外さないと直近7日しか数えない
+② ITEMS PER PAGE を 50 にする
+③ ページ送りで最後まで回す
+④ 表の全行を拾い、created + title + END USER の3つで重複を除く</pre>
+</div>
+
+<h3>C. 呼び出し元の見分け方（END USER の接頭辞）</h3>
+
+<div class="scroll">
+<table>
+<thead><tr><th>接頭辞</th><th>どこから来たか</th><th>v2</th><th>NORMAL</th><th>FAST</th><th>DEEP</th></tr></thead>
+<tbody>
+<tr class="hi"><td><code>try-</code></td><td><strong>お試し版のページ（お客様）</strong></td><td class="num">27</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td><code>untendai-</code></td><td>運転台のアプリ</td><td class="num">3</td><td class="num">26</td><td class="num">4</td><td class="num">21</td></tr>
+<tr><td><code>ip-</code></td><td>IP だけ記録されたもの</td><td class="num">6</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+<tr><td><code>diag-</code> / <code>probe-</code> / <code>kensa-</code> 等</td><td>切り分け・検査用（私が叩いたもの）</td><td class="num">1</td><td class="num">30前後</td><td class="num">多数</td><td class="num">多数</td></tr>
+<tr><td><code>credit-sokutei-</code></td><td>費用の測定用</td><td class="num">0</td><td class="num">1</td><td class="num">0</td><td class="num">1</td></tr>
+<tr><td><code>ab-tester-20260614-</code></td><td>6/14 の本測定の痕跡</td><td class="num">0</td><td class="num">0</td><td class="num">6</td><td class="num">6</td></tr>
+<tr><td>36桁の番号 / <code>u_</code></td><td>Dify の画面から直接（名乗りなし）</td><td class="num">124</td><td class="num">1</td><td class="num">11+</td><td class="num">13+</td></tr>
+</tbody>
+</table>
+</div>
+
+<p style="font-size:14px;"><strong>次に数えるときも、この接頭辞で分ければ「お客様か・自分のテストか」が分かる。</strong>総件数だけ見ると、検査用の呼び出しが混ざって多く見える。</p>
+
+<h3>D. 出典（絶対パス）</h3>
+
+<div class="card">
+<table>
+<thead><tr><th style="width:34%;">何</th><th>場所</th></tr></thead>
+<tbody>
+<tr><td>この件の引継書</td><td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/引継書_AI-Mitsのチューニング_20260911.md</code></td></tr>
+<tr><td>経緯の時系列（表A/B/C）</td><td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_keii_jikeiretsu_20260911.md</code></td></tr>
+<tr><td>対策表（21項目）</td><td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/dify_taisaku_20260827.html</code></td></tr>
+<tr><td>設計書<br><span class="dim">（L320 の v2.1／v3 の記述は古い）</span></td><td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_full_design_20260615.md</code></td></tr>
+<tr><td>エンジン定義の正本<br><span class="dim">L145／L159／L168／L178／L266</span></td><td><code>/Users/nishidamitsuhiro/untendai-seiri/src-tauri/src/sanbo.rs</code></td></tr>
+<tr><td>中継サーバーの正本<br><span class="dim">L262-280（通り道）／L372-379（レポート集め）</span></td><td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits-report-proxy/src/index.js</code></td></tr>
+<tr><td>分野別の索引<br><span class="dim">L154 の「秘密は4本」は古い</span></td><td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/RESOURCE_INDEX.md</code></td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>E. 問題の2会話（原文を引いた場所）</h3>
+
+<div class="card">
+<table>
+<thead><tr><th style="width:30%;">何</th><th>どこ</th></tr></thead>
+<tbody>
+<tr>
+  <td>お客様を「Mitsさん」と呼んだ会話<br><span class="dim">2026-09-10 10:49・2往復</span></td>
+  <td>AI-MITS v2 の Logs<br><code>conversation_id = 72ccf14d-f2ee-4d45-8dd2-1946dcee9cd7</code><br>END USER <code>try-z3k7yjwtmtu4nmfy</code>／タイトル「お金と魅力の哲学 🤔」</td>
+</tr>
+<tr>
+  <td>西田さんを第三者として扱った会話<br><span class="dim">2026-09-09 21:19 開始・12往復</span></td>
+  <td>AI-MITS v2 の Logs<br><code>conversation_id = 34c10c83-9fc8-4cc2-b465-4ec09eb7195a</code><br>同じ END USER／タイトル「西田さんは何を学んでる？」</td>
+</tr>
+</tbody>
+</table>
+<p style="font-size:14px;margin-bottom:0;">この <code>try-z3k7yjwtmtu4nmfy</code> という1人だけで14件。9/8以降の21件のうちの多くがこの人。</p>
+</div>
+
+<h3>F. 次に同じことを確かめるときの、最短の3手</h3>
+
+<div class="card">
+<ol style="margin:0;padding-left:22px;">
+  <li><code>funnel_page_get(1QtzdExbynBp / V3A9LG00dL2S / UgSfW8MCzHqv)</code> で <code>var APP</code> の行を見る ── <strong>入口がどこを向いているか</strong></li>
+  <li><code>curl …/health</code> で鍵を見る ── <strong>向け直した先が中継を通れるか</strong></li>
+  <li>Dify の Logs を<strong>全期間</strong>にして <code>try-</code> の件数を数える ── <strong>お客様が実際どこに来ているか</strong></li>
+</ol>
+</div>
+
+<footer>
+  作成 2026-09-11／最終更新 2026-09-11（8「名前を付け替える」を追加。括弧の中身を今の中身に合わせて付け直す形＝43d47f25→(RAG)／14d6df13→(ナレッジ無し)／1a8d8b9c→(Corpus2Skill) を反映）<br>実測はすべて読み取りのみ。Dify の設定・UTAGE のページ・中継サーバーは、どれも触っていません。<strong>8 の名前の付け替えも、まだ実行していません。</strong><br>
+  裏取り：お試し版のページは返る全11項目を合算して数え、ファネルの19ページを1枚ずつ開いて確認。中継の鍵は本番の health と、実際に叩いた応答コードの両方で確認。Logs は4アプリとも絞り込みを外して全ページ数えた。
+</footer>
+
+</div>
+</div>
+<footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
+</body>
+</html>

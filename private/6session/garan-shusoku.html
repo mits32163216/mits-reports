@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+<title>伽藍とバザールの実現 収束プラン ／ 6セッション社内レポート</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:20px 20px 80px; max-width:1000px; margin:0 auto; line-height:1.7; }
+h1,h2,h3,h4,h5,h6 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; color:var(--fg); }
+h1 { font-size:26px; margin:12px 0 18px; padding-bottom:10px; border-bottom:1px solid var(--line); }
+h2 { font-size:20px; margin:32px 0 12px; padding-left:10px; border-left:4px solid var(--gold); }
+h3 { font-size:16px; margin:24px 0 10px; }
+p { margin:10px 0; }
+a { color:var(--gold); text-decoration:none; }
+a:hover { text-decoration:underline; }
+code { font-family:var(--mono); background:var(--sub-bg); padding:2px 5px; border-radius:3px; font-size:0.9em; }
+pre { font-family:var(--mono); background:var(--sub-bg); padding:14px 16px; border-radius:8px; overflow-x:auto; border:1px solid var(--line); font-size:0.85em; line-height:1.5; }
+pre code { background:transparent; padding:0; }
+blockquote { border-left:3px solid var(--gold); padding:6px 14px; margin:14px 0; color:var(--muted); background:var(--sub-bg); border-radius:0 6px 6px 0; }
+ul,ol { padding-left:22px; }
+li { margin:4px 0; }
+table { border-collapse:collapse; width:100%; margin:14px 0; font-size:0.9em; }
+th,td { border:1px solid var(--line); padding:6px 10px; text-align:left; vertical-align:top; }
+th { background:var(--sub-bg); font-family:var(--mincho); font-weight:600; }
+hr { border:0; border-top:1px dashed var(--line); margin:24px 0; }
+img { max-width:100%; height:auto; }
+
+.nav-back { display:inline-block; margin:0 0 12px; font-family:var(--mono); font-size:12px; color:var(--muted); }
+.nav-back a { color:var(--muted); }
+.nav-back a:hover { color:var(--gold); }
+
+.meta-head { background:var(--sub-bg); border:1px dashed var(--line); border-radius:6px; padding:8px 12px; margin:8px 0 18px; font-family:var(--mono); font-size:11px; color:var(--muted); line-height:1.7; }
+.meta-head b { color:var(--fg); font-weight:600; margin-right:4px; }
+
+.embed-html { border-top:1px dashed var(--line); padding-top:16px; margin-top:8px; }
+.embed-html iframe { width:100%; border:0; min-height:80vh; background:var(--card-bg); border-radius:8px; }
+
+footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+</style>
+</head>
+<body>
+<div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
+<div class="meta-head"><div><b>元のファイル</b>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/伽藍とバザールの実現_収束プラン_20260914.html</div><div><b>最後に更新された日時</b>2026-09-14 15:02 JST</div></div>
+<h1>伽藍とバザールの実現 収束プラン</h1><div class="embed-html"><style>
+  :root{
+    --bg:#ffffff; --card:#fcfcff; --card2:#f7f8fc; --tx:#212529; --sub:#505461;
+    --line:#e3e6f0; --line2:#ccd2e4;
+    --info:#11159f; --purple:#0a0d6b; --amber:#7a5e1f; --good:#1f6b45;
+    --shusoku-bg:#e0e9ff; --shusoku-tx:#11159f;
+    --saiyozumi-bg:#e8f4ea; --saiyozumi-tx:#1f6b45;
+    --hold-bg:#fff8e1; --hold-tx:#7a5e1f;
+    --kyakka-bg:#f2f2f2; --kyakka-tx:#8a8a8a;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;line-height:1.75;font-size:17px;}
+  .wrap{max-width:1200px;margin:0 auto;padding:32px 24px 96px;}
+  h1{font-size:26px;line-height:1.4;border-bottom:2px solid var(--info);padding-bottom:12px;margin:0 0 12px;color:var(--purple);}
+  h2{font-size:19px;line-height:1.4;margin:36px 0 12px;padding:8px 12px;background:var(--card2);border-left:5px solid var(--info);color:var(--purple);}
+  h3{font-size:19px;line-height:1.4;margin:22px 0 10px;color:var(--info);}
+  p,li,td,th{font-size:17px;}
+  .meta{font-size:14.5px;color:var(--sub);margin:0 0 20px;}
+  .note{font-size:14.5px;color:var(--sub);}
+  blockquote{margin:12px 0;padding:12px 16px;background:var(--card2);border-left:4px solid var(--amber);font-size:17px;color:var(--tx);}
+  .tbl-wrap{overflow-x:auto;margin:12px 0;}
+  table{border-collapse:collapse;width:100%;background:var(--card);font-size:17px;}
+  th,td{border:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top;}
+  th{background:var(--card2);font-weight:700;font-size:17px;}
+  .tag{display:inline-block;font-size:14.5px;font-weight:700;padding:2px 8px;border-radius:4px;margin-right:6px;white-space:nowrap;}
+  .tag-shusoku{background:var(--shusoku-bg);color:var(--shusoku-tx);}
+  .tag-saiyozumi{background:var(--saiyozumi-bg);color:var(--saiyozumi-tx);}
+  .tag-hold{background:var(--hold-bg);color:var(--hold-tx);}
+  .tag-kyakka{background:var(--kyakka-bg);color:var(--kyakka-tx);}
+  .tag-teikyou{background:#e0e9ff;color:#11159f;}
+  .tag-market{background:#faf5ff;color:#4a2a7a;}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px 20px;margin:12px 0;}
+  .hanrei{background:#fefefe;border:1px solid var(--line);border-radius:8px;padding:14px 18px;margin:12px 0 24px;font-size:14.5px;}
+  .kiroku{background:var(--card2);border-left:4px solid var(--info);padding:12px 16px;margin:10px 0;font-size:17px;}
+  .kiroku-date{font-weight:700;color:var(--purple);font-size:17px;}
+  .riyu{color:var(--sub);font-size:14.5px;display:block;margin-top:4px;}
+  ol,ul{padding-left:22px;}
+  li{margin:4px 0;}
+  code{background:var(--card2);padding:1px 6px;border-radius:3px;font-size:14.5px;}
+  .kyakka-line{color:var(--kyakka-tx);text-decoration:line-through;font-size:17px;}
+</style>
+
+<div class="wrap">
+
+<h1>伽藍とバザールの実現・収束プラン ── 過去手法の共通点を、1つの形に絞る</h1>
+<p class="meta">最終更新：2026-09-14・BA-strategist（内部向け・Mits様が読む・お客様には出さない）</p>
+
+<h2>0. Mits様原文と読み方</h2>
+
+<div class="box">
+<p>本収束プランの芯となる、Mits様原文（2026-09-14）。</p>
+<blockquote>手法の共通点_20260914.html　とは別名保存で、収束したプラン版でまとめてみて。それと2つを較べながらブラッシュアップしていく。まとめ方は任せる、伽藍とバザールの実現</blockquote>
+<blockquote>linuxがすべて無償化して技術者が改善を続けて来た　これだ</blockquote>
+<blockquote>BMIって誰でも知っている、しかし誰が制定したかなんて誰も知らない、でも、みんな使っている、すべての西田語がこうなってくれることを望む、が私のビジネスの根幹</blockquote>
+<blockquote>OK　共同開発では無いが、初期の開発と普及の仲間を募りたい、それを呼びかけるオファー＝協力して貰う同期、将来の展望、ビジョンについて整理</blockquote>
+<blockquote>仲間の呼び名　募る人数と期間　仲間だけが先に受け取れるもの　OK　決めるが今は保留</blockquote>
+</div>
+
+<div class="box">
+<p><strong>読み方</strong>：本プランは、共通点表（吸収の場）の全行を、<strong>1行につき1つの形に絞った</strong>計画である。絞る根拠は、共通点表の「今の実現状況」と、内部プラン（<code>仲間募集プラン_暫定_20260914.html</code>）で既に採用・却下・保留が決まっている記録。</p>
+<p><strong>軸</strong>：Mits様の memory <code>project_untendai_daihoshin.md</code> 1〜5節の原文（Linux／BMI 化／Red Hat 型／中心＝いちばん判断する人／循環）から、<strong>伽藍</strong>（会員だけの中身・判断する人）と、<strong>バザール</strong>（開けた道具・使う人・広める人）と、<strong>つなぎ目</strong>（配信→着地→相談→登録）の3つに並べ直す。</p>
+<p>共通点表の該当行は、番号（2-A #／4節 #／6節 #／3節）でそのまま指し、5節の一覧で横に並べる。</p>
+<p>共通点表（吸収の場・一字も変えない）：<a href="過去手法の共通点_20260914.html">過去手法の共通点_20260914.html</a></p>
+</div>
+
+<div class="hanrei">
+<h3 style="margin-top:0;font-size:19px;">印の凡例（4つだけ）</h3>
+<div><span class="tag tag-shusoku">【収束案】</span> 本プランで1つに絞った形。Mits様が較べて直す</div>
+<div><span class="tag tag-saiyozumi">【採用済】</span> 内部プランで既に「採用」または「採用・方向」。写すだけ・変えない</div>
+<div><span class="tag tag-hold">【保留・Mits様が決める】</span> 保留3つ（呼び名／募る人数と期間／先に受け取れるもの）と内部プラン保留15件。値を入れない</div>
+<div><span class="tag tag-kyakka">【却下済】</span> 内部プランの却下7件。再提案しない。7節にだけ並べる</div>
+</div>
+
+<h2>1. 実現する姿（1枚）</h2>
+
+<p>3つに並べ直す。各セルに「今の実現状況」（共通点表 5節・6節から写した事実）を添える。</p>
+
+<div class="tbl-wrap">
+<table>
+<thead><tr>
+  <th style="width:16%;">面</th>
+  <th style="width:32%;">担う人・持つ場所</th>
+  <th style="width:26%;">中身</th>
+  <th style="width:26%;">今の実現状況</th>
+</tr></thead>
+<tbody>
+<tr>
+  <th>伽藍<br>（守り、深める側）</th>
+  <td>Mits様。少数の会員・正規コンサル3つ・かかりつけの premium</td>
+  <td>B コーパス／C 西田メソッド／「計器に載せるか」の判断／知見の更新の場</td>
+  <td>実現している：AI-Mits の相談画面（<code>data-screen=sanbo</code>）／かかりつけ（premium・月額3,300円税込）／正規コンサル3つ（すごい／2ヶ月コンサル BE-01／作戦会議ミニ）</td>
+</tr>
+<tr>
+  <th>バザール<br>（開け、広める側）</th>
+  <td>使い込む仲間／広める仲間／自分の版を作って売る方（Apache-2.0）</td>
+  <td>計器盤11画面・取り込み・学び・段（行いの対価）・Discord の場・利用者の声・仲間募集ページ</td>
+  <td>一部実現：運転台11画面（<code>data-screen</code>＝yotsuba / okane / kokyaku / mokuhyo / bunseki / plan / getsuji / jisha / manabi / aikoza / yobo）＋ ダウンロードページ <code>oHtrsl52qpXg</code>／未実現：Discord の場（body_v4.md §集まる場「立てる時期は保留」）・段の呼び名・声の埋込</td>
+</tr>
+<tr>
+  <th>つなぎ目<br>（バザールから伽藍へ人が渡る道）</th>
+  <td>配信の口（UTAGE／spro／まぐまぐ）→着地→相談→登録→premium</td>
+  <td>札の付け方／1st stage の計測／登録の壁の直し／仲間募集ページ＝2枚目の着地</td>
+  <td>一部実現：札の付け方（utm_source＝小文字の utage / spro / magmag / test・utm_campaign＝YYYYMMDD_短い名前）は 2026-09-08 に確定／登録先は AI-Mits <code>XU7Gfd7XoiCQ</code> の1本／L節 46項目中 済37・未9（2026-09-14 実測）</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h2>2. 伽藍 ── 守り、深める側</h2>
+
+<p>会員だけの中身（B コーパス／C 西田メソッド）と、正規コンサル3つと、「これを計器に載せるか」の判断の場。ここに当たる共通点表の行を、1つの形に絞る。</p>
+
+<ul>
+<li><span class="tag tag-shusoku">【収束案】</span> <span class="tag tag-market">マーケット</span> AI-Mits の3つの相手（汎用の AI／西田メソッドを持たせた AI／台帳を全部たどる AI）の呼び分けに、材料1 §3 の「タグ付けのルール（5層／1・2・3層のタグ）」を写す。<span class="riyu">（共通点表 2-A #4 と重なる。理由：過去に出た答えを次に来た人が引き出せる形が、AI-Mits の呼び分けと1対1に対応する）</span></li>
+<li><span class="tag tag-shusoku">【収束案】</span> <span class="tag tag-market">マーケット</span> 学び画面（manabi）と <code>commands.rs</code> の <code>MANABI</code> の並びを、材料2 スライド43「体系的に、順番に、ステップバイステップで」の順に並べ直す。<span class="riyu">（共通点表 2-A #13。理由：数の多い知を、順番に取り出せる棚に並べる）</span></li>
+<li><span class="tag tag-shusoku">【収束案】</span> <span class="tag tag-market">マーケット</span> 顧客画面（kokyaku）に、材料1 §3 の「業歴×緊急性」の分類軸を近付ける。4タイプ分類（のらりくらり／行動／尻叩き／野放し）は AI-Mits の相談画面の裏側に持たせる。<span class="riyu">（共通点表 2-A #7。理由：相手を見分けて、それぞれに合う手を分ける）</span></li>
+<li><span class="tag tag-shusoku">【収束案】</span> <span class="tag tag-market">マーケット</span> AI-Mits に集まる相談の分析に、共起ネットワーク・ワードクラウド（材料1 p.52-53）を使う。集めた素材から次の版の目盛りを決める仕組みを、伽藍側の判断の場として1本置く。<span class="riyu">（共通点表 2-A #10・3節 #4。理由：大量の言葉を集めて型を取り出すのは、Mits様しか判断できない場所）</span></li>
+<li><span class="tag tag-saiyozumi">【採用済】</span> 「計器に載せるか」を決めるのは Mits様。参謀は決めない。<span class="riyu">（内部プラン 0節「採用」「共同開発ではない」＋方向性 memory 4節「これを計器に載せるか＝Mits様だけ」の写し）</span></li>
+<li><span class="tag tag-saiyozumi">【採用済】</span> 情報共有は Discord に用途専用の場を別に立てる（既存の講座・コミュニティに相乗りしない）。<span class="riyu">（内部プラン 0節「採用」・5節）</span></li>
+</ul>
+
+<h2>3. バザール ── 開け、広める側</h2>
+
+<p>道具の無償公開（Apache-2.0）と、使う人・広める人の集まりの場。ここに当たる共通点表の行を、1つの形に絞る。</p>
+
+<ul>
+<li><span class="tag tag-saiyozumi">【採用済】</span> 集めるのは使い込む人と広める人。共同開発ではない。<span class="riyu">（内部プラン 0節「採用」・body_v4.md §集めているお役目）</span></li>
+<li><span class="tag tag-saiyozumi">【採用済】</span> 募集ページはクラファンのスタイル。セールス型 LP にしない。お金は集めない。<span class="riyu">（内部プラン 0節「採用」）</span></li>
+<li><span class="tag tag-saiyozumi">【採用済】</span> 利用者総数（初期開発＋premium＋free）で1つの集まりにする。<span class="riyu">（内部プラン 0節【採用・方向】・5節）</span></li>
+<li><span class="tag tag-saiyozumi">【採用済】</span> 段は「使う段／伝える段／広める段」の3段素案。お金ではなく行いを応援の対価にする。<span class="riyu">（内部プラン 0節【採用・方向】・3節）</span></li>
+<li><span class="tag tag-saiyozumi">【採用済】</span> 成功したクラファン（CAMPFIRE 914700）の「レターとしての構成」と「リターンの設計」を、行いの段に写す。<span class="riyu">（内部プラン 0節【採用・方向】・campfire_kenkyu_914700 10節）</span></li>
+<li><span class="tag tag-shusoku">【収束案】</span> <span class="tag tag-teikyou">提供側</span> body_v4.md §集めているお役目 の下に、2×2の表（人の種類2つ×役2つ）を写す。<span class="riyu">（共通点表 2-A #16。理由：3つの関わり方のうち、コードを書く役は取らないので2×2で足りる）</span></li>
+<li><span class="tag tag-shusoku">【収束案】</span> <span class="tag tag-teikyou">提供側</span> body_v4.md §行いで上がる段 の各段の「受け取るもの」の欄を、6本柱の形で並べる（メソッド／毎月コンテンツ／部会／オンライン相談／地域勉強会／道具の提供の型を写す）。<span class="riyu">（共通点表 2-A #14・6節 #3。理由：受け取る中身を複数の柱で並べて見せる）</span></li>
+<li><span class="tag tag-shusoku">【収束案】</span> <span class="tag tag-teikyou">提供側</span> 仲間募集ページの冒頭に、運転台の1枚絵（計器盤の全体像）を置く。<span class="riyu">（共通点表 6節 #1・body_v4.md 冒頭コメント「メイン画像:運転台の画面」）</span></li>
+<li><span class="tag tag-shusoku">【収束案】</span> <span class="tag tag-market">マーケット</span> body_v4.md §はじめに の頭に、「1分だけ」型の門番の見出しを置く。<span class="riyu">（共通点表 6節 #6・3節 #7。理由：読み手の心理的な入りを軽くする）</span></li>
+<li><span class="tag tag-shusoku">【収束案】</span> <span class="tag tag-teikyou">提供側</span> body_v4.md §集めた仲間の力の使い道 の3項目に、割合の欄を足す（金額でなく人数か言葉）。<span class="riyu">（共通点表 6節 #8・3節 #10。理由：1口が全体のどこに効くかを見せる）</span></li>
+<li><span class="tag tag-shusoku">【収束案】</span> <span class="tag tag-teikyou">提供側</span> ダウンロードページ（UTAGE <code>oHtrsl52qpXg</code>）に「利用者の声」を約1ヶ月で増やす。声は本人の許可が取れたものだけ。<span class="riyu">（共通点表 6節 #7・内部プラン 6節【採用・方向】）</span></li>
+<li><span class="tag tag-shusoku">【収束案】</span> <span class="tag tag-teikyou">提供側</span> Apache-2.0 で「自分の版を作って売ってよい」を、コンサルタント・コーチ・士業・IT系の方への使い始めの動機に据える。<span class="riyu">（共通点表 2-A #8・4節 #1・body_v4.md §使い始める動機②）</span></li>
+<li><span class="tag tag-hold">【保留・Mits様が決める】</span> 段の数・呼び名・色・条件・段ごとに受け取るもの。<span class="riyu">（共通点表 2-A #9 #17・6節 #2・内部プラン 3節）</span></li>
+</ul>
+
+<h2>4. つなぎ目 ── バザールから伽藍へ人が渡る道</h2>
+
+<p>配信の口（UTAGE／spro／まぐまぐ）→着地→相談→登録（AI-Mits <code>XU7Gfd7XoiCQ</code>）→premium の道。ここに当たる共通点表の行を、1つの形に絞る。</p>
+
+<ul>
+<li><span class="tag tag-shusoku">【収束案】</span> <span class="tag tag-market">マーケット</span> 計器（運転台 marketing 枝）が映すのは 1st stage（AI-Mits 登録の人数）まで。⑤有料とお金の台帳は 1st stage の外に置く。<span class="riyu">（共通点表 5節 2026-09-13 の行。理由：Mits様の決定「売上は見ないと言った1stのみでいい」）</span></li>
+<li><span class="tag tag-shusoku">【収束案】</span> <span class="tag tag-market">マーケット</span> 生きている WEB の入口は、お試し版 UTAGE <code>UgSfW8MCzHqv</code> の1枚に絞る。<span class="riyu">（共通点表 5節 2026-09-14 の行）</span></li>
+<li><span class="tag tag-shusoku">【収束案】</span> <span class="tag tag-market">マーケット</span> 札の付け方は utm_source＝小文字の utage / spro / magmag / test、utm_campaign＝YYYYMMDD_短い名前。札なしは空欄のまま（direct・unknown を入れない）。<span class="riyu">（共通点表 5節 2026-09-08 の行）</span></li>
+<li><span class="tag tag-shusoku">【収束案】</span> <span class="tag tag-market">マーケット</span> 登録の壁（認証メールを2回以上出した8人のうち7人が1回目のリンクを押したのにまた登録を押している・タブを閉じて開き直すと未登録扱いになる 4-35）は、L節の未9項目を潰しきる。<span class="riyu">（共通点表 5節 2026-09-14 の行）</span></li>
+<li><span class="tag tag-shusoku">【収束案】</span> <span class="tag tag-market">マーケット</span> 仲間募集ページを、ダウンロードページに続く「2枚目の着地」として置く。ダウンロードページの声が増える回路（バザール §6）と、AI-Mits の登録（伽藍への入口）の間に挟む。<span class="riyu">（共通点表 2-A #15・4節 #5。理由：入った人が最初に通る道を決まった順で用意する）</span></li>
+<li><span class="tag tag-shusoku">【収束案】</span> <span class="tag tag-market">マーケット</span> 仲間募集ページに、「参加の流れ 5段」（申込→アンケート→オーダーメイド面談→取り組むメソッド決定→部会参加）の型を、body_v4.md §公開の3段階と現在地 の下に写す。<span class="riyu">（共通点表 2-A #15。理由：参加者に道筋を先に見せる）</span></li>
+<li><span class="tag tag-shusoku">【収束案】</span> <span class="tag tag-market">マーケット</span> 仲間募集ページ上部に、章扉のバー＋現在位置ハイライトを置く（材料2 スライド118 の型）。<span class="riyu">（共通点表 4節 #5・6節 #5。理由：読み手が今どこにいるかを見せる）</span></li>
+<li><span class="tag tag-shusoku">【収束案】</span> <span class="tag tag-market">マーケット</span> 仲間募集ページに、誰から誰への相談か・誰から誰への広めかを1枚の循環図として置く（材料2 スライド117 の型）。<span class="riyu">（共通点表 4節 #4・6節 #4・3節 #5。理由：受け取る側・渡す側・外側の3節点を1枚で見せる）</span></li>
+<li><span class="tag tag-shusoku">【収束案】</span> <span class="tag tag-market">マーケット</span> body_v4.md 冒頭に、現況＋余枠の枠（「既に◯人が使い込んでいます／これから◯人と組みます」）を置く。<span class="riyu">（共通点表 6節 #9・3節 #8・campfire 914700 のネクストゴール宣言の型）</span></li>
+<li><span class="tag tag-saiyozumi">【採用済】</span> 「Mits様の製品版に入れる」と「世に出す」を分ける（2026-09-14 10:41 Mits様「OK、それをルールにしよう」）。<span class="riyu">（内部プラン 0節「採用」・7節）</span></li>
+</ul>
+
+<h2>5. 収束した項目の一覧（共通点表と較べる表）</h2>
+
+<p>共通点表 2-A の全17行・4節の全6行・6節の全16行の <strong>合わせて39行</strong> と、3節の14件を1つの表に載せる。列は「共通点表の番号｜当時の言葉（短く）｜今の実現状況｜収束した形（1つ）｜印｜理由（1行）」。</p>
+
+<div class="tbl-wrap">
+<table>
+<thead><tr>
+  <th style="width:7%;">番号</th>
+  <th style="width:20%;">当時の言葉（短く）</th>
+  <th style="width:20%;">今の実現状況</th>
+  <th style="width:20%;">収束した形（1つ）</th>
+  <th style="width:8%;">分け</th>
+  <th style="width:10%;">印</th>
+  <th style="width:19%;">理由（1行）</th>
+</tr></thead>
+<tbody>
+
+<tr><td>2-A #1</td><td>経営コックピットを作る</td><td>実現：運転台11画面（yotsuba / okane / kokyaku / mokuhyo / bunseki / plan / getsuji / jisha / manabi / aikoza / yobo）</td><td>判定表示なしの計器盤設計を守る。良し悪しを色・記号で出さない</td><td><span class="tag tag-teikyou">提供側</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：案件 CLAUDE.md「事実を見て、判断は経営者がする」に沿う</td></tr>
+
+<tr><td>2-A #2</td><td>カルテを作る</td><td>実現：設定 / 初回設定 / 自社情報 / AI-Mits の4画面</td><td>4画面の役割の被りを整理する（材料1 §3 の3段の役割分担を写す）</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：1人ぶんの状態を1箇所にまとめる</td></tr>
+
+<tr><td>2-A #3</td><td>ヒアリングをテンプレート化する</td><td>一部実現：初回設定と自社情報で数字は取れる</td><td>初回設定の順を「四方山話→事業情報→タイプ予想」（材料1 p.106）の型に沿わせる</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：相手から状態を引き出す型を決まった順に置く</td></tr>
+
+<tr><td>2-A #4</td><td>事例を FAQ 化（コンサルの AI 化）</td><td>実現：AI-Mits の3つの相手（汎用／西田メソッド／台帳）</td><td>材料1 §3 の「タグ付けルール」を AI-Mits の呼び分けの中に写す</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：過去の答えを次に来た人が引き出せる形</td></tr>
+
+<tr><td>2-A #5</td><td>看護師（お母さんアドバイザー）による代行入力</td><td>未実現：本人が入れる前提のみ</td><td>②の仲間（クライアントを持つ方）が、その方のクライアントの数字を代わりに入れる場面として、body_v4.md §仲間の2つの姿②に既に写している道でカバーする</td><td><span class="tag tag-teikyou">提供側</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：手伝う人が数字を先に整えて渡す道は、仲間の役②と重なる</td></tr>
+
+<tr><td>2-A #6</td><td>経営診断書を定期配信（プッシュ）</td><td>未実現：本人が開いたときに表示する形のみ</td><td>月次まとめ（getsuji）の要点を、Discord の場に月1で流す</td><td><span class="tag tag-teikyou">提供側</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：数字と状態をこちらから相手に届ける／Discord の場（内部プラン 5節）を配信の場として使う</td></tr>
+
+<tr><td>2-A #7</td><td>顧客をタイプ・ステージ・課題で判別</td><td>一部実現：kokyaku＋10のステータス＋レントゲン＋CPF レシオ</td><td>kokyaku 画面の分類軸を「業歴×緊急性」（材料1 §3）に近付ける。4タイプ分類は AI-Mits の相談画面の裏側に持たせる</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：相手を見分けて、それぞれに合う手を分ける</td></tr>
+
+<tr><td>2-A #8</td><td>手伝う人を育てる研修プログラム</td><td>未実現：教える側を育てる仕組みはアプリに無い</td><td>body_v4.md §仲間の2つの姿②（クライアントを持つ方）＋ Apache-2.0「自分の版を作って売ってよい」で写す</td><td><span class="tag tag-teikyou">提供側</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：教える側を教える段を、ライセンスと動機で開ける</td></tr>
+
+<tr><td>2-A #9</td><td>階級制・段・級のグレード</td><td>一部実現：3段素案（使う段／伝える段／広める段）</td><td>候補（材料2 スライド116 の5段の色帯／スライド115 のメンバーシップ6段）を並べたまま、Mits様が呼び名・段の数・色を決める</td><td>—</td><td><span class="tag tag-hold">【保留・Mits様が決める】</span></td><td>理由：保留3つの1つ目「仲間の呼び名」に当たる</td></tr>
+
+<tr><td>2-A #10</td><td>AI 化に向けた素材集め（テンプレートに立ち返る）</td><td>実現：AI-Mits の3つの相手／prerelease で仲間だけに渡す道が開いている</td><td>共起ネットワーク・ワードクラウド（材料1 p.52-53）を、AI-Mits に集まる相談の分析に使う</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：集めた素材から次の版の目盛りを決める仕組み</td></tr>
+
+<tr><td>2-A #11</td><td>実案件で顧客管理・配車のアプリを組む</td><td>実現：優良のお客様20人からはじめ、メルマガ読者の一部にお渡し中（登録25名・2026-09-07）</td><td>材料1「軸となる項目を選出3段階」の型を、実案件から得た型としてアプリの目盛りに反映する回路を回す</td><td><span class="tag tag-teikyou">提供側</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：実案件で先に組み、そこで型を取る</td></tr>
+
+<tr><td>2-A #12</td><td>幸せな経営を実現していく経営者のコミュニティ</td><td>未実現：Discord の場は立っていない</td><td>3層（初期／premium／free）を1つの場に置くか、場を分けるかは Mits様が決める</td><td>—</td><td><span class="tag tag-hold">【保留・Mits様が決める】</span></td><td>理由：内部プラン 5節【保留】と重なる</td></tr>
+
+<tr><td>2-A #13</td><td>100以上のメソッドをアーカイブし正しい順番で</td><td>実現：manabi ＋ 数字の隣に学び先ボタン</td><td><code>commands.rs</code> の <code>MANABI</code> を、材料2 スライド43「体系的に、順番に、ステップバイステップで」の順に並べ直す</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：数の多い知を順番に取り出せる棚に並べる</td></tr>
+
+<tr><td>2-A #14</td><td>6本柱の提供</td><td>一部実現：計器盤／取り込み／学び／AI-Mits の3つ／有料</td><td>body_v4.md §行いで上がる段 の各段の「受け取るもの」を、6本柱の形で並べる</td><td><span class="tag tag-teikyou">提供側</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：受け取る中身を複数の柱で並べて見せる</td></tr>
+
+<tr><td>2-A #15</td><td>参加の動線を設計する</td><td>一部実現：ダウンロードページ ＋ 仲間募集ページ ＋ 初回設定</td><td>「参加の流れ 5段」（材料2 スライド103）を、body_v4.md §公開の3段階と現在地 の下に節として置く</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：入った人が最初に通る道を決まった順で用意する</td></tr>
+
+<tr><td>2-A #16</td><td>3つの関わり方（メンバー／広める人／コンサル）</td><td>一部実現：仲間の2つの姿 ＋ 集めているお役目（使い込む／広める）</td><td>2×2の表（人の種類2つ×役2つ）を body_v4.md §集めているお役目 の下に写す</td><td><span class="tag tag-teikyou">提供側</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：役と人の種類を軸で分けて動き方を渡す</td></tr>
+
+<tr><td>2-A #17</td><td>階層と役割（ベーシック／リーダー／アンバサダー等）</td><td>一部実現：3段素案／段の数・色・呼び名は無い</td><td>候補の事実（材料2 スライド115・116）だけ並べ、Mits様が段の数・色・呼び名を決める</td><td>—</td><td><span class="tag tag-hold">【保留・Mits様が決める】</span></td><td>理由：呼び名は保留1、募る人数は保留2に当たる</td></tr>
+
+<tr><td>4節 #1</td><td>得られるもの4つ（正統な軸のコンサル経験／過去事例の学習と体系／セミナー運営ノウハウ／システム利用）</td><td>一部実現：body_v4.md §使い始める動機②の3つの使い方</td><td>body_v4.md §使い始める動機② の3つに、4つ目として「案件獲得の場」に当たる項目を並べる（材料2 p114 に沿わせる）</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：持ち帰れるものを4つ揃えて並べる</td></tr>
+
+<tr><td>4節 #2</td><td>メンバーシップの入れ子（ベーシック／アンバサダー等＋外側に地域・部会・プロジェクト）</td><td>一部実現：仲間の2つの姿 ＋ Apache-2.0</td><td>候補（呼び名・外側3つ）を並べ、Mits様が決める</td><td>—</td><td><span class="tag tag-hold">【保留・Mits様が決める】</span></td><td>理由：呼び名は保留1に当たる</td></tr>
+
+<tr><td>4節 #3</td><td>コンサル向け5段（マスター／タンデム／パートナー金／シニア銀／ジュニア青）</td><td>一部実現：3段素案</td><td>候補（5段の色帯）を並べ、Mits様が段の数・色・呼び名を決める</td><td>—</td><td><span class="tag tag-hold">【保留・Mits様が決める】</span></td><td>理由：呼び名は保留1に当たる</td></tr>
+
+<tr><td>4節 #4</td><td>依頼・サポートの循環図</td><td>一部実現：body_v4.md §集まる場に文字で3層はある</td><td>仲間募集ページに、誰から誰への相談か・誰から誰への広めかを1枚の循環図として置く</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：受け取る側・渡す側・外側の3節点を1枚で見せる</td></tr>
+
+<tr><td>4節 #5</td><td>4th 章扉（現在位置ハイライト）</td><td>一部実現：body_v4.md §公開の3段階 は文字表</td><td>仲間募集ページ上部に、章扉の型（バー＋現在位置ハイライト）を写す</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：読み手が今どこにいるかを見せる</td></tr>
+
+<tr><td>4節 #6</td><td>目指すもの（家族を大切にできる経営者／スモールビジネスの物差し／大切なものを大切に）</td><td>実現：body_v4.md §何を実現したいか（BMI 化）</td><td>body_v4.md §何を実現したいか に、材料2 スライド119・120「家族を大切にできる経営者が増える」を1行足す</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：手元の道具の先に、社会の姿の変化を置く</td></tr>
+
+<tr><td>6節 #1</td><td>コックピット化・レーダー・インジケーター</td><td>実現：運転台11画面 ＋ 案件 CLAUDE.md 冒頭の計器盤の絵</td><td>仲間募集ページの冒頭に、運転台の1枚絵（計器盤の全体像）を置く（body_v4.md 冒頭コメント枠に入れる）</td><td><span class="tag tag-teikyou">提供側</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：数字と状態を1枚で相手に見せる</td></tr>
+
+<tr><td>6節 #2</td><td>階層の段の呼び名（ベーシック等）</td><td>3段素案／呼び名と色は無い</td><td>候補を並べ、Mits様が呼び名と色を決める</td><td>—</td><td><span class="tag tag-hold">【保留・Mits様が決める】</span></td><td>理由：呼び名は保留1に当たる</td></tr>
+
+<tr><td>6節 #3</td><td>6本柱の提供</td><td>2-A #14 と同じ</td><td>2-A #14 と同じ：body_v4.md §行いで上がる段 の各段の「受け取るもの」を6本柱の形で並べる</td><td><span class="tag tag-teikyou">提供側</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：受け取る中身を複数の柱で並べて見せる</td></tr>
+
+<tr><td>6節 #4</td><td>依頼・サポートの循環図</td><td>4節 #4 と同じ</td><td>4節 #4 と同じ：仲間募集ページに1枚の循環図を置く</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：受け取る側・渡す側・外側の3節点を1枚で見せる</td></tr>
+
+<tr><td>6節 #5</td><td>章扉のタイトルバー＋現在位置ハイライト</td><td>4節 #5 と同じ</td><td>4節 #5 と同じ：仲間募集ページ上部にバー＋現在位置ハイライトを置く</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：読み手が今どこにいるかを見せる</td></tr>
+
+<tr><td>6節 #6</td><td>「1分だけ🙏」で門番を置く見出し</td><td>未実現：body_v4.md §はじめに の頭に無い</td><td>body_v4.md §はじめに の頭に、「1分だけ」型の門番の見出しを置く</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：読み手の心理的な入りを軽くする</td></tr>
+
+<tr><td>6節 #7</td><td>推薦・受講者の声を本文中に埋め込む</td><td>一部実現：本人の許可を取ったものだけの約束あり</td><td>許可の取れた声の埋め込み欄を仲間募集ページに置く（載せるのは許可の取れたものだけ）</td><td><span class="tag tag-teikyou">提供側</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：第三者の声で信頼を足す</td></tr>
+
+<tr><td>6節 #8</td><td>使い道の割合開示（半分ずつ）</td><td>一部実現：body_v4.md §集めた仲間の力の使い道 に3項目あり</td><td>3項目に対応する割合の欄（金額でなく人数か言葉）を足す</td><td><span class="tag tag-teikyou">提供側</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：1口が全体のどこに効くかを見せる</td></tr>
+
+<tr><td>6節 #9</td><td>ネクストゴール宣言を冒頭に置く</td><td>一部実現：body_v4.md §公開の3段階 に登録25名の1行あり／冒頭ではない</td><td>body_v4.md 冒頭に、現況＋余枠の枠（「既に◯人が使い込んでいます／これから◯人と組みます」）を置く</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：既参加者を「私達」側に括り、未参加者に「間に合う」を伝える</td></tr>
+
+<tr><td>6節 #10</td><td>投資対効果の計算式・割引の段積み</td><td>未実現：お金を集めない設計と衝突</td><td>取り入れない（写す形が無い）</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：お金を集めない設計と衝突する（body_v4.md §最後に）</td></tr>
+
+<tr><td>6節 #11</td><td>限定数「残り〇」を段の一部に付ける</td><td>仲間募集の段に「残り〇」の書き方は無い</td><td>Mits様が募る人数と期間を決めた後に、1〜2段だけに付ける（写しすぎない）</td><td>—</td><td><span class="tag tag-hold">【保留・Mits様が決める】</span></td><td>理由：保留2「募る人数と期間」に当たる</td></tr>
+
+<tr><td>6節 #12</td><td>最上段に「1点物」の段を置く</td><td>仲間募集の3段素案に「1点物」の段は無い</td><td>候補（Mits様と一緒に手を動かす日・Mits様と個別に話す枠 等）を並べ、Mits様が決める</td><td>—</td><td><span class="tag tag-hold">【保留・Mits様が決める】</span></td><td>理由：保留3「仲間だけが先に受け取れるもの」に当たる</td></tr>
+
+<tr><td>6節 #13</td><td>WCM（Will／Can／Must）の3画面</td><td>未実現：運転台の11画面に無い</td><td>アプリ本体の候補として置く（仲間募集ページの範囲外）</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：本人の望み・出来ること・要ることを3つに分けて見せる</td></tr>
+
+<tr><td>6節 #14</td><td>経営者の欲求 6段ピラミッド</td><td>未実現：運転台の11画面に無い</td><td>アプリ本体の候補として置く（仲間募集ページの範囲外）</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：本人が今どの段にいるかを見せる</td></tr>
+
+<tr><td>6節 #15</td><td>スケジュールを日付単位で書き並べる</td><td>一部実現：body_v4.md §公開の3段階 は3段階のみ</td><td>body_v4.md にスケジュール節を足し、開発版→次の版→次の次を月単位で並べる</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：先の予定を日付で並べる</td></tr>
+
+<tr><td>6節 #16</td><td>タイトルに数字を1つ入れる</td><td>body_v4.md のタイトルに数字は無い</td><td>Mits様が募る人数を決めた後に、タイトルに数字を1つ入れる</td><td>—</td><td><span class="tag tag-hold">【保留・Mits様が決める】</span></td><td>理由：保留2「募る人数と期間」に当たる</td></tr>
+
+<tr><td>3節 #1</td><td>スプリント5段階（理解→発散→決定→プロトタイプ→テスト）</td><td>共通点表 3節：スマイル打合せ p.3 のみ</td><td>取り入れない（開発プロセスの型で、仲間募集ページの型ではない）</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：アプリの開発の型として、Mits様の側で使う道具</td></tr>
+
+<tr><td>3節 #2</td><td>WCM（Will／Can／Must）</td><td>6節 #13 と同じ</td><td>6節 #13 と同じ：アプリ本体の候補（仲間募集ページの範囲外）</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：本人の望み・出来ること・要ることを3つに分ける</td></tr>
+
+<tr><td>3節 #3</td><td>形而上5階ピラミッド</td><td>共通点表 3節：スマイル打合せ p.109 のみ（180903 の6層モデルへ発展）</td><td>取り入れない（180903 の6層モデルへ既に発展）</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：既に発展形（6層）が正本</td></tr>
+
+<tr><td>3節 #4</td><td>KH Coder の共起ネットワーク・名詞スコア表</td><td>共通点表 3節：スマイル打合せ p.52-53 のみ</td><td>AI-Mits に集まる相談の分析に使う（2-A #10 と同じ）</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：大量の言葉を集めて型を取り出す</td></tr>
+
+<tr><td>3節 #5</td><td>依頼・サポートの循環図（外注は点線で外側）</td><td>共通点表 3節：Kamakura スライド117 のみ</td><td>仲間募集ページに1枚の循環図として置く（4節 #4 と同じ）</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：受け取る側・渡す側・外側の3節点を1枚で見せる</td></tr>
+
+<tr><td>3節 #6</td><td>投資対効果の計算式・割引の段積み</td><td>6節 #10 と同じ</td><td>取り入れない（お金を集めない設計と衝突）</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：お金を集めない設計と衝突する</td></tr>
+
+<tr><td>3節 #7</td><td>「1分だけ🙏」で門番を置く見出し</td><td>6節 #6 と同じ</td><td>body_v4.md §はじめに の頭に置く（6節 #6 と同じ）</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：読み手の心理的な入りを軽くする</td></tr>
+
+<tr><td>3節 #8</td><td>ネクストゴール宣言を冒頭に置く</td><td>6節 #9 と同じ</td><td>body_v4.md 冒頭に現況＋余枠の枠を置く（6節 #9 と同じ）</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：既参加者を「私達」側に括る</td></tr>
+
+<tr><td>3節 #9</td><td>同金額×選択肢の横広げ（5,000円×4本）</td><td>共通点表 3節：914700 §6-1 のみ（結果は4本とも0人）</td><td>取り入れない（受け取り手が判断疲れを起こす・実績が0人）</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：写しても選ばれない実測がある</td></tr>
+
+<tr><td>3節 #10</td><td>使い道の内訳を「半分ずつ」と開示</td><td>6節 #8 と同じ</td><td>body_v4.md 使い道3項目に割合欄を足す（6節 #8 と同じ）</td><td><span class="tag tag-teikyou">提供側</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：1口が全体のどこに効くかを見せる</td></tr>
+
+<tr><td>3節 #11</td><td>All-in／All-or-Nothing の方式明示</td><td>共通点表 3節：上位10件 #4・914700 §8 のみ</td><td>取り入れない（期限が無い設計と衝突）</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：期限がない「毎月続く」型に置き換える（campfire 10-2）</td></tr>
+
+<tr><td>3節 #12</td><td>CAMPFIRE 定型 FAQ 3問を最下部</td><td>仲間募集は「よくあるご質問」を自作（body_v4.md §よくあるご質問）</td><td>最下部の位置だけ写す（中身は自作・既に済）</td><td><span class="tag tag-market">マーケット</span></td><td><span class="tag tag-shusoku">【収束案】</span></td><td>理由：位置は写せる・中身はお金を集めない設計に合わせて自作</td></tr>
+
+<tr><td>3節 #13</td><td>「共同開発ではない・お金は集めない」の言い切り</td><td>いまの仲間募集のみ</td><td>共同開発ではない・お金は集めない（そのまま守る）</td><td>—</td><td><span class="tag tag-saiyozumi">【採用済】</span></td><td>理由：内部プラン 0節「採用」</td></tr>
+
+<tr><td>3節 #14</td><td>「Mits様の製品版に入れる」と「世に出す」を分ける内部基準</td><td>いまの仲間募集 §7 のみ</td><td>2つを分ける（そのまま守る）</td><td>—</td><td><span class="tag tag-saiyozumi">【採用済】</span></td><td>理由：内部プラン 0節「採用」（2026-09-14 10:41 Mits様「OK、それをルールにしよう」）</td></tr>
+
+</tbody>
+</table>
+</div>
+
+
+<h2>5-B. 収束案64件の2分け ── 提供側が強く提供したいと思っているであろうもの／マーケットに聞いてみた方が良いもの</h2>
+
+<div class="box">
+<p><strong>Mits様原文（2026-09-14）</strong>：</p>
+<blockquote>この仮の収束案を、もう1歩踏み込んで整理して収集した。私の資料から提供側が私が提供したいと強く思っているであろうものとマーケットに聞いてみた方が良いもの。</blockquote>
+<p><strong>参謀の見立て・Mits様が直す</strong>：</p>
+<ul>
+<li><strong>提供側</strong>＝同じ中身が Mits様ご自身の資料の <strong>2つ以上の資料、または2つ以上の年</strong>（2017-18 スマイル打合せ／2020 Kamakura md／2026 memory <code>project_untendai_daihoshin.md</code> の Mits様原文と 2026-09-14 のお言葉）に出ているもの。年をまたいで繰り返し出ている＝強い意志と読む</li>
+<li><strong>マーケット</strong>＝上に当たらないもの。理由は3種のどれか：資料に1回だけ／外の型（CAMPFIRE 914700・上位10件）からの写し／受け手の反応で決まる</li>
+</ul>
+<p class="note">分類は 62 件（【収束案】の総 grep 数64件のうち、0節「印の凡例」の説明1件と 8節「追記の記録」の言及1件を除く）。数え方：提供側 18 件／マーケット 44 件 ＝ 62 件。</p>
+</div>
+
+<h3>5-B (a). 提供側 ── 強く提供したいと思っているであろうもの（18件）</h3>
+<div class="tbl-wrap"><table>
+<thead><tr><th style="width:20%;">番号</th><th style="width:35%;">収束案（短く）</th><th style="width:45%;">出典と出現（資料名＋位置・件数）</th></tr></thead>
+<tbody>
+<tr><td>3節 #5 (2×2表)</td><td>body_v4.md §集めているお役目 の下に、2×2の表（人の種類2つ×役2つ）を写す</td><td>2020 Kamakura スライド104〜106（3つの関わり方）／2026 memory project_untendai_daihoshin.md §9「集めているお役目」＋ body_v4.md §集めているお役目（2件）</td></tr>
+<tr><td>3節 #6 (6本柱)</td><td>body_v4.md §行いで上がる段 の各段の「受け取るもの」の欄を、6本柱の形で並べる</td><td>2020 Kamakura スライド45（6本柱）／2026 memory project_untendai_daihoshin.md §9「行いで上がる段」＋ body_v4.md §行いで上がる段（2件）</td></tr>
+<tr><td>3節 #7 (計器盤1枚絵)</td><td>仲間募集ページの冒頭に、運転台の1枚絵（計器盤の全体像）を置く</td><td>2017-18 スマイル打合せ p.5・p.24-25・p.36（コックピット化）／2020 Kamakura md §手法 4-1（レーダーチャート）／2026 案件 CLAUDE.md 冒頭 ＋ body_v4.md 冒頭コメント「メイン画像:運転台の画面」（4件）</td></tr>
+<tr><td>3節 #9 (使い道割合)</td><td>body_v4.md §集めた仲間の力の使い道 の3項目に、割合の欄を足す（金額でなく人数か言葉）</td><td>2017-18 スマイル打合せ p.35・p.45（項目のフィールド一覧）／2020 Kamakura スライド45・101（6本柱の使い道と価値）／CAMPFIRE 914700 §7-2（半分ずつと開示）／2026 body_v4.md §集めた仲間の力の使い道（4件）</td></tr>
+<tr><td>3節 #10 (声を約1ヶ月)</td><td>ダウンロードページに「利用者の声」を約1ヶ月で増やす。声は本人の許可が取れたものだけ</td><td>2020 Kamakura スライド57〜66（受講生事例5〜6人）／2026-09-14 Mits様原文「1ヶ月くらいで、ダウンロードページに『利用者の声』が増える形にして」／2026 body_v4.md §利用者の声のご紹介（3件）</td></tr>
+<tr><td>3節 #11 (Apache-2.0動機)</td><td>Apache-2.0 で「自分の版を作って売ってよい」を、コンサルタント・コーチ・士業・IT系の方への使い始めの動機に据える</td><td>2017-18 スマイル打合せ p.125・p.123（教える側を育てる）／2026 memory project_untendai_daihoshin.md §9「動機4・5：自分の仕事の道具にしてよい／自分の版を作って売ってもよい」＋ body_v4.md §使い始める動機②・§仲間の2つの姿②（3件）</td></tr>
+<tr><td>5節 2-A #1 (判定表示なし計器盤)</td><td>判定表示なしの計器盤設計を守る。良し悪しを色・記号で出さない</td><td>2017-18 スマイル打合せ p.5（コクピット化・色分けして緊急度・診断書）／2026 案件 CLAUDE.md「事実を見て、判断は経営者がする」節（2年）</td></tr>
+<tr><td>5節 2-A #5 (代行入力=②の仲間)</td><td>②の仲間（クライアントを持つ方）が、その方のクライアントの数字を代わりに入れる場面として、body_v4.md §仲間の2つの姿②に既に写している道でカバーする</td><td>2017-18 スマイル打合せ p.15・p.17・p.149（看護師＝お母さんアドバイザーによる代行入力）／2026 memory project_untendai_daihoshin.md §9「向こう側にクライアントがいる人」＋ body_v4.md §仲間の2つの姿②（2年）</td></tr>
+<tr><td>5節 2-A #6 (月次まとめを配信)</td><td>月次まとめ（getsuji）の要点を、Discord の場に月1で流す</td><td>2017-18 スマイル打合せ p.15（経営診断書を定期的にお客様に届ける・プッシュ配信）／2026-09-14 Mits様原文「情報共有の場はdiscordで別途専門に立てる」（2年）</td></tr>
+<tr><td>5節 2-A #8 (Apache-2.0=教える側)</td><td>body_v4.md §仲間の2つの姿②（クライアントを持つ方）＋ Apache-2.0「自分の版を作って売ってよい」で写す</td><td>2017-18 スマイル打合せ p.125・p.123（手伝う人を育てる研修プログラム）／2026 memory project_untendai_daihoshin.md §9 動機5・body_v4.md §仲間の2つの姿②（2年）</td></tr>
+<tr><td>5節 2-A #11 (実案件で組む)</td><td>材料1「軸となる項目を選出3段階」の型を、実案件から得た型としてアプリの目盛りに反映する回路を回す</td><td>2017-18 スマイル打合せ p.138-148（実案件で顧客管理・配車のアプリを組む）／2026 body_v4.md §なぜ、いま仲間を募るか「優良のお客様20人からはじめ」＋ 内部プラン §6「約1ヶ月で利用者の声を増やしダウンロードへ」（2年）</td></tr>
+<tr><td>5節 2-A #14 (6本柱で段の受け取るもの)</td><td>body_v4.md §行いで上がる段 の各段の「受け取るもの」を、6本柱の形で並べる</td><td>2020 Kamakura スライド45（6本柱）／2026 memory project_untendai_daihoshin.md §9「行いで上がる段」＋ body_v4.md §行いで上がる段（2年）</td></tr>
+<tr><td>5節 2-A #16 (2×2表)</td><td>2×2の表（人の種類2つ×役2つ）を body_v4.md §集めているお役目 の下に写す</td><td>2020 Kamakura スライド104〜106（3つの関わり方）／2026 memory project_untendai_daihoshin.md §9・body_v4.md §集めているお役目（2年）</td></tr>
+<tr><td>5節 6節 #1 (計器盤1枚絵)</td><td>仲間募集ページの冒頭に、運転台の1枚絵（計器盤の全体像）を置く（body_v4.md 冒頭コメント枠に入れる）</td><td>2017-18 スマイル打合せ p.6・p.7・p.24-25（コックピット化・レーダーチャート・インジケーター）／2026 案件 CLAUDE.md 冒頭の計器盤の絵＋body_v4.md 冒頭コメント「メイン画像:運転台の画面」（2年）</td></tr>
+<tr><td>5節 6節 #3 (6本柱で段の受け取るもの)</td><td>2-A #14 と同じ：body_v4.md §行いで上がる段 の各段の「受け取るもの」を6本柱の形で並べる</td><td>2020 Kamakura スライド45（6本柱）／2026 memory project_untendai_daihoshin.md §9・body_v4.md §行いで上がる段（2年）</td></tr>
+<tr><td>5節 6節 #7 (声の埋め込み欄)</td><td>許可の取れた声の埋め込み欄を仲間募集ページに置く（載せるのは許可の取れたものだけ）</td><td>2020 Kamakura スライド57・61〜66（受講者の声を本文中に埋め込む）／2026 body_v4.md §利用者の声のご紹介「ご本人の許可を取ったものだけ」の約束（2年）</td></tr>
+<tr><td>5節 6節 #8 (使い道割合)</td><td>3項目に対応する割合の欄（金額でなく人数か言葉）を足す</td><td>2017-18 スマイル打合せ p.35・p.45（項目のフィールド一覧）／2020 Kamakura スライド45・101（使い道と価値）／CAMPFIRE 914700 §7-2（半分ずつと開示）／2026 body_v4.md §集めた仲間の力の使い道（4件）</td></tr>
+<tr><td>5節 3節 #10 (使い道割合)</td><td>body_v4.md 使い道3項目に割合欄を足す（6節 #8 と同じ）</td><td>2017-18 スマイル打合せ p.35・p.45／2020 Kamakura スライド45・101／CAMPFIRE 914700 §7-2／2026 body_v4.md §集めた仲間の力の使い道（4件）</td></tr>
+</tbody></table></div>
+
+<h3>5-B (b). マーケット ── 受け手に見てもらった方が良いもの（44件）</h3>
+<div class="tbl-wrap"><table>
+<thead><tr><th style="width:20%;">番号</th><th style="width:35%;">収束案（短く）</th><th style="width:45%;">受け手に見てもらった方が良い理由（1行）</th></tr></thead>
+<tbody>
+<tr><td>2節-1 (AI-Mits タグ付けルール)</td><td>AI-Mits の3つの相手（汎用の AI／西田メソッドを持たせた AI／台帳を全部たどる AI）の呼び分けに、材料1 §3 の「タグ付けのルール（5層／1・2・3層のタグ）」を写す</td><td>資料に1回だけ（2017-18 スマイル打合せ §3 のみ）・写し方の妥当性は使う人の反応で決まる</td></tr>
+<tr><td>2節-2 (MANABI 順番)</td><td>学び画面（manabi）と <code>commands.rs</code> の <code>MANABI</code> の並びを、材料2 スライド43「体系的に、順番に、ステップバイステップで」の順に並べ直す</td><td>資料に1回だけ（2020 Kamakura スライド43 のみ）・使う人の学びの順に合うかは受け手の反応で決まる</td></tr>
+<tr><td>2節-3 (kokyaku 業歴×緊急性)</td><td>顧客画面（kokyaku）に、材料1 §3 の「業歴×緊急性」の分類軸を近付ける。4タイプ分類（のらりくらり／行動／尻叩き／野放し）は AI-Mits の相談画面の裏側に持たせる</td><td>資料に1回だけ（2017-18 スマイル打合せ p.72-74・p.124 のみ）・分類が今の使い手に合うかは受け手の反応で決まる</td></tr>
+<tr><td>2節-4 (共起ネットワーク)</td><td>AI-Mits に集まる相談の分析に、共起ネットワーク・ワードクラウド（材料1 p.52-53）を使う。集めた素材から次の版の目盛りを決める仕組みを、伽藍側の判断の場として1本置く</td><td>資料に1回だけ（2017-18 スマイル打合せ p.52-53 のみ）・分析の結果が次の目盛りに繋がるかは実運用の反応で決まる</td></tr>
+<tr><td>3節-4 (「1分だけ」門番)</td><td>body_v4.md §はじめに の頭に、「1分だけ」型の門番の見出しを置く</td><td>外の型（CAMPFIRE 914700 §3 見出し2）からの写し・受け手の心理的な入りの軽さは反応で決まる</td></tr>
+<tr><td>4節-1 (1st stageのみ計測)</td><td>計器（運転台 marketing 枝）が映すのは 1st stage（AI-Mits 登録の人数）まで。⑤有料とお金の台帳は 1st stage の外に置く</td><td>資料に1回だけ（2026-09-13 Mits様原文「売上は見ないと言った1stのみでいい」のみ）・線を動かすかは実運用の反応で決まる</td></tr>
+<tr><td>4節-2 (お試し版1枚)</td><td>生きている WEB の入口は、お試し版 UTAGE <code>UgSfW8MCzHqv</code> の1枚に絞る</td><td>資料に1回だけ（2026-09-14 全体設計図 G節）・絞る妥当性は入りの反応で決まる</td></tr>
+<tr><td>4節-3 (札の付け方)</td><td>札の付け方は utm_source＝小文字の utage / spro / magmag / test、utm_campaign＝YYYYMMDD_短い名前。札なしは空欄のまま（direct・unknown を入れない）</td><td>資料に1回だけ（2026-09-08 全体設計図 D節）・つけ方の妥当性は計測の反応で決まる</td></tr>
+<tr><td>4節-4 (登録の壁の直し)</td><td>登録の壁（認証メールを2回以上出した8人のうち7人が1回目のリンクを押したのにまた登録を押している・タブを閉じて開き直すと未登録扱いになる 4-35）は、L節の未9項目を潰しきる</td><td>資料に1回だけ（2026-09-14 全体設計図 L節）・直しが登録率を動かすかは受け手の反応で決まる</td></tr>
+<tr><td>4節-5 (2枚目の着地)</td><td>仲間募集ページを、ダウンロードページに続く「2枚目の着地」として置く。ダウンロードページの声が増える回路と、AI-Mits の登録の間に挟む</td><td>資料に1回だけ（2026 の仲間募集の話のみ）・並びの妥当性は導線の反応で決まる</td></tr>
+<tr><td>4節-6 (参加の流れ 5段)</td><td>仲間募集ページに、「参加の流れ 5段」（申込→アンケート→オーダーメイド面談→取り組むメソッド決定→部会参加）の型を、body_v4.md §公開の3段階と現在地 の下に写す</td><td>資料に1回だけ（2020 Kamakura スライド103 のみ）・流れが参加者に合うかは受け手の反応で決まる</td></tr>
+<tr><td>4節-7 (バー＋現在位置)</td><td>仲間募集ページ上部に、章扉のバー＋現在位置ハイライトを置く（材料2 スライド118 の型）</td><td>資料に1回だけ（2020 Kamakura スライド118 のみ）・見せ方の妥当性は受け手の反応で決まる</td></tr>
+<tr><td>4節-8 (循環図)</td><td>仲間募集ページに、誰から誰への相談か・誰から誰への広めかを1枚の循環図として置く（材料2 スライド117 の型）</td><td>資料に1回だけ（2020 Kamakura スライド117 のみ）・図の分かりやすさは受け手の反応で決まる</td></tr>
+<tr><td>4節-9 (冒頭に現況＋余枠)</td><td>body_v4.md 冒頭に、現況＋余枠の枠（「既に◯人が使い込んでいます／これから◯人と組みます」）を置く</td><td>外の型（CAMPFIRE 914700 §7-1 ネクストゴール宣言）からの写し・冒頭の効き方は受け手の反応で決まる</td></tr>
+<tr><td>5節 2-A #2 (4画面役割整理)</td><td>4画面の役割の被りを整理する（材料1 §3 の3段の役割分担を写す）</td><td>資料に1回だけ（2017-18 スマイル打合せ p.4・p.32・p.36・p.56 のみ）・被りの整理が今の使い方に合うかは受け手の反応で決まる</td></tr>
+<tr><td>5節 2-A #3 (初回設定の順)</td><td>初回設定の順を「四方山話→事業情報→タイプ予想」（材料1 p.106）の型に沿わせる</td><td>資料に1回だけ（2017-18 スマイル打合せ p.106 のみ）・順の妥当性は受け手の反応で決まる</td></tr>
+<tr><td>5節 2-A #4 (タグ付けルール)</td><td>材料1 §3 の「タグ付けルール」を AI-Mits の呼び分けの中に写す</td><td>資料に1回だけ（2017-18 スマイル打合せ §3 のみ）・写し方の妥当性は使う人の反応で決まる</td></tr>
+<tr><td>5節 2-A #7 (業歴×緊急性)</td><td>kokyaku 画面の分類軸を「業歴×緊急性」（材料1 §3）に近付ける。4タイプ分類は AI-Mits の相談画面の裏側に持たせる</td><td>資料に1回だけ（2017-18 スマイル打合せ p.72-74・p.124 のみ）・受け手の反応で決まる</td></tr>
+<tr><td>5節 2-A #10 (共起ネットワーク)</td><td>共起ネットワーク・ワードクラウド（材料1 p.52-53）を、AI-Mits に集まる相談の分析に使う</td><td>資料に1回だけ（2017-18 スマイル打合せ p.52-53 のみ）・受け手の反応で決まる</td></tr>
+<tr><td>5節 2-A #13 (MANABI 順番)</td><td><code>commands.rs</code> の <code>MANABI</code> を、材料2 スライド43「体系的に、順番に、ステップバイステップで」の順に並べ直す</td><td>資料に1回だけ（2020 Kamakura スライド43 のみ）・受け手の反応で決まる</td></tr>
+<tr><td>5節 2-A #15 (参加の流れ)</td><td>「参加の流れ 5段」（材料2 スライド103）を、body_v4.md §公開の3段階と現在地 の下に節として置く</td><td>資料に1回だけ（2020 Kamakura スライド103 のみ）・受け手の反応で決まる</td></tr>
+<tr><td>5節 4節 #1 (使い始める動機4項目目)</td><td>body_v4.md §使い始める動機② の3つに、4つ目として「案件獲得の場」に当たる項目を並べる（材料2 p114 に沿わせる）</td><td>資料に1回だけ（2020 Kamakura p114 のみ）・受け手の反応で決まる</td></tr>
+<tr><td>5節 4節 #4 (循環図)</td><td>仲間募集ページに、誰から誰への相談か・誰から誰への広めかを1枚の循環図として置く</td><td>資料に1回だけ（2020 Kamakura スライド117 のみ）・受け手の反応で決まる</td></tr>
+<tr><td>5節 4節 #5 (バー＋現在位置)</td><td>仲間募集ページ上部に、章扉の型（バー＋現在位置ハイライト）を写す</td><td>資料に1回だけ（2020 Kamakura スライド118 のみ）・受け手の反応で決まる</td></tr>
+<tr><td>5節 4節 #6 (家族を大切に)</td><td>body_v4.md §何を実現したいか に、材料2 スライド119・120「家族を大切にできる経営者が増える」を1行足す</td><td>資料に1回だけ（2020 Kamakura スライド119・120 のみ）・受け手の反応で決まる</td></tr>
+<tr><td>5節 6節 #4 (循環図)</td><td>4節 #4 と同じ：仲間募集ページに1枚の循環図を置く</td><td>資料に1回だけ（2020 Kamakura スライド117 のみ）・受け手の反応で決まる</td></tr>
+<tr><td>5節 6節 #5 (バー＋現在位置)</td><td>4節 #5 と同じ：仲間募集ページ上部にバー＋現在位置ハイライトを置く</td><td>資料に1回だけ（2020 Kamakura スライド118 のみ）・受け手の反応で決まる</td></tr>
+<tr><td>5節 6節 #6 (1分だけ門番)</td><td>body_v4.md §はじめに の頭に、「1分だけ」型の門番の見出しを置く</td><td>外の型（CAMPFIRE 914700 §3 見出し2）からの写し・受け手の反応で決まる</td></tr>
+<tr><td>5節 6節 #9 (冒頭に現況＋余枠)</td><td>body_v4.md 冒頭に、現況＋余枠の枠（「既に◯人が使い込んでいます／これから◯人と組みます」）を置く</td><td>外の型（CAMPFIRE 914700 §7-1 ネクストゴール宣言）からの写し・受け手の反応で決まる</td></tr>
+<tr><td>5節 6節 #10 (投資対効果 取り入れない)</td><td>取り入れない（写す形が無い）</td><td>受け手（お金を集めない設計）の反応で決まる（2020 Kamakura スライド81〜95 の投資対効果はお金の話で写せない）</td></tr>
+<tr><td>5節 6節 #13 (WCM アプリ本体候補)</td><td>アプリ本体の候補として置く（仲間募集ページの範囲外）</td><td>資料に1回だけ（2017-18 スマイル打合せ p.44・p.149 のみ）・仲間募集ページの範囲外・受け手の反応で決まる</td></tr>
+<tr><td>5節 6節 #14 (経営者6段ピラミッド)</td><td>アプリ本体の候補として置く（仲間募集ページの範囲外）</td><td>資料に1回だけ（2017-18 スマイル打合せ p.80 のみ）・受け手の反応で決まる</td></tr>
+<tr><td>5節 6節 #15 (スケジュール節)</td><td>body_v4.md にスケジュール節を足し、開発版→次の版→次の次を月単位で並べる</td><td>外の型（CAMPFIRE 914700 の日付単位のスケジュール）からの写し・受け手の反応で決まる</td></tr>
+<tr><td>5節 3節 #1 (スプリント5段階)</td><td>取り入れない（開発プロセスの型で、仲間募集ページの型ではない）</td><td>資料に1回だけ（2017-18 スマイル打合せ p.3 のみ）・仲間募集ページの型ではない・受け手の反応で決まる</td></tr>
+<tr><td>5節 3節 #2 (WCM アプリ本体候補)</td><td>アプリ本体の候補（仲間募集ページの範囲外）</td><td>資料に1回だけ（2017-18 スマイル打合せ p.44・p.149 のみ）・仲間募集ページの範囲外・受け手の反応で決まる</td></tr>
+<tr><td>5節 3節 #3 (形而上5階ピラミッド 取り入れない)</td><td>取り入れない（180903 の6層モデルへ既に発展）</td><td>資料に1回だけ（2017-18 スマイル打合せ p.109 のみ）・既に発展形が正本・受け手の反応で決まる</td></tr>
+<tr><td>5節 3節 #4 (KH Coder 共起ネットワーク)</td><td>AI-Mits に集まる相談の分析に使う（2-A #10 と同じ）</td><td>資料に1回だけ（2017-18 スマイル打合せ p.52-53 のみ）・受け手の反応で決まる</td></tr>
+<tr><td>5節 3節 #5 (循環図)</td><td>仲間募集ページに1枚の循環図として置く（4節 #4 と同じ）</td><td>資料に1回だけ（2020 Kamakura スライド117 のみ）・受け手の反応で決まる</td></tr>
+<tr><td>5節 3節 #6 (投資対効果 取り入れない)</td><td>取り入れない（お金を集めない設計と衝突）</td><td>受け手（お金を集めない設計）の反応で決まる（2020 Kamakura のみ）</td></tr>
+<tr><td>5節 3節 #7 (「1分だけ」門番)</td><td>body_v4.md §はじめに の頭に置く（6節 #6 と同じ）</td><td>外の型（CAMPFIRE 914700 §3 見出し2）からの写し・受け手の反応で決まる</td></tr>
+<tr><td>5節 3節 #8 (冒頭に現況＋余枠)</td><td>body_v4.md 冒頭に現況＋余枠の枠を置く（6節 #9 と同じ）</td><td>外の型（CAMPFIRE 914700 §7-1 ネクストゴール宣言）からの写し・受け手の反応で決まる</td></tr>
+<tr><td>5節 3節 #9 (同金額×選択肢 取り入れない)</td><td>取り入れない（受け取り手が判断疲れを起こす・実績が0人）</td><td>外の型（CAMPFIRE 914700 §6-1・実績0人）からの写しの見送り・受け手の反応で決まる</td></tr>
+<tr><td>5節 3節 #11 (All-in 取り入れない)</td><td>取り入れない（期限が無い設計と衝突）</td><td>外の型（CAMPFIRE 上位10件・914700 §8）からの写しの見送り・受け手の反応で決まる</td></tr>
+<tr><td>5節 3節 #12 (定型FAQ 位置だけ)</td><td>最下部の位置だけ写す（中身は自作・既に済）</td><td>外の型（CAMPFIRE 上位10件 10件全て）からの写し・中身は既に自作・位置の効き方は受け手の反応で決まる</td></tr>
+</tbody></table></div>
+
+<h2>6. 順番</h2>
+
+<p>収束した項目を、3つに分ける。番号は上の 5節の番号で指す。</p>
+
+<h3>A. 保留3つが決まる前に進められるもの</h3>
+<ol>
+<li>2-A #1（判定表示なしの計器盤設計を守る）── 既に走っている。触らない</li>
+<li>2-A #3（初回設定の順を「四方山話→事業情報→タイプ予想」に沿わせる）</li>
+<li>2-A #4（AI-Mits のタグ付けルール）</li>
+<li>2-A #13（MANABI を体系順に並べ直す）</li>
+<li>2-A #10 ／ 3節 #4（AI-Mits の相談を共起ネットワークで分析）</li>
+<li>2-A #16（body_v4.md §集めているお役目 の下に2×2表）</li>
+<li>4節 #6（body_v4.md §何を実現したいか に「家族を大切にできる経営者が増える」を1行足す）</li>
+<li>6節 #1（仲間募集ページ冒頭に運転台の1枚絵）</li>
+<li>6節 #6 ／ 3節 #7（body_v4.md §はじめに の頭に「1分だけ」型の門番）</li>
+<li>4節 #5 ／ 6節 #5（仲間募集ページ上部にバー＋現在位置ハイライト）</li>
+<li>4節 #4 ／ 6節 #4 ／ 3節 #5（仲間募集ページに1枚の循環図）</li>
+<li>つなぎ目：札の付け方・1st stage の計測・登録の壁の直しの完遂（L節 未9項目を潰す）</li>
+</ol>
+
+<h3>B. 保留3つが決まってから進めるもの</h3>
+<ol>
+<li>2-A #9・2-A #17・4節 #2・4節 #3・6節 #2（段の呼び名・数・色）── 保留1</li>
+<li>6節 #11・6節 #16（限定数「残り〇」・タイトルに数字1つ）── 保留2</li>
+<li>6節 #12（最上段の「1点物」段）── 保留3</li>
+<li>2-A #12（Discord の場を3層で1つにするか分けるか）── 保留と関連</li>
+<li>2-A #14 ／ 6節 #3（段ごとの「受け取るもの」を6本柱で並べる）── 段が決まってから</li>
+<li>6節 #8 ／ 3節 #10（body_v4.md 使い道3項目に割合欄）── 段が決まってから割合を置く</li>
+<li>6節 #9 ／ 3節 #8（body_v4.md 冒頭に現況＋余枠）── 募る人数が決まってから</li>
+<li>4節 #1（body_v4.md §使い始める動機② に4項目目「案件獲得の場」）── 段の中身が決まってから</li>
+</ol>
+
+<h3>C. 「世に出す」の内部基準に従うもの</h3>
+<ol>
+<li>2-A #6（月次まとめを Discord に月1で流す）── Discord の場が立ち、premium 以外に届いてから</li>
+<li>2-A #11（実案件から得た型をアプリの目盛りに反映する回路）── 版が上がるたびに1回</li>
+<li>6節 #7（許可の取れた声の埋め込み欄）── ダウンロードページに約1ヶ月かけて増やす</li>
+<li>6節 #15（body_v4.md にスケジュール節）── 「世に出す」引き金（Mits様が「出す」と言われる／お客様の手元で数字が間違っている）が来た時に更新</li>
+<li>2-A #2（設定 / 初回 / 自社 / AI-Mits の4画面の役割の被りを整理）── 版を上げる回に合わせる</li>
+<li>2-A #7（kokyaku の分類軸を「業歴×緊急性」に近付ける／4タイプ分類を AI-Mits の裏側に）</li>
+<li>2-A #5（②の仲間がクライアントの数字を代わりに入れる場面のカバー）── 仲間募集後の実運用で</li>
+<li>2-A #8（Apache-2.0 で「自分の版を作って売ってよい」の動機づけ）── 仲間募集ページの公開に合わせる</li>
+</ol>
+
+<h2>7. 触らないもの</h2>
+
+<h3>7-A. 保留3つ（Mits様が「決めるが今は保留」と明言された）</h3>
+<ul>
+<li><span class="tag tag-hold">【保留・Mits様が決める】</span> 仲間の呼び名</li>
+<li><span class="tag tag-hold">【保留・Mits様が決める】</span> 募る人数と期間</li>
+<li><span class="tag tag-hold">【保留・Mits様が決める】</span> 仲間だけが先に受け取れるもの</li>
+</ul>
+
+<h3>7-B. 内部プランの保留15件（項目名だけ・値を入れない）</h3>
+<ul>
+<li>Discord の場と3つの層の関係（1つの場に3層を置くか、場を分けるか）</li>
+<li>Discord の場を立てる時期</li>
+<li>Discord の場に入れる人の条件</li>
+<li>ライトなコンサルティングの値付け</li>
+<li>ライトなコンサルティングの回数・期間の確定値</li>
+<li>ライトなコンサルティングの範囲の確定値（1点相談の対象）</li>
+<li>ライトなコンサルティングの提供の形の運用</li>
+<li>段の数の確定値</li>
+<li>段ごとの名前の確定値</li>
+<li>段ごとの条件の確定値</li>
+<li>段ごとの受け取るものの確定値</li>
+<li>紹介1件あたりの報酬（UTAGE パートナー案件 <code>T1pSTUHxF427</code>・現在 1,000円は仮置き）</li>
+<li>お客様の Mac の中で数字を取り込んだかどうかを Mits様の側から見る仕組みの有無</li>
+<li>仲間だけが先に受け取れるものが prerelease になるか別の道か</li>
+<li>人の種類の2分と役の組み合わせ・軸の扱いの確定</li>
+</ul>
+
+<h3>7-C. 内部プランの却下7件（項目名だけ・取消線）</h3>
+<ul>
+<li><span class="tag tag-kyakka">【却下済】</span> <span class="kyakka-line">作業場所を <code>untendai</code> に移す案</span></li>
+<li><span class="tag tag-kyakka">【却下済】</span> <span class="kyakka-line">募集ページをセールス型 LP にする案</span></li>
+<li><span class="tag tag-kyakka">【却下済】</span> <span class="kyakka-line">保留3つを AI が埋める案</span></li>
+<li><span class="tag tag-kyakka">【却下済】</span> <span class="kyakka-line">コンサルタント養成講座 corecon をライト版の比べる相手に入れる案</span></li>
+<li><span class="tag tag-kyakka">【却下済】</span> <span class="kyakka-line">「1ヶ月くらい」を募集期間の決定として扱う案</span></li>
+<li><span class="tag tag-kyakka">【却下済】</span> <span class="kyakka-line">募集ページに「支援金の使い道」欄を置く案</span></li>
+<li><span class="tag tag-kyakka">【却下済】</span> <span class="kyakka-line">募集ページに「活動報告」「参加された方のひとこと」の見出しを中身が無い状態で置く案</span></li>
+</ul>
+
+<h3>7-D. 撤回された話（memory <code>project_untendai_daihoshin.md</code> 3節・生きた前提として再掲しない）</h3>
+<ul>
+<li>「財布より知財」は死んでいる（守るのは持ち出しの阻止ではなく更新の速さ）</li>
+<li>商標は取らない</li>
+<li>月予算・上限の管理は目的に合わない</li>
+<li>レポートの仕組みは廃止</li>
+<li>スマホ版は作らない</li>
+</ul>
+
+<h2>8. 追記の記録（新しい順）</h2>
+
+<div class="kiroku">
+<div class="kiroku-date">2026-09-14 追記（追加発注）</div>
+<p>Mits様原文「この仮の収束案を、もう1歩踏み込んで整理して収集した。私の資料から提供側が私が提供したいと強く思っているであろうものとマーケットに聞いてみた方が良いもの」を受けて、収束案62件（グレップ総数64件のうち凡例と本追記の記録の言及を除く）を「提供側」「マーケット」の2つに分けた。分け方は参謀の見立て（Mits様が直す）：2つ以上の資料または2つ以上の年に出ているもの＝提供側／それ以外＝マーケット。5節の表に「分け」列を足し、2〜4節の箇条書きにも同じ札を付け、5節の直後に h2「5-B. 収束案64件の2分け」を新設。分けの内訳は 提供側18件／マーケット44件。書き換え前の写し：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20260914_伽藍とバザール収束プラン_2分け前.html。</p>
+</div>
+
+<div class="kiroku">
+<div class="kiroku-date">2026-09-14 初版</div>
+<p>BA-strategist が初版を作成。0節（Mits様原文と読み方・印の凡例・共通点表への相対リンク）／1節（伽藍・バザール・つなぎ目の3つを1枚の表に）／2〜4節（3つに絞った収束案）／5節（共通点表と較べる表・2-A 17行＋4節 6行＋6節 16行＝39行＋3節 14行）／6節（順番 A・B・C）／7節（触らないもの 保留3つ＋内部保留15件＋却下7件＋撤回された話）を配置。印は4つだけ（【収束案】【採用済】【保留・Mits様が決める】【却下済】）。</p>
+</div>
+
+<hr style="margin:48px 0 24px;border:0;border-top:1px solid var(--line);">
+<p class="meta">絶対パス：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/伽藍とバザールの実現_収束プラン_20260914.html</p>
+
+</div>
+</div>
+<footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
+</body>
+</html>

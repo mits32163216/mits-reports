@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+<title>宛先表 ／ 6セッション社内レポート</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:20px 20px 80px; max-width:1000px; margin:0 auto; line-height:1.7; }
+h1,h2,h3,h4,h5,h6 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; color:var(--fg); }
+h1 { font-size:26px; margin:12px 0 18px; padding-bottom:10px; border-bottom:1px solid var(--line); }
+h2 { font-size:20px; margin:32px 0 12px; padding-left:10px; border-left:4px solid var(--gold); }
+h3 { font-size:16px; margin:24px 0 10px; }
+p { margin:10px 0; }
+a { color:var(--gold); text-decoration:none; }
+a:hover { text-decoration:underline; }
+code { font-family:var(--mono); background:var(--sub-bg); padding:2px 5px; border-radius:3px; font-size:0.9em; }
+pre { font-family:var(--mono); background:var(--sub-bg); padding:14px 16px; border-radius:8px; overflow-x:auto; border:1px solid var(--line); font-size:0.85em; line-height:1.5; }
+pre code { background:transparent; padding:0; }
+blockquote { border-left:3px solid var(--gold); padding:6px 14px; margin:14px 0; color:var(--muted); background:var(--sub-bg); border-radius:0 6px 6px 0; }
+ul,ol { padding-left:22px; }
+li { margin:4px 0; }
+table { border-collapse:collapse; width:100%; margin:14px 0; font-size:0.9em; }
+th,td { border:1px solid var(--line); padding:6px 10px; text-align:left; vertical-align:top; }
+th { background:var(--sub-bg); font-family:var(--mincho); font-weight:600; }
+hr { border:0; border-top:1px dashed var(--line); margin:24px 0; }
+img { max-width:100%; height:auto; }
+
+.nav-back { display:inline-block; margin:0 0 12px; font-family:var(--mono); font-size:12px; color:var(--muted); }
+.nav-back a { color:var(--muted); }
+.nav-back a:hover { color:var(--gold); }
+
+.meta-head { background:var(--sub-bg); border:1px dashed var(--line); border-radius:6px; padding:8px 12px; margin:8px 0 18px; font-family:var(--mono); font-size:11px; color:var(--muted); line-height:1.7; }
+.meta-head b { color:var(--fg); font-weight:600; margin-right:4px; }
+
+.embed-html { border-top:1px dashed var(--line); padding-top:16px; margin-top:8px; }
+.embed-html iframe { width:100%; border:0; min-height:80vh; background:var(--card-bg); border-radius:8px; }
+
+footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+</style>
+</head>
+<body>
+<div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
+<div class="meta-head"><div><b>元のファイル</b>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/renrakusaki.md</div><div><b>最後に更新された日時</b>2026-09-16 14:11 JST</div></div>
+<h1>宛先表</h1>
+<h1 id="6">宛先表（6セッション・直接送るための一覧）</h1>
+<p><strong>毎朝の点呼（asa-tenko-6session・6:30）が、この表のIDを実測で書き換える。</strong><br />
+セッションは立て直すとIDが変わる。ここが古いまま送ると相手に届かない。</p>
+<h2 id="22026-09-16">🔴 送る道具は2つある。窓によって使い分ける（2026-09-16 実機で確かめた）</h2>
+<p><strong>チャットの窓（人が開いている画面）から送るとき</strong><br />
+<code>mcp__ccd_session_mgmt__send_message</code> に、下の「いまのセッションID」を入れる。<br />
+結果が delivered／queued 以外なら届いていない。あとから届くことは無いので、送り直す。</p>
+<p><strong>予約タスクの窓（時計で起きた回）から送るとき</strong><br />
+<code>SendMessage</code> の <code>to</code> に、下の「予約タスクの窓から送るときの名前」を入れる。<br />
+この道具は予約タスクの回でも通る（実機の記録：2026-09-12 12:25:19 UTC に<br />
+<code>"success":true, "“3経路の測定結果を渡す” → untendai-marketing-93 (another Claude session on this machine)"</code> が返っている）。<br />
+名前は <code>ListAgents</code> が返す一覧の値。IDではない。<br />
+🛑 予約タスクの回から <code>mcp__ccd_session_mgmt__send_message</code> を呼ぶと、権限の層で断られる<br />
+（逐語 <code>This tool is unavailable in unattended sessions (scheduled-task runs and remote-dispatched trees).</code>）。</p>
+<p><strong>下の表の中身は 実測 2026-09-16 14:0x・毎朝の点呼 asa-tenko-6session が書き換える。</strong></p>
+<table>
+<thead>
+<tr>
+<th>持ち場</th>
+<th>いまのセッションID（チャットの窓から使う）</th>
+<th>予約タスクの窓から送るときの名前</th>
+<th>この持ち場に直接送る事がら</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>司令塔</td>
+<td>local_9fa118c7-d668-4215-a7b6-6ee2ceaca29c</td>
+<td>司令塔 (fork)</td>
+<td>全体の設計・検収・報連相のまとめ。ほかの持ち場にまたがる決定</td>
+</tr>
+<tr>
+<td>メール配信・計測・自動化</td>
+<td>local_8c87fdc8-a96c-4edf-9ecc-b2bcef79a730</td>
+<td>メール配信・計測・自動化</td>
+<td>3スタンドの配信、除外の設定、配信の抜け、送信の時刻</td>
+</tr>
+<tr>
+<td>運転台マーケ</td>
+<td>local_054ca6d7-8007-42c8-ad3f-b4d74d9d9c8c</td>
+<td>運転台マーケ</td>
+<td>計測の台帳・数え方・運転台の計器（マーケ枝）への取り込み</td>
+</tr>
+<tr>
+<td>運転台改善</td>
+<td>local_fac485e5-8f94-4d17-809e-4388b4a60bd7</td>
+<td>運転台改善</td>
+<td>運転台のアプリの不具合・版・画面の作り</td>
+</tr>
+<tr>
+<td>AI-Mits-チューニング</td>
+<td>local_ea95e77b-85c6-4f40-adcd-4b1d371e0a1f</td>
+<td>AI-Mits-チューニング</td>
+<td>お試し版の画面、Dify の頭、登録の数</td>
+</tr>
+<tr>
+<td>伽藍とバザールの実現</td>
+<td>local_915bd86f-cef7-48bf-833e-8cce83962a7b</td>
+<td>伽藍とバザールの実現</td>
+<td>普及・販促・仲間募集</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1">使い方（各持ち場の朝の時計に入れる1行）</h2>
+<p>昨日、決定台帳に自分が足した行のうち、上の表の「直接送る事がら」に当たるものがあれば、<br />
+<strong>司令塔を通さず、その持ち場へ直接1通送る。</strong>予約タスクの窓なら <code>SendMessage</code>、チャットの窓なら <code>mcp__ccd_session_mgmt__send_message</code>。<br />
+送ったら、その日の自分の日誌に「◯◯へ1通」と書く。送れなかったときだけ、呼び出し札 yobidashi.md に伝言を1行置く。</p>
+<p>出どころ：司令塔の決まり1（計測・除外・数え方の決定は他の5つへ即送る）。<br />
+2026-09-16 まで、この決まりに「やる時刻」が無かったため、横の連絡は0通のままだった。<br />
+朝の時計に載せて時刻を付けた（Mits様 2026-09-16）。</p>
+<footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
+</body>
+</html>

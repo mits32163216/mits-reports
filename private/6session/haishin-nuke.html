@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+<title>配信の抜けの分析 ／ 6セッション社内レポート</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:20px 20px 80px; max-width:1000px; margin:0 auto; line-height:1.7; }
+h1,h2,h3,h4,h5,h6 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; color:var(--fg); }
+h1 { font-size:26px; margin:12px 0 18px; padding-bottom:10px; border-bottom:1px solid var(--line); }
+h2 { font-size:20px; margin:32px 0 12px; padding-left:10px; border-left:4px solid var(--gold); }
+h3 { font-size:16px; margin:24px 0 10px; }
+p { margin:10px 0; }
+a { color:var(--gold); text-decoration:none; }
+a:hover { text-decoration:underline; }
+code { font-family:var(--mono); background:var(--sub-bg); padding:2px 5px; border-radius:3px; font-size:0.9em; }
+pre { font-family:var(--mono); background:var(--sub-bg); padding:14px 16px; border-radius:8px; overflow-x:auto; border:1px solid var(--line); font-size:0.85em; line-height:1.5; }
+pre code { background:transparent; padding:0; }
+blockquote { border-left:3px solid var(--gold); padding:6px 14px; margin:14px 0; color:var(--muted); background:var(--sub-bg); border-radius:0 6px 6px 0; }
+ul,ol { padding-left:22px; }
+li { margin:4px 0; }
+table { border-collapse:collapse; width:100%; margin:14px 0; font-size:0.9em; }
+th,td { border:1px solid var(--line); padding:6px 10px; text-align:left; vertical-align:top; }
+th { background:var(--sub-bg); font-family:var(--mincho); font-weight:600; }
+hr { border:0; border-top:1px dashed var(--line); margin:24px 0; }
+img { max-width:100%; height:auto; }
+
+.nav-back { display:inline-block; margin:0 0 12px; font-family:var(--mono); font-size:12px; color:var(--muted); }
+.nav-back a { color:var(--muted); }
+.nav-back a:hover { color:var(--gold); }
+
+.meta-head { background:var(--sub-bg); border:1px dashed var(--line); border-radius:6px; padding:8px 12px; margin:8px 0 18px; font-family:var(--mono); font-size:11px; color:var(--muted); line-height:1.7; }
+.meta-head b { color:var(--fg); font-weight:600; margin-right:4px; }
+
+.embed-html { border-top:1px dashed var(--line); padding-top:16px; margin-top:8px; }
+.embed-html iframe { width:100%; border:0; min-height:80vh; background:var(--card-bg); border-radius:8px; }
+
+footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+</style>
+</head>
+<body>
+<div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
+<div class="meta-head"><div><b>元のファイル</b>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/分析_配信の抜け_20260915.md</div><div><b>最後に更新された日時</b>2026-09-16 07:34 JST</div></div>
+<h1>配信の抜けの分析</h1>
+<h1 id="2026-09-08-2026-09-15">配信の抜けと計測の抜けの分析（2026-09-08 〜 2026-09-15）</h1>
+<p>作成：BA-strategist（司令塔発注）<br />
+作成日時：2026-09-15<br />
+対象：毎日メルマガ3スタンド（UTAGE・spro・まぐまぐ）と、その計測の回</p>
+<p>Mits様の絶対的ゴール：AI-Mits登録の増加／測定データ取得不具合の発見と仕組みの修正。</p>
+<hr />
+<h2 id="1-24">1. 集計（号ごと × スタンド・24行）</h2>
+<p>「予定の枠」＝各号の日付の 21:00〜24:00（日本時間）。「遅れ」は枠の終わり（24:00）から実際に出た時刻までの時間。早く出た分は 0h として注記に書く。「未」は配信ID が空欄・または配送履歴で確認できないもの。</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>号の日付</th>
+<th>題材（件名の要）</th>
+<th>スタンド</th>
+<th>予定の枠</th>
+<th>実際に出た時刻</th>
+<th>配信ID</th>
+<th>出し手</th>
+<th>遅れ</th>
+<th>届いた確認</th>
+<th>注記</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2026-09-08</td>
+<td>数字を見せて相談できる相手、いますか</td>
+<td>UTAGE</td>
+<td>21:00〜24:00</td>
+<td>2026-09-08 20:13:50</td>
+<td>zwiRAkvvRiEx</td>
+<td>記録なし</td>
+<td>0h</td>
+<td>送信1813／12h開封 100</td>
+<td>46分早出（枠外）</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2026-09-08</td>
+<td>同上</td>
+<td>spro</td>
+<td>21:00〜24:00</td>
+<td>2026-09-08 22:16:36</td>
+<td>5127</td>
+<td>記録なし</td>
+<td>0h</td>
+<td>送信 実測</td>
+<td>枠内</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2026-09-08</td>
+<td>同上</td>
+<td>まぐまぐ</td>
+<td>21:00〜24:00</td>
+<td>2026-09-08 21:02:37</td>
+<td>165282274</td>
+<td>記録なし</td>
+<td>0h</td>
+<td>発行 実測</td>
+<td>枠内</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2026-09-09</td>
+<td>放っておいていい月と、手を打つ月</td>
+<td>UTAGE</td>
+<td>21:00〜24:00</td>
+<td>2026-09-09 22:10:00</td>
+<td>y8chI3ufDbJr</td>
+<td>記録なし</td>
+<td>0h</td>
+<td>送信1812</td>
+<td>枠内</td>
+</tr>
+<tr>
+<td>5</td>
+<td>2026-09-09</td>
+<td>同上</td>
+<td>spro</td>
+<td>21:00〜24:00</td>
+<td>2026-09-11 00:17:06</td>
+<td>5128</td>
+<td>記録なし</td>
+<td>24時間17分</td>
+<td>送信 実測</td>
+<td>予約タスク制度前（手動運用期）</td>
+</tr>
+<tr>
+<td>6</td>
+<td>2026-09-09</td>
+<td>同上</td>
+<td>まぐまぐ</td>
+<td>21:00〜24:00</td>
+<td>未</td>
+<td>未</td>
+<td>未</td>
+<td>未</td>
+<td>未</td>
+<td>配送履歴に該当なし（推測：制度前で押し忘れ）</td>
+</tr>
+<tr>
+<td>7</td>
+<td>2026-09-10</td>
+<td>月末の残高で、月を採点しない</td>
+<td>UTAGE</td>
+<td>21:00〜24:00</td>
+<td>2026-09-10 22:10:00</td>
+<td>SEpcQInjZ3Qq</td>
+<td>記録なし</td>
+<td>0h</td>
+<td>送信 実測</td>
+<td>枠内</td>
+</tr>
+<tr>
+<td>8</td>
+<td>2026-09-10</td>
+<td>同上</td>
+<td>spro</td>
+<td>21:00〜24:00</td>
+<td>未</td>
+<td>未</td>
+<td>未</td>
+<td>未</td>
+<td>未</td>
+<td>配信履歴に該当なし（推測：制度前）</td>
+</tr>
+<tr>
+<td>9</td>
+<td>2026-09-10</td>
+<td>同上</td>
+<td>まぐまぐ</td>
+<td>21:00〜24:00</td>
+<td>未</td>
+<td>未</td>
+<td>未</td>
+<td>未</td>
+<td>未</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>10</td>
+<td>2026-09-11</td>
+<td>100円で、月を採点する</td>
+<td>UTAGE</td>
+<td>21:00〜24:00</td>
+<td>2026-09-12 22:30:20</td>
+<td>jDKfaYAwfMLM</td>
+<td>記録なし</td>
+<td>22時間30分</td>
+<td>送信 実測</td>
+<td>予約タスク稼働は9/13以降・移行期</td>
+</tr>
+<tr>
+<td>11</td>
+<td>2026-09-11</td>
+<td>同上</td>
+<td>spro</td>
+<td>21:00〜24:00</td>
+<td>2026-09-11 21:12:06</td>
+<td>5129</td>
+<td>記録なし</td>
+<td>0h</td>
+<td>送信3835</td>
+<td>枠内</td>
+</tr>
+<tr>
+<td>12</td>
+<td>2026-09-11</td>
+<td>同上</td>
+<td>まぐまぐ</td>
+<td>21:00〜24:00</td>
+<td>2026-09-11 19:08:53</td>
+<td>165285559（＋165285573 19:18:51 二重）</td>
+<td>記録なし</td>
+<td>0h</td>
+<td>発行1447</td>
+<td>1時間51分早出＋二重発行</td>
+</tr>
+<tr>
+<td>13</td>
+<td>2026-09-12</td>
+<td>自分のギネスを、平均にする</td>
+<td>UTAGE</td>
+<td>21:00〜24:00</td>
+<td>2026-09-13 09:00:00</td>
+<td>5JKfI2cd3jDF</td>
+<td>記録なし</td>
+<td>9時間0分</td>
+<td>送信 実測</td>
+<td>朝の時刻に予約されて枠を跨いだ（原因記録なし）</td>
+</tr>
+<tr>
+<td>14</td>
+<td>2026-09-12</td>
+<td>同上</td>
+<td>spro</td>
+<td>21:00〜24:00</td>
+<td>2026-09-13 00:32:06</td>
+<td>5130</td>
+<td>記録なし</td>
+<td>32分</td>
+<td>送信3836</td>
+<td>寸差の枠越え</td>
+</tr>
+<tr>
+<td>15</td>
+<td>2026-09-12</td>
+<td>同上</td>
+<td>まぐまぐ</td>
+<td>21:00〜24:00</td>
+<td>2026-09-12 23:30:03</td>
+<td>165286865</td>
+<td>記録なし</td>
+<td>0h</td>
+<td>発行1447</td>
+<td>枠内（ギリギリ）</td>
+</tr>
+<tr>
+<td>16</td>
+<td>2026-09-13</td>
+<td>STRAC面積図で配分を見る</td>
+<td>UTAGE</td>
+<td>21:00〜24:00</td>
+<td>2026-09-13 22:35:02</td>
+<td>s0orycTjfJUs</td>
+<td>mainichi-merumaga-21-24</td>
+<td>0h</td>
+<td>送信1799／36h開封287</td>
+<td>枠内</td>
+</tr>
+<tr>
+<td>17</td>
+<td>2026-09-13</td>
+<td>同上</td>
+<td>spro</td>
+<td>21:00〜24:00</td>
+<td>2026-09-14 00:09:06</td>
+<td>5131</td>
+<td>mainichi-merumaga-21-24</td>
+<td>9分</td>
+<td>送信3843</td>
+<td>寸差の枠越え</td>
+</tr>
+<tr>
+<td>18</td>
+<td>2026-09-13</td>
+<td>同上</td>
+<td>まぐまぐ</td>
+<td>21:00〜24:00</td>
+<td>2026-09-13 22:52:04</td>
+<td>165287930（＋165287931 22:54:25 二重）</td>
+<td>mainichi-merumaga-21-24／参謀（手）</td>
+<td>0h</td>
+<td>発行1447</td>
+<td>二重発行（1本は手で二重に出した）</td>
+</tr>
+<tr>
+<td>19</td>
+<td>2026-09-14</td>
+<td>今どこにいるかを、＠で見る</td>
+<td>UTAGE</td>
+<td>21:00〜24:00</td>
+<td>2026-09-14 21:56:01</td>
+<td>ZKvMbgZBKhin</td>
+<td>FS-utage-pm</td>
+<td>0h</td>
+<td>送信1798／12h開封285</td>
+<td>枠内</td>
+</tr>
+<tr>
+<td>20</td>
+<td>2026-09-14</td>
+<td>同上</td>
+<td>spro</td>
+<td>21:00〜24:00</td>
+<td>2026-09-15 21:09:00（予約）／実配信は21:09過ぎ</td>
+<td>5132</td>
+<td>BS-engineer-haishin（2026-09-15再配信）</td>
+<td>21時間9分</td>
+<td>dashita_kiroku 記載・spro クリック計測 0件</td>
+<td>9/14の予約タスクは19:39起動前（19:28）にMits様が停止／20:06戻し／保存でテスト済フラグ消失</td>
+</tr>
+<tr>
+<td>21</td>
+<td>2026-09-14</td>
+<td>同上</td>
+<td>まぐまぐ</td>
+<td>21:00〜24:00</td>
+<td>2026-09-15 20:23:20</td>
+<td>165290156</td>
+<td>BS-engineer-kansou（2026-09-15再配信）</td>
+<td>20時間23分</td>
+<td>配送完了1447部（画面実測）</td>
+<td>同上（停止／戻し）＋確認画面が時間切れ（ERR_CACHE_MISS）で当日9/14 21:25便が配送されず</td>
+</tr>
+<tr>
+<td>22</td>
+<td>2026-09-15</td>
+<td>（新号）</td>
+<td>UTAGE</td>
+<td>21:00〜24:00</td>
+<td>2026-09-15 20:20</td>
+<td>vP9ldTlxQ77e</td>
+<td>mainichi-merumaga-21-24</td>
+<td>0h</td>
+<td>dashita_kiroku 記載</td>
+<td>40分早出</td>
+</tr>
+<tr>
+<td>23</td>
+<td>2026-09-15</td>
+<td>同上</td>
+<td>spro</td>
+<td>21:00〜24:00</td>
+<td>2026-09-15 20:17 テスト送信済＋21:15 予約</td>
+<td>5133</td>
+<td>mainichi-merumaga-21-24</td>
+<td>0h</td>
+<td>テスト送信 実測</td>
+<td>予約時刻は枠内</td>
+</tr>
+<tr>
+<td>24</td>
+<td>2026-09-15</td>
+<td>同上</td>
+<td>まぐまぐ</td>
+<td>21:00〜24:00</td>
+<td>未（21:00 dashita 記載・haishin_id 空欄）</td>
+<td>未</td>
+<td>mainichi-merumaga-21-24</td>
+<td>未</td>
+<td>未</td>
+<td>押した記録はあるが配信ID未記入・配送履歴未確認</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2">2. 分析</h2>
+<h3 id="_1">抜け・遅れ・枠外 だけ切り出した表</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>号</th>
+<th>スタンド</th>
+<th>状態</th>
+<th>遅れ</th>
+<th>原因の型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>9/08</td>
+<td>UTAGE</td>
+<td>早出（46分）</td>
+<td>0h</td>
+<td>(e)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>9/09</td>
+<td>spro</td>
+<td>遅れ</td>
+<td>24時間17分</td>
+<td>(e) 制度前</td>
+</tr>
+<tr>
+<td>6</td>
+<td>9/09</td>
+<td>まぐまぐ</td>
+<td>未</td>
+<td>—</td>
+<td>(e) 制度前</td>
+</tr>
+<tr>
+<td>8</td>
+<td>9/10</td>
+<td>spro</td>
+<td>未</td>
+<td>—</td>
+<td>(e) 制度前</td>
+</tr>
+<tr>
+<td>9</td>
+<td>9/10</td>
+<td>まぐまぐ</td>
+<td>未</td>
+<td>—</td>
+<td>(e) 制度前</td>
+</tr>
+<tr>
+<td>10</td>
+<td>9/11</td>
+<td>UTAGE</td>
+<td>遅れ</td>
+<td>22時間30分</td>
+<td>(e) 制度前・移行期</td>
+</tr>
+<tr>
+<td>12</td>
+<td>9/11</td>
+<td>まぐまぐ</td>
+<td>早出＋二重</td>
+<td>0h</td>
+<td>(e) 移行期・二重発行</td>
+</tr>
+<tr>
+<td>13</td>
+<td>9/12</td>
+<td>UTAGE</td>
+<td>遅れ</td>
+<td>9時間0分</td>
+<td>(e) 朝時刻に予約された（原因記録なし・推測：制度移行の残り）</td>
+</tr>
+<tr>
+<td>14</td>
+<td>9/12</td>
+<td>spro</td>
+<td>遅れ</td>
+<td>32分</td>
+<td>(e) 寸差の枠越え</td>
+</tr>
+<tr>
+<td>17</td>
+<td>9/13</td>
+<td>spro</td>
+<td>遅れ</td>
+<td>9分</td>
+<td>(e) 寸差の枠越え</td>
+</tr>
+<tr>
+<td>18</td>
+<td>9/13</td>
+<td>まぐまぐ</td>
+<td>二重発行</td>
+<td>0h</td>
+<td>(c) 参謀が手で二重に押した（dashita_kiroku 4行目「参謀（手で出した・二重）」）</td>
+</tr>
+<tr>
+<td>20</td>
+<td>9/14</td>
+<td>spro</td>
+<td>遅れ</td>
+<td>21時間9分</td>
+<td><strong>(d)＋(b)</strong> 人の操作で予約タスク停止／戻し後の保存でspro側テスト送信済フラグが消失・翌日再配信</td>
+</tr>
+<tr>
+<td>21</td>
+<td>9/14</td>
+<td>まぐまぐ</td>
+<td>遅れ</td>
+<td>20時間23分</td>
+<td><strong>(d)＋(b)</strong> 人の操作で停止／戻し後、確認画面が時間切れ（ERR_CACHE_MISS）で当日配送されず・翌日再配信</td>
+</tr>
+<tr>
+<td>22</td>
+<td>9/15</td>
+<td>UTAGE</td>
+<td>早出（40分）</td>
+<td>0h</td>
+<td>(b) 予約タスクが枠外の時刻に配信を成立させた（原因記録なし・推測）</td>
+</tr>
+<tr>
+<td>24</td>
+<td>9/15</td>
+<td>まぐまぐ</td>
+<td>未</td>
+<td>—</td>
+<td>(c) または (b)。dashita_kiroku 21:00 の行に haishin_id 空欄・配送履歴未確認</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_2">型ごとの件数</h3>
+<table>
+<thead>
+<tr>
+<th>型</th>
+<th>件数</th>
+<th>該当</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(a) 予約タスクが起動しなかった</td>
+<td>0</td>
+<td>—</td>
+</tr>
+<tr>
+<td>(b) 起動したが途中で止まった</td>
+<td>3（うち 2 は d と重複）</td>
+<td>#20 #21 #22（＋#24 の推測）</td>
+</tr>
+<tr>
+<td>(c) 出たが台帳に載っていない／配信ID空欄</td>
+<td>2</td>
+<td>#18 二重発行、#24 空欄</td>
+</tr>
+<tr>
+<td>(d) 人の操作で止めた</td>
+<td>2</td>
+<td>#20 #21</td>
+</tr>
+<tr>
+<td>(e) その他（制度前・移行期・原因記録なし）</td>
+<td>8</td>
+<td>#1 #5 #6 #8 #9 #10 #12 #13</td>
+</tr>
+<tr>
+<td>寸差の枠越え（e に含める）</td>
+<td>2</td>
+<td>#14 #17</td>
+</tr>
+</tbody>
+</table>
+<p>制度は 2026-09-13 に「Mits様検収なし・毎日21〜24時に1通・予約タスク mainichi-merumaga-21-24」で始まった（memory <code>project_merumaga_kadochu_kyoka_no_han_i.md</code> 参照）。9/08〜9/12 の抜け・遅れは制度前の手動運用時代のもので、仕組み上の欠陥ではなく手が回らなかった件。<strong>制度施行後（9/13 以降）に絞ると、抜け・遅れは 3日で 5件（#18 二重／#20 #21 停止・戻し／#22 早出／#24 未）。</strong></p>
+<h3 id="1">1回の抜けが翌日まで残った仕組み上の理由</h3>
+<ul>
+<li><strong>見張りが動いていない</strong>。SKILL.md 上には「見張り mainichi-merumaga-mihari-2310（23:10）」の記述があるが、<code>ls /Users/nishidamitsuhiro/.claude/scheduled-tasks/</code> に該当ディレクトリは無い（未実装または未登録）。23:10 に「出ていないスタンド」を検知して補送する層が実在しない。</li>
+<li><strong>配信ID 空欄で通す関所</strong>。dasu_mae_kakunin.py は 2026-09-15 修正で「配信ID が空欄の行では止めない」形に直された（押し直しを可能にするため）。この改修は正しいが、空欄行のまま24時を跨いでも警告する層がない。#24 が空欄のまま朝を迎える可能性がある。</li>
+<li><strong>予約タスクの停止／戻しが計測タスクに波及</strong>。19:12 に SKILL.md へ「今夜だけ23:00〜」の2行を足し／19:28 に3本停止／20:06 に戻す、の一連の操作が、当夜の 19:39 起動を跨いだ結果、翌日の運行に食い込んだ。停止／戻しが「今夜の運行に間に合うか」を判定するチェック層が無い。</li>
+<li><strong>spro の「保存でテスト送信済フラグが消える」既知バグ</strong>。session-log に 2026-09-15 20:19 実測記載あり。この既知バグを踏まないための「保存前にテスト送信済かを見る」層が配信スキル側に無い。</li>
+<li><strong>まぐまぐの確認画面が時間切れで戻ると当日配送されない</strong>。ERR_CACHE_MISS を掴んだときに再ログイン→再確認する手順が配信スキル側に組み込まれていない。</li>
+</ul>
+<h3 id="916">計測の予約タスクが 9/16 に飛んだ件（司令塔からの追加材料）</h3>
+<p>事実：<br />
+- merumaga-keisoku-24h-36h-48h の lastRunAt 2026-09-14T12:05:46Z（＝日本時間 9/14 21:05）、nextRunAt 2026-09-16T12:04:51Z（＝9/16 21:04）。9/15 21:04 の起動が飛ぶ見込み。<br />
+- 同タスクの SKILL.md が 2026-09-15 20:20:53 に BS-engineer-skill によって書き換えられた（spro ログインの22行を配信スキルへの指しに置き換え）。控えは <code>/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20260915_skill_seiri_mae/6a_keisoku_24_36_48/</code>。<br />
+- 対象セッションのサブエージェント jsonl（<code>/Users/nishidamitsuhiro/.claude/projects/…/4c3d1aaf-…/subagents/</code>）を Python で走査した結果、<code>update_scheduled_task</code> / <code>run_scheduled_task</code> / <code>delete_scheduled_task</code> の実際の tool_use 呼び出しは <strong>0件</strong>（マッチしたのは deferred_tools_delta の一覧列挙のみで、実行ではない）。<br />
+- 比較材料：mainichi-merumaga-21-24 は 9/15 19:39 に走った・nextRunAt 9/16 19:39。untendai-mkt-haishin-torikomi の nextRunAt 9/15 23:03。merumaga-keisoku-36h-asa の nextRunAt 9/16 09:06。<strong>24h-36h-48h だけが直近の起動を飛ばしている。</strong></p>
+<p>推測：SKILL.md 書換と nextRunAt 9/16 移動の因果関係は現時点で不明。update_scheduled_task 系の呼び出し記録が subagent jsonl に無い以上、コード上は書換だけ発生している。<strong>推測1</strong>：スケジューラ側が SKILL.md 更新を検知した際に nextRunAt を再計算する仕様がある。<strong>推測2</strong>：関係のない外部要因（スケジューラのバックエンド遅延）。<strong>確かめられない</strong>。</p>
+<h2 id="3">3. 修正案</h2>
+<p>原因の型ごとに、直す形を1つずつ書く。持ち場は 発注書 の3択から選ぶ。</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>原因の型</th>
+<th>直す形</th>
+<th>直す場所（絶対パス）</th>
+<th>持ち場</th>
+<th>検収の線（値）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R1</td>
+<td>(b) 途中で止まった：spro の「保存でテスト送信済フラグ消失」</td>
+<td>配信スキルの spro 節に「保存前にテスト送信済 datetime を読み、0000-00-00 なら保存中止して先にテスト送信を通す」ガードを1段追加</td>
+<td>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/skills/merumaga-3stand-haishin/SKILL.md</td>
+<td>メール配信・計測・自動化</td>
+<td>保存 API を叩く直前にテスト送信 datetime を screenshot でも DOM でも良いので値として取り、<code>0000-00-00</code> なら exit 1 で保存を止める</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>(b) まぐまぐの ERR_CACHE_MISS で当日配送されない</td>
+<td>配信スキルのまぐまぐ節に「配送予約押下→30秒以内に配送履歴で本日の配送を確認、無ければ再ログイン→再確認→再押下」を追加</td>
+<td>同上</td>
+<td>メール配信・計測・自動化</td>
+<td>配送履歴の1行目の日時が「押下時刻 ± 5分」に入っていること／dashita_kiroku.csv の haishin_id が埋まっていること</td>
+</tr>
+<tr>
+<td>R3</td>
+<td>(d) 人の操作で予約タスクを停止／戻しした結果、当夜の起動が飛んだ</td>
+<td>mainichi の停止／戻しは「次回起動時刻の30分前まで」に制限。30分を切ってからの停止は「今夜は手で完走」の宣言を dashita_kiroku に1行足すまで通さない</td>
+<td>/Users/nishidamitsuhiro/.claude/scheduled-tasks/mainichi-merumaga-21-24/SKILL.md（先頭の運用注意を追加）</td>
+<td>司令塔（横断規約）／メール配信・計測・自動化（実装）</td>
+<td>停止 API を叩く前に nextRunAt を読み、当日 19:39 の30分前（19:09）以降なら stderr に「手で完走宣言」を促す</td>
+</tr>
+<tr>
+<td>R4</td>
+<td>(c) 台帳の配信ID 空欄が朝まで残る</td>
+<td>見張り予約タスク <code>mainichi-merumaga-mihari-2310</code> を新規作成（23:10 起動）。dashita_kiroku の当日3行を読み、haishin_id 空欄が1行でもあれば、そのスタンドの補送を試みる</td>
+<td>/Users/nishidamitsuhiro/.claude/scheduled-tasks/mainichi-merumaga-mihari-2310/SKILL.md（新規）</td>
+<td>メール配信・計測・自動化</td>
+<td>23:10 に起動して当日3行が全部 haishin_id 埋まっていれば exit 0／1行でも空欄なら該当スタンドで押し直しを試みて結果を1行 append</td>
+</tr>
+<tr>
+<td>R5</td>
+<td>(c) 参謀が手で二重に押した（9/13 まぐまぐ）</td>
+<td>関所 dasu_mae_kakunin.py を「配信IDが埋まっている行があれば止める」の元仕様に戻すのではなく、「同じ号・同じスタンドで haishin_id が既に埋まっている行があれば、出す手が『同一手ではない』場合のみ止める」に絞る。人が手で出したあとで機械が二重に出す事故は既に防げているが、その逆（機械が出したあとで人が二重に出す）を防ぐ</td>
+<td>/Users/nishidamitsuhiro/.claude/scheduled-tasks/mainichi-merumaga-21-24/dasu_mae_kakunin.py</td>
+<td>メール配信・計測・自動化</td>
+<td>同一号・同一スタンドで haishin_id 埋まりの行があるとき、次に別の手が来たら exit 1／同じ手が来たら exit 0（既存行を使う）</td>
+</tr>
+<tr>
+<td>R6</td>
+<td>(b)推測 UTAGE が枠外時刻に配信成立（#22 40分早出／#13 朝9時）</td>
+<td>UTAGE 配信スキルに「予約日時が今日の21:00〜24:00 に入っているかを reserved 化前に検算」を追加</td>
+<td>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/skills/merumaga-3stand-haishin/SKILL.md（UTAGE 節）</td>
+<td>メール配信・計測・自動化</td>
+<td>reserved 化前に予約日時を parse し、当日 21:00〜24:00 の範囲に入っていなければ exit 1</td>
+</tr>
+<tr>
+<td>R7</td>
+<td>(b)推測 計測タスク 24h-36h-48h の nextRunAt が SKILL.md 書換後に 9/16 へ飛んだ</td>
+<td>予約タスク SKILL.md を書き換える subagent（BS-engineer-skill 等）に「書換の直前に nextRunAt を読み、書換の直後にも読み、値が変わっていれば警告して update_scheduled_task で元に戻す」を必須手順化</td>
+<td>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/agents/BS-engineer.md（および engineer 系の運用規約）</td>
+<td>司令塔（規約）／メール配信・計測・自動化（当該タスクの復旧）</td>
+<td>SKILL.md 書換の前後で nextRunAt をログに残す／飛んだら update_scheduled_task で 24 時間巻き戻す／今夜の分は手で1回走らせる</td>
+</tr>
+<tr>
+<td>R8</td>
+<td>(e) 寸差の枠越え（9/12 spro 32分・9/13 spro 9分）</td>
+<td>枠終了 30分前（23:30）で「まだ押していないスタンドがあれば急ぐ」の内部アラームを配信スキルに追加。手順の順番を「押しやすい順（まぐまぐ→UTAGE→spro）」に固定</td>
+<td>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/skills/merumaga-3stand-haishin/SKILL.md（順序節）</td>
+<td>メール配信・計測・自動化</td>
+<td>23:30 時点で dashita_kiroku の当日3行のうち haishin_id 空欄があれば警告を stderr に出す</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4">4. 足りない材料</h2>
+<table>
+<thead>
+<tr>
+<th>埋まらなかった欄</th>
+<th>持っていそうな持ち場</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>9/08 UTAGE／9/08 spro／9/08 magmag／9/09 UTAGE／9/10 UTAGE／9/11 spro／9/11 magmag／9/12 magmag（出し手 「記録なし」）</td>
+<td>制度前のため出し手記録なし。掘り起こす価値は低い（Mits様手動運用時代の記録は Notion 側）｜メール配信・計測・自動化</td>
+</tr>
+<tr>
+<td>9/09 magmag／9/10 spro／9/10 magmag（未・実際に出さなかったのか出したが記録が無いのか）</td>
+<td>メール配信・計測・自動化（当時のまぐまぐ配送履歴・spro 配信履歴の実機確認）</td>
+</tr>
+<tr>
+<td>9/15 まぐまぐ（haishin_id 空欄・配送完了かどうか）</td>
+<td>メール配信・計測・自動化（まぐまぐ配送履歴の実機確認）</td>
+</tr>
+<tr>
+<td>予約タスク merumaga-keisoku-24h-36h-48h が 9/16 に飛んだ因果</td>
+<td>メール配信・計測・自動化（今日の設定変更の有無を持ち主に問い合わせ中と司令塔連絡あり）／司令塔（スケジューラ側の仕様確認）</td>
+</tr>
+<tr>
+<td>9/14 spro／9/14 magmag の停止／戻しの前後で subagent が update_scheduled_task を呼んだか</td>
+<td>メール配信・計測・自動化（当該セッションの subagent jsonl は本報告で 0 件だったが、親セッションの jsonl 未走査）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>以上。</p>
+<hr />
+<h2 id="5-2026-09-15-212x">5. 司令塔の追加確認（2026-09-15 21:2x・実物で取った値）</h2>
+<ol>
+<li><strong>9/14 20:07 に手で走らせた配信の予約タスクは、許可の自動判定で止められていた。</strong><br />
+   - 手で走らせた操作：メール配信・計測・自動化（記録 4c3d1aaf）が 2026-09-14 20:07:35 に run_scheduled_task（mainichi-merumaga-21-24）を呼んだ。<br />
+   - 返り値（20:07:55）：is_error=True「Permission for this action was denied by the Claude Code auto mode classifier. Reason: Blocked by classifier.」<br />
+   - このため 9/14 の実行記録は0件。そのあとの手作業（spro・まぐまぐの画面操作）でも、ボタン操作が同じ判定で止められた（同セッションの報告）。<br />
+   - #20・#21 の原因の型は「(d) 人の操作で止めた」だけでなく、「(b) 戻したあとの手動実行が許可の自動判定で止められた」を含む。</li>
+<li><strong>2026-09-13 の実行（13:02:23Z＝22:02）は、予約の時刻による起動ではなく手で走らせたもの</strong>（run_scheduled_task 2026-09-13T13:02:21Z・記録 b14da621）。予約の時刻どおりに起動した記録は 2026-09-15 19:39 の1件だけ。</li>
+<li><strong>計測タスク merumaga-keisoku-24h-36h-48h の設定変更の呼び出し</strong>（2026-09-14 12:00 以降に更新された ~/.claude/projects の全 jsonl を走査）<br />
+   - 名前と説明を変えた update_scheduled_task は 2026-09-10 00:18Z（記録 b14da621）で、今日ではない。<br />
+   - 今日このタスクに当たったのは、SKILL.md の中身を書き換えたこと（2026-09-15 20:20:53）だけ。<br />
+   - 次回予定が 9/16 に移った原因は、まだ確かめられていない（推測1：SKILL.md の書き換えで次回予定が計算し直された）。<br />
+   - 同じ時刻に書き換えた merumaga-keisoku-36h-asa（20:21:22）は、次回が 9/16 09:06 で本来の順番どおりのため、比べる材料にならない。</li>
+<li><strong>見張り mainichi-merumaga-mihari-2310 が書いてあるのは、配信の手順書ではない。</strong><br />
+   - 書いてある場所：/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/project_merumaga_kadochu_kyoka_no_han_i.md L24<br />
+   - mainichi-merumaga-21-24/SKILL.md での grep は0件。<br />
+   - ~/.claude/scheduled-tasks/ に mainichi-merumaga-mihari* のフォルダは無い（ls で確認）。<br />
+   - 決まりには見張りがあると書いてあるのに、実物は無い。</li>
+<li><strong>spro の本文が文字化けし、spro の本配信は今夜は出ていない見込み</strong>（メール配信・計測・自動化の報告・2026-09-15 21:1x）<br />
+   - Mits様が spro の受信で見つけた：HTML 本文の日本語が、ISO-2022-JP の文字の並びのまま表示される（「$BL\l8$O&lt;+J,$G7h$a$k (B」の形）。同じ内容の予約が2通あった（どのIDかは未確認）。<br />
+   - 21:08：BS-engineer が 5132 の編集画面で保存を押した（予約を 9/16 00:00 に変える途中・結果は未確認）→ 止めた。その後、Mits様がご自身で予約の時刻を変えた（変えた後の時刻は未確認）。<br />
+   - 見落とし：「7 テスト配信をチェックした」で、テスト便を平文の突き合わせだけで合格にし、HTML の表示を見ていなかった。→ 原因の型 (b)、ただし「止まった」ではなく「検収の線が HTML 表示を見ていない」型。<br />
+   - 台帳 dashita_kiroku.csv の 2026-09-14 spro 5132／2026-09-15 spro 5133 は、「本配信が出た」ことを意味しない状態。台帳の1行が「押した」「予約した」「読者に届いた」のどれかを区別する欄が無い。<br />
+   - 今夜の計測の手動実行は、spro の件が片付くまで保留（持ち場の判断）。</li>
+</ol>
+<h2 id="6-2026-09-15-211x212x">6. 持ち場の回答（メール配信・計測・自動化・2026-09-15 21:1x〜21:2x）</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>回答</th>
+<th>中身</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R1</td>
+<td>採る（順番を変える）</td>
+<td>予約日時を決めて保存 → テスト送信 → 一覧で「すでにテスト配信がすんでいます」を読む。保存するとテスト済みが消えるので、テスト送信を保存の後に置く</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>採る</td>
+<td>—</td>
+</tr>
+<tr>
+<td>R4</td>
+<td>形を変えて R8 と1本にする</td>
+<td>23:10 の予約タスク1本は、配信IDの空欄を見つけて知らせるだけ。押し直しはしない（手で出した分と重なって二重発行になり得るため）。memory L24 の記載は、作った実物に合わせて直す</td>
+</tr>
+<tr>
+<td>R5</td>
+<td>採る＋穴を直す</td>
+<td>今の already_dashita() は、号の日付とスタンドだけを見て出し手は見ない（出し手が違っても止まる）。ただし、同じ号・同じスタンドの行を最初の1行だけ返すため、空欄の行が先にあると、後ろの埋まった行を見ずに「出してよい」を返す＝二重発行が通る。同じ号・同じスタンドの行を全部見て、1行でも配信IDが埋まっていれば止める形に直す</td>
+</tr>
+<tr>
+<td>R6</td>
+<td>採る</td>
+<td>—</td>
+</tr>
+<tr>
+<td>R8</td>
+<td>採る（R4 と1本）</td>
+<td>—</td>
+</tr>
+<tr>
+<td>R9（持ち場が足した）</td>
+<td>採る</td>
+<td>「7 テスト配信をチェックした」に「HTML 表示で文字化けが無いこと」を入れる</td>
+</tr>
+<tr>
+<td>R3・R7</td>
+<td>司令塔の分</td>
+<td>計測タスクの次回が 9/16 に移った原因を確かめてから決める</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>手を入れる時期：spro の文字化けの原因が出た後、R1〜R9 を1回でまとめて入れる。</li>
+<li>材料のうち #22・#24・9/09〜9/10 の3件は、持ち場の BS-engineer-shiryo が確かめている（見るだけ）。</li>
+<li>今夜の計測の手動実行は、spro の件が片付くまで保留。許可の自動判定で止められたら、返り値の文言をそのまま司令塔へ送る。別の道具で回り込むことはしない。</li>
+</ul>
+<h2 id="7-2026-09-15-212x">7. 訂正（司令塔・2026-09-15 21:2x）</h2>
+<ul>
+<li><strong>§2「計測の予約タスクが 9/16 に飛んだ件」、§5-3、R7 の前提は誤り。</strong></li>
+<li>一覧の値：merumaga-keisoku-24h-36h-48h の lastRunAt は 2026-09-15T12:04:58Z（日本時間 9/15 21:04:58）で、今夜も予約どおり起動していた。</li>
+<li>21:02 の時点で、一覧はすでに nextRunAt を 2026-09-16T12:04:51Z と表示していた。起動の3分前だった。</li>
+<li>司令塔が一覧の nextRunAt だけを見て「今夜の回が飛ぶ」と判断したのが誤り。実行記録（lastRunAt・list_task_runs）で確かめるべきだった。</li>
+<li>R7 は「手順書を書き換える前後に nextRunAt を読む」ではなく、「起動したかは nextRunAt ではなく、実行記録で確かめる」に置き換える候補。</li>
+<li>nextRunAt が起動の前に翌日へ進む表示の仕様は、公式の資料を調べている最中。</li>
+</ul>
+<h2 id="8-2026-09-15-212x">8. 材料の確認結果（メール配信・計測・自動化・2026-09-15 21:2x・読み取りのみ）</h2>
+<ul>
+<li><strong>#22 9/15 UTAGE は「早出」ではない（§1・§2 の「40分早出」を取り消す）。</strong></li>
+<li>UTAGE vP9ldTlxQ77e：status reserved・send_datetime 2026-09-15 21:15:00・send_count 0（確認時点）・updated_at 20:21:26。</li>
+<li>台帳の「20:20」は記入した時刻で、出た時刻でも予約時刻でもない。</li>
+<li>R6 の根拠のうち #22 は外れる（#13 9/12 の朝9時は残る）。</li>
+<li><strong>#24 9/15 まぐまぐ</strong></li>
+<li>台帳の行には、いまは 21:00・165290207 が入っている。</li>
+<li>まぐまぐの配送履歴の 9/15 の行は、165290156（9/14号・20:23:20 完了）の1件だけ。165290207 は、確認時点で履歴に出ていない。</li>
+<li><strong>9/09 まぐまぐ・9/10 まぐまぐは、出ていない。</strong></li>
+<li>配送履歴の9月分で、9/08 21:02:37 の次は 9/11 19:08:53。</li>
+<li><strong>9/10 spro は、作られていない＝出ていない。</strong></li>
+<li>メール番号は 5127（9/8）・5128（9/9）・5129（9/11）・5130（9/12）で、9/10号の番号が無い。</li>
+<li><strong>spro の今夜（確認時点）：読者に出た便は0通。</strong></li>
+<li>5132「今どこにいるかを、＠で見る」：予約 2026-09-16 00:00:00・最終更新 21:08:43・テスト送信日時 0000-00-00</li>
+<li>5133「目標までの差を、＠で見る」：予約 2026-09-15 22:15:00・最終更新 21:08:57・テスト送信日時 0000-00-00</li>
+<li>両方ともテスト済みが消えていて、このままでは予約の時刻が来ても出ない。21:08 台の保存（予約時刻の変更）で消えた。R1 の型と同じ。</li>
+<li>9/15 の spro「予約配信完了」通知は0件。</li>
+<li><strong>文字化けは、spro の管理画面のプレビューで起きていた。</strong></li>
+<li>/smail/tmpwork/viewhtmltemp.html が meta charset=utf-8 と宣言したまま、中身を ISO-2022-JP で返している。</li>
+<li>受信したテスト便3通は text/html; charset=UTF-8・base64 で、中身は正常。</li>
+<li>本配信の便が読者側でどう表示されるかは、未確認。</li>
+</ul>
+<h2 id="9-2026-09-15-212x">9. 公式の資料と既知の報告（司令塔が 2026-09-15 21:2x に原文を取り直して確認）</h2>
+<p>出典：<br />
+https://code.claude.com/docs/en/desktop-scheduled-tasks</p>
+<ul>
+<li><strong>眠っていると飛ぶ</strong>："If your computer sleeps through a scheduled time, the run is skipped."</li>
+<li>設定 Desktop app → General の <strong>Keep computer awake</strong> で、アイドルでの眠りは防げる。蓋を閉じると眠る。</li>
+<li><strong>追いつきは1回だけ</strong>："Desktop starts exactly one catch-up run for the most recently missed time and discards anything older."</li>
+<li><strong>遅れは決まった幅</strong>："Each task gets a small delay of a few minutes after the scheduled time … The delay is deterministic"</li>
+<li><strong>許可はタスクごと</strong>："Each task has its own permission mode"</li>
+<li>止まらないようにする方法："click Run now after creating a task, watch for permission prompts, and select 'always allow' for each one"</li>
+<li>タスクの詳細画面の Always allowed で、確かめたり取り消したりできる。</li>
+<li><strong>飛んだ回の記録</strong>：詳細画面の Review history に「including skipped runs」が出る。</li>
+<li>飛んだ理由は3つ：眠っていた／前の回が走っていた／ほかの予約タスクが走っていた。</li>
+<li><strong>SKILL.md を直接書き換えた場合</strong>："Changes take effect on the next run. Schedule, folder, model, and enabled state are not in this file"</li>
+<li>書き換えで次回予定が変わるとは、書かれていない。</li>
+</ul>
+<p>既知の報告（gh api で実在と題名を確認）：<br />
+- #92429 open 2026-09-06「Scheduled task marks itself as completed (lastRunAt/nextRunAt advance) without actually running」<br />
+  https://github.com/anthropics/claude-code/issues/92429<br />
+- #77657 open 2026-07-15「[BUG] Scheduled Tasks: lastRunAt/nextRunAt inconsistent with actual execution」<br />
+  https://github.com/anthropics/claude-code/issues/77657<br />
+- 今夜 21:02 に、起動の前なのに nextRunAt が翌日を示していたのは、この2件と同じ系統の食い違いと見る（推測。本文は読んでいない）。</p>
+<p>司令塔の分の案を置き換える：<br />
+- <strong>R7（新）</strong>：予約タスクが起動したかは、nextRunAt・lastRunAt ではなく、list_task_runs の実行記録（started_at と status）で確かめる。記録が無ければ、Review history の skipped の理由を見る。<br />
+  - 持ち場：司令塔（決まり）／各持ち場（実際に確かめる）<br />
+  - 検収の線：抜けの判定の根拠が list_task_runs の値になっていない報告が 0 件<br />
+- <strong>R3（新）</strong>：予約タスクを止める・戻す操作が、その日の起動時刻をまたいだときは、止めた側がその場で持ち場へ「今夜の回は起動しない」と1通送る。止めることそのものは制限しない。<br />
+  - 持ち場：司令塔（決まり）<br />
+  - 検収の線：起動時刻をまたいで止めた回で、持ち場への連絡が抜けた件が 0 件<br />
+- <strong>Mits様のご判断に回すもの</strong>（設定なので AI は触らない）<br />
+  - 予約タスクごとの許可（Run now と always allow）<br />
+  - Keep computer awake<br />
+  - 9/14 20:07 に run_scheduled_task を止めたのは、呼んだ側のセッション（defaultMode auto）の判定。予約タスク自身の許可ではない。</p>
+<h2 id="10-2026-09-15-212x2122">10. 持ち場からの続報（メール配信・計測・自動化・2026-09-15 21:2x）と司令塔の実行記録確認（21:22）</h2>
+<h3 id="_3">配信が出たもの（持ち場の実測値）</h3>
+<ul>
+<li>9/15号 UTAGE vP9ldTlxQ77e：message_get status sending（updated_at 21:15:08）・message_stats_get send_count 176・open_count 14</li>
+<li>9/15号 まぐまぐ 165290207：配送履歴「配送完了日時 2026/09/15 21:05:18／1,447部／完了」。Gmail 本配信の便 id 1a0a4f451fe7f5b6（mailmag@mag2tegami.com → 21:03:27 着）→ §1 #24 は「配送履歴に未反映」から「出た」に変わる</li>
+<li>9/14号 まぐまぐ 165290156：Gmail 本配信の便 id 1a0a4e9e1c5014e9（2026-09-15 20:21:28 着）→ §1 #21 は「20時間遅れで出た」で確定</li>
+<li>訂正（持ち場）：先の「本配信の便 0件」は送信元を mailmag@mag2.com で探した取り違え。本配信の送信元は mag2tegami.com、テスト便は mag2.com</li>
+<li>直し案の材料：「届いたか」の確かめは送信元を2つ（本配信 mag2tegami.com／テスト mag2.com）分けて引く。R1 の一覧確認の手順に入れる候補</li>
+</ul>
+<h3 id="spro">spro（未配信のまま）</h3>
+<ul>
+<li>5132（9/14号）・5133（9/15号）ともテスト送信日時 0000-00-00 で出ない状態。Mits様にお伝え済み（持ち場）</li>
+<li>Mits様の指示（持ち場経由）：「同じ趣旨の内容なら一通だけにしてテスト配信　このシステムは削除ができないので、使用しない方をテスト配信しなければ未配信でそこに残る」</li>
+<li>持ち場が 5132 と 5133 の中身を比べ中。1通に決めてテスト送信したら1行来る</li>
+<li>直し案の材料：spro は予約を消せない → 同じ回で2通目を作らない（R1「保存→試験送信→一覧確認」の前に、未配信の既存号が一覧に無いかを見る）</li>
+</ul>
+<h3 id="list_task_runs-2122">実行記録（司令塔が list_task_runs で 21:22 に取得）</h3>
+<table>
+<thead>
+<tr>
+<th>仕事</th>
+<th>回</th>
+<th>開始（JST）</th>
+<th>状態</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mainichi-merumaga-21-24</td>
+<td>今夜</td>
+<td>9/15 19:39:36</td>
+<td>running（最終 21:22:26）</td>
+</tr>
+<tr>
+<td>mainichi-merumaga-21-24</td>
+<td>前</td>
+<td>9/13 22:02:23</td>
+<td>succeeded（最終 22:53:34）</td>
+</tr>
+<tr>
+<td>merumaga-keisoku-24h-36h-48h</td>
+<td>今夜</td>
+<td>9/15 21:04:58</td>
+<td>running（最終 21:22:46）</td>
+</tr>
+<tr>
+<td>merumaga-keisoku-24h-36h-48h</td>
+<td>前</td>
+<td>9/14 21:05:46</td>
+<td>succeeded（最終 21:33:14）</td>
+</tr>
+<tr>
+<td>merumaga-keisoku-24h-36h-48h</td>
+<td>前々</td>
+<td>9/13 21:05:15</td>
+<td>succeeded（最終 21:11:01）</td>
+</tr>
+<tr>
+<td>- mainichi の実行記録は通算2件（totalRuns 2）。9/14 の記録は0件（19:39 は停止中で起動せず、20:07:35 の手動起動は判定器で止められて記録に残らない）</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- 訂正：§2 の型の表「(a) 予約タスクが起動しなかった 0」は、この実行記録と合わない。9/14 の mainichi は起動0件なので #20・#21 は (a) にも当たる（(d) 人の操作による停止が原因）。表の行は書き換えず、ここで訂正する</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- 計測は 9/13・9/14・9/15 の3晩とも起動。9/14 は停止（19:28〜20:06）の後の発火なので影響なし</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="22026-09-15-212x">続報2（メール配信・計測・自動化・2026-09-15 21:2x）</h3>
+<ul>
+<li>今夜の計測 merumaga-keisoku-24h-36h-48h：21:23:20 に succeeded。keisoku_suii.csv に今夜の行 5行（ファイル更新 21:21:57）</li>
+<li>21:09:42 24h UTAGE ZKvMbgZBKhin（9/14号）</li>
+<li>21:10:02 48h まぐまぐ 165287930／21:10:05 48h まぐまぐ 165287931</li>
+<li>21:11:15 48h spro 5131</li>
+<li>21:18:26 48h UTAGE s0orycTjfJUs</li>
+<li>9/14号の spro・まぐまぐの 24h 行が無いのは、spro 5132 が未配信、まぐまぐ 165290156 が 9/15 20:21 着で 24h に達していないため（抜けではない）</li>
+<li>材料1（送信元を2つに分けて探す）・材料2（保存の前に未配信の既存号が一覧に残っていないか見る）：持ち場が採用。R1〜R9 と同じ回に入れる</li>
+<li>spro 5132 と 5133 は別の話（説明本文の一致は講座案内の1段落だけ）→ Mits様の「同じ趣旨なら一通だけ」には当たらず、2通とも出す対象。予約時刻は Mits様がお持ち。決まり次第、持ち場が2通のテスト送信を発注</li>
+<li>mainichi の今夜の回（local_b41e6fd4）は 21:23:56 時点で running。持ち場が中身を読んでいる</li>
+<li>未確定の食い違い（司令塔が 21:25 に keisoku_suii.csv で確認・持ち場に照会済）：UTAGE ZKvMbgZBKhin の送信時刻が 48行目（12h）で 2026-09-14 21:56:01、55行目（24h）で 2026-09-14 21:32:59。dashita_kiroku.csv 6行目は 21:32。§1 #19 の「21:56:01」もどちらが正しいか未確定</li>
+<li>持ち場の返事（21:2x）：Mits様原文「過去の事はいい、から今日のこと優先」のため、今夜の spro（5133 22:15・5132 9/16 00:00 のテスト送信を実行中）が片付いてから調べる。手元の材料＝前セッション保存の要約「UTAGE 21:56 完了（ZKvMbgZBKhin）」／dashita_kiroku.csv 6行目 21:32（台帳の時刻は記入時刻の場合がある＝#22 と同じ型）。正誤と列の出所は未確認・分かったら追記</li>
+</ul>
+<h3 id="32026-09-15-2128spro-2">続報3（メール配信・計測・自動化・2026-09-15 21:28）spro 2通のテスト送信が通った</h3>
+<ul>
+<li>5133「目標までの差を、＠で見る」：テスト送信 21:26:23・一覧「2026-09-15 22:15:00より配信されます。」</li>
+<li>5132「今どこにいるかを、＠で見る」：テスト送信 21:27:42・一覧「2026-09-16 00:00:00より配信されます。」</li>
+<li>予約時刻は Mits様が決めた値のまま。編集画面の保存はしていない（最終更新 21:08:57／21:08:43 のまま）→ R1 の「保存→試験送信→一覧確認」の順を守った形</li>
+<li>テスト便2通のチェック（平文の突き合わせ＋HTML の $B・(B の並び数）は実行中。9 配信が終わった・10 メールボックスに届いた は 22:15 以降と 00:00 以降に持ち場が確かめる</li>
+<li>§1 の見込み：#20（9/14号 spro）は 9/16 00:00 配信で、枠の終わり（9/14 24:00）から 48時間0分遅れになる見込み。【司令塔訂正 2026-09-16 07:1x：9/14 24:00＝9/15 00:00 なので 9/16 00:00 は 24時間0分遅れ。48時間は計算の誤り。実際の完了は続報8】#23（9/15号 spro）は 22:15 で枠内の見込み。どちらも 9・10 の結果で確定</li>
+</ul>
+<h3 id="42026-09-15-2238spro-5133">続報4（メール配信・計測・自動化・2026-09-15 22:38）spro 5133 本配信中</h3>
+<ul>
+<li>一覧の 5133 行：「テスト配信がおわり、予約配信日時が設定されています。…『2026-09-15 22:15:00』より配信されます。すでに配信された件数：1,225」（22:38 時点）</li>
+<li>完了通知（dai@spro01.com「…（5133）：予約配信完了」）は 22:38 時点で届いておらず、ログ画面にも載っていない。過去の本配信は予約から1時間15〜22分後に完了通知 → 持ち場が 23:35 に再確認</li>
+<li>文字化けの比べる相手：5131 本配信の便（message 1a09b4958eaacd55・9/14 00:01:06 着・Delivered-To 3216.fun@gmail.com）は Content-Type text/html; charset=UTF-8・base64・「$B」「(B」の並び0件 → 読者に届く本配信は UTF-8 で、§8 の「文字化けは管理画面プレビューだけ」と合う</li>
+<li>5132 は 9/16 00:00 予約。持ち場が 00:03 以降に確かめる</li>
+<li>直し案の材料：spro の「出た」の判定は、一覧の「すでに配信された件数」ではなく完了通知（予約から約1時間15〜22分後）で締める。途中の件数は進行中の値</li>
+<li>持ち場の返事（22:4x）：「spro の 9 配信が終わった は完了通知（件名「…（<ID>）：予約配信完了」の配信数）で締める。一覧の『すでに配信された件数』は途中の値として扱う」を採用。R1〜R9 と同じ回に入れる</li>
+<li>持ち場が同じ回に入れる直しの一覧（2026-09-15 22:4x 時点）：R1／R2／R4＋R8／R5／R6／R9／材料1 送信元を2つに分けて探す／材料2 保存の前に未配信の既存号を見る／材料3 spro の出たは完了通知で締める</li>
+</ul>
+<h3 id="52026-09-15-233xspro-5133-1-23">続報5（メール配信・計測・自動化・2026-09-15 23:3x）spro 5133 配信完了 → §1 #23 確定</h3>
+<ul>
+<li>9 配信が終わった：完了通知 thread 1a0a57bdf3a8c1bf 受信 23:32:32「（5133）：予約配信完了…配信数＝3851」／ログ magazinelistsd「配信完了日時：2026-09-15 23:32:32／配信数：3,851 件／開封 ユニーク51・トータル66（1.32%）」</li>
+<li>10 メールボックスに届いた：本配信の便 message 1a0a57423ee7e33d 受信 23:24:02・from dai@spro01.com・Delivered-To 3216.fun@gmail.com・text/html; charset=UTF-8・base64・「$B」「(B」各0件（文字化けなし）</li>
+<li>§1 #23（9/15号 spro 5133）：予約 22:15:00 開始・23:32:32 完了。枠（21:00〜24:00）内で完了 → 遅れ 0h で確定</li>
+<li>完了まで 1時間17分32秒（予約時刻から）＝ 過去の「1時間15〜22分」の幅に入る</li>
+<li>残り：§1 #20（9/14号 spro 5132・9/16 00:00 予約）は持ち場が 00:03 以降に確かめる</li>
+</ul>
+<h3 id="62026-09-16-020xspro-5132-3000-1-20">続報6（メール配信・計測・自動化・2026-09-16 02:0x）spro 5132 が 3,000件で止まっている → §1 #20 未確定</h3>
+<ul>
+<li>一覧 5132 行「すでに配信された件数」：00:03 200 → 01:22 3,000 → 01:40 3,000 → 02:00 3,000。最終更新日 21:08:43 のまま（保存なし）</li>
+<li>完了通知（…（5132）：予約配信完了）0件・ログ magazinelistsd に 5132 行なし・本配信の便（dai@spro01.com・テスト無し）0件</li>
+<li>一覧・ログに「エラー」「停止」等の表示なし</li>
+<li>比べる相手：5133 は 22:15 開始・23:32:32 完了・3,851件（77分）。5132 は開始から 2時間で 3,000件止まり</li>
+<li>spro 画面の注記「内容変更をしますと配信をストップします。内容変更後に再度テスト配信すると配信再開できますが、その場合はすでに配信済みのアドレスにも配信されます」→ 持ち場は触らず 03:00 に件数を見直す</li>
+<li>原因（分割送信の間隔か、上限か、止まったのか）は未確認</li>
+<li>司令塔の手元の材料：session-log 2026-09-08_1641_mail-haishin-keisoku-jidoka.md L156「21:00 に spro（3,824通・25通/回の分割）」</li>
+<li>司令塔の見立て（未確認・持ち場に 02:1x 照会）：今夜は 5133（22:15〜23:32・3,851件）と 5132（00:00〜・3,000件）が2時間弱に重なり計 6,851件。直近の 5130（9/13 00:32）・5131（9/14 00:09）は1晩1通で止まらず完了。止まった値がちょうど 3,000 → 時間あたり／日あたりの送信上限の疑い。持ち場に「設定画面・ヘルプの上限の記載」「03:00 の件数の動き」を読むだけで確かめるよう依頼</li>
+<li>直し案の候補（上限と確かめられたら）：spro は1晩に1通だけ予約する。遅れた号を出す日は、その晩の号と時間を空ける</li>
+<li>持ち場の返事（02:2x）：画面にある上限は「30秒ごとに25通」だけ（プラン設定 plan_manager.php?pid=step_R120ta「基本」タブ「【メルマガ配信数設定】30秒ごとに 25 通配信 ※現バージョンでは MAX 25。メルマガごとに設定変更が可能です。」haisinsuu=25）＝50通/分・3,000通/時。サーバ設定 index.php・help.php に上限・分割・cron の記載なし。送信元サーバ側の時間・日あたり制限は管理画面の外で未確認</li>
+<li>司令塔の計算：5133 は 22:15:00〜23:32:32（77分32秒）で 3,851件＝49.7通/分、1時間 3,000件を越えて途切れず完了 → 「1時間あたり 3,000件で切る」上限では説明がつかない。5132 は 50通/分なら 01:00 ごろに 3,000件（＝ちょうど60分ぶん）に達し、そこから増えていない</li>
+<li>残る見立て（どれも未確認）：①送信元サーバ側の、ある時間幅あたりの上限（5133＋5132 で 2時間45分に計 6,851件）②配信の処理が 60分ほどで途中終了して再開していない ③別の理由。03:00 の件数の動きで①②のどちらに寄るかを見る</li>
+<li>直し案の候補「spro は1晩に1通だけ予約する」は、①なら効き、②なら効かない。03:00 の結果を見るまで持ち場に採否を求めない</li>
+</ul>
+<h3 id="72026-09-16-030xspro-5132-0300-3000">続報7（メール配信・計測・自動化・2026-09-16 03:0x）spro 5132 は 03:00 も 3,000件</h3>
+<ul>
+<li>03:00「すでに配信された件数：3,000」（02:00 から +0件）。完了通知0件・配信ログに行なし・本配信の便0件。最終更新 21:08:43 のまま</li>
+<li>持ち場は触らず、次は 07:00 に確かめる（同じ spro の別プラン 5125 が 9/15 07:00 に完了＝朝の定時処理が動く時刻）</li>
+<li>司令塔の見立て（推測・未確認）：01:22〜03:00 の1時間38分で増加0件。「時間幅あたりの上限」なら時間がたつと増え始めると考えたが、spro・送信元サーバがそう動くかは確かめていない → ①②のどちらかはまだ決められない。07:00 の件数と、5125 が途中から再開したか最初から送ったかで見る</li>
+<li>読者への影響（持ち場の数字から）：5132 の宛先はおよそ 3,851件（5133 と同じ規模として）のうち 3,000件に送信済み、残りおよそ 851件は未送信のまま</li>
+<li>直し案の候補「spro は1晩に1通だけ予約する」は②には効かない → 保留。代わりの候補：spro の「9 配信が終わった」を完了通知で締める（採用済の材料3）に加え、予約時刻から 1時間30分たっても完了通知が無ければ、件数を2回（30分あけて）見て止まりを知らせる</li>
+<li>持ち場の返事（03:1x）：止まりの知らせ（予約から1時間30分たっても完了通知が無ければ、件数を30分あけて2回見て、同じなら知らせる）を採用し、R4＋R8 と1本にする。07:00 に 5125 の配信数と 5132 の件数を1行で送る。5132 の残り（読者に2通目が届くかに関わる）は AI で決めず Mits様にお伝えする</li>
+<li>持ち場が同じ回に入れる直しの一覧（2026-09-16 03:1x 時点）：R1／R2／R4＋R8＋止まりの知らせ／R5／R6／R9／材料1 送信元を2つに分けて探す／材料2 保存の前に未配信の既存号を見る／材料3 spro の出たは完了通知で締める。「spro は1晩に1通だけ」は未判定</li>
+</ul>
+<h3 id="82026-09-16-070xspro-5132-1-20-914915310">続報8（メール配信・計測・自動化・2026-09-16 07:0x）spro 5132 配信完了 → §1 #20 確定・9/14号と9/15号の3スタンドすべて「10 メールボックスに届いた」まで確認済み</h3>
+<ul>
+<li>9 配信が終わった：完了通知 thread 1a0a6eeb96b176cf（06:17:36）。ログ「予約 2026-09-16 00:00:00／配信完了日時 2026-09-16 06:17:36／配信数 3,852 件／開封 ユニーク109・トータル140（2.83%）」</li>
+<li>10 メールボックスに届いた：本配信の便 message 1a0a6e6ea238b964（06:09:02・Delivered-To 3216.fun@gmail.com・charset=UTF-8・「$B」「(B」0件）</li>
+<li>§1 #20（9/14号 spro 5132）：遅れ＝枠の終わり（9/15 00:00）から 30時間17分36秒。予約から完了まで 6時間17分36秒</li>
+<li>途中で止まっていた時間（司令塔の計算・推測）：残り 852件（3,852−3,000）を 50通/分で送ると 17分 → 再開はおよそ 06:00:34。01:00 ごろ 3,000件に達し、06:00 ごろ再開＝約5時間止まっていた見込み。持ち場の担当の見立て「05:47 ごろ再開」とは13分ずれる（どちらも未確認。05:47 再開なら残り852件に30分＝28通/分で、設定の50通/分と合わない）</li>
+<li>二重送信：配信数 3,852 は 5133 の 3,851 とほぼ同じ → 送信済みの 3,000件に2通目を送った形跡は配信数からは見えない（件数での判断・宛先ごとの確認はしていない）</li>
+<li>5125 の比べ：5116〜5125 は 07:00:00 予約・31〜32秒で完了・4〜5件。25通/30秒の1回分に収まるので、途中から再開したか最初からかは見分けられない</li>
+<li>原因（3,000件で止まり約5時間後に再開した理由）は未確認のまま。材料：止まったのは 3,000件＝設定の速さでちょうど60分ぶん／再開は 06:00 ごろ（計算）／朝の定時処理の時刻（07:00）より前</li>
+<li>採用済みの「止まりの知らせ」（予約から1時間30分で完了通知が無ければ件数を30分あけて2回見る）なら、今夜の 5132 は 01:30 と 02:00 に 3,000 で知らせが出ていた計算</li>
+<li>持ち場の返事（07:1x）：「止まった後は完了通知が来るまで30分おきに件数と時刻を記録する」を採用。スキルに記録している担当（BS-engineer-kansou-kiroku）に足した。直し終えたら R5 の試験の出力と R9 の「$B」「(B」0件の値をあわせて1通で送る</li>
+<li>持ち場が同じ回に入れる直しの一覧（2026-09-16 07:1x 時点）：R1／R2／R4＋R8＋止まりの知らせ＋止まった後の30分おき記録／R5／R6／R9／材料1 送信元を2つに分けて探す／材料2 保存の前に未配信の既存号を見る／材料3 spro の出たは完了通知で締める。「spro は1晩に1通だけ」は未判定</li>
+<li>司令塔の検収（受け取ったら見る値）：R5「空の行が先・埋まった行が後 → 止める」の試験出力／R9「$B」「(B」各0件</li>
+</ul>
+<h3 id="92026-09-16-072x-0717">続報9（メール配信・計測・自動化・2026-09-16 07:2x）直しを入れた → 司令塔が検収（07:17）</h3>
+<ul>
+<li>持ち場が直したファイル：/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/skills/merumaga-3stand-haishin/SKILL.md／/Users/nishidamitsuhiro/.claude/scheduled-tasks/mainichi-merumaga-21-24/SKILL.md／同 dasu_mae_kakunin.py。控え /Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20260916_kansou_kiroku_mae/</li>
+<li>入れた中身（持ち場の申告）：R1・R9・同じ趣旨は1通だけテスト・完了通知で締める・止まりの知らせと30分おきの記録・送信元を分けて探す・台帳の時刻は記入時刻・関所の全行走査</li>
+<li>まだのもの（持ち場の申告）：23:10 の見張りの予約タスク作成（R4＋R8）と memory project_merumaga_kadochu_kyoka_no_han_i.md L24 の記載合わせ</li>
+</ul>
+<p>司令塔の検収（実物）<br />
+- 配信スキルの md5：ac4d40e533542e1943f72cfedb0a681d（持ち場の申告と一致）<br />
+- 配信スキルの語句の数：「$B」2／「予約配信完了」1／「30分」3／「mag2tegami」2／「0000-00-00」1。L476「列 dashita_koku は関所を通したときに記入した時刻」あり。L350・L356 に charset=UTF-8 の数え方あり<br />
+- 予約タスクの SKILL.md：「予約配信完了」1／「30分」3。「$B」「mag2tegami」「0000-00-00」は0件だが、配信スキルを7か所で指している（L21・L182・L200 ほか）→ 正本は配信スキル側<br />
+- 旧パス「整理プロセス/配信計測_推移」：配信スキル・予約タスクのフォルダとも0件。関所の DEFAULT_CSV は新パス（…/司令塔/dashita_kiroku.csv）<br />
+- R5 の試験を司令塔が別に5通り走らせた（試験用の記録は scratchpad/r5/・DASHITA_KIROKU_CSV で差し替え・本番の記録には触れていない）</p>
+<table>
+<thead>
+<tr>
+<th>試験</th>
+<th>記録の中身（2026-09-20 spro）</th>
+<th>期待</th>
+<th>結果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>空欄の行 → 埋まった行 5199</td>
+<td>止める</td>
+<td>止める・exit=1・行数 3→3</td>
+</tr>
+<tr>
+<td>B</td>
+<td>埋まった行 5199 → 空欄の行</td>
+<td>止める</td>
+<td>止める・exit=1・行数 3→3</td>
+</tr>
+<tr>
+<td>C</td>
+<td>空欄の行だけ</td>
+<td>出してよい・追記しない</td>
+<td>出してよい・exit=0・行数 2→2</td>
+</tr>
+<tr>
+<td>D</td>
+<td>該当なし（9/19 の行だけ）</td>
+<td>出してよい・1行書く</td>
+<td>出してよい・exit=0・行数 2→3</td>
+</tr>
+<tr>
+<td>E</td>
+<td>別スタンド（magmag）が埋まっている</td>
+<td>出してよい・1行書く</td>
+<td>出してよい・exit=0・行数 2→3</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>R9 の値（持ち場の申告）：本配信の便 5133 1a0a57423ee7e33d・5132 1a0a6e6ea238b964、テスト便 1a0a4c9a0a704c08・1a0a4d4c122a5e18、いずれも「$B」「(B」0件・charset=UTF-8</li>
+<li>検収の判定：R5 は5通りとも期待どおり。R1・R9 ほか語句は配信スキルに入っている。残りは R4＋R8（23:10 の見張りの予約タスク）と memory L24</li>
+<li>持ち場の返事（07:3x）：23:10 の見張り（R4＋R8）は BS-engineer-nokori-naoshi が手順書の下書きまで作成中。予約タスクそのものは、常に動く設定を新しく足す操作なので Mits様の了承を得てから作る。作ったら ID・動く時刻・有効かどうかと nextRunAt・初回の started_at と status を1行で送る。memory L24 は同じ担当が「未作成・下書きのパス」に直し中。R2（まぐまぐの配送履歴を押下時刻の前後5分で確かめる）と R6（UTAGE の予約日時が 21:00〜24:00 か確かめる）が配信スキルに入っているかも確かめ、無ければ入れさせている</li>
+<li>残り（2026-09-16 07:3x 時点）：R4＋R8 の予約タスク（Mits様の了承待ち）／memory L24／R2・R6 の有無の確認</li>
+<li>司令塔の確認（07:3x・配信スキル md5 ac4d40e533542e1943f72cfedb0a681d のまま）：「配送履歴」を含む行のうち「5分／前後／±5」を含む行 0件 → R2 の記載は見当たらない。「21:00／21〜24」を含む行は L239・L254 の2件で、どちらも spro の予約の説明 → UTAGE の予約日時を 21:00〜24:00 で確かめる R6 の記載は見当たらない。持ち場が確認・追記中なので、入った後の md5 と行番号で再検収する</li>
+</ul>
+<h3 id="102026-09-16-073xr2r6">続報10（メール配信・計測・自動化・2026-09-16 07:3x）R2・R6 を入れた → 司令塔が検収</h3>
+<ul>
+<li>配信スキルの md5：7a910f6c4416092d922b679fde9a2d4d（持ち場の申告と一致）</li>
+<li>配信スキル：L406 UTAGE の reserved の直前に send_date＋send_hour＋send_min が今日の 21:00〜24:00 か／L410 見出し「R2 押した直後の予約日時検算（まぐまぐ）」／L412「前後5分（±5分）」／L424 見出し「R6 UTAGE 予約日時の当日枠検査」／L426「今日の日付かつ 21:00〜24:00」</li>
+<li>毎日の配信タスクの SKILL.md：L294 R2（deliveryImmediately を押したあと、配送履歴1行目の配送予約日時が押した時刻の±5分）／L300 R6（send_date が今日・send_hour が 21〜23）</li>
+<li>判定：R2・R6 とも記載あり。send_hour 21〜23 は 21:00〜23:59 で、配信スキルの 21:00〜24:00 と同じ範囲</li>
+<li>確かめ待ち1点（持ち場に照会）：R2 の±5分は「今すぐ送る（deliveryImmediately）」前提。2026-09-08 は「あとで送る」で 21:00 に予約（受付 20:49）しており、この形だと予約日時は押した時刻から離れる → 配信スキル L412 が「あとで送る」の時にどう見るかを書いているか</li>
+<li>見張りの下書き：scratchpad から /Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/skills/merumaga-3stand-haishin/mihari_2310_shitagaki.md へ移し、memory L24 もそのパスに直し中（持ち場の申告・済んだら1行）</li>
+</ul>
+<h3 id="112026-09-16-074x">続報11（メール配信・計測・自動化・2026-09-16 07:4x）見張りの下書きを移した → 司令塔が検収</h3>
+<ul>
+<li>下書き：/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/skills/merumaga-3stand-haishin/mihari_2310_shitagaki.md</li>
+<li>md5 7cf9a72f07fcaee13b5281c2d8f6a3c1（持ち場の申告と一致）・6,044 bytes・改行93</li>
+<li>frontmatter の name は mainichi-merumaga-mihari-2310。description に「予約タスクとしては未作成（2026-09-16 現在）。予約タスク化は Mits様の判断待ち」「押し直しはしない（知らせるだけ）」</li>
+<li>語句の件数：23:10 4／完了通知 6／30分 4／1時間30分 2／haishin_id 7／押し直しはしない 2／知らせ 7／mag2tegami 0／list_task_runs 0</li>
+<li>memory project_merumaga_kadochu_kyoka_no_han_i.md L24：「23:10 の見張りは未作成。下書き …/mihari_2310_shitagaki.md」。/private/tmp は0件</li>
+<li>判定：下書きの移しと memory L24 の直しは済み。R4＋R8 の残りは予約タスクにすること（Mits様の了承待ち）だけ</li>
+<li>材料（持ち場に送った）：下書きに list_task_runs が0件 → 23:10 の見張りで、その夜の mainichi-merumaga-21-24 が本当に起動したか（started_at・status）も見る案（R7 と同じ見方）</li>
+<li>持ち場の返事（07:4x・R2「あとで送る」の件）：配信スキル L412 は「押した時刻の前後5分」だけで、「あとで送る」の見方は書いていなかった（持ち場が L408〜422 を読んで確認）。足すと決めた。中身は①「あとで送る」は配送予約日時が入力した予約日時と分まで一致するかを見る ②一致しない行が出たら、押し直す前にその予約を取り消せるかを確かめ、取り消せなければ押し直さない。同じ中身を毎日の配信タスク L294 付近にも入れる。BS-engineer-nokori-naoshi に依頼中。済んだら新しい md5 と行番号が来る</li>
+<li>司令塔の検収（受け取ったら見る値）：配信スキルの新しい md5 と ①②の行番号／毎日の配信タスク SKILL.md の①②の行番号／「分まで一致」「取り消せなければ押し直さない」の語句がそれぞれ1件以上</li>
+<li>list_task_runs を見張りに入れる材料の採否は、まだ返事なし</li>
+<li>持ち場の返事（07:4x）：見張りに list_task_runs の確かめを入れる案を採用。その夜の mainichi-merumaga-21-24 の started_at と status で ①起動していない ②起動したが止まった／まだ動いている ③終わった（台帳に空欄が残ればそのスタンドを添える）に分けて知らせる。nextRunAt は判定に使わない。BS-engineer-nokori-naoshi に足させ中。R2「あとで送る」も同じ担当が入れ中。済んだら md5 と行番号を下書きの分とまとめて送る</li>
+<li>🔴 司令塔が見つけた穴（07:5x・下書きを実物で読んで確認）：下書き L36〜42 は「Step 2 ── 抜けたスタンドを参謀に知らせる」を SendMessage（宛先は list_sessions の title「メール配信・計測・自動化」「司令塔」）で行う形。ところがセッション間の送信道具 mcp__ccd_session_mgmt__send_message の説明文には「Unavailable in unattended sessions (scheduled-task runs and remote-dispatched sessions), and cannot deliver to them either.」とある → 予約タスクとして動く見張りからは、この道具で知らせを送れない（道具の説明文による・実機で試してはいない）</li>
+<li>もう1点：このセッションの画面名は「司令塔 (fork)」で、title の完全一致「司令塔」では引けない可能性がある（list_sessions で未確認）</li>
+<li>持ち場に照会：予約タスクの中から届く知らせ方（例：予約タスクの実行結果の要約に書いて、メール配信・計測・自動化が朝に list_task_runs で読む／Mits様あてのメール・通知）をどれにするか</li>
+<li>確認（07:5x・get_session self と list_sessions include_archived で実物）：このセッションの title は「司令塔 (fork)」（local_9fa118c7-d668-4215-a7b6-6ee2ceaca29c）。title が完全一致で「司令塔」のセッションは local_c7fdc734-d004-40ef-9cb7-513180ba1bd7 の1件で、isArchived true・cwd は削除済みの旧パス …/整理プロセス/配信計測_推移 → 見張りが title「司令塔」で引くと、保管済みの旧セッションに当たる。作業フォルダが消えたセッションには連絡が届かない（2026-09-14 実測「The project folder ... no longer exists」）</li>
+<li>送信道具の件は道具の説明文による（実機では試していない）</li>
+</ul>
+<h3 id="122026-09-16-075xr2">続報12（メール配信・計測・自動化・2026-09-16 07:5x）R2「あとで送る」を入れた・見張りの知らせ方を決めた → 司令塔が検収</h3>
+<ul>
+<li>配信スキル md5：da738ff3e126f7ec8b1f660fd3f25fc8（持ち場の申告と一致）</li>
+<li>配信スキル L414：「あとで送る」を使ったとき（2026-09-08 165282274 の実例：受付 20:49・予約 21:00）…配送予約日時が、入力した予約日時と「分まで」一致するかを見る。「押し直さない」は配信スキル2件</li>
+<li>毎日の配信タスク L295：同じ趣旨（入力した予約日時と分まで一致するか／一致しなければ…）。「分まで一致」1件・「押し直さない」2件</li>
+<li>判定：R2「あとで送る」は両方の手順書に入った</li>
+<li>見張りの知らせ方（持ち場の決定）：予約タスクからはメッセージを送らない。最後の返事の1行目に「&lt;日付&gt; 見張り：起動（なし／止まった／終わった）・空欄スタンド＝…・spro 件数停止＝…」を書き list_task_runs の summary に出す。同じ1行を /Users/nishidamitsuhiro/.claude/scheduled-tasks/mainichi-merumaga-mihari-2310/mihari_kekka.log に追記。メール配信・計測・自動化が翌朝に list_task_runs とこのファイルを読み、司令塔へ ID local_9fa118c7-d668-4215-a7b6-6ee2ceaca29c あてに1行送る（宛先の決まりも下書きの「朝に読む側の手順」に書く）。メールで送る案は外に出る操作なので採らない</li>
+<li>司令塔の確認：/Users/nishidamitsuhiro/.claude/scheduled-tasks/mainichi-merumaga-mihari-2310 は 07:5x 時点で存在しない（予約タスク未作成のため）→ ログを書く手順は、フォルダが作られた後に動く前提</li>
+<li>見張りの下書きへの list_task_runs と知らせ方の反映：まだ（下書き md5 7cf9a72f07fcaee13b5281c2d8f6a3c1 のまま）。入ったら md5 と行番号が来る</li>
+</ul>
+<h3 id="132026-09-16-080x">続報13（メール配信・計測・自動化・2026-09-16 08:0x）見張りの下書きを直した → 司令塔が検収</h3>
+<ul>
+<li>下書き md5：aa011b0693c3dbfc31306063faf041a7（持ち場の申告と一致）</li>
+<li>L14 出所（司令塔 local_9fa118c7 の案）／L22 list_task_runs（taskId mainichi-merumaga-21-24）でその夜の実行記録を読む／L35「nextRunAt と lastRunAt は判定に使わない」／L64 見張りの最後の返事の1行目に結果（summary に出る形）／L71 ①起動なし の書式／L79 <code>mkdir -p "$logdir"</code>・L83「フォルダが無ければ作る」／L92 朝に読む側は taskId mainichi-merumaga-mihari-2310 の summary／L97 司令塔へは title でなく sessionId local_9fa118c7 あて／L106 spro 件数停止の書き方</li>
+<li>語句の件数：list_task_runs 4／mihari_kekka.log 3／9fa118c7 2／c7fdc734 1（届かない旧セッションとして名前を挙げるだけ）／SendMessage・send_message 1（L59 の「予約タスクからは使えない」説明の引用で、送る手順ではない）</li>
+<li>判定：list_task_runs の3つの分け方・nextRunAt 不使用・知らせ方（summary と mihari_kekka.log）・宛先 ID・フォルダが無い時の扱い、すべて下書きに入った</li>
+<li>材料（持ち場に送った）：list_task_runs の summary は道具の説明文では「when available … a one-line summary」で、見張りの最後の返事の1行目がそのまま summary になるかは確かめていない → 朝に読む側は mihari_kekka.log を正本にし、summary は補助にする形が確実</li>
+<li>残り：見張りを予約タスクにすること（Mits様の了承待ち）。了承後に予約タスクの ID・動く時刻・有効かどうか・nextRunAt・初回の started_at と status が持ち場から来る</li>
+<li>持ち場の返事（08:0x・フォルダが無い時の動き）：下書きにすでに入っていたので書き足していない。L78〜80 は mkdir -p のあとに echo &gt;&gt; で追記、L83「フォルダが無ければ作る」。ログが書けなくても L64 の最後の返事の1行目（summary）に同じ結果が残る、とのこと。md5 aa011b0693c3dbfc31306063faf041a7 のまま</li>
+<li>司令塔の注記：「summary に最後の返事の1行目がそのまま出る」は未確認（道具の説明文は「when available … a one-line summary」のみ）。この点は 08:0x の続報13の材料として持ち場に送信済み（queued）。ログと summary のどちらを正本にするかは持ち場の返事待ち</li>
+<li>数え方の違い：持ち場は SendMessage「0件」、司令塔の grep は L59 の1件（予約タスクからは使えないという説明の引用）。送る手順としては0件で一致</li>
+</ul>
+<h3 id="142026-09-16-081x">続報14（メール配信・計測・自動化・2026-09-16 08:1x）翌朝の読み方をログ正本に直した → 司令塔が検収</h3>
+<ul>
+<li>下書き md5：c3fa9610c27c9f8835b32baec096d31f（持ち場の申告と一致）</li>
+<li>L64「list_task_runs の summary に出ることもある形」（言い切りをやめた）／L90「ログを正本、summary は補助にする（司令塔 local_9fa118c7 からの材料・2026-09-16）」／L92 正本 mihari_kekka.log（追記型・1日1行）／L93 補助 list_task_runs の summary（"when available … a one-line summary" を引用）／L95 ログにその日の行が無く実行記録がある場合は「見張りは動いたがログを書けなかった」として summary と status で判断</li>
+<li>判定：翌朝の読み方はログ正本・summary 補助で確定。見張りの下書きの残りは0件</li>
+<li>残り：見張りを予約タスクにすること（Mits様の了承待ち）</li>
+</ul>
+<footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
+</body>
+</html>

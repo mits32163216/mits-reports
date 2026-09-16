@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+<title>仲間募集プラン（暫定） ／ 6セッション社内レポート</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:20px 20px 80px; max-width:1000px; margin:0 auto; line-height:1.7; }
+h1,h2,h3,h4,h5,h6 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; color:var(--fg); }
+h1 { font-size:26px; margin:12px 0 18px; padding-bottom:10px; border-bottom:1px solid var(--line); }
+h2 { font-size:20px; margin:32px 0 12px; padding-left:10px; border-left:4px solid var(--gold); }
+h3 { font-size:16px; margin:24px 0 10px; }
+p { margin:10px 0; }
+a { color:var(--gold); text-decoration:none; }
+a:hover { text-decoration:underline; }
+code { font-family:var(--mono); background:var(--sub-bg); padding:2px 5px; border-radius:3px; font-size:0.9em; }
+pre { font-family:var(--mono); background:var(--sub-bg); padding:14px 16px; border-radius:8px; overflow-x:auto; border:1px solid var(--line); font-size:0.85em; line-height:1.5; }
+pre code { background:transparent; padding:0; }
+blockquote { border-left:3px solid var(--gold); padding:6px 14px; margin:14px 0; color:var(--muted); background:var(--sub-bg); border-radius:0 6px 6px 0; }
+ul,ol { padding-left:22px; }
+li { margin:4px 0; }
+table { border-collapse:collapse; width:100%; margin:14px 0; font-size:0.9em; }
+th,td { border:1px solid var(--line); padding:6px 10px; text-align:left; vertical-align:top; }
+th { background:var(--sub-bg); font-family:var(--mincho); font-weight:600; }
+hr { border:0; border-top:1px dashed var(--line); margin:24px 0; }
+img { max-width:100%; height:auto; }
+
+.nav-back { display:inline-block; margin:0 0 12px; font-family:var(--mono); font-size:12px; color:var(--muted); }
+.nav-back a { color:var(--muted); }
+.nav-back a:hover { color:var(--gold); }
+
+.meta-head { background:var(--sub-bg); border:1px dashed var(--line); border-radius:6px; padding:8px 12px; margin:8px 0 18px; font-family:var(--mono); font-size:11px; color:var(--muted); line-height:1.7; }
+.meta-head b { color:var(--fg); font-weight:600; margin-right:4px; }
+
+.embed-html { border-top:1px dashed var(--line); padding-top:16px; margin-top:8px; }
+.embed-html iframe { width:100%; border:0; min-height:80vh; background:var(--card-bg); border-radius:8px; }
+
+footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+</style>
+</head>
+<body>
+<div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
+<div class="meta-head"><div><b>元のファイル</b>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/仲間募集プラン_暫定_20260914.html</div><div><b>最後に更新された日時</b>2026-09-14 12:09 JST</div></div>
+<h1>仲間募集プラン（暫定）</h1><div class="embed-html"><style>
+  :root{
+    --bg:#ffffff; --card:#fcfcff; --card2:#f7f8fc; --tx:#212529; --sub:#505461;
+    --line:#e3e6f0; --line2:#ccd2e4;
+    --info:#11159f; --amber:#7a5e1f; --good:#1f6b45; --purple:#0a0d6b;
+    --hold-bg:#fff8e1; --hold-tx:#7a5e1f;
+    --zantei-bg:#e8f4ea; --zantei-tx:#1f6b45;
+    --saiyo-bg:#e0e9ff; --saiyo-tx:#11159f;
+    --kyakka-bg:#f2f2f2; --kyakka-tx:#8a8a8a;
+    --okangae-bg:#f4ecff; --okangae-tx:#4a2a7a;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);font-family:"Noto Sans JP",-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.75;font-size:17px;}
+  .wrap{max-width:960px;margin:0 auto;padding:32px 24px 96px;}
+  h1{font-size:26px;line-height:1.4;border-bottom:2px solid var(--info);padding-bottom:12px;margin:0 0 8px;color:var(--purple);}
+  h2{font-size:22px;line-height:1.4;margin:40px 0 12px;padding:8px 12px;background:var(--card2);border-left:5px solid var(--info);color:var(--purple);}
+  h3{font-size:19px;line-height:1.4;margin:24px 0 10px;color:var(--info);}
+  h4{font-size:17px;line-height:1.4;margin:16px 0 6px;color:var(--tx);}
+  p,li,td,th{font-size:17px;}
+  .meta{font-size:14.5px;color:var(--sub);margin:0 0 24px;}
+  .note{font-size:14.5px;color:var(--sub);}
+  .konkyo{font-size:14.5px;color:var(--sub);margin:4px 0 12px;padding-left:12px;border-left:3px solid var(--line2);}
+  .tag{display:inline-block;font-size:14.5px;font-weight:700;padding:2px 8px;border-radius:4px;margin-right:6px;}
+  .tag-saiyo{background:var(--saiyo-bg);color:var(--saiyo-tx);}
+  .tag-kyakka{background:var(--kyakka-bg);color:var(--kyakka-tx);}
+  .tag-zantei{background:var(--zantei-bg);color:var(--zantei-tx);}
+  .tag-hold{background:var(--hold-bg);color:var(--hold-tx);}
+  .tag-okangae{background:var(--okangae-bg);color:var(--okangae-tx);}
+  .kyakka-block{color:var(--kyakka-tx);text-decoration:line-through;background:#fafafa;padding:10px 14px;border:1px dashed #d5d5d5;border-radius:6px;margin:8px 0;font-size:17px;}
+  .kyakka-reason{color:var(--sub);text-decoration:none;display:block;margin-top:6px;font-size:14.5px;}
+  blockquote{margin:12px 0;padding:12px 16px;background:var(--card2);border-left:4px solid var(--amber);font-size:17px;color:var(--tx);}
+  .tbl-wrap{overflow-x:auto;margin:12px 0;}
+  table{border-collapse:collapse;width:100%;background:var(--card);font-size:17px;}
+  th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top;}
+  th{background:var(--card2);font-weight:700;}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px 20px;margin:12px 0;}
+  .box-hold{background:var(--hold-bg);border:1px solid #e8d090;border-radius:8px;padding:16px 20px;margin:12px 0;}
+  .box-saiyo{background:#f2f5ff;border:1px solid #c8d3f5;border-radius:8px;padding:16px 20px;margin:12px 0;}
+  .box-okangae{background:#faf5ff;border:1px solid #dccef0;border-radius:8px;padding:16px 20px;margin:12px 0;}
+  ol,ul{padding-left:22px;}
+  li{margin:4px 0;}
+  code{background:var(--card2);padding:1px 6px;border-radius:3px;font-size:14.5px;}
+  .toc{background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:16px 20px;margin:16px 0 32px;}
+  .toc ol{margin:6px 0 0;}
+  .hanrei{background:#fefefe;border:1px solid var(--line);border-radius:8px;padding:14px 18px;margin:12px 0 24px;font-size:14.5px;}
+  .hanrei .tag{margin-bottom:4px;}
+  .kiroku{background:var(--card2);border-left:4px solid var(--info);padding:12px 16px;margin:10px 0;font-size:17px;}
+  .kiroku-date{font-weight:700;color:var(--purple);font-size:17px;}
+</style>
+
+<div class="wrap">
+
+<h1>仲間募集プラン（内部向け・更新し続ける）── AI-Mits＆経営アプリ、初期の開発と普及の仲間を募る</h1>
+<p class="meta">最終更新：2026-09-14 11:32 JST・BA-strategist（内部向けプラン・お客様には出さない。お客様向けは <code>nakama_boshu_20260914/</code> 系）</p>
+
+<div class="box">
+<p>Mits様のご指示（2026-09-14）：</p>
+<blockquote>仲間募集プラン_暫定_20260914.html　は内部向け　で今後も更新　採用したこと、却下したことが分かるように私の追記形式で更新</blockquote>
+<blockquote>かなり的確に整理してくれている。この方向性を維持して</blockquote>
+</div>
+
+<div class="hanrei">
+<h4 style="margin-top:0;">状態の印（凡例）</h4>
+<div><span class="tag tag-saiyo">【採用】</span> Mits様が決めた・言い切ったもの。日付と原文を添える</div>
+<div><span class="tag tag-okangae">【Mits様のお考え・未確定】</span> Mits様が言われたが、まだ確定していない</div>
+<div><span class="tag tag-zantei">【暫定】</span> 材料の事実から参謀が導いた値。確定ではない</div>
+<div><span class="tag tag-hold">【保留・Mits様が決める】</span> Mits様が「決めるが今は保留」と明言されたもの</div>
+<div><span class="tag tag-kyakka">却下</span> 一度は検討したが外したもの。元の位置に取消線＋グレーで残す（印は10節の索引を参照）</div>
+</div>
+
+<div class="box">
+<p>本プランの芯となる、2026-09-14 の Mits様のお言葉。</p>
+<blockquote>OK　共同開発では無いが、初期の開発と普及の仲間を募りたい、それを呼びかけるオファー＝協力して貰う同期、将来の展望、ビジョンについて整理</blockquote>
+<blockquote>仲間の呼び名　募る人数と期間　仲間だけが先に受け取れるもの　OK　決めるが今は保留</blockquote>
+</div>
+
+<div class="toc">
+<h4>目次</h4>
+<ol>
+<li>0. 決まったこと（採用の要点まとめ）</li>
+<li>1. ねらいとビジョン（一文の素案と3つの層）</li>
+<li>2. 誰を募るか（役2つ×人の種類2つ）</li>
+<li>3. 段 ── 行いを応援の対価にした段</li>
+<li>4. ライトなコンサルティングの暫定案（正規3つとの比べ）</li>
+<li>5. コミュニティ（初期開発／premium／free と Discord）</li>
+<li>6. 利用者の声 → ダウンロードの流れ（約1ヶ月）</li>
+<li>7. 仲間に先に届ける道（「世に出す」の内部基準と試験版）</li>
+<li>8. 進める順番</li>
+<li>9. 決まっていないことの一覧</li>
+<li>10. 却下したこと（元の位置に取消線で残す・ここは索引）</li>
+<li>11. 追記の記録（新しい順）</li>
+</ol>
+</div>
+
+<h2>0. 決まったこと（採用の要点まとめ）</h2>
+
+<div class="box-saiyo">
+<p><span class="tag tag-saiyo">【採用】</span> <strong>共同開発ではない。集めるのは使い込む人と広める人。</strong>（2026-09-14）</p>
+<blockquote>OK　共同開発では無いが、初期の開発と普及の仲間を募りたい</blockquote>
+</div>
+
+<div class="box-saiyo">
+<p><span class="tag tag-saiyo">【採用】</span> <strong>募集ページはクラファンのスタイル。セールス型 LP にしない。お金は集めない。</strong>（2026-09-14）</p>
+<blockquote>募集の公式ページになるたたき台としてのページを作ってみて。セールス型LPではなくて、どちらかというとクラファンのスタイルかな</blockquote>
+</div>
+
+<div class="box-saiyo">
+<p><span class="tag tag-saiyo">【採用】</span> <strong>「世に出す」の内部基準を分ける。</strong>（2026-09-14 10:41）</p>
+<blockquote>OK、それをルールにしよう</blockquote>
+<p>「Mits様の製品版に入れる」＝Mits様の Mac だけ入れ替える／「世に出す」＝GitHub に Release を作り全員に「新しい版があります」が出る。詳細は 7節。</p>
+</div>
+
+<div class="box-saiyo">
+<p><span class="tag tag-saiyo">【採用】</span> <strong>情報共有は Discord に用途専用の場を別に立てる。</strong>（2026-09-14）</p>
+<blockquote>情報共有の場はdiscordで別途専門に立てる</blockquote>
+</div>
+
+<div class="box-saiyo">
+<p><span class="tag tag-saiyo">【採用】</span> <strong>この方向性を維持する。</strong>（2026-09-14）</p>
+<blockquote>かなり的確に整理してくれている。この方向性を維持して</blockquote>
+</div>
+
+<div class="box-saiyo">
+<p><span class="tag tag-saiyo">【採用】</span> <strong>本プランは内部向けで更新し続ける。ユーザー向けは別の名前にする。</strong>（2026-09-14）</p>
+<blockquote>仲間募集プラン_暫定_20260914.html　は内部向け　で今後も更新　採用したこと、却下したことが分かるように私の追記形式で更新</blockquote>
+</div>
+
+<div class="box-saiyo">
+<p><span class="tag tag-saiyo">【採用・方向】</span> <strong>利用者総数（初期開発＋premium＋free）でコミュニティ化する。中身は未決。</strong>（2026-09-14）</p>
+<blockquote>初期開発コミュニティ＋有料利用者コミュニティ＋無料利用者　＝利用者総数でコミュニティ化していきたい</blockquote>
+</div>
+
+<div class="box-saiyo">
+<p><span class="tag tag-saiyo">【採用・方向】</span> <strong>お金ではなく行いを応援の対価にして、段を分ける。段の数・条件・受け取るものの中身は未決。</strong>（2026-09-14）</p>
+<blockquote>クラファンはお金という「応援対価」にリターンの大小でレベル分けしている、お金では無いが、同様にレベル分けしたい</blockquote>
+</div>
+
+<div class="box-saiyo">
+<p><span class="tag tag-saiyo">【採用・方向】</span> <strong>約1ヶ月でダウンロードページに利用者の声を増やし、そこにアクセスを集めてダウンロードを増やす。中身は未決。</strong>（2026-09-14）</p>
+<blockquote>1ヶ月くらいで、ダウンロードページに「利用者の声」が増える形にして、そこにたくさんアクセスを集めてどんどんDL</blockquote>
+</div>
+
+<div class="box-saiyo">
+<p><span class="tag tag-saiyo">【採用・方向】</span> <strong>「実績を伝える」──アプリは新しいが、西田メソッドで成功してきた人の声は使える。その型をアプリに詰め込んだ実績を伝える。中身（どの声・どの数字）は未決。</strong>（2026-09-14）</p>
+</div>
+
+<div class="box-saiyo">
+<p><span class="tag tag-saiyo">【採用・方向】</span> <strong>使い始める動機を2つの相手に届ける。①「次はあなたの番だ」の利用者／②コンサルティングをしていて次の成功をサポートする人。</strong>（2026-09-14）</p>
+<blockquote>この運転台自体は開発したばかりだが、西田メソッドで成功してきた人の声は使える、それをアプリに詰め込んだんだという「実績」も伝えたい。次はあなたの番だ、のユーザーと、コンサルティングをしている人で、次の成功をサポートする人が使い始める動機づけ</blockquote>
+</div>
+
+<div class="box-saiyo">
+<p><span class="tag tag-saiyo">【採用・方向】</span> <strong>成功したクラファン（CAMPFIRE 914700）の「レターとしての構成」と「リターンの設計」を仲間募集ページに取り入れる。</strong>（2026-09-14）</p>
+<blockquote>以下は私のクライアントで、成功したクラファン　成功した一つの要因はクラファンをよく知る人がページと内容の設計をしっかりしたと聞いているので、信憑性のある情報なので取り入れる</blockquote>
+<blockquote>レターとしての構成、リターンの設計</blockquote>
+<p class="note">出所：Mits様のクライアントの成功したクラファン（CAMPFIRE 914700）。ページと内容の設計をクラファンをよく知る人が担当したと Mits様がお聞きになっている。分解メモ：<code>campfire_kenkyu_914700_20260914.md</code>（同フォルダ）</p>
+<p><span class="tag tag-zantei">【暫定】</span> 写し方の要点（分解メモ 10節「行い型の仲間募集に写すときの対応表」から）：</p>
+<ul>
+<li>気持ちの弧を7段でつなぐ（警戒 → 共感 → 悔しさ → 好奇心 → 信頼 → 未来共有 → 行動）</li>
+<li>呼びかけは命令形を使わない招待型で、冒頭1・中盤2・末尾1の4点に配置</li>
+<li>支援者は低額の上位3段（気持ちのメール・Tシャツ・アーカイブ動画）に105人中86人が集中（38+27+21）</li>
+<li>同じ金額の選択肢の横並び4本（5,000円 × 全国4拠点のスタジオ選択）は4本とも0人</li>
+<li>限定数は1段（当日定員）のみに使い希少性で押さない・使い道は半分ずつ（チケット売上とクラファン）と開示</li>
+</ul>
+</div>
+
+<h2>1. ねらいとビジョン（一文の素案と3つの層）</h2>
+
+<h3>一文の素案</h3>
+<div class="box">
+<p><span class="tag tag-zantei">【暫定】</span> 一人で経営を背負う人が、自分の数字で自分の状態を自覚し、自分で決められるようにする。そのための言葉と計器を、BMI のように誰のものでもない形で世の中に広める。</p>
+<p class="konkyo">根拠：正本 9節「一文の素案」／2017年の目的「目指す高みに応じた、負荷、課題、緊急性の『自覚』を持てる」／1節「BMI 化が事業の根幹」。</p>
+</div>
+
+<h3>Mits様の芯（原文）</h3>
+<blockquote>私は私のメソッドが爆発的に広まることを望んでいる　知財も放棄してもいいくらいのきもち</blockquote>
+<blockquote>BMIって誰でも知っている、しかし誰が制定したかなんて誰も知らない、でも、みんな使っている、すべての西田語がこうなってくれることを望む、が私のビジネスの根幹</blockquote>
+
+<h3>3つの層</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>層</th><th>ねらい</th></tr></thead>
+<tbody>
+<tr><td>一人の経営者</td><td>自分の数字で自覚し、自分で決められる</td></tr>
+<tr><td>仲間（初期の開発と普及）</td><td>使い込み、広め、自分の仕事にも道具として使う</td></tr>
+<tr><td>世の中</td><td>西田語が出所を知られないまま普通の言葉になる（BMI 化）</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>2. 誰を募るか（役2つ×人の種類2つ）</h2>
+
+<div class="box-okangae">
+<p><span class="tag tag-okangae">【Mits様のお考え・未確定】</span> 人の種類の2分は Mits様が言われたが、役との組み合わせ・軸の扱いは確定していない。（2026-09-14）</p>
+<blockquote>開発仲間に2つ　おそらくずっとユーザーでいる人と　その人の向こう側にコンサルティング等のクライアントがいる人</blockquote>
+</div>
+
+<p>役（何をするか）と、人の種類（どういう人か）は別の軸。表の置き換えではない。</p>
+
+<p class="note">つなぎ：0節の【採用・方向】「使い始める動機を2つの相手に届ける」（①「次はあなたの番だ」の利用者／②コンサルティングをしていて次の成功をサポートする人）は、この人の種類2つに重なる方向。ただし人の種類2つは Mits様のお考え・未確定のままで、参謀が確定に格上げしない。</p>
+
+<div class="tbl-wrap">
+<table>
+<thead><tr><th></th><th>ずっとユーザーでいる人</th><th>向こう側にクライアントがいる人</th></tr></thead>
+<tbody>
+<tr><th>使い込む役</th><td>自分の会計・顧客の数字で毎週使う／詰まった所を伝える</td><td>自分のお客様の経営相談の席で使う／実務で回した実感を返す</td></tr>
+<tr><th>広める役</th><td>同業の1人企業家に紹介リンクを渡す／使った実感を発信</td><td>自分の版を作って売ってもよい（Apache-2.0）／自分のクライアント網へ紹介</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>3. 段 ── 行いを応援の対価にした段</h2>
+
+<div class="box-saiyo">
+<p><span class="tag tag-saiyo">【採用・方向】</span> お金ではなく行いを応援の対価にして段を分ける（0節と同じ）。段の数・条件・受け取るものは未決。</p>
+</div>
+
+<p>段の数・各段の条件・各段で受け取るものは経営判断。参謀が確定に格上げしない。<span class="tag tag-hold">【保留・Mits様が決める】</span></p>
+
+<p><span class="tag tag-zantei">【暫定】</span> の枠として、Mits様の側から数えられる行いを整理する（数えられないものは段の条件にできない）。</p>
+
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>数えられる行い</th><th>どこで見えるか（Mits様の側）</th></tr></thead>
+<tbody>
+<tr><td>紹介リンク経由の登録</td><td>UTAGE パートナー案件 <code>T1pSTUHxF427</code>（ただし登録数は送信回数）</td></tr>
+<tr><td>機能要望フォームの送信</td><td>UTAGE ページ <code>8OPXLgTgerHc</code></td></tr>
+<tr><td>Discord の場ができれば投稿数</td><td>Discord（場の立ち上げは未実施）</td></tr>
+<tr><td>お客様の Mac の中で数字を取り込んだかどうか</td><td>Mits様から見えるかどうか未確認（2026-09-14 時点）</td></tr>
+</tbody>
+</table>
+</div>
+<p class="konkyo">根拠：正本 9節「段の条件は、Mits様の側から数えられる行いでしか置けない」の列挙。</p>
+
+<h3>段の素案（暫定・値の置き方）</h3>
+<div class="box">
+<p><span class="tag tag-zantei">【暫定】</span> 段は「使う段」「伝える段」「広める段」の3つに分ける。段の数と名前は経営判断。参謀が確定させない。</p>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>段</th><th>応援の対価（行い）</th><th>受け取るもの</th><th>Mits様の側から数える方法</th></tr></thead>
+<tbody>
+<tr><td>使う段</td><td>自分の会計・顧客の数字を入れて毎週使う</td><td><span class="tag tag-hold">【保留・Mits様が決める】</span></td><td>取り込みの実測（見え方の実装は未確認）</td></tr>
+<tr><td>伝える段</td><td>詰まった所・分からない言葉・「この数字も見たい」を伝える</td><td><span class="tag tag-hold">【保留・Mits様が決める】</span></td><td>機能要望フォーム <code>8OPXLgTgerHc</code> の送信</td></tr>
+<tr><td>広める段</td><td>同業の1人企業家に紹介リンクを渡す／自分のクライアントに使う／実感を発信する</td><td><span class="tag tag-hold">【保留・Mits様が決める】</span></td><td>UTAGE パートナー案件 <code>T1pSTUHxF427</code> の登録</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<h2>4. ライトなコンサルティングの暫定案（正規3つとの比べ）</h2>
+
+<div class="box-okangae">
+<p><span class="tag tag-okangae">【Mits様のお考え・未確定】</span>（2026-09-14）</p>
+<blockquote>今、考えていること　初期の開発に自分の数字をつかって参加してくれた人には、経営戦略、マーケティング、会計などのコンサルティングを提供したい。もちろん正規サービスよりもライトにして</blockquote>
+</div>
+
+<p>これは 3節「使う段」の「受け取るもの」の候補になりうるが、保留のまま。値を確定させない。<span class="tag tag-hold">【保留・Mits様が決める】</span></p>
+
+<h3>正規3つの実測（BA-researcher／FS-utage-pm 実測・2026-09-14）</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>商品</th><th>時間</th><th>期間</th><th>範囲</th><th>価格</th></tr></thead>
+<tbody>
+<tr><td>すごい（完全）コンサルティング</td><td>Zoom＋6ヶ月に1回訪問＋必要時に温泉合宿・個別完全オーダーメード</td><td>通常1年（西田の判断で6ヶ月）</td><td>戦略参謀・ビジョン・お金・マーケ・セールス・会計・業務改善（人事労務・法務・融資はやらない）</td><td>オーダーメード（基準は月額30万円）</td></tr>
+<tr><td>2ヶ月コンサル（BE-01・伴走コンサル）</td><td>個別コンサル3回（各60分）＋専用チャット2ヶ月無制限（平日）＋セールスレター添削 無制限</td><td>2ヶ月</td><td>セールスレター・LP・広告文・コンセプト添削／企画可否／ペルソナ／戦略設計／リパッケージ・値付け・売り方・サポート設計</td><td>110,000円（税込・一括）または 60,000円×2回</td></tr>
+<tr><td>作戦会議ミニ</td><td>Zoom 1回25分（実質20分＋まとめ5分）×3回・毎回宿題1つ</td><td>3回（時期は運用）</td><td>1人ビジネスの事業者向け・お金を残す作戦会議</td><td>キャンペーン価格 34,620円（税込）/3回</td></tr>
+</tbody>
+</table>
+</div>
+
+<p class="note">補足：コンサルタント養成講座「ザ・コア コンサルタント養成講座（4期）corecon.pdf・2016年開講・10ヶ月・168万円＋税」をライト版の比べる相手に並べる案は、性質が違うため外している（10節に索引あり）。</p>
+
+<h3>ライト版の暫定案</h3>
+<div class="box">
+<p><span class="tag tag-zantei">【暫定】</span> ライト版は「作戦会議ミニ」と「2ヶ月コンサル」の間に置く。時間・期間・範囲の3軸で線を引く。</p>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>軸</th><th>ライト版の暫定線</th><th>置き方の根拠</th></tr></thead>
+<tbody>
+<tr><td>時間</td><td><span class="tag tag-zantei">【暫定】</span> 1回30〜45分</td><td>作戦会議ミニの25分より長く、2ヶ月コンサルの60分より短い中間</td></tr>
+<tr><td>期間</td><td><span class="tag tag-zantei">【暫定】</span> 1〜2回（連続でなくてよい）</td><td>2ヶ月コンサルの2ヶ月伴走型ではなく、作戦会議ミニ3回より軽い</td></tr>
+<tr><td>範囲</td><td><span class="tag tag-zantei">【暫定】</span> AI-Mits＆経営アプリで取り込んだご自身の数字を使った1点相談（戦略・マーケ・会計のいずれか1つ）</td><td>Mits様原文「初期の開発に自分の数字をつかって参加してくれた人」＝自分の数字が前提。範囲を1点に絞ることで正規との住み分けを作る</td></tr>
+<tr><td>提供の形</td><td><span class="tag tag-zantei">【暫定】</span> Zoom 個別・回数の運用は保留</td><td>正規3つ全てが Zoom 個別。運用の仕組みを揃えれば追加負担が小さい</td></tr>
+<tr><td>値付け</td><td><span class="tag tag-hold">【保留・Mits様が決める】</span></td><td>経営判断。参謀が数字を置かない</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<h2>5. コミュニティ（初期開発／premium／free と Discord）</h2>
+
+<div class="box-saiyo">
+<p><span class="tag tag-saiyo">【採用】</span> 情報共有は Discord に用途専用の場を別に立てる（0節と同じ・既存の講座・コミュニティの場には相乗りしない）。（2026-09-14）</p>
+</div>
+
+<div class="box-saiyo">
+<p><span class="tag tag-saiyo">【採用・方向】</span> 3層を「利用者総数」としてコミュニティ化する（0節と同じ）。（2026-09-14）</p>
+</div>
+
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>層</th><th>中身</th><th>使う道具</th></tr></thead>
+<tbody>
+<tr><td>初期開発の仲間</td><td>使い込む役・広める役の人たち（本プランで募集）</td><td>Discord に用途専用の場を別に立てる（未実施）</td></tr>
+<tr><td>premium（有料利用者）</td><td>月額 3,300円（税込）・NORMAL/DEEP/かかりつけを使う人</td><td>アプリ本体（かかりつけ・The Library）</td></tr>
+<tr><td>free（無料利用者）</td><td>計器盤11画面・取り込み・学びを使う人</td><td>アプリ本体（FAST は継続・NORMAL/DEEP ははじめ90日のみ）</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="box-hold">
+<p><span class="tag tag-hold">【保留・Mits様が決める】</span> Discord の場を1つの場に3層を置くか、場を分けるか。立てる時期・呼び名・入れる人の条件は、保留3つと一緒に決まる。</p>
+</div>
+
+<h2>6. 利用者の声 → ダウンロードの流れ（約1ヶ月）</h2>
+
+<div class="box-saiyo">
+<p><span class="tag tag-saiyo">【採用・方向】</span> 約1ヶ月で利用者の声を増やし、そこにアクセスを集めてダウンロードを増やす（0節と同じ）。中身は未決。</p>
+</div>
+
+<div class="box">
+<p><span class="tag tag-zantei">【暫定】</span> 流れは3段。</p>
+<ol>
+<li>初期の仲間が使い込む → 実感を集める（1ヶ月の目安）</li>
+<li>ダウンロードページ（UTAGE page_id <code>oHtrsl52qpXg</code>）に「利用者の声」が増えていく形にする</li>
+<li>ダウンロードページにアクセスを集めてダウンロードを増やす</li>
+</ol>
+<p class="konkyo">根拠：正本 9節「置き場：ダウンロードページ <code>oHtrsl52qpXg</code>／約1ヶ月で声が増える形／そのページにアクセスを集めてダウンロードを増やす」。</p>
+<p class="note">守ること：お客様のお名前・声を載せるときは本人の許可を取ったものだけ／中身の無い「声」の枠を先に置かない。</p>
+</div>
+
+<p class="note">補足：「1ヶ月くらい」を募集期間の決定として扱わない（Mits様は「声が増えるまでの目安」として言われている）。10節に索引あり。</p>
+
+<h2>7. 仲間に先に届ける道（「世に出す」の内部基準と試験版）</h2>
+
+<div class="box-saiyo">
+<p><span class="tag tag-saiyo">【採用】</span> 「Mits様の製品版に入れる」と「世に出す」を分ける。（2026-09-14 10:41 Mits様「OK、それをルールにしよう」）</p>
+</div>
+
+<h3>「世に出す」の内部基準</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>言葉</th><th>何をするか</th><th>お客様に届くか</th></tr></thead>
+<tbody>
+<tr><td>Mits様の製品版に入れる</td><td>Mits様の Mac だけを入れ替える。GitHub の Release を作らない</td><td>届かない（latest.json が動かない）</td></tr>
+<tr><td>世に出す</td><td>GitHub に Release を作り、latest.json を新しい版にする</td><td>全員に「新しい版があります」が出る</td></tr>
+</tbody>
+</table>
+</div>
+<p class="konkyo">根拠：案件 CLAUDE.md「『世に出す』の内部基準」節（2026-09-14 Mits様確定）。</p>
+
+<h3>「世に出す」引き金は2つ</h3>
+<ol>
+<li>Mits様が「出す」と言われたとき（それまで直しは Mits様の製品版に溜める）</li>
+<li>お客様の手元で数字が間違っている・取り込みが止まっているとき（その場で出す）</li>
+</ol>
+
+<h3>試験版の仕組み（材料に書かれている事実だけ）</h3>
+<ul>
+<li>更新の置き場 <code>updater/index.js:41</code> は GitHub の releases/latest を読む</li>
+<li>prerelease（試験版）の印が付いた版はお客様に配らない（<code>updater/index.js:58</code>）</li>
+<li>この仕組みが動くので、「仲間だけが先に受け取る版」を prerelease として置く道は技術的に開いている</li>
+</ul>
+
+<h3>大きな企業の形（untendai-seiri が公式ヘルプから引いたもの・参考）</h3>
+<ul>
+<li>Chrome：Canary／Dev／Beta／Stable の段。Stable は小さい直し2〜3週ごと・大きい版4週ごと</li>
+<li>Apple TestFlight：公開前の版を社内最大100人・社外最大1万人に渡して不具合報告を受ける</li>
+</ul>
+
+<div class="box-hold">
+<p><span class="tag tag-hold">【保留・Mits様が決める】</span> 仲間だけが先に受け取れるものが、prerelease 版そのものになるか／別の道になるかは Mits様がお決めになる。参謀は「候補の1つになりうる」と書くだけで、確定に格上げしない。</p>
+</div>
+
+<h2>8. 進める順番</h2>
+
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>順</th><th>やること</th><th>これが決まらないと止まるもの</th></tr></thead>
+<tbody>
+<tr><td>①</td><td><span class="tag tag-hold">【保留・Mits様が決める】</span> 仲間の呼び名を決める</td><td>募集ページ本文の「仲間」の語を一括置換できない／Discord の場の名前が決まらない</td></tr>
+<tr><td>②</td><td><span class="tag tag-hold">【保留・Mits様が決める】</span> 募る人数と期間を決める</td><td>募集ページの「いまの段階」枠が埋まらない</td></tr>
+<tr><td>③</td><td><span class="tag tag-hold">【保留・Mits様が決める】</span> 仲間だけが先に受け取れるものを決める</td><td>ライトなコンサル案の値付け／prerelease 版の運用／段ごとの「受け取るもの」の確定</td></tr>
+<tr><td>④</td><td>Discord の場を立てる（1つか3つか含む）</td><td>初期開発の仲間の情報共有の場が無い状態が続く</td></tr>
+<tr><td>⑤</td><td>募集ページの本文を仲間の呼び名で確定し、公開する</td><td>紹介の入口が立たない</td></tr>
+<tr><td>⑥</td><td>約1ヶ月かけて利用者の声を集め、ダウンロードページに反映する</td><td>③の道具が回らないと、声の質と量が伸びにくい</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>9. 決まっていないことの一覧</h2>
+
+<div class="box-hold">
+<h4>保留（Mits様が「決めるが今は保留」と明言された3つ）</h4>
+<ol>
+<li><span class="tag tag-hold">【保留・Mits様が決める】</span> 仲間の呼び名</li>
+<li><span class="tag tag-hold">【保留・Mits様が決める】</span> 募る人数と期間</li>
+<li><span class="tag tag-hold">【保留・Mits様が決める】</span> 仲間だけが先に受け取れるもの</li>
+</ol>
+</div>
+
+<div class="box-hold">
+<h4>Mits様がまだ言われていない・参謀が値を埋めないもの</h4>
+<ul>
+<li>Discord の場と3つの層の関係（1つの場に3層を置くか、場を分けるか）</li>
+<li>ライトなコンサルティングの値付け・回数・期間の確定値</li>
+<li>段の数・段ごとの名前・段ごとの条件の確定値</li>
+<li>紹介1件あたりの報酬（UTAGE パートナー案件 <code>T1pSTUHxF427</code>・現在 1,000円は仮置き）</li>
+<li>お客様の Mac の中で数字を取り込んだかどうかを Mits様の側から見る仕組みの有無</li>
+</ul>
+</div>
+
+<h2>10. 却下したこと（元の位置に取消線で残す・ここは索引）</h2>
+
+<p>各項目の詳細は元の位置に取消線で残してある。ここは横断で見るための索引。</p>
+
+<div class="kyakka-block">
+<span class="tag tag-kyakka">【却下】</span> 作業場所を <code>untendai</code> に移す案。
+<span class="kyakka-reason">却下：材料と運転台 CLAUDE.md が <code>claude-nishida</code> にある。移すと参照が壊れる（2026-09-14）。</span>
+</div>
+
+<div class="kyakka-block">
+<span class="tag tag-kyakka">【却下】</span> 募集ページをセールス型 LP にする案。
+<span class="kyakka-reason">却下：Mits様「セールス型LPではなくて、どちらかというとクラファンのスタイルかな」（2026-09-14）。</span>
+</div>
+
+<div class="kyakka-block">
+<span class="tag tag-kyakka">【却下】</span> 保留3つ（呼び名／人数と期間／先に受け取れるもの）を AI が埋める案。
+<span class="kyakka-reason">却下：Mits様「決めるが今は保留」（2026-09-14）。参謀が確定に格上げしない。</span>
+</div>
+
+<div class="kyakka-block">
+<span class="tag tag-kyakka">【却下】</span> コンサルタント養成講座 corecon（2016年開講）をライト版の比べる相手に入れる案。
+<span class="kyakka-reason">却下：コンサルタントを育てる講座で性質が違う（BA-researcher 実測・2026-09-14）。</span>
+</div>
+
+<div class="kyakka-block">
+<span class="tag tag-kyakka">【却下】</span> 「1ヶ月くらい」を募集期間の決定として扱う案。
+<span class="kyakka-reason">却下：Mits様のお言葉は「声が増えるまでの目安」（2026-09-14）。</span>
+</div>
+
+<div class="kyakka-block">
+<span class="tag tag-kyakka">【却下】</span> 募集ページに「支援金の使い道」欄を置く案。
+<span class="kyakka-reason">却下：お金は集めない（2026-09-14 発注書に Mits様お言葉「お金は集めない」ではないが、参謀解釈として明記・原文には支援金の話は0件）。</span>
+</div>
+
+<div class="kyakka-block">
+<span class="tag tag-kyakka">【却下】</span> 募集ページに「活動報告」「参加された方のひとこと」の見出しを、中身が無い状態で置く案（v1 → v2 で外した）。
+<span class="kyakka-reason">却下：中身の無い枠を置くと読み手が混乱する（LP スキル「ない情報セクション禁止」）。書き込みが1件でも入った時点で見出しを戻す（2026-09-14）。</span>
+</div>
+
+<h2>11. 追記の記録（新しい順）</h2>
+
+<div class="kiroku">
+<div class="kiroku-date">2026-09-14 12:10 JST</div>
+<p>Mits様のご指示「以下は私のクライアントで、成功したクラファン　成功した一つの要因はクラファンをよく知る人がページと内容の設計をしっかりしたと聞いているので、信憑性のある情報なので取り入れる」「レターとしての構成、リターンの設計」を受けて、0節に【採用・方向】を1件追加。成功したクラファン（CAMPFIRE 914700）の「レターとしての構成」と「リターンの設計」を仲間募集ページに取り入れる方向を確定。分解メモ <code>campfire_kenkyu_914700_20260914.md</code>（同フォルダ）の10節「行い型の仲間募集に写すときの対応表」から、写し方の要点5点（気持ちの弧の7段／命令形を使わない招待の4点配置／低額3段に105人中86人が集中／同金額×選択肢の横広げ4本は0人だったので写さない／限定数は1段のみ・使い道は半分ずつと開示）を【暫定】として並べた。保留15件は格上げしない。共有 memory §9 にも同期。</p>
+<p class="note">更新前の版は退避済み：<code>/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20260914_仲間募集プラン_暫定_914700追記前.html</code></p>
+</div>
+
+<div class="kiroku">
+<div class="kiroku-date">2026-09-14 11:50 JST</div>
+<p>Mits様のご指示「この運転台自体は開発したばかりだが、西田メソッドで成功してきた人の声は使える、それをアプリに詰め込んだんだという『実績』も伝えたい。次はあなたの番だ、のユーザーと、コンサルティングをしている人で、次の成功をサポートする人が使い始める動機づけ」を受けて、0節に【採用・方向】を2件追加。①「実績を伝える」（アプリは新しいが西田メソッドの成功者の声を使う・その型をアプリに詰め込んだ実績を伝える・中身は未決）／②「使い始める動機を2つの相手に届ける」（利用者／コンサルティングをしていて次の成功をサポートする人）。2節に、人の種類2つとつながる方向であることを1行つないだ（人の種類2つは【Mits様のお考え・未確定】のまま格上げしない）。使える声は出どころと本人の許可が記録で確かめられるものだけ。</p>
+</div>
+
+<div class="kiroku">
+<div class="kiroku-date">2026-09-14 11:32 JST</div>
+<p>内部向けの追記形式に組み替え。冒頭に状態の印の凡例を置いた（採用・却下・暫定・保留・Mits様のお考え）。0節「決まったこと（採用の要点まとめ）」と10節「却下したこと（索引）」と本節「追記の記録」を新設。ユーザー向けの募集ページ本文は <code>nakama_boshu_20260914/body_v2.md</code> に分けている（本 file は触らない）。Mits様原文「仲間募集プラン_暫定_20260914.html　は内部向け　で今後も更新　採用したこと、却下したことが分かるように私の追記形式で更新」。</p>
+<p class="note">更新前の版は退避済み：<code>/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20260914_仲間募集プラン_暫定_更新前.html</code></p>
+</div>
+
+<div class="kiroku">
+<div class="kiroku-date">2026-09-14 初版</div>
+<p>Mits様「これらを統合して、暫定版でプランを作ってHTMLにして」を受けて BA-strategist が初版を作成。1〜9節（ねらいとビジョン／誰を募るか／段／ライトなコンサル暫定案／コミュニティ／利用者の声→DL／世に出すの内部基準／進める順番／決まっていないこと）を配置。発言8つの原文・正規3つの比べ表・暫定の値の根拠を全て記載。</p>
+</div>
+
+<hr style="margin:48px 0 24px;border:0;border-top:1px solid var(--line);">
+<p class="meta">絶対パス：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/仲間募集プラン_暫定_20260914.html</p>
+
+</div>
+</div>
+<footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
+</body>
+</html>

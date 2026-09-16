@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+<title>測定とメアド取得の図解 ／ 6セッション社内レポート</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:20px 20px 80px; max-width:1000px; margin:0 auto; line-height:1.7; }
+h1,h2,h3,h4,h5,h6 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; color:var(--fg); }
+h1 { font-size:26px; margin:12px 0 18px; padding-bottom:10px; border-bottom:1px solid var(--line); }
+h2 { font-size:20px; margin:32px 0 12px; padding-left:10px; border-left:4px solid var(--gold); }
+h3 { font-size:16px; margin:24px 0 10px; }
+p { margin:10px 0; }
+a { color:var(--gold); text-decoration:none; }
+a:hover { text-decoration:underline; }
+code { font-family:var(--mono); background:var(--sub-bg); padding:2px 5px; border-radius:3px; font-size:0.9em; }
+pre { font-family:var(--mono); background:var(--sub-bg); padding:14px 16px; border-radius:8px; overflow-x:auto; border:1px solid var(--line); font-size:0.85em; line-height:1.5; }
+pre code { background:transparent; padding:0; }
+blockquote { border-left:3px solid var(--gold); padding:6px 14px; margin:14px 0; color:var(--muted); background:var(--sub-bg); border-radius:0 6px 6px 0; }
+ul,ol { padding-left:22px; }
+li { margin:4px 0; }
+table { border-collapse:collapse; width:100%; margin:14px 0; font-size:0.9em; }
+th,td { border:1px solid var(--line); padding:6px 10px; text-align:left; vertical-align:top; }
+th { background:var(--sub-bg); font-family:var(--mincho); font-weight:600; }
+hr { border:0; border-top:1px dashed var(--line); margin:24px 0; }
+img { max-width:100%; height:auto; }
+
+.nav-back { display:inline-block; margin:0 0 12px; font-family:var(--mono); font-size:12px; color:var(--muted); }
+.nav-back a { color:var(--muted); }
+.nav-back a:hover { color:var(--gold); }
+
+.meta-head { background:var(--sub-bg); border:1px dashed var(--line); border-radius:6px; padding:8px 12px; margin:8px 0 18px; font-family:var(--mono); font-size:11px; color:var(--muted); line-height:1.7; }
+.meta-head b { color:var(--fg); font-weight:600; margin-right:4px; }
+
+.embed-html { border-top:1px dashed var(--line); padding-top:16px; margin-top:8px; }
+.embed-html iframe { width:100%; border:0; min-height:80vh; background:var(--card-bg); border-radius:8px; }
+
+footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+</style>
+</head>
+<body>
+<div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
+<div class="meta-head"><div><b>元のファイル</b>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/整理プロセス/図解_測定とメアド取得_20260911.html</div><div><b>最後に更新された日時</b>2026-09-11 18:14 JST</div></div>
+<h1>測定とメアド取得の図解</h1><div class="embed-html"><style>
+  :root{
+    --ink:#1c2530; --ink2:#4a5865; --ink3:#7c8896;
+    --bg:#fbfcfd; --panel:#ffffff; --line:#dfe5ec;
+    --ok:#1f7a4d; --ng:#c0392b; --now:#b36b00; --key:#1f5fa8;
+    --mono:"SFMono-Regular",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;
+       font-size:14px;line-height:1.75;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto;padding:32px 24px 80px}
+  h1{font-size:23px;font-weight:700;margin:0 0 4px;letter-spacing:.01em}
+  .sub{color:var(--ink3);font-size:13px;margin:0 0 28px}
+  h2{font-size:17px;font-weight:700;margin:44px 0 14px;padding-bottom:8px;
+     border-bottom:2px solid var(--line)}
+  h3{font-size:14px;font-weight:700;margin:24px 0 8px;color:var(--ink2)}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;
+         padding:20px 22px;margin:14px 0}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--ink3);font-weight:600;font-size:12px;letter-spacing:.04em;
+     background:#f5f8fb;white-space:nowrap}
+  td.n{font-family:var(--mono);text-align:right;white-space:nowrap;
+       font-variant-numeric:tabular-nums}
+  code,.m{font-family:var(--mono);font-size:12.5px}
+  pre{background:#f6f8fa;border:1px solid var(--line);border-radius:6px;
+      padding:13px 15px;overflow-x:auto;font-family:var(--mono);font-size:12px;
+      line-height:1.65;margin:8px 0;color:var(--ink2)}
+  .ok{color:var(--ok);font-weight:700}
+  .ng{color:var(--ng);font-weight:700}
+  .now{color:var(--now);font-weight:700}
+  .key{color:var(--key);font-weight:700}
+  .big{font-family:var(--mono);font-size:27px;font-weight:700;
+       font-variant-numeric:tabular-nums;line-height:1.2}
+  .kpi{display:flex;gap:0;flex-wrap:wrap;border:1px solid var(--line);
+       border-radius:8px;overflow:hidden;background:var(--panel)}
+  .kpi > div{flex:1 1 150px;padding:16px 18px;border-right:1px solid var(--line)}
+  .kpi > div:last-child{border-right:0}
+  .kpi .lab{font-size:11.5px;color:var(--ink3);letter-spacing:.04em;margin-bottom:5px}
+  .kpi .note{font-size:11.5px;color:var(--ink3);margin-top:3px}
+  svg{display:block;width:100%;height:auto}
+  .cap{font-size:12px;color:var(--ink3);margin:6px 0 0}
+  .note-box{border-left:3px solid var(--line);padding:2px 0 2px 14px;
+            color:var(--ink2);font-size:13px;margin:12px 0}
+  .note-box.warn{border-left-color:var(--ng)}
+  .note-box.fix{border-left-color:var(--key)}
+  ul{margin:8px 0;padding-left:20px} li{margin:4px 0}
+  .quote{font-size:13.5px;color:var(--ink2);border-left:3px solid var(--line);
+         padding-left:14px;margin:10px 0}
+  .scroll{overflow-x:auto}
+  footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);
+         color:var(--ink3);font-size:12px}
+  footer a{color:var(--key)}
+</style>
+<style>
+    .bx{fill:#fff;stroke:#dfe5ec;stroke-width:1.5;rx:7}
+    .bxr{fill:#fff;stroke:#c0392b;stroke-width:2;rx:7}
+    .t{font:13px -apple-system,"Hiragino Sans",sans-serif;fill:#1c2530}
+    .ts{font:11px "SFMono-Regular",Menlo,monospace;fill:#7c8896}
+    .tb{font:13px -apple-system,"Hiragino Sans",sans-serif;fill:#1c2530;font-weight:700}
+    .tok{font:12px -apple-system,"Hiragino Sans",sans-serif;fill:#1f7a4d;font-weight:700}
+    .tng{font:12px -apple-system,"Hiragino Sans",sans-serif;fill:#c0392b;font-weight:700}
+    .ln{stroke:#7c8896;stroke-width:1.6;fill:none}
+    .lnr{stroke:#c0392b;stroke-width:2;fill:none;stroke-dasharray:5 3}
+  </style>
+<style>
+    .bx2{fill:#fff;stroke:#dfe5ec;stroke-width:1.5;rx:7}
+    .bxk{fill:#fff;stroke:#1f5fa8;stroke-width:2;rx:7}
+    .bxn{fill:#fff;stroke:#c0392b;stroke-width:2;rx:7}
+    .bxg{fill:#fbfcfd;stroke:#dfe5ec;stroke-width:1.5;rx:9;stroke-dasharray:4 3}
+    .t{font:12.5px -apple-system,"Hiragino Sans",sans-serif;fill:#1c2530}
+    .ts{font:11px "SFMono-Regular",Menlo,monospace;fill:#7c8896}
+    .tb{font:13px -apple-system,"Hiragino Sans",sans-serif;fill:#1c2530;font-weight:700}
+    .th{font:12px -apple-system,"Hiragino Sans",sans-serif;fill:#7c8896;font-weight:700;letter-spacing:.06em}
+    .tk{font:11.5px -apple-system,"Hiragino Sans",sans-serif;fill:#1f5fa8;font-weight:700}
+    .tok2{font:11.5px -apple-system,"Hiragino Sans",sans-serif;fill:#1f7a4d;font-weight:700}
+    .tng2{font:11.5px -apple-system,"Hiragino Sans",sans-serif;fill:#c0392b;font-weight:700}
+    .ln2{stroke:#7c8896;stroke-width:1.6;fill:none}
+    .lnk{stroke:#1f5fa8;stroke-width:2;fill:none}
+    .lng{stroke:#c0392b;stroke-width:2;fill:none;stroke-dasharray:5 3}
+    .lbl{font:11px -apple-system,"Hiragino Sans",sans-serif;fill:#7c8896}
+    .num{font:11px "SFMono-Regular",Menlo,monospace;fill:#1c2530;font-weight:700}
+  </style>
+
+<div class="wrap">
+
+<h1>測定とメアド取得 ── いまの姿と、直した後の姿</h1>
+<p class="sub">2026-09-11 作成・同日 17時台 更新／数字はすべてこの日に実機で叩いた実測値。AI が後から突き合わせられるよう、数えたコマンドを各所に併記。</p>
+
+<div class="note-box fix" style="border-left-color:#1f5fa8">
+<strong>🔵 2026-09-11 の午後に変わったこと（この図の前提が動いた）</strong>
+<table style="width:100%;margin-top:8px">
+<tr><td style="width:34%">🟢 <b>途中の所を数え始めた</b></td><td>18時台。ダウンロードページとお試し版の <code>&lt;/body&gt;</code> の直前に script を1本ずつ足し、<b>窓が出た・入れ違えた・入れずに閉じた・15分と25分の声かけ・相談からDLへ回った</b>を1件ずつ <code>POST /ev</code> へ置くようにした。<b>端末の札（uid）</b>を <code>/get/</code> まで持っていくので、63 を人数に割れる。詳細は 1.7</td></tr>
+<tr><td style="width:34%">ファネルが2本になった</td><td>使い方12枚＋機能要望2枚＋規約2枚を新ファネル <code>us8SDwmrVGOK</code>「AI-Mits＆経営アプリ 使い方・規約」へ移した。旧 <code>1QtzdExbynBp</code> に残るのは<strong>お試し版・ダウンロード・premium の3枚だけ</strong></td></tr>
+<tr><td>旧14枚を消した</td><td>控えは <code>/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20260911_旧ファネル14枚_削除前控え</code>。ステップの枠 <code>dDeoyHQ6p7Il</code> と <code>RlJo5smy3MgU</code> は中身0枚で残っている（API にステップを消す道具が無い）</td></tr>
+<tr><td>機能要望フォームのID</td><td><code>8OPXLgTgerHc</code> → <code>UWYgpFIuTHd6</code>。<strong>登録2件は旧ページごと消えたので 0 から数え直し</strong></td></tr>
+<tr><td>ステップメール</td><td>シナリオ <code>XU7Gfd7XoiCQ</code> の全68通のうち<strong>24通</strong>のリンクを新IDへ張り替えた。飛んでいた 00〜03日の4通に404が2本混じっていた</td></tr>
+<tr><td>アプリ v1.70.0 を配った</td><td>使い方の参照先を新IDへ／Windows のインストーラを日本語に／二重起動を止めた（<code>tauri-plugin-single-instance</code>）</td></tr>
+<tr><td>読者</td><td>18人 → <strong>19人</strong></td></tr>
+</table>
+<strong>測定の切れ目は動いていない。</strong>UTAGE の form を通った登録だけが数えられ、中継へ投げた登録は数えられない。
+</div>
+<div class="note-box warn"><strong>⚠️ 4節「🔴④ 確認メールが送られていない」は裏取りの途中です（devils-advocate が走行中・2026-09-11 12:40 発注）。</strong>手元のソースを読んだ結果であり、<strong>本番の Worker が手元と同じかは未確認</strong>（<code>.wrangler/</code> にデプロイの記録が0件）。裏取りが返るまで、この節を根拠に実装しないこと。</div>
+
+<div class="quote">
+Mits様「今の現状を活かすことは活かすけど、目的は測定とメアドをちゃんと取得すること、再設計でもいい」
+</div>
+<div class="note-box fix" style="border-left-color:#1f5fa8">
+<strong>🔵 大原則（2026-09-11 Mits様）── すべてのアクションを測るが基本。</strong><br>
+ページを開いた・話し始めた・一言送った・窓が出た・メアドを入れた・メールを開いた・リンクを踏んだ・
+ボタンを押した・落とした・起動した・申し込んだ ── <strong>人が何かをしたら、必ず1件数える。</strong>
+測っていないアクションがあれば、それは設計の抜けとして扱う。
+</div>
+
+<!-- ═══ 1. いまの数字 ═══ -->
+<h2>1. いまの数字</h2>
+
+<div class="kpi">
+  <div><div class="lab">ダウンロード（8/12〜）</div><div class="big">62</div><div class="note">回</div></div>
+  <div><div class="lab">取れたメアド</div><div class="big now">18</div><div class="note">件（テスト26件を除く）</div></div>
+  <div><div class="lab">経路が付いたメアド</div><div class="big ng">0</div><div class="note">件</div></div>
+  <div><div class="lab">UTAGE の登録数</div><div class="big ng">0</div><div class="note">お試し版・DL とも</div></div>
+  <div><div class="lab">台帳の「登録」列</div><div class="big ng">0</div><div class="note">15列中</div></div>
+  <div><div class="lab">KV の verify: トークン</div><div class="big ng">0</div><div class="note">件（TTL 15分）</div></div>
+</div>
+
+<p class="cap"><strong>62回落とされて、メアドは18件。そのどれにも経路が付いていない。</strong></p>
+
+<div class="panel">
+<h3>ダウンロードの内訳（中継 untendai-update）</h3>
+<pre>curl -s "https://untendai-update.3216-fun.workers.dev/count?detail=1"
+
+total 62        by_day   9/8 29 ／ 9/9 12 ／ 9/10 20 ／ 9/11 1
+by_os           mac 33 ／ windows 29
+by_from         spro 36 ／ utage 12 ／ magmag 2 ／ aDqCF 2 ／ (不明) 10
+by_campaign     idou_heikin_0909 25 ／ idou_heikin_0908 22 ／ (不明) 10 ／
+                honban_kakunin_0908 2 ／ fNOl_rFrNCg_2191 2 ／ 20260910_sekidobi 1</pre>
+
+<h3>メアドの置き場（中継 KV aimits_identity）</h3>
+<pre>GET /accounts/&lt;acc&gt;/storage/kv/namespaces/&lt;ns&gt;/keys?limit=1000
+
+鍵の総数 206
+  anon 97 ／ <span class="key">email2reader 44</span> ／ reader 35 ／ member 11 ／
+  legacy2canonical 8 ／ canonical2legacy 7 ／ anon2reader 4
+
+email2reader 44件 → テスト・ご自身のアドレスを除くと <span class="now">18件</span></pre>
+
+<h3>中継のソースに UTM が1文字も無い</h3>
+<pre>grep -c "utm_" aimits-report-proxy/src/index.js   →  <span class="ng">0</span></pre>
+</div>
+
+<!-- ═══ 2. いまの道 ═══ -->
+<h2>1.5 🔴 63 と 19 ── ダウンロードを押した全件を1行ずつ数えた（2026-09-11 17時台）</h2>
+
+<div class="quote">
+Mits様「総数 63 が、重複があったとしても取れるメアドの最大値なのに18しか取れていない、これを直そうとしている」<br>
+Mits様「HTMLに数字を書き込む、そして落ちているところをチェックする、その落ちているところに測定の装置と登録を必ず通過させる」
+</div>
+
+<p>集計（<code>/count?detail=1</code>）ではなく、<b>Cloudflare KV の生の行を63件すべて引いて数えた</b>。
+1件は本文が空で読めず、<b>62件</b>で集計している。</p>
+
+<pre>KV  namespace DLLOG  4ab2f9e24aad4030ab1698b38a0e3fc5
+    鍵 dl:&lt;日付&gt;:&lt;時刻&gt;-&lt;乱数&gt;   63件
+    1行の中身  ts / os / which / version / from / utm{5} / ref / country / ua</pre>
+
+<table>
+<tr><th>Referer</th><th>from</th><th>端末</th><th>国</th><th>件数</th></tr>
+<tr><td class="m">無</td><td class="m">spro</td><td class="m">Windows</td><td class="m">JP</td><td class="m"><b>20</b></td></tr>
+<tr><td class="m">無</td><td class="m">spro</td><td class="m">Windows</td><td class="m">SK</td><td class="m"><b>8</b></td></tr>
+<tr><td class="m">無</td><td class="m">(無)</td><td class="m">curl</td><td class="m">JP</td><td class="m"><b>7</b></td></tr>
+<tr><td class="m">有</td><td class="m">utage</td><td class="m">Windows</td><td class="m">JP</td><td class="m"><b>6</b></td></tr>
+<tr><td class="m">無</td><td class="m">spro</td><td class="m">Mac</td><td class="m">JP</td><td class="m"><b>6</b></td></tr>
+<tr><td class="m">有</td><td class="m">utage</td><td class="m">Mac</td><td class="m">JP</td><td class="m"><b>5</b></td></tr>
+<tr><td class="m">有</td><td class="m">magmag</td><td class="m">Mac</td><td class="m">JP</td><td class="m"><b>2</b></td></tr>
+<tr><td class="m">無</td><td class="m">aDqCF</td><td class="m">Windows</td><td class="m">JP</td><td class="m"><b>2</b></td></tr>
+<tr><td class="m">有</td><td class="m">(無)</td><td class="m">Windows</td><td class="m">JP</td><td class="m"><b>1</b></td></tr>
+<tr><td class="m">有</td><td class="m">spro</td><td class="m">Mac</td><td class="m">JP</td><td class="m"><b>1</b></td></tr>
+<tr><td class="m">有</td><td class="m">(無)</td><td class="m">Mac</td><td class="m">JP</td><td class="m"><b>1</b></td></tr>
+<tr><td class="m">無</td><td class="m">(無)</td><td class="m">Mac</td><td class="m">JP</td><td class="m"><b>1</b></td></tr>
+<tr><td class="m">有</td><td class="m">spro</td><td class="m">Windows</td><td class="m">JP</td><td class="m"><b>1</b></td></tr>
+<tr><td class="m">無</td><td class="m">utage</td><td class="m">Mac</td><td class="m">JP</td><td class="m"><b>1</b></td></tr>
+</table>
+
+<div class="note-box fix" style="border-left-color:#1f5fa8">
+<strong>🔵 ここで読み違えを1つ直した。</strong><br>
+「Referer が無い＝ダウンロードページを通っていない」と最初に読んだが、<b>違う</b>。<br>
+<code>/get/</code> に <code>utm_source=spro</code> が付くのは、<b>ダウンロードページの JS が押された瞬間に足したときだけ</b>
+（<code>oHtrsl52qpXg</code> の「経路の札を、ダウンロードの口まで持っていく」スクリプト）。
+メールの HTML もテキスト版も <code>/get/</code> を直に指していない（実測：spro 版・magmag 版・UTAGE 版とも0件。
+ステップメール68通も0件）。<br>
+→ <b>札が付いている52件は、全員ダウンロードページを通り、メアドの窓を見ている。</b>
+Referer が落ちるのは、メールソフトの中のブラウザなど、送らない環境があるため。
+</div>
+
+<h3>数の突き合わせ</h3>
+<table>
+<tr><th>何</th><th>件数</th><th>根拠</th></tr>
+<tr><td>/get/ を押した延べ</td><td class="m"><b>63</b></td><td>KV の行数</td></tr>
+<tr><td>読めた行</td><td class="m">62</td><td>1件は本文が空</td></tr>
+<tr><td class="ng">私の curl（テスト）</td><td class="m">7</td><td>ua が curl/8.7.1</td></tr>
+<tr><td class="ng">海外（SK）</td><td class="m">8</td><td>country=SK</td></tr>
+<tr><td><b>人らしきもの</b></td><td class="m"><b>47</b></td><td>62 − 7 − 8</td></tr>
+<tr><td>うち札が付いている（＝窓を見た）</td><td class="m">52 − 15 ＝ <b>44</b></td><td>utm または from が入っている行</td></tr>
+<tr><td class="ok">実際に取れたメアド</td><td class="m"><b>19</b></td><td>message_reader_list(XU7Gfd7XoiCQ)</td></tr>
+<tr><td class="ng"><b>落ちた</b></td><td class="m"><b>25</b></td><td>44 − 19</td></tr>
+</table>
+
+<p>同じ版を何度も押した分が入っている（<code>by_version</code> が9つに割れている：
+1.60.6 が26・1.66.0 が20・1.60.5 が6 …）。実人数はこれより少ない。
+<b>いまは同じ人を数え分ける札が無いので、そこが測れない。</b></p>
+
+<h2>1.6 🔴 落ちている所の一覧 ── ここに測定の装置と登録を通す</h2>
+
+<p>Mits様のご指示は2つ。<b>落ちている所に①測定の装置を置く ②登録を必ず通過させる。</b>
+下の表の「いま」が実測、「置くもの」がまだ無いもの。</p>
+
+<table>
+<tr><th>#</th><th>落ちている所</th><th>いま</th><th>置くもの</th></tr>
+<tr><td class="m">1</td><td>窓を閉じた人（× / 背景 / Esc）</td><td class="ng">記録なし。閉じた事実がどこにも残らない</td><td>閉じた1件を数える。閉じても<b>もう一度出す</b></td></tr>
+<tr><td class="m">2</td><td>メアドを入れずに離脱</td><td class="ng">記録なし</td><td>窓が出た1件・入れ始めた1件・送った1件の3段で数える</td></tr>
+<tr><td class="m">3</td><td>同じ人の押し直し</td><td class="ng">数え分ける札が無い（63は延べ）</td><td>端末ごとの札（anon_uid）を <code>/get/</code> まで持っていく</td></tr>
+<tr><td class="m">4</td><td>Referer が落ちる環境</td><td class="ng">45件が Referer 無し。経路が utm でしか追えない</td><td>ページ通過の1件を、ページ側から直接数える</td></tr>
+<tr><td class="m">5</td><td>JavaScript が動かない環境</td><td class="ng">窓が開かず、素のリンクとして落ちる（壁にしない設計）</td><td>素で落ちた1件も数える</td></tr>
+<tr><td class="m">6</td><td class="ng"><b>お試し版の 15分・25分の声かけ</b></td><td class="ng">出しているが<b>記録が0件</b>（sendBeacon 0・gtag 0・dataLayer 0）</td><td>声かけが出た1件・閉じた1件・そこまでの送信回数を数える</td></tr>
+<tr><td class="m">7</td><td>お試し版で相談した人</td><td class="ng">pv 198 / uu 76 に対して<b>登録 0</b></td><td>相談1回ごとに数え、何回目で登録に行くかを見る</td></tr>
+<tr><td class="m">8</td><td>確認メールのリンクの着地</td><td class="ng"><code>/p/XN7acYfA4sq5</code> が <b>404</b></td><td>着地ページを立て、踏んだ1件を数える</td></tr>
+<tr><td class="m">9</td><td>UTAGE のファネル統計</td><td class="ng">お試し版・DL とも登録0（中継経由は定義上出ない）</td><td>UTAGE の form を通す道を1本足す</td></tr>
+</table>
+
+<div class="note-box warn">
+<strong>⚠️ 1・2・4・5 は「窓を見た44件のうち25件が落ちた」の内訳そのもの。いまはどれも数えていないので、
+25件がどの理由で落ちたかを分けられない。</strong>まず数える装置を置いて、それから塞ぐ。
+</div>
+
+<h2>1.7 🟢 置いた装置 ── 2026-09-11 18時台に入れたもの（全部実測で通した）</h2>
+
+<p>1.6 の表の 1〜7 に、数える装置を入れた。<b>お客様に見える文言は1文字も変えていない。</b>
+足したのは、それぞれのページの <code>&lt;/body&gt;</code> の直前に置いた script ひとつだけ
+（UTAGE の中身は部分置換・読み返して1バイトまで一致を確認）。</p>
+
+<h3>置いた所と、そこで数えるもの</h3>
+
+<table>
+<tr><th>置いた所</th><th>数える名前</th><th>何が分かるか</th></tr>
+<tr><td rowspan="7">ダウンロードページ<br><code>oHtrsl52qpXg</code></td>
+    <td class="m">page_view</td><td>ページに着いた人</td></tr>
+<tr><td class="m">dl_click</td><td>ダウンロードを押した人（Mac / Windows・最新 / 1つ前）</td></tr>
+<tr><td class="m">gate_open</td><td>メアドの窓が出た</td></tr>
+<tr><td class="m">gate_error</td><td>空のまま押した／形が違うものを入れた</td></tr>
+<tr><td class="m">gate_close</td><td><b>入れずに閉じた</b>（× / 背景 / Esc）</td></tr>
+<tr><td class="m">gate_leave</td><td>窓を開けたまま去った</td></tr>
+<tr><td class="m">dl_start / again_click</td><td>実際に落ち始めた／始まらず押し直した</td></tr>
+<tr><td rowspan="6">お試し版<br><code>UgSfW8MCzHqv</code></td>
+    <td class="m">chat_send</td><td>何回相談したか（1回目・2回目…と数が入る）</td></tr>
+<tr><td class="m">nudge15 / nudge25</td><td><b>15分・25分の声かけが出た</b>（これまで記録0件）</td></tr>
+<tr><td class="m">nudge_fin / nudge_more</td><td>声かけのあと「決めて終える」か「もう少し話す」か</td></tr>
+<tr><td class="m">to_dl</td><td><b>相談からダウンロードページへ回った</b>（声かけから／画面から）</td></tr>
+<tr><td class="m">reg_open / reg_error / reg_close</td><td>登録の窓を出した・入れ違えた・入れずに閉じた</td></tr>
+<tr><td class="m">reg_submit / login_submit</td><td>はじめての登録／ログイン</td></tr>
+</table>
+
+<h3>端末の札（uid）── 63 を人数に割るための1本</h3>
+
+<p>これまで 63 は「押した延べ」で、同じ人が2回押したのか2人が押したのかを分けられなかった。
+今回、ブラウザごとに札を1つ作って <code>localStorage</code> に置き、</p>
+
+<ul>
+<li>ページの中の記録（<code>ev:</code>）に必ず入れる</li>
+<li>ダウンロードの行き先 <code>/get/…?uid=…</code> にも足して、押した行（<code>dl:</code>）にも入れる</li>
+</ul>
+
+<p><b>お試し版とダウンロードページは同じ入れもの（change.7years.life）で開くので、札は同じ。</b>
+つまり「相談した人が、あとで落としに来たか」が初めて線でつながる（1.6 の 7 番）。
+<code>/count?detail=1</code> に <code>people</code>（人数）・<code>pushes_with_uid</code>（延べ）・
+<code>people_by_campaign</code>（経路ごとの人数）を足した。</p>
+
+<h3>実測（この場で通した出力・そのあとテスト行は消した）</h3>
+
+<pre>ダウンロードページ（?utm_source=test_sanbo&amp;utm_campaign=20260911_soubi で開いた）
+  リンクの形   /get/windows?utm_source=test_sanbo&amp;utm_medium=email&amp;utm_campaign=20260911_soubi&amp;uid=mtwoq7iupz7dzz2s
+  08:19:09  dl   page_view                        uid mtwoq7iupz7dzz2s  camp 20260911_soubi
+  08:19:13  dl   dl_click    latest / windows     uid mtwoq7iupz7dzz2s  camp 20260911_soubi
+  08:19:13  dl   gate_open                        uid mtwoq7iupz7dzz2s  camp 20260911_soubi
+  08:19:19  dl   gate_error  空のまま              uid mtwoq7iupz7dzz2s  camp 20260911_soubi
+  08:19:22  dl   gate_close  入れずに閉じた         uid mtwoq7iupz7dzz2s  camp 20260911_soubi
+
+お試し版
+  08:21:15  trial  page_view                      uid mtwoq7iupz7dzz2s
+  08:21:15  trial  nudge15                        uid mtwoq7iupz7dzz2s
+  08:21:16  trial  nudge25                        uid mtwoq7iupz7dzz2s
+  08:21:16  trial  nudge_fin   nudge25            uid mtwoq7iupz7dzz2s
+
+札が2枚とも同じ = 別のページでも同じ人として並ぶ</pre>
+
+<h3>まだ塞いでいない所</h3>
+
+<table>
+<tr><th>#</th><th>いま</th></tr>
+<tr><td class="m">5</td><td>JavaScript が動かない環境は、この装置も動かない。<b>押した行（<code>dl:</code>）には残る</b>ので、
+「札の無い押下」＝JS が効かなかった分として引き算で出せる</td></tr>
+<tr><td class="m">8</td><td class="ng">確認メールの着地 404 は、<b>中継のソースは直したが本番へはまだ出していない</b>。
+同じファイルに、別のセッションが作った未反映の直し（A/B 振り分けの撤去）が入っているため。
+出すとそちらも一緒に本番へ出る</td></tr>
+<tr><td class="m">9</td><td>UTAGE の統計に出す道（form 要素）は入れていない。3.6 の判定待ちのまま</td></tr>
+</table>
+
+<h2>1.8 🔴 装置を入れたあとの裏取り ── devils-advocate に上流から叩かせた</h2>
+
+<p>入れた本人の申告を信じずに、別の目で1件ずつ実機を叩かせた。<b>穴が3つ出た。2つはその場で塞ぎ、1つが残っている。</b></p>
+
+<table>
+<tr><th>#</th><th>出た穴</th><th>いま</th></tr>
+<tr><td class="m">1</td><td><b>受け口 <code>/ev</code> が誰でも書けた。</b>認証も上限も無く、よその名乗りで POST すると 204 で記録に入っていた。数える口が汚れると 63 と 19 の差を割る土台そのものが崩れる</td><td class="ok">塞いだ。<code>change.7years.life</code> と <code>utage-system.com</code> からだけ受ける。読む口はそのまま</td></tr>
+<tr><td class="m">2</td><td><b>札が2つに割れていた。</b>同じページが <code>change.7years.life</code> と <code>utage-system.com</code> の2つの入れもので出る。札の置き場は入れものごとに別なので、片方で相談してもう片方で落とすと<b>同じ人が2人として数えられていた</b></td><td class="ok">塞いだ。行き先の URL に札を載せて持ち回る形にした</td></tr>
+<tr><td class="m">3</td><td class="ng"><b>確認メールの着地は、いまも 404 のまま。</b>ソースは直したが本番に出していない。「出していない」と「本番はいま何を出しているか」は別で、押した人は<b>今この瞬間も 404 に着いている</b></td><td class="ng">残っている（下の判定待ち）</td></tr>
+</table>
+
+<h3>塞いだことの実測</h3>
+
+<pre>受け口を締めたあと（Version d7042095-cfc1-42b5-a89d-55fd91efaf24）
+  よそからの名乗り     403      Origin: https://evil.example.com
+  名乗りも来歴も無し   403
+  似せた名前で騙る     403      https://change.7years.life.evil.com
+  change.7years.life   204
+  utage-system.com     204
+  読む口 /ev/count     200      ← 読むのは今までどおり
+
+札の持ち回り（本番で2つの入れものをまたいで通した）
+  utage-system.com   お試し版を開く → 札 mtwpwdq4slr7obuk
+                     DLへのリンク    https://change.7years.life/p/nPC0MfBNagSy?uid=mtwpwdq4slr7obuk
+  change.7years.life そこを開く     → 札 mtwpwdq4slr7obuk（同じ札を受け取った）
+                     DLボタン        /get/windows?uid=mtwpwdq4slr7obuk
+  記録   08:51:56 trial page_view / to_dl    uid mtwpwdq4slr7obuk
+         08:52:03 dl    page_view            uid mtwpwdq4slr7obuk   ← 1人として並んだ</pre>
+
+<div class="note-box warn">
+<strong>⚠️ 残っている1つ ── 確認メールの着地 404。</strong>
+中継の本番は 2026-09-09 09:14（UTC）が最後で、そこには 404 の古い値が入ったまま。
+手元のソースは直っているが、<b>同じファイルに別のセッションが作った未反映の直し（A/B 振り分けの撤去）が入っている</b>ので、
+出すとそちらも一緒に本番へ出る。
+</div>
+
+<h2>1.9 🟢 経路 × 配信のクロス ── まぐまぐが0だった</h2>
+
+<p>これまで「配信ごと」と「経路ごと」が別々にしか出ず、
+<b>1本の配信について spro・まぐまぐ・UTAGE のどれが効いたかが出せなかった。</b>
+3スタンドとも同じ <code>utm_campaign</code> を焼いて <code>utm_source</code> で分けているので、重ねれば出る。
+<code>/count?days=30&amp;detail=1</code> に <code>by_from_campaign</code> と <code>people_by_from_campaign</code> を足した。</p>
+
+<table>
+<tr><th>経路</th><th>延べ</th><th>内訳</th></tr>
+<tr><td class="m">spro</td><td class="m">36</td><td>idou_heikin_0909 20 ／ idou_heikin_0908 16</td></tr>
+<tr><td class="m">utage</td><td class="m">12</td><td>idou_heikin_0908 6 ／ idou_heikin_0909 5 ／ 20260910_sekidobi 1</td></tr>
+<tr><td class="m">(不明)</td><td class="m">11</td><td>札も経路も付いていない押下</td></tr>
+<tr><td class="m">magmag</td><td class="m">2</td><td>honban_kakunin_0908 2</td></tr>
+<tr><td class="m">aDqCF</td><td class="m">2</td><td>fNOl_rFrNCg_2191 2</td></tr>
+</table>
+
+<div class="note-box warn">
+<strong>⚠️ この形にして初めて出たこと ── 9/8・9/9 の2本（合計47回）で、まぐまぐ経由の押下が 0。</strong>
+spro が 36、UTAGE が 11。まぐまぐの2回は <code>honban_kakunin_0908</code> という別の名前の分で、
+<code>idou_heikin_*</code> には1回も乗っていない。3スタンド出したはずの2本なので、入稿の記録と突き合わせる。
+<br>生の63行を全部引き直した内訳：<code>idou_heikin_0908 22（spro 16 / utage 6）</code>・
+<code>idou_heikin_0909 25（spro 20 / utage 5）</code>。別綴り（mag / mm / ma9 / magazine）は0件。
+</div>
+
+<p><b>9/10 の <code>20260910_sekidobi</code> が 1 で止まっているのは、UTAGE の1本しか出ていないため</b>
+（spro とまぐまぐは入稿できておらず読者に届いていない）。9/8・9/9 の22・25 と並べて比べない。</p>
+
+<h2>1.10 🔴 数える口の限り ── 内訳は500件で打ち切る</h2>
+
+<p><code>/count?detail=1</code> は、内訳を作るときに先頭500件までしか中身を読まない
+（<code>updater/index.js:334</code>）。</p>
+
+<pre>if (detail &amp;&amp; hits.length &lt; 500) hits.push(k.name);</pre>
+
+<table>
+<tr><th>出るもの</th><th>数え方</th></tr>
+<tr><td class="m">total ／ by_day</td><td class="ok">全件を数える</td></tr>
+<tr><td class="m">by_os ／ by_from ／ by_campaign ／ by_from_campaign ／ people 系</td><td class="ng">先頭500件ぶんだけ</td></tr>
+</table>
+
+<p>いまの総数は63なので影響しない。<b>押下が500を超えると、内訳が静かに欠ける。</b>
+500に近づいた時点で、打ち切りを外すか窓を切る。</p>
+
+<h2>1.11 🟠 台帳 keisoku_suii.csv を読む口は、開発版の枝にある</h2>
+
+<p>「運転台は台帳を1行も読んでいない」は <code>main</code> 枝では真だが、
+<b><code>marketing</code> 枝には CSV を読む口が既にある</b>（2026-09-11 の裏取りで判明・参謀が
+<code>main</code> の4フォルダだけを見て断定していた）。</p>
+
+<pre>marketing:src-tauri/src/haishin.rs:29    pub const TABLE: &amp;str = "haishin_keisoku";
+marketing:src-tauri/src/haishin.rs:144   pub fn import_csv(
+marketing:src-tauri/src/commands.rs:4094 // ── 配信計測（マーケティング・2026-09-08 Mits様）──
+marketing:src/index.html:5493            &lt;th&gt;経過&lt;/th&gt;&lt;th&gt;測った時刻&lt;/th&gt;&lt;th&gt;送信&lt;/th&gt;…</pre>
+
+<p><code>import_csv()</code> は<b>列名で引く</b>ので、<code>keisoku_suii.csv</code> の見出しと10列が重なっている。</p>
+
+<table>
+<tr><th>台帳に何をするか</th><th>開発版への影響</th></tr>
+<tr><td class="m">列を足す</td><td class="ok">安全。使われない列は無視される</td></tr>
+<tr><td class="m">列を減らす</td><td class="ng">壊れる（必須3列＝配信日または配信時刻／件名／経路）</td></tr>
+<tr><td class="m">列の名前を変える</td><td class="ng">同上</td></tr>
+</table>
+
+<p>ファイルの絶対パスはソースに書かれておらず、画面からファイルを選ぶ形なので、いま自動では読まれていない。</p>
+
+<h2>2. いまの道 ── どこで落ちているか</h2>
+
+<div class="panel">
+<div class="scroll">
+<svg viewBox="0 0 1080 430" role="img" aria-label="いまの経路とUTMが落ちる3か所">
+  <defs>
+    <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7c8896"/></marker>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/></marker>
+  </defs>
+  <style>
+    .bx{fill:#fff;stroke:#dfe5ec;stroke-width:1.5;rx:7}
+    .bxr{fill:#fff;stroke:#c0392b;stroke-width:2;rx:7}
+    .t{font:13px -apple-system,"Hiragino Sans",sans-serif;fill:#1c2530}
+    .ts{font:11px "SFMono-Regular",Menlo,monospace;fill:#7c8896}
+    .tb{font:13px -apple-system,"Hiragino Sans",sans-serif;fill:#1c2530;font-weight:700}
+    .tok{font:12px -apple-system,"Hiragino Sans",sans-serif;fill:#1f7a4d;font-weight:700}
+    .tng{font:12px -apple-system,"Hiragino Sans",sans-serif;fill:#c0392b;font-weight:700}
+    .ln{stroke:#7c8896;stroke-width:1.6;fill:none}
+    .lnr{stroke:#c0392b;stroke-width:2;fill:none;stroke-dasharray:5 3}
+  </style>
+
+  <rect class="bx" x="20" y="20" width="185" height="60"/>
+  <text class="tb" x="36" y="44">① メール・広告</text>
+  <text class="ts" x="36" y="64">?utm_source=… &amp;campaign=…</text>
+
+  <line class="ln" x1="205" y1="50" x2="268" y2="50" marker-end="url(#a1)"/>
+
+  <rect class="bx" x="272" y="20" width="230" height="60"/>
+  <text class="tb" x="288" y="44">② change.7years.life に着地</text>
+  <text class="tok" x="288" y="64">✅ UTM は届いている</text>
+
+  <path class="ln" d="M387,80 L387,110 L200,110 L200,140" marker-end="url(#a1)"/>
+  <path class="ln" d="M387,80 L387,110 L640,110 L640,140" marker-end="url(#a1)"/>
+
+  <rect class="bx" x="80" y="144" width="240" height="66"/>
+  <text class="tb" x="96" y="168">③-a ダウンロードボタン</text>
+  <text class="ts" x="96" y="188">untendai-update /get/</text>
+  <text class="tok" x="96" y="204">✅ UTM ごと KV へ → 62回</text>
+
+  <rect class="bxr" x="520" y="144" width="240" height="66"/>
+  <text class="tb" x="536" y="168">③-b メアドの窓</text>
+  <text class="ts" x="536" y="188">POST /register { email }</text>
+  <text class="tng" x="536" y="204">🔴① UTM がここで落ちる</text>
+
+  <line class="lnr" x1="640" y1="210" x2="640" y2="248" marker-end="url(#a2)"/>
+
+  <rect class="bxr" x="520" y="252" width="240" height="66"/>
+  <text class="tb" x="536" y="276">④ UTAGE に顧客登録</text>
+  <text class="ts" x="536" y="296">reader_create { mail }</text>
+  <text class="tng" x="536" y="312">🔴② 標準 utm_* は form 経由のみ</text>
+
+  <line class="ln" x1="200" y1="210" x2="200" y2="330" marker-end="url(#a1)"/>
+  <path class="lnr" d="M640,318 L640,344 L330,344" marker-end="url(#a2)"/>
+
+  <rect class="bxr" x="80" y="334" width="240" height="66"/>
+  <text class="tb" x="96" y="358">⑤ 台帳 keisoku_suii.csv</text>
+  <text class="ts" x="96" y="378">15列・データ8行</text>
+  <text class="tng" x="96" y="394">🔴③ 登録数の列が 0件</text>
+
+  <rect class="bx" x="820" y="144" width="235" height="174"/>
+  <text class="tb" x="836" y="168">結果（実測）</text>
+  <text class="t"  x="836" y="194">ダウンロード</text><text class="t" x="1020" y="194" text-anchor="end">62回</text>
+  <text class="t"  x="836" y="216">メアド</text><text class="t" x="1020" y="216" text-anchor="end">18件</text>
+  <text class="t"  x="836" y="238">経路つきメアド</text><text class="tng" x="1020" y="238" text-anchor="end">0件</text>
+  <text class="t"  x="836" y="260">UTAGE 登録数</text><text class="tng" x="1020" y="260" text-anchor="end">0</text>
+  <text class="t"  x="836" y="282">utm_* 5列</text><text class="tng" x="1020" y="282" text-anchor="end">全部 null</text>
+  <text class="ts" x="836" y="306">→ 突き合わせの表が作れない</text>
+</svg>
+</div>
+</div>
+
+<table>
+<tr><th style="width:34px">#</th><th>落ちている所</th><th>そう言える実測</th></tr>
+<tr><td class="ng">①</td>
+    <td>DL ページ <code>oHtrsl52qpXg</code> L439 の来訪クエリ <code>Q</code> が script A の IIFE に閉じていて、登録の JS（script B）から読めない。<code>/register</code> に送る body は <code>{email}</code> だけ</td>
+    <td class="m">grep -c "utm_" index.js → <span class="ng">0</span></td></tr>
+<tr><td class="ng">②</td>
+    <td>UTAGE の<strong>標準</strong> utm_* 5列（<code>funnel_subscriber_list</code> が返すもの）は、<strong>form 要素を置いたページに UTM 付きで来訪 → そのフォームから登録</strong>したときだけ埋まる。API で作った読者には入らない</td>
+    <td class="m">読者19名の utm_* <span class="ng">全部 null</span></td></tr>
+<tr><td class="ng">③</td>
+    <td>台帳15列に登録数の列が無い。DL 計測は <code>JSON.stringify(by)</code> で1セルに詰めていて、キーを取り出している箇所が無い</td>
+    <td class="m">grep 登録 → <span class="ng">0件</span><br>L134-135 stringify のみ<br>by[ / Object.keys(by) → <span class="ng">0件</span></td></tr>
+<tr><td class="ng">④</td>
+    <td><strong>確認のメールが送られていない。</strong>中継は UTAGE に<strong>下書きを作るだけで送信していない</strong>ので、成功しても <code>sent:false</code> を返す。Web版のポップアップは「登録」ではなく「確認のメールを送る」で終わる作りで、<strong>メールのリンクを踏まないと登録が済まない</strong>（リンクは15分）。踏めないので <code>/resolve</code> がいつまでも「まだ」を返す</td>
+    <td class="m">L765-766 draft only<br>L928 に入らない<br>L939 常に sent:false<br>KV verify: <span class="ng">0件</span></td></tr>
+<tr><td class="ng">⑤</td>
+    <td><strong>経路が細分化されていない。</strong><code>by_from</code> は5つ、<code>by_campaign</code> は6キーだけで、<strong>どのページのどのボタンから来たかが分かれていない</strong>。DL ページのメアドの窓か、お試し版のポップアップかも区別が付かない</td>
+    <td class="m">utm_content <span class="ng">0件</span><br>utm_term <span class="ng">0件</span><br>(不明) 10件</td></tr>
+</table>
+
+<h3>🔴④ 確認メールが送られていない ── 中継のソース（手元）</h3>
+<pre>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits-report-proxy/src/index.js
+
+L765  <span class="ng">// draft のみ作成 = 実送信していないので sent:false 扱い</span>
+L766  return { sent: <span class="ng">false</span>, draft_id: (j.data &amp;&amp; j.data.id) || null,
+               note: '<span class="ng">Phase1: draft only, not sent</span>' };
+
+L928  if (mailRes &amp;&amp; mailRes.sent) { ... sent:true ... }   <span class="ng">← 永久に入らない</span>
+L939  return jsonResponse({ sent:false, verify_url: verifyUrl, ... })  <span class="ng">← 常にこちら</span></pre>
+
+<h3>お試し版のポップアップが何をしているか（本番 html_source を読んだ結果）</h3>
+<pre>POST /register { email }        ← body は email だけ（utm も名前も無い）
+
+ページのコメント原文：
+  「登録はメールのリンクを踏んで初めて済みます（リンクは15分）。踏まれたかは
+    /resolve に10秒おきに聞きます。」
+
+→ <span class="ng">メールが来ない → リンクを踏めない → /resolve は「まだ」を返し続ける</span></pre>
+
+<h3>🔴⑤ いま取れている経路の粗さ</h3>
+<pre>by_from       spro 36 ／ utage 12 ／ magmag 2 ／ aDqCF 2 ／ <span class="ng">(不明) 10</span>
+by_campaign   6キー（うち「不明」10）
+
+utm_content   配信原稿での命中 <span class="ng">0件</span>   ← 空いている
+utm_term      配信原稿での命中 <span class="ng">0件</span>   ← 空いている</pre>
+<div class="note-box warn">
+<strong>どの口から入ったかが分からない。</strong>DL ページのメアドの窓・お試し版のポップアップ・機能要望フォーム・premium の4つが、いま全部同じ札で来る。
+<code>utm_content</code> が空いているので、そこに「どの口か」を入れられる。
+</div>
+
+<div class="note-box warn">
+<strong>②について、2026-09-11 に引き直して分かったこと（前の書き方を訂正）。</strong>
+「UTAGE には UTM を焼く口が無い」は言い過ぎだった。<code>message_reader_create</code> に <code>utm_*</code> という<em>名前の引数</em>は無いが、
+<code>scenario_fields</code> / <code>common_fields</code> は「キー=項目名、値=文字列」の<strong>自由な入れ物</strong>で、
+<code>message_reader_item_create</code> で読者項目を新しく作れる（<code>reserved_word</code> は <code>freeN</code> が自動採番）。
+<strong>つまり API 経由の登録にも UTM を残せる。</strong>
+</div>
+
+<!-- ═══ 3. 新しい道 ═══ -->
+<h2>3. 直した後の道</h2>
+
+<div class="panel">
+<div class="scroll">
+<svg viewBox="0 0 1140 1180" role="img" aria-label="着地からリストまでの全経路">
+  <style>
+    .bx2{fill:#fff;stroke:#dfe5ec;stroke-width:1.5;rx:7}
+    .bxk{fill:#fff;stroke:#1f5fa8;stroke-width:2;rx:7}
+    .bxn{fill:#fff;stroke:#c0392b;stroke-width:2;rx:7}
+    .bxg{fill:#fbfcfd;stroke:#dfe5ec;stroke-width:1.5;rx:9;stroke-dasharray:4 3}
+    .t{font:12.5px -apple-system,"Hiragino Sans",sans-serif;fill:#1c2530}
+    .ts{font:11px "SFMono-Regular",Menlo,monospace;fill:#7c8896}
+    .tb{font:13px -apple-system,"Hiragino Sans",sans-serif;fill:#1c2530;font-weight:700}
+    .th{font:12px -apple-system,"Hiragino Sans",sans-serif;fill:#7c8896;font-weight:700;letter-spacing:.06em}
+    .tk{font:11.5px -apple-system,"Hiragino Sans",sans-serif;fill:#1f5fa8;font-weight:700}
+    .tok2{font:11.5px -apple-system,"Hiragino Sans",sans-serif;fill:#1f7a4d;font-weight:700}
+    .tng2{font:11.5px -apple-system,"Hiragino Sans",sans-serif;fill:#c0392b;font-weight:700}
+    .ln2{stroke:#7c8896;stroke-width:1.6;fill:none}
+    .lnk{stroke:#1f5fa8;stroke-width:2;fill:none}
+    .lng{stroke:#c0392b;stroke-width:2;fill:none;stroke-dasharray:5 3}
+    .lbl{font:11px -apple-system,"Hiragino Sans",sans-serif;fill:#7c8896}
+    .num{font:11px "SFMono-Regular",Menlo,monospace;fill:#1c2530;font-weight:700}
+  </style>
+  <defs>
+    <marker id="d1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7c8896"/></marker>
+    <marker id="d2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f5fa8"/></marker>
+    <marker id="d3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/></marker>
+  </defs>
+
+  <!-- ① メール -->
+  <rect class="bx2" x="410" y="14" width="320" height="52"/>
+  <text class="tb" x="426" y="38">① メール・広告から来る</text>
+  <text class="ts" x="426" y="57">?utm_source &amp;medium &amp;campaign &amp;content &amp;term</text>
+
+  <line class="lnk" x1="570" y1="66" x2="570" y2="90" marker-end="url(#d2)"/>
+
+  <!-- ② 着地（実測3つ） -->
+  <rect class="bxk" x="130" y="94" width="880" height="86"/>
+  <text class="tb" x="146" y="118">② change.7years.life に着地 ── 実際に飛んでいる先は3つ（配信原稿を数えた実測）</text>
+  <text class="ts" x="146" y="140">/page/oHtrsl52qpXg  ダウンロードページ</text>
+  <text class="num" x="470" y="140">65件</text>
+  <text class="ts" x="530" y="140">/p/V3A9LG00dL2S  1_入口_案内と同意（お試し版）</text>
+  <text class="num" x="905" y="140">25件</text>
+  <text class="ts" x="146" y="158">/page/v8pQL82x2Am1  BE-02 メインレター（AI-Mits とは別商品）</text>
+  <text class="num" x="560" y="158">5件</text>
+  <text class="tk" x="146" y="174">🔧 着地した瞬間に UTM 5つを sessionStorage に焼く（どの script からも読める）</text>
+
+  <path class="lnk" d="M450,180 L450,202 L265,202 L265,232" marker-end="url(#d2)"/>
+  <path class="lnk" d="M690,180 L690,202 L855,202 L855,232" marker-end="url(#d2)"/>
+  <text class="lbl" x="180" y="197">入口に着いた 25件</text>
+  <text class="lbl" x="760" y="197">DL ページに着いた 65件</text>
+
+  <!-- ══ 左：お試し版 ══ -->
+  <rect class="bxg" x="30" y="232" width="470" height="420"/>
+  <text class="th" x="48" y="256">A. お試し版（入口）UgSfW8MCzHqv</text>
+
+  <rect class="bx2" x="50" y="268" width="430" height="48"/>
+  <text class="tb" x="66" y="290">A-1 画面を見て AI-Mits と話し始める</text>
+  <text class="tok2" x="66" y="308">✅ 登録なしで話せる（入口を塞がない）</text>
+
+  <path class="ln2" d="M160,316 L160,340" marker-end="url(#d1)"/>
+  <path class="ln2" d="M465,316 L465,330 L500,330" marker-end="url(#d1)"/>
+  <text class="lbl" x="352" y="308">別の道 →</text>
+  
+
+  <rect class="bxk" x="50" y="344" width="430" height="96"/>
+  <text class="tb" x="66" y="366">A-2 送ろうとした瞬間、窓が出る → メアドを入れる</text>
+  <text class="tk" x="66" y="386">ここから UTAGE へ行く道が2本になる 🔧</text>
+  <text class="ts" x="66" y="406">①中継 POST /register → utageFindOrCreateReader()</text>
+  <text class="ts" x="286" y="406">→ XU7Gfd7XoiCQ</text>
+  <text class="tng2" x="66" y="424">②UTAGE の form 要素（新設）── 要るか判定待ち ↓下の節</text>
+
+  <line class="lng" x1="195" y1="440" x2="195" y2="464" marker-end="url(#d3)"/>
+
+  <rect class="bxn" x="50" y="468" width="290" height="62"/>
+  <text class="tb" x="66" y="490">A-3 確認のメールが届く</text>
+  <text class="tng2" x="66" y="508">🔴 いま送られていない（draft only）</text>
+  <text class="tk" x="66" y="524">🔧 実際に送る。リンクは15分</text>
+
+  <line class="lnk" x1="195" y1="530" x2="195" y2="546" marker-end="url(#d2)"/>
+
+  <rect class="bx2" x="50" y="550" width="290" height="56"/>
+  <text class="tb" x="66" y="570">A-4 リンクを踏む → 登録が済む</text>
+  <text class="ts" x="66" y="587">/resolve が10秒おきに聞く</text>
+  <text class="tok2" x="66" y="602">✅「入口で1登録」</text>
+
+  <rect class="bx2" x="50" y="612" width="430" height="32"/>
+  <text class="ts" x="66" y="632">お試し版から出る他のリンク：規約 TpJ6y5BD4O15 ×2（2026-09-11 に旧 RlJo5smy3MgU から張り替え） ／ 特商法(SDL) pFsDTTiWIDNq ／ プライバシー(SDL) SxgDwcOu2ojV</text>
+
+  <!-- ══ 右：DL ページ ══ -->
+  <rect class="bxg" x="520" y="232" width="590" height="420"/>
+  <text class="th" x="538" y="256">B. ダウンロードページ oHtrsl52qpXg</text>
+
+  <rect class="bx2" x="540" y="268" width="550" height="48"/>
+  <text class="tb" x="556" y="290">B-1「ダウンロードする」ボタンを押す</text>
+  <text class="ts" x="556" y="308">untendai-update.3216-fun.workers.dev/get/mac ×3 ／ /get/windows ×3</text>
+
+  <path class="ln2" d="M700,316 L700,344" marker-end="url(#d1)"/>
+  <path class="ln2" d="M980,316 L980,344" marker-end="url(#d1)"/>
+  <text class="lbl" x="556" y="336">ファイルは必ず落ちる</text>
+  <text class="lbl" x="856" y="336">同時に窓が出る</text>
+
+  <rect class="bx2" x="540" y="348" width="250" height="64"/>
+  <text class="tb" x="556" y="370">B-2a アプリが落ちる</text>
+  <text class="tok2" x="556" y="390">✅ 62回。これは取れている</text>
+  <text class="ts" x="556" y="406">by_campaign も付く</text>
+
+  <rect class="bxk" x="820" y="348" width="270" height="86"/>
+  <text class="tb" x="836" y="370">B-2b メアドを聞く窓</text>
+  <text class="ts" x="836" y="389">POST /register（いま email だけ）</text>
+  <text class="tk" x="836" y="407">🔧 utm_content=dl_modal も送る</text>
+  <text class="ts" x="836" y="426">→ 中継が XU7Gfd7XoiCQ に読者を作る</text>
+
+  <path class="ln2" d="M880,412 L880,442" marker-end="url(#d1)"/>
+  <path class="lng" d="M1010,434 L1010,446" marker-end="url(#d3)"/>
+  <text class="lbl" x="800" y="434">入れなくても</text>
+  <text class="lbl" x="1032" y="434">入れたら</text>
+
+  <rect class="bx2" x="790" y="446" width="180" height="58"/>
+  <text class="tb" x="806" y="468">B-3a 落ちるだけ</text>
+  <text class="tok2" x="806" y="487">✅ 邪魔しない</text>
+  <text class="ts" x="806" y="500">3秒で見切る</text>
+
+  <rect class="bxn" x="985" y="446" width="105" height="58"/>
+  <text class="tb" x="998" y="468">B-3b メール</text>
+  <text class="tng2" x="998" y="487">🔴 送られて</text>
+  <text class="tng2" x="998" y="500">いない</text>
+
+  <line class="lnk" x1="1037" y1="504" x2="1037" y2="532" marker-end="url(#d2)"/>
+
+  <rect class="bx2" x="790" y="536" width="300" height="62"/>
+  <text class="tb" x="806" y="558">B-4 リンクを踏む → 登録が済む</text>
+  <text class="ts" x="806" y="576">落とした人のうち、くれた人が数えられる</text>
+  <text class="tok2" x="806" y="592">✅「DL ボタンで1登録」</text>
+
+  <rect class="bx2" x="540" y="606" width="550" height="36"/>
+  <text class="ts" x="556" y="629">DL ページから出る他のリンク：特商法 HKzPieL6sDDy ／ プライバシー 7WtT0uHMMsAC（どちらもファネルに属さない孤立ページ）</text>
+
+  <!-- 中継へ -->
+  <path class="lnk" d="M195,606 L195,678 L460,678 L460,704" marker-end="url(#d2)"/>
+  <path class="lnk" d="M940,598 L940,678 L680,678 L680,704" marker-end="url(#d2)"/>
+  <text class="lbl" x="480" y="672">どちらの道も、同じ中継に集まる</text>
+
+  <rect class="bxk" x="340" y="708" width="460" height="96"/>
+  <text class="tb" x="356" y="732">③ 中継 Workers が正本を持つ</text>
+  <text class="ts" x="356" y="752">POST /register { email, anon_uid, utm_source, utm_medium,</text>
+  <text class="ts" x="356" y="768">   utm_campaign, utm_content, utm_term, landing_page }</text>
+  <text class="tk" x="356" y="790">🔧 KV の reader:&lt;id&gt; に UTM ごと保存</text>
+
+  <line class="lnk" x1="570" y1="804" x2="570" y2="836" marker-end="url(#d2)"/>
+
+  <!-- ═══ リスト ═══ -->
+  <rect class="bxg" x="30" y="840" width="1080" height="200"/>
+  <text class="th" x="48" y="864">④ どのリストに入るか（実測）</text>
+
+  <rect class="bxk" x="50" y="876" width="330" height="88"/>
+  <text class="tb" x="66" y="898">★【AI-Mits登録】XU7Gfd7XoiCQ</text>
+  <text class="ts" x="66" y="918">wrangler.toml L36 UTAGE_SCENARIO_ID</text>
+  <text class="t"  x="66" y="938">入る人：お試し版・DL ページ・運転台アプリ</text>
+  <text class="tok2" x="66" y="956">✅ 中継からの登録は全部ここ1本</text>
+
+  <rect class="bx2" x="400" y="876" width="230" height="88"/>
+  <text class="tb" x="416" y="898">経営の運転台_機能要望</text>
+  <text class="ts" x="416" y="917">wUS58TtDwzYL</text>
+  <text class="t"  x="416" y="937">機能要望フォームから</text>
+  <text class="tok2" x="416" y="955">✅ 数えられている（2件）</text>
+
+  <rect class="bx2" x="650" y="876" width="230" height="88"/>
+  <text class="tb" x="666" y="898">premium の申し込み</text>
+  <text class="ts" x="666" y="917">product_id O0UJdLsRdTtI</text>
+  <text class="t"  x="666" y="937">商品への紐付けで、</text>
+  <text class="t"  x="666" y="955">シナリオの直接指定は無い</text>
+
+  <rect class="bxn" x="900" y="876" width="190" height="88"/>
+  <text class="tb" x="916" y="898">LINE</text>
+  <text class="tng2" x="916" y="918">🔴 どこにも入らない</text>
+  <text class="ts" x="916" y="937">line_channel_token</text>
+  <text class="ts" x="916" y="953">= false（本番 health）</text>
+
+  <text class="ts" x="50" y="990">4ページとも line.me / lin.ee / LINE登録 の命中 0件（お試し版・DL・premium・機能要望を数えた実測）。</text>
+  <text class="ts" x="50" y="1008">〈メルマガ〉メインメルマガ bjDd8NXsSPMa と 999_ALL登録者 rvJa0GuJuNSU には、この道からは入らない。</text>
+  <text class="ts" x="50" y="1026">🔧 UTAGE の読者項目を5つ作って、XU7Gfd7XoiCQ の読者に UTM を残す（free21〜 が空いている）。</text>
+
+  <!-- 数え口 -->
+  <line class="lnk" x1="215" y1="1040" x2="215" y2="1068" marker-end="url(#d2)"/>
+  <rect class="bxk" x="60" y="1072" width="310" height="70"/>
+  <text class="tb" x="76" y="1094">⑤ 数え口を1つ作る</text>
+  <text class="ts" x="76" y="1113">GET /registrations?detail=1</text>
+  <text class="tk" x="76" y="1132">🔧 by_campaign ／ by_content ／ with_utm</text>
+
+  <path class="ln2" d="M370,1107 L430,1107" marker-end="url(#d1)"/>
+  <rect class="bx2" x="434" y="1072" width="300" height="70"/>
+  <text class="tb" x="450" y="1094">⑥ 台帳に2列足す</text>
+  <text class="ts" x="450" y="1113">16列目 登録数 ／ 17列目 経路別</text>
+  <text class="ts" x="450" y="1132">DL もキーごとに数える</text>
+</svg>
+</div>
+</div>
+
+<h3>決めたこと3つ</h3>
+<table>
+<tr><th style="width:34px">#</th><th>決めたこと</th><th>理由</th></tr>
+<tr><td class="key">1</td>
+    <td><strong>メアドの正本は中継（Workers）に置く。</strong>あわせて UTAGE にも読者項目を5つ作って UTM を残す</td>
+    <td>KV なら何列でも持てて、突き合わせが1か所で済む。form を通った登録は標準 utm_* に、API で作った登録は読者項目に入るので<strong>取りこぼしが出ない</strong></td></tr>
+<tr><td class="now">2</td>
+    <td><strong>登録の窓は UTAGE の form と中継の両方を通す</strong><br>
+        <span class="now">🟠 2026-09-11 12時台に判定待ちになった → 3.6節</span></td>
+    <td>Mits様 2026-09-11 のご確定。ただし「UTM を残す道は form しかない」という当時の前提が、同じ日の実測で崩れた（読者項目5つで代替できる）</td></tr>
+<tr><td class="key">3</td>
+    <td><strong>測る数字は中継の1か所から出す。台帳はそれを写すだけ</strong></td>
+    <td>いま DL は中継・登録は UTAGE・開封は UTAGE と3か所に散っていて突き合わせられない</td></tr>
+<tr><td class="ng">4</td>
+    <td><strong>🔴 確認のメールを、実際に送る形にする（最優先）</strong><br>
+        いまの <code>Phase1: draft only, not sent</code> をやめる</td>
+    <td><strong>ここが直らないとメアドが1件も増えない。</strong>UTM の細分化より先</td></tr>
+<tr><td class="ng">5</td>
+    <td><strong>🔴 <code>utm_content</code> に「どの口から入ったか」を入れる</strong></td>
+    <td>いま4つの口が全部同じ札で来る。<code>utm_content</code> は空いている（配信原稿で0件）</td></tr>
+</table>
+
+<h3>utm_content に入れる「口」の名前</h3>
+<table>
+<tr><th>口</th><th>どのページ</th><th>utm_content に入れる値</th></tr>
+<tr><td>お試し版のポップアップ</td><td class="m">UgSfW8MCzHqv</td><td class="m">trial_gate</td></tr>
+<tr><td>DL ページのメアドの窓</td><td class="m">oHtrsl52qpXg</td><td class="m">dl_modal</td></tr>
+<tr><td>機能要望フォーム</td><td class="m">UWYgpFIuTHd6</td><td class="m">youbou_form</td></tr>
+<tr><td>premium の申し込み</td><td class="m">6VLQVfQ5Hwfj</td><td class="m">premium</td></tr>
+</table>
+<p class="cap">これで「62回のダウンロードのうち、どの口から何件メアドが取れたか」が1つの表で言えるようになる。</p>
+
+<h3>UTAGE に作る読者項目 5つ</h3>
+<pre>シナリオ ★【AI-Mits登録】XU7Gfd7XoiCQ のいまの読者項目 13個（実測）
+  name / mail / sei / mei / kana / phone / zipcode / pref / city /
+  address / building / event_date / free20(お名前・2026-07-26 に後から作られた)
+  → <span class="key">free21 以降が空いている</span></pre>
+
+<table>
+<tr><th>表示名</th><th>入る値</th><th>field_group</th><th>data_type</th></tr>
+<tr><td>流入元（utm_source）</td><td class="m">utage / spro / magmag</td><td class="m">scenario_fields</td><td class="m">text</td></tr>
+<tr><td>流入手段（utm_medium）</td><td class="m">email</td><td class="m">scenario_fields</td><td class="m">text</td></tr>
+<tr><td>配信名（utm_campaign）</td><td class="m">20260910_sekidobi</td><td class="m">scenario_fields</td><td class="m">text</td></tr>
+<tr><td>着地ページ</td><td class="m">change.7years.life/p/…</td><td class="m">scenario_fields</td><td class="m">text</td></tr>
+<tr><td>初回来訪</td><td class="m">ISO8601</td><td class="m">scenario_fields</td><td class="m">text</td></tr>
+</table>
+
+<h3>campaign の形を1つにする</h3>
+<pre>grep -oh "utm_campaign=[^\"'&amp; )&lt;]*" 配信原稿/*.html 配信原稿/*.txt | sort | uniq -c
+
+  20 utm_campaign=20260910_sekidobi     ← YYYYMMDD_&lt;名前&gt;
+  43 utm_campaign=idou_heikin_0908      ← &lt;名前&gt;_MMDD
+  32 utm_campaign=idou_heikin_0909      ← &lt;名前&gt;_MMDD</pre>
+<div class="note-box fix">
+これから出すものは <strong><code>YYYYMMDD_&lt;短い名前&gt;</code></strong> に揃える。
+過去の3つは書き換えない（配信済みのメールの中の URL は直せないため）。<strong>集計側で両方の形を受ける。</strong>
+</div>
+
+<h2>3.6 🟠 form を新設するか ── 2026-09-11 12時台に出てきた判定待ち</h2>
+
+<div class="quote">
+Mits様（2026-09-11）「登録の受け口：両方置く。窓は UTAGE の <code>form</code> 要素にして数えられるようにし、その送信を JS で捕まえて中継にも同じメールアドレスを送る」<br>
+Mits様（同日・後）「UTAGE の form 要素で直接送る（新設）→ XU7Gfd7XoiCQ　これを新設にする意図と意義は？」
+</div>
+
+<div class="note-box warn">
+<strong>ご確定の当時は「UTAGE に UTM を残す道は form しかない」という前提だった。その前提が、同じ日の後の実測で崩れた。</strong>
+<code>message_reader_item_create</code> で読者項目を作れば、<strong>中継経由の登録にも UTM を残せる</strong>（free21 以降が空いている）。
+つまり form の意義は「UTM を残すこと」ではなくなった。
+</div>
+
+<h3>form を新設して得られるもの ── 1つだけ</h3>
+<table>
+<tr><th>得られるもの</th><th>いま</th><th>form を置いたら</th></tr>
+<tr><td>UTAGE のファネル統計の「登録数」欄<br><span class="m">/funnel/1QtzdExbynBp/data/daily</span></td><td class="n ng">0</td><td>数が入る</td></tr>
+<tr><td>UTAGE の標準 utm_* 5列</td><td class="n ng">全部 null</td><td>埋まる（<span class="key">読者項目5つでも代替できる</span>）</td></tr>
+<tr><td>登録数そのもの</td><td class="n now">18件（KV を手で数えた）</td><td><span class="key">中継 /registrations でも取れる</span></td></tr>
+</table>
+
+<h3>form を新設するために払うもの ── 3つ</h3>
+<pre>① ページを raw_html から elements に組み替える（実測）
+
+   お試し版 UgSfW8MCzHqv   content_type=<span class="ng">raw_html</span>   <span class="ng">69,629文字</span>   elements=無
+   DL      oHtrsl52qpXg   content_type=<span class="ng">raw_html</span>   <span class="ng">27,910文字</span>   elements=無
+   機能要望  UWYgpFIuTHd6   content_type=elements          0文字   elements=有  ← 手本
+
+   合わせて <span class="ng">97,539文字</span> の書き直し。この中に入っているもの：
+     ・落とす邪魔をしない（3秒で見切って必ずダウンロードへ進む）
+     ・ログインの窓（gate）
+     ・15分・25分の声かけ
+
+② 二重登録の競合が残る（中継の重複判定は「422 を踏んでから再検索」の作り）
+
+   L605  if (r.status === 422) {
+   L609    const retryHit = await utageFilterReaderByMail(env, emailLower);
+   L617    const scanHit  = await utageScanReadersByEmail(env, emailLower, 500);
+
+③ LP修正は部分置換のみ（rules_utage §3）。content_type ごと変える作業は、
+   この決まりの外側になる</pre>
+
+<div class="note-box fix">
+<strong>参謀の見立て（Mits様の一言待ち・参謀は決めない）。</strong><br>
+<strong>form を置かない側：</strong>UTM は読者項目5つで残る。登録数は中継 <code>/registrations</code> で数える。
+UTAGE は「顧客が入っている箱」として使い、「何件入ったかを数える道具」としては使わない。
+<strong>この場合、<code>/data/daily</code> の登録数はこれからも 0 のままになる。</strong><br>
+<strong>form を置く側：</strong>97,539文字を組み替える。Mits様が最初に指摘された「ファネルでの登録数が正しく表記されていない」が、その画面のまま直る。
+</div>
+
+<!-- ═══ 3.5 すべてのアクション ═══ -->
+<h2>3.5 すべてのアクションと、いま測れているか</h2>
+
+<p class="cap">人が起こす動きを、着地から申し込みまで全部並べた。<span class="ok">✅</span>＝いま数えられている／<span class="now">△</span>＝部分的／<span class="ng">✕</span>＝数えていない。</p>
+
+<table>
+<tr><th style="width:34px">#</th><th>アクション</th><th>どこで起きる</th><th style="width:44px">いま</th><th>どこで測るか（直したあと）</th></tr>
+
+<tr><td class="m">01</td><td>メールを開いた</td><td class="m">受信箱</td><td class="ok">✅</td><td class="m">UTAGE（台帳 8列目）</td></tr>
+<tr><td class="m">02</td><td>メールのリンクを押した</td><td class="m">受信箱</td><td class="ok">✅</td><td class="m">UTAGE（台帳 10列目）</td></tr>
+<tr><td class="m">03</td><td>ページに着地した</td><td class="m">お試し版／DL ページ</td><td class="ok">✅</td><td class="m">UTAGE ファネル統計 pv / uu</td></tr>
+
+<tr><td class="m">04</td><td>AI-Mits と話し始めた</td><td class="m">お試し版</td><td class="ng">✕</td><td class="m">中継 /dify の1往復目を数える</td></tr>
+<tr><td class="m">05</td><td>一言送った（何往復したか）</td><td class="m">お試し版</td><td class="now">△</td><td class="m">Dify の Logs にはあるが台帳に来ていない</td></tr>
+<tr><td class="m">06</td><td>メアドの窓（gate）が出た</td><td class="m">お試し版</td><td class="ng">✕</td><td class="m">🔧 窓が開いた時に1件送る</td></tr>
+<tr><td class="m">07</td><td>窓にメアドを入れた</td><td class="m">お試し版</td><td class="now">△</td><td class="m">/register は来るが utm_content が無い</td></tr>
+<tr><td class="m">08</td><td>窓を閉じた（入れずに離脱）</td><td class="m">お試し版</td><td class="ng">✕</td><td class="m">🔧 06 − 07 の引き算で出す</td></tr>
+
+<tr><td class="m">09</td><td><strong>確認メールが送られた</strong></td><td class="m">中継 → UTAGE</td><td class="ng">✕</td><td class="m">🔴 いま送られていない。送った数を数える</td></tr>
+<tr><td class="m">10</td><td>確認メールを開いた</td><td class="m">受信箱</td><td class="ng">✕</td><td class="m">🔧 UTAGE の開封</td></tr>
+<tr><td class="m">11</td><td><strong>リンクを踏んだ（登録完了）</strong></td><td class="m">/verify</td><td class="ng">✕</td><td class="m">🔧 /registrations の total</td></tr>
+<tr><td class="m">12</td><td>15分で切れて踏めなかった</td><td class="m">/verify</td><td class="ng">✕</td><td class="m">🔧 09 − 11 の引き算で出す</td></tr>
+
+<tr><td class="m">13</td><td>相談が続いた（登録後）</td><td class="m">お試し版</td><td class="ng">✕</td><td class="m">🔧 /resolve が通った回数</td></tr>
+<tr><td class="m">14</td><td>「やることを決めて終える」を押した</td><td class="m">お試し版</td><td class="ng">✕</td><td class="m">🔧 押した時に1件送る</td></tr>
+
+<tr><td class="m">15</td><td>DL ページへ移動した</td><td class="m">お試し版 → nPC0MfBNagSy</td><td class="now">△</td><td class="m">UTAGE の pv では出るが、どこから来たかが無い</td></tr>
+<tr><td class="m">16</td><td><strong>ダウンロードボタンを押した</strong></td><td class="m">DL ページ</td><td class="ok">✅</td><td class="m">中継 /count（62回・by_campaign つき）</td></tr>
+<tr><td class="m">17</td><td>DL のメアドの窓が出た</td><td class="m">DL ページ</td><td class="ng">✕</td><td class="m">🔧 窓が開いた時に1件送る</td></tr>
+<tr><td class="m">18</td><td>DL の窓にメアドを入れた</td><td class="m">DL ページ</td><td class="now">△</td><td class="m">/register は来るが utm_content が無い</td></tr>
+<tr><td class="m">19</td><td>入れずにそのまま落とした</td><td class="m">DL ページ</td><td class="ng">✕</td><td class="m">🔧 16 − 18 の引き算で出す</td></tr>
+<tr><td class="m">20</td><td>ファイルが落ち切った</td><td class="m">untendai-update</td><td class="now">△</td><td class="m">押した数は出るが、落ち切ったかは出ない</td></tr>
+
+<tr><td class="m">21</td><td>アプリを起動した</td><td class="m">運転台アプリ</td><td class="now">△</td><td class="m">by_version では出る（更新の問い合わせ経由）</td></tr>
+<tr><td class="m">22</td><td>アプリでログインした</td><td class="m">運転台アプリ</td><td class="ng">✕</td><td class="m">🔧 中継 /login の数</td></tr>
+
+<tr><td class="m">23</td><td>規約・特商法を開いた</td><td class="m">各ページ</td><td class="now">△</td><td class="m">UTAGE の pv（どこから来たかが無い）</td></tr>
+<tr><td class="m">24</td><td>機能要望を送った</td><td class="m">UWYgpFIuTHd6</td><td class="ok">✅</td><td class="m">UTAGE 登録数（新ページなので 0 から）</td></tr>
+<tr><td class="m">25</td><td>premium を開いた</td><td class="m">6VLQVfQ5Hwfj</td><td class="ok">✅</td><td class="m">UTAGE ファネル統計（pv 17 / uu 4）</td></tr>
+<tr><td class="m">26</td><td>premium を申し込んだ</td><td class="m">6VLQVfQ5Hwfj</td><td class="ok">✅</td><td class="m">UTAGE 登録数（1件）</td></tr>
+</table>
+
+<div class="note-box warn">
+<strong>26のアクションのうち、いま数えられているのは 7つ。</strong>
+部分的が 6つ、まったく数えていないのが 13。<br>
+数えていない13のうち、<strong>09〜12（確認メールの4つ）が全部止まっている</strong>ので、
+メアドが増える道そのものが塞がっている。ここが最優先。
+</div>
+
+<div class="note-box fix">
+<strong>測り方の型は3つだけにする。</strong>
+<ul>
+<li><strong>人が押した／窓が開いた</strong> → その場で中継に1件送る（<code>POST /ev</code> を新設。<code>{ name, utm_*5, anon_uid }</code>）</li>
+<li><strong>引き算で出るもの</strong>（08・12・19）→ 新しく測らない。上の数から引く</li>
+<li><strong>UTAGE がもう数えているもの</strong>（01〜03・24〜26）→ そのまま使う。二重に測らない</li>
+</ul>
+</div>
+
+<!-- ═══ 4. 測る数字 ═══ -->
+<h2>4. 測る数字 ── これが言えれば「ちゃんと取れている」</h2>
+
+<div class="note-box fix">
+<strong>線：ダウンロード62回に対して、登録が何件で、そのうち何件に経路が付いているかが、1つの表で言えること。</strong>
+いまは登録19件の経路が0件なので、この表が作れない。
+</div>
+
+<table>
+<tr><th>数字</th><th>どこから取るか</th><th style="text-align:right">いま</th><th>直したら</th></tr>
+<tr><td>着地（pv / uu）</td><td class="m">UTAGE ファネル統計</td><td class="n">174 / 90</td><td>そのまま</td></tr>
+<tr><td>ダウンロード</td><td class="m">中継 /count</td><td class="n">62</td><td>そのまま</td></tr>
+<tr><td>ダウンロード（経路別）</td><td class="m">中継 /count の by_campaign</td><td class="n">6キー</td><td>そのまま（不明10を減らす）</td></tr>
+<tr><td><strong>登録（メアド）</strong></td><td class="m">中継 /registrations（新設）</td><td class="n now">18</td><td>口から取れる</td></tr>
+<tr><td><strong>登録（経路別）</strong></td><td class="m">中継 /registrations の by_campaign</td><td class="n ng">0</td><td>取れる</td></tr>
+<tr><td><strong>UTAGE の登録数</strong></td><td class="m">UTAGE ファネル統計</td><td class="n ng">0</td><td>form 経由で数えられる</td></tr>
+<tr><td><strong>UTAGE の標準 utm_*</strong></td><td class="m">funnel_subscriber_list</td><td class="n ng">全部 null</td><td>form 経由で埋まる</td></tr>
+<tr><td><strong>UTAGE の読者項目（UTM 5つ）</strong></td><td class="m">message_reader_get</td><td class="n ng">項目が無い</td><td>API 経由でも残る</td></tr>
+<tr><td><strong>確認メールが届いた数</strong></td><td class="m">中継 /register の sent</td><td class="n ng">常に false</td><td>送れた数が出る</td></tr>
+<tr><td><strong>口ごとの登録（utm_content）</strong></td><td class="m">中継 /registrations</td><td class="n ng">札が無い</td><td>4つの口で分かれる</td></tr>
+<tr><td>開封・クリック</td><td class="m">UTAGE（台帳 8〜11列）</td><td class="n">取れている</td><td>そのまま</td></tr>
+</table>
+
+<!-- ═══ 5. 触る所 ═══ -->
+<h2>5. 触る所</h2>
+
+<table>
+<tr><th>どこ</th><th>何を</th></tr>
+<tr><td class="m">UTAGE UgSfW8MCzHqv<br>（お試し版）</td>
+    <td>メアドの窓を <code>form</code> 要素に。着地の UTM を sessionStorage へ<br>
+        <span class="ng">🛑 <code>var APP = 'e472bc1f'</code> の行は触らない（別件で判断中）</span></td></tr>
+<tr><td class="m">UTAGE oHtrsl52qpXg<br>（ダウンロード）</td>
+    <td>同上。<strong>L439 の <code>Q</code> を IIFE の外に出す</strong>（ここが①の本体）</td></tr>
+<tr><td class="m">UTAGE 読者項目</td>
+    <td>シナリオ <code>XU7Gfd7XoiCQ</code> に5つ作る（<code>message_reader_item_create</code>）</td></tr>
+<tr><td class="m">中継 src/index.js<br>L873-895</td>
+    <td><code>handleRegister</code> に UTM 5つ＋<code>landing_page</code>＋<code>first_seen_at</code> の受け口</td></tr>
+<tr><td class="m">中継 src/index.js<br>L909 / L982 / L1439</td>
+    <td>KV の <code>reader:&lt;id&gt;</code> に UTM を持たせる</td></tr>
+<tr><td class="m">中継 src/index.js<br>L571-627</td>
+    <td><code>utageFindOrCreateReader</code> の <code>scenario_fields</code> に読者項目5つも渡す（いま <code>mail</code> だけ）</td></tr>
+<tr><td class="m">中継 src/index.js<br>L2018 の並び</td>
+    <td><code>GET /registrations?detail=1</code> を新設</td></tr>
+<tr><td class="m ng">中継 src/index.js<br>L755-771</td>
+    <td><strong>🔴 最優先。</strong><code>utageSendVerifyMail</code> が下書きを作るだけで終わっている。実際に送る形にして <code>sent:true</code> を返す</td></tr>
+<tr><td class="m ng">UTAGE の4つの口</td>
+    <td><strong>🔴 <code>utm_content</code> に口の名前を入れる</strong>（trial_gate / dl_modal / youbou_form / premium）</td></tr>
+<tr><td class="m">台帳 keisoku_suii.csv</td>
+    <td>16列目「登録数」17列目「登録数(by_campaign)」</td></tr>
+<tr><td class="m">merumaga-keisoku-worker<br>src/index.js L134-135</td>
+    <td><code>JSON.stringify(by)</code> をやめてキーごとに数える</td></tr>
+</table>
+
+<!-- ═══ 6. 先に確かめること ═══ -->
+<h2>6. 先に確かめること（推測で埋めない）</h2>
+<div class="note-box warn">
+<strong>いま裏取り中（devils-advocate・2026-09-11 12:40 発注）。</strong>この5つが返るまで実装しない。
+<ol style="margin:8px 0">
+<li>中継の KV binding が <strong>1本か2本以上か</strong>（別の namespace に verify: がある可能性）</li>
+<li>UTAGE に溜まっている確認メールの下書きが <strong>何本あるか</strong>（0本なら参謀の読みが違う）</li>
+<li><code>member:</code> 11件のうち、実際に verify を踏んで登録が済んだ人が <strong>何人いるか</strong></li>
+<li>シナリオ <code>XU7Gfd7XoiCQ</code> のステップメールで、いま実際に飛ぶ設定のものが <strong>何通あるか</strong></li>
+<li><code>utm_content</code> / <code>utm_term</code> を使っている箇所が、配信原稿の外を含めて <strong>何件あるか</strong></li>
+</ol>
+</div>
+<ul>
+<li><strong>本番の Worker が手元のソースと同じか。</strong><code>.wrangler/</code> にデプロイの記録が0件。
+    <code>wrangler deployments list --name aimits-report-proxy</code> は node 22 が要る（手元は v20.20.1）</li>
+<li><strong>短縮ドメイン <code>change.7years.life</code> 経由の UTM が、UTAGE の <code>funnel_subscriber_list</code> の utm_* 列まで届くか。</strong>
+    ページが 200 を返すことは実測済みだが、登録者レコード側は未検証。
+    手を入れた直後に、テスト用アドレス1件で通して確かめる（<strong>終わったら消す</strong>）</li>
+</ul>
+
+<!-- ═══ 7. 変えないこと ═══ -->
+<h2>7. 変えないこと（もう決まっている）</h2>
+<ul>
+<li><strong>登録の受け口は両方置く</strong>（UTAGE の form ＋ 中継）── 2026-09-11 Mits様</li>
+<li><strong>Worker も UTAGE も両方要る</strong> ── 2026-09-11 Mits様原文「workerはAI-Mitsに帰ってきたときにメールで判定するから必要／UTAGEでは顧客登録だからこれも必要」</li>
+<li><strong>登録経路（tracking）は作らない。UTM で行く</strong> ── 2026-09-08 18:05 Mits様</li>
+<li><strong>落ちる邪魔をしない</strong>（3秒で見切ってダウンロードへ進む・中継が落ちていても必ず落ちる）</li>
+<li><strong>KV の26件を UTAGE に流し込まない</strong>（2026-09-08 に消したテスト読者が戻るため）</li>
+<li><strong>9/9・9/10 の2回分の UTM は UTAGE 側では取り返せない</strong>（後付けの口が無い）</li>
+</ul>
+
+<footer>
+正本の文書：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/整理プロセス/再設計_測定とメアド取得_20260911.md</code><br>
+この図：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/整理プロセス/図解_測定とメアド取得_20260911.html</code><br>
+数字はすべて 2026-09-11 の実測。値が古くなったら、各所に書いてあるコマンドで数え直して書き換えること。
+</footer>
+
+</div>
+</div>
+<footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
+</body>
+</html>

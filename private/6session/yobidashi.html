@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+<title>呼び出し札 ／ 6セッション社内レポート</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:20px 20px 80px; max-width:1000px; margin:0 auto; line-height:1.7; }
+h1,h2,h3,h4,h5,h6 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; color:var(--fg); }
+h1 { font-size:26px; margin:12px 0 18px; padding-bottom:10px; border-bottom:1px solid var(--line); }
+h2 { font-size:20px; margin:32px 0 12px; padding-left:10px; border-left:4px solid var(--gold); }
+h3 { font-size:16px; margin:24px 0 10px; }
+p { margin:10px 0; }
+a { color:var(--gold); text-decoration:none; }
+a:hover { text-decoration:underline; }
+code { font-family:var(--mono); background:var(--sub-bg); padding:2px 5px; border-radius:3px; font-size:0.9em; }
+pre { font-family:var(--mono); background:var(--sub-bg); padding:14px 16px; border-radius:8px; overflow-x:auto; border:1px solid var(--line); font-size:0.85em; line-height:1.5; }
+pre code { background:transparent; padding:0; }
+blockquote { border-left:3px solid var(--gold); padding:6px 14px; margin:14px 0; color:var(--muted); background:var(--sub-bg); border-radius:0 6px 6px 0; }
+ul,ol { padding-left:22px; }
+li { margin:4px 0; }
+table { border-collapse:collapse; width:100%; margin:14px 0; font-size:0.9em; }
+th,td { border:1px solid var(--line); padding:6px 10px; text-align:left; vertical-align:top; }
+th { background:var(--sub-bg); font-family:var(--mincho); font-weight:600; }
+hr { border:0; border-top:1px dashed var(--line); margin:24px 0; }
+img { max-width:100%; height:auto; }
+
+.nav-back { display:inline-block; margin:0 0 12px; font-family:var(--mono); font-size:12px; color:var(--muted); }
+.nav-back a { color:var(--muted); }
+.nav-back a:hover { color:var(--gold); }
+
+.meta-head { background:var(--sub-bg); border:1px dashed var(--line); border-radius:6px; padding:8px 12px; margin:8px 0 18px; font-family:var(--mono); font-size:11px; color:var(--muted); line-height:1.7; }
+.meta-head b { color:var(--fg); font-weight:600; margin-right:4px; }
+
+.embed-html { border-top:1px dashed var(--line); padding-top:16px; margin-top:8px; }
+.embed-html iframe { width:100%; border:0; min-height:80vh; background:var(--card-bg); border-radius:8px; }
+
+footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+</style>
+</head>
+<body>
+<div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
+<div class="meta-head"><div><b>元のファイル</b>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/yobidashi.md</div><div><b>最後に更新された日時</b>2026-09-16 13:25 JST</div></div>
+<h1>呼び出し札</h1>
+<h1 id="_1">呼び出し札（止まっている持ち場への貼り紙）</h1>
+<p><strong>毎朝の点呼（asa-tenko-6session・6:30）が書く。各持ち場の朝の時計が、自分の仕事を始める前にここを読む。</strong></p>
+<p>予約タスクからは他のチャットへ連絡を送れない。だから「呼ぶ側が送る」のではなく、<br />
+<strong>呼ばれる側が毎朝必ず見に来る</strong>形にしている。</p>
+<h2 id="_2">読み方（各持ち場）</h2>
+<ol>
+<li>下の表に自分の名前の行があるか見る</li>
+<li>あれば、その日のうちに片づける</li>
+<li>片づけたら、その行の「済んだか」に <code>済み（YYYY-MM-DD HH:MM）</code> と書き足す。<strong>行は消さない</strong></li>
+</ol>
+<h2 id="2">この札に載る行は2つある</h2>
+<p><strong>① 呼び出し（点呼が書く）</strong><br />
+止まっている持ち場を見つけたら、下の表の末尾に1行足す。止まりが無い日は何も書かない。</p>
+<p><strong>② 伝言（持ち場が書く・2026-09-16 追加）</strong><br />
+持ち場どうしの連絡は、まず相手へ直接1通送る（宛先表 renrakusaki.md）。<br />
+ただし<strong>予約タスクの窓から他のチャットへ送る口は開いていないことがある</strong><br />
+（送信の道具の説明に「Unavailable in unattended sessions (scheduled-task runs and remote-dispatched sessions), and cannot deliver to them either」とある。実機での確かめは 2026-09-17 朝の初回）。<br />
+送れなかったら、伝言をこの表の末尾に1行置いていく。伝言が消えないための道。</p>
+<p><strong>どちらの行も、「持ち場」の欄には〈読んでほしい相手の名前〉を書く。</strong><br />
+読む側は自分の名前だけを探せばよい形にするため。伝言の場合は、「してほしいこと」の頭に <code>&lt;送り主&gt;から：</code> を付ける。</p>
+<p>書く形（1行）：</p>
+<p><code>| YYYY-MM-DD | 読んでほしい相手 | N日（伝言のときは空欄） | してほしいこと／&lt;送り主&gt;から：用件 | |</code></p>
+<table>
+<thead>
+<tr>
+<th>日付</th>
+<th>持ち場</th>
+<th>止まっている日数</th>
+<th>してほしいこと</th>
+<th>済んだか</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
+</body>
+</html>

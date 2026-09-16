@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+<title>コンサルタント手順書 ／ 6セッション社内レポート</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:20px 20px 80px; max-width:1000px; margin:0 auto; line-height:1.7; }
+h1,h2,h3,h4,h5,h6 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; color:var(--fg); }
+h1 { font-size:26px; margin:12px 0 18px; padding-bottom:10px; border-bottom:1px solid var(--line); }
+h2 { font-size:20px; margin:32px 0 12px; padding-left:10px; border-left:4px solid var(--gold); }
+h3 { font-size:16px; margin:24px 0 10px; }
+p { margin:10px 0; }
+a { color:var(--gold); text-decoration:none; }
+a:hover { text-decoration:underline; }
+code { font-family:var(--mono); background:var(--sub-bg); padding:2px 5px; border-radius:3px; font-size:0.9em; }
+pre { font-family:var(--mono); background:var(--sub-bg); padding:14px 16px; border-radius:8px; overflow-x:auto; border:1px solid var(--line); font-size:0.85em; line-height:1.5; }
+pre code { background:transparent; padding:0; }
+blockquote { border-left:3px solid var(--gold); padding:6px 14px; margin:14px 0; color:var(--muted); background:var(--sub-bg); border-radius:0 6px 6px 0; }
+ul,ol { padding-left:22px; }
+li { margin:4px 0; }
+table { border-collapse:collapse; width:100%; margin:14px 0; font-size:0.9em; }
+th,td { border:1px solid var(--line); padding:6px 10px; text-align:left; vertical-align:top; }
+th { background:var(--sub-bg); font-family:var(--mincho); font-weight:600; }
+hr { border:0; border-top:1px dashed var(--line); margin:24px 0; }
+img { max-width:100%; height:auto; }
+
+.nav-back { display:inline-block; margin:0 0 12px; font-family:var(--mono); font-size:12px; color:var(--muted); }
+.nav-back a { color:var(--muted); }
+.nav-back a:hover { color:var(--gold); }
+
+.meta-head { background:var(--sub-bg); border:1px dashed var(--line); border-radius:6px; padding:8px 12px; margin:8px 0 18px; font-family:var(--mono); font-size:11px; color:var(--muted); line-height:1.7; }
+.meta-head b { color:var(--fg); font-weight:600; margin-right:4px; }
+
+.embed-html { border-top:1px dashed var(--line); padding-top:16px; margin-top:8px; }
+.embed-html iframe { width:100%; border:0; min-height:80vh; background:var(--card-bg); border-radius:8px; }
+
+footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+</style>
+</head>
+<body>
+<div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
+<div class="meta-head"><div><b>元のファイル</b>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/コンサルタント手順書_20260916.html</div><div><b>最後に更新された日時</b>2026-09-16 14:34 JST</div></div>
+<h1>コンサルタント手順書</h1><div class="embed-html"><style>
+  :root{
+    --sz:17px; --note:calc(var(--sz)*.84); --mark:calc(var(--sz)*.72);
+    --tx:#212529; --sub:#505461; --info:#11159f;
+    --card:#fcfcff; --card2:#f7f8fc; --line:#dde1ec; --line2:#ccd2e4; --bg:#ffffff;
+    --good:#1f6b45; --bad:#a63f3f; --warn:#8a5a12;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--tx);
+    font:var(--sz)/1.75 "Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,system-ui,sans-serif}
+  .wrap{max-width:1040px;margin:0 auto;padding:30px 22px 90px}
+  h1{font-size:calc(var(--sz)*1.35);font-weight:600;margin:0 0 6px}
+  .lead{color:var(--sub);font-size:var(--note);margin:0 0 6px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px 18px;margin:16px 0}
+  h2{font-size:calc(var(--sz)*1.08);font-weight:600;margin:0 0 10px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+  h3{font-size:var(--sz);font-weight:600;margin:16px 0 6px}
+  p{margin:.45em 0}
+  ul,ol{margin:.4em 0;padding-left:1.4em}
+  li{margin:.25em 0}
+  table{width:100%;border-collapse:collapse;font-size:var(--note);margin:8px 0}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--sub);font-weight:600;font-size:var(--mark);letter-spacing:.04em}
+  td.n{white-space:nowrap;font-variant-numeric:tabular-nums}
+  .say{background:var(--card2);border-left:3px solid var(--line2);padding:8px 12px;margin:6px 0;font-size:var(--note)}
+  .say b{color:var(--info);font-weight:600;font-size:var(--mark);display:block;margin-bottom:2px}
+  .note{color:var(--sub);font-size:var(--mark);margin-top:8px}
+  .bad{color:var(--bad);font-weight:600}
+  .good{color:var(--good);font-weight:600}
+  .warn{color:var(--warn);font-weight:600}
+  .draft{background:#fff9e8;border:1px solid #e8d9a8;border-radius:6px;padding:9px 13px;
+    font-size:var(--mark);color:#6b5412;margin:0 0 6px}
+  .path{font-size:var(--mark);color:var(--sub);word-break:break-all}
+</style>
+
+<div class="wrap">
+
+<div class="draft">下書きです。<b>2 の1枚（現状を正しく写せているか）は、まだ作っていません。</b>いま出来ているのはモックだけで、実装は「発注GO」のあとです。1 と 3 は、いまの製品版でそのまま出来ます。</div>
+
+<h1>コンサルタント手順書</h1>
+<p class="lead">AI-Mits＆経営アプリを使って、顧客の経営を毎月みる進め方（2026-09-16 下書き）</p>
+
+<div class="card">
+<h2>0. この手順書の前提</h2>
+<ul>
+  <li><b>画面は顧客の端末で開きます。</b>Zoom で画面を共有してもらい、コンサルと顧客が同じ1枚を一緒に見ます</li>
+  <li><b>顧客の数字は、コンサルの手元に移りません。</b>会計・入金の中身は顧客の端末の中だけにあります</li>
+  <li><b>顧客の合言葉は預かりません。</b>つなぐ操作は、顧客本人が自分の画面で押します</li>
+  <li>コンサルが持ち帰るのは、その回の<b>状態</b>（どこが済んで、次に何を直すか）だけです</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>1. 初回の回 ── 一緒に設定する</h2>
+<p>目標：<b>準備の12項目のうち、必要不可欠の3つを緑にする</b>。ここが緑になると、アプリが顧客の数字で話せるようになります。</p>
+
+<table>
+<tr><th class="n">順</th><th>入れるもの</th><th>顧客が押す場所</th><th>緑になる条件</th></tr>
+<tr><td class="n">1</td><td>会計の要点（粗利・経費・現預金・余裕度）</td><td>自社データにする → マネーフォワード</td><td>会計の数字が1期でも入ったら</td></tr>
+<tr><td class="n">2</td><td>月ごとの売上の並び</td><td>同上（会計をつなぐと一緒に入る）</td><td>売上が1ヶ月でも入ったら</td></tr>
+<tr><td class="n">3</td><td>目標との差</td><td>設定 → 決める（①〜⑦）</td><td>最初の設定を終えたら</td></tr>
+</table>
+
+<p>時間が残ったら、次の4つへ進みます（無理に同じ回で終えません）。</p>
+<table>
+<tr><td class="n">4</td><td>戦略の決定（どの軸で戦うか・打ち手の向き）</td><td>自社情報設定 → 戦略の決定</td></tr>
+<tr><td class="n">5</td><td>お客さまの名簿</td><td>自社データにする → CSV／UTAGE</td></tr>
+<tr><td class="n">6</td><td>入金の明細</td><td>自社データにする → Stripe／UTAGE</td></tr>
+<tr><td class="n">7</td><td>数字の食い違いの点検</td><td>5 と 6 が入ると自動で出る</td></tr>
+</table>
+
+<h3>この回で言うこと</h3>
+<div class="say"><b>はじめに</b>今日は、御社の数字がこの画面に正しく映るところまでを一緒にやります。数字の中身の話は、映ってからです。</div>
+<div class="say"><b>つなぐ前に</b>合言葉は私には見えません。ご自身で入れてください。入れたあとは、私の側には数字だけが画面で見えます。</div>
+<div class="say"><b>終わりに</b>今日は◯番まで緑になりました。次の回で、残りと、映った数字のずれを直します。</div>
+
+<p class="note">この回で終わらなかった項目は、次の回の初めに戻ります。顧客に宿題を出しても、たいてい戻ってきません。<b>画面の操作は回の中で終える</b>のが基本です。</p>
+</div>
+
+<div class="card">
+<h2>2. 毎月の回・前半 ── 現状を正しく写せているか</h2>
+<p>1枚を開いて、<b>赤い行を上から片づけます。</b>ここが済むまで、数字の良し悪しの話はしません。</p>
+
+<h3>見る順</h3>
+<ol>
+  <li><b>上の日付3つ</b>（会計の数字を入れた日／画面に出ている数字の日／入金の明細を入れた日）。画面の日が古ければ、そこから直す</li>
+  <li><b>直す順の6行</b>を上から。1行ずつ、顧客に聞きながら直す</li>
+  <li><b>前回からの差</b>。先月直したところが戻っていないかを見る</li>
+</ol>
+
+<h3>行ごとに、顧客へ聞くこと</h3>
+<table>
+<tr><th>画面の行</th><th>顧客へ聞くこと</th><th>その場で直せるか</th></tr>
+<tr><td>入れた数字が、まだ画面に出ていない</td><td>（聞くことなし）</td><td class="good">押すだけで直る</td></tr>
+<tr><td>振り分けが決まっていない科目がある</td><td>この費目は、どの区分のお金ですか</td><td class="good">その場で決める</td></tr>
+<tr><td>どのお客さまの入金か分からないものがある</td><td>この入金は、どちらのお客さまですか</td><td class="good">その場で結びつける</td></tr>
+<tr><td>会計の売上と、入金の合計が合わない</td><td>この差は、何の取引でしょうか</td><td class="warn">持ち帰りになることがある</td></tr>
+<tr><td>最後の日が違う</td><td>（聞くことなし）</td><td class="good">もう一度入れる</td></tr>
+<tr><td>お客さまの名簿に空がある</td><td>この方は、どの階層・どの経路ですか</td><td class="warn">件数が多ければ次回へ</td></tr>
+</table>
+
+<div class="say"><b>赤が残ったとき</b>今日はここまでにします。残りは次回の初めに片づけます。いまの数字は、この2か所がまだ正しくないという前提で見てください。</div>
+
+<p class="note">数字が正しくないまま打ち手の話をすると、間違った前提の上に手を打つことになります。<b>前半が終わらない回は、後半に入らない。</b></p>
+</div>
+
+<div class="card">
+<h2>3. 毎月の回・後半 ── 数字を読む（コンサル本体）</h2>
+<p>赤が消えてから入ります。見るのは計器の並びです。</p>
+<ul>
+  <li>今月の進捗（速報）と、目標との差</li>
+  <li>4:2:2:2 の面積 ── どこが膨らんで、どこが痩せているか</li>
+  <li>お客さまの名簿 ── 滞在の長さ・累計・階層の動き</li>
+  <li>AI-Mits への相談 ── その場で、この数字のまま聞く</li>
+</ul>
+<p class="note">ここは既存の画面でそのまま出来ます。手順書に書くのは「前半が終わってから入る」という順だけです。</p>
+</div>
+
+<div class="card">
+<h2>4. 回のあとに残すもの</h2>
+<ul>
+  <li><b>その回の状態1枚</b>：どこが緑になったか・今日直したこと・次に直すこと</li>
+  <li>顧客の数字そのものは持ち帰りません</li>
+  <li>次回の初めに、この1枚を開いて続きから始めます</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>5. やらないこと</h2>
+<ul>
+  <li>顧客の合言葉・カード情報を預かる</li>
+  <li>顧客の会計の元帳を、コンサルの端末に写す</li>
+  <li>顧客が振り分けを決める前に、コンサルが代わりに決める（区分は顧客の経営判断です）</li>
+  <li>赤が残っている状態で、数字の良し悪しを断じる</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>6. この手順書の置き場と、直す道</h2>
+<p>公開するときは UTAGE の使い方ページに置きます。アプリの中に説明を抱えない決まり（直したその日に、使っている全員へ届くため）に合わせます。</p>
+<p class="path">下書きの置き場：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/コンサルタント手順書_20260916.html</p>
+<table>
+<tr><th>段</th><th>することと道具</th><th>誰に届くか</th></tr>
+<tr><td>① Mits様の製品版に入れる</td><td>bash tools/release.sh --自分だけ &lt;版&gt; "&lt;要約&gt;"</td><td>届かない（溜める）</td></tr>
+<tr><td>② 世に出す</td><td>bash tools/release.sh &lt;溜めた最後の版&gt; "&lt;要約&gt;"</td><td>お客様全員</td></tr>
+<tr><td>③ この手順書を出す</td><td>UTAGE の使い方ページに載せる</td><td>コンサルと、その人の顧客</td></tr>
+</table>
+<p class="note">③ は、Mits様が実際の回で使って、詰まった所を直してから ② と一緒に出します。</p>
+</div>
+
+</div>
+</div>
+<footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
+</body>
+</html>

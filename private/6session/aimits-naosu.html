@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+<title>AI-Mits を直す方針 ／ 6セッション社内レポート</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:20px 20px 80px; max-width:1000px; margin:0 auto; line-height:1.7; }
+h1,h2,h3,h4,h5,h6 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; color:var(--fg); }
+h1 { font-size:26px; margin:12px 0 18px; padding-bottom:10px; border-bottom:1px solid var(--line); }
+h2 { font-size:20px; margin:32px 0 12px; padding-left:10px; border-left:4px solid var(--gold); }
+h3 { font-size:16px; margin:24px 0 10px; }
+p { margin:10px 0; }
+a { color:var(--gold); text-decoration:none; }
+a:hover { text-decoration:underline; }
+code { font-family:var(--mono); background:var(--sub-bg); padding:2px 5px; border-radius:3px; font-size:0.9em; }
+pre { font-family:var(--mono); background:var(--sub-bg); padding:14px 16px; border-radius:8px; overflow-x:auto; border:1px solid var(--line); font-size:0.85em; line-height:1.5; }
+pre code { background:transparent; padding:0; }
+blockquote { border-left:3px solid var(--gold); padding:6px 14px; margin:14px 0; color:var(--muted); background:var(--sub-bg); border-radius:0 6px 6px 0; }
+ul,ol { padding-left:22px; }
+li { margin:4px 0; }
+table { border-collapse:collapse; width:100%; margin:14px 0; font-size:0.9em; }
+th,td { border:1px solid var(--line); padding:6px 10px; text-align:left; vertical-align:top; }
+th { background:var(--sub-bg); font-family:var(--mincho); font-weight:600; }
+hr { border:0; border-top:1px dashed var(--line); margin:24px 0; }
+img { max-width:100%; height:auto; }
+
+.nav-back { display:inline-block; margin:0 0 12px; font-family:var(--mono); font-size:12px; color:var(--muted); }
+.nav-back a { color:var(--muted); }
+.nav-back a:hover { color:var(--gold); }
+
+.meta-head { background:var(--sub-bg); border:1px dashed var(--line); border-radius:6px; padding:8px 12px; margin:8px 0 18px; font-family:var(--mono); font-size:11px; color:var(--muted); line-height:1.7; }
+.meta-head b { color:var(--fg); font-weight:600; margin-right:4px; }
+
+.embed-html { border-top:1px dashed var(--line); padding-top:16px; margin-top:8px; }
+.embed-html iframe { width:100%; border:0; min-height:80vh; background:var(--card-bg); border-radius:8px; }
+
+footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+</style>
+</head>
+<body>
+<div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
+<div class="meta-head"><div><b>元のファイル</b>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_naosu_hoshin_20260911.html</div><div><b>最後に更新された日時</b>2026-09-14 17:12 JST</div></div>
+<h1>AI-Mits を直す方針</h1><div class="embed-html"><style>
+  :root{
+    --ink:#1a1f36; --sub:#5b6478; --line:#d8dee9; --bg:#f7f9fc; --card:#ffffff;
+    --navy:#1c3d6e; --gold:#b8860b; --red:#c0392b; --green:#1e8449; --gray:#8a94a6;
+    --warn-bg:#fff6e5; --warn-line:#e6b34a; --bad-bg:#fdeded; --bad-line:#e0a0a0;
+    --ok-bg:#eef7f0; --ok-line:#9dc9ab;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:0; background:var(--bg); color:var(--ink);
+    font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+    font-size:16px; line-height:1.85;
+  }
+  .wrap{max-width:1080px; margin:0 auto; padding:40px 24px 80px;}
+  header{border-bottom:3px solid var(--navy); padding-bottom:18px; margin-bottom:36px;}
+  h1{font-size:26px; margin:0 0 8px; color:var(--navy); letter-spacing:.02em;}
+  .lead{color:var(--sub); font-size:14px; margin:0;}
+  h2{
+    font-size:19px; margin:52px 0 16px; color:var(--navy);
+    border-left:5px solid var(--gold); padding-left:12px;
+  }
+  h3{font-size:16px; margin:28px 0 10px; color:var(--ink);}
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:10px;
+    padding:22px 24px; margin:16px 0;
+  }
+  .kekka{
+    background:var(--warn-bg); border:2px solid var(--warn-line); border-radius:10px;
+    padding:20px 24px; margin:20px 0; font-size:17px;
+  }
+  .kekka strong{color:var(--red);}
+  table{border-collapse:collapse; width:100%; margin:14px 0; font-size:14.5px;}
+  th,td{border:1px solid var(--line); padding:9px 12px; text-align:left; vertical-align:top;}
+  th{background:#eef2f7; font-weight:600; color:var(--navy);}
+  td.num{text-align:right; font-variant-numeric:tabular-nums;}
+  tr.hi td{background:var(--bad-bg);}
+  tr.hi td.num{font-weight:700; color:var(--red);}
+  .dim{color:var(--gray);}
+  .quote{
+    border-left:4px solid var(--line); padding:4px 0 4px 16px; margin:12px 0;
+    color:#333; font-size:15px; background:#fbfcfe;
+  }
+  .quote em{font-style:normal; background:#ffe9e9; padding:1px 3px; font-weight:600;}
+  code{
+    background:#eef2f7; padding:1px 6px; border-radius:4px;
+    font-family:"SF Mono",Menlo,Consolas,monospace; font-size:13px;
+  }
+  .scroll{overflow-x:auto;}
+  ul{padding-left:22px;} li{margin:5px 0;}
+  .tag{
+    display:inline-block; font-size:12px; padding:2px 9px; border-radius:11px;
+    border:1px solid var(--line); background:#fff; color:var(--sub); margin-right:5px;
+  }
+  .tag.ng{background:var(--bad-bg); border-color:var(--bad-line); color:var(--red);}
+  .tag.ok{background:var(--ok-bg); border-color:var(--ok-line); color:var(--green);}
+  footer{margin-top:64px; padding-top:18px; border-top:1px solid var(--line);
+         color:var(--sub); font-size:13px;}
+</style>
+
+<div class="wrap">
+
+<header>
+  <h1>AI-Mits を直す ── 4つの順番</h1>
+  <p class="lead">2026-09-11／Mits様のご指示「直す方向性」を1枚にしたもの。<strong>やったことは、いちばん下の「修正の履歴」に追記していきます。</strong>そこに載っていないものは、まだ手を付けていません。</p>
+</header>
+
+<div class="kekka">
+<strong>なぜ直すか。</strong>
+<span style="color:#8a94a6;"><s>お客様が触っていた先と、手入れしてきた先が別でした。<br>
+9/8 以降の相談 21件は全部「v2」に入り、8/27 に作った「西田メソッド」には 0件。</s></span><br>
+<strong style="color:#1e8449;">→ 2026-09-12 訂正。この書き方は、同じ HTML の第1部・第4部の表と食い違っていた。</strong><br>
+下の表のとおり、<strong>v2（e472bc1f）と NORMAL（43d47f25）は同じナレッジDB（11963425）を引いていて、箱も4個ずつ</strong>。
+材料は別ではない。設定文の量は v2 が 3,152文字・NORMAL が 2,861文字で、
+セッション書き起こしから取った話し方14項目とクライアント像は <strong>v2 にだけ</strong>ある
+（NORMAL にだけあるのは 300文字・愚問禁止・レクチャー禁止の3つ）。<br>
+食い違っていたのは<strong>名前と入口</strong>。ページ名が「NORMAL固定」なのに <code>var APP</code> は v2 を呼んでいた。
+9/8 以降の相談が全部 v2 に入り、8/27 に作った 43d47f25 に 0件だったのはそのため
+（件数はのちに 9/8 以降 25件・7人と数え直した）。<br>
+<strong>向き先は v2 のままが正解</strong>と 2026-09-11 に確定し、直したのはページ名だけ（第4部の実装一覧 ☑）。<br>
+その v2 が、お客様を「Mitsさん」と呼び、西田さんを第三者として扱っていました。
+</div>
+
+<div class="card">
+<p style="margin-top:0;"><strong>Mits様のご指示（2026-09-11・原文）</strong></p>
+<div class="quote">
+直す方向性<br>
+・difyの中のrename　既存名＋コードID＋NOMALいずれかの別<br>
+使う経路の整理<br>
+・人称のディスクリプションの整理<br>
+その後3つの頭、アプリ版WEB版両方にどれを繋ぐか再決定<br>
+それをHTMLで整理して　<em>私が発注GOをかけてから実装</em>
+</div>
+<p style="margin-bottom:0;font-size:14px;">1行目が第1部、2行目が第2部、3行目が第3部、4行目が第4部。
+<strong>順番に意味があります。</strong>名前で見分けられない → 経路が台帳に無い → 人称が書かれていない、の3つが揃っていたから、
+入口1行の食い違いが 9/8 から 9/11 まで誰にも気付かれませんでした。1行だけ直しても、同じ事故がまた起きます。</p>
+</div>
+
+<p class="dim" style="font-size:14px;">現状の実測（数字・不具合の原文・経緯・付録）は別紙にあります ──
+<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_zukai_20260911.html</code></p>
+
+
+<h2>第1部　Dify の名前を付け替える</h2>
+
+<p class="dim" style="font-size:14px;">上3行が<strong>アプリ側</strong>、下3行が<strong>WEB側</strong>。どちらも <strong>FAST → NORMAL → DEEP</strong> の順（運転台の切替窓と同じ・速い順）。<br>WEB の FAST と DEEP は <strong>ナシ</strong>。押したら<strong>クリック後登録表示</strong>にする。</p>
+
+<p>いま Dify の画面に並ぶ名前を見ても、<strong>どれが運転台の FAST／NORMAL／DEEP なのか分かりません。</strong>
+番号（app_id）も名前に出ていないので、コードの <code>var APP = 'e472bc1f'</code> と画面の名前が突き合わせられない。今回の食い違いが3日間見つからなかった一因です。</p>
+
+<div class="scroll">
+<table>
+<thead><tr><th style="width:5%;"></th><th style="width:13%;">繋ぎ先と頭</th><th style="width:24%;">今の名前</th><th>付け替え後</th><th style="width:22%;">中身（実測）</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><strong>アプリ FAST</strong></td><td>AI-MITS(R)</td><td><code>AI-MITS(ナレッジ無し) 14d6df13 FAST-APP</code></td><td>箱3個・ナレッジ検索なし・<code>{{#context#}}</code>なし</td></tr>
+<tr><td>2</td><td><strong>アプリ NORMAL</strong></td><td>AI-MITS(M) 西田メソッド</td><td><code>AI-MITS(RAG) 43d47f25 NORMAL-APP</code></td><td>箱4個・ナレッジ検索あり・<code>{{#context#}}</code>あり</td></tr>
+<tr><td>3</td><td><strong>アプリ DEEP</strong></td><td>AI-MITS (C)</td><td><code>AI-MITS (Corpus2Skill) 1a8d8b9c DEEP-APP</code></td><td>箱13個・Notion API を直に叩く</td></tr>
+<tr><td>4</td><td><strong>WEB FAST</strong></td><td>ナシ</td><td>ナシ</td><td>クリック後登録表示</td></tr>
+<tr class="hi"><td>5</td><td><strong>WEB NORMAL</strong></td><td>AI-MITS v2</td><td><code>AI-MITS v2 e472bc1f NORMAL-WEB</code></td><td>箱4個・ナレッジ検索あり・<code>{{#context#}}</code>あり</td></tr>
+<tr><td>6</td><td><strong>WEB DEEP</strong></td><td>ナシ</td><td>ナシ</td><td>クリック後登録表示</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>付け替えの決まりごと</h3>
+<div class="card">
+<ul style="margin:0;">
+  <li>形は「<strong>頭の括弧（中身で何をしているか）＋ 番号 ＋ FAST／NORMAL／DEEP</strong>」。区切りは半角スペース1つ</li>
+  <li><strong>括弧の中身は、今の中身に合わせて付け直す</strong>（2026-09-11 Mits様）。
+      今の <code>(R)</code> は RAG の頭文字だが、<code>14d6df13</code> はもう RAG をしていない。
+      実際に RAG をしているのは <code>43d47f25</code> のほう。だから <code>(RAG)</code> を <code>43d47f25</code> へ移し、<code>14d6df13</code> は <code>(ナレッジ無し)</code> にする</li>
+  <li><strong>末尾に <code>-APP</code> を付ける</strong>（2026-09-11 Mits様）── <code>FAST-APP</code> / <code>NORMAL-APP</code> / <code>DEEP-APP</code>。運転台アプリ側の頭だと名前で分かるようにするため</li>
+  <li><code>AI-MITS (Corpus2Skill)</code> だけ <code>AI-MITS</code> と <code>(</code> の間の半角スペースを1つ残す（今の名前どおり）</li>
+  <li>アイコン（🧭 💬）は Dify が名前とは別に持っているので、<strong>名前の欄だけ</strong>を書き換える</li>
+  <li><strong>末尾で繋ぎ先を分ける</strong>（2026-09-11 Mits様）── 運転台アプリ側の3つは <code>-APP</code>、WEB（お試し版）が向いている v2 は <code>-WEB</code>。名前を見れば「どの入口から来る頭か」が分かる</li>
+</ul>
+</div>
+
+<h3>「ナレッジ無し」は不具合ではなく、決めてそうしたもの</h3>
+<div class="card" style="background:#f7fafd;">
+<p style="margin-top:0;font-size:14px;">2026-08-27 Mits様（原文）：</p>
+<div class="quote">
+今のAI-MITSは素のLLMを呼び出しているに過ぎないことがわかった。<br>
+しかしこれを利用して、A　素のLLM　Bのコーパス　これから作るCが私のナレッジを呼び出すもの
+</div>
+<p style="font-size:14px;">2026-08-28 06:52 に Mits様が FAST の脇へ記入されたのが「<strong>4.4秒・いちばん速い・西田の知見は入らない</strong>」。
+同じ日の却下記録に「A の回答LLM にも材料を渡す → それは C と同じ物になり、3択の A ではなくなる」とある。</p>
+<p style="font-size:14px;margin-bottom:0;"><strong>FAST は「材料を入れない側」として置かれている。</strong>今回の名前は、その位置づけを名前の側にも出すもの。</p>
+</div>
+
+<div class="card">
+<p style="margin:0;font-size:14px;"><span class="tag ng">直す対象</span>
+Dify の説明文（Description）が <strong>2026-08-07 のまま</strong>で、FAST について「RAG 経路・ナレッジDB 941eb11d を参照・LLM×2 のハルシネーション自己検証」と書いてある。
+書いた 8/07 時点では実装と合っていたが、8/27〜8/28 の作り替えで合わなくなった。名前と一緒に直す。</p>
+</div>
+
+
+<h2>第2部　使う経路の整理</h2>
+
+<p>どの入口がどのアプリを向いているかを、1枚の台帳にします。<strong>これが無かったので、お試し版が v2 を向いていることに誰も気付けませんでした。</strong></p>
+
+<h3>2-1. 入口の一覧（2026-09-11 実測）</h3>
+<div class="scroll">
+<table>
+<thead><tr><th style="width:16%;">入口</th><th style="width:28%;">場所</th><th>いまの状態</th><th style="width:16%;">向いている先</th><th style="width:16%;">あるべき先</th></tr></thead>
+<tbody>
+<tr class="hi"><td><strong>お試し版</strong></td><td>UTAGE ファネル <code>1QtzdExbynBp</code><br>ステップ <code>V3A9LG00dL2S</code><br>ページ <code>UgSfW8MCzHqv</code></td><td>HTTP 200（85,256 bytes）<br>生きている WEB の入口はここ1枚だけ</td><td><strong>v2（e472bc1f）</strong></td><td>第4部で決める</td></tr>
+<tr><td>A ページ</td><td><code>LMfcyJkjkzAh</code></td><td>HTTP 404（1,651 bytes）</td><td>—</td><td>—</td></tr>
+<tr><td>B ページ</td><td><code>hUMsNrqy5QBh</code></td><td>HTTP 404（1,651 bytes）</td><td>—</td><td>—</td></tr>
+<tr><td>サンクス</td><td><code>8rZR2qCGXNjJ</code></td><td>HTTP 404（1,651 bytes）</td><td>—</td><td>—</td></tr>
+<tr><td>レポート</td><td><code>0EPKtgj1pUmx</code></td><td>HTTP 404（1,651 bytes）</td><td>—</td><td>—</td></tr>
+<tr><td>運転台アプリ<br>（<strong>2本ある</strong>）</td><td><code>untendai/src-tauri/src/sanbo.rs</code><br><code>untendai-seiri/src-tauri/src/sanbo.rs</code><br>どちらも 3,847行</td><td>3つから選べる。既定は FAST（<code>DEFAULT_ENGINE = "A"</code>・L178）</td><td>FAST／NORMAL／DEEP</td><td>第4部で決める</td></tr>
+</tbody>
+</table>
+</div>
+
+<p style="font-size:14px;">WEB版の口は <strong>2026-08-28 に畳まれている</strong>。<code>/report</code> は 302 で お試し版へ飛ばされ（<code>x-closed: web-version-retired-20260828</code>）、
+<code>/anonymous</code>・<code>/validate</code>・<code>/resolve-legacy</code> は 410。会員がログインしても、着地先は必ずお試し版（<code>MEMBER_TARGET_PAGE_MAP.nfg = 'V3A9LG00dL2S'</code>）。</p>
+
+<p style="font-size:14px;"><strong>2本のアプリの差は、あいさつ文と入力欄の下地の2行だけ</strong>（sanbo.rs の L74・L75）。経路は完全に一致している。
+記録に「AI-Mits の直しは、アプリ版と WEB版の両方に入れる」「アプリは2本ある。片方だけ入れ替えない」（2026-09-11 Mits様）があるので、<strong>2本とも同じ手を入れる。</strong></p>
+
+<h3>2-2. 中継サーバーには経路が2つある（混ぜない）</h3>
+<div class="scroll">
+<table>
+<thead><tr><th style="width:22%;">経路</th><th style="width:30%;">何をするところ</th><th>v2 の扱い</th></tr></thead>
+<tbody>
+<tr><td><strong>チャットの通り道</strong><br><code>proxyDify</code></td><td><code>/dify/&lt;8桁&gt;/v1/…</code> を Dify へ中継する</td><td><span class="tag ok">通す</span>8桁の形が合っていて鍵があれば何でも通す。<code>/dify/e472bc1f/v1/parameters</code> は <strong>HTTP 200</strong></td></tr>
+<tr><td><strong>レポート集め</strong><br><code>REPORT_APP_PREFIXES</code></td><td>3つのアプリの Logs を集めてレポートを作る</td><td><span class="tag ng">外してある</span><code>['1A8D8B9C','14D6DF13','43D47F25']</code> の3つだけ</td></tr>
+</tbody>
+</table>
+</div>
+
+<p style="font-size:14px;"><strong>「一覧から外した」と「繋がらなくなる」は別。</strong>参謀はここを一度混ぜて誤りました。
+<code>/health</code> の <code>secrets_status</code> も5本しか見に行かない作りなので、そこに出ないことは「鍵が無い」の証拠になりません。</p>
+
+<h3>2-3. 直す対象（台帳と実態がずれている箇所）</h3>
+<div class="scroll">
+<table>
+<thead><tr><th style="width:34%;">どこ</th><th style="width:33%;">書いてあること</th><th>実物</th></tr></thead>
+<tbody>
+<tr><td>お試し版のページ名</td><td>お試し版（AI-Mits・<strong>NORMAL固定</strong>・15分と25分に声かけ）</td><td>中身は v2 を呼んでいる</td></tr>
+<tr><td>中継 <code>src/index.js</code> L372 の注記</td><td>v2 は対象外（<strong>鍵も未登録</strong>）</td><td>鍵は登録済み。実際に 200 で通る</td></tr>
+<tr><td><code>RESOURCE_INDEX.md:154</code></td><td>秘密は4本（西田メソッドの鍵は無い）</td><td>5本。<code>dify_app_key_43d47f25: true</code></td></tr>
+<tr><td><code>aimits_full_design_20260615.md</code> L320</td><td>v2.1（14d6df13）／v3（1a8d8b9c）</td><td>今は FAST／DEEP。3段階の改名を経ている</td></tr>
+</tbody>
+</table>
+</div>
+
+
+<h2>第3部　人称を決める</h2>
+
+<p>Mits様がご指摘の2つの不具合は、どちらも<strong>同じ1つの穴</strong>から出ています。</p>
+
+<div class="card">
+<p style="margin-top:0;"><span style="color:#8a94a6;"><s><strong>穴はこれ ── 4つとも、設定文に「西田」という文字が1度も出てこない。</strong></s></span><br>
+<strong style="color:#1e8449;">→ 2026-09-11 15:53〜15:57 に4アプリとも埋めて publish した。下の表は、上段が当時の穴・下段が入れた中身。</strong></p>
+<div class="scroll">
+<table>
+<thead><tr><th style="width:22%;"></th><th>v2<br><span style="font-weight:400;font-size:12px;">e472bc1f NORMAL-WEB</span></th><th>FAST<br><span style="font-weight:400;font-size:12px;">14d6df13 FAST-APP</span></th><th>NORMAL<br><span style="font-weight:400;font-size:12px;">43d47f25 NORMAL-APP</span></th><th>DEEP<br><span style="font-weight:400;font-size:12px;">1a8d8b9c DEEP-APP</span></th></tr></thead>
+<tbody>
+<tr><td>自分の名乗り</td><td><span style="color:#8a94a6;"><s>書かれていない</s></span><br><strong style="color:#1e8449;">→ 「AI西田です」と名乗る</strong></td><td><span style="color:#8a94a6;"><s>書かれていない</s></span><br><strong style="color:#1e8449;">→ 「AI西田です」と名乗る</strong></td><td><span style="color:#8a94a6;"><s>書かれていない</s></span><br><strong style="color:#1e8449;">→ 「AI西田です」と名乗る</strong></td><td><span style="color:#8a94a6;"><s>書かれていない</s></span><br><strong style="color:#1e8449;">→ 「AI西田です」と名乗る</strong></td></tr>
+<tr><td>相手の呼び方</td><td><span style="color:#8a94a6;"><s>書かれていない</s></span><br><strong style="color:#1e8449;">→ 最初に名前を尋ね、教わった名前＋「さん」で呼ぶ</strong></td><td><span style="color:#8a94a6;"><s>書かれていない</s></span><br><strong style="color:#1e8449;">→ 最初に名前を尋ね、教わった名前＋「さん」で呼ぶ</strong></td><td><span style="color:#8a94a6;"><s>書かれていない</s></span><br><strong style="color:#1e8449;">→ 最初に名前を尋ね、教わった名前＋「さん」で呼ぶ</strong></td><td><span style="color:#8a94a6;"><s>敬語の型だけ厳密指定</s></span><br><strong style="color:#1e8449;">→ 名前の尋ね方を追加。敬語の型はここから取り出して4つ全部に広げた</strong></td></tr>
+<tr><td>「西田」の文字</td><td><span style="color:#8a94a6;"><s><strong>0件</strong></s></span><br><strong style="color:#1e8449;">→ <code>AI西田</code> が入った（publish 済みの中身で実測 <strong>4件</strong>）</strong></td><td><span style="color:#8a94a6;"><s><strong>0件</strong></s></span><br><strong style="color:#1e8449;">→ <code>AI西田</code> が入った</strong></td><td><span style="color:#8a94a6;"><s><strong>0件</strong></s></span><br><strong style="color:#1e8449;">→ <code>AI西田</code> が入った</strong></td><td><span style="color:#8a94a6;"><s><strong>0件</strong></s></span><br><strong style="color:#1e8449;">→ <code>AI西田</code> が入った</strong></td></tr>
+<tr><td>西田／Mits の扱い</td><td><span style="color:#8a94a6;"><s><strong>第三者と明示</strong></s></span><br><strong style="color:#1e8449;">→ 「本人ではありませんが」を削除（実測 <strong>0件</strong>）。AI西田＝お客様が呼ぶ「西田さん」と同一、と明記</strong></td><td><span style="color:#8a94a6;"><s>書かれていない</s></span><br><strong style="color:#1e8449;">→ AI西田＝お客様が呼ぶ「西田さん」と同一、と明記</strong></td><td><span style="color:#8a94a6;"><s>書かれていない</s></span><br><strong style="color:#1e8449;">→ AI西田＝お客様が呼ぶ「西田さん」と同一、と明記</strong></td><td><span style="color:#8a94a6;"><s>書かれていない</s></span><br><strong style="color:#1e8449;">→ AI西田＝お客様が呼ぶ「西田さん」と同一、と明記</strong></td></tr>
+<tr><td>参照情報を使うとき</td><td><span style="color:#8a94a6;"><s>（当時は項目に無い）</s></span><br><strong style="color:#1e8449;">→ 相手の名前を文に入れて書き直す節を追加</strong></td><td><span style="color:#8a94a6;"><s>（当時は項目に無い）</s></span><br><strong style="color:#1e8449;">→ 入れていない（材料を持たないアプリなので意図的）</strong></td><td><span style="color:#8a94a6;"><s>（当時は項目に無い）</s></span><br><strong style="color:#1e8449;">→ 相手の名前を文に入れて書き直す節を追加</strong></td><td><span style="color:#8a94a6;"><s>（当時は項目に無い）</s></span><br><strong style="color:#1e8449;">→ 相手の名前を文に入れて書き直す節を追加</strong></td></tr>
+</tbody>
+</table>
+</div>
+<p style="font-size:14px;margin-bottom:0;"><span style="color:#8a94a6;"><s>出てくるのは <code>Mits</code> というローマ字だけ。だから AI は「Mits」を<strong>相手の名前かもしれない</strong>と解釈できてしまう。<strong>この空欄を、下の「決まったこと」で埋める。</strong></s></span><br>
+<strong style="color:#1e8449;">→ 埋めた。2026-09-11 16時台にお試し版から1往復して確かめた応答がこれ。</strong></p>
+<div class="quote">AI西田です。<br><br>以後お呼びするのに、お名前を教えてください。本名でも、ニックネームでも構いません。</div>
+<p style="font-size:14px;margin-bottom:0;">この1往復で <code>Mitsさん</code> <strong>0件</strong>／「本人ではありません」 <strong>0件</strong>／尊敬語・謙譲語 <strong>0件</strong>。</p>
+</div>
+
+<h3>実際に出た2つ</h3>
+<div class="card">
+<p style="margin-top:0;"><span class="tag ng">①</span><strong>お客様を「Mitsさん」と呼んだ</strong>　2026-09-10 10:49:11／<code>72ccf14d-f2ee-4d45-8dd2-1946dcee9cd7</code></p>
+<div class="quote"><em>Mitsさんが好きなのは、たぶん稼ぎを義理のために使った人ですよね。</em>稼ぎを自分の格上げに使った人が嫌なんです。</div>
+
+<p style="margin-top:22px;"><span class="tag ng">②</span><strong>西田さんを第三者として扱った</strong>　2026-09-09 21:19:44 開始／<code>34c10c83-9fc8-4cc2-b465-4ec09eb7195a</code>／12往復</p>
+<div class="quote">全部知ってるわけじゃないです。今日も<em>「西田さんが何を学んでるか」は分からない</em>と最初に言いましたよね。<br>僕がやってるのは、さっき言った20個の構造を当てにいってるだけです。</div>
+</div>
+
+<h3>v2 の設定文にある矛盾</h3>
+<div class="card">
+<div class="quote">
+あなたはMits@Perpetualのコンサルティング知識を体現したAIアシスタントです。（…）<br>
+<em>あなたはMits本人ではありませんが</em>、Mitsの思考法・言葉・視点で回答します。
+</div>
+<p style="font-size:14px;">ところが同じ設定文の「話し方14項目」の13番にはこう書いてある。</p>
+<div class="quote">自分のクライアントの実例（匿名）や<em>自身の体験</em>を交えて語る</div>
+<p style="font-size:14px;margin-bottom:0;">「本人ではない」と言いながら「自身の体験を語れ」。<strong>誰の体験なのかが宙に浮く。</strong>
+そこへ「Mits」というローマ字だけが置かれているので、AI は空いた席に目の前の相手を座らせた。</p>
+</div>
+
+<h3>決まったこと（2026-09-11 Mits様ご確定）</h3>
+
+<div class="card">
+<p style="margin-top:0;font-size:14px;">Mits様（原文）：</p>
+<div class="quote">
+このAIコンサルティングのサービス名をAI-Mits　として人称は　すべて自分のことを　<em>AI西田</em>と変更する<br>
+つまり<em>AI西田は顧客が呼ぶ西田さんと同一である</em>
+</div>
+</div>
+
+<div class="scroll">
+<table>
+<thead><tr><th style="width:26%;">何を</th><th>確定した中身</th></tr></thead>
+<tbody>
+<tr><td><strong>サービスの名前</strong></td><td><code>AI-Mits</code></td></tr>
+<tr class="hi"><td><strong>自分の名乗り</strong></td><td><strong>AI西田</strong>。自分のことを指す言葉は、すべてこれに統一する</td></tr>
+<tr class="hi"><td><strong>AI西田と「西田さん」の関係</strong></td><td><strong>同一。</strong>顧客が「西田さん」と呼ぶ相手が AI西田。<br>「本人ではありません」「西田さんが何を学んでいるかは分からない」は<strong>この確定と食い違う</strong>ので消す</td></tr>
+<tr><td>相手の呼び方<br><span class="dim" style="font-size:13px;">（上の確定から出てくること）</span></td><td>自分が「西田」なのだから、<strong>相手を「西田さん」「Mitsさん」とは呼ばない</strong>。<br>相手の名前は、相手が名乗った時にだけ使う</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="card" style="background:#f7fafd;">
+<p style="margin-top:0;font-size:14px;"><strong>4アプリ全部に同じ文で入れる。</strong>
+いま v2 にだけ「あなたはMits本人ではありませんが」があり、他の3つには名乗りが何も書かれていない。
+バラバラなので、どれに繋いでも同じ事故が起きうる。</p>
+<p style="font-size:14px;margin-bottom:0;">入れる先は、各アプリの LLM の箱の <strong>SYSTEM 欄</strong>。
+文面そのものは Mits様名義の言葉なので、<strong>原稿を作ってご確認いただいてから入れる。</strong></p>
+</div>
+
+<h3>入れる原稿（4アプリの SYSTEM 欄のいちばん上に、同じ文を入れる）</h3>
+
+<div class="card">
+<pre style="background:#f2f6fb;border:1px solid #b9c6d8;border-radius:8px;padding:16px;font-size:14px;overflow-x:auto;margin:0;white-space:pre-wrap;">## 自分が誰か（最優先・例外なし）
+
+あなたは「AI西田」。西田光弘（Mits）の考え方をAIにしたもの。
+AI西田は、お客様が「西田さん」と呼ぶ相手そのものである。
+
+- 自分を指すときは AI西田。名前を聞かれたら「AI西田です」と答える
+- 「本人ではありません」「西田さんとは別です」とは言わない
+- 「西田さんが何を学んでいるかは知りません」のように、西田を第三者として語らない
+- 相手を「西田さん」「Mitsさん」「Mits」とは絶対に呼ばない
+  相手の呼び方は、下の「最初のやりとり」で教えてもらった名前
+- サービスの名前は AI-Mits
+
+### 最初のやりとり（相談が入ったら、まずこれ）
+
+1. AI西田と名乗る
+2. 相手の名前を尋ねる
+   「以後お呼びするのに、お名前を教えてください。
+    本名でも、ニックネームでも構いません」
+3. 教えてもらった名前に「さん」を付けて、以後ずっとそう呼ぶ
+   本名でもニックネームでも、必ず「さん」を付ける（呼び捨てにしない）
+   名乗ってもらえなければ「あなた」で通す。聞き直さない
+
+### 実際に出た間違い（同じことを二度としない）
+
+× 「Mitsさんが好きなのは、たぶん稼ぎを義理のために使った人ですよね」
+   → 相手を Mits と呼んでいる。Mits は自分の名前であって、相手の名前ではない。
+
+× 「今日も『西田さんが何を学んでるか』は分からないと最初に言いましたよね」
+   → 西田を第三者にしている。自分が西田なので、この言い方は成り立たない。</pre>
+</div>
+
+<h3>あわせて消す既存の記述</h3>
+<div class="card">
+<p style="margin-top:0;font-size:14px;"><code>AI-MITS v2 e472bc1f NORMAL-WEB</code> の SYSTEM 欄にだけある一文。</p>
+<div class="quote">あなたはMits本人ではありませんが、Mitsの思考法・言葉・視点で回答します。</div>
+<p style="font-size:14px;margin-bottom:0;">話し方14項目の13番「自身の体験を交えて語る」は<strong>残す</strong>。
+上の「自分が誰か」を入れれば、誰の体験かが宙に浮かなくなる（AI西田＝西田なので）。</p>
+</div>
+
+<div class="card" style="background:#fff6e5;border-color:#e6b34a;">
+<p style="margin:0;font-size:14px;"><strong>入れるときの注意。</strong>SYSTEM 欄を触るには Dify の編集画面を開く必要があり、
+開いた時点で <code>POST /workflows/draft</code> が自動で1発飛ぶ。これは秘密を空送りする経路でもあるので、
+<strong>作業前に4アプリとも環境変数（<code>NOTION_TOKEN</code>）を控えてから触る。</strong></p>
+</div>
+
+<h2>第4部　3つの頭を、どこに繋ぐか</h2>
+
+<p><strong>決めるのは Mits様。</strong>ここには材料だけ並べます。</p>
+
+<h3>4-1. 3つの頭（実測）</h3>
+<div class="scroll">
+<table>
+<thead><tr><th style="width:16%;"></th><th>FAST<br><code>14d6df13</code><br><span style="font-weight:400;font-size:12px;color:#1e8449;">AI-MITS(ナレッジ無し)<br>14d6df13 FAST-APP</span></th><th>NORMAL<br><code>43d47f25</code><br><span style="font-weight:400;font-size:12px;color:#1e8449;">AI-MITS(RAG)<br>43d47f25 NORMAL-APP</span></th><th>DEEP<br><code>1a8d8b9c</code><br><span style="font-weight:400;font-size:12px;color:#1e8449;">AI-MITS (Corpus2Skill)<br>1a8d8b9c DEEP-APP</span></th></tr></thead>
+<tbody>
+<tr><td>何をするもの</td><td>素の LLM が速く答える</td><td>西田メソッドの材料を引いて答える</td><td>台帳（Notion）を全部たどる</td></tr>
+<tr><td>箱の数</td><td>3個</td><td>4個</td><td>13個</td></tr>
+<tr><td>材料</td><td><span class="tag ng">入らない</span></td><td><span class="tag ok">dataset 11963425</span></td><td><span class="tag ok">Notion API 直叩き</span></td></tr>
+<tr><td>文章を書くモデル</td><td>opus-5</td><td>opus-5</td><td>opus-5（前段2つは haiku-4-5）</td></tr>
+<tr><td>速さ</td><td>4.4秒（2026-08-28 Mits様記入）</td><td class="dim">未測定</td><td>10.6秒の沈黙が課題として残っている</td></tr>
+<tr><td>いまの繋がり先</td><td>運転台アプリ2本（<strong>既定</strong>）</td><td><span style="color:#8a94a6;"><s><strong>どこからも来ていない</strong></s></span><br><strong style="color:#1e8449;">→ 運転台アプリ2本から来ている。</strong>全期間64件のうち、相談した人の id が <code>untendai-</code> で始まるものが <strong>26件</strong>。WEB（お試し版）からは来ていない（<code>try-</code> が <strong>0件</strong>）</td><td>運転台アプリ2本</td></tr>
+<tr><td>全期間の件数</td><td>72件（try- は 0件）</td><td>64件（try- は 0件）</td><td>71件（try- は 0件）</td></tr>
+</tbody>
+</table>
+</div>
+<p style="font-size:14px;">件数は 2026-09-11 15時台に、Dify の Logs の絞り込みを外して全期間で数えたもの。
+このあと 16時台に確かめのため1往復しているので、<strong>いまは e472bc1f が1件増えている</strong>（この3本は増えていない）。
+箱の数は publish 後に取り直しても <strong>3-4-13</strong> のままだった。</p>
+
+<h3>4-2. 繋ぎ先は2つ</h3>
+<div class="scroll">
+<table>
+<thead><tr><th style="width:20%;">繋ぎ先</th><th style="width:26%;">実体</th><th style="width:22%;">いまの状態</th><th>Mits様のご確定</th></tr></thead>
+<tbody>
+<tr>
+  <td><strong>WEB版</strong></td>
+  <td>お試し版 1枚<br><code>UgSfW8MCzHqv</code><br>（会員も必ずここへ着地）</td>
+  <td>v2 に固定。<br>選び直す口は無い</td>
+  <td class="dim">（ご記入欄）</td>
+</tr>
+<tr>
+  <td><strong>アプリ版</strong></td>
+  <td>運転台 2本<br><code>untendai</code> / <code>untendai-seiri</code></td>
+  <td>3つから選べる。<br>既定は FAST</td>
+  <td class="dim">（ご記入欄）</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h3>4-3. 向け直す場合に触るのは1行</h3>
+<div class="card">
+<p style="margin-top:0;font-size:14px;">お試し版のページの中の1行。</p>
+<pre style="background:#f2f6fb;border:1px solid #b9c6d8;border-radius:8px;padding:16px;font-size:14px;overflow-x:auto;margin:0;">var APP = 'e472bc1f';   →   var APP = '43d47f25';</pre>
+<p style="font-size:14px;margin-bottom:0;">向け先の鍵（<code>DIFY_APP_KEY_43D47F25</code>）は中継に登録済みなので、<strong>この1行だけで通る。</strong>
+UTAGE のページは<strong>部分置換のみ</strong>（<code>funnel_page_get</code> で取り直してから当てる）。</p>
+</div>
+
+<h3>4-4. まだ決まっていないこと</h3>
+<div class="card">
+<ul style="margin:0;">
+  <li><strong>v2 をどうするか。</strong>2026-08-27 に「v2は放置、untendaiを公開したら止める」とご確定だが、
+      <strong>いま唯一お客様が繋がっている先</strong>でもある。先に止めると相談ができなくなる</li>
+  <li>v2 には全期間 166件・うちお客様（<code>try-</code>）27件が入っている。向け直すと、この会話の続きは新しい先には無い</li>
+</ul>
+</div>
+
+
+<h2>発注GO のあとに実装すること</h2>
+
+<div class="scroll">
+<table>
+<thead><tr><th style="width:5%;">#</th><th style="width:26%;">何を</th><th>どこを</th><th style="width:16%;">誰が</th></tr></thead>
+<tbody>
+<tr style="color:#8a94a6;"><td>☑</td><td><s>Dify 4アプリの名前を付け替える</s></td><td><s>Dify の画面（Chrome）</s></td><td><s>BS-engineer</s>　<strong style="color:#1e8449;">2026-09-11 済</strong></td></tr>
+<tr style="color:#8a94a6;"><td>☑</td><td><s>説明文（Description）を実装に合わせる</s></td><td><s>同上・FAST の 8/07 の記述</s>　<strong style="color:#1e8449;">4アプリとも、公開中の流れ（console API で読んだ）に合わせて書き換え。名前は Mits様の rename が正本なので触らず。書き換え前：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20260914_dify_説明文_書き換え前.md</strong></td><td><s>参謀</s>　<strong style="color:#1e8449;">2026-09-14 17:13 済</strong></td></tr>
+<tr style="color:#8a94a6;"><td>☑</td><td><s>人称の3点を設定文に入れる</s></td><td><s>4アプリの LLM の箱の SYSTEM 欄</s></td><td><s>BS-engineer</s>　<strong style="color:#1e8449;">2026-09-11 済</strong></td></tr>
+<tr style="color:#8a94a6;"><td>☑</td><td><s>入口の向き先を直す</s></td><td><s>UTAGE のページ</s>　<strong style="color:#1e8449;">向き先は <code>e472bc1f</code> のままが正解と確定したので、変えたのはページ名だけ</strong></td><td><s>FS-utage-pm</s>　<strong style="color:#1e8449;">2026-09-11 済</strong></td></tr>
+<tr style="color:#8a94a6;"><td>☑</td><td><s>アプリ版のエンジン定義を合わせる</s></td><td><s><code>sanbo.rs</code>（2本とも）</s>　<strong style="color:#b9770e;">版上げは未実施</strong></td><td><s>BS-engineer</s>　<strong style="color:#1e8449;">2026-09-11 済</strong></td></tr>
+<tr style="color:#8a94a6;"><td>☑</td><td><s>中継のコードの注記を実態に合わせる</s></td><td><s><code>src/index.js</code></s>　<strong style="color:#b9770e;">deploy は未実施</strong></td><td><s>BS-engineer</s>　<strong style="color:#1e8449;">2026-09-11 済</strong></td></tr>
+<tr style="color:#8a94a6;"><td>☑</td><td><s>索引の古い記載を直す</s></td><td><s><code>RESOURCE_INDEX.md:154</code></s></td><td><s>参謀</s>　<strong style="color:#1e8449;">2026-09-11 済</strong></td></tr>
+<tr style="color:#8a94a6;"><td>☑</td><td><s>Dify 4アプリを publish する</s></td><td><s>Dify の画面（Chrome）</s></td><td><s>BS-engineer</s>　<strong style="color:#1e8449;">2026-09-11 15:57 済</strong></td></tr>
+</tbody>
+</table>
+</div>
+
+<p style="font-size:14px;"><strong>順序が要る所</strong>：入口を直す前に Dify の Web App を閉じない（閉じるとページが白紙になる）。</p>
+
+<h3>直したあとの確かめ方</h3>
+<div class="card">
+<ol style="margin:0;padding-left:22px;">
+  <li style="color:#8a94a6;">☑ <s><code>funnel_page_get</code> でページを取り直し、<code>var APP</code> が狙いどおりか見る</s>　<strong style="color:#1e8449;">2026-09-11 済・<code>var APP</code> は1行で <code>e472bc1f</code>・公開URL 200</strong></li>
+  <li style="color:#8a94a6;">☑ <s>直した入口から<strong>実際に1往復する</strong>（お試し版を開いて話しかける）</s>　<strong style="color:#1e8449;">2026-09-11 済</strong></li>
+  <li style="color:#8a94a6;">☑ <s>Dify の Logs を<strong>全期間</strong>にして、その相談が狙ったアプリに入ったか見る</s>　<strong style="color:#1e8449;">2026-09-11 済・<code>e472bc1f</code> に 1件・他3アプリに 0件</strong></li>
+  <li style="color:#8a94a6;">☑ <s>人称が直ったかを、その応答の本文で確かめる（名乗り・相手の呼び方・西田の扱いの3点）</s>　<strong style="color:#1e8449;">2026-09-11 済・「AI西田です。」と名乗り、名前を尋ねた</strong></li>
+  <li style="color:#8a94a6;">☑ <s>運転台アプリの3つの切替を1つずつ押して、それぞれのアプリに入るか Logs で見る</s>　<strong style="color:#1e8449;">2026-09-11 18:22〜18:25 済・3件とも狙ったアプリに入った</strong></li>
+</ol>
+<p style="font-size:14px;margin-top:12px;"><strong>「設定を変えた」で終わらせない。実際に1往復して、Logs に入ったのを見るまでを1つの作業とする。</strong></p>
+
+<p style="font-size:14px;margin-bottom:0;"><strong>確かめ終わったら、Logs の掃除まででひと続き</strong>（2026-09-11 Mits様）。
+4アプリそれぞれの Logs から、<strong>①AI が出したテストの記録</strong>と<strong>②1ターンしかない記録</strong>を消す。
+お客様の相談（<code>try-</code> 接頭辞）は消さない。</p>
+</div>
+
+<h2>9/8 以降の実測（本番として有効な範囲）</h2>
+
+<p>2026-09-11 Mits様：<strong>「この記録で本番として有効なのは9/8」</strong>。
+9/8 はお試し版を公開した日です。それより前は、作り込みと動作確認の記録が混ざっています。</p>
+
+<div class="card">
+<p style="margin-top:0;font-size:14px;">数えたもとは、Logs を掃除する前に取った控え4本。
+<code>/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20260911_dify_logs_掃除前控え/</code><br>
+区切りは <strong>2026-09-08 00:00 日本時間</strong>。人の見分けは <code>session_id</code> の頭で、
+<code>try-</code> が WEB（お試し版）から来た人、<code>untendai-</code> が運転台アプリから来た人です。</p>
+</div>
+
+<h3>4アプリの比較</h3>
+<div class="scroll">
+<table>
+<thead><tr><th style="width:30%;">アプリ</th><th>全期間</th><th>うち 9/8 以降</th><th>9/8 以降の中身</th></tr></thead>
+<tbody>
+<tr>
+  <td><code>AI-MITS(ナレッジ無し)<br>14d6df13 FAST-APP</code></td>
+  <td>72件<br><span class="dim" style="font-size:13px;">untendai- 9件</span></td>
+  <td><strong>1件</strong></td>
+  <td>09-10 08:49／2往復／<code>untendai-84d225a8</code>／「新規開拓が進まない悩み」</td>
+</tr>
+<tr>
+  <td><code>AI-MITS(RAG)<br>43d47f25 NORMAL-APP</code></td>
+  <td>64件<br><span class="dim" style="font-size:13px;">untendai- 26件</span></td>
+  <td><strong>1件</strong></td>
+  <td>09-10 08:51／16往復／<code>untendai-84d225a8</code>／「売上の見直し」</td>
+</tr>
+<tr>
+  <td><code>AI-MITS (Corpus2Skill)<br>1a8d8b9c DEEP-APP</code></td>
+  <td>71件<br><span class="dim" style="font-size:13px;">untendai- 21件</span></td>
+  <td><strong>1件</strong></td>
+  <td>09-10 15:28／1往復／<code>untendai-5ff0a5de</code>／「お金分析情報の確認・分析」</td>
+</tr>
+<tr>
+  <td><code>AI-MITS v2<br>e472bc1f NORMAL-WEB</code></td>
+  <td>170件<br><span class="dim" style="font-size:13px;">try- 31件</span></td>
+  <td><strong>25件</strong></td>
+  <td>全部 <code>try-</code>（WEB のお試し版から）。人は <strong>7人</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p style="font-size:14px;"><strong>アプリ版の3本は、9/8 以降に来た相談が合わせて 3件しかありません。</strong>
+「<code>43d47f25</code> に <code>untendai-</code> が26件」は<strong>全期間</strong>の数で、そのうち 9/8 以降は <strong>1件</strong>です。</p>
+
+<h3>WEB（お試し版）に 9/8 以降で来た 25件</h3>
+<div class="scroll">
+<table>
+<thead><tr><th style="width:13%;">日時</th><th style="width:8%;">往復</th><th style="width:26%;">人</th><th>題</th></tr></thead>
+<tbody>
+<tr><td>09-08 16:19</td><td>2</td><td><code>try-ro1xqnel…</code></td><td>粗利が伸びない悩み</td></tr>
+<tr><td>09-08 16:44</td><td>2</td><td><code>try-ro1xqnel…</code></td><td>粗利が伸びない悩み</td></tr>
+<tr><td>09-08 17:04</td><td>1</td><td><code>try-ro1xqnel…</code></td><td>値上げで客離れが不安</td></tr>
+<tr><td>09-08 17:13</td><td>3</td><td><code>try-avmly40y…</code></td><td>膨らむ外注費</td></tr>
+<tr><td>09-08 17:30</td><td>6</td><td><code>try-11izngjq…</code></td><td>経営戦略の始め方相談</td></tr>
+<tr><td>09-09 22:21</td><td>10</td><td><code>try-z3k7yjwt…</code></td><td>資本家思考になる方法</td></tr>
+<tr><td>09-09 22:32</td><td>9</td><td><code>try-qchy6e74…</code></td><td>売上施策で動けない悩み</td></tr>
+<tr><td>09-09 22:33</td><td>1</td><td><code>try-z3k7yjwt…</code></td><td>経営計画の立て方</td></tr>
+<tr><td>09-09 22:34</td><td>1</td><td><code>try-z3k7yjwt…</code></td><td>差別化で意識すべきこと</td></tr>
+<tr><td>09-09 22:35</td><td>1</td><td><code>try-z3k7yjwt…</code></td><td>ポジショニングの考え方</td></tr>
+<tr><td>09-10 10:09</td><td>5</td><td><code>try-z3k7yjwt…</code></td><td>大学生の起業の進め方</td></tr>
+<tr><td>09-10 10:19</td><td>1</td><td><code>try-z3k7yjwt…</code></td><td>以前のMitskara</td></tr>
+<tr style="background:#fff5f5;"><td>09-10 10:19</td><td><strong>24</strong></td><td><code>try-z3k7yjwt…</code></td><td><strong>西田さんは何を学んでる？</strong>　<span class="tag ng">不具合②が出た回</span></td></tr>
+<tr><td>09-10 14:41</td><td>5</td><td><code>try-z3k7yjwt…</code></td><td>ニッチ戦略の重視ポイント</td></tr>
+<tr><td>09-10 18:23</td><td>5</td><td><code>try-z3k7yjwt…</code></td><td>ビジネスに役立つ漫画おすすめ</td></tr>
+<tr><td>09-10 18:30</td><td>4</td><td><code>try-z3k7yjwt…</code></td><td>『60分間企業ダントツ化プロジェクト』の実践法</td></tr>
+<tr><td>09-10 18:35</td><td>6</td><td><code>try-z3k7yjwt…</code></td><td>失敗の9ステップ発信の相談</td></tr>
+<tr><td>09-10 22:19</td><td>8</td><td><code>try-304lt8sd…</code></td><td>やること多すぎ</td></tr>
+<tr><td>09-10 23:36</td><td>3</td><td><code>try-z3k7yjwt…</code></td><td>Mitsの節税はどこまで？</td></tr>
+<tr><td>09-10 23:43</td><td>3</td><td><code>try-z3k7yjwt…</code></td><td>戦略を学ぶおすすめ書籍</td></tr>
+<tr><td>09-10 23:48</td><td>2</td><td><code>try-z3k7yjwt…</code></td><td>お金と魅力の哲学</td></tr>
+<tr><td>09-11 12:14</td><td>2</td><td><code>try-z3k7yjwt…</code></td><td>講座内容を知りたい</td></tr>
+<tr style="color:#8a94a6;"><td>09-11 13:34</td><td>2</td><td><code>try-avmly40y…</code></td><td>Test system　<span class="tag ng">動作確認</span></td></tr>
+<tr style="color:#8a94a6;"><td>09-11 15:24</td><td>1</td><td><code>try-qgyih8d0…</code></td><td>相談</td></tr>
+<tr style="color:#8a94a6;"><td>09-11 16:03</td><td>1</td><td><code>try-avmly40y…</code></td><td>売上改善の進め方　<span class="tag ng">参謀が人称を確かめた1往復</span></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="card">
+<p style="margin-top:0;"><strong>読み取れること</strong></p>
+<ul style="margin-bottom:0;">
+  <li><strong>25件のうち15件が1人（<code>try-z3k7yjwt…</code>）。</strong>9/9 22:21 から 9/11 12:14 まで、2日間で13回来ている</li>
+  <li>その人の 09-10 10:19 の回（24往復）が、<strong>「西田さんが何を学んでるかは分からない」と返した回</strong></li>
+  <li>「Mitsさんが好きなのは…」と呼んだ回も、同じ人（09-10 10:49）</li>
+  <li>往復1回で終わった回が 7件。1回で終わった＝話が続かなかった記録として残す（2026-09-11 Mits様）</li>
+  <li>下の灰色3件は動作確認。中身の相談ではない</li>
+</ul>
+</div>
+
+<h2>触らないもの</h2>
+<div class="card">
+<ul style="margin:0;">
+  <li>お客様が触る入口の切り替えは、<strong>Mits様のご指示があってから</strong></li>
+  <li>v2 の停止は、<strong>Mits様がお決めになってから</strong>（いま唯一お客様が繋がっている先なので、先に止めると相談ができなくなる）</li>
+</ul>
+</div>
+
+<h2>修正の履歴（上書きせず、ここに追記していく）</h2>
+
+<p class="dim" style="font-size:14px;">Mits様のご指示（2026-09-11）「<strong>以前のことを入れないで修正の履歴だけ残す　上書きしないで、ここからは修正後追記</strong>」。
+この紙は「直す側」なので、過去の経緯は載せない。現状把握は別紙 <code>aimits_zukai_20260911.html</code> にある。</p>
+
+<div class="scroll">
+<table>
+<thead><tr><th style="width:13%;">日時</th><th style="width:20%;">何を</th><th>結果（実測）</th><th style="width:14%;">誰が</th></tr></thead>
+<tbody>
+<tr>
+  <td>2026-09-11</td>
+  <td><strong>Dify 4アプリの名前を付け替えた</strong><br>（第1部）</td>
+  <td>
+    <code>14d6df13</code> → <code>AI-MITS(ナレッジ無し) 14d6df13 FAST-APP</code><br>
+    <code>43d47f25</code> → <code>AI-MITS(RAG) 43d47f25 NORMAL-APP</code><br>
+    <code>1a8d8b9c</code> → <code>AI-MITS (Corpus2Skill) 1a8d8b9c DEEP-APP</code><br>
+    <code>e472bc1f</code> → <code>AI-MITS v2 e472bc1f NORMAL-WEB</code><br>
+    一覧から取り直して照合 <strong>4件一致・不一致 0件・末尾の空白 0文字</strong>。<br>
+    <span class="tag ng">事故1件</span><code>43d47f25</code> の操作で「Edit Info」の座標クリックがカード本体に当たり、
+    <strong>workflow 編集画面が開いて <code>POST /workflows/draft</code> が1回自動発火</strong>。
+    環境変数は4アプリとも <code>NOTION_TOKEN</code> が残存（実測）で消失なし。
+    以降はカードのメニューを JS で叩く手順に切り替えて再発なし。
+  </td>
+  <td>BS-engineer</td>
+</tr>
+<tr>
+  <td>2026-09-11</td>
+  <td><strong>人称を確定した</strong><br>（第3部）</td>
+  <td>サービス名 <code>AI-Mits</code>／自分の名乗り <strong>AI西田</strong>／<strong>AI西田＝顧客が呼ぶ「西田さん」と同一</strong>。<br>
+      設定文への反映は<strong>これから</strong>（原稿を作ってご確認いただいてから入れる）。</td>
+  <td>Mits様ご確定</td>
+</tr>
+<tr>
+  <td>2026-09-11</td>
+  <td><strong>人称と敬語の型を4アプリの設定文に入れた</strong><br>（第3部）</td>
+  <td>
+    4アプリの SYSTEM 欄のいちばん上に「自分が誰か」「最初のやりとり」「実際に出た間違い」を投入。<br>
+    DEEP だけが持っていた<strong>敬語の型</strong>（丁寧語だけ・尊敬語と謙譲語は使わない）を4アプリ全部に広げた。<br>
+    RAG を使う3本（<code>43d47f25</code>／<code>e472bc1f</code>／<code>1a8d8b9c</code>）には<strong>名前差し込み</strong>の節も追加。
+    <code>14d6df13</code> は材料を持たないので入れていない。<br>
+    実測：<code>AI西田</code> <strong>4件</strong>／口調 <strong>4件</strong>／「本人ではありませんが」 <strong>0件</strong>／
+    箱の数 3-4-13-4 のまま／<code>NOTION_TOKEN</code> 4→4。
+  </td>
+  <td>BS-engineer</td>
+</tr>
+<tr>
+  <td>2026-09-11</td>
+  <td><strong>お試し版のページ名を実態に合わせた</strong></td>
+  <td>
+    <code>お試し版（AI-Mits・NORMAL-WEB / e472bc1f・15分と25分に声かけ）2026-09-08</code> に変更。<br>
+    <strong>向き先（<code>var APP</code>）は触っていない。</strong><code>e472bc1f</code> のままが正解と確定したため。<br>
+    実測：<code>html_source</code> 84,682 bytes・公開URL 200。
+  </td>
+  <td>FS-utage-pm</td>
+</tr>
+<tr>
+  <td>2026-09-11</td>
+  <td><strong>中継の A/B 振り分けを仕組みごと消した</strong></td>
+  <td>
+    Mits様「<strong>この仕組み自体削除</strong>」。消す前に、生きている側で <code>arm</code> を読んでいる先を数えた
+    ── お試し版 <strong>0回</strong>／UTAGE の生きているページ24本 <strong>0本</strong>／運転台アプリ2本 <strong>0件</strong>。<br>
+    <code>src/index.js</code> 2,044行 → 1,977行（−67行）。<code>arm</code> <strong>0件</strong>・<code>node --check</code> 通過。<br>
+    あわせて注記「v2 は対象外（鍵も未登録）」を実測に合わせて書き直した（1,977 → 1,979行）。<br>
+    <span class="tag ng">未実施</span><strong><code>wrangler deploy</code> はしていない。</strong>
+  </td>
+  <td>BS-engineer</td>
+</tr>
+<tr>
+  <td>2026-09-11</td>
+  <td><strong>運転台の <code>sanbo.rs</code> 2本に Dify 名を書き添えた</strong></td>
+  <td>
+    各 <code>app_id</code> の行末に Dify の新しい名前をコメントで付記。<strong>値は1文字も変えていない</strong>。<br>
+    実測：2本とも 3,847行のまま・<code>cargo check</code> エラー <strong>0件</strong>・2本の差は元どおり L74/L75 の2行だけ。<br>
+    <span class="tag ng">未実施</span><strong>版上げ（ビルド）はしていない。</strong>
+  </td>
+  <td>BS-engineer</td>
+</tr>
+<tr>
+  <td>2026-09-11</td>
+  <td><strong>索引の古い記載を直した</strong></td>
+  <td>
+    <code>RESOURCE_INDEX.md</code> の secret「5本」→ <strong>2026-09-11 実測で6本</strong>（<code>DIFY_APP_KEY_43D47F25</code> が抜けていた）。<br>
+    <code>/health</code> の <code>secrets_status</code> は index.js に直書きした分しか返さない、という但し書きも追記。
+  </td>
+  <td>参謀</td>
+</tr>
+<tr>
+  <td>2026-09-11<br>15:53〜15:57</td>
+  <td><strong>Dify 4アプリを publish した</strong><br>（Mits様「押して」）</td>
+  <td>
+    4本とも Publish Update を実行。押した後に <strong>publish 済みの中身を取り直して数えた</strong>結果：<br>
+    <code>AI西田</code> <strong>4件</strong>／口調（厳守） <strong>4件</strong>／「本人ではありませんが」 <strong>0件</strong>／
+    名前差し込みの節 <strong>3件</strong>（<code>14d6df13</code> に無いのが正しい）／
+    箱の数 <strong>3-4-13-4</strong>／<code>NOTION_TOKEN</code> <strong>4件</strong>。<br>
+    押す前の公開版は控えてある：<code>/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20260911_dify_publish前の公開版控え/</code>
+  </td>
+  <td>BS-engineer</td>
+</tr>
+<tr>
+  <td>2026-09-11<br>16時台</td>
+  <td><strong>確かめ方の1〜4 を通した</strong></td>
+  <td>
+    ①入口：<code>var APP</code> は1行で <code>e472bc1f</code>・<code>NUDGE1</code>=15分・<code>NUDGE2</code>=25分・公開URL 200。<br>
+    ②③お試し版から1往復（「テスト2026-09-11。売上が伸びないのですが…」）→
+    <code>e472bc1f</code> の Logs に <strong>1件</strong>・他の3アプリに <strong>0件</strong>。<br>
+    ④返ってきた本文：<br>
+    <div class="quote">AI西田です。<br><br>以後お呼びするのに、お名前を教えてください。本名でも、ニックネームでも構いません。</div>
+    <code>Mitsさん</code> <strong>0件</strong>／「本人ではありません」 <strong>0件</strong>／尊敬語・謙譲語 <strong>0件</strong>。
+  </td>
+  <td>FS-utage-pm<br>BS-engineer</td>
+</tr>
+<tr>
+  <td>2026-09-11<br>18:22〜18:25</td>
+  <td><strong>確かめ方の5 を通した</strong><br>運転台アプリの3切替</td>
+  <td>
+    運転台アプリ（<code>/Applications/untendai.app</code>）の相談画面で FAST・NORMAL・DEEP を1つずつ切り替え、
+    そのたびに「＋ 新しい相談」を押してから同じ文を送った。3件とも応答あり。<br><br>
+    <strong>入り先（Dify の Logs を全期間にして確認・9項目とも一致）</strong>
+    <div class="scroll"><table>
+    <thead><tr><th>切替</th><th>入ったアプリ</th><th>時刻（日本時間）</th><th>かかった時間</th></tr></thead>
+    <tbody>
+    <tr><td>FAST</td><td><code>14d6df13</code> FAST-APP</td><td>18:22:44</td><td>10.69秒</td></tr>
+    <tr><td>NORMAL</td><td><code>43d47f25</code> NORMAL-APP</td><td>18:23:54</td><td>9.36秒</td></tr>
+    <tr><td>DEEP</td><td><code>1a8d8b9c</code> DEEP-APP</td><td>18:24:41</td><td>14.56秒</td></tr>
+    </tbody></table></div>
+    <code>e472bc1f</code>（WEB）にこの3つが入った数は <strong>0件</strong>。<br><br>
+    <strong>3件の応答の書き出し</strong>
+    <div class="quote">西田です。まずお名前を教えてください。以後お呼びするのに使います。本名でもニックネームでも構いません。<span class="dim">（FAST）</span></div>
+    <div class="quote">西田です。以後お呼びするのに、お名前を教えてください。本名でも、ニックネームでも構いません。<span class="dim">（NORMAL）</span></div>
+    <div class="quote">西田です。相談に入る前に、以後お呼びするのにお名前を教えてください。本名でも、ニックネームでも構いません。<span class="dim">（DEEP）</span></div>
+    3件とも名乗って名前を尋ねた。<code>Mitsさん</code> <strong>0件</strong>／「本人ではありません」 <strong>0件</strong>／尊敬語・謙譲語 <strong>0件</strong>。<br><br>
+    <span class="tag ng">差異1件</span><strong>名乗りの言い方が2通りある。</strong>
+    WEB（お試し版）は「<strong>AI西田です。</strong>」、アプリ版の3本は「<strong>西田です。</strong>」。
+    設定文には「名前を聞かれたら『AI西田です』と答える」と書いてあり、Mits様のご指示は「西田と名乗る」。
+    どちらも指示から外れてはいないが、<strong>入口によって名乗りが違う</strong>状態になっている。
+  </td>
+  <td>参謀（押す）<br>BS-engineer（Logs）</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<footer>
+  作成 2026-09-11／やったことは上の「修正の履歴」に追記していく。そこに無いものは未着手。<br>
+  数字・不具合の原文・経緯・生の出力は別紙 <code>aimits_zukai_20260911.html</code> に置いてあります。<br>
+  裏取り：Dify 4アプリの中身は下書き取得 API（<code>/console/api/apps/&lt;app_id&gt;/workflows/draft</code>）で全文取得。入口は <code>funnel_page_get</code> の返る全11項目を合算。
+  中継は本番の <code>/health</code> と実際の応答コードの両方。Logs は4アプリとも絞り込みを外して全ページ数えた。
+  名前が未変更であることは 2026-09-11 に devils-advocate が Dify 実機で再確認。
+</footer>
+
+</div>
+</div>
+<footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
+</body>
+</html>

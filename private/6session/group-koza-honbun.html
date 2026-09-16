@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+<title>複数セッション運営の講座本文 ／ 6セッション社内レポート</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:20px 20px 80px; max-width:1000px; margin:0 auto; line-height:1.7; }
+h1,h2,h3,h4,h5,h6 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; color:var(--fg); }
+h1 { font-size:26px; margin:12px 0 18px; padding-bottom:10px; border-bottom:1px solid var(--line); }
+h2 { font-size:20px; margin:32px 0 12px; padding-left:10px; border-left:4px solid var(--gold); }
+h3 { font-size:16px; margin:24px 0 10px; }
+p { margin:10px 0; }
+a { color:var(--gold); text-decoration:none; }
+a:hover { text-decoration:underline; }
+code { font-family:var(--mono); background:var(--sub-bg); padding:2px 5px; border-radius:3px; font-size:0.9em; }
+pre { font-family:var(--mono); background:var(--sub-bg); padding:14px 16px; border-radius:8px; overflow-x:auto; border:1px solid var(--line); font-size:0.85em; line-height:1.5; }
+pre code { background:transparent; padding:0; }
+blockquote { border-left:3px solid var(--gold); padding:6px 14px; margin:14px 0; color:var(--muted); background:var(--sub-bg); border-radius:0 6px 6px 0; }
+ul,ol { padding-left:22px; }
+li { margin:4px 0; }
+table { border-collapse:collapse; width:100%; margin:14px 0; font-size:0.9em; }
+th,td { border:1px solid var(--line); padding:6px 10px; text-align:left; vertical-align:top; }
+th { background:var(--sub-bg); font-family:var(--mincho); font-weight:600; }
+hr { border:0; border-top:1px dashed var(--line); margin:24px 0; }
+img { max-width:100%; height:auto; }
+
+.nav-back { display:inline-block; margin:0 0 12px; font-family:var(--mono); font-size:12px; color:var(--muted); }
+.nav-back a { color:var(--muted); }
+.nav-back a:hover { color:var(--gold); }
+
+.meta-head { background:var(--sub-bg); border:1px dashed var(--line); border-radius:6px; padding:8px 12px; margin:8px 0 18px; font-family:var(--mono); font-size:11px; color:var(--muted); line-height:1.7; }
+.meta-head b { color:var(--fg); font-weight:600; margin-right:4px; }
+
+.embed-html { border-top:1px dashed var(--line); padding-top:16px; margin-top:8px; }
+.embed-html iframe { width:100%; border:0; min-height:80vh; background:var(--card-bg); border-radius:8px; }
+
+footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+</style>
+</head>
+<body>
+<div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
+<div class="meta-head"><div><b>元のファイル</b>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/AIグループ講座_複数セッション運営_20260916_honbun.md</div><div><b>最後に更新された日時</b>2026-09-16 13:40 JST</div></div>
+<h1>複数セッション運営の講座本文</h1>
+<h1 id="aiai1">AIグループ講座｜自分のAIたちを「1つの部署」に変える</h1>
+<h2 id="1">1. 目的</h2>
+<p>読んだその日に、自分の状態を10問で測り、足りない1つを直せます。1人の社長が、複数のAIに別々の持ち場を持たせ、互いの状況が分かった状態で仕事を進める。これが到達点です。</p>
+<p>到達点は3つに分けられます。</p>
+<p>1つ目、朝に「昨日誰が何をしたか」が1枚で分かります。<br />
+2つ目、同じ調べを2人がやりません。<br />
+3つ目、決めたことが1か所に貯まります。</p>
+<p>この3つが同時に成り立つと、自分のAIたちは「1人ずつの相談相手」から「1つの部署」に変わります。呼ばれた時だけ動く便利な機械の群れではなく、担当と受け持ちが分かれた仕事場になります。</p>
+<h2 id="2">2. なぜ放っておくとそうならないか</h2>
+<p>AIは呼ばれた時だけ動きます。裏で待機していません。時計で起こす仕組みを別に用意しない限り、こちらから声をかけるまで、AIは1文字も書きません。</p>
+<p>AIは別の窓の中身を見られません。同じ会社の人なら廊下で聞ける話が、窓が違うだけで届きません。AとBの2つのチャットを開いていても、AがBに直接話しかけることはできません。あなたが橋渡しをするまで、隣の窓は無いのと同じです。</p>
+<p>覚えていません。窓が一杯になると古い話から消えます。書いた物だけが残ります。「昨日そう決めましたよね」と言っても、書いた場所を渡さない限り、その決定はもう相手の手元にありません。</p>
+<p>Mits様の6つのチャットが動いていた2026-09-14から16の3日間の実測が、これをそのまま映しています。連絡は司令塔とメール配信の2つで合計81通に集中しました。ほかの4つは受け取りが9〜11通、こちらから返した数は1〜3通です。4つ同士が直接やり取りした回数は0通でした。</p>
+<p>決定台帳の担当欄8件も、司令塔5件・旧名の司令塔1件・旧名のAI-Mits 1件・見本1件と、書き込む人が1か所に偏っていました。</p>
+<p>放っておくと、こうなります。呼んだ人の窓だけが賑わい、ほかは黙って止まります。仕組みを足さない限り、時間が経つほど偏りは大きくなります。</p>
+<h2 id="3">3. 裏で起きていること</h2>
+<p>輪の話です。</p>
+<p>会話を全部まとめて送ります。次の一手が文章で返ります。走らせ役が道具を実際に動かします。結果を会話の末尾に足します。この4つが1回のやり取りの中身で、これを何度も繰り返します。判断は毎回、全文を読み直した上での一手です。前の1周を覚えているのではなく、末尾に足された結果まで含めて、全文を読み直しています。</p>
+<p><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" font-family="sans-serif"><br />
+  <rect width="720" height="420" fill="#f5efdf"/><br />
+  <text x="360" y="30" text-anchor="middle" font-size="17" fill="#1a3a5c" font-weight="bold">図1 輪の話 ─ 1回のやり取りで裏で起きていること</text><br />
+  <defs><br />
+    <marker id="arr1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><br />
+      <path d="M0,0 L10,5 L0,10 Z" fill="#c99b3d"/><br />
+    </marker><br />
+  </defs><br />
+  <rect x="270" y="60" width="180" height="60" rx="8" fill="#1a3a5c"/><br />
+  <text x="360" y="87" text-anchor="middle" font-size="14" fill="#f5efdf">1. 会話を全部まとめて</text><br />
+  <text x="360" y="107" text-anchor="middle" font-size="14" fill="#f5efdf">送る</text><br />
+  <rect x="510" y="180" width="180" height="60" rx="8" fill="#1a3a5c"/><br />
+  <text x="600" y="207" text-anchor="middle" font-size="14" fill="#f5efdf">2. 次の一手が</text><br />
+  <text x="600" y="227" text-anchor="middle" font-size="14" fill="#f5efdf">文章で返る</text><br />
+  <rect x="270" y="300" width="180" height="60" rx="8" fill="#1a3a5c"/><br />
+  <text x="360" y="327" text-anchor="middle" font-size="14" fill="#f5efdf">3. 走らせ役が</text><br />
+  <text x="360" y="347" text-anchor="middle" font-size="14" fill="#f5efdf">道具を動かす</text><br />
+  <rect x="30" y="180" width="180" height="60" rx="8" fill="#1a3a5c"/><br />
+  <text x="120" y="207" text-anchor="middle" font-size="14" fill="#f5efdf">4. 結果を会話の</text><br />
+  <text x="120" y="227" text-anchor="middle" font-size="14" fill="#f5efdf">末尾に足す</text><br />
+  <path d="M 455 100 Q 560 130 555 180" stroke="#c99b3d" stroke-width="3" fill="none" marker-end="url(#arr1)"/><br />
+  <path d="M 600 245 Q 555 305 455 320" stroke="#c99b3d" stroke-width="3" fill="none" marker-end="url(#arr1)"/><br />
+  <path d="M 265 320 Q 165 305 165 245" stroke="#c99b3d" stroke-width="3" fill="none" marker-end="url(#arr1)"/><br />
+  <path d="M 120 180 Q 165 130 265 100" stroke="#c99b3d" stroke-width="3" fill="none" marker-end="url(#arr1)"/><br />
+  <text x="360" y="200" text-anchor="middle" font-size="13" fill="#1a3a5c">判断は毎回、</text><br />
+  <text x="360" y="220" text-anchor="middle" font-size="13" fill="#1a3a5c">全文を読み直した上での一手</text><br />
+</svg></p>
+<p>窓の話です。</p>
+<p>親の窓があります。子の窓があります。別のチャットの窓があります。窓と窓の間で渡るのは、頼み文と報告の2種類だけです。窓の中身そのものは、隣の窓からは見えません。</p>
+<p><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" font-family="sans-serif"><br />
+  <rect width="720" height="380" fill="#f5efdf"/><br />
+  <text x="360" y="30" text-anchor="middle" font-size="17" fill="#1a3a5c" font-weight="bold">図2 窓の話 ─ 3つの窓と、その間を渡るもの</text><br />
+  <defs><br />
+    <marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><br />
+      <path d="M0,0 L10,5 L0,10 Z" fill="#c99b3d"/><br />
+    </marker><br />
+  </defs><br />
+  <rect x="40" y="80" width="180" height="200" rx="8" fill="#ffffff" stroke="#1a3a5c" stroke-width="2"/><br />
+  <rect x="40" y="80" width="180" height="30" fill="#1a3a5c"/><br />
+  <text x="130" y="100" text-anchor="middle" font-size="14" fill="#f5efdf">親の窓</text><br />
+  <text x="130" y="150" text-anchor="middle" font-size="12" fill="#1a3a5c">頼みを出す</text><br />
+  <text x="130" y="175" text-anchor="middle" font-size="12" fill="#1a3a5c">全体を見る</text><br />
+  <rect x="270" y="80" width="180" height="200" rx="8" fill="#ffffff" stroke="#1a3a5c" stroke-width="2"/><br />
+  <rect x="270" y="80" width="180" height="30" fill="#1a3a5c"/><br />
+  <text x="360" y="100" text-anchor="middle" font-size="14" fill="#f5efdf">子の窓</text><br />
+  <text x="360" y="150" text-anchor="middle" font-size="12" fill="#1a3a5c">頼まれた仕事を</text><br />
+  <text x="360" y="175" text-anchor="middle" font-size="12" fill="#1a3a5c">受け持つ</text><br />
+  <rect x="500" y="80" width="180" height="200" rx="8" fill="#ffffff" stroke="#1a3a5c" stroke-width="2"/><br />
+  <rect x="500" y="80" width="180" height="30" fill="#1a3a5c"/><br />
+  <text x="590" y="100" text-anchor="middle" font-size="14" fill="#f5efdf">別のチャットの窓</text><br />
+  <text x="590" y="150" text-anchor="middle" font-size="12" fill="#1a3a5c">別の持ち場を</text><br />
+  <text x="590" y="175" text-anchor="middle" font-size="12" fill="#1a3a5c">担当する</text><br />
+  <line x1="220" y1="185" x2="270" y2="185" stroke="#c99b3d" stroke-width="3" marker-end="url(#arr2)"/><br />
+  <text x="245" y="175" text-anchor="middle" font-size="11" fill="#1a3a5c">頼み文</text><br />
+  <line x1="270" y1="220" x2="220" y2="220" stroke="#c99b3d" stroke-width="3" marker-end="url(#arr2)"/><br />
+  <text x="245" y="240" text-anchor="middle" font-size="11" fill="#1a3a5c">報告</text><br />
+  <line x1="450" y1="185" x2="500" y2="185" stroke="#c99b3d" stroke-width="3" marker-end="url(#arr2)"/><br />
+  <text x="475" y="175" text-anchor="middle" font-size="11" fill="#1a3a5c">頼み文</text><br />
+  <line x1="500" y1="220" x2="450" y2="220" stroke="#c99b3d" stroke-width="3" marker-end="url(#arr2)"/><br />
+  <text x="475" y="240" text-anchor="middle" font-size="11" fill="#1a3a5c">報告</text><br />
+  <text x="360" y="325" text-anchor="middle" font-size="13" fill="#1a3a5c">窓の中身は互いに見えない</text><br />
+  <text x="360" y="350" text-anchor="middle" font-size="13" fill="#1a3a5c">渡るのは「頼み文」と「報告」だけ</text><br />
+</svg></p>
+<p>起こし方は3つしかありません。人が書く。時計（決まった時刻に動く仕組み）が呼ぶ。別のチャットからの連絡が届く。この3つ以外で、AIが自分から動き始めることはありません。</p>
+<p>版で変わります。2026-07-21 の時点では、時計で動く仕事から別のチャットへ連絡を送ることが実際に動きました。それが7月30日に拒否に変わり、9月の版では道具の一覧そのものから消えました（報告 #82501・#92249）。だから、動く動かないを書き残すときは、確かめた日付を必ず添えます。日付が無い覚え書きは、次に読んだ時にはもう使えなくなっている、と思っておきます。</p>
+<h2 id="4-4">4. どうすればいいか（4つの部品）</h2>
+<p>4つの部品で組みます。</p>
+<p>持ち場です。役割表を1枚のファイルに書きます。誰が何を担当するか、何を読むかを、名前と短い1行の説明で並べます。この1枚が無いと、頼み文の宛先が毎回ぶれます。</p>
+<p>出勤です。持ち場ごとに時計を1本用意します。決まった時刻に自分から動く仕組みです。時計の無い持ち場は、呼ばれるまで止まります。Mits様の環境の予約タスク16本のうち、運転台改善と伽藍とバザールの実現の2つの持ち場を起こす仕事は0本でした。時計が無いから、この2つは黙って止まっていました。</p>
+<p>台帳です。決めたことを1か所に足していきます。書き換えません。末尾に付け足すだけです。修正が必要なときは、元の行を残したまま「取消」と新しい行を足します。書き換える運用にすると、昔の決定を読みに来た別の窓が、今の理由が分からないまま動いてしまいます。</p>
+<p>点呼です。毎朝、誰が動いて誰が止まったかを1枚にまとめます。止まっていた持ち場に、こちらから声をかけます。止まっている理由は、たいてい「時計が回っていない」「頼み文が来ていない」「読む物の場所が変わった」のどれかです。毎日1回、順に見に行きます。</p>
+<p>この4つが揃うと、「1人ずつの相談相手」が「1つの部署」に変わります。抽象論ではありません。持ち場・出勤・台帳・点呼という4つの物理的な仕組みを、実際に作る、という話です。</p>
+<p>参考までに、Mits様の環境では、各持ち場が使う「持ち越し用のフォルダ」が既に実在し、蓄積があります。BS-engineer 57ファイル、FS-utage-pm 25ファイル、FA-writer 18ファイル。書いた物が残る場所は、始めから作ってあります。あとは、そこへ何を残し、そこから何を読ませるかを、あなたが決めるだけです。</p>
+<h2 id="5-10">5. 現状チェック（10問・はい／いいえ）</h2>
+<p>1問30秒で答えていってください。全部で10問です。</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>設問</th>
+<th>どちらが良い</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>持ち場を書いた1枚があるか</td>
+<td>はいが良い</td>
+</tr>
+<tr>
+<td>2</td>
+<td>各持ち場の名前で相手のチャットを呼び出せるか</td>
+<td>はいが良い</td>
+</tr>
+<tr>
+<td>3</td>
+<td>決めたことを足す台帳が1か所にあるか</td>
+<td>はいが良い</td>
+</tr>
+<tr>
+<td>4</td>
+<td>昨日の決定を別のチャットが読んだ形跡があるか</td>
+<td>はいが良い</td>
+</tr>
+<tr>
+<td>5</td>
+<td>時計で自動で動く仕事が1本以上あるか</td>
+<td>はいが良い</td>
+</tr>
+<tr>
+<td>6</td>
+<td>24時間以上誰も触っていないチャットがあるか</td>
+<td>いいえが良い</td>
+</tr>
+<tr>
+<td>7</td>
+<td>同じ調べを2つのチャットがやった経験があるか</td>
+<td>いいえが良い</td>
+</tr>
+<tr>
+<td>8</td>
+<td>チャット同士があなたを通さずに連絡した回数は月に1回以上あるか</td>
+<td>はいが良い</td>
+</tr>
+<tr>
+<td>9</td>
+<td>どのチャットが今どこまで進んでいるかを1分以内に言えるか</td>
+<td>はいが良い</td>
+</tr>
+<tr>
+<td>10</td>
+<td>チャットが1つ消えても仕事が続く形になっているか</td>
+<td>はいが良い</td>
+</tr>
+</tbody>
+</table>
+<p>「はいが良い」の設問は「はい」で1点、「いいえが良い」の設問は「いいえ」で1点として数えます。合計点で今の位置が分かります。</p>
+<ul>
+<li>0〜3点：まず「持ち場」の1枚から作ります。ここが無いと他の3つが積み上がりません。6節の①〜③に進んでください。</li>
+<li>4〜7点：「出勤」と「台帳」を先に埋めます。動くけれど残らない状態、または残るけれど動かない状態のどちらかです。6節の④〜⑨に進んでください。</li>
+<li>8点以上：「点呼」の精度を上げます。止まっている持ち場に、その日のうちに声をかける仕組みへ寄せます。6節の⑩〜⑫に進んでください。</li>
+</ul>
+<h2 id="6-12">6. 作業チェックリスト（12項目・上から順）</h2>
+<p>上から順に埋めていきます。飛ばさないでください。前の項目が土台になります。</p>
+<p>第1段は「持ち場」です。</p>
+<ul>
+<li>① 役割表を1枚のファイルに書き出す<br />
+  できたと言える線：担当名と読む物の場所が1行ずつ並んでいる</li>
+<li>② 各持ち場の呼び名を短く決める<br />
+  できたと言える線：呼び名だけで相手のチャットが立ち上がる</li>
+<li>③ その持ち場が読む物の場所を1行で書く<br />
+  できたと言える線：他の人が同じ場所を開ける</li>
+</ul>
+<p>第2段は「台帳」です。</p>
+<ul>
+<li>④ 決定台帳の置き場所を1か所に決める<br />
+  できたと言える線：全員が同じ絶対の場所を指せる</li>
+<li>⑤ 書く形を3行に決める(日付・決めたこと・理由)<br />
+  できたと言える線：3行で1件が収まる</li>
+<li>⑥ 決めたら自分で足す運用を全員に伝える<br />
+  できたと言える線：伝えた記録が台帳の1件目に入っている</li>
+</ul>
+<p>第3段は「出勤」です。</p>
+<ul>
+<li>⑦ 持ち場ごとに時計を1本作る<br />
+  できたと言える線：時刻を指定して、その時刻に動いた記録が残る</li>
+<li>⑧ 時計が起こす仕事の中身を自分で書く<br />
+  できたと言える線：他人が読んで同じ動きを再現できる</li>
+<li>⑨ 初回の動きを見て記録を確かめる<br />
+  できたと言える線：実行記録に開始時刻と終わった印が出ている</li>
+</ul>
+<p>第4段は「点呼」です。</p>
+<ul>
+<li>⑩ 毎朝の点呼を1本作る<br />
+  できたと言える線：昨日24時間の各持ち場の動きが1枚に並ぶ</li>
+<li>⑪ 止まった持ち場に声をかける<br />
+  できたと言える線：呼びかけた回数と返信の記録が残る</li>
+<li>⑫ 横の連絡回数を数える<br />
+  できたと言える線：チャット同士の連絡回数が週ごとに1つの数字で出る</li>
+</ul>
+<p>Mits様の環境では、2026-09-16 に時計を2本作りました。毎朝8:35の点呼と、23:10の配信の見張りです。これで⑩と、時計側の1本(⑦)が動き始めました。残りの10項目を、この順で埋めていきます。1日1項目で、12日で12項目が全部揃います。</p>
+<p>読んだその日に、自分の状態を10問で測り、足りない1つを直せます。今日、5節の10問に答えてください。次に、6節の12項目の中で×が付いた最初の項目を1つだけ埋めてください。この2つで、今日の分は終わりです。</p>
+<h2 id="_1">追記の記録</h2>
+<p>Mits様の決定（2026-09-16）：「ここであらたに私が確認、AIからの回答、実装していったこと、改善したことは今作っているグループ講座の資料に、都度追記するように決定」。以後、確認・答え・実装・改善が出るたびにこの節へ足す。書く形は 日付／確認したこと／AIの答え／実装・改善／出どころ の5つ。</p>
+<h3 id="2026-09-16">2026-09-16</h3>
+<table>
+<thead>
+<tr>
+<th>確認したこと</th>
+<th>AIの答え</th>
+<th>実装・改善</th>
+<th>出どころ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>6つのチャットは互いの仕事を知って動いているか</td>
+<td>知らずに動いている。9/14 12:00 以降の連絡は司令塔とメール配信の2つで81通、ほかの4つは受け9〜11通・返し1〜3通、4つの相互は0通</td>
+<td>毎朝の点呼（予約タスク asa-tenko-6session・8:35）を新設</td>
+<td>会話の記録32本を走査</td>
+</tr>
+<tr>
+<td>決めたことは1か所に貯まっているか</td>
+<td>貯まっていない。決定台帳の担当欄8件のうち、司令塔5件・旧名の司令塔1件・旧名のAI-Mits 1件・見本1件</td>
+<td>4つのチャットに「決めたら自分で台帳に足す」を通知。横の連絡は司令塔を通さず直接送る、も同時に通知</td>
+<td>決定台帳の担当欄を数えた</td>
+</tr>
+<tr>
+<td>時計を持たない持ち場はあるか</td>
+<td>ある。予約タスク16本のうち、運転台改善・伽藍とバザールの実現を起こす仕事は0本</td>
+<td>点呼で「24時間動いていない持ち場」を毎朝出す形にした</td>
+<td>予約タスクの手順書を grep</td>
+</tr>
+<tr>
+<td>予約タスクから他のチャットへ連絡できるか</td>
+<td>いまの版ではできない。道具の一覧から消えている（報告 #92249）。2026-07-21 には動いた記録がある（報告 #82501）</td>
+<td>見張りも点呼も、結果をファイルと実行記録に書き、人か動いているチャットが読む形にした。見張りの下書きに「版が上がったら見直す」を明記</td>
+<td>公式 desktop-scheduled-tasks／GitHub の報告2件</td>
+</tr>
+<tr>
+<td>各チャットは点呼表を読む道筋を持っているか</td>
+<td>持っていなかった。共通で読むものの一覧に点呼表は0件だった</td>
+<td>司令塔の CLAUDE.md の「6つが共通で読むもの」に点呼表を1行追加</td>
+<td>CLAUDE.md を grep</td>
+</tr>
+<tr>
+<td>サブエージェントに記憶は残らないのか</td>
+<td>残る。持ち越し用のフォルダがあり、BS-engineer 57ファイル・FS-utage-pm 25ファイル・FA-writer 18ファイルが貯まっている</td>
+<td>説明の言い方を「窓は毎回消えるが、配線があれば持ち越せる」に訂正</td>
+<td>検証役が公式文書と実機で確認</td>
+</tr>
+</tbody>
+</table>
+<p>| 23:10 の見張り（2本目の時計）は作れたか | 作れた。ID mainichi-merumaga-mihari-2310・毎日23時10分・有効・初回は今夜23:13・実行記録はまだ0件 | 予約タスクは17本になった。これで持ち場の1つが時計を3本持つ形になった | 予約タスクの一覧を実測（2026-09-16） |<br />
+| 他の持ち場の常設の設定を、こちらのチャットから中継で作れるか | 作れなかった。担当の持ち場が「常設を1本増やす作業なので、他のチャット経由の中継では動かせない。本人の画面で言われた時に作る」と断った | 常設の設定は、その持ち場のチャットで本人に一言言う形に決めた。司令塔は無理に進めず、本人へ回す | 担当の持ち場からの連絡（2026-09-16） |<br />
+| 予約タスクは、その持ち場のチャットを起こしてくれるか | 起こさない。新しい窓が別に立ち上がるだけ。今日の点呼も、開いているチャットではなく別の窓で走った | 「チャットを毎朝起こす」案を取り下げ、持ち場の知識はチャットではなくファイルに置き、仕事は予約タスクの新しい窓でやらせる形に寄せた | 点呼の実行記録（別のセッションとして記録されていた） |<br />
+| 検収の線に「N件」と書けば足りるか | 足りない。行数で数えるのか、出てくる回数で数えるのかで食い違う（発注側が行数5を見て「4件」と書き、受けた側は回数6で数えた） | 検収の線に「行数で数える」「出てくる回数で数える」のどちらかを書く、を規約に追加 | 担当の持ち場が拾った学び①（2026-09-16） |<br />
+| 予約タスクを作る道具は、渡した中身をそのまま置いてくれるか | 置いてくれない。独自の書き方に直されるため、中身の指紋（md5）が変わる | 登録したあとに原文で上書きし、下書き時代の「まだ作っていない」という文を消す手順を足した | 担当の持ち場が拾った学び②（2026-09-16） |<br />
+| 持ち場の仕事は何時に置くべきか | 点呼より前に置く。司令塔は 9:00・10:00 と点呼（8:35）の後ろに並べてしまい、点呼が読むのが前日の結果になっていた。Mits様の指摘「常に設定が遅いのがAIの癖のようだ／翌日は非合理的／点呼の前に載せる、そしてその日の点呼が来る」 | 4本の時刻を点呼の前に引き直した（月曜6:50／7:10／7:30／7:50 →点呼8:35）。重い仕事を先に、20分ずつ空けて重ならないようにした | Mits様の指摘（2026-09-16） |<br />
+| 時計は誰が作るのか | 本人が自分の画面で作る。他のチャットからの中継では動かない（今日、担当の持ち場が断った実例がある）。司令塔は言葉を伝えて、できたものを数で確かめる側にまわる | Mits様の「4本とも作っていい」を、4つの持ち場それぞれに時刻つきで渡した。返す形は taskId・cron・有効・次の起動・手順書の指紋の5つに決めた | Mits様の言葉（2026-09-16）／司令塔の送信結果4件とも delivered |<br />
+| 作った時計は、明日の朝まで待って確かめるのか | 待たない。Mits様の指示「できたら、明日を待たず全セッション実行して」。予約タスクは手で今すぐ走らせられる（「いま走らせる」で、決まった時刻を待たずに1回動かせる） | 4本が登録され次第その場で1回ずつ走らせ、書き出し先のファイルに行が増えるかを確かめ、最後に点呼を走らせて4本の結果が1枚に並ぶかを見る形にした | Mits様の指示（2026-09-16） |<br />
+| 決まりを書けば横の連絡は流れるか | 流れない。「計測の決定は他の持ち場へ即送る」という決まりは前からあったが、<strong>やる時刻が書かれていなかった</strong>ため、2日間で横の連絡は0通だった | 決まりを朝の時計の手順書に1行として載せ、時刻を付けた。宛先表（誰に何を送るか・いまの連絡先）を1枚作り、毎朝の点呼がその連絡先を実測で書き換える形にした | 点呼表の受け取り欄（4つとも司令塔からのみ） |<br />
+| 止まった持ち場に、誰が声をかけるか | 送る側を作らない。予約タスクからは他のチャットへ連絡を送れないため、<strong>呼ばれる側が毎朝見に来る</strong>紙（呼び出し札）を1枚置く形にした。点呼が書き、各持ち場が仕事の前に読む | 点呼を 8:35 → 6:30 に前倒しし、点呼→各持ち場（6:50/7:10/7:30/7:50）の順にした。札に書かれた側は、その日のうちに片づけて「済み」と書き足す | Mits様の言葉「点呼を6:30に前倒しでいい、その順番で作れ」（2026-09-16） |<br />
+| 時計の窓から、ほかのチャットへ連絡を送れるのか | 送れない見込みが高い。送信の道具の説明に「予約タスクの回では使えない・そこへ届けることもできない」と書かれている。持ち場の1つがこれを見つけて知らせてきた（司令塔は確かめずに「直接送る」案を出していた） | 伝言を貼り紙（呼び出し札）に置く形を、逃げ道から<strong>表の道</strong>に格上げした。載る行を2つにし、どちらも「読んでほしい相手の名前」を先頭の欄に書く形にした。実機での確かめは翌朝の初回 | 持ち場からの指摘と、道具の説明文（2026-09-16） |<br />
+| 「送れない見込み」は本当か | 本当だった。持ち場の1つが実機の記録で裏を取り、断られた回が3日ぶん（同じ日の自分の回を含む）出てきた。成功した記録は1件も無い。司令塔はこれを確かめずに「直接送る」と4つの持ち場に指示しており、4本の手順書に動かない行が入っていた | 指示を取り消し、4つの持ち場に直す連絡を出した。横の連絡は貼り紙に伝言を置く形に一本化した。学びは共有の覚書に1本残し、次の人が同じ形を書かないようにした | 持ち場の検証役の調査と、司令塔の実測（2026-09-16） |<br />
+| 「送信の道具が使えない」と言ってよいか | 言ってはいけない。使えないのは〈チャット同士に送る道具〉だけで、〈担当（下請け）に送る道具〉は予約タスクの回でも使える。まとめて「送信が使えない」と書くと、使える方まで巻き込んで誤りになる | 覚書と手順書で、2つの道具を名前で分けて書くことにした | 持ち場からの指摘（2026-09-16） |<br />
+| 🔴 時計の窓から、ほかのチャットへ連絡は送れないのか（前の2行を取り消す） | 送れる。断られるのは〈相手を番号で指す道具〉だけで、〈相手を名前で指す道具〉は時計の窓からでも届いていた。記録に「別のチャットへ届けた」という成功が複数残っていた（2026-09-12・2026-09-14） | 送る道具を窓で使い分ける形にした。人が開いている画面からは番号で、時計の窓からは名前で送る。宛先表に「時計の窓から送るときの名前」の列を足し、毎朝の点呼がその名前を実測で埋める | 司令塔が記録の中の呼び出しと返りを突き合わせた（2026-09-16） |<br />
+| 同じ日に同じ話で2回ひっくり返った。何が原因か | 1回目は道具の説明文だけを見て「送れない」と決めたこと。2回目は失敗の記録だけを数えて「送れない」と決めたこと。<strong>成功の記録を探していなかった。</strong>「無い」を言うときは、無いことの証拠ではなく、有ることの証拠を先に探す | 覚書と手順書では、道具を名前で分けて書く。「送信ができない」のような丸めた言い方を使わない | 2026-09-16 の実際の経緯 |</p>
+<footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
+</body>
+</html>

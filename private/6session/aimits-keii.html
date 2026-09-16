@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+<title>AI-Mits の経緯（時系列） ／ 6セッション社内レポート</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:20px 20px 80px; max-width:1000px; margin:0 auto; line-height:1.7; }
+h1,h2,h3,h4,h5,h6 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; color:var(--fg); }
+h1 { font-size:26px; margin:12px 0 18px; padding-bottom:10px; border-bottom:1px solid var(--line); }
+h2 { font-size:20px; margin:32px 0 12px; padding-left:10px; border-left:4px solid var(--gold); }
+h3 { font-size:16px; margin:24px 0 10px; }
+p { margin:10px 0; }
+a { color:var(--gold); text-decoration:none; }
+a:hover { text-decoration:underline; }
+code { font-family:var(--mono); background:var(--sub-bg); padding:2px 5px; border-radius:3px; font-size:0.9em; }
+pre { font-family:var(--mono); background:var(--sub-bg); padding:14px 16px; border-radius:8px; overflow-x:auto; border:1px solid var(--line); font-size:0.85em; line-height:1.5; }
+pre code { background:transparent; padding:0; }
+blockquote { border-left:3px solid var(--gold); padding:6px 14px; margin:14px 0; color:var(--muted); background:var(--sub-bg); border-radius:0 6px 6px 0; }
+ul,ol { padding-left:22px; }
+li { margin:4px 0; }
+table { border-collapse:collapse; width:100%; margin:14px 0; font-size:0.9em; }
+th,td { border:1px solid var(--line); padding:6px 10px; text-align:left; vertical-align:top; }
+th { background:var(--sub-bg); font-family:var(--mincho); font-weight:600; }
+hr { border:0; border-top:1px dashed var(--line); margin:24px 0; }
+img { max-width:100%; height:auto; }
+
+.nav-back { display:inline-block; margin:0 0 12px; font-family:var(--mono); font-size:12px; color:var(--muted); }
+.nav-back a { color:var(--muted); }
+.nav-back a:hover { color:var(--gold); }
+
+.meta-head { background:var(--sub-bg); border:1px dashed var(--line); border-radius:6px; padding:8px 12px; margin:8px 0 18px; font-family:var(--mono); font-size:11px; color:var(--muted); line-height:1.7; }
+.meta-head b { color:var(--fg); font-weight:600; margin-right:4px; }
+
+.embed-html { border-top:1px dashed var(--line); padding-top:16px; margin-top:8px; }
+.embed-html iframe { width:100%; border:0; min-height:80vh; background:var(--card-bg); border-radius:8px; }
+
+footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+</style>
+</head>
+<body>
+<div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
+<div class="meta-head"><div><b>元のファイル</b>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_keii_jikeiretsu_20260911.md</div><div><b>最後に更新された日時</b>2026-09-11 12:23 JST</div></div>
+<h1>AI-Mits の経緯（時系列）</h1>
+<h1 id="ai-mits-2026-09-11">AI-Mits 経緯 時系列（2026-09-11 時点）</h1>
+<p>事実確認のみ。設定・ファイル・ページの書き換えは一切行っていません。<br />
+「今も生きているか」は、後の日付でひっくり返されていないかを見て ○ / 撤回済み / 未確認 で書いています。<br />
+出典はすべて絶対パスまたは Notion URL（説明の行と URL の行を分けています）。</p>
+<h2 id="dify-id-2026-09-11">Dify アプリ ID の対応（2026-09-11 実測・以後の表で使う名前）</h2>
+<table>
+<thead>
+<tr>
+<th>呼び名</th>
+<th>Dify app_id</th>
+<th>Dify の今の名前</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>v1（初代）</strong></td>
+<td><code>27ae368a-84be-4cf5-a722-029c1fc9c9b0</code></td>
+<td>（公開URL: <code>Me77aUdJfgKSscsJ</code>）</td>
+<td>2026-03 の Chatbot v1（廃止扱い）</td>
+</tr>
+<tr>
+<td><strong>v2</strong></td>
+<td><code>e472bc1f-055c-400b-ab80-a5a568f724e4</code></td>
+<td><strong>AI-MITS v2</strong></td>
+<td>2026-04-13 の Chatflow。放置方針</td>
+</tr>
+<tr>
+<td><strong>FAST</strong>（A群）</td>
+<td><code>14d6df13-b81e-4eba-b0f2-356528e97ac3</code></td>
+<td><strong>AI-MITS(R)</strong></td>
+<td>素のLLM</td>
+</tr>
+<tr>
+<td><strong>DEEP</strong>（B群）</td>
+<td><code>1a8d8b9c-8d3d-4df8-8893-b767be48d862</code></td>
+<td><strong>AI-MITS (C)</strong></td>
+<td>Corpus2Skill</td>
+</tr>
+<tr>
+<td><strong>NORMAL</strong>（C群）</td>
+<td><code>43d47f25-13bb-45c5-b262-9d37f0bd1f65</code></td>
+<td><strong>AI-MITS(M) 西田メソッド</strong></td>
+<td>西田メソッド（A の複製・2026-08-27 作成）</td>
+</tr>
+<tr>
+<td><strong>振り返り</strong></td>
+<td><code>b732635c-c696-4115-a1c6-514190519154</code></td>
+<td><strong>AI-Mits 振り返り</strong></td>
+<td>f20 振り返りボット</td>
+</tr>
+<tr>
+<td><strong>Report Generator</strong></td>
+<td><code>7c6bee73-e742-48cf-b4f1-762ba8eb21be</code></td>
+<td><strong>AI-MITS Report Generator</strong></td>
+<td>Dify Workflow</td>
+</tr>
+<tr>
+<td><strong>Corpus2Skill 原典</strong></td>
+<td><code>ffcd49a8-c108-4a83-a115-803ebb0cfbda</code></td>
+<td>AI-MITS Corpus2Skill 原典</td>
+<td>参照</td>
+</tr>
+</tbody>
+</table>
+<p>エンジン記号の対応（<code>sanbo.rs</code> L145/L159/L168・2026-09-06 Mits様確定「FAST / NORMAL / DEEP」）：<strong>A=FAST=<code>14d6df13</code>／C=NORMAL=<code>43d47f25</code>／B=DEEP=<code>1a8d8b9c</code></strong>。既定 <code>DEFAULT_ENGINE = "A"</code>（2026-09-05 Mits様「デフォルトをfastにして」で C→A へ）。</p>
+<hr />
+<h2 id="a-mits">表A ── 時系列（Mits様のご確定と、それを受けて実装したこと）</h2>
+<table>
+<thead>
+<tr>
+<th>日付</th>
+<th>Mits様が確定なさったこと（原文）</th>
+<th>それを受けて実装したこと（対象＋ID）</th>
+<th>今も生きているか</th>
+<th>出典</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026-03-29〜30</td>
+<td>「将来AI-MITSをインタフェースはわからないが、コンサルティングの窓口として開放して、24/7でコンサルティングヒアリング回答＝情報収集をしてみたい」／「主目的としては、裏のデータベースにコンサルティングの会話履歴をたくさん貯められることです」</td>
+<td>v1（<code>27ae368a</code>）稼働。ナレッジDB「AI-MITS v2」（<code>11963425-fd47-489f-9c5d-442acd7d9448</code>）に <code>knowledge_db_27.md</code>／<code>good_answer_examples_v2.md</code>／<code>video_resources.md</code> の3件を投入・High Quality/Hybrid Search（Semantic 0.7 / Keyword 0.3）/Top K=4 で稼働</td>
+<td>○（ナレッジDBは今も NORMAL の材料元）</td>
+<td>Notion <code>AI-Mits やってみる</code>　https://app.notion.com/p/33200782d90a81ecbafdc804870aab86</td>
+</tr>
+<tr>
+<td>2026-03-30</td>
+<td>「切り分けルールは明示的に言語化していないけれども、コンサルティングの現場の録音の中では、頭の中では完全に切り分けながら答えている。…100件のナレッジがたまれば…AIに任せれば、かなりのレベルでできる」／「すでに入ってしまった27件をもう一度Zoomの書き起こしに戻って切り分けルールを作りに行った方がいい」</td>
+<td>Notion のナレッジDB MK-1〜27 に「切り分けシーケンス（Mitsの診断プロセス）」を追記。MK-28〜32 を第1バッチとして登録。安藤・佐々木・高田の全文 YouTube 書き起こしを「すごいコンサル」配下に格納（<code>16e00782d90a80e7bfd9ee83dbe31b11</code>）</td>
+<td>○（ナレッジ本体は稼働。ただし1,258件からの追加は途中で止まっている）</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>2026-04-13</td>
+<td>「最初に作った時の設計に戻って」（<code>dify_prompt_v4.md</code> が RAG で 62.5% 引かれ「参加者は何人ですか？」の的外れ回答を出したことへの是正指示）</td>
+<td>① v2 Chatflow（<code>e472bc1f</code>）完成・公開（URL <code>2Vs7p2VbJ63uYmZX</code>）。モデル claude-sonnet-4-6。<br>② ナレッジ側の <code>dify_prompt_v4.md</code>（<code>2b615af2-9845-4bd4-b93c-4bc264f93c37</code>）を Disable。<br>③ <code>good_answer_examples_v2.md</code> を 10例→16例に更新。<br>④ <code>video_resources.md</code> に MK-28〜53 の YouTube URL を追加。<br>⑤ Citations &amp; Attributions を OFF。<br>⑥ LLM ノード SYSTEM にペルソナA情報の追記案文を Mits様に提示（Mits様手動待ち）</td>
+<td>v2 は「放置」に確定（2026-08-27）／材料5件が同日以降どこかで OFF になっていた（下記 2026-04-13 事故欄）</td>
+<td>Notion <code>AI-MITS Difyアップデート0413</code>　https://app.notion.com/p/34100782d90a8175aea3e8bc26a8f160</td>
+</tr>
+<tr>
+<td>2026-04-13</td>
+<td>（事故・Mits様の直接確定ではない）</td>
+<td>材料5件が「切られていた」ことが後日発覚。切った日時・切った人は Dify Cloud の口（<code>operation-logs</code>／<code>audit-logs</code>）が404で取れず。参謀が 2026-08-27 09:47 に有効化した操作で <code>updated_at</code> が上書きされ、元の値は追跡不能に。<strong>意図的に切られたのは <code>dify_prompt_v4.md</code> の1件だけ</strong>で理由もはっきり記録あり。残り5件は「切った」記述がどのページにもない</td>
+<td>5件が今どうなっているかは未確定（2026-08-27 に有効化されたのが今の状態）</td>
+<td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/dify_taisaku_20260827.html</code> L466-499</td>
+</tr>
+<tr>
+<td>2026-06-04</td>
+<td>「続ける」／「自走を促しているのに、なんでいちいち聞いてくるんだよ」</td>
+<td>AI-MITS フロント実装を別枝で自走：<code>report_real_3cases_20260603.html</code>／<code>impl_brief_front_on_v2copy_20260603.md</code>／<code>dify_copy_14d6df13_draft_20260603.json</code>（V2コピー <code>14d6df13</code> に 4ノード追加案・投入待ち）</td>
+<td>後に AB本測定で <code>14d6df13</code> は A群「素のLLM」として使われる形になり、この 4ノード追加案は結果として不採用</td>
+<td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-06-04_1736_ai-mits-front-impl.md</code></td>
+</tr>
+<tr>
+<td>2026-06-12</td>
+<td>AB テスト（RAG v2.1 vs Corpus2Skill v3）の実構築 GO</td>
+<td>UTAGE ファネル「AI-Mits-AB テスト」<code>1QtzdExbynBp</code> 実構築。ステップ／ページ実機確認済み。v1 実ログ 114会話の分析：中央値 11分／6往復、<strong>0往復離脱が約半数</strong>、日またぎ再訪 12%</td>
+<td>ファネルは今も稼働。0往復離脱の今の数字は未実測（対策12 として未着手）</td>
+<td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-06-12_1530_aimits-ab-entrance.md</code></td>
+</tr>
+<tr>
+<td>2026-06-13</td>
+<td>「私か？準備か？AIとのやりとりで止まったのか？」（v3 が簡易版で「悪い」ことへの調査要請）</td>
+<td>v3（<code>1a8d8b9c</code>）Corpus2Skill フォレンジック：真因は NOTION_TOKEN 消失（Dify の secret env var は draft 保存で空送りになると消える型の事故）。トークン復活＋回答長緩和＋RAG 撤去をブラウザ fetch で実装→Publish→devils-advocate 裏取り</td>
+<td>○（v3 の骨格は現在の DEEP＝<code>1a8d8b9c</code> に受け継がれている）</td>
+<td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-06-13_1731_aimits-v3-corpus2skill-repair.md</code></td>
+</tr>
+<tr>
+<td>2026-06-14</td>
+<td>AB 本測定・エンジン整備 GO</td>
+<td>v2 本番不可侵復元→ 2.1（<code>14d6df13</code>）／v3（<code>1a8d8b9c</code>）に AB 対象切替。Branch v2.0 全97件付与。GitHub Pages 正本トラッカー化：https://mits32163216.github.io/ai-mits-tracker/ 。Phase 3 表側（入口LP＋振り分けサンクス）HTML 完成</td>
+<td>○（トラッカーは正本のまま。振り分けは 2026-08-27 に廃止・後述）</td>
+<td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-06-14_1812_aimits-ab-engine-tracker-front.md</code></td>
+</tr>
+<tr>
+<td>2026-06-15</td>
+<td>「コンサルボットに帰って来たくなるか（リテンション）」を最上位 KPI に確定</td>
+<td>表 r7 サンクスページ Report 動的表示完成。f10 LINE リマインダ／f8 利用規約／f14 The Library ログイン併記／f16 iframe 認証強化。<strong>大枠完成</strong>。A案 PDF DL 機能プラン（<code>stateless-strolling-finch</code>）確定</td>
+<td>○（サンクス／レポート／LINE 動線は今も生きている）</td>
+<td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-06-15_1637_aimits-omote-4complete-circle-done.md</code>　<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-06-15_2114_aimits-pdf-dl-plan-saved.md</code></td>
+</tr>
+<tr>
+<td>2026-06-16</td>
+<td>「今日勉強したことは、次の会に行った時の冒頭で復習をする。今回と次回の冒頭までが1回のセット。…これが私のコンサルスタイル」（公文型）／「あと1分でメインが終了、ボットに『最後の質問』シグナルを送りました。本番なら3分にあたるところなのに、また、ボットが話を広げた」</td>
+<td>公文型コンサル外形完成：f20 振り返りボット新規作成（<code>b732635c</code>）／v3・v2.1 の Start ノードに <code>prev_summary</code>／<code>prev_homework</code>／<code>incident_id</code> 追加＋Publish／メタルール強化（R1〜R5、R5 は「始め方」・末尾に打ち消しブロック追加）／Nfg3iO7vokkY iframe 組込／A案 PDF DL 完成（<code>oYWUuDQ5RnCB</code> step / <code>0EPKtgj1pUmx</code> page）</td>
+<td>メタルールは 2026-08-28 の対策6 で統合。振り返り（<code>b732635c</code>）は動いているが実相談者への接続は 2026-08-27 対策8 で「未接続」と再確認</td>
+<td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-06-16_0009_aimits-koubun-complete.md</code></td>
+</tr>
+<tr>
+<td>2026-06-16</td>
+<td>「優先順位：最優先メタルール ＞ R1-R4 ＞ R5（公文型）＞ その他」</td>
+<td>session-log にのみ記載（設定文には書かれず）</td>
+<td>○（後の 2026-08-28 対策6 で設定文にも統合・詳細後述）</td>
+<td>同上／<code>dify_taisaku_20260827.html</code> L282-315</td>
+</tr>
+<tr>
+<td>2026-06-21</td>
+<td>「AI-MITS Talk を触るURLを教えて」</td>
+<td>AI-MITS Talk（2026-04-25 版・音声チャット試作）を復元。実プロジェクトは <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/Mitsトーク/</code>。Phase 1〜7 実装済み・Phase 8（本番デプロイ）で停止</td>
+<td>2026-08-26 に UTAGE step <code>pOAc6rp9qGVU</code> / page <code>C4CneLy42uuv</code> として移植された。本番デプロイ（<code>mits-talk.3216-fun.workers.dev</code> = 404）は未実施</td>
+<td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-06-21_1655_aimits-talk-restore.md</code></td>
+</tr>
+<tr>
+<td>2026-08-07</td>
+<td>Cloudflare Workers 中継 GO</td>
+<td><code>aimits-report-proxy</code> Wave 2 完了：4 key rotate 完了、LP 5 page proxy 化、生 Dify key を LP 側から全撤去</td>
+<td>○（<code>https://aimits-report-proxy.3216-fun.workers.dev</code> が今も本番）</td>
+<td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-08-07_1746_aimits-distribution-check-wave1.md</code></td>
+</tr>
+<tr>
+<td>2026-08-08</td>
+<td>Phase 4 対策X（epoch suffix 付与）は方向違い</td>
+<td>devils-advocate の 5経路裏取り：プランB（v3 → Chat App 再構築）REJECTED／プランC（v3 停止）REJECTED／プランA PARTIAL。Phase 4 対策X 撤去は 2026-08-18 に実施</td>
+<td>○（対策X は 2026-08-18 deploy c53bc717 で撤去済み）</td>
+<td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-08-08_2059_aimits-logs-end-user-phase4-mistake.md</code></td>
+</tr>
+<tr>
+<td>2026-08-18</td>
+<td>Nfg3iO7vokkY を他 LP と同じ Cloudflare 統合済み実装に書き直し GO</td>
+<td>UTAGE <code>funnel_page_update</code>：<code>ECJsS6KIeBvp</code>（Nfg3iO7vokkY）を全書き直し（fnvHash 撤去、<code>bindEmailForm</code> を Workers <code>/register-and-signin</code> 呼び出しに）／<code>LMfcyJkjkzAh</code>（arm=A）本番仕様化（MAIN=15<em>60・WARN=3</em>60）。Cloudflare Workers deploy <code>c53bc717</code>（Phase 4 対策X撤去）／<code>c35a537f</code>（500件scan 修正）。Dify Web app 名称変更：<code>1a8d8b9c</code> AI-MITS v3→<strong>AI-MITS (C)</strong>／<code>14d6df13</code> AI-MITS v2-0603→<strong>AI-MITS (R)</strong></td>
+<td>○（Cloudflare 統合は今も本番。名称は 2026-09-06 に FAST/NORMAL/DEEP へ再統一）</td>
+<td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-08-18_1548_aimits-nfg-cloudflare-honban-timer.md</code></td>
+</tr>
+<tr>
+<td>2026-08-26</td>
+<td>「未登録でA に全振りは考えていない」（運転台経由）／「rag版は速い、Corpus2Skill版は枝をたどる…比較対照的に遅いはず」／「WEB版でテストしているあちらのセッションから受けた事例を修正を web版であなたにやってほしい」／「ローカルで見られるようにして」／「押して話す、の入力も削って今、動いているチャット窓を出すようにして」／「並列 カラーモック アプリに実装前のHTMLで https://change.7years.life/p/V3A9LG00dL2S のcssで作ってみて 明るい版」／「この色合いがいいな、採用、アプリに即実装して」</td>
+<td>① A ページ <code>LMfcyJkjkzAh</code>（Dify <code>14d6df13</code>）を自前チャット画面に切替（会話番号 <code>aimits_conv_id_A</code> 保持、429 の 2→5→10秒 backoff、逐次表示）／② サンクス <code>8rZR2qCGXNjJ</code>／レポート <code>0EPKtgj1pUmx</code> の <code>**</code> 整形／③ A/B 応答速度実測：A 最初の一文字 4.5秒・B 10.6秒／④ B ページ <code>hUMsNrqy5QBh</code> の利用者IDを Dify 仕様に合わせ <code>?user=&lt;生&gt;</code> → <code>?sys.user_id=&lt;GZIP+Base64+URIencode&gt;</code>／⑤ 匿名A固定バグ修正（<code>armFromAnonUid</code> 追加・deploy <code>722f2dde</code>・実測20回 A=8/B=12）／⑥ AI-MITS Talk を UTAGE に移植（新規：step <code>pOAc6rp9qGVU</code> / page <code>C4CneLy42uuv</code>）／⑦ 運転台 v0.2.0 の配色を Web版と同じに（<code>--navy #11159f</code>／<code>--navy-deep #0a0d6b</code>／<code>--gold #c9a04b</code>）</td>
+<td>①〜⑤ は 2026-08-27 の振り分け廃止（<code>ARM_FIXED='B'</code>）でさらに上書き。⑥ は今も稼働。⑦ は運転台に採用</td>
+<td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-08-26_1525_untendai-web-colors.md</code>　<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-08-26_1628_aimits-web-jizen-chat-ui.md</code></td>
+</tr>
+<tr>
+<td>2026-08-27</td>
+<td>「振り分けはUTAGEのオプトインもプログラムも廃止、止める、関連の参照先元も整理する」／「v2は放置、untendaiを公開したら止める」／「対策を実装するまえに Notion の記録を読んで設計〜テスト時の思考を確認」</td>
+<td>① 件1：<code>fetchDifyConversationsAllApps</code> 新設（A/B/C 3アプリ全部見る）・deploy <code>98ee98dd-eae8-43dd-bd13-316a3bbb4d64</code>／② 件2：<code>armFromEmail</code>／<code>armFromMemberUid</code>／<code>armFromAnonUid</code> を <code>ARM_FIXED='B'</code> に・deploy <code>2b4a4c6d-d6ef-457d-9646-2963b4f9d3df</code>・KV 全走査で reader 27件（A15/B12）／anon 97件（A68/B29）／member 9件（A3/B6）は不変／③ 件3：v2（<code>e472bc1f</code>）放置決着・実顧客89人／133会話／④ <strong>C（NORMAL・<code>43d47f25</code>）を新規作成</strong>：A（<code>14d6df13</code>）の複製→ナレッジDB <code>11963425</code> を有効化→本体LLMのsystem prompt に <code>{{#context#}}</code> 挿入（1,538→1,685文字・v2 の「## 参照情報（RAG検索結果）」ブロックを流用）／⑤ 中継 <code>src/index.js</code> の <code>REPORT_APP_PREFIXES</code> に <code>43D47F25</code> を追加（B の1本固定を A/B/C の3本に）／⑥ 参照元5ファイル整理（<code>spec.md</code>／<code>src/index.js</code>／<code>aimits_full_design_20260615.md</code> 冒頭に廃止節／<code>aimits_implementation_tracker_v2_20260614.html</code> f2／<code>ni.html</code>）</td>
+<td>○（今も稼働・NORMAL=<code>43d47f25</code> は今の中核）</td>
+<td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-08-27_1706_dify-sekkei-souten-ken.md</code> L28-56　<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/dify_taisaku_20260827.html</code>　<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits-report-proxy/src/index.js</code> L372-395</td>
+</tr>
+<tr>
+<td>2026-08-28</td>
+<td>「ABCそれぞれのLLMのモデルを最適化する」／「ABCそれぞれ実装 → その後、LLM2の問題に行く」／「次は終わり方問題　R1,2,,,,　これを解決して次は振り返りAI、レポートAI」／「素とmits版微妙に回答が違う のが明らかにわかるのがいい」「Corpus2Skillでもけっこう違う感じがする」</td>
+<td>① 件4：A から <code>Knowledge Retrieval</code>（node <code>1775816423573</code>）と <code>LLM 2</code>（node <code>1775877622448</code>）を削除・線を User Input → LLM → Answer に・<code>context.enabled=false</code>。実測 11.6秒 2.9円 → 7.1秒 1.7円／② モデル最適化：A LLM opus-5(think off)・B N6 haiku-4-5・B N12 opus-5(think off)・C LLM opus-5(think off)。Claude 5 世代は <code>&lt;think&gt;&lt;/think&gt;</code> が顧客に見えるので <code>thinking: false</code> 必須／③ LLM 2 廃止（A に続き C からも削除・5→4箱）。材料は「渡す」だけでなく「使え」の1文を SYSTEM に追加：「参照情報の中に具体的な打ち手（数字・手順・言い回し）があれば、いまの相談の段階に合う形で必ず1つ本文に織り込むこと。…」／④ 件6：R1-R5 統合・「他のすべてに優先」節を1つに（L21 と L40 の2つ → 1つ）・A 1,538→1,405 / C 1,793→1,660・Mits様の固定文は無傷／⑤ 件11：C の鍵ローテート（新 id <code>87af63f8-4306-40b6-aa21-fac54d1db953</code> 末尾 yocV）／⑥ 件15：<code>fetchDifyConversationsAllUsers</code> 実装（reader_id / anon_uid / u_ 旧 uid / fnv1a_hex を全部見る）・deploy <code>181ce6e1-cd29-4b1d-9108-627c7eb0ec5b</code>／⑦ credits 主犯特定：OpenAI の埋め込み（<code>text-embedding-3-large</code>）・Anthropic は自前キー（<code>credential_id 019ceb18-...</code>）</td>
+<td>○（全件本番反映済み・「今も生きている」）</td>
+<td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-08-27_1706_dify-sekkei-souten-ken.md</code> L57-198　<code>dify_taisaku_20260827.html</code> 全体</td>
+</tr>
+<tr>
+<td>2026-08-28</td>
+<td>「Windows 版を作れ」／「バグ修正＝今のようなのも21.0の0の部分で管理して 直っているのかどうかわかる」／「AI-MITSを社外取締役としてをONにして顧客体験ができるようにしあげる」／「左メニュー 設定の時、サブメニューというのな／この形式をAI-MITSにも採用」</td>
+<td>運転台 v0.2.0→v0.12.0（タグ18本）：Windows 版を初めて組み立てた（d12）／規約をアプリに置いた（w1）／<strong>AI-Mits に ABC エンジン切替を入れた</strong>（<code>sanbo.rs</code> に <code>ENGINES</code>／<code>engine_by_code</code>／<code>load_engine</code>／<code>incident.engine</code>、<code>commands.rs</code> に <code>sanbo_send</code> の engine ／<code>sanbo_engines</code>、UTAGE ファネル <code>1QtzdExbynBp</code> / step <code>2aB8guYSCZNp</code> / page <code>jIDfdXs2Rr9P</code>「エンジン切替 試作 v1.1.1」）／v0.27.0 で AI-MITS を目次形式へ・顔写真・相づち廃止・エンジン切替の確認</td>
+<td>○（<code>sanbo.rs</code> に今も生きている。UTAGE の選択画面 <code>2aB8guYSCZNp</code> は本番未接続）</td>
+<td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-08-28_0123_untendai-version-abc-color.md</code>　<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-08-28_1020_untendai-v0270-aimits-ui.md</code>　<code>/Users/nishidamitsuhiro/untendai-seiri/src-tauri/src/sanbo.rs</code> L145/L159/L168/L178/L266</td>
+</tr>
+<tr>
+<td>2026-08-28</td>
+<td>「Claudeでユーザがフェイブル使ったり、オーパス使ったり、ソネットを使ったり、選べるようなもの」／実機で「素とmits版微妙に回答が違う のが明らかにわかるのがいい」</td>
+<td>運転台 v0.27.0 で A→C→B を同じ問いで聞き直し、3つとも答えが違うことを実機で確認（切替時「この問いを、新しい頭脳でもう一度聞く」窓を <code>src/index.html #sb-ov-eng</code> に追加）。<strong>ただし会話は引き継げない</strong>（Dify は <code>conversation_id</code> をアプリごとに持つ）</td>
+<td>○（3択の設計は今も生きている。「エンジン切替の窓の実機押し確認」は 2026-08-28 時点で未・以後の確認記録なし）</td>
+<td><code>aimits_full_design_20260615.md</code> L17-47（先頭の廃止宣言・実測付き）　<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-08-28_1020_untendai-v0270-aimits-ui.md</code> L275-276</td>
+</tr>
+<tr>
+<td>2026-09-05</td>
+<td>「名前　FAST　速い・汎用AIが回答」／「normalをAI-Mits　にして」／「デフォルトをfastにして」</td>
+<td><code>sanbo.rs</code> の <code>ENGINES</code> を FAST（A）／AI-Mits（C）／DEEP（B）に。<code>DEFAULT_ENGINE</code> を C→A へ</td>
+<td>2026-09-06 に C の name のみ「AI-Mits」→「NORMAL」に再変更（下記）</td>
+<td><code>/Users/nishidamitsuhiro/untendai-seiri/src-tauri/src/sanbo.rs</code> L145-180</td>
+</tr>
+<tr>
+<td>2026-09-06</td>
+<td>「FAST / NORMAL / DEEP　うん、アプリ版もweb版もこれがいいな」</td>
+<td><code>sanbo.rs</code> の C の name を「AI-Mits」→「NORMAL」に戻し、アプリ版と Web 版のお試し版（<code>UgSfW8MCzHqv</code>）両方で FAST/NORMAL/DEEP に統一（AI-Mits は相手の名前＝ペルソナ、NORMAL は頭の段、混ぜないため）</td>
+<td>○（今の名前）</td>
+<td>同上 L159-172（コメント原文）</td>
+</tr>
+<tr>
+<td>2026-09-08</td>
+<td>「C案の実装と実機　go」／「このお試し版は 15分 です。…　の制限も無くそう　目的はダウンロードしてもらって」</td>
+<td>① 中継 <code>aimits-report-proxy/src/index.js</code> に C案（合言葉は締めたあとで）実装：1,911行 → 2,044行。/dify/... は壁を作らない・レポート系のみ壁／② お試し版 <code>UgSfW8MCzHqv</code>（step <code>V3A9LG00dL2S</code>）の JS を 68,336→68,280→69,098→69,857 バイトで3段書き換え。ログイン窓 409 の受け止め書き換え・帯の時計削除・「このお試し版は15分」を外し「話し終えたら『やることを決めて終える』を押してください」に／③ UTAGE ページ題「お試し版（…本番15分）2026-08-28」→「お試し版（…時間の区切りなし）2026-09-08」→ さらに後日「お試し版（AI-Mits・<strong>NORMAL固定</strong>・15分と25分に声かけ）2026-09-08」に</td>
+<td>お試し版のページ名の「NORMAL固定」と中身の食い違いが 2026-09-11 に発覚（後述）</td>
+<td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-09-08_1637_untendai-eda-wake-c-an.md</code> L245-720</td>
+</tr>
+<tr>
+<td>2026-09-11</td>
+<td>「並列　BAengeneer に発注／nomalである　AI-Mitsがまた『僕は西田さんが何を学んでるかは知らないです。』と答えている／difyのディスクリプションを確認」／「43d47f25　こういう数字で言われてもわからないと何度も行っている」／「いきなり触るなよ！」／「事実確認が先」／「9/8以来どんどん相談が貯まっているから、間違いなくアプリかWEBから」／「読んで」／「やっぱりかなりおかしいところがある／＞Mitsさんが好きなのは、たぶん稼ぎを義理のために使った人ですよね。稼ぎを自分の格上げに使った人が嫌なんです。／相手をmitsさんと読んでいる」</td>
+<td>実測のみ（触っていない）：<br>① Dify 一覧から全 UUID を取り、<code>e472bc1f = AI-MITS v2</code>／<code>43d47f25 = AI-MITS(M) 西田メソッド（NORMAL）</code>／<code>14d6df13 = AI-MITS(R)（FAST）</code>／<code>1a8d8b9c = AI-MITS (C)（DEEP）</code> を確定<br>② 前セッションの「AI-MITS v2 = NORMAL」結論を撤回（v2 は3つのどれでもない）<br>③ v2 の Logs で不具合A（相手を「Mitsさん」と呼ぶ）／不具合B（「西田さんを知らない第三者」として名乗る）を確認<br>④ お試し版 <code>UgSfW8MCzHqv</code> の <code>html_source</code> を <code>funnel_page_get</code> で取ると <code>var APP = 'e472bc1f';       /* v2-2 */</code> ── <strong>ページ名「NORMAL固定」なのに中身は v2 を叩いている</strong><br>⑤ 中継 Worker <code>/health</code> で秘密鍵5本を確認：<code>43D47F25</code>／<code>14D6DF13</code>／<code>1A8D8B9C</code>／<code>b732635c</code>／<code>7c6bee73</code> すべて <code>true</code>（v2 は未登録）</td>
+<td>④ のズレは未修正・Mits様の判断待ち／⑤ の実測を受けて <code>RESOURCE_INDEX.md:154</code> の「秘密は4本（43D47F25 は無い）」は古い記載</td>
+<td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/引継書_AI-Mitsのチューニング_20260911.md</code> 全文</td>
+</tr>
+<tr>
+<td>2026-09-11</td>
+<td>「そして確定したら difyの今の名前＋43d47f25＋NOMALのいずれかの3つを含めてrename　nomalも、fastも、DEEPも」</td>
+<td><strong>未実行</strong>（お試し版 v2 叩きの決着が先）</td>
+<td>未実行</td>
+<td>同上 §4</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="b">表B ── 食い違い一覧</h2>
+<table>
+<thead>
+<tr>
+<th>何について</th>
+<th>古い方（日付・出典）</th>
+<th>新しい方（日付・出典）</th>
+<th>どちらが正か</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>お試し版 <code>UgSfW8MCzHqv</code> の中身</td>
+<td>ページ名「お試し版（AI-Mits・<strong>NORMAL固定</strong>・15分と25分に声かけ）2026-09-08」／2026-09-08 の書き換えで NORMAL 固定を掲げた（session-log 2026-09-08_1637）</td>
+<td>2026-09-11 実測：<code>html_source</code> の <code>var APP = 'e472bc1f';       /* v2-2 */</code>。v2 を叩いている（引継書 §3）</td>
+<td><strong>新しい方が正。名前と中身が食い違っている</strong>。Mits様の判断で NORMAL に向け直すか v2 のまま扱うかを決める</td>
+</tr>
+<tr>
+<td>「AI-MITS v2 は NORMAL である」</td>
+<td>前セッション（2026-09-11 12時前の参謀の結論）／お試し版のページ名「NORMAL固定」を根拠に v2 = NORMAL と誤認</td>
+<td>2026-09-11 実測：v2 = <code>e472bc1f</code>。NORMAL は <code>43d47f25</code>。v2 は3つ（FAST/NORMAL/DEEP）のどれでもない（引継書 §2-2）</td>
+<td><strong>新しい方が正。前セッションの結論は撤回済み</strong></td>
+</tr>
+<tr>
+<td>中継 Worker の秘密鍵の本数</td>
+<td><code>RESOURCE_INDEX.md:154</code>「秘密は4本（43D47F25 は無い）」</td>
+<td>2026-09-11 実測：<code>/health</code> で <code>dify_app_key_43d47f25: true</code> ほか5本（+振り返り <code>b732635c</code>・レポート <code>7c6bee73</code>）／2026-08-27 の対策1と 2026-08-28 の鍵ローテートで既に登録済み</td>
+<td><strong>新しい方が正。索引の記載自体が古い（要更新）</strong></td>
+</tr>
+<tr>
+<td><code>aimits_full_design_20260615.md</code> L320「v2.1（<code>14d6df13</code>）／ v3（<code>1a8d8b9c</code>）」</td>
+<td>2026-06-15 初版時の内訳</td>
+<td>2026-08-27〜2026-09-06 の刷新：A=FAST=<code>14d6df13</code>／C=NORMAL=<code>43d47f25</code>／B=DEEP=<code>1a8d8b9c</code>（<code>sanbo.rs</code> L145-180 の正本）</td>
+<td><strong>新しい方が正</strong>。本論冒頭（L17-47）に「A/B 振り分けは 2026-08-27 に廃止」の但し書きあり。<strong>L320 の記述は古い</strong>（引継書 §6）</td>
+</tr>
+<tr>
+<td>Dify アプリ名 v3 / v2.1 表記</td>
+<td>2026-06-12〜2026-08-07：「AI-MITS v3」「AI-MITS v2-0603」</td>
+<td>2026-08-18：「AI-MITS (C)」「AI-MITS (R)」→ さらに 2026-09-06 以後は FAST/NORMAL/DEEP の内部名で参照</td>
+<td><strong>新しい方が正</strong>（Dify Console 上の表示は AI-MITS (C)/(R) のまま）</td>
+</tr>
+<tr>
+<td>A/B 振り分けの仕組み</td>
+<td><code>aimits_full_design_20260615.md</code> §1〜§5 の「hash で A/B に分ける」「?arm=A/B」</td>
+<td>2026-08-27：<code>ARM_FIXED='B'</code> 固定・振り分け廃止・選択画面 <code>2aB8guYSCZNp</code> が本番接続後に UTAGE ネイティブ AB も畳む予定</td>
+<td><strong>新しい方が正</strong>。本論冒頭に廃止宣言あり</td>
+</tr>
+<tr>
+<td>A ページの中身（LLM 2 検証官）</td>
+<td>2026-06 の初期実装：A も KR+LLM+LLM 2 の5箱</td>
+<td>2026-08-28：A から KR と LLM 2 を削除して3箱に。<strong>顧客に出る文章は変わっていない</strong>（材料も判定も元から出口に届いていなかった）</td>
+<td><strong>新しい方が正</strong></td>
+</tr>
+<tr>
+<td>C（NORMAL）の draft と publish</td>
+<td>2026-08-28 事故直前：C の draft が空（公開版は5ノード）</td>
+<td>2026-08-28 復旧：公開版から draft を復旧してから LLM 2 削除の作業を実施</td>
+<td>復旧後が正</td>
+</tr>
+<tr>
+<td>材料5件が切られた日時・切った人</td>
+<td>2026-08-27 の推測「Dify の secret env var 消失事故と同じ型かも」</td>
+<td>2026-08-27 実機測定：Dify Cloud に操作記録の口なし（4経路 404）。<code>updated_at</code> は参謀の有効化操作で上書き</td>
+<td><strong>どちらでもない・追跡不能</strong>。残っている道は Dify サポート照会のみ</td>
+</tr>
+<tr>
+<td>tracker の f 系ステータス</td>
+<td>2026-06 表側🟢・裏側 f19〜f24 🔵中長期</td>
+<td>2026-08-26：f25（Pro契約＋自前UI）→🟢完了、f28（月40セッション）→数字を訂正、f40 新設（B の穴）</td>
+<td>新しい方</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="c">表C ── 実装したが、今どうなっているか確かめていないもの</h2>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>実装した記録</th>
+<th>今どうなっているか未確認の理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>対策5：〆合図 <code>[TIMER_3MIN_REMAINING]</code> が UTAGE JS から送られるか</td>
+<td>2026-08-28：Dify 側は正常と切り分け済み。送り出し側＝UTAGE ページの JS（15分タイマーが <code>sendTimerSignal()</code> を呼ぶ経路）が未確認</td>
+<td>Mits様「WEB版に依拠する課題なら無視できる」で保留。アプリ版はタイマーを自前で持つので持ち込まれない</td>
+</tr>
+<tr>
+<td>対策7：レポート生成が一度も動いていない</td>
+<td>2026-08-27 対策1 で会話取得は直したが、Report Generator（<code>7c6bee73</code>）は全期間で 0件のまま</td>
+<td>サンクスから呼び出す線を1本繋ぐだけ・Mits様判定待ち</td>
+</tr>
+<tr>
+<td>対策8：振り返り（<code>b732635c</code>）が実相談者に届いていない</td>
+<td>2026-08-27：20件動くが上位が <code>u_test</code>／<code>test</code>／<code>demo用</code>。実相談者への呼び出し経路が未接続</td>
+<td>再訪ページに振り返りを通す線を作る必要あり・Mits様判定待ち</td>
+</tr>
+<tr>
+<td>対策9：会話の続きがエンジンをまたげない</td>
+<td>2026-08-27：Dify のアプリが違うと会話番号が通らないことは確定。切替時「ここから別の相談になります」の画面表示は未実装</td>
+<td>選択画面 <code>2aB8guYSCZNp</code> は本番未接続</td>
+</tr>
+<tr>
+<td>対策12：0往復離脱の今の数字</td>
+<td>2026-06-12 に v1 で「約半数」を実測。今の数字は未実測</td>
+<td>A/B/C/v2 それぞれで数える段取り・未着手</td>
+</tr>
+<tr>
+<td>対策13：帰還率を数える仕組み</td>
+<td>2026-06-14〜2026-08-27：勝敗指標＝「コンサルボットに帰ってくる率」と確定。数える仕組みは未実装</td>
+<td>3択で人が分散するため始める前のベースラインが必要・未着手</td>
+</tr>
+<tr>
+<td>対策14：材料の良し悪しを決めるルール</td>
+<td>2026-05-02 から未確定。Mits様「コンサルのナレッジを貯めているのに、それを dify に引き渡していない」</td>
+<td>自動化では解けない設計（当時案：Mits様に20〜30件見てもらってルールを起こす）・Mits様判定待ち</td>
+</tr>
+<tr>
+<td>OpenAI API キー投入</td>
+<td>2026-08-27〜28：credits 主犯が OpenAI 埋め込みと特定。手順は確立（クリップボード経由で <code>pbpaste \| wrangler secret put</code>）</td>
+<td>Mits様判定待ち・未実行</td>
+</tr>
+<tr>
+<td>Dify LLM ノード SYSTEM のペルソナA情報追記</td>
+<td>2026-04-13：Mits様手動待ちのまま Chrome MCP 経由編集は React 相性で3回失敗</td>
+<td>その後の確認記録なし・現在の SYSTEM に入っているか未確認</td>
+</tr>
+<tr>
+<td>ペルソナA追記後の v2 テスト・回答品質確認</td>
+<td>2026-04-13：次のステップとして残ったまま</td>
+<td>v2 は 2026-08-27 に「放置」決着</td>
+</tr>
+<tr>
+<td>運転台 v0.27.0 のエンジン切替窓（<code>sb-ov-eng</code>）実機押し</td>
+<td>2026-08-28：ブラウザでは DB が無いため未検証（session-log の next_actions に残る）</td>
+<td>その後の確認記録なし</td>
+</tr>
+<tr>
+<td>Dify アプリ名 rename（Mits様指示⑨）</td>
+<td>2026-09-11：確定後に「AI-MITS(M) 西田メソッド 43d47f25 NORMAL」／「AI-MITS(R) 14d6df13 FAST」／「AI-MITS (C) 1a8d8b9c DEEP」に rename 予定</td>
+<td>お試し版 v2 叩きの決着が先・未実行</td>
+</tr>
+<tr>
+<td>お試し版 <code>UgSfW8MCzHqv</code> の中身を NORMAL に向け直す</td>
+<td>2026-09-11 発覚：v2 のまま。触っていない</td>
+<td>Mits様の判断待ち（NORMAL に向け直すか v2 のまま扱うか）</td>
+</tr>
+<tr>
+<td>f28 月セッション数閾値マトリクス</td>
+<td>2026-08-26：数字を2つ訂正（月40は古い・先に当たる壁はメッセージ枠 5,000/月＝1相談5往復で月1,000相談で尽きる）</td>
+<td>Dify Pro $59 の実測はあるが、月次で追う仕組みは未実装</td>
+</tr>
+<tr>
+<td>Dify Chatflow の Answer ノード段階的レスポンス（B の10.6秒沈黙対策）</td>
+<td>2026-08-26：公式仕様として確認済み（Issue #422/#461/#35519）</td>
+<td>Mits様領域（Dify Console 操作）・未実装</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_1">参照ファイル（絶対パス）</h2>
+<ul>
+<li>引継書：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/引継書_AI-Mitsのチューニング_20260911.md</code></li>
+<li>対策表（21項目・完了9件）：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/dify_taisaku_20260827.html</code></li>
+<li>本論設計図（先頭に廃止節あり・L320 は古い）：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_full_design_20260615.md</code></li>
+<li>現況→対策：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/dify_genjo_taisaku_20260827.html</code></li>
+<li>中継 Worker 正本：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits-report-proxy/src/index.js</code></li>
+<li>運転台エンジン定義正本：<code>/Users/nishidamitsuhiro/untendai-seiri/src-tauri/src/sanbo.rs</code>（L145/L159/L168/L178/L266）</li>
+<li>索引（要更新）：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/RESOURCE_INDEX.md</code>（Dify 節 L146-159）</li>
+</ul>
+<p>session-log（時系列で厚いもの・全部本文読了）：<br />
+- <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-06-04_1736_ai-mits-front-impl.md</code><br />
+- <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-06-12_1530_aimits-ab-entrance.md</code><br />
+- <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-06-13_1731_aimits-v3-corpus2skill-repair.md</code><br />
+- <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-06-14_1812_aimits-ab-engine-tracker-front.md</code><br />
+- <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-06-15_1637_aimits-omote-4complete-circle-done.md</code><br />
+- <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-06-15_2114_aimits-pdf-dl-plan-saved.md</code><br />
+- <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-06-16_0009_aimits-koubun-complete.md</code><br />
+- <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-06-21_1655_aimits-talk-restore.md</code><br />
+- <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-08-07_1746_aimits-distribution-check-wave1.md</code><br />
+- <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-08-08_2059_aimits-logs-end-user-phase4-mistake.md</code><br />
+- <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-08-18_1548_aimits-nfg-cloudflare-honban-timer.md</code><br />
+- <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-08-26_1525_untendai-web-colors.md</code><br />
+- <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-08-26_1628_aimits-web-jizen-chat-ui.md</code><br />
+- <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-08-27_1706_dify-sekkei-souten-ken.md</code><br />
+- <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-08-28_0123_untendai-version-abc-color.md</code><br />
+- <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-08-28_1020_untendai-v0270-aimits-ui.md</code><br />
+- <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-09-08_1637_untendai-eda-wake-c-an.md</code></p>
+<p>Notion（実測）：<br />
+- AI-Mits やってみる（pensive-confident-cray・2026-03〜05）<br />
+  https://app.notion.com/p/33200782d90a81ecbafdc804870aab86<br />
+- AI-MITS Difyアップデート0413（Claude Code・2026-04-13）<br />
+  https://app.notion.com/p/34100782d90a8175aea3e8bc26a8f160<br />
+- AI-MITSプロジェクト（親ページ）<br />
+  https://app.notion.com/p/32600782d90a8122a34dd545d1d3674a<br />
+- AI-MITS Talkアプリ実装<br />
+  https://app.notion.com/p/34d00782d90a812190cfe640ebd68b0f<br />
+- CORPUS2SKILLとアップデート<br />
+  https://app.notion.com/p/35400782d90a813ea9a3f49e6ddb848e</p>
+<hr />
+<h2 id="_2">分かっていないこと（推測で埋めていない）</h2>
+<ul>
+<li>材料5件（<code>dify_prompt_v4.md</code> 以外）が 2026-04-13 以降のいつ・誰の操作で切られたか（Dify Cloud に口がなく追跡不能。参謀の 2026-08-27 09:47 の有効化で <code>updated_at</code> が上書きされた）</li>
+<li>2026-09-11 に不具合A・不具合B を出した AI-MITS v2 会話（<code>72CCF14D-F2EE-4D45-8DD2-1946DCEE9CD7</code>）が何往復したか（引継書は要約のみ）</li>
+<li>お試し版が v2 を叩き始めたのがいつからか（2026-09-08 の書き換え時点で <code>var APP = 'e472bc1f';       /* v2-2 */</code> があったのか、それ以前からなのかを本ファイルでは切り分けきれていない）</li>
+</ul>
+<footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
+</body>
+</html>
