@@ -72,8 +72,8 @@ const PHRASES=[
   src:"本文 ?aN の項「～'jakutu そうだから」。「〜です」まで付けた形は辞典で確かめられないため付けていない"},
  {ja:"どれくらい○○語を学んでいますか？", r:"caNnagee ○○guci naratooga", k:"g",
   src:"caNnagee〔どのくらいの時間〕索引743頁／narajuN〔習う・学ぶ〕の音便語幹 narat＋ooN（継続形）／問いの型は本文 kura=sjuN の用例「naNniN kuracooga 何年暮らしているか」"},
- {ja:"趣味は何ですか？", r:"Sicina muNnee nuu deebiruga", k:"x",
-  src:"「趣味」は辞典に無い。「好きなものは何ですか」で表す。Sici〔好き〕索引710頁（用例「～naQcu 好きな人」）"},
+ {ja:"趣味は何ですか？", r:"'iirimuNnee nuu deebiruga", k:"g",
+  src:"'iirimuN は本文266頁「1.おもちゃ。2.趣味としているもの。得意とするもの。」／-N＋ja が -Nnee になるのは用例「'waNnee sakee わたしは酒は」"},
  {ja:"○○したことはありますか？", r:"○○sjaru kutunu ?aibiimi", k:"e",
   src:"本文 ?uNnjuka=juN の項「…?uNnjukataru kutunu ?aibiimi こういう歌をお聞きになったことがありますか」"},
  {ja:"○○してもいいですか？", r:"○○QsiN 'jutasjaibiimi", k:"g",
@@ -102,13 +102,13 @@ const PHRASES=[
   src:"本文 ?ama の項「?amaamaa ?ujaNSeebiiga あのかたはどなたでいらっしゃいますか」"},
  {ja:"何時ですか？", r:"naNduci deebiruga", k:"g",
   src:"naNduci〔何時〕索引750頁"},
- {ja:"おすすめの料理は何ですか？", r:"maasamuNnee nuu deebiruga", k:"x",
-  src:"「おすすめ」は辞典に無い。「おいしいものは何ですか」で表す。maasamuN〔うまいもの〕索引「うまい」。料理の hoocuu は本文では「料理人」のため使っていない"},
+ {ja:"おすすめの料理は何ですか？", r:"SiSimijuru maasamuNnee nuu deebiruga", k:"g",
+  src:"SiSimijuN〔勧める〕本文485頁の連体形（連用語幹 SiSimij＋uru）で「勧めるおいしいものは何ですか」と表す。maasamuN〔うまいもの〕索引「うまい」。料理の hoocuu は本文では「料理人」のため使っていない"},
  {ja:"これをください", r:"kuri kwimisjoori", k:"e",
   src:"kuri〔これ〕索引687頁／本文 naahwiN の項「naahwiN kwimisjoori もっと下さい」"},
  {ja:"お会計をお願いします", r:"kaNzoo nigajabiiN", k:"g",
   src:"kaNzoo〔勘定〕索引663頁（saNmiN とも）／nigajuN〔願う〕の丁寧形。お店でこの言い方をするかは辞典で確かめられない"},
- {ja:"○○していただけますか？", r:"○○Qsi kwiraNna", k:"e",
-  src:"本文 hwiQcati=juN の項「hjaQkwaNbikeeN hwiQcatiraci kwiraNna 銭100貫ばかり一時貸してくれないか」。敬った形での問いは用例が無いため付けていない"}
+ {ja:"○○していただけますか？", r:"○○Qsi kwimiSeega", k:"e",
+  src:"本文 kurumahwicaa の項「caQsaQsi nusiti kwimiSeega.（いくらでのせて下さいますか）」。kwimiSeeN〔下さる〕は本文 kwijuN の項"}
 ];
 const PH_TAG={d:["t-d","辞典の用例そのまま"],e:["t-e","辞典の用例の型"],g:["t-g","辞典の語で組み立て"],x:["t-x","辞典に無い語を言い換え"]};

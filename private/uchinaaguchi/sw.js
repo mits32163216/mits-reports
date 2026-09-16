@@ -1,6 +1,6 @@
 /* うちなーぐち辞書：電波が無くても引けるようにする。
    台帳（dict.js）は 3.7MB あるので、初回に取り込んで以後は端末の中から読む。 */
-const CACHE = "uchinaaguchi-v4";
+const CACHE = "uchinaaguchi-v5";
 const FILES = ["./", "./index.html", "./translate.html", "./phrases.html", "./rireki.html", "./hist.js", "./phrases.js", "./dict.js", "./mine.json",
                "./manifest.json", "./icon-180.png", "./icon-192.png", "./icon-512.png"];
 
