@@ -2,7 +2,7 @@
    画面（html・js）は毎回まず取りに行き、取れない時だけ端末の中の写しを出す。
    こうしないと、ホーム画面のアプリが古い画面のまま止まる（2026-09-16 iPhone で発生）。
    台帳（dict.js）は 3.7MB あるので、端末の中の写しを先に出し、裏で新しいものを取る。 */
-const CACHE = "uchinaaguchi-v7";
+const CACHE = "uchinaaguchi-v8";
 const FILES = ["./", "./index.html", "./translate.html", "./phrases.html", "./rireki.html", "./hist.js", "./phrases.js", "./dict.js", "./mine.json",
                "./manifest.json", "./icon-180.png", "./icon-192.png", "./icon-512.png"];
 

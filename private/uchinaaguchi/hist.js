@@ -25,6 +25,7 @@ function histAdd(q,p,extra){
   h.unshift(Object.assign({q,t:now,p},extra||{}));
   if(h.length>HIST_MAX) h=h.slice(0,HIST_MAX);
   try{ localStorage.setItem(HIST_KEY,JSON.stringify(h)); }catch(e){}
+  histAutoSync();
 }
 /* ?q= で開かれたら、その語を入れた状態で始める */
 function qParam(){ try{ return new URLSearchParams(location.search).get("q")||""; }catch(e){ return ""; } }
@@ -52,4 +53,18 @@ async function histSync(){
   try{ localStorage.setItem("uchi_synced_at",String(Date.now())); }catch(e){}
   return {sent:(JSON.parse(state.uchi_hist||"[]")).length, onServer:n,
           mine:(JSON.parse(state.uchi_mine_v1||"[]")).length};
+}
+
+/* ───── 自動で預ける ─────
+   引くたびに、少し待ってからサーバーへ送る。開いた時・画面を離れる時にも送る。
+   サーバーは1件ずつ合体するので、何度送っても消えない。電波が無ければ次の機会に送る。 */
+let _histSyncTimer=null;
+function histAutoSync(delay){
+  clearTimeout(_histSyncTimer);
+  _histSyncTimer=setTimeout(()=>{ histSync().catch(()=>{}); }, delay==null?4000:delay);
+}
+if(typeof window!=="undefined" && location.protocol!=="file:"){
+  window.addEventListener("load",()=>histAutoSync(1500));
+  document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="hidden"){ clearTimeout(_histSyncTimer); histSync().catch(()=>{}); } });
+  window.addEventListener("online",()=>histAutoSync(1000));
 }

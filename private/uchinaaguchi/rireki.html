@@ -48,7 +48,7 @@ main{padding:12px}
   </div>
   <div class="cnt" id="cnt"></div>
   <div id="list"></div>
-  <p class="note">履歴はこの端末の中に残ります（最大 2,000件）。上のボタンを押すと、その時点の履歴をサーバーにも残します（何度押しても、別の端末から押しても、前に残した分は消えません）。押すと、その語をもう一度引きます。<br>
+  <p class="note">履歴は引くたびに自動でサーバーにも残ります（最大 2,000件。電波が無い時は、次に開いた時に送ります）。上のボタンはすぐ送りたい時用です。押すと、その語をもう一度引きます。<br>
   打っている途中の形（「あ」「あり」「ありが」）は1件にまとめています。</p>
 </main>
 <script src="hist.js"></script>
@@ -96,6 +96,6 @@ sb.onclick=async()=>{
   sb.disabled=false;
 };
 </script>
-<script>if("serviceWorker" in navigator&&location.protocol!=="file:")navigator.serviceWorker.register("sw.js?v=7").catch(()=>{});</script>
+<script>if("serviceWorker" in navigator&&location.protocol!=="file:")navigator.serviceWorker.register("sw.js?v=8").catch(()=>{});</script>
 </body>
 </html>

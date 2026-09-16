@@ -78,6 +78,6 @@ let tm=null;
 f.addEventListener("input",()=>{ clearTimeout(tm); draw(f.value); tm=setTimeout(()=>{ if(f.value.trim()) histAdd(f.value,"30フレーズ"); },1500); });
 draw(qParam()); if(qParam()) f.value=qParam();
 </script>
-<script>if("serviceWorker" in navigator&&location.protocol!=="file:")navigator.serviceWorker.register("sw.js?v=7").catch(()=>{});</script>
+<script>if("serviceWorker" in navigator&&location.protocol!=="file:")navigator.serviceWorker.register("sw.js?v=8").catch(()=>{});</script>
 </body>
 </html>
