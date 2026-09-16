@@ -31,6 +31,9 @@ main{padding:12px}
 .q{flex:1;font-size:16px;word-break:break-word}
 .pg{font-size:11px;padding:1px 7px;border-radius:9px;background:#f3efe7;color:#6b5a2f;white-space:nowrap}
 .cnt{font-size:12.5px;color:var(--gray);margin:8px 2px}
+.sync{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px}
+.sync button{width:100%;padding:11px 0;border:0;border-radius:10px;background:var(--navy);color:#fff;font-size:15px;font-weight:700;font-family:inherit}
+.sync .note{margin-top:6px}
 </style>
 </head>
 <body>
@@ -39,9 +42,13 @@ main{padding:12px}
   <input id="f" type="search" placeholder="履歴の中を探す" autocomplete="off">
 </header>
 <main>
+  <div class="sync">
+    <button id="sync">この端末の履歴をサーバーに残す</button>
+    <div class="note" id="syncmsg"></div>
+  </div>
   <div class="cnt" id="cnt"></div>
   <div id="list"></div>
-  <p class="note">履歴はこの端末の中にだけ残ります（最大 2,000件）。押すと、その語をもう一度引きます。<br>
+  <p class="note">履歴はこの端末の中に残ります（最大 2,000件）。上のボタンを押すと、その時点の履歴をサーバーにも残します（何度押しても、別の端末から押しても、前に残した分は消えません）。押すと、その語をもう一度引きます。<br>
   打っている途中の形（「あ」「あり」「ありが」）は1件にまとめています。</p>
 </main>
 <script src="hist.js"></script>
@@ -72,7 +79,23 @@ function draw(q){
 const f=document.getElementById("f");
 f.addEventListener("input",()=>draw(f.value));
 draw("");
+const sm=document.getElementById("syncmsg"), sb=document.getElementById("sync");
+function lastSync(){ try{ const t=+localStorage.getItem("uchi_synced_at"); if(t){ const D=new Date(t);
+  sm.textContent="前回サーバーに残した日時："+D.getFullYear()+"年"+(D.getMonth()+1)+"月"+D.getDate()+"日 "+String(D.getHours()).padStart(2,"0")+":"+String(D.getMinutes()).padStart(2,"0"); } }catch(e){} }
+lastSync();
+sb.onclick=async()=>{
+  sb.disabled=true; sm.style.color="var(--gray)"; sm.textContent="送っています…";
+  try{
+    const r=await histSync();
+    sm.style.color="#2f6b2f";
+    sm.textContent=`✓ サーバーに残しました。この端末から送った履歴 ${r.sent}件／サーバーにある履歴 ${r.onServer}件／自分で足した語 ${r.mine}件`;
+    draw(document.getElementById("f").value);
+  }catch(e){
+    sm.style.color="#8a3a3a"; sm.textContent="送れませんでした（電波が要ります）："+String(e.message||e).slice(0,80);
+  }
+  sb.disabled=false;
+};
 </script>
-<script>if("serviceWorker" in navigator&&location.protocol!=="file:")navigator.serviceWorker.register("sw.js?v=4").catch(()=>{});</script>
+<script>if("serviceWorker" in navigator&&location.protocol!=="file:")navigator.serviceWorker.register("sw.js?v=6").catch(()=>{});</script>
 </body>
 </html>

@@ -29,3 +29,27 @@ function histAdd(q,p,extra){
 /* ?q= で開かれたら、その語を入れた状態で始める */
 function qParam(){ try{ return new URLSearchParams(location.search).get("q")||""; }catch(e){ return ""; } }
 
+
+/* ───── サーバーに預ける（Cloudflare Worker uchinaaguchi-sync） ─────
+   この端末の履歴・以前の「最近引いた語」・自分で足した語を送る。
+   サーバー側は履歴を1件ずつ合体するので、何度押しても、別の端末から押しても消えない。
+   合言葉は画面の JS に入っていて秘密にはできない（karaoke-sync と同じ扱い）。 */
+const SYNC_URL="https://uchinaaguchi-sync.3216-fun.workers.dev/state";
+const SYNC_KEY="a277861338236c72bed1c978186ab7b6", SYNC_FAMILY="mitsuhiro";
+async function histSync(){
+  histLoad();                                   /* 以前の記録の移し替えを先に済ませる */
+  const g=k=>{ try{ return localStorage.getItem(k); }catch(e){ return null; } };
+  const state={};
+  if(g(HIST_KEY)!==null) state.uchi_hist=g(HIST_KEY);
+  if(g("uchi_recent")!==null) state.uchi_recent=g("uchi_recent");
+  if(g("uchinaaguchi_mine_v1")!==null) state.uchi_mine_v1=g("uchinaaguchi_mine_v1");
+  const res=await fetch(SYNC_URL+"?key="+SYNC_KEY+"&f="+SYNC_FAMILY,{method:"POST",
+    headers:{"Content-Type":"application/json"},body:JSON.stringify({state,updatedAt:Date.now()})});
+  const j=await res.json();
+  if(!j.ok) throw new Error(j.error||("HTTP "+res.status));
+  const back=await (await fetch(SYNC_URL+"?key="+SYNC_KEY+"&f="+SYNC_FAMILY)).json();
+  let n=0; try{ n=JSON.parse(back.state.uchi_hist||"[]").length; }catch(e){}
+  try{ localStorage.setItem("uchi_synced_at",String(Date.now())); }catch(e){}
+  return {sent:(JSON.parse(state.uchi_hist||"[]")).length, onServer:n,
+          mine:(JSON.parse(state.uchi_mine_v1||"[]")).length};
+}
