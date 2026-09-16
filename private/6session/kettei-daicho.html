@@ -57,7 +57,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-16 16:48 ／ 写した時刻 2026-09-16 16:51</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-16 16:53 ／ 写した時刻 2026-09-16 16:53</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -407,6 +408,26 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>参謀が自分で測り直した実測：GitHub の Release v1.73.0 が Latest（2026-09-16T07:46:52Z）／資産4本（untendai.app.tar.gz 8,293,504 bytes・.sig 408・untendai_1.73.0_x64-setup.exe 5,615,464 bytes・.sig 420）／latest.json が version 1.73.0・お知らせの文も一致・platforms は darwin-aarch64 と windows-x86_64 の2つ／Mac の2本とも 1.73.0（untendai.app・untendai-dev.app）</li>
 <li>変更の記録 CHANGELOG.md の v1.73.0 の行（commit 0cc2091）は他の版と同じ形で既に入っており、直しは要らなかった</li>
 </ul>
+<h3 id="41-社内レポートの-HTML-の壊れを直した-予約タスクは数分遅れて立つ-2026-09-16">41. 社内レポートの HTML の壊れを直した／予約タスクは数分遅れて立つ（2026-09-16 17:0x・司令塔）</h3>
+<p><strong>宛先：6つぜんぶ</strong></p>
+<h4 id="41-1-公開ページの-HTML-が壊れていた-直した">41-1. 公開ページの HTML が壊れていた（直した）</h4>
+<p>Mits様の指摘（原文）：</p>
+<p>&gt; <a href="https://reports.7years.life/private/6session/group-koza-honbun.html">https://reports.7years.life/private/6session/group-koza-honbun.html</a> HTML　が壊れている部分がある</p>
+<p>原因は、司令塔が作った写しの道具 <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/shanai_report_utsusu.py</code> の中の2箇所。</p>
+<p>1. <strong>正本の md に直接書いてある HTML の図（svg 3枚）を、文字に化かしていた。</strong><code>&lt;p&gt;&amp;lt;svg xmlns=…&lt;/p&gt;</code> が60行ならんで画面が壊れていた。→ md の中の HTML はそのまま通すようにした</p>
+<p>2. <strong>URL が途中で切れていた。</strong>除外の並びに <code>&amp;lt;</code> と書いてあり、これが「&amp; l t ;」の4文字を除く意味になっていた。そのため URL が最初の <code>l</code> か <code>t</code> で切れていた（実測 <code><a href="https://gi">https://gi</a></code> ／ <code><a href="https://u">https://u</a></code> ／ <code><a href="https://aimi">https://aimi</a></code> ／ <code><a href="https://code.c">https://code.c</a></code> ／ <code><a href="https://change.7years.">https://change.7years.</a></code>）。→ 除外を <code>&lt;</code> に直した</p>
+<p><strong>28枚すべて写し直して確かめた</strong>（タグの開閉のずれ 0件・切れた URL 0件・公開先も HTTP 200 で図3枚が生きていることを確認）。</p>
+<h4 id="41-2-予約タスクは-書いた時刻ちょうどには立たない">41-2. 予約タスクは、書いた時刻ちょうどには立たない</h4>
+<p>Mits様の指摘（原文）：</p>
+<p>&gt; あと18分で18:34 の定時報告です。時計おかしい</p>
+<p><strong>時計は壊れていない。</strong>仕組みの側が毎回わざと数分の遅れを足してから立てる。定時報告は 18:30 に対して <strong>4分43秒</strong>遅れるので 18:34 に立つ。他も同じ（7:10→7:12／7:30→7:31／7:50→7:51／19:30→19:39／23:10→23:13）。</p>
+<ul>
+<li>遅れの秒数は本ごとに決まっていて毎回同じ。<code>list_scheduled_tasks</code> の <code>jitterSeconds</code> がその秒数</li>
+<li><strong>実際に立つ時刻は <code>nextRunAt</code></strong>（UTC で返るので +9時間して日本時間にする）</li>
+<li><strong>cron の時刻を前倒しして帳尻を合わせない。</strong>一覧の見出しが「6:25」になって、もっと分からなくなる</li>
+<li>2026-09-16 の定時報告は5回とも手で走らせたテスト。<strong>自動で立つのは 18:34 が初めて</strong>（作った時点で 6:30 と 12:30 を過ぎていたため）</li>
+</ul>
+<p>正本：/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/reference_yoyaku_task_wa_sukoshi_okurete_tatsu.md</p>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
 </body>
