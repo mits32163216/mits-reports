@@ -52,7 +52,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-16 16:29 ／ 写した時刻 2026-09-16 16:30</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-16 16:36 ／ 写した時刻 2026-09-16 16:39</p>
 <h2 id="マーケ経路で決まったこと-運転台-marketing-枝が実装する側の写し">マーケ経路で決まったこと（運転台 marketing 枝が実装する側の写し）</h2>
 <p>Mits様（2026-09-08）「メルマガ経路関係で決まったことは、untendai マーケティングがアプリに実装していくので、常に P2P で共有する」。</p>
 <p>正本はセッション「メール配信と計測と自動化」の</p>
@@ -168,9 +169,6 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>spro のクリック計測は<strong>裸URLを1行で置いた形しか拾わない</strong>（5128 で実測：checkboxCount 0 ／</li>
 </ul>
 <p>  pickedUrls 空 ／ hrefs 4）。語句に埋め込んだリンクは1本も拾われない</p>
-<ul>
-  <li>2026-09-13 訂正：5128（9/9）は埋め込み4本でチェック欄が 0、5129（9/11）・5130（9/12）は同じく埋め込み4本でチェックが入り数えられた（5129 ユニーク12／のべ28、5130 ユニーク10／のべ21）。ファイルで数えた形は3件とも同じ（<code>&lt;a </code> 本数 4／<code>target=</code> 0／<code>{{htmlkaifu}}</code> 1）。ファイル大きさは spro_0909.html 33.2K・20260911_*_spro.html 6.9K・20260912_*_spro.html 7.4K。原因は未確認</li>
-</ul>
 <p>🟡 <strong>Mits様判定待ち</strong>：spro のリンクを裸URL1行の形にするか。読者に見える文面が変わる。</p>
 <h3 id="計測の台帳が-Cloudflare-Workers-に移った-2026-09-10・Mits様">計測の台帳が Cloudflare Workers に移った（2026-09-10・Mits様「発注GO」）</h3>
 <p>Mac は蓋を閉じると止まるので、測定が飛んでいた（実測：9/8 21:30 の次が 9/9 09:30 で12時間空き）。</p>
@@ -422,10 +420,123 @@ ID:5127  数字を見せて相談できる相手       2026-09-08 22:16:36  3825
 <p>クリックも2便とも空欄。</p>
 <h4 id="幅を過ぎて測った行-事後91h・事後41h-の扱い-そのまま入れてよい">幅を過ぎて測った行（事後91h・事後41h）の扱い ── そのまま入れてよい</h4>
 <p>経過ラベルは鍵と見出しにしか使っていない（数として読む所は1つも無い）ので、</p>
-<p><code>事後91h</code> のような印でも通る。1回しか測っていない配信は</p>
+<p><code>事後91h</code> のようなラベルでも通る。1回しか測っていない配信は</p>
 <p>「送ったあとの伸び」に出ない（2回以上の測定が要るため）。テストで固定した。</p>
-<h4 id="2026-09-13-21-52-の-spro-2行-解除の-351-を配信停止の累計の列に移し">2026-09-13 21:52 の spro 2行 ── 解除の 351 を配信停止の累計の列に移した</h4>
-<p>理由：累計が1本ごとの列に入っていたため。CSV の移し替えそのものは BS-engineer が行う。</p>
+<h3 id="配信の数字とお金の数字は-別の台帳に入っている-2026-09-12-夜・4セッション統合の設">🛑 配信の数字とお金の数字は、別の台帳に入っている（2026-09-12 夜・4セッション統合の設計で出た）</h3>
+<p>「4セッションデータ統合分析設計」セッションが全体設計図を組んだ。運転台の位置づけは</p>
+<p><strong>道（お客様が通る経路）ではなく計器</strong>。①配信 →②着地 →③相談 →④AI-Mits登録 →⑤有料 のうち、</p>
+<p>画面に映しているのは <strong>①〜② まで</strong>。③④⑤の段が丸ごと無い。</p>
+<h4 id="繋がっていない理由は2段ある">繋がっていない理由は2段ある</h4>
+<pre><code>
+段1  同じ台帳の中で繋ぐ鍵が無い
+段2  そもそも別の台帳に入っている（.mkt と 無印）   ← こちらが重い
+</code></pre>
+<p>実測（2026-09-12）：</p>
+<pre><code>
+~/Library/Application Support/com.mits.untendai.mkt/   配信 24行 / お金 0行
+  customer 0 / customer_month 0 / import_payment 0 / strac 0
+
+~/Library/Application Support/com.mits.untendai/       配信の表そのものが無い / お金あり
+  customer 1084 / customer_month 269 / import_payment 400 / strac 181
+</code></pre>
+<p><strong><code>haishin_keisoku</code> はマーケ開発版の台帳にしか無い。</strong>製品版・開発版には表そのものが無く、</p>
+<p>画面も出ない。これは事故ではなく、3本の .app が互いを上書きしないよう identifier を分けた</p>
+<p>結果（2026-09-08 Mits様）。<strong>「繋ぐ」＝ marketing 枝を main に入れて1本の台帳に合流させる</strong></p>
+<p>という意味になる。Mits様が「入れる」と言われるまで起きない。</p>
+<h4 id="鍵の重なりは-id-だけ">鍵の重なりは <code>id</code> だけ</h4>
+<pre><code>
+$ comm -12 &lt;(haishin_keisoku の列) &lt;(customer の列)
+id
+</code></pre>
+<p>両方が自分で振った連番なので繋ぐ鍵にならない。<code>customer</code> には <code>email</code> <code>inflow_source</code></p>
+<p><code>ext_id</code> がある。**繋ぐなら、配信側に <code>email</code> か <code>ext_id</code> を持たせるか、DL の押下に人の印を</p>
+<p>付けるかのどちらか。**どちらも今は無い。</p>
+<h4 id="import-marketing-を生きている口と読まない"><code>import_marketing</code> を生きている口と読まない</h4>
+<p>3本の台帳すべてに <code>import_marketing</code> という表があるが<strong>3本とも0行</strong>。</p>
+<p>取り込み口は <code>haishin_keisoku</code> 側の <code>import_csv</code>。<strong>空の表を口と読むと設計が1段ずれる。</strong></p>
+<h4 id="映していないもの-設計図で確定">映していないもの（設計図で確定）</h4>
+<table>
+<tr><th></th><th>状態</th></tr>
+<tr><td>到達</td><td>列も取り込み口もある。UTAGE の API が返さないので24行中0行（直す先は取り込む元）</td></tr>
+<tr><td>解除（除外後）</td><td><code>haishin.rs</code> に6か所・24行中5行に値。<code>index.html</code> には0か所 ── <strong>持っているのに見せていない</strong></td></tr>
+<tr><td>お金（費用・売上・申込）</td><td>配信の表に列が無い。別の台帳にある</td></tr>
+<tr><td>人ごとの追いかけ</td><td>人を指す列が21列中0</td></tr>
+</table>
+<h4 id="測り方の形-Mits様確定・設計図より">測り方の形（Mits様確定・設計図より）</h4>
+<p>縦が段、各段に分母・分子・率・単価。列に 基準値／◯◯基準で／1000人なら。</p>
+<p>横に号を並べて win を出す。粒度は<strong>号 × 経路</strong>。</p>
+<p>🛑 <strong>基準値はまだ決めない。</strong>自分の実測を3〜4回並べてから決め、<strong>決めた日を残して動かさない。</strong></p>
+<p>画面には焼かない（<code>1.27</code> <code>4.14</code> <code>19.11</code> <code>0.82</code> すべて <code>index.html</code> に0件・2026-09-12 実測）。</p>
+<h3 id="絶対的ゴール-2026-09-13-Mits様・統合設計セッション経由">🎯 絶対的ゴール（2026-09-13 Mits様・統合設計セッション経由）</h3>
+<p>&gt; 絶対的ゴールは『AI-Mits登録の増加』そしてその経過を状態の変化を計測しながら改善していくこと</p>
+<p>計器の役目はこの「経過の状態の変化」を映すこと。いまは ①配信 →②着地 までで、④登録の段はまだ無い。</p>
+<h4 id="経路の印の取り決め-2026-09-13-統合設計セッションが中継とお試し版の書き手に渡した">経路の印の取り決め（2026-09-13 統合設計セッションが中継とお試し版の書き手に渡した）</h4>
+<pre><code>
+utm_source    小文字の utage / spro / magmag / test
+utm_campaign  来た値をそのまま
+印なし        空欄のまま（direct や unknown を入れない）
+</code></pre>
+<p>🛑 <strong><code>test</code> は経路として数えない。</strong>Mits様と AI の試し打ちなので、号 × 経路の分析に混ぜると</p>
+<p>登録が水増しされる（<code>feedback_keisoku_kara_jibun_no_address_ip_wo_nozoku</code>）。</p>
+<p>③④の段を計器に足すときは、<code>test</code> を外してから数える。</p>
+<p>③④の段を足す話は、1-2・1-3・2-1 が本番に出たあとに届く。</p>
+<h3 id="毎日-21-00-24-00-に3スタンドへ1通-2026-09-13-21-50-Mits様">📮 毎日 21:00〜24:00 に3スタンドへ1通（2026-09-13 21:50 Mits様決定）</h3>
+<p>&gt; 毎日のメルマガを私の目視検収を不要にするので、毎日21時から24時の間に必ず1通配信するように設定して</p>
+<p>&gt; 追伸は必ず、AIグループ講座のリンクを受講者の声を使って　リンクを入れる</p>
+<ul>
+<li>予約タスク <code>mainichi-merumaga-21-24</code>。UTAGE・spro は 21:15 予約、まぐまぐは 21:00 以降に即時。初回 2026-09-14 夜</li>
+<li>utm：source <code>utage</code> / <code>spro</code> / <code>magmag</code>、medium <code>email</code>、campaign <code>YYYYMMDD_&lt;題材ローマ字&gt;</code> の1種類（追伸のリンクも同じ campaign）</li>
+<li>測定の幅（21:15 配信）：12h＝翌朝 09:06（11時間51分）／24h＝翌晩 21:05（23時間50分）／36h・48h も既存の回に入る</li>
+</ul>
+<h4 id="計器側から伝えたこと">計器側から伝えたこと</h4>
+<ul>
+<li>🛑 <strong>追伸のリンクが本文と同じ campaign だと、どちらが押されたか分けられない。</strong>分けるなら <code>utm_content</code>（本文 <code>honbun</code>／追伸 <code>tsuishin</code> など）。入れるかは配信側の判断。運転台はまだ utm_content を読まない</li>
+<li>毎日出すと、アプリの台帳の遅れ（画面で「取り込む」を押した時にしか増えない）が積み上がる。統合設計セッションに報告済み・直し方は未定</li>
+</ul>
+<h4 id="utm-content-を入れることになった-2026-09-13-配信側が決定・初回-2026">utm_content を入れることになった（2026-09-13 配信側が決定・初回 2026-09-14）</h4>
+<p>追伸と本文のどちらが押されたかを分けるため。値は 9/12 の UTAGE 号（5JKfI2cd3jDF）に揃えてある。</p>
+<pre><code>
+download   パソコンに入れる方はこちら
+sample     見本を入れるボタン
+aimits     AI-Mits だけブラウザで試す
+course     本文末尾の AIグループ講座
+tsuishin   追伸の受講者の声のあとのリンク
+</code></pre>
+<p>source と campaign は取り決めのまま。運転台の計器はまだ utm_content を読まない。読むときはこの綴りをそのまま使う。</p>
+<h3 id="ダウンロードページに-利用者の声-を増やしていく方向-2026-09-14・まだ作らない">ダウンロードページに「利用者の声」を増やしていく方向（2026-09-14・まだ作らない）</h3>
+<p>仲間募集の討議セッション（claude-nishida-cd）から届いた。<strong>方向だけで、中身は決まっていない。まだ何も作らない。</strong></p>
+<p>Mits様原文（2026-09-14）：</p>
+<p>&gt; 1ヶ月くらいで、ダウンロードページに「利用者の声」が増える形にして、そこにたくさんアクセスを集めてどんどんDL</p>
+<pre><code>
+置き場所        運転台のダウンロードページ（UTAGE page_id oHtrsl52qpXg）
+声を出す人      初期の開発仲間（募集ページのたたき台は claude-nishida で作成中・UTAGE には未掲載）
+未決            声の集め方／載せ方／アクセスの集め方／「1ヶ月」の数え始め
+守ること        声とお名前は本人の許可を取ったものだけ載せる
+                中身がまだ無いうちに「声」の枠を先に置かない
+正本            /Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/project_untendai_daihoshin.md の9節
+</code></pre>
+<p>計器とのつながり：DL の数え上げ（/count の by_campaign）と配信計測は、声が載る前と後を比べる物差しになる。載せた日が決まったら、この台帳にその日付を書く。</p>
+<h3 id="計測の決定2件-2026-09-14・claude-nishida-0b-から">計測の決定2件（2026-09-14・claude-nishida-0b から）</h3>
+<p>出どころは全体設計図の ③→④ の節と ④登録の節です。</p>
+<p>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/全体設計図_20260912.html</p>
+<p>（2026-09-14 19:2x に共通フォルダが 整理プロセス/配信計測_推移 から 経営プロジェクト/司令塔 へ移ったので、パスを書き換えた。司令塔 commit 13076dc1）</p>
+<h4 id="1-お試し版の異常値を計測から外す">1. お試し版の異常値を計測から外す</h4>
+<pre><code>
+対象      Dify user try-z3k7yjwtmtu4nmfy（お試し版で18回相談・89往復・5,460秒・一度も押していない）
+扱い      異常値として計測から外す。生の数は残し、除外前と除外後の両方を持つ
+焼き付け  除外条件はアプリに焼き付けない（設計図 G節）
+</code></pre>
+<p>Mits様原文：</p>
+<p>&gt; 言いよ異常値だから除外で（2026-09-12 22:06 JST・★AI-Mits セッション）</p>
+<p>&gt; 異常値なので外す（2026-09-14 14:52 JST）</p>
+<h4 id="2-中継から登録した読者にも経路の印が入る">2. 中継から登録した読者にも経路の印が入る</h4>
+<pre><code>
+いつから  2026-09-14 14:50 JST（commit ee0dcbbc・デプロイ 293b2d87）
+入る欄    free29 = utm_source ／ free30 = utm_campaign
+それより前  14:50 より前の読者は空のまま（埋め直さない）
+外す試験   3216.fun+utm20260914b@gmail.com ／ reader FrUeVEYDj84s
+</code></pre>
+<p>運転台（マーケ開発版）の配信計測は、いまはこの2つ（Dify の相談記録・UTAGE の free29/free30）を読んでいない。読むようになったら、この2つの除外条件を画面の外（除外リスト）から当てる。</p>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
 </body>

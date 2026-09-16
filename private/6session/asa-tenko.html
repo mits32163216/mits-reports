@@ -52,7 +52,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-16 16:13 ／ 写した時刻 2026-09-16 16:13</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-16 16:38 ／ 写した時刻 2026-09-16 16:39</p>
 <h3 id="2026-09-16-朝の点呼">2026-09-16 朝の点呼</h3>
 <p>（初回。予約タスク asa-tenko-6session を 12:05 に手で走らせた分。前日＝2026-09-15）</p>
 <table>
@@ -145,6 +146,18 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>宛先表 renrakusaki.md：<code>mcp__ccd_session_mgmt__list_sessions</code> と <code>ListAgents</code> の両方を実測。ID 6件・名前 6件とも 14:4x の回から変わっておらず、書き換えは不要だった（実測時刻の記載だけ 16:1x に直した）</li>
 <li>新しい仕組みの即時テスト（手順 3-7）：この回で走らせたのは <strong>写す道具 shanai_report_utsusu.py</strong>（16:02 に更新されたばかり）。走らせて2本写り、公開先まで実機で確かめた。<strong>この定時報告そのもの（手順書 3-7 を足した直後の初回）も、次の自動実行を待たずにこの回で走らせている</strong></li>
 <li>数え方：連絡の数は記録の中の cross-session-message を、送り主と本文の頭200字の組で重複を取り除いて数えた（09-16 14:43〜16:10 JST）。司令塔は記録が3本（9e7b2310・9fa118c7・4f183721）に分かれているため合算した。送った連絡は、そのセッションが送信の道具（SendMessage ／ session_mgmt の送信）を呼んだ回数</li>
+</ul>
+<hr>
+<h3 id="申し送り-2026-09-16-17-3x-JST-運転台改善から">申し送り（2026-09-16 17:3x JST ／ 運転台改善から）</h3>
+<ul>
+<li><strong>宛先：司令塔／AI-Mits-チューニング／運転台マーケ</strong></li>
+<li>直接の1通が届かなかったのでここに置く。送信の結果は「承認待ちのまま期限切れ・相手のセッションには渡っていない」（相手側の許可の設定で保留になった。同じ形で送り直しても同じところで止まるので送り直さない）</li>
+<li>中身は <strong>決定の記録の末尾から2件目</strong>（2026-09-16 17:2x ／ 運転台改善「『札』には5つ目の意味がある。運転台の分は置き換えない」）に全部書いてある。要点だけ：</li>
+  <li>運転台の「札」は、Mits様が決められた4語（①端末の番号 ②相談の利用者名 ③経路の印 ④申し送り）の<strong>どれにも当たらない</strong>。全部「画面に出る小さな表示（バッジ・ラベル）」の意味＝<strong>5つ目の意味</strong>。参謀が5つ目の語を勝手に作って当てないので、<strong>据え置く</strong></li>
+  <li>数えた範囲と全件：司令塔/運転台_画面_index_20260912.html 8（md5 87ac17991fc079673173a0b938f70deb・15,592行）／司令塔/運転台_配信計測_haishin_20260912.rs 1（md5 4a96a4ceb8af389d34c67444110235f1・1,322行）／<strong>実機</strong> untendai-seiri/src/index.html <strong>12</strong>（写しより4件多い）／実機 haishin.rs 0／untendai-marketing/src-tauri/src/haishin.rs 9（<strong>運転台マーケの持ち場</strong>・決まり7で触っていない）</li>
+  <li><strong>顧客の画面には1件も出ない。</strong>コメント（<code>&lt;!-- --&gt;</code>・<code>/* */</code>・<code>//</code>）を落としたコピーを作って数え直した ── 元12 → 落としたあと0</li>
+  <li>untendai-asa-tenken/SKILL.md の2件は、依頼が届いた時点で既に0件（前日に「呼び出し札 → 申し送り」で④に当てて置換済み・md5 e69f0c443badd7abef70ce924a388072・146行・申し送り6件）</li>
+<li><strong>運転台マーケへ</strong>：haishin.rs の9件はそちらの持ち場。中身を見たうえで①②③④のどれに当たるかを判定してください。運転台側と同じ「小さな表示」の意味なら、同じく据え置きになります</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
