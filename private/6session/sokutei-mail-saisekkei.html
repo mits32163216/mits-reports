@@ -50,16 +50,15 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 </head>
 <body>
 <div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
-<div class="meta-head"><div><b>元のファイル</b>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/整理プロセス/再設計_測定とメアド取得_20260911.md</div><div><b>最後に更新された日時</b>2026-09-14 19:31 JST</div></div>
-<h1>測定とメアド取得の再設計</h1>
-<h1 id="2026-09-11">再設計 ── 測定とメアドを、ちゃんと取る（2026-09-11）</h1>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-14 19:31 ／ 写した時刻 2026-09-16 16:02</p>
+<h2 id="再設計-測定とメアドを-ちゃんと取る-2026-09-11">再設計 ── 測定とメアドを、ちゃんと取る（2026-09-11）</h2>
 <p>Mits様のご指示：</p>
-<blockquote>
-<p>今の現状を活かすことは活かすけど、目的は測定とメアドをちゃんと取得すること、再設計でもいい</p>
-</blockquote>
-<hr />
-<h2 id="1-2026-09-11">1. いまどうなっているか（すべて 2026-09-11 に叩いた実測）</h2>
-<pre><code>ダウンロード（untendai-update /count?detail=1・2026-08-12 から）
+<p>&gt; 今の現状を活かすことは活かすけど、目的は測定とメアドをちゃんと取得すること、再設計でもいい</p>
+<hr>
+<h3 id="1-いまどうなっているか-すべて-2026-09-11-に叩いた実測">1. いまどうなっているか（すべて 2026-09-11 に叩いた実測）</h3>
+<pre><code>
+ダウンロード（untendai-update /count?detail=1・2026-08-12 から）
   合計 62回
     9/8 29 ／ 9/9 12 ／ 9/10 20 ／ 9/11 1
   経路（by_from）   spro 36 ／ utage 12 ／ magmag 2 ／ aDqCF 2 ／ (不明) 10
@@ -83,96 +82,57 @@ UTAGE ファネル 1QtzdExbynBp（9/1〜9/11）
   9/10 の配信 SEpcQInjZ3Qq の測定行 0本
 </code></pre>
 <p><strong>62回ダウンロードされて、メアドは18件。そのどれにも UTM が付いていない。</strong></p>
-<hr />
-<h2 id="2-3">2. どこで落ちているか（3か所・全部実測で特定済み）</h2>
-<pre><code>メール → change.7years.life に utm 付きで着地           ✅ 効いている
+<hr>
+<h3 id="2-どこで落ちているか-3か所・全部実測で特定済み">2. どこで落ちているか（3か所・全部実測で特定済み）</h3>
+<pre><code>
+メール → change.7years.life に utm 付きで着地           ✅ 効いている
   → DL ボタン → untendai-update /get/ が UTM ごと KV へ   ✅ by_campaign はここから出ている
   → メアドの窓 → 中継 /register（email だけ）            🔴 ①ここで UTM が落ちる
   → 中継 → UTAGE message_reader_create（mail だけ）       🔴 ②UTM を焼く口が API に無い
   → 台帳 keisoku_suii.csv                                🔴 ③登録数の列が無い・DL は文字列のまま
 </code></pre>
 <table>
-<thead>
-<tr>
-<th>#</th>
-<th>落ちている所</th>
-<th>実測</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>①</td>
-<td>DL ページ <code>oHtrsl52qpXg</code> L439 の来訪クエリ <code>Q</code> が script A の IIFE に閉じていて、登録の JS（script B）から読めない。<code>/register</code> の body は <code>{email}</code> だけ</td>
-<td>中継の <code>utm_</code> 命中 0件</td>
-</tr>
-<tr>
-<td>②</td>
-<td>UTAGE の標準 utm_<em> 5列（<code>funnel_subscriber_list</code> が返すもの）は、</em><em>form 要素を置いたページに UTM 付きで来訪 → そのフォームから登録</em>*したときだけ埋まる。API で作った読者には入らない</td>
-<td>読者18名の utm_* 全部 null</td>
-</tr>
-<tr>
-<td>③</td>
-<td>台帳15列に登録数の列が無い。DL 計測は <code>JSON.stringify(by)</code> で1セルに詰めていて、キーを取り出している箇所が0件</td>
-<td><code>grep 登録</code> → 0件</td>
-</tr>
-</tbody>
+<tr><th>#</th><th>落ちている所</th><th>実測</th></tr>
+<tr><td>①</td><td>DL ページ <code>oHtrsl52qpXg</code> L439 の来訪クエリ <code>Q</code> が script A の IIFE に閉じていて、登録の JS（script B）から読めない。<code>/register</code> の body は <code>{email}</code> だけ</td><td>中継の <code>utm_</code> 命中 0件</td></tr>
+<tr><td>②</td><td>UTAGE の標準 utm_* 5列（<code>funnel_subscriber_list</code> が返すもの）は、<strong>form 要素を置いたページに UTM 付きで来訪 → そのフォームから登録</strong>したときだけ埋まる。API で作った読者には入らない</td><td>読者18名の utm_* 全部 null</td></tr>
+<tr><td>③</td><td>台帳15列に登録数の列が無い。DL 計測は <code>JSON.stringify(by)</code> で1セルに詰めていて、キーを取り出している箇所が0件</td><td><code>grep 登録</code> → 0件</td></tr>
 </table>
-<hr />
-<h2 id="3-1">3. 再設計 ── 1本の道にする</h2>
-<h3 id="3">決めたこと3つ</h3>
+<hr>
+<h3 id="3-再設計-1本の道にする">3. 再設計 ── 1本の道にする</h3>
+<h4 id="決めたこと3つ">決めたこと3つ</h4>
 <p><strong>(1) メアドの正本は中継（Workers）に置く。UTAGE は「顧客登録の写し」にする。</strong></p>
-<p>理由：中継の KV なら何列でも持てて、突き合わせも1か所で済む。<br />
-Mits様の「workerはAI-Mitsに帰ってきたときにメールで判定するから必要／UTAGEでは顧客登録だからこれも必要」と一致する。</p>
-<p>🔧 <strong>UTAGE 側にも UTM を残す（2026-09-11 に引き直して分かったこと）。</strong><br />
-<code>message_reader_create</code> に <code>utm_*</code> という名前の引数は無いが、<code>scenario_fields</code> / <code>common_fields</code> は<br />
-<strong>「キー=項目名、値=文字列」の自由な入れ物</strong>で、<code>message_reader_item_create</code> で読者項目を新しく作れる<br />
-（<code>reserved_word</code> は <code>freeN</code> が自動採番される）。</p>
-<pre><code>シナリオ ★【AI-Mits登録】XU7Gfd7XoiCQ のいまの読者項目 13個（実測）
+<p>理由：中継の KV なら何列でも持てて、突き合わせも1か所で済む。</p>
+<p>Mits様の「workerはAI-Mitsに帰ってきたときにメールで判定するから必要／UTAGEでは顧客登録だからこれも必要」と一致する。</p>
+<p>🔧 <strong>UTAGE 側にも UTM を残す（2026-09-11 に引き直して分かったこと）。</strong></p>
+<p><code>message_reader_create</code> に <code>utm_*</code> という名前の引数は無いが、<code>scenario_fields</code> / <code>common_fields</code> は</p>
+<p><strong>「キー=項目名、値=文字列」の自由な入れ物</strong>で、<code>message_reader_item_create</code> で読者項目を新しく作れる</p>
+<p>（<code>reserved_word</code> は <code>freeN</code> が自動採番される）。</p>
+<pre><code>
+シナリオ ★【AI-Mits登録】XU7Gfd7XoiCQ のいまの読者項目 13個（実測）
   name / mail / sei / mei / kana / phone / zipcode / pref / city /
   address / building / event_date / free20(お名前・2026-07-26 に後から作られた)
   → free21 以降が空いている
 </code></pre>
 <p><strong>作る読者項目 5つ</strong>（<code>field_group</code> は <code>scenario_fields</code>・<code>data_type</code> は <code>text</code>）</p>
 <table>
-<thead>
-<tr>
-<th>表示名</th>
-<th>入る値</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>流入元（utm_source）</td>
-<td>utage / spro / magmag</td>
-</tr>
-<tr>
-<td>流入手段（utm_medium）</td>
-<td>email</td>
-</tr>
-<tr>
-<td>配信名（utm_campaign）</td>
-<td>20260910_sekidobi など</td>
-</tr>
-<tr>
-<td>着地ページ</td>
-<td>change.7years.life/p/…</td>
-</tr>
-<tr>
-<td>初回来訪</td>
-<td>ISO8601</td>
-</tr>
-</tbody>
+<tr><th>表示名</th><th>入る値</th></tr>
+<tr><td>流入元（utm_source）</td><td>utage / spro / magmag</td></tr>
+<tr><td>流入手段（utm_medium）</td><td>email</td></tr>
+<tr><td>配信名（utm_campaign）</td><td>20260910_sekidobi など</td></tr>
+<tr><td>着地ページ</td><td>change.7years.life/p/…</td></tr>
+<tr><td>初回来訪</td><td>ISO8601</td></tr>
 </table>
-<p>これで、<strong>form を通った登録は UTAGE の標準 utm_* 5列に、API で作った登録は読者項目5つに</strong>、<br />
-どちらでも経路が残る。取りこぼしが出ない。</p>
+<p>これで、**form を通った登録は UTAGE の標準 utm_* 5列に、API で作った登録は読者項目5つに**、</p>
+<p>どちらでも経路が残る。取りこぼしが出ない。</p>
 <p><strong>(2) 登録の窓は「UTAGE の form ＋ 中継」の両方を通す。</strong></p>
-<p>理由：UTAGE の登録数・utm_* 5列は form 経由でしか埋まらない。<br />
-手本は既に動いている面 ── <code>8OPXLgTgerHc</code>（機能要望フォーム）の<br />
-<code>{"type":"form","scenario_id":"wUS58TtDwzYL","use_reader_item":1,…}</code>。</p>
+<p>理由：UTAGE の登録数・utm_* 5列は form 経由でしか埋まらない。</p>
+<p>手本は既に動いている面 ── <code>8OPXLgTgerHc</code>（機能要望フォーム）の</p>
+<p><code>{&quot;type&quot;:&quot;form&quot;,&quot;scenario_id&quot;:&quot;wUS58TtDwzYL&quot;,&quot;use_reader_item&quot;:1,…}</code>。</p>
 <p><strong>(3) 測る数字は中継の1か所から出す。台帳はそれを写すだけにする。</strong></p>
 <p>理由：いま DL は中継、登録は UTAGE、開封は UTAGE と、3か所に散っていて突き合わせられない。</p>
-<h3 id="_1">新しい道</h3>
-<pre><code>① メール／広告
+<h4 id="新しい道">新しい道</h4>
+<pre><code>
+① メール／広告
      ?utm_source=… &amp;utm_medium=email &amp;utm_campaign=…
         ↓
 ② change.7years.life に着地（お試し版 or DL ページ）
@@ -206,86 +166,34 @@ Mits様の「workerはAI-Mitsに帰ってきたときにメールで判定する
      17列目 登録数(by_campaign)
        🔧 直す：DL の by_campaign も、文字列のままではなくキーごとに数える
 </code></pre>
-<h3 id="campaign-1">あわせて直す ── campaign の形を1つにする</h3>
+<h4 id="あわせて直す-campaign-の形を1つにする">あわせて直す ── campaign の形を1つにする</h4>
 <p>いま2つの形が混ざっている（実測）。</p>
-<pre><code>20 utm_campaign=20260910_sekidobi     ← YYYYMMDD_&lt;名前&gt;
+<pre><code>
+20 utm_campaign=20260910_sekidobi     ← YYYYMMDD_&lt;名前&gt;
 43 utm_campaign=idou_heikin_0908      ← &lt;名前&gt;_MMDD
 32 utm_campaign=idou_heikin_0909      ← &lt;名前&gt;_MMDD
 </code></pre>
 <p><strong>これから出すものは <code>YYYYMMDD_&lt;短い名前&gt;</code> に揃える。</strong>過去の3つは書き換えない（配信済みのメールの中の URL は直せないため）。集計側で両方の形を受ける。</p>
-<hr />
-<h2 id="4">4. 測る数字の定義（これができれば「ちゃんと取れている」）</h2>
+<hr>
+<h3 id="4-測る数字の定義-これができれば-ちゃんと取れている">4. 測る数字の定義（これができれば「ちゃんと取れている」）</h3>
 <table>
-<thead>
-<tr>
-<th>数字</th>
-<th>どこから</th>
-<th>いまの値</th>
-<th>取れるようになる値</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>着地（pv / uu）</td>
-<td>UTAGE ファネル統計</td>
-<td>174 / 90（お試し版）</td>
-<td>そのまま</td>
-</tr>
-<tr>
-<td>ダウンロード</td>
-<td>中継 <code>/count</code></td>
-<td><strong>62回</strong></td>
-<td>そのまま</td>
-</tr>
-<tr>
-<td>ダウンロード（経路別）</td>
-<td>中継 <code>/count</code> の by_campaign</td>
-<td><strong>6キー</strong>（うち不明10）</td>
-<td>そのまま</td>
-</tr>
-<tr>
-<td><strong>登録（メアド）</strong></td>
-<td>中継 <code>/registrations</code>（新設）</td>
-<td><strong>18件</strong>（KV を手で数えた値）</td>
-<td>口から取れる</td>
-</tr>
-<tr>
-<td><strong>登録（経路別）</strong></td>
-<td>中継 <code>/registrations</code> の by_campaign</td>
-<td><strong>0件</strong>（UTM を持っていない）</td>
-<td>取れる</td>
-</tr>
-<tr>
-<td><strong>UTAGE の登録数</strong></td>
-<td>UTAGE ファネル統計</td>
-<td><strong>0</strong>（form を通っていない）</td>
-<td>数えられる</td>
-</tr>
-<tr>
-<td><strong>UTAGE の標準 utm_*</strong></td>
-<td><code>funnel_subscriber_list</code></td>
-<td><strong>全部 null</strong></td>
-<td>form 経由で埋まる</td>
-</tr>
-<tr>
-<td><strong>UTAGE の読者項目（UTM 5つ）</strong></td>
-<td><code>message_reader_get</code></td>
-<td><strong>項目がまだ無い</strong></td>
-<td>API 経由の登録でも残る</td>
-</tr>
-<tr>
-<td>開封・クリック</td>
-<td>UTAGE</td>
-<td>台帳の 8〜11列</td>
-<td>そのまま</td>
-</tr>
-</tbody>
+<tr><th>数字</th><th>どこから</th><th>いまの値</th><th>取れるようになる値</th></tr>
+<tr><td>着地（pv / uu）</td><td>UTAGE ファネル統計</td><td>174 / 90（お試し版）</td><td>そのまま</td></tr>
+<tr><td>ダウンロード</td><td>中継 <code>/count</code></td><td><strong>62回</strong></td><td>そのまま</td></tr>
+<tr><td>ダウンロード（経路別）</td><td>中継 <code>/count</code> の by_campaign</td><td><strong>6キー</strong>（うち不明10）</td><td>そのまま</td></tr>
+<tr><td><strong>登録（メアド）</strong></td><td>中継 <code>/registrations</code>（新設）</td><td><strong>18件</strong>（KV を手で数えた値）</td><td>口から取れる</td></tr>
+<tr><td><strong>登録（経路別）</strong></td><td>中継 <code>/registrations</code> の by_campaign</td><td><strong>0件</strong>（UTM を持っていない）</td><td>取れる</td></tr>
+<tr><td><strong>UTAGE の登録数</strong></td><td>UTAGE ファネル統計</td><td><strong>0</strong>（form を通っていない）</td><td>数えられる</td></tr>
+<tr><td><strong>UTAGE の標準 utm_\</strong>*</td><td><code>funnel_subscriber_list</code></td><td><strong>全部 null</strong></td><td>form 経由で埋まる</td></tr>
+<tr><td><strong>UTAGE の読者項目（UTM 5つ）</strong></td><td><code>message_reader_get</code></td><td><strong>項目がまだ無い</strong></td><td>API 経由の登録でも残る</td></tr>
+<tr><td>開封・クリック</td><td>UTAGE</td><td>台帳の 8〜11列</td><td>そのまま</td></tr>
 </table>
-<p><strong>「ちゃんと取れている」の線：ダウンロード62回に対して、登録が何件で、そのうち何件に経路が付いているかが、1つの表で言えること。</strong><br />
-いまは登録18件の経路が0件なので、この表が作れない。</p>
-<hr />
-<h2 id="5">5. 触るもの</h2>
-<pre><code>UTAGE（MCP API・部分置換のみ）
+<p><strong>「ちゃんと取れている」の線：ダウンロード62回に対して、登録が何件で、そのうち何件に経路が付いているかが、1つの表で言えること。</strong></p>
+<p>いまは登録18件の経路が0件なので、この表が作れない。</p>
+<hr>
+<h3 id="5-触るもの">5. 触るもの</h3>
+<pre><code>
+UTAGE（MCP API・部分置換のみ）
   UgSfW8MCzHqv  お試し版        メアドの窓を form 要素に。着地の UTM を sessionStorage へ
   oHtrsl52qpXg  ダウンロード     同上。L439 の Q を IIFE の外に出す
 
@@ -302,26 +210,31 @@ UTAGE の読者項目（MCP API・message_reader_item_create）
   /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/keisoku_suii.csv   16列目「登録数」17列目「登録数(by_campaign)」
   merumaga-keisoku-worker/src/index.js  L134-135 の JSON.stringify をやめてキーごとに数える
 </code></pre>
-<hr />
-<h2 id="6">6. 先に確かめること（推測で埋めない）</h2>
+<hr>
+<h3 id="6-先に確かめること-推測で埋めない">6. 先に確かめること（推測で埋めない）</h3>
 <ul>
-<li><strong>本番の Worker が手元のソースと同じか。</strong><code>.wrangler/</code> にデプロイの記録が0件。<br />
-<code>wrangler deployments list --name aimits-report-proxy</code> は node 22 が要る（手元は v20.20.1）</li>
-<li><strong>短縮ドメイン <code>change.7years.life</code> 経由の UTM が、UTAGE の <code>funnel_subscriber_list</code> の<br />
-  utm_* 列まで届くか。</strong>ページが 200 を返すことは実測済みだが、登録者レコード側は未検証。<br />
-  → 手を入れた直後に、テスト用アドレス1件で通して確かめる（終わったら消す）</li>
+<li><strong>本番の Worker が手元のソースと同じか。</strong><code>.wrangler/</code> にデプロイの記録が0件。</li>
 </ul>
-<hr />
-<h2 id="7">7. 既に決まっていること（変えない）</h2>
+<p>  <code>wrangler deployments list --name aimits-report-proxy</code> は node 22 が要る（手元は v20.20.1）</p>
+<ul>
+<li>**短縮ドメイン <code>change.7years.life</code> 経由の UTM が、UTAGE の <code>funnel_subscriber_list</code> の</li>
+</ul>
+<p>  utm_* 列まで届くか。**ページが 200 を返すことは実測済みだが、登録者レコード側は未検証。</p>
+<p>  → 手を入れた直後に、テスト用アドレス1件で通して確かめる（終わったら消す）</p>
+<hr>
+<h3 id="7-既に決まっていること-変えない">7. 既に決まっていること（変えない）</h3>
 <ul>
 <li><strong>登録の受け口は両方置く</strong>（UTAGE の form ＋ 中継）── 2026-09-11 Mits様</li>
-<li><strong>Worker も UTAGE も両方要る</strong> ── 2026-09-11 Mits様原文<br />
-  「workerはAI-Mitsに帰ってきたときにメールで判定するから必要／UTAGEでは顧客登録だからこれも必要」</li>
+<li><strong>Worker も UTAGE も両方要る</strong> ── 2026-09-11 Mits様原文</li>
+</ul>
+<p>  「workerはAI-Mitsに帰ってきたときにメールで判定するから必要／UTAGEでは顧客登録だからこれも必要」</p>
+<ul>
 <li><strong>登録経路（tracking）は作らない。UTM で行く</strong> ── 2026-09-08 18:05 Mits様</li>
 <li><strong>落ちる邪魔をしない</strong>（3秒で見切ってダウンロードへ進む・中継が落ちていても必ず落ちる）</li>
 <li><strong>KV の26件を UTAGE に流し込まない</strong>（2026-09-08 に消したテスト読者が戻るため）</li>
 <li><strong>9/9・9/10 の2回分の UTM は UTAGE 側では取り返せない</strong>（後付けの口が無い）</li>
 </ul>
+
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
 </body>
 </html>

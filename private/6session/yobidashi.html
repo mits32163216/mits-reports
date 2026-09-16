@@ -50,50 +50,34 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 </head>
 <body>
 <div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
-<div class="meta-head"><div><b>元のファイル</b>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/yobidashi.md</div><div><b>最後に更新された日時</b>2026-09-16 13:25 JST</div></div>
-<h1>申し送り</h1>
-<h1 id="_1">呼び出し札（止まっている持ち場への貼り紙）</h1>
-<p><strong>毎朝の点呼（asa-tenko-6session・6:30）が書く。各持ち場の朝の時計が、自分の仕事を始める前にここを読む。</strong></p>
-<p>予約タスクからは他のチャットへ連絡を送れない。だから「呼ぶ側が送る」のではなく、<br />
-<strong>呼ばれる側が毎朝必ず見に来る</strong>形にしている。</p>
-<h2 id="_2">読み方（各持ち場）</h2>
-<ol>
-<li>下の表に自分の名前の行があるか見る</li>
-<li>あれば、その日のうちに片づける</li>
-<li>片づけたら、その行の「済んだか」に <code>済み（YYYY-MM-DD HH:MM）</code> と書き足す。<strong>行は消さない</strong></li>
-</ol>
-<h2 id="2">この札に載る行は2つある</h2>
-<p><strong>① 呼び出し（点呼が書く）</strong><br />
-止まっている持ち場を見つけたら、下の表の末尾に1行足す。止まりが無い日は何も書かない。</p>
-<p><strong>② 伝言（持ち場が書く・2026-09-16 追加）</strong><br />
-持ち場どうしの連絡は、まず相手へ直接1通送る（宛先表 renrakusaki.md）。<br />
-ただし<strong>予約タスクの窓から他のチャットへ送る口は開いていないことがある</strong><br />
-（送信の道具の説明に「Unavailable in unattended sessions (scheduled-task runs and remote-dispatched sessions), and cannot deliver to them either」とある。実機での確かめは 2026-09-17 朝の初回）。<br />
-送れなかったら、伝言をこの表の末尾に1行置いていく。伝言が消えないための道。</p>
-<p><strong>どちらの行も、「持ち場」の欄には〈読んでほしい相手の名前〉を書く。</strong><br />
-読む側は自分の名前だけを探せばよい形にするため。伝言の場合は、「してほしいこと」の頭に <code>&lt;送り主&gt;から：</code> を付ける。</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-16 14:51 ／ 写した時刻 2026-09-16 16:02</p>
+<h2 id="申し送り-止まっている持ち場への貼り紙">申し送り（止まっている持ち場への貼り紙）</h2>
+<p><strong>毎朝の定時報告（asa-tenko-6session・6:30）が書く。各持ち場の朝の時計が、自分の仕事を始める前にここを読む。</strong></p>
+<p>呼ぶ側が送っても相手が読むとは限らないので、<strong>呼ばれる側が毎朝必ず見に来る</strong>形にしている。</p>
+<p>（2026-09-16 13:5x 訂正。ここに書いてあった「予約タスクからは他のチャットへ連絡を送れない」は誤り。</p>
+<p>断られるのは <code>mcp__ccd_session_mgmt__send_message</code> だけで、<code>SendMessage</code>（<code>to</code> に ListAgents の名前）は</p>
+<p>予約タスクの回でも届く。実機の記録は決定の記録 2026-09-16 13:5x の行にある）</p>
+<h3 id="読み方-各持ち場">読み方（各持ち場）</h3>
+<p>1. 下の表に自分の名前の行があるか見る</p>
+<p>2. あれば、その日のうちに片づける</p>
+<p>3. 片づけたら、その行の「済んだか」に <code>済み（YYYY-MM-DD HH:MM）</code> と書き足す。<strong>行は消さない</strong></p>
+<h3 id="この札に載る行は2つある">この札に載る行は2つある</h3>
+<p><strong>① 呼び出し（定時報告が書く）</strong></p>
+<p>止まっている持ち場を見つけたら、下の表の末尾に1行足す。止まりが無い日は何も書かない。</p>
+<p><strong>② 伝言（持ち場が書く・2026-09-16 追加）</strong></p>
+<p>持ち場どうしの連絡は、まず相手へ直接1通送る（宛先表 renrakusaki.md）。</p>
+<p>窓によって道具が違う ── チャットの窓は <code>mcp__ccd_session_mgmt__send_message</code>（local_ のID）、</p>
+<p>予約タスクの窓は <code>SendMessage</code>（ListAgents が返す名前）。</p>
+<p>送れなかったときだけ、伝言をこの表の末尾に1行置いていく。伝言が消えないための控えの道。</p>
+<p><strong>どちらの行も、「持ち場」の欄には〈読んでほしい相手の名前〉を書く。</strong></p>
+<p>読む側は自分の名前だけを探せばよい形にするため。伝言の場合は、「してほしいこと」の頭に <code>&lt;送り主&gt;から：</code> を付ける。</p>
 <p>書く形（1行）：</p>
 <p><code>| YYYY-MM-DD | 読んでほしい相手 | N日（伝言のときは空欄） | してほしいこと／&lt;送り主&gt;から：用件 | |</code></p>
 <table>
-<thead>
-<tr>
-<th>日付</th>
-<th>持ち場</th>
-<th>止まっている日数</th>
-<th>してほしいこと</th>
-<th>済んだか</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
+<tr><th>日付</th><th>持ち場</th><th>止まっている日数</th><th>してほしいこと</th><th>済んだか</th></tr>
 </table>
+
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
 </body>
 </html>

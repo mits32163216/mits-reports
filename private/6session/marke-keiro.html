@@ -50,489 +50,261 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 </head>
 <body>
 <div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
-<div class="meta-head"><div><b>元のファイル</b>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/マーケ経路_決まったこと台帳_20260912.md</div><div><b>最後に更新された日時</b>2026-09-13 22:07 JST</div></div>
-<h1>マーケ経路の決まったこと</h1>
-<h1 id="marketing">マーケ経路で決まったこと（運転台 marketing 枝が実装する側の写し）</h1>
-<p>Mits様（2026-09-08）「メルマガ経路関係で決まったことは、untendai マーケティングがアプリに実装していくので、常に P2P で共有する」。<br />
-正本はセッション「メール配信と計測と自動化」の<br />
-<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/整理プロセス/登録経路の仕組み整理_AI-Mits_20260908.md</code>（節番号）。<br />
-ここは運転台側の写し。決まるたびに上から足す。<strong>実装したら右端に版を書く。</strong></p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-13 22:07 ／ 写した時刻 2026-09-16 16:02</p>
+<h2 id="マーケ経路で決まったこと-運転台-marketing-枝が実装する側の写し">マーケ経路で決まったこと（運転台 marketing 枝が実装する側の写し）</h2>
+<p>Mits様（2026-09-08）「メルマガ経路関係で決まったことは、untendai マーケティングがアプリに実装していくので、常に P2P で共有する」。</p>
+<p>正本はセッション「メール配信と計測と自動化」の</p>
+<p><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/整理プロセス/登録経路の仕組み整理_AI-Mits_20260908.md</code>（節番号）。</p>
+<p>ここは運転台側の写し。決まるたびに上から足す。<strong>実装したら右端に版を書く。</strong></p>
 <table>
-<thead>
-<tr>
-<th>日付</th>
-<th>正本の節</th>
-<th>決まったこと</th>
-<th>運転台で触る場所</th>
-<th>実装した版</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>2026-09-08</td>
-<td>11</td>
-<td>経路の印は UTM。<code>?utm_source=&lt;スタンド&gt;&amp;utm_medium=email&amp;utm_campaign=&lt;配信日YYYYMMDD&gt;</code>。utm_source は utage / magmag / spro / test（増えたら note / x / youtube）。UTAGE の集計は funnel_stats_get / funnel_stats_daily の utm_<em> 絞り込み、登録者ごとは funnel_subscriber_list の utm_</em> 5列（utm_source / utm_medium / utm_campaign / utm_term / utm_content・応答24列中・2026-09-08 実測・いまは全員 null）</td>
-<td><code>src-tauri/src/utage.rs</code> parse_subscriber（いまは mail/sei/mei/name/kana/created_at/common_reader_id だけ読む）に utm_* を足す。customer 表は <code>inflow_source</code>（001_init.sql 72行）1列のみ</td>
-<td>未</td>
-</tr>
-<tr>
-<td>2026-09-08</td>
-<td>9（seiri 実装済）</td>
-<td><strong>DL の数え方が決まり動いている。</strong>Worker <code>untendai-update</code>（<code>/Users/nishidamitsuhiro/untendai-seiri/updater/index.js</code>）が <code>/get/</code> を押した瞬間に KV <code>untendai_download_log</code>（binding DLLOG）へ1件ずつ置く（ゴールページは作らない・足し引きしない）。1件の形：ts / os(mac,windows) / which(latest,prev) / version / from(utm_source か from=) / utm{source,medium,campaign,content,term} / ref / country / ua。読む口 <code>https://untendai-update.3216-fun.workers.dev/count</code>（<code>?detail=1</code>・<code>?from=YYYY-MM-DD</code>・<code>days</code> 既定30）→ since / total / by_day / by_os / by_from / by_version / by_campaign。🚨 KV list は反映に最大60秒。<code>(不明)</code> は札の無い経路（エラーではない）。2026-09-08 時点の記録 0件（動作確認分は消した・2026-09-09 の3スタンド配信が最初の実データ）。<strong>CVR の分母は UTAGE</strong>：funnel_stats_get（funnel 1QtzdExbynBp・start_date/end_date）の PV/UU。9/7〜9/8 実測：1_入口_案内と同意 PV90/UU29、2_運転台のダウンロード PV145/UU67</td>
-<td>配信計測の画面に「分母（UTAGE の PV/UU）」と「分子（/count の by_from）」を1枚に並べる。列は上の1件の形をそのまま使う</td>
-<td>未</td>
-</tr>
-<tr>
-<td>2026-09-08</td>
-<td>9</td>
-<td>DL の記録（untendai-seiri の Worker untendai-update・/count）の <code>from</code> は utm_source の値そのまま。DL ボタンがページ URL の utm_source を読んで写す作りを seiri へ依頼済み</td>
-<td>main 側（Worker）。この枝では触らない</td>
-<td>─</td>
-</tr>
-<tr>
-<td>2026-09-08</td>
-<td>10</td>
-<td>計測から Mits様と AI の分を除外：ac_nishida@spro01.com / 3216.fun@gmail.com / dai@3216.fun、bs-<em> / dup-test-</em> / +dup1 型、IP 103.100.190.110（変わり得る）、UA curl/*、utm_source=test。生データは残し除外前後の両方を持つ。除外条件は <code>配信計測_生データ/除外リスト.md</code> に1本</td>
-<td>配信計測の画面で「除外前／除外後」の両方を出す。除外条件はアプリに焼き付けない（利用者ごとに違う・Mits様の実データを商品に入れない）</td>
-<td>未</td>
-</tr>
-<tr>
-<td>2026-09-08</td>
-<td>12</td>
-<td>パートナー制度（準備中）：紹介者の印は紹介リンクの <code>?ftid=&lt;パートナー固有コード&gt;</code>。台帳の「経路」列に <code>partner:&lt;ftid&gt;</code>。成約は管理画面の CSV（MCP にパートナー関連ツールは 0本）</td>
-<td>ftid は funnel_subscriber_list の応答（24列・2026-09-08 実測）に<strong>出ない</strong>。出るのは管理画面「成約状況」の CSV（案件名／パートナー／ステータス／報酬額／種別／成約日時）だけ。MCP にパートナー関連ツール 0本（178本中）。→ customer 表の ftid 列は当面 CSV 取り込みで埋める。読者側 API に出るかは成約1件できてから（あちらが確かめて送る）</td>
-<td>未</td>
-</tr>
-</tbody>
+<tr><th>日付</th><th>正本の節</th><th>決まったこと</th><th>運転台で触る場所</th><th>実装した版</th></tr>
+<tr><td>2026-09-08</td><td>11</td><td>経路の印は UTM。<code>?utm_source=&lt;スタンド&gt;&amp;utm_medium=email&amp;utm_campaign=&lt;配信日YYYYMMDD&gt;</code>。utm_source は utage / magmag / spro / test（増えたら note / x / youtube）。UTAGE の集計は funnel_stats_get / funnel_stats_daily の utm_* 絞り込み、登録者ごとは funnel_subscriber_list の utm_* 5列（utm_source / utm_medium / utm_campaign / utm_term / utm_content・応答24列中・2026-09-08 実測・いまは全員 null）</td><td><code>src-tauri/src/utage.rs</code> parse_subscriber（いまは mail/sei/mei/name/kana/created_at/common_reader_id だけ読む）に utm_* を足す。customer 表は <code>inflow_source</code>（001_init.sql 72行）1列のみ</td><td>未</td></tr>
+<tr><td>2026-09-08</td><td>9（seiri 実装済）</td><td><strong>DL の数え方が決まり動いている。</strong>Worker <code>untendai-update</code>（<code>/Users/nishidamitsuhiro/untendai-seiri/updater/index.js</code>）が <code>/get/</code> を押した瞬間に KV <code>untendai_download_log</code>（binding DLLOG）へ1件ずつ置く（ゴールページは作らない・足し引きしない）。1件の形：ts / os(mac,windows) / which(latest,prev) / version / from(utm_source か from=) / utm{source,medium,campaign,content,term} / ref / country / ua。読む口 <code><a href="https://un">https://un</a>tendai-update.3216-fun.workers.dev/count</code>（<code>?detail=1</code>・<code>?from=YYYY-MM-DD</code>・<code>days</code> 既定30）→ since / total / by_day / by_os / by_from / by_version / by_campaign。🚨 KV list は反映に最大60秒。<code>(不明)</code> は札の無い経路（エラーではない）。2026-09-08 時点の記録 0件（動作確認分は消した・2026-09-09 の3スタンド配信が最初の実データ）。<strong>CVR の分母は UTAGE</strong>：funnel_stats_get（funnel 1QtzdExbynBp・start_date/end_date）の PV/UU。9/7〜9/8 実測：1_入口_案内と同意 PV90/UU29、2_運転台のダウンロード PV145/UU67</td><td>配信計測の画面に「分母（UTAGE の PV/UU）」と「分子（/count の by_from）」を1枚に並べる。列は上の1件の形をそのまま使う</td><td>未</td></tr>
+<tr><td>2026-09-08</td><td>9</td><td>DL の記録（untendai-seiri の Worker untendai-update・/count）の <code>from</code> は utm_source の値そのまま。DL ボタンがページ URL の utm_source を読んで写す作りを seiri へ依頼済み</td><td>main 側（Worker）。この枝では触らない</td><td>─</td></tr>
+<tr><td>2026-09-08</td><td>10</td><td>計測から Mits様と AI の分を除外：ac_nishida@spro01.com / 3216.fun@gmail.com / dai@3216.fun、bs-* / dup-test-* / +dup1 型、IP 103.100.190.110（変わり得る）、UA curl/*、utm_source=test。生データは残し除外前後の両方を持つ。除外条件は <code>配信計測_生データ/除外リスト.md</code> に1本</td><td>配信計測の画面で「除外前／除外後」の両方を出す。除外条件はアプリに焼き付けない（利用者ごとに違う・Mits様の実データを商品に入れない）</td><td>未</td></tr>
+<tr><td>2026-09-08</td><td>12</td><td>パートナー制度（準備中）：紹介者の印は紹介リンクの <code>?ftid=&lt;パートナー固有コード&gt;</code>。台帳の「経路」列に <code>partner:&lt;ftid&gt;</code>。成約は管理画面の CSV（MCP にパートナー関連ツールは 0本）</td><td>ftid は funnel_subscriber_list の応答（24列・2026-09-08 実測）に<strong>出ない</strong>。出るのは管理画面「成約状況」の CSV（案件名／パートナー／ステータス／報酬額／種別／成約日時）だけ。MCP にパートナー関連ツール 0本（178本中）。→ customer 表の ftid 列は当面 CSV 取り込みで埋める。読者側 API に出るかは成約1件できてから（あちらが確かめて送る）</td><td>未</td></tr>
 </table>
-<h2 id="mits">決まっていないこと（Mits様の指示待ち）</h2>
+<h3 id="決まっていないこと-Mits様の指示待ち">決まっていないこと（Mits様の指示待ち）</h3>
 <ul>
 <li>運転台のアカウント登録に経路を受ける欄を足す件（auth.rs register の body／中継 /register／UTAGE 読者の reader_item の3か所案）</li>
 </ul>
-<h2 id="2026-09-08-1829-jst-mits-untendai">配信計測の実データが届いた（2026-09-08 18:29 JST 取得・Mits様指示「データが整理できたら untendai マーケティングに報告して」）</h2>
+<h3 id="配信計測の実データが届いた-2026-09-08-18-29-JST-取得・Mits様指示-デー">配信計測の実データが届いた（2026-09-08 18:29 JST 取得・Mits様指示「データが整理できたら untendai マーケティングに報告して」）</h3>
 <ul>
 <li>生データ（API 応答そのまま・487.9KB）：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/整理プロセス/配信計測_生データ/utage_broadcast_stats_20260908.json</code></li>
-<li>形：<code>fetched_at</code> / <code>account_id</code>（vNItAbojIgEK）/ <code>scenario_id</code>（bjDd8NXsSPMa）/ <code>message_list_raw</code> / <code>message_list_parsed</code>（data 20件・1件＝id, channel, type, status, title, send_type, send_date, send_hour, send_min, created_at, updated_at, mail）/ <code>message_stats_raw_by_id</code>（5件・SSE の JSON-RPC 応答そのまま・<code>result.content[0].text</code> を再 JSON）/ <code>exclusion</code>（source, excluded_readers, reader_activity_raw, counts_by_message, note）</li>
+  <li>形：<code>fetched_at</code> / <code>account_id</code>（vNItAbojIgEK）/ <code>scenario_id</code>（bjDd8NXsSPMa）/ <code>message_list_raw</code> / <code>message_list_parsed</code>（data 20件・1件＝id, channel, type, status, title, send_type, send_date, send_hour, send_min, created_at, updated_at, mail）/ <code>message_stats_raw_by_id</code>（5件・SSE の JSON-RPC 応答そのまま・<code>result.content[0].text</code> を再 JSON）/ <code>exclusion</code>（source, excluded_readers, reader_activity_raw, counts_by_message, note）</li>
 <li>CSV（出口の見本・21行）：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/整理プロセス/配信計測たたき台_20260908.csv</code></li>
-<li>見出し16列：配信日,件名,経路,送信,到達,開封,開封率,クリック,クリック率,解除,配信ID,取得時刻,送信（除外後）,開封（除外後）,クリック（除外後）,解除（除外後）</li>
-<li>配信1本＝UTAGE／まぐまぐ／spro の3行＋合計行。開封率・クリック率は数式 <code>=IF(D2="","",F2/D2)</code></li>
+  <li>見出し16列：配信日,件名,経路,送信,到達,開封,開封率,クリック,クリック率,解除,配信ID,取得時刻,送信（除外後）,開封（除外後）,クリック（除外後）,解除（除外後）</li>
+  <li>配信1本＝UTAGE／まぐまぐ／spro の3行＋合計行。開封率・クリック率は数式 <code>=IF(D2=&quot;&quot;,&quot;&quot;,F2/D2)</code></li>
 <li>取り直しの道具：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/整理プロセス/haishin_keisoku_utage_to_sheet.py</code>（--limit 5 / --all / --skip-exclude）── <strong>運転台の Rust に写す手本はこれ</strong></li>
 </ul>
 <p>直近5通（UTAGE・→ の右が除外後）</p>
 <table>
-<thead>
-<tr>
-<th>配信日</th>
-<th>件名</th>
-<th>配信ID</th>
-<th>送信</th>
-<th>開封</th>
-<th>クリック</th>
-<th>解除</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>2026-09-07</td>
-<td>AI-Mitsと経営アプリ 公開</td>
-<td>A32N2J8UwNAQ</td>
-<td>1815→1814</td>
-<td>309→308</td>
-<td>31→30</td>
-<td>1</td>
-</tr>
-<tr>
-<td>2026-09-05</td>
-<td>居酒屋で店員やってます</td>
-<td>0rKOIKvtK4kQ</td>
-<td>1822→1821</td>
-<td>344→343</td>
-<td>26→25</td>
-<td>1</td>
-</tr>
-<tr>
-<td>2026-09-04</td>
-<td>AIに相談'なんて'しなくなります。</td>
-<td>VePtd8IbqGMb</td>
-<td>1826→1825</td>
-<td>336→335</td>
-<td>39→38</td>
-<td>3</td>
-</tr>
-<tr>
-<td>2026-08-06</td>
-<td>なぜ１億は稼げても10億は稼げないのか？</td>
-<td>3s6zmgsP6tD0</td>
-<td>1826→1825</td>
-<td>357→356</td>
-<td>10</td>
-<td>0</td>
-</tr>
-<tr>
-<td>2026-08-04</td>
-<td>甲子園だってサーカスです。</td>
-<td>Q0EPXN9iSloK</td>
-<td>1827→1826</td>
-<td>396</td>
-<td>12</td>
-<td>0</td>
-</tr>
-</tbody>
+<tr><th>配信日</th><th>件名</th><th>配信ID</th><th>送信</th><th>開封</th><th>クリック</th><th>解除</th></tr>
+<tr><td>2026-09-07</td><td>AI-Mitsと経営アプリ 公開</td><td>A32N2J8UwNAQ</td><td>1815→1814</td><td>309→308</td><td>31→30</td><td>1</td></tr>
+<tr><td>2026-09-05</td><td>居酒屋で店員やってます</td><td>0rKOIKvtK4kQ</td><td>1822→1821</td><td>344→343</td><td>26→25</td><td>1</td></tr>
+<tr><td>2026-09-04</td><td>AIに相談&#x27;なんて&#x27;しなくなります。</td><td>VePtd8IbqGMb</td><td>1826→1825</td><td>336→335</td><td>39→38</td><td>3</td></tr>
+<tr><td>2026-08-06</td><td>なぜ１億は稼げても10億は稼げないのか？</td><td>3s6zmgsP6tD0</td><td>1826→1825</td><td>357→356</td><td>10</td><td>0</td></tr>
+<tr><td>2026-08-04</td><td>甲子園だってサーカスです。</td><td>Q0EPXN9iSloK</td><td>1827→1826</td><td>396</td><td>12</td><td>0</td></tr>
 </table>
-<p><strong>運転台の表に効く事実</strong><br />
-- 到達は UTAGE の API に無い（空欄・画面から手入力）。まぐまぐ・spro の行は今回空（画面からの手入力・後日）<br />
-- 除外はメールアドレスでしか効かない。このシナリオで当たったのは 3216.fun@gmail.com（reader 1JWtYFFc9lft）1人。IP・UA は UTAGE の API に欄が無い。解除は誰が解除したか取る口が無く差分ゼロ<br />
-- 送信・開封・クリックの除外は message_reader_sent_list / open_list / click_list を reader 単位で数えて引く<br />
-- ~~固定シートへの API 書き込みは 403（持ち主 3216.fun・書き込み側 ykhm1116 が共有に無い）。あちらが GUI 取り込みで通している~~<br />
-<strong>→ 2026-09-08 19:55 Mits様が Google シートを外した。</strong>原文「Untendaiマーケティングが読めれば良いので、ローカルのAIが読める数字で構わない。最初は私がGoogleで目視しようと思ったが、今はその役目はなくなったので。」<br />
-<strong>配信計測の正本は上の CSV と生 JSON の2つに確定。</strong>以後の配信分も同じファイルを上書き。運転台はこの2つを読む</p>
-<p><strong>実装した（2026-09-08・marketing 枝・未コミット・v1.60.5 のまま）</strong>：<code>src-tauri/src/haishin.rs</code>（表 <code>haishin_keisoku</code>・CSV 取り込み・分析）、<code>commands.rs</code> の <code>haishin_import_csv_bytes</code> / <code>haishin_list</code> / <code>haishin_bunseki</code>、<code>src/index.html</code> のマーケティング画面（取り込み口・分析・表）。テスト5本。untendai-mkt.app で正本 CSV を入れて実測：20行読み 15件入る・配信5本・UTAGE 開封率 平均 19.11%（幅 17.02〜21.67%）・クリック率 平均 1.30%。<br />
-<strong>運転台での持ち方</strong>：生 JSON の形をそのまま SQLite の表にする（message 1行＝message_list の1件、stats 1行＝配信ID×取得時刻）。除外は「除外の条件」を利用者が自分で持つ欄にし、除外前／除外後の両方を出す（正本10節）。</p>
-<h2 id="2026-09-0812">パートナー制度で出来たもの（2026-09-08・正本12節）</h2>
+<p><strong>運転台の表に効く事実</strong></p>
+<ul>
+<li>到達は UTAGE の API に無い（空欄・画面から手入力）。まぐまぐ・spro の行は今回空（画面からの手入力・後日）</li>
+<li>除外はメールアドレスでしか効かない。このシナリオで当たったのは 3216.fun@gmail.com（reader 1JWtYFFc9lft）1人。IP・UA は UTAGE の API に欄が無い。解除は誰が解除したか取る口が無く差分ゼロ</li>
+<li>送信・開封・クリックの除外は message_reader_sent_list / open_list / click_list を reader 単位で数えて引く</li>
+<li>~~固定シートへの API 書き込みは 403（持ち主 3216.fun・書き込み側 ykhm1116 が共有に無い）。あちらが GUI 取り込みで通している~~</li>
+</ul>
+<p>  <strong>→ 2026-09-08 19:55 Mits様が Google シートを外した。</strong>原文「Untendaiマーケティングが読めれば良いので、ローカルのAIが読める数字で構わない。最初は私がGoogleで目視しようと思ったが、今はその役目はなくなったので。」</p>
+<p>  <strong>配信計測の正本は上の CSV と生 JSON の2つに確定。</strong>以後の配信分も同じファイルを上書き。運転台はこの2つを読む</p>
+<p><strong>実装した（2026-09-08・marketing 枝・未コミット・v1.60.5 のまま）</strong>：<code>src-tauri/src/haishin.rs</code>（表 <code>haishin_keisoku</code>・CSV 取り込み・分析）、<code>commands.rs</code> の <code>haishin_import_csv_bytes</code> / <code>haishin_list</code> / <code>haishin_bunseki</code>、<code>src/index.html</code> のマーケティング画面（取り込み口・分析・表）。テスト5本。untendai-mkt.app で正本 CSV を入れて実測：20行読み 15件入る・配信5本・UTAGE 開封率 平均 19.11%（幅 17.02〜21.67%）・クリック率 平均 1.30%。</p>
+<p><strong>運転台での持ち方</strong>：生 JSON の形をそのまま SQLite の表にする（message 1行＝message_list の1件、stats 1行＝配信ID×取得時刻）。除外は「除外の条件」を利用者が自分で持つ欄にし、除外前／除外後の両方を出す（正本10節）。</p>
+<h3 id="パートナー制度で出来たもの-2026-09-08・正本12節">パートナー制度で出来たもの（2026-09-08・正本12節）</h3>
 <table>
-<thead>
-<tr>
-<th>もの</th>
-<th>ID／URL</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>案件「AI-Mits ご紹介-20260908更新」</td>
-<td>T1pSTUHxF427（メール登録・登録先 XU7Gfd7XoiCQ・LP1 <code>https://change.7years.life/p/V3A9LG00dL2S</code>・手動承認・公開・報酬 登録時 1,000円＝たたき台）</td>
-</tr>
-<tr>
-<td>パートナーグループ「AI-Mits ご紹介者」</td>
-<td>xHmef2zTwgB2・登録 URL <code>https://change.7years.life/partner/xHmef2zTwgB2/register</code></td>
-</tr>
-<tr>
-<td>お客様目線のパートナー 3216.fun@gmail.com の紹介リンク</td>
-<td><code>https://change.7years.life/p/K0ErKAteTkXm/KOPZvrRngqRe</code>（<code>/p/V3A9LG00dL2S</code> に着地）</td>
-</tr>
-<tr>
-<td>紹介者向けシナリオ「AI-Mits ご紹介者_パートナー配信」</td>
-<td>e2KfC3R6ehDT（中身は空・グループの連携シナリオへの紐付けは未了）</td>
-</tr>
-</tbody>
+<tr><th>もの</th><th>ID／URL</th></tr>
+<tr><td>案件「AI-Mits ご紹介-20260908更新」</td><td>T1pSTUHxF427（メール登録・登録先 XU7Gfd7XoiCQ・LP1 <code><a href="https://change.7years.">https://change.7years.</a>life/p/V3A9LG00dL2S</code>・手動承認・公開・報酬 登録時 1,000円＝たたき台）</td></tr>
+<tr><td>パートナーグループ「AI-Mits ご紹介者」</td><td>xHmef2zTwgB2・登録 URL <code><a href="https://change.7years.">https://change.7years.</a>life/partner/xHmef2zTwgB2/register</code></td></tr>
+<tr><td>お客様目線のパートナー 3216.fun@gmail.com の紹介リンク</td><td><code><a href="https://change.7years.">https://change.7years.</a>life/p/K0ErKAteTkXm/KOPZvrRngqRe</code>（<code>/p/V3A9LG00dL2S</code> に着地）</td></tr>
+<tr><td>紹介者向けシナリオ「AI-Mits ご紹介者_パートナー配信」</td><td>e2KfC3R6ehDT（中身は空・グループの連携シナリオへの紐付けは未了）</td></tr>
 </table>
-<p><strong>紹介リンクの形は2つ。運転台で紹介者を読むなら両方見る。</strong><br />
-- 新：<code>/p/&lt;ページID&gt;/&lt;パートナーID&gt;</code>（パスの2つ目がパートナーID）<br />
-- 旧：<code>?ftid=&lt;パートナーID&gt;</code></p>
+<p><strong>紹介リンクの形は2つ。運転台で紹介者を読むなら両方見る。</strong></p>
+<ul>
+<li>新：<code>/p/&lt;ページID&gt;/&lt;パートナーID&gt;</code>（パスの2つ目がパートナーID）</li>
+<li>旧：<code>?ftid=&lt;パートナーID&gt;</code></li>
+</ul>
 <p>顧客表の ftid 列には「パートナーID（パスの2つ目 or ftid）」を入れる。運転台側で今すぐ触るものは無し。</p>
-<p><strong>訂正（2026-09-08・あちらの実データ＋こちらの実叩き）：紹介者はシナリオ側の読者 API に出る。</strong><br />
-<code>message_reader_list</code>（account vNItAbojIgEK・scenario XU7Gfd7XoiCQ・per_page=1）の応答に<br />
-<code>partner</code> / <code>funnel_tracking_id</code> / <code>funnel_tracking_name</code> / <code>message_tracking_id</code> / <code>message_tracking_name</code> がある（いまは全部 null・total 8）。<br />
-あちらは message_reader_create の応答で <code>referrer</code> も見ている（reader_list の応答には出なかった）。<br />
-→ 運転台で紹介者を取る口は、ファネルの funnel_subscriber_list ではなく <strong>シナリオ側の読者 API の <code>partner</code></strong>。<br />
-<code>partner</code> に入るのがパートナーID か名前かは、パートナー経由の成約1件のあとに、あちらが確かめて送る。</p>
-<h2 id="dl-2026-09-08seiri-mits">DL ページに「メアドの窓」が付いた（2026-09-08・seiri が実施・Mits様「ダウンロードボタンでメアドだけ取ろう」）</h2>
-<p>DL ページ（UTAGE oHtrsl52qpXg）のダウンロードボタンを押すと小窓が開き、メールアドレスを1欄だけ聞く。中継の /register を通って UTAGE に読者ができる。<br />
-押した数の記録（/get/ の1件1行・Worker untendai-update）はこれまで通り別に残る。<br />
-→ 配信の表に並べられる数は3つになった：<strong>ページを見た数（UTAGE funnel_stats の PV/UU）／押した数（/count）／メアドをくれた数（読者）</strong>。</p>
-<h2 id="utage-2026-09-08-mitsseiri">UTAGE の命名が変わった（2026-09-08 Mits様指示・seiri が実施）</h2>
-<p>ステップ名は上から付番し直し、ページ名からは連番を外した。名前で照合しているコードがあれば直す。<br />
-<code>0_入口_案内と同意→1_入口_案内と同意</code>／<code>8_運転台のダウンロード→2_運転台のダウンロード</code>／<code>6_運転台の使い方→3_運転台の使い方</code>／<code>9_運転台の有料契約→4_運転台の有料契約（サブスク）</code>／<code>10_利用規約…→5_利用規約・プライバシーポリシー</code>／ページ15枚は <code>00_使い方トップ→使い方トップ</code> のように連番を外した。<br />
-この枝で古い名前を含むのは <code>src-tauri/src/commands.rs</code> 3158行のコメント1か所のみ（ID kkiIBThjldzt で引いており、名前照合ではない）。</p>
-<h2 id="2026-09-09-0h-24h-2">経過測定の形が決まった（2026-09-09・あちらから 0h / 24h の2点が届いた）</h2>
+<p><strong>訂正（2026-09-08・あちらの実データ＋こちらの実叩き）：紹介者はシナリオ側の読者 API に出る。</strong></p>
+<p><code>message_reader_list</code>（account vNItAbojIgEK・scenario XU7Gfd7XoiCQ・per_page=1）の応答に</p>
+<p><code>partner</code> / <code>funnel_tracking_id</code> / <code>funnel_tracking_name</code> / <code>message_tracking_id</code> / <code>message_tracking_name</code> がある（いまは全部 null・total 8）。</p>
+<p>あちらは message_reader_create の応答で <code>referrer</code> も見ている（reader_list の応答には出なかった）。</p>
+<p>→ 運転台で紹介者を取る口は、ファネルの funnel_subscriber_list ではなく <strong>シナリオ側の読者 API の <code>partner</code></strong>。</p>
+<p><code>partner</code> に入るのがパートナーID か名前かは、パートナー経由の成約1件のあとに、あちらが確かめて送る。</p>
+<h3 id="DL-ページに-メアドの窓-が付いた-2026-09-08・seiri-が実施・Mits様-ダウ">DL ページに「メアドの窓」が付いた（2026-09-08・seiri が実施・Mits様「ダウンロードボタンでメアドだけ取ろう」）</h3>
+<p>DL ページ（UTAGE oHtrsl52qpXg）のダウンロードボタンを押すと小窓が開き、メールアドレスを1欄だけ聞く。中継の /register を通って UTAGE に読者ができる。</p>
+<p>押した数の記録（/get/ の1件1行・Worker untendai-update）はこれまで通り別に残る。</p>
+<p>→ 配信の表に並べられる数は3つになった：<strong>ページを見た数（UTAGE funnel_stats の PV/UU）／押した数（/count）／メアドをくれた数（読者）</strong>。</p>
+<h3 id="UTAGE-の命名が変わった-2026-09-08-Mits様指示・seiri-が実施">UTAGE の命名が変わった（2026-09-08 Mits様指示・seiri が実施）</h3>
+<p>ステップ名は上から付番し直し、ページ名からは連番を外した。名前で照合しているコードがあれば直す。</p>
+<p><code>0_入口_案内と同意→1_入口_案内と同意</code>／<code>8_運転台のダウンロード→2_運転台のダウンロード</code>／<code>6_運転台の使い方→3_運転台の使い方</code>／<code>9_運転台の有料契約→4_運転台の有料契約（サブスク）</code>／<code>10_利用規約…→5_利用規約・プライバシーポリシー</code>／ページ15枚は <code>00_使い方トップ→使い方トップ</code> のように連番を外した。</p>
+<p>この枝で古い名前を含むのは <code>src-tauri/src/commands.rs</code> 3158行のコメント1か所のみ（ID kkiIBThjldzt で引いており、名前照合ではない）。</p>
+<h3 id="経過測定の形が決まった-2026-09-09・あちらから-0h-24h-の2点が届いた">経過測定の形が決まった（2026-09-09・あちらから 0h / 24h の2点が届いた）</h3>
 <p>1つの配信を時間を追って何度も測る。<strong>列を足すのではなく、行が増える形。</strong></p>
 <table>
-<thead>
-<tr>
-<th>配信</th>
-<th>経過</th>
-<th>送信</th>
-<th>開封</th>
-<th>開封率</th>
-<th>クリック</th>
-<th>クリック率</th>
-<th>解除</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>2026-09-08 <code>zwiRAkvvRiEx</code>「数字を見せて相談できる相手、いますか」</td>
-<td>0h</td>
-<td>1,813</td>
-<td>100</td>
-<td>5.52%</td>
-<td>5</td>
-<td>0.28%</td>
-<td>0</td>
-</tr>
-<tr>
-<td>同</td>
-<td>24h</td>
-<td>1,813</td>
-<td>311</td>
-<td>17.15%</td>
-<td>17</td>
-<td>0.94%</td>
-<td>0</td>
-</tr>
-<tr>
-<td>2026-09-09 <code>y8chI3ufDbJr</code>「放っておいていい月と、手を打つ月」</td>
-<td>0h</td>
-<td>1,812</td>
-<td>137</td>
-<td>7.56%</td>
-<td>4</td>
-<td>0.22%</td>
-<td>1</td>
-</tr>
-</tbody>
+<tr><th>配信</th><th>経過</th><th>送信</th><th>開封</th><th>開封率</th><th>クリック</th><th>クリック率</th><th>解除</th></tr>
+<tr><td>2026-09-08 <code>zwiRAkvvRiEx</code>「数字を見せて相談できる相手、いますか」</td><td>0h</td><td>1,813</td><td>100</td><td>5.52%</td><td>5</td><td>0.28%</td><td>0</td></tr>
+<tr><td>同</td><td>24h</td><td>1,813</td><td>311</td><td>17.15%</td><td>17</td><td>0.94%</td><td>0</td></tr>
+<tr><td>2026-09-09 <code>y8chI3ufDbJr</code>「放っておいていい月と、手を打つ月」</td><td>0h</td><td>1,812</td><td>137</td><td>7.56%</td><td>4</td><td>0.22%</td><td>1</td></tr>
 </table>
-<p><strong>運転台側の直し（v1.62.4・commit 04ab4b2）</strong><br />
-- <code>haishin_keisoku</code> に <code>keika_label</code> 列を足し、一意鍵を<br />
-<code>(経路, 配信日, 件名, 配信ID, 経過ラベル)</code> にした。これが無いと 24h が 0h を上書きして経過が消える<br />
-- 分析は<strong>1配信につき最新の1回だけ</strong>を使う（<code>latest_per_haishin</code>）。<br />
-  送信37分後の 5.52% と落ち着いた 17.15% を混ぜて平均すると、測り方の違いで「自分の平均」が動く<br />
-- 画面に「送ったあとの伸び」の箱を足した（0h → 24h の増分を出す）</p>
-<p><strong>取り込み口が受ける列名</strong>（無い列は空で受ける・利用者に整理をさせない）<br />
-- 配信日 ← <code>配信日</code> または <code>配信時刻</code>（時刻からは日付だけを取る）<br />
-- 取得時刻 ← <code>取得時刻</code> または <code>測定時刻</code><br />
-- 経過ラベル ← <code>経過ラベル</code> または <code>経過</code><br />
-- <strong>必須は 配信日（or 配信時刻）・件名・経路の3つ。</strong><code>keisoku_suii.csv</code> は<br />
-  経路の列が無く、24h の行の件名が空なので、そのままでは読めない</p>
-<h2 id="2026-09-09">計測できるもの・できないもの（2026-09-09 あちらの実測）</h2>
+<p><strong>運転台側の直し（v1.62.4・commit 04ab4b2）</strong></p>
+<ul>
+<li><code>haishin_keisoku</code> に <code>keika_label</code> 列を足し、一意鍵を</li>
+</ul>
+<p>  <code>(経路, 配信日, 件名, 配信ID, 経過ラベル)</code> にした。これが無いと 24h が 0h を上書きして経過が消える</p>
+<ul>
+<li>分析は<strong>1配信につき最新の1回だけ</strong>を使う（<code>latest_per_haishin</code>）。</li>
+</ul>
+<p>  送信37分後の 5.52% と落ち着いた 17.15% を混ぜて平均すると、測り方の違いで「自分の平均」が動く</p>
+<ul>
+<li>画面に「送ったあとの伸び」の箱を足した（0h → 24h の増分を出す）</li>
+</ul>
+<p><strong>取り込み口が受ける列名</strong>（無い列は空で受ける・利用者に整理をさせない）</p>
+<ul>
+<li>配信日 ← <code>配信日</code> または <code>配信時刻</code>（時刻からは日付だけを取る）</li>
+<li>取得時刻 ← <code>取得時刻</code> または <code>測定時刻</code></li>
+<li>経過ラベル ← <code>経過ラベル</code> または <code>経過</code></li>
+<li><strong>必須は 配信日（or 配信時刻）・件名・経路の3つ。</strong><code>keisoku_suii.csv</code> は</li>
+</ul>
+<p>  経路の列が無く、24h の行の件名が空なので、そのままでは読めない</p>
+<h3 id="計測できるもの・できないもの-2026-09-09-あちらの実測">計測できるもの・できないもの（2026-09-09 あちらの実測）</h3>
 <table>
-<thead>
-<tr>
-<th>経路</th>
-<th>開封</th>
-<th>クリック</th>
-<th>備考</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>UTAGE</td>
-<td>取れる</td>
-<td>取れる</td>
-<td>API から。運転台の表に入っている</td>
-</tr>
-<tr>
-<td>spro</td>
-<td>差込タグ <code>{{htmlkaifu}}</code> を入れた回だけ</td>
-<td>「▼URLクリック解析の確認▼」で <code>[[%GPURL_n%]]</code> を付けた回だけ</td>
-<td>下記</td>
-</tr>
-<tr>
-<td>まぐまぐ</td>
-<td><strong>項目そのものが無い</strong></td>
-<td>同左</td>
-<td>取れるのは発行部数・読者数・月別購読数/解除数・売上の4つ（2026-09-07 裏取り済み）</td>
-</tr>
-</tbody>
+<tr><th>経路</th><th>開封</th><th>クリック</th><th>備考</th></tr>
+<tr><td>UTAGE</td><td>取れる</td><td>取れる</td><td>API から。運転台の表に入っている</td></tr>
+<tr><td>spro</td><td>差込タグ <code>{{htmlkaifu}}</code> を入れた回だけ</td><td>「▼URLクリック解析の確認▼」で <code>[[%GPURL_n%]]</code> を付けた回だけ</td><td>下記</td></tr>
+<tr><td>まぐまぐ</td><td><strong>項目そのものが無い</strong></td><td>同左</td><td>取れるのは発行部数・読者数・月別購読数/解除数・売上の4つ（2026-09-07 裏取り済み）</td></tr>
 </table>
-<p><strong>spro の取りこぼし2件</strong><br />
-- 9/8 配信 ID:5127（3,825件）は <code>{{htmlkaifu}}</code> が抜けていて開封が「-」のまま。<strong>取り戻せない</strong><br />
-- spro のクリック計測は<strong>裸URLを1行で置いた形しか拾わない</strong>（5128 で実測：checkboxCount 0 ／<br />
-  pickedUrls 空 ／ hrefs 4）。語句に埋め込んだリンクは1本も拾われない<br />
-  - 2026-09-13 訂正：5128（9/9）は埋め込み4本でチェック欄が 0、5129（9/11）・5130（9/12）は同じく埋め込み4本でチェックが入り数えられた（5129 ユニーク12／のべ28、5130 ユニーク10／のべ21）。ファイルで数えた形は3件とも同じ（<code>&lt;a</code> 本数 4／<code>target=</code> 0／<code>{{htmlkaifu}}</code> 1）。ファイル大きさは spro_0909.html 33.2K・20260911_<em><em>spro.html 6.9K・20260912</em></em>_spro.html 7.4K。原因は未確認</p>
+<p><strong>spro の取りこぼし2件</strong></p>
+<ul>
+<li>9/8 配信 ID:5127（3,825件）は <code>{{htmlkaifu}}</code> が抜けていて開封が「-」のまま。<strong>取り戻せない</strong></li>
+<li>spro のクリック計測は<strong>裸URLを1行で置いた形しか拾わない</strong>（5128 で実測：checkboxCount 0 ／</li>
+</ul>
+<p>  pickedUrls 空 ／ hrefs 4）。語句に埋め込んだリンクは1本も拾われない</p>
+<ul>
+  <li>2026-09-13 訂正：5128（9/9）は埋め込み4本でチェック欄が 0、5129（9/11）・5130（9/12）は同じく埋め込み4本でチェックが入り数えられた（5129 ユニーク12／のべ28、5130 ユニーク10／のべ21）。ファイルで数えた形は3件とも同じ（<code>&lt;a </code> 本数 4／<code>target=</code> 0／<code>{{htmlkaifu}}</code> 1）。ファイル大きさは spro_0909.html 33.2K・20260911_*_spro.html 6.9K・20260912_*_spro.html 7.4K。原因は未確認</li>
+</ul>
 <p>🟡 <strong>Mits様判定待ち</strong>：spro のリンクを裸URL1行の形にするか。読者に見える文面が変わる。</p>
-<h2 id="cloudflare-workers-2026-09-10mitsgo">計測の台帳が Cloudflare Workers に移った（2026-09-10・Mits様「発注GO」）</h2>
-<p>Mac は蓋を閉じると止まるので、測定が飛んでいた（実測：9/8 21:30 の次が 9/9 09:30 で12時間空き）。<br />
-測定は <strong>12h・24h・36h・48h の4点</strong>（2026-09-10 Mits様「12,24,36,48時間となる」）。</p>
-<p>Worker <code>merumaga-keisoku.3216-fun.workers.dev</code> が <code>/keisoku.csv</code> を返す。<br />
-列も順も改行（CRLF）も <code>keisoku_suii.csv</code> と同じ。</p>
-<h3 id="worker-url-2026-09-10">🛑 運転台に Worker の URL を焼かない（2026-09-10 に決めた）</h3>
+<h3 id="計測の台帳が-Cloudflare-Workers-に移った-2026-09-10・Mits様">計測の台帳が Cloudflare Workers に移った（2026-09-10・Mits様「発注GO」）</h3>
+<p>Mac は蓋を閉じると止まるので、測定が飛んでいた（実測：9/8 21:30 の次が 9/9 09:30 で12時間空き）。</p>
+<p>測定は <strong>12h・24h・36h・48h の4点</strong>（2026-09-10 Mits様「12,24,36,48時間となる」）。</p>
+<p>Worker <code>merumaga-keisoku.3216-fun.workers.dev</code> が <code>/keisoku.csv</code> を返す。</p>
+<p>列も順も改行（CRLF）も <code>keisoku_suii.csv</code> と同じ。</p>
+<h4 id="運転台に-Worker-の-URL-を焼かない-2026-09-10-に決めた">🛑 運転台に Worker の URL を焼かない（2026-09-10 に決めた）</h4>
 <p>あちらから「読み先を <code>/keisoku.csv</code> にできます」と提案があったが、<strong>断った。</strong>理由2つ。</p>
-<ol>
-<li><strong>製品版のゴールから外れる。</strong>Mits様 2026-09-08「このuntendaiを使うユーザが自分のマーケティング<br />
-   システムから同様の数字をダウンロードして、untendaiで読み込みをすれば集計が出てくるようにしたい」。<br />
-   この Worker は Mits様の測定の仕組みで、運転台を買った人は持っていない。繋ぐと Mits様専用の道具になる</li>
-<li><strong>合言葉が <code>.app</code> から読める。</strong>読み口は <code>X-App-Secret</code> が要る。<code>.app</code> の中の文字列は取り出せるので、<br />
-   焼くと配った先から読める。合言葉は受け取らない・求めない</li>
-</ol>
+<p>1. <strong>製品版のゴールから外れる。</strong>Mits様 2026-09-08「このuntendaiを使うユーザが自分のマーケティング</p>
+<p>   システムから同様の数字をダウンロードして、untendaiで読み込みをすれば集計が出てくるようにしたい」。</p>
+<p>   この Worker は Mits様の測定の仕組みで、運転台を買った人は持っていない。繋ぐと Mits様専用の道具になる</p>
+<p>2. <strong>合言葉が <code>.app</code> から読める。</strong>読み口は <code>X-App-Secret</code> が要る。<code>.app</code> の中の文字列は取り出せるので、</p>
+<p>   焼くと配った先から読める。合言葉は受け取らない・求めない</p>
 <p><strong>運転台の口は「CSV を落として入れる」のまま。</strong>あちらも取り下げた（2026-09-10 返信）。</p>
-<h3 id="3">経過測定が3点以上になっても大丈夫（実測）</h3>
+<h4 id="経過測定が3点以上になっても大丈夫-実測">経過測定が3点以上になっても大丈夫（実測）</h4>
 <p>手元の台帳が5行に増えた時点で、実データを運転台に通して確かめた。</p>
-<pre><code>IMPORT 読み5 新規5 上書き0 読めず0
+<pre><code>
+IMPORT 読み5 新規5 上書き0 読めず0
 zwiRAkvvRiEx「数字を見せて相談できる相手、いますか」  0h 5.52% → 24h 17.15% → 36h 17.76%
   増分  開封 +100 → +211 → +11
 分析に使われたのは 36h の 17.76%（いちばん新しく測った1回）
 </code></pre>
-<p><strong>送ったあとの伸びのグラフは、開封とクリックを別のグラフに分けた</strong>（2026-09-10）。<br />
-同じ軸に載せると桁が違って（17% と 0.9%）クリックが潰れ、伸びが見えなかった。</p>
-<pre><code>分ける前  目盛り 0 10 20 30       ← クリックの 0.61%→1.02% が潰れる
+<p><strong>送ったあとの伸びのグラフは、開封とクリックを別のグラフに分けた</strong>（2026-09-10）。</p>
+<p>同じ軸に載せると桁が違って（17% と 0.9%）クリックが潰れ、伸びが見えなかった。</p>
+<pre><code>
+分ける前  目盛り 0 10 20 30       ← クリックの 0.61%→1.02% が潰れる
 分けた後  開封   15 16 17 18 19   幅 4
           クリック 0.4 0.6 0.8 1 1.2  幅 0.8
 </code></pre>
-<h2 id="4822026-09-12">48時間の測定が2本そろった（2026-09-12 受領・実測）</h2>
+<h3 id="48時間の測定が2本そろった-2026-09-12-受領・実測">48時間の測定が2本そろった（2026-09-12 受領・実測）</h3>
 <p>はじめて 0h から 48h まで通しで揃った。運転台に9行とも入り、グラフが4点・5点で描けることを実機で確かめた。</p>
 <table>
-<thead>
-<tr>
-<th>配信</th>
-<th>0h</th>
-<th>12h</th>
-<th>24h</th>
-<th>36h</th>
-<th>48h</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>9/08「数字を見せて相談できる相手、いますか」開封</td>
-<td>5.52%</td>
-<td>─</td>
-<td>17.15%</td>
-<td>17.76%</td>
-<td><strong>18.42%</strong></td>
-</tr>
-<tr>
-<td>同 クリック</td>
-<td>0.28%</td>
-<td>─</td>
-<td>0.94%</td>
-<td>0.94%</td>
-<td><strong>0.94%</strong></td>
-</tr>
-<tr>
-<td>9/09「放っておいていい月と、手を打つ月」開封</td>
-<td>7.56%</td>
-<td>16.28%</td>
-<td>18.49%</td>
-<td>19.65%</td>
-<td><strong>19.81%</strong></td>
-</tr>
-<tr>
-<td>同 クリック</td>
-<td>0.22%</td>
-<td>0.61%</td>
-<td>0.72%</td>
-<td>0.72%</td>
-<td><strong>0.77%</strong></td>
-</tr>
-</tbody>
+<tr><th>配信</th><th>0h</th><th>12h</th><th>24h</th><th>36h</th><th>48h</th></tr>
+<tr><td>9/08「数字を見せて相談できる相手、いますか」開封</td><td>5.52%</td><td>─</td><td>17.15%</td><td>17.76%</td><td><strong>18.42%</strong></td></tr>
+<tr><td>同 クリック</td><td>0.28%</td><td>─</td><td>0.94%</td><td>0.94%</td><td><strong>0.94%</strong></td></tr>
+<tr><td>9/09「放っておいていい月と、手を打つ月」開封</td><td>7.56%</td><td>16.28%</td><td>18.49%</td><td>19.65%</td><td><strong>19.81%</strong></td></tr>
+<tr><td>同 クリック</td><td>0.22%</td><td>0.61%</td><td>0.72%</td><td>0.72%</td><td><strong>0.77%</strong></td></tr>
 </table>
 <p>9/08 の便は 12h の仕組みを入れる前なので 12h の行が無い。<strong>点が飛んでも線は引ける</strong>（実機で確認）。</p>
-<h3 id="12909">伸びは12時間でほぼ終わる（実測・9/09 の便）</h3>
-<p>開封 295/359 = 82%、クリック 11/14 = 79% が 12時間で済んでいる。<br />
-24h より後に増えるのは開封 +64・クリック +3 だけ。</p>
-<p>🛑 <strong>この割合を画面に書かない。</strong>「12時間で8割」は 1本の配信から出た数字で、<br />
-使う人の配信がそうなるとは限らない。運転台が画面に出すのは<strong>その人自身の数字と、その人自身の平均</strong>だけ<br />
-（CLAUDE.md「割合の決め打ちを、お客様に見える場所に書かない」）。</p>
-<h3 id="2026-09-12">運転台の側で確かめたこと（2026-09-12）</h3>
-<pre><code>IMPORT 読み9 新規9 上書き0 読めず0
+<h4 id="伸びは12時間でほぼ終わる-実測・9-09-の便">伸びは12時間でほぼ終わる（実測・9/09 の便）</h4>
+<p>開封 295/359 = 82%、クリック 11/14 = 79% が 12時間で済んでいる。</p>
+<p>24h より後に増えるのは開封 +64・クリック +3 だけ。</p>
+<p>🛑 <strong>この割合を画面に書かない。</strong>「12時間で8割」は 1本の配信から出た数字で、</p>
+<p>使う人の配信がそうなるとは限らない。運転台が画面に出すのは<strong>その人自身の数字と、その人自身の平均</strong>だけ</p>
+<p>（CLAUDE.md「割合の決め打ちを、お客様に見える場所に書かない」）。</p>
+<h4 id="運転台の側で確かめたこと-2026-09-12">運転台の側で確かめたこと（2026-09-12）</h4>
+<pre><code>
+IMPORT 読み9 新規9 上書き0 読めず0
 表9行 → 分析に使う2行（1配信につき最新の1回）・推移2本（5点と4点）
 分析に入ったのは 48h の 18.42% と 19.81%（0h の 5.52%・7.56% ではない）
 グラフの座標を node で逆算 → 18点すべて一致・値の文字の重なり0組・面を塗る要素0個
 </code></pre>
-<p><strong>開封とクリックを分けた効果が出た。</strong>5点の便で、クリックの目盛りが 0〜1.0% になり、<br />
-0.22% → 0.77% の伸びが読める。同じ軸に載せていたら 25% 刻みの中で潰れていた。</p>
-<h3 id="2026-09-12_1">台帳にまだ無いもの（2026-09-12 時点）</h3>
+<p><strong>開封とクリックを分けた効果が出た。</strong>5点の便で、クリックの目盛りが 0〜1.0% になり、</p>
+<p>0.22% → 0.77% の伸びが読める。同じ軸に載せていたら 25% 刻みの中で潰れていた。</p>
+<h4 id="台帳にまだ無いもの-2026-09-12-時点">台帳にまだ無いもの（2026-09-12 時点）</h4>
 <ul>
 <li>経路列は9行すべて UTAGE。<strong>spro とまぐまぐの便は1行も入っていない</strong></li>
 <li>9/10 の赤道日便は測定行が0件（配信IDは2本だけ）</li>
 </ul>
-<h2 id="2026-09-12mits">「読者数」の列を作った（2026-09-12・Mits様「どうやって改善するか」から）</h2>
-<p>あちらから3択で来た ── まぐまぐの送信列に (a) 読者数を入れる (b) 空欄にする (c) 別の列を作る。<br />
-<strong>(c) を選んだ。</strong></p>
-<p>送信数＝その回に実際に送った数。読者数＝いま数えた宛先の数。<strong>別のもの。</strong><br />
-同じ列に入れると、UTAGE の 1,812（配送時点）と まぐまぐの 1,796（現時点）が<br />
-同じグラフに並んで、比べられなくなる。空欄にすると まぐまぐが画面から消える。</p>
+<h3 id="読者数-の列を作った-2026-09-12・Mits様-どうやって改善するか-から">「読者数」の列を作った（2026-09-12・Mits様「どうやって改善するか」から）</h3>
+<p>あちらから3択で来た ── まぐまぐの送信列に (a) 読者数を入れる (b) 空欄にする (c) 別の列を作る。</p>
+<p><strong>(c) を選んだ。</strong></p>
+<p>送信数＝その回に実際に送った数。読者数＝いま数えた宛先の数。<strong>別のもの。</strong></p>
+<p>同じ列に入れると、UTAGE の 1,812（配送時点）と まぐまぐの 1,796（現時点）が</p>
+<p>同じグラフに並んで、比べられなくなる。空欄にすると まぐまぐが画面から消える。</p>
 <ul>
 <li>表に <code>dokusha_su</code> 列。CSV の列名は <code>読者数</code>（<code>購読者数</code> でも受ける）</li>
 <li>送信数が1本も取れない経路でも、読者数があれば画面に残す</li>
 <li>グラフは「届く先の数」（送信）と「読者の数」（読者数）を<strong>別に描く</strong></li>
 <li>送信数の平均は、送信が取れた行だけで割る（取れない行を 0 で薄めない）</li>
 </ul>
-<h2 id="2026-09-12utage-7">数字から言えること（2026-09-12・UTAGE 7本の実測）</h2>
+<h3 id="数字から言えること-2026-09-12・UTAGE-7本の実測">数字から言えること（2026-09-12・UTAGE 7本の実測）</h3>
 <table>
-<thead>
-<tr>
-<th></th>
-<th>幅</th>
-<th>最大 ÷ 最小</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>開封率（件名の仕事）</td>
-<td>17.02 〜 21.67%</td>
-<td>1.27倍</td>
-</tr>
-<tr>
-<td>開いた人のうち押した割合（本文の仕事）</td>
-<td>2.80 〜 11.61%</td>
-<td><strong>4.14倍</strong></td>
-</tr>
-</tbody>
+<tr><th></th><th>幅</th><th>最大 ÷ 最小</th></tr>
+<tr><td>開封率（件名の仕事）</td><td>17.02 〜 21.67%</td><td>1.27倍</td></tr>
+<tr><td>開いた人のうち押した割合（本文の仕事）</td><td>2.80 〜 11.61%</td><td><strong>4.14倍</strong></td></tr>
 </table>
-<p>7本とも送信数はほぼ同じ（1,812〜1,827）なので条件は揃っている。<br />
-<strong>開封率と押した割合は逆に動いていた</strong>（順位相関 −0.82）。</p>
+<p>7本とも送信数はほぼ同じ（1,812〜1,827）なので条件は揃っている。</p>
+<p><strong>開封率と押した割合は逆に動いていた</strong>（順位相関 −0.82）。</p>
 <ul>
 <li>いちばん開かれた 08/04「甲子園だってサーカスです。」21.67% → 押されたのは 3.03%</li>
-<li>いちばん押された 09/04「AIに相談'なんて'しなくなります。」18.40% → 押されたのは 11.61%</li>
+<li>いちばん押された 09/04「AIに相談&#x27;なんて&#x27;しなくなります。」18.40% → 押されたのは 11.61%</li>
 </ul>
 <p>🛑 <strong>この数字を運転台の画面に書かない。</strong>7本から出た数字で、使う人がそうなるとは限らない。</p>
-<h3 id="_1">経路ごとの成果は、取れているのに台帳に列が無い</h3>
-<p>3スタンドとも <code>utm_campaign</code> は同じで、<code>utm_source</code> だけ分かれている（utage / magmag / spro）。<br />
-DL を記録している Worker（<code>/Users/nishidamitsuhiro/untendai-seiri/updater/index.js</code>）は<br />
-<strong>すでに <code>by_from_campaign</code>（経路×配信）を返している</strong>（525〜542行）。<br />
-計測 Worker が台帳に書くのは <code>DL計測(by_campaign)</code> の1列だけなので、3スタンド合計に潰れている。</p>
+<h4 id="経路ごとの成果は-取れているのに台帳に列が無い">経路ごとの成果は、取れているのに台帳に列が無い</h4>
+<p>3スタンドとも <code>utm_campaign</code> は同じで、<code>utm_source</code> だけ分かれている（utage / magmag / spro）。</p>
+<p>DL を記録している Worker（<code>/Users/nishidamitsuhiro/untendai-seiri/updater/index.js</code>）は</p>
+<p><strong>すでに <code>by_from_campaign</code>（経路×配信）を返している</strong>（525〜542行）。</p>
+<p>計測 Worker が台帳に書くのは <code>DL計測(by_campaign)</code> の1列だけなので、3スタンド合計に潰れている。</p>
 <p>だからこの食い違いが起きていた。</p>
-<pre><code>9/8便  UTAGEのクリック 17 回  →  DLページの押下 22 回
+<pre><code>
+9/8便  UTAGEのクリック 17 回  →  DLページの押下 22 回
 9/9便  UTAGEのクリック 14 回  →  DLページの押下 25 回
 </code></pre>
-<h3 id="dl">🛑 訂正：まぐまぐを測る手段は DL だけではない</h3>
-<p>2026-09-12 に「まぐまぐを続ける根拠が無い」と書きかけたが、<strong>言い過ぎ</strong>。<br />
-この台帳の上の方（「計測できるもの・できないもの」節）に自分で書いてある。</p>
-<blockquote>
-<p>取れるのは発行部数・読者数・月別購読数/解除数・売上の4つ（2026-09-07 裏取り済み）</p>
-</blockquote>
-<p>正しくは「<strong>配信1本ごとの効き目</strong>を測る手段が、いまは DL しかない」。<br />
-媒体としての価値は売上や購読数の推移でも測れる。</p>
-<p>なお、あちらの 2026-09-12 の実測では「読者数だけ」と報告があり、<br />
-2026-09-07 の裏取り（4つ）と<strong>食い違っている</strong>。どちらが正かは未確定。</p>
-<h2 id="2026-09-12_2">🛑 読者数の横軸は「配信日」ではなく「数えた日」（2026-09-12・あちらの指摘から）</h2>
-<p>あちらから「1,801 → 1,796 で5人減った、が『解除された』と読めないか。月別解除数は<br />
-2026/09 が3件で、差の5と合わない」と来た。<strong>指摘のとおりだったが、原因はもっと手前にあった。</strong></p>
-<p>読者数を<strong>配信日の横軸に打っていた。</strong>読者数は「いま数えた時点」の宛先の数なので、<br />
-配信日の上に置くと「その配信の日の読者数」と読める。数えた日は 9/11・9/12 で、<br />
-配信日の 9/05・9/07 とは違う。</p>
-<p><strong>直した（2026-09-12）</strong><br />
-- <code>KeiroTen</code> に <code>shutoku_at</code> を足し、読者数のグラフの横軸を<strong>数えた日</strong>にした。軸の題も「数えた日」<br />
-- 文言を「N 人減っています」から<br />
-  「9/11 に数えて 1,801 人、9/12 に数えて 1,796 人でした（5 人の減）。<br />
-<strong>この差がどの配信で動いたかは、この数字からは分かりません。</strong>」に変えた<br />
-- UTAGE の「届く先の数」（送信・配信日が横軸）とは別のグラフのまま</p>
-<p><strong>送信数の減りには解除数を添えてよい</strong>（UTAGE は配信ごとの解除が API で取れるため）。<br />
-読者数の減りには添えない。数え方が違う。</p>
-<h2 id="42026-09-12">まぐまぐから取れるのは4つで確定（2026-09-12 あちらが画面で再確認）</h2>
-<p>2026-09-07 の裏取りが正しく、9/12 の「読者数だけ」は配送履歴の周りだけを見た言い方だった、<br />
-とあちらが取り消した。</p>
+<h4 id="訂正-まぐまぐを測る手段は-DL-だけではない">🛑 訂正：まぐまぐを測る手段は DL だけではない</h4>
+<p>2026-09-12 に「まぐまぐを続ける根拠が無い」と書きかけたが、<strong>言い過ぎ</strong>。</p>
+<p>この台帳の上の方（「計測できるもの・できないもの」節）に自分で書いてある。</p>
+<p>&gt; 取れるのは発行部数・読者数・月別購読数/解除数・売上の4つ（2026-09-07 裏取り済み）</p>
+<p>正しくは「<strong>配信1本ごとの効き目</strong>を測る手段が、いまは DL しかない」。</p>
+<p>媒体としての価値は売上や購読数の推移でも測れる。</p>
+<p>なお、あちらの 2026-09-12 の実測では「読者数だけ」と報告があり、</p>
+<p>2026-09-07 の裏取り（4つ）と<strong>食い違っている</strong>。どちらが正かは未確定。</p>
+<h3 id="読者数の横軸は-配信日-ではなく-数えた日-2026-09-12・あちらの指摘から">🛑 読者数の横軸は「配信日」ではなく「数えた日」（2026-09-12・あちらの指摘から）</h3>
+<p>あちらから「1,801 → 1,796 で5人減った、が『解除された』と読めないか。月別解除数は</p>
+<p>2026/09 が3件で、差の5と合わない」と来た。<strong>指摘のとおりだったが、原因はもっと手前にあった。</strong></p>
+<p>読者数を<strong>配信日の横軸に打っていた。</strong>読者数は「いま数えた時点」の宛先の数なので、</p>
+<p>配信日の上に置くと「その配信の日の読者数」と読める。数えた日は 9/11・9/12 で、</p>
+<p>配信日の 9/05・9/07 とは違う。</p>
+<p><strong>直した（2026-09-12）</strong></p>
+<ul>
+<li><code>KeiroTen</code> に <code>shutoku_at</code> を足し、読者数のグラフの横軸を<strong>数えた日</strong>にした。軸の題も「数えた日」</li>
+<li>文言を「N 人減っています」から</li>
+</ul>
+<p>  「9/11 に数えて 1,801 人、9/12 に数えて 1,796 人でした（5 人の減）。</p>
+<p>   <strong>この差がどの配信で動いたかは、この数字からは分かりません。</strong>」に変えた</p>
+<ul>
+<li>UTAGE の「届く先の数」（送信・配信日が横軸）とは別のグラフのまま</li>
+</ul>
+<p><strong>送信数の減りには解除数を添えてよい</strong>（UTAGE は配信ごとの解除が API で取れるため）。</p>
+<p>読者数の減りには添えない。数え方が違う。</p>
+<h3 id="まぐまぐから取れるのは4つで確定-2026-09-12-あちらが画面で再確認">まぐまぐから取れるのは4つで確定（2026-09-12 あちらが画面で再確認）</h3>
+<p>2026-09-07 の裏取りが正しく、9/12 の「読者数だけ」は配送履歴の周りだけを見た言い方だった、</p>
+<p>とあちらが取り消した。</p>
 <table>
-<thead>
-<tr>
-<th></th>
-<th>値（2026-09-12 実測）</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>読者数</td>
-<td>1,796（パソコン1,792 / docomo1 / au2 / softbank1）</td>
-</tr>
-<tr>
-<td>月別購読数・解除数</td>
-<td>2026年 購読3・解除9（09月は解除3・購読0）</td>
-</tr>
-<tr>
-<td>売上</td>
-<td>2026年 7,920円（毎月880円で一定・<strong>発行者アカウント全体</strong>でメルマガ単位ではない）</td>
-</tr>
-<tr>
-<td>発行部数</td>
-<td>🛑 下の訂正を見る（読者数と同じものではない）</td>
-</tr>
-</tbody>
+<tr><th></th><th>値（2026-09-12 実測）</th></tr>
+<tr><td>読者数</td><td>1,796（パソコン1,792 / docomo1 / au2 / softbank1）</td></tr>
+<tr><td>月別購読数・解除数</td><td>2026年 購読3・解除9（09月は解除3・購読0）</td></tr>
+<tr><td>売上</td><td>2026年 7,920円（毎月880円で一定・<strong>発行者アカウント全体</strong>でメルマガ単位ではない）</td></tr>
+<tr><td>発行部数</td><td>🛑 下の訂正を見る（読者数と同じものではない）</td></tr>
 </table>
-<h3 id="12026-09-12">🛑 訂正：まぐまぐには「配信1本ごとの発行部数」がある（2026-09-12 夕）</h3>
-<p>「4つとも月単位・累積で、配信1本には紐づかない」「配信1本ごとの効き目は DL だけ」は<strong>誤り</strong>。<br />
-<strong>配送履歴の検索結果に、1配信ごとの発行部数が出る。</strong></p>
-<pre><code>件名 | 配送完了日時 | 発行部数 | 配送ID | 定期/号外 | 配送状態
+<h4 id="訂正-まぐまぐには-配信1本ごとの発行部数-がある-2026-09-12-夕">🛑 訂正：まぐまぐには「配信1本ごとの発行部数」がある（2026-09-12 夕）</h4>
+<p>「4つとも月単位・累積で、配信1本には紐づかない」「配信1本ごとの効き目は DL だけ」は<strong>誤り</strong>。</p>
+<p><strong>配送履歴の検索結果に、1配信ごとの発行部数が出る。</strong></p>
+<pre><code>
+件名 | 配送完了日時 | 発行部数 | 配送ID | 定期/号外 | 配送状態
 100円で、月を採点する      2026/09/11 19:18:51  1,447部  165285573  完了
 100円で、月を採点する      2026/09/11 19:08:53  1,447部  165285559  完了
 数字を見せて相談できる相手  2026/09/08 21:02:37  1,449部  165282274  完了
@@ -540,112 +312,120 @@ AI-Mitsと経営アプリ 公開   2026/09/07 20:49:29  1,450部  165281208  完
 </code></pre>
 <p>公式ヘルプ（help.mag2.com/000212.html）も「配送履歴で配信ごとの購読者数を確認」と書いている。</p>
 <p><strong>まぐまぐ行の <code>送信</code> には発行部数が入る。<code>配信時刻</code> は配送完了日時。</strong></p>
-<p><strong>0件と言った原因</strong>：<code>開封|クリック|配信数|送信数|到達|解除</code> の6語で grep した。<br />
-まぐまぐは「<strong>発行部数</strong>」という語を使っていた。自分で選んだ言葉の範囲で 0件と言っていた<br />
-（<code>feedback_scan_scope_self_selected_is_not_zero</code> と同じ型）。</p>
-<h3 id="1447-1796">発行部数 1,447 と 読者数 1,796 は足し引きしない</h3>
-<p>349 の差がある。<strong>別の数え方。</strong>差の理由は未確定。<br />
-「読者数のうち実際に配送された数が発行部数」と読めそうだが、確かめていない。<br />
-だから運転台でも <code>送信</code>（発行部数）と <code>読者数</code> は別の列のまま置く。</p>
-<h2 id="2026-09-12_3">のべ数の列を足した（2026-09-12）</h2>
+<p><strong>0件と言った原因</strong>：<code>開封|クリック|配信数|送信数|到達|解除</code> の6語で grep した。</p>
+<p>まぐまぐは「<strong>発行部数</strong>」という語を使っていた。自分で選んだ言葉の範囲で 0件と言っていた</p>
+<p>（<code>feedback_scan_scope_self_selected_is_not_zero</code> と同じ型）。</p>
+<h4 id="発行部数-1-447-と-読者数-1-796-は足し引きしない">発行部数 1,447 と 読者数 1,796 は足し引きしない</h4>
+<p>349 の差がある。<strong>別の数え方。</strong>差の理由は未確定。</p>
+<p>「読者数のうち実際に配送された数が発行部数」と読めそうだが、確かめていない。</p>
+<p>だから運転台でも <code>送信</code>（発行部数）と <code>読者数</code> は別の列のまま置く。</p>
+<h3 id="のべ数の列を足した-2026-09-12">のべ数の列を足した（2026-09-12）</h3>
 <p>spro は開封ユニーク191 とトータル266 の両方が取れる。差が「同じ人が何回開いたか」を出すので捨てない。</p>
 <ul>
 <li>列名は <code>開封のべ</code> <code>クリックのべ</code>（<code>開封トータル</code> <code>クリックトータル</code> でも受ける）</li>
 <li><strong>割合の計算には使わない。</strong>分母が送信数なので、のべで割ると 100% を超えることがある</li>
 </ul>
-<h2 id="dl-spro-2026-09-12">🛑 経路別のDLが出た ── いちばん成果を出しているのは spro だった（2026-09-12）</h2>
+<h3 id="経路別のDLが出た-いちばん成果を出しているのは-spro-だった-2026-09-12">🛑 経路別のDLが出た ── いちばん成果を出しているのは spro だった（2026-09-12）</h3>
 <p>あちらが <code>by_from_campaign</code> を取り出した。<strong>運転台がこれまで見ていなかった数字。</strong></p>
-<pre><code>spro   : idou_heikin_0908 16 / idou_heikin_0909 20 / 20260911_hyakuen 1
+<pre><code>
+spro   : idou_heikin_0908 16 / idou_heikin_0909 20 / 20260911_hyakuen 1
 utage  : idou_heikin_0908  6 / idou_heikin_0909  6 / step21 1 / 20260910_sekidobi 1
 magmag : honban_kakunin_0908 2
 aDqCF  : fNOl_rFrNCg_2191 2
 (不明) : (不明) 11
 </code></pre>
-<p><strong>移動平均の2本で、spro は UTAGE の 2.7倍・3.3倍取っている。</strong><br />
-運転台は開封率19.11%・クリック率1.17%と UTAGE だけを分析していたが、<br />
-<strong>成果がいちばん出ている経路の行を1行も持っていなかった。</strong></p>
-<h3 id="dl_1">🛑 訂正：「クリックより DL が多い」は合計を比べていた</h3>
-<p>2026-09-12 に「9/8便 UTAGEのクリック17回 → DL 22回」と書いたが、<strong>22 は3スタンドの合計</strong>だった。<br />
-経路別に見ると逆で、<strong>クリックした人の3分の1しか最後まで来ていない。</strong></p>
-<pre><code>9/8便  UTAGEのクリック 17 回  →  utage 経由の DL  6 件
+<p><strong>移動平均の2本で、spro は UTAGE の 2.7倍・3.3倍取っている。</strong></p>
+<p>運転台は開封率19.11%・クリック率1.17%と UTAGE だけを分析していたが、</p>
+<p><strong>成果がいちばん出ている経路の行を1行も持っていなかった。</strong></p>
+<h4 id="訂正-クリックより-DL-が多い-は合計を比べていた">🛑 訂正：「クリックより DL が多い」は合計を比べていた</h4>
+<p>2026-09-12 に「9/8便 UTAGEのクリック17回 → DL 22回」と書いたが、<strong>22 は3スタンドの合計</strong>だった。</p>
+<p>経路別に見ると逆で、<strong>クリックした人の3分の1しか最後まで来ていない。</strong></p>
+<pre><code>
+9/8便  UTAGEのクリック 17 回  →  utage 経由の DL  6 件
 9/9便  UTAGEのクリック 14 回  →  utage 経由の DL  6 件
 </code></pre>
-<p>検算（あちらの経路別の合計と by_campaign の突き合わせ）：8件中5件が一致、<br />
-ずれた3件（20260911_hyakuen・idou_heikin_0909・step21）は全部<strong>測った時点の差</strong>で説明が付く。</p>
-<h3 id="2026-09-12_4">運転台に足したもの（2026-09-12）</h3>
+<p>検算（あちらの経路別の合計と by_campaign の突き合わせ）：8件中5件が一致、</p>
+<p>ずれた3件（20260911_hyakuen・idou_heikin_0909・step21）は全部<strong>測った時点の差</strong>で説明が付く。</p>
+<h4 id="運転台に足したもの-2026-09-12">運転台に足したもの（2026-09-12）</h4>
 <ul>
 <li><code>dl_su</code> 列。CSV の列名は <code>ダウンロード数</code>（<code>DL</code> <code>DL数</code> でも受ける）</li>
 <li>分析に「ダウンロードしてくれた数」と「<strong>押してくれた人のうち何%が最後まで来たか</strong>」</li>
 <li>グラフに「ダウンロードしてくれた数」</li>
-<li>実機で確認：UTAGE 合計12件・<strong>押してくれた人のうち 39.08% が最後まで来ています</strong><br />
-  （6/17=35.29% と 6/14=42.86% の平均）</li>
+<li>実機で確認：UTAGE 合計12件・<strong>押してくれた人のうち 39.08% が最後まで来ています</strong></li>
 </ul>
-<p><strong>JSON をそのまま入れない。</strong>台帳は1行＝1経路×1配信なので、その行の DL 数を数字で入れる。<br />
-<code>DL計測(by_source_campaign)</code> の JSON は台帳に残してよいが、運転台は <code>ダウンロード数</code> 列を読む。</p>
-<h3 id="_2">開封率・クリック率の列は落とさなくてよい</h3>
-<p>運転台はこの2列を<strong>読んでいない</strong>（送信・開封・クリックから自分で割る）。<br />
-残っていても害は無い。あちらが既存9行の率を消さないのも問題ない。</p>
-<h3 id="910911-dl-6-2026-09-12">🛑 9/10・9/11 の DL 6 は、その行の測定時刻の数字ではない（2026-09-12 あちらの申し送り）</h3>
-<p>経路別の内訳を記録し始めたのが 2026-09-12 なので、9/10・9/11 の時点の経路別は残っていない。<br />
-台帳に入れた <strong>DL 6 は、どちらも 2026-09-12 16:44 に数えた値</strong>。</p>
-<pre><code>分母のクリック 17 / 14  →  48h 時点の数
+<p>  （6/17=35.29% と 6/14=42.86% の平均）</p>
+<p><strong>JSON をそのまま入れない。</strong>台帳は1行＝1経路×1配信なので、その行の DL 数を数字で入れる。</p>
+<p><code>DL計測(by_source_campaign)</code> の JSON は台帳に残してよいが、運転台は <code>ダウンロード数</code> 列を読む。</p>
+<h4 id="開封率・クリック率の列は落とさなくてよい">開封率・クリック率の列は落とさなくてよい</h4>
+<p>運転台はこの2列を<strong>読んでいない</strong>（送信・開封・クリックから自分で割る）。</p>
+<p>残っていても害は無い。あちらが既存9行の率を消さないのも問題ない。</p>
+<h4 id="9-10・9-11-の-DL-6-は-その行の測定時刻の数字ではない-2026-09-12-あ">🛑 9/10・9/11 の DL 6 は、その行の測定時刻の数字ではない（2026-09-12 あちらの申し送り）</h4>
+<p>経路別の内訳を記録し始めたのが 2026-09-12 なので、9/10・9/11 の時点の経路別は残っていない。</p>
+<p>台帳に入れた <strong>DL 6 は、どちらも 2026-09-12 16:44 に数えた値</strong>。</p>
+<pre><code>
+分母のクリック 17 / 14  →  48h 時点の数
 分子の DL       6 /  6  →  2026-09-12 に数えた数（その後に増えたぶんを含む）
 </code></pre>
-<p>DL は積み上がる数なので、<strong>「押してくれた人のうち 39.08%」は厳密な比ではない。</strong><br />
-3分の1という桁は動かないが、正確な比が出るのは<strong>同じ時刻で揃う 9/12 以降の行</strong>から。</p>
-<h3 id="0-0-0">ダウンロードの 0 は「測れた 0 件」── ただし「札の付いた押下が 0 件」の意味</h3>
-<p><code>0</code> は本当に 0 件であって、測れなかったのではない。<br />
-開封・クリックの空欄（そもそも測る手立てが無い）とは別もの。</p>
-<p>🛑 <strong>ただし「全部の経路を拾う」は言い過ぎだった</strong>（2026-09-12 あちらの訂正）。<br />
-拾えるのは<strong>札（<code>utm_source</code>）が付いて押された分だけ</strong>。札が落ちた分は <code>(不明)</code> に入る。</p>
-<pre><code>by_from: spro 37 / utage 14 / (不明) 11 / magmag 2 / aDqCF 2
+<p>DL は積み上がる数なので、<strong>「押してくれた人のうち 39.08%」は厳密な比ではない。</strong></p>
+<p>3分の1という桁は動かないが、正確な比が出るのは<strong>同じ時刻で揃う 9/12 以降の行</strong>から。</p>
+<h4 id="ダウンロードの-0-は-測れた-0-件-ただし-札の付いた押下が-0-件-の意味">ダウンロードの 0 は「測れた 0 件」── ただし「札の付いた押下が 0 件」の意味</h4>
+<p><code>0</code> は本当に 0 件であって、測れなかったのではない。</p>
+<p>開封・クリックの空欄（そもそも測る手立てが無い）とは別もの。</p>
+<p>🛑 <strong>ただし「全部の経路を拾う」は言い過ぎだった</strong>（2026-09-12 あちらの訂正）。</p>
+<p>拾えるのは<strong>札（<code>utm_source</code>）が付いて押された分だけ</strong>。札が落ちた分は <code>(不明)</code> に入る。</p>
+<pre><code>
+by_from: spro 37 / utage 14 / (不明) 11 / magmag 2 / aDqCF 2
 </code></pre>
-<p><strong>66件中 11件（6分の1）が経路不明。</strong>だから <code>ダウンロード数 0</code> の正しい読みは<br />
-「その経路の<strong>札が付いた</strong>押下が 0 件」であって、「その経路から誰も来ていない」ではない。</p>
-<p>札が落ちる心当たり3つ ── メールソフトが <code>?</code> 以降を落とす／読者が URL を手で打ち直す／<br />
-札を入れ忘れたリンク（過去の号）。次の号から、原稿側で全リンクの札を数えてから出す。</p>
-<p><strong>39.08% も同じ性質を持つ。</strong>分子の utage 6 は札付きのみなので、<br />
-実際の到達は 6 より多い可能性がある。<strong>3分の1は下限寄りの数字。</strong></p>
+<p><strong>66件中 11件（6分の1）が経路不明。</strong>だから <code>ダウンロード数 0</code> の正しい読みは</p>
+<p>「その経路の<strong>札が付いた</strong>押下が 0 件」であって、「その経路から誰も来ていない」ではない。</p>
+<p>札が落ちる心当たり3つ ── メールソフトが <code>?</code> 以降を落とす／読者が URL を手で打ち直す／</p>
+<p>札を入れ忘れたリンク（過去の号）。次の号から、原稿側で全リンクの札を数えてから出す。</p>
+<p><strong>39.08% も同じ性質を持つ。</strong>分子の utage 6 は札付きのみなので、</p>
+<p>実際の到達は 6 より多い可能性がある。<strong>3分の1は下限寄りの数字。</strong></p>
 <p>運転台の実測（<code>d6ce765</code> でテストに固定）：</p>
-<pre><code>CSV の &quot;0&quot;   → Some(0)（空欄は None）
+<pre><code>
+CSV の &quot;0&quot;   → Some(0)（空欄は None）
 画面        → 0.00% と出る（「測れません」にしない）
 グラフ      → 0 の点を打つ
 </code></pre>
-<h2 id="spro-9899-2026-09-12-2">🛑🛑 「spro は 9/8・9/9 を出していない」は取り消し（2026-09-12 夜・2度目の訂正）</h2>
-<p>いったん「spro は出していないので比較は保留」と書いたが、<strong>それが間違いだった。</strong><br />
-配信履歴の正本を開いた実測で、5127・5128 とも配信完了している。</p>
-<pre><code>spro01.com/smail/admin/mailmag.php?act=magazinelistsd&amp;pid=step_R120ta
+<h3 id="spro-は-9-8・9-9-を出していない-は取り消し-2026-09-12-夜・2度目の訂">🛑🛑 「spro は 9/8・9/9 を出していない」は取り消し（2026-09-12 夜・2度目の訂正）</h3>
+<p>いったん「spro は出していないので比較は保留」と書いたが、<strong>それが間違いだった。</strong></p>
+<p>配信履歴の正本を開いた実測で、5127・5128 とも配信完了している。</p>
+<pre><code>
+spro01.com/smail/admin/mailmag.php?act=magazinelistsd&amp;pid=step_R120ta
 
 ID:5129  100円で、月を採点する           2026-09-11 21:12:06  3835件  開封5.01%（192/267）
 ID:5128  放っておいていい月と、手を打つ月  2026-09-11 00:17:06  3829件  開封7.78%（298/442）
 ID:5127  数字を見せて相談できる相手       2026-09-08 22:16:36  3825件  開封 —（0/0・未開封）
 </code></pre>
-<p><strong>外した原因</strong>：数えたのが <code>gpurl_manager.php</code>（アドオン「URLクリック解析」の画面）で、<br />
-<code>[[%GPURL_n%]]</code> を仕込んだ便しか並ばない。5127・5128 は仕込みが無いので1行も出なかった。<br />
-<strong>出ていない ≠ 配信していない。</strong>配信履歴の正本は <code>mailmag.php?act=magazinelistsd</code>。</p>
-<p>🛑 <strong>画面が空なら、その画面が何を並べる画面かを先に確かめる。</strong><br />
-今日3回とも同じ型だった ── まぐまぐの「発行部数」（語を絞って grep）／<br />
-spro のクリック行（プランを選ぶまで出ない）／この件（別の画面を見ていた）。</p>
-<h3 id="spro">「spro に本数を寄せる」は言える</h3>
-<pre><code>9/8便  UTAGE 送信1813 クリック17 → utage DL  6
+<p><strong>外した原因</strong>：数えたのが <code>gpurl_manager.php</code>（アドオン「URLクリック解析」の画面）で、</p>
+<p><code>[[%GPURL_n%]]</code> を仕込んだ便しか並ばない。5127・5128 は仕込みが無いので1行も出なかった。</p>
+<p><strong>出ていない ≠ 配信していない。</strong>配信履歴の正本は <code>mailmag.php?act=magazinelistsd</code>。</p>
+<p>🛑 <strong>画面が空なら、その画面が何を並べる画面かを先に確かめる。</strong></p>
+<p>今日3回とも同じ型だった ── まぐまぐの「発行部数」（語を絞って grep）／</p>
+<p>spro のクリック行（プランを選ぶまで出ない）／この件（別の画面を見ていた）。</p>
+<h4 id="spro-に本数を寄せる-は言える">「spro に本数を寄せる」は言える</h4>
+<pre><code>
+9/8便  UTAGE 送信1813 クリック17 → utage DL  6
        spro  送信3825 クリック測れず → spro DL 16
 9/9便  UTAGE 送信1812 クリック14 → utage DL  6
        spro  送信3829 開封298      → spro DL 20
 </code></pre>
-<p><strong>送信は spro が UTAGE の 2.1倍。DL は 2.7倍・3.3倍。</strong>送信の差より DL の差が大きいので、<br />
-1人あたりでも spro が上回る。<code>(不明)</code> 11件の割り振りは分からないので、下限寄りの話は残る。</p>
-<h3 id="spro-0-dl">spro 側の 0 と、DL 側の数は別経路</h3>
-<p><code>{{htmlkaifu}}</code>（開封タグ）や <code>[[%GPURL_n%]]</code>（クリック計測）が無くても、<br />
-本文の <code>?utm_source=spro&amp;utm_campaign=...</code> は生きていて DL の数え上げには届く。<br />
-<strong>spro の画面が 0 でも、DL には積まれる。</strong>5127 がその実例（spro 開封0・DL 16）。</p>
-<p>だから 5127 の開封は<strong>空欄</strong>（測る仕掛けが無かった。誰も開かなかったのではない）。<br />
-クリックも2便とも空欄。</p>
-<h3 id="91h41h">幅を過ぎて測った行（事後91h・事後41h）の扱い ── そのまま入れてよい</h3>
-<p>経過ラベルは鍵と見出しにしか使っていない（数として読む所は1つも無い）ので、<br />
-<code>事後91h</code> のような札でも通る。1回しか測っていない配信は<br />
-「送ったあとの伸び」に出ない（2回以上の測定が要るため）。テストで固定した。</p>
-<h3 id="2026-09-13-2152-spro-2-351">2026-09-13 21:52 の spro 2行 ── 解除の 351 を配信停止の累計の列に移した</h3>
+<p><strong>送信は spro が UTAGE の 2.1倍。DL は 2.7倍・3.3倍。</strong>送信の差より DL の差が大きいので、</p>
+<p>1人あたりでも spro が上回る。<code>(不明)</code> 11件の割り振りは分からないので、下限寄りの話は残る。</p>
+<h4 id="spro-側の-0-と-DL-側の数は別経路">spro 側の 0 と、DL 側の数は別経路</h4>
+<p><code>{{htmlkaifu}}</code>（開封タグ）や <code>[[%GPURL_n%]]</code>（クリック計測）が無くても、</p>
+<p>本文の <code>?utm_source=spro&amp;utm_campaign=...</code> は生きていて DL の数え上げには届く。</p>
+<p><strong>spro の画面が 0 でも、DL には積まれる。</strong>5127 がその実例（spro 開封0・DL 16）。</p>
+<p>だから 5127 の開封は<strong>空欄</strong>（測る仕掛けが無かった。誰も開かなかったのではない）。</p>
+<p>クリックも2便とも空欄。</p>
+<h4 id="幅を過ぎて測った行-事後91h・事後41h-の扱い-そのまま入れてよい">幅を過ぎて測った行（事後91h・事後41h）の扱い ── そのまま入れてよい</h4>
+<p>経過ラベルは鍵と見出しにしか使っていない（数として読む所は1つも無い）ので、</p>
+<p><code>事後91h</code> のような札でも通る。1回しか測っていない配信は</p>
+<p>「送ったあとの伸び」に出ない（2回以上の測定が要るため）。テストで固定した。</p>
+<h4 id="2026-09-13-21-52-の-spro-2行-解除の-351-を配信停止の累計の列に移し">2026-09-13 21:52 の spro 2行 ── 解除の 351 を配信停止の累計の列に移した</h4>
 <p>理由：累計が1本ごとの列に入っていたため。CSV の移し替えそのものは BS-engineer が行う。</p>
+
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
 </body>
 </html>

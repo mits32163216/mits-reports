@@ -50,530 +50,222 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 </head>
 <body>
 <div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
-<div class="meta-head"><div><b>元のファイル</b>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/整理プロセス/登録経路の仕組み整理_AI-Mits_20260908.md</div><div><b>最後に更新された日時</b>2026-09-08 18:34 JST</div></div>
-<h1>登録経路の仕組み整理</h1>
-<h1 id="3-ai-mits">登録経路（トラッキング）の仕組み整理 ── 3スタンドのメルマガから AI-Mits へ来た人を経路で分ける</h1>
-<p>2026-09-08 Mits様「実装の前に仕組みを整理して、私も理解しておきたい」「登録経路のデータも untendai マーケティングに渡す必要がある」。<br />
-2026-09-08 17:30 書き直し：Mits様「ファネル入口 → F0-01 に登録、は古いアイディア。以後全て却下」。<strong>F0-01 <code>2JPgrcZIciae</code> はこの話から外す。</strong><br />
-事前調査の状態：✅ 事前調査済み（UTAGE ヘルプ archives/6033・6097・13896 読了／管理画面・MCP API・中継サーバーのソースを実機で確認／今日の運転台セッションの実測記録 2026-09-08_1637 を参照）</p>
-<hr />
-<h2 id="1-ai-mits-2026-09-08">1. いま AI-Mits の登録が起きる場所（2026-09-08 時点の正）</h2>
-<p><strong>登録先はシナリオ「AI-Mits登録20260612」<code>XU7Gfd7XoiCQ</code> の1本だけ。</strong>（Mits様 2026-09-08「シナリオはこれで確定」）<br />
-Mits様が開かれた画面 <code>https://change.7years.life/account/vNItAbojIgEK/scenario/XU7Gfd7XoiCQ/tracking</code> は、このシナリオの登録経路。</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-08 18:34 ／ 写した時刻 2026-09-16 16:02</p>
+<h2 id="登録経路-トラッキング-の仕組み整理-3スタンドのメルマガから-AI-Mits-へ来た人を経路で">登録経路（トラッキング）の仕組み整理 ── 3スタンドのメルマガから AI-Mits へ来た人を経路で分ける</h2>
+<p>2026-09-08 Mits様「実装の前に仕組みを整理して、私も理解しておきたい」「登録経路のデータも untendai マーケティングに渡す必要がある」。</p>
+<p>2026-09-08 17:30 書き直し：Mits様「ファネル入口 → F0-01 に登録、は古いアイディア。以後全て却下」。<strong>F0-01 <code>2JPgrcZIciae</code> はこの話から外す。</strong></p>
+<p>事前調査の状態：✅ 事前調査済み（UTAGE ヘルプ archives/6033・6097・13896 読了／管理画面・MCP API・中継サーバーのソースを実機で確認／今日の運転台セッションの実測記録 2026-09-08_1637 を参照）</p>
+<hr>
+<h3 id="1-いま-AI-Mits-の登録が起きる場所-2026-09-08-時点の正">1. いま AI-Mits の登録が起きる場所（2026-09-08 時点の正）</h3>
+<p><strong>登録先はシナリオ「AI-Mits登録20260612」<code>XU7Gfd7XoiCQ</code> の1本だけ。</strong>（Mits様 2026-09-08「シナリオはこれで確定」）</p>
+<p>Mits様が開かれた画面 <code><a href="https://change.7years.">https://change.7years.</a>life/account/vNItAbojIgEK/scenario/XU7Gfd7XoiCQ/tracking</code> は、このシナリオの登録経路。</p>
 <p>このシナリオに人が入る道は2本ある：</p>
 <table>
-<thead>
-<tr>
-<th>道</th>
-<th>どこで登録するか</th>
-<th>UTAGE に reader ができる仕組み</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>道①：UTAGE のフォーム</strong></td>
-<td>入口ページ <code>https://change.7years.life/p/V3A9LG00dL2S</code>（ファネル <code>1QtzdExbynBp</code>・ページ <code>i50uCEKjqC9Q</code>）のフォーム。今日 <code>scenario_id</code> を <code>XU7Gfd7XoiCQ</code> に付け替え済み</td>
-<td>UTAGE 自身が作る</td>
-</tr>
-<tr>
-<td><strong>道②：中継サーバー（Cloudflare Worker <code>aimits-report-proxy</code>）</strong></td>
-<td>Web お試し版 <code>UgSfW8MCzHqv</code> の「メールアドレスだけ」の窓、および運転台アプリからの登録</td>
-<td>Worker の <code>utageFindOrCreateReader()</code> が API <code>POST /readers</code> で作る。送っている項目は <strong><code>scenario_fields.mail</code> と <code>opt_in_confirmed</code> の2つだけ</strong>（<code>src/index.js</code> L594-597 実測）</td>
-</tr>
-</tbody>
+<tr><th>道</th><th>どこで登録するか</th><th>UTAGE に reader ができる仕組み</th></tr>
+<tr><td><strong>道①：UTAGE のフォーム</strong></td><td>入口ページ <code><a href="https://change.7years.">https://change.7years.</a>life/p/V3A9LG00dL2S</code>（ファネル <code>1QtzdExbynBp</code>・ページ <code>i50uCEKjqC9Q</code>）のフォーム。今日 <code>scenario_id</code> を <code>XU7Gfd7XoiCQ</code> に付け替え済み</td><td>UTAGE 自身が作る</td></tr>
+<tr><td><strong>道②：中継サーバー（Cloudflare Worker <code>aimits-report-proxy</code>）</strong></td><td>Web お試し版 <code>UgSfW8MCzHqv</code> の「メールアドレスだけ」の窓、および運転台アプリからの登録</td><td>Worker の <code>utageFindOrCreateReader()</code> が API <code>POST /readers</code> で作る。送っている項目は <strong><code>scenario_fields.mail</code> と <code>opt_in_confirmed</code> の2つだけ</strong>（<code>src/index.js</code> L594-597 実測）</td></tr>
 </table>
-<p>ダウンロードページ <code>https://change.7years.life/page/oHtrsl52qpXg</code> にはフォームが置かれていない（HTML 実測：form 0・メール欄 0・zip の DL リンクのみ）。ここでは登録は起きない。</p>
+<p>ダウンロードページ <code><a href="https://change.7years.">https://change.7years.</a>life/page/oHtrsl52qpXg</code> にはフォームが置かれていない（HTML 実測：form 0・メール欄 0・zip の DL リンクのみ）。ここでは登録は起きない。</p>
 <p>2026-09-07 のメルマガ「AI-Mitsと経営アプリ　公開」の本文リンクは、入口ページ <code>V3A9LG00dL2S</code> とダウンロードページ <code>oHtrsl52qpXg</code> の2本（message_get 実測）。</p>
-<hr />
-<h2 id="2-utage-2">2. UTAGE の登録経路は「ファネル側」と「シナリオ側」の2種類（ヘルプの記載）</h2>
+<hr>
+<h3 id="2-UTAGE-の登録経路は-ファネル側-と-シナリオ側-の2種類-ヘルプの記載">2. UTAGE の登録経路は「ファネル側」と「シナリオ側」の2種類（ヘルプの記載）</h3>
 <table>
-<thead>
-<tr>
-<th></th>
-<th>ファネル側（archives/6033）</th>
-<th>シナリオ側（archives/6097 メール／6101 LINE）</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>どこで作る</td>
-<td>ファネル → 登録経路 → 追加</td>
-<td>シナリオ設定 → 登録経路 → 追加（Mits様が開かれた画面）</td>
-</tr>
-<tr>
-<td>入れるもの</td>
-<td>管理名称・対象ステップ（＋ページ）</td>
-<td>管理名称・種類（メール／LINE）</td>
-</tr>
-<tr>
-<td>出てくるもの</td>
-<td>登録経路用の URL（自動生成）</td>
-<td>登録経路用の URL（自動生成）</td>
-</tr>
-<tr>
-<td>集計を見る場所</td>
-<td>ファネル → データ（合算／日別）を「登録経路」で絞る</td>
-<td>シナリオ設定 → 登録経路分析（PV／UU／登録数）</td>
-</tr>
-<tr>
-<td>次のページへの引き継ぎ</td>
-<td>ボタンのリンク先が「ファネルの次のステップ」なら引き継ぐ。「指定した URL」だと切れる</td>
-<td>シナリオ遷移では引き継がれない</td>
-</tr>
-<tr>
-<td>ヘルプ原文</td>
-<td>──</td>
-<td>「ファネルの登録経路機能を利用している場合は、追加する必要はありません」</td>
-</tr>
-</tbody>
+<tr><th></th><th>ファネル側（archives/6033）</th><th>シナリオ側（archives/6097 メール／6101 LINE）</th></tr>
+<tr><td>どこで作る</td><td>ファネル → 登録経路 → 追加</td><td>シナリオ設定 → 登録経路 → 追加（Mits様が開かれた画面）</td></tr>
+<tr><td>入れるもの</td><td>管理名称・対象ステップ（＋ページ）</td><td>管理名称・種類（メール／LINE）</td></tr>
+<tr><td>出てくるもの</td><td>登録経路用の URL（自動生成）</td><td>登録経路用の URL（自動生成）</td></tr>
+<tr><td>集計を見る場所</td><td>ファネル → データ（合算／日別）を「登録経路」で絞る</td><td>シナリオ設定 → 登録経路分析（PV／UU／登録数）</td></tr>
+<tr><td>次のページへの引き継ぎ</td><td>ボタンのリンク先が「ファネルの次のステップ」なら引き継ぐ。「指定した URL」だと切れる</td><td>シナリオ遷移では引き継がれない</td></tr>
+<tr><td>ヘルプ原文</td><td>──</td><td>「ファネルの登録経路機能を利用している場合は、追加する必要はありません」</td></tr>
 </table>
 <p>どちらも仕組みは同じ：<strong>経路を1本作ると、対象ページの URL に経路の印が付いた別 URL が1本出る。</strong>その URL で来た人のアクセス（PV／UU）が経路に数えられ、フォームで登録すると reader に登録経路が付く（読者一覧に「登録経路」列・API では <code>tracking_id</code>）。印の形はヘルプに書かれていない。作って初めて見える。</p>
-<hr />
-<h2 id="3-12">3. 道①と道②で、経路の付き方が違う（ここが要点）</h2>
+<hr>
+<h3 id="3-道-と道-で-経路の付き方が違う-ここが要点">3. 道①と道②で、経路の付き方が違う（ここが要点）</h3>
 <table>
-<thead>
-<tr>
-<th></th>
-<th>道①：UTAGE のフォーム</th>
-<th>道②：中継サーバー</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>経路が reader に付くか</td>
-<td><strong>付く</strong>（UTAGE 標準の登録経路）</td>
-<td><strong>付かない</strong>。API <code>message_reader_create</code> に登録経路を渡す口が無い（受け付けるのは scenario_fields / common_fields / opt_in_confirmed / allow_duplicates / has_step_* の6つ・ツール定義で確認）</td>
-</tr>
-<tr>
-<td>経路×期間の PV／UU</td>
-<td>取れる</td>
-<td>取れる（ページを開いた分は数えられる。登録数だけ 0 のまま）</td>
-</tr>
-<tr>
-<td>経路を付けるには</td>
-<td>メルマガのリンク先を経路付き URL にするだけ</td>
-<td>Worker が経路の印を受け取り、<strong>読者項目（free 欄など）に書く</strong>改修が要る。ページ → Worker へ印を持ち回る手段が今は無い（Worker の受け口は email と anon_uid の2つ・L19-20 実測）</td>
-</tr>
-</tbody>
+<tr><th></th><th>道①：UTAGE のフォーム</th><th>道②：中継サーバー</th></tr>
+<tr><td>経路が reader に付くか</td><td><strong>付く</strong>（UTAGE 標準の登録経路）</td><td><strong>付かない</strong>。API <code>message_reader_create</code> に登録経路を渡す口が無い（受け付けるのは scenario_fields / common_fields / opt_in_confirmed / allow_duplicates / has_step_* の6つ・ツール定義で確認）</td></tr>
+<tr><td>経路×期間の PV／UU</td><td>取れる</td><td>取れる（ページを開いた分は数えられる。登録数だけ 0 のまま）</td></tr>
+<tr><td>経路を付けるには</td><td>メルマガのリンク先を経路付き URL にするだけ</td><td>Worker が経路の印を受け取り、<strong>読者項目（free 欄など）に書く</strong>改修が要る。ページ → Worker へ印を持ち回る手段が今は無い（Worker の受け口は email と anon_uid の2つ・L19-20 実測）</td></tr>
 </table>
-<p><strong>つまり、いまメルマガのリンク先になっている入口ページ <code>V3A9LG00dL2S</code> のフォームは道①なので、経路付き URL を貼るだけで reader に経路が付く。</strong><br />
-お試し版と運転台アプリからの登録（道②）に経路を付けたければ、Worker の改修が別に要る。運転台 marketing 枝に、その枝の実装として問い合わせ済み（2026-09-08 17:25）。</p>
-<h3 id="3-2-2-marketing-2026-09-08-1740">3-2. 道②の実物（運転台 marketing 枝の返答・2026-09-08 17:40・全部コードを読んだ事実）</h3>
+<p><strong>つまり、いまメルマガのリンク先になっている入口ページ <code>V3A9LG00dL2S</code> のフォームは道①なので、経路付き URL を貼るだけで reader に経路が付く。</strong></p>
+<p>お試し版と運転台アプリからの登録（道②）に経路を付けたければ、Worker の改修が別に要る。運転台 marketing 枝に、その枝の実装として問い合わせ済み（2026-09-08 17:25）。</p>
+<h4 id="3-2-道-の実物-運転台-marketing-枝の返答・2026-09-08-17-40・全部">3-2. 道②の実物（運転台 marketing 枝の返答・2026-09-08 17:40・全部コードを読んだ事実）</h4>
 <ul>
 <li>アカウントを作る場所：<strong>アプリ内の画面 → アプリの Rust → 中継サーバー → UTAGE 読者作成</strong>。Supabase は使っていない</li>
-<li>画面 <code>/Users/nishidamitsuhiro/untendai-marketing/src/index.html</code> L10898 <code>auth_register {email, name, password}</code></li>
-<li>Rust <code>/Users/nishidamitsuhiro/untendai-marketing/src-tauri/src/auth.rs</code> L228 <code>register</code> → <code>POST /register</code>（body：email, name, password, from:"app"）</li>
-<li>中継 <code>aimits-report-proxy/src/index.js</code> L871〜 <code>/register</code> が読むのは email / anon_uid / name / password / from の5つ。<code>from</code> は "app" か否かの1ビット</li>
-<li>UTAGE へは <code>{scenario_fields:{mail}, opt_in_confirmed:true}</code> のみ。登録先は wrangler.toml L36 <code>UTAGE_SCENARIO_ID = "XU7Gfd7XoiCQ"</code></li>
+  <li>画面 <code>/Users/nishidamitsuhiro/untendai-marketing/src/index.html</code> L10898 <code>auth_register {email, name, password}</code></li>
+  <li>Rust <code>/Users/nishidamitsuhiro/untendai-marketing/src-tauri/src/auth.rs</code> L228 <code>register</code> → <code>POST /register</code>（body：email, name, password, from:&quot;app&quot;）</li>
+  <li>中継 <code>aimits-report-proxy/src/index.js</code> L871〜 <code>/register</code> が読むのは email / anon_uid / name / password / from の5つ。<code>from</code> は &quot;app&quot; か否かの1ビット</li>
+  <li>UTAGE へは <code>{scenario_fields:{mail}, opt_in_confirmed:true}</code> のみ。登録先は wrangler.toml L36 <code>UTAGE_SCENARIO_ID = &quot;XU7Gfd7XoiCQ&quot;</code></li>
 <li>「どこから来たか」を受ける欄：<strong>無い</strong>（auth.rs を utm/ref/inflow/source で grep して0件・画面の送信欄3つ・中継の受け口5つ・UTAGE には mail 1項目）</li>
 <li>ダウンロードページ → アプリで印を持ち回る手段：<strong>無い</strong>（deep link の仕組みは未導入・Cargo.toml / tauri.conf.json / lib.rs に <code>deep</code> 0件）</li>
 <li>ただし運転台が取り込む「お客様のお客様」側には流入元の列がある：<code>src-tauri/src/utage.rs</code> L274 <code>parse_funnel_subscribers</code> が <code>inflow_source</code> を「UTAGE / {funnel名}」で埋める。<strong>運転台のアカウント登録とは別物</strong></li>
 </ul>
-<p>道②に経路を付けるなら足す場所は3つ（運転台側・未着手・Mits様の指示待ち）：<br />
-1. auth.rs <code>register</code> の body に <code>inflow</code>（例 "utage_mail" / "magmag" / "spro"）を1項目<br />
-2. 中継 <code>/register</code> で body.inflow を読み、KV の記録と UTAGE 読者作成の読者項目（または label）に付ける<br />
-3. アプリがその値をどこから得るか ── deep link を入れるか、ダウンロードページに「登録コード」を出して利用者が入れるか。<strong>ここは決まっていない</strong></p>
+<p>道②に経路を付けるなら足す場所は3つ（運転台側・未着手・Mits様の指示待ち）：</p>
+<p>1. auth.rs <code>register</code> の body に <code>inflow</code>（例 &quot;utage_mail&quot; / &quot;magmag&quot; / &quot;spro&quot;）を1項目</p>
+<p>2. 中継 <code>/register</code> で body.inflow を読み、KV の記録と UTAGE 読者作成の読者項目（または label）に付ける</p>
+<p>3. アプリがその値をどこから得るか ── deep link を入れるか、ダウンロードページに「登録コード」を出して利用者が入れるか。<strong>ここは決まっていない</strong></p>
 <p>運転台側の結論：「メルマガのリンク先を UTAGE の登録経路付き URL にして、UTAGE 側で経路×期間の PV/UU を取る」案は<strong>運転台のコードに触らずに成立する</strong>。</p>
-<hr />
-<h2 id="4-memory">4. 注意（ヘルプ・memory から）</h2>
+<hr>
+<h3 id="4-注意-ヘルプ・memory-から">4. 注意（ヘルプ・memory から）</h3>
 <ul>
 <li><strong>発行後の再編集はできない</strong>（ヘルプ原文「登録経路リンク発行後の再編集は仕様上できません」）。名前と対象を決めてから作る</li>
 <li>入口ページから先へ進むボタンは「ファネルの次のステップ」でないと経路が切れる（現状のボタン設定は未確認・発注時の確認項目）</li>
 <li>UU は IP アドレスで数える</li>
 <li><strong>テスト用の経路を1本作り、テスト送信には必ずそれを付ける</strong>（memory feedback_utage_toroku_su_wa_jinzu_de_nai：AI-Mits ファネルの登録37のうち32行が自分たちのテストだった。今日もテスト26件を削除している）</li>
 </ul>
-<hr />
-<h2 id="5-2026-09-08-1720-0">5. 現状（2026-09-08 17:20 実測・全部 0 本）</h2>
+<hr>
+<h3 id="5-現状-2026-09-08-17-20-実測・全部-0-本">5. 現状（2026-09-08 17:20 実測・全部 0 本）</h3>
 <table>
-<thead>
-<tr>
-<th>対象</th>
-<th>登録経路の本数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ファネル <code>1QtzdExbynBp</code>（<code>funnel_tracking_list</code>）</td>
-<td>0</td>
-</tr>
-<tr>
-<td>シナリオ <code>XU7Gfd7XoiCQ</code>（<code>message_tracking_list</code>・管理画面も空）</td>
-<td>0</td>
-</tr>
-</tbody>
+<tr><th>対象</th><th>登録経路の本数</th></tr>
+<tr><td>ファネル <code>1QtzdExbynBp</code>（<code>funnel_tracking_list</code>）</td><td>0</td></tr>
+<tr><td>シナリオ <code>XU7Gfd7XoiCQ</code>（<code>message_tracking_list</code>・管理画面も空）</td><td>0</td></tr>
 </table>
-<hr />
-<h2 id="6-mits">6. 作る経路（案・名前は Mits様が直す）</h2>
-<p><strong>どちら側に作るか：ファネル側（<code>1QtzdExbynBp</code>・対象ステップ「1_入口_案内と同意」（旧 0_・2026-09-08 untendai-seiri が付番し直し））。</strong><br />
-理由：メルマガのリンク先が入口ページで、登録がそのページのフォーム（道①）で起きるから。ヘルプも「ファネルの登録経路を使っていればシナリオ側は不要」。<br />
-シナリオ側（Mits様が開かれた画面）は、LINE 登録ページ <code>/line/open/XU7Gfd7XoiCQ</code> を直接メルマガに貼るときに要る。</p>
+<hr>
+<h3 id="6-作る経路-案・名前は-Mits様が直す">6. 作る経路（案・名前は Mits様が直す）</h3>
+<p><strong>どちら側に作るか：ファネル側（<code>1QtzdExbynBp</code>・対象ステップ「1_入口_案内と同意」（旧 0_・2026-09-08 untendai-seiri が付番し直し））。</strong></p>
+<p>理由：メルマガのリンク先が入口ページで、登録がそのページのフォーム（道①）で起きるから。ヘルプも「ファネルの登録経路を使っていればシナリオ側は不要」。</p>
+<p>シナリオ側（Mits様が開かれた画面）は、LINE 登録ページ <code>/line/open/XU7Gfd7XoiCQ</code> を直接メルマガに貼るときに要る。</p>
 <table>
-<thead>
-<tr>
-<th>管理名称</th>
-<th>貼る先</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>メルマガ_UTAGE</td>
-<td>UTAGE メインメルマガ（シナリオ <code>bjDd8NXsSPMa</code>）の本文リンク</td>
-</tr>
-<tr>
-<td>メルマガ_まぐまぐ</td>
-<td>まぐまぐの原稿の本文リンク</td>
-</tr>
-<tr>
-<td>メルマガ_spro</td>
-<td>spro（プラン <code>step_R120ta</code>）の本文リンク</td>
-</tr>
-<tr>
-<td>テスト</td>
-<td>テスト送信・動作確認のときだけ</td>
-</tr>
-</tbody>
+<tr><th>管理名称</th><th>貼る先</th></tr>
+<tr><td>メルマガ_UTAGE</td><td>UTAGE メインメルマガ（シナリオ <code>bjDd8NXsSPMa</code>）の本文リンク</td></tr>
+<tr><td>メルマガ_まぐまぐ</td><td>まぐまぐの原稿の本文リンク</td></tr>
+<tr><td>メルマガ_spro</td><td>spro（プラン <code>step_R120ta</code>）の本文リンク</td></tr>
+<tr><td>テスト</td><td>テスト送信・動作確認のときだけ</td></tr>
 </table>
-<p><strong>経路は配信1本ではなくスタンドに付ける。</strong>毎回の配信で同じ URL を使い回す。どの配信で登録したかは日別データで分かる。配信ごとに経路を作ると毎週増えて集計が割れる。<br />
-経路が増えたら（note・X・YouTube 等）同じ要領で1本足す（Mits様 2026-09-07「他にもルートが増えたらトラッキングする」）。</p>
+<p><strong>経路は配信1本ではなくスタンドに付ける。</strong>毎回の配信で同じ URL を使い回す。どの配信で登録したかは日別データで分かる。配信ごとに経路を作ると毎週増えて集計が割れる。</p>
+<p>経路が増えたら（note・X・YouTube 等）同じ要領で1本足す（Mits様 2026-09-07「他にもルートが増えたらトラッキングする」）。</p>
 <p>配信のたびに変わるのは本文の URL だけ：<strong>3か所の原稿は同じ文面で、リンク先の URL だけがスタンドごとに違う。</strong>親の発注書「原版から2か所へ流す」自動化に、URL の差し替え1手が加わる。</p>
-<hr />
-<h2 id="7-untendai-api">7. untendai マーケティングへ渡せるデータ（API で取れるもの・ツール定義で確認済み）</h2>
+<hr>
+<h3 id="7-untendai-マーケティングへ渡せるデータ-API-で取れるもの・ツール定義で確認済み">7. untendai マーケティングへ渡せるデータ（API で取れるもの・ツール定義で確認済み）</h3>
 <table>
-<thead>
-<tr>
-<th>何が取れるか</th>
-<th>ツール</th>
-<th>形</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>経路の一覧（ID と名前）</td>
-<td><code>funnel_tracking_list {funnel_id}</code></td>
-<td>tracking_id／管理名称</td>
-</tr>
-<tr>
-<td>経路 × 期間の PV／UU／登録数</td>
-<td><code>funnel_tracking_stats {funnel_id, date_from, date_to}</code></td>
-<td>管理画面「登録経路データ」と同じ</td>
-</tr>
-<tr>
-<td>登録者1人ごとの経路</td>
-<td><code>funnel_subscriber_list {funnel_id, tracking_id, date_from, date_to}</code>（定義に「氏名・連絡先・登録経路・UTM・登録日時を返す」）</td>
-<td>誰がどの経路から来たか</td>
-</tr>
-<tr>
-<td>日別の登録数</td>
-<td><code>funnel_stats_daily</code></td>
-<td>配信日と突き合わせる材料</td>
-</tr>
-<tr>
-<td>シナリオ側の読者を経路で絞る</td>
-<td><code>message_reader_list</code> の conditions に特別キー <code>tracking</code></td>
-<td>道①の reader だけ経路が付く</td>
-</tr>
-</tbody>
+<tr><th>何が取れるか</th><th>ツール</th><th>形</th></tr>
+<tr><td>経路の一覧（ID と名前）</td><td><code>funnel_tracking_list {funnel_id}</code></td><td>tracking_id／管理名称</td></tr>
+<tr><td>経路 × 期間の PV／UU／登録数</td><td><code>funnel_tracking_stats {funnel_id, date_from, date_to}</code></td><td>管理画面「登録経路データ」と同じ</td></tr>
+<tr><td>登録者1人ごとの経路</td><td><code>funnel_subscriber_list {funnel_id, tracking_id, date_from, date_to}</code>（定義に「氏名・連絡先・登録経路・UTM・登録日時を返す」）</td><td>誰がどの経路から来たか</td></tr>
+<tr><td>日別の登録数</td><td><code>funnel_stats_daily</code></td><td>配信日と突き合わせる材料</td></tr>
+<tr><td>シナリオ側の読者を経路で絞る</td><td><code>message_reader_list</code> の conditions に特別キー <code>tracking</code></td><td>道①の reader だけ経路が付く</td></tr>
 </table>
-<p>運転台は利用者の UTAGE キーで既に顧客・売上を取っている。上の口も同じキーで取れる。<br />
-<strong>運転台に入れる列は「顧客（メール）× 登録経路の名前 × 登録日」。</strong>これで「どのスタンドから来た人が、いくら買ったか」まで結べる。</p>
+<p>運転台は利用者の UTAGE キーで既に顧客・売上を取っている。上の口も同じキーで取れる。</p>
+<p><strong>運転台に入れる列は「顧客（メール）× 登録経路の名前 × 登録日」。</strong>これで「どのスタンドから来た人が、いくら買ったか」まで結べる。</p>
 <p>登録経路を<strong>作る</strong>ツールは MCP の一覧に無い（一覧にあるのは list と stats）。作るのは管理画面から。</p>
-<hr />
-<h2 id="8-go">8. 実装の順（発注GO 後）</h2>
-<ol>
-<li>ファネル <code>1QtzdExbynBp</code> に上の4本を管理画面で作る（FS-utage-pm・Chrome）。出てきた4本の URL を控える</li>
-<li>入口ページ「1_入口_案内と同意」（旧 0_・2026-09-08 untendai-seiri が付番し直し）の先へ進むボタンが「ファネルの次のステップ」か確認（違えば経路が切れる）</li>
-<li>テスト経路の URL で1回登録し、<code>funnel_tracking_stats</code>・<code>funnel_subscriber_list</code>・読者一覧に経路が付くことを確かめる。テスト reader は削除する</li>
-<li>次の配信から、3か所の原稿のリンク先をスタンドごとの URL に差し替える</li>
-<li><code>funnel_tracking_stats</code> と <code>funnel_subscriber_list</code> の生 JSON を配信計測_生データ に落とし、運転台側へ渡す</li>
-<li>道②（お試し版・アプリからの登録）に経路を付けるかは、運転台 marketing 枝の返事を待って別建て</li>
-</ol>
-<hr />
-<h2 id="9-untendai-seiri-2026-09-08-1750">9. ダウンロードの計測（運転台側 untendai-seiri から 2026-09-08 17:50 受領・同じ台帳に並べる）</h2>
+<hr>
+<h3 id="8-実装の順-発注GO-後">8. 実装の順（発注GO 後）</h3>
+<p>1. ファネル <code>1QtzdExbynBp</code> に上の4本を管理画面で作る（FS-utage-pm・Chrome）。出てきた4本の URL を控える</p>
+<p>2. 入口ページ「1_入口_案内と同意」（旧 0_・2026-09-08 untendai-seiri が付番し直し）の先へ進むボタンが「ファネルの次のステップ」か確認（違えば経路が切れる）</p>
+<p>3. テスト経路の URL で1回登録し、<code>funnel_tracking_stats</code>・<code>funnel_subscriber_list</code>・読者一覧に経路が付くことを確かめる。テスト reader は削除する</p>
+<p>4. 次の配信から、3か所の原稿のリンク先をスタンドごとの URL に差し替える</p>
+<p>5. <code>funnel_tracking_stats</code> と <code>funnel_subscriber_list</code> の生 JSON を配信計測_生データ に落とし、運転台側へ渡す</p>
+<p>6. 道②（お試し版・アプリからの登録）に経路を付けるかは、運転台 marketing 枝の返事を待って別建て</p>
+<hr>
+<h3 id="9-ダウンロードの計測-運転台側-untendai-seiri-から-2026-09-08-17">9. ダウンロードの計測（運転台側 untendai-seiri から 2026-09-08 17:50 受領・同じ台帳に並べる）</h3>
 <p>ダウンロードは UTAGE の外で数えている。<strong>ボタンを押した瞬間に必ず通る <code>/get/</code> で1件ずつ記録</strong>（ページを挟まないので途中で閉じた人が漏れない）。</p>
 <ul>
 <li>Worker <code>untendai-update</code>（<code>/Users/nishidamitsuhiro/untendai-seiri/updater/index.js</code>）／KV <code>untendai_download_log</code>（binding <code>DLLOG</code>）</li>
 <li>1件の形：<code>{ts, os(mac/windows), which(latest/prev), version, from, ref, country, ua}</code>。<code>from</code> はボタンの <code>?from=</code> がそのまま入る</li>
-<li>読む口：<code>https://untendai-update.3216-fun.workers.dev/count?from=2026-09-07&amp;detail=1</code> → total／by_day／by_os／by_from／by_version</li>
+<li>読む口：<code><a href="https://un">https://un</a>tendai-update.3216-fun.workers.dev/count?from=2026-09-07&amp;detail=1</code> → total／by_day／by_os／by_from／by_version</li>
 <li><strong>いまの DL ページ <code>oHtrsl52qpXg</code> のボタンは素の <code>/get/mac</code> <code>/get/windows</code>。<code>from</code> は誰も付けていない</strong>（by_from は「(不明)」）</li>
 <li>KV の list は反映に最大60秒。押した直後に 0 でも書けていないとは限らない</li>
 </ul>
-<h3 id="from"><code>from</code> の値の決め方（この文書で決めた・運転台側へ返答済み）</h3>
+<h4 id="from-の値の決め方-この文書で決めた・運転台側へ返答済み"><code>from</code> の値の決め方（この文書で決めた・運転台側へ返答済み）</h4>
 <p><strong>UTAGE の登録経路と同じ切り方＝スタンドごとに固定。</strong>配信ごとには変えない（配信は by_day で分かる）。</p>
 <table>
-<thead>
-<tr>
-<th>スタンド</th>
-<th>UTAGE 登録経路の管理名称</th>
-<th>DL の <code>from</code></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>UTAGE メインメルマガ</td>
-<td>メルマガ_UTAGE</td>
-<td><code>utage-mail</code></td>
-</tr>
-<tr>
-<td>まぐまぐ</td>
-<td>メルマガ_まぐまぐ</td>
-<td><code>magmag</code></td>
-</tr>
-<tr>
-<td>spro</td>
-<td>メルマガ_spro</td>
-<td><code>spro</code></td>
-</tr>
-<tr>
-<td>テスト</td>
-<td>テスト</td>
-<td><code>test</code></td>
-</tr>
-</tbody>
+<tr><th>スタンド</th><th>UTAGE 登録経路の管理名称</th><th>DL の <code>from</code></th></tr>
+<tr><td>UTAGE メインメルマガ</td><td>メルマガ_UTAGE</td><td><code>utage-mail</code></td></tr>
+<tr><td>まぐまぐ</td><td>メルマガ_まぐまぐ</td><td><code>magmag</code></td></tr>
+<tr><td>spro</td><td>メルマガ_spro</td><td><code>spro</code></td></tr>
+<tr><td>テスト</td><td>テスト</td><td><code>test</code></td></tr>
 </table>
-<h3 id="dl-from">DL ページのボタンに <code>from</code> をどう渡すか</h3>
-<p>メルマガのリンク先は UTAGE の経路付き URL（DL ページ、またはファネルの「2_運転台のダウンロード」（旧 8_）ステップ）。<br />
-<strong>DL ページのボタンが「いま開いているページの URL に付いている経路の印」を読んで <code>?from=</code> に写す</strong>作りにする（運転台側へ依頼済み）。<br />
-印のパラメータ名は UTAGE で経路を作って初めて分かる（8節の手順1）。分かった時点で運転台側へ渡す。<br />
-それまでは <code>from</code> 無し＝「(不明)」のまま。</p>
-<h3 id="utage-2026-09-0708">分母（UTAGE 側・運転台側の実測 2026-09-07〜08）</h3>
+<h4 id="DL-ページのボタンに-from-をどう渡すか">DL ページのボタンに <code>from</code> をどう渡すか</h4>
+<p>メルマガのリンク先は UTAGE の経路付き URL（DL ページ、またはファネルの「2_運転台のダウンロード」（旧 8_）ステップ）。</p>
+<p><strong>DL ページのボタンが「いま開いているページの URL に付いている経路の印」を読んで <code>?from=</code> に写す</strong>作りにする（運転台側へ依頼済み）。</p>
+<p>印のパラメータ名は UTAGE で経路を作って初めて分かる（8節の手順1）。分かった時点で運転台側へ渡す。</p>
+<p>それまでは <code>from</code> 無し＝「(不明)」のまま。</p>
+<h4 id="分母-UTAGE-側・運転台側の実測-2026-09-07-08">分母（UTAGE 側・運転台側の実測 2026-09-07〜08）</h4>
 <table>
-<thead>
-<tr>
-<th>ステップ</th>
-<th>PV</th>
-<th>UU</th>
-<th>登録</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1_入口_案内と同意（お試し版・旧 0_）</td>
-<td>90</td>
-<td>29</td>
-<td>0</td>
-</tr>
-<tr>
-<td>2_運転台のダウンロード（旧 8_）</td>
-<td>145</td>
-<td>67</td>
-<td>0</td>
-</tr>
-<tr>
-<td>9_運転台の有料契約（サブスク）</td>
-<td>15</td>
-<td>1</td>
-<td>1</td>
-</tr>
-</tbody>
+<tr><th>ステップ</th><th>PV</th><th>UU</th><th>登録</th></tr>
+<tr><td>1_入口_案内と同意（お試し版・旧 0_）</td><td>90</td><td>29</td><td>0</td></tr>
+<tr><td>2_運転台のダウンロード（旧 8_）</td><td>145</td><td>67</td><td>0</td></tr>
+<tr><td>9_運転台の有料契約（サブスク）</td><td>15</td><td>1</td><td>1</td></tr>
 </table>
-<p><code>funnel_stats_get</code>（funnel <code>1QtzdExbynBp</code>・start_date / end_date で期間を切れる）。<br />
-<strong>台帳の列は「スタンド × 日 × PV／UU／登録（UTAGE）／DL（/count の by_from）／有料契約」</strong>になる。</p>
-<hr />
-<h2 id="10-ip-mits-2026-09-08ip">10. 自分たちのアドレス・IP を計測から外す（Mits様 2026-09-08「計測には私のアドレスやIPが含まれるので、可能な限り除外する」）</h2>
+<p><code>funnel_stats_get</code>（funnel <code>1QtzdExbynBp</code>・start_date / end_date で期間を切れる）。</p>
+<p><strong>台帳の列は「スタンド × 日 × PV／UU／登録（UTAGE）／DL（/count の by_from）／有料契約」</strong>になる。</p>
+<hr>
+<h3 id="10-自分たちのアドレス・IP-を計測から外す-Mits様-2026-09-08-計測には私のア">10. 自分たちのアドレス・IP を計測から外す（Mits様 2026-09-08「計測には私のアドレスやIPが含まれるので、可能な限り除外する」）</h3>
 <p>計測の数字（UTAGE の PV／UU／登録、DL の件数、配信の開封／クリック）に、Mits様と AI の作業分が乗る。<strong>取れる口ごとに、除外の手を全部かける。</strong></p>
-<h3 id="2026-09-08">除外リスト（2026-09-08 時点・記録から抜いた実物）</h3>
+<h4 id="除外リスト-2026-09-08-時点・記録から抜いた実物">除外リスト（2026-09-08 時点・記録から抜いた実物）</h4>
 <table>
-<thead>
-<tr>
-<th>種類</th>
-<th>値</th>
-<th>出どころ</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>メールアドレス</td>
-<td><code>ac_nishida@spro01.com</code>／<code>3216.fun@gmail.com</code>／<code>dai@3216.fun</code></td>
-<td>Mits様の口座・裏 Gmail・テスト用</td>
-</tr>
-<tr>
-<td>メールアドレスの型</td>
-<td><code>bs-*@gmail.com</code>／<code>dup-test-*@gmail.com</code>／<code>phase3verify.*@gmail.com</code>／<code>+dup1</code> <code>+dupcheck</code> <code>+cookietest</code> <code>+guitest</code> <code>+browsertest</code> 付き</td>
-<td>AI の動作確認で作ったもの（memory feedback_utage_toroku_su_wa_jinzu_de_nai・session-log 2026-09-08_1637）</td>
-</tr>
-<tr>
-<td>IP</td>
-<td><code>103.100.190.110</code>（2026-09-08 17:55 この Mac から実測・回線が変われば変わる）</td>
-<td>Mits様の作業場所</td>
-</tr>
-<tr>
-<td>User-Agent</td>
-<td><code>curl/*</code>・AI のブラウザ操作（Chrome MCP／ヘッドレス）</td>
-<td>AI の動作確認</td>
-</tr>
-<tr>
-<td>登録経路</td>
-<td>「テスト」経路（<code>from=test</code>）</td>
-<td>AI・Mits様の試し</td>
-</tr>
-</tbody>
+<tr><th>種類</th><th>値</th><th>出どころ</th></tr>
+<tr><td>メールアドレス</td><td><code>ac_nishida@spro01.com</code>／<code>3216.fun@gmail.com</code>／<code>dai@3216.fun</code></td><td>Mits様の口座・裏 Gmail・テスト用</td></tr>
+<tr><td>メールアドレスの型</td><td><code>bs-*@gmail.com</code>／<code>dup-test-*@gmail.com</code>／<code>phase3verify.*@gmail.com</code>／<code>+dup1</code> <code>+dupcheck</code> <code>+cookietest</code> <code>+guitest</code> <code>+browsertest</code> 付き</td><td>AI の動作確認で作ったもの（memory feedback_utage_toroku_su_wa_jinzu_de_nai・session-log 2026-09-08_1637）</td></tr>
+<tr><td>IP</td><td><code>103.100.190.110</code>（2026-09-08 17:55 この Mac から実測・回線が変われば変わる）</td><td>Mits様の作業場所</td></tr>
+<tr><td>User-Agent</td><td><code>curl/*</code>・AI のブラウザ操作（Chrome MCP／ヘッドレス）</td><td>AI の動作確認</td></tr>
+<tr><td>登録経路</td><td>「テスト」経路（<code>from=test</code>）</td><td>AI・Mits様の試し</td></tr>
 </table>
-<h3 id="_1">口ごとの手</h3>
+<h4 id="口ごとの手">口ごとの手</h4>
 <table>
-<thead>
-<tr>
-<th>口</th>
-<th>手</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>UTAGE 登録経路（PV／UU／登録）</td>
-<td>①テスト送信・動作確認は必ず「テスト」経路の URL で行い、集計から経路「テスト」を落とす ②登録者は <code>funnel_subscriber_list</code> で上のアドレスを落としてから数える ③UU は IP 単位なので、作業した日は外す（memory feedback_shukei_kikan_wa_sagyo_access_wo_nozoku）</td>
-</tr>
-<tr>
-<td>DL の記録（Worker <code>untendai-update</code>）</td>
-<td>①<code>from=test</code> を落とす ②<code>ua</code> が <code>curl/*</code> を落とす ③IP を1件の形に足して、上の IP を落とす（運転台側へ依頼・2026-09-08 17:55）</td>
-</tr>
-<tr>
-<td>配信の開封／クリック（UTAGE <code>message_stats_get</code>）</td>
-<td>送信先に自分のアドレスが入っている分は、<code>message_reader_open_list</code>／<code>message_reader_click_list</code> で上のアドレスを落として引き直す。まぐまぐ・spro のテスト送信分は各画面の数字から手で引く</td>
-</tr>
-<tr>
-<td>運転台へ渡す生データ</td>
-<td>落とす前の生と、落とした後の2本を置く（生を消さない。除外の条件は別ファイルに書いて、あとから条件を直せるようにする）</td>
-</tr>
-</tbody>
+<tr><th>口</th><th>手</th></tr>
+<tr><td>UTAGE 登録経路（PV／UU／登録）</td><td>①テスト送信・動作確認は必ず「テスト」経路の URL で行い、集計から経路「テスト」を落とす ②登録者は <code>funnel_subscriber_list</code> で上のアドレスを落としてから数える ③UU は IP 単位なので、作業した日は外す（memory feedback_shukei_kikan_wa_sagyo_access_wo_nozoku）</td></tr>
+<tr><td>DL の記録（Worker <code>untendai-update</code>）</td><td>①<code>from=test</code> を落とす ②<code>ua</code> が <code>curl/*</code> を落とす ③IP を1件の形に足して、上の IP を落とす（運転台側へ依頼・2026-09-08 17:55）</td></tr>
+<tr><td>配信の開封／クリック（UTAGE <code>message_stats_get</code>）</td><td>送信先に自分のアドレスが入っている分は、<code>message_reader_open_list</code>／<code>message_reader_click_list</code> で上のアドレスを落として引き直す。まぐまぐ・spro のテスト送信分は各画面の数字から手で引く</td></tr>
+<tr><td>運転台へ渡す生データ</td><td>落とす前の生と、落とした後の2本を置く（生を消さない。除外の条件は別ファイルに書いて、あとから条件を直せるようにする）</td></tr>
 </table>
 <p><strong>除外は「落とした後」だけを正にしない。</strong>生データは残し、除外条件を1か所（<code>配信計測_生データ/除外リスト.md</code>）に置く。条件が増えたらそこだけ直す。</p>
-<hr />
-<h2 id="11-utm-2026-09-08-1805-mitsarchives5892-utm">11. 登録経路（トラッキング）ではなく UTM を使う（2026-09-08 18:05 決定・Mits様「archives/5892 を使うか UTM」）</h2>
+<hr>
+<h3 id="11-登録経路-トラッキング-ではなく-UTM-を使う-2026-09-08-18-05-決定・">11. 登録経路（トラッキング）ではなく UTM を使う（2026-09-08 18:05 決定・Mits様「archives/5892 を使うか UTM」）</h3>
 <p>事前調査の状態：✅ 事前調査済み（ヘルプ archives/5892 読了／MCP の funnel_stats_get・funnel_stats_daily・funnel_subscriber_list の定義と実データで確認）</p>
-<h3 id="_2">比べた結果</h3>
+<h4 id="比べた結果">比べた結果</h4>
 <table>
-<thead>
-<tr>
-<th></th>
-<th>登録経路（トラッキング）</th>
-<th>UTM（archives/5892）</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>URL の形</td>
-<td>作って初めて分かる（ヘルプに記載が無い）</td>
-<td><strong>いま分かっている</strong>：<code>?utm_source=magmag&amp;utm_medium=email&amp;utm_campaign=20260909</code> の形。半角英数字のみ</td>
-</tr>
-<tr>
-<td>事前に UTAGE で作るもの</td>
-<td>管理画面で1本ずつ作る。発行後は編集できない</td>
-<td><strong>無し。</strong>URL に付けるだけ</td>
-</tr>
-<tr>
-<td>集計（画面）</td>
-<td>ファネル → データ を「登録経路」で絞る</td>
-<td>ファネル → データ → 詳細条件 にパラメータを入れる</td>
-</tr>
-<tr>
-<td>集計（API）</td>
-<td><code>funnel_tracking_stats</code></td>
-<td><code>funnel_stats_get</code> / <code>funnel_stats_daily</code> に <code>utm_source</code> <code>utm_medium</code> <code>utm_campaign</code> <code>utm_term</code> <code>utm_content</code> の絞り込みがある（定義で確認）</td>
-</tr>
-<tr>
-<td>登録者1人ごと</td>
-<td><code>funnel_subscriber_list</code> の <code>tracking_name</code></td>
-<td>同じ口に <code>utm_source</code>〜<code>utm_content</code> の5列が最初からある（実データで確認・いまは全員 null）</td>
-</tr>
-<tr>
-<td>スタンドと配信の両方を持てるか</td>
-<td>経路1本＝1つの値。配信ごとに分けるなら経路が増える</td>
-<td><strong>source にスタンド、campaign に配信日</strong>、と2つの軸を同時に持てる</td>
-</tr>
-<tr>
-<td>DL のボタンへの持ち回り</td>
-<td>パラメータ名が分かるまで運転台側が組めない</td>
-<td>パラメータ名が既知なので<strong>いま組める</strong></td>
-</tr>
-<tr>
-<td>次のページへの引き継ぎ</td>
-<td>「ファネルの次のステップ」なら引き継ぐ（ヘルプ記載）</td>
-<td><strong>ヘルプに記載が無い。</strong>テストで確かめる（8節の手順3に入れる）</td>
-</tr>
-</tbody>
+<tr><th></th><th>登録経路（トラッキング）</th><th>UTM（archives/5892）</th></tr>
+<tr><td>URL の形</td><td>作って初めて分かる（ヘルプに記載が無い）</td><td><strong>いま分かっている</strong>：<code>?utm_source=magmag&amp;utm_medium=email&amp;utm_campaign=20260909</code> の形。半角英数字のみ</td></tr>
+<tr><td>事前に UTAGE で作るもの</td><td>管理画面で1本ずつ作る。発行後は編集できない</td><td><strong>無し。</strong>URL に付けるだけ</td></tr>
+<tr><td>集計（画面）</td><td>ファネル → データ を「登録経路」で絞る</td><td>ファネル → データ → 詳細条件 にパラメータを入れる</td></tr>
+<tr><td>集計（API）</td><td><code>funnel_tracking_stats</code></td><td><code>funnel_stats_get</code> / <code>funnel_stats_daily</code> に <code>utm_source</code> <code>utm_medium</code> <code>utm_campaign</code> <code>utm_term</code> <code>utm_content</code> の絞り込みがある（定義で確認）</td></tr>
+<tr><td>登録者1人ごと</td><td><code>funnel_subscriber_list</code> の <code>tracking_name</code></td><td>同じ口に <code>utm_source</code>〜<code>utm_content</code> の5列が最初からある（実データで確認・いまは全員 null）</td></tr>
+<tr><td>スタンドと配信の両方を持てるか</td><td>経路1本＝1つの値。配信ごとに分けるなら経路が増える</td><td><strong>source にスタンド、campaign に配信日</strong>、と2つの軸を同時に持てる</td></tr>
+<tr><td>DL のボタンへの持ち回り</td><td>パラメータ名が分かるまで運転台側が組めない</td><td>パラメータ名が既知なので<strong>いま組める</strong></td></tr>
+<tr><td>次のページへの引き継ぎ</td><td>「ファネルの次のステップ」なら引き継ぐ（ヘルプ記載）</td><td><strong>ヘルプに記載が無い。</strong>テストで確かめる（8節の手順3に入れる）</td></tr>
 </table>
 <p><strong>UTM を使う。</strong>理由：①いま URL が書けて運転台側がすぐ組める ②UTAGE に何も作らないので「発行後に直せない」が無い ③スタンドと配信日を同時に持てる ④登録者ごとの5列が API に既にある。</p>
-<h3 id="_3">値の決め方（半角英数字のみ）</h3>
+<h4 id="値の決め方-半角英数字のみ">値の決め方（半角英数字のみ）</h4>
 <table>
-<thead>
-<tr>
-<th>パラメータ</th>
-<th>値</th>
-<th>意味</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>utm_source</code></td>
-<td><code>utage</code> / <code>magmag</code> / <code>spro</code> / <code>test</code>（増えたら <code>note</code> <code>x</code> <code>youtube</code>）</td>
-<td>スタンド</td>
-</tr>
-<tr>
-<td><code>utm_medium</code></td>
-<td><code>email</code></td>
-<td>媒体（メルマガはすべて email。後で LINE や投稿が来たら <code>line</code> <code>post</code>）</td>
-</tr>
-<tr>
-<td><code>utm_campaign</code></td>
-<td><code>20260909</code>（配信日 YYYYMMDD）</td>
-<td>どの配信か</td>
-</tr>
-<tr>
-<td><code>utm_content</code></td>
-<td>空でよい。同じ配信に本文リンクが2本以上あるとき <code>top</code> <code>bottom</code> 等</td>
-<td>リンクの位置</td>
-</tr>
-</tbody>
+<tr><th>パラメータ</th><th>値</th><th>意味</th></tr>
+<tr><td><code>utm_source</code></td><td><code>utage</code> / <code>magmag</code> / <code>spro</code> / <code>test</code>（増えたら <code>note</code> <code>x</code> <code>youtube</code>）</td><td>スタンド</td></tr>
+<tr><td><code>utm_medium</code></td><td><code>email</code></td><td>媒体（メルマガはすべて email。後で LINE や投稿が来たら <code>line</code> <code>post</code>）</td></tr>
+<tr><td><code>utm_campaign</code></td><td><code>20260909</code>（配信日 YYYYMMDD）</td><td>どの配信か</td></tr>
+<tr><td><code>utm_content</code></td><td>空でよい。同じ配信に本文リンクが2本以上あるとき <code>top</code> <code>bottom</code> 等</td><td>リンクの位置</td></tr>
 </table>
-<p>例：まぐまぐの 2026-09-09 配信で入口ページへ飛ばす URL<br />
-<code>https://change.7years.life/p/V3A9LG00dL2S?utm_source=magmag&amp;utm_medium=email&amp;utm_campaign=20260909</code></p>
+<p>例：まぐまぐの 2026-09-09 配信で入口ページへ飛ばす URL</p>
+<p><code><a href="https://change.7years.">https://change.7years.</a>life/p/V3A9LG00dL2S?utm_source=magmag&amp;utm_medium=email&amp;utm_campaign=20260909</code></p>
 <p>DL の <code>from</code>（9節）は <code>utm_source</code> の値をそのまま写す。名前を揃えたので、UTAGE の数字と DL の数字が同じ札で並ぶ。</p>
-<h3 id="689">6節・8節・9節への影響</h3>
+<h4 id="6節・8節・9節への影響">6節・8節・9節への影響</h4>
 <ul>
 <li>6節の「登録経路4本を管理画面で作る」は<strong>やらない</strong>（UTM で置き換え）。「テスト」経路も <code>utm_source=test</code> で代える</li>
 <li>8節の手順1は消え、手順2（ボタンのリンク先）と手順3（テスト登録で UTM が <code>funnel_subscriber_list</code> に付くか・次のステップまで残るか）が先頭になる</li>
 <li>9節の「印のパラメータ名は作って初めて分かる」は解消。運転台側へ <code>utm_source</code> を伝えた（2026-09-08 18:05）</li>
 <li>10節の除外は同じ。<code>utm_source=test</code> を落とす</li>
 </ul>
-<hr />
-<h2 id="12-2026-09-08-1830">12. パートナー制度（紹介・アフィリエイト）を「経路」に組み込む（2026-09-08 18:30・準備中・構造だけ）</h2>
-<p>Mits様「パートナー制度紹介いわゆるアフィリエイトもすぐにやる予定。ヘルプと宴のパートナー制度のページを見て、それが各紹介者のフロムになるので、仕組みの入れ方も考えて」<br />
-事前調査の状態：✅ 事前調査済み（ヘルプ archives/24086・21084・7858・3059・28468 読了／Mits様の管理画面（案件・URL管理・成約状況・パートナー一覧）と、UTAGE 社のパートナーサイト（Mits様がパートナーとして登録済み <code>EN0PiDzLbndh</code>）を Chrome で実機確認）</p>
-<h3 id="12-1-utage-archives24086">12-1. UTAGE のパートナー機能の構造（ヘルプ archives/24086）</h3>
-<pre><code>パートナーグループ（一般／VIP…・報酬条件の違い）
+<hr>
+<h3 id="12-パートナー制度-紹介・アフィリエイト-を-経路-に組み込む-2026-09-08-18-3">12. パートナー制度（紹介・アフィリエイト）を「経路」に組み込む（2026-09-08 18:30・準備中・構造だけ）</h3>
+<p>Mits様「パートナー制度紹介いわゆるアフィリエイトもすぐにやる予定。ヘルプと宴のパートナー制度のページを見て、それが各紹介者のフロムになるので、仕組みの入れ方も考えて」</p>
+<p>事前調査の状態：✅ 事前調査済み（ヘルプ archives/24086・21084・7858・3059・28468 読了／Mits様の管理画面（案件・URL管理・成約状況・パートナー一覧）と、UTAGE 社のパートナーサイト（Mits様がパートナーとして登録済み <code>EN0PiDzLbndh</code>）を Chrome で実機確認）</p>
+<h4 id="12-1-UTAGE-のパートナー機能の構造-ヘルプ-archives-24086">12-1. UTAGE のパートナー機能の構造（ヘルプ archives/24086）</h4>
+<pre><code>
+パートナーグループ（一般／VIP…・報酬条件の違い）
  └ パートナー（紹介者・グループ登録 URL から自分で登録 → パートナーサイトにログイン）
     └ 案件（何を紹介するか＝商品購入／メール登録／LINE登録・LP の URL・報酬）
        └ 成約（紹介リンク経由の登録／購入が記録される）
           └ 報酬（運営が「承認」して確定 → 月次で運営が振込。UTAGE は代行しない）
 </code></pre>
-<h3 id="12-2">12-2. 紹介リンクの形（実機で確認）</h3>
+<h4 id="12-2-紹介リンクの形-実機で確認">12-2. 紹介リンクの形（実機で確認）</h4>
 <table>
-<thead>
-<tr>
-<th>どこの</th>
-<th>形</th>
-<th>例</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Mits様の制度</strong>（管理画面 パートナー一覧 → 紹介用リンク・パートナー「西田紹介アカウント」）</td>
-<td><code>https://utage-system.com/p/&lt;LPページID&gt;?ftid=&lt;パートナー固有コード&gt;</code></td>
-<td><code>https://utage-system.com/p/6qaAIkCGa2kM?ftid=W0iiZNJGGUvt</code></td>
-</tr>
-<tr>
-<td>UTAGE 社の制度（Mits様がパートナーの側）</td>
-<td><code>https://utage-system.com/p/&lt;LPページID&gt;/&lt;パートナー固有コード&gt;</code></td>
-<td><code>https://utage-system.com/p/LYmND3mC1QjP/i9Mn155NamEq</code></td>
-</tr>
-<tr>
-<td>トラッキングコード付き（パートナーがパートナーサイトで自分で生成）</td>
-<td>上に <code>?tid=&lt;半角英数字&gt;</code> が付く</td>
-<td><code>…/i9Mn155NamEq?tid=test</code>（実機で生成して確認）</td>
-</tr>
-</tbody>
+<tr><th>どこの</th><th>形</th><th>例</th></tr>
+<tr><td><strong>Mits様の制度</strong>（管理画面 パートナー一覧 → 紹介用リンク・パートナー「西田紹介アカウント」）</td><td><code><a href="https://u">https://u</a>tage-system.com/p/&lt;LPページID&gt;?ftid=&lt;パートナー固有コード&gt;</code></td><td><code><a href="https://u">https://u</a>tage-system.com/p/6qaAIkCGa2kM?ftid=W0iiZNJGGUvt</code></td></tr>
+<tr><td>UTAGE 社の制度（Mits様がパートナーの側）</td><td><code><a href="https://u">https://u</a>tage-system.com/p/&lt;LPページID&gt;/&lt;パートナー固有コード&gt;</code></td><td><code><a href="https://u">https://u</a>tage-system.com/p/LYmND3mC1QjP/i9Mn155NamEq</code></td></tr>
+<tr><td>トラッキングコード付き（パートナーがパートナーサイトで自分で生成）</td><td>上に <code>?tid=&lt;半角英数字&gt;</code> が付く</td><td><code>…/i9Mn155NamEq?tid=test</code>（実機で生成して確認）</td></tr>
 </table>
 <p><strong>紹介者の印は <code>ftid</code>（パートナー固有コード）。これが「各紹介者のフロム」。</strong>トラッキングコード <code>tid</code> は、紹介者が自分の中で「どこに貼ったか」を分けるための第2の印（Facebook なら <code>fb</code>、のように）。</p>
-<h3 id="12-3-archives3059">12-3. 判定の仕組みと制約（ヘルプ archives/3059）</h3>
+<h4 id="12-3-判定の仕組みと制約-ヘルプ-archives-3059">12-3. 判定の仕組みと制約（ヘルプ archives/3059）</h4>
 <ul>
 <li><strong>Cookie で30日間</strong>紹介者を覚える。複数の紹介リンクを踏むと<strong>後勝ち</strong>（上書き）</li>
 <li><strong>別ブラウザ・別端末では外れる</strong>（「ブラウザや端末を変えずに申し込んでください」と案内する前提）</li>
@@ -581,75 +273,32 @@ Mits様が開かれた画面 <code>https://change.7years.life/account/vNItAbojIg
 <li>LINE 登録は「一度も友だち追加されていない人」だけ成約になる</li>
 <li>申込後の紹介者変更は不可</li>
 </ul>
-<h3 id="12-4-mits2026-09-08">12-4. いま Mits様の制度に何があるか（2026-09-08 実機）</h3>
+<h4 id="12-4-いま-Mits様の制度に何があるか-2026-09-08-実機">12-4. いま Mits様の制度に何があるか（2026-09-08 実機）</h4>
 <table>
-<thead>
-<tr>
-<th>種類</th>
-<th>実物</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>案件</td>
-<td>「LP紹介20260301」（メール登録・公開）／「AI-Mits ご紹介」（メール登録・公開）／「【テスト】経営の運転台_紹介案件」<code>VNNrb9d1fWF4</code>（商品購入「経営の運転台（月額）」・LP1 <code>https://change.7years.life/p/ZI4MSkZy0QS3</code>・非公開・報酬未設定）</td>
-</tr>
-<tr>
-<td>パートナーグループ</td>
-<td>一般／AI-Mits ご紹介者（F0-01会員）／【テスト】経営の運転台_紹介者</td>
-</tr>
-<tr>
-<td>グループ登録 URL</td>
-<td>一般 <code>https://change.7years.life/partner/9ZM5yiRgVptw/register</code>／AI-Mits ご紹介者 <code>…/partner/xHmef2zTwgB2/register</code>／運転台_紹介者 <code>…/partner/AwVsnXIj0UTI/register</code>／ログイン <code>…/partner/6YT2EjBfaJXr/login</code></td>
-</tr>
-<tr>
-<td>パートナー</td>
-<td>1人（西田紹介アカウント・dai@dmikz.com・一般・2026-03-01）＝テスト用</td>
-</tr>
-<tr>
-<td>成約状況</td>
-<td>案件名／パートナー／ステータス／報酬額／種別／成約日時。<strong>CSV 出力あり</strong>。絞り込みに案件・ステータス・種別・成約年月・パートナー</td>
-</tr>
-<tr>
-<td>MCP API</td>
-<td><strong>パートナー関連のツールは 0本</strong>（tools/list 178本を partner / agent / affil / reward で引いて該当なし）。成約は画面の CSV から取る</td>
-</tr>
-</tbody>
+<tr><th>種類</th><th>実物</th></tr>
+<tr><td>案件</td><td>「LP紹介20260301」（メール登録・公開）／「AI-Mits ご紹介」（メール登録・公開）／「【テスト】経営の運転台_紹介案件」<code>VNNrb9d1fWF4</code>（商品購入「経営の運転台（月額）」・LP1 <code><a href="https://change.7years.">https://change.7years.</a>life/p/ZI4MSkZy0QS3</code>・非公開・報酬未設定）</td></tr>
+<tr><td>パートナーグループ</td><td>一般／AI-Mits ご紹介者（F0-01会員）／【テスト】経営の運転台_紹介者</td></tr>
+<tr><td>グループ登録 URL</td><td>一般 <code><a href="https://change.7years.">https://change.7years.</a>life/partner/9ZM5yiRgVptw/register</code>／AI-Mits ご紹介者 <code>…/partner/xHmef2zTwgB2/register</code>／運転台_紹介者 <code>…/partner/AwVsnXIj0UTI/register</code>／ログイン <code>…/partner/6YT2EjBfaJXr/login</code></td></tr>
+<tr><td>パートナー</td><td>1人（西田紹介アカウント・dai@dmikz.com・一般・2026-03-01）＝テスト用</td></tr>
+<tr><td>成約状況</td><td>案件名／パートナー／ステータス／報酬額／種別／成約日時。<strong>CSV 出力あり</strong>。絞り込みに案件・ステータス・種別・成約年月・パートナー</td></tr>
+<tr><td>MCP API</td><td><strong>パートナー関連のツールは 0本</strong>（tools/list 178本を partner / agent / affil / reward で引いて該当なし）。成約は画面の CSV から取る</td></tr>
 </table>
-<h3 id="12-5">12-5. 台帳への入れ方（案）</h3>
+<h4 id="12-5-台帳への入れ方-案">12-5. 台帳への入れ方（案）</h4>
 <p><strong>紹介者は UTM のスタンドと同じ列に並べる。値は <code>ftid</code> のコード。</strong></p>
 <table>
-<thead>
-<tr>
-<th>台帳の列「経路」</th>
-<th>値の出どころ</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>utage / magmag / spro</td>
-<td>メルマガ URL の <code>utm_source</code></td>
-</tr>
-<tr>
-<td>partner:<ftid></td>
-<td>紹介リンクの <code>ftid</code>（例 <code>partner:W0iiZNJGGUvt</code>）</td>
-</tr>
-<tr>
-<td>test</td>
-<td><code>utm_source=test</code></td>
-</tr>
-</tbody>
+<tr><th>台帳の列「経路」</th><th>値の出どころ</th></tr>
+<tr><td>utage / magmag / spro</td><td>メルマガ URL の <code>utm_source</code></td></tr>
+<tr><td>partner:&lt;ftid&gt;</td><td>紹介リンクの <code>ftid</code>（例 <code>partner:W0iiZNJGGUvt</code>）</td></tr>
+<tr><td>test</td><td><code>utm_source=test</code></td></tr>
 </table>
 <p>取り方：</p>
-<ol>
-<li><strong>登録（メール）</strong>：UTAGE の成約状況（案件「AI-Mits ご紹介」等）の CSV に「パートナー × 成約日時」が出る。これが正。API が無いので画面から CSV を落とす（発注書の「まぐまぐ・spro は画面から」と同じ扱い）</li>
-<li><strong>PV／UU</strong>：UTAGE のファネルデータは紹介者別に割れない（<code>funnel_stats_get</code> の絞り込みは tracking_id と utm_<em> のみ）。紹介者別の PV が要るなら、</em><em>案件の LP1 の URL に <code>?utm_source=partner</code> を付けておく</em><em>（案件編集画面の LP1 欄）。紹介リンクは LP1 に <code>ftid</code> を足した形で出るはずなので、<code>utm_source=partner&amp;ftid=…</code> の URL になる。</em><em>これは未検証</em>*（LP1 に <code>?</code> 付き URL を入れたときに紹介リンクがどう出るかは、テスト案件で作って確かめる）</li>
-<li><strong>DL の from</strong>：DL ページのボタンが、ページ URL の <code>ftid</code> を読んで <code>from=partner-&lt;ftid&gt;</code> に写す（<code>utm_source</code> と同じ仕組みで1つ増やすだけ。運転台側へ依頼済み・2026-09-08 18:30）。Cookie は UTAGE のもので運転台からは読めないので、URL の <code>ftid</code> を読む</li>
-<li><strong>紹介者ごとの購入</strong>：成約状況の「初回支払／2回目以降支払」の行が紹介者ごとに出る。台帳の「有料契約」列はここから</li>
-</ol>
+<p>1. <strong>登録（メール）</strong>：UTAGE の成約状況（案件「AI-Mits ご紹介」等）の CSV に「パートナー × 成約日時」が出る。これが正。API が無いので画面から CSV を落とす（発注書の「まぐまぐ・spro は画面から」と同じ扱い）</p>
+<p>2. <strong>PV／UU</strong>：UTAGE のファネルデータは紹介者別に割れない（<code>funnel_stats_get</code> の絞り込みは tracking_id と utm_* のみ）。紹介者別の PV が要るなら、<strong>案件の LP1 の URL に <code>?utm_source=partner</code> を付けておく</strong>（案件編集画面の LP1 欄）。紹介リンクは LP1 に <code>ftid</code> を足した形で出るはずなので、<code>utm_source=partner&amp;ftid=…</code> の URL になる。<strong>これは未検証</strong>（LP1 に <code>?</code> 付き URL を入れたときに紹介リンクがどう出るかは、テスト案件で作って確かめる）</p>
+<p>3. <strong>DL の from</strong>：DL ページのボタンが、ページ URL の <code>ftid</code> を読んで <code>from=partner-&lt;ftid&gt;</code> に写す（<code>utm_source</code> と同じ仕組みで1つ増やすだけ。運転台側へ依頼済み・2026-09-08 18:30）。Cookie は UTAGE のもので運転台からは読めないので、URL の <code>ftid</code> を読む</p>
+<p>4. <strong>紹介者ごとの購入</strong>：成約状況の「初回支払／2回目以降支払」の行が紹介者ごとに出る。台帳の「有料契約」列はここから</p>
 <p><strong>訂正（2026-09-08 19:40）：読者側の API には出る。</strong><code>message_reader_create</code> の応答（読者1件の形）に <code>partner</code> / <code>referrer</code> / <code>funnel_tracking_id</code> / <code>funnel_tracking_name</code> / <code>message_tracking_id</code> / <code>message_tracking_name</code> の項目がある（実データ・いまは全部 null）。<code>message_reader_get</code> / <code>message_reader_list</code> も同じ形のはず（読者の形は共通）。運転台は読者 API の <code>partner</code> で紹介者を取れる見込み。パートナー経由の成約が1件できたら <code>partner</code> に何が入るか（名前か ID か）を確かめる。</p>
 <p><strong>ファネル側の <code>funnel_subscriber_list</code> には出ない（2026-09-08 18:50 確認）</strong>：<code>funnel_subscriber_list</code> の応答の列は id / step_name / page_title / mail / name / sei / mei / kana / phone / zipcode / pref / city / address / building / line_display_name / line_picture_url / tracking_name / utm_source / utm_medium / utm_campaign / utm_term / utm_content / reserved_datetime / created_at の24列で、パートナー（ftid）の列は無い。紹介者の紐付けは管理画面「成約状況」の CSV だけ。読者側の API（message_reader_get 等）にパートナー項目が出るかは、パートナー経由の成約が1件できてから確かめる。</p>
-<h3 id="12-6-mits">12-6. 準備中に決めておくこと（Mits様が決める・いまは空欄）</h3>
+<h4 id="12-6-準備中に決めておくこと-Mits様が決める・いまは空欄">12-6. 準備中に決めておくこと（Mits様が決める・いまは空欄）</h4>
 <ul>
 <li>案件を「メール登録」（AI-Mits 登録＝シナリオ <code>XU7Gfd7XoiCQ</code>）にするか「商品購入」（経営の運転台（月額））にするか、両方にするか</li>
 <li>報酬の額と、申込時／初回支払時／2回目以降の別</li>
@@ -657,105 +306,44 @@ Mits様が開かれた画面 <code>https://change.7years.life/account/vNItAbojIg
 <li>紹介特典を使うか（申込フォームの下に「○○さんからの紹介」と出る。ヘルプでは、紹介が有効になっているかを本人が確認できるので推奨されている）</li>
 <li>「ブラウザや端末を変えずに」の案内文をどこに置くか</li>
 </ul>
-<h3 id="12-7-2026-09-08-1940">12-7. 2026-09-08 19:40 時点の実装状況（このセッションで設定したもの）</h3>
+<h4 id="12-7-2026-09-08-19-40-時点の実装状況-このセッションで設定したもの">12-7. 2026-09-08 19:40 時点の実装状況（このセッションで設定したもの）</h4>
 <table>
-<thead>
-<tr>
-<th>項目</th>
-<th>状態</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>案件「AI-Mits ご紹介-20260908更新」<code>T1pSTUHxF427</code></td>
-<td>Mits様設定：メール登録・登録先 <code>XU7Gfd7XoiCQ</code>・LP1 <code>https://change.7years.life/p/V3A9LG00dL2S</code>・紹介特典 利用可・手動承認・有効・公開・報酬 登録時 1,000円</td>
-</tr>
-<tr>
-<td>パートナーグループ「AI-Mits ご紹介者」<code>xHmef2zTwgB2</code></td>
-<td>Mits様整理済み（この1つだけ）。連携シナリオ＝メインメルマガのまま</td>
-</tr>
-<tr>
-<td>パートナー 3216.fun@gmail.com（名前「3216.fun お客様目線」）</td>
-<td><strong>追加済み</strong>（管理画面 CSV 取り込み・1行・パートナーID <code>KOPZvrRngqRe</code>・2026-09-08 18:20）。ログインには本人が「パスワードをお忘れですか？」から設定する（Mits様）</td>
-</tr>
-<tr>
-<td>3216.fun の紹介リンク（AI-Mits ご紹介 LP1）</td>
-<td><code>https://change.7years.life/p/K0ErKAteTkXm/KOPZvrRngqRe</code> → 200・<code>/p/V3A9LG00dL2S</code> に着地（curl 実測）</td>
-</tr>
-<tr>
-<td>紹介者向けシナリオ「AI-Mits ご紹介者_パートナー配信」<code>e2KfC3R6ehDT</code></td>
-<td><strong>新設</strong>（API）。送信者名／アドレスをメインメルマガと同じにした。中身（ステップメール）は空。3216.fun を読者として登録済み（reader <code>4G103ss62twi</code>）</td>
-</tr>
-<tr>
-<td>グループの連携シナリオを新シナリオに紐付け</td>
-<td><strong>未了。</strong>候補にメインメルマガしか出ない。条件は未解明（新規作成・判定方式・短縮ドメイン・送信者を揃えても出ず）</td>
-</tr>
-<tr>
-<td>古いパートナー「西田紹介アカウント」dai@dmikz.com</td>
-<td>グループ欄が空（元のグループが整理で消えた）</td>
-</tr>
-</tbody>
+<tr><th>項目</th><th>状態</th></tr>
+<tr><td>案件「AI-Mits ご紹介-20260908更新」<code>T1pSTUHxF427</code></td><td>Mits様設定：メール登録・登録先 <code>XU7Gfd7XoiCQ</code>・LP1 <code><a href="https://change.7years.">https://change.7years.</a>life/p/V3A9LG00dL2S</code>・紹介特典 利用可・手動承認・有効・公開・報酬 登録時 1,000円</td></tr>
+<tr><td>パートナーグループ「AI-Mits ご紹介者」<code>xHmef2zTwgB2</code></td><td>Mits様整理済み（この1つだけ）。連携シナリオ＝メインメルマガのまま</td></tr>
+<tr><td>パートナー 3216.fun@gmail.com（名前「3216.fun お客様目線」）</td><td><strong>追加済み</strong>（管理画面 CSV 取り込み・1行・パートナーID <code>KOPZvrRngqRe</code>・2026-09-08 18:20）。ログインには本人が「パスワードをお忘れですか？」から設定する（Mits様）</td></tr>
+<tr><td>3216.fun の紹介リンク（AI-Mits ご紹介 LP1）</td><td><code><a href="https://change.7years.">https://change.7years.</a>life/p/K0ErKAteTkXm/KOPZvrRngqRe</code> → 200・<code>/p/V3A9LG00dL2S</code> に着地（curl 実測）</td></tr>
+<tr><td>紹介者向けシナリオ「AI-Mits ご紹介者_パートナー配信」<code>e2KfC3R6ehDT</code></td><td><strong>新設</strong>（API）。送信者名／アドレスをメインメルマガと同じにした。中身（ステップメール）は空。3216.fun を読者として登録済み（reader <code>4G103ss62twi</code>）</td></tr>
+<tr><td>グループの連携シナリオを新シナリオに紐付け</td><td><strong>未了。</strong>候補にメインメルマガしか出ない。条件は未解明（新規作成・判定方式・短縮ドメイン・送信者を揃えても出ず）</td></tr>
+<tr><td>古いパートナー「西田紹介アカウント」dai@dmikz.com</td><td>グループ欄が空（元のグループが整理で消えた）</td></tr>
 </table>
-<h3 id="13-2026-09-08-1815-jstuntendai-seiri">13. 運転台側の受け口が完成（2026-09-08 18:15 JST・untendai-seiri から受領）</h3>
+<h4 id="13-運転台側の受け口が完成-2026-09-08-18-15-JST・untendai-sei">13. 運転台側の受け口が完成（2026-09-08 18:15 JST・untendai-seiri から受領）</h4>
 <p><strong>明日の配信から、メール本文の URL に UTM を付けるだけで運転台の DL 計測に並ぶ。</strong></p>
 <table>
-<thead>
-<tr>
-<th>何</th>
-<th>値（untendai-seiri 実測）</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>経路の札</td>
-<td><code>utm_source</code> を経路として扱う。<code>from=</code> も引き続き受け、<code>from</code> が空なら <code>utm_source</code></td>
-</tr>
-<tr>
-<td>束ねる単位</td>
-<td><code>utm_campaign</code>（<code>by_campaign</code> として集計に出る）</td>
-</tr>
-<tr>
-<td>記録の粒度</td>
-<td>押されるたび1件。utm 5項目を丸ごと残す</td>
-</tr>
-<tr>
-<td>UTAGE ページに UTM を付けても壊れない</td>
-<td>入口 <code>/p/V3A9LG00dL2S</code>・お試し版 UgSfW8MCzHqv・DL oHtrsl52qpXg・premium 6VLQVfQ5Hwfj で 200・サイズ同一</td>
-</tr>
-<tr>
-<td>直した3か所</td>
-<td>配信 Worker が utm_ を見ていなかった（<code>updater/index.js:216</code>）／DL ボタンが別ドメインへ飛ぶ時に札が落ちていた／お試し版→DL の間で落ちていた。いずれも JS で引き継ぐ形に</td>
-</tr>
-<tr>
-<td>一気通貫の実証</td>
-<td>UTM 付きで本番ボタンを押し、KV に <code>from: magmag / utm.campaign: honban_kakunin_0908</code> が残った。確認用1件は消して現在 0件</td>
-</tr>
-<tr>
-<td>読む口</td>
-<td><code>https://untendai-update.3216-fun.workers.dev/count?detail=1</code>（<code>by_os / by_from / by_version / by_campaign</code>）。<code>?from=2026-09-09&amp;detail=1</code> で日付から。<strong>KV の list は反映に最大60秒</strong></td>
-</tr>
-<tr>
-<td>分母</td>
-<td><code>funnel_stats_get</code>（funnel 1QtzdExbynBp）。<code>start_date</code> / <code>end_date</code> が効く</td>
-</tr>
-<tr>
-<td>ステップ名</td>
-<td>untendai-seiri が上から <code>1_〜5_</code> に付番し直した（旧 <code>0_/6_/8_/9_/10_</code>）。ページ名から連番を外した</td>
-</tr>
-</tbody>
+<tr><th>何</th><th>値（untendai-seiri 実測）</th></tr>
+<tr><td>経路の札</td><td><code>utm_source</code> を経路として扱う。<code>from=</code> も引き続き受け、<code>from</code> が空なら <code>utm_source</code></td></tr>
+<tr><td>束ねる単位</td><td><code>utm_campaign</code>（<code>by_campaign</code> として集計に出る）</td></tr>
+<tr><td>記録の粒度</td><td>押されるたび1件。utm 5項目を丸ごと残す</td></tr>
+<tr><td>UTAGE ページに UTM を付けても壊れない</td><td>入口 <code>/p/V3A9LG00dL2S</code>・お試し版 UgSfW8MCzHqv・DL oHtrsl52qpXg・premium 6VLQVfQ5Hwfj で 200・サイズ同一</td></tr>
+<tr><td>直した3か所</td><td>配信 Worker が utm_ を見ていなかった（<code>updater/index.js:216</code>）／DL ボタンが別ドメインへ飛ぶ時に札が落ちていた／お試し版→DL の間で落ちていた。いずれも JS で引き継ぐ形に</td></tr>
+<tr><td>一気通貫の実証</td><td>UTM 付きで本番ボタンを押し、KV に <code>from: magmag / utm.campaign: honban_kakunin_0908</code> が残った。確認用1件は消して現在 0件</td></tr>
+<tr><td>読む口</td><td><code><a href="https://un">https://un</a>tendai-update.3216-fun.workers.dev/count?detail=1</code>（<code>by_os / by_from / by_version / by_campaign</code>）。<code>?from=2026-09-09&amp;detail=1</code> で日付から。<strong>KV の list は反映に最大60秒</strong></td></tr>
+<tr><td>分母</td><td><code>funnel_stats_get</code>（funnel 1QtzdExbynBp）。<code>start_date</code> / <code>end_date</code> が効く</td></tr>
+<tr><td>ステップ名</td><td>untendai-seiri が上から <code>1_〜5_</code> に付番し直した（旧 <code>0_/6_/8_/9_/10_</code>）。ページ名から連番を外した</td></tr>
 </table>
 <p><strong>このセッションが守ること：3スタンドで <code>utm_campaign</code> を同じ値にする。</strong>11節の決定どおり配信日 <code>YYYYMMDD</code> を使う（例 <code>20260909</code>）。<code>utm_source</code> は <code>utage</code> / <code>magmag</code> / <code>spro</code>。</p>
 <p>正本：<code>/Users/nishidamitsuhiro/untendai-seiri/updater/index.js</code>（Version ID <code>e864c88c-f4bb-4d0a-8bc8-ce70358b0a31</code>）・KV <code>untendai_download_log</code>（id <code>4ab2f9e24aad4030ab1698b38a0e3fc5</code>）。</p>
 <p><strong>読者 API の項目差（untendai-marketing 実測）</strong>：<code>message_reader_list</code> の応答には <code>partner</code> / <code>funnel_tracking_*</code> / <code>message_tracking_*</code> は出るが <code>referrer</code> は出ない（<code>message_reader_create</code> の応答にはある）。</p>
-<h3 id="14-csv-json2026-09-08-1955-jstmits">14. 配信計測の置き場は「ローカルの CSV と生 JSON」に確定（2026-09-08 19:55 JST・Mits様）</h3>
+<h4 id="14-配信計測の置き場は-ローカルの-CSV-と生-JSON-に確定-2026-09-08-19">14. 配信計測の置き場は「ローカルの CSV と生 JSON」に確定（2026-09-08 19:55 JST・Mits様）</h4>
 <p>Mits様原文「Untendaiマーケティングが読めれば良いので、ローカルのAIが読める数字で構わない。最初は私がGoogleで目視しようと思ったが、今はその役目はなくなったので。」</p>
 <ul>
 <li>固定 Google シート（1ZenI85I0RHwXv4TXTbBBS7YppQ3wsSt58qmXTUyg1zY）への書き込みは<strong>やめる</strong>。API 403 の解消も GUI 取り込みも打ち切り</li>
 <li>正本は次の2つ。untendai-marketing はここを読む</li>
-<li>CSV：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/整理プロセス/配信計測たたき台_20260908.csv</code></li>
-<li>生 JSON：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/整理プロセス/配信計測_生データ/utage_broadcast_stats_20260908.json</code></li>
+  <li>CSV：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/整理プロセス/配信計測たたき台_20260908.csv</code></li>
+  <li>生 JSON：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/整理プロセス/配信計測_生データ/utage_broadcast_stats_20260908.json</code></li>
 <li>取り直し：<code>haishin_keisoku_utage_to_sheet.py</code>（--limit 5 / --all / --skip-exclude）。シート書き込みの部分は使わない</li>
 </ul>
+
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
 </body>
 </html>
