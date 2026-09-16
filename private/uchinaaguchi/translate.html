@@ -488,7 +488,7 @@ $("#src").innerHTML =
   if(!("serviceWorker" in navigator)){ say("この端末は取り込みに対応していません（電波が要ります）"); return; }
   if(location.protocol==="file:"){ say("ファイルを直接開いているため取り込めません"); return; }
   say("この端末に取り込んでいます…");
-  navigator.serviceWorker.register("sw.js?v=6").then(reg=>{
+  navigator.serviceWorker.register("sw.js?v=7").then(reg=>{
     const done=()=>caches.keys().then(ks=>ks.some(k=>k.startsWith("uchinaaguchi"))).then(ok=>
       say(ok?"✓ この端末に取り込み済み。電波が無くても使えます。"
             :"取り込みの途中です。もう一度開くと仕上がります。", ok?"#2f6b2f":null));
