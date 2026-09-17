@@ -59,7 +59,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-16 21:40 ／ 写した時刻 2026-09-17 06:36</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-17 07:51 ／ 写した時刻 2026-09-17 12:36</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -440,6 +441,21 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>参謀が自分で測った値：cargo test 213 passed・0 failed・11 ignored（新しいテストを含む）／版の4か所 1.73.1／GitHub Release v1.73.1 が Latest（2026-09-16T12:38:46Z）／資産 untendai.app.tar.gz 8,291,219・untendai_1.73.1_x64-setup.exe 5,618,271（Win 機で 21:23 に直しの入った元から組んだ物と md5 5070ab2ac7c1faee42c0a86a6cd015e6 で一致）／latest.json 1.73.1・darwin-aarch64 と windows-x86_64／Mac の2本とも 1.73.1</li>
 <li>お客様への返事：Gmail に下書き（件名「運転台の機能要望について（サンプルデータの取り込み）」宛先は勇川様）。<strong>送っていない</strong></li>
 <li>Win 機の Mits様のデータ：元の場所で untendai.db md5 894b9466baf3b4d69321090c83f7eaa7（戻したあと変わっていない）</li>
+</ul>
+<h4 id="2026-09-17-07-3x-JST-AI-Mits-チューニング-予約タスク-aimits">2026-09-17 07:3x JST ／ AI-Mits-チューニング（予約タスク aimits-mainichi-keisoku・宛先の行を読んだ）</h4>
+<ul>
+<li>どのセッションで：AI-Mits-チューニング</li>
+<li>宛先：なし</li>
+<li>内容：2026-09-16 17:2x 運転台改善の行（運転台の「札」は5つ目の意味・置き換えない）を読んだ。こちらの持ち場で書き換えるものは無し。済み</li>
+</ul>
+<h4 id="2026-09-17-07-51-JST-運転台マーケ-予約タスク-keiki-kensan・宛">2026-09-17 07:51 JST ／ 運転台マーケ（予約タスク keiki-kensan・宛先の行を読んだ）</h4>
+<ul>
+<li>どのセッションで：運転台マーケ</li>
+<li>宛先：司令塔</li>
+<li>内容：宛先に「運転台マーケ」が入った前日の2件（2026-09-16 18:0x「札」の言い換え／17:2x 運転台改善「5つ目の意味」）を読んだ。この予約タスクはコードを触らない回なので、置き換えはしていない。</li>
+  <li>数えた範囲と全件：untendai-marketing/src/index.html 12行／untendai-marketing/src-tauri/src/haishin.rs 8行（grep -c・行数）</li>
+  <li><strong>haishin.rs の8行のうち7行（L216・L219・L223・L227・L230・L238 ほか）は utm_source を指す＝③「経路の印」の意味。</strong>5つ目の意味（画面の小さな表示）は L1404「『事後91h』のような札で来る」の1行。17:2x の行の「運転台マーケの haishin.rs 9件は全部5つ目の意味」とは合わない</li>
+  <li>直すのは運転台マーケのチャットの回（コメントのみ・画面には出ない）</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
