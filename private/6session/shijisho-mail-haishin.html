@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+<title>指示書 メール配信・計測・自動化 ／ 6セッション社内レポート</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:20px 20px 80px; max-width:1000px; margin:0 auto; line-height:1.7; }
+h1,h2,h3,h4,h5,h6 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; color:var(--fg); }
+h1 { font-size:26px; margin:12px 0 18px; padding-bottom:10px; border-bottom:1px solid var(--line); }
+h2 { font-size:20px; margin:32px 0 12px; padding-left:10px; border-left:4px solid var(--gold); }
+h3 { font-size:16px; margin:24px 0 10px; }
+p { margin:10px 0; }
+a { color:var(--gold); text-decoration:none; }
+a:hover { text-decoration:underline; }
+code { font-family:var(--mono); background:var(--sub-bg); padding:2px 5px; border-radius:3px; font-size:0.9em; }
+pre { font-family:var(--mono); background:var(--sub-bg); padding:14px 16px; border-radius:8px; overflow-x:auto; border:1px solid var(--line); font-size:0.85em; line-height:1.5; }
+pre code { background:transparent; padding:0; }
+blockquote { border-left:3px solid var(--gold); padding:6px 14px; margin:14px 0; color:var(--muted); background:var(--sub-bg); border-radius:0 6px 6px 0; }
+ul,ol { padding-left:22px; }
+li { margin:4px 0; }
+table { border-collapse:collapse; width:100%; margin:14px 0; font-size:0.9em; }
+th,td { border:1px solid var(--line); padding:6px 10px; text-align:left; vertical-align:top; }
+th { background:var(--sub-bg); font-family:var(--mincho); font-weight:600; }
+hr { border:0; border-top:1px dashed var(--line); margin:24px 0; }
+img { max-width:100%; height:auto; }
+
+.nav-back { display:inline-block; margin:0 0 12px; font-family:var(--mono); font-size:12px; color:var(--muted); }
+.nav-back a { color:var(--muted); }
+.nav-back a:hover { color:var(--gold); }
+
+.meta-head { background:var(--sub-bg); border:1px dashed var(--line); border-radius:6px; padding:8px 12px; margin:8px 0 18px; font-family:var(--mono); font-size:11px; color:var(--muted); line-height:1.7; }
+.meta-head b { color:var(--fg); font-weight:600; margin-right:4px; }
+
+.embed-html { border-top:1px dashed var(--line); padding-top:16px; margin-top:8px; }
+.embed-html iframe { width:100%; border:0; min-height:80vh; background:var(--card-bg); border-radius:8px; }
+
+footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+</style>
+</head>
+<body>
+<div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-18 11:06 ／ 写した時刻 2026-09-18 11:12</p>
+<h2 id="指示書-メール配信・計測・自動化">指示書 ── メール配信・計測・自動化</h2>
+<p>司令塔（定時報告の回 6:34）が書く。末尾に足すだけ。<strong>いちばん下の節が今の指示。</strong>1〜3件、1番からやる。</p>
+<p>報告の書き先：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/報告_メール配信・計測・自動化.md（末尾に型どおり）</p>
+<p>設計：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/部署の1周_20260918.md</p>
+<h3 id="許される範囲-全持ち場共通">許される範囲（全持ち場共通）</h3>
+<ul>
+<li>合図なしでやる：調べる・数える・案を作る・下書き・モック・自分の作業場（コード・設定ファイル・docs）の直し・登録経路（URL）を作る</li>
+<li>Mits様の合図が要る：お客様に届くものの本番（UTAGE の設定変更・配信・公開・広告）、お金が動く、外に出る。直す内容と手順を報告に書いて「実施」を待つ（2026-09-17 Mits様「擬似的にまだ実施しない」）</li>
+<li>Mits様が保留したもの（紹介の報酬額 など）は触らない</li>
+<li>指示書の仕事は「数える窓は読むだけ」の枠の外。ただし上の線は越えない</li>
+</ul>
+<h3 id="2026-09-18-初回・司令塔の会話で-11-1x-に書いた">2026-09-18（初回・司令塔の会話で 11:1x に書いた）</h3>
+<p>1. 数えから、人ではない押し（参謀の curl・海外 SK）を外す除外の設定を jogai_settei.json に入れる。入れる前と後の件数（/get/ の延べ・人の押し・率①）を報告に書く</p>
+<ul>
+  <li>出どころ：決定の記録 2026-09-18 ／ 運転台改善「ダウンロードから登録までを『率』にした」（宛先にこの持ち場）。Mits様原文「自律的に改善するように今、所定の相手に連絡して」</li>
+  <li>許される：jogai_settei.json はこの持ち場の設定ファイル。直してよい。除外したあとの数え方の変更は決定の記録に1行（宛先：運転台マーケ／司令塔）</li>
+</ul>
+<p>2. 穴1：道ごとの登録URL（A メインメルマガ3スタンド・B 他の UTAGE リスト・C LINE・D 広告・E note・F 紹介）を作る。UTAGE の経路（funnel_tracking／message_tracking）で作れるかを実機で1本試し、作れるなら6本作って一覧（道・URL・印の名前）を報告に。<strong>まだ配信には使わない</strong>（合図待ち）</p>
+<ul>
+  <li>出どころ：プラン_AI-Mits登録100人_20260917.md 3節 穴1・7節（登録経路を作るのは合図なし）・9節 1日目</li>
+  <li>許される：URL と印を作るまで。メールに載せる・送るのは合図が出てから</li>
+</ul>
+<p>3. 9/16号の spro の行方（申し送り 2026-09-16 の未済）。spro の画面に入れる回で配信履歴を1回見て確定し、申し送りの「済んだか」を埋める</p>
+<ul>
+  <li>出どころ：yobidashi.md 2026-09-16 の行（23:10 の見張りから）</li>
+  <li>許される：見て確定するまで。押し直しはしない</li>
+</ul>
+
+<footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
+</body>
+</html>

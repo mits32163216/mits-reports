@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+<title>部署の1周 ／ 6セッション社内レポート</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:20px 20px 80px; max-width:1000px; margin:0 auto; line-height:1.7; }
+h1,h2,h3,h4,h5,h6 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; color:var(--fg); }
+h1 { font-size:26px; margin:12px 0 18px; padding-bottom:10px; border-bottom:1px solid var(--line); }
+h2 { font-size:20px; margin:32px 0 12px; padding-left:10px; border-left:4px solid var(--gold); }
+h3 { font-size:16px; margin:24px 0 10px; }
+p { margin:10px 0; }
+a { color:var(--gold); text-decoration:none; }
+a:hover { text-decoration:underline; }
+code { font-family:var(--mono); background:var(--sub-bg); padding:2px 5px; border-radius:3px; font-size:0.9em; }
+pre { font-family:var(--mono); background:var(--sub-bg); padding:14px 16px; border-radius:8px; overflow-x:auto; border:1px solid var(--line); font-size:0.85em; line-height:1.5; }
+pre code { background:transparent; padding:0; }
+blockquote { border-left:3px solid var(--gold); padding:6px 14px; margin:14px 0; color:var(--muted); background:var(--sub-bg); border-radius:0 6px 6px 0; }
+ul,ol { padding-left:22px; }
+li { margin:4px 0; }
+table { border-collapse:collapse; width:100%; margin:14px 0; font-size:0.9em; }
+th,td { border:1px solid var(--line); padding:6px 10px; text-align:left; vertical-align:top; }
+th { background:var(--sub-bg); font-family:var(--mincho); font-weight:600; }
+hr { border:0; border-top:1px dashed var(--line); margin:24px 0; }
+img { max-width:100%; height:auto; }
+
+.nav-back { display:inline-block; margin:0 0 12px; font-family:var(--mono); font-size:12px; color:var(--muted); }
+.nav-back a { color:var(--muted); }
+.nav-back a:hover { color:var(--gold); }
+
+.meta-head { background:var(--sub-bg); border:1px dashed var(--line); border-radius:6px; padding:8px 12px; margin:8px 0 18px; font-family:var(--mono); font-size:11px; color:var(--muted); line-height:1.7; }
+.meta-head b { color:var(--fg); font-weight:600; margin-right:4px; }
+
+.embed-html { border-top:1px dashed var(--line); padding-top:16px; margin-top:8px; }
+.embed-html iframe { width:100%; border:0; min-height:80vh; background:var(--card-bg); border-radius:8px; }
+
+footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+</style>
+</head>
+<body>
+<div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-18 11:06 ／ 写した時刻 2026-09-18 11:12</p>
+<h2 id="部署の1周-朝から自分で仕事に取り掛かる形-2026-09-18・司令塔">部署の1周 ── 朝から自分で仕事に取り掛かる形（2026-09-18・司令塔）</h2>
+<h3 id="Mits様の言葉-2026-09-18・これが仕様">Mits様の言葉（2026-09-18・これが仕様）</h3>
+<p>&gt; 朝から自分で仕事に取り掛かり、「互いの仕事を知っている部署」に適切な指示書を送り、それを受取、読んで、仕事を始め、定時報告をし、定時報告を読み、現状を「互いの仕事を知っている状態」をアップデートし、自分の仕事もアップデートし、さらに定時報告する　ようにしたい</p>
+<p>前提（2026-09-16 Mits様）：「人間の会社の中の一つの部署のように仕事を進めたい」「それぞれの人が働けば働くほど、その部署のそれまでの仕事のやり方や、誰が何をしているかを知っていて、AさんはBさんがしている仕事を知っている前提なので、毎日朝からすぐに仕事に取り掛かれる」</p>
+<h3 id="2026-09-18-朝までに足りなかったもの-実測">2026-09-18 朝までに足りなかったもの（実測）</h3>
+<ul>
+<li>定時報告（6:34／12:34／18:34）は「書くだけ」。誰にも指示を出さず、誰も読んで動かない（手順書に、ほかの持ち場へ何かを頼む手順が0件）</li>
+<li>持ち場の朝の窓（月曜6:50／7:12／7:31／7:51／9:06）は「数える・確かめる」だけ。登録を増やす仕事に取り掛かる窓は 19:30 のメルマガ1本で、届く先はメインメルマガの読者だけ</li>
+<li>直接の連絡（SendMessage）は、受け取る側で Mits様の承認が要る。承認されないまま期限が切れて届かない（09-16 に1通・09-18 に4通）</li>
+<li>申し送り（yobidashi.md）は届く。09-18 の朝に 運転台マーケ（07:51）と AI-Mits-チューニング（07:45）が自分の行を読んで片づけた（実測）。<strong>だから、この1周は紙だけで回す</strong></li>
+<li>結果：AI-Mits の登録は 2026-09-15 07:47 を最後に0件（09-16・09-17）</li>
+</ul>
+<h3 id="1周の形-紙4種類・すべて司令塔フォルダ">1周の形（紙4種類・すべて司令塔フォルダ）</h3>
+<table>
+<tr><th>紙</th><th>誰が書く</th><th>いつ</th><th>誰が読む</th><th>書き方</th></tr>
+<tr><td>指示書_&lt;持ち場&gt;.md（6本）</td><td>司令塔（定時報告の回）</td><td>朝 6:34 に今日の節。昼 12:34・夕 18:34 は、報告を読んで変える必要があるときだけ差し替えの節</td><td>その持ち場の窓（申し送りから開く）</td><td>末尾に足すだけ。いちばん下の節が今の指示。1〜3件、1番から。1件ごとに「出どころ」の行</td></tr>
+<tr><td>申し送り yobidashi.md</td><td>司令塔（定時報告の回）</td><td>朝 6:34 に「指示書の今日の節を読め」を持ち場ごとに1行</td><td>各持ち場の窓の手順0（5つの窓すべてが、すでに読んでいる）</td><td>末尾に足すだけ。済んだかは持ち場が書く</td></tr>
+<tr><td>報告_&lt;持ち場&gt;.md（5本）</td><td>各持ち場の窓</td><td>指示書の仕事を終えたとき（その回のうち）</td><td>司令塔（定時報告の回）・ほかの持ち場</td><td>末尾に型どおり足す。司令塔の報告は asa_tenko.md</td></tr>
+<tr><td>現状表.md（1枚）</td><td>司令塔（定時報告の回）</td><td>毎回（朝・昼・夕）</td><td>全員（「互いの仕事を知っている状態」の正本）</td><td><strong>この紙だけは毎回書き直す</strong>（末尾に足すのではない）</td></tr>
+</table>
+<pre><code>
+ 6:34  定時報告（朝）  報告5本・決定の記録・申し送りを読む
+                      → 定時報告を書く → 現状表を書き直す
+                      → 指示書6本に今日の節 → 申し送りに「指示書を読め」5行
+                      → 指示書_司令塔 の仕事をする
+ 6:50（月曜）伽藍とバザールの実現 の窓 ─┐
+ 7:12  運転台改善 の窓                  │ 手順0で申し送り → 指示書の今日の節を開く
+ 7:31  AI-Mits-チューニング の窓         │ → 1番から仕事 → 報告に書く → 申し送りの「済んだか」
+ 7:51  運転台マーケ の窓                 │
+ 9:06  メール配信・計測・自動化 の窓     ─┘
+12:34  定時報告（昼）  報告を読む → 現状表を書き直す → 変えるなら指示書に「昼（差し替え）」の節と申し送り1行
+18:34  定時報告（夕）  同じ
+19:39  毎日のメルマガ（今まで通り）
+翌 6:34 に戻る
+</code></pre>
+<h3 id="許される範囲-指示書の仕事・全持ち場共通">許される範囲（指示書の仕事・全持ち場共通）</h3>
+<ul>
+<li><strong>合図なしでやる</strong>：調べる・数える・案を作る・下書き・モック・自分の作業場（コード・設定ファイル・docs）の直し・登録経路（URL）を作る</li>
+<li><strong>Mits様の合図が要る</strong>：お客様に届くものの本番（UTAGE の設定変更・配信・公開・広告）、お金が動く、外に出る（プラン_AI-Mits登録100人_20260917.md 7節）。直す内容と手順を報告に書いて「実施」を待つ</li>
+<li>2026-09-17 Mits様「擬似的にまだ実施しない」：プランの打ち手（広告・B と C の送信・note の公開）は合図が出るまで出さない。準備（下書き・URL・除外の設定・案）は進める</li>
+<li>Mits様が保留したもの（紹介の報酬額 など）は触らない（決まり3）</li>
+<li>1日に変えるのは1つだけ（プラン 5節）。指示書は3件まで、1番から</li>
+<li>指示書の仕事は「数える窓は読むだけ」の枠の外。ただし上の線は越えない</li>
+</ul>
+<h3 id="型">型</h3>
+<h4 id="指示書-司令塔が書く">指示書（司令塔が書く）</h4>
+<pre><code>
+## YYYY-MM-DD（朝の定時報告が書いた）
+1. &lt;仕事を1行&gt;。&lt;出た物をどこに置くか&gt;
+   - 出どころ：&lt;決定の記録の節／報告の日時／プランの節／申し送りの行、のどれか&gt;
+   - 許される：&lt;この仕事がどこまでやってよいか1行&gt;
+2. …
+</code></pre>
+<p>出どころの無い仕事は書かない（作文しない）。拾う先は、①決定の記録の宛先にその持ち場があり済んでいない行 ②報告の「次に自分がやる」「ほかの持ち場に頼む」 ③申し送りの未済 ④前日の指示書で「できなかった」もの ⑤プランの 5節の役と 9節の日程。どれにも当たらなければ「今日の指示：なし（数える窓だけ）」。</p>
+<h4 id="報告-持ち場が書く">報告（持ち場が書く）</h4>
+<pre><code>
+## YYYY-MM-DD HH:MM（窓の名前）
+- 読んだ指示書の節：YYYY-MM-DD
+- やった：&lt;番号&gt; &lt;1行&gt;（出た物：絶対パス）
+- できなかった：&lt;番号&gt; &lt;理由を1行&gt;（窓の決まりで触れない／合図待ち／実機で確かめられず、のどれか）
+- 次に自分がやる：&lt;1行&gt;
+- ほかの持ち場に頼む：&lt;持ち場&gt;：&lt;1行&gt;（急ぎなら決定の記録にも宛先付きで）
+- 数字：&lt;この持ち場が見ている数字があれば1行&gt;
+</code></pre>
+<h4 id="現状表-司令塔が書き直す">現状表（司令塔が書き直す）</h4>
+<p>頭に「書き直した回」と登録の数字。表は6行：持ち場／いまの仕事（指示書の番号と1行）／最後の報告（日時・1行）／出た物（絶対パス）／止まっている・待っている／次の窓。</p>
+<h3 id="直接の連絡-SendMessage-の扱い">直接の連絡（SendMessage）の扱い</h3>
+<p>急ぎ（その日のうちに動かないと事故になるもの）だけ。送っても届いたことにはならない。届いたかは相手の台帳で確かめる（memory feedback_yoyaku_task_no_renraku_wa_namae_ate_de_okuru）。届かなかったら申し送りに1行。<strong>この1周は、直接の連絡が1通も届かなくても回る</strong>ように組んである。</p>
+<h3 id="各持ち場に頼むこと-決まり7-司令塔は持ち場の手順書を書き換えない">各持ち場に頼むこと（決まり7：司令塔は持ち場の手順書を書き換えない）</h3>
+<p>1. 今日の申し送りの自分の行から、指示書を開いて仕事をする（手順0はすでに全窓にある）</p>
+<p>2. 自分の窓の手順書に「申し送りの次に、指示書のいちばん下の節を読み、1番から仕事をして、報告に書く」の1歩を<strong>自分で</strong>足す。足したら決定の記録に1行（宛先：司令塔）</p>
+<h3 id="まだ足りないもの-v1-で分かっていること">まだ足りないもの（v1 で分かっていること）</h3>
+<ul>
+<li>持ち場の窓は1日1回（朝）。「定時報告を読んで、その日のうちに自分の仕事をアップデートする」のは翌朝の窓になる。1日で何度も変わる持ち場（運転台改善）は、6時間ごとの機能要望の窓が同じ申し送りを読めば昼にも拾える</li>
+<li>伽藍とバザールの実現 の窓は週1（月曜）。指示書を次に読むのは 2026-09-21。それまでは会話が開いたときに読む</li>
+<li>指示書の中身を書くのは定時報告の回（AI）。出どころの無い仕事は書かないという線で作文を止めているが、毎朝の中身は Mits様が現状表で見て直す</li>
+</ul>
+<h3 id="初回の実行-決まり-5-1・作った仕組みはその場で走らせる">初回の実行（決まり 5-1・作った仕組みはその場で走らせる）</h3>
+<p>（2026-09-18 に司令塔が走らせたあと、ここに結果を足す）</p>
+
+<footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
+</body>
+</html>
