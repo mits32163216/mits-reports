@@ -62,7 +62,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-17 22:25 ／ 写した時刻 2026-09-18 06:38</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-18 11:09 ／ 写した時刻 2026-09-18 11:11</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -469,6 +470,127 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <h4 id="2026-09-17-22-3x-JST-メール配信・計測・自動化-毎日メルマガの予約タスク">2026-09-17 22:3x JST ／ メール配信・計測・自動化（毎日メルマガの予約タスク）</h4>
 <ul>
 <li>2026-09-16 17:0x／18:0x の「札」を4つに分ける決定を読んだ。こちらの持ち場（予約タスク mainichi-merumaga-21-24/SKILL.md・merumaga-3stand-haishin/SKILL.md）は「札」0件で、書き換えるものは無し。済。</li>
+</ul>
+<h4 id="2026-09-18-07-1x-JST-運転台改善-予約タスク-untendai-asa-te">2026-09-18 07:1x JST ／ 運転台改善（予約タスク untendai-asa-tenken）</h4>
+<ul>
+<li>どのセッションで：運転台改善</li>
+<li>宛先：なし</li>
+<li>内容：毎朝点検の手順3（版の食い違い）を直した。<code>src/index.html</code> と <code>CHANGELOG.md</code> を版の置き場として数えていたが、どちらにもその日の版は書かれていない（index.html の版は動く時にアプリから受け取る／CHANGELOG 先頭は「版の付け方」の表）。そのため grep が古い注記 <code>v0.66.0</code> と表の例 <code>0.74.0</code> を拾い、<strong>9/16・9/17・9/18 の日誌に3日続けて「食い違い 2 か所」という嘘の値が入っていた</strong>。版の置き場を3か所（Cargo.toml／tauri.conf.json／製品版 /Applications/untendai.app）に直し、直した後の手順をその場で1回叩いて3か所とも 1.73.8 を確かめた。直した先：/Users/nishidamitsuhiro/.claude/scheduled-tasks/untendai-asa-tenken/SKILL.md</li>
+<li>本日の実測：cargo test 216 passed・0 failed・11 ignored ／ 版 1.73.8 で3か所とも一致・食い違い 0 か所 ／ 未提出 4件 ／ check_version.sh「v1.73.8 のあと 1 件 commit（f1af1ad＝CHANGELOG 記録）」</li>
+<li>あわせて見つけたこと：同梱の見本 <code>src-tauri/resources/sample.db</code> が未提出のまま中身だけ変わっている（大きさ 655360 で同じ・最後の提出は 41f56fb v1.73.2）。触らずに置いてある</li>
+</ul>
+<h4 id="2026-09-18-07-2x-JST-運転台改善-予約タスク-untendai-asa-te">2026-09-18 07:2x JST ／ 運転台改善（予約タスク untendai-asa-tenken・直前の行の取消と訂正）</h4>
+<ul>
+<li>どのセッションで：運転台改善</li>
+<li>宛先：なし</li>
+<li><strong>取消</strong>：直上 07:1x の行のうち「src/index.html と CHANGELOG.md にはその日の版が書かれていない／版の置き場を3か所に直した」は誤り。<strong>両方とも版は正しく書いてある</strong>（src/index.html L3266 の <code>id=&quot;app-ver&quot;</code> の札／CHANGELOG.md L103 の版の一覧。裏取りは、いまの版の数字で index.html を全文 grep して 1 件ヒット）</li>
+<li>新しい行：本当の不具合は<strong>拾い方</strong>だった。前の手順は両ファイルから「最初に出てきた版らしき文字」を取っており、index.html の1件目は 2026-08-31 の古い注記 <code>v0.66.0</code>、CHANGELOG の1件目は冒頭「版の付け方」の表の例 <code>0.74.0</code> に当たっていた。そのため毎日「食い違い 2 か所」という嘘が出ていた（9/16・9/17・9/18 の3日）。<strong>版の置き場は5か所のまま</strong>にして、拾う所を本物の在り処（app-ver の札／版の一覧の太字の行）に直した。直した後の手順をその場で1回叩き、5か所とも一致・食い違い 0 か所を確かめた。直した先：/Users/nishidamitsuhiro/.claude/scheduled-tasks/untendai-asa-tenken/SKILL.md</li>
+<li>学び（同じ日に2回間違えた）：<strong>「無い」と言う前に、いまの値で全文を叩く。</strong>拾えないのは無いからではなく、拾い方が悪いからのことがある（home CLAUDE.md 裏取り原則6と同じ形）</li>
+</ul>
+<h4 id="2026-09-18-07-4x-JST-AI-Mits-チューニング-予約タスク-aimits">2026-09-18 07:4x JST ／ AI-Mits-チューニング（予約タスク aimits-mainichi-keisoku）</h4>
+<ul>
+<li>どのセッションで：AI-Mits-チューニング</li>
+<li>宛先：司令塔／運転台改善</li>
+<li>用件：申し送り 2026-09-18 の「AI-Mits の登録が 09-15 07:47 を最後に3日間0件。お試し版の入口が生きているかを実物で確かめる」への答え。<strong>入口は生きている。止まっているのは入口ではなく、入口まで来た人が登録しないこと。</strong></li>
+<li>実測（2026-09-18 07:3x〜07:4x・全部読むだけ）：</li>
+  <li>お試し版のページ <code>UgSfW8MCzHqv</code> … <code><a href="https://change.7years.life/page/UgSfW8MCzHqv">https://change.7years.life/page/UgSfW8MCzHqv</a></code> が HTTP 200・104,886 バイト（<code>/p/UgSfW8MCzHqv</code> は 404。ページの空間は <code>/page/</code>）</li>
+  <li>中継 <code>aimits-report-proxy</code> … ルート HTTP 200・<code>utage_api_key</code> と <code>dify_api_key</code> は有り（<code>line_channel_token</code> だけ false）</li>
+  <li><code>/register</code> と <code>/login</code> … GET は 404（POST 専用）、OPTIONS の下調べは 204 で通る＝道は open</li>
+  <li>シナリオ「AI-Mits登録20260612」<code>XU7Gfd7XoiCQ</code> の読者 … <strong>29件ある</strong>。いちばん新しいのが 2026-09-15 07:47（takadat12@gmail.com）。09-16・09-17・09-18 は 0件</li>
+  <li>計測の口 <code>untendai-update</code> の <code>/ev/count?days=30</code> … 総数 995・9/17 だけで 186件（page_view 624 / chat_send 238 / gate_submit 11 / reg_submit 1）。<strong>人は来ていて、会話もしている</strong></li>
+<li>読み方：3日間0件は入口の故障ではない。30日で page_view 624 に対し reg_submit 1・gate_submit 11 なので、<strong>見て・触って・登録しないで帰る</strong>形になっている。直す先は入口の生死ではなく、登録に進ませる言い方と置き場所。</li>
+<li>あわせて：2026-09-17 13:20 の行にある「UTAGE 全シナリオに読者0件」の疑いは、少なくとも <code>XU7Gfd7XoiCQ</code> については当たらない（29件ある）。dai@3216.fun 1件の件は 運転台改善 の持ち場なので触っていない。</li>
+</ul>
+<h4 id="2026-09-18-08-0x-JST-AI-Mits-チューニング-予約タスク-aimits">2026-09-18 08:0x JST ／ AI-Mits-チューニング（予約タスク aimits-mainichi-keisoku・直前の行の訂正）</h4>
+<ul>
+<li>どのセッションで：AI-Mits-チューニング</li>
+<li>宛先：司令塔／運転台マーケ</li>
+<li><strong>取消</strong>：直上 07:4x の行と、2026-09-17・2026-09-18 の毎日の記録にある「verify_done は /ev/count の by_name に無いため空欄」は誤り。</li>
+<li>新しい行：<strong>verify_done はお試し版のページに実装されている。</strong><code><a href="https://change.7years.life/page/UgSfW8MCzHqv">https://change.7years.life/page/UgSfW8MCzHqv</a></code> の中に送る場所が2か所（認証が通った時 <code>&#x27;s=&#x27;+n*10</code> ／ 開き直した時 <code>reason=reopen</code>）あり、即送りの一覧 <code>NOW</code> にも <code>verify_done:1</code> が入っている。受け口 <code>/ev</code> は名前で弾かない作りなので、送れば必ず集計に載る。<strong>by_name に出ないのは「測れなかった」ではなく「30日間ほんとうに0件」。</strong>同じ経路の verify_giveup が1件出ていることが、経路が生きている証拠。</li>
+<li>直したこと：2026-09-18 の行の verify_done を 空欄 → <strong>0</strong> に直した。2026-09-17 の行は「途中の行は書き換えない」決まりに従って残してある（あの行の verify_done も本当は 0）。</li>
+<li>手順書も直した：<code>/Users/nishidamitsuhiro/.claude/scheduled-tasks/aimits-mainichi-keisoku/SKILL.md</code>。「返事に無い名前は空欄」の但し書きに、<strong>送り側のページを grep して実装があれば 0 と書く</strong>を足した。</li>
+<li>学び：<strong>「返事に無い＝測れていない」と決めつけない。</strong>送り側のコードを1回 grep すれば、測れた0なのか未実装なのかが分かる（home CLAUDE.md 裏取り原則6と同じ形）。</li>
+<li>読み方への影響：認証を始めた人のうち<strong>完了0・諦め1</strong>。登録が3日間0件なのは、入口の故障ではなく認証まで来る人がほとんどいないこと。</li>
+</ul>
+<h4 id="2026-09-18-07-51-JST-運転台マーケ-予約タスク-keiki-kensan・宛">2026-09-18 07:51 JST ／ 運転台マーケ（予約タスク keiki-kensan・宛先の行を読んだ）</h4>
+<ul>
+<li>どのセッションで：運転台マーケ</li>
+<li>宛先：なし</li>
+<li>内容：宛先に「運転台マーケ」が入った2件を読んだ。① 2026-09-17 13:20（運転台 v1.73.2 を世に出した・勇川様のサンプル取り込み）② 2026-09-18 08:0x（AI-Mits-チューニング・verify_done は実装されており空欄ではなく0）。どちらも運転台マーケの持ち場で直すものは無い（①は運転台改善のコード、②は AI-Mits の毎日の記録）。済み</li>
+<li>申し送りの自分の行（2026-09-17・2026-09-18）も片づけた。<strong>haishin.rs の「札」のコメント直しは、この予約タスクでは触らない</strong>（この回はコードを触らない決まり）。09-17 07:51 に数えた通り、8行のうち7行は utm_source を指す③「経路の印」の意味、5つ目の意味（画面の小さな表示）は L1404 の1行だけ。直すのは運転台マーケのチャットの回</li>
+<li>本日の計器の検算：CSV 77行 ／ 台帳 91行（前日 79・増分 +12）／ UTAGE 36本・spro 20本・まぐまぐ 35本 ／ いちばん新しい測定 2026-09-17 21:14:49 ／ 判定 追いついている。前日に「9/16号は spro だけ行が無い」と伝言した spro も、09-17 の回は 21:14:49 で入っている</li>
+</ul>
+<h4 id="2026-09-18-07-58-JST-運転台マーケ-予約タスク-keiki-kensan・直">2026-09-18 07:58 JST ／ 運転台マーケ（予約タスク keiki-kensan・直前の行の取消と訂正）</h4>
+<ul>
+<li>どのセッションで：運転台マーケ</li>
+<li>宛先：運転台マーケ（チャットの回）／運転台改善</li>
+<li><strong>取消</strong>：直上 07:51 の行のうち「自分あて2件は<strong>どちらも</strong>運転台マーケの持ち場で直すものは無い」は誤り。実機で叩かずに、書いてある内容から「相手の持ち場だ」と決めていた</li>
+<li>新しい行（範囲を宣言して全件叩いた結果）：</li>
+  <li>① 2026-09-17 13:20 v1.73.2（見本DBが WAL 形式だと書けない場所で開けない）── <strong>マーケ開発版にも同じ形で残っている。</strong><code>untendai-marketing/src-tauri/resources/sample.db</code> はヘッダ18-19バイトが <code>0202</code>（＝WAL）・md5 90c5ab0a795462134360d3929848c9e5・640.0K。運転台改善側 <code>untendai-seiri/src-tauri/resources/sample.db</code> は <code>0101</code>（＝通常形式）・md5 99038a24d8259b8093cdca2eae51c241・640.0K。<strong>2本を並べて比べた結果</strong></li>
+  <li>② 2026-09-18 08:0x verify_done ── 運転台マーケの作業場（src／src-tauri／docs の .rs .html .js .md 全部）で <code>verify_done</code> は <strong>0件</strong>（ヒットは本日 07:51 に自分で書いた日誌の1行だけ）。直すものは無い</li>
+<li><strong>この回では直さない</strong>（予約タスクはコードを触らない決まり）。直すのは運転台マーケのチャットの回。マーケ開発版は Mits様と AI の手元だけで、お客様には届かないので急ぎではない</li>
+<li>学び：<strong>「相手の持ち場だ」と決める前に、自分の作業場で1回叩く。</strong>書いてある文面から持ち場を推し量ると、同じ不具合が自分の側に残っていても見落とす（home CLAUDE.md 裏取り原則6）</li>
+</ul>
+<h4 id="2026-09-18-08-2x-JST-AI-Mits-チューニング-予約タスク-aimits">2026-09-18 08:2x JST ／ AI-Mits-チューニング（予約タスク aimits-mainichi-keisoku・連絡の行方の確定）</h4>
+<ul>
+<li>どのセッションで：AI-Mits-チューニング</li>
+<li>宛先：司令塔</li>
+<li><strong>取消</strong>：直上で書いた「承認待ちで止まったのが 司令塔 と 運転台改善 のどちらかは決まらない」は誤り。調べ足りずの保留だった。</li>
+<li>新しい行：<strong>司令塔あて（msg_id 5db6b0fd…）は届いていない</strong>（承認されないまま期限切れ）。<strong>運転台改善あて（msg_id c78e05de…）は届いている。</strong></li>
+<li>裏取り：①止まった先のソケット <code>/tmp/cc-socks/9972.sock</code> の持ち主 pid 9972 の起動時の resume ID <code>4f183721-…</code> から台帳を引くと、1行目が <code>&quot;customTitle&quot;:&quot;司令塔 (fork)&quot;</code>。②<code>~/.claude/projects</code> の台帳<strong>全件</strong>を msg_id で grep すると、<code>c78e05de…</code> は 運転台改善 の台帳 <code>f4e25fef-…</code> に入っており、<code>5db6b0fd…</code> は送り手の台帳にしか無い。</li>
+<li>学び：<strong>作業フォルダでセッションを見分けようとして止まった。</strong>13本のうち9本が同じフォルダなので当然絞れない。<strong>起動時の resume ID → その台帳の1行目 <code>customTitle</code></strong> を見れば1発で決まる。「決まらない」と書く前に、見分けられる鍵が他に無いかを1つ探す（home CLAUDE.md 裏取り原則6と同じ形）。</li>
+<li>置き場所の直し：この見分け方を <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/feedback_yoyaku_task_no_renraku_wa_namae_ate_de_okuru.md</code> に足した。</li>
+</ul>
+<h4 id="2026-09-18-運転台改善-ダウンロードから登録までを-率-にした-改善の土台">2026-09-18 ／ 運転台改善 ── ダウンロードから登録までを「率」にした（改善の土台）</h4>
+<ul>
+<li>どのセッションで：運転台改善</li>
+<li>宛先：司令塔／運転台マーケ／メール配信・計測・自動化</li>
+<li>Mits様原文：「これをマーケティング的に活用できる　率　にして　改善の土台にして。意味を見言い出して」「定時報告で報告して、かつ、自律的に改善するように今、所定の相手に連絡して」</li>
+<li>元の数（2026-09-11 に数えた時点の累計・記録 /Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-09-11_1653_keisoku-63-to-19.md）：/get/ を押した延べ 63／読めた行 62／参謀の curl 7／海外（SK）8／人らしきもの 47／うち登録の窓を見た 44／取れたメアド 19（message_reader_list XU7Gfd7XoiCQ）／落ちた 25</li>
+<li>率：</li>
+  <li>① 人の押し 47÷62 = 76%（残り24%は curl 11%・海外 13%。生の数は約1.3倍に膨らむ）</li>
+  <li>② 登録の窓まで届く 44÷47 = 94%</li>
+  <li>③ 窓で登録する 19÷44 = 43%（57%がメアドを入れずに離れる）。44 は延べなので 1人あたりの率は 43% 以上（実際の値は測れていない）</li>
+  <li>通し 19÷47 = 40%</li>
+  <li>式：登録数 ＝ 人の押し × ②窓まで届く率 × ③窓で登録する率</li>
+<li>意味：細いのは③だけ。③が 43%→53% で登録は 44人あたり 19→23（+21%）、60% で 26（+37%）</li>
+<li>持ち場ごとにやること：</li>
+  <li>司令塔：この3つの率を土台として持ち、同じ数え方で測り続けて診る。数え直しの日と値を記録に足す</li>
+  <li>運転台マーケ：③を上げる。窓の言い方と置き場所を直し、直す前と後の③を比べる</li>
+  <li>メール配信・計測・自動化：①の人ではない押し（参謀の curl・海外）を数えから外す（除外の設定 jogai_settei.json）</li>
+<li>まだ測れていないもの：同じ人の押し直し（人を見分ける手がかりが無い）／窓を閉じた・入れずに離れた瞬間（2026-09-11 時点で記録0件）。今日時点で同じかは未確認</li>
+</ul>
+<h4 id="2026-09-18-11-0x-JST-運転台改善-運転台-v1-73-8-を世に出した・中継">2026-09-18 11:0x JST ／ 運転台改善 ── 運転台 v1.73.8 を世に出した・中継の控えの迷子33件を直した</h4>
+<ul>
+<li>どのセッションで：運転台改善</li>
+<li>宛先：司令塔／AI-Mits-チューニング／メール配信・計測・自動化</li>
+<li>1. 運転台 v1.73.8 を世に出した（2026-09-17 19:05 JST・Mits様「世に出して」）。latest.json 1.73.8・Mac／Win のダウンロード 200。中身：Stripe のドル建てサブスクが1ドル1円で出ていた（円の決済の fx_rate=1.0 を最新レートとして拾っていた）→ ドル決済の最新レートで円に直す。あわせて v1.73.3〜v1.73.7 の見本の直し（お金・分析の金額を千円単位・見本の数字を緑・月の途中を直近月と呼ばない・見本の状態で実データの言葉を出さない）</li>
+<li>2. 中継 aimits-report-proxy の /register を直した（2026-09-18 10:4x デプロイ・Version 79476db8）。控え KV aimits_identity の email2reader: が UTAGE から消えた読者を指していると、認証メールが送信先0件になっていた（dai@3216.fun）。控えを使う前に読者が居るかを確かめ、居なければ作り直す。迷子の控え 33件を消した（61→28件・消す前の一覧は /Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20260918_aimits_identity_迷子の控え/）。迷子は全部 Mits様の検証用アドレスで、外のお客様は0件</li>
+<li>数え方への影響：試しの登録で dai@3216.fun が XU7Gfd7XoiCQ の読者に1件増えた（Ykavcneep5nJ・2026-09-18 10:48）。登録数を数えるときは自分たちのアドレスとして外す</li>
+</ul>
+<h3 id="2026-09-18-11-1x-司令塔-部署の1周-指示書・報告・現状表-を作った">2026-09-18 11:1x ／ 司令塔 ── 部署の1周（指示書・報告・現状表）を作った</h3>
+<ul>
+<li>どのセッションで：司令塔</li>
+<li>宛先：6つぜんぶ（司令塔／メール配信・計測・自動化／運転台マーケ／運転台改善／AI-Mits-チューニング／伽藍とバザールの実現）</li>
+<li>Mits様原文（2026-09-18）：「朝から自分で仕事に取り掛かり、『互いの仕事を知っている部署』に適切な指示書を送り、それを受取、読んで、仕事を始め、定時報告をし、定時報告を読み、現状を『互いの仕事を知っている状態』をアップデートし、自分の仕事もアップデートし、さらに定時報告する　ようにしたい」</li>
+<li>なぜ：AI-Mits の登録は 2026-09-15 07:47 から0件。定時報告は書くだけ・持ち場の窓は数えるだけ・直接の連絡は承認待ちで届かない（09-16 に1通・09-18 に4通）。申し送りは届く（09-18 朝に 運転台マーケ 07:51・AI-Mits-チューニング 07:45 が自分の行を片づけた）</li>
+<li>作った紙（司令塔フォルダ）：部署の1周_20260918.md（設計）／現状表.md／指示書_&lt;持ち場&gt;.md 6本／報告_&lt;持ち場&gt;.md 5本（司令塔の報告は asa_tenko.md）</li>
+<li>回し方：6:34 の定時報告が 報告5本を読む → 現状表を書き直す → 指示書6本に今日の節 → 申し送りに「指示書を読め」5行。各持ち場の窓は手順0の申し送りから指示書を開き、いちばん下の節を1番から仕事にして、報告の末尾に型どおり書く。12:34・18:34 は報告を読んで現状表を書き直し、変えるときだけ指示書に差し替えの節</li>
+<li><strong>各持ち場にしてほしいこと</strong>：①今日の申し送りの自分の行から指示書を開いて仕事をする ②自分の窓の手順書に「申し送りの次に、指示書のいちばん下の節を読み、1番から仕事をして、報告に書く」の1歩を自分で足す（司令塔は持ち場の手順書を書き換えない・決まり7）。足したら決定の記録に1行（宛先：司令塔）</li>
+<li>許される範囲：調べる・数える・案・下書き・モック・自分の作業場の直し・登録URLを作る、まで合図なし。お客様に届く本番（UTAGE の設定変更・配信・公開・広告）・お金が動く・外に出るは、報告に書いて Mits様の「実施」を待つ（2026-09-17 Mits様「擬似的にまだ実施しない」）。保留（紹介の報酬額など）は触らない</li>
+<li>直接の連絡（SendMessage）は急ぎだけ。届いたかは相手の台帳で確かめる。この1周は直接の連絡が1通も届かなくても回る</li>
+<li>定時報告の手順書 asa-tenko-6session に 1-2（報告を読む）・3-8（現状表）・3-9（指示書）・3-10（申し送り）・3-11（司令塔の指示書の仕事）を足した。控え：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20260918_1110_asa-tenko_SKILL_mae.md</li>
+<li>司令塔 CLAUDE.md に決まり10 と、共通で読むものに4本を足した。社内レポートの一覧に13本を足した</li>
+<li>初回の実行（決まり 5-1）：この行のあとに、走らせた結果を別の行で足す</li>
+</ul>
+<h3 id="2026-09-18-11-1x-司令塔-YouTube-チャンネルコンセプト構想で決まった柱の">2026-09-18 11:1x ／ 司令塔 ── YouTube チャンネルコンセプト構想で決まった柱の言葉と相手の線</h3>
+<ul>
+<li>どのセッションで：司令塔（YouTube セッション 685bba1c の記録を 2026-09-17 に読んだ）</li>
+<li>宛先：伽藍とバザールの実現／メール配信・計測・自動化</li>
+<li>柱：「経営を、凡人の手に　nomad×経営戦略コンサルティング×ひとり起業」（2026-09-17 に決定・動画はまだ0本・ネタ10本 v2・判定待ち5件）</li>
+<li>相手の線：経営に反応する人・ド素人でない・士業でない・先生と呼ばれる人は入れない。一つ下のレイヤー＝運転台・AI-Mits を参謀に</li>
+<li>Meta 広告の相手（Mits様原文 2026-09-17）：「コンサルタント　知財を提供している仕事の人に除く士業、META広告」→ 届ける＝コンサルタント・コーチ・講師・研修講師・専門家／外す＝士業（中小企業診断士も含む）</li>
+<li>使い方：note の記事・広告の文面・メルマガの相手の線をこれに合わせる。YouTube を6つの運用に入れるのは、動画が出て専用の登録URLから登録が数えられてから（2026-09-17 の判断）</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
