@@ -66,7 +66,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-18 11:08 ／ 写した時刻 2026-09-18 11:12</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-18 11:27 ／ 写した時刻 2026-09-18 12:34</p>
 <h2 id="報告-AI-Mits-チューニング">報告 ── AI-Mits-チューニング</h2>
 <p>この持ち場の窓（7:31 のお試し版と Dify の数え・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_AI-Mits-チューニング.md</p>
@@ -82,6 +83,28 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 - 数字：&lt;この持ち場が見ている数字があれば1行&gt;
 </code></pre>
 <hr>
+<h3 id="2026-09-18-11-25-AI-Mits-チューニング・予約タスク-aimits-mai">2026-09-18 11:25（AI-Mits-チューニング・予約タスク aimits-mainichi-keisoku の回）</h3>
+<ul>
+<li>読んだ指示書の節：2026-09-18</li>
+<li>やった：1 穴2の原因を実機で確かめた。<strong>UTAGE の読者の重複ではない。</strong>シナリオ「AI-Mits登録20260612」XU7Gfd7XoiCQ の読者30件は、メアドの重なりが0件（中継の utageFindOrCreateReader が同じ人を1人にまとめている）。認証メールは中継 aimits-report-proxy が <strong>/register を受けるたびに一斉配信を1本作って出す</strong>作り（src/index.js L1238〜・送り直しを止める仕組みが無い）。そこに<strong>認証リンクの期限が15分</strong>（L54 <code>VERIFY_TOKEN_TTL_SEC = 900</code>・2026-09-05 Mits様「gmailの到着が遅いので15分以内にしたほうがいい」）が重なり、15分を過ぎて押した人は「期限切れ」になり、登録をやり直すので2通目が出る。実例：takadat12（読者 IhTDymQYI2ve）は 09-15 07:49 に1通目 → 08:56 に押して期限切れ（iPhone・約67分後）→ 13:35 に登録し直して 13:37 に2通目 → 13:41 に成功（Windows）。重複登録の設定（フォームの duplicate_check）は、この経路では関係しない</li>
+  <li>数字（中継の記録 KV <code>verify_result:</code>・09-13〜09-18 の12件・テスト4件を除く8件）：成功3件（本物2人：takadat12・hot-ocean1971）／期限切れ5件。期限切れのうち1件は成功の4秒後の同じ人の2度押し（09-16 13:36:37 成功 → 13:36:41 期限切れ）。残り4件は<strong>そのあと成功が無い</strong>。時刻から見て、momozato（登録 09-14 14:25）と y-tanaka（登録 09-14 17:51・押したのは 18:16＝25分後）が期限切れで止まった可能性が高い（期限切れの記録にはメアドが残らないので、人の特定は時刻の突き合わせまで）</li>
+  <li>直し方の案（本番の中継を変えるので、変える前に「実施」の合図を待つ）：</li>
+</ul>
+<p>    ① 期限切れの画面を、いまの <code>{&quot;error&quot;:&quot;token_invalid_or_expired&quot;}</code> の文字から「もう一度、同じアドレスに送ります」の1ボタンの画面に変える（登録をやり直させない）</p>
+<p>    ② /register で、同じメアドにまだ生きているリンクがあれば、新しい一斉配信を作らず「さっきのメールを見てください」を返す（2通目を止める）</p>
+<p>    ③ 2度押し（使い切ったリンクをもう1回押した）は、そのメアドが認証済みなら成功の画面を出す</p>
+<p>    ④ 期限の15分は Mits様が決めた値なので、ここでは変えない。上の3つは15分のままで効く</p>
+<ul>
+  <li>出た物：この報告の節</li>
+<li>やった：2 穴3を確かめた。<strong>認証が済んだことは中継の KV にだけ残っていて、UTAGE には何も残らない。</strong>中継は成功時に <code>reader:&lt;読者ID&gt;</code> に verified_at を書き、<code>verify_result:</code> を30日で消える形で1件残す。UTAGE の読者には印（ラベル・読者項目）が付かないので、UTAGE だけを見ても「済んだ人」と「リンクを押していない人」が分からない。しかも<strong>ステップメールは認証の前から始まる</strong>（takadat12 は 09-15 07:47 に「00日 使えるようになりました」が出て、認証は 13:41）</li>
+  <li>残す形の案（本番なので合図待ち）：成功の時に中継が UTAGE の読者にラベル「AI-Mits認証済み」を1つ付ける（読者の作成と同じ API 鍵で足りる）。あわせて <code>verify_result:</code> の30日の期限を外すか、日ごとの件数だけ無期限で残す</li>
+<li>やった：3 止める線の点検（読むだけ）。①認証メールは届く経路が生きている：09-15 07:47 の本物の読者 takadat12 に、認証メール2通（09-15 07:49・13:37）とステップ4通（00日・01日・02日・03日＝09-18 08:02）が送信済みになっている（message_reader_sent_list）。②登録が UTAGE の読者に増える経路も生きている：今日 09-18 10:48 に読者が1件増えた（dai@3216.fun＝こちら側のアドレス・本物の登録ではない）。<strong>3日0件は入口の故障ではなく、来た人の数と、期限切れで落ちる形の2つ</strong></li>
+<li>できなかった：なし</li>
+<li>次に自分がやる：合図が出たら、①②③を中継に入れる案の差分を作る（作業場のコードだけ・デプロイはしない）</li>
+<li>ほかの持ち場に頼む：運転台改善：中継 aimits-report-proxy の持ち場なら、上の①②③と穴3のラベルの案を見てほしい（決定の記録にも宛先付きで書いた）</li>
+<li>数字：XU7Gfd7XoiCQ の読者30件（本物の最新 09-15 07:47・今日の1件はこちら側）／/ev/count は 07:31 と同じ（reg_submit 1・verify_giveup 1・nudge30s 18）</li>
+<li>裏取りの追記（2026-09-18 11:3x）：中継の KV <code>reader:&lt;読者ID&gt;</code> を直接読んだ。takadat12（IhTDymQYI2ve）は verified_at あり（09-15 13:41）。momozato（4wBUjdbIYr1k）と y-tanaka（s1Bdn5YwaOtl）は <strong>404 Not Found＝認証が1度も済んでいない</strong>（事実）。2人が「期限切れで」止まったかは、期限切れの記録にメアドが無いので時刻の突き合わせまで（momozato 登録 14:25→期限切れ 14:55、y-tanaka 登録 17:51→期限切れ 18:16）。UTAGE の takadat12 の読者は labels が [] で、認証済みの印は無い（message_reader_get）</li>
+</ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
 </body>
