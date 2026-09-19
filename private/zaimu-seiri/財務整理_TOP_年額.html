@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>財務整理 年額</title>
+<style>
+:root {
+  --bg: #f7f4ed;
+  --panel: #ffffff;
+  --ink: #1a1a1a;
+  --sub: #666;
+  --navy: #1e3a5f;
+  --gold: #b8860b;
+  --green: #2e7d32;
+  --red: #c62828;
+  --yellow: #e6b800;
+  --gray: #9a9a9a;
+  --line: #e0dcd0;
+  --hover: #f0ede4;
+  --done-bg: #eef5ee;
+  --hold-bg: #fdf7dc;
+  --keep-bg: #ececec;
+  --handled: #4a9cd9;
+  --handled-bg: #eaf4fb;
+  --above80: #fff7d6;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif; font-size: 13px; line-height: 1.55; }
+body { padding: 12px; max-width: 1980px; margin: 0 auto; }
+
+/* 上部サマリー */
+.summary { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 16px; margin-bottom: 16px; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.summary h1 { margin: 0 0 12px; font-size: 18px; color: var(--navy); }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 12px; }
+.metric { border: 1px solid var(--line); border-radius: 6px; padding: 10px; background: #fafaf7; }
+.metric .label { font-size: 11px; color: var(--sub); margin-bottom: 4px; }
+.metric .value { font-size: 20px; font-weight: bold; color: var(--navy); }
+.metric.big .value { font-size: 22px; }
+.metric.now .value { color: var(--red); }
+.metric.left .value { color: var(--gold); }
+.metric.left.done .value { color: var(--green); }
+.metric.p80 .value { color: var(--yellow); font-weight: 700; }
+.metric.p80.done .value { color: var(--green); }
+.metric .yen { font-size: 12px; margin-left: 2px; color: var(--sub); font-weight: normal; }
+.metric .sub-line { font-size: 11px; color: var(--sub); margin-top: 4px; }
+/* 上部の式並び（Before − 借入 ＝ 出発点 − 継続 ＝ サーカス対象） */
+.eq-row { display: flex; flex-wrap: wrap; align-items: stretch; gap: 4px; margin-bottom: 12px; }
+.eq-row .metric { flex: 1 1 130px; min-width: 130px; }
+.eq-op { display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; color: var(--navy); padding: 0 4px; flex: 0 0 22px; }
+.eq-row .metric .value { font-size: 18px; }
+.eq-row .metric .src { font-size: 10px; color: var(--sub); margin-top: 3px; line-height: 1.35; }
+.metric.eq-before { background:#f6f6f6; border-color:#c8c8c8; }
+.metric.eq-loan { background:#f5efe0; border-color:#c9a54a; }
+.metric.eq-loan .value { color: var(--gold); }
+.metric.eq-start { background:#f0f7f0; border-color:#a8c9a8; }
+.metric.eq-start .value { color: var(--green); }
+.metric.eq-keep-decided { background:#ececec; border-color:var(--gray); }
+.metric.eq-keep-decided .value { color: #555; }
+.metric.eq-target { background:#fbeaea; border-color:var(--red); border-width:2px; box-shadow: 0 0 0 3px rgba(198,40,40,0.08); }
+.metric.eq-target .label { color: var(--red); font-weight: bold; }
+.metric.eq-target .value { color: var(--red); font-size: 22px; }
+.metric.eq-target .value::after { content:" ← 削減対象"; font-size: 11px; color: var(--red); font-weight: 500; margin-left: 4px; }
+.metric.eq-cut { background:#fef7e0; border-color:#e6c65b; }
+.metric.eq-cut .value { color: #a66f0d; }
+.metric.eq-now { background:#fdf3ec; border-color:#e0a878; }
+.metric.eq-now .value { color: #c85a12; }
+.metric.eq-outside { background:#eef4fb; border-color:#8fb4e0; cursor:pointer; }
+.metric.eq-outside .value { color:#204a80; }
+/* 2026-09-18 時点で固定（ロックした雰囲気）*/
+.metric.frozen { background:#e9ebee !important; border-color:#c8ccd3 !important; border-width:1px !important; box-shadow:none !important; }
+.metric.frozen .label { color:#6b7280 !important; font-weight:normal !important; }
+.metric.frozen .value { color:#6b7280 !important; font-size:18px !important; }
+.metric.frozen .value::after { content:none !important; }
+.metric.frozen .src { color:#9ca3af !important; }
+.metric.frozen .lock-note { display:block; font-size:9px; color:#9ca3af; margin-top:3px; font-style:italic; }
+.metric.eq-target-a { background:#fef7e0; border-color:#c9a54a; }
+.metric.eq-target-a .label { color:var(--gold); font-weight:bold; }
+.metric.eq-target-a .value { color:var(--gold); }
+.metric.eq-remaining { background:#fbeaea; border-color:var(--red); border-width:2px; box-shadow: 0 0 0 3px rgba(198,40,40,0.08); }
+.metric.eq-remaining .label { color:var(--red); font-weight:bold; }
+.metric.eq-remaining .value { color:var(--red); font-size:22px; }
+.metric.eq-remaining .value::after { content:" ← 削減対象"; font-size:11px; color:var(--red); font-weight:500; margin-left:4px; }
+.eq-row-4 { margin-bottom: 0; }
+.eq-row-3 { margin-bottom: 14px; }
+.eq-row-3 .loan-note { flex: 1 1 auto; padding: 6px 10px; background: #f5efe0; border: 1px solid #c9a54a; border-radius: 6px; font-size: 11px; color: var(--sub); }
+.eq-row-3 .loan-note b { color: var(--gold); font-size: 14px; }
+@media (max-width: 900px) {
+  .eq-row .metric { min-width: 100px; flex-basis: calc(50% - 26px); }
+  .eq-op { font-size: 18px; }
+}
+
+/* 進捗バー */
+.bar-wrap { margin: 10px 0 4px; position: relative; }
+.bar-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--sub); margin-bottom: 4px; }
+.bar-outer { position: relative; height: 16px; background: #eee; border-radius: 8px; overflow: visible; }
+.bar-inner { height: 100%; background: linear-gradient(90deg, #4a7c59, #2e7d32); border-radius: 8px; transition: width 0.3s; }
+.bar-inner.over { background: linear-gradient(90deg, #b8860b, #d4a017); }
+.bar-mark-80 { position: absolute; top: -4px; bottom: -4px; left: 80%; width: 2px; background: var(--yellow); pointer-events: none; }
+.bar-mark-80-lbl { position: absolute; top: -18px; left: 80%; transform: translateX(-50%); font-size: 10px; color: var(--yellow); font-weight: bold; white-space: nowrap; }
+
+.dual-summary { display: grid; grid-template-columns: 3fr 2fr; gap: 12px; margin-bottom: 8px; }
+.pane { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: #fafaf7; }
+.pane-a { border-left: 4px solid var(--green); background: #f7fbf7; }
+.pane-b { border-left: 4px solid var(--gold); background: #faf8f0; }
+.pane-title { font-weight: bold; font-size: 13px; margin-bottom: 8px; color: var(--navy); }
+.pane-a .pane-title { color: var(--green); }
+.pane-b .pane-title { color: var(--gold); }
+.pane-note { font-size: 11px; margin-top: 8px; padding: 6px 0; border-top: 1px dashed var(--line); }
+.total-summary-line { padding: 8px 10px; background: #eeeae0; border-radius: 6px; font-size: 12px; margin: 6px 0 4px; color: var(--sub); }
+.borrow-divider { margin: 40px 0 12px; padding-top: 20px; border-top: 2px dashed var(--gold); }
+.bottom-total { margin: 16px 0; padding: 12px 14px; background: #eeeae0; border-radius: 6px; font-size: 13px; text-align: center; }
+.bottom-total b { color: var(--navy); font-weight: 700; font-size: 15px; }
+.total-summary-line b { color: var(--ink); font-weight: 600; }
+.total-summary-line .tot-label { color: var(--navy); font-weight: bold; margin-right: 6px; }
+@media (max-width: 900px) { .dual-summary { grid-template-columns: 1fr; } }
+.count-line { font-size: 12px; color: var(--sub); margin-top: 10px; }
+.count-line b { color: var(--ink); font-weight: 600; }
+.count-line .keep-yen { color: var(--navy); font-weight: bold; margin-left: 8px; }
+
+/* 区分見出し */
+.section { margin-bottom: 28px; }
+.section-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; padding: 10px 4px 6px; border-bottom: 2px solid var(--navy); margin-bottom: 6px; }
+.section-head h2 { margin: 0; font-size: 15px; color: var(--navy); }
+.section-sub { font-size: 12px; color: var(--sub); }
+.section-sub .done-sub { color: var(--green); font-weight: bold; }
+.section-sub .p80-sub { color: var(--yellow); font-weight: bold; margin-left: 8px; }
+
+/* テーブル */
+table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+th, td { padding: 5px 6px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: middle; font-size: 12px; }
+th { background: #f0ede4; font-size: 11px; color: var(--sub); font-weight: normal; }
+tr:last-child td { border-bottom: none; }
+
+/* 状態別の背景 */
+tr.st-done { background: var(--done-bg); }
+tr.st-done td.name, tr.st-done td.amount { text-decoration: line-through; color: var(--sub); }
+tr.st-hold { background: var(--hold-bg); }
+tr.st-keep { background: var(--keep-bg); color: var(--sub); }
+tr.st-keep td.name { color: var(--gray); }
+tr.st-handled { background: var(--handled-bg); }
+tr.st-handled td.name { color: var(--navy); }
+tr.st-excluded { background: #f5f5f5; color: #999; }
+tr.st-excluded td.name, tr.st-excluded td.amount { text-decoration: line-through; color: #999; }
+tr.st-excluded td.bar-cell .row-bar-inner { background: #ccc; }
+.badge-excluded { display:inline-block; padding:2px 6px; font-size:10px; background:#e0e0e0; color:#666; border-radius:3px; margin-left:4px; }
+
+/* 8割の線より上（累計が対象額 80% に達するまで）— border-left で強調 */
+tr.above80 td:first-child { border-left: 4px solid var(--yellow); }
+
+/* 8割の線 */
+tr.p80-line td { border-bottom: 3px double var(--yellow); position: relative; }
+tr.p80-line td:first-child::after {
+  content: "▲ ここまでで小計の8割";
+  position: absolute; left: 0; bottom: -20px;
+  font-size: 10px; color: var(--yellow); font-weight: bold;
+  white-space: nowrap; background: var(--panel); padding: 0 4px;
+}
+tr.p80-line + tr td { padding-top: 22px; }
+
+/* 列 */
+td.actions { width: 230px; white-space: nowrap; }
+td.actions button {
+  border: 1px solid var(--line);
+  background: #fafaf7;
+  color: var(--sub);
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-right: 2px;
+  min-width: 44px;
+}
+td.actions button:hover { background: var(--hover); }
+td.actions button.on-done { background: var(--green); color: #fff; border-color: var(--green); }
+td.actions button.on-hold { background: var(--yellow); color: #fff; border-color: var(--yellow); }
+td.actions button.on-keep { background: var(--gray); color: #fff; border-color: var(--gray); }
+td.actions button.on-handled { background: var(--handled); color: #fff; border-color: var(--handled); }
+
+td.name { min-width: 140px; font-weight: 500; }
+td.amount { text-align: right; font-family: "SF Mono", Menlo, monospace; white-space: nowrap; width: 90px; }
+td.bar-cell { width: 110px; }
+td.bar-cell .row-bar-outer { height: 8px; background: #f0ede4; border-radius: 4px; overflow: hidden; }
+td.bar-cell .row-bar-inner { height: 100%; background: var(--navy); border-radius: 4px; }
+tr.st-keep td.bar-cell .row-bar-inner { background: var(--gray); }
+td.cum { text-align: right; font-family: "SF Mono", Menlo, monospace; white-space: nowrap; width: 90px; color: var(--sub); font-size: 12px; }
+td.card { font-size: 11px; color: var(--sub); min-width: 90px; max-width: 130px; }
+td.memo { font-size: 11px; color: var(--ink); min-width: 320px; max-width: 480px; white-space: normal; line-height: 1.4; padding: 4px 6px; cursor: text; outline: none; }
+td.memo:hover { background: #fffbea; }
+td.memo:focus { background: #fff7d6; box-shadow: inset 0 0 0 2px var(--gold); }
+td.memo:empty::before { content: "＋ メモ・備考（クリックで書き込み）"; color: var(--gray); font-style: italic; }
+td.memo.user-note { color: var(--navy); }
+td.date { font-size: 11px; color: var(--sub); width: 90px; }
+td.paydate { font-size: 11px; color: var(--sub); width: 90px; white-space: nowrap; }
+td.paydate.stale { color: var(--gray); font-style: italic; }
+td.paydate.stale::after { content: " ⚠"; color: var(--red); }
+.badge-annual { display:inline-block; margin-left:4px; font-size:9px; color:var(--gold); border:1px solid var(--gold); border-radius:3px; padding:0 3px; vertical-align:middle; }
+td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-align: right; font-family: "SF Mono", Menlo, monospace; width: 150px; }
+.notion-link { display: inline-block; margin-left: 6px; font-size: 10px; color: var(--sub); text-decoration: none; padding: 1px 4px; border: 1px solid var(--line); border-radius: 3px; background: #f5f2eb; }
+.notion-link:hover { background: var(--hover); color: var(--navy); }
+
+/* エクスポート */
+.actions-bar { margin: 16px 0; text-align: right; }
+.actions-bar button { background: var(--navy); color: #fff; border: none; padding: 8px 14px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+.actions-bar button:hover { background: #2c4d7d; }
+.export-out { margin-top: 8px; padding: 8px; background: #f5f2eb; border: 1px solid var(--line); border-radius: 4px; font-family: monospace; font-size: 10px; max-height: 200px; overflow: auto; display: none; white-space: pre-wrap; text-align: left; }
+
+.footer-note { margin-top: 20px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 11px; color: var(--sub); }
+.footer-note a { color: var(--navy); }
+.legend { font-size: 11px; color: var(--sub); margin: 4px 0 12px; }
+.legend span { display: inline-block; margin-right: 12px; }
+.legend .box { display: inline-block; width: 10px; height: 10px; border-radius: 2px; vertical-align: middle; margin-right: 4px; }
+
+@media (max-width: 700px) {
+  body { padding: 8px; font-size: 13px; }
+  .summary { padding: 12px; }
+  th, td { padding: 4px 5px; }
+  td.card, td.memo { display: none; }
+  .metrics { grid-template-columns: 1fr 1fr; }
+  td.actions { width: auto; }
+  td.actions button { padding: 4px 6px; min-width: 40px; margin-bottom: 2px; }
+  td.bar-cell { width: 60px; }
+  td.cum { font-size: 11px; }
+}
+.topnav { position:sticky; top:0; z-index:100; background:#fff; border-bottom:2px solid var(--line); padding:8px 12px; margin:-12px -12px 12px -12px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; font-size:13px; }
+.topnav .btn-reload { padding:5px 12px; background:var(--gold); color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:bold; }
+.topnav .btn-reload:hover { background:#a68738; }
+.topnav .last-update { color:var(--sub); font-size:11px; }
+.topnav .nav-links { display:flex; gap:8px; margin-left:auto; }
+.topnav .nav-links a { padding:4px 10px; color:var(--navy); text-decoration:none; border-radius:4px; border:1px solid var(--line); font-size:12px; }
+.topnav .nav-links a:hover { background:var(--ivory); }
+.topnav .nav-links a.active { background:var(--navy); color:#fff; border-color:var(--navy); }
+
+.correction { color:#c62828 !important; font-size:11px !important; margin-top:4px !important; font-weight:bold !important; }
+</style>
+</head>
+<body>
+<div class="topnav">
+  <button class="btn-reload" onclick="location.reload()">↻ 更新</button>
+  <span class="last-update">最終更新 <span id="topnav-time">-</span></span>
+  <span class="nav-links">
+    <a href="財務整理_TOP.html">TOP</a>
+    <a href="財務整理_TOP_年額.html" class="active">年額</a>
+    <a href="財務整理_進捗表.html">進捗表（一覧）</a>
+    <a href="継続経費.html">継続経費</a>
+    <a href="一覧外の経費.html">一覧外の経費</a>
+    <a href="借入の返済.html">借入の返済</a>
+  </span>
+</div>
+
+<div id="save-state-bar" style="margin:0 0 12px 0;padding:8px 12px;background:#fff8ea;border:1px solid #b08d3a;border-radius:4px;font-size:12px;"></div>
+
+<div class="summary">
+  <h1>財務整理 年額 <span style="font-size:12px;color:#c62828;font-weight:bold;">（1〜7月の合計＝TOP の月額 × 7。9月以降は月数を増やす）</span></h1>
+  <!-- 1段目：Before − 借入 = 出発点（全部固定・グレー） -->
+  <div class="eq-row eq-row-1">
+    <div class="metric eq-before frozen"><div class="label">Before 総額</div><div class="value">1,123,751<span class="yen">円</span><div class="src">1〜7月の月平均 1,224,685 − 私用（事業主貸）100,934<br>PayPay は実額（RKS 127,388＋ATM 77,286）・カード請求の二重計上 78,229 を除外（Chase Hyatt・BOA 4452）・ドルは148円</div><span class="lock-note">2026-09-19 Mits様確認</span></div></div>
+    <div class="eq-op">−</div>
+    <div class="metric eq-loan frozen"><div class="label">借入の返済</div><div class="value">142,286<span class="yen">円</span><div class="src">1〜7月の実額の月平均：楽天 35,431 ／ Amex JP 96,687 ／ Amex US 10,169</div><span class="lock-note">2026-09-19 Mits様確認</span></div></div>
+    <div class="eq-op">＝</div>
+    <div class="metric eq-start frozen"><div class="label">出発点総額（借入の返済を除く）</div><div class="value">981,465<span class="yen">円</span><div class="src">1,123,751 − 142,286</div><span class="lock-note">2026-09-19 Mits様確認</span></div></div>
+  </div>
+
+  <!-- 2段目 サブスク：全部固定 -->
+  <div class="eq-row eq-row-2" style="margin-top:6px;">
+    <div class="metric frozen"><div class="label">サブスクリプション型の削減対象A(分母)</div><div class="value">374,378<span class="yen">円</span><div class="src">一覧の行の合計 318,933 ＋ 年払いの1〜7月実額との差 41,082（Notion・Genspark・年会費）＋ DOCPRO 14,363</div><span class="lock-note">2026-09-19 Mits様確認</span></div></div>
+    <div class="eq-op">−</div>
+    <div class="metric eq-keep-decided frozen"><div class="label">継続と決めた額</div><div class="value">129,695<span class="yen">円</span><div class="src">21行の月額合計（9/18 以降に継続にした6行を含む・年払いは月割り）</div><div class="src" id="m-keep-breakdown" style="font-size:11px;line-height:1.5;text-align:left;margin-top:4px;">―</div><span class="lock-note">2026-09-18 訂正後の値で固定</span></div></div>
+    <div class="eq-op">＝</div>
+    <div class="metric eq-target-a frozen"><div class="label">残りの削減対象A</div><div class="value">244,683<span class="yen">円</span><div class="src">374,378 − 129,695</div><span class="lock-note">2026-09-19 Mits様確認</span></div></div>
+  </div>
+
+  <!-- 3段目 一覧外：全部固定・枠全体が一覧外.htmlリンク -->
+  <a href="一覧外の経費.html" style="text-decoration:none; color:inherit;" title="クリックで一覧外の経費のページを開く">
+  <div class="eq-row eq-row-3" style="margin-top:6px; cursor:pointer;">
+    <div class="metric eq-outside frozen"><div class="label">削減対象B(別ページの分母)　<span style="font-size:10px; color:var(--navy);">→ 一覧外の経費.html</span></div><div class="value">607,087<span class="yen">円</span><div class="src">出発点 981,465 − 一覧 A 374,378</div><span class="lock-note">2026-09-19 Mits様確認</span></div></div>
+    <div class="eq-op">−</div>
+    <div class="metric eq-outside frozen"><div class="label">継続と決めた額(一覧外)</div><div class="value">129,064<span class="yen">円</span><div class="src">RKS（家賃＋管理費 122,022＋電気 5,365）127,388 ＋ ガス 1,676（1〜7月実額）</div><div class="src" id="m-keepout-breakdown" style="font-size:11px;line-height:1.5;text-align:left;margin-top:4px;">―</div><span class="lock-note">2026-09-19 Mits様確認</span></div></div>
+    <div class="eq-op">＝</div>
+    <div class="metric eq-outside frozen"><div class="label">残りの削減対象B</div><div class="value">478,023<span class="yen">円</span><div class="src">607,087 − 129,064</div><span class="lock-note">2026-09-18 訂正後の値で固定</span></div></div>
+  </div>
+  </a>
+
+  <!-- 4段目：分母合計 − 継続合計 = 削減対象総額 -->
+  <div class="eq-row eq-row-4" style="margin-top:10px;">
+    <div class="metric frozen"><div class="label">分母の合計</div><div class="value">981,465<span class="yen">円</span><div class="src">一覧 A 374,378 ＋ 一覧外 B 607,087（＝出発点）</div><span class="lock-note">2026-09-19 Mits様確認</span></div></div>
+    <div class="eq-op">−</div>
+    <div class="metric frozen"><div class="label">継続と決めた額の合計</div><div class="value">258,759<span class="yen">円</span><div class="src">一覧 21行 129,695 ＋ 一覧外 129,064</div><span class="lock-note">2026-09-19 Mits様確認</span></div></div>
+    <div class="eq-op">＝</div>
+    <div class="metric frozen" style="border-width:3px; border-color:#c8ccd3;"><div class="label" style="font-weight:bold;">半分経営するための削減対象総額</div><div class="value" style="font-size:26px;">722,706<span class="yen">円</span><div class="src">981,465 − 258,759（＝残り A 244,683 ＋ 残り B 478,023）</div><span class="lock-note">2026-09-18 訂正後の値で固定</span></div></div>
+  </div>
+
+  <!-- 5段目：半分経営の削減目標 − (削った額＋対応済み) = 半分まで残り -->
+  <div class="eq-row eq-row-5" style="margin-top:10px;">
+    <div class="metric frozen"><div class="label">半分経営の削減目標(削減対象総額 ÷ 2)</div><div class="value"><span id="m-half-goal">-</span><span class="yen">円</span><div class="src">4段目 722,706 ÷ 2</div><span class="lock-note">2026-09-18 訂正後の値で固定</span></div></div>
+    <div class="eq-op">−</div>
+    <div class="metric eq-cut"><div class="label">削った額＋対応済み(可変)</div><div class="value"><span id="m-cut-plus-handled">-</span><span class="yen">円</span><div class="src">削った額(完了 <span id="m-eq2-done-count">0</span>件)<span id="m-eq2-cut">-</span> ＋ 対応済み(<span id="m-after-handled-sub">0件</span>)<span id="m-after-handled">-</span></div><div id="m-cut-breakdown" style="font-size:11px;color:var(--sub);margin-top:6px;text-align:left;line-height:1.5;"></div></div></div>
+    <div class="eq-op">＝</div>
+    <div class="metric eq-remaining" style="border-width:3px;"><div class="label">半分まで残り</div><div class="value" style="font-size:26px;"><span id="m-half-remaining">-</span><span class="yen">円</span><div class="src">半分経営の削減目標 − (削った額＋対応済み)</div></div></div>
+  </div>
+
+  <!-- 6段目：半分経営の目標 ＋ 継続の合計 ＋ 借入の返済(最新) ＝ 合計 -->
+  <div class="eq-row eq-row-6" style="margin-top:8px;">
+    <div class="metric frozen"><div class="label">半分経営の削減目標(削減対象総額 ÷ 2)</div><div class="value"><span id="m-6-half-goal">-</span><span class="yen">円</span><div class="src">4段目 722,706 ÷ 2</div><span class="lock-note">2026-09-18 訂正後の値で固定</span></div></div>
+    <div class="eq-op">＋</div>
+    <div class="metric frozen"><div class="label">継続と決めた額の合計</div><div class="value"><span id="m-6-keep-total">-</span><span class="yen">円</span><div class="src">一覧 21行 129,695 ＋ 一覧外 129,064</div><span class="lock-note">2026-09-18 訂正後の値で固定</span></div></div>
+    <div class="eq-op">＋</div>
+    <div class="metric"><div class="label"><a href="借入の返済.html" style="color:inherit;text-decoration:none;">借入の返済(最新) <span style="color:#c62828;font-size:10px;">→ 詳しくはこちら</span></a></div><div class="value"><a href="借入の返済.html" style="color:inherit;text-decoration:none;"><span id="m-6-loan">-</span><span class="yen">円</span></a><div class="src">② Amex JP リボ 15,000 ＋ ③ 楽天デンタル 17,288 ＋ Amex US 9,512 ＋ 楽天その他 1,775</div><span class="lock-note">借入の返済ページと同期(可変)</span></div></div>
+    <div class="eq-op">＝</div>
+    <div class="metric frozen" style="border-width:3px; border-color:#c8ccd3;"><div class="label" style="font-weight:bold;">半分経営の目標 ＋ 継続 ＋ 借入の返済</div><div class="value" style="font-size:26px;"><span id="m-6-total">-</span><span class="yen">円</span><div class="src">361,353 ＋ 258,759 ＋ <span id="m-6-loan-echo">-</span> ＝ 合計</div><span class="lock-note">借入の返済が変われば一緒に変わる</span></div></div>
+  </div>
+
+  <div class="bar-wrap">
+    <div class="bar-label"><span>進み具合(削った額＋対応済み ÷ 半分経営の削減目標)</span><span id="m-pct">0%</span></div>
+    <div class="bar-outer">
+      <div class="bar-inner" id="m-bar" style="width:0%"></div>
+      <div class="bar-mark-80-lbl">8割</div>
+      <div class="bar-mark-80"></div>
+    </div>
+  </div>
+  <div class="count-line">
+    未着手 <b><span id="m-todo-count">0</span></b> 件　／
+    対応済み <b style="color:var(--handled);"><span id="m-handled-count">0</span></b> 件　／
+    完了 <b><span id="m-done-count">0</span></b> 件　／
+    判断保留 <b><span id="m-hold-count">0</span></b> 件　／
+    継続 <b><span id="m-keep-count">0</span></b> 件
+    <span>全 <b><span id="m-total-count">0</span></b> 件　削減済み <b><span id="m-cut">0</span></b> 円</span>
+  </div>
+  <div id="m-keep-banner" style="display:none; padding:8px 12px; background:#ececec; border-radius:6px; margin-top:8px; font-size:12px; border-left:4px solid var(--gray);">
+    <b style="color:var(--navy);">継続(パン・払い続ける)</b>
+    <b><span id="m-keep-banner-count">0</span></b>件　月額 <b><span id="m-keep-banner-sum">0</span></b>円
+    　<a href="継続経費.html" target="_blank" style="color:var(--navy); font-weight:bold; text-decoration:underline;">→ 継続経費(別ページ)を開く</a>
+    <span style="color:var(--sub); font-size:11px;">　※ 継続は払い続けるので削減の数字には含めない</span>
+  </div>
+</div>
+
+<!-- 月別の実績 -->
+<div class="section monthly-actual" style="margin-top:20px;">
+  <div class="section-head">
+    <h2>月別の実績 <span style="font-size:11px;color:var(--sub);font-weight:normal;">MF の仕訳から出した実額・8月は未締めのため未収載</span></h2>
+  </div>
+  <table id="monthly-actual-table">
+    <thead>
+      <tr>
+        <th>月</th>
+        <th style="text-align:right;">出ていった総額</th>
+        <th style="text-align:right;">私用（事業主貸）</th>
+        <th style="text-align:right;">借入の返済</th>
+        <th style="text-align:right;">単発（5万円以上の外注）</th>
+        <th style="text-align:right;">ランニング</th>
+      </tr>
+    </thead>
+    <tbody id="monthly-actual-tbody"></tbody>
+  </table>
+  <div id="monthly-actual-bar" style="margin-top:16px;"></div>
+</div>
+
+<!-- TOP: legend以下は無し -->
+<script src="zaimu_seiri_data.js"></script>
+<script src="zaimu_seiri_state.js"></script>
+<script src="zaimu_seiri_render.js"></script>
+<script>
+// 年額ページ：TOP と同じ数字（月額）を MONTHS 倍して表示する。数字の出どころは TOP と同じ data.js / render.js。
+(function(){
+  const MONTHS = 7; // 1〜7月（8月は MF 未締め）
+  const RE = /(\d{1,3}(?:,\d{3})+|\d{4,})(?![\d,]*\s*(?:行|件|%|％|年|月|日|-|\/|kWh))/g;
+  function conv(t){ t = t.replace(/月平均/g,'合計').replace(/月額合計/g,'合計'); return t.replace(RE, m => { const n = parseInt(m.replace(/,/g,''),10); if (n>=2000 && n<=2100) return m; return (n*MONTHS).toLocaleString('ja-JP'); }); }
+  function walk(){
+    const root = document.querySelector('.summary'); if(!root) return;
+    const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let node; while((node = w.nextNode())){
+      if (node.parentElement && node.parentElement.closest('.lock-note,#monthly-actual,.monthly-actual')) continue;
+      if (node.nodeValue !== node.__conv){ node.__orig = node.nodeValue; node.__conv = conv(node.__orig); node.nodeValue = node.__conv; }
+    }
+  }
+  const run = () => setTimeout(walk, 30);
+  run(); window.addEventListener('load', run); window.addEventListener('focus', run);
+  window.addEventListener('storage', run); document.addEventListener('visibilitychange', run);
+  new MutationObserver(run).observe(document.body, {subtree:true, childList:true, characterData:true});
+})();
+</script>
+
+</body>
+</html>
