@@ -125,7 +125,7 @@ td.count { text-align: right; font-family: "SF Mono", Menlo, monospace; width: 5
 td.total-col { text-align: right; font-family: "SF Mono", Menlo, monospace; white-space: nowrap; width: 100px; }
 td.monthly-col { text-align: right; font-family: "SF Mono", Menlo, monospace; white-space: nowrap; width: 90px; font-weight: bold; color: var(--navy); }
 td.date { font-size: 11px; color: var(--sub); width: 100px; white-space: nowrap; }
-td.note-col { font-size: 11px; color: var(--ink); min-width: 240px; max-width: 420px; white-space: normal; line-height: 1.4; }
+td.note-col { font-size: 11px; color: var(--ink); min-width: 120px; max-width: 200px; white-space: normal; line-height: 1.4; }
 
 .empty-note { padding: 16px; background: #fafaf7; border: 1px dashed var(--line); border-radius: 6px; color: var(--sub); font-size: 12px; text-align: center; }
 .footer-note { margin-top: 20px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 11px; color: var(--sub); }
@@ -138,6 +138,13 @@ td.note-col { font-size: 11px; color: var(--ink); min-width: 240px; max-width: 4
   td.actions { width: auto; }
   td.actions button { padding: 4px 6px; min-width: 50px; margin-bottom: 2px; }
 }
+/* 浪費の中分類 */
+td.subs { white-space: nowrap; }
+td.subs button { font-size: 11px; padding: 3px 7px; margin: 1px; border: 1px solid #c9b98a; background: #fff; border-radius: 4px; cursor: pointer; }
+td.subs button.on { background: #6b4fa0; color: #fff; border-color: #6b4fa0; }
+tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; padding: 6px 8px; }
+.sub-toggle { font-size: 11px; padding: 3px 10px; margin-left: 8px; border: 1px solid #6b4fa0; color: #6b4fa0; background: #fff; border-radius: 4px; cursor: pointer; }
+.hide-subs td.subs, .hide-subs th.subs { display: none; }
 </style>
 </head>
 <body>
@@ -207,9 +214,9 @@ td.note-col { font-size: 11px; color: var(--ink); min-width: 240px; max-width: 4
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789810654"></script>
-<script src="zaimu_seiri_state.js?v=1789810654"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789810654"></script>
+<script src="zaimu_seiri_data.js?v=1789810990"></script>
+<script src="zaimu_seiri_state.js?v=1789810990"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789810990"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -240,6 +247,13 @@ function _mergeIch(saved, local){
   }
   return merged;
 }
+const SUB_KEY = "zaimu_seiri_ichirangai_sub_v1";
+const SUB_HIDE_KEY = "zaimu_seiri_ichirangai_sub_hide_v1";
+const SUBS = ["飲み","食事","ホテル","カフェ","交通"];
+function loadSub(){ try { return JSON.parse(localStorage.getItem(SUB_KEY) || "{}") || {}; } catch(e){ return {}; } }
+function saveSub(o){ try { localStorage.setItem(SUB_KEY, JSON.stringify(o)); } catch(e){} }
+function subOf(it, subs){ return (subs[it.id] && subs[it.id].sub) || it.sub || ""; }
+function subHidden(){ try { return localStorage.getItem(SUB_HIDE_KEY) === "1"; } catch(e){ return false; } }
 function loadIchState(){ return _mergeIch(_savedIchirangai(), _loadLocalIch()); }
 function saveIchState(s){ try { localStorage.setItem(ICH_STATE_KEY, JSON.stringify(s)); } catch(e){} }
 function todayStr(){ const d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
@@ -352,7 +366,9 @@ function render(){
     if (b.items.length === 0) return "";
     // 月平均降順
     const sorted = b.items.slice().sort((x,y) => (y.monthly||0) - (x.monthly||0));
-    const rows = sorted.map(it => {
+    const isRouhi = (c === "浪費");
+    const subs = loadSub();
+    const rowOf = it => {
       const s = state[it.id];
       const st = s && s.status ? s.status : null;
       let cls = "";
@@ -366,6 +382,7 @@ function render(){
           <button data-id="${esc(it.id)}" data-act="keep" class="${st==='keep'?'on-keep':''}">続ける</button>
           <button data-id="${esc(it.id)}" data-act="once" class="${st==='once'?'on-once':''}">一回性</button>
         </td>
+        ${isRouhi ? `<td class="subs">${SUBS.map(x => `<button data-id="${esc(it.id)}" data-sub="${x}" class="${subOf(it,subs)===x?'on':''}">${x}</button>`).join("")}</td>` : ""}
         <td class="merchant">${esc(it.merchant || "")}</td>
         <td class="card">${esc(it.card || "")}</td>
         <td class="user">${esc(it.user || "")}</td>
@@ -375,17 +392,31 @@ function render(){
         <td class="date">${esc(it.first||"")}<br>〜 ${esc(it.last||"")}</td>
         <td class="note-col">${esc(it.note||"")}${dt?`<br><span style="color:var(--sub);font-size:10px;">押した日 ${esc(dt)}</span>`:""}</td>
       </tr>`;
-    }).join("");
+    };
+    let rows;
+    const NCOL = isRouhi ? 10 : 9;
+    if (isRouhi) {
+      rows = ["", ...SUBS].map(g => {
+        const gi = sorted.filter(it => subOf(it, subs) === g);
+        if (!gi.length) return "";
+        const gm = gi.reduce((t,i)=>t+(Number(i.monthly)||0),0);
+        const gt = gi.reduce((t,i)=>t+(Number(i.total)||0),0);
+        return `<tr class="sub-head"><td colspan="${NCOL}">${g || "未分類"}　${gi.length}件・月平均 ${fmtYen(gm)}円・1〜7月の総額 ${fmtYen(gt)}円</td></tr>` + gi.map(rowOf).join("");
+      }).join("");
+    } else {
+      rows = sorted.map(rowOf).join("");
+    }
     const cap = Number(caps[c]) || 0;
     const after = b.actual - b.cut - b.once;
-    return `<div class="section">
+    return `<div class="section${isRouhi && subHidden() ? ' hide-subs' : ''}">
       <div class="section-head">
         <h2>${esc(c)} <span class="section-sub">${b.items.length}件・月平均 ${fmtYen(b.actual)}円・1〜7月の総額 ${fmtYen(b.items.reduce((t,i)=>t+(i.total||0),0))}円・<b style="color:#c0392b;">削った総額 ${fmtYen(b.items.filter(i=>(state[i.id]||{}).status==="cut").reduce((t,i)=>t+(i.total||0),0))}円（月 ${fmtYen(b.cut)}円）</b></span></h2>
-        <span class="section-sub">上限 ${cap?fmtYen(cap)+'円':'―'} ／ 一回性 <b style="color:#a68000;">${fmtYen(b.once)}円</b> ／ これからの月額 <b style="color:var(--gold);">${fmtYen(after)}円</b></span>
+        <span class="section-sub">上限 ${cap?fmtYen(cap)+'円':'―'} ／ 一回性 <b style="color:#a68000;">${fmtYen(b.once)}円</b> ／ これからの月額 <b style="color:var(--gold);">${fmtYen(after)}円</b>${isRouhi ? `<button class="sub-toggle" id="sub-toggle">${subHidden() ? "分類ボタンを出す" : "分類ボタンを消す"}</button>` : ""}</span>
       </div>
       <table>
         <thead><tr>
           <th style="width:230px;">判定</th>
+          ${isRouhi ? '<th class="subs">中分類</th>' : ''}
           <th>相手先</th>
           <th>カード</th>
           <th>使った人</th>
@@ -406,6 +437,23 @@ function render(){
   container.querySelectorAll("td.actions button").forEach(btn => {
     btn.addEventListener("click", onClickAct);
   });
+  container.querySelectorAll("td.subs button").forEach(btn => {
+    btn.addEventListener("click", e => {
+      const id = e.currentTarget.getAttribute("data-id");
+      const sub = e.currentTarget.getAttribute("data-sub");
+      const o = loadSub();
+      const it = items.find(x => x.id === id) || {};
+      if (subOf(it, o) === sub) o[id] = { sub: "", date: todayStr() };
+      else o[id] = { sub: sub, date: todayStr() };
+      saveSub(o);
+      render();
+    });
+  });
+  const tg = document.getElementById("sub-toggle");
+  if (tg) tg.addEventListener("click", () => {
+    try { localStorage.setItem(SUB_HIDE_KEY, subHidden() ? "0" : "1"); } catch(e){}
+    render();
+  });
 }
 
 function onClickAct(e){
@@ -421,7 +469,7 @@ function onClickAct(e){
 
 // 別タブ・タブ復帰・focus で即時再描画
 window.addEventListener("storage", (e) => {
-  if (!e.key || e.key === ICH_STATE_KEY) render();
+  if (!e.key || e.key === ICH_STATE_KEY || e.key === SUB_KEY || e.key === SUB_HIDE_KEY) render();
 });
 document.addEventListener("visibilitychange", () => { if (!document.hidden) render(); });
 window.addEventListener("focus", () => render());
