@@ -104,12 +104,10 @@ var ICHIRANGAI_MEISAI = {
     ]
   },
   "caps": {
-    "消費": 38643,
+    "消費": 42780,
     "浪費": 53400,
-    "投資": 14112,
+    "投資": 38595,
     "旅行": 51331,
-    "Amazon": 24484,
-    "コンビニ・スーパー": 4137,
     "未仕訳": 6659
   },
   "caps_reason": {
@@ -117,10 +115,8 @@ var ICHIRANGAI_MEISAI = {
     "浪費": "実績の半分（Mits様指示 2026-09-19・画面は実績から毎回計算）",
     "投資": "実績の半分（Mits様指示 2026-09-19・画面は実績から毎回計算）",
     "旅行": "実績の半分（Mits様指示 2026-09-19・画面は実績から毎回計算）",
-    "Amazon": "実績の半分（Mits様指示 2026-09-19・画面は実績から毎回計算）",
     "外注・その他": "実績 138431/月 のうち手数料・利息を圧縮",
-    "未仕訳": "実績の半分（Mits様指示 2026-09-19・画面は実績から毎回計算）",
-    "コンビニ・スーパー": "実績の半分（Mits様指示 2026-09-19・画面は実績から毎回計算）"
+    "未仕訳": "実績の半分（Mits様指示 2026-09-19・画面は実績から毎回計算）"
   },
   "items": [
     {
@@ -137,7 +133,8 @@ var ICHIRANGAI_MEISAI = {
       "last": "2026-07-21",
       "note": "PayPay 銀行の出金18回（2月3・3月3・4月4・5月1・6月3・7月4）合計 541,000円＋手数料。1月は0回",
       "status": null,
-      "status_date": null
+      "status_date": null,
+      "sub": "現金（ATM）"
     },
     {
       "id": "m-003",
@@ -157,7 +154,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-004",
-      "category": "Amazon",
+      "category": "投資",
       "row": "o-08",
       "merchant": "JP FBA SAPPORO",
       "card": "Amex US 44000",
@@ -169,7 +166,8 @@ var ICHIRANGAI_MEISAI = {
       "last": "2026-07-24",
       "note": "Amazon の FBA（札幌の倉庫）。飲食ではない。MF では荷造運賃で仕訳（2026-08-20 Mits様判定）",
       "status": null,
-      "status_date": null
+      "status_date": null,
+      "sub": "Amazon"
     },
     {
       "id": "m-005",
@@ -654,7 +652,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-035",
-      "category": "Amazon",
+      "category": "投資",
       "row": "o-08",
       "merchant": "AMAZON.CO.JP",
       "card": "Amex US 44000",
@@ -666,11 +664,12 @@ var ICHIRANGAI_MEISAI = {
       "last": "2026-07-24",
       "note": "都度買い物（サブスク定額と別）",
       "status": null,
-      "status_date": null
+      "status_date": null,
+      "sub": "Amazon"
     },
     {
       "id": "m-036",
-      "category": "Amazon",
+      "category": "投資",
       "row": "o-08",
       "merchant": "AMAZON DOWNLOADS",
       "card": "Amex US 44000",
@@ -682,11 +681,12 @@ var ICHIRANGAI_MEISAI = {
       "last": "2026-07-19",
       "note": "Kindle本・学び（Amazon分類・投資に近い性質）",
       "status": null,
-      "status_date": null
+      "status_date": null,
+      "sub": "Amazon"
     },
     {
       "id": "m-037",
-      "category": "Amazon",
+      "category": "投資",
       "row": "o-08",
       "merchant": "AMAZON マーケットプレイス",
       "card": "Amex US 44000",
@@ -698,7 +698,8 @@ var ICHIRANGAI_MEISAI = {
       "last": "2026-07-14",
       "note": "",
       "status": null,
-      "status_date": null
+      "status_date": null,
+      "sub": "Amazon"
     },
     {
       "id": "m-039",
@@ -1022,7 +1023,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k002",
-      "category": "コンビニ・スーパー",
+      "category": "消費",
       "row": "小口",
       "merchant": "LAWSON * JP",
       "card": "Amex US 44000",
@@ -1034,11 +1035,12 @@ var ICHIRANGAI_MEISAI = {
       "last": "2026-07-22",
       "note": "元の分類：飲食",
       "status": null,
-      "status_date": null
+      "status_date": null,
+      "sub": "コンビニ・スーパー"
     },
     {
       "id": "m-k003",
-      "category": "コンビニ・スーパー",
+      "category": "消費",
       "row": "小口",
       "merchant": "SEVEN ELEVEN * JP",
       "card": "Amex US 44000",
@@ -1050,11 +1052,12 @@ var ICHIRANGAI_MEISAI = {
       "last": "2026-07-21",
       "note": "元の分類：飲食",
       "status": null,
-      "status_date": null
+      "status_date": null,
+      "sub": "コンビニ・スーパー"
     },
     {
       "id": "m-k004",
-      "category": "コンビニ・スーパー",
+      "category": "消費",
       "row": "小口",
       "merchant": "FAMILY MART * JP",
       "card": "Amex US 44000",
@@ -1066,11 +1069,12 @@ var ICHIRANGAI_MEISAI = {
       "last": "2026-07-14",
       "note": "元の分類：飲食",
       "status": null,
-      "status_date": null
+      "status_date": null,
+      "sub": "コンビニ・スーパー"
     },
     {
       "id": "m-k005",
-      "category": "コンビニ・スーパー",
+      "category": "消費",
       "row": "小口",
       "merchant": "AEON RYUKYU * JP",
       "card": "Amex US 44000",
@@ -1082,7 +1086,8 @@ var ICHIRANGAI_MEISAI = {
       "last": "2026-07-23",
       "note": "元の分類：買い物",
       "status": null,
-      "status_date": null
+      "status_date": null,
+      "sub": "コンビニ・スーパー"
     },
     {
       "id": "m-k006",
@@ -1905,7 +1910,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k059",
-      "category": "Amazon",
+      "category": "投資",
       "row": "小口",
       "merchant": "アマゾン シーオージェーピー",
       "card": "Amex JP Marriott 42008",
@@ -1917,7 +1922,8 @@ var ICHIRANGAI_MEISAI = {
       "last": "2026-01-19",
       "note": "元の分類：買い物",
       "status": null,
-      "status_date": null
+      "status_date": null,
+      "sub": "Amazon"
     },
     {
       "id": "m-k061",
@@ -2817,7 +2823,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k126",
-      "category": "コンビニ・スーパー",
+      "category": "消費",
       "row": "小口",
       "merchant": "MARUETSU PETI* JP",
       "card": "Amex US 44000",
@@ -2829,7 +2835,8 @@ var ICHIRANGAI_MEISAI = {
       "last": "2026-03-07",
       "note": "元の分類：その他",
       "status": null,
-      "status_date": null
+      "status_date": null,
+      "sub": "コンビニ・スーパー"
     },
     {
       "id": "m-k127",
@@ -2945,7 +2952,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k134",
-      "category": "コンビニ・スーパー",
+      "category": "消費",
       "row": "小口",
       "merchant": "AEON RYUKYU OKINAWAKEN SHIMAJIRIJP",
       "card": "Amex US 44000",
@@ -2957,7 +2964,8 @@ var ICHIRANGAI_MEISAI = {
       "last": "2026-02-28",
       "note": "元の分類：買い物",
       "status": null,
-      "status_date": null
+      "status_date": null,
+      "sub": "コンビニ・スーパー"
     },
     {
       "id": "m-k135",
@@ -3170,7 +3178,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k148",
-      "category": "コンビニ・スーパー",
+      "category": "消費",
       "row": "小口",
       "merchant": "MYBASKET * JP",
       "card": "Amex US 44000",
@@ -3182,7 +3190,8 @@ var ICHIRANGAI_MEISAI = {
       "last": "2026-06-16",
       "note": "元の分類：その他",
       "status": null,
-      "status_date": null
+      "status_date": null,
+      "sub": "コンビニ・スーパー"
     },
     {
       "id": "m-k149",
@@ -3970,7 +3979,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k201",
-      "category": "コンビニ・スーパー",
+      "category": "消費",
       "row": "小口",
       "merchant": "BIO C BON * JP",
       "card": "Amex US 44000",
@@ -3982,7 +3991,8 @@ var ICHIRANGAI_MEISAI = {
       "last": "2026-06-16",
       "note": "元の分類：飲食",
       "status": null,
-      "status_date": null
+      "status_date": null,
+      "sub": "コンビニ・スーパー"
     },
     {
       "id": "m-k202",
