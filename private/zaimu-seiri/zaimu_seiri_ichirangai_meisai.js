@@ -104,8 +104,8 @@ var ICHIRANGAI_MEISAI = {
     ]
   },
   "caps": {
-    "消費": 44123,
-    "浪費": 50424,
+    "消費": 46517,
+    "浪費": 48030,
     "投資": 40228,
     "旅行": 51331,
     "未仕訳": 6659
@@ -219,7 +219,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-008",
-      "category": "浪費",
+      "category": "消費",
       "row": "o-08",
       "merchant": "NITORI",
       "card": "Amex US 44000",
@@ -229,7 +229,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 4788,
       "first": "2026-04-01",
       "last": "2026-04-01",
-      "note": "",
+      "note": " ／消費へ（Mits様判定 2026-09-19）",
       "status": null,
       "status_date": null
     },
