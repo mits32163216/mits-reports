@@ -492,7 +492,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-025",
-      "category": "旅行",
+      "category": "投資",
       "row": "o-12",
       "merchant": "PAYPAL VALENCIAPRE",
       "card": "Chase Sapphire 0430",
@@ -502,7 +502,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 7501,
       "first": "2026-01-26",
       "last": "2026-03-09",
-      "note": "",
+      "note": " ／投資へ（Mits様判定 2026-09-19）",
       "status": null,
       "status_date": null
     },
@@ -1484,7 +1484,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k031",
-      "category": "旅行",
+      "category": "浪費",
       "row": "小口",
       "merchant": "BAR COCCO 080-3906-2357",
       "card": "Chase Sapphire 0430",
@@ -1494,9 +1494,10 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 676,
       "first": "2026-06-04",
       "last": "2026-06-04",
-      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行） ／浪費・飲みへ（Mits様判定 2026-09-19）",
       "status": null,
-      "status_date": null
+      "status_date": null,
+      "sub": "飲み"
     },
     {
       "id": "m-k032",
@@ -1644,7 +1645,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k042",
-      "category": "旅行",
+      "category": "浪費",
       "row": "小口",
       "merchant": "SQ*KUROOBISYUBO OKINAWA",
       "card": "Chase Sapphire 0430",
@@ -1654,9 +1655,10 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 542,
       "first": "2026-06-05",
       "last": "2026-06-05",
-      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行） ／浪費・飲みへ（Mits様判定 2026-09-19）",
       "status": null,
-      "status_date": null
+      "status_date": null,
+      "sub": "飲み"
     },
     {
       "id": "m-k043",
@@ -1804,7 +1806,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k052",
-      "category": "旅行",
+      "category": "浪費",
       "row": "小口",
       "merchant": "SAKURAZAKAGURANDO OKINAWA",
       "card": "Chase Sapphire 0430",
@@ -1814,9 +1816,10 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 438,
       "first": "2026-02-20",
       "last": "2026-02-20",
-      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行） ／浪費・飲みへ（Mits様判定 2026-09-19）",
       "status": null,
-      "status_date": null
+      "status_date": null,
+      "sub": "飲み"
     },
     {
       "id": "m-k053",
