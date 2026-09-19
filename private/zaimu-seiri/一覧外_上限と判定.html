@@ -47,8 +47,8 @@ body { padding: 12px; max-width: 1980px; margin: 0 auto; }
 .summary { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
 .summary h1 { margin: 0 0 12px; font-size: 18px; color: var(--navy); }
 
-/* 4分類ボックス */
-.cat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; }
+/* 分類ボックス（4〜5個・caps のキー数に合わせて自動で列を割る） */
+.cat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 14px; }
 .cat-box { border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; background: #fafaf7; }
 .cat-box .cat-name { font-size: 12px; color: var(--sub); font-weight: bold; margin-bottom: 6px; }
 .cat-box .cat-lines { display: flex; flex-direction: column; gap: 4px; }
@@ -204,13 +204,15 @@ td.note-col { font-size: 11px; color: var(--ink); min-width: 240px; max-width: 4
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789807425"></script>
-<script src="zaimu_seiri_state.js?v=1789807425"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789807425"></script>
+<script src="zaimu_seiri_data.js?v=1789807458"></script>
+<script src="zaimu_seiri_state.js?v=1789807458"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789807458"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
-const CATEGORIES = ["消費", "浪費", "投資", "外注・その他"];
+// カテゴリは caps のキーからそのまま拾う（決め打ちしない・BS-keiri が増減できる）
+// caps に無いカテゴリを item が持っていた場合の受け皿を末尾に置く
+const CATEGORY_FALLBACK = "外注・その他";
 // 削減目標（半分経営に要る一覧外からの削減）— 発注書で指定された値
 const ICH_GOAL = 317193;
 
@@ -278,29 +280,31 @@ function render(){
 
   // 分類ごとの集計
   const byCat = {};
-  CATEGORIES.forEach(c => { byCat[c] = { actual: 0, cut: 0, items: [] }; });
+  CATEGORIES.forEach(c => { byCat[c] = { actual: 0, cut: 0, once: 0, items: [] }; });
   items.forEach(it => {
     const c = CATEGORIES.includes(it.category) ? it.category : "外注・その他";
     const m = Number(it.monthly) || 0;
     byCat[c].actual += m;
     byCat[c].items.push(it);
     const s = state[it.id];
-    if (s && s.status === "cut") byCat[c].cut += m;
+    if (s && s.status === "cut")  byCat[c].cut  += m;
+    if (s && s.status === "once") byCat[c].once += m;
   });
 
-  // 4分類ボックス描画
+  // 4分類ボックス描画（「一回性」の行を1本追加・「これからの月額」= actual − cut − once）
   catRow.innerHTML = CATEGORIES.map(c => {
     const b = byCat[c];
     const cap = Number(caps[c]) || 0;
-    const after = b.actual - b.cut;
-    const diff = cap - after;    // 上限 − 削った後
+    const after = b.actual - b.cut - b.once;
+    const diff = cap - after;    // 上限 − これからの月額
     const over = diff < 0;
     return `<div class="cat-box${over?' over':''}">
       <div class="cat-name">${esc(c)}</div>
       <div class="cat-lines">
         <div class="cat-line"><span class="lbl">実績（月平均）</span><span class="val">${fmtYen(b.actual)}円</span></div>
         <div class="cat-line"><span class="lbl">月の上限</span><span class="val">${cap?fmtYen(cap)+'円':'―'}</span></div>
-        <div class="cat-line after"><span class="lbl">削った後</span><span class="val">${fmtYen(after)}円</span></div>
+        <div class="cat-line"><span class="lbl" style="color:#a68000;">一回性</span><span class="val" style="color:#a68000;">${fmtYen(b.once)}円</span></div>
+        <div class="cat-line after"><span class="lbl">これからの月額</span><span class="val">${fmtYen(after)}円</span></div>
         <div class="cat-line diff${over?' over':''}"><span class="lbl">上限との差</span><span class="val">${cap?(over?'−'+fmtYen(-diff):'+'+fmtYen(diff))+'円':'―'}</span></div>
       </div>
     </div>`;
@@ -309,15 +313,23 @@ function render(){
   // 合計
   const totalActual = CATEGORIES.reduce((a,c) => a + byCat[c].actual, 0);
   const totalCut    = CATEGORIES.reduce((a,c) => a + byCat[c].cut, 0);
-  const totalAfter  = totalActual - totalCut;
+  const totalOnce   = CATEGORIES.reduce((a,c) => a + byCat[c].once, 0);
+  const totalAfter  = totalActual - totalCut - totalOnce;
   document.getElementById("t-actual").textContent = fmtYen(totalActual);
   document.getElementById("t-cut").textContent    = fmtYen(totalCut);
+  document.getElementById("t-once").textContent   = fmtYen(totalOnce);
   document.getElementById("t-after").textContent  = fmtYen(totalAfter);
-  const pct = ICH_GOAL > 0 ? Math.min(100, (totalCut / ICH_GOAL) * 100) : 0;
-  document.getElementById("t-pct").textContent    = pct.toFixed(1) + "%";
-  const bar = document.getElementById("t-bar");
-  bar.style.width = pct + "%";
-  if (totalCut >= ICH_GOAL) bar.classList.add("over"); else bar.classList.remove("over");
+  // 進捗バー：削る + 一回性 の合計で進める。バーは2色に分ける
+  const pctCut  = ICH_GOAL > 0 ? Math.min(100, (totalCut  / ICH_GOAL) * 100) : 0;
+  const pctOnce = ICH_GOAL > 0 ? Math.min(100 - pctCut, (totalOnce / ICH_GOAL) * 100) : 0;
+  const pctSum  = pctCut + pctOnce;
+  document.getElementById("t-pct").textContent    = pctSum.toFixed(1) + "%";
+  const barCut  = document.getElementById("t-bar-cut");
+  const barOnce = document.getElementById("t-bar-once");
+  barCut.style.left  = "0%";
+  barCut.style.width = pctCut + "%";
+  barOnce.style.left  = pctCut + "%";
+  barOnce.style.width = pctOnce + "%";
 
   // 既存の分類テーブル削除して再描画
   Array.from(container.querySelectorAll(".section")).forEach(el => el.remove());
