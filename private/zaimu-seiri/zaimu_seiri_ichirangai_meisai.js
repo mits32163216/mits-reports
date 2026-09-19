@@ -728,22 +728,6 @@ var ICHIRANGAI_MEISAI = {
       "status_date": null
     },
     {
-      "id": "m-038",
-      "category": "外注・その他",
-      "row": "o-11+out",
-      "merchant": "Wise 送金（送金先未特定）",
-      "card": "BOA VISA 4452",
-      "user": "Mits様",
-      "count": 4,
-      "total": 372229,
-      "monthly": 53176,
-      "first": "2026-01-26",
-      "last": "2026-05-18",
-      "note": "BOA VISA 4452 経由の外注送金4件・送金先未特定",
-      "status": null,
-      "status_date": null
-    },
-    {
       "id": "m-039",
       "category": "外注・その他",
       "row": "o-08",
@@ -1081,6 +1065,25 @@ var ICHIRANGAI_MEISAI = {
       "status": null,
       "status_date": null,
       "moved": "2026-09-19 Mits様指示"
+    }
+  ],
+  "removed": [
+    {
+      "id": "m-038",
+      "category": "外注・その他",
+      "row": "o-11+out",
+      "merchant": "Wise 送金（送金先未特定）",
+      "card": "BOA VISA 4452",
+      "user": "Mits様",
+      "count": 4,
+      "total": 372229,
+      "monthly": 53176,
+      "first": "2026-01-26",
+      "last": "2026-05-18",
+      "note": "BOA VISA 4452 経由の外注送金4件・送金先未特定",
+      "status": null,
+      "status_date": null,
+      "removed": "2026-09-19 Mits様指示：送金先で使途が仕分けられているので二重"
     }
   ]
 };
