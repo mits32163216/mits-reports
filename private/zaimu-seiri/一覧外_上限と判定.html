@@ -190,6 +190,9 @@ td.note-col { font-size: 11px; color: var(--ink); min-width: 240px; max-width: 4
   </div>
 </div>
 
+<!-- 年額の箱（上の箱を × 12 で写す） -->
+<div class="summary" id="summary-year" style="margin-top:14px;"></div>
+
 <!-- 分類ごとの表 -->
 <div id="sections-container">
   <div class="empty-note" id="empty-note">
@@ -204,9 +207,9 @@ td.note-col { font-size: 11px; color: var(--ink); min-width: 240px; max-width: 4
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789810586"></script>
-<script src="zaimu_seiri_state.js?v=1789810586"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789810586"></script>
+<script src="zaimu_seiri_data.js?v=1789810654"></script>
+<script src="zaimu_seiri_state.js?v=1789810654"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789810654"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -434,6 +437,44 @@ render();
     el.textContent = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
   }
   updateTopnavTime();
+})();
+
+// ── 年額の箱：上の箱（月額）を写して、円の数字を × 12 にする ──
+(function(){
+  const src = document.querySelector(".summary:not(#summary-year)");
+  const dst = document.getElementById("summary-year");
+  if (!src || !dst) return;
+  function build(){
+    const c = src.cloneNode(true);
+    c.querySelectorAll("[id]").forEach(e => e.removeAttribute("id"));
+    c.querySelectorAll("button").forEach(e => e.remove());
+    const h1 = c.querySelector("h1");
+    if (h1) h1.innerHTML = '一覧外の判定（年額） <span style="font-size:11px;color:var(--sub);font-weight:normal;">（上の箱の月額 × 12）</span>';
+    const w = document.createTreeWalker(c, NodeFilter.SHOW_TEXT);
+    const nodes = []; while (w.nextNode()) nodes.push(w.currentNode);
+    nodes.forEach(n => {
+      let t = n.nodeValue;
+      t = t.replace(/月平均/g, "年額").replace(/これからの月額/g, "これからの年額").replace(/月の上限/g, "年の上限");
+      n.nodeValue = t;
+    });
+    // 「円」の直前の数字（同じ要素内で分かれている場合も含む）を × 12
+    c.querySelectorAll("span, b, div, td").forEach(e => {
+      if (e.children.length) return;
+      const next = e.nextSibling;
+      const followsYen = next && next.nodeType === 3 && /^\s*円/.test(next.nodeValue);
+      if (followsYen && /^[\d,]+$/.test(e.textContent.trim())) {
+        e.textContent = (Number(e.textContent.replace(/,/g, "")) * 12).toLocaleString("ja-JP");
+      }
+    });
+    const w2 = document.createTreeWalker(c, NodeFilter.SHOW_TEXT);
+    const n2 = []; while (w2.nextNode()) n2.push(w2.currentNode);
+    n2.forEach(n => {
+      n.nodeValue = n.nodeValue.replace(/(\d[\d,]*)(\s*円)/g, (m, num, yen) => (Number(num.replace(/,/g, "")) * 12).toLocaleString("ja-JP") + yen);
+    });
+    dst.innerHTML = c.innerHTML;
+  }
+  build();
+  new MutationObserver(build).observe(src, { childList: true, subtree: true, characterData: true, attributes: true });
 })();
 </script>
 </body>
