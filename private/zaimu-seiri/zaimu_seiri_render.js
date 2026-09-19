@@ -477,6 +477,7 @@ function render() {
   const ichCutOnce = ich ? ich.cut + ich.once : 0;
   const cutPlusHandled = totalCut + handledSum + ichCutOnce;
   const halfRemaining = halfGoal5 - cutPlusHandled;
+  window.ZS_CUT_PLUS_HANDLED = cutPlusHandled;   // 8段目の進み具合の分子（一覧Aの削った額＋対応済み ＋ 判定ページの削る・一回性）
   setText("m-half-goal", fmtYen(halfGoal5));
   setText("m-half-goal-src", fmtYen(r4Total));
   setText("m-ich-cutonce", fmtYen(ichCutOnce));
