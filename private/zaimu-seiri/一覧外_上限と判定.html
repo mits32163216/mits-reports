@@ -224,11 +224,11 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789829864"></script>
-<script src="zaimu_seiri_state.js?v=1789829864"></script>
-<script src="zaimu_seiri_sync.js?v=1789829864"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789829864"></script>
-<script src="zaimu_seiri_kijun.js?v=1789829864"></script>
+<script src="zaimu_seiri_data.js?v=1789829953"></script>
+<script src="zaimu_seiri_state.js?v=1789829953"></script>
+<script src="zaimu_seiri_sync.js?v=1789829953"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789829953"></script>
+<script src="zaimu_seiri_kijun.js?v=1789829953"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -444,7 +444,7 @@ function render(){
       return `<tr class="sub-head"><td colspan="${NCOL}">${esc(label)}　${gi.length}件・月平均 ${fmtYen(gm)}円・${KIKAN}の総額 ${fmtYen(gt)}円</td></tr>` + gi.map(rowOf).join("");
     };
     const groupHtml = (g, gi) => {
-      if (g !== "飲み") return headRow(g || "未分類", gi);
+      if (g !== "飲み" || c !== "浪費") return headRow(g || "未分類", gi);   // 分けるのは浪費の「飲み」だけ
       const isOnce1 = it => Number(it.count) === 1 && !((stOf(it, state) || {}).status);
       const a = gi.filter(it => !isOnce1(it)), b = gi.filter(isOnce1);
       return (a.length ? headRow("飲み", a) : "") + (b.length ? headRow("飲み（1回だけ・まだ押していない）", b) : "");
