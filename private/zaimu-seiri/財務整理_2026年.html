@@ -273,7 +273,7 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   <span class="nav-links">
     <a href="財務整理_TOP.html">TOP</a>
     <a href="財務整理_TOP_年額.html">年額</a>
-    <a href="財務整理_2026年.html" class="active">2026年</a>
+    <a href="財務整理_2026年.html" class="active">2026年／2027年 予測</a>
     <a href="財務整理_進捗表.html">サブスク整理</a>
     <a href="継続経費.html">継続経費</a>
     <a href="借入の返済.html">借入の返済</a>
@@ -298,11 +298,33 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   <div class="note" id="y-note"></div>
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789832004"></script>
-<script src="zaimu_seiri_state.js?v=1789832004"></script>
-<script src="zaimu_seiri_sync.js?v=1789832004"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789832004"></script>
-<script src="zaimu_seiri_kijun.js?v=1789832004"></script>
+<!-- 2027年 予測（同じページに並べる・2026年の下に置く）── 2026年の表・計算は変えない -->
+<div class="summary y26" style="border-top:3px solid var(--gold); margin-top:20px;">
+  <h1>2027年の支出（予測） <span style="font-size:11px;color:var(--sub);font-weight:normal;">（今の判定〔継続・削る予定額〕と 借入の返済 の予定から作った予測。1〜12月すべて予測）</span></h1>
+
+  <div style="padding:8px 10px; background:#f5efe0; border:1px solid #c9a54a; border-radius:4px; font-size:12px; color:var(--sub); line-height:1.6; margin-bottom:10px;">
+    根拠：2027年は、今の判定（継続・削る予定額）と 借入の返済 の予定から作った予測。ランニング月額＝2026年の8月以降と同じ月額（一覧A：月平均 − 完了 − 対応済み、サブスク外：月平均 − 削る − 一回性 − 削る予定額）を12か月そのまま流した。借入の返済＝2026年12月の月々（77,598円・借入の返済ページ「合計（月々の返済）」の値）を12か月そのまま流した。2027年内に完済する借入は無い（⑤ペイディ 最終回 2028-04-27・③楽天デンタル 完済見込み 2029-04頃・①楽天キャッシングリボ・②Amex JP リボは残高から2027年中の完済なし）。年払いは 一覧A の月平均に月割りで入っている（2026年の A_ADJ を毎月ならしていない年払いの差分として1〜8月の実額と合わせるためのもので、2027年は12か月とも同じ月平均に含めて流す）。
+  </div>
+
+  <div class="y26-boxes">
+    <div class="y26-box main"><div class="l">2027年の支出（予測）</div><div class="v"><span id="y2-total">-</span>円</div><div class="s">ランニング ＋ 借入の返済</div></div>
+    <div class="y26-box"><div class="l">何もしなかった場合</div><div class="v"><span id="y2-nothing">-</span>円</div><div class="s">出発点 × 12 ＋ 借入 × 12</div></div>
+    <div class="y26-box"><div class="l">減らせる額（予測）</div><div class="v" style="color:var(--green);"><span id="y2-saved">-</span>円</div><div class="s">何もしなかった場合 − 予測</div></div>
+    <div class="y26-box"><div class="l">ゴールどおりなら</div><div class="v"><span id="y2-goal">-</span>円</div><div class="s">ゴール <span id="y2-goal-m">-</span> × 12 ＋ 借入 × 12</div></div>
+  </div>
+
+  <table>
+    <thead><tr><th>項目</th><th>月額（予測）</th><th>2027年 計（月額 × 12）</th></tr></thead>
+    <tbody id="y2-body"></tbody>
+  </table>
+  <div class="note" id="y2-note"></div>
+</div>
+
+<script src="zaimu_seiri_data.js?v=1789832046"></script>
+<script src="zaimu_seiri_state.js?v=1789832046"></script>
+<script src="zaimu_seiri_sync.js?v=1789832046"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789832046"></script>
+<script src="zaimu_seiri_kijun.js?v=1789832046"></script>
 <script src="zaimu_seiri_8gatsu_jisseki.js"></script>
 <script>
 (function(){
