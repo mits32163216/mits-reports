@@ -4,11 +4,8 @@
 // data.js の後・render.js の前に読み込む。SAVED_STATE をベースにして、
 // ブラウザの localStorage に残っている操作を「新しい方が勝ち」で重ねる。
 //
-// 「💾 状態をファイルに保存」ボタンで、ブラウザから最新の SAVED_STATE を
-// ダウンロードして、このファイルを丸ごと差し替える運用。
-//
-// 初期値は 2026-09-19 時点の data.js の status を機械的に抜いたもの。
-// data.js は BS-keiri が編集するので、こちらに status を書かない（唯一のソース＝この state.js）。
+// このファイルは、TOP か進捗表の「💾 状態をファイルに保存」ボタンで生成する。
+// Chrome の Downloads に落ちるので、参謀が 04_口座・明細/ に手動で移す。
 
 var SAVED_STATE = {
   "progress": {
@@ -97,7 +94,7 @@ var SAVED_STATE = {
       "status_date": "2026-09-18"
     },
     "k2-11": {
-      "status": "hold",
+      "status": "keep",
       "status_date": "2026-09-18"
     },
     "k2-10": {
@@ -151,9 +148,51 @@ var SAVED_STATE = {
     "k2-39": {
       "status": "done",
       "status_date": "2026-09-18"
+    },
+    "k2-38": {
+      "status": "keep",
+      "status_date": "2026-09-18"
+    },
+    "k3-06": {
+      "status": "keep",
+      "status_date": "2026-09-18"
+    },
+    "k4-01": {
+      "status": "done",
+      "status_date": "2026-09-18"
+    },
+    "k2-16": {
+      "status": "keep",
+      "status_date": "2026-09-18"
+    },
+    "k2-01": {
+      "status": "keep",
+      "status_date": "2026-09-18"
+    },
+    "k2-08": {
+      "status": "keep",
+      "status_date": "2026-09-18"
     }
   },
-  "outside": {},
-  "notes": {},
-  "saved_at": "2026-09-19T06:00:47.582Z"
+  "outside": {
+    "o-01": {
+      "status": "keep",
+      "status_date": "2026-09-18"
+    },
+    "o-02": {
+      "status": "keep",
+      "status_date": "2026-09-18"
+    },
+    "o-03": {
+      "status": "keep",
+      "status_date": "2026-09-18"
+    }
+  },
+  "notes": {
+    "k2-33": "Call our Customer Care department at 1-888-550-2159 or chat with a live agent. We are here to assist you every day of the week:\n\nMonday - Friday, 8AM to 8PM CT\nSaturday, 8AM to 5PM CT\nSunday, Noon to 6PM CT",
+    "k2-34": "営業時間に電話",
+    "k2-38": "下げると40日しか見られない　過去ログの為",
+    "k2-30": "pixelの残債　払ってしまう"
+  },
+  "saved_at": "2026-09-19T06:28:18.063Z"
 };
