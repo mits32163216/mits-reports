@@ -262,9 +262,10 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 2671,
       "first": "2026-05-12",
       "last": "2026-05-21",
-      "note": "旅先の支出（Mits様判定）／ペナン滞在の飲食 → 浪費（仕事の会食なら 投資）",
+      "note": "旅先の支出（Mits様判定）／ペナン滞在の飲食 → 浪費（仕事の会食なら 投資） ／旅行・食事（Mits様判定 2026-09-19）",
       "status": null,
-      "status_date": null
+      "status_date": null,
+      "sub": "食事"
     },
     {
       "id": "m-011",
