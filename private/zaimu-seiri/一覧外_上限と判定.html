@@ -220,10 +220,10 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789827818"></script>
-<script src="zaimu_seiri_state.js?v=1789827818"></script>
-<script src="zaimu_seiri_sync.js?v=1789827818"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789827818"></script>
+<script src="zaimu_seiri_data.js?v=1789827917"></script>
+<script src="zaimu_seiri_state.js?v=1789827917"></script>
+<script src="zaimu_seiri_sync.js?v=1789827917"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789827917"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -470,7 +470,7 @@ function render(){
     return `<div class="section${isRouhi && subHidden() ? ' hide-subs' : ''}${isOpen ? '' : ' folded'}">
       <div class="section-head" data-cat="${esc(c)}">
         <h2><span class="fold-mark">${isOpen ? '▼' : '▶'}</span>${esc(c)} <span class="section-sub">${b.items.length}件・月平均 ${fmtYen(b.actual)}円・${KIKAN}の総額 ${fmtYen(b.items.reduce((t,i)=>t+(i.total||0),0))}円・<b style="color:#c0392b;">削る総額 ${fmtYen(b.items.filter(i=>(stOf(i,state)||{}).status==="cut").reduce((t,i)=>t+(i.total||0),0))}円（月 ${fmtYen(b.cut)}円）</b>・<label class="plan-box" style="white-space:nowrap;">削る予定額（月） <input class="plan-input" data-cat="${esc(c)}" type="text" inputmode="numeric" value="${(plans[c] && plans[c].plan) ? fmtYen(plans[c].plan) : ""}" placeholder="0" style="width:110px;text-align:right;font-size:14px;padding:2px 6px;border:1px solid #c8ccd3;border-radius:4px;">円</label></span></h2>
-        <span class="section-sub">上限 ${cap?fmtYen(cap)+'円':'―'} ／ 一回性 <b style="color:#a68000;">${fmtYen(b.once)}円</b> ／ これからの月額 <b style="color:var(--gold);">${fmtYen(after)}円</b>${isRouhi ? `<button class="sub-toggle">${subHidden() ? "分類ボタンを出す" : "分類ボタンを消す"}</button>` : ""}</span>
+        <span class="section-sub">まだ削る・続ける・一回性を決めていない分 <b style="color:var(--gold);">月 ${fmtYen(after)}円</b> → 上限 月 ${cap?fmtYen(cap)+'円':'―'}（続ける以外の実績の半分）${cap ? (after > cap ? `まで <b style="color:#c0392b;">あと ${fmtYen(after - cap)}円 減らす</b>` : `に <b style="color:var(--green);">収まっている（余り ${fmtYen(cap - after)}円）</b>`) : ''} ／ 一回性（もう出ない）${fmtYen(b.once)}円${isRouhi ? `<button class="sub-toggle">${subHidden() ? "分類ボタンを出す" : "分類ボタンを消す"}</button>` : ""}</span>
       </div>
       <table>
         <thead><tr>
