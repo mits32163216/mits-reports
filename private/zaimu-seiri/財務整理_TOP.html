@@ -251,7 +251,6 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
     <a href="財務整理_TOP_年額.html">年額</a>
     <a href="財務整理_進捗表.html">進捗表（一覧）</a>
     <a href="継続経費.html">継続経費</a>
-    <a href="一覧外の経費.html">一覧外の経費</a>
     <a href="借入の返済.html">借入の返済</a>
     <a href="一覧外_上限と判定.html">一覧外の判定</a>
   </span>
@@ -280,13 +279,13 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   </div>
 
   <!-- 3段目 一覧外：全部固定・枠全体が一覧外.htmlリンク -->
-  <a href="一覧外の経費.html" style="text-decoration:none; color:inherit;" title="クリックで一覧外の経費のページを開く">
+  <a href="一覧外_上限と判定.html" style="text-decoration:none; color:inherit;" title="クリックで一覧外の判定のページを開く">
   <div class="eq-row eq-row-3" style="margin-top:6px; cursor:pointer;">
-    <div class="metric eq-outside frozen"><div class="label">削減対象B(別ページの分母)　<span style="font-size:10px; color:var(--navy);">→ 一覧外の経費.html</span></div><div class="value">529,354<span class="yen">円</span><div class="src">継続 129,064 ＋ 一覧外の判定の合計 400,290（判定ページのデータ）</div><span class="lock-note">2026-09-19 判定ページに合わせた</span></div></div>
+    <div class="metric eq-outside frozen"><div class="label">削減対象B(別ページの分母)　<span style="font-size:10px; color:var(--navy);">→ 一覧外の判定</span></div><div class="value"><span id="r3-b">-</span><span class="yen">円</span><div class="src">一覧外の判定の合計（判定ページのデータから自動）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
     <div class="eq-op">−</div>
-    <div class="metric eq-outside frozen"><div class="label">継続と決めた額(一覧外)</div><div class="value">129,064<span class="yen">円</span><div class="src">RKS（家賃＋管理費 122,022＋電気 5,365）127,388 ＋ ガス 1,676（1〜7月実額）</div><div class="src" id="m-keepout-breakdown" style="font-size:11px;line-height:1.5;text-align:left;margin-top:4px;">―</div><span class="lock-note">2026-09-19 Mits様確認</span></div></div>
+    <div class="metric eq-outside frozen"><div class="label">継続と決めた額(一覧外)</div><div class="value"><span id="r3-keep">-</span><span class="yen">円</span><div class="src">判定ページで「続ける」の行の合計（家賃 RKS 127,388 ＋ ガス 1,676 など）</div><div class="src" id="m-keepout-breakdown" style="font-size:11px;line-height:1.5;text-align:left;margin-top:4px;">―</div><span class="lock-note">2026-09-19 Mits様確認</span></div></div>
     <div class="eq-op">＝</div>
-    <div class="metric eq-outside frozen"><div class="label">残りの削減対象B</div><div class="value">400,290<span class="yen">円</span><div class="src">529,354 − 129,064（＝一覧外の判定の合計）</div><span class="lock-note">2026-09-19 判定ページに合わせた</span></div></div>
+    <div class="metric eq-outside frozen"><div class="label">残りの削減対象B</div><div class="value"><span id="r3-rem">-</span><span class="yen">円</span><div class="src">削減対象B − 継続</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
   </div>
   </a>
 
@@ -365,8 +364,26 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 </div>
 
 <!-- TOP: legend以下は無し -->
-<script src="zaimu_seiri_data.js?v=1789815433"></script>
-<script src="zaimu_seiri_state.js?v=1789815433"></script>
-<script src="zaimu_seiri_render.js?v=1789815433"></script>
+<script src="zaimu_seiri_data.js?v=1789815475"></script>
+<script src="zaimu_seiri_state.js?v=1789815475"></script>
+<script src="zaimu_seiri_render.js?v=1789815475"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789815475"></script>
+<script>
+// 3段目：一覧外の判定ページ（zaimu_seiri_ichirangai_meisai.js）から計算する（2026-09-19 Mits様指示・一覧外の経費ページは廃止）
+(function(){
+  if (typeof ICHIRANGAI_MEISAI === "undefined" || !ICHIRANGAI_MEISAI) return;
+  let saved = {}; try { saved = (SAVED_STATE && SAVED_STATE.ichirangai) || {}; } catch(e){}
+  let local = {}; try { local = JSON.parse(localStorage.getItem("zaimu_seiri_ichirangai_decision_v1") || "{}") || {}; } catch(e){}
+  const pick = id => { const s = saved[id], l = local[id]; if (s && l) return ((l.date||"") >= (s.date||"")) ? l : s; return l || s || null; };
+  let total = 0, keep = 0;
+  (ICHIRANGAI_MEISAI.items || []).forEach(it => {
+    const m = Number(it.monthly) || 0; total += m;
+    const s = pick(it.id) || (it.status ? { status: it.status } : null);
+    if (s && s.status === "keep") keep += m;
+  });
+  const put = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = Math.round(v).toLocaleString("ja-JP"); };
+  put("r3-b", total); put("r3-keep", keep); put("r3-rem", total - keep);
+})();
+</script>
 </body>
 </html>
