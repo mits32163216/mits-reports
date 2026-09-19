@@ -214,9 +214,9 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789813624"></script>
-<script src="zaimu_seiri_state.js?v=1789813624"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789813624"></script>
+<script src="zaimu_seiri_data.js?v=1789813666"></script>
+<script src="zaimu_seiri_state.js?v=1789813666"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789813666"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -313,8 +313,8 @@ function render(){
     let ec = (it.category === "未仕訳" && subOf(it, _subs0)) ? "浪費" : it.category;
     // 浪費で「ホテル」「交通」を押したものは旅行の同じ中分類へ移す（Mits様指示 2026-09-19）
     if (ec === "浪費" && ["ホテル","交通"].includes(subOf(it, _subs0))) ec = "旅行";
-    // 浪費で「食事」を押したものは消費の食事へ移す（Mits様指示 2026-09-19）
-    if (ec === "浪費" && subOf(it, _subs0) === "食事") ec = "消費";
+    // 浪費で「食事」「カフェ」を押したものは消費の同じ中分類へ移す（Mits様指示 2026-09-19）
+    if (ec === "浪費" && ["食事","カフェ"].includes(subOf(it, _subs0))) ec = "消費";
     const c = CATEGORIES.includes(ec) ? ec : CATEGORY_FALLBACK;
     if (!byCat[c]) byCat[c] = { actual: 0, cut: 0, once: 0, items: [] };
     const m = Number(it.monthly) || 0;
