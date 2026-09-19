@@ -1212,7 +1212,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k014",
-      "category": "浪費",
+      "category": "旅行",
       "row": "小口",
       "merchant": "TAKINOTA ZU BING XIA JUN KA",
       "card": "Amex US 44000",
@@ -1222,7 +1222,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 846,
       "first": "2026-03-08",
       "last": "2026-03-08",
-      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名） ／旅行へ（Mits様判定 2026-09-19）",
       "status": null,
       "status_date": null
     },
