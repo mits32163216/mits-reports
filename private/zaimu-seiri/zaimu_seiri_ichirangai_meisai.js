@@ -105,9 +105,9 @@ var ICHIRANGAI_MEISAI = {
   },
   "caps": {
     "消費": 47517,
-    "浪費": 40506,
+    "浪費": 38803,
     "投資": 48126,
-    "旅行": 49957,
+    "旅行": 50580,
     "未仕訳": 543
   },
   "caps_reason": {
@@ -830,22 +830,6 @@ var ICHIRANGAI_MEISAI = {
       "status_date": null
     },
     {
-      "id": "m-048",
-      "category": "浪費",
-      "row": "o-07",
-      "merchant": "Amex JP 63000 の一覧外利用",
-      "card": "Amex JP 63000",
-      "user": "Mits様",
-      "count": 7,
-      "total": 15113,
-      "monthly": 2159,
-      "first": "2026-01-01",
-      "last": "2026-07-31",
-      "note": "",
-      "status": null,
-      "status_date": null
-    },
-    {
       "id": "m-049",
       "category": "浪費",
       "row": "o-11+out",
@@ -991,7 +975,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-058",
-      "category": "浪費",
+      "category": "旅行",
       "row": "o-08",
       "merchant": "CASTMAGIC AUSTIN TX",
       "card": "Amex US 44000",
@@ -1001,9 +985,10 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 1247,
       "first": "2026-01-25",
       "last": "2026-01-25",
-      "note": "",
+      "note": " ／旅行・食事（Mits様判定 2026-09-19）",
       "status": null,
-      "status_date": null
+      "status_date": null,
+      "sub": "食事"
     },
     {
       "id": "m-k002",
@@ -4326,6 +4311,12 @@ var ICHIRANGAI_MEISAI = {
       "total": 85623,
       "monthly": 12232,
       "memo": "一覧外から削除（Mits様指示 2026-09-19）"
+    },
+    {
+      "name": "Amex JP 63000 の一覧外利用",
+      "total": 15113,
+      "monthly": 2159,
+      "memo": "中身は PRIORITY PASS（ANA 63000・2/4 5,655／6/8 5,807×2）。一覧A k2-34 PRIORITY PASS（17,269÷7＝2,467/月）と同じ請求の二重計上。1/19 5,733 は事業主貸で除外済み。15,113 は進捗表 o-07 の見込み 2,159×7 で、実際の明細ではない（2026-09-19 参謀が照合）"
     }
   ]
 };
