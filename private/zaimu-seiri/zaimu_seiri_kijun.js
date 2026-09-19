@@ -39,6 +39,14 @@ var ZS_KIJUN = (function(){
     rowSum += it.amount || 0;
     if (stOf(it) === "keep") A_KEEP += it.amount || 0;
   }));
+  // サブスク外の判定の「削る予定額（月）」の合計（保存ファイルとブラウザの入力の新しい方）
+  let planSum = 0;
+  (function(){
+    let sv = {}; try { sv = (SAVED_STATE && SAVED_STATE.ichirangai_plan) || {}; } catch(e){}
+    let lc = {}; try { lc = JSON.parse(localStorage.getItem("zaimu_seiri_ichirangai_plan_v1") || "{}") || {}; } catch(e){}
+    const t = e => (e && (e.ts || e.date)) || "";
+    new Set([...Object.keys(sv), ...Object.keys(lc)]).forEach(k => { const a = sv[k], b = lc[k]; const x = (a && b) ? (t(b) >= t(a) ? b : a) : (b || a); planSum += (x && Number(x.plan)) || 0; });
+  })();
   const A_BASE  = rowSum + A_ADJ;
   const a       = A_BASE;                      // 2段目 一覧 A
   const start   = a + b;                       // 1段目 出発点（借入の返済を除く）
@@ -52,7 +60,7 @@ var ZS_KIJUN = (function(){
   const free    = goal - keepAll;              // 6段目 継続以外に使える額
   const target2 = r4 - free;                   // 8段目②
 
-  return { A_BASE, A_ADJ, A_KEEP, rowSum, LOAN_BEFORE, LOAN_LATEST, LOAN_PRINCIPAL,
+  return { A_BASE, A_ADJ, A_KEEP, rowSum, planSum, LOAN_BEFORE, LOAN_LATEST, LOAN_PRINCIPAL,
            addA, toA, a, b, bKeep, bCut, bOnce, keepItems,
            start, before, keepAll, aRemain, bRemain, r4, target1, goal, free, target2 };
 })();

@@ -214,10 +214,10 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789822271"></script>
-<script src="zaimu_seiri_state.js?v=1789822271"></script>
-<script src="zaimu_seiri_sync.js?v=1789822271"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789822271"></script>
+<script src="zaimu_seiri_data.js?v=1789822464"></script>
+<script src="zaimu_seiri_state.js?v=1789822464"></script>
+<script src="zaimu_seiri_sync.js?v=1789822464"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789822464"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -342,8 +342,10 @@ function render(){
   });
 
   // 分類ボックス描画（「一回性」の行を1本追加・「これからの月額」= actual − cut − once）
+  const plansAll = loadPlan();
   catRow.innerHTML = CATEGORIES.map(c => {
     const b = byCat[c];
+    const plan = (plansAll[c] && Number(plansAll[c].plan)) || 0;   // 見出しの「削る予定額（月）」
     const cap = Math.round((byCat[c].actual - byCat[c].keep) / 2); // 上限＝続ける以外の実績の半分（Mits様指示 2026-09-19）
     const after = b.actual - b.keep - b.cut - b.once;
     const diff = cap - after;    // 上限 − これからの月額
@@ -358,6 +360,9 @@ function render(){
         <div class="cat-line"><span class="lbl" style="color:#c0392b;">削る金額</span><span class="val" style="color:#c0392b;">${fmtYen(b.cut)}円</span></div>
         <div class="cat-line after"><span class="lbl">これからの月額</span><span class="val">${fmtYen(after)}円</span></div>
         <div class="cat-line diff${over?' over':''}"><span class="lbl">上限との差</span><span class="val">${cap?(over?'−'+fmtYen(-diff):'+'+fmtYen(diff))+'円':'―'}</span></div>
+        <div class="cat-line plan" style="border-top:1px dashed #c8ccd3;margin-top:4px;padding-top:4px;"><span class="lbl" style="color:#6a3fa0;">削る予定額</span><span class="val" style="color:#6a3fa0;">${plan?fmtYen(plan)+'円':'―'}</span></div>
+        <div class="cat-line plan"><span class="lbl" style="color:#6a3fa0;">予定どおりなら月額</span><span class="val" style="color:#6a3fa0;">${fmtYen(after - plan)}円</span></div>
+        <div class="cat-line plan${(cap - (after - plan))<0?' over':''}"><span class="lbl" style="color:#6a3fa0;">予定での上限との差</span><span class="val" style="color:${(cap - (after - plan))<0?'#c0392b':'#6a3fa0'};">${cap?(((cap - (after - plan))<0)?'−'+fmtYen(-(cap - (after - plan))):'+'+fmtYen(cap - (after - plan)))+'円':'―'}</span></div>
       </div>
     </div>`;
   }).join("");
@@ -496,7 +501,7 @@ function render(){
     const t = e.currentTarget;
     const n = parseInt(String(t.value).replace(/[^\d]/g, ""), 10) || 0;
     savePlanOne(t.getAttribute("data-cat"), n);
-    t.value = n ? fmtYen(n) : "";
+    render();   // 大項目の箱の「予定どおりなら月額」を描き直す
   }));
   container.querySelectorAll(".sub-toggle").forEach(tg => tg.addEventListener("click", () => {
     try { localStorage.setItem(SUB_HIDE_KEY, subHidden() ? "0" : "1"); } catch(e){}
@@ -552,7 +557,7 @@ render();
     const nodes = []; while (w.nextNode()) nodes.push(w.currentNode);
     nodes.forEach(n => {
       let t = n.nodeValue;
-      t = t.replace(/月平均/g, "年額").replace(/これからの月額/g, "これからの年額").replace(/月の上限/g, "年の上限");
+      t = t.replace(/月平均/g, "年額").replace(/これからの月額/g, "これからの年額").replace(/月の上限/g, "年の上限").replace(/予定どおりなら月額/g, "予定どおりなら年額");
       n.nodeValue = t;
     });
     // 「円」の直前の数字（同じ要素内で分かれている場合も含む）を × 12

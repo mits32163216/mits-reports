@@ -483,6 +483,7 @@ function render() {
   setText("m-ich-cutonce", fmtYen(ichCutOnce));
   setText("m-cut-plus-handled", fmtYen(cutPlusHandled));
   setText("m-half-remaining", fmtYen(halfRemaining));
+  if (K) { setText("m-plan-sum", fmtYen(K.planSum)); setText("m-plan-remaining", fmtYen(halfRemaining - K.planSum)); }
 
   // 5段目 真ん中の内訳（月払い／年払い・可変）
   // DATA と OUTSIDE_BREAKDOWN の中で status が done / handled の行を集める
