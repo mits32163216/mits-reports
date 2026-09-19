@@ -271,11 +271,11 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 
   <!-- 2段目 サブスク：全部固定 -->
   <div class="eq-row eq-row-2" style="margin-top:6px;">
-    <div class="metric frozen"><div class="label">サブスクリプション型の削減対象A(分母)</div><div class="value"><span id="r2-a">-</span><span class="yen">円</span><div class="src">一覧の行の合計 318,933 ＋ 年払いの1〜7月実額との差 41,082（Notion・Genspark・年会費）＋ DOCPRO 14,363 ＋ 判定ページからサブスク側へ移した分 <span id="r2-add">-</span></div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
+    <div class="metric frozen"><div class="label">サブスクリプション型の削減対象A(分母)</div><div class="value"><span id="r2-a">-</span><span class="yen">円</span><div class="src">サブスク整理の行の合計 <span id="r2-add">-</span> ＋ 年払いの1〜7月実額との差 <span id="r2-adj">-</span>（Notion・Genspark・年会費）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
     <div class="eq-op">−</div>
-    <div class="metric eq-keep-decided frozen"><div class="label">継続と決めた額</div><div class="value">129,695<span class="yen">円</span><div class="src">21行の月額合計（9/18 以降に継続にした6行を含む・年払いは月割り）</div><div class="src" id="m-keep-breakdown" style="font-size:11px;line-height:1.5;text-align:left;margin-top:4px;">―</div><span class="lock-note">2026-09-18 訂正後の値で固定</span></div></div>
+    <div class="metric eq-keep-decided frozen"><div class="label">継続と決めた額</div><div class="value"><span id="r2-keep">-</span><span class="yen">円</span><div class="src">サブスク整理で「継続」にした行の月額合計（年払いは月割り）</div><div class="src" id="m-keep-breakdown" style="font-size:11px;line-height:1.5;text-align:left;margin-top:4px;">―</div><span class="lock-note">2026-09-18 訂正後の値で固定</span></div></div>
     <div class="eq-op">＝</div>
-    <div class="metric eq-target-a frozen"><div class="label">残りの削減対象A</div><div class="value"><span id="r2-rem">-</span><span class="yen">円</span><div class="src"><span id="r2-rem-a">-</span> − 129,695</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
+    <div class="metric eq-target-a frozen"><div class="label">残りの削減対象A</div><div class="value"><span id="r2-rem">-</span><span class="yen">円</span><div class="src"><span id="r2-rem-a">-</span> − <span id="r2-rem-k">-</span></div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
   </div>
 
   <!-- 3段目 一覧外：全部固定・枠全体が一覧外.htmlリンク -->
@@ -293,7 +293,7 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   <div class="eq-row eq-row-4" style="margin-top:10px;">
     <div class="metric frozen"><div class="label">分母の合計</div><div class="value"><span id="r4-den">-</span><span class="yen">円</span><div class="src">一覧 A <span id="r4-den-a">-</span> ＋ 一覧外 B <span id="r4-den-b">-</span>（判定ページのデータ）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
     <div class="eq-op">−</div>
-    <div class="metric frozen"><div class="label">継続と決めた額の合計</div><div class="value"><span id="r4-keep">-</span><span class="yen">円</span><div class="src">一覧 21行 129,695 ＋ 一覧外 <span id="r4-keep-b">-</span>（判定ページの「続ける」）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
+    <div class="metric frozen"><div class="label">継続と決めた額の合計</div><div class="value"><span id="r4-keep">-</span><span class="yen">円</span><div class="src">サブスク整理 <span class="zs-akeep">-</span> ＋ 一覧外 <span id="r4-keep-b">-</span>（判定ページの「続ける」）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
     <div class="eq-op">＝</div>
     <div class="metric frozen" style="border-width:3px; border-color:#c8ccd3;"><div class="label" style="font-weight:bold;">半分経営するための削減対象総額</div><div class="value" style="font-size:26px;"><span id="r4-total">-</span><span class="yen">円</span><div class="src">分母 − 継続（＝残り A <span id="r4-rem-a">-</span> ＋ 残り B <span id="r4-total-b">-</span>）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
   </div>
@@ -311,7 +311,7 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   <div class="eq-row eq-row-7" style="margin-top:8px;">
     <div class="metric frozen" style="border-width:3px; border-color:#c8ccd3;"><div class="label" style="font-weight:bold;">継続以外に使える額（ゴール − 継続）</div><div class="value" style="font-size:26px;"><span id="r7-diff">-</span><span class="yen">円</span><div class="src"><span id="r7-diff-a">-</span> − <span id="r7-diff-b">-</span></div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
     <div class="eq-op">＋</div>
-    <div class="metric frozen"><div class="label">継続と決めた額の合計</div><div class="value"><span id="r7-keep">-</span><span class="yen">円</span><div class="src">一覧 21行 129,695 ＋ 一覧外 <span id="r7-keep-b">-</span>（判定ページの「続ける」）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
+    <div class="metric frozen"><div class="label">継続と決めた額の合計</div><div class="value"><span id="r7-keep">-</span><span class="yen">円</span><div class="src">サブスク整理 <span class="zs-akeep">-</span> ＋ 一覧外 <span id="r7-keep-b">-</span>（判定ページの「続ける」）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
     <div class="eq-op">＝</div>
     <div class="metric frozen"><div class="label">ゴール（出発点総額の半分）</div><div class="value"><span id="r7-start">-</span><span class="yen">円</span><div class="src">出発点総額 <span id="r7-start-b">-</span> ÷ 2（一覧 A ＋ 一覧外 B：判定ページのデータ）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
   </div>
@@ -320,7 +320,7 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   <div class="eq-row eq-row-6" style="margin-top:8px;">
     <div class="metric frozen"><div class="label">半分経営の削減目標(削減対象総額 ÷ 2)</div><div class="value"><span id="m-6-half-goal">-</span><span class="yen">円</span><div class="src">4段目 <span id="m-6-half-goal-src">-</span> ÷ 2</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
     <div class="eq-op">＋</div>
-    <div class="metric frozen"><div class="label">継続と決めた額の合計</div><div class="value"><span id="m-6-keep-total">-</span><span class="yen">円</span><div class="src">一覧 21行 129,695 ＋ 一覧外 <span id="m-6-keep-b">-</span>（判定ページの「続ける」）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
+    <div class="metric frozen"><div class="label">継続と決めた額の合計</div><div class="value"><span id="m-6-keep-total">-</span><span class="yen">円</span><div class="src">サブスク整理 <span class="zs-akeep">-</span> ＋ 一覧外 <span id="m-6-keep-b">-</span>（判定ページの「続ける」）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
     <div class="eq-op">＋</div>
     <div class="metric"><div class="label"><a href="借入の返済.html" style="color:inherit;text-decoration:none;">借入の返済(最新) <span style="color:#c62828;font-size:10px;">→ 詳しくはこちら</span></a></div><div class="value"><a href="借入の返済.html" style="color:inherit;text-decoration:none;"><span id="m-6-loan">-</span><span class="yen">円</span></a><div class="src">② Amex JP リボ 15,000 ＋ ③ 楽天デンタル 17,288 ＋ Amex US 9,512 ＋ 楽天その他 1,775</div><span class="lock-note">借入の返済ページと同期(可変)</span></div></div>
     <div class="eq-op">＝</div>
@@ -381,11 +381,11 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 </div>
 
 <!-- TOP: legend以下は無し -->
-<script src="zaimu_seiri_data.js?v=1789817839"></script>
-<script src="zaimu_seiri_state.js?v=1789817839"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789817839"></script>
-<script src="zaimu_seiri_kijun.js?v=1789817839"></script>
-<script src="zaimu_seiri_render.js?v=1789817839"></script>
+<script src="zaimu_seiri_data.js?v=1789818019"></script>
+<script src="zaimu_seiri_state.js?v=1789818019"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789818019"></script>
+<script src="zaimu_seiri_kijun.js?v=1789818019"></script>
+<script src="zaimu_seiri_render.js?v=1789818019"></script>
 <script>
 // 3段目：サブスク外の判定ページ（zaimu_seiri_ichirangai_meisai.js）から計算する（2026-09-19 Mits様指示・一覧外の経費ページは廃止）
 (function(){
@@ -394,10 +394,10 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   const total = K.b, keep = K.bKeep;
   const put = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = Math.round(v).toLocaleString("ja-JP"); };
   put("r3-b", total); put("r3-keep", keep); put("r3-rem", total - keep);
-  // 4段目：一覧 A（固定 374,378・継続 129,695）＋ 一覧外 B（判定ページ）
+  // 4段目：一覧 A・継続（サブスク整理の行から計算・zaimu_seiri_kijun.js）＋ 一覧外 B（判定ページ）
   // 一覧 A＝374,378 ＋ 判定ページからサブスク側へ移した分（重複を除く・to_ichiran_a）
   const ADD_A = K.addA, A = K.a, A_KEEP = K.A_KEEP;
-  put("r2-a", A); put("r2-add", ADD_A); put("r2-rem", A - A_KEEP); put("r2-rem-a", A);
+  put("r2-a", A); put("r2-add", K.rowSum); put("r2-keep", A_KEEP); put("r2-rem-k", A_KEEP); document.querySelectorAll(".zs-akeep").forEach(e => e.textContent = Math.round(A_KEEP).toLocaleString("ja-JP")); put("r2-adj", K.A_ADJ); put("r2-rem", A - A_KEEP); put("r2-rem-a", A);
   put("r4-den", A + total); put("r4-den-b", total); put("r4-den-a", A); put("r4-rem-a", A - A_KEEP); put("r1-start-a", A);
   put("r4-keep", A_KEEP + keep); put("r4-keep-b", keep);
   put("r4-total", (A - A_KEEP) + (total - keep)); put("r4-total-b", total - keep);

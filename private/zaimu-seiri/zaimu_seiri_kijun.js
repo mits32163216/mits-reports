@@ -4,9 +4,7 @@
 // TOP・年額・サブスク整理・継続経費・借入の返済は、出発点・Before・ゴール・継続をここから読む。ページに直書きしない。
 
 var ZS_KIJUN = (function(){
-  const A_BASE      = 374378;  // 一覧 A（サブスク整理の区分2〜4）の月額合計
-  const A_ADJ       = 55445;   // 一覧の行に無い足し分（2026-09-19 Mits様確認）：年払いを1〜7月の実額に直した差 41,082（Notion・Genspark・年会費）＋ DOCPRO 14,363
-  const A_KEEP      = 129695;  // 一覧 A で継続と決めた額（サブスク整理の21行）
+  const A_ADJ       = 41082;   // 一覧の行に無い足し分（2026-09-19 Mits様確認）：年払いを1〜7月の実額に直した差（Notion・Genspark・年会費）
   const LOAN_BEFORE = 142286;  // 借入の返済（1〜7月の実額の月平均・2026-09-19 Mits様確認）
   const LOAN_LATEST = 43575;   // 今の月々の返済（2026-09-18 完済後）
   const LOAN_PRINCIPAL = 908570; // 残っている元金 合計（判明分）
@@ -26,10 +24,23 @@ var ZS_KIJUN = (function(){
     else if (st === "cut") bCut += m;
     else if (st === "once") bOnce += m;
   });
-  const toA = ((M && M.to_ichiran_a) || []).filter(x => !x.dup_of);
-  const addA = toA.reduce((t,x) => t + (Number(x.monthly)||0), 0);
+  const toA = ((M && M.to_ichiran_a) || []).filter(x => !x.dup_of);   // 記録用（行は サブスク整理 の k2-47〜k2-59 に入れた）
+  const addA = 0;
 
-  const a       = A_BASE + addA;               // 2段目 一覧 A
+  // 一覧 A＝サブスク整理の区分2〜4 の行（対象外を除く）＋ 行に無い足し分。継続は今「継続」の行の合計
+  let sp = {}; try { sp = (SAVED_STATE && SAVED_STATE.progress) || {}; } catch(e){}
+  let lp = {}; try { lp = JSON.parse(localStorage.getItem("zaimu_seiri_progress_v1") || "{}") || {}; } catch(e){}
+  const dt = x => (x && (x.status_date || x.done_date)) || "";
+  const stOf = it => { const s = sp[it.id], l = lp[it.id]; const x = (s && l) ? (dt(l) >= dt(s) ? l : s) : (l || s);
+    if (x) { if (x.status) return x.status; if (x.done === true) return "done"; if (x.done === false) return null; } return it.status || null; };
+  let rowSum = 0, A_KEEP = 0;
+  ["k2m","k2a","k3","k4"].forEach(k => (((typeof DATA !== "undefined") && DATA[k] && DATA[k].items) || []).forEach(it => {
+    if (it.excluded === true) return;
+    rowSum += it.amount || 0;
+    if (stOf(it) === "keep") A_KEEP += it.amount || 0;
+  }));
+  const A_BASE  = rowSum + A_ADJ;
+  const a       = A_BASE;                      // 2段目 一覧 A
   const start   = a + b;                       // 1段目 出発点（借入の返済を除く）
   const before  = start + LOAN_BEFORE;         // 1段目 Before
   const keepAll = A_KEEP + bKeep;              // 4段目 継続の合計
@@ -41,7 +52,7 @@ var ZS_KIJUN = (function(){
   const free    = goal - keepAll;              // 6段目 継続以外に使える額
   const target2 = r4 - free;                   // 8段目②
 
-  return { A_BASE, A_ADJ, A_KEEP, LOAN_BEFORE, LOAN_LATEST, LOAN_PRINCIPAL,
+  return { A_BASE, A_ADJ, A_KEEP, rowSum, LOAN_BEFORE, LOAN_LATEST, LOAN_PRINCIPAL,
            addA, toA, a, b, bKeep, bCut, bOnce, keepItems,
            start, before, keepAll, aRemain, bRemain, r4, target1, goal, free, target2 };
 })();

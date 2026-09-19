@@ -517,7 +517,7 @@ function render() {
 
   // 6段目：半分経営の削減目標（固定）＋ 継続と決めた額の合計（固定）＋ 借入の返済（最新）＝ 合計
   // Mits様指示（2026-09-19 組み替え後）：293,233 ＋ 219,297 ＋ LOAN_MONTHLY_LATEST(43,575) ＝ 556,105
-  const KEEP_SUB_CORRECTED = 129695;                                       // サブスク整理の15行の月額合計（訂正後）
+  const KEEP_SUB_CORRECTED = K ? K.A_KEEP : 129695;   // サブスク整理で「継続」にした行（zaimu_seiri_kijun.js）                                       // サブスク整理の15行の月額合計（訂正後）
   // 2026-09-19 Mits様指示：6段目もサブスク外の判定ページから計算（目標＝5段目と同じ・継続＝一覧 129,695 ＋ 判定ページの「続ける」）
   const keepOutside6 = ich ? ich.keep : keepOutsideFrozen;
   const KEEP_TOTAL_FROZEN  = KEEP_SUB_CORRECTED + keepOutside6;
