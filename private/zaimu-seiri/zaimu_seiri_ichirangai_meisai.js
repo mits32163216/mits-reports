@@ -777,7 +777,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-041",
-      "category": "外注・その他",
+      "category": "浪費",
       "row": "o-08",
       "merchant": "USAGI TOKYO",
       "card": "Amex US 44000",
@@ -873,7 +873,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-047",
-      "category": "外注・その他",
+      "category": "浪費",
       "row": "o-11+out",
       "merchant": "BOA VISA 4452 キャッシング手数料",
       "card": "BOA VISA 4452",
@@ -1001,7 +1001,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-055",
-      "category": "外注・その他",
+      "category": "浪費",
       "row": "o-11+out",
       "merchant": "BOA VISA 4452 遅延手数料",
       "card": "BOA VISA 4452",
@@ -1062,7 +1062,9 @@ var ICHIRANGAI_MEISAI = {
       "note": "",
       "status": null,
       "status_date": null
-    },
+    }
+  ],
+  "moved_to_subscription": [
     {
       "id": "m-059",
       "category": "外注・その他",
@@ -1077,8 +1079,8 @@ var ICHIRANGAI_MEISAI = {
       "last": "2026-06-20",
       "note": "",
       "status": null,
-      "status_date": null
+      "status_date": null,
+      "moved": "2026-09-19 Mits様指示"
     }
   ]
 };
-// 監視の試験 18:00:15
