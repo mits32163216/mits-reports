@@ -286,9 +286,9 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 
   <div class="y26-boxes">
     <div class="y26-box main"><div class="l">2026年の支出（見込み）</div><div class="v"><span id="y-total">-</span>円</div><div class="s">ランニング ＋ 借入の返済</div></div>
-    <div class="y26-box"><div class="l">何もしなかった場合</div><div class="v"><span id="y-nothing">-</span>円</div><div class="s">1〜7月のペースのまま12か月</div></div>
+    <div class="y26-box"><div class="l">何もしなかった場合</div><div class="v"><span id="y-nothing">-</span>円</div><div class="s">1〜7月の実績 ＋ 8〜12月も出発点のまま</div></div>
     <div class="y26-box"><div class="l">減らせる額（見込み）</div><div class="v" style="color:var(--green);"><span id="y-saved">-</span>円</div><div class="s">何もしなかった場合 − 見込み</div></div>
-    <div class="y26-box"><div class="l">半分経営のゴールの年額</div><div class="v"><span id="y-goal">-</span>円</div><div class="s">ゴール <span id="y-goal-m">-</span> × 12 ＋ 借入の返済</div></div>
+    <div class="y26-box"><div class="l">8月からゴールどおりなら</div><div class="v"><span id="y-goal">-</span>円</div><div class="s">1〜7月の実績 ＋ ゴール <span id="y-goal-m">-</span> × 5 ＋ 借入の返済</div></div>
   </div>
 
   <table>
@@ -298,11 +298,11 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   <div class="note" id="y-note"></div>
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789823008"></script>
-<script src="zaimu_seiri_state.js?v=1789823008"></script>
-<script src="zaimu_seiri_sync.js?v=1789823008"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789823008"></script>
-<script src="zaimu_seiri_kijun.js?v=1789823008"></script>
+<script src="zaimu_seiri_data.js?v=1789823043"></script>
+<script src="zaimu_seiri_state.js?v=1789823043"></script>
+<script src="zaimu_seiri_sync.js?v=1789823043"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789823043"></script>
+<script src="zaimu_seiri_kijun.js?v=1789823043"></script>
 <script>
 (function(){
   const K = (typeof ZS_KIJUN !== "undefined") ? ZS_KIJUN : null;
@@ -335,16 +335,16 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   html += `<tr class="grand"><td>2026年の支出（見込み）</td><td class="n">${f(runH1 + loanH1)}</td><td class="n">―</td><td class="n">${f(runM2 * M2 + loanH2)}</td><td class="n">${f(total)}</td></tr>`;
   document.getElementById("y-body").innerHTML = html;
 
-  const nothing = (K.start + K.LOAN_BEFORE) * 12;
+  const nothing = runH1 + loanH1 + (K.start + K.LOAN_BEFORE) * M2;   // 1〜7月は同じ実績・8〜12月も出発点と借入の月平均のまま
   document.getElementById("y-total").textContent = f(total);
   document.getElementById("y-nothing").textContent = f(nothing);
   document.getElementById("y-saved").textContent = f(nothing - total);
   document.getElementById("y-goal-m").textContent = f(K.goal);
-  document.getElementById("y-goal").textContent = f(K.goal * 12 + loanH1 + loanH2);
+  document.getElementById("y-goal").textContent = f(runH1 + K.goal * M2 + loanH1 + loanH2);
   document.getElementById("y-note").innerHTML =
     `・1〜7月：サブスク整理は月平均 × ${M1}（年払いは1〜7月の実額に直した差を含む）、サブスク外は明細の総額、借入は実額の月平均 ${f(K.LOAN_BEFORE)} × ${M1}。<br>` +
     `・8〜12月：押した状態（完了・対応済み・削る・一回性）と、サブスク外の判定で入れた「削る予定額」を引いた月額 × ${M2}。「続ける」と未判定はそのまま残る。<br>` +
-    `・何もしなかった場合：出発点 ${f(K.start)} ＋ 借入 ${f(K.LOAN_BEFORE)} の × 12。ゴールの年額：ゴール ${f(K.goal)} × 12 ＋ 2026年の借入の返済。<br>` +
+    `・何もしなかった場合：1〜7月の実績 ＋ 8〜12月も出発点 ${f(K.start)} ＋ 借入 ${f(K.LOAN_BEFORE)} のまま × ${M2}。8月からゴールどおりなら：1〜7月の実績 ＋ ゴール ${f(K.goal)} × ${M2} ＋ 2026年の借入の返済。<br>` +
     `・押した状態・削る予定額を変えると、ここも一緒に変わる（ローカルと web は自動で同期）。`;
   const d = new Date(); document.getElementById("topnav-time").textContent = d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0") + " " + String(d.getHours()).padStart(2,"0") + ":" + String(d.getMinutes()).padStart(2,"0");
 })();
