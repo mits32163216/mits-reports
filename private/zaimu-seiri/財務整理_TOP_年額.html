@@ -318,13 +318,13 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
     <div class="metric frozen" style="border-width:3px; border-color:#c8ccd3;"><div class="label" style="font-weight:bold;">半分経営の目標 ＋ 継続 ＋ 借入の返済</div><div class="value" style="font-size:26px;"><span id="m-6-total">-</span><span class="yen">円</span><div class="src"><span id="m-6-total-a">-</span> ＋ <span id="m-6-total-b">-</span> ＋ <span id="m-6-loan-echo">-</span> ＝ 合計</div><span class="lock-note">借入の返済が変われば一緒に変わる</span></div></div>
   </div>
 
-  <!-- 7段目：継続以外 ＋ 継続と決めた額の合計 ＝ 出発点総額（2026-09-19 Mits様指示・判定ページから計算） -->
+  <!-- 7段目：継続以外 ＋ 継続と決めた額の合計 ＝ ゴール（出発点総額の半分）（2026-09-19 Mits様指示・判定ページから計算） -->
   <div class="eq-row eq-row-7" style="margin-top:8px;">
-    <div class="metric frozen" style="border-width:3px; border-color:#c8ccd3;"><div class="label" style="font-weight:bold;">継続以外（出発点 − 継続）</div><div class="value" style="font-size:26px;"><span id="r7-diff">-</span><span class="yen">円</span><div class="src"><span id="r7-diff-a">-</span> − <span id="r7-diff-b">-</span></div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
+    <div class="metric frozen" style="border-width:3px; border-color:#c8ccd3;"><div class="label" style="font-weight:bold;">継続以外に使える額（ゴール − 継続）</div><div class="value" style="font-size:26px;"><span id="r7-diff">-</span><span class="yen">円</span><div class="src"><span id="r7-diff-a">-</span> − <span id="r7-diff-b">-</span></div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
     <div class="eq-op">＋</div>
     <div class="metric frozen"><div class="label">継続と決めた額の合計</div><div class="value"><span id="r7-keep">-</span><span class="yen">円</span><div class="src">一覧 21行 129,695 ＋ 一覧外 <span id="r7-keep-b">-</span>（判定ページの「続ける」）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
     <div class="eq-op">＝</div>
-    <div class="metric frozen"><div class="label">出発点総額（借入の返済を除く）</div><div class="value"><span id="r7-start">-</span><span class="yen">円</span><div class="src">一覧 A 374,378 ＋ 一覧外 B <span id="r7-start-b">-</span>（判定ページのデータ）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
+    <div class="metric frozen"><div class="label">ゴール（出発点総額の半分）</div><div class="value"><span id="r7-start">-</span><span class="yen">円</span><div class="src">出発点総額 <span id="r7-start-b">-</span> ÷ 2（一覧 A 374,378 ＋ 一覧外 B：判定ページのデータ）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
   </div>
 
   <div class="bar-wrap">
@@ -373,10 +373,10 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 </div>
 
 <!-- TOP: legend以下は無し -->
-<script src="zaimu_seiri_data.js?v=1789816035"></script>
-<script src="zaimu_seiri_state.js?v=1789816035"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789816035"></script>
-<script src="zaimu_seiri_render.js?v=1789816035"></script>
+<script src="zaimu_seiri_data.js?v=1789816105"></script>
+<script src="zaimu_seiri_state.js?v=1789816105"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789816105"></script>
+<script src="zaimu_seiri_render.js?v=1789816105"></script>
 <script>
 // 3段目：一覧外の判定ページ（zaimu_seiri_ichirangai_meisai.js）から計算する（2026-09-19 Mits様指示・一覧外の経費ページは廃止）
 (function(){
@@ -401,11 +401,11 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   const BORROW = 142286;
   put("r1-start", A + total); put("r1-start-b", total);
   put("r1-before", A + total + BORROW); put("r1-before-start", A + total);
-  // 7段目：継続以外 ＋ 継続 ＝ 出発点
-  const START = A + total, KEEP_ALL = A_KEEP + keep;
-  put("r7-start", START); put("r7-start-b", total);
+  // 7段目：継続以外に使える額 ＋ 継続 ＝ ゴール（出発点総額 ÷ 2）
+  const START = A + total, GOAL7 = Math.round(START / 2), KEEP_ALL = A_KEEP + keep;
+  put("r7-start", GOAL7); put("r7-start-b", START);
   put("r7-keep", KEEP_ALL); put("r7-keep-b", keep);
-  put("r7-diff", START - KEEP_ALL); put("r7-diff-a", START); put("r7-diff-b", KEEP_ALL);
+  put("r7-diff", GOAL7 - KEEP_ALL); put("r7-diff-a", GOAL7); put("r7-diff-b", KEEP_ALL);
 })();
 </script>
 <script>
