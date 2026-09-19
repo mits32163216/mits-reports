@@ -171,6 +171,7 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
   <!-- 合計行：実績 − 削る − 一回性 = これからの月額 -->
   <div class="total-row">
     <div class="total-cell"><div class="lbl">実績（月平均）</div><div class="val"><span id="t-actual">-</span>円</div></div>
+    <div class="total-cell"><div class="lbl">「続ける」の合計</div><div class="val" style="color:var(--green);"><span id="t-keep">0</span>円</div></div>
     <div class="total-cell cut"><div class="lbl">「削る」を押した合計</div><div class="val"><span id="t-cut">0</span>円</div></div>
     <div class="total-cell once"><div class="lbl">「一回性」を押した合計</div><div class="val"><span id="t-once">0</span>円</div></div>
     <div class="total-cell after"><div class="lbl">これからの月額</div><div class="val"><span id="t-after">-</span>円</div></div>
@@ -214,9 +215,9 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789815220"></script>
-<script src="zaimu_seiri_state.js?v=1789815220"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789815220"></script>
+<script src="zaimu_seiri_data.js?v=1789815433"></script>
+<script src="zaimu_seiri_state.js?v=1789815433"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789815433"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -254,6 +255,8 @@ function loadSub(){ return {}; } // 中分類はデータの sub だけを使う
 function saveSub(o){ try { localStorage.setItem(SUB_KEY, JSON.stringify(o)); } catch(e){} }
 function subOf(it, subs){ return (subs[it.id] && subs[it.id].sub) || it.sub || ""; }
 function subHidden(){ try { return localStorage.getItem(SUB_HIDE_KEY) === "1"; } catch(e){ return false; } }
+// 押した状態が無い行は、データに書いた状態（家賃・ガスの「続ける」など）を使う
+function stOf(it, state){ const s = state[it.id]; if (s) return s; return it.status ? { status: it.status, date: it.status_date || "" } : null; }
 function loadIchState(){ return _mergeIch(_savedIchirangai(), _loadLocalIch()); }
 function saveIchState(s){ try { localStorage.setItem(ICH_STATE_KEY, JSON.stringify(s)); } catch(e){} }
 function todayStr(){ const d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
@@ -306,7 +309,7 @@ function render(){
 
   // 分類ごとの集計
   const byCat = {};
-  CATEGORIES.forEach(c => { byCat[c] = { actual: 0, cut: 0, once: 0, items: [] }; });
+  CATEGORIES.forEach(c => { byCat[c] = { actual: 0, cut: 0, once: 0, keep: 0, items: [] }; });
   const _subs0 = loadSub();
   items.forEach(it => {
     // 未仕訳で中分類ボタンを押したものは、浪費の同じ中分類へ移す（Mits様指示 2026-09-19）
@@ -316,11 +319,12 @@ function render(){
     // 浪費で「食事」「カフェ」を押したものは消費の同じ中分類へ移す（Mits様指示 2026-09-19）
     if (ec === "浪費" && ["食事","カフェ"].includes(subOf(it, _subs0))) ec = "消費";
     const c = CATEGORIES.includes(ec) ? ec : CATEGORY_FALLBACK;
-    if (!byCat[c]) byCat[c] = { actual: 0, cut: 0, once: 0, items: [] };
+    if (!byCat[c]) byCat[c] = { actual: 0, cut: 0, once: 0, keep: 0, items: [] };
     const m = Number(it.monthly) || 0;
     byCat[c].actual += m;
     byCat[c].items.push(it);
-    const s = state[it.id];
+    const s = stOf(it, state);
+    if (s && s.status === "keep") byCat[c].keep += m;
     if (s && s.status === "cut")  byCat[c].cut  += m;
     if (s && s.status === "once") byCat[c].once += m;
   });
@@ -328,15 +332,16 @@ function render(){
   // 分類ボックス描画（「一回性」の行を1本追加・「これからの月額」= actual − cut − once）
   catRow.innerHTML = CATEGORIES.map(c => {
     const b = byCat[c];
-    const cap = Math.round(byCat[c].actual / 2); // 上限＝実績の半分（Mits様指示 2026-09-19）
-    const after = b.actual - b.cut - b.once;
+    const cap = Math.round((byCat[c].actual - byCat[c].keep) / 2); // 上限＝続ける以外の実績の半分（Mits様指示 2026-09-19）
+    const after = b.actual - b.keep - b.cut - b.once;
     const diff = cap - after;    // 上限 − これからの月額
     const over = diff < 0;
     return `<div class="cat-box${over?' over':''}">
       <div class="cat-name">${esc(c)}</div>
       <div class="cat-lines">
         <div class="cat-line"><span class="lbl">実績（月平均）</span><span class="val">${fmtYen(b.actual)}円</span></div>
-        <div class="cat-line"><span class="lbl">月の上限（実績の半分）</span><span class="val">${cap?fmtYen(cap)+'円':'―'}</span></div>
+        <div class="cat-line"><span class="lbl">月の上限（続ける以外の実績の半分）</span><span class="val">${cap?fmtYen(cap)+'円':'―'}</span></div>
+        <div class="cat-line"><span class="lbl" style="color:var(--green);">続ける</span><span class="val" style="color:var(--green);">${fmtYen(b.keep)}円</span></div>
         <div class="cat-line"><span class="lbl" style="color:#a68000;">一回性</span><span class="val" style="color:#a68000;">${fmtYen(b.once)}円</span></div>
         <div class="cat-line"><span class="lbl" style="color:#c0392b;">削る金額</span><span class="val" style="color:#c0392b;">${fmtYen(b.cut)}円</span></div>
         <div class="cat-line after"><span class="lbl">これからの月額</span><span class="val">${fmtYen(after)}円</span></div>
@@ -349,7 +354,9 @@ function render(){
   const totalActual = CATEGORIES.reduce((a,c) => a + byCat[c].actual, 0);
   const totalCut    = CATEGORIES.reduce((a,c) => a + byCat[c].cut, 0);
   const totalOnce   = CATEGORIES.reduce((a,c) => a + byCat[c].once, 0);
-  const totalAfter  = totalActual - totalCut - totalOnce;
+  const totalKeep   = CATEGORIES.reduce((a,c) => a + byCat[c].keep, 0);
+  const totalAfter  = totalActual - totalKeep - totalCut - totalOnce;
+  document.getElementById("t-keep").textContent = fmtYen(totalKeep);
   document.getElementById("t-actual").textContent = fmtYen(totalActual);
   document.getElementById("t-cut").textContent    = fmtYen(totalCut);
   document.getElementById("t-once").textContent   = fmtYen(totalOnce);
@@ -377,7 +384,7 @@ function render(){
     const isRouhi = false; // 分類ボタンは役目を終えたので外した（2026-09-19 Mits様指示・押した中分類はデータの sub に書き写し済み）
     const subs = loadSub();
     const rowOf = it => {
-      const s = state[it.id];
+      const s = stOf(it, state);
       const st = s && s.status ? s.status : null;
       let cls = "";
       if (st === "cut")  cls = "st-cut";
@@ -427,11 +434,11 @@ function render(){
     } else {
       rows = sorted.map(rowOf).join("");
     }
-    const cap = Math.round(byCat[c].actual / 2); // 上限＝実績の半分（Mits様指示 2026-09-19）
-    const after = b.actual - b.cut - b.once;
+    const cap = Math.round((byCat[c].actual - byCat[c].keep) / 2);
+    const after = b.actual - b.keep - b.cut - b.once;
     return `<div class="section${isRouhi && subHidden() ? ' hide-subs' : ''}">
       <div class="section-head">
-        <h2>${esc(c)} <span class="section-sub">${b.items.length}件・月平均 ${fmtYen(b.actual)}円・1〜7月の総額 ${fmtYen(b.items.reduce((t,i)=>t+(i.total||0),0))}円・<b style="color:#c0392b;">削る総額 ${fmtYen(b.items.filter(i=>(state[i.id]||{}).status==="cut").reduce((t,i)=>t+(i.total||0),0))}円（月 ${fmtYen(b.cut)}円）</b></span></h2>
+        <h2>${esc(c)} <span class="section-sub">${b.items.length}件・月平均 ${fmtYen(b.actual)}円・1〜7月の総額 ${fmtYen(b.items.reduce((t,i)=>t+(i.total||0),0))}円・<b style="color:#c0392b;">削る総額 ${fmtYen(b.items.filter(i=>(stOf(i,state)||{}).status==="cut").reduce((t,i)=>t+(i.total||0),0))}円（月 ${fmtYen(b.cut)}円）</b></span></h2>
         <span class="section-sub">上限 ${cap?fmtYen(cap)+'円':'―'} ／ 一回性 <b style="color:#a68000;">${fmtYen(b.once)}円</b> ／ これからの月額 <b style="color:var(--gold);">${fmtYen(after)}円</b>${isRouhi ? `<button class="sub-toggle">${subHidden() ? "分類ボタンを出す" : "分類ボタンを消す"}</button>` : ""}</span>
       </div>
       <table>
@@ -480,8 +487,10 @@ function onClickAct(e){
   const id  = e.currentTarget.getAttribute("data-id");
   const act = e.currentTarget.getAttribute("data-act");
   const state = loadIchState();
-  const cur = state[id] && state[id].status;
-  if (cur === act) delete state[id];
+  const it = (typeof ICHIRANGAI_MEISAI !== "undefined" && ICHIRANGAI_MEISAI.items || []).find(x => x.id === id) || { id };
+  const curS = stOf(it, state);
+  const cur = curS && curS.status;
+  if (cur === act) state[id] = { status: null, date: todayStr() };   // データに状態がある行も外せるよう、空の状態を置く
   else state[id] = { status: act, date: todayStr() };
   saveIchState(state);
   render();

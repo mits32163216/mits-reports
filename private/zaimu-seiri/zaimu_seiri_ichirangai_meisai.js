@@ -104,8 +104,8 @@ var ICHIRANGAI_MEISAI = {
     ]
   },
   "caps": {
-    "現金生活費": 53220,
-    "カード生活費": 16123,
+    "現金生活費": 116914,
+    "カード生活費": 16961,
     "浪費": 30688,
     "投資": 48126,
     "旅行": 51989
@@ -132,7 +132,8 @@ var ICHIRANGAI_MEISAI = {
       "last": "2026-07-21",
       "note": "月額＝日額 3,548円 × 30日＝106,440円（2026-09-17 旅程の滞在日数から算出：1〜8月の引き出し 660,000円 ÷ 日本にいた186日＝3,548円/日。Mits様指示 2026-09-19）。1〜7月の引き出しは PayPay 銀行の18回・541,000円＋手数料",
       "status": null,
-      "status_date": null
+      "status_date": null,
+      "sub": "現金（ATM）"
     },
     {
       "id": "m-003",
@@ -4308,6 +4309,40 @@ var ICHIRANGAI_MEISAI = {
       "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
+    },
+    {
+      "id": "m-rent",
+      "category": "現金生活費",
+      "sub": "家賃",
+      "row": "o-01",
+      "merchant": "家賃（RKS：家賃＋管理費＋電気）",
+      "card": "PayPay 銀行",
+      "user": "Mits様",
+      "count": 7,
+      "total": 891713,
+      "monthly": 127388,
+      "first": "2026-01",
+      "last": "2026-07",
+      "note": "大和リビング D-ROOM・RKS（保証会社）経由。1〜7月実額 891,713円（家賃＋管理費 122,022／電気 5,365 の月平均）。継続（2026-09-18 Mits様判定・一覧外の経費ページから移した）",
+      "status": "keep",
+      "status_date": "2026-09-18"
+    },
+    {
+      "id": "m-gas",
+      "category": "カード生活費",
+      "sub": "ガス",
+      "row": "o-03",
+      "merchant": "ガス（りゅうせき・都市ガス）",
+      "card": "Amex JP 42008",
+      "user": "Mits様",
+      "count": 5,
+      "total": 11732,
+      "monthly": 1676,
+      "first": "2026-01",
+      "last": "2026-05",
+      "note": "1〜5月の明細から。6〜8月分は未取り込み。継続（2026-09-18 Mits様判定・一覧外の経費ページから移した）",
+      "status": "keep",
+      "status_date": "2026-09-18"
     }
   ],
   "moved_to_subscription": [
