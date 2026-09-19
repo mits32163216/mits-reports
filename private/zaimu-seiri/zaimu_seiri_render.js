@@ -1,12 +1,12 @@
 "use strict";
 
 // ─── 共有定数：借入の月々返済（TOP と 借入.html の両方が参照する唯一の値） ───
-// 2026-09-18：① 楽天キャッシングリボ + ④-1 8WEEKS.AI + ④-2/④-3 みたゆた ×2 完済後の値。
+// 2026-09-18：④-1 8WEEKS.AI + ④-2/④-3 みたゆた ×2 完済後の値（① 楽天キャッシングリボの繰り上げ返済は 2026-09-19 取り消し）。
 // 借入.html の borrow-divider・参考行、TOP の 6段目 借入返済箱、この4か所が同じ数字を読む。
 // 借入が変わったら、ここ1か所を直せば全部が同期する。
-const LOAN_MONTHLY_LATEST  = 43575;   // 現在の月々の返済（② + ③ + Amex US 利息 + 楽天その他）
+const LOAN_MONTHLY_LATEST  = 59690;   // 現在の月々の返済（① + ② + ③ + Amex US 利息 + 楽天その他）── 2026-09-19 ① の繰り上げ返済を取り消し
 const LOAN_MONTHLY_BEFORE  = 139450;  // 9/18 完済前（① + ④-1 + ④-2 + ④-3 が生きていた頃）
-const LOAN_MONTHLY_LABEL   = "① ＋ ④-1 ＋ ④-2 ＋ ④-3 完済後";
+const LOAN_MONTHLY_LABEL   = "④-1 ＋ ④-2 ＋ ④-3 完済後・① は取り消し";
 
 const STORAGE_KEY     = "zaimu_seiri_progress_v1";
 const OUTSIDE_KEY     = "zaimu_seiri_outside_v1";
@@ -204,8 +204,8 @@ function render() {
         <div class="pane pane-b" style="border-left-width:6px;">
           <div class="pane-title">借入の返済（別合計）── ランニングコストとは分けて集計</div>
           <div class="metrics">
-            <div class="metric"><div class="label">月々の返済 <span style="color:#2e7d32;font-size:10px;font-weight:bold;">（${LOAN_MONTHLY_LABEL}）</span></div><div class="value">${fmtYen(LOAN_MONTHLY_LATEST)}<span class="yen">円</span><div class="sub-line">② Amex JP リボ 15,000 ／ ③ 楽天デンタル分割 17,288 ／ Amex US 利息 9,512 ／ その他 1,775<br><span style="color:#9aa1a8;font-size:10px;">前 115,623（− みたゆた×2 72,048）／ 前 123,335（− ④-1 8WEEKS.AI 7,712）／ 前 ${fmtYen(LOAN_MONTHLY_BEFORE)}（− ① 楽天キャッシングリボ 16,115）</span></div></div></div>
-            <div class="metric"><div class="label">残っている元金 合計（判明分）<span style="color:#2e7d32;font-size:10px;font-weight:bold;">（${LOAN_MONTHLY_LABEL}）</span></div><div class="value">908,570<span class="yen">円</span><div class="sub-line">楽天 432,200（③ デンタル分割）＋ Amex JP 476,370（② リボのみ）（＋ Amex US 未確定）<br><span style="color:#9aa1a8;font-size:10px;">前 975,244（− みたゆた×2 66,674）／ 前 1,018,051（− 8WEEKS.AI 42,807）／ 前 1,408,051（− キャッシングリボ 390,000）</span></div></div></div>
+            <div class="metric"><div class="label">月々の返済 <span style="color:#2e7d32;font-size:10px;font-weight:bold;">（${LOAN_MONTHLY_LABEL}）</span></div><div class="value">${fmtYen(LOAN_MONTHLY_LATEST)}<span class="yen">円</span><div class="sub-line">① 楽天キャッシングリボ 16,115 ／ ② Amex JP リボ 15,000 ／ ③ 楽天デンタル分割 17,288 ／ Amex US 利息 9,512 ／ その他 1,775<br><span style="color:#9aa1a8;font-size:10px;">前 131,738（− みたゆた×2 72,048）／ 前 ${fmtYen(LOAN_MONTHLY_BEFORE)}（− ④-1 8WEEKS.AI 7,712）</span></div></div></div>
+            <div class="metric"><div class="label">残っている元金 合計（判明分）<span style="color:#2e7d32;font-size:10px;font-weight:bold;">（${LOAN_MONTHLY_LABEL}）</span></div><div class="value">1,298,570<span class="yen">円</span><div class="sub-line">楽天 822,200（① キャッシングリボ 390,000 ＋ ③ デンタル分割 432,200）＋ Amex JP 476,370（② リボのみ）（＋ Amex US 未確定）<br><span style="color:#9aa1a8;font-size:10px;">前 1,365,244（− みたゆた×2 66,674）／ 前 1,408,051（− 8WEEKS.AI 42,807）</span></div></div></div>
           </div>
           <div class="pane-note" style="color:var(--sub);">
             返済は削減ではないので、上の A の数字には入れない。返済が終わると、この月々 ${fmtYen(LOAN_MONTHLY_LATEST)}円（${LOAN_MONTHLY_LABEL}前は ${fmtYen(LOAN_MONTHLY_BEFORE)}円） が家計から消える。

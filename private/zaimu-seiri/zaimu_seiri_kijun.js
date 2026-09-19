@@ -6,8 +6,8 @@
 var ZS_KIJUN = (function(){
   const A_ADJ       = 47018;   // 一覧の行に無い足し分：年払いを1〜7月の実額に直した差 41,082（Notion・Genspark・年会費・2026-09-19 Mits様確認）＋ DOCPRO 5,936（1〜7月の月平均 14,363 − 月割り 8,427・2026-09-19 年払いへ）
   const LOAN_BEFORE = 142286;  // 借入の返済（1〜7月の実額の月平均・2026-09-19 Mits様確認）
-  const LOAN_LATEST = 43575;   // 今の月々の返済（2026-09-18 完済後）
-  const LOAN_PRINCIPAL = 908570; // 残っている元金 合計（判明分）
+  const LOAN_LATEST = 59690;   // 今の月々の返済（④-1・④-2・④-3 完済後。① 楽天キャッシングリボの繰り上げ返済は 2026-09-19 取り消し）
+  const LOAN_PRINCIPAL = 1298570; // 残っている元金 合計（判明分）＝楽天 822,200 ＋ Amex JP 476,370
 
   const M = (typeof ICHIRANGAI_MEISAI !== "undefined" && ICHIRANGAI_MEISAI) ? ICHIRANGAI_MEISAI : null;
   let saved = {}; try { saved = (SAVED_STATE && SAVED_STATE.ichirangai) || {}; } catch(e){}
