@@ -320,11 +320,11 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   <div class="note" id="y2-note"></div>
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789833145"></script>
-<script src="zaimu_seiri_state.js?v=1789833145"></script>
-<script src="zaimu_seiri_sync.js?v=1789833145"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789833145"></script>
-<script src="zaimu_seiri_kijun.js?v=1789833145"></script>
+<script src="zaimu_seiri_data.js?v=1789833161"></script>
+<script src="zaimu_seiri_state.js?v=1789833161"></script>
+<script src="zaimu_seiri_sync.js?v=1789833161"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789833161"></script>
+<script src="zaimu_seiri_kijun.js?v=1789833161"></script>
 <script src="zaimu_seiri_8gatsu_jisseki.js"></script>
 <script>
 (function(){
@@ -420,36 +420,22 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   const runM = aNext + bM;
   const runY = runM * 12;
 
-  // 借入の返済 2027年：2026年12月の「合計（月々の返済）」= K.LOAN_LATEST（77,598 円）を12か月そのまま流す
-  // 内訳：①楽天キャッシングリボ 16,115 ＋ ②Amex JP リボ 15,000 ＋ ③楽天デンタル 17,288 ＋ ⑤ペイディ 17,908 ＋ Amex US 44000 9,512 ＋ 楽天その他 1,775 = 77,598
-  const loanM = K.LOAN_LATEST;
-  const PAIDY_M = 17908;   // ⑤ペイディ（MacBook Pro 24回）1〜12月とも同額・2028-04-27 最終回
-  const loanBreakdownM = [
-    ["①楽天キャッシングリボ", 16115],
-    ["②Amex JP リボ",        15000],
-    ["③楽天デンタル分割",     17288],
-    ["⑤ペイディ（MacBook Pro）", PAIDY_M],
-    ["Amex US 44000（利息）",  9512],
-    ["楽天 その他",             1775]
-  ];
-  const loanBreakSum = loanBreakdownM.reduce((t,x) => t + x[1], 0);   // 77,598 と一致するはず（一致しなければコンソールに警告）
-  if (loanBreakSum !== loanM) {
-    console.warn("2027予測：借入内訳の合計が LOAN_LATEST と一致しません", loanBreakSum, "vs", loanM);
-  }
-  const loanY = loanM * 12;
-  const paidyY = PAIDY_M * 12;   // 214,896
+  // 借入の返済 2027年：Mits様 2026-09-20「2027は借り入れ一切ナシに」＝1〜12月すべて 0
+  // ペイディ・楽天キャッシングリボ・Amex JP リボ・楽天デンタル・Amex US 利息 は 2026年中に全部返し終わる前提。
+  const loanM = 0;
+  const loanY = 0;
 
   const tr = (r) => `<tr class="${r.cls || ""}"><td>${r.indent ? "　" : ""}${esc(r.name)}${r.sub ? `<div style="font-size:10px;color:var(--sub);font-weight:normal;">${esc(r.sub)}</div>` : ""}</td><td class="n">${f(r.m)}</td><td class="n">${f(r.m * 12)}</td></tr>`;
   let html = rows.map(tr).join("");
   html += tr({ name: "ランニングコスト 計", m: runM, cls: "sum" });
-  const loanSub = "毎月 " + f(loanM) + " × 12 ＝ " + f(loanY) + "／内訳：" + loanBreakdownM.map(x => x[0] + " " + f(x[1])).join(" ＋ ") + "。2027年内に完済する借入は無い（⑤ペイディの最終回は 2028-04-27・③楽天デンタルの完済見込みは 2029-04 頃・①②は残高から2027年中の完済なし）";
+  const loanSub = "2027年は借入の返済なし（Mits様 2026-09-20「2027は借り入れ一切ナシに」）。2026年中に全部返し終わる前提。";
   html += `<tr><td>借入の返済<div style="font-size:10px;color:var(--sub);font-weight:normal;">${esc(loanSub)}</div></td><td class="n">${f(loanM)}</td><td class="n">${f(loanY)}</td></tr>`;
   const total = runY + loanY;
   html += `<tr class="grand"><td>2027年の支出（予測）</td><td class="n">${f(runM + loanM)}</td><td class="n">${f(total)}</td></tr>`;
   document.getElementById("y2-body").innerHTML = html;
 
-  const nothing = (K.start + K.LOAN_BEFORE) * 12;                 // 何もしなかった場合＝出発点＋借入の月平均（Before）を12か月
-  const goalTotal = K.goal * 12 + loanY;                          // ゴールどおり＝ゴール × 12 ＋ 借入 × 12
+  const nothing = K.start * 12;                                    // 何もしなかった場合＝出発点 × 12（2027年は借入なし）
+  const goalTotal = K.goal * 12;                                   // ゴールどおり＝ゴール × 12（2027年は借入なし）
   document.getElementById("y2-total").textContent   = f(total);
   document.getElementById("y2-nothing").textContent = f(nothing);
   document.getElementById("y2-saved").textContent   = f(nothing - total);
@@ -460,12 +446,11 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   const monthlyByRow = rows.reduce((t, r) => t + r.m, 0) + loanM;   // 各行の月額の和
   const yearlyByRow  = rows.reduce((t, r) => t + r.m * 12, 0) + loanY;   // 各行の年計の和
   const drift = yearlyByRow - total;                              // 表と grand total の1円差
-  const paidyOK = (paidyY === 214896);
   document.getElementById("y2-note").innerHTML =
     `・ランニング月額 ${f(runM)}／年計 ${f(runY)}（内訳：一覧A ${f(aNext)} ＋ サブスク外 ${f(bM)}）。<br>` +
-    `・借入 月額 ${f(loanM)}／年計 ${f(loanY)}。うち ⑤ペイディ ${f(PAIDY_M)} × 12 ＝ ${f(paidyY)}${paidyOK ? "" : "（❌ 214,896 と合わない）"}。<br>` +
+    `・借入 月額 ${f(loanM)}／年計 ${f(loanY)}（2027年は借入なし・Mits様 2026-09-20）。<br>` +
     `・自己検算：各行の月額の和 ${f(monthlyByRow)}／年計 ${f(yearlyByRow)}／grand ${f(total)}／差 ${f(drift)} 円（0円のはず${drift === 0 ? "✅" : "❌"}）。<br>` +
-    `・押した状態・削る予定額・借入の完済状況が変わると、ここも一緒に変わる（1画面で 2026年 と 2027年 を見比べられるように同じページに置いてある）。`;
+    `・押した状態・削る予定額を変えると、ここも一緒に変わる（1画面で 2026年 と 2027年 を見比べられるように同じページに置いてある）。`;
 })();
 </script>
 </body>
