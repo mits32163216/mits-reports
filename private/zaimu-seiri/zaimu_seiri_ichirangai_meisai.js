@@ -217,7 +217,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-006",
-      "category": "浪費",
+      "category": "投資",
       "row": "o-08",
       "merchant": "LOND HAIRDRE OKINAWA",
       "card": "Amex US 44000",
@@ -227,7 +227,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 5986,
       "first": "2026-02-07",
       "last": "2026-06-27",
-      "note": "",
+      "note": "美容（Mits様判定）",
       "status": null,
       "status_date": null
     },
@@ -281,7 +281,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-010",
-      "category": "浪費",
+      "category": "旅行",
       "row": "o-12",
       "merchant": "PAWN KITCHEN PENANG",
       "card": "Chase Sapphire 0430",
@@ -291,7 +291,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 2671,
       "first": "2026-05-12",
       "last": "2026-05-21",
-      "note": "ペナン滞在の飲食 → 浪費（仕事の会食なら 投資）",
+      "note": "旅先の支出（Mits様判定）／ペナン滞在の飲食 → 浪費（仕事の会食なら 投資）",
       "status": null,
       "status_date": null
     },
@@ -329,7 +329,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-013",
-      "category": "浪費",
+      "category": "旅行",
       "row": "o-12",
       "merchant": "YIN'S SOURDOUGH UPTOWN DA PENANG",
       "card": "Chase Sapphire 0430",
@@ -339,13 +339,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 1929,
       "first": "2026-01-16",
       "last": "2026-06-02",
-      "note": "",
+      "note": "旅先の支出（Mits様判定）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-014",
-      "category": "浪費",
+      "category": "旅行",
       "row": "o-12",
       "merchant": "VNPAY*AU A OFTICAL P.HOI AN",
       "card": "Chase Sapphire 0430",
@@ -355,7 +355,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 1664,
       "first": "2026-01-10",
       "last": "2026-01-10",
-      "note": "",
+      "note": "旅先の支出（Mits様判定）",
       "status": null,
       "status_date": null
     },
@@ -425,7 +425,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-019",
-      "category": "浪費",
+      "category": "投資",
       "row": "o-08",
       "merchant": "IHERB IHERB.COM AMSTERDAM NL",
       "card": "Amex US 44000",
@@ -435,13 +435,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 1433,
       "first": "2026-07-23",
       "last": "2026-07-23",
-      "note": "",
+      "note": "サプリ（Mits様判定）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-020",
-      "category": "浪費",
+      "category": "旅行",
       "row": "o-12",
       "merchant": "99 SPEEDMART-3635 PULAU PINANG",
       "card": "Chase Sapphire 0430",
@@ -451,7 +451,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 1367,
       "first": "2026-01-18",
       "last": "2026-05-29",
-      "note": "",
+      "note": "旅先の支出（Mits様判定）",
       "status": null,
       "status_date": null
     },
