@@ -170,6 +170,13 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
 <div class="summary">
   <h1>サブスク外の判定 <span style="font-size:11px;color:var(--sub);font-weight:normal;">（一覧外の支出を相手先ごとに並べ、削る／続けるを1件ずつ押す）</span></h1>
 
+  <!-- 各大項目の「予定どおりなら月額」を足したもの（2026-09-19 Mits様指示・一番上に） -->
+  <div style="margin:8px 0 12px; padding:10px 14px; background:#f4effa; border:2px solid #6a3fa0; border-radius:6px; display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 14px;">
+    <span style="font-size:14px; color:#6a3fa0; font-weight:bold;">予定どおりなら月額（全大項目の合計）</span>
+    <span style="font-size:26px; font-weight:bold; color:#6a3fa0; font-family:'SF Mono',Menlo,monospace;"><span id="t-plan-total">-</span>円</span>
+    <span style="font-size:11px; color:var(--sub);" id="t-plan-total-src"></span>
+  </div>
+
   <!-- 4分類ボックス -->
   <div class="cat-row" id="cat-row"></div>
 
@@ -208,10 +215,10 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789828183"></script>
-<script src="zaimu_seiri_state.js?v=1789828183"></script>
-<script src="zaimu_seiri_sync.js?v=1789828183"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789828183"></script>
+<script src="zaimu_seiri_data.js?v=1789829289"></script>
+<script src="zaimu_seiri_state.js?v=1789829289"></script>
+<script src="zaimu_seiri_sync.js?v=1789829289"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789829289"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -353,6 +360,14 @@ function render(){
       </div>
     </div>`;
   }).join("");
+
+  // 各大項目の「予定どおりなら月額」（これからの月額 − 削る予定額）を足して一番上に出す
+  {
+    let planTotal = 0; const parts = [];
+    CATEGORIES.forEach(c => { const b = byCat[c]; const plan = (plansAll[c] && Number(plansAll[c].plan)) || 0; const v = (b.actual - b.keep - b.cut - b.once) - plan; planTotal += v; parts.push(c + " " + fmtYen(v) + "円"); });
+    const el = document.getElementById("t-plan-total"); if (el) el.textContent = fmtYen(planTotal);
+    const src = document.getElementById("t-plan-total-src"); if (src) src.textContent = parts.join(" ＋ ");
+  }
 
   // 合計
   const totalActual = CATEGORIES.reduce((a,c) => a + byCat[c].actual, 0);
