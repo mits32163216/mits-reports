@@ -214,9 +214,9 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789811844"></script>
-<script src="zaimu_seiri_state.js?v=1789811844"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789811844"></script>
+<script src="zaimu_seiri_data.js?v=1789811912"></script>
+<script src="zaimu_seiri_state.js?v=1789811912"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789811912"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -401,7 +401,8 @@ function render(){
     if (isRouhi) {
       rows = ["", ...SUBS].map(g => {
         const gi = sorted.filter(it => subOf(it, subs) === g);
-        if (!gi.length) return "";
+        if (!gi.length && (g === "" || c === "未仕訳")) return "";
+        if (!gi.length) return `<tr class="sub-head"><td colspan="${NCOL}">${g}　0件</td></tr>`;
         const gm = gi.reduce((t,i)=>t+(Number(i.monthly)||0),0);
         const gt = gi.reduce((t,i)=>t+(Number(i.total)||0),0);
         return `<tr class="sub-head"><td colspan="${NCOL}">${g || "未分類"}　${gi.length}件・月平均 ${fmtYen(gm)}円・1〜7月の総額 ${fmtYen(gt)}円</td></tr>` + gi.map(rowOf).join("");
