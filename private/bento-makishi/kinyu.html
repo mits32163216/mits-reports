@@ -20,22 +20,23 @@ tr.tot td{font-weight:700;border-top:2px solid var(--navy)}.neg{color:var(--red)
 <p class="sub">書き出したHTMLは、開けば書き込んだ数字のまま出てきます。別の日の数字は、別の名前で保存すれば並べて残せます。</p></div>
 <h2>いまの数字での月の損益</h2><div id="sum"></div><div id="form"></div>
 <script id="saved"></script><script>
-const KEY='bento-makishi-kinyu-v3';
+const KEY='bento-makishi-kinyu-v4';
 const DEF={"days": 26, "fixed": [["家賃", 100000], ["電気", 43468], ["プロパンガス", 21575], ["水道", 4367], ["人件費", 0]], "base": [["ご飯200g（国産ブレンド米・生で約90g）", 40], ["キャベツと人参の炒め", 25], ["ポテサラ約10g（業務用1kg 583円）", 6], ["梅干し（弁当用S 1kg 1,280円）", 5], ["白ごま", 1], ["容器一式（容器とフタ54・バラン0.4・輪ゴム1・割り箸3.4・レジ袋3.5）", 62], ["廃棄の見込み", 10]], "items": [{"n": "タコライス", "p": 750, "q": 5.0, "base": false, "parts": [["合挽き肉80g（100gあたり170円）", 136], ["チーズ30g（シュレッド1kg 1,632円）", 49], ["レタス・トマトほか野菜", 30], ["ご飯200g", 40], ["容器一式ほか", 85]]}, {"n": "唐揚げ弁当", "p": 500, "q": 13.33, "base": true, "parts": [["鶏もも174g（3個×生58g・100gあたり110円）", 191], ["衣と揚げ油", 25]]}, {"n": "唐揚げ単品", "p": 120, "q": 50.0, "base": false, "parts": [["鶏もも58g（100gあたり110円）", 64], ["衣と揚げ油", 10], ["透明パック", 15]]}, {"n": "ゴーヤコロッケ弁当", "p": 500, "q": 6.67, "base": true, "parts": [["ゴーヤ半本と卵1個・大きなコロッケ1個・豚こま40gと野菜", 176]]}, {"n": "生姜焼き弁当", "p": 500, "q": 5.83, "base": true, "parts": [["豚100g（100gあたり130円）", 130], ["玉ねぎ・人参", 20], ["タレ", 10]]}, {"n": "おろしハンバーグ＋目玉焼き", "p": 500, "q": 5.83, "base": true, "parts": [["合挽き肉100g（100gあたり170円）", 170], ["つなぎ", 12], ["大根おろし", 12], ["目玉焼き", 30]]}, {"n": "ユーリンチー弁当", "p": 500, "q": 5.83, "base": true, "parts": [["鶏もも125g（100gあたり110円）", 138], ["衣", 20], ["あん", 25], ["卵焼き", 17]]}, {"n": "ピーマンの肉詰め", "p": 500, "q": 4.17, "base": true, "parts": [["合挽き肉125g（100gあたり170円）", 213], ["つなぎ", 15], ["ピーマン", 20]]}, {"n": "ステーキ弁当", "p": 950, "q": 3.33, "base": true, "parts": [["ヒレ（テンダーロイン）150g（業務用NZ産 100gあたり567円）", 850], ["ソース・付け合わせ", 49]]}]};
 let D;
 try{D=window.__SAVED__||JSON.parse(localStorage.getItem(KEY)||'null')||structuredClone(DEF)}catch(e){D=window.__SAVED__||structuredClone(DEF)}
 const $=s=>document.querySelector(s);
 const yen=v=>Math.round(v).toLocaleString('ja-JP')+'円';
 function inp(path,val,w){return `<input type="number" step="any" data-p="${path}" value="${val}" style="width:${w||90}px">`}
-function txt(path,val){return `<input type="text" data-p="${path}" value="${String(val).replace(/"/g,'&quot;')}" style="width:100%;min-width:180px">`}
+function txt(path,val){return `<input type="text" data-p="${path}" value="${String(val).replace(/"/g,'&quot;')}" style="width:100%;min-width:120px">`}
 function render(){
- let h='<h2>前提</h2><div class="card tw"><table><tr><td>月の営業日数</td><td class=n>'+inp('days',D.days,70)+' 日</td></tr></table></div>';
+ let h='<h2>販売個数（ここに書き込む）</h2><p class="sub">1日の個数か、月の個数のどちらかに書き込めば、もう片方は自動で直ります。</p><div class="card tw"><table><tr><th>品</th><th class=n>1日</th><th class=n>月</th></tr>'+D.items.map((it,k)=>`<tr><td>${it.n}</td><td class=n>${inp('items.'+k+'.q',it.q,80)} 個</td><td class=n><input type="number" step="any" data-m="${k}" value="${Math.round((+it.q||0)*(+D.days||0))}" style="width:90px"> 個</td></tr>`).join('')+'<tr class=tot><td>計</td><td class=n id="qd"></td><td class=n id="qm"></td></tr></table></div>';
+ h+='<h2>前提</h2><div class="card tw"><table><tr><td>月の営業日数</td><td class=n>'+inp('days',D.days,70)+' 日</td></tr></table></div>';
  h+='<h2>固定費（月）</h2><div class="card tw"><table>'+D.fixed.map((f,i)=>`<tr><td>${txt('fixed.'+i+'.0',f[0])}</td><td class=n>${inp('fixed.'+i+'.1',f[1],110)} 円</td></tr>`).join('')+'<tr class=tot><td>計</td><td class=n id="fx"></td></tr></table></div>';
  h+='<h2>弁当に共通の土台（1個あたり）</h2><div class="card tw"><table>'+D.base.map((b,i)=>`<tr><td>${txt('base.'+i+'.0',b[0])}</td><td class=n>${inp('base.'+i+'.1',b[1])} 円</td></tr>`).join('')+'<tr class=tot><td>計</td><td class=n id="bs"></td></tr></table></div>';
  h+='<h2>品目</h2>';
  D.items.forEach((it,k)=>{
   h+=`<div class="card"><div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center"><b style="font-size:1.1rem">${it.n}</b>
-  <label>税込 ${inp('items.'+k+'.p',it.p)} 円</label><label>1日 ${inp('items.'+k+'.q',it.q,70)} 個</label>
+  <label>税込 ${inp('items.'+k+'.p',it.p)} 円</label><label>1日 ${inp('items.'+k+'.q',it.q,80)} 個</label>
   <label><input type="checkbox" data-p="items.${k}.base" ${it.base?'checked':''}> 共通の土台を足す</label></div>
   <div class="tw"><table>`+it.parts.map((p,j)=>`<tr><td>${txt('items.'+k+'.parts.'+j+'.0',p[0])}</td><td class=n>${inp('items.'+k+'.parts.'+j+'.1',p[1])} 円</td></tr>`).join('')+
   `</table></div><button data-add="${k}">材料の行を足す</button> <span class="sub" id="r${k}"></span></div>`;
@@ -51,11 +52,13 @@ function calc(){
   S+=net*q*days; C+=c*q*days;
   $('#r'+k).innerHTML=`原価 <b>${yen(c)}</b>・原価率 ${net?Math.round(c/net*100):0}%・1個の粗利 <b class="${gp<0?'neg':''}">${yen(gp)}</b>・月の粗利 <b class="${gp<0?'neg':''}">${yen(gp*q*days)}</b>`;
   rows+=`<tr><td>${it.n}</td><td class=n>${yen(c)}</td><td class="n ${gp<0?'neg':''}">${yen(gp)}</td><td class=n>${q}個</td><td class="n ${gp<0?'neg':''}">${yen(gp*q*days)}</td></tr>`;});
+ let QD=0;D.items.forEach((it,k)=>{QD+=+it.q||0;document.querySelectorAll('[data-p="items.'+k+'.q"]').forEach(el=>{if(el!==document.activeElement)el.value=+(+it.q||0).toFixed(2)});const m=document.querySelector('[data-m="'+k+'"]');if(m&&m!==document.activeElement)m.value=Math.round((+it.q||0)*days)});
+ $('#qd').textContent=(+QD.toFixed(2))+'個';$('#qm').textContent=Math.round(QD*days).toLocaleString('ja-JP')+'個';
  const G=S-C, OP=G-fx;
  $('#sum').innerHTML=`<div class="kpi"><div>売上（税抜）<b>${yen(S)}</b></div><div>原価率<b>${S?(C/S*100).toFixed(1):0}%</b></div><div>粗利<b>${yen(G)}</b></div><div>固定費<b>${yen(fx)}</b></div><div>営業利益<b class="${OP<0?'neg':''}">${yen(OP)}</b></div><div>＠（2人）<b>${yen(G/2)}</b></div></div><div class="card tw"><table><tr><th>品</th><th class=n>原価</th><th class=n>1個の粗利</th><th class=n>1日</th><th class=n>月の粗利</th></tr>${rows}</table></div>`;
  try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){}
 }
-document.addEventListener('input',e=>{const p=e.target.dataset.p;if(!p)return;const t=e.target;set(p,t.type==='checkbox'?t.checked:(t.type==='number'?(t.value===''?0:+t.value):t.value));calc()});
+document.addEventListener('input',e=>{const m=e.target.dataset.m;if(m!==undefined){const d=+D.days||1;D.items[m].q=(e.target.value===''?0:+e.target.value)/d;calc();return}const p=e.target.dataset.p;if(!p)return;const t=e.target;set(p,t.type==='checkbox'?t.checked:(t.type==='number'?(t.value===''?0:+t.value):t.value));calc()});
 document.addEventListener('change',e=>{if(e.target.type==='checkbox'){set(e.target.dataset.p,e.target.checked);calc()}});
 document.addEventListener('click',e=>{const k=e.target.dataset.add;if(k===undefined)return;D.items[k].parts.push(['（材料名）',0]);render()});
 function saveAs(){
