@@ -5,6 +5,7 @@
 
 var ZS_KIJUN = (function(){
   const A_BASE      = 374378;  // 一覧 A（サブスク整理の区分2〜4）の月額合計
+  const A_ADJ       = 55445;   // 一覧の行に無い足し分（2026-09-19 Mits様確認）：年払いを1〜7月の実額に直した差 41,082（Notion・Genspark・年会費）＋ DOCPRO 14,363
   const A_KEEP      = 129695;  // 一覧 A で継続と決めた額（サブスク整理の21行）
   const LOAN_BEFORE = 142286;  // 借入の返済（1〜7月の実額の月平均・2026-09-19 Mits様確認）
   const LOAN_LATEST = 43575;   // 今の月々の返済（2026-09-18 完済後）
@@ -40,7 +41,7 @@ var ZS_KIJUN = (function(){
   const free    = goal - keepAll;              // 6段目 継続以外に使える額
   const target2 = r4 - free;                   // 8段目②
 
-  return { A_BASE, A_KEEP, LOAN_BEFORE, LOAN_LATEST, LOAN_PRINCIPAL,
+  return { A_BASE, A_ADJ, A_KEEP, LOAN_BEFORE, LOAN_LATEST, LOAN_PRINCIPAL,
            addA, toA, a, b, bKeep, bCut, bOnce, keepItems,
            start, before, keepAll, aRemain, bRemain, r4, target1, goal, free, target2 };
 })();

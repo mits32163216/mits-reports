@@ -214,9 +214,9 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789817540"></script>
-<script src="zaimu_seiri_state.js?v=1789817540"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789817540"></script>
+<script src="zaimu_seiri_data.js?v=1789817839"></script>
+<script src="zaimu_seiri_state.js?v=1789817839"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789817839"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -224,7 +224,7 @@ const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
 // caps に無いカテゴリを item が持っていた場合の受け皿を末尾に置く
 const CATEGORY_FALLBACK = "外注・その他";
 // 削減目標（半分経営に要る一覧外からの削減）— 発注書で指定された値
-const ICH_GOAL = 317193;
+let ICH_GOAL = 0;   // 上限の合計＝（実績 − 続ける）÷ 2。描くたびに計算し直す（旧 317,193 は発注書の固定値だった）
 
 function _savedIchirangai(){ try { return (SAVED_STATE && SAVED_STATE.ichirangai) || {}; } catch(e){ return {}; } }
 function _loadLocalIch(){
@@ -355,6 +355,8 @@ function render(){
   const totalOnce   = CATEGORIES.reduce((a,c) => a + byCat[c].once, 0);
   const totalKeep   = CATEGORIES.reduce((a,c) => a + byCat[c].keep, 0);
   const totalAfter  = totalActual - totalKeep - totalCut - totalOnce;
+  ICH_GOAL = Math.round((totalActual - totalKeep) / 2);
+  document.getElementById("t-goal").textContent = fmtYen(ICH_GOAL);
   document.getElementById("t-keep").textContent = fmtYen(totalKeep);
   document.getElementById("t-actual").textContent = fmtYen(totalActual);
   document.getElementById("t-cut").textContent    = fmtYen(totalCut);

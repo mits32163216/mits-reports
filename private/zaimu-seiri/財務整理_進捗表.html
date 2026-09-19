@@ -271,22 +271,26 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 <br>ボタンは同じものをもう一度押すと外れて未着手に戻ります。状態はこのブラウザに保存されます（他の端末には送りません）。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789817540"></script>
-<script src="zaimu_seiri_state.js?v=1789817540"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789817540"></script>
-<script src="zaimu_seiri_kijun.js?v=1789817540"></script>
-<script src="zaimu_seiri_render.js?v=1789817540"></script>
+<script src="zaimu_seiri_data.js?v=1789817839"></script>
+<script src="zaimu_seiri_state.js?v=1789817839"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789817839"></script>
+<script src="zaimu_seiri_kijun.js?v=1789817839"></script>
+<script src="zaimu_seiri_render.js?v=1789817839"></script>
 <script>
 // サブスク外の判定ページから一覧 A（サブスク側）へ移した行（重複を除く）── TOP 2段目の「＋」の分（2026-09-19）
 (function(){
   const box = document.getElementById("to-ichiran-a");
   if (!box || typeof ZS_KIJUN === "undefined" || !ZS_KIJUN) return;
   const K = ZS_KIJUN, f = n => Math.round(n).toLocaleString("ja-JP");
+  let rowSum = 0;   // 区分2〜4 の行（対象外を除く）
+  ["k2m","k2a","k3","k4"].forEach(k => ((DATA[k] && DATA[k].items) || []).forEach(it => { if (it.excluded !== true) rowSum += it.amount || 0; }));
   const esc = t => String(t == null ? "" : t).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const rows = K.toA.map(x => `<tr><td class="name">${esc(x.name)}</td><td class="amount">${f(Number(x.monthly)||0)}円</td><td>${esc(x.from || "")}</td></tr>`).join("");
   box.innerHTML = `<div class="section"><h2 style="font-size:15px;margin:0 0 6px;">サブスク外の判定から一覧 A へ移した分（${K.toA.length}行）</h2>
     <table><thead><tr><th>名称</th><th style="text-align:right;">月額</th><th>元の場所</th></tr></thead><tbody>${rows}</tbody></table>
-    <div class="sec-subtotal">小計：<b>${f(K.addA)}円</b>　／　一覧 A ＝ ${f(K.A_BASE)} ＋ ${f(K.addA)} ＝ <b>${f(K.a)}円</b>（TOP 2段目と同じ）</div></div>`;
+    <div class="sec-subtotal">小計：<b>${f(K.addA)}円</b></div>
+    <div class="sec-subtotal" style="line-height:1.8;">一覧の行の合計 ${f(rowSum)} ＋ 行に無い足し分 ${f(K.A_BASE - rowSum)}（年払いを1〜7月の実額に直した差 41,082［Notion・Genspark・年会費］＋ DOCPRO 14,363・2026-09-19 Mits様確認）＝ ${f(K.A_BASE)}<br>
+    一覧 A ＝ ${f(K.A_BASE)} ＋ 移した分 ${f(K.addA)} ＝ <b>${f(K.a)}円</b>（TOP 2段目と同じ）</div></div>`;
 })();
 </script>
 </body>

@@ -177,6 +177,7 @@ function render() {
   const state = loadState();
   const container = document.getElementById("sections");
   if (container) container.innerHTML = "";
+  let excludedCount = 0;
   let totalCount = 0, doneCount = 0, holdCount = 0, keepCount = 0, handledCount = 0, todoCount = 0;
   let totalCut = 0;
   let totalCutA = 0;   // A（借入返済を除く）だけの削減額
@@ -221,7 +222,7 @@ function render() {
     // 継続の集計を先に済ませる（totalCount / keepCount / keepSum に反映）
     keepItems.forEach(it => { totalCount++; keepCount++; keepSum += it.amount; });
     // 除外行は totalCount のみ加算（合計・8割線・累計・削減額など全ての金額集計から外す）
-    excludedItems.forEach(() => { totalCount++; });
+    excludedItems.forEach(() => { totalCount++; excludedCount++; });
     const items = activeItems.concat(excludedItems); // 表に描画するのは（継続除く）+ 除外行を末尾に
 
     // 小計と 8割：継続（パン）を除いた合計だけを対象にする
@@ -548,6 +549,7 @@ function render() {
   setText("m-hold-count", holdCount);
   setText("m-keep-count", keepCount);
   setText("m-total-count", totalCount);
+  setText("m-excluded-count", excludedCount);
   setText("m-cut", fmtYen(totalCut));
 
   // 継続バナー（別ページへの導線）
@@ -647,14 +649,14 @@ function updateTopnavTime() {
 function renderKeepBreakdown() {
   if (typeof DATA === "undefined") return;
   if (typeof BASELINE_20260918 === "undefined") return;
-  const keptIds = new Set(BASELINE_20260918.keptIds || []);
-  const ANNUAL_LIKE_IDS = new Set(["k2-36"]); // ムームードメイン（irregular・年更新）は年払い扱い
+  // 継続経費ページと同じ分け方：今「継続」の行を、年払い（cycle annual）とそれ以外（月払い・不定期）に分ける
+  const kst = loadState();
   let subMonthly = 0, subAnnual = 0;
   Object.keys(DATA).forEach(sk => {
     (DATA[sk].items || []).forEach(it => {
       if (it.excluded === true) return;
-      if (!keptIds.has(it.id)) return;
-      const isAnnualLike = it.cycle === "annual" || ANNUAL_LIKE_IDS.has(it.id);
+      if (getStatus(it, kst) !== "keep") return;
+      const isAnnualLike = it.cycle === "annual";
       if (isAnnualLike) subAnnual += it.amount || 0;
       else              subMonthly += it.amount || 0;
     });
