@@ -227,11 +227,11 @@ tr.sub-head.foldable td:hover { background: #e5d9f4; }
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789840206"></script>
-<script src="zaimu_seiri_state.js?v=1789840206"></script>
-<script src="zaimu_seiri_sync.js?v=1789840206"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789840206"></script>
-<script src="zaimu_seiri_kijun.js?v=1789840206"></script>
+<script src="zaimu_seiri_data.js?v=1789840480"></script>
+<script src="zaimu_seiri_state.js?v=1789840480"></script>
+<script src="zaimu_seiri_sync.js?v=1789840480"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789840480"></script>
+<script src="zaimu_seiri_kijun.js?v=1789840480"></script>
 <script>
 // 見立ての理由を読みやすく出す（Mits様 2026-09-20「見立ての理由が煩雑で読みづらい　整理して」）
 // note は「／」区切りで新しい順に積んである。1行目＝いまの置き場所の理由（いちばん新しい判断）、2行目＝元の記録、残りは「変更の記録」に畳む
@@ -312,7 +312,7 @@ function savePlanOne(cat, n){
   try { localStorage.setItem(PLAN_KEY, JSON.stringify(local)); } catch(e){}
 }
 // 大分類の削る予定額＝中分類に入れた額（キー「大分類::中分類」）の合計 ＋ 大分類に直接入れた額（2026-09-19 Mits様指示）
-function subPlanSum(plans, c){ let t = 0; Object.keys(plans || {}).forEach(k => { if (k.indexOf(c + "::") === 0) t += Number(plans[k] && plans[k].plan) || 0; }); return t; }
+function subPlanSum(plans, c){ let t = 0; Object.keys(plans || {}).forEach(k => { if (k.indexOf(c + "::") === 0 && (typeof ZS_KIJUN === "undefined" || ZS_KIJUN.isLivePlanKey(k))) t += Number(plans[k] && plans[k].plan) || 0; }); return t; }
 function catPlan(plans, c){ return ((plans && plans[c] && Number(plans[c].plan)) || 0) + subPlanSum(plans, c); }
 function todayStr(){ const d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
 function fmtYen(n){ return Math.round(n).toLocaleString("ja-JP"); }

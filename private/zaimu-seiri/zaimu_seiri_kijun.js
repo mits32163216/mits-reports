@@ -48,12 +48,17 @@ var ZS_KIJUN = (function(){
     else if (sa === "handled") aHandled += it.amount || 0;
   }));
   // サブスク外の判定の「削る予定額（月）」の合計（保存ファイルとブラウザの入力の新しい方）
+  // 今ページに出ている中分類のキーだけを数える。中分類が別の大分類へ移ったあと、元の大分類に残った入力は数えない
+  // （2026-09-20 Mits様「中分類の削る額入力を暗算で計算しても82000にならない」＝カード生活費に家族カードの旧入力 60,000 が残っていた）
+  const LIVE_SUB = new Set(["浪費::飲み（1回だけ・まだ押していない）"]);
+  ((M && M.items) || []).forEach(it => LIVE_SUB.add(it.category + "::" + (it.sub || "未分類")));
+  const isLivePlanKey = k => k.indexOf("::") < 0 || LIVE_SUB.has(k);
   let planSum = 0; const plans = {};
   (function(){
     let sv = {}; try { sv = (SAVED_STATE && SAVED_STATE.ichirangai_plan) || {}; } catch(e){}
     let lc = {}; try { lc = JSON.parse(localStorage.getItem("zaimu_seiri_ichirangai_plan_v1") || "{}") || {}; } catch(e){}
     const t = e => (e && (e.ts || e.date)) || "";
-    new Set([...Object.keys(sv), ...Object.keys(lc)]).forEach(k => { const a = sv[k], b = lc[k]; const x = (a && b) ? (t(b) >= t(a) ? b : a) : (b || a); const n = (x && Number(x.plan)) || 0; const c = k.split("::")[0].replace(/^銀行出金$/, "基本支出"); plans[c] = (plans[c] || 0) + n; planSum += n; });   // 「大分類::中分類」は大分類に足す（2026-09-19）
+    new Set([...Object.keys(sv), ...Object.keys(lc)]).forEach(k => { const a = sv[k], b = lc[k]; const x = (a && b) ? (t(b) >= t(a) ? b : a) : (b || a); const n = (x && Number(x.plan) && isLivePlanKey(k)) ? Number(x.plan) : 0; const c = k.split("::")[0].replace(/^銀行出金$/, "基本支出"); plans[c] = (plans[c] || 0) + n; planSum += n; });   // 「大分類::中分類」は大分類に足す（2026-09-19）
   })();
   const A_BASE  = rowSum + A_ADJ;
   const a       = A_BASE;                      // 2段目 一覧 A
@@ -70,7 +75,7 @@ var ZS_KIJUN = (function(){
 
   const months = (M && M.months) || 7;
   const KIKAN = "1〜" + months + "月";   // 集計期間の表記（ページの「1〜N月」はここから入れる）
-  return { KIKAN, LOAN_NOTE, A_BASE, A_ADJ, A_KEEP, rowSum, planSum, plans, byCat, aDone, aHandled, months, LOAN_BEFORE, LOAN_LATEST, LOAN_PRINCIPAL,
+  return { isLivePlanKey, KIKAN, LOAN_NOTE, A_BASE, A_ADJ, A_KEEP, rowSum, planSum, plans, byCat, aDone, aHandled, months, LOAN_BEFORE, LOAN_LATEST, LOAN_PRINCIPAL,
            addA, toA, a, b, bKeep, bCut, bOnce, keepItems,
            start, before, keepAll, aRemain, bRemain, r4, target1, goal, free, target2 };
 })();
