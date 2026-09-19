@@ -306,7 +306,7 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
     <div class="eq-op">＋</div>
     <div class="metric frozen"><div class="label">継続と決めた額の合計</div><div class="value"><span id="m-6-keep-total">-</span><span class="yen">円</span><div class="src">一覧 21行 129,695 ＋ 一覧外 129,064</div><span class="lock-note">2026-09-18 訂正後の値で固定</span></div></div>
     <div class="eq-op">＋</div>
-    <div class="metric"><div class="label"><a href="借入の返済.html" style="color:inherit;text-decoration:none;">借入の返済(最新) <span style="color:#c62828;font-size:10px;">→ 詳しくはこちら</span></a></div><div class="value"><a href="借入の返済.html" style="color:inherit;text-decoration:none;"><span id="m-6-loan">-</span><span class="yen">円</span></a><div class="src">② Amex JP リボ 15,000 ＋ ③ 楽天デンタル 17,288 ＋ Amex US 9,512 ＋ 楽天その他 1,775</div><span class="lock-note">借入の返済ページと同期(可変)</span></div></div>
+    <div class="metric"><div class="label"><a href="借入の返済.html" style="color:inherit;text-decoration:none;">借入の総額(残っている元金) <span style="color:#c62828;font-size:10px;">→ 詳しくはこちら</span></a></div><div class="value"><a href="借入の返済.html" style="color:inherit;text-decoration:none;"><span id="m-6-loan">-</span><span class="yen">円</span></a><div class="src loan-total-src">残っている元金の総額：楽天デンタル分割 432,200 ＋ Amex JP リボ 476,370（Amex US は未確定）</div><span class="lock-note">借入の返済ページの残元金と同じ</span></div></div>
     <div class="eq-op">＝</div>
     <div class="metric frozen" style="border-width:3px; border-color:#c8ccd3;"><div class="label" style="font-weight:bold;">半分経営の目標 ＋ 継続 ＋ 借入の返済</div><div class="value" style="font-size:26px;"><span id="m-6-total">-</span><span class="yen">円</span><div class="src">361,353 ＋ 258,759 ＋ <span id="m-6-loan-echo">-</span> ＝ 合計</div><span class="lock-note">借入の返済が変われば一緒に変わる</span></div></div>
   </div>
@@ -370,9 +370,15 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
     const root = document.querySelector('.summary'); if(!root) return;
     const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
     let node; while((node = w.nextNode())){
-      if (node.parentElement && node.parentElement.closest('.lock-note,#monthly-actual,.monthly-actual')) continue;
+      if (node.parentElement && node.parentElement.closest('.lock-note,#monthly-actual,.monthly-actual,#m-6-loan,#m-6-loan-echo,#m-6-total,.loan-total-src')) continue;
       if (node.nodeValue !== node.__conv){ node.__orig = node.nodeValue; node.__conv = conv(node.__orig); node.nodeValue = node.__conv; }
     }
+    // 借入は ×7 せず、残っている元金の総額を出す（6段目）
+    const LOAN_TOTAL = 908570; // 借入の返済ページの「残っている元金 合計」と同じ値（楽天 432,200 ＋ Amex JP 476,370）
+    const num = id => { const e=document.getElementById(id); return e ? parseInt((e.textContent||'0').replace(/[^\d]/g,''),10)||0 : 0; };
+    const put = (id,v) => { const e=document.getElementById(id); const t=v.toLocaleString('ja-JP'); if(e && e.textContent!==t) e.textContent=t; };
+    put('m-6-loan', LOAN_TOTAL); put('m-6-loan-echo', LOAN_TOTAL);
+    put('m-6-total', num('m-6-half-goal') + num('m-6-keep-total') + LOAN_TOTAL);
   }
   const run = () => setTimeout(walk, 30);
   run(); window.addEventListener('load', run); window.addEventListener('focus', run);
