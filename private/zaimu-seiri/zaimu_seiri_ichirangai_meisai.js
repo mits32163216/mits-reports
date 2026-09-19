@@ -1724,7 +1724,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k047",
-      "category": "未仕訳",
+      "category": "投資",
       "row": "小口",
       "merchant": "INFOTHERAPY SHIBUYAKU TO",
       "card": "Amex US 44000",
@@ -1734,7 +1734,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 485,
       "first": "2026-05-22",
       "last": "2026-05-22",
-      "note": "元の分類：その他 ／未仕訳（コンビニ・スーパーと決めきれない）",
+      "note": "元の分類：その他 ／投資へ（Mits様判定 2026-09-19）",
       "status": null,
       "status_date": null
     },
@@ -2044,7 +2044,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k070",
-      "category": "未仕訳",
+      "category": "投資",
       "row": "小口",
       "merchant": "GINZA SECO* SPACEMARSAITAMASHI SA",
       "card": "Amex US 44000",
@@ -2054,7 +2054,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 333,
       "first": "2026-06-16",
       "last": "2026-06-20",
-      "note": "元の分類：その他 ／未仕訳（コンビニ・スーパーと決めきれない）",
+      "note": "元の分類：その他 ／投資へ（Mits様判定 2026-09-19）",
       "status": null,
       "status_date": null
     },
