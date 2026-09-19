@@ -104,22 +104,23 @@ var ICHIRANGAI_MEISAI = {
     ]
   },
   "caps": {
-    "消費": 54766,
+    "現金生活費": 38643,
+    "カード生活費": 16123,
     "浪費": 30688,
     "投資": 48126,
     "旅行": 51989
   },
   "caps_reason": {
-    "消費": "実績の半分（Mits様指示 2026-09-19・画面は実績から毎回計算）",
+    "現金生活費": "実績の半分（Mits様指示 2026-09-19・画面は実績から毎回計算）",
+    "カード生活費": "実績の半分（Mits様指示 2026-09-19・画面は実績から毎回計算）",
     "浪費": "実績の半分（Mits様指示 2026-09-19・画面は実績から毎回計算）",
     "投資": "実績の半分（Mits様指示 2026-09-19・画面は実績から毎回計算）",
-    "旅行": "実績の半分（Mits様指示 2026-09-19・画面は実績から毎回計算）",
-    "外注・その他": "実績 138431/月 のうち手数料・利息を圧縮"
+    "旅行": "実績の半分（Mits様指示 2026-09-19・画面は実績から毎回計算）"
   },
   "items": [
     {
       "id": "m-001",
-      "category": "消費",
+      "category": "現金生活費",
       "row": "o-04",
       "merchant": "ATM 現金引き出し（生活費）",
       "card": "PayPay 銀行 ATM",
@@ -131,8 +132,7 @@ var ICHIRANGAI_MEISAI = {
       "last": "2026-07-21",
       "note": "PayPay 銀行の出金18回（2月3・3月3・4月4・5月1・6月3・7月4）合計 541,000円＋手数料。1月は0回",
       "status": null,
-      "status_date": null,
-      "sub": "現金（ATM）"
+      "status_date": null
     },
     {
       "id": "m-003",
@@ -220,7 +220,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-008",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "o-08",
       "merchant": "NITORI",
       "card": "Amex US 44000",
@@ -270,7 +270,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-011",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "o-08",
       "merchant": "RAKUTENPAY PESCA NANOSAKA JP",
       "card": "Amex US 44000",
@@ -287,7 +287,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-012",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "o-08",
       "merchant": "DON QUIJOTE K* JP",
       "card": "Amex US 44000",
@@ -337,7 +337,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-015",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "o-08",
       "merchant": "NINONI MAKISHOKINAWA JP",
       "card": "Amex US 44000",
@@ -901,7 +901,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-052",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "o-08",
       "merchant": "SHIYOKUNOBAN OKINAWA",
       "card": "Amex US 44000",
@@ -1016,7 +1016,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k002",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "LAWSON * JP",
       "card": "Amex US 44000",
@@ -1033,7 +1033,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k003",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "SEVEN ELEVEN * JP",
       "card": "Amex US 44000",
@@ -1050,7 +1050,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k004",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "FAMILY MART * JP",
       "card": "Amex US 44000",
@@ -1067,7 +1067,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k005",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "AEON RYUKYU * JP",
       "card": "Amex US 44000",
@@ -1101,7 +1101,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k007",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "SAKURAYA OKINAWA JP",
       "card": "Amex US 44000",
@@ -1268,7 +1268,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k017",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "TAMAGUSUKU CONA BA SHI OK",
       "card": "Amex US 44000",
@@ -1336,7 +1336,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k021",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "SUSHITENSOBATOKINAWA JP",
       "card": "Amex US 44000",
@@ -1402,7 +1402,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k025",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "RYUKYUORIONHOOKINAWA JP",
       "card": "Amex US 44000",
@@ -1419,7 +1419,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k026",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "BIC CAMERA SH* JP",
       "card": "Amex US 44000",
@@ -1486,7 +1486,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k030",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "MAIKOHAN GIONMIYAGAWKYOTO JP",
       "card": "Amex US 44000",
@@ -1621,7 +1621,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k039",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "MANEKINEKONAHOKINAWA JP",
       "card": "Amex US 44000",
@@ -1789,7 +1789,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k049",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "GODIVA CAFE OOKINAWA JP",
       "card": "Amex US 44000",
@@ -2010,7 +2010,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k064",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "SOBA SANRAKU OKINAWA JP",
       "card": "Amex US 44000",
@@ -2161,7 +2161,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k074",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "RYUKYUCHAKAN NA BA SHI OK",
       "card": "Amex US 44000",
@@ -2195,7 +2195,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k076",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "COFFEE CAMP AKANAGAWA JP",
       "card": "Amex US 44000",
@@ -2280,7 +2280,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k081",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "JOINUS KANAGAWA JP",
       "card": "Amex US 44000",
@@ -2413,7 +2413,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k097",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "KYUBIKKUPLAZAJAPAN JP",
       "card": "Amex US 44000",
@@ -2446,7 +2446,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k099",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "POTIERCOFFEEIKANAGAWA JP",
       "card": "Amex US 44000",
@@ -2463,7 +2463,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k100",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "AOBASHINKAN KANAGAWA JP",
       "card": "Amex US 44000",
@@ -2480,7 +2480,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k101",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "YS 4ST KOKUSAOKINAWA JP",
       "card": "Amex US 44000",
@@ -2497,7 +2497,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k102",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "TRATTORIA SOMNA BA SHI OK",
       "card": "Amex US 44000",
@@ -2579,7 +2579,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k107",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "TULLYS COFFEETOKYO JP",
       "card": "Amex US 44000",
@@ -2596,7 +2596,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k108",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "ATOZ CAFE TOKYO JP",
       "card": "Amex US 44000",
@@ -2629,7 +2629,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k110",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "COFFEEPOTOHOTOKINAWA JP",
       "card": "Amex US 44000",
@@ -2679,7 +2679,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k113",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "CHILLULU COFFKANAGAWA JP",
       "card": "Amex US 44000",
@@ -2729,7 +2729,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k116",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "CALORIESMILEGOKINAWA JP",
       "card": "Amex US 44000",
@@ -2795,7 +2795,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k120",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "SURFCAFEULUOKOKINAWA JP",
       "card": "Amex US 44000",
@@ -2812,7 +2812,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k121",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "ZHYVAGOCOFFEEOKINAWA JP",
       "card": "Amex US 44000",
@@ -2829,7 +2829,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k122",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "TM COFFEE AIROKINAWA JP",
       "card": "Amex US 44000",
@@ -2846,7 +2846,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k123",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "RYUKYUSHIMABUOKINAWA JP",
       "card": "Amex US 44000",
@@ -2863,7 +2863,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k124",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "UNI COFFEE ROHENG BANG SHI ZHONG KA",
       "card": "Amex US 44000",
@@ -2880,7 +2880,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k125",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "DEPARTMENT STOKINAWA JP",
       "card": "Amex US 44000",
@@ -2896,7 +2896,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k126",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "MARUETSU PETI* JP",
       "card": "Amex US 44000",
@@ -2930,7 +2930,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k128",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "COCOKARAFINE KANAGAWA JP",
       "card": "Amex US 44000",
@@ -2978,7 +2978,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k131",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "FOREST NOCTUROKINAWA JP",
       "card": "Amex US 44000",
@@ -2994,7 +2994,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k132",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "HINOYACURRY TTOKYO JP",
       "card": "Amex US 44000",
@@ -3028,7 +3028,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k134",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "AEON RYUKYU OKINAWAKEN SHIMAJIRIJP",
       "card": "Amex US 44000",
@@ -3045,7 +3045,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k135",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "RAMENTORIDASHTOKYO JP",
       "card": "Amex US 44000",
@@ -3096,7 +3096,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k138",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "STARBUCKS COF* JP",
       "card": "Amex US 44000",
@@ -3130,7 +3130,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k140",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "TENDONTENYA Y* JP",
       "card": "Amex US 44000",
@@ -3147,7 +3147,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k141",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "HIDAKAYA KANAGAWA JP",
       "card": "Amex US 44000",
@@ -3230,7 +3230,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k146",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "THE COFFEE STOKINAWA JP",
       "card": "Amex US 44000",
@@ -3247,7 +3247,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k147",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "AGU DIVE PG OKINAWA JP",
       "card": "Amex US 44000",
@@ -3264,7 +3264,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k148",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "MYBASKET * JP",
       "card": "Amex US 44000",
@@ -3363,7 +3363,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k154",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "TULLYS COFFEE* JP",
       "card": "Amex US 44000",
@@ -3544,7 +3544,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k165",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "KAIKATSUCLUB OKINAWA JP",
       "card": "Amex US 44000",
@@ -3593,7 +3593,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k168",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "DOUTOR COFFEETOKYO JP",
       "card": "Amex US 44000",
@@ -3643,7 +3643,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k172",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "BREWERSCAFE PKANAGAWA JP",
       "card": "Amex US 44000",
@@ -3694,7 +3694,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k175",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "UKAUKA KYOTO JP",
       "card": "Amex US 44000",
@@ -3728,7 +3728,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k178",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "POMPADOUR MOTKANAGAWA JP",
       "card": "Amex US 44000",
@@ -3795,7 +3795,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k182",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "MORI BUILDINGTOKYO JP",
       "card": "Amex US 44000",
@@ -3829,7 +3829,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k184",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "LUCUA OSAKA OSAKA JP",
       "card": "Amex US 44000",
@@ -3964,7 +3964,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k192",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "COFFEEPOTOHOTO AIR OKINAWA JP",
       "card": "Amex US 44000",
@@ -3981,7 +3981,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k193",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "OSAKA INTERNA* JP",
       "card": "Amex US 44000",
@@ -3998,7 +3998,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k194",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "BASEGATE YOKO* JP",
       "card": "Amex US 44000",
@@ -4097,7 +4097,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k201",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "BIO C BON * JP",
       "card": "Amex US 44000",
@@ -4146,7 +4146,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k204",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "COCA-COLA POP GARDENMINATOKU TO",
       "card": "Amex US 44000",
@@ -4229,7 +4229,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k209",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "OKINAWA COCACOKINAWA JP",
       "card": "Amex US 44000",
@@ -4246,7 +4246,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k210",
-      "category": "消費",
+      "category": "カード生活費",
       "row": "小口",
       "merchant": "MANEKENJRKYOUKYOTO JP",
       "card": "Amex US 44000",
