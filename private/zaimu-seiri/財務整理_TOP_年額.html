@@ -262,11 +262,11 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   <h1>財務整理 年額 <span style="font-size:12px;color:#c62828;font-weight:bold;">（1〜7月の実績の月平均 × 12 ＝ 年額に換算。借入だけは残っている元金の総額）</span></h1>
   <!-- 1段目：Before − 借入 = 出発点（全部固定・グレー） -->
   <div class="eq-row eq-row-1">
-    <div class="metric eq-before frozen"><div class="label">Before 総額</div><div class="value">1,123,751<span class="yen">円</span><div class="src">1〜7月の月平均 1,224,685 − 私用（事業主貸）100,934<br>PayPay は実額（RKS 127,388＋ATM 77,286）・カード請求の二重計上 78,229 を除外（Chase Hyatt・BOA 4452）・ドルは148円</div><span class="lock-note">2026-09-19 Mits様確認</span></div></div>
+    <div class="metric eq-before frozen"><div class="label">Before 総額</div><div class="value"><span id="r1-before">-</span><span class="yen">円</span><div class="src">出発点 <span id="r1-before-start">-</span> ＋ 借入の返済 142,286<br>（前の値 1,123,751 は 1〜7月の月平均 1,224,685 − 私用 100,934）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
     <div class="eq-op">−</div>
     <div class="metric eq-loan frozen"><div class="label">借入の返済</div><div class="value">142,286<span class="yen">円</span><div class="src">1〜7月の実額の月平均：楽天 35,431 ／ Amex JP 96,687 ／ Amex US 10,169</div><span class="lock-note">2026-09-19 Mits様確認</span></div></div>
     <div class="eq-op">＝</div>
-    <div class="metric eq-start frozen"><div class="label">出発点総額（借入の返済を除く）</div><div class="value">981,465<span class="yen">円</span><div class="src">1,123,751 − 142,286</div><span class="lock-note">2026-09-19 Mits様確認</span></div></div>
+    <div class="metric eq-start frozen"><div class="label">出発点総額（借入の返済を除く）</div><div class="value"><span id="r1-start">-</span><span class="yen">円</span><div class="src">一覧 A 374,378 ＋ 一覧外 B <span id="r1-start-b">-</span>（判定ページのデータ）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
   </div>
 
   <!-- 2段目 サブスク：全部固定 -->
@@ -364,10 +364,10 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 </div>
 
 <!-- TOP: legend以下は無し -->
-<script src="zaimu_seiri_data.js?v=1789815858"></script>
-<script src="zaimu_seiri_state.js?v=1789815858"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789815858"></script>
-<script src="zaimu_seiri_render.js?v=1789815858"></script>
+<script src="zaimu_seiri_data.js?v=1789815914"></script>
+<script src="zaimu_seiri_state.js?v=1789815914"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789815914"></script>
+<script src="zaimu_seiri_render.js?v=1789815914"></script>
 <script>
 // 3段目：一覧外の判定ページ（zaimu_seiri_ichirangai_meisai.js）から計算する（2026-09-19 Mits様指示・一覧外の経費ページは廃止）
 (function(){
@@ -388,6 +388,10 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   put("r4-den", A + total); put("r4-den-b", total);
   put("r4-keep", A_KEEP + keep); put("r4-keep-b", keep);
   put("r4-total", (A - A_KEEP) + (total - keep)); put("r4-total-b", total - keep);
+  // 1段目：出発点＝一覧 A ＋ 一覧外 B（判定ページ）／ Before＝出発点＋借入の返済（142,286・1〜7月実額）
+  const BORROW = 142286;
+  put("r1-start", A + total); put("r1-start-b", total);
+  put("r1-before", A + total + BORROW); put("r1-before-start", A + total);
 })();
 </script>
 <script>
