@@ -15,7 +15,7 @@ REPO="/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジ�
 
 MSG="${1:-財務整理: 最新版で出し直し}"
 
-# 対象11本（HTML 6本＋JS 5本）。参照は grep で確認済み・これ以外は無い
+# 対象12本（HTML 6本＋JS 6本）。参照は grep で確認済み・これ以外は無い
 FILES=(
   "財務整理_TOP.html"
   "財務整理_TOP_年額.html"
@@ -28,6 +28,7 @@ FILES=(
   "zaimu_seiri_state.js"
   "zaimu_seiri_ichirangai_meisai.js"
   "zaimu_seiri_kijun.js"
+  "zaimu_seiri_sync.js"
 )
 
 # 1. 存在確認
