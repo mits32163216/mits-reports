@@ -182,18 +182,6 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
     <div class="total-cell after"><div class="lbl">これからの月額</div><div class="val"><span id="t-after">-</span>円</div></div>
   </div>
 
-  <!-- 進み具合バー（削る＋一回性を2色に分けて足す） -->
-  <div class="bar-wrap">
-    <div class="bar-label">
-      <span>半分経営に要る一覧外からの削減 <b id="t-goal">317,193</b>円 に対する進み具合（<span style="color:var(--red);">削る</span> ＋ <span style="color:#a68000;">一回性</span>）</span>
-      <span id="t-pct">0%</span>
-    </div>
-    <div class="bar-outer">
-      <div class="bar-cut"  id="t-bar-cut"  style="left:0%;width:0%"></div>
-      <div class="bar-once" id="t-bar-once" style="left:0%;width:0%"></div>
-    </div>
-  </div>
-
   <div style="margin-top:10px; font-size:11px; color:var(--sub);">
     集計期間 <span id="t-period">-</span>／件数 <b id="t-count">-</b> 件／
     <span style="color:var(--red);">■ 削る</span>
@@ -220,18 +208,17 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789827917"></script>
-<script src="zaimu_seiri_state.js?v=1789827917"></script>
-<script src="zaimu_seiri_sync.js?v=1789827917"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789827917"></script>
+<script src="zaimu_seiri_data.js?v=1789828183"></script>
+<script src="zaimu_seiri_state.js?v=1789828183"></script>
+<script src="zaimu_seiri_sync.js?v=1789828183"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789828183"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
 // カテゴリは caps のキーからそのまま拾う（決め打ちしない・BS-keiri が増減できる）
 // caps に無いカテゴリを item が持っていた場合の受け皿を末尾に置く
 const CATEGORY_FALLBACK = "外注・その他";
-// 削減目標（半分経営に要る一覧外からの削減）— 発注書で指定された値
-let ICH_GOAL = 0;   // 上限の合計＝（実績 − 続ける）÷ 2。描くたびに計算し直す（旧 317,193 は発注書の固定値だった）
+// 上限（実績の半分）と、その合計に対する進み具合は 2026-09-19 Mits様指示で消した
 
 function _savedIchirangai(){ try { return (SAVED_STATE && SAVED_STATE.ichirangai) || {}; } catch(e){ return {}; } }
 function _loadLocalIch(){
@@ -301,7 +288,6 @@ function render(){
   // 期間表示
   document.getElementById("t-period").textContent = (data && data.period) || "-";
   document.getElementById("t-count").textContent  = items.length;
-  document.getElementById("t-goal").textContent   = fmtYen(ICH_GOAL);
 
   // カテゴリは caps のキーで並ぶ順に決まる（BS-keiri が caps の並びで意図を伝える）
   // caps に無い category を持つ item は末尾の CATEGORY_FALLBACK に落とす
@@ -319,9 +305,6 @@ function render(){
     document.getElementById("t-cut").textContent    = "0";
     document.getElementById("t-once").textContent   = "0";
     document.getElementById("t-after").textContent  = "0";
-    document.getElementById("t-pct").textContent    = "0%";
-    document.getElementById("t-bar-cut").style.width  = "0%";
-    document.getElementById("t-bar-once").style.width = "0%";
     Array.from(container.querySelectorAll(".section")).forEach(el => el.remove());
     return;
   }
@@ -356,23 +339,17 @@ function render(){
   catRow.innerHTML = CATEGORIES.map(c => {
     const b = byCat[c];
     const plan = (plansAll[c] && Number(plansAll[c].plan)) || 0;   // 見出しの「削る予定額（月）」
-    const cap = Math.round((byCat[c].actual - byCat[c].keep) / 2); // 上限＝続ける以外の実績の半分（Mits様指示 2026-09-19）
     const after = b.actual - b.keep - b.cut - b.once;
-    const diff = cap - after;    // 上限 − これからの月額
-    const over = diff < 0;
-    return `<div class="cat-box${over?' over':''}">
+    return `<div class="cat-box">
       <div class="cat-name">${esc(c)}</div>
       <div class="cat-lines">
         <div class="cat-line"><span class="lbl">実績（月平均）</span><span class="val">${fmtYen(b.actual)}円</span></div>
-        <div class="cat-line"><span class="lbl">月の上限（続ける以外の実績の半分）</span><span class="val">${cap?fmtYen(cap)+'円':'―'}</span></div>
         <div class="cat-line"><span class="lbl" style="color:var(--green);">続ける</span><span class="val" style="color:var(--green);">${fmtYen(b.keep)}円</span></div>
         <div class="cat-line"><span class="lbl" style="color:#a68000;">一回性</span><span class="val" style="color:#a68000;">${fmtYen(b.once)}円</span></div>
         <div class="cat-line"><span class="lbl" style="color:#c0392b;">削る金額</span><span class="val" style="color:#c0392b;">${fmtYen(b.cut)}円</span></div>
         <div class="cat-line after"><span class="lbl">これからの月額</span><span class="val">${fmtYen(after)}円</span></div>
-        <div class="cat-line diff${over?' over':''}"><span class="lbl">上限との差</span><span class="val">${cap?(over?'−'+fmtYen(-diff):'+'+fmtYen(diff))+'円':'―'}</span></div>
         <div class="cat-line plan" style="border-top:1px dashed #c8ccd3;margin-top:4px;padding-top:4px;"><span class="lbl" style="color:#6a3fa0;">削る予定額</span><span class="val" style="color:#6a3fa0;">${plan?fmtYen(plan)+'円':'―'}</span></div>
         <div class="cat-line plan"><span class="lbl" style="color:#6a3fa0;">予定どおりなら月額</span><span class="val" style="color:#6a3fa0;">${fmtYen(after - plan)}円</span></div>
-        <div class="cat-line plan${(cap - (after - plan))<0?' over':''}"><span class="lbl" style="color:#6a3fa0;">予定での上限との差</span><span class="val" style="color:${(cap - (after - plan))<0?'#c0392b':'#6a3fa0'};">${cap?(((cap - (after - plan))<0)?'−'+fmtYen(-(cap - (after - plan))):'+'+fmtYen(cap - (after - plan)))+'円':'―'}</span></div>
       </div>
     </div>`;
   }).join("");
@@ -383,24 +360,11 @@ function render(){
   const totalOnce   = CATEGORIES.reduce((a,c) => a + byCat[c].once, 0);
   const totalKeep   = CATEGORIES.reduce((a,c) => a + byCat[c].keep, 0);
   const totalAfter  = totalActual - totalKeep - totalCut - totalOnce;
-  ICH_GOAL = Math.round((totalActual - totalKeep) / 2);
-  document.getElementById("t-goal").textContent = fmtYen(ICH_GOAL);
   document.getElementById("t-keep").textContent = fmtYen(totalKeep);
   document.getElementById("t-actual").textContent = fmtYen(totalActual);
   document.getElementById("t-cut").textContent    = fmtYen(totalCut);
   document.getElementById("t-once").textContent   = fmtYen(totalOnce);
   document.getElementById("t-after").textContent  = fmtYen(totalAfter);
-  // 進捗バー：削る + 一回性 の合計で進める。バーは2色に分ける
-  const pctCut  = ICH_GOAL > 0 ? Math.min(100, (totalCut  / ICH_GOAL) * 100) : 0;
-  const pctOnce = ICH_GOAL > 0 ? Math.min(100 - pctCut, (totalOnce / ICH_GOAL) * 100) : 0;
-  const pctSum  = pctCut + pctOnce;
-  document.getElementById("t-pct").textContent    = pctSum.toFixed(1) + "%";
-  const barCut  = document.getElementById("t-bar-cut");
-  const barOnce = document.getElementById("t-bar-once");
-  barCut.style.left  = "0%";
-  barCut.style.width = pctCut + "%";
-  barOnce.style.left  = pctCut + "%";
-  barOnce.style.width = pctOnce + "%";
 
   // 既存の分類テーブル削除して再描画
   Array.from(container.querySelectorAll(".section")).forEach(el => el.remove());
@@ -463,14 +427,13 @@ function render(){
     } else {
       rows = sorted.map(rowOf).join("");
     }
-    const cap = Math.round((byCat[c].actual - byCat[c].keep) / 2);
     const after = b.actual - b.keep - b.cut - b.once;
     const plans = loadPlan();
     const isOpen = !!loadOpen()[c];
     return `<div class="section${isRouhi && subHidden() ? ' hide-subs' : ''}${isOpen ? '' : ' folded'}">
       <div class="section-head" data-cat="${esc(c)}">
         <h2><span class="fold-mark">${isOpen ? '▼' : '▶'}</span>${esc(c)} <span class="section-sub">${b.items.length}件・月平均 ${fmtYen(b.actual)}円・${KIKAN}の総額 ${fmtYen(b.items.reduce((t,i)=>t+(i.total||0),0))}円・<b style="color:#c0392b;">削る総額 ${fmtYen(b.items.filter(i=>(stOf(i,state)||{}).status==="cut").reduce((t,i)=>t+(i.total||0),0))}円（月 ${fmtYen(b.cut)}円）</b>・<label class="plan-box" style="white-space:nowrap;">削る予定額（月） <input class="plan-input" data-cat="${esc(c)}" type="text" inputmode="numeric" value="${(plans[c] && plans[c].plan) ? fmtYen(plans[c].plan) : ""}" placeholder="0" style="width:110px;text-align:right;font-size:14px;padding:2px 6px;border:1px solid #c8ccd3;border-radius:4px;">円</label></span></h2>
-        <span class="section-sub">まだ削る・続ける・一回性を決めていない分 <b style="color:var(--gold);">月 ${fmtYen(after)}円</b> → 上限 月 ${cap?fmtYen(cap)+'円':'―'}（続ける以外の実績の半分）${cap ? (after > cap ? `まで <b style="color:#c0392b;">あと ${fmtYen(after - cap)}円 減らす</b>` : `に <b style="color:var(--green);">収まっている（余り ${fmtYen(cap - after)}円）</b>`) : ''} ／ 一回性（もう出ない）${fmtYen(b.once)}円${isRouhi ? `<button class="sub-toggle">${subHidden() ? "分類ボタンを出す" : "分類ボタンを消す"}</button>` : ""}</span>
+        <span class="section-sub">まだ削る・続ける・一回性を決めていない分 <b style="color:var(--gold);">月 ${fmtYen(after)}円</b> ／ 一回性（もう出ない）${fmtYen(b.once)}円${isRouhi ? `<button class="sub-toggle">${subHidden() ? "分類ボタンを出す" : "分類ボタンを消す"}</button>` : ""}</span>
       </div>
       <table>
         <thead><tr>
@@ -577,7 +540,7 @@ render();
     const nodes = []; while (w.nextNode()) nodes.push(w.currentNode);
     nodes.forEach(n => {
       let t = n.nodeValue;
-      t = t.replace(/月平均/g, "年額").replace(/これからの月額/g, "これからの年額").replace(/月の上限/g, "年の上限").replace(/予定どおりなら月額/g, "予定どおりなら年額");
+      t = t.replace(/月平均/g, "年額").replace(/これからの月額/g, "これからの年額").replace(/予定どおりなら月額/g, "予定どおりなら年額");
       n.nodeValue = t;
     });
     // 「円」の直前の数字（同じ要素内で分かれている場合も含む）を × 12
