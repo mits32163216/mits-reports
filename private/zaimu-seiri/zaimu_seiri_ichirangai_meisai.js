@@ -794,7 +794,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-046",
-      "category": "浪費",
+      "category": "旅行",
       "row": "o-12",
       "merchant": "PAYPAL LIMONZ",
       "card": "Chase Sapphire 0430",
@@ -804,7 +804,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 2748,
       "first": "2026-04-22",
       "last": "2026-07-21",
-      "note": "",
+      "note": "旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -1082,7 +1082,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k006",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "SWING & PILLOGEORGETOWN",
       "card": "Amex US 44000",
@@ -1092,7 +1092,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 970,
       "first": "2026-01-15",
       "last": "2026-01-15",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：海外の地名）",
       "status": null,
       "status_date": null
     },
@@ -1130,7 +1130,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k009",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "PINDUODUO HONG KONG",
       "card": "Chase Sapphire 0430",
@@ -1140,13 +1140,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 921,
       "first": "2026-01-03",
       "last": "2026-01-03",
-      "note": "元の分類：買い物",
+      "note": "元の分類：買い物 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k010",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "EXPEDIA 734764315814EXPEDIA.COM WA",
       "card": "Amex US 44000",
@@ -1156,13 +1156,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 890,
       "first": "2026-06-17",
       "last": "2026-06-17",
-      "note": "元の分類：旅行・宿泊・交通",
+      "note": "元の分類：旅行・宿泊・交通 ／旅行へ（Mits様判定 2026-09-19：海外の地名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k011",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "THE JUNK CAFE GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -1172,7 +1172,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 889,
       "first": "2026-05-12",
       "last": "2026-06-01",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -1194,7 +1194,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k013",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "V-LOOK EYEWEAR GEORGE TOWN",
       "card": "Chase Sapphire 0430",
@@ -1204,7 +1204,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 878,
       "first": "2026-01-21",
       "last": "2026-01-21",
-      "note": "元の分類：買い物",
+      "note": "元の分類：買い物 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -1290,7 +1290,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k019",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "VNPAY MIAFOODANDDRINK DA NANG",
       "card": "Chase Sapphire 0430",
@@ -1300,13 +1300,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 802,
       "first": "2026-01-01",
       "last": "2026-01-09",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k020",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "STEEP SOCIAL GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -1316,7 +1316,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 783,
       "first": "2026-05-14",
       "last": "2026-05-14",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -1354,7 +1354,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k023",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "ALPRO PHARMACY - PGTCS1 PULAU PINANG",
       "card": "Chase Sapphire 0430",
@@ -1364,13 +1364,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 753,
       "first": "2026-05-23",
       "last": "2026-05-23",
-      "note": "元の分類：買い物",
+      "note": "元の分類：買い物 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k024",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "SP LONELY PLANET FORT MILL SC",
       "card": "Amex US 44000",
@@ -1380,7 +1380,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 731,
       "first": "2026-04-01",
       "last": "2026-04-01",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：海外の地名）",
       "status": null,
       "status_date": null
     },
@@ -1434,7 +1434,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k028",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "GUARDIAN-1AVP-8476 GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -1444,13 +1444,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 703,
       "first": "2026-05-24",
       "last": "2026-05-24",
-      "note": "元の分類：買い物",
+      "note": "元の分類：買い物 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k029",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "ALIGHT COFFEEGEORGE TOWN",
       "card": "Amex US 44000",
@@ -1460,7 +1460,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 685,
       "first": "2026-01-19",
       "last": "2026-05-13",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：海外の地名）",
       "status": null,
       "status_date": null
     },
@@ -1482,7 +1482,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k031",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "BAR COCCO 080-3906-2357",
       "card": "Chase Sapphire 0430",
@@ -1492,7 +1492,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 676,
       "first": "2026-06-04",
       "last": "2026-06-04",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -1514,7 +1514,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k033",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "PINDUODUO HK",
       "card": "Chase Sapphire 0430",
@@ -1524,7 +1524,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 651,
       "first": "2026-01-03",
       "last": "2026-01-03",
-      "note": "元の分類：買い物",
+      "note": "元の分類：買い物 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -1546,7 +1546,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k035",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "GRAB RIDES-EC PETALING JAYA",
       "card": "Amex US 44000",
@@ -1556,13 +1556,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 619,
       "first": "2026-01-11",
       "last": "2026-06-02",
-      "note": "元の分類：旅行・宿泊・交通",
+      "note": "元の分類：旅行・宿泊・交通 ／旅行へ（Mits様判定 2026-09-19：海外の地名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k036",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "SNAPPY MART GEORGETOWN",
       "card": "Amex US 44000 / Chase Sapphire 0430",
@@ -1572,7 +1572,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 598,
       "first": "2026-01-14",
       "last": "2026-06-01",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -1594,7 +1594,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k038",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "ALIGHT COFFEE GEORGE TOWN",
       "card": "Chase Sapphire 0430",
@@ -1604,7 +1604,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 580,
       "first": "2026-05-18",
       "last": "2026-05-30",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -1626,7 +1626,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k040",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "CHULIA COURT THE TAVERN PENANG",
       "card": "Chase Sapphire 0430",
@@ -1636,7 +1636,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 544,
       "first": "2026-01-27",
       "last": "2026-01-27",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -1658,7 +1658,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k042",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "SQ*KUROOBISYUBO OKINAWA",
       "card": "Chase Sapphire 0430",
@@ -1668,13 +1668,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 542,
       "first": "2026-06-05",
       "last": "2026-06-05",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k043",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "AMERICAN AIRLINES 800-433-7300 TX",
       "card": "Amex US 44000",
@@ -1684,7 +1684,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 537,
       "first": "2026-01-24",
       "last": "2026-01-24",
-      "note": "元の分類：旅行・宿泊・交通",
+      "note": "元の分類：旅行・宿泊・交通 ／旅行へ（Mits様判定 2026-09-19：海外の地名）",
       "status": null,
       "status_date": null
     },
@@ -1818,7 +1818,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k052",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "SAKURAZAKAGURANDO OKINAWA",
       "card": "Chase Sapphire 0430",
@@ -1828,13 +1828,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 438,
       "first": "2026-02-20",
       "last": "2026-02-20",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k053",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "DEEN CLAYPOT BRIYANI GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -1844,13 +1844,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 434,
       "first": "2026-05-14",
       "last": "2026-05-24",
-      "note": "元の分類：買い物",
+      "note": "元の分類：買い物 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k054",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "SEAFOOD STAND PACIOREK HA KANAGAWA",
       "card": "Chase Sapphire 0430",
@@ -1860,7 +1860,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 427,
       "first": "2026-06-17",
       "last": "2026-06-17",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -1978,7 +1978,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k062",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "GRAB HA NOI",
       "card": "Amex US 44000",
@@ -1988,13 +1988,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 385,
       "first": "2026-01-09",
       "last": "2026-01-11",
-      "note": "元の分類：旅行・宿泊・交通",
+      "note": "元の分類：旅行・宿泊・交通 ／旅行へ（Mits様判定 2026-09-19：海外の地名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k063",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "SMILING BUFFALO-GEORGETOW GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -2004,7 +2004,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 382,
       "first": "2026-01-12",
       "last": "2026-01-14",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -2090,7 +2090,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k069",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "BUREAU OF THE ROYAL HOUSE BANGKOK",
       "card": "Chase Sapphire 0430",
@@ -2100,7 +2100,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 338,
       "first": "2026-02-04",
       "last": "2026-02-04",
-      "note": "元の分類：旅行・宿泊・交通",
+      "note": "元の分類：旅行・宿泊・交通 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -2138,7 +2138,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k072",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "RAFFLES DE SALOON PENANG",
       "card": "Chase Sapphire 0430",
@@ -2148,13 +2148,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 321,
       "first": "2026-05-23",
       "last": "2026-05-23",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k073",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "SWING & PILLOWS@MUNTRI GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -2164,7 +2164,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 317,
       "first": "2026-01-14",
       "last": "2026-01-14",
-      "note": "元の分類：旅行・宿泊・交通",
+      "note": "元の分類：旅行・宿泊・交通 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -2218,7 +2218,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k077",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "NOMAD BAR GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -2228,13 +2228,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 293,
       "first": "2026-05-20",
       "last": "2026-05-20",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k078",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "VINAHOUSE SDN. BHD. PULAU PINANG",
       "card": "Chase Sapphire 0430",
@@ -2244,7 +2244,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 293,
       "first": "2026-05-21",
       "last": "2026-05-21",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -2298,7 +2298,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k082",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "TIMES MART GROUP GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -2308,7 +2308,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 280,
       "first": "2026-05-13",
       "last": "2026-05-15",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -2330,7 +2330,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k084",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "CARA CARO CAFE GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -2340,7 +2340,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 274,
       "first": "2026-01-15",
       "last": "2026-01-25",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -2394,7 +2394,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k088",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "HAPPY MART-L.KIMBERLEY GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -2404,13 +2404,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 262,
       "first": "2026-01-19",
       "last": "2026-01-24",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k089",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "MPOS HKDCHUMPA DA NANG",
       "card": "Chase Sapphire 0430",
@@ -2420,7 +2420,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 257,
       "first": "2026-01-03",
       "last": "2026-01-09",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -2506,7 +2506,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k095",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "VILLAGE GROCER-1ST AVENUE PENANG",
       "card": "Chase Sapphire 0430",
@@ -2516,7 +2516,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 252,
       "first": "2026-05-24",
       "last": "2026-05-24",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -2554,7 +2554,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k098",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "ATHENA SOUVLAKI TP. DA NANG",
       "card": "Chase Sapphire 0430",
@@ -2564,7 +2564,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 233,
       "first": "2026-01-08",
       "last": "2026-01-08",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -2634,7 +2634,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k103",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "LU COFFEE APARTMENT DA NANG",
       "card": "Chase Sapphire 0430",
@@ -2644,13 +2644,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 209,
       "first": "2026-01-01",
       "last": "2026-01-08",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k104",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "ISTORE GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -2660,13 +2660,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 209,
       "first": "2026-01-22",
       "last": "2026-01-22",
-      "note": "元の分類：買い物",
+      "note": "元の分類：買い物 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k105",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "WEIXIN*PANDUO PLATFORM SHENZHEN",
       "card": "Chase Sapphire 0430",
@@ -2676,13 +2676,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 207,
       "first": "2026-01-04",
       "last": "2026-01-04",
-      "note": "元の分類：買い物",
+      "note": "元の分類：買い物 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k106",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "HURRY HARI GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -2692,7 +2692,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 204,
       "first": "2026-05-18",
       "last": "2026-06-02",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -2730,7 +2730,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k109",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "GOOD EXPRESS MART GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -2740,7 +2740,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 188,
       "first": "2026-01-11",
       "last": "2026-05-11",
-      "note": "元の分類：買い物",
+      "note": "元の分類：買い物 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -2762,7 +2762,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k111",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "JW MARRIOTT BANGKOK BANGKOK",
       "card": "Chase Sapphire 0430",
@@ -2772,13 +2772,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 186,
       "first": "2026-02-02",
       "last": "2026-02-02",
-      "note": "元の分類：旅行・宿泊・交通",
+      "note": "元の分類：旅行・宿泊・交通 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k112",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "JAHANAKIPPANTEN 098-867-3687",
       "card": "Chase Sapphire 0430",
@@ -2788,7 +2788,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 183,
       "first": "2026-06-26",
       "last": "2026-06-26",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -2810,7 +2810,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k114",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "WATSON'S 1ST AVENUE (M258 PULAU PINANG",
       "card": "Chase Sapphire 0430",
@@ -2820,7 +2820,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 177,
       "first": "2026-01-21",
       "last": "2026-01-21",
-      "note": "元の分類：買い物",
+      "note": "元の分類：買い物 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -2858,7 +2858,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k117",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "TEK SEN RESTAURANT PG GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -2868,13 +2868,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 175,
       "first": "2026-05-28",
       "last": "2026-05-28",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k118",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "CIMB - BLACK KETTLE (PENA 10250 PENANG.",
       "card": "Chase Sapphire 0430",
@@ -2884,13 +2884,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 174,
       "first": "2026-05-22",
       "last": "2026-05-22",
-      "note": "元の分類：買い物",
+      "note": "元の分類：買い物 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k119",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "HWA TING GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -2900,7 +2900,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 168,
       "first": "2026-01-13",
       "last": "2026-01-13",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -3050,7 +3050,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k129",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "MPOS*HKD FLY Q NGU HANH SON",
       "card": "Amex US 44000",
@@ -3060,7 +3060,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 149,
       "first": "2026-01-08",
       "last": "2026-01-08",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：海外の地名）",
       "status": null,
       "status_date": null
     },
@@ -3114,7 +3114,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k133",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "DUO TIAN CAFE GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -3124,7 +3124,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 135,
       "first": "2026-01-23",
       "last": "2026-06-01",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -3210,7 +3210,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k139",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "CATFEINE COFFEE & JOYGIFT GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -3220,7 +3220,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 128,
       "first": "2026-05-26",
       "last": "2026-05-26",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -3258,7 +3258,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k142",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "WHEELER'S CAFE GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -3268,13 +3268,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 121,
       "first": "2026-01-14",
       "last": "2026-01-14",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k143",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "UKISHIMABASE 080-6496-1916",
       "card": "Chase Sapphire 0430",
@@ -3284,13 +3284,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 119,
       "first": "2026-06-06",
       "last": "2026-06-06",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k144",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "SB134-1ST AVEPENANG",
       "card": "Amex US 44000",
@@ -3300,7 +3300,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 115,
       "first": "2026-01-28",
       "last": "2026-01-28",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：海外の地名）",
       "status": null,
       "status_date": null
     },
@@ -3370,7 +3370,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k149",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "VNPAY GOZARCOFFEE DA NANG",
       "card": "Chase Sapphire 0430",
@@ -3380,7 +3380,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 108,
       "first": "2026-01-01",
       "last": "2026-01-06",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -3402,7 +3402,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k151",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "THONG THAI FUSION-GTWN PULAU PINANG",
       "card": "Chase Sapphire 0430",
@@ -3412,13 +3412,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 107,
       "first": "2026-05-15",
       "last": "2026-05-15",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k152",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "ROYAL HOST NAHASI",
       "card": "Chase Sapphire 0430",
@@ -3428,13 +3428,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 105,
       "first": "2026-06-04",
       "last": "2026-06-04",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k153",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "VNPAY FAIFOCOFFEE2 QUANG NAM",
       "card": "Chase Sapphire 0430",
@@ -3444,7 +3444,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 100,
       "first": "2026-01-10",
       "last": "2026-01-10",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -3466,7 +3466,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k155",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "SEVEN-ELEVEN TOKYO",
       "card": "Chase Sapphire 0430",
@@ -3476,7 +3476,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 96,
       "first": "2026-06-07",
       "last": "2026-06-07",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -3498,7 +3498,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k157",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "JIT SENG HK ROASTED GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -3508,7 +3508,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 95,
       "first": "2026-05-29",
       "last": "2026-05-29",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -3546,7 +3546,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k160",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "TACO BELL-1ST AVENUE GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -3556,13 +3556,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 92,
       "first": "2026-05-24",
       "last": "2026-05-24",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k161",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "J MART DA NANG",
       "card": "Chase Sapphire 0430",
@@ -3572,13 +3572,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 92,
       "first": "2026-01-04",
       "last": "2026-01-04",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k162",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "456 SCT-THE PBANGKOK TH",
       "card": "Amex US 44000",
@@ -3588,13 +3588,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 91,
       "first": "2026-01-31",
       "last": "2026-01-31",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：海外の地名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k163",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "034 SCT-NA NA SQUARE BANGKOK",
       "card": "Chase Sapphire 0430",
@@ -3604,13 +3604,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 91,
       "first": "2026-02-03",
       "last": "2026-02-03",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k164",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "SB267-GREEN HPENANG",
       "card": "Amex US 44000",
@@ -3620,7 +3620,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 89,
       "first": "2026-01-29",
       "last": "2026-01-29",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：海外の地名）",
       "status": null,
       "status_date": null
     },
@@ -3642,7 +3642,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k166",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "CF1073-SINGHA COMPLEX BANGKOK",
       "card": "Chase Sapphire 0430",
@@ -3652,13 +3652,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 81,
       "first": "2026-02-04",
       "last": "2026-02-04",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k167",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "MPOS*HKDCHUMPDA NANG",
       "card": "Amex US 44000",
@@ -3668,7 +3668,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 80,
       "first": "2026-01-04",
       "last": "2026-01-08",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：海外の地名）",
       "status": null,
       "status_date": null
     },
@@ -3690,7 +3690,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k169",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "TEXAS 1ST AVENUE PG PENANG",
       "card": "Chase Sapphire 0430",
@@ -3700,7 +3700,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 80,
       "first": "2026-05-24",
       "last": "2026-05-24",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -3722,7 +3722,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k171",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "24 XPRESS-MASJID KAPITAN GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -3732,7 +3732,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 77,
       "first": "2026-05-20",
       "last": "2026-05-29",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -3770,7 +3770,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k174",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "NAMASTEY KITCHEN GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -3780,7 +3780,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 73,
       "first": "2026-01-29",
       "last": "2026-01-29",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -3818,7 +3818,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k177",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "HEIM COFFEE BAR GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -3828,7 +3828,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 71,
       "first": "2026-05-23",
       "last": "2026-05-23",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -3850,7 +3850,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k179",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "7 ELEVEN MALAYSIA SDN BHD JALAN PENANG",
       "card": "Chase Sapphire 0430",
@@ -3860,13 +3860,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 70,
       "first": "2026-05-18",
       "last": "2026-05-18",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k180",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "GRAB BANGKOK TH",
       "card": "Amex US 44000",
@@ -3876,13 +3876,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 69,
       "first": "2026-02-04",
       "last": "2026-02-04",
-      "note": "元の分類：旅行・宿泊・交通",
+      "note": "元の分類：旅行・宿泊・交通 ／旅行へ（Mits様判定 2026-09-19：海外の地名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k181",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "COOKIE CRUMBS CHULIA STRE PULAU PINANG",
       "card": "Chase Sapphire 0430",
@@ -3892,7 +3892,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 68,
       "first": "2026-05-13",
       "last": "2026-05-13",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -3914,7 +3914,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k183",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "LANDMARK FOODBANGKOK TH",
       "card": "Amex US 44000",
@@ -3924,7 +3924,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 65,
       "first": "2026-02-04",
       "last": "2026-02-04",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：海外の地名）",
       "status": null,
       "status_date": null
     },
@@ -3946,7 +3946,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k185",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "ZUS COFFEE-THE WHITEAWAYS GEORGE TOWN",
       "card": "Chase Sapphire 0430",
@@ -3956,13 +3956,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 63,
       "first": "2026-05-16",
       "last": "2026-05-16",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k186",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "FULL-MARKET 3 DA NANG",
       "card": "Chase Sapphire 0430",
@@ -3972,7 +3972,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 62,
       "first": "2026-01-01",
       "last": "2026-01-01",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -3994,7 +3994,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k188",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "SPARK OPTICS GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -4004,13 +4004,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 59,
       "first": "2026-05-27",
       "last": "2026-05-27",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k189",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "INTER MGM ENTERPRISE GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -4020,7 +4020,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 59,
       "first": "2026-05-29",
       "last": "2026-05-29",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -4042,7 +4042,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k191",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "BAGELS DREAM GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -4052,7 +4052,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 53,
       "first": "2026-05-25",
       "last": "2026-05-25",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -4106,7 +4106,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k195",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "SB134-1ST AVENUE PENANG",
       "card": "Chase Sapphire 0430",
@@ -4116,7 +4116,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 51,
       "first": "2026-05-16",
       "last": "2026-05-16",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -4138,7 +4138,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k197",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "ROPEWALKER - DORM GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -4148,13 +4148,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 45,
       "first": "2026-01-27",
       "last": "2026-01-27",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k198",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "PAYOO-HIGHLANDA NANG",
       "card": "Amex US 44000",
@@ -4164,7 +4164,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 44,
       "first": "2026-01-10",
       "last": "2026-01-10",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：海外の地名）",
       "status": null,
       "status_date": null
     },
@@ -4186,7 +4186,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k200",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "OKINAWATOSHIMONORAIL OKINAWA",
       "card": "Chase Sapphire 0430",
@@ -4196,7 +4196,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 43,
       "first": "2026-02-06",
       "last": "2026-02-06",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -4218,7 +4218,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k202",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "HAMEEDIYAH RESTAURANT GEORGETOWN",
       "card": "Chase Sapphire 0430",
@@ -4228,13 +4228,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 42,
       "first": "2026-01-25",
       "last": "2026-01-25",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k203",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "FAMILYMART-CHPENANG",
       "card": "Amex US 44000",
@@ -4244,7 +4244,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 41,
       "first": "2026-01-17",
       "last": "2026-01-17",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：海外の地名）",
       "status": null,
       "status_date": null
     },
@@ -4266,7 +4266,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k205",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "BREAD HISTORY (PRANGIN MA PULAU PINANG",
       "card": "Chase Sapphire 0430",
@@ -4276,13 +4276,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 32,
       "first": "2026-05-21",
       "last": "2026-05-21",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k206",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "DOUBLE FOOD (MALAYSIA) SD TAMAN USAHANI",
       "card": "Chase Sapphire 0430",
@@ -4292,7 +4292,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 29,
       "first": "2026-01-26",
       "last": "2026-01-26",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -4314,7 +4314,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k208",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "ARL. RPR. BANGKOK",
       "card": "Chase Sapphire 0430",
@@ -4324,7 +4324,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 27,
       "first": "2026-01-31",
       "last": "2026-01-31",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
@@ -4362,7 +4362,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k211",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "FAMILYMART TOKYO",
       "card": "Chase Sapphire 0430",
@@ -4372,13 +4372,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 26,
       "first": "2026-06-07",
       "last": "2026-06-07",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k212",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "FAMILYMART-CHULIA STREET PENANG",
       "card": "Chase Sapphire 0430",
@@ -4388,13 +4388,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 24,
       "first": "2026-05-21",
       "last": "2026-05-21",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k213",
-      "category": "コンビニ・スーパー",
+      "category": "旅行",
       "row": "小口",
       "merchant": "ARL. SVB. SAMUTPRAKAN",
       "card": "Chase Sapphire 0430",
@@ -4404,7 +4404,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 24,
       "first": "2026-02-04",
       "last": "2026-02-04",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
       "status": null,
       "status_date": null
     }
