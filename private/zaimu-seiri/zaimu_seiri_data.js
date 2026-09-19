@@ -176,12 +176,8 @@ var DATA = {
       { id:"k3-08", name:"Amex US Delta 年会費（Reserve）", amount:8801, card:"", memo:"2026-07-07 RENEWAL MEMBERSHIP FEE $650.00（Delta Reserve 本カード・Mits様分）＠162.4782 = 105,611円。同日 家族カード追加カード分 $175.00（28,434円）は別行扱い（k3 は本カード年会費のみを対象・Hilton k3-05 と同じ運用）。出典 amex_us_2026_zenken_shokai.html／MF 仕訳「RENEWAL MEMBERSHIP FEE 07/07〜07/17 3件 $1,375.00 → 仕入高 223,408円」。", notion_url:"https://app.notion.com/3b100782d90a81a69893ff05affb3671", cycle:"annual", annual_amount:"$650（105,611円）", annual_jpy:105611, last_paid:"2026-07-07", next_due:"2027-07-07予定", status:null, status_date:null }
     ]
   },
-  "k4": {
-    title: "区分4　家族カードの利用を月 $100 にする",
-    items: [
-      { id:"k4-01", name:"家族カード利用（今の月 $421.42 → $100）", amount:50855, card:"Amex US 44000", memo:"減額実行", notion_url:null, cycle:null, annual_amount:null, annual_jpy:null, last_paid:"2026-09-14", next_due:"継続", status:null, status_date:null }
-    ]
-  }
+  // 区分4（家族カード利用の減額）は 2026-09-20 削除（Mits様指示）。
+  // 家族カードの利用は、判定ページの明細「Amex US 44000 家族カード（41014）」に全件入っており、区分4 に置くと二重計上になるため。
   // 区分5（単発）は月額の経費ではないため計算対象外（2026-09-18 Mits様確定）
 };
 

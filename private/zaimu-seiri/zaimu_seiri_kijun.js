@@ -39,7 +39,7 @@ var ZS_KIJUN = (function(){
   const stOf = it => { const s = sp[it.id], l = lp[it.id]; const x = (s && l) ? (dt(l) >= dt(s) ? l : s) : (l || s);
     if (x) { if (x.status) return x.status; if (x.done === true) return "done"; if (x.done === false) return null; } return it.status || null; };
   let rowSum = 0, A_KEEP = 0, aDone = 0, aHandled = 0;
-  ["k2m","k2a","k3","k4"].forEach(k => (((typeof DATA !== "undefined") && DATA[k] && DATA[k].items) || []).forEach(it => {
+  ["k2m","k2a","k3"].forEach(k => (((typeof DATA !== "undefined") && DATA[k] && DATA[k].items) || []).forEach(it => {
     if (it.excluded === true) return;
     rowSum += it.amount || 0;
     const sa = stOf(it);

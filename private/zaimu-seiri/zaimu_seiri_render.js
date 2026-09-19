@@ -186,7 +186,7 @@ function render() {
 
   // ページごとに表示するセクションを絞る。container の data-sections 属性で指定できる。
   // 未指定なら従来どおり全部（サブスク整理と互換）。
-  const DEFAULT_SECTION_ORDER = ["k2m", "k2a", "k3", "k4", "k1"];
+  const DEFAULT_SECTION_ORDER = ["k2m", "k2a", "k3", "k1"];
   let SECTION_ORDER = DEFAULT_SECTION_ORDER;
   if (container) {
     const attr = container.getAttribute && container.getAttribute("data-sections");
@@ -194,6 +194,7 @@ function render() {
   }
   SECTION_ORDER.forEach(sectionKey => {
     const section = DATA[sectionKey];
+    if (!section) return;   // 区分4 のように削除済みのセクションを飛ばす（2026-09-20）
     const isBorrow = (sectionKey === "k1"); // 区分1（借入返済）は 8割・累計の計算対象外
     const isAnnualSection = section.isAnnual === true; // 年払いセクションは8割線・累計を出さない
     // 借入セクションの直前に「借入の返済（別合計）」の区切りブロックを挿入
