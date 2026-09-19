@@ -204,9 +204,9 @@ td.note-col { font-size: 11px; color: var(--ink); min-width: 240px; max-width: 4
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789810449"></script>
-<script src="zaimu_seiri_state.js?v=1789810449"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789810449"></script>
+<script src="zaimu_seiri_data.js?v=1789810586"></script>
+<script src="zaimu_seiri_state.js?v=1789810586"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789810586"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -377,7 +377,7 @@ function render(){
     const after = b.actual - b.cut - b.once;
     return `<div class="section">
       <div class="section-head">
-        <h2>${esc(c)} <span class="section-sub">${b.items.length}件・月平均 ${fmtYen(b.actual)}円・1〜7月の総額 ${fmtYen(b.items.reduce((t,i)=>t+(i.total||0),0))}円</span></h2>
+        <h2>${esc(c)} <span class="section-sub">${b.items.length}件・月平均 ${fmtYen(b.actual)}円・1〜7月の総額 ${fmtYen(b.items.reduce((t,i)=>t+(i.total||0),0))}円・<b style="color:#c0392b;">削った総額 ${fmtYen(b.items.filter(i=>(state[i.id]||{}).status==="cut").reduce((t,i)=>t+(i.total||0),0))}円（月 ${fmtYen(b.cut)}円）</b></span></h2>
         <span class="section-sub">上限 ${cap?fmtYen(cap)+'円':'―'} ／ 一回性 <b style="color:#a68000;">${fmtYen(b.once)}円</b> ／ これからの月額 <b style="color:var(--gold);">${fmtYen(after)}円</b></span>
       </div>
       <table>
