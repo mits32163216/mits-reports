@@ -16,13 +16,17 @@ var ZS_KIJUN = (function(){
 
   let b = 0, bKeep = 0, bCut = 0, bOnce = 0;
   const keepItems = [];
+  const byCat = {};   // 大分類ごと {actual(月平均), total(1〜7月の総額), keep, cut, once}
+  Object.keys((M && M.caps) || {}).forEach(c => { byCat[c] = { actual: 0, total: 0, keep: 0, cut: 0, once: 0 }; });
   ((M && M.items) || []).forEach(it => {
     const m = Number(it.monthly) || 0; b += m;
     const s = pick(it.id) || (it.status ? { status: it.status } : null);
     const st = s && s.status;
-    if (st === "keep") { bKeep += m; keepItems.push(it); }
-    else if (st === "cut") bCut += m;
-    else if (st === "once") bOnce += m;
+    const bc = byCat[it.category] || (byCat[it.category] = { actual: 0, total: 0, keep: 0, cut: 0, once: 0 });
+    bc.actual += m; bc.total += Number(it.total) || 0;
+    if (st === "keep") { bKeep += m; keepItems.push(it); bc.keep += m; }
+    else if (st === "cut") { bCut += m; bc.cut += m; }
+    else if (st === "once") { bOnce += m; bc.once += m; }
   });
   const toA = ((M && M.to_ichiran_a) || []).filter(x => !x.dup_of);   // 記録用（行は サブスク整理 の k2-47〜k2-59 に入れた）
   const addA = 0;
@@ -33,19 +37,22 @@ var ZS_KIJUN = (function(){
   const dt = x => (x && (x.status_date || x.done_date)) || "";
   const stOf = it => { const s = sp[it.id], l = lp[it.id]; const x = (s && l) ? (dt(l) >= dt(s) ? l : s) : (l || s);
     if (x) { if (x.status) return x.status; if (x.done === true) return "done"; if (x.done === false) return null; } return it.status || null; };
-  let rowSum = 0, A_KEEP = 0;
+  let rowSum = 0, A_KEEP = 0, aDone = 0, aHandled = 0;
   ["k2m","k2a","k3","k4"].forEach(k => (((typeof DATA !== "undefined") && DATA[k] && DATA[k].items) || []).forEach(it => {
     if (it.excluded === true) return;
     rowSum += it.amount || 0;
-    if (stOf(it) === "keep") A_KEEP += it.amount || 0;
+    const sa = stOf(it);
+    if (sa === "keep") A_KEEP += it.amount || 0;
+    else if (sa === "done") aDone += it.amount || 0;
+    else if (sa === "handled") aHandled += it.amount || 0;
   }));
   // サブスク外の判定の「削る予定額（月）」の合計（保存ファイルとブラウザの入力の新しい方）
-  let planSum = 0;
+  let planSum = 0; const plans = {};
   (function(){
     let sv = {}; try { sv = (SAVED_STATE && SAVED_STATE.ichirangai_plan) || {}; } catch(e){}
     let lc = {}; try { lc = JSON.parse(localStorage.getItem("zaimu_seiri_ichirangai_plan_v1") || "{}") || {}; } catch(e){}
     const t = e => (e && (e.ts || e.date)) || "";
-    new Set([...Object.keys(sv), ...Object.keys(lc)]).forEach(k => { const a = sv[k], b = lc[k]; const x = (a && b) ? (t(b) >= t(a) ? b : a) : (b || a); planSum += (x && Number(x.plan)) || 0; });
+    new Set([...Object.keys(sv), ...Object.keys(lc)]).forEach(k => { const a = sv[k], b = lc[k]; const x = (a && b) ? (t(b) >= t(a) ? b : a) : (b || a); const n = (x && Number(x.plan)) || 0; plans[k] = n; planSum += n; });
   })();
   const A_BASE  = rowSum + A_ADJ;
   const a       = A_BASE;                      // 2段目 一覧 A
@@ -60,7 +67,7 @@ var ZS_KIJUN = (function(){
   const free    = goal - keepAll;              // 6段目 継続以外に使える額
   const target2 = r4 - free;                   // 8段目②
 
-  return { A_BASE, A_ADJ, A_KEEP, rowSum, planSum, LOAN_BEFORE, LOAN_LATEST, LOAN_PRINCIPAL,
+  return { A_BASE, A_ADJ, A_KEEP, rowSum, planSum, plans, byCat, aDone, aHandled, months: (M && M.months) || 7, LOAN_BEFORE, LOAN_LATEST, LOAN_PRINCIPAL,
            addA, toA, a, b, bKeep, bCut, bOnce, keepItems,
            start, before, keepAll, aRemain, bRemain, r4, target1, goal, free, target2 };
 })();
