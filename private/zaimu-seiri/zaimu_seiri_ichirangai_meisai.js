@@ -105,12 +105,11 @@ var ICHIRANGAI_MEISAI = {
   },
   "caps": {
     "消費": 40000,
-    "浪費": 20000,
+    "浪費": 30000,
     "投資": 20000,
     "旅行": 30000,
     "Amazon": 20000,
-    "コンビニ・スーパー": 20000,
-    "外注・その他": 10000
+    "コンビニ・スーパー": 20000
   },
   "caps_reason": {
     "消費": "実績 90718/月 の 40%を上限（ATM 生活費 77,286→40,000 に締める）",
@@ -729,7 +728,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-039",
-      "category": "外注・その他",
+      "category": "浪費",
       "row": "o-08",
       "merchant": "MALAYAN BANKING（両替）",
       "card": "Amex US 44000",
@@ -745,7 +744,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-040",
-      "category": "外注・その他",
+      "category": "浪費",
       "row": "o-05/o-06",
       "merchant": "PAYPAL NICRIANTEJA",
       "card": "Amex JP Marriott 42008",
@@ -777,7 +776,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-042",
-      "category": "外注・その他",
+      "category": "浪費",
       "row": "o-05/o-06",
       "merchant": "8WEEKS.AI",
       "card": "Amex JP Marriott 42008",
@@ -793,7 +792,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-043",
-      "category": "外注・その他",
+      "category": "浪費",
       "row": "o-08",
       "merchant": "8WEEKS.AI SHIBUYA-KU TO",
       "card": "Amex US 44000",
@@ -809,7 +808,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-044",
-      "category": "外注・その他",
+      "category": "浪費",
       "row": "o-05/o-06",
       "merchant": "PAYPAL ACTIVENOTE",
       "card": "Amex JP Marriott 42008",
@@ -825,7 +824,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-045",
-      "category": "外注・その他",
+      "category": "浪費",
       "row": "o-10",
       "merchant": "CIF TOKYO JP",
       "card": "Amex US Hilton 72006",
@@ -841,7 +840,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-046",
-      "category": "外注・その他",
+      "category": "浪費",
       "row": "o-12",
       "merchant": "PAYPAL LIMONZ",
       "card": "Chase Sapphire 0430",
@@ -873,7 +872,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-048",
-      "category": "外注・その他",
+      "category": "浪費",
       "row": "o-07",
       "merchant": "Amex JP 63000 の一覧外利用",
       "card": "Amex JP 63000",
@@ -889,7 +888,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-049",
-      "category": "外注・その他",
+      "category": "浪費",
       "row": "o-11+out",
       "merchant": "BOA VISA 4452 年会費",
       "card": "BOA VISA 4452",
@@ -905,7 +904,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-050",
-      "category": "外注・その他",
+      "category": "浪費",
       "row": "o-11+out",
       "merchant": "BOA VISA 4452 キャッシング利息",
       "card": "BOA VISA 4452",
@@ -921,7 +920,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-051",
-      "category": "外注・その他",
+      "category": "浪費",
       "row": "o-08",
       "merchant": "ADDNESS CO JP TOKYO JP",
       "card": "Amex US 44000",
@@ -937,7 +936,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-052",
-      "category": "外注・その他",
+      "category": "浪費",
       "row": "o-08",
       "merchant": "SHIYOKUNOBAN OKINAWA",
       "card": "Amex US 44000",
@@ -953,7 +952,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-053",
-      "category": "外注・その他",
+      "category": "浪費",
       "row": "o-12",
       "merchant": "PAYPAL *TIKTOK 4029357733",
       "card": "Chase Sapphire 0430",
@@ -969,7 +968,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-054",
-      "category": "外注・その他",
+      "category": "浪費",
       "row": "o-08",
       "merchant": "LATE FEE",
       "card": "Amex US 44000",
@@ -1001,7 +1000,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-056",
-      "category": "外注・その他",
+      "category": "浪費",
       "row": "o-08",
       "merchant": "NAMINOUE CRY OKINAWA",
       "card": "Amex US 44000",
@@ -1017,7 +1016,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-057",
-      "category": "外注・その他",
+      "category": "浪費",
       "row": "o-08",
       "merchant": "CASH ADVANCE FEE",
       "card": "Amex US 44000",
@@ -1033,7 +1032,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-058",
-      "category": "外注・その他",
+      "category": "浪費",
       "row": "o-08",
       "merchant": "CASTMAGIC AUSTIN TX",
       "card": "Amex US 44000",
