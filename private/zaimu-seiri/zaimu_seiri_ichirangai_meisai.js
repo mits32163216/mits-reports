@@ -151,22 +151,6 @@ var ICHIRANGAI_MEISAI = {
       "status_date": null
     },
     {
-      "id": "m-002",
-      "category": "消費",
-      "row": "o-08",
-      "merchant": "Amex US キャッシング（横浜の ATM）",
-      "card": "Amex US 44000",
-      "user": "Mits様",
-      "count": 1,
-      "total": 94027,
-      "monthly": 13432,
-      "first": "2026-03-07",
-      "last": "2026-03-07",
-      "note": "$1,000×2回のキャッシング・NAKA-KU YOKOHAMA ATM",
-      "status": null,
-      "status_date": null
-    },
-    {
       "id": "m-003",
       "category": "浪費",
       "row": "o-08",
@@ -1083,6 +1067,23 @@ var ICHIRANGAI_MEISAI = {
       "status": null,
       "status_date": null,
       "removed": "2026-09-19 Mits様指示：送金先で使途が仕分けられているので二重"
+    },
+    {
+      "id": "m-002",
+      "category": "消費",
+      "row": "o-08",
+      "merchant": "Amex US キャッシング（横浜の ATM）",
+      "card": "Amex US 44000",
+      "user": "Mits様",
+      "count": 1,
+      "total": 94027,
+      "monthly": 13432,
+      "first": "2026-03-07",
+      "last": "2026-03-07",
+      "note": "$1,000×2回のキャッシング・NAKA-KU YOKOHAMA ATM",
+      "status": null,
+      "status_date": null,
+      "removed": "2026-09-19 Mits様指示：借入の返済に入っているので二重"
     }
   ]
 };
