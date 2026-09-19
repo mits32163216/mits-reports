@@ -516,9 +516,15 @@ function render() {
   // 6段目：半分経営の削減目標（固定）＋ 継続と決めた額の合計（固定）＋ 借入の返済（最新）＝ 合計
   // Mits様指示（2026-09-19 組み替え後）：293,233 ＋ 219,297 ＋ LOAN_MONTHLY_LATEST(43,575) ＝ 556,105
   const KEEP_SUB_CORRECTED = 129695;                                       // 進捗表の15行の月額合計（訂正後）
-  const KEEP_TOTAL_FROZEN  = KEEP_SUB_CORRECTED + keepOutsideFrozen;       // 106,971 + 112,326 = 219,297
-  const sixTotal = halfGoal + KEEP_TOTAL_FROZEN + LOAN_MONTHLY_LATEST;      // 293,233 + 219,297 + 43,575 = 556,105
-  setText("m-6-half-goal", fmtYen(halfGoal));
+  // 2026-09-19 Mits様指示：6段目も一覧外の判定ページから計算（目標＝5段目と同じ・継続＝一覧 129,695 ＋ 判定ページの「続ける」）
+  const keepOutside6 = ich ? ich.keep : keepOutsideFrozen;
+  const KEEP_TOTAL_FROZEN  = KEEP_SUB_CORRECTED + keepOutside6;
+  const sixTotal = halfGoal5 + KEEP_TOTAL_FROZEN + LOAN_MONTHLY_LATEST;
+  setText("m-6-half-goal", fmtYen(halfGoal5));
+  setText("m-6-half-goal-src", fmtYen(r4Total));
+  setText("m-6-keep-b", fmtYen(keepOutside6));
+  setText("m-6-total-a", fmtYen(halfGoal5));
+  setText("m-6-total-b", fmtYen(KEEP_TOTAL_FROZEN));
   setText("m-6-keep-total", fmtYen(KEEP_TOTAL_FROZEN));
   setText("m-6-loan", fmtYen(LOAN_MONTHLY_LATEST));
   setText("m-6-loan-echo", fmtYen(LOAN_MONTHLY_LATEST));
