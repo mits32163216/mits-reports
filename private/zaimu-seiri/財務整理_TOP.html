@@ -99,7 +99,8 @@ body { padding: 12px; max-width: 1980px; margin: 0 auto; }
 .bar-wrap { margin: 10px 0 4px; position: relative; }
 .bar-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--sub); margin-bottom: 4px; }
 .bar-outer { position: relative; height: 16px; background: #eee; border-radius: 8px; overflow: visible; }
-.bar-inner { height: 100%; background: linear-gradient(90deg, #4a7c59, #2e7d32); border-radius: 8px; transition: width 0.3s; }
+.bar-plan { position: absolute; top: 0; height: 100%; background: repeating-linear-gradient(45deg, #9b7fd1, #9b7fd1 6px, #b9a3e3 6px, #b9a3e3 12px); border-radius: 0 8px 8px 0; transition: width 0.3s; }
+.bar-inner { position: relative; height: 100%; background: linear-gradient(90deg, #4a7c59, #2e7d32); border-radius: 8px; transition: width 0.3s; }
 .bar-inner.over { background: linear-gradient(90deg, #b8860b, #d4a017); }
 .bar-mark-80 { position: absolute; top: -4px; bottom: -4px; left: 80%; width: 2px; background: var(--yellow); pointer-events: none; }
 .bar-mark-80-lbl { position: absolute; top: -18px; left: 80%; transform: translateX(-50%); font-size: 10px; color: var(--yellow); font-weight: bold; white-space: nowrap; }
@@ -339,8 +340,10 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   </div>
 
   <div class="bar-wrap">
-    <div class="bar-label"><span>進み具合(削った額＋対応済み ÷ 半分経営の削減目標)</span><span id="m-pct">0%</span></div>
+    <div class="bar-label"><span>進み具合(削った額＋対応済み ÷ 半分経営の削減目標)</span><span><span id="m-pct">0%</span><span class="plan-pct" style="color:#6a3fa0;font-weight:bold;margin-left:8px;">予定込み <span id="m-pct-plan">-</span></span></span></div>
+    <div style="font-size:11px;color:var(--sub);margin:2px 0 4px;"><span style="color:#2e7d32;">■ 削った＋対応済み＋「削る」「一回性」</span>　<span style="color:#6a3fa0;">■ 削る予定額（サブスク外の判定で入力）</span></div>
     <div class="bar-outer">
+      <div class="bar-plan" id="m-bar-plan" style="left:0%;width:0%"></div>
       <div class="bar-inner" id="m-bar" style="width:0%"></div>
       <div class="bar-mark-80-lbl">8割</div>
       <div class="bar-mark-80"></div>
@@ -385,12 +388,12 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 </div>
 
 <!-- TOP: legend以下は無し -->
-<script src="zaimu_seiri_data.js?v=1789822702"></script>
-<script src="zaimu_seiri_state.js?v=1789822702"></script>
-<script src="zaimu_seiri_sync.js?v=1789822702"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789822702"></script>
-<script src="zaimu_seiri_kijun.js?v=1789822702"></script>
-<script src="zaimu_seiri_render.js?v=1789822702"></script>
+<script src="zaimu_seiri_data.js?v=1789822830"></script>
+<script src="zaimu_seiri_state.js?v=1789822830"></script>
+<script src="zaimu_seiri_sync.js?v=1789822830"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789822830"></script>
+<script src="zaimu_seiri_kijun.js?v=1789822830"></script>
+<script src="zaimu_seiri_render.js?v=1789822830"></script>
 <script>
 // 3段目：サブスク外の判定ページ（zaimu_seiri_ichirangai_meisai.js）から計算する（2026-09-19 Mits様指示・一覧外の経費ページは廃止）
 (function(){

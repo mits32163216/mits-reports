@@ -542,6 +542,12 @@ function render() {
   setText("m-pct", pct + "%");
   const bar = document.getElementById("m-bar");
   if (bar) { bar.style.width = pct + "%"; if (pct >= 100) bar.classList.add("over"); else bar.classList.remove("over"); }
+  // 削る予定額（サブスク外の判定で入力）を、実績の棒の続きに別の色で出す
+  const planSum = (K && K.planSum) || 0;
+  const pctPlanAll = halfGoal5 > 0 ? Math.min(100, Math.round((cutPlusHandled + planSum) / halfGoal5 * 1000) / 10) : 0;
+  const pb = document.getElementById("m-bar-plan");
+  if (pb) { pb.style.left = pct + "%"; pb.style.width = Math.max(0, pctPlanAll - pct) + "%"; }
+  setText("m-pct-plan", pctPlanAll + "%");
 
   // 件数行
   setText("m-todo-count", todoCount);
