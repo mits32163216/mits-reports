@@ -70,6 +70,9 @@ body { padding: 12px; max-width: 1980px; margin: 0 auto; }
 .metric.eq-outside .value { color:#204a80; }
 /* 2026-09-18 時点で固定（ロックした雰囲気）*/
 .metric.frozen { background:#e9ebee !important; border-color:#c8ccd3 !important; border-width:1px !important; box-shadow:none !important; }
+/* 1段目（借入の返済 全体）は下の借入1本ごとの段と色を分ける（Mits様 2026-09-20「グレーでは無く」） */
+.eq-row-1 .metric.frozen { background:#f5efe0 !important; border-color:#c9a54a !important; }
+.eq-row-1 .metric.frozen:last-child { border-width:3px !important; border-color:#b8860b !important; background:#f3e6c4 !important; }
 .metric.frozen .label { color:#6b7280 !important; font-weight:normal !important; }
 .metric.frozen .value { color:#6b7280 !important; font-size:18px !important; }
 .metric.frozen .value::after { content:none !important; }
@@ -429,11 +432,11 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 <br>ボタンは同じものをもう一度押すと外れて未着手に戻ります。状態はこのブラウザに保存されます（他の端末には送りません）。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789834499"></script>
-<script src="zaimu_seiri_state.js?v=1789834499"></script>
-<script src="zaimu_seiri_sync.js?v=1789834499"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789834499"></script>
-<script src="zaimu_seiri_kijun.js?v=1789834499"></script>
-<script src="zaimu_seiri_render.js?v=1789834499"></script>
+<script src="zaimu_seiri_data.js?v=1789834956"></script>
+<script src="zaimu_seiri_state.js?v=1789834956"></script>
+<script src="zaimu_seiri_sync.js?v=1789834956"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789834956"></script>
+<script src="zaimu_seiri_kijun.js?v=1789834956"></script>
+<script src="zaimu_seiri_render.js?v=1789834956"></script>
 </body>
 </html>
