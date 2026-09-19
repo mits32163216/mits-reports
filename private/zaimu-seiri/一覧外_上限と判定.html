@@ -224,11 +224,11 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789829953"></script>
-<script src="zaimu_seiri_state.js?v=1789829953"></script>
-<script src="zaimu_seiri_sync.js?v=1789829953"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789829953"></script>
-<script src="zaimu_seiri_kijun.js?v=1789829953"></script>
+<script src="zaimu_seiri_data.js?v=1789830106"></script>
+<script src="zaimu_seiri_state.js?v=1789830106"></script>
+<script src="zaimu_seiri_sync.js?v=1789830106"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789830106"></script>
+<script src="zaimu_seiri_kijun.js?v=1789830106"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -285,6 +285,9 @@ function savePlanOne(cat, n){
   local[cat] = { plan: n, date: new Date().toISOString() };
   try { localStorage.setItem(PLAN_KEY, JSON.stringify(local)); } catch(e){}
 }
+// 大分類の削る予定額＝中分類に入れた額（キー「大分類::中分類」）の合計 ＋ 大分類に直接入れた額（2026-09-19 Mits様指示）
+function subPlanSum(plans, c){ let t = 0; Object.keys(plans || {}).forEach(k => { if (k.indexOf(c + "::") === 0) t += Number(plans[k] && plans[k].plan) || 0; }); return t; }
+function catPlan(plans, c){ return ((plans && plans[c] && Number(plans[c].plan)) || 0) + subPlanSum(plans, c); }
 function todayStr(){ const d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
 function fmtYen(n){ return Math.round(n).toLocaleString("ja-JP"); }
 function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
@@ -355,7 +358,7 @@ function render(){
   const plansAll = loadPlan();
   catRow.innerHTML = CATEGORIES.map(c => {
     const b = byCat[c];
-    const plan = (plansAll[c] && Number(plansAll[c].plan)) || 0;   // 見出しの「削る予定額（月）」
+    const plan = catPlan(plansAll, c);   // 大分類の削る予定額（中分類の合計＋大分類に直接）
     const after = b.actual - b.keep - b.cut - b.once;
     return `<div class="cat-box">
       <div class="cat-name">${esc(c)}</div>
@@ -374,7 +377,7 @@ function render(){
   // 各大項目の「予定どおりなら月額」（これからの月額 − 削る予定額）を足して一番上に出す
   {
     let planTotal = 0; const parts = [];
-    CATEGORIES.forEach(c => { const b = byCat[c]; const plan = (plansAll[c] && Number(plansAll[c].plan)) || 0; const v = (b.actual - b.keep - b.cut - b.once) - plan; planTotal += v; parts.push(c + " " + fmtYen(v) + "円"); });
+    CATEGORIES.forEach(c => { const b = byCat[c]; const plan = catPlan(plansAll, c); const v = (b.actual - b.keep - b.cut - b.once) - plan; planTotal += v; parts.push(c + " " + fmtYen(v) + "円"); });
     const el = document.getElementById("t-plan-total"); if (el) el.textContent = fmtYen(planTotal);
     const src = document.getElementById("t-plan-total-src"); if (src) src.textContent = parts.join(" ＋ ");
     // 継続以外に使える額＝ゴール（出発点÷2）−（サブスク整理の継続 ＋ この画面の「続ける」）。TOP 7段目と同じ式。押すたびに計算し直す
@@ -441,7 +444,8 @@ function render(){
     const headRow = (label, gi) => {
       const gm = gi.reduce((t,i)=>t+(Number(i.monthly)||0),0);
       const gt = gi.reduce((t,i)=>t+(Number(i.total)||0),0);
-      return `<tr class="sub-head"><td colspan="${NCOL}">${esc(label)}　${gi.length}件・月平均 ${fmtYen(gm)}円・${KIKAN}の総額 ${fmtYen(gt)}円</td></tr>` + gi.map(rowOf).join("");
+      const key = c + "::" + label, pv = (plansAll[key] && Number(plansAll[key].plan)) || 0;
+      return `<tr class="sub-head"><td colspan="${NCOL}">${esc(label)}　${gi.length}件・月平均 ${fmtYen(gm)}円・${KIKAN}の総額 ${fmtYen(gt)}円　<label style="white-space:nowrap;color:#6a3fa0;font-weight:normal;">削る予定額（月） <input class="plan-input" data-cat="${esc(key)}" type="text" inputmode="numeric" value="${pv ? fmtYen(pv) : ""}" placeholder="0" style="width:90px;text-align:right;font-size:13px;padding:1px 5px;border:1px solid #c8ccd3;border-radius:4px;">円</label></td></tr>` + gi.map(rowOf).join("");
     };
     const groupHtml = (g, gi) => {
       if (g !== "飲み" || c !== "浪費") return headRow(g || "未分類", gi);   // 分けるのは浪費の「飲み」だけ
@@ -474,7 +478,7 @@ function render(){
     const isOpen = !!loadOpen()[c];
     return `<div class="section${isRouhi && subHidden() ? ' hide-subs' : ''}${isOpen ? '' : ' folded'}">
       <div class="section-head" data-cat="${esc(c)}">
-        <h2><span class="fold-mark">${isOpen ? '▼' : '▶'}</span>${esc(c)} <span class="section-sub">${b.items.length}件・月平均 ${fmtYen(b.actual)}円・${KIKAN}の総額 ${fmtYen(b.items.reduce((t,i)=>t+(i.total||0),0))}円・<b style="color:#c0392b;">削る総額 ${fmtYen(b.items.filter(i=>(stOf(i,state)||{}).status==="cut").reduce((t,i)=>t+(i.total||0),0))}円（月 ${fmtYen(b.cut)}円）</b>・<label class="plan-box" style="white-space:nowrap;">削る予定額（月） <input class="plan-input" data-cat="${esc(c)}" type="text" inputmode="numeric" value="${(plans[c] && plans[c].plan) ? fmtYen(plans[c].plan) : ""}" placeholder="0" style="width:110px;text-align:right;font-size:14px;padding:2px 6px;border:1px solid #c8ccd3;border-radius:4px;">円</label></span></h2>
+        <h2><span class="fold-mark">${isOpen ? '▼' : '▶'}</span>${esc(c)} <span class="section-sub">${b.items.length}件・月平均 ${fmtYen(b.actual)}円・${KIKAN}の総額 ${fmtYen(b.items.reduce((t,i)=>t+(i.total||0),0))}円・<b style="color:#c0392b;">削る総額 ${fmtYen(b.items.filter(i=>(stOf(i,state)||{}).status==="cut").reduce((t,i)=>t+(i.total||0),0))}円（月 ${fmtYen(b.cut)}円）</b>・<span style="white-space:nowrap;color:#6a3fa0;">削る予定額（月）合計 <b>${fmtYen(catPlan(plans, c))}円</b>（中分類の合計 ${fmtYen(subPlanSum(plans, c))}円 ＋ </span><label class="plan-box" style="white-space:nowrap;">大分類に直接 <input class="plan-input" data-cat="${esc(c)}" type="text" inputmode="numeric" value="${(plans[c] && plans[c].plan) ? fmtYen(plans[c].plan) : ""}" placeholder="0" style="width:100px;text-align:right;font-size:14px;padding:2px 6px;border:1px solid #c8ccd3;border-radius:4px;">円）</label></span></h2>
         <span class="section-sub">まだ削る・続ける・一回性を決めていない分 <b style="color:var(--gold);">月 ${fmtYen(after)}円</b> ／ 一回性（もう出ない）${fmtYen(b.once)}円${isRouhi ? `<button class="sub-toggle">${subHidden() ? "分類ボタンを出す" : "分類ボタンを消す"}</button>` : ""}</span>
       </div>
       <table>
