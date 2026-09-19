@@ -453,10 +453,32 @@ function render() {
   const keepOutsideFrozen = (BASE.keepOutside !== undefined) ? BASE.keepOutside : 112326;
   const remainingBFrozen = OUTSIDE_TOTAL_B - keepOutsideFrozen;
   const targetTotalFrozen = 722706;   // 訂正後の固定値（805,763 − 219,297）
-  const halfGoal = 361353;             // 訂正後の固定値（Math.round(586466/2)）
-  const cutPlusHandled = totalCut + handledSum;
-  const halfRemaining = halfGoal - cutPlusHandled;
-  setText("m-half-goal", fmtYen(halfGoal));
+  const halfGoal = 361353;             // 訂正後の固定値（Math.round(586466/2)）── 6段目はこの値のまま
+  // 5段目：一覧外の判定ページ（ICHIRANGAI_MEISAI）から計算する（2026-09-19 Mits様指示）
+  //   目標＝4段目の削減対象総額 ÷ 2 ／ 削った額＋対応済み に判定ページの「削る」「一回性」を足す
+  const ich = (function(){
+    if (typeof ICHIRANGAI_MEISAI === "undefined" || !ICHIRANGAI_MEISAI) return null;
+    let saved = {}; try { saved = (SAVED_STATE && SAVED_STATE.ichirangai) || {}; } catch(e){}
+    let local = {}; try { local = JSON.parse(localStorage.getItem("zaimu_seiri_ichirangai_decision_v1") || "{}") || {}; } catch(e){}
+    const pick = id => { const s = saved[id], l = local[id]; if (s && l) return ((l.date||"") >= (s.date||"")) ? l : s; return l || s || null; };
+    let total = 0, keep = 0, cut = 0, once = 0;
+    (ICHIRANGAI_MEISAI.items || []).forEach(it => {
+      const m = Number(it.monthly) || 0; total += m;
+      const s = pick(it.id) || (it.status ? { status: it.status } : null);
+      const st = s && s.status;
+      if (st === "keep") keep += m; else if (st === "cut") cut += m; else if (st === "once") once += m;
+    });
+    return { total, keep, cut, once };
+  })();
+  const A_REMAIN = 374378 - 129695;   // 一覧 A の残り（固定）
+  const r4Total  = ich ? A_REMAIN + (ich.total - ich.keep) : 722706;
+  const halfGoal5 = Math.round(r4Total / 2);
+  const ichCutOnce = ich ? ich.cut + ich.once : 0;
+  const cutPlusHandled = totalCut + handledSum + ichCutOnce;
+  const halfRemaining = halfGoal5 - cutPlusHandled;
+  setText("m-half-goal", fmtYen(halfGoal5));
+  setText("m-half-goal-src", fmtYen(r4Total));
+  setText("m-ich-cutonce", fmtYen(ichCutOnce));
   setText("m-cut-plus-handled", fmtYen(cutPlusHandled));
   setText("m-half-remaining", fmtYen(halfRemaining));
 
@@ -506,7 +528,7 @@ function render() {
   setText("m-6-keep-out", fmtYen(keepOutsideFrozen));
 
   // 進捗バー：分子＝削った額＋対応済み（cutPlusHandled）／分母＝半分経営の削減目標（halfGoal）
-  const pctRaw = halfGoal > 0 ? cutPlusHandled / halfGoal * 100 : 0;
+  const pctRaw = halfGoal5 > 0 ? cutPlusHandled / halfGoal5 * 100 : 0;
   const pct = Math.min(100, Math.round(pctRaw * 10) / 10);  // 小数第1位で四捨五入
   setText("m-pct", pct + "%");
   const bar = document.getElementById("m-bar");
