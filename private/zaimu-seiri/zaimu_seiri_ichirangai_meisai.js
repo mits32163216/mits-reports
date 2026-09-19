@@ -4507,5 +4507,133 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 2159,
       "memo": "中身は PRIORITY PASS（ANA 63000・2/4 5,655／6/8 5,807×2）。一覧A k2-34 PRIORITY PASS（17,269÷7＝2,467/月）と同じ請求の二重計上。1/19 5,733 は事業主貸で除外済み。15,113 は進捗表 o-07 の見込み 2,159×7 で、実際の明細ではない（2026-09-19 参謀が照合）"
     }
+  ],
+  "to_ichiran_a": [
+    {
+      "name": "HEYGEN",
+      "monthly": 4125,
+      "from": "BS-keiri の照合で一覧Aへ",
+      "dup_of": null
+    },
+    {
+      "name": "AZUKEL TOKYO JP",
+      "monthly": 1738,
+      "from": "BS-keiri の照合で一覧Aへ",
+      "dup_of": null
+    },
+    {
+      "name": "LINE 公式アカウント",
+      "monthly": 5500,
+      "from": "BS-keiri の照合で一覧Aへ",
+      "dup_of": null
+    },
+    {
+      "name": "DOCPRO オーソモレキュラー",
+      "monthly": 14364,
+      "from": "BS-keiri の照合で一覧Aへ",
+      "dup_of": "一覧A の DOCPRO 14,363（2段目に加算済み）"
+    },
+    {
+      "name": "BUSINESS I* BI_SUBSCRI",
+      "monthly": 1114,
+      "from": "判定ページからサブスク側へ（Mits様 2026-09-19）",
+      "dup_of": null
+    },
+    {
+      "name": "CIF TOKYO JP",
+      "monthly": 2866,
+      "from": "判定ページからサブスク側へ（Mits様 2026-09-19）",
+      "dup_of": "k2-25 CIF TOKYO"
+    },
+    {
+      "name": "AQUA VOICE SAN FRANCISCO CA",
+      "monthly": 634,
+      "from": "判定ページからサブスク側へ（Mits様 2026-09-19）",
+      "dup_of": null
+    },
+    {
+      "name": "DMM TOKYO JP",
+      "monthly": 406,
+      "from": "判定ページからサブスク側へ（Mits様 2026-09-19）",
+      "dup_of": "k2-11 DMM"
+    },
+    {
+      "name": "NOTE TOKYO JP",
+      "monthly": 402,
+      "from": "判定ページからサブスク側へ（Mits様 2026-09-19）",
+      "dup_of": "k2-03 note"
+    },
+    {
+      "name": "APPLE ZERO GA* JP",
+      "monthly": 365,
+      "from": "判定ページからサブスク側へ（Mits様 2026-09-19）",
+      "dup_of": "k2-02 Apple"
+    },
+    {
+      "name": "SUBLINE HOKKAIDO JP",
+      "monthly": 279,
+      "from": "判定ページからサブスク側へ（Mits様 2026-09-19）",
+      "dup_of": "k2-04 SUBLINE"
+    },
+    {
+      "name": "WEBLIO CO JP TOKYO JP",
+      "monthly": 264,
+      "from": "判定ページからサブスク側へ（Mits様 2026-09-19）",
+      "dup_of": "k2-01 WEBLIO"
+    },
+    {
+      "name": "AMAZON DIGIT*CH4I112888-802-3080 WA",
+      "monthly": 254,
+      "from": "判定ページからサブスク側へ（Mits様 2026-09-19）",
+      "dup_of": null
+    },
+    {
+      "name": "AMAZON DIGIT*BK29C1S888-802-3080 WA",
+      "monthly": 254,
+      "from": "判定ページからサブスク側へ（Mits様 2026-09-19）",
+      "dup_of": null
+    },
+    {
+      "name": "AMAZON DIGIT*YQ8OO8K888-802-3080 WA",
+      "monthly": 254,
+      "from": "判定ページからサブスク側へ（Mits様 2026-09-19）",
+      "dup_of": null
+    },
+    {
+      "name": "AMAZON DIGIT*ZN8AF3D888-802-3080 WA",
+      "monthly": 254,
+      "from": "判定ページからサブスク側へ（Mits様 2026-09-19）",
+      "dup_of": null
+    },
+    {
+      "name": "AMAZON DIGIT*NG27W7N888-802-3080 WA",
+      "monthly": 254,
+      "from": "判定ページからサブスク側へ（Mits様 2026-09-19）",
+      "dup_of": null
+    },
+    {
+      "name": "UDEMYJP DUBLIN IR",
+      "monthly": 242,
+      "from": "判定ページからサブスク側へ（Mits様 2026-09-19）",
+      "dup_of": null
+    },
+    {
+      "name": "ＳＵＢＬＩＮＥ 北海道 札幌市中央区",
+      "monthly": 79,
+      "from": "判定ページからサブスク側へ（Mits様 2026-09-19）",
+      "dup_of": "k2-04 SUBLINE"
+    },
+    {
+      "name": "ノート 東京都 千代田区",
+      "monthly": 71,
+      "from": "判定ページからサブスク側へ（Mits様 2026-09-19）",
+      "dup_of": "k2-03 note"
+    },
+    {
+      "name": "WIKIPEDIA GIFT SAN FRANCISCO",
+      "monthly": 44,
+      "from": "判定ページからサブスク側へ（Mits様 2026-09-19）",
+      "dup_of": null
+    }
   ]
 };

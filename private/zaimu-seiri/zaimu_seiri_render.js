@@ -468,9 +468,10 @@ function render() {
       const st = s && s.status;
       if (st === "keep") keep += m; else if (st === "cut") cut += m; else if (st === "once") once += m;
     });
-    return { total, keep, cut, once };
+    const addA = (ICHIRANGAI_MEISAI.to_ichiran_a || []).filter(x => !x.dup_of).reduce((t,x) => t + (Number(x.monthly)||0), 0);
+    return { total, keep, cut, once, addA };
   })();
-  const A_REMAIN = 374378 - 129695;   // 一覧 A の残り（固定）
+  const A_REMAIN = 374378 + (ich ? ich.addA : 0) - 129695;   // 一覧 A の残り（374,378 ＋ 判定ページからサブスク側へ移した分 − 継続）
   const r4Total  = ich ? A_REMAIN + (ich.total - ich.keep) : 722706;
   const halfGoal5 = Math.round(r4Total / 2);
   const ichCutOnce = ich ? ich.cut + ich.once : 0;
