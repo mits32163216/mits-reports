@@ -67,7 +67,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-18 11:27 ／ 写した時刻 2026-09-18 12:34</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-19 07:32 ／ 写した時刻 2026-09-19 12:37</p>
 <h2 id="報告-AI-Mits-チューニング">報告 ── AI-Mits-チューニング</h2>
 <p>この持ち場の窓（7:31 のお試し版と Dify の数え・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_AI-Mits-チューニング.md</p>
@@ -104,6 +105,18 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>ほかの持ち場に頼む：運転台改善：中継 aimits-report-proxy の持ち場なら、上の①②③と穴3のラベルの案を見てほしい（決定の記録にも宛先付きで書いた）</li>
 <li>数字：XU7Gfd7XoiCQ の読者30件（本物の最新 09-15 07:47・今日の1件はこちら側）／/ev/count は 07:31 と同じ（reg_submit 1・verify_giveup 1・nudge30s 18）</li>
 <li>裏取りの追記（2026-09-18 11:3x）：中継の KV <code>reader:&lt;読者ID&gt;</code> を直接読んだ。takadat12（IhTDymQYI2ve）は verified_at あり（09-15 13:41）。momozato（4wBUjdbIYr1k）と y-tanaka（s1Bdn5YwaOtl）は <strong>404 Not Found＝認証が1度も済んでいない</strong>（事実）。2人が「期限切れで」止まったかは、期限切れの記録にメアドが無いので時刻の突き合わせまで（momozato 登録 14:25→期限切れ 14:55、y-tanaka 登録 17:51→期限切れ 18:16）。UTAGE の takadat12 の読者は labels が [] で、認証済みの印は無い（message_reader_get）</li>
+</ul>
+<h3 id="2026-09-19-07-4x-AI-Mits-チューニング・予約タスク-aimits-mai">2026-09-19 07:4x（AI-Mits-チューニング・予約タスク aimits-mainichi-keisoku の回）</h3>
+<ul>
+<li>読んだ指示書の節：2026-09-19（あわせて 2026-09-18 夕（差し替え）の 1・2。同じ中身なので1回で済ませた）</li>
+<li>やった：1 中継 /register の変更後の経路を読んだ（自分ではテスト登録していない）。シナリオ「AI-Mits登録20260612」XU7Gfd7XoiCQ の読者は35件。09-18 16:20 以降に増えた読者は fs-utage-verify-20260918-1620@3216.fun（AEb1sAC3QqiJ）と fs-utage-verify-20260918-1658@3216.fun（8nxq0yrBeMEw）の2件だけで、<strong>20:09 の時刻にできた読者は無い</strong>。1658 の読者の配信記録は「00日 使えるようになりました」16:58:02 と認証メールの一斉配信 17:00:07 の<strong>各1通</strong>。1620 も同じ形（16:20:53／16:22:03）。新しい人の「登録 → 読者ができる → 認証メール1通」は生きている</li>
+  <li>決定の記録 20:09 の「新しいアドレスは読者番号と確認メール1通・配信 77→78件」は、読者の並びから見ると 16:58 の1件（17:00:07 の一斉配信）の結果を 20:09 に表にしたものと読める。20:09 に新しい読者は増えていない</li>
+  <li>読めなかったこと：認証リンクを押したあと（中継の KV <code>reader:</code> に verified_at が付くか）は、この回では中継の記録を開いていない。@3216.fun の試しの読者は UTAGE 上 is_mail_error が true（届け先の箱が無い）なので、認証の成功までは UTAGE からは確かめられない</li>
+<li>やった：2 重なりの1行 ── 昨日入った直し1（確認済みの人には2通目を出さない）は「認証が済んだ人」だけに効く。朝の案②（まだ生きているリンクがあれば2通目を作らない）は「まだ認証していない人が15分以内に押し直した」場合で、<strong>対象が重ならない</strong>。案②を入れるときは中継 src/index.js の同じ分岐（L1265-1277）の手前に足し、別の場所に作らない</li>
+<li>できなかった：なし（1 の認証のあとは上に書いたとおり読める範囲外）</li>
+<li>次に自分がやる：案①②③と穴3のラベルは「実施」の合図待ちのまま。合図が出たら差分を作業場で作る</li>
+<li>ほかの持ち場に頼む：運転台改善：20:09 の「新しいアドレス」が 1658 のことか、別のアドレスかを会話記録 f4e25fef で1行はっきりさせてほしい（読者は 16:58 のあと増えていない）</li>
+<li>数字：本物の登録は 09-15 07:47（takadat12）が最新のまま・09-16〜09-19 朝まで0件（除外：3216.fun・dmikz.com）／/ev/count は前日と同じ（reg_submit 1・verify_giveup 1・nudge30s 18）／Dify 合計 143（前日比 +9：FAST +6・DEEP +3）</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>

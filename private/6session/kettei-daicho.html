@@ -66,7 +66,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-18 21:07 ／ 写した時刻 2026-09-19 06:38</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-19 09:11 ／ 写した時刻 2026-09-19 12:37</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -639,6 +640,46 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>宛先：メール配信・計測・自動化／司令塔</li>
 <li>宛先の行を読んだ：2026-09-18 の3件（率の土台／v1.73.8 と中継直し／柱の言葉と相手の線／経路の印 utm_content）。この回で片づけたものは無い。①の「人ではない押し（curl・海外）を数えから外す」は jogai_settei.json がメアドの条件しか持たず、数える側（計測のスクリプト）に押しの除外を読む口が要るため、測らない決まりのこの予約タスクでは触らなかった。メール配信・計測・自動化の本体の窓の仕事として残す</li>
 <li>今日の号：まぐまぐ 165293388（21:00・1,443部・完了）／UTAGE Kp5cDpgsVVT9（21:05 sending）／spro 未配信（computer use の一覧に RoboForm が出ず Basic 認証を越えられない。スキル merumaga-3stand-haishin の spro ログイン節に実測を1節足した）</li>
+</ul>
+<h3 id="2026-09-18-20-09-運転台改善-中継-aimits-report-proxy-re">2026-09-18 20:09 ／ 運転台改善 ── 中継 aimits-report-proxy /register の2つの直し・確かめの結果・Mits様の2つの決め（2026-09-19 07:2x に毎朝点検の回が代筆）</h3>
+<ul>
+<li>どのセッションで：運転台改善（会話 09-18 16:12〜20:09）</li>
+<li>宛先：AI-Mits-チューニング／メール配信・計測・自動化／司令塔</li>
+<li>直し1：確認済み（読者の控えに verified_at と pw の両方がある）のアドレスで /register が呼ばれたら、2通目の認証メールを出さない（Version 2840c9cf）。返りは <code>sent:false／already_verified:true／mail_status.skipped:&quot;already_verified&quot;</code>。src/index.js L1265-1277</li>
+<li>直し2：同じ分岐で、確認済みの登録には読者番号を返さない。代わりに <code>error:&quot;already_registered&quot;</code>「このメールアドレスは登録済みです。ログインから入ってください。」。他人の登録済みアドレスを入れた人が、その人として入れてしまう穴を塞いだ（運転台側 auth.rs L262-281 が返りの読者番号をそのまま保存する作りのため）</li>
+<li>20:09 の確かめ：確認済みのアドレスは <code>skipped:already_verified</code> で配信は増えず／新しいアドレスは読者番号と確認メール1通・配信 77→78件（シナリオ XU7Gfd7XoiCQ）。この数字の出どころは asa_tenko.md 09-19 の行（会話記録の時刻では確かめられず）</li>
+<li>直す前の控え（2本）：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20260918_aimits-report-proxy_index.js_beforeChange_registered_no2ndmail ／ /Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20260918_aimits-report-proxy_index.js_beforeChange_close_impersonation_hole</li>
+<li>Mits様原文（09-18・会話記録 f670a3f7 から逐語）：「運転台自体の改修はきょうはしないで、以後「AI-Mitsのみ版」と呼ぶ、を作業する」「今後AI-Mitsのみ版をダウンロードした人がuntendaiをダウンロードして同じアカウントで使うことを前提とする。その逆もある。」</li>
+<li>数え方への影響：確認済みの人が登録を押し直しても、配信と読者は増えない。押し直しの数は中継の記録（mail_status.skipped）で数える</li>
+<li>詳細：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/報告_運転台改善.md の 2026-09-19 07:2x の節</li>
+</ul>
+<h3 id="2026-09-19-07-2x-運転台改善-予約タスク-untendai-asa-tenken">2026-09-19 07:2x ／ 運転台改善（予約タスク untendai-asa-tenken）── 部署の1周の1歩を自分の窓に足した</h3>
+<ul>
+<li>どのセッションで：運転台改善（毎朝点検の予約タスク）</li>
+<li>宛先：司令塔</li>
+<li>決定の記録 2026-09-18 11:1x の②に対して：毎朝点検の手順書 /Users/nishidamitsuhiro/.claude/scheduled-tasks/untendai-asa-tenken/SKILL.md の手順0に「申し送りの次に、指示書のいちばん下の節を読み、1番から仕事をして、報告に書く」を足した。この回で走らせ、指示書 2026-09-19 の1〜3を済ませて報告に1節書いた。6時間ごとの機能要望の窓の手順書はまだ（1/2）</li>
+</ul>
+<h3 id="2026-09-19-07-3x-運転台改善-予約タスク-untendai-asa-tenken">2026-09-19 07:3x ／ 運転台改善（予約タスク untendai-asa-tenken・2つ上の「2026-09-18 20:09」の節の訂正）</h3>
+<ul>
+<li>どのセッションで：運転台改善（毎朝点検の予約タスク）</li>
+<li>宛先：AI-Mits-チューニング／メール配信・計測・自動化／司令塔</li>
+<li>取消：「この数字の出どころは asa_tenko.md 09-19 の行（会話記録の時刻では確かめられず）」</li>
+<li>新しい行：配信 77件→78件と <code>skipped:already_verified</code> は、運転台改善の会話記録 f4e25fef（2026-09-18T11:09:24Z＝20:09 JST・確かめの表「担当の実測」）に書いてある。前の回は別の会話記録 f670a3f7 だけを探していた</li>
+</ul>
+<h3 id="2026-09-19-07-4x-AI-Mits-チューニング-予約タスク-aimits-mai">2026-09-19 07:4x ／ AI-Mits-チューニング（予約タスク aimits-mainichi-keisoku）── 宛先の行を読んだ・止める線の点検</h3>
+<ul>
+<li>どのセッションで：AI-Mits-チューニング</li>
+<li>宛先：司令塔／運転台改善</li>
+<li>読んで片づけた：2026-09-18 20:09 と 2026-09-19 07:3x（宛先に AI-Mits-チューニング）。中継 /register の変更後も、新しい人の「登録 → 読者 → 認証メール1通」は生きている（XU7Gfd7XoiCQ の 1658 の試しの読者 8nxq0yrBeMEw に 17:00:07 の認証1通）</li>
+<li>気づいたこと：20:09 の時刻にできた読者は無い（16:58 が最後）。20:09 の「新しいアドレスで 77→78件」は 16:58 の1件を表にしたものと読める。運転台改善に1行の確認を頼んだ</li>
+<li>重なり：直し1（確認済みには2通目なし）と案②（未認証で生きているリンクがあれば2通目なし）は対象が重ならない。案②は同じ分岐の手前に足す</li>
+<li>詳細：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/報告_AI-Mits-チューニング.md の 2026-09-19 07:4x の節</li>
+</ul>
+<h3 id="2026-09-19-09-1x-メール配信・計測・自動化-予約タスク-merumaga-kei">2026-09-19 09:1x ／ メール配信・計測・自動化（予約タスク merumaga-keisoku-36h-asa）── 宛先の行を読んだ</h3>
+<ul>
+<li>どのセッションで：メール配信・計測・自動化（朝の測定の回）</li>
+<li>宛先：司令塔／運転台改善</li>
+<li>読んで片づけた：2026-09-18 20:09 と 2026-09-19 07:3x（宛先にメール配信・計測・自動化）。測定の台帳に入れる数に影響なし（押し直しは配信・読者を増やさない。数えるときは中継の mail_status.skipped を見る、を承知した）</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
