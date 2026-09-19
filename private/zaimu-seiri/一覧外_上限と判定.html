@@ -214,9 +214,9 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789810990"></script>
-<script src="zaimu_seiri_state.js?v=1789810990"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789810990"></script>
+<script src="zaimu_seiri_data.js?v=1789811650"></script>
+<script src="zaimu_seiri_state.js?v=1789811650"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789811650"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -366,7 +366,7 @@ function render(){
     if (b.items.length === 0) return "";
     // 月平均降順
     const sorted = b.items.slice().sort((x,y) => (y.monthly||0) - (x.monthly||0));
-    const isRouhi = (c === "浪費");
+    const isRouhi = ["浪費","旅行","未仕訳"].includes(c);
     const subs = loadSub();
     const rowOf = it => {
       const s = state[it.id];
@@ -411,7 +411,7 @@ function render(){
     return `<div class="section${isRouhi && subHidden() ? ' hide-subs' : ''}">
       <div class="section-head">
         <h2>${esc(c)} <span class="section-sub">${b.items.length}件・月平均 ${fmtYen(b.actual)}円・1〜7月の総額 ${fmtYen(b.items.reduce((t,i)=>t+(i.total||0),0))}円・<b style="color:#c0392b;">削った総額 ${fmtYen(b.items.filter(i=>(state[i.id]||{}).status==="cut").reduce((t,i)=>t+(i.total||0),0))}円（月 ${fmtYen(b.cut)}円）</b></span></h2>
-        <span class="section-sub">上限 ${cap?fmtYen(cap)+'円':'―'} ／ 一回性 <b style="color:#a68000;">${fmtYen(b.once)}円</b> ／ これからの月額 <b style="color:var(--gold);">${fmtYen(after)}円</b>${isRouhi ? `<button class="sub-toggle" id="sub-toggle">${subHidden() ? "分類ボタンを出す" : "分類ボタンを消す"}</button>` : ""}</span>
+        <span class="section-sub">上限 ${cap?fmtYen(cap)+'円':'―'} ／ 一回性 <b style="color:#a68000;">${fmtYen(b.once)}円</b> ／ これからの月額 <b style="color:var(--gold);">${fmtYen(after)}円</b>${isRouhi ? `<button class="sub-toggle">${subHidden() ? "分類ボタンを出す" : "分類ボタンを消す"}</button>` : ""}</span>
       </div>
       <table>
         <thead><tr>
@@ -449,11 +449,10 @@ function render(){
       render();
     });
   });
-  const tg = document.getElementById("sub-toggle");
-  if (tg) tg.addEventListener("click", () => {
+  container.querySelectorAll(".sub-toggle").forEach(tg => tg.addEventListener("click", () => {
     try { localStorage.setItem(SUB_HIDE_KEY, subHidden() ? "0" : "1"); } catch(e){}
     render();
-  });
+  }));
 }
 
 function onClickAct(e){
