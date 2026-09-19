@@ -1,61 +1,48 @@
-// サブスク外の月額の内訳（提案3・別ページ用データ）第7版
+// サブスク外の月額の内訳 第7版 v7.2（2026-09-19 Mits様「全部入れる」規則反映）
 // 期間: 2026-01〜2026-08（8ヶ月）・USD→JPYレート: 148
-// BS-keiri 生成・2026-09-19 第7版（第6版 = /Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20260919_meisai_dai6han/）
+// BS-keiri 生成・第6版 = /Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20260919_meisai_dai6han/
 //
-// === 参謀決定の反映（2026-09-19）===
-// 1. DF.ペイデイ 17,908 / DF.カンリヒトウ 26,530 / 振込ニシダセイジ 5,400 は skip:定義外
-//    （1〜7月と同じ扱い・PayPay 直接引落・私用・total 定義の外）
-// 2. ガス m-gas 8月は 1,810（Mits様確定）
-// 3. GRAMMARLY はサブスク（a:k2-64）に足す（ここには載らない）
-// 4. new は m-a01〜（既存 id と重ならない・category は caps 素案・sub は第6版方式）
-// 5. monthly ＝ round(total÷8)。m-001 のみ note の日額算式で 106,440 固定
+// === 変更履歴 ===
+// v7.0: 米国側・日本側 CSV を相手先別に集計した json を統合
+// v7.1: DF.カンリヒトウ / ニシダ イクコ / ニシダ セイジ を新 item として追加
+// v7.2: JALカード年会費(2,200 サブスク側へ)／JALカード決済(20,900)／マーケティングワークス status once
 //
 // === 検算（1円まで）===
-// 第7版 Σtotal = ¥4,034,951
-// 第6版 Σtotal = ¥3,503,424
-// Δ = ¥531,527
-//   ├ m-* 8月（US+JP）: ¥376,983
-//   ├ US new: ¥152,519
-//   └ JP new（DF 2件除外）: ¥2,025
-// 期待値と実測値の差 = ¥0（1円まで一致）
+// 第7版 Σtotal (v7.2)      = ¥5,354,705
+// 第6版 Σtotal             = ¥3,503,424
+// Δ                        = ¥1,851,281
+//   ├ US+JP m-* 8月         = ¥376,983
+//   ├ US new (39 相手)      = ¥152,519
+//   ├ JP new 元(kept)       = ¥2,025
+//   ├ DF.カンリヒトウ 8件   = ¥202,440
+//   ├ ニシダ イクコ 7件     = ¥951,711
+//   ├ ニシダ セイジ 4件     = ¥87,985
+//   ├ JALカード決済 1件     = ¥20,900
+//   ├ マーケティングワークス 1件 = ¥54,400
+//   ├ 振込手数料 拡張       = ¥2,320 (145→2,465)
+//   └ m-001 ATM 調整        = -¥2
 // 第6版にあった 255 id 全て残存（消失 0件）
+// 期待値と実測値の差 = ¥0（1円まで一致）
+//
+// === 除外項目（Mits様 2026-09-19 新規則） ===
+// DF.ペイデイ 4件 71,882 → loan（借入返済）に入る・meisai 対象外
+// Wise→PayPay 振込 3件 806,317 → 自己口座間移動・除外
+// 為替差損益 / Stripe手数料 → 帳簿上のみ or 売上から自動引き・除外
+// JALカード年会費 2,200 → a:k3-09 サブスク側に足された
 //
 var ICHIRANGAI_MEISAI = {
-  "period": "2026-01〜2026-08",
+  "period": "2026-01\u301c2026-08",
   "months": 8,
   "rate_usd": 148,
   "target_monthly": 478023,
-  "items_sum_monthly": 524442,
-  "expected_after_adjust": 524442,
+  "items_sum_monthly": 689411,
+  "expected_after_adjust": 689411,
   "diff_actual_vs_expected": 0,
-  "reconciliation": {
-    "period": "2026-01〜2026-08 (8ヶ月)",
-    "sigma_total_7han": 4034951,
-    "sigma_total_6han": 3503424,
-    "delta_from_6han": 531527,
-    "delta_breakdown": {
-      "m_hoshi_aug_US+JP": 376983,
-      "US_new": 152519,
-      "JP_new_kept_DF除外": 2025,
-      "sum": 531527
-    },
-    "check_all_255_id_kept": "0件消失（items 297件・第6版 255 + 新規 42）",
-    "moved_to_skip_kikatsu_no_soto": {
-      "DF.ペイデイ": 17908,
-      "DF.カンリヒトウ": 26530,
-      "振込ニシダセイジ": 5400,
-      "note": "1〜7月と同じ扱い（PayPay 直接引落／私用・total 定義外・参謀 2026-09-19 決定）"
-    },
-    "notes": [
-      "monthly ＝ round(total÷8)。m-001 のみ note の日額算式により 106,440 で固定。",
-      "GRAMMARLY は a:k2-64（サブスク側）に足したのでここには載らない。",
-      "AMEX Brilliant Dining Credit -3,700 は m-002（第6版で removed 済）に該当のため new 側 m-aXX として計上。"
-    ]
-  },
+  "reconciliation": {"period": "2026-01〜2026-08 (8ヶ月)", "sigma_total_7han_v72": 5354705, "sigma_total_6han": 3503424, "delta_from_6han": 1851281, "delta_breakdown": {"m_hoshi_aug_US+JP": 376983, "US_new": 152519, "JP_new_kept_original": 2025, "DF.カンリヒトウ_1_8月": 202440, "ニシダ_イクコ_1_8月": 951711, "ニシダ_セイジ_1_8月": 87985, "JALカード_決済_20260610": 20900, "マーケティングワークス_20260311": 54400, "振込手数料_1_8月_拡張": 2320, "m_001_ATM_差2円調整": -2, "sum": 1851281}, "check_all_255_id_kept": "0件消失（items 302件・第6版 255 + 新規 47）", "new_rule_applied": "口座・カードから外に出たお金は全部入れる。外すのは自己口座間移動と為替差損益のみ（Mits様 2026-09-19）", "excluded_from_meisai": {"DF.ペイデイ_4件_71882": "loan（借入返済）に入る・m-a01〜m-a47 には無い", "Wise_PayPay_振込3件_806317": "自己口座間移動・除外", "為替差損益": "帳簿上のみ・除外", "Stripe手数料": "売上から自動引かれ・除外", "JALカード年会費_2200": "a:k3-09 サブスク側に足された（Mits様指示）"}, "notes": ["DF.ペイデイ 6/28 の 18,158 は本来 17,908 の分割額と 250 円差（銀行扇合1回分の払込差の見立て）", "MF #890 (2026-04-20) MacBook Pro 429,800 購入仕訳を新規計上・工具器具備品・一括償却資産アカウント無効のため消耗品費で代用（後で Mits様が再分類）", "MF #558/#570/#583/#851 の DF.ペイデイ 4件を 未払金/普通預金 の形式に修正（元の消耗品費から）", "8月末の 未払金(ペイディサブなし) 残高 = 429,800 - 17,908×3 - 18,158 = 357,918（参謀 358,168 との差 250 は 6/28 差）"]},
   "caps": {"現金生活費": 116914, "カード生活費": 16961, "浪費": 30688, "投資": 48126, "旅行": 51989},
   "caps_reason": {"現金生活費": "実績の半分（Mits様指示 2026-09-19・画面は実績から毎回計算）", "カード生活費": "実績の半分（Mits様指示 2026-09-19・画面は実績から毎回計算）", "浪費": "実績の半分（Mits様指示 2026-09-19・画面は実績から毎回計算）", "投資": "実績の半分（Mits様指示 2026-09-19・画面は実績から毎回計算）", "旅行": "実績の半分（Mits様指示 2026-09-19・画面は実績から毎回計算）"},
   "items": [
-    {"id": "m-001", "category": "現金生活費", "row": "o-04", "merchant": "ATM 現金引き出し（生活費）", "card": "PayPay 銀行 ATM", "user": "Mits様", "count": 23, "total": 691002, "monthly": 106440, "first": "2026-02-05", "last": "2026-08-29", "note": "月額＝日額 3,548円 × 30日＝106,440円（2026-09-17 旅程の滞在日数から算出：1〜8月の引き出し 660,000円 ÷ 日本にいた186日＝3,548円/日。Mits様指示 2026-09-19）。1〜7月の引き出しは PayPay 銀行の18回・541,000円＋手数料", "status": null, "status_date": null, "sub": "現金（ATM）"},
+    {"id": "m-001", "category": "現金生活費", "row": "o-04", "merchant": "ATM 現金引き出し（生活費）", "card": "PayPay 銀行 ATM", "user": "Mits様", "count": 23, "total": 691000, "monthly": 106440, "first": "2026-02-05", "last": "2026-08-29", "note": "月額＝日額 3,548円 × 30日＝106,440円（2026-09-17 旅程の滞在日数から算出：1〜8月の引き出し 660,000円 ÷ 日本にいた186日＝3,548円/日。Mits様指示 2026-09-19）。1〜7月の引き出しは PayPay 銀行の18回・541,000円＋手数料（2026-09-19 第7版：CSVと突き合わせで2円差を調整）", "status": null, "status_date": null, "sub": "現金（ATM）"},
     {"id": "m-003", "category": "浪費", "row": "o-08", "merchant": "IORI PG TOKYO", "card": "Amex US 44000", "user": "Mits様", "count": 2, "total": 98322, "monthly": 12290, "first": "2026-03-05", "last": "2026-06-19", "note": "", "status": null, "status_date": null, "sub": "飲み"},
     {"id": "m-004", "category": "投資", "row": "o-08", "merchant": "JP FBA SAPPORO", "card": "Amex US 44000", "user": "Mits様", "count": 38, "total": 92381, "monthly": 11548, "first": "2026-02-07", "last": "2026-08-18", "note": "Amazon の FBA（札幌の倉庫）。飲食ではない。MF では荷造運賃で仕訳（2026-08-20 Mits様判定）", "status": null, "status_date": null, "sub": "Amazon"},
     {"id": "m-005", "category": "浪費", "row": "o-08", "merchant": "BAR COCCO OKINAWA", "card": "Amex US 44000", "user": "Mits様", "count": 19, "total": 71232, "monthly": 8904, "first": "2026-02-21", "last": "2026-08-27", "note": "", "status": null, "status_date": null, "sub": "飲み"},
@@ -311,7 +298,7 @@ var ICHIRANGAI_MEISAI = {
     {"id": "m-udemy", "category": "投資", "sub": "", "row": "", "merchant": "UDEMYJP DUBLIN IR", "card": "", "user": "Mits様", "count": 1, "total": 1693, "monthly": 212, "first": "", "last": "", "note": "サブスク側から戻した（Mits様 2026-09-19：一回性）", "status": "once", "status_date": "2026-09-19"},
     {"id": "m-wiki", "category": "浪費", "sub": "", "row": "", "merchant": "WIKIPEDIA GIFT SAN FRANCISCO", "card": "", "user": "Mits様", "count": 1, "total": 306, "monthly": 38, "first": "", "last": "", "note": "サブスク側から戻した（Mits様 2026-09-19：一回性）", "status": "once", "status_date": "2026-09-19"},
     {"id": "m-a01", "category": "旅行", "row": "", "merchant": "ETCカード売上", "card": "楽天プレミアム 2944", "user": "Mits様", "count": 3, "total": 1880, "monthly": 235, "first": "2026-08-23", "last": "2026-08-24", "note": "2026-08 に初出（第7版）・BS-keiri 相手先別割当", "status": null, "status_date": null, "sub": "交通"},
-    {"id": "m-a02", "category": "カード生活費", "row": "", "merchant": "振込手数料（PayPay 銀行）", "card": "PayPay 銀行 5914310", "user": "Mits様", "count": 1, "total": 145, "monthly": 18, "first": "2026-08-25", "last": "2026-08-25", "note": "2026-08 に初出（第7版）・BS-keiri 相手先別割当", "status": null, "status_date": null, "sub": "その他"},
+    {"id": "m-a02", "category": "カード生活費", "row": "", "merchant": "振込手数料（PayPay 銀行）", "card": "PayPay 銀行 5914310", "user": "Mits様", "count": 17, "total": 2465, "monthly": 308, "first": "2026-01-21", "last": "2026-08-25", "note": "2026-09-19 第7版：1〜8月の PayPay 銀行 振込手数料 全件（Wise 振込付随含む）に拡張", "status": null, "status_date": null, "sub": "その他"},
     {"id": "m-a03", "category": "カード生活費", "row": "", "merchant": "LAWSON       *", "card": "Amex US 44000", "user": "Mits様", "count": 4, "total": 1096, "monthly": 137, "first": "2026-08-01", "last": "2026-08-31", "note": "2026-08 に初出（第7版）・BS-keiri 相手先別割当・USD $7.41@148", "status": null, "status_date": null, "sub": "食事"},
     {"id": "m-a04", "category": "カード生活費", "row": "", "merchant": "TOWNPLAZAKANEOKINAWA", "card": "Amex US 44000", "user": "Mits様", "count": 8, "total": 26621, "monthly": 3328, "first": "2026-08-05", "last": "2026-08-31", "note": "2026-08 に初出（第7版）・BS-keiri 相手先別割当・USD $179.87@148", "status": null, "status_date": null, "sub": "食事"},
     {"id": "m-a05", "category": "カード生活費", "row": "", "merchant": "BOOK WALKER         TOKYO", "card": "Amex US 44000", "user": "Mits様", "count": 2, "total": 1029, "monthly": 129, "first": "2026-08-10", "last": "2026-08-31", "note": "2026-08 に初出（第7版）・BS-keiri 相手先別割当・USD $6.95@148", "status": null, "status_date": null, "sub": "本"},
@@ -351,7 +338,12 @@ var ICHIRANGAI_MEISAI = {
     {"id": "m-a39", "category": "カード生活費", "row": "", "merchant": "MONTHLY SERVICE FEE", "card": "Chase Checking 5669", "user": "Mits様", "count": 1, "total": 2220, "monthly": 278, "first": "2026-08-21", "last": "2026-08-21", "note": "2026-08 に初出（第7版）・BS-keiri 相手先別割当・USD $15.00@148", "status": null, "status_date": null, "sub": "その他"},
     {"id": "m-a40", "category": "カード生活費", "row": "", "merchant": "INTEREST CHARGED ON BANK CASH ADVAN", "card": "BOA Card 4452", "user": "Mits様", "count": 1, "total": 252, "monthly": 32, "first": "2026-08-21", "last": "2026-08-21", "note": "2026-08 に初出（第7版）・BS-keiri 相手先別割当・USD $1.70@148", "status": null, "status_date": null, "sub": "その他"},
     {"id": "m-a41", "category": "カード生活費", "row": "", "merchant": "INTEREST CHARGED ON PURCHASES", "card": "BOA Card 4452", "user": "Mits様", "count": 1, "total": 314, "monthly": 39, "first": "2026-08-21", "last": "2026-08-21", "note": "2026-08 に初出（第7版）・BS-keiri 相手先別割当・USD $2.12@148", "status": null, "status_date": null, "sub": "その他"},
-    {"id": "m-a42", "category": "カード生活費", "row": "", "merchant": "AMEX Brilliant Dining Credit", "card": "Amex US 44000", "user": "Mits様", "count": 1, "total": -3700, "monthly": -462, "first": "2026-08-02", "last": "2026-08-02", "note": "2026-08 に初出（第7版）・BS-keiri 相手先別割当・USD $-25.00@148", "status": null, "status_date": null, "sub": "割戻"}
+    {"id": "m-a42", "category": "カード生活費", "row": "", "merchant": "AMEX Brilliant Dining Credit", "card": "Amex US 44000", "user": "Mits様", "count": 1, "total": -3700, "monthly": -462, "first": "2026-08-02", "last": "2026-08-02", "note": "2026-08 に初出（第7版）・BS-keiri 相手先別割当・USD $-25.00@148", "status": null, "status_date": null, "sub": "割戻"},
+    {"id": "m-a43", "category": "現金生活費", "row": "", "merchant": "他の不動産の管理費（DF.カンリヒトウ）", "card": "PayPay 銀行 5914310", "user": "Mits様", "count": 8, "total": 202440, "monthly": 25305, "first": "2026-01-27", "last": "2026-08-27", "note": "2026-09-19 第7版 追加（Mits様「全部入れる」規則反映）・PayPay 銀行 1〜8月引落 突き合わせ", "status": null, "status_date": null, "sub": "管理費"},
+    {"id": "m-a44", "category": "現金生活費", "row": "", "merchant": "振込 ニシダ イクコ（給与）", "card": "PayPay 銀行 5914310", "user": "Mits様", "count": 7, "total": 951711, "monthly": 118964, "first": "2026-01-21", "last": "2026-07-21", "note": "2026-09-19 第7版 追加（Mits様「全部入れる」規則反映）・PayPay 銀行 1〜8月引落 突き合わせ", "status": null, "status_date": null, "sub": "家族"},
+    {"id": "m-a45", "category": "現金生活費", "row": "", "merchant": "振込 ニシダ セイジ", "card": "PayPay 銀行 5914310", "user": "Mits様", "count": 4, "total": 87985, "monthly": 10998, "first": "2026-01-XX", "last": "2026-08-25", "note": "2026-09-19 第7版 追加（Mits様「全部入れる」規則反映）・PayPay 銀行 1〜8月引落 突き合わせ", "status": null, "status_date": null, "sub": "家族"},
+    {"id": "m-a46", "category": "カード生活費", "row": "", "merchant": "JALカード 決済（三菱UFJニコス）", "card": "PayPay 銀行 5914310", "user": "Mits様", "count": 1, "total": 20900, "monthly": 2612, "first": "2026-06-10", "last": "2026-06-10", "note": "2026-09-19 第7版：Mits様判定「JALカードでの1回決済」・年会費 2,200 は a:k3-09 サブスク側", "status": null, "status_date": null, "sub": "カード引落"},
+    {"id": "m-a47", "category": "投資", "row": "", "merchant": "振込 カ)マーケティングワークス", "card": "PayPay 銀行 5914310", "user": "Mits様", "count": 1, "total": 54400, "monthly": 6800, "first": "2026-03-11", "last": "2026-03-11", "note": "2026-09-19 第7版：Mits様判定「今後無い・外注費」・単発・#49 50,371 と同じ取引の可能性(差 4,029 は 振込手数料 か 相手先計上差)", "status": "once", "status_date": "2026-09-19", "sub": "外注"}
   ],
   "moved_to_subscription": [{"id": "m-059", "category": "外注・その他", "row": "o-05/o-06", "merchant": "BUSINESS I* BI_SUBSCRI", "card": "Amex JP Marriott 42008", "user": "Mits様", "count": 1, "total": 7800, "monthly": 1114, "first": "2026-06-20", "last": "2026-06-20", "note": "", "status": null, "status_date": null, "moved": "2026-09-19 Mits様指示"}, {"name": "CIF TOKYO JP", "monthly": 2866, "total": 20063, "memo": "サブスク（Mits様判定 2026-09-19）。一覧A k2-25 CIF と同じ課金"}, {"name": "AQUA VOICE SAN FRANCISCO CA", "monthly": 634, "total": 4440, "memo": "ネットのサービス（Mits様判定 2026-09-19：サブスク側）"}, {"name": "DMM TOKYO JP", "monthly": 406, "total": 2840, "memo": "ネットのサービス（Mits様判定 2026-09-19：サブスク側）"}, {"name": "NOTE TOKYO JP", "monthly": 402, "total": 2813, "memo": "ネットのサービス（Mits様判定 2026-09-19：サブスク側）"}, {"name": "APPLE ZERO GA* JP", "monthly": 365, "total": 2553, "memo": "ネットのサービス（Mits様判定 2026-09-19：サブスク側）"}, {"name": "SUBLINE HOKKAIDO JP", "monthly": 279, "total": 1956, "memo": "ネットのサービス（Mits様判定 2026-09-19：サブスク側）"}, {"name": "WEBLIO CO JP TOKYO JP", "monthly": 264, "total": 1849, "memo": "ネットのサービス（Mits様判定 2026-09-19：サブスク側）"}, {"name": "AMAZON DIGIT*CH4I112888-802-3080 WA", "monthly": 254, "total": 1775, "memo": "ネットのサービス（Mits様判定 2026-09-19：サブスク側）"}, {"name": "AMAZON DIGIT*BK29C1S888-802-3080 WA", "monthly": 254, "total": 1775, "memo": "ネットのサービス（Mits様判定 2026-09-19：サブスク側）"}, {"name": "AMAZON DIGIT*YQ8OO8K888-802-3080 WA", "monthly": 254, "total": 1775, "memo": "ネットのサービス（Mits様判定 2026-09-19：サブスク側）"}, {"name": "AMAZON DIGIT*ZN8AF3D888-802-3080 WA", "monthly": 254, "total": 1775, "memo": "ネットのサービス（Mits様判定 2026-09-19：サブスク側）"}, {"name": "AMAZON DIGIT*NG27W7N888-802-3080 WA", "monthly": 254, "total": 1775, "memo": "ネットのサービス（Mits様判定 2026-09-19：サブスク側）"}, {"name": "ＳＵＢＬＩＮＥ 北海道 札幌市中央区", "monthly": 79, "total": 550, "memo": "ネットのサービス（Mits様判定 2026-09-19：サブスク側）"}, {"name": "ノート 東京都 千代田区", "monthly": 71, "total": 500, "memo": "ネットのサービス（Mits様判定 2026-09-19：サブスク側）"}],
   "removed": [{"id": "m-038", "category": "外注・その他", "row": "o-11+out", "merchant": "Wise 送金（送金先未特定）", "card": "BOA VISA 4452", "user": "Mits様", "count": 4, "total": 372229, "monthly": 53176, "first": "2026-01-26", "last": "2026-05-18", "note": "BOA VISA 4452 経由の外注送金4件・送金先未特定", "status": null, "status_date": null, "removed": "2026-09-19 Mits様指示：送金先で使途が仕分けられているので二重"}, {"id": "m-002", "category": "消費", "row": "o-08", "merchant": "Amex US キャッシング（横浜の ATM）", "card": "Amex US 44000", "user": "Mits様", "count": 1, "total": 94027, "monthly": 13432, "first": "2026-03-07", "last": "2026-03-07", "note": "$1,000×2回のキャッシング・NAKA-KU YOKOHAMA ATM", "status": null, "status_date": null, "removed": "2026-09-19 Mits様指示：借入の返済に入っているので二重"}, {"name": "分割払い利用分（Amex JP Marriott 42008）", "total": 85623, "monthly": 12232, "memo": "一覧外から削除（Mits様指示 2026-09-19）"}, {"name": "Amex JP 63000 の一覧外利用", "total": 15113, "monthly": 2159, "memo": "中身は PRIORITY PASS（ANA 63000・2/4 5,655／6/8 5,807×2）。一覧A k2-34 PRIORITY PASS（17,269÷7＝2,467/月）と同じ請求の二重計上。1/19 5,733 は事業主貸で除外済み。15,113 は進捗表 o-07 の見込み 2,159×7 で、実際の明細ではない（2026-09-19 参謀が照合）"}],
