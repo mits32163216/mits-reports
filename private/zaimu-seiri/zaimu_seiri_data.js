@@ -73,10 +73,12 @@ var MONTHLY_ACTUAL = [
   { month:"2026-02", total:1767200, jigyounushi_kashi:609774, borrow:120820, one_off:     0, running:1036606 },
   { month:"2026-03", total:1399157, jigyounushi_kashi: 11000, borrow:137706, one_off:     0, running:1250451 },
   { month:"2026-04", total: 949744, jigyounushi_kashi:     0, borrow:146489, one_off:     0, running: 803255 },
-  { month:"2026-05", total:1108630, jigyounushi_kashi:  5000, borrow:145694, one_off:     0, running: 957936 },
-  { month:"2026-06", total:1305664, jigyounushi_kashi:     0, borrow:130769, one_off:     0, running:1174895 },
-  { month:"2026-07", total:1009192, jigyounushi_kashi:     0, borrow:118943, one_off:     0, running: 890249 }
-  // 2026-08 は未締め（家賃・電気 未仕訳、カード9月引落分の一部未反映）。9月締め後に追記する。
+  { month:"2026-05", total:1108630, jigyounushi_kashi:  5000, borrow:163602, one_off:     0, running: 940028 },
+  { month:"2026-06", total:1305664, jigyounushi_kashi:     0, borrow:148927, one_off:     0, running:1156737 },
+  { month:"2026-07", total:1009192, jigyounushi_kashi:     0, borrow:136851, one_off:     0, running: 872341 },
+  { month:"2026-08", total: 946482, jigyounushi_kashi:     0, borrow:177743, one_off:     0, running: 768739 }
+  // 2026-09-19 8月締め：5〜7月の borrow にペイディ（MacBook Pro 24回払い 17,908・6月は 18,158）を足し、同じ額を running から移した（MF では消耗品費で total に入っていた）。
+  // 8月：MF 8月の支出 1,502,238 − 自分の口座どうしの移動（Wise→PayPay）450,451 − 帳簿の上だけの数字（為替差損益・Stripe 手数料など）105,305 ＝ 946,482。borrow＝楽天 33,403＋Amex JP 114,579＋ペイフレックス 11,853＋ペイディ 17,908（BS-keiri）
 ];
 
 // この一覧に載っていない月額の経費（家賃・水道光熱費など）の内訳。
