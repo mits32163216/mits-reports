@@ -298,11 +298,11 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   <div class="note" id="y-note"></div>
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789824915"></script>
-<script src="zaimu_seiri_state.js?v=1789824915"></script>
-<script src="zaimu_seiri_sync.js?v=1789824915"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789824915"></script>
-<script src="zaimu_seiri_kijun.js?v=1789824915"></script>
+<script src="zaimu_seiri_data.js?v=1789825018"></script>
+<script src="zaimu_seiri_state.js?v=1789825018"></script>
+<script src="zaimu_seiri_sync.js?v=1789825018"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789825018"></script>
+<script src="zaimu_seiri_kijun.js?v=1789825018"></script>
 <script src="zaimu_seiri_8gatsu_jisseki.js"></script>
 <script>
 (function(){
@@ -312,10 +312,10 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   const esc = t => String(t == null ? "" : t).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const M0 = K.months || 7;   // 月平均の元になった月数（1〜7月）
   // 8月の実績（MF から BS-keiri が作る zaimu_seiri_8gatsu_jisseki.js）があれば、実績を1〜8月・見込みを9〜12月にする
-  const J = (typeof ZS_JISSEKI_08 !== "undefined" && ZS_JISSEKI_08) ? ZS_JISSEKI_08 : null;
+  const J = (typeof ZS_JISSEKI_08 !== "undefined" && ZS_JISSEKI_08 && M0 < 8) ? ZS_JISSEKI_08 : null;   // 明細が1〜8月になったら8月単月ファイルは使わない（二重に数えない）
   const M1 = J ? M0 + 1 : M0, M2 = 12 - M1;   // 実績の月数・見込みの月数
   const P1 = `1〜${M1}月`, P2 = `${M1 + 1}〜12月`, S2 = `${M1 + 1}月`;
-  if (J) {
+  if (M1 !== 7) {   // 集計期間が1〜7月でなくなったら、ページに書いた「1〜7月」「8〜12月」「× 5」を今の期間に置き換える
     const box = document.querySelector(".summary.y26");
     const w = document.createTreeWalker(box, NodeFilter.SHOW_TEXT); const ns = []; while (w.nextNode()) ns.push(w.currentNode);
     ns.forEach(n => { n.nodeValue = n.nodeValue.replace(/1〜7月/g, P1).replace(/8〜12月/g, P2).replace(/8月から/g, S2 + "から").replace(/× 5/g, "× " + M2); });
@@ -337,7 +337,7 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   const runH1 = K.a * M0 + jA + bH1, runM2 = aNext + bM2;
   // 借入の返済：1〜7月＝実額の月平均 × 7／8〜12月＝借入の返済ページの月ごとの見込み
   const LOAN = [ ["8月", 139450, "①〜④ 全部"], ["9月", 131738, "④-1 8WEEKS.AI の分割を止めた後"], ["10月", K.LOAN_LATEST + 35671, "今の月々 ＋ 8WEEKS.AI 一括 35,671（10/10）"], ["11月", K.LOAN_LATEST, "今の月々"], ["12月", K.LOAN_LATEST, "今の月々"] ];
-  if (J) LOAN.shift();   // 8月は実績に入った
+  LOAN.splice(0, M1 - 7);   // 実績に入った月（8月〜）は見込みの列から外す
   const loanH1 = K.LOAN_BEFORE * M0 + jLoan, loanH2 = LOAN.reduce((t, x) => t + x[1], 0);
 
   const tr = (r) => `<tr class="${r.cls || ""}"><td>${r.indent ? "　" : ""}${esc(r.name)}${r.sub ? `<div style="font-size:10px;color:var(--sub);font-weight:normal;">${esc(r.sub)}</div>` : ""}</td><td class="n">${f(r.h1)}</td><td class="n">${r.m2 == null ? "―" : f(r.m2)}</td><td class="n">${f(r.h2 != null ? r.h2 : r.m2 * M2)}</td><td class="n">${f(r.h1 + (r.h2 != null ? r.h2 : r.m2 * M2))}</td></tr>`;
@@ -355,7 +355,7 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   document.getElementById("y-goal-m").textContent = f(K.goal);
   document.getElementById("y-goal").textContent = f(runH1 + K.goal * M2 + loanH1 + loanH2);
   document.getElementById("y-note").innerHTML =
-    `・1〜7月：サブスク整理は月平均 × ${M0}（年払いは1〜7月の実額に直した差を含む）、サブスク外は明細の総額、借入は実額の月平均 ${f(K.LOAN_BEFORE)} × ${M0}。<br>` +
+    `・1〜${M0}月：サブスク整理は月平均 × ${M0}（年払いは1〜${M0}月の実額に直した差を含む）、サブスク外は明細の総額、借入は実額の月平均 ${f(K.LOAN_BEFORE)} × ${M0}。<br>` +
     (J ? `・8月：MF の仕訳から出した8月の実額（${esc(J.source || "")}）。<br>` : "") +
     `・${P2}：押した状態（完了・対応済み・削る・一回性）と、サブスク外の判定で入れた「削る予定額」を引いた月額 × ${M2}。「続ける」と未判定はそのまま残る。<br>` +
     `・何もしなかった場合：${P1}の実績 ＋ ${P2}も出発点 ${f(K.start)} ＋ 借入 ${f(K.LOAN_BEFORE)} のまま × ${M2}。${S2}からゴールどおりなら：${P1}の実績 ＋ ゴール ${f(K.goal)} × ${M2} ＋ 2026年の借入の返済。<br>` +

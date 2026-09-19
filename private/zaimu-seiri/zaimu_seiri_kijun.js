@@ -5,7 +5,8 @@
 
 var ZS_KIJUN = (function(){
   const A_ADJ       = 47018;   // 一覧の行に無い足し分：年払いを1〜7月の実額に直した差 41,082（Notion・Genspark・年会費・2026-09-19 Mits様確認）＋ DOCPRO 5,936（1〜7月の月平均 14,363 − 月割り 8,427・2026-09-19 年払いへ）
-  const LOAN_BEFORE = 142286;  // 借入の返済（1〜7月の実額の月平均・2026-09-19 Mits様確認）
+  const LOAN_BEFORE = 142286;  // 借入の返済（集計期間の実額の月平均・2026-09-19 Mits様確認）
+  const LOAN_NOTE   = "楽天 35,431 ／ Amex JP 96,687 ／ Amex US 10,169";   // LOAN_BEFORE の内訳（集計期間の実額の月平均）
   const LOAN_LATEST = 59690;   // 今の月々の返済（④-1・④-2・④-3 完済後。① 楽天キャッシングリボの繰り上げ返済は 2026-09-19 取り消し）
   const LOAN_PRINCIPAL = 1298570; // 残っている元金 合計（判明分）＝楽天 822,200 ＋ Amex JP 476,370
 
@@ -16,7 +17,7 @@ var ZS_KIJUN = (function(){
 
   let b = 0, bKeep = 0, bCut = 0, bOnce = 0;
   const keepItems = [];
-  const byCat = {};   // 大分類ごと {actual(月平均), total(1〜7月の総額), keep, cut, once}
+  const byCat = {};   // 大分類ごと {actual(月平均), total(集計期間の総額), keep, cut, once}
   Object.keys((M && M.caps) || {}).forEach(c => { byCat[c] = { actual: 0, total: 0, keep: 0, cut: 0, once: 0 }; });
   ((M && M.items) || []).forEach(it => {
     const m = Number(it.monthly) || 0; b += m;
@@ -67,7 +68,9 @@ var ZS_KIJUN = (function(){
   const free    = goal - keepAll;              // 6段目 継続以外に使える額
   const target2 = r4 - free;                   // 8段目②
 
-  return { A_BASE, A_ADJ, A_KEEP, rowSum, planSum, plans, byCat, aDone, aHandled, months: (M && M.months) || 7, LOAN_BEFORE, LOAN_LATEST, LOAN_PRINCIPAL,
+  const months = (M && M.months) || 7;
+  const KIKAN = "1〜" + months + "月";   // 集計期間の表記（ページの「1〜N月」はここから入れる）
+  return { KIKAN, LOAN_NOTE, A_BASE, A_ADJ, A_KEEP, rowSum, planSum, plans, byCat, aDone, aHandled, months, LOAN_BEFORE, LOAN_LATEST, LOAN_PRINCIPAL,
            addA, toA, a, b, bKeep, bCut, bOnce, keepItems,
            start, before, keepAll, aRemain, bRemain, r4, target1, goal, free, target2 };
 })();
@@ -83,3 +86,15 @@ if (typeof BASELINE_20260918 !== "undefined" && BASELINE_20260918) {
   BASELINE_20260918.keepOutside = ZS_KIJUN.bKeep;
   BASELINE_20260918.outside     = ZS_KIJUN.b;
 }
+
+// ページの集計期間・借入の返済の表記を基準の値で埋める（1〜7月 → 1〜8月 のように、明細の months から決まる）
+(function(){
+  const K = ZS_KIJUN, f = n => Math.round(n).toLocaleString("ja-JP");
+  const fill = () => {
+    document.querySelectorAll(".zs-kikan").forEach(e => e.textContent = K.KIKAN);
+    document.querySelectorAll(".zs-loan-before").forEach(e => e.textContent = f(K.LOAN_BEFORE));
+    document.querySelectorAll(".zs-loan-note").forEach(e => e.textContent = K.LOAN_NOTE);
+    document.querySelectorAll(".zs-loan-diff").forEach(e => e.textContent = f(K.LOAN_BEFORE - 139450));
+  };
+  if (typeof document !== "undefined") { if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", fill); else fill(); }
+})();
