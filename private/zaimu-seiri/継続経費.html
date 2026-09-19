@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>継続する経費</title>
+<style>
+:root {
+  --bg: #f7f4ed;
+  --panel: #ffffff;
+  --ink: #1a1a1a;
+  --sub: #666;
+  --navy: #1e3a5f;
+  --gold: #b8860b;
+  --green: #2e7d32;
+  --gray: #9a9a9a;
+  --line: #e0dcd0;
+  --keep-bg: #ececec;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif; font-size: 13px; line-height: 1.55; }
+body { padding: 12px; max-width: 1680px; margin: 0 auto; }
+
+h1 { font-size: 18px; color: var(--navy); margin: 0 0 12px; }
+h2 { font-size: 15px; color: var(--navy); border-bottom: 2px solid var(--navy); padding-bottom: 4px; margin: 24px 0 8px; }
+
+.summary { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; margin-bottom: 16px; }
+.summary .total-line { font-size: 15px; margin-bottom: 6px; }
+.summary .total-line b { color: var(--navy); font-size: 20px; }
+.summary .sub-line { font-size: 12px; color: var(--sub); }
+.summary .back-link { display: inline-block; margin-top: 8px; padding: 4px 10px; background: var(--navy); color: #fff; text-decoration: none; border-radius: 4px; font-size: 11px; }
+.summary .back-link:hover { background: #2c4d7d; }
+
+.empty { padding: 12px; background: #fafaf7; border: 1px dashed var(--line); border-radius: 6px; color: var(--sub); font-size: 12px; }
+
+table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+th, td { padding: 6px 8px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: middle; font-size: 12px; }
+th { background: #f0ede4; font-size: 11px; color: var(--sub); font-weight: normal; }
+tr:last-child td { border-bottom: none; }
+tr.st-keep { background: var(--keep-bg); }
+
+td.name { min-width: 140px; font-weight: 500; }
+td.amount { text-align: right; font-family: "SF Mono", Menlo, monospace; white-space: nowrap; width: 90px; }
+td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-align: right; width: 150px; }
+td.card { font-size: 11px; color: var(--sub); min-width: 90px; max-width: 130px; }
+td.memo { font-size: 11px; color: var(--ink); min-width: 260px; max-width: 420px; white-space: normal; line-height: 1.4; }
+td.paydate { font-size: 11px; color: var(--sub); width: 90px; white-space: nowrap; }
+
+.sec-subtotal { padding: 8px 10px; background: #eeeae0; border-radius: 6px; font-size: 12px; margin: 6px 0 4px; }
+.sec-subtotal b { color: var(--navy); font-weight: 700; }
+
+.footer-note { margin-top: 20px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 11px; color: var(--sub); }
+
+@media (max-width: 700px) {
+  body { padding: 8px; }
+  td.card { display: none; }
+  td.memo { min-width: 160px; }
+}
+.topnav { position:sticky; top:0; z-index:100; background:#fff; border-bottom:2px solid var(--line); padding:8px 12px; margin:-12px -12px 12px -12px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; font-size:13px; }
+.topnav .btn-reload { padding:5px 12px; background:var(--gold); color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:bold; }
+.topnav .btn-reload:hover { background:#a68738; }
+.topnav .last-update { color:var(--sub); font-size:11px; }
+.topnav .nav-links { display:flex; gap:8px; margin-left:auto; }
+.topnav .nav-links a { padding:4px 10px; color:var(--navy); text-decoration:none; border-radius:4px; border:1px solid var(--line); font-size:12px; }
+.topnav .nav-links a:hover { background:var(--ivory); }
+.topnav .nav-links a.active { background:var(--navy); color:#fff; border-color:var(--navy); }
+</style>
+</head>
+<body>
+<div class="topnav">
+  <button class="btn-reload" onclick="location.reload()">↻ 更新</button>
+  <span class="last-update">最終更新 <span id="topnav-time">-</span></span>
+  <span class="nav-links">
+    <a href="財務整理_TOP.html">TOP</a>
+    <a href="財務整理_進捗表.html">進捗表（一覧）</a>
+    <a href="継続経費.html" class="active">継続経費</a>
+    <a href="一覧外の経費.html">一覧外の経費</a>
+    <a href="借入の返済.html">借入の返済</a>
+  </span>
+</div>
+
+<h1>継続する経費 <span style="font-size:11px;color:var(--sub);font-weight:normal;">（財務整理 進捗表で「継続（パン）」ボタンを押した行のまとめ）</span></h1>
+
+<div class="summary">
+  <div class="total-line">毎月かかる継続経費（月額経費 ＋ 年額経費の月割り）：<b><span id="m-total">0</span>円</b></div>
+  <div class="sub-line">
+    月額経費：<span id="m-monthly-sum">0</span>円（<span id="m-monthly-count">0</span>件）
+    ／ 年額経費・月割り：<span id="m-annual-monthly-sum">0</span>円（<span id="m-annual-count">0</span>件）
+    ／ 年額経費・年額計：<span id="m-annual-yen-sum">0</span>円（判明分）
+  </div>
+  <a href="財務整理_進捗表.html" class="back-link">← 財務整理 進捗表に戻る</a>
+</div>
+
+<h2>月額経費（月払い・不定期）</h2>
+<div id="monthly-container">
+  <div class="empty" id="monthly-empty">「継続（パン）」を押した月払い・不定期の行はまだありません。</div>
+</div>
+
+<h2>年額経費（年払い）</h2>
+<div id="annual-container">
+  <div class="empty" id="annual-empty">「継続（パン）」を押した年払いの行はまだありません。</div>
+</div>
+
+<div class="footer-note">
+  このページは 財務整理_進捗表.html と同じデータ（zaimu_seiri_data.js）を読み、
+  同じブラウザに保存された状態（localStorage キー <code>zaimu_seiri_progress_v1</code>）を反映します。
+  進捗表で「継続（パン）」ボタンを押した行だけがここに現れます。
+  <br>この画面から編集や保存はできません。表示だけです（メモ・備考も表示のみ）。
+</div>
+
+<script src="zaimu_seiri_data.js"></script>
+<script src="zaimu_seiri_state.js"></script>
+<script>
+"use strict";
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  }[c]));
+}
+
+// SAVED_STATE と localStorage をマージするヘルパーで H.loadState を上書きする
+// （data.js の window.ZAIMU_HELPERS はここでは触らず、ここだけで一段被せる）
+const H = window.ZAIMU_HELPERS;
+(function patchHelpersForSavedState(){
+  function _mergeStore(saved, local){
+    const merged = {};
+    const ids = new Set([...Object.keys(saved||{}), ...Object.keys(local||{})]);
+    for (const id of ids) {
+      const s = (saved||{})[id], l = (local||{})[id];
+      if (s && !l) { merged[id] = s; continue; }
+      if (l && !s) { merged[id] = l; continue; }
+      const sd = (s && (s.status_date || s.done_date)) || "";
+      const ld = (l && (l.status_date || l.done_date)) || "";
+      if (ld > sd) merged[id] = l;
+      else if (sd > ld) merged[id] = s;
+      else merged[id] = l;
+    }
+    return merged;
+  }
+  const savedProgress = (typeof SAVED_STATE !== "undefined" && SAVED_STATE && SAVED_STATE.progress) || {};
+  const savedNotes    = (typeof SAVED_STATE !== "undefined" && SAVED_STATE && SAVED_STATE.notes)    || {};
+  const origLoadState = H.loadState.bind(H);
+  const origLoadNotes = H.loadNotes.bind(H);
+  H.loadState = function(){ return _mergeStore(savedProgress, origLoadState()); };
+  H.loadNotes = function(){ return { ...savedNotes, ...origLoadNotes() }; };
+})();
+const fmtYen = H.fmtYen;
+
+function collectKeepItems() {
+  const monthly = [];
+  const annual  = [];
+  Object.keys(DATA).forEach(sectionKey => {
+    const section = DATA[sectionKey];
+    section.items.forEach(it => {
+      if (H.getStatus(it) === "keep") {
+        // cycle が annual なら年払い側、それ以外（monthly / irregular / null）は月払い側
+        if (it.cycle === "annual") annual.push({...it, _sec: sectionKey});
+        else monthly.push({...it, _sec: sectionKey, _isIrregular: it.cycle === "irregular" || it.cycle === null || it.cycle === undefined });
+      }
+    });
+  });
+  // 一覧外の経費（OUTSIDE_BREAKDOWN）で「継続」を押した行も取り込む
+  // 状態は別 localStorage キー zaimu_seiri_outside_v1 に入っている
+  try {
+    const outState = JSON.parse(localStorage.getItem("zaimu_seiri_outside_v1") || "{}");
+    if (typeof OUTSIDE_BREAKDOWN !== "undefined" && Array.isArray(OUTSIDE_BREAKDOWN)) {
+      OUTSIDE_BREAKDOWN.forEach(it => {
+        const s = outState[it.id];
+        const st = (s && s.status) ? s.status : (it.status || null);
+        if (st === "keep") {
+          if (it.cycle === "annual") annual.push({...it, _sec: "outside"});
+          else monthly.push({...it, _sec: "outside", _isIrregular: it.cycle === "irregular" || it.cycle === null || it.cycle === undefined });
+        }
+      });
+    }
+  } catch(e) { /* ignore */ }
+  // 月払いは月額の大きい順、年払いは 次の更新日 が近い順
+  monthly.sort((a,b) => b.amount - a.amount);
+  annual.sort((a,b) => {
+    const ad = a.next_due || "9999-99-99";
+    const bd = b.next_due || "9999-99-99";
+    return ad.localeCompare(bd);
+  });
+  return { monthly, annual };
+}
+
+function renderMonthly(items) {
+  const c = document.getElementById("monthly-container");
+  if (items.length === 0) {
+    c.innerHTML = '<div class="empty">「継続（パン）」を押した月払い・不定期の行はまだありません。</div>';
+    return 0;
+  }
+  const rows = items.map(it => {
+    const memo = H.loadUserNote(it.id);
+    const memoTxt = memo !== null ? memo : (it.memo || '');
+    const irregularBadge = it._isIrregular ? '<span style="font-size:10px;color:var(--gold);border:1px solid var(--gold);border-radius:3px;padding:0 3px;margin-left:4px;">不定期</span>' : '';
+    return `<tr class="st-keep">
+      <td class="name">${escapeHtml(it.name)}${irregularBadge}</td>
+      <td class="amount">${fmtYen(it.amount)}円</td>
+      <td class="card">${escapeHtml(it.card || "")}</td>
+      <td class="paydate">${it.last_paid || ""}</td>
+      <td class="paydate">${it.next_due || ""}</td>
+      <td class="memo">${escapeHtml(memoTxt)}</td>
+    </tr>`;
+  }).join("");
+  const sum = items.reduce((a,b) => a + b.amount, 0);
+  c.innerHTML = `
+    <table><thead><tr>
+      <th>名称</th>
+      <th style="text-align:right;">月額</th>
+      <th>払っているところ</th>
+      <th>最終決済日</th>
+      <th>次の予定日</th>
+      <th>メモ・備考</th>
+    </tr></thead><tbody>${rows}</tbody></table>
+    <div class="sec-subtotal">月額経費 小計：<b>${fmtYen(sum)}円</b>（${items.length}件）</div>
+  `;
+  return sum;
+}
+
+function renderAnnual(items) {
+  const c = document.getElementById("annual-container");
+  if (items.length === 0) {
+    c.innerHTML = '<div class="empty">「継続（パン）」を押した年払いの行はまだありません。</div>';
+    return { monthlySum:0, yenSum:0 };
+  }
+  const rows = items.map(it => {
+    const memo = H.loadUserNote(it.id);
+    const memoTxt = memo !== null ? memo : (it.memo || '');
+    const annualDisp = it.annual_amount ? escapeHtml(it.annual_amount) : "—";
+    return `<tr class="st-keep">
+      <td class="name">${escapeHtml(it.name)}</td>
+      <td class="annual-amt">${annualDisp}</td>
+      <td class="amount">${fmtYen(it.amount)}円</td>
+      <td class="paydate">${it.last_paid || ""}</td>
+      <td class="paydate">${it.next_due || ""}</td>
+      <td class="memo">${escapeHtml(memoTxt)}</td>
+    </tr>`;
+  }).join("");
+  const monthlySum = items.reduce((a,b) => a + b.amount, 0);
+  const yenSum = items.reduce((a,b) => a + (typeof b.annual_jpy === "number" ? b.annual_jpy : 0), 0);
+  c.innerHTML = `
+    <table><thead><tr>
+      <th>名称</th>
+      <th style="text-align:right;">年額（ドルは円も）</th>
+      <th style="text-align:right;">月割り</th>
+      <th>最終決済日</th>
+      <th>次の更新日</th>
+      <th>メモ・備考</th>
+    </tr></thead><tbody>${rows}</tbody></table>
+    <div class="sec-subtotal">年額経費：年額合計（判明分）<b>${fmtYen(yenSum)}円</b>　／　月割り小計 <b>${fmtYen(monthlySum)}円</b>（${items.length}件）</div>
+  `;
+  return { monthlySum, yenSum };
+}
+
+function render() {
+  const { monthly, annual } = collectKeepItems();
+  const monthlySum = renderMonthly(monthly);
+  const { monthlySum: annualMonthlySum, yenSum: annualYenSum } = renderAnnual(annual);
+
+  document.getElementById("m-monthly-sum").textContent = fmtYen(monthlySum);
+  document.getElementById("m-monthly-count").textContent = monthly.length;
+  document.getElementById("m-annual-monthly-sum").textContent = fmtYen(annualMonthlySum);
+  document.getElementById("m-annual-count").textContent = annual.length;
+  document.getElementById("m-annual-yen-sum").textContent = fmtYen(annualYenSum);
+  document.getElementById("m-total").textContent = fmtYen(monthlySum + annualMonthlySum);
+}
+
+render();
+
+// localStorage 変更・タブ復帰・focus で即時再描画
+window.addEventListener("storage", (e) => {
+  if (!e.key) { render(); return; }
+  if (["zaimu_seiri_progress_v1","zaimu_seiri_outside_v1","zaimu_seiri_user_notes_v1", H.STATE_KEY, H.NOTES_KEY].includes(e.key)) render();
+});
+document.addEventListener("visibilitychange", () => { if (!document.hidden) render(); });
+window.addEventListener("focus", () => render());
+</script>
+<script>
+(function(){
+  function updateTopnavTime(){
+    const el = document.getElementById("topnav-time");
+    if(!el) return;
+    const d = new Date();
+    const pad = n => String(n).padStart(2, "0");
+    el.textContent = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", updateTopnavTime);
+  } else { updateTopnavTime(); }
+})();
+</script>
+</body>
+</html>

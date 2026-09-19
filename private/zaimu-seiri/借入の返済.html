@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>借入の返済</title>
+<style>
+:root {
+  --bg: #f7f4ed;
+  --panel: #ffffff;
+  --ink: #1a1a1a;
+  --sub: #666;
+  --navy: #1e3a5f;
+  --gold: #b8860b;
+  --green: #2e7d32;
+  --red: #c62828;
+  --yellow: #e6b800;
+  --gray: #9a9a9a;
+  --line: #e0dcd0;
+  --hover: #f0ede4;
+  --done-bg: #ececec;
+  --hold-bg: #fdf7dc;
+  --keep-bg: #ececec;
+  --handled: #4a9cd9;
+  --handled-bg: #eaf4fb;
+  --above80: #fff7d6;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif; font-size: 13px; line-height: 1.55; }
+body { padding: 12px; max-width: 1980px; margin: 0 auto; }
+
+/* 上部サマリー */
+.summary { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 16px; margin-bottom: 16px; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.summary h1 { margin: 0 0 12px; font-size: 18px; color: var(--navy); }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 12px; }
+.metric { border: 1px solid var(--line); border-radius: 6px; padding: 10px; background: #fafaf7; }
+.metric .label { font-size: 11px; color: var(--sub); margin-bottom: 4px; }
+.metric .value { font-size: 20px; font-weight: bold; color: var(--navy); }
+.metric.big .value { font-size: 22px; }
+.metric.now .value { color: var(--red); }
+.metric.left .value { color: var(--gold); }
+.metric.left.done .value { color: var(--green); }
+.metric.p80 .value { color: var(--yellow); font-weight: 700; }
+.metric.p80.done .value { color: var(--green); }
+.metric .yen { font-size: 12px; margin-left: 2px; color: var(--sub); font-weight: normal; }
+.metric .sub-line { font-size: 11px; color: var(--sub); margin-top: 4px; }
+/* 上部の式並び（Before − 借入 ＝ 出発点 − 継続 ＝ サーカス対象） */
+.eq-row { display: flex; flex-wrap: wrap; align-items: stretch; gap: 4px; margin-bottom: 12px; }
+.eq-row .metric { flex: 1 1 130px; min-width: 130px; }
+.eq-op { display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; color: var(--navy); padding: 0 4px; flex: 0 0 22px; }
+.eq-row .metric .value { font-size: 18px; }
+.eq-row .metric .src { font-size: 10px; color: var(--sub); margin-top: 3px; line-height: 1.35; }
+.metric.eq-before { background:#f6f6f6; border-color:#c8c8c8; }
+.metric.eq-loan { background:#f5efe0; border-color:#c9a54a; }
+.metric.eq-loan .value { color: var(--gold); }
+.metric.eq-start { background:#f0f7f0; border-color:#a8c9a8; }
+.metric.eq-start .value { color: var(--green); }
+.metric.eq-keep-decided { background:#ececec; border-color:var(--gray); }
+.metric.eq-keep-decided .value { color: #555; }
+.metric.eq-target { background:#fbeaea; border-color:var(--red); border-width:2px; box-shadow: 0 0 0 3px rgba(198,40,40,0.08); }
+.metric.eq-target .label { color: var(--red); font-weight: bold; }
+.metric.eq-target .value { color: var(--red); font-size: 22px; }
+.metric.eq-target .value::after { content:" ← 削減対象"; font-size: 11px; color: var(--red); font-weight: 500; margin-left: 4px; }
+.metric.eq-cut { background:#fef7e0; border-color:#e6c65b; }
+.metric.eq-cut .value { color: #a66f0d; }
+.metric.eq-now { background:#fdf3ec; border-color:#e0a878; }
+.metric.eq-now .value { color: #c85a12; }
+.metric.eq-outside { background:#eef4fb; border-color:#8fb4e0; cursor:pointer; }
+.metric.eq-outside .value { color:#204a80; }
+/* 2026-09-18 時点で固定（ロックした雰囲気）*/
+.metric.frozen { background:#e9ebee !important; border-color:#c8ccd3 !important; border-width:1px !important; box-shadow:none !important; }
+.metric.frozen .label { color:#6b7280 !important; font-weight:normal !important; }
+.metric.frozen .value { color:#6b7280 !important; font-size:18px !important; }
+.metric.frozen .value::after { content:none !important; }
+.metric.frozen .src { color:#9ca3af !important; }
+.metric.frozen .lock-note { display:block; font-size:9px; color:#9ca3af; margin-top:3px; font-style:italic; }
+.metric.eq-target-a { background:#fef7e0; border-color:#c9a54a; }
+.metric.eq-target-a .label { color:var(--gold); font-weight:bold; }
+.metric.eq-target-a .value { color:var(--gold); }
+.metric.eq-remaining { background:#fbeaea; border-color:var(--red); border-width:2px; box-shadow: 0 0 0 3px rgba(198,40,40,0.08); }
+.metric.eq-remaining .label { color:var(--red); font-weight:bold; }
+.metric.eq-remaining .value { color:var(--red); font-size:22px; }
+.metric.eq-remaining .value::after { content:" ← 削減対象"; font-size:11px; color:var(--red); font-weight:500; margin-left:4px; }
+.eq-row-4 { margin-bottom: 0; }
+.eq-row-3 { margin-bottom: 14px; }
+.eq-row-3 .loan-note { flex: 1 1 auto; padding: 6px 10px; background: #f5efe0; border: 1px solid #c9a54a; border-radius: 6px; font-size: 11px; color: var(--sub); }
+.eq-row-3 .loan-note b { color: var(--gold); font-size: 14px; }
+@media (max-width: 900px) {
+  .eq-row .metric { min-width: 100px; flex-basis: calc(50% - 26px); }
+  .eq-op { font-size: 18px; }
+}
+
+/* 進捗バー */
+.bar-wrap { margin: 10px 0 4px; position: relative; }
+.bar-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--sub); margin-bottom: 4px; }
+.bar-outer { position: relative; height: 16px; background: #eee; border-radius: 8px; overflow: visible; }
+.bar-inner { height: 100%; background: linear-gradient(90deg, #4a7c59, #2e7d32); border-radius: 8px; transition: width 0.3s; }
+.bar-inner.over { background: linear-gradient(90deg, #b8860b, #d4a017); }
+.bar-mark-80 { position: absolute; top: -4px; bottom: -4px; left: 80%; width: 2px; background: var(--yellow); pointer-events: none; }
+.bar-mark-80-lbl { position: absolute; top: -18px; left: 80%; transform: translateX(-50%); font-size: 10px; color: var(--yellow); font-weight: bold; white-space: nowrap; }
+
+.dual-summary { display: grid; grid-template-columns: 3fr 2fr; gap: 12px; margin-bottom: 8px; }
+.pane { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: #fafaf7; }
+.pane-a { border-left: 4px solid var(--green); background: #f7fbf7; }
+.pane-b { border-left: 4px solid var(--gold); background: #faf8f0; }
+.pane-title { font-weight: bold; font-size: 13px; margin-bottom: 8px; color: var(--navy); }
+.pane-a .pane-title { color: var(--green); }
+.pane-b .pane-title { color: var(--gold); }
+.pane-note { font-size: 11px; margin-top: 8px; padding: 6px 0; border-top: 1px dashed var(--line); }
+.total-summary-line { padding: 8px 10px; background: #eeeae0; border-radius: 6px; font-size: 12px; margin: 6px 0 4px; color: var(--sub); }
+.borrow-divider { margin: 40px 0 12px; padding-top: 20px; border-top: 2px dashed var(--gold); }
+.bottom-total { margin: 16px 0; padding: 12px 14px; background: #eeeae0; border-radius: 6px; font-size: 13px; text-align: center; }
+.bottom-total b { color: var(--navy); font-weight: 700; font-size: 15px; }
+.total-summary-line b { color: var(--ink); font-weight: 600; }
+.total-summary-line .tot-label { color: var(--navy); font-weight: bold; margin-right: 6px; }
+@media (max-width: 900px) { .dual-summary { grid-template-columns: 1fr; } }
+.count-line { font-size: 12px; color: var(--sub); margin-top: 10px; }
+.count-line b { color: var(--ink); font-weight: 600; }
+.count-line .keep-yen { color: var(--navy); font-weight: bold; margin-left: 8px; }
+
+/* 区分見出し */
+.section { margin-bottom: 28px; }
+.section-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; padding: 10px 4px 6px; border-bottom: 2px solid var(--navy); margin-bottom: 6px; }
+.section-head h2 { margin: 0; font-size: 15px; color: var(--navy); }
+.section-sub { font-size: 12px; color: var(--sub); }
+.section-sub .done-sub { color: var(--green); font-weight: bold; }
+.section-sub .p80-sub { color: var(--yellow); font-weight: bold; margin-left: 8px; }
+
+/* テーブル */
+table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+th, td { padding: 5px 6px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: middle; font-size: 12px; }
+th { background: #f0ede4; font-size: 11px; color: var(--sub); font-weight: normal; }
+tr:last-child td { border-bottom: none; }
+
+/* 状態別の背景 */
+tr.st-done { background: var(--done-bg); }
+tr.st-done td.name, tr.st-done td.amount { text-decoration: line-through; color: var(--sub); }
+tr.st-hold { background: var(--hold-bg); }
+tr.st-keep { background: var(--keep-bg); color: var(--sub); }
+tr.st-keep td.name { color: var(--gray); }
+tr.st-handled { background: var(--handled-bg); }
+tr.st-handled td.name { color: var(--navy); }
+tr.st-excluded { background: #f5f5f5; color: #999; }
+tr.st-excluded td.name, tr.st-excluded td.amount { text-decoration: line-through; color: #999; }
+tr.st-excluded td.bar-cell .row-bar-inner { background: #ccc; }
+.badge-excluded { display:inline-block; padding:2px 6px; font-size:10px; background:#e0e0e0; color:#666; border-radius:3px; margin-left:4px; }
+
+/* 8割の線より上（累計が対象額 80% に達するまで）— border-left で強調 */
+tr.above80 td:first-child { border-left: 4px solid var(--yellow); }
+
+/* 8割の線 */
+tr.p80-line td { border-bottom: 3px double var(--yellow); position: relative; }
+tr.p80-line td:first-child::after {
+  content: "▲ ここまでで小計の8割";
+  position: absolute; left: 0; bottom: -20px;
+  font-size: 10px; color: var(--yellow); font-weight: bold;
+  white-space: nowrap; background: var(--panel); padding: 0 4px;
+}
+tr.p80-line + tr td { padding-top: 22px; }
+
+/* 列 */
+td.actions { width: 230px; white-space: nowrap; }
+td.actions button {
+  border: 1px solid var(--line);
+  background: #fafaf7;
+  color: var(--sub);
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-right: 2px;
+  min-width: 44px;
+}
+td.actions button:hover { background: var(--hover); }
+td.actions button.on-done { background: var(--green); color: #fff; border-color: var(--green); }
+td.actions button.on-hold { background: var(--yellow); color: #fff; border-color: var(--yellow); }
+td.actions button.on-keep { background: var(--gray); color: #fff; border-color: var(--gray); }
+td.actions button.on-handled { background: var(--handled); color: #fff; border-color: var(--handled); }
+
+td.name { min-width: 140px; font-weight: 500; }
+td.amount { text-align: right; font-family: "SF Mono", Menlo, monospace; white-space: nowrap; width: 90px; }
+td.bar-cell { width: 110px; }
+td.bar-cell .row-bar-outer { height: 8px; background: #f0ede4; border-radius: 4px; overflow: hidden; }
+td.bar-cell .row-bar-inner { height: 100%; background: var(--navy); border-radius: 4px; }
+tr.st-keep td.bar-cell .row-bar-inner { background: var(--gray); }
+td.cum { text-align: right; font-family: "SF Mono", Menlo, monospace; white-space: nowrap; width: 90px; color: var(--sub); font-size: 12px; }
+td.card { font-size: 11px; color: var(--sub); min-width: 90px; max-width: 130px; }
+td.memo { font-size: 11px; color: var(--ink); min-width: 320px; max-width: 480px; white-space: normal; line-height: 1.4; padding: 4px 6px; cursor: text; outline: none; }
+td.memo:hover { background: #fffbea; }
+td.memo:focus { background: #fff7d6; box-shadow: inset 0 0 0 2px var(--gold); }
+td.memo:empty::before { content: "＋ メモ・備考（クリックで書き込み）"; color: var(--gray); font-style: italic; }
+td.memo.user-note { color: var(--navy); }
+td.date { font-size: 11px; color: var(--sub); width: 90px; }
+td.paydate { font-size: 11px; color: var(--sub); width: 90px; white-space: nowrap; }
+td.paydate.stale { color: var(--gray); font-style: italic; }
+td.paydate.stale::after { content: " ⚠"; color: var(--red); }
+.badge-annual { display:inline-block; margin-left:4px; font-size:9px; color:var(--gold); border:1px solid var(--gold); border-radius:3px; padding:0 3px; vertical-align:middle; }
+td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-align: right; font-family: "SF Mono", Menlo, monospace; width: 150px; }
+.notion-link { display: inline-block; margin-left: 6px; font-size: 10px; color: var(--sub); text-decoration: none; padding: 1px 4px; border: 1px solid var(--line); border-radius: 3px; background: #f5f2eb; }
+.notion-link:hover { background: var(--hover); color: var(--navy); }
+
+/* エクスポート */
+.actions-bar { margin: 16px 0; text-align: right; }
+.actions-bar button { background: var(--navy); color: #fff; border: none; padding: 8px 14px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+.actions-bar button:hover { background: #2c4d7d; }
+.export-out { margin-top: 8px; padding: 8px; background: #f5f2eb; border: 1px solid var(--line); border-radius: 4px; font-family: monospace; font-size: 10px; max-height: 200px; overflow: auto; display: none; white-space: pre-wrap; text-align: left; }
+
+.footer-note { margin-top: 20px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 11px; color: var(--sub); }
+.footer-note a { color: var(--navy); }
+.legend { font-size: 11px; color: var(--sub); margin: 4px 0 12px; }
+.legend span { display: inline-block; margin-right: 12px; }
+.legend .box { display: inline-block; width: 10px; height: 10px; border-radius: 2px; vertical-align: middle; margin-right: 4px; }
+
+@media (max-width: 700px) {
+  body { padding: 8px; font-size: 13px; }
+  .summary { padding: 12px; }
+  th, td { padding: 4px 5px; }
+  td.card, td.memo { display: none; }
+  .metrics { grid-template-columns: 1fr 1fr; }
+  td.actions { width: auto; }
+  td.actions button { padding: 4px 6px; min-width: 40px; margin-bottom: 2px; }
+  td.bar-cell { width: 60px; }
+  td.cum { font-size: 11px; }
+}
+.topnav { position:sticky; top:0; z-index:100; background:#fff; border-bottom:2px solid var(--line); padding:8px 12px; margin:-12px -12px 12px -12px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; font-size:13px; }
+.topnav .btn-reload { padding:5px 12px; background:var(--gold); color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:bold; }
+.topnav .btn-reload:hover { background:#a68738; }
+.topnav .last-update { color:var(--sub); font-size:11px; }
+.topnav .nav-links { display:flex; gap:8px; margin-left:auto; }
+.topnav .nav-links a { padding:4px 10px; color:var(--navy); text-decoration:none; border-radius:4px; border:1px solid var(--line); font-size:12px; }
+.topnav .nav-links a:hover { background:var(--ivory); }
+.topnav .nav-links a.active { background:var(--navy); color:#fff; border-color:var(--navy); }
+</style>
+</head>
+<body>
+<div class="topnav">
+  <button class="btn-reload" onclick="location.reload()">↻ 更新</button>
+  <span class="last-update">最終更新 <span id="topnav-time">-</span></span>
+  <span class="nav-links">
+    <a href="財務整理_TOP.html">TOP</a>
+    <a href="財務整理_進捗表.html">進捗表（一覧）</a>
+    <a href="継続経費.html">継続経費</a>
+    <a href="一覧外の経費.html">一覧外の経費</a>
+    <a href="借入の返済.html" class="active">借入の返済</a>
+  </span>
+</div>
+
+<!-- 借入の元本／利息／合計 箱の段（BS-keiri 出典：明細 PDF・1〜8月の月平均） -->
+<!-- 繰り上げ返済の順番（年利の高い順・公式に手数料削減の明記があるものを優先） -->
+<div class="summary" style="margin-bottom:12px;">
+  <h1 style="color:#c62828;">繰り上げ返済の順番 <span style="font-size:11px;color:var(--sub);font-weight:normal;">（年利の高い順／公式に手数料削減の明文があるものを優先）</span></h1>
+  <table style="width:100%;border-collapse:collapse;font-size:12px;color:#c62828;">
+    <thead>
+      <tr style="border-bottom:2px solid #c62828;color:#c62828;">
+        <th style="text-align:center;padding:4px 6px;width:40px;">順</th>
+        <th style="text-align:left;padding:4px 6px;">借入</th>
+        <th style="text-align:right;padding:4px 6px;">年利</th>
+        <th style="text-align:right;padding:4px 6px;">残高</th>
+        <th style="text-align:left;padding:4px 6px;">理由 / 公式</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px dotted #c62828;color:#9aa1a8;text-decoration:line-through;">
+        <td style="text-align:center;padding:4px 6px;font-weight:bold;font-size:16px;text-decoration:none;">☑ <span style="text-decoration:line-through;">①</span></td>
+        <td style="padding:4px 6px;font-weight:bold;">楽天キャッシングリボ <span style="color:#2e7d32;font-weight:bold;text-decoration:none;font-size:11px;margin-left:6px;">2026-09-18 全額繰り上げ返済で完済（380,000円）</span></td>
+        <td style="text-align:right;padding:4px 6px;">18.0%（明細逆算 18.35%）</td>
+        <td style="text-align:right;padding:4px 6px;">0円 <span style="color:#9aa1a8;font-size:10px;text-decoration:none;">（前 390,000）</span></td>
+        <td style="padding:4px 6px;">一部・全額を先に返せる（e-NAVI「リボ残高のおまとめ払い」）<br><a href="https://www.rakuten-card.co.jp/adjustment/cashing/revo/" target="_blank" style="color:#9aa1a8;">https://www.rakuten-card.co.jp/adjustment/cashing/revo/</a></td>
+      </tr>
+      <tr style="border-bottom:1px dotted #c62828;">
+        <td style="text-align:center;padding:4px 6px;font-weight:bold;font-size:16px;">②</td>
+        <td style="padding:4px 6px;font-weight:bold;">Amex JP リボ（あとリボ）</td>
+        <td style="text-align:right;padding:4px 6px;">14.9%（7/20 明細に記載）</td>
+        <td style="text-align:right;padding:4px 6px;">476,370円</td>
+        <td style="padding:4px 6px;">一部・全額の増額返済ができる（締め〜支払日前日の手数料は残る）<br><a href="https://www.americanexpress.com/ja-jp/services/payflex/ato-revo/" target="_blank" style="color:#c62828;">https://www.americanexpress.com/ja-jp/services/payflex/ato-revo/</a></td>
+      </tr>
+      <tr style="border-bottom:1px dotted #c62828;">
+        <td style="text-align:center;padding:4px 6px;font-weight:bold;font-size:16px;">③</td>
+        <td style="padding:4px 6px;font-weight:bold;">楽天デンタル分割</td>
+        <td style="text-align:right;padding:4px 6px;">約14.6%（逆算）</td>
+        <td style="text-align:right;padding:4px 6px;">432,200円</td>
+        <td style="padding:4px 6px;">一括繰り上げで以降の手数料節約と公式記事に明記（電話手続き）<br><a href="https://www.rakuten-card.co.jp/minna-money/credit-card/knowledge/article_2206_90053/" target="_blank" style="color:#c62828;">https://www.rakuten-card.co.jp/minna-money/credit-card/knowledge/article_2206_90053/</a></td>
+      </tr>
+      <tr style="color:#9aa1a8;">
+        <td style="text-align:center;padding:4px 6px;font-weight:bold;font-size:16px;">☑ <span style="text-decoration:line-through;">④</span></td>
+        <td style="padding:4px 6px;font-weight:bold;text-decoration:line-through;">Amex JP 分割（8WEEKS.AI・みたゆた）</td>
+        <td style="text-align:right;padding:4px 6px;text-decoration:line-through;">約14.9%（逆算）</td>
+        <td style="text-align:right;padding:4px 6px;"><span style="text-decoration:line-through;">8WEEKS.AI 42,807円</span> <span style="color:#2e7d32;font-size:10px;font-weight:bold;">☑ 一括切替（35,671・10/10 引落）</span><br><span style="text-decoration:line-through;">みたゆた×2 66,674円</span> <span style="color:#2e7d32;font-size:10px;font-weight:bold;">☑ 2026-09-10 最終回 完済</span></td>
+        <td style="padding:4px 6px;text-decoration:line-through;">一括払いに変更可（手数料削減は公式に明記無し・そのため後ろ）<br><a href="https://www.americanexpress.com/ja-jp/services/payflex/ato-bunkatsu/" target="_blank" style="color:#9aa1a8;">https://www.americanexpress.com/ja-jp/services/payflex/ato-bunkatsu/</a></td>
+      </tr>
+      <tr style="color:var(--sub);">
+        <td style="text-align:center;padding:4px 6px;">対象外</td>
+        <td style="padding:4px 6px;">Amex US 44000</td>
+        <td style="text-align:right;padding:4px 6px;">─</td>
+        <td style="text-align:right;padding:4px 6px;">0円</td>
+        <td style="padding:4px 6px;">7/24 締めの明細で利息 $0・毎月全額払い</td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="margin-top:8px;padding:6px 10px;background:#f0fff4;border:1px solid #2e7d32;border-radius:4px;font-size:12px;color:#2e7d32;font-weight:bold;">
+    ☑ ① 楽天キャッシングリボは 2026-09-18 全額繰り上げ返済で完済（380,000円）。次の削減分は ② Amex JP リボ（14.9%・残 476,370）へ。
+  </div>
+</div>
+
+<div class="summary" style="margin-bottom:16px;">
+  <h1>借入の返済 <span style="font-size:11px;color:var(--sub);font-weight:normal;">（元本／支払い利息／合計・1〜8月の月平均・BS-keiri 集計）</span></h1>
+
+  <!-- 1段目：全体（① 完済＋④-1 一括切替＋④-2/④-3 みたゆた 2026-09-10 完済後） -->
+  <div class="eq-row eq-row-1">
+    <div class="metric frozen"><div class="label">元本（全体）</div><div class="value">23,058<span class="yen">円</span><div class="src">楽天 13,888 ＋ Amex JP 9,170 ＋ Amex US 0<br><span style="color:#9aa1a8;font-size:10px;">前 89,724（− みたゆた×2 元本 66,666）／さらに前 96,860（− ④-1 8WEEKS.AI 7,136）／さらに前 106,860（− ① 楽天キャッシングリボ 10,000）</span></div><span class="lock-note">2026-09-18 完済後</span></div></div>
+    <div class="eq-op">＋</div>
+    <div class="metric frozen"><div class="label">支払い利息（全体）</div><div class="value">18,742<span class="yen">円</span><div class="src">楽天 3,400 ＋ Amex JP 5,830 ＋ Amex US 9,512<br><span style="color:#9aa1a8;font-size:10px;">前 24,124（− みたゆた×2 手数料 5,382）／さらに前 24,700（− ④-1 手数料 576）／さらに前 30,815（− 楽天キャッシングリボ 6,115）</span></div><span class="lock-note">2026-09-18 完済後</span></div></div>
+    <div class="eq-op">＝</div>
+    <div class="metric frozen" style="border-width:3px; border-color:#c8ccd3;"><div class="label" style="font-weight:bold;">合計（月々の返済）</div><div class="value" style="font-size:26px;">43,575<span class="yen">円</span><div class="src">うち その他（楽天の年会費・少額の買い物・推定）1,775 を含む<br><span style="color:#9aa1a8;font-size:10px;">前 115,623（− みたゆた×2 72,048）／さらに前 123,335（− ④-1 7,712）／さらに前 139,450（− ① 16,115）</span></div><span class="lock-note">2026-09-18 完済後</span></div></div>
+  </div>
+
+  <!-- 借入1本ごとの段（利息の高い順・繰り上げ返済 ①〜④・対象外・その他） -->
+
+  <!-- ① 楽天キャッシングリボ（18.0%）── 2026-09-18 全額繰り上げ返済で完済（380,000円）：☑ + 取消線 + グレーで残す -->
+  <div class="eq-row" style="margin-top:6px;opacity:0.55;">
+    <div class="metric frozen"><div class="label" style="text-decoration:line-through;color:#9aa1a8;"><span style="color:#9aa1a8;font-weight:bold;">☑ ①</span> 楽天キャッシングリボ 元本 <span style="color:#9aa1a8;font-size:10px;">年利 18.0%</span></div><div class="value" style="text-decoration:line-through;color:#9aa1a8;">0<span class="yen">円</span><div class="src" style="text-decoration:none;color:#2e7d32;font-weight:bold;">2026-09-18 全額繰り上げ返済で完済（380,000円）<br><span style="color:#9aa1a8;font-weight:normal;">前 10,000（残債 390,000 → 0）</span></div><span class="lock-note">2026-09-18 完済</span></div></div>
+    <div class="eq-op" style="text-decoration:line-through;color:#9aa1a8;">＋</div>
+    <div class="metric frozen"><div class="label" style="text-decoration:line-through;color:#9aa1a8;"><span style="color:#9aa1a8;font-weight:bold;">☑ ①</span> 楽天キャッシングリボ 利息</div><div class="value" style="text-decoration:line-through;color:#9aa1a8;">0<span class="yen">円</span><div class="src" style="text-decoration:none;color:#9aa1a8;">前 6,115（明細逆算 18.35%）</div><span class="lock-note">2026-09-18 完済</span></div></div>
+    <div class="eq-op" style="text-decoration:line-through;color:#9aa1a8;">＝</div>
+    <div class="metric frozen" style="border-width:3px; border-color:#c8ccd3;"><div class="label" style="font-weight:bold;text-decoration:line-through;color:#9aa1a8;"><span style="color:#9aa1a8;">☑ ①</span> 楽天キャッシングリボ 合計</div><div class="value" style="font-size:22px;text-decoration:line-through;color:#9aa1a8;">0<span class="yen">円</span><div class="src" style="text-decoration:none;color:#9aa1a8;">前 16,115（10,000 + 6,115）</div><span class="lock-note">2026-09-18 完済</span></div></div>
+  </div>
+
+  <!-- ② Amex JP リボ（14.9%） -->
+  <div class="eq-row" style="margin-top:6px;">
+    <div class="metric frozen"><div class="label"><span style="color:#c62828;font-weight:bold;">②</span> Amex JP リボ（あとリボ）元本 <span style="color:#c62828;font-size:10px;">年利 14.9%</span></div><div class="value">9,170<span class="yen">円</span><div class="src">残債 476,370 円</div><span class="lock-note">2026-09-18 時点</span></div></div>
+    <div class="eq-op">＋</div>
+    <div class="metric frozen"><div class="label"><span style="color:#c62828;font-weight:bold;">②</span> Amex JP リボ 手数料</div><div class="value">5,830<span class="yen">円</span><div class="src">7/20 明細に記載</div><span class="lock-note">2026-09-18 時点</span></div></div>
+    <div class="eq-op">＝</div>
+    <div class="metric frozen" style="border-width:3px; border-color:#c8ccd3;"><div class="label" style="font-weight:bold;"><span style="color:#c62828;">②</span> Amex JP リボ 合計</div><div class="value" style="font-size:22px;">15,000<span class="yen">円</span><div class="src">9,170 + 5,830</div><span class="lock-note">2026-09-18 時点</span></div></div>
+  </div>
+
+  <!-- ③ 楽天デンタル分割（約14.6%） -->
+  <div class="eq-row" style="margin-top:6px;">
+    <div class="metric frozen"><div class="label"><span style="color:#c62828;font-weight:bold;">③</span> 楽天デンタル分割 元本 <span style="color:#c62828;font-size:10px;">年利 約14.6%</span></div><div class="value">13,888<span class="yen">円</span><div class="src">残債 432,200 円</div><span class="lock-note">2026-09-18 時点</span></div></div>
+    <div class="eq-op">＋</div>
+    <div class="metric frozen"><div class="label"><span style="color:#c62828;font-weight:bold;">③</span> 楽天デンタル分割 手数料</div><div class="value">3,400<span class="yen">円</span><div class="src">逆算 約14.6%</div><span class="lock-note">2026-09-18 時点</span></div></div>
+    <div class="eq-op">＝</div>
+    <div class="metric frozen" style="border-width:3px; border-color:#c8ccd3;"><div class="label" style="font-weight:bold;"><span style="color:#c62828;">③</span> 楽天デンタル分割 合計</div><div class="value" style="font-size:22px;">17,288<span class="yen">円</span><div class="src">13,888 + 3,400</div><span class="lock-note">2026-09-18 時点</span></div></div>
+  </div>
+
+  <!-- ④-1 Amex JP 分割 8WEEKS.AI ── 2026-09-18 一括払いに切り替え（35,671円・10/10 引落予定）：☑ + 取消線 + グレーで残す -->
+  <div class="eq-row" style="margin-top:6px;opacity:0.55;">
+    <div class="metric frozen"><div class="label" style="text-decoration:line-through;color:#9aa1a8;"><span style="color:#9aa1a8;font-weight:bold;">☑ ④-1</span> Amex JP 分割 8WEEKS.AI 元本 <span style="color:#9aa1a8;font-size:10px;">年利 約14.9%</span></div><div class="value" style="text-decoration:line-through;color:#9aa1a8;">0<span class="yen">円</span><div class="src" style="text-decoration:none;color:#2e7d32;font-weight:bold;">2026-09-18 一括払いに切り替え（35,671円・10/10 引落予定）<br><span style="color:#9aa1a8;font-weight:normal;">前 7,136（残債 42,807 → 一括 35,671）</span></div><span class="lock-note">2026-09-18 一括切替</span></div></div>
+    <div class="eq-op" style="text-decoration:line-through;color:#9aa1a8;">＋</div>
+    <div class="metric frozen"><div class="label" style="text-decoration:line-through;color:#9aa1a8;"><span style="color:#9aa1a8;font-weight:bold;">☑ ④-1</span> 8WEEKS.AI 手数料</div><div class="value" style="text-decoration:line-through;color:#9aa1a8;">0<span class="yen">円</span><div class="src" style="text-decoration:none;color:#9aa1a8;">前 576（残り5回分の手数料は請求されない見込み）</div><span class="lock-note">2026-09-18 一括切替</span></div></div>
+    <div class="eq-op" style="text-decoration:line-through;color:#9aa1a8;">＝</div>
+    <div class="metric frozen" style="border-width:3px; border-color:#c8ccd3;"><div class="label" style="font-weight:bold;text-decoration:line-through;color:#9aa1a8;"><span style="color:#9aa1a8;">☑ ④-1</span> 8WEEKS.AI 合計</div><div class="value" style="font-size:22px;text-decoration:line-through;color:#9aa1a8;">0<span class="yen">円</span><div class="src" style="text-decoration:none;color:#9aa1a8;">前 7,712（7,136 + 576）</div><span class="lock-note">2026-09-18 一括切替</span></div></div>
+  </div>
+
+  <!-- ④-2 Amex JP 分割 みたゆた（1本目）── 2026-09-10 最終回（12/12）引き落としで完済：☑ + 取消線 + グレーで残す -->
+  <div class="eq-row" style="margin-top:6px;opacity:0.55;">
+    <div class="metric frozen"><div class="label" style="text-decoration:line-through;color:#9aa1a8;"><span style="color:#9aa1a8;font-weight:bold;">☑ ④-2</span> Amex JP 分割 みたゆた（1本目）元本</div><div class="value" style="text-decoration:line-through;color:#9aa1a8;">0<span class="yen">円</span><div class="src" style="text-decoration:none;color:#2e7d32;font-weight:bold;">2026-09-10 最終回（12/12）引き落としで完済<br><span style="color:#9aa1a8;font-weight:normal;">前 33,333（残債 33,337 → 0）</span></div><span class="lock-note">2026-09-10 完済</span></div></div>
+    <div class="eq-op" style="text-decoration:line-through;color:#9aa1a8;">＋</div>
+    <div class="metric frozen"><div class="label" style="text-decoration:line-through;color:#9aa1a8;"><span style="color:#9aa1a8;font-weight:bold;">☑ ④-2</span> みたゆた（1本目）手数料</div><div class="value" style="text-decoration:line-through;color:#9aa1a8;">0<span class="yen">円</span><div class="src" style="text-decoration:none;color:#9aa1a8;">前 2,691</div><span class="lock-note">2026-09-10 完済</span></div></div>
+    <div class="eq-op" style="text-decoration:line-through;color:#9aa1a8;">＝</div>
+    <div class="metric frozen" style="border-width:3px; border-color:#c8ccd3;"><div class="label" style="font-weight:bold;text-decoration:line-through;color:#9aa1a8;"><span style="color:#9aa1a8;">☑ ④-2</span> みたゆた（1本目）合計</div><div class="value" style="font-size:22px;text-decoration:line-through;color:#9aa1a8;">0<span class="yen">円</span><div class="src" style="text-decoration:none;color:#9aa1a8;">前 36,024（33,333 + 2,691）</div><span class="lock-note">2026-09-10 完済</span></div></div>
+  </div>
+
+  <!-- ④-3 Amex JP 分割 みたゆた（2本目）── 2026-09-10 最終回（12/12）引き落としで完済：☑ + 取消線 + グレーで残す -->
+  <div class="eq-row" style="margin-top:6px;opacity:0.55;">
+    <div class="metric frozen"><div class="label" style="text-decoration:line-through;color:#9aa1a8;"><span style="color:#9aa1a8;font-weight:bold;">☑ ④-3</span> Amex JP 分割 みたゆた（2本目）元本</div><div class="value" style="text-decoration:line-through;color:#9aa1a8;">0<span class="yen">円</span><div class="src" style="text-decoration:none;color:#2e7d32;font-weight:bold;">2026-09-10 最終回（12/12）引き落としで完済<br><span style="color:#9aa1a8;font-weight:normal;">前 33,333（残債 33,337 → 0）</span></div><span class="lock-note">2026-09-10 完済</span></div></div>
+    <div class="eq-op" style="text-decoration:line-through;color:#9aa1a8;">＋</div>
+    <div class="metric frozen"><div class="label" style="text-decoration:line-through;color:#9aa1a8;"><span style="color:#9aa1a8;font-weight:bold;">☑ ④-3</span> みたゆた（2本目）手数料</div><div class="value" style="text-decoration:line-through;color:#9aa1a8;">0<span class="yen">円</span><div class="src" style="text-decoration:none;color:#9aa1a8;">前 2,691</div><span class="lock-note">2026-09-10 完済</span></div></div>
+    <div class="eq-op" style="text-decoration:line-through;color:#9aa1a8;">＝</div>
+    <div class="metric frozen" style="border-width:3px; border-color:#c8ccd3;"><div class="label" style="font-weight:bold;text-decoration:line-through;color:#9aa1a8;"><span style="color:#9aa1a8;">☑ ④-3</span> みたゆた（2本目）合計</div><div class="value" style="font-size:22px;text-decoration:line-through;color:#9aa1a8;">0<span class="yen">円</span><div class="src" style="text-decoration:none;color:#9aa1a8;">前 36,024（33,333 + 2,691）</div><span class="lock-note">2026-09-10 完済</span></div></div>
+  </div>
+
+  <!-- 対象外 Amex US 44000 -->
+  <div class="eq-row" style="margin-top:6px;">
+    <div class="metric frozen"><div class="label"><span style="color:var(--sub);font-weight:bold;">対象外</span> Amex US 44000 元本</div><div class="value">0<span class="yen">円</span><div class="src">元本の返済なし・残債 0 円</div><span class="lock-note">2026-09-18 時点</span></div></div>
+    <div class="eq-op">＋</div>
+    <div class="metric frozen"><div class="label"><span style="color:var(--sub);font-weight:bold;">対象外</span> Amex US 44000 利息・手数料</div><div class="value">9,512<span class="yen">円</span><div class="src">利息・遅延料・キャッシング手数料</div><span class="lock-note">2026-09-18 時点</span></div></div>
+    <div class="eq-op">＝</div>
+    <div class="metric frozen" style="border-width:3px; border-color:#c8ccd3;"><div class="label" style="font-weight:bold;"><span style="color:var(--sub);">対象外</span> Amex US 44000 合計</div><div class="value" style="font-size:22px;">9,512<span class="yen">円</span><div class="src">0 + 9,512</div><span class="lock-note">2026-09-18 時点</span></div></div>
+  </div>
+
+  <!-- 楽天 その他（年会費・少額の買い物・推定） -->
+  <div class="eq-row" style="margin-top:6px;">
+    <div class="metric frozen" style="opacity:0.75;"><div class="label" style="font-size:10px;">楽天 その他 元本（推定）</div><div class="value" style="font-size:14px;">0<span class="yen">円</span><div class="src">─</div><span class="lock-note">2026-09-18 時点</span></div></div>
+    <div class="eq-op" style="font-size:16px;">＋</div>
+    <div class="metric frozen" style="opacity:0.75;"><div class="label" style="font-size:10px;">楽天 その他 利息</div><div class="value" style="font-size:14px;">0<span class="yen">円</span><div class="src">─</div><span class="lock-note">2026-09-18 時点</span></div></div>
+    <div class="eq-op" style="font-size:16px;">＋</div>
+    <div class="metric frozen" style="opacity:0.75;"><div class="label" style="font-size:10px;">楽天 その他（推定）</div><div class="value" style="font-size:14px;">1,775<span class="yen">円</span><div class="src">年会費・少額の買い物（推定）</div><span class="lock-note">2026-09-18 時点</span></div></div>
+    <div class="eq-op" style="font-size:16px;">＝</div>
+    <div class="metric frozen" style="opacity:0.75;"><div class="label" style="font-size:10px;">楽天 その他 合計</div><div class="value" style="font-size:16px;">1,775<span class="yen">円</span><div class="src">元本にも利息にも入らない</div><span class="lock-note">2026-09-18 時点</span></div></div>
+  </div>
+
+  <div style="margin-top:8px; padding:6px 10px; background:#f5f2ea; border-radius:4px; font-size:10px; color:var(--sub); line-height:1.5;">
+    出典：楽天 csv_inbox/rakuten_2944_2026-08_statement.pdf ／ Amex JP csv_inbox/amex_jp_42008_2026-07-20_statement.pdf の p.5〜6 ／ Amex US k1-03 の memo。
+    楽天の「その他 1,775」は年会費と少額の買い物（推定）で、元本にも利息にも入りません。
+  </div>
+</div>
+
+<div class="legend">
+  <span><span class="box" style="background:#fff7d6;border:1px solid var(--yellow);"></span>累計が8割に届くまでの行（黄色い縦帯）</span>
+  <span><span class="box" style="background:var(--handled-bg);border:1px solid var(--handled);"></span>対応済み（手続き済み・課金停止待ち）</span>
+  <span><span class="box" style="background:var(--done-bg);"></span>完了</span>
+  <span><span class="box" style="background:var(--hold-bg);"></span>判断保留</span>
+  <span><span class="box" style="background:var(--keep-bg);"></span>継続（パン）＝サーカスに入れない・小計にも累計にも入れない</span>
+</div>
+
+<div id="sections" data-sections="k1"></div>
+
+<div class="actions-bar">
+  <button onclick="exportJSON()">状態一覧を書き出す（JSONをコピー）</button>
+  <pre class="export-out" id="export-out"></pre>
+</div>
+
+<div class="footer-note">
+サーカス（定期課金）の一覧の元：Notion「🎪 サーカス撤退監査」<a href="https://app.notion.com/p/467d5f10489f47e4a8b60c9baf3b9031" target="_blank">https://app.notion.com/p/467d5f10489f47e4a8b60c9baf3b9031</a>
+<br>継続（パン）＝意図的に続けるもの。サーカスには入れない。Notion の状態も「継続決定（パン）」にする。
+<br>ボタンは同じものをもう一度押すと外れて未着手に戻ります。状態はこのブラウザに保存されます（他の端末には送りません）。この画面から Notion は書き換えません。
+</div>
+
+<script src="zaimu_seiri_data.js"></script>
+<script src="zaimu_seiri_state.js"></script>
+<script src="zaimu_seiri_render.js"></script>
+</body>
+</html>

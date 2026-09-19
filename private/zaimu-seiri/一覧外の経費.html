@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一覧外の経費</title>
+<style>
+:root {
+  --bg:#f7f4ed; --panel:#fff; --ink:#1a1a1a; --sub:#666;
+  --navy:#1e3a5f; --gold:#b8860b; --green:#2e7d32; --red:#c62828;
+  --yellow:#e6b800; --gray:#9a9a9a; --line:#e0dcd0; --hover:#f0ede4;
+  --done-bg:#eef5ee; --hold-bg:#fdf7dc; --keep-bg:#ececec;
+  --handled:#4a9cd9; --handled-bg:#eaf4fb; --above80:#fff7d6;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif;font-size:13px;line-height:1.55}
+body{padding:12px;max-width:1680px;margin:0 auto}
+.summary{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin-bottom:16px}
+h1{font-size:18px;color:var(--navy);margin:0 0 12px}
+.back-link{display:inline-block;margin-left:10px;padding:3px 10px;background:var(--navy);color:#fff;text-decoration:none;border-radius:4px;font-size:11px}
+.back-link:hover{background:#2c4d7d}
+.eq-row{display:flex;flex-wrap:wrap;align-items:stretch;gap:4px;margin-bottom:12px}
+.eq-row .metric{flex:1 1 130px;min-width:130px;border:1px solid var(--line);border-radius:6px;padding:10px;background:#fafaf7}
+.eq-row .metric .label{font-size:11px;color:var(--sub);margin-bottom:4px}
+.eq-row .metric .value{font-size:18px;font-weight:bold;color:var(--navy)}
+.eq-row .metric .yen{font-size:12px;margin-left:2px;color:var(--sub);font-weight:normal}
+.eq-row .metric .src{font-size:10px;color:var(--sub);margin-top:3px;line-height:1.35}
+.eq-op{display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:var(--navy);padding:0 4px;flex:0 0 22px}
+.metric.eq-before{background:#f6f6f6;border-color:#c8c8c8}
+.metric.eq-list{background:#f5efe0;border-color:#c9a54a}
+.metric.eq-list .value{color:var(--gold)}
+.metric.eq-outside{background:#eef4fb;border-color:#8fb4e0}
+.metric.eq-outside .value{color:#204a80}
+.metric.eq-keep-decided{background:#ececec;border-color:var(--gray)}
+.metric.eq-keep-decided .value{color:#555}
+.metric.eq-target-red{background:#fbeaea;border-color:var(--red)}
+.metric.eq-target-red .label{color:var(--red);font-weight:bold}
+.metric.frozen{background:#e9ebee !important;border-color:#c8ccd3 !important}
+.metric.frozen .label{color:#6b7280 !important;font-weight:normal !important}
+.metric.frozen .value{color:#6b7280 !important}
+.metric.frozen .src{color:#9ca3af !important}
+.lock-note{display:block;font-size:9px;color:#9ca3af;margin-top:2px}
+.metric.eq-target-red .value{color:var(--red)}
+.metric.eq-cut{background:#fef7e0;border-color:#e6c65b}
+.metric.eq-cut .value{color:#a66f0d}
+.metric.eq-remaining{background:#fbeaea;border-color:var(--red);border-width:2px;box-shadow:0 0 0 3px rgba(198,40,40,0.08)}
+.metric.eq-remaining .label{color:var(--red);font-weight:bold}
+.metric.eq-remaining .value{color:var(--red);font-size:22px}
+.metric.eq-remaining .value::after{content:" ← 削減対象";font-size:11px;color:var(--red);font-weight:500;margin-left:4px}
+table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:8px}
+th,td{padding:5px 6px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle;font-size:12px}
+th{background:#f0ede4;font-size:11px;color:var(--sub);font-weight:normal}
+tr:last-child td{border-bottom:none}
+tr.st-done{background:var(--done-bg)}
+tr.st-done td.name,tr.st-done td.amount{text-decoration:line-through;color:var(--sub)}
+tr.st-hold{background:var(--hold-bg)}
+tr.st-keep{background:var(--keep-bg);color:var(--sub)}
+tr.st-handled{background:var(--handled-bg)}
+tr.st-residual{background:#f5f5f5;color:#999;font-style:italic}
+tr.st-residual td.name,tr.st-residual td.amount{color:#999}
+tr.above80 td:first-child{border-left:4px solid var(--yellow)}
+tr.p80-line td{border-bottom:3px double var(--yellow);position:relative}
+tr.p80-line td:first-child::after{content:"▲ ここまでで8割";position:absolute;left:0;bottom:-20px;font-size:10px;color:var(--yellow);font-weight:bold;white-space:nowrap;background:var(--panel);padding:0 4px}
+tr.p80-line + tr td{padding-top:22px}
+td.actions{width:230px;white-space:nowrap}
+td.actions button{border:1px solid var(--line);background:#fafaf7;color:var(--sub);font-size:10px;padding:2px 6px;border-radius:3px;cursor:pointer;margin-right:2px;min-width:44px}
+td.actions button:hover{background:var(--hover)}
+td.actions button.on-done{background:var(--green);color:#fff;border-color:var(--green)}
+td.actions button.on-hold{background:var(--yellow);color:#fff;border-color:var(--yellow)}
+td.actions button.on-keep{background:var(--gray);color:#fff;border-color:var(--gray)}
+td.actions button.on-handled{background:var(--handled);color:#fff;border-color:var(--handled)}
+td.name{min-width:140px;font-weight:500}
+td.amount{text-align:right;font-family:"SF Mono",Menlo,monospace;white-space:nowrap;width:90px}
+td.cum{text-align:right;font-family:"SF Mono",Menlo,monospace;white-space:nowrap;width:90px;color:var(--sub);font-size:12px}
+td.category{font-size:11px;color:var(--sub);min-width:90px}
+td.memo{font-size:11px;color:var(--ink);min-width:260px;max-width:460px;white-space:normal;line-height:1.4;padding:4px 6px;cursor:text;outline:none}
+td.memo:hover{background:#fffbea}
+td.memo:focus{background:#fff7d6;box-shadow:inset 0 0 0 2px var(--gold)}
+td.memo:empty::before{content:"＋ メモ・備考（クリックで書き込み）";color:var(--gray);font-style:italic}
+.empty-note{padding:12px;background:#fafaf7;border:1px dashed var(--line);border-radius:6px;color:var(--sub);font-size:12px;text-align:center}
+.footer-note{margin-top:20px;padding-top:12px;border-top:1px solid var(--line);font-size:11px;color:var(--sub)}
+.topnav { position:sticky; top:0; z-index:100; background:#fff; border-bottom:2px solid var(--line); padding:8px 12px; margin:-12px -12px 12px -12px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; font-size:13px; }
+.topnav .btn-reload { padding:5px 12px; background:var(--gold); color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:bold; }
+.topnav .btn-reload:hover { background:#a68738; }
+.topnav .last-update { color:var(--sub); font-size:11px; }
+.topnav .nav-links { display:flex; gap:8px; margin-left:auto; }
+.topnav .nav-links a { padding:4px 10px; color:var(--navy); text-decoration:none; border-radius:4px; border:1px solid var(--line); font-size:12px; }
+.topnav .nav-links a:hover { background:var(--ivory); }
+.topnav .nav-links a.active { background:var(--navy); color:#fff; border-color:var(--navy); }
+
+.correction { color:#c62828 !important; font-size:11px !important; margin-top:4px !important; font-weight:bold !important; }
+</style>
+</head>
+<body>
+<div class="topnav">
+  <button class="btn-reload" onclick="location.reload()">↻ 更新</button>
+  <span class="last-update">最終更新 <span id="topnav-time">-</span></span>
+  <span class="nav-links">
+    <a href="財務整理_TOP.html">TOP</a>
+    <a href="財務整理_進捗表.html">進捗表（一覧）</a>
+    <a href="継続経費.html">継続経費</a>
+    <a href="一覧外の経費.html" class="active">一覧外の経費</a>
+    <a href="借入の返済.html">借入の返済</a>
+  </span>
+</div>
+
+<div class="summary">
+  <h1>一覧外の経費（削減対象B）<span style="font-size:11px;color:var(--sub);font-weight:normal;">（家賃・水道光熱費・食費など・進捗表の一覧に載っていない月額の経費）</span><a href="財務整理_進捗表.html" class="back-link">← 進捗表に戻る</a></h1>
+  <div class="eq-row">
+    <div class="metric eq-target-red frozen"><div class="label">削減対象B（このページの分母）</div><div class="value">483,866<span class="yen">円</span><div class="src">Before 総額 945,213 − 一覧の行の合計 461,347</div><span class="lock-note">2026-09-18 訂正後の値で固定</span></div></div>
+    <div class="eq-op">−</div>
+    <div class="metric eq-keep-decided frozen"><div class="label">継続と決めた額（月額相当）</div><div class="value"><span id="o-keep-sum">112,326</span><span class="yen">円</span><div class="src">家賃 106,770 ＋ 電気 4,695 ＋ ガス 861（9/18 の3行）</div><span class="lock-note">2026-09-18 時点で固定</span></div></div>
+    <div class="eq-op">−</div>
+    <div class="metric eq-cut"><div class="label">削った額（完了 <span id="o-done-count">0</span>件）</div><div class="value"><span id="o-cut">0</span><span class="yen">円</span><div class="src">「完了」を押した行の月額合計（可変）</div></div></div>
+    <div class="eq-op">＝</div>
+    <div class="metric eq-remaining"><div class="label">残りの削減対象B（可変）</div><div class="value"><span id="o-remaining">-</span><span class="yen">円</span><div class="src">削減対象B − 継続（9/18 固定）− 削った額</div></div></div>
+  </div>
+</div>
+
+<div id="table-container">
+  <div class="empty-note" id="empty-note">内訳を集計中（BS-keiri が家賃・水道光熱費・食費などを 1円まで合わせて渡してくれるのを待っています）。<br>渡ってきたら zaimu_seiri_data.js の OUTSIDE_BREAKDOWN 配列に入れると、この表に自動で出ます。</div>
+</div>
+
+<div class="footer-note">
+  このページは 財務整理_進捗表.html と同じデータ（zaimu_seiri_data.js の OUTSIDE_BREAKDOWN 配列）を読みます。<br>
+  状態は同じブラウザに保存されます（キー <code>zaimu_seiri_outside_v1</code>）。メモ・備考は進捗表と共通の保存領域を使います（キー <code>zaimu_seiri_user_notes_v1</code>）。<br>
+  ボタンは同じものをもう一度押すと外れて未着手に戻ります。この画面から Notion は書き換えません。
+</div>
+
+<script src="zaimu_seiri_data.js"></script>
+<script src="zaimu_seiri_state.js"></script>
+<script>
+"use strict";
+const OUT_STATE_KEY = "zaimu_seiri_outside_v1";
+const OUT_NOTES_KEY = "zaimu_seiri_user_notes_v1";
+// SAVED_STATE と localStorage をマージする（新しい方が勝つ・feedback_kanryo と同じ流儀）
+function _mergeStore(saved, local){
+  const merged = {};
+  const ids = new Set([...Object.keys(saved||{}), ...Object.keys(local||{})]);
+  for (const id of ids) {
+    const s = (saved||{})[id];
+    const l = (local||{})[id];
+    if (s && !l) { merged[id] = s; continue; }
+    if (l && !s) { merged[id] = l; continue; }
+    const sd = (s && (s.status_date || s.done_date)) || "";
+    const ld = (l && (l.status_date || l.done_date)) || "";
+    if (ld > sd) merged[id] = l;
+    else if (sd > ld) merged[id] = s;
+    else merged[id] = l;
+  }
+  return merged;
+}
+function _savedOutside(){ try { return (SAVED_STATE && SAVED_STATE.outside) || {}; } catch(e){ return {}; } }
+function _savedNotes(){ try { return (SAVED_STATE && SAVED_STATE.notes) || {}; } catch(e){ return {}; } }
+function loadState(){
+  let local = {};
+  try { local = JSON.parse(localStorage.getItem(OUT_STATE_KEY)||"{}") || {}; } catch(e){}
+  return _mergeStore(_savedOutside(), local);
+}
+function saveState(s){ try { localStorage.setItem(OUT_STATE_KEY, JSON.stringify(s)); } catch(e){} }
+function loadNotes(){
+  let local = {};
+  try { local = JSON.parse(localStorage.getItem(OUT_NOTES_KEY)||"{}") || {}; } catch(e){}
+  return { ..._savedNotes(), ...local };
+}
+function saveUserNote(id, text){
+  let all = {};
+  try { all = JSON.parse(localStorage.getItem(OUT_NOTES_KEY)||"{}") || {}; } catch(e){}
+  const t = (text||"").replace(/\r/g,"").replace(/\n{3,}/g,"\n\n"); if (t) all[id] = t; else delete all[id];
+  try { localStorage.setItem(OUT_NOTES_KEY, JSON.stringify(all)); } catch(e){}
+}
+function loadUserNote(id){ const all = loadNotes(); return Object.prototype.hasOwnProperty.call(all, id) ? all[id] : null; }
+function getStatus(item){ const s = loadState()[item.id]; if (s && s.status) return s.status; return item.status || null; }
+function getStatusDate(item){ const s = loadState()[item.id]; if (s && s.status_date) return s.status_date; return item.status_date || null; }
+function fmtYen(n){ return n.toLocaleString("ja-JP"); }
+function todayStr(){ const d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function esc(s){ return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function escAttr(s){ return esc(s); }
+
+const OUTSIDE_TOTAL = 483866; // 訂正後：Before 945,213 − 一覧の行 461,347（2026-09-18 訂正後）
+
+function render(){
+  const items = (typeof OUTSIDE_BREAKDOWN !== "undefined" && Array.isArray(OUTSIDE_BREAKDOWN)) ? OUTSIDE_BREAKDOWN.slice() : [];
+  const container = document.getElementById("table-container");
+  const emptyNote = document.getElementById("empty-note");
+  let keepSum = 0, doneSum = 0, doneCount = 0;
+
+  if (items.length === 0) {
+    // 空のときは集計中プレースホルダを見せる（テーブルは作らない）
+    if (emptyNote) emptyNote.style.display = "block";
+    const keepFixed0 = (typeof BASELINE_20260918 !== "undefined" && BASELINE_20260918.keepOutside) ? BASELINE_20260918.keepOutside : 112326;
+    document.getElementById("o-keep-sum").textContent = fmtYen(keepFixed0);
+    document.getElementById("o-cut").textContent = "0";
+    document.getElementById("o-done-count").textContent = "0";
+    document.getElementById("o-remaining").textContent = fmtYen(OUTSIDE_TOTAL - keepFixed0);
+    return;
+  }
+
+  if (emptyNote) emptyNote.style.display = "none";
+  // 残差（residual:true）は 482,237 − 他12行合計で自動計算
+  const residual = items.find(it => it.residual === true);
+  const nonResidual = items.filter(it => it.residual !== true);
+  const nonResidualSum = nonResidual.reduce((a,b) => a + (b.amount||0), 0);
+  if (residual) residual.amount = OUTSIDE_TOTAL - nonResidualSum; // 通常マイナス（超過）
+  // 残差以外を金額降順、残差は末尾に固定
+  nonResidual.sort((a,b) => (b.amount||0) - (a.amount||0));
+  const orderedItems = residual ? nonResidual.concat([residual]) : nonResidual;
+  const activeItems = orderedItems.filter(it => getStatus(it) !== "keep");
+  const keepItems = orderedItems.filter(it => getStatus(it) === "keep");
+  keepItems.forEach(it => { if (it.residual !== true) keepSum += it.amount||0; });
+  const subTotal = activeItems.filter(it => it.residual !== true).reduce((a,b) => a + (b.amount||0), 0);
+  const subTotal80 = Math.ceil(subTotal * 0.8);
+
+  // 累計・8割線（残差行は集計から外す）
+  let cum = 0, p80Idx = -1, hasP80 = false;
+  activeItems.forEach((it, i) => {
+    if (it.residual === true) { it._cum = null; return; }
+    const st = getStatus(it);
+    if (st === "done") { doneSum += it.amount||0; doneCount++; }
+    cum += it.amount || 0;
+    it._cum = cum;
+    if (!hasP80 && subTotal > 0 && cum >= subTotal80) { p80Idx = i; hasP80 = true; }
+  });
+
+  const rows = activeItems.map((it, i) => {
+    const st = getStatus(it);
+    const dt = getStatusDate(it);
+    const memo = loadUserNote(it.id);
+    const memoTxt = memo !== null ? memo : (it.memo || '');
+    const isResidual = it.residual === true;
+    let cls = "";
+    if (isResidual) cls += " st-residual";
+    else if (st === "done") cls += " st-done";
+    else if (st === "hold") cls += " st-hold";
+    else if (st === "handled") cls += " st-handled";
+    if (!isResidual && hasP80 && i <= p80Idx) cls += " above80";
+    if (!isResidual && hasP80 && i === p80Idx) cls += " p80-line";
+    const actionsCell = isResidual
+      ? `<td class="actions"><span style="padding:2px 6px;font-size:10px;background:#e0e0e0;color:#666;border-radius:3px;">照合差・集計外</span></td>`
+      : `<td class="actions">
+        <button data-id="${it.id}" data-act="handled" class="${st==='handled'?'on-handled':''}" title="手続き済み・課金停止待ち">対応済み</button>
+        <button data-id="${it.id}" data-act="done" class="${st==='done'?'on-done':''}">完了</button>
+        <button data-id="${it.id}" data-act="hold" class="${st==='hold'?'on-hold':''}">保留</button>
+        <button data-id="${it.id}" data-act="keep" class="${st==='keep'?'on-keep':''}">継続（パン）</button>
+      </td>`;
+    const mainRow = `<tr class="${cls.trim()}">
+      ${actionsCell}
+      <td class="name">${esc(it.name || it.category || "")}</td>
+      <td class="amount">${fmtYen(it.amount||0)}円</td>
+      <td class="cum">${isResidual ? "―" : fmtYen(it._cum||0)+"円"}</td>
+      <td class="category">${esc(it.category || "")}</td>
+      <td class="memo" contenteditable="plaintext-only" data-id="${it.id}" data-default="${escAttr(it.memo||'')}">${esc(memoTxt)}</td>
+      <td class="cum">${dt||""}</td>
+    </tr>`;
+    // 子行がある場合は続けて出す（親の中身なので集計には入れない・ボタン無し）
+    let childRows = "";
+    if (Array.isArray(it.children) && it.children.length > 0) {
+      childRows = it.children.map(ch => `<tr class="st-child" style="background:#fafafa;color:#888;">
+        <td class="actions"></td>
+        <td class="name" style="padding-left:24px;font-size:11px;">└ ${esc(ch.name||"")}</td>
+        <td class="amount" style="font-size:11px;">${fmtYen(ch.amount||0)}円</td>
+        <td class="cum">―</td>
+        <td class="category" style="font-size:11px;">${esc(ch.category||"")}</td>
+        <td class="memo" style="font-size:10px;color:#999;">${esc(ch.memo||"")}</td>
+        <td class="cum"></td>
+      </tr>`).join("");
+    }
+    return mainRow + childRows;
+  }).join("");
+
+  const keepRows = keepItems.map(it => {
+    const memo = loadUserNote(it.id);
+    const memoTxt = memo !== null ? memo : (it.memo || '');
+    return `<tr class="st-keep">
+      <td class="actions">
+        <button data-id="${it.id}" data-act="keep" class="on-keep">継続（パン）</button>
+        <button data-id="${it.id}" data-act="done">完了</button>
+        <button data-id="${it.id}" data-act="hold">保留</button>
+      </td>
+      <td class="name">${esc(it.name || it.category || "")}</td>
+      <td class="amount">${fmtYen(it.amount||0)}円</td>
+      <td class="cum">―</td>
+      <td class="category">${esc(it.category || "")}</td>
+      <td class="memo" contenteditable="plaintext-only" data-id="${it.id}" data-default="${escAttr(it.memo||'')}">${esc(memoTxt)}</td>
+      <td class="cum">${getStatusDate(it)||""}</td>
+    </tr>`;
+  }).join("");
+
+  container.innerHTML = `<div style="padding:6px 10px;background:#eeeae0;border-radius:6px;font-size:12px;margin:6px 0;">
+    <b style="color:var(--navy);">小計 ${fmtYen(subTotal)}円</b>
+    <span style="color:var(--yellow);font-weight:bold;margin-left:8px;">8割：${fmtYen(subTotal80)}円</span>
+    <span style="color:var(--green);font-weight:bold;margin-left:8px;">完了 ${fmtYen(doneSum)}円</span>
+    <span style="color:var(--gray);margin-left:8px;">継続（パン） ${fmtYen(keepSum)}円 は除外</span>
+  </div>
+  <table><thead><tr>
+    <th style="width:230px;">状態</th>
+    <th>名称（分類）</th>
+    <th style="text-align:right;">月額</th>
+    <th style="text-align:right;">累計</th>
+    <th>主な相手先</th>
+    <th>メモ・備考（クリックで書き込み）</th>
+    <th>状態変更日</th>
+  </tr></thead><tbody>${rows}${keepRows}</tbody></table>`;
+
+  // 上部の数字（継続は 9/18 固定値 BASELINE.keepOutside を使う）
+  const keepFixed = (typeof BASELINE_20260918 !== "undefined" && BASELINE_20260918.keepOutside) ? BASELINE_20260918.keepOutside : 112326;
+  document.getElementById("o-keep-sum").textContent = fmtYen(keepFixed);
+  document.getElementById("o-cut").textContent = fmtYen(doneSum);
+  document.getElementById("o-done-count").textContent = doneCount;
+  document.getElementById("o-remaining").textContent = fmtYen(OUTSIDE_TOTAL - keepFixed - doneSum);
+
+  // ボタン
+  document.querySelectorAll('td.actions button').forEach(btn => {
+    btn.addEventListener("click", onClickAct);
+  });
+  document.querySelectorAll('td.memo[contenteditable]').forEach(el => {
+    el.addEventListener("blur", onMemoBlur);
+    el.addEventListener("keydown", (e) => { if (e.key === "Escape") e.currentTarget.blur(); });
+  });
+}
+
+function onClickAct(e){
+  const id = e.currentTarget.getAttribute("data-id");
+  const act = e.currentTarget.getAttribute("data-act");
+  const state = loadState();
+  const cur = state[id] && state[id].status;
+  if (cur === act) state[id] = { status: null, status_date: null };
+  else state[id] = { status: act, status_date: todayStr() };
+  saveState(state);
+  render();
+}
+
+function onMemoBlur(e){
+  const el = e.currentTarget;
+  const id = el.getAttribute("data-id");
+  const def = el.getAttribute("data-default") || "";
+  const text = el.innerText.trim();
+  if (text === def) { const all = loadNotes(); delete all[id]; try { localStorage.setItem(OUT_NOTES_KEY, JSON.stringify(all)); } catch(err){} }
+  else saveUserNote(id, text);
+}
+
+
+render();
+// localStorage 変更・タブ復帰・focus で即時再描画
+window.addEventListener("storage", (e) => {
+  if (!e.key) { render(); return; }
+  if (["zaimu_seiri_progress_v1","zaimu_seiri_outside_v1","zaimu_seiri_user_notes_v1", OUT_STATE_KEY, OUT_NOTES_KEY].includes(e.key)) render();
+});
+document.addEventListener("visibilitychange", () => { if (!document.hidden) render(); });
+window.addEventListener("focus", () => render());
+</script>
+<script>
+(function(){
+  function updateTopnavTime(){
+    const el = document.getElementById("topnav-time");
+    if(!el) return;
+    const d = new Date();
+    const pad = n => String(n).padStart(2, "0");
+    el.textContent = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", updateTopnavTime);
+  } else { updateTopnavTime(); }
+})();
+</script>
+</body>
+</html>
