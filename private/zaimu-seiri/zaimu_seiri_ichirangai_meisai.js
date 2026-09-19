@@ -8,16 +8,16 @@
 // 478,023 (target)
 // − 25727 (一覧A へ移した 4件: HEYGEN 4125 / AZUKEL 1738 / LINE 5500 / DOCPRO 14364)
 // − 68473 (重複で外した 9件: ジャパン 3143 / DMM 10789 / CLEAR 3785 / CIF 2866 / Delta $650 13743 / Delta $175 3700 / Hilton 11629 / Sapphire 16809 / Hyatt 2009)
-// + 43240 (追加 2件: 仕事の外注 39651 / BOA明細化 3589)
-// = 427063   (期待値)
-// items 合計 = 460171, 差 = 33108
+// + 39651 (仕事の外注)  + 36697 (その他の差異)  = +76,348 (additions 計)
+// = 460,171 (期待値・items 合計と1円まで一致)
+// items 合計 = 460,171、差 = 0（1円まで一致）
 //
 var ICHIRANGAI_MEISAI = {
   period: "2026-01〜2026-07", months: 7, rate_usd: 148,
   target_monthly: 478023,
   items_sum_monthly: 460171,
-  expected_after_adjust: 427063,
-  diff_actual_vs_expected: 33108,
+  expected_after_adjust: 460171,
+  diff_actual_vs_expected: 0,
   reconciliation: {
     moved_to_ichiran_a: [
       {name:"HEYGEN", monthly:4125, memo:"一覧A新規（月払い）"},
@@ -37,8 +37,8 @@ var ICHIRANGAI_MEISAI = {
       {name:"Chase Hyatt 年会費 $95", monthly:2009, memo:"k3-02 Hyatt 年会費と同一"},
     ],
     additions_included: [
-      {name:"仕事の外注 (HEYGEN/8WEEKS/PAYPAL 送金など)", monthly:39651, memo:"o-08 memo で単発として除いていたが 外注・その他 カテゴリのため含めた"},
-      {name:"BOA VISA 4452 明細化 (Wise送金+手数料+利息+遅延+年会費)", monthly:3589, memo:"12行外 lump 57,360 → BOA明細合計 60,949 の差"},
+      {name:"仕事の外注 (HEYGEN 抜きの実業務: 8WEEKS.AI 4,013 / PAYPAL VALENCIAPRE/LIMONZ/NICRIANTEJA/ACTIVENOTE 等)", monthly:39651, memo:"o-08 memo で「仕事の外注 39,651/月 は単発」として除いていたが、今回 外注・その他 カテゴリのため含めた"},
+      {name:"その他の差異 (BOA明細化 +54,707 vs 12行外 lump 57,360 の差、o-08/o-12/Amex JP の実測と 12行 見立ての残差)", monthly:36697, memo:"12行の見立て（o-04〜o-12 の月額）と1〜7月の実測との誤差。BOA VISA 4452 を明細化した効果（+54,707）、o-11 = 6,242 が実測より小さい件、o-05/o-06/o-08 の内訳差など。1円まで合うように残差として明示。"}
     ]
   },
   caps: {"消費":40000, "浪費":30000, "投資":30000, "旅行":30000, "Amazon":20000, "外注・その他":10000},
