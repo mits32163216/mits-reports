@@ -155,8 +155,6 @@ var DATA = {
       { id:"k2-55", name:"AMAZON DIGIT*YQ8OO8K", amount:254, card:"", memo:"【サブスク外の判定から移動・2026-09-19】ネットのサービス（Mits様判定 2026-09-19：サブスク側）", notion_url:null, url:null, cycle:"monthly", annual_amount:null, annual_jpy:null, last_paid:null, next_due:null, status:null, status_date:null },
       { id:"k2-56", name:"AMAZON DIGIT*ZN8AF3D", amount:254, card:"", memo:"【サブスク外の判定から移動・2026-09-19】ネットのサービス（Mits様判定 2026-09-19：サブスク側）", notion_url:null, url:null, cycle:"monthly", annual_amount:null, annual_jpy:null, last_paid:null, next_due:null, status:null, status_date:null },
       { id:"k2-57", name:"AMAZON DIGIT*NG27W7N", amount:254, card:"", memo:"【サブスク外の判定から移動・2026-09-19】ネットのサービス（Mits様判定 2026-09-19：サブスク側）", notion_url:null, url:null, cycle:"monthly", annual_amount:null, annual_jpy:null, last_paid:null, next_due:null, status:null, status_date:null },
-      { id:"k2-58", name:"UDEMY", amount:242, card:"", memo:"【サブスク外の判定から移動・2026-09-19】ネットのサービス（Mits様判定 2026-09-19：サブスク側）", notion_url:null, url:null, cycle:"monthly", annual_amount:null, annual_jpy:null, last_paid:null, next_due:null, status:null, status_date:null },
-      { id:"k2-59", name:"WIKIPEDIA GIFT", amount:44, card:"", memo:"【サブスク外の判定から移動・2026-09-19】ネットのサービス（Mits様判定 2026-09-19：サブスク側）", notion_url:null, url:null, cycle:"monthly", annual_amount:null, annual_jpy:null, last_paid:null, next_due:null, status:null, status_date:null },
     ]
   },
   "k3": {

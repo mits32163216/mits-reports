@@ -4343,6 +4343,40 @@ var ICHIRANGAI_MEISAI = {
       "note": "1〜5月の明細から。6〜8月分は未取り込み。継続（2026-09-18 Mits様判定・一覧外の経費ページから移した）",
       "status": "keep",
       "status_date": "2026-09-18"
+    },
+    {
+      "id": "m-udemy",
+      "category": "投資",
+      "sub": "",
+      "row": "",
+      "merchant": "UDEMYJP DUBLIN IR",
+      "card": "",
+      "user": "Mits様",
+      "count": 1,
+      "total": 1693,
+      "monthly": 242,
+      "first": "",
+      "last": "",
+      "note": "サブスク側から戻した（Mits様 2026-09-19：一回性）",
+      "status": "once",
+      "status_date": "2026-09-19"
+    },
+    {
+      "id": "m-wiki",
+      "category": "浪費",
+      "sub": "",
+      "row": "",
+      "merchant": "WIKIPEDIA GIFT SAN FRANCISCO",
+      "card": "",
+      "user": "Mits様",
+      "count": 1,
+      "total": 306,
+      "monthly": 44,
+      "first": "",
+      "last": "",
+      "note": "サブスク側から戻した（Mits様 2026-09-19：一回性）",
+      "status": "once",
+      "status_date": "2026-09-19"
     }
   ],
   "moved_to_subscription": [
@@ -4436,12 +4470,6 @@ var ICHIRANGAI_MEISAI = {
       "memo": "ネットのサービス（Mits様判定 2026-09-19：サブスク側）"
     },
     {
-      "name": "UDEMYJP DUBLIN IR",
-      "monthly": 242,
-      "total": 1693,
-      "memo": "ネットのサービス（Mits様判定 2026-09-19：サブスク側）"
-    },
-    {
       "name": "ＳＵＢＬＩＮＥ 北海道 札幌市中央区",
       "monthly": 79,
       "total": 550,
@@ -4451,12 +4479,6 @@ var ICHIRANGAI_MEISAI = {
       "name": "ノート 東京都 千代田区",
       "monthly": 71,
       "total": 500,
-      "memo": "ネットのサービス（Mits様判定 2026-09-19：サブスク側）"
-    },
-    {
-      "name": "WIKIPEDIA GIFT SAN FRANCISCO",
-      "monthly": 44,
-      "total": 306,
       "memo": "ネットのサービス（Mits様判定 2026-09-19：サブスク側）"
     }
   ],
@@ -4612,12 +4634,6 @@ var ICHIRANGAI_MEISAI = {
       "dup_of": null
     },
     {
-      "name": "UDEMYJP DUBLIN IR",
-      "monthly": 242,
-      "from": "判定ページからサブスク側へ（Mits様 2026-09-19）",
-      "dup_of": null
-    },
-    {
       "name": "ＳＵＢＬＩＮＥ 北海道 札幌市中央区",
       "monthly": 79,
       "from": "判定ページからサブスク側へ（Mits様 2026-09-19）",
@@ -4628,12 +4644,6 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 71,
       "from": "判定ページからサブスク側へ（Mits様 2026-09-19）",
       "dup_of": "k2-03 note"
-    },
-    {
-      "name": "WIKIPEDIA GIFT SAN FRANCISCO",
-      "monthly": 44,
-      "from": "判定ページからサブスク側へ（Mits様 2026-09-19）",
-      "dup_of": null
     }
   ]
 };
