@@ -88,6 +88,11 @@ body { padding: 12px; max-width: 1980px; margin: 0 auto; }
 .section-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; padding: 10px 4px 6px; border-bottom: 2px solid var(--navy); margin-bottom: 6px; }
 .section-head h2 { margin: 0; font-size: 15px; color: var(--navy); }
 .section-sub { font-size: 12px; color: var(--sub); }
+/* 大項目の畳み（2026-09-19 Mits様指示・見出しを押すと開く／畳む） */
+.section-head { cursor: pointer; }
+.section-head .fold-mark { display: inline-block; width: 1.1em; color: var(--navy); }
+.section.folded table { display: none; }
+.section.folded { margin-bottom: 10px; }
 
 /* テーブル */
 table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
@@ -215,10 +220,10 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789823043"></script>
-<script src="zaimu_seiri_state.js?v=1789823043"></script>
-<script src="zaimu_seiri_sync.js?v=1789823043"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789823043"></script>
+<script src="zaimu_seiri_data.js?v=1789823795"></script>
+<script src="zaimu_seiri_state.js?v=1789823795"></script>
+<script src="zaimu_seiri_sync.js?v=1789823795"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789823795"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -251,6 +256,9 @@ function _mergeIch(saved, local){
 }
 const SUB_KEY = "zaimu_seiri_ichirangai_sub_v1";
 const SUB_HIDE_KEY = "zaimu_seiri_ichirangai_sub_hide_v1";
+const OPEN_KEY = "zaimu_seiri_ichirangai_open_v1";   // 開いている大項目（見る人ごとの表示の好み・同期しない）。既定は全部畳む
+function loadOpen(){ try { return JSON.parse(localStorage.getItem(OPEN_KEY) || "{}") || {}; } catch(e){ return {}; } }
+function saveOpen(o){ try { localStorage.setItem(OPEN_KEY, JSON.stringify(o)); } catch(e){} }
 const SUBS = ["飲み","食事","ホテル","カフェ","交通"];
 function loadSub(){ return {}; } // 中分類はデータの sub だけを使う（ブラウザに残った押した状態は読まない）
 function saveSub(o){ try { localStorage.setItem(SUB_KEY, JSON.stringify(o)); } catch(e){} }
@@ -457,9 +465,10 @@ function render(){
     const cap = Math.round((byCat[c].actual - byCat[c].keep) / 2);
     const after = b.actual - b.keep - b.cut - b.once;
     const plans = loadPlan();
-    return `<div class="section${isRouhi && subHidden() ? ' hide-subs' : ''}">
-      <div class="section-head">
-        <h2>${esc(c)} <span class="section-sub">${b.items.length}件・月平均 ${fmtYen(b.actual)}円・1〜7月の総額 ${fmtYen(b.items.reduce((t,i)=>t+(i.total||0),0))}円・<b style="color:#c0392b;">削る総額 ${fmtYen(b.items.filter(i=>(stOf(i,state)||{}).status==="cut").reduce((t,i)=>t+(i.total||0),0))}円（月 ${fmtYen(b.cut)}円）</b>・<label class="plan-box" style="white-space:nowrap;">削る予定額（月） <input class="plan-input" data-cat="${esc(c)}" type="text" inputmode="numeric" value="${(plans[c] && plans[c].plan) ? fmtYen(plans[c].plan) : ""}" placeholder="0" style="width:110px;text-align:right;font-size:14px;padding:2px 6px;border:1px solid #c8ccd3;border-radius:4px;">円</label></span></h2>
+    const isOpen = !!loadOpen()[c];
+    return `<div class="section${isRouhi && subHidden() ? ' hide-subs' : ''}${isOpen ? '' : ' folded'}">
+      <div class="section-head" data-cat="${esc(c)}">
+        <h2><span class="fold-mark">${isOpen ? '▼' : '▶'}</span>${esc(c)} <span class="section-sub">${b.items.length}件・月平均 ${fmtYen(b.actual)}円・1〜7月の総額 ${fmtYen(b.items.reduce((t,i)=>t+(i.total||0),0))}円・<b style="color:#c0392b;">削る総額 ${fmtYen(b.items.filter(i=>(stOf(i,state)||{}).status==="cut").reduce((t,i)=>t+(i.total||0),0))}円（月 ${fmtYen(b.cut)}円）</b>・<label class="plan-box" style="white-space:nowrap;">削る予定額（月） <input class="plan-input" data-cat="${esc(c)}" type="text" inputmode="numeric" value="${(plans[c] && plans[c].plan) ? fmtYen(plans[c].plan) : ""}" placeholder="0" style="width:110px;text-align:right;font-size:14px;padding:2px 6px;border:1px solid #c8ccd3;border-radius:4px;">円</label></span></h2>
         <span class="section-sub">上限 ${cap?fmtYen(cap)+'円':'―'} ／ 一回性 <b style="color:#a68000;">${fmtYen(b.once)}円</b> ／ これからの月額 <b style="color:var(--gold);">${fmtYen(after)}円</b>${isRouhi ? `<button class="sub-toggle">${subHidden() ? "分類ボタンを出す" : "分類ボタンを消す"}</button>` : ""}</span>
       </div>
       <table>
@@ -503,6 +512,15 @@ function render(){
     const n = parseInt(String(t.value).replace(/[^\d]/g, ""), 10) || 0;
     savePlanOne(t.getAttribute("data-cat"), n);
     render();   // 大項目の箱の「予定どおりなら月額」を描き直す
+  }));
+  container.querySelectorAll(".section-head").forEach(h => h.addEventListener("click", e => {
+    if (e.target.closest("input, label, button")) return;   // 予定額の入力・ボタンでは畳まない
+    const o = loadOpen(); const c = h.getAttribute("data-cat");
+    if (o[c]) delete o[c]; else o[c] = 1;
+    saveOpen(o);
+    const sec = h.parentElement; const open = !!o[c];
+    sec.classList.toggle("folded", !open);
+    h.querySelector(".fold-mark").textContent = open ? "▼" : "▶";
   }));
   container.querySelectorAll(".sub-toggle").forEach(tg => tg.addEventListener("click", () => {
     try { localStorage.setItem(SUB_HIDE_KEY, subHidden() ? "0" : "1"); } catch(e){}
