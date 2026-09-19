@@ -44,6 +44,12 @@ for f in "${FILES[@]}"; do
   cp "$SRC/$f" "$DST/$f"
 done
 
+# 3b. ブラウザの古い控えを使わせない：HTML の中の js 読み込みに版番号を付ける
+VER=$(date +%s)
+for f in "${FILES[@]}"; do
+  case "$f" in *.html) LC_ALL=C sed -i '' -E 's#src="(zaimu_seiri_[a-z]+\.js)(\?v=[0-9]+)?"#src="\1?v='"$VER"'"#g' "$DST/$f" ;; esac
+done
+
 # 4. 伏字件数を数えてから置換（報告用）
 AKIYA_COUNT=0
 PAYPAY_COUNT=0
