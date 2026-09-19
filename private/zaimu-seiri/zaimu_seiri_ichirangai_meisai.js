@@ -106,9 +106,9 @@ var ICHIRANGAI_MEISAI = {
   "caps": {
     "消費": 46517,
     "浪費": 48030,
-    "投資": 40228,
-    "旅行": 51331,
-    "未仕訳": 6659
+    "投資": 41602,
+    "旅行": 49957,
+    "未仕訳": 543
   },
   "caps_reason": {
     "消費": "実績の半分（Mits様指示 2026-09-19・画面は実績から毎回計算）",
@@ -799,7 +799,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-046",
-      "category": "旅行",
+      "category": "投資",
       "row": "o-12",
       "merchant": "PAYPAL LIMONZ",
       "card": "Chase Sapphire 0430",
@@ -809,7 +809,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 2748,
       "first": "2026-04-22",
       "last": "2026-07-21",
-      "note": "旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
+      "note": "旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行） ／投資へ（Mits様判定 2026-09-19）",
       "status": null,
       "status_date": null
     },
@@ -1002,22 +1002,6 @@ var ICHIRANGAI_MEISAI = {
       "first": "2026-01-25",
       "last": "2026-01-25",
       "note": "",
-      "status": null,
-      "status_date": null
-    },
-    {
-      "id": "m-k001",
-      "category": "未仕訳",
-      "row": "小口",
-      "merchant": "分割払い利用分",
-      "card": "Amex JP Marriott 42008",
-      "user": "Mits様",
-      "count": 1,
-      "total": 85623,
-      "monthly": 12232,
-      "first": "2026-01-21",
-      "last": "2026-01-21",
-      "note": "Amex JP の分割払い（新規）。何を買ったかは明細に出ていない。元の分類：買い物（分割新規） ／未仕訳（コンビニ・スーパーと決めきれない）",
       "status": null,
       "status_date": null
     },
@@ -4336,6 +4320,12 @@ var ICHIRANGAI_MEISAI = {
       "status": null,
       "status_date": null,
       "removed": "2026-09-19 Mits様指示：借入の返済に入っているので二重"
+    },
+    {
+      "name": "分割払い利用分（Amex JP Marriott 42008）",
+      "total": 85623,
+      "monthly": 12232,
+      "memo": "一覧外から削除（Mits様指示 2026-09-19）"
     }
   ]
 };
