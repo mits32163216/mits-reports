@@ -175,6 +175,7 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
   <div style="padding:10px 14px; background:#f4effa; border:2px solid #6a3fa0; border-radius:6px; display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 14px;">
     <span style="font-size:14px; color:#6a3fa0; font-weight:bold;">予定どおりなら月額（全大項目の合計）</span>
     <span style="font-size:26px; font-weight:bold; color:#6a3fa0; font-family:'SF Mono',Menlo,monospace;"><span id="t-plan-total">-</span>円</span>
+    <span style="font-size:18px; font-weight:bold;" id="t-plan-remain"></span>
     <span style="font-size:11px; color:var(--sub);" id="t-plan-total-src"></span>
   </div>
   <!-- TOP 7段目と同じ「継続以外に使える額（ゴール − 継続）」（2026-09-19 Mits様指示・横に置く） -->
@@ -223,11 +224,11 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789829401"></script>
-<script src="zaimu_seiri_state.js?v=1789829401"></script>
-<script src="zaimu_seiri_sync.js?v=1789829401"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789829401"></script>
-<script src="zaimu_seiri_kijun.js?v=1789829401"></script>
+<script src="zaimu_seiri_data.js?v=1789829490"></script>
+<script src="zaimu_seiri_state.js?v=1789829490"></script>
+<script src="zaimu_seiri_sync.js?v=1789829490"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789829490"></script>
+<script src="zaimu_seiri_kijun.js?v=1789829490"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -380,6 +381,9 @@ function render(){
     if (typeof ZS_KIJUN !== "undefined") {
       const K = ZS_KIJUN, keepB = CATEGORIES.reduce((a,c) => a + byCat[c].keep, 0), keepAll = K.A_KEEP + keepB;
       const fe = document.getElementById("t-free"); if (fe) fe.textContent = fmtYen(K.goal - keepAll);
+      // 予定どおりなら月額の合計の横に「継続以外に使える額まで あと何円」
+      const free = K.goal - keepAll, rem = planTotal - free, re = document.getElementById("t-plan-remain");
+      if (re) re.innerHTML = rem > 0 ? `<span style="color:#c0392b;">継続以外に使える額 ${fmtYen(free)}円まで あと ${fmtYen(rem)}円</span>` : `<span style="color:var(--green);">継続以外に使える額 ${fmtYen(free)}円に収まっている（余り ${fmtYen(-rem)}円）</span>`;
       const fs = document.getElementById("t-free-src"); if (fs) fs.textContent = fmtYen(K.goal) + " − " + fmtYen(keepAll) + "（継続：サブスク整理 " + fmtYen(K.A_KEEP) + "円 ＋ この画面の続ける " + fmtYen(keepB) + "円）";
     }
   }
