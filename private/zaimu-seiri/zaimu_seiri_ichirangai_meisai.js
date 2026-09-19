@@ -3087,7 +3087,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k143",
-      "category": "旅行",
+      "category": "浪費",
       "row": "小口",
       "merchant": "UKISHIMABASE 080-6496-1916",
       "card": "Chase Sapphire 0430",
@@ -3097,9 +3097,10 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 119,
       "first": "2026-06-06",
       "last": "2026-06-06",
-      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行）",
+      "note": "元の分類：その他 ／旅行へ（Mits様判定 2026-09-19：Chase はすべて旅行） ／浪費・飲みへ（Mits様判定 2026-09-19）",
       "status": null,
-      "status_date": null
+      "status_date": null,
+      "sub": "飲み"
     },
     {
       "id": "m-k144",
