@@ -53,7 +53,7 @@ var ZS_KIJUN = (function(){
     let sv = {}; try { sv = (SAVED_STATE && SAVED_STATE.ichirangai_plan) || {}; } catch(e){}
     let lc = {}; try { lc = JSON.parse(localStorage.getItem("zaimu_seiri_ichirangai_plan_v1") || "{}") || {}; } catch(e){}
     const t = e => (e && (e.ts || e.date)) || "";
-    new Set([...Object.keys(sv), ...Object.keys(lc)]).forEach(k => { const a = sv[k], b = lc[k]; const x = (a && b) ? (t(b) >= t(a) ? b : a) : (b || a); const n = (x && Number(x.plan)) || 0; const c = k.split("::")[0]; plans[c] = (plans[c] || 0) + n; planSum += n; });   // 「大分類::中分類」は大分類に足す（2026-09-19）
+    new Set([...Object.keys(sv), ...Object.keys(lc)]).forEach(k => { const a = sv[k], b = lc[k]; const x = (a && b) ? (t(b) >= t(a) ? b : a) : (b || a); const n = (x && Number(x.plan)) || 0; const c = k.split("::")[0].replace(/^銀行出金$/, "基本支出"); plans[c] = (plans[c] || 0) + n; planSum += n; });   // 「大分類::中分類」は大分類に足す（2026-09-19）
   })();
   const A_BASE  = rowSum + A_ADJ;
   const a       = A_BASE;                      // 2段目 一覧 A
