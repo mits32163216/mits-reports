@@ -68,6 +68,8 @@ done
 for f in "${FILES[@]}"; do
   # Akiya様 → 家族カード
   LC_ALL=C sed -i '' -e 's|Akiya様|家族カード|g' "$DST/$f"
+  # 家族の名前（2026-09-19 追加・明細に出た振込先）
+  sed -i '' -e 's|ニシダ イクコ|家族|g' -e 's|ニシダ セイジ|家族|g' -e 's|ﾆｼﾀﾞ|家族|g' "$DST/$f"
   # PayPay 5914310（7桁）→ PayPay 14310（末尾5桁）
   LC_ALL=C sed -i '' -e 's|PayPay 5914310|PayPay 14310|g' "$DST/$f"
 done
