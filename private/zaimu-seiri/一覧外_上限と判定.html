@@ -214,9 +214,9 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789814200"></script>
-<script src="zaimu_seiri_state.js?v=1789814200"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789814200"></script>
+<script src="zaimu_seiri_data.js?v=1789814310"></script>
+<script src="zaimu_seiri_state.js?v=1789814310"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789814310"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -250,7 +250,7 @@ function _mergeIch(saved, local){
 const SUB_KEY = "zaimu_seiri_ichirangai_sub_v1";
 const SUB_HIDE_KEY = "zaimu_seiri_ichirangai_sub_hide_v1";
 const SUBS = ["飲み","食事","ホテル","カフェ","交通"];
-function loadSub(){ try { return JSON.parse(localStorage.getItem(SUB_KEY) || "{}") || {}; } catch(e){ return {}; } }
+function loadSub(){ return {}; } // 中分類はデータの sub だけを使う（ブラウザに残った押した状態は読まない）
 function saveSub(o){ try { localStorage.setItem(SUB_KEY, JSON.stringify(o)); } catch(e){} }
 function subOf(it, subs){ return (subs[it.id] && subs[it.id].sub) || it.sub || ""; }
 function subHidden(){ try { return localStorage.getItem(SUB_HIDE_KEY) === "1"; } catch(e){ return false; } }
@@ -374,7 +374,7 @@ function render(){
     if (b.items.length === 0) return "";
     // 月平均降順
     const sorted = b.items.slice().sort((x,y) => (y.monthly||0) - (x.monthly||0));
-    const isRouhi = ["浪費","旅行","未仕訳"].includes(c);
+    const isRouhi = false; // 分類ボタンは役目を終えたので外した（2026-09-19 Mits様指示・押した中分類はデータの sub に書き写し済み）
     const subs = loadSub();
     const rowOf = it => {
       const s = state[it.id];
@@ -402,7 +402,7 @@ function render(){
       </tr>`;
     };
     // ボタンの無い分類（消費・投資）の見出し：データの中分類を使う。押した中分類は、消費へ移る「食事」「カフェ」だけ使う
-    const grpOf = it => it.sub || ((c === "消費" && ["食事","カフェ"].includes(subOf(it, subs))) ? subOf(it, subs) : "");
+    const grpOf = it => it.sub || "";
     let rows;
     const NCOL = isRouhi ? 10 : 9;
     if (isRouhi) {
@@ -416,7 +416,8 @@ function render(){
       }).join("");
     } else if (sorted.some(it => grpOf(it))) {
       // ボタンの無い分類でも、データに中分類があれば見出しで分けて並べる（消費：現金（ATM）／コンビニ・スーパー）
-      const gs = Array.from(new Set(sorted.map(it => grpOf(it) || "未分類")));
+      const ORDER = ["未分類","現金（ATM）","コンビニ・スーパー","Amazon","飲み","食事","カフェ","ホテル","交通"];
+      const gs = Array.from(new Set(sorted.map(it => grpOf(it) || "未分類"))).sort((x,y) => (ORDER.indexOf(x)+99)%108 - (ORDER.indexOf(y)+99)%108);
       rows = gs.map(g => {
         const gi = sorted.filter(it => (grpOf(it) || "未分類") === g);
         const gm = gi.reduce((t,i)=>t+(Number(i.monthly)||0),0);
