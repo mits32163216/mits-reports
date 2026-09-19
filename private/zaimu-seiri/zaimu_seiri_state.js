@@ -176,6 +176,18 @@ var SAVED_STATE = {
     "k2-49": {
       "status": "keep",
       "status_date": "2026-09-19"
+    },
+    "k2-30": {
+      "status": "done",
+      "status_date": "2026-09-20"
+    },
+    "k2-33": {
+      "status": "done",
+      "status_date": "2026-09-20"
+    },
+    "k2-34": {
+      "status": "done",
+      "status_date": "2026-09-20"
     }
   },
   "outside": {
