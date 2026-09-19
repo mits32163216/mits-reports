@@ -104,9 +104,9 @@ var ICHIRANGAI_MEISAI = {
     ]
   },
   "caps": {
-    "消費": 46517,
-    "浪費": 48030,
-    "投資": 41602,
+    "消費": 47517,
+    "浪費": 40506,
+    "投資": 48126,
     "旅行": 49957,
     "未仕訳": 543
   },
@@ -284,7 +284,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-012",
-      "category": "浪費",
+      "category": "消費",
       "row": "o-08",
       "merchant": "DON QUIJOTE K* JP",
       "card": "Amex US 44000",
@@ -294,7 +294,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 2000,
       "first": "2026-02-14",
       "last": "2026-07-20",
-      "note": "",
+      "note": " ／消費へ（Mits様判定 2026-09-19）",
       "status": null,
       "status_date": null
     },
@@ -719,7 +719,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-040",
-      "category": "浪費",
+      "category": "投資",
       "row": "o-05/o-06",
       "merchant": "PAYPAL NICRIANTEJA",
       "card": "Amex JP Marriott 42008",
@@ -729,7 +729,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 4961,
       "first": "2026-01-06",
       "last": "2026-07-06",
-      "note": "",
+      "note": " ／投資へ（Mits様判定 2026-09-19）",
       "status": null,
       "status_date": null
     },
@@ -751,7 +751,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-042",
-      "category": "浪費",
+      "category": "投資",
       "row": "o-05/o-06",
       "merchant": "8WEEKS.AI",
       "card": "Amex JP Marriott 42008",
@@ -761,13 +761,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 4075,
       "first": "2026-01-01",
       "last": "2026-01-01",
-      "note": "",
+      "note": " ／投資へ（Mits様判定 2026-09-19）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-043",
-      "category": "浪費",
+      "category": "投資",
       "row": "o-08",
       "merchant": "8WEEKS.AI SHIBUYA-KU TO",
       "card": "Amex US 44000",
@@ -777,7 +777,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 4013,
       "first": "2026-01-02",
       "last": "2026-01-02",
-      "note": "",
+      "note": " ／投資へ（Mits様判定 2026-09-19）",
       "status": null,
       "status_date": null
     },
