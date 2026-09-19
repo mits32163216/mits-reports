@@ -334,6 +334,27 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   </div>
 </div>
 
+<!-- 月別の実績 -->
+<div class="section monthly-actual" style="margin-top:20px;">
+  <div class="section-head">
+    <h2>月別の実績 <span style="font-size:11px;color:var(--sub);font-weight:normal;">MF の仕訳から出した実額・8月は未締めのため未収載</span></h2>
+  </div>
+  <table id="monthly-actual-table">
+    <thead>
+      <tr>
+        <th>月</th>
+        <th style="text-align:right;">出ていった総額</th>
+        <th style="text-align:right;">私用（事業主貸）</th>
+        <th style="text-align:right;">借入の返済</th>
+        <th style="text-align:right;">単発（5万円以上の外注）</th>
+        <th style="text-align:right;">ランニング</th>
+      </tr>
+    </thead>
+    <tbody id="monthly-actual-tbody"></tbody>
+  </table>
+  <div id="monthly-actual-bar" style="margin-top:16px;"></div>
+</div>
+
 <!-- TOP: legend以下は無し -->
 <script src="zaimu_seiri_data.js"></script>
 <script src="zaimu_seiri_state.js"></script>

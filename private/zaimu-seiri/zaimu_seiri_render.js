@@ -634,6 +634,107 @@ function renderKeepBreakdown() {
   if (okb) okb.textContent = `月払い ${fmtYen(outMonthly)}円 ／ 年払い ${fmtYen(outAnnual)}円`;
 }
 
+// 月別の実績（MONTHLY_ACTUAL）── TOP の進み具合バーの下に、表と棒グラフを出す。
+// 表：月／出ていった総額／私用（事業主貸）／借入の返済／単発（5万円以上の外注）／ランニング。
+// 最終行に 1〜N 月の平均を追加。棒はランニングの月次推移で、出発点 805,763 と目標 512,530
+// の縦線、直近3ヶ月平均の横棒を添える。data.js は触らない前提で、この関数だけで完結する。
+function renderMonthlyActual() {
+  if (typeof MONTHLY_ACTUAL === "undefined" || !Array.isArray(MONTHLY_ACTUAL)) return;
+  const tbody = document.getElementById("monthly-actual-tbody");
+  const barBox = document.getElementById("monthly-actual-bar");
+  if (!tbody || !barBox) return;
+  const rows = MONTHLY_ACTUAL;
+  const n = rows.length;
+  if (n === 0) { tbody.innerHTML = ""; barBox.innerHTML = ""; return; }
+
+  // 平均（1〜N 月）
+  const sum = rows.reduce((a, m) => ({
+    total: a.total + (m.total || 0),
+    jigyounushi_kashi: a.jigyounushi_kashi + (m.jigyounushi_kashi || 0),
+    borrow: a.borrow + (m.borrow || 0),
+    one_off: a.one_off + (m.one_off || 0),
+    running: a.running + (m.running || 0)
+  }), { total:0, jigyounushi_kashi:0, borrow:0, one_off:0, running:0 });
+  const avg = {
+    total: Math.round(sum.total / n),
+    jigyounushi_kashi: Math.round(sum.jigyounushi_kashi / n),
+    borrow: Math.round(sum.borrow / n),
+    one_off: Math.round(sum.one_off / n),
+    running: Math.round(sum.running / n)
+  };
+
+  // 表
+  const monthLabel = m => {
+    const s = String(m.month || "");
+    // "2026-07" → "7月"
+    const mm = /^\d{4}-(\d{2})$/.exec(s);
+    return mm ? (parseInt(mm[1], 10) + "月") : s;
+  };
+  const trs = rows.map(m => `<tr>
+    <td>${escapeHtml(monthLabel(m))}</td>
+    <td class="amount">${fmtYen(m.total || 0)}円</td>
+    <td class="amount">${fmtYen(m.jigyounushi_kashi || 0)}円</td>
+    <td class="amount">${fmtYen(m.borrow || 0)}円</td>
+    <td class="amount">${fmtYen(m.one_off || 0)}円</td>
+    <td class="amount">${fmtYen(m.running || 0)}円</td>
+  </tr>`).join("");
+  const firstNum = /^\d{4}-(\d{2})$/.exec(rows[0].month || "");
+  const lastNum  = /^\d{4}-(\d{2})$/.exec(rows[n-1].month || "");
+  const avgLabel = (firstNum && lastNum)
+    ? `${parseInt(firstNum[1],10)}〜${parseInt(lastNum[1],10)}月の平均`
+    : "平均";
+  const avgTr = `<tr style="background:#f0ede4; font-weight:bold;">
+    <td style="border-top:2px solid var(--navy);">${escapeHtml(avgLabel)}</td>
+    <td class="amount" style="border-top:2px solid var(--navy);">${fmtYen(avg.total)}円</td>
+    <td class="amount" style="border-top:2px solid var(--navy);">${fmtYen(avg.jigyounushi_kashi)}円</td>
+    <td class="amount" style="border-top:2px solid var(--navy);">${fmtYen(avg.borrow)}円</td>
+    <td class="amount" style="border-top:2px solid var(--navy);">${fmtYen(avg.one_off)}円</td>
+    <td class="amount" style="border-top:2px solid var(--navy);">${fmtYen(avg.running)}円</td>
+  </tr>`;
+  tbody.innerHTML = trs + avgTr;
+
+  // 棒グラフ（ランニングの月次推移）
+  const START_POINT = 805763;              // 出発点（1段目 eq-start と同じ値）
+  const HALF_GOAL   = 293233;              // 半分経営の削減目標
+  const GOAL        = START_POINT - HALF_GOAL;  // 512,530
+  const last3 = rows.slice(-3);
+  const last3Avg = last3.length > 0
+    ? Math.round(last3.reduce((a,m) => a + (m.running || 0), 0) / last3.length)
+    : 0;
+  const maxRun = Math.max(...rows.map(m => m.running || 0), START_POINT);
+  const maxVal = maxRun * 1.08;  // 右側に余白
+  const pctOf = v => (v / maxVal * 100).toFixed(2);
+  const startPct = pctOf(START_POINT);
+  const goalPct  = pctOf(GOAL);
+
+  const barRow = (label, value, color, isMeta) => {
+    const pct = pctOf(value);
+    const labelColor = isMeta ? "var(--gold)" : "var(--sub)";
+    const valueColor = isMeta ? "var(--gold)" : "var(--ink)";
+    const extraStyle = isMeta ? "padding-top:8px; margin-top:6px; border-top:1px dashed var(--line);" : "";
+    return `<div style="display:flex; align-items:center; margin-bottom:4px; font-size:11px; ${extraStyle}">
+      <div style="width:110px; color:${labelColor}; ${isMeta?'font-weight:bold;':''}">${escapeHtml(label)}</div>
+      <div style="flex:1; height:18px; background:#f0ede4; border-radius:3px; position:relative;">
+        <div style="width:${pct}%; height:100%; background:${color}; border-radius:3px;"></div>
+        <div style="position:absolute; top:-3px; bottom:-3px; left:${startPct}%; width:2px; background:var(--red); z-index:2;" title="出発点 ${fmtYen(START_POINT)}円"></div>
+        <div style="position:absolute; top:-3px; bottom:-3px; left:${goalPct}%; width:2px; background:var(--green); z-index:2;" title="目標 ${fmtYen(GOAL)}円"></div>
+      </div>
+      <div style="width:120px; text-align:right; font-family:'SF Mono',Menlo,monospace; color:${valueColor}; ${isMeta?'font-weight:bold;':''}">${fmtYen(value)}円</div>
+    </div>`;
+  };
+
+  const bars = rows.map(m => barRow(monthLabel(m), m.running || 0, "linear-gradient(90deg,#4a7c59,#2e7d32)", false)).join("");
+  const last3Bar = barRow("直近3ヶ月平均", last3Avg, "var(--gold)", true);
+
+  const legend = `<div style="margin-top:10px; font-size:11px; color:var(--sub); display:flex; flex-wrap:wrap; gap:16px;">
+    <span><span style="display:inline-block; width:14px; height:2px; background:var(--red); vertical-align:middle; margin-right:4px;"></span>出発点 ${fmtYen(START_POINT)}円</span>
+    <span><span style="display:inline-block; width:14px; height:2px; background:var(--green); vertical-align:middle; margin-right:4px;"></span>目標 ${fmtYen(GOAL)}円（${fmtYen(START_POINT)} − ${fmtYen(HALF_GOAL)}）</span>
+    <span><span style="display:inline-block; width:14px; height:6px; background:var(--gold); vertical-align:middle; margin-right:4px;"></span>直近3ヶ月平均 ${fmtYen(last3Avg)}円</span>
+  </div>`;
+
+  barBox.innerHTML = `<div style="font-size:12px; color:var(--sub); margin-bottom:8px;">ランニングの月次推移（棒＝各月・縦線＝基準）</div>${bars}${last3Bar}${legend}`;
+}
+
 // ─── 状態のファイル保存（Blob + a[download] で zaimu_seiri_state.js を落とす） ───
 // 押した瞬間の SAVED_STATE + localStorage をマージした最新状態を、
 // var SAVED_STATE = {...} の形の JS として書き出す。
@@ -708,11 +809,12 @@ function initSaveStateBar() {
 
 render();
 renderKeepBreakdown();
+renderMonthlyActual();
 updateTopnavTime();
 initSaveStateBar();
 
 // 別タブでの状態変化・タブ復帰・focus で即時再描画（TOP と進捗表が同期する）
-function _refreshAll() { render(); renderKeepBreakdown(); updateTopnavTime(); }
+function _refreshAll() { render(); renderKeepBreakdown(); renderMonthlyActual(); updateTopnavTime(); }
 const _WATCHED_KEYS = ["zaimu_seiri_progress_v1", "zaimu_seiri_outside_v1", "zaimu_seiri_user_notes_v1"];
 window.addEventListener("storage", (e) => {
   if (!e.key) { _refreshAll(); return; }
