@@ -105,8 +105,8 @@ var ICHIRANGAI_MEISAI = {
   },
   "caps": {
     "消費": 42780,
-    "浪費": 53400,
-    "投資": 38595,
+    "浪費": 51768,
+    "投資": 40228,
     "旅行": 51331,
     "未仕訳": 6659
   },
@@ -783,7 +783,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-044",
-      "category": "浪費",
+      "category": "投資",
       "row": "o-05/o-06",
       "merchant": "PAYPAL ACTIVENOTE",
       "card": "Amex JP Marriott 42008",
@@ -793,7 +793,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 3265,
       "first": "2026-01-06",
       "last": "2026-07-06",
-      "note": "",
+      "note": " ／投資へ（Mits様判定 2026-09-19）",
       "status": null,
       "status_date": null
     },
