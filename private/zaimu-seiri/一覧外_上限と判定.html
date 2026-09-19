@@ -224,11 +224,11 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789829490"></script>
-<script src="zaimu_seiri_state.js?v=1789829490"></script>
-<script src="zaimu_seiri_sync.js?v=1789829490"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789829490"></script>
-<script src="zaimu_seiri_kijun.js?v=1789829490"></script>
+<script src="zaimu_seiri_data.js?v=1789829790"></script>
+<script src="zaimu_seiri_state.js?v=1789829790"></script>
+<script src="zaimu_seiri_sync.js?v=1789829790"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789829790"></script>
+<script src="zaimu_seiri_kijun.js?v=1789829790"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -437,6 +437,18 @@ function render(){
     };
     // ボタンの無い分類（消費・投資）の見出し：データの中分類を使う。押した中分類は、消費へ移る「食事」「カフェ」だけ使う
     const grpOf = it => it.sub || "";
+    // 中分類の見出し＋行。「飲み」だけは、ボタンを押していない・回数1回のものを別の見出しに分ける（2026-09-19 Mits様指示・押すと「飲み」に戻る）
+    const headRow = (label, gi) => {
+      const gm = gi.reduce((t,i)=>t+(Number(i.monthly)||0),0);
+      const gt = gi.reduce((t,i)=>t+(Number(i.total)||0),0);
+      return `<tr class="sub-head"><td colspan="${NCOL}">${esc(label)}　${gi.length}件・月平均 ${fmtYen(gm)}円・${KIKAN}の総額 ${fmtYen(gt)}円</td></tr>` + gi.map(rowOf).join("");
+    };
+    const groupHtml = (g, gi) => {
+      if (g !== "飲み") return headRow(g || "未分類", gi);
+      const isOnce1 = it => Number(it.count) === 1 && !((stOf(it, state) || {}).status);
+      const a = gi.filter(it => !isOnce1(it)), b = gi.filter(isOnce1);
+      return (a.length ? headRow("飲み", a) : "") + (b.length ? headRow("飲み（1回だけ・まだ押していない）", b) : "");
+    };
     let rows;
     const NCOL = isRouhi ? 10 : 9;
     if (isRouhi) {
@@ -444,9 +456,7 @@ function render(){
         const gi = sorted.filter(it => subOf(it, subs) === g);
         if (!gi.length && (g === "" || c === "未仕訳")) return "";
         if (!gi.length) return `<tr class="sub-head"><td colspan="${NCOL}">${g}　0件</td></tr>`;
-        const gm = gi.reduce((t,i)=>t+(Number(i.monthly)||0),0);
-        const gt = gi.reduce((t,i)=>t+(Number(i.total)||0),0);
-        return `<tr class="sub-head"><td colspan="${NCOL}">${g || "未分類"}　${gi.length}件・月平均 ${fmtYen(gm)}円・${KIKAN}の総額 ${fmtYen(gt)}円</td></tr>` + gi.map(rowOf).join("");
+        return groupHtml(g, gi);
       }).join("");
     } else if (sorted.some(it => grpOf(it))) {
       // ボタンの無い分類でも、データに中分類があれば見出しで分けて並べる（消費：現金（ATM）／コンビニ・スーパー）
@@ -454,9 +464,7 @@ function render(){
       const gs = Array.from(new Set(sorted.map(it => grpOf(it) || "未分類"))).sort((x,y) => { const r = v => { const i = ORDER.indexOf(v); return i < 0 ? 99 : i; }; return r(x) - r(y); });
       rows = gs.map(g => {
         const gi = sorted.filter(it => (grpOf(it) || "未分類") === g);
-        const gm = gi.reduce((t,i)=>t+(Number(i.monthly)||0),0);
-        const gt = gi.reduce((t,i)=>t+(Number(i.total)||0),0);
-        return `<tr class="sub-head"><td colspan="${NCOL}">${esc(g)}　${gi.length}件・月平均 ${fmtYen(gm)}円・${KIKAN}の総額 ${fmtYen(gt)}円</td></tr>` + gi.map(rowOf).join("");
+        return groupHtml(g, gi);
       }).join("");
     } else {
       rows = sorted.map(rowOf).join("");
