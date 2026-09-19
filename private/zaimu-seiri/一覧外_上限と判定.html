@@ -227,11 +227,11 @@ tr.sub-head.foldable td:hover { background: #e5d9f4; }
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789838981"></script>
-<script src="zaimu_seiri_state.js?v=1789838981"></script>
-<script src="zaimu_seiri_sync.js?v=1789838981"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789838981"></script>
-<script src="zaimu_seiri_kijun.js?v=1789838981"></script>
+<script src="zaimu_seiri_data.js?v=1789838991"></script>
+<script src="zaimu_seiri_state.js?v=1789838991"></script>
+<script src="zaimu_seiri_sync.js?v=1789838991"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789838991"></script>
+<script src="zaimu_seiri_kijun.js?v=1789838991"></script>
 <script>
 // 見立ての理由を読みやすく出す（Mits様 2026-09-20「見立ての理由が煩雑で読みづらい　整理して」）
 // note は「／」区切りで新しい順に積んである。1行目＝いまの置き場所の理由（いちばん新しい判断）、2行目＝元の記録、残りは「変更の記録」に畳む
@@ -472,7 +472,7 @@ function render(){
       const gm = gi.reduce((t,i)=>t+(Number(i.monthly)||0),0);
       const gt = gi.reduce((t,i)=>t+(Number(i.total)||0),0);
       const key = c + "::" + label, pv = (plansAll[key] && Number(plansAll[key].plan)) || 0;
-      const foldable = gi.length >= SUB_FOLD_MIN || g === "家族カード（41014）コンビニ・スーパー";   // Mits様 2026-09-20「家族カード（41014）コンビニ・スーパーも畳んで」（9行でも畳む）
+      const foldable = gi.length >= SUB_FOLD_MIN || label === "家族カード（41014）コンビニ・スーパー";   // Mits様 2026-09-20「家族カード（41014）コンビニ・スーパーも畳んで」（9行でも畳む）
       const isSubOpen = foldable ? !!subOpenMap[key] : true;   // 10行未満は常に開いた扱い
       const mark = foldable ? `<span class="sub-fold-mark">${isSubOpen?'▼':'▶'}</span>` : "";
       const trCls = "sub-head" + (foldable ? " foldable" : "");
