@@ -86,10 +86,10 @@ var MONTHLY_ACTUAL = [
 // 2026-09-18 BS-keiri 第3版反映。合計は 482,237 を分母にしているが、実測合計は 526,543 で 44,306 円の超過。
 // o-99 に「照合で合わない差（未解明）」として 482,237 − 12行合計 を負の値で置く。ボタンは付けない。
 var OUTSIDE_BREAKDOWN = [
-  { id:"o-01", name:"家賃（水道込み）",              amount:106770, cycle:"monthly",  card:"PayPay 銀行",    memo:"大和リビング D-ROOM・RKS（保証会社）経由", status:null, status_date:null },
-  { id:"o-02", name:"電気",                          amount:  4695, cycle:"monthly",  card:"PayPay 銀行",    memo:"沖縄電力", status:null, status_date:null },
-  { id:"o-03", name:"ガス",                          amount:   861, cycle:"monthly",  card:"Amex JP 42008",  memo:"りゅうせき（都市ガス）／1〜5月の明細から。6〜8月分は未取り込み", status:null, status_date:null },
-  { id:"o-04", name:"ATM の現金引き出し（生活費）",  amount: 78875, cycle:"monthly",  card:"銀行 ATM",       memo:"3万円 × 約21回", status:null, status_date:null },
+  { id:"o-01", name:"家賃（RKS：家賃＋管理費＋電気・1〜7月実額）",              amount:127388, cycle:"monthly",  card:"PayPay 銀行",    memo:"大和リビング D-ROOM・RKS（保証会社）経由", status:null, status_date:null },
+  { id:"o-02", name:"電気（家賃の RKS に含む・0）",                          amount:  0, cycle:"monthly",  card:"PayPay 銀行",    memo:"沖縄電力", status:null, status_date:null },
+  { id:"o-03", name:"ガス",                          amount:   1676, cycle:"monthly",  card:"Amex JP 42008",  memo:"りゅうせき（都市ガス）／1〜5月の明細から。6〜8月分は未取り込み", status:null, status_date:null },
+  { id:"o-04", name:"ATM の現金引き出し（生活費）",  amount: 77286, cycle:"monthly",  card:"銀行 ATM",       memo:"3万円 × 約21回", status:null, status_date:null },
   { id:"o-05", name:"Amex JP 42008 の買い物・分割・その他", amount:13958, cycle:"monthly", card:"Amex JP 42008",  memo:"", status:null, status_date:null },
   { id:"o-06", name:"Amex JP 42008 のサブスク（一覧に無い分）", amount:25486, cycle:"monthly", card:"Amex JP 42008",  memo:"", status:null, status_date:null },
   { id:"o-07", name:"Amex JP 63000",                 amount:  2159, cycle:"monthly",  card:"Amex JP 63000",  memo:"", status:null, status_date:null },
