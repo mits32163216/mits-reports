@@ -348,7 +348,7 @@ function render() {
       const cumStr = it._cum === null ? "―" : (fmtYen(it._cum) + "円");
 
       const actionsCell = isExcluded
-        ? `<td class="actions"><span class="badge-excluded">重複・集計外</span></td>`
+        ? `<td class="actions"><span class="badge-excluded">${escapeAttr(it.excluded_label || "重複・集計外")}</span></td>`
         : `<td class="actions">
           <button data-id="${it.id}" data-act="handled" class="${st==='handled'?'on-handled':''}" title="手続き済み・課金停止待ち">対応済み</button>
           <button data-id="${it.id}" data-act="done" class="${st==='done'?'on-done':''}">完了</button>
