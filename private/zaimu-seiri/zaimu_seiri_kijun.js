@@ -7,8 +7,8 @@ var ZS_KIJUN = (function(){
   const A_ADJ       = 35236;   // 一覧の行に無い足し分：年払いを1〜8月の実額に直した差（1〜8月の実額÷8 − 月割り）＝ Notion 3,804 ＋ Genspark 9,944 ＋ Bonvoy 年会費 6,138 ＋ Delta 年会費 3,224 ＋ Hilton 年会費 2,734 ＋ Chase Sapphire 年会費 4,185 ＋ DOCPRO 4,214 ＋ GRAMMARLY 993（2026-09-19 8月締め。1〜7月は 47,018）
   const LOAN_BEFORE = 142286;  // 借入の返済（集計期間の実額の月平均・2026-09-19 Mits様確認）
   const LOAN_NOTE   = "楽天 35,431 ／ Amex JP 96,687 ／ Amex US 10,169";   // LOAN_BEFORE の内訳（集計期間の実額の月平均）
-  const LOAN_LATEST = 59690;   // 今の月々の返済（④-1・④-2・④-3 完済後。① 楽天キャッシングリボの繰り上げ返済は 2026-09-19 取り消し）
-  const LOAN_PRINCIPAL = 1298570; // 残っている元金 合計（判明分）＝楽天 822,200 ＋ Amex JP 476,370
+  const LOAN_LATEST = 77598;   // 2026-09-19 ⑤ ペイディ（MacBook Pro 24回・17,908）を追加。前 59690   // 今の月々の返済（④-1・④-2・④-3 完済後。① 楽天キャッシングリボの繰り上げ返済は 2026-09-19 取り消し）
+  const LOAN_PRINCIPAL = 1656738; // 2026-09-19 ⑤ ペイディ 358,168（8月末）を追加。前 1298570 // 残っている元金 合計（判明分）＝楽天 822,200 ＋ Amex JP 476,370
 
   const M = (typeof ICHIRANGAI_MEISAI !== "undefined" && ICHIRANGAI_MEISAI) ? ICHIRANGAI_MEISAI : null;
   let saved = {}; try { saved = (SAVED_STATE && SAVED_STATE.ichirangai) || {}; } catch(e){}

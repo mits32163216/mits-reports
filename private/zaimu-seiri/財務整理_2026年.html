@@ -298,11 +298,11 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   <div class="note" id="y-note"></div>
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789826157"></script>
-<script src="zaimu_seiri_state.js?v=1789826157"></script>
-<script src="zaimu_seiri_sync.js?v=1789826157"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789826157"></script>
-<script src="zaimu_seiri_kijun.js?v=1789826157"></script>
+<script src="zaimu_seiri_data.js?v=1789826435"></script>
+<script src="zaimu_seiri_state.js?v=1789826435"></script>
+<script src="zaimu_seiri_sync.js?v=1789826435"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789826435"></script>
+<script src="zaimu_seiri_kijun.js?v=1789826435"></script>
 <script src="zaimu_seiri_8gatsu_jisseki.js"></script>
 <script>
 (function(){
@@ -336,7 +336,7 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   });
   const runH1 = K.a * M0 + jA + bH1, runM2 = aNext + bM2;
   // 借入の返済：1〜7月＝実額の月平均 × 7／8〜12月＝借入の返済ページの月ごとの見込み
-  const LOAN = [ ["8月", 139450, "①〜④ 全部"], ["9月", 131738, "④-1 8WEEKS.AI の分割を止めた後"], ["10月", K.LOAN_LATEST + 35671, "今の月々 ＋ 8WEEKS.AI 一括 35,671（10/10）"], ["11月", K.LOAN_LATEST, "今の月々"], ["12月", K.LOAN_LATEST, "今の月々"] ];
+  const LOAN = [ ["8月", 139450, "①〜④ 全部"], ["9月", 131738 + 17908, "⑤ ペイディ 17,908 込み・④-1 8WEEKS.AI の分割を止めた後"], ["10月", K.LOAN_LATEST + 35671, "今の月々 ＋ 8WEEKS.AI 一括 35,671（10/10）"], ["11月", K.LOAN_LATEST, "今の月々"], ["12月", K.LOAN_LATEST, "今の月々"] ];
   LOAN.splice(0, M1 - 7);   // 実績に入った月（8月〜）は見込みの列から外す
   const loanH1 = K.LOAN_BEFORE * M0 + jLoan, loanH2 = LOAN.reduce((t, x) => t + x[1], 0);
 
