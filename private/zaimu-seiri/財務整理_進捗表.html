@@ -4,7 +4,7 @@
 <meta name="robots" content="noindex,nofollow">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>財務整理 進捗表</title>
+<title>財務整理 サブスク整理</title>
 <style>
 :root {
   --bg: #f7f4ed;
@@ -240,10 +240,10 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   <span class="nav-links">
     <a href="財務整理_TOP.html">TOP</a>
     <a href="財務整理_TOP_年額.html">年額</a>
-    <a href="財務整理_進捗表.html" class="active">進捗表（一覧）</a>
+    <a href="財務整理_進捗表.html" class="active">サブスク整理</a>
     <a href="継続経費.html">継続経費</a>
     <a href="借入の返済.html">借入の返済</a>
-    <a href="一覧外_上限と判定.html">一覧外の判定</a>
+    <a href="一覧外_上限と判定.html">サブスク外の判定</a>
   </span>
 </div>
 
@@ -271,20 +271,20 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 <br>ボタンは同じものをもう一度押すと外れて未着手に戻ります。状態はこのブラウザに保存されます（他の端末には送りません）。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789817434"></script>
-<script src="zaimu_seiri_state.js?v=1789817434"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789817434"></script>
-<script src="zaimu_seiri_kijun.js?v=1789817434"></script>
-<script src="zaimu_seiri_render.js?v=1789817434"></script>
+<script src="zaimu_seiri_data.js?v=1789817493"></script>
+<script src="zaimu_seiri_state.js?v=1789817493"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789817493"></script>
+<script src="zaimu_seiri_kijun.js?v=1789817493"></script>
+<script src="zaimu_seiri_render.js?v=1789817493"></script>
 <script>
-// 一覧外の判定ページから一覧 A（サブスク側）へ移した行（重複を除く）── TOP 2段目の「＋」の分（2026-09-19）
+// サブスク外の判定ページから一覧 A（サブスク側）へ移した行（重複を除く）── TOP 2段目の「＋」の分（2026-09-19）
 (function(){
   const box = document.getElementById("to-ichiran-a");
   if (!box || typeof ZS_KIJUN === "undefined" || !ZS_KIJUN) return;
   const K = ZS_KIJUN, f = n => Math.round(n).toLocaleString("ja-JP");
   const esc = t => String(t == null ? "" : t).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const rows = K.toA.map(x => `<tr><td class="name">${esc(x.name)}</td><td class="amount">${f(Number(x.monthly)||0)}円</td><td>${esc(x.from || "")}</td></tr>`).join("");
-  box.innerHTML = `<div class="section"><h2 style="font-size:15px;margin:0 0 6px;">一覧外の判定から一覧 A へ移した分（${K.toA.length}行）</h2>
+  box.innerHTML = `<div class="section"><h2 style="font-size:15px;margin:0 0 6px;">サブスク外の判定から一覧 A へ移した分（${K.toA.length}行）</h2>
     <table><thead><tr><th>名称</th><th style="text-align:right;">月額</th><th>元の場所</th></tr></thead><tbody>${rows}</tbody></table>
     <div class="sec-subtotal">小計：<b>${f(K.addA)}円</b>　／　一覧 A ＝ ${f(K.A_BASE)} ＋ ${f(K.addA)} ＝ <b>${f(K.a)}円</b>（TOP 2段目と同じ）</div></div>`;
 })();

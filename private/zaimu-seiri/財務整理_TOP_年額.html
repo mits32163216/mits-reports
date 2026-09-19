@@ -249,10 +249,10 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   <span class="nav-links">
     <a href="財務整理_TOP.html">TOP</a>
     <a href="財務整理_TOP_年額.html" class="active">年額</a>
-    <a href="財務整理_進捗表.html">進捗表（一覧）</a>
+    <a href="財務整理_進捗表.html">サブスク整理</a>
     <a href="継続経費.html">継続経費</a>
     <a href="借入の返済.html">借入の返済</a>
-    <a href="一覧外_上限と判定.html">一覧外の判定</a>
+    <a href="一覧外_上限と判定.html">サブスク外の判定</a>
   </span>
 </div>
 
@@ -279,9 +279,9 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   </div>
 
   <!-- 3段目 一覧外：全部固定・枠全体が一覧外.htmlリンク -->
-  <a href="一覧外_上限と判定.html" style="text-decoration:none; color:inherit;" title="クリックで一覧外の判定のページを開く">
+  <a href="一覧外_上限と判定.html" style="text-decoration:none; color:inherit;" title="クリックでサブスク外の判定のページを開く">
   <div class="eq-row eq-row-3" style="margin-top:6px; cursor:pointer;">
-    <div class="metric eq-outside frozen"><div class="label">削減対象B(別ページの分母)　<span style="font-size:10px; color:var(--navy);">→ 一覧外の判定</span></div><div class="value"><span id="r3-b">-</span><span class="yen">円</span><div class="src">一覧外の判定の合計（判定ページのデータから自動）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
+    <div class="metric eq-outside frozen"><div class="label">削減対象B(別ページの分母)　<span style="font-size:10px; color:var(--navy);">→ サブスク外の判定</span></div><div class="value"><span id="r3-b">-</span><span class="yen">円</span><div class="src">サブスク外の判定の合計（判定ページのデータから自動）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
     <div class="eq-op">−</div>
     <div class="metric eq-outside frozen"><div class="label">継続と決めた額(一覧外)</div><div class="value"><span id="r3-keep">-</span><span class="yen">円</span><div class="src">判定ページで「続ける」の行の合計（家賃 RKS 127,388 ＋ ガス 1,676 など）</div><div class="src" id="m-keepout-breakdown" style="font-size:11px;line-height:1.5;text-align:left;margin-top:4px;">―</div><span class="lock-note">2026-09-19 Mits様確認</span></div></div>
     <div class="eq-op">＝</div>
@@ -302,7 +302,7 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   <div class="eq-row eq-row-5" style="margin-top:10px;">
     <div class="metric frozen"><div class="label">半分経営の削減目標(削減対象総額 ÷ 2)</div><div class="value"><span id="m-half-goal">-</span><span class="yen">円</span><div class="src">4段目 <span id="m-half-goal-src">-</span> ÷ 2</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
     <div class="eq-op">−</div>
-    <div class="metric eq-cut"><div class="label">削った額＋対応済み(可変)</div><div class="value"><span id="m-cut-plus-handled">-</span><span class="yen">円</span><div class="src">削った額(完了 <span id="m-eq2-done-count">0</span>件)<span id="m-eq2-cut">-</span> ＋ 対応済み(<span id="m-after-handled-sub">0件</span>)<span id="m-after-handled">-</span> ＋ 一覧外の判定の「削る」「一回性」<span id="m-ich-cutonce">-</span></div><div id="m-cut-breakdown" style="font-size:11px;color:var(--sub);margin-top:6px;text-align:left;line-height:1.5;"></div></div></div>
+    <div class="metric eq-cut"><div class="label">削った額＋対応済み(可変)</div><div class="value"><span id="m-cut-plus-handled">-</span><span class="yen">円</span><div class="src">削った額(完了 <span id="m-eq2-done-count">0</span>件)<span id="m-eq2-cut">-</span> ＋ 対応済み(<span id="m-after-handled-sub">0件</span>)<span id="m-after-handled">-</span> ＋ サブスク外の判定の「削る」「一回性」<span id="m-ich-cutonce">-</span></div><div id="m-cut-breakdown" style="font-size:11px;color:var(--sub);margin-top:6px;text-align:left;line-height:1.5;"></div></div></div>
     <div class="eq-op">＝</div>
     <div class="metric eq-remaining" style="border-width:3px;"><div class="label">半分まで残り</div><div class="value" style="font-size:26px;"><span id="m-half-remaining">-</span><span class="yen">円</span><div class="src">半分経営の削減目標 − (削った額＋対応済み)</div></div></div>
   </div>
@@ -329,9 +329,9 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 
   <!-- 8段目：削減目標① と 削減目標②（2026-09-19 Mits様指示・判定ページから計算） -->
   <div class="eq-row eq-row-8" style="margin-top:8px;">
-    <div class="metric frozen"><div class="label">削減目標①　半分経営の削減目標(削減対象総額 ÷ 2)</div><div class="value"><span id="r8-1">-</span><span class="yen">円</span><div class="src">4段目 <span id="r8-1-src">-</span> ÷ 2</div><div class="r8-pct-wrap" style="margin-top:6px;"><div style="font-size:11px;color:#374151;">進み具合 <b><span id="r8-1-pct" class="r8-pct">0%</span></b>（<span id="r8-1-num">-</span> ÷ <span id="r8-1-den">-</span>）</div><div style="height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden;margin-top:3px;"><div id="r8-1-bar" style="height:100%;width:0%;background:#2563eb;"></div></div><div style="font-size:9px;color:#6b7280;">分子＝削った額＋対応済み（一覧A）＋ 一覧外の判定の「削る」「一回性」</div></div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
+    <div class="metric frozen"><div class="label">削減目標①　半分経営の削減目標(削減対象総額 ÷ 2)</div><div class="value"><span id="r8-1">-</span><span class="yen">円</span><div class="src">4段目 <span id="r8-1-src">-</span> ÷ 2</div><div class="r8-pct-wrap" style="margin-top:6px;"><div style="font-size:11px;color:#374151;">進み具合 <b><span id="r8-1-pct" class="r8-pct">0%</span></b>（<span id="r8-1-num">-</span> ÷ <span id="r8-1-den">-</span>）</div><div style="height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden;margin-top:3px;"><div id="r8-1-bar" style="height:100%;width:0%;background:#2563eb;"></div></div><div style="font-size:9px;color:#6b7280;">分子＝削った額＋対応済み（一覧A）＋ サブスク外の判定の「削る」「一回性」</div></div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
     <div class="eq-op">　</div>
-    <div class="metric frozen"><div class="label">削減目標②　半分経営するための削減対象総額 − 継続以外に使える額</div><div class="value"><span id="r8-2">-</span><span class="yen">円</span><div class="src">4段目 <span id="r8-2-a">-</span> − 6段目 <span id="r8-2-b">-</span></div><div class="r8-pct-wrap" style="margin-top:6px;"><div style="font-size:11px;color:#374151;">進み具合 <b><span id="r8-2-pct" class="r8-pct">0%</span></b>（<span id="r8-2-num">-</span> ÷ <span id="r8-2-den">-</span>）</div><div style="height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden;margin-top:3px;"><div id="r8-2-bar" style="height:100%;width:0%;background:#2563eb;"></div></div><div style="font-size:9px;color:#6b7280;">分子＝削った額＋対応済み（一覧A）＋ 一覧外の判定の「削る」「一回性」</div></div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
+    <div class="metric frozen"><div class="label">削減目標②　半分経営するための削減対象総額 − 継続以外に使える額</div><div class="value"><span id="r8-2">-</span><span class="yen">円</span><div class="src">4段目 <span id="r8-2-a">-</span> − 6段目 <span id="r8-2-b">-</span></div><div class="r8-pct-wrap" style="margin-top:6px;"><div style="font-size:11px;color:#374151;">進み具合 <b><span id="r8-2-pct" class="r8-pct">0%</span></b>（<span id="r8-2-num">-</span> ÷ <span id="r8-2-den">-</span>）</div><div style="height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden;margin-top:3px;"><div id="r8-2-bar" style="height:100%;width:0%;background:#2563eb;"></div></div><div style="font-size:9px;color:#6b7280;">分子＝削った額＋対応済み（一覧A）＋ サブスク外の判定の「削る」「一回性」</div></div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
   </div>
 
   <div class="bar-wrap">
@@ -380,13 +380,13 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 </div>
 
 <!-- TOP: legend以下は無し -->
-<script src="zaimu_seiri_data.js?v=1789817434"></script>
-<script src="zaimu_seiri_state.js?v=1789817434"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789817434"></script>
-<script src="zaimu_seiri_kijun.js?v=1789817434"></script>
-<script src="zaimu_seiri_render.js?v=1789817434"></script>
+<script src="zaimu_seiri_data.js?v=1789817493"></script>
+<script src="zaimu_seiri_state.js?v=1789817493"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789817493"></script>
+<script src="zaimu_seiri_kijun.js?v=1789817493"></script>
+<script src="zaimu_seiri_render.js?v=1789817493"></script>
 <script>
-// 3段目：一覧外の判定ページ（zaimu_seiri_ichirangai_meisai.js）から計算する（2026-09-19 Mits様指示・一覧外の経費ページは廃止）
+// 3段目：サブスク外の判定ページ（zaimu_seiri_ichirangai_meisai.js）から計算する（2026-09-19 Mits様指示・一覧外の経費ページは廃止）
 (function(){
   if (typeof ZS_KIJUN === "undefined" || !ZS_KIJUN) return;
   const K = ZS_KIJUN;   // 数字は zaimu_seiri_kijun.js で計算（全ページ共通）

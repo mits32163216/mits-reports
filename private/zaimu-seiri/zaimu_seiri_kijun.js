@@ -1,11 +1,11 @@
 "use strict";
 // 財務整理の基準の数字を1か所で計算する（2026-09-19 Mits様指示「全ページが判定ページと TOP の1段目から読む」）。
 // 読む順：zaimu_seiri_data.js → zaimu_seiri_state.js → zaimu_seiri_ichirangai_meisai.js → このファイル → zaimu_seiri_render.js
-// TOP・年額・進捗表・継続経費・借入の返済は、出発点・Before・ゴール・継続をここから読む。ページに直書きしない。
+// TOP・年額・サブスク整理・継続経費・借入の返済は、出発点・Before・ゴール・継続をここから読む。ページに直書きしない。
 
 var ZS_KIJUN = (function(){
-  const A_BASE      = 374378;  // 一覧 A（進捗表の区分2〜4）の月額合計
-  const A_KEEP      = 129695;  // 一覧 A で継続と決めた額（進捗表の21行）
+  const A_BASE      = 374378;  // 一覧 A（サブスク整理の区分2〜4）の月額合計
+  const A_KEEP      = 129695;  // 一覧 A で継続と決めた額（サブスク整理の21行）
   const LOAN_BEFORE = 142286;  // 借入の返済（1〜7月の実額の月平均・2026-09-19 Mits様確認）
   const LOAN_LATEST = 43575;   // 今の月々の返済（2026-09-18 完済後）
   const LOAN_PRINCIPAL = 908570; // 残っている元金 合計（判明分）

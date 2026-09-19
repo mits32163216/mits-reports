@@ -4,7 +4,7 @@
 <meta name="robots" content="noindex,nofollow">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>一覧外の判定</title>
+<title>サブスク外の判定</title>
 <style>
 :root {
   --bg: #f7f4ed;
@@ -154,15 +154,15 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
   <span class="nav-links">
     <a href="財務整理_TOP.html">TOP</a>
     <a href="財務整理_TOP_年額.html">年額</a>
-    <a href="財務整理_進捗表.html">進捗表（一覧）</a>
+    <a href="財務整理_進捗表.html">サブスク整理</a>
     <a href="継続経費.html">継続経費</a>
     <a href="借入の返済.html">借入の返済</a>
-    <a href="一覧外_上限と判定.html" class="active">一覧外の判定</a>
+    <a href="一覧外_上限と判定.html" class="active">サブスク外の判定</a>
   </span>
 </div>
 
 <div class="summary">
-  <h1>一覧外の判定 <span style="font-size:11px;color:var(--sub);font-weight:normal;">（一覧外の支出を相手先ごとに並べ、削る／続けるを1件ずつ押す）</span></h1>
+  <h1>サブスク外の判定 <span style="font-size:11px;color:var(--sub);font-weight:normal;">（一覧外の支出を相手先ごとに並べ、削る／続けるを1件ずつ押す）</span></h1>
 
   <!-- 4分類ボックス -->
   <div class="cat-row" id="cat-row"></div>
@@ -214,9 +214,9 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789817434"></script>
-<script src="zaimu_seiri_state.js?v=1789817434"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789817434"></script>
+<script src="zaimu_seiri_data.js?v=1789817493"></script>
+<script src="zaimu_seiri_state.js?v=1789817493"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789817493"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -525,7 +525,7 @@ render();
     c.querySelectorAll("[id]").forEach(e => e.removeAttribute("id"));
     c.querySelectorAll("button").forEach(e => e.remove());
     const h1 = c.querySelector("h1");
-    if (h1) h1.innerHTML = '一覧外の判定（年額） <span style="font-size:11px;color:var(--sub);font-weight:normal;">（上の箱の月額 × 12）</span>';
+    if (h1) h1.innerHTML = 'サブスク外の判定（年額） <span style="font-size:11px;color:var(--sub);font-weight:normal;">（上の箱の月額 × 12）</span>';
     const w = document.createTreeWalker(c, NodeFilter.SHOW_TEXT);
     const nodes = []; while (w.nextNode()) nodes.push(w.currentNode);
     nodes.forEach(n => {

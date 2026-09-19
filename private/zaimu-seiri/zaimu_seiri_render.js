@@ -111,7 +111,7 @@ function loadOutsideState() {
   return mergeStatusStore(getSavedState().outside, loadLocalOutside());
 }
 
-// 一覧外の判定（一覧外_上限と判定.html が書く localStorage）
+// サブスク外の判定（一覧外_上限と判定.html が書く localStorage）
 function loadLocalIchirangai() {
   try {
     const raw = localStorage.getItem(ICHIRANGAI_KEY);
@@ -184,7 +184,7 @@ function render() {
   let handledSum = 0;
 
   // ページごとに表示するセクションを絞る。container の data-sections 属性で指定できる。
-  // 未指定なら従来どおり全部（進捗表と互換）。
+  // 未指定なら従来どおり全部（サブスク整理と互換）。
   const DEFAULT_SECTION_ORDER = ["k2m", "k2a", "k3", "k4", "k1"];
   let SECTION_ORDER = DEFAULT_SECTION_ORDER;
   if (container) {
@@ -453,7 +453,7 @@ function render() {
   const remainingBFrozen = OUTSIDE_TOTAL_B - keepOutsideFrozen;
   const targetTotalFrozen = 722706;   // 訂正後の固定値（805,763 − 219,297）
   const halfGoal = 361353;             // 訂正後の固定値（Math.round(586466/2)）── 6段目はこの値のまま
-  // 5段目：一覧外の判定ページ（ICHIRANGAI_MEISAI）から計算する（2026-09-19 Mits様指示）
+  // 5段目：サブスク外の判定ページ（ICHIRANGAI_MEISAI）から計算する（2026-09-19 Mits様指示）
   //   目標＝4段目の削減対象総額 ÷ 2 ／ 削った額＋対応済み に判定ページの「削る」「一回性」を足す
   const K = (typeof ZS_KIJUN !== "undefined" && ZS_KIJUN) ? ZS_KIJUN : null;   // zaimu_seiri_kijun.js
   const ich = K ? { total: K.b, keep: K.bKeep, cut: K.bCut, once: K.bOnce, addA: K.addA } : null;
@@ -464,11 +464,18 @@ function render() {
   const cutPlusHandled = totalCut + handledSum + ichCutOnce;
   const halfRemaining = halfGoal5 - cutPlusHandled;
   window.ZS_CUT_PLUS_HANDLED = cutPlusHandled;
-  if (K) {   // 参考の行（進捗表・借入の返済）
+  if (K) {   // 参考の行（サブスク整理・借入の返済）
     setText("zs-now-start", fmtYen(K.start)); setText("zs-now-start2", fmtYen(K.start));
-    setText("zs-now-cut", fmtYen(cutPlusHandled));
-    setText("zs-now-running", fmtYen(K.start - cutPlusHandled));
-    setText("zs-now-total", fmtYen(K.start - cutPlusHandled + LOAN_MONTHLY_LATEST));
+    // ページが一部の区分しか描かなくても、全区分の「削った・対応済み」で数える（TOP 5段目と同じ数字）
+    let allCut = ichCutOnce;
+    Object.keys(DATA).forEach(sk => (DATA[sk].items || []).forEach(it => {
+      if (it.excluded === true) return;
+      const st = getStatus(it, state);
+      if (st === "done" || st === "handled") allCut += it.amount || 0;
+    }));
+    setText("zs-now-cut", fmtYen(allCut));
+    setText("zs-now-running", fmtYen(K.start - allCut));
+    setText("zs-now-total", fmtYen(K.start - allCut + LOAN_MONTHLY_LATEST));
   }   // 8段目の進み具合の分子（一覧Aの削った額＋対応済み ＋ 判定ページの削る・一回性）
   setText("m-half-goal", fmtYen(halfGoal5));
   setText("m-half-goal-src", fmtYen(r4Total));
@@ -509,8 +516,8 @@ function render() {
 
   // 6段目：半分経営の削減目標（固定）＋ 継続と決めた額の合計（固定）＋ 借入の返済（最新）＝ 合計
   // Mits様指示（2026-09-19 組み替え後）：293,233 ＋ 219,297 ＋ LOAN_MONTHLY_LATEST(43,575) ＝ 556,105
-  const KEEP_SUB_CORRECTED = 129695;                                       // 進捗表の15行の月額合計（訂正後）
-  // 2026-09-19 Mits様指示：6段目も一覧外の判定ページから計算（目標＝5段目と同じ・継続＝一覧 129,695 ＋ 判定ページの「続ける」）
+  const KEEP_SUB_CORRECTED = 129695;                                       // サブスク整理の15行の月額合計（訂正後）
+  // 2026-09-19 Mits様指示：6段目もサブスク外の判定ページから計算（目標＝5段目と同じ・継続＝一覧 129,695 ＋ 判定ページの「続ける」）
   const keepOutside6 = ich ? ich.keep : keepOutsideFrozen;
   const KEEP_TOTAL_FROZEN  = KEEP_SUB_CORRECTED + keepOutside6;
   const sixTotal = halfGoal5 + KEEP_TOTAL_FROZEN + LOAN_MONTHLY_LATEST;
@@ -803,7 +810,7 @@ function buildSavedStateJS() {
 // data.js の後・render.js の前に読み込む。SAVED_STATE をベースにして、
 // ブラウザの localStorage に残っている操作を「新しい方が勝ち」で重ねる。
 //
-// このファイルは、TOP か進捗表の「💾 状態をファイルに保存」ボタンで生成する。
+// このファイルは、TOP かサブスク整理の「💾 状態をファイルに保存」ボタンで生成する。
 // Chrome の Downloads に落ちるので、参謀が 04_口座・明細/ に手動で移す。
 
 var SAVED_STATE = ${body};
@@ -838,7 +845,7 @@ function formatSavedAt(iso) {
 }
 
 // 「💾 状態をファイルに保存」ボタン ＋「最後の保存」表示を、
-// #save-state-bar があるページに注入する（TOP・進捗表）。
+// #save-state-bar があるページに注入する（TOP・サブスク整理）。
 function initSaveStateBar() {
   const bar = document.getElementById("save-state-bar");
   if (!bar) return;
@@ -859,7 +866,7 @@ renderMonthlyActual();
 updateTopnavTime();
 initSaveStateBar();
 
-// 別タブでの状態変化・タブ復帰・focus で即時再描画（TOP と進捗表が同期する）
+// 別タブでの状態変化・タブ復帰・focus で即時再描画（TOP とサブスク整理が同期する）
 function _refreshAll() { render(); renderKeepBreakdown(); renderMonthlyActual(); updateTopnavTime(); }
 const _WATCHED_KEYS = ["zaimu_seiri_progress_v1", "zaimu_seiri_outside_v1", "zaimu_seiri_ichirangai_decision_v1", "zaimu_seiri_user_notes_v1"];
 window.addEventListener("storage", (e) => {

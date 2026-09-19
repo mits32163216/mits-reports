@@ -74,14 +74,14 @@ td.paydate { font-size: 11px; color: var(--sub); width: 90px; white-space: nowra
   <span class="nav-links">
     <a href="財務整理_TOP.html">TOP</a>
     <a href="財務整理_TOP_年額.html">年額</a>
-    <a href="財務整理_進捗表.html">進捗表（一覧）</a>
+    <a href="財務整理_進捗表.html">サブスク整理</a>
     <a href="継続経費.html" class="active">継続経費</a>
     <a href="借入の返済.html">借入の返済</a>
-    <a href="一覧外_上限と判定.html">一覧外の判定</a>
+    <a href="一覧外_上限と判定.html">サブスク外の判定</a>
   </span>
 </div>
 
-<h1>継続する経費 <span style="font-size:11px;color:var(--sub);font-weight:normal;">（財務整理 進捗表で「継続（パン）」ボタンを押した行のまとめ）</span></h1>
+<h1>継続する経費 <span style="font-size:11px;color:var(--sub);font-weight:normal;">（財務整理 サブスク整理で「継続（パン）」ボタンを押した行のまとめ）</span></h1>
 
 <div class="summary">
   <div id="m-split" style="font-size:12px;color:#374151;margin:0 0 6px;"></div>
@@ -91,7 +91,7 @@ td.paydate { font-size: 11px; color: var(--sub); width: 90px; white-space: nowra
     ／ 年額経費・月割り：<span id="m-annual-monthly-sum">0</span>円（<span id="m-annual-count">0</span>件）
     ／ 年額経費・年額計：<span id="m-annual-yen-sum">0</span>円（判明分）
   </div>
-    <a href="財務整理_進捗表.html" class="back-link">← 財務整理 進捗表に戻る</a>
+    <a href="財務整理_進捗表.html" class="back-link">← 財務整理 サブスク整理に戻る</a>
 </div>
 
 <h2>月額経費（月払い・不定期）</h2>
@@ -107,14 +107,14 @@ td.paydate { font-size: 11px; color: var(--sub); width: 90px; white-space: nowra
 <div class="footer-note">
   このページは 財務整理_進捗表.html と同じデータ（zaimu_seiri_data.js）を読み、
   同じブラウザに保存された状態（localStorage キー <code>zaimu_seiri_progress_v1</code>）を反映します。
-  進捗表で「継続（パン）」ボタンを押した行だけがここに現れます。
+  サブスク整理で「継続（パン）」ボタンを押した行だけがここに現れます。
   <br>この画面から編集や保存はできません。表示だけです（メモ・備考も表示のみ）。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789817434"></script>
-<script src="zaimu_seiri_state.js?v=1789817434"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789817434"></script>
-<script src="zaimu_seiri_kijun.js?v=1789817434"></script>
+<script src="zaimu_seiri_data.js?v=1789817493"></script>
+<script src="zaimu_seiri_state.js?v=1789817493"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789817493"></script>
+<script src="zaimu_seiri_kijun.js?v=1789817493"></script>
 <script>
 "use strict";
 
@@ -165,11 +165,11 @@ function collectKeepItems() {
       }
     });
   });
-  // 一覧外の判定ページで「続ける」にした行も取り込む（zaimu_seiri_kijun.js・2026-09-19）
+  // サブスク外の判定ページで「続ける」にした行も取り込む（zaimu_seiri_kijun.js・2026-09-19）
   if (typeof ZS_KIJUN !== "undefined" && ZS_KIJUN) {
     ZS_KIJUN.keepItems.forEach(it => {
       monthly.push({ id: it.id, name: it.merchant, amount: Number(it.monthly) || 0, card: it.card || "",
-                     last_paid: it.last || "", next_due: "", memo: (it.category || "") + (it.sub ? "・" + it.sub : "") + "（一覧外の判定）",
+                     last_paid: it.last || "", next_due: "", memo: (it.category || "") + (it.sub ? "・" + it.sub : "") + "（サブスク外の判定）",
                      _sec: "ichirangai", _isIrregular: false });
     });
   }
@@ -265,7 +265,7 @@ function render() {
   document.getElementById("m-total").textContent = fmtYen(monthlySum + annualMonthlySum);
   const outSum = monthly.filter(it => it._sec === "ichirangai").reduce((a,b) => a + b.amount, 0);
   const sp = document.getElementById("m-split");
-  if (sp) sp.textContent = `一覧（進捗表）${fmtYen(monthlySum + annualMonthlySum - outSum)}円 ＋ 一覧外（判定ページの「続ける」）${fmtYen(outSum)}円 ＝ ${fmtYen(monthlySum + annualMonthlySum)}円（TOP 4段目の継続と同じ）`;
+  if (sp) sp.textContent = `サブスク整理${fmtYen(monthlySum + annualMonthlySum - outSum)}円 ＋ 一覧外（判定ページの「続ける」）${fmtYen(outSum)}円 ＝ ${fmtYen(monthlySum + annualMonthlySum)}円（TOP 4段目の継続と同じ）`;
 }
 
 render();
