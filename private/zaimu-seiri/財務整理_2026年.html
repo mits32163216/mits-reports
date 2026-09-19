@@ -303,7 +303,7 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   <h1>2027年の支出（予測） <span style="font-size:11px;color:var(--sub);font-weight:normal;">（今の判定〔継続・削る予定額〕と 借入の返済 の予定から作った予測。1〜12月すべて予測）</span></h1>
 
   <div style="padding:8px 10px; background:#f5efe0; border:1px solid #c9a54a; border-radius:4px; font-size:12px; color:var(--sub); line-height:1.6; margin-bottom:10px;">
-    根拠：2027年は、今の判定（継続・削る予定額）と 借入の返済 の予定から作った予測。ランニング月額＝2026年の8月以降と同じ月額（一覧A：月平均 − 完了 − 対応済み、サブスク外：月平均 − 削る − 一回性 − 削る予定額）を12か月そのまま流した。借入の返済＝2026年12月の月々（77,598円・借入の返済ページ「合計（月々の返済）」の値）を12か月そのまま流した。2027年内に完済する借入は無い（⑤ペイディ 最終回 2028-04-27・③楽天デンタル 完済見込み 2029-04頃・①楽天キャッシングリボ・②Amex JP リボは残高から2027年中の完済なし）。年払いは 一覧A の月平均に月割りで入っている（2026年の A_ADJ を毎月ならしていない年払いの差分として1〜8月の実額と合わせるためのもので、2027年は12か月とも同じ月平均に含めて流す）。
+    根拠：2027年は、今の判定（継続・削る予定額）と 借入の返済 の予定から作った予測。<b>サブスク整理は Chase Hyatt 年会費・Notion・JALカード 年会費（三菱UFJニコス） の3つを残し、他は全部解約した前提（Mits様 2026-09-20）。</b>ランニング月額のうち一覧Aは残す3行の月割り（Chase Hyatt 1,267 ＋ Notion 8,975 ＋ JALカード 1,742 ＝ 11,984 円/月・DATAから id で拾って足す）。他の行は 2027-01 から全部 0。サブスク外は2026年の8月以降と同じ月額（月平均 − 削る − 一回性 − 削る予定額）を12か月流す。借入の返済＝2026年12月の月々（77,598円・借入の返済ページ「合計（月々の返済）」の値）を12か月そのまま流した。2027年内に完済する借入は無い（⑤ペイディ 最終回 2028-04-27・③楽天デンタル 完済見込み 2029-04頃・①楽天キャッシングリボ・②Amex JP リボは残高から2027年中の完済なし）。2026年の A_ADJ（年払いを1〜8月の実額に直した差 37,215）は2027年には入れない（残す3行は月割りの amount で数えているため）。
   </div>
 
   <div class="y26-boxes">
@@ -320,11 +320,11 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   <div class="note" id="y2-note"></div>
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789832894"></script>
-<script src="zaimu_seiri_state.js?v=1789832894"></script>
-<script src="zaimu_seiri_sync.js?v=1789832894"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789832894"></script>
-<script src="zaimu_seiri_kijun.js?v=1789832894"></script>
+<script src="zaimu_seiri_data.js?v=1789832967"></script>
+<script src="zaimu_seiri_state.js?v=1789832967"></script>
+<script src="zaimu_seiri_sync.js?v=1789832967"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789832967"></script>
+<script src="zaimu_seiri_kijun.js?v=1789832967"></script>
 <script src="zaimu_seiri_8gatsu_jisseki.js"></script>
 <script>
 (function(){
@@ -392,12 +392,24 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   const f = n => Math.round(n).toLocaleString("ja-JP");
   const esc = t => String(t == null ? "" : t).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
-  // 一覧 A（サブスク整理）：2026年8月以降と同じ月額 = 月平均 − 完了 − 対応済み
-  const aNext = K.a - K.aDone - K.aHandled;
+  // 一覧 A（サブスク整理）：Mits様 2026-09-20「Chase Hyatt 年会費・Notion・JALカード 年会費（三菱UFJニコス）を除き全部解約を織り込み」
+  // 残す3行だけを DATA から id で拾って月割りの amount を足す（金額が後で変わっても追従・A_ADJ は2027年には入れない）
+  const KEPT_IDS_2027 = ["k3-02", "k2-37", "k3-09"];   // Chase Hyatt / Notion / JALカード 年会費
+  const keptItems2027 = [];
+  ["k2m","k2a","k3","k4"].forEach(k => {
+    const sec = (typeof DATA !== "undefined") && DATA[k];
+    if (!sec || !sec.items) return;
+    sec.items.forEach(it => {
+      if (it.excluded === true) return;
+      if (KEPT_IDS_2027.indexOf(it.id) >= 0) keptItems2027.push(it);
+    });
+  });
+  const aNext = keptItems2027.reduce((t, it) => t + (Number(it.amount) || 0), 0);
+  const keptDetail = keptItems2027.map(it => esc(it.name) + " " + f(it.amount)).join(" ＋ ");
 
   // サブスク外：大分類ごとに 月平均 − 削る − 一回性 − 削る予定額（0未満は0）
   const rows = [];
-  rows.push({ name: "サブスク整理（一覧 A）", sub: `月 ${f(K.a)} − 完了 ${f(K.aDone)} − 対応済み ${f(K.aHandled)}`, m: aNext });
+  rows.push({ name: "サブスク整理（一覧 A）", sub: `2027年は3行だけ残す：${keptDetail} 円/月 ＝ ${f(aNext)} 円/月（他の行は 2027-01 から全部 0・A_ADJ は2027年には入れない）`, m: aNext });
   let bM = 0;
   Object.keys(K.byCat).forEach(c => {
     const x = K.byCat[c], plan = (K.plans && K.plans[c]) || 0;
