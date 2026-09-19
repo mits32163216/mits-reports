@@ -298,39 +298,52 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   <div class="note" id="y-note"></div>
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789823795"></script>
-<script src="zaimu_seiri_state.js?v=1789823795"></script>
-<script src="zaimu_seiri_sync.js?v=1789823795"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789823795"></script>
-<script src="zaimu_seiri_kijun.js?v=1789823795"></script>
+<script src="zaimu_seiri_data.js?v=1789824102"></script>
+<script src="zaimu_seiri_state.js?v=1789824102"></script>
+<script src="zaimu_seiri_sync.js?v=1789824102"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789824102"></script>
+<script src="zaimu_seiri_kijun.js?v=1789824102"></script>
+<script src="zaimu_seiri_8gatsu_jisseki.js"></script>
 <script>
 (function(){
   const K = (typeof ZS_KIJUN !== "undefined") ? ZS_KIJUN : null;
   if (!K) return;
   const f = n => Math.round(n).toLocaleString("ja-JP");
   const esc = t => String(t == null ? "" : t).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-  const M1 = K.months || 7, M2 = 12 - M1;   // 実績の月数・見込みの月数
+  const M0 = K.months || 7;   // 月平均の元になった月数（1〜7月）
+  // 8月の実績（MF から BS-keiri が作る zaimu_seiri_8gatsu_jisseki.js）があれば、実績を1〜8月・見込みを9〜12月にする
+  const J = (typeof ZS_JISSEKI_08 !== "undefined" && ZS_JISSEKI_08) ? ZS_JISSEKI_08 : null;
+  const M1 = J ? M0 + 1 : M0, M2 = 12 - M1;   // 実績の月数・見込みの月数
+  const P1 = `1〜${M1}月`, P2 = `${M1 + 1}〜12月`, S2 = `${M1 + 1}月`;
+  if (J) {
+    const box = document.querySelector(".summary.y26");
+    const w = document.createTreeWalker(box, NodeFilter.SHOW_TEXT); const ns = []; while (w.nextNode()) ns.push(w.currentNode);
+    ns.forEach(n => { n.nodeValue = n.nodeValue.replace(/1〜7月/g, P1).replace(/8〜12月/g, P2).replace(/8月から/g, S2 + "から").replace(/× 5/g, "× " + M2); });
+  }
+  const jA = J ? (Number(J.a_total) || 0) : 0, jLoan = J ? (Number(J.loan) || 0) : 0;
+  const jCat = c => J && J.by_cat ? (Number(J.by_cat[c]) || 0) : 0;
   const rows = [];
   // サブスク整理（一覧 A）：1〜7月＝月平均 × 7／8〜12月＝月平均 − 完了 − 対応済み
   const aNext = K.a - K.aDone - K.aHandled;
-  rows.push({ name: "サブスク整理（一覧 A）", sub: `月 ${f(K.a)} − 完了 ${f(K.aDone)} − 対応済み ${f(K.aHandled)}`, h1: K.a * M1, m2: aNext });
+  rows.push({ name: "サブスク整理（一覧 A）", sub: `月 ${f(K.a)} − 完了 ${f(K.aDone)} − 対応済み ${f(K.aHandled)}` + (J ? `／8月の実績 ${f(jA)}` : ""), h1: K.a * M0 + jA, m2: aNext });
   // サブスク外（一覧外 B）：大分類ごと。1〜7月＝明細の総額／8〜12月＝月平均 − 削る − 一回性 − 削る予定額
   let bH1 = 0, bM2 = 0;
   Object.keys(K.byCat).forEach(c => {
     const x = K.byCat[c], plan = (K.plans && K.plans[c]) || 0;
     const m2 = Math.max(0, x.actual - x.cut - x.once - plan);
-    bH1 += x.total; bM2 += m2;
-    rows.push({ name: "サブスク外：" + c, sub: `月 ${f(x.actual)} − 削る ${f(x.cut)} − 一回性 ${f(x.once)} − 削る予定額 ${f(plan)}`, h1: x.total, m2: m2, indent: true });
+    bH1 += x.total + jCat(c); bM2 += m2;
+    rows.push({ name: "サブスク外：" + c, sub: `月 ${f(x.actual)} − 削る ${f(x.cut)} − 一回性 ${f(x.once)} − 削る予定額 ${f(plan)}` + (J ? `／8月の実績 ${f(jCat(c))}` : ""), h1: x.total + jCat(c), m2: m2, indent: true });
   });
-  const runH1 = K.a * M1 + bH1, runM2 = aNext + bM2;
+  const runH1 = K.a * M0 + jA + bH1, runM2 = aNext + bM2;
   // 借入の返済：1〜7月＝実額の月平均 × 7／8〜12月＝借入の返済ページの月ごとの見込み
   const LOAN = [ ["8月", 139450, "①〜④ 全部"], ["9月", 131738, "④-1 8WEEKS.AI の分割を止めた後"], ["10月", K.LOAN_LATEST + 35671, "今の月々 ＋ 8WEEKS.AI 一括 35,671（10/10）"], ["11月", K.LOAN_LATEST, "今の月々"], ["12月", K.LOAN_LATEST, "今の月々"] ];
-  const loanH1 = K.LOAN_BEFORE * M1, loanH2 = LOAN.reduce((t, x) => t + x[1], 0);
+  if (J) LOAN.shift();   // 8月は実績に入った
+  const loanH1 = K.LOAN_BEFORE * M0 + jLoan, loanH2 = LOAN.reduce((t, x) => t + x[1], 0);
 
   const tr = (r) => `<tr class="${r.cls || ""}"><td>${r.indent ? "　" : ""}${esc(r.name)}${r.sub ? `<div style="font-size:10px;color:var(--sub);font-weight:normal;">${esc(r.sub)}</div>` : ""}</td><td class="n">${f(r.h1)}</td><td class="n">${r.m2 == null ? "―" : f(r.m2)}</td><td class="n">${f(r.h2 != null ? r.h2 : r.m2 * M2)}</td><td class="n">${f(r.h1 + (r.h2 != null ? r.h2 : r.m2 * M2))}</td></tr>`;
   let html = rows.map(tr).join("");
   html += tr({ name: "ランニングコスト 計", h1: runH1, m2: runM2, cls: "sum" });
-  html += tr({ name: "借入の返済", sub: LOAN.map(x => `${x[0]} ${f(x[1])}（${x[2]}）`).join("／"), h1: loanH1, m2: null, h2: loanH2 });
+  html += tr({ name: "借入の返済", sub: (J ? `8月の実績 ${f(jLoan)}／` : "") + LOAN.map(x => `${x[0]} ${f(x[1])}（${x[2]}）`).join("／"), h1: loanH1, m2: null, h2: loanH2 });
   const total = runH1 + runM2 * M2 + loanH1 + loanH2;
   html += `<tr class="grand"><td>2026年の支出（見込み）</td><td class="n">${f(runH1 + loanH1)}</td><td class="n">―</td><td class="n">${f(runM2 * M2 + loanH2)}</td><td class="n">${f(total)}</td></tr>`;
   document.getElementById("y-body").innerHTML = html;
@@ -342,9 +355,10 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   document.getElementById("y-goal-m").textContent = f(K.goal);
   document.getElementById("y-goal").textContent = f(runH1 + K.goal * M2 + loanH1 + loanH2);
   document.getElementById("y-note").innerHTML =
-    `・1〜7月：サブスク整理は月平均 × ${M1}（年払いは1〜7月の実額に直した差を含む）、サブスク外は明細の総額、借入は実額の月平均 ${f(K.LOAN_BEFORE)} × ${M1}。<br>` +
-    `・8〜12月：押した状態（完了・対応済み・削る・一回性）と、サブスク外の判定で入れた「削る予定額」を引いた月額 × ${M2}。「続ける」と未判定はそのまま残る。<br>` +
-    `・何もしなかった場合：1〜7月の実績 ＋ 8〜12月も出発点 ${f(K.start)} ＋ 借入 ${f(K.LOAN_BEFORE)} のまま × ${M2}。8月からゴールどおりなら：1〜7月の実績 ＋ ゴール ${f(K.goal)} × ${M2} ＋ 2026年の借入の返済。<br>` +
+    `・1〜7月：サブスク整理は月平均 × ${M0}（年払いは1〜7月の実額に直した差を含む）、サブスク外は明細の総額、借入は実額の月平均 ${f(K.LOAN_BEFORE)} × ${M0}。<br>` +
+    (J ? `・8月：MF の仕訳から出した8月の実額（${esc(J.source || "")}）。<br>` : "") +
+    `・${P2}：押した状態（完了・対応済み・削る・一回性）と、サブスク外の判定で入れた「削る予定額」を引いた月額 × ${M2}。「続ける」と未判定はそのまま残る。<br>` +
+    `・何もしなかった場合：${P1}の実績 ＋ ${P2}も出発点 ${f(K.start)} ＋ 借入 ${f(K.LOAN_BEFORE)} のまま × ${M2}。${S2}からゴールどおりなら：${P1}の実績 ＋ ゴール ${f(K.goal)} × ${M2} ＋ 2026年の借入の返済。<br>` +
     `・押した状態・削る予定額を変えると、ここも一緒に変わる（ローカルと web は自動で同期）。`;
   const d = new Date(); document.getElementById("topnav-time").textContent = d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0") + " " + String(d.getHours()).padStart(2,"0") + ":" + String(d.getMinutes()).padStart(2,"0");
 })();
