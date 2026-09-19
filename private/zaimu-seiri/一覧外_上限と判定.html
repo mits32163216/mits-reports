@@ -227,11 +227,11 @@ tr.sub-head.foldable td:hover { background: #e5d9f4; }
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789832363"></script>
-<script src="zaimu_seiri_state.js?v=1789832363"></script>
-<script src="zaimu_seiri_sync.js?v=1789832363"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789832363"></script>
-<script src="zaimu_seiri_kijun.js?v=1789832363"></script>
+<script src="zaimu_seiri_data.js?v=1789832396"></script>
+<script src="zaimu_seiri_state.js?v=1789832396"></script>
+<script src="zaimu_seiri_sync.js?v=1789832396"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789832396"></script>
+<script src="zaimu_seiri_kijun.js?v=1789832396"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -548,6 +548,14 @@ function render(){
     sec.classList.toggle("folded", !open);
     h.querySelector(".fold-mark").textContent = open ? "▼" : "▶";
   }));
+  // 中分類のまとまり（10行以上）を畳む／開く（2026-09-20 Mits様指示）
+  container.querySelectorAll("tr.sub-head.foldable").forEach(tr => tr.addEventListener("click", e => {
+    if (e.target.closest("input, label, button")) return;   // 予定額の入力欄では畳まない
+    const o = loadSubOpen(); const k = tr.getAttribute("data-sub-key");
+    if (o[k]) delete o[k]; else o[k] = 1;
+    saveSubOpen(o);
+    render();
+  }));
   container.querySelectorAll(".sub-toggle").forEach(tg => tg.addEventListener("click", () => {
     try { localStorage.setItem(SUB_HIDE_KEY, subHidden() ? "0" : "1"); } catch(e){}
     render();
@@ -569,7 +577,7 @@ function onClickAct(e){
 
 // 別タブ・タブ復帰・focus で即時再描画
 window.addEventListener("storage", (e) => {
-  if (!e.key || e.key === ICH_STATE_KEY || e.key === SUB_KEY || e.key === SUB_HIDE_KEY || e.key === PLAN_KEY) render();
+  if (!e.key || e.key === ICH_STATE_KEY || e.key === SUB_KEY || e.key === SUB_HIDE_KEY || e.key === PLAN_KEY || e.key === OPEN_KEY || e.key === SUB_OPEN_KEY) render();
 });
 document.addEventListener("visibilitychange", () => { if (!document.hidden) render(); });
 window.addEventListener("focus", () => { const a = document.activeElement; if (!(a && a.classList && a.classList.contains("plan-input"))) render(); });
