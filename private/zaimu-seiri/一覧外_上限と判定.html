@@ -161,21 +161,23 @@ td.note-col { font-size: 11px; color: var(--ink); min-width: 240px; max-width: 4
   <!-- 4分類ボックス -->
   <div class="cat-row" id="cat-row"></div>
 
-  <!-- 合計行 -->
+  <!-- 合計行：実績 − 削る − 一回性 = これからの月額 -->
   <div class="total-row">
     <div class="total-cell"><div class="lbl">実績（月平均）</div><div class="val"><span id="t-actual">-</span>円</div></div>
     <div class="total-cell cut"><div class="lbl">「削る」を押した合計</div><div class="val"><span id="t-cut">0</span>円</div></div>
-    <div class="total-cell after"><div class="lbl">削った後の月額</div><div class="val"><span id="t-after">-</span>円</div></div>
+    <div class="total-cell once"><div class="lbl">「一回性」を押した合計</div><div class="val"><span id="t-once">0</span>円</div></div>
+    <div class="total-cell after"><div class="lbl">これからの月額</div><div class="val"><span id="t-after">-</span>円</div></div>
   </div>
 
-  <!-- 進み具合バー -->
+  <!-- 進み具合バー（削る＋一回性を2色に分けて足す） -->
   <div class="bar-wrap">
     <div class="bar-label">
-      <span>半分経営に要る一覧外からの削減 <b id="t-goal">317,193</b>円 に対する進み具合</span>
+      <span>半分経営に要る一覧外からの削減 <b id="t-goal">317,193</b>円 に対する進み具合（<span style="color:var(--red);">削る</span> ＋ <span style="color:#a68000;">一回性</span>）</span>
       <span id="t-pct">0%</span>
     </div>
     <div class="bar-outer">
-      <div class="bar-inner" id="t-bar" style="width:0%"></div>
+      <div class="bar-cut"  id="t-bar-cut"  style="left:0%;width:0%"></div>
+      <div class="bar-once" id="t-bar-once" style="left:0%;width:0%"></div>
     </div>
   </div>
 
@@ -183,6 +185,7 @@ td.note-col { font-size: 11px; color: var(--ink); min-width: 240px; max-width: 4
     集計期間 <span id="t-period">-</span>／件数 <b id="t-count">-</b> 件／
     <span style="color:var(--red);">■ 削る</span>
     <span style="color:var(--green);">■ 続ける</span>
+    <span style="color:#a68000;">■ 一回性</span>
     <span style="color:var(--sub);">同じボタンをもう一度押すと未判定に戻る</span>
   </div>
 </div>
@@ -201,9 +204,9 @@ td.note-col { font-size: 11px; color: var(--ink); min-width: 240px; max-width: 4
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789807372"></script>
-<script src="zaimu_seiri_state.js?v=1789807372"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789807372"></script>
+<script src="zaimu_seiri_data.js?v=1789807425"></script>
+<script src="zaimu_seiri_state.js?v=1789807425"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789807425"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
