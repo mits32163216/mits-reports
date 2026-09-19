@@ -440,8 +440,8 @@ function render() {
   // Mits様指示（2026-09-18 訂正後）：継続 106,971・継続外 112,326・継続合計 219,297・削減対象総額 586,466・半分経営の削減目標 293,233
   const keepOutsideFrozen = (BASE.keepOutside !== undefined) ? BASE.keepOutside : 112326;
   const remainingBFrozen = OUTSIDE_TOTAL_B - keepOutsideFrozen;
-  const targetTotalFrozen = 586466;   // 訂正後の固定値（805,763 − 219,297）
-  const halfGoal = 293233;             // 訂正後の固定値（Math.round(586466/2)）
+  const targetTotalFrozen = 722706;   // 訂正後の固定値（805,763 − 219,297）
+  const halfGoal = 361353;             // 訂正後の固定値（Math.round(586466/2)）
   const cutPlusHandled = totalCut + handledSum;
   const halfRemaining = halfGoal - cutPlusHandled;
   setText("m-half-goal", fmtYen(halfGoal));
@@ -481,7 +481,7 @@ function render() {
 
   // 6段目：半分経営の削減目標（固定）＋ 継続と決めた額の合計（固定）＋ 借入の返済（最新）＝ 合計
   // Mits様指示（2026-09-19 組み替え後）：293,233 ＋ 219,297 ＋ LOAN_MONTHLY_LATEST(43,575) ＝ 556,105
-  const KEEP_SUB_CORRECTED = 106971;                                       // 進捗表の15行の月額合計（訂正後）
+  const KEEP_SUB_CORRECTED = 129695;                                       // 進捗表の15行の月額合計（訂正後）
   const KEEP_TOTAL_FROZEN  = KEEP_SUB_CORRECTED + keepOutsideFrozen;       // 106,971 + 112,326 = 219,297
   const sixTotal = halfGoal + KEEP_TOTAL_FROZEN + LOAN_MONTHLY_LATEST;      // 293,233 + 219,297 + 43,575 = 556,105
   setText("m-6-half-goal", fmtYen(halfGoal));
@@ -694,8 +694,8 @@ function renderMonthlyActual() {
   tbody.innerHTML = trs + avgTr;
 
   // 棒グラフ（ランニングの月次推移）
-  const START_POINT = 805763;              // 出発点（1段目 eq-start と同じ値）
-  const HALF_GOAL   = 293233;              // 半分経営の削減目標
+  const START_POINT = 981465;              // 出発点（1段目 eq-start と同じ値）
+  const HALF_GOAL   = 361353;              // 半分経営の削減目標
   const GOAL        = START_POINT - HALF_GOAL;  // 512,530
   const last3 = rows.slice(-3);
   const last3Avg = last3.length > 0
