@@ -168,7 +168,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-004",
-      "category": "浪費",
+      "category": "Amazon",
       "row": "o-08",
       "merchant": "JP FBA SAPPORO",
       "card": "Amex US 44000",
@@ -178,7 +178,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 12204,
       "first": "2026-02-07",
       "last": "2026-07-24",
-      "note": "札幌の飲食（BAR系）→ 浪費として計上・仕事の会食なら 投資 に組替え可",
+      "note": "Amazon の FBA（札幌の倉庫）。飲食ではない。MF では荷造運賃で仕訳（2026-08-20 Mits様判定）",
       "status": null,
       "status_date": null
     },
