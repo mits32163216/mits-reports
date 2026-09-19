@@ -94,6 +94,7 @@ if (typeof BASELINE_20260918 !== "undefined" && BASELINE_20260918) {
     document.querySelectorAll(".zs-kikan").forEach(e => e.textContent = K.KIKAN);
     document.querySelectorAll(".zs-loan-before").forEach(e => e.textContent = f(K.LOAN_BEFORE));
     document.querySelectorAll(".zs-loan-note").forEach(e => e.textContent = K.LOAN_NOTE);
+    document.querySelectorAll(".zs-a-adj").forEach(e => e.textContent = f(K.A_ADJ));
     document.querySelectorAll(".zs-loan-diff").forEach(e => e.textContent = f(K.LOAN_BEFORE - 139450));
   };
   if (typeof document !== "undefined") { if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", fill); else fill(); }

@@ -265,19 +265,19 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 <div id="save-state-bar" style="margin:0 0 12px 0;padding:8px 12px;background:#fff8ea;border:1px solid #b08d3a;border-radius:4px;font-size:12px;"></div>
 
 <div class="summary">
-  <h1>財務整理 年額 <span style="font-size:12px;color:#c62828;font-weight:bold;">（<span class="zs-kikan">1〜7月</span>の実績の月平均 × 12 ＝ 年額に換算。借入だけは残っている元金の総額）</span></h1>
+  <h1>財務整理 年額 <span style="font-size:12px;color:#c62828;font-weight:bold;">（<span class="zs-kikan">1〜8月</span>の実績の月平均 × 12 ＝ 年額に換算。借入だけは残っている元金の総額）</span></h1>
   <!-- 1段目：Before − 借入 = 出発点（全部固定・グレー） -->
   <div class="eq-row eq-row-1">
-    <div class="metric eq-before frozen"><div class="label">Before 総額</div><div class="value"><span id="r1-before">-</span><span class="yen">円</span><div class="src">出発点 <span id="r1-before-start">-</span> ＋ 借入の返済 <span class="zs-loan-before">142,286</span></div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
+    <div class="metric eq-before frozen"><div class="label">Before 総額</div><div class="value"><span id="r1-before">-</span><span class="yen">円</span><div class="src">出発点 <span id="r1-before-start">-</span> ＋ 借入の返済 <span class="zs-loan-before">153,465</span></div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
     <div class="eq-op">−</div>
-    <div class="metric eq-loan frozen"><div class="label">借入の返済</div><div class="value"><span id="r1-borrow" class="zs-loan-before">142,286</span><span class="yen">円</span><div class="src"><span class="zs-kikan">1〜7月</span>の実額の月平均：<span class="zs-loan-note">楽天 35,431 ／ Amex JP 96,687 ／ Amex US 10,169</span></div><span class="lock-note">2026-09-19 Mits様確認</span></div></div>
+    <div class="metric eq-loan frozen"><div class="label">借入の返済</div><div class="value"><span id="r1-borrow" class="zs-loan-before">153,465</span><span class="yen">円</span><div class="src"><span class="zs-kikan">1〜8月</span>の実額の月平均：<span class="zs-loan-note">各月の実額：1月 195,584 ／ 2月 120,820 ／ 3月 137,706 ／ 4月 146,489 ／ 5月 163,602 ／ 6月 148,927 ／ 7月 136,851 ／ 8月 177,743（5月から ペイディ 17,908 を含む）</span></div><span class="lock-note">2026-09-19 Mits様確認</span></div></div>
     <div class="eq-op">＝</div>
     <div class="metric eq-start eq-pair frozen"><div class="label">出発点総額（借入の返済を除く）</div><div class="value"><span id="r1-start">-</span><span class="yen">円</span><div class="src">一覧 A <span id="r1-start-a">-</span> ＋ 一覧外 B <span id="r1-start-b">-</span>（判定ページのデータ）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
   </div>
 
   <!-- 2段目 サブスク：全部固定 -->
   <div class="eq-row eq-row-2" style="margin-top:6px;">
-    <div class="metric frozen"><div class="label">サブスクリプション型の削減対象A(分母)</div><div class="value"><span id="r2-a">-</span><span class="yen">円</span><div class="src">サブスク整理の行の合計 <span id="r2-add">-</span> ＋ 年払いの<span class="zs-kikan">1〜7月</span>実額との差 <span id="r2-adj">-</span>（Notion・Genspark・年会費・DOCPRO）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
+    <div class="metric frozen"><div class="label">サブスクリプション型の削減対象A(分母)</div><div class="value"><span id="r2-a">-</span><span class="yen">円</span><div class="src">サブスク整理の行の合計 <span id="r2-add">-</span> ＋ 年払いの<span class="zs-kikan">1〜8月</span>実額との差 <span id="r2-adj">-</span>（Notion・Genspark・年会費・DOCPRO）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
     <div class="eq-op">−</div>
     <div class="metric eq-keep-decided frozen"><div class="label">継続と決めた額</div><div class="value"><span id="r2-keep">-</span><span class="yen">円</span><div class="src">サブスク整理で「継続」にした行の月額合計（年払いは月割り）</div><div class="src" id="m-keep-breakdown" style="font-size:11px;line-height:1.5;text-align:left;margin-top:4px;">―</div><span class="lock-note">2026-09-18 訂正後の値で固定</span></div></div>
     <div class="eq-op">＝</div>
@@ -389,12 +389,12 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 </div>
 
 <!-- TOP: legend以下は無し -->
-<script src="zaimu_seiri_data.js?v=1789839011"></script>
-<script src="zaimu_seiri_state.js?v=1789839011"></script>
-<script src="zaimu_seiri_sync.js?v=1789839011"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789839011"></script>
-<script src="zaimu_seiri_kijun.js?v=1789839011"></script>
-<script src="zaimu_seiri_render.js?v=1789839011"></script>
+<script src="zaimu_seiri_data.js?v=1789840179"></script>
+<script src="zaimu_seiri_state.js?v=1789840179"></script>
+<script src="zaimu_seiri_sync.js?v=1789840179"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789840179"></script>
+<script src="zaimu_seiri_kijun.js?v=1789840179"></script>
+<script src="zaimu_seiri_render.js?v=1789840179"></script>
 <script>
 // 3段目：サブスク外の判定ページ（zaimu_seiri_ichirangai_meisai.js）から計算する（2026-09-19 Mits様指示・一覧外の経費ページは廃止）
 (function(){
