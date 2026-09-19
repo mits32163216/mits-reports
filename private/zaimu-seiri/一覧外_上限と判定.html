@@ -214,9 +214,9 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789812596"></script>
-<script src="zaimu_seiri_state.js?v=1789812596"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789812596"></script>
+<script src="zaimu_seiri_data.js?v=1789812841"></script>
+<script src="zaimu_seiri_state.js?v=1789812841"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789812841"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -334,6 +334,7 @@ function render(){
         <div class="cat-line"><span class="lbl">実績（月平均）</span><span class="val">${fmtYen(b.actual)}円</span></div>
         <div class="cat-line"><span class="lbl">月の上限</span><span class="val">${cap?fmtYen(cap)+'円':'―'}</span></div>
         <div class="cat-line"><span class="lbl" style="color:#a68000;">一回性</span><span class="val" style="color:#a68000;">${fmtYen(b.once)}円</span></div>
+        <div class="cat-line"><span class="lbl" style="color:#c0392b;">削った金額</span><span class="val" style="color:#c0392b;">${fmtYen(b.cut)}円</span></div>
         <div class="cat-line after"><span class="lbl">これからの月額</span><span class="val">${fmtYen(after)}円</span></div>
         <div class="cat-line diff${over?' over':''}"><span class="lbl">上限との差</span><span class="val">${cap?(over?'−'+fmtYen(-diff):'+'+fmtYen(diff))+'円':'―'}</span></div>
       </div>
