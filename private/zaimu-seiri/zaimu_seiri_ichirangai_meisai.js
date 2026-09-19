@@ -1098,7 +1098,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k007",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "SAKURAYA OKINAWA JP",
       "card": "Amex US 44000",
@@ -1108,13 +1108,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 955,
       "first": "2026-03-18",
       "last": "2026-03-18",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k008",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "BAR TAKARA AIOKINAWA JP",
       "card": "Amex US 44000",
@@ -1124,7 +1124,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 945,
       "first": "2026-06-10",
       "last": "2026-07-09",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -1178,7 +1178,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k012",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "SAKENOMIDOKORGANG QU TO",
       "card": "Amex US 44000",
@@ -1188,7 +1188,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 887,
       "first": "2026-03-04",
       "last": "2026-03-04",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -1210,7 +1210,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k014",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "TAKINOTA ZU BING XIA JUN KA",
       "card": "Amex US 44000",
@@ -1220,13 +1220,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 846,
       "first": "2026-03-08",
       "last": "2026-03-08",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k015",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "SHOTBAR BAFFI BARUBAOSAKA JP",
       "card": "Amex US 44000",
@@ -1236,13 +1236,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 835,
       "first": "2026-06-24",
       "last": "2026-06-24",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k016",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "KOBOU RYUHAKUOKINAWA JP",
       "card": "Amex US 44000",
@@ -1252,13 +1252,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 820,
       "first": "2026-04-10",
       "last": "2026-04-10",
-      "note": "元の分類：買い物",
+      "note": "元の分類：買い物 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k017",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "TAMAGUSUKU CONA BA SHI OK",
       "card": "Amex US 44000",
@@ -1268,13 +1268,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 814,
       "first": "2026-02-15",
       "last": "2026-04-25",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k018",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "ROCKING CHAIR KYOTO JP",
       "card": "Amex US 44000",
@@ -1284,7 +1284,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 808,
       "first": "2026-06-21",
       "last": "2026-06-21",
-      "note": "元の分類：買い物",
+      "note": "元の分類：買い物 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -1322,7 +1322,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k021",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "SUSHITENSOBATOKINAWA JP",
       "card": "Amex US 44000",
@@ -1332,7 +1332,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 768,
       "first": "2026-06-30",
       "last": "2026-07-08",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -1386,7 +1386,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k025",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "RYUKYUORIONHOOKINAWA JP",
       "card": "Amex US 44000",
@@ -1396,13 +1396,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 722,
       "first": "2026-03-20",
       "last": "2026-03-20",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k026",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "BIC CAMERA SH* JP",
       "card": "Amex US 44000",
@@ -1412,13 +1412,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 718,
       "first": "2026-02-05",
       "last": "2026-02-05",
-      "note": "元の分類：買い物",
+      "note": "元の分類：買い物 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k027",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "BARKOTANI AIROKINAWA JP",
       "card": "Amex US 44000",
@@ -1428,7 +1428,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 717,
       "first": "2026-06-30",
       "last": "2026-06-30",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -1466,7 +1466,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k030",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "MAIKOHAN GIONMIYAGAWKYOTO JP",
       "card": "Amex US 44000",
@@ -1476,7 +1476,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 682,
       "first": "2026-06-20",
       "last": "2026-06-20",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -1498,7 +1498,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k032",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "SAMIS CRAFTGIOKINAWA JP",
       "card": "Amex US 44000",
@@ -1508,7 +1508,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 665,
       "first": "2026-03-15",
       "last": "2026-03-15",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -1578,7 +1578,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k037",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "OKINAWAIZAKAYASUN PGOKINAWA JP",
       "card": "Amex US 44000",
@@ -1588,7 +1588,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 583,
       "first": "2026-03-28",
       "last": "2026-03-28",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -1610,7 +1610,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k039",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "MANEKINEKONAHOKINAWA JP",
       "card": "Amex US 44000",
@@ -1620,7 +1620,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 561,
       "first": "2026-07-06",
       "last": "2026-07-17",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -1642,7 +1642,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k041",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "TORIICHIZUNAHOKINAWA JP",
       "card": "Amex US 44000",
@@ -1652,7 +1652,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 543,
       "first": "2026-03-26",
       "last": "2026-03-26",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -1722,7 +1722,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k046",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "YAKINIKUYARUKKYOTO JP",
       "card": "Amex US 44000",
@@ -1732,7 +1732,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 496,
       "first": "2026-06-22",
       "last": "2026-06-22",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -1754,7 +1754,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k048",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "SHABU SHABU TOKINAWA JP",
       "card": "Amex US 44000",
@@ -1764,13 +1764,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 476,
       "first": "2026-05-06",
       "last": "2026-05-06",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k049",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "GODIVA CAFE OOKINAWA JP",
       "card": "Amex US 44000",
@@ -1780,13 +1780,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 456,
       "first": "2026-02-20",
       "last": "2026-04-08",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k050",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "BASE087 OKINAWA JP",
       "card": "Amex US 44000",
@@ -1796,7 +1796,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 447,
       "first": "2026-07-01",
       "last": "2026-07-01",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -1882,7 +1882,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k056",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "BAR TONIGHT AOKINAWA JP",
       "card": "Amex US 44000",
@@ -1892,13 +1892,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 423,
       "first": "2026-02-10",
       "last": "2026-02-10",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k057",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "BARLINK OKINAWA JP",
       "card": "Amex US 44000",
@@ -1908,7 +1908,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 417,
       "first": "2026-05-08",
       "last": "2026-05-08",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -1962,7 +1962,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k061",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "KUROOBISYUBO NA BA SHI OK",
       "card": "Amex US 44000",
@@ -1972,7 +1972,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 395,
       "first": "2026-06-12",
       "last": "2026-06-12",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -2010,7 +2010,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k064",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "SOBA SANRAKU OKINAWA JP",
       "card": "Amex US 44000",
@@ -2020,13 +2020,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 370,
       "first": "2026-03-22",
       "last": "2026-07-02",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k065",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "SAKURAZAKARILOKINAWA JP",
       "card": "Amex US 44000",
@@ -2036,7 +2036,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 365,
       "first": "2026-07-18",
       "last": "2026-07-18",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -2170,7 +2170,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k074",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "RYUKYUCHAKAN NA BA SHI OK",
       "card": "Amex US 44000",
@@ -2180,13 +2180,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 302,
       "first": "2026-04-16",
       "last": "2026-05-03",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k075",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "ICHIBAR OKINAWA JP",
       "card": "Amex US 44000",
@@ -2196,13 +2196,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 297,
       "first": "2026-02-13",
       "last": "2026-02-13",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k076",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "COFFEE CAMP AKANAGAWA JP",
       "card": "Amex US 44000",
@@ -2212,7 +2212,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 296,
       "first": "2026-03-08",
       "last": "2026-03-08",
-      "note": "元の分類：旅行・宿泊・交通",
+      "note": "元の分類：旅行・宿泊・交通 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -2266,7 +2266,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k080",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "OSAKENOBIJYUTKANAGAWA JP",
       "card": "Amex US 44000",
@@ -2276,13 +2276,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 283,
       "first": "2026-02-05",
       "last": "2026-02-05",
-      "note": "元の分類：旅行・宿泊・交通",
+      "note": "元の分類：旅行・宿泊・交通 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k081",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "JOINUS KANAGAWA JP",
       "card": "Amex US 44000",
@@ -2292,7 +2292,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 283,
       "first": "2026-06-16",
       "last": "2026-06-16",
-      "note": "元の分類：旅行・宿泊・交通",
+      "note": "元の分類：旅行・宿泊・交通 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -2346,7 +2346,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k085",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "OKINAWAHAISAIOKINAWA JP",
       "card": "Amex US 44000",
@@ -2356,7 +2356,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 268,
       "first": "2026-07-16",
       "last": "2026-07-16",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -2538,7 +2538,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k097",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "KYUBIKKUPLAZAJAPAN JP",
       "card": "Amex US 44000",
@@ -2548,7 +2548,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 240,
       "first": "2026-02-05",
       "last": "2026-02-05",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -2570,7 +2570,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k099",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "POTIERCOFFEEIKANAGAWA JP",
       "card": "Amex US 44000",
@@ -2580,7 +2580,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 229,
       "first": "2026-03-05",
       "last": "2026-03-06",
-      "note": "元の分類：旅行・宿泊・交通",
+      "note": "元の分類：旅行・宿泊・交通 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -2602,7 +2602,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k101",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "YS 4ST KOKUSAOKINAWA JP",
       "card": "Amex US 44000",
@@ -2612,13 +2612,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 221,
       "first": "2026-07-05",
       "last": "2026-07-05",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k102",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "TRATTORIA SOMNA BA SHI OK",
       "card": "Amex US 44000",
@@ -2628,7 +2628,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 212,
       "first": "2026-04-25",
       "last": "2026-04-25",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -2698,7 +2698,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k107",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "TULLYS COFFEETOKYO JP",
       "card": "Amex US 44000",
@@ -2708,13 +2708,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 198,
       "first": "2026-02-05",
       "last": "2026-02-06",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k108",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "ATOZ CAFE TOKYO JP",
       "card": "Amex US 44000",
@@ -2724,7 +2724,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 198,
       "first": "2026-06-16",
       "last": "2026-06-16",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -2746,7 +2746,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k110",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "COFFEEPOTOHOTOKINAWA JP",
       "card": "Amex US 44000",
@@ -2756,7 +2756,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 186,
       "first": "2026-03-19",
       "last": "2026-03-19",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -2794,7 +2794,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k113",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "CHILLULU COFFKANAGAWA JP",
       "card": "Amex US 44000",
@@ -2804,7 +2804,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 178,
       "first": "2026-03-06",
       "last": "2026-03-07",
-      "note": "元の分類：旅行・宿泊・交通",
+      "note": "元の分類：旅行・宿泊・交通 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -2842,7 +2842,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k116",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "CALORIESMILEGOKINAWA JP",
       "card": "Amex US 44000",
@@ -2852,7 +2852,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 176,
       "first": "2026-05-01",
       "last": "2026-05-01",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -2906,7 +2906,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k120",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "SURFCAFEULUOKOKINAWA JP",
       "card": "Amex US 44000",
@@ -2916,13 +2916,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 162,
       "first": "2026-06-11",
       "last": "2026-06-12",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k121",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "ZHYVAGOCOFFEEOKINAWA JP",
       "card": "Amex US 44000",
@@ -2932,13 +2932,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 162,
       "first": "2026-02-28",
       "last": "2026-02-28",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k122",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "TM COFFEE AIROKINAWA JP",
       "card": "Amex US 44000",
@@ -2948,13 +2948,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 160,
       "first": "2026-04-11",
       "last": "2026-04-11",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k123",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "RYUKYUSHIMABUOKINAWA JP",
       "card": "Amex US 44000",
@@ -2964,13 +2964,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 159,
       "first": "2026-04-27",
       "last": "2026-04-27",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k124",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "UNI COFFEE ROHENG BANG SHI ZHONG KA",
       "card": "Amex US 44000",
@@ -2980,13 +2980,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 159,
       "first": "2026-06-18",
       "last": "2026-06-18",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k125",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "DEPARTMENT STOKINAWA JP",
       "card": "Amex US 44000",
@@ -2996,7 +2996,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 157,
       "first": "2026-02-20",
       "last": "2026-02-20",
-      "note": "元の分類：買い物",
+      "note": "元の分類：買い物 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -3034,7 +3034,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k128",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "COCOKARAFINE KANAGAWA JP",
       "card": "Amex US 44000",
@@ -3044,7 +3044,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 152,
       "first": "2026-05-10",
       "last": "2026-05-10",
-      "note": "元の分類：旅行・宿泊・交通",
+      "note": "元の分類：旅行・宿泊・交通 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -3082,7 +3082,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k131",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "FOREST NOCTUROKINAWA JP",
       "card": "Amex US 44000",
@@ -3092,13 +3092,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 144,
       "first": "2026-06-27",
       "last": "2026-06-27",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k132",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "HINOYACURRY TTOKYO JP",
       "card": "Amex US 44000",
@@ -3108,7 +3108,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 138,
       "first": "2026-06-19",
       "last": "2026-06-19",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -3146,7 +3146,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k135",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "RAMENTORIDASHTOKYO JP",
       "card": "Amex US 44000",
@@ -3156,7 +3156,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 134,
       "first": "2026-02-06",
       "last": "2026-02-06",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -3194,7 +3194,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k138",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "STARBUCKS COF* JP",
       "card": "Amex US 44000",
@@ -3204,7 +3204,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 129,
       "first": "2026-06-18",
       "last": "2026-06-20",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -3226,7 +3226,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k140",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "TENDONTENYA Y* JP",
       "card": "Amex US 44000",
@@ -3236,13 +3236,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 126,
       "first": "2026-03-10",
       "last": "2026-03-10",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k141",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "HIDAKAYA KANAGAWA JP",
       "card": "Amex US 44000",
@@ -3252,7 +3252,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 121,
       "first": "2026-03-05",
       "last": "2026-03-05",
-      "note": "元の分類：旅行・宿泊・交通",
+      "note": "元の分類：旅行・宿泊・交通 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -3322,7 +3322,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k146",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "THE COFFEE STOKINAWA JP",
       "card": "Amex US 44000",
@@ -3332,13 +3332,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 112,
       "first": "2026-06-06",
       "last": "2026-06-06",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k147",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "AGU DIVE PG OKINAWA JP",
       "card": "Amex US 44000",
@@ -3348,7 +3348,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 112,
       "first": "2026-07-04",
       "last": "2026-07-04",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -3450,7 +3450,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k154",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "TULLYS COFFEE* JP",
       "card": "Amex US 44000",
@@ -3460,7 +3460,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 98,
       "first": "2026-03-10",
       "last": "2026-03-10",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -3626,7 +3626,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k165",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "KAIKATSUCLUB OKINAWA JP",
       "card": "Amex US 44000",
@@ -3636,7 +3636,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 86,
       "first": "2026-06-11",
       "last": "2026-06-11",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -3674,7 +3674,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k168",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "DOUTOR COFFEETOKYO JP",
       "card": "Amex US 44000",
@@ -3684,7 +3684,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 80,
       "first": "2026-06-19",
       "last": "2026-06-21",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -3738,7 +3738,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k172",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "BREWERSCAFE PKANAGAWA JP",
       "card": "Amex US 44000",
@@ -3748,13 +3748,13 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 74,
       "first": "2026-03-09",
       "last": "2026-03-09",
-      "note": "元の分類：旅行・宿泊・交通",
+      "note": "元の分類：旅行・宿泊・交通 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
     {
       "id": "m-k173",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "NINONI NAHA AOKINAWA JP",
       "card": "Amex US 44000",
@@ -3764,7 +3764,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 73,
       "first": "2026-04-27",
       "last": "2026-04-27",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -3786,7 +3786,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k175",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "UKAUKA KYOTO JP",
       "card": "Amex US 44000",
@@ -3796,7 +3796,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 72,
       "first": "2026-06-21",
       "last": "2026-06-21",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -3834,7 +3834,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k178",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "POMPADOUR MOTKANAGAWA JP",
       "card": "Amex US 44000",
@@ -3844,7 +3844,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 70,
       "first": "2026-06-18",
       "last": "2026-06-18",
-      "note": "元の分類：旅行・宿泊・交通",
+      "note": "元の分類：旅行・宿泊・交通 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -3930,7 +3930,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k184",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "LUCUA OSAKA OSAKA JP",
       "card": "Amex US 44000",
@@ -3940,7 +3940,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 64,
       "first": "2026-06-23",
       "last": "2026-06-23",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -4058,7 +4058,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k192",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "COFFEEPOTOHOTO AIR OKINAWA JP",
       "card": "Amex US 44000",
@@ -4068,7 +4068,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 53,
       "first": "2026-03-19",
       "last": "2026-03-19",
-      "note": "元の分類：飲食",
+      "note": "元の分類：飲食 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -4090,7 +4090,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k194",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "BASEGATE YOKO* JP",
       "card": "Amex US 44000",
@@ -4100,7 +4100,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 51,
       "first": "2026-06-17",
       "last": "2026-06-17",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
@@ -4346,7 +4346,7 @@ var ICHIRANGAI_MEISAI = {
     },
     {
       "id": "m-k210",
-      "category": "コンビニ・スーパー",
+      "category": "浪費",
       "row": "小口",
       "merchant": "MANEKENJRKYOUKYOTO JP",
       "card": "Amex US 44000",
@@ -4356,7 +4356,7 @@ var ICHIRANGAI_MEISAI = {
       "monthly": 26,
       "first": "2026-06-23",
       "last": "2026-06-23",
-      "note": "元の分類：その他",
+      "note": "元の分類：その他 ／浪費へ（Mits様判定 2026-09-19：店名）",
       "status": null,
       "status_date": null
     },
