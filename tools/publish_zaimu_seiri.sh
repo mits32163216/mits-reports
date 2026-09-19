@@ -15,7 +15,7 @@ REPO="/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジ�
 
 MSG="${1:-財務整理: 最新版で出し直し}"
 
-# 対象8本（HTML 5本＋JS 3本）。参照は grep で確認済み・これ以外は無い
+# 対象10本（HTML 7本＋JS 4本）。参照は grep で確認済み・これ以外は無い
 FILES=(
   "財務整理_TOP.html"
   "財務整理_TOP_年額.html"
@@ -23,9 +23,11 @@ FILES=(
   "継続経費.html"
   "一覧外の経費.html"
   "借入の返済.html"
+  "一覧外_上限と判定.html"
   "zaimu_seiri_data.js"
   "zaimu_seiri_render.js"
   "zaimu_seiri_state.js"
+  "zaimu_seiri_ichirangai_meisai.js"
 )
 
 # 1. 存在確認
@@ -47,7 +49,7 @@ done
 # 3b. ブラウザの古い控えを使わせない：HTML の中の js 読み込みに版番号を付ける
 VER=$(date +%s)
 for f in "${FILES[@]}"; do
-  case "$f" in *.html) LC_ALL=C sed -i '' -E 's#src="(zaimu_seiri_[a-z]+\.js)(\?v=[0-9]+)?"#src="\1?v='"$VER"'"#g' "$DST/$f" ;; esac
+  case "$f" in *.html) LC_ALL=C sed -i '' -E 's#src="(zaimu_seiri_[a-z_]+\.js)(\?v=[0-9]+)?"#src="\1?v='"$VER"'"#g' "$DST/$f" ;; esac
 done
 
 # 4. 伏字件数を数えてから置換（報告用）

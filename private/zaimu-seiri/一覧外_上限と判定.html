@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一覧外の判定</title>
+<style>
+:root {
+  --bg: #f7f4ed;
+  --panel: #ffffff;
+  --ink: #1a1a1a;
+  --sub: #666;
+  --navy: #1e3a5f;
+  --gold: #b8860b;
+  --green: #2e7d32;
+  --red: #c62828;
+  --yellow: #e6b800;
+  --gray: #9a9a9a;
+  --line: #e0dcd0;
+  --hover: #f0ede4;
+  --done-bg: #eef5ee;
+  --hold-bg: #fdf7dc;
+  --keep-bg: #ececec;
+  --handled: #4a9cd9;
+  --handled-bg: #eaf4fb;
+  --above80: #fff7d6;
+  --cut-bg: #fdecec;
+  --keep2-bg: #eaf5ea;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif; font-size: 13px; line-height: 1.55; }
+body { padding: 12px; max-width: 1980px; margin: 0 auto; }
+
+/* 上部ナビ（TOP と揃える） */
+.topnav { position:sticky; top:0; z-index:100; background:#fff; border-bottom:2px solid var(--line); padding:8px 12px; margin:-12px -12px 12px -12px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; font-size:13px; }
+.topnav .btn-reload { padding:5px 12px; background:var(--gold); color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:bold; }
+.topnav .btn-reload:hover { background:#a68738; }
+.topnav .last-update { color:var(--sub); font-size:11px; }
+.topnav .nav-links { display:flex; gap:8px; margin-left:auto; }
+.topnav .nav-links a { padding:4px 10px; color:var(--navy); text-decoration:none; border-radius:4px; border:1px solid var(--line); font-size:12px; }
+.topnav .nav-links a:hover { background:var(--hover); }
+.topnav .nav-links a.active { background:var(--navy); color:#fff; border-color:var(--navy); }
+
+/* サマリー */
+.summary { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.summary h1 { margin: 0 0 12px; font-size: 18px; color: var(--navy); }
+
+/* 4分類ボックス */
+.cat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; }
+.cat-box { border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; background: #fafaf7; }
+.cat-box .cat-name { font-size: 12px; color: var(--sub); font-weight: bold; margin-bottom: 6px; }
+.cat-box .cat-lines { display: flex; flex-direction: column; gap: 4px; }
+.cat-box .cat-line { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; }
+.cat-box .cat-line .lbl { color: var(--sub); font-size: 11px; }
+.cat-box .cat-line .val { font-family: "SF Mono", Menlo, monospace; font-weight: bold; color: var(--navy); }
+.cat-box .cat-line.diff .val { color: var(--green); }
+.cat-box .cat-line.diff.over .val { color: var(--red); font-weight: bold; }
+.cat-box .cat-line.after .val { color: var(--gold); }
+.cat-box.over { border-color: var(--red); background: #fdf3f3; }
+@media (max-width: 900px) { .cat-row { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 500px) { .cat-row { grid-template-columns: 1fr; } }
+
+/* 合計行 */
+.total-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 10px 12px; background: #eeeae0; border-radius: 6px; margin-bottom: 10px; }
+.total-cell { text-align: center; }
+.total-cell .lbl { font-size: 11px; color: var(--sub); }
+.total-cell .val { font-family: "SF Mono", Menlo, monospace; font-size: 18px; font-weight: bold; color: var(--navy); margin-top: 2px; }
+.total-cell.after .val { color: var(--gold); }
+.total-cell.cut .val { color: var(--red); }
+
+/* 進み具合バー */
+.bar-wrap { margin: 10px 0 4px; }
+.bar-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--sub); margin-bottom: 4px; }
+.bar-outer { position: relative; height: 16px; background: #eee; border-radius: 8px; overflow: hidden; }
+.bar-inner { height: 100%; background: linear-gradient(90deg, #4a7c59, #2e7d32); border-radius: 8px; transition: width 0.3s; }
+.bar-inner.over { background: linear-gradient(90deg, #b8860b, #d4a017); }
+
+/* 区分見出し */
+.section { margin-bottom: 28px; }
+.section-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; padding: 10px 4px 6px; border-bottom: 2px solid var(--navy); margin-bottom: 6px; }
+.section-head h2 { margin: 0; font-size: 15px; color: var(--navy); }
+.section-sub { font-size: 12px; color: var(--sub); }
+
+/* テーブル */
+table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+th, td { padding: 5px 6px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: middle; font-size: 12px; }
+th { background: #f0ede4; font-size: 11px; color: var(--sub); font-weight: normal; }
+tr:last-child td { border-bottom: none; }
+
+/* 状態別背景 */
+tr.st-cut { background: var(--cut-bg); }
+tr.st-cut td.merchant, tr.st-cut td.total-col, tr.st-cut td.monthly-col { text-decoration: line-through; color: var(--sub); }
+tr.st-keep { background: var(--keep2-bg); }
+
+/* 列 */
+td.actions { width: 170px; white-space: nowrap; }
+td.actions button {
+  border: 1px solid var(--line);
+  background: #fafaf7;
+  color: var(--sub);
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-right: 2px;
+  min-width: 56px;
+}
+td.actions button:hover { background: var(--hover); }
+td.actions button.on-cut { background: var(--red); color: #fff; border-color: var(--red); }
+td.actions button.on-keep { background: var(--green); color: #fff; border-color: var(--green); }
+td.merchant { min-width: 200px; font-weight: 500; }
+td.card { font-size: 11px; color: var(--sub); min-width: 90px; max-width: 130px; }
+td.user { font-size: 11px; color: var(--sub); width: 90px; }
+td.count { text-align: right; font-family: "SF Mono", Menlo, monospace; width: 50px; }
+td.total-col { text-align: right; font-family: "SF Mono", Menlo, monospace; white-space: nowrap; width: 100px; }
+td.monthly-col { text-align: right; font-family: "SF Mono", Menlo, monospace; white-space: nowrap; width: 90px; font-weight: bold; color: var(--navy); }
+td.date { font-size: 11px; color: var(--sub); width: 100px; white-space: nowrap; }
+td.note-col { font-size: 11px; color: var(--ink); min-width: 240px; max-width: 420px; white-space: normal; line-height: 1.4; }
+
+.empty-note { padding: 16px; background: #fafaf7; border: 1px dashed var(--line); border-radius: 6px; color: var(--sub); font-size: 12px; text-align: center; }
+.footer-note { margin-top: 20px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 11px; color: var(--sub); }
+
+@media (max-width: 700px) {
+  body { padding: 8px; font-size: 13px; }
+  .summary { padding: 12px; }
+  th, td { padding: 4px 5px; }
+  td.card, td.note-col, td.user { display: none; }
+  td.actions { width: auto; }
+  td.actions button { padding: 4px 6px; min-width: 50px; margin-bottom: 2px; }
+}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <button class="btn-reload" onclick="location.reload()">↻ 更新</button>
+  <span class="last-update">最終更新 <span id="topnav-time">-</span></span>
+  <span class="nav-links">
+    <a href="財務整理_TOP.html">TOP</a>
+    <a href="財務整理_TOP_年額.html">年額</a>
+    <a href="財務整理_進捗表.html">進捗表（一覧）</a>
+    <a href="継続経費.html">継続経費</a>
+    <a href="一覧外の経費.html">一覧外の経費</a>
+    <a href="借入の返済.html">借入の返済</a>
+    <a href="一覧外_上限と判定.html" class="active">一覧外の判定</a>
+  </span>
+</div>
+
+<div class="summary">
+  <h1>一覧外の判定 <span style="font-size:11px;color:var(--sub);font-weight:normal;">（一覧外の支出を相手先ごとに並べ、削る／続けるを1件ずつ押す）</span></h1>
+
+  <!-- 4分類ボックス -->
+  <div class="cat-row" id="cat-row"></div>
+
+  <!-- 合計行 -->
+  <div class="total-row">
+    <div class="total-cell"><div class="lbl">実績（月平均）</div><div class="val"><span id="t-actual">-</span>円</div></div>
+    <div class="total-cell cut"><div class="lbl">「削る」を押した合計</div><div class="val"><span id="t-cut">0</span>円</div></div>
+    <div class="total-cell after"><div class="lbl">削った後の月額</div><div class="val"><span id="t-after">-</span>円</div></div>
+  </div>
+
+  <!-- 進み具合バー -->
+  <div class="bar-wrap">
+    <div class="bar-label">
+      <span>半分経営に要る一覧外からの削減 <b id="t-goal">317,193</b>円 に対する進み具合</span>
+      <span id="t-pct">0%</span>
+    </div>
+    <div class="bar-outer">
+      <div class="bar-inner" id="t-bar" style="width:0%"></div>
+    </div>
+  </div>
+
+  <div style="margin-top:10px; font-size:11px; color:var(--sub);">
+    集計期間 <span id="t-period">-</span>／件数 <b id="t-count">-</b> 件／
+    <span style="color:var(--red);">■ 削る</span>
+    <span style="color:var(--green);">■ 続ける</span>
+    <span style="color:var(--sub);">同じボタンをもう一度押すと未判定に戻る</span>
+  </div>
+</div>
+
+<!-- 分類ごとの表 -->
+<div id="sections-container">
+  <div class="empty-note" id="empty-note">
+    zaimu_seiri_ichirangai_meisai.js の items が空です。<br>
+    BS-keiri が渡してくれるのを待っています。渡ったらこの画面に表が出ます。
+  </div>
+</div>
+
+<div class="footer-note">
+  このページは <code>zaimu_seiri_ichirangai_meisai.js</code>（BS-keiri が作る本物データが入る）を読みます。<br>
+  押した状態は同じブラウザに保存されます（キー <code>zaimu_seiri_ichirangai_decision_v1</code>）。<br>
+  同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
+</div>
+
+<script src="zaimu_seiri_data.js?v=1789807192"></script>
+<script src="zaimu_seiri_state.js?v=1789807192"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789807192"></script>
+<script>
+"use strict";
+const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
+const CATEGORIES = ["消費", "浪費", "投資", "外注・その他"];
+// 削減目標（半分経営に要る一覧外からの削減）— 発注書で指定された値
+const ICH_GOAL = 317193;
+
+function _savedIchirangai(){ try { return (SAVED_STATE && SAVED_STATE.ichirangai) || {}; } catch(e){ return {}; } }
+function _loadLocalIch(){
+  try { return JSON.parse(localStorage.getItem(ICH_STATE_KEY) || "{}") || {}; } catch(e){ return {}; }
+}
+// 保存 vs local を「新しい方が勝つ」でマージ（他ページと同じ流儀）
+function _mergeIch(saved, local){
+  const merged = {};
+  const ids = new Set([...Object.keys(saved||{}), ...Object.keys(local||{})]);
+  for (const id of ids){
+    const s = (saved||{})[id];
+    const l = (local||{})[id];
+    if (s && !l) { merged[id] = s; continue; }
+    if (l && !s) { merged[id] = l; continue; }
+    const sd = (s && s.date) || "";
+    const ld = (l && l.date) || "";
+    if (ld > sd) merged[id] = l;
+    else if (sd > ld) merged[id] = s;
+    else merged[id] = l;
+  }
+  return merged;
+}
+function loadIchState(){ return _mergeIch(_savedIchirangai(), _loadLocalIch()); }
+function saveIchState(s){ try { localStorage.setItem(ICH_STATE_KEY, JSON.stringify(s)); } catch(e){} }
+function todayStr(){ const d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function fmtYen(n){ return Math.round(n).toLocaleString("ja-JP"); }
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+
+function getData(){
+  if (typeof ICHIRANGAI_MEISAI === "undefined" || !ICHIRANGAI_MEISAI) return null;
+  return ICHIRANGAI_MEISAI;
+}
+
+function render(){
+  const data = getData();
+  const container = document.getElementById("sections-container");
+  const emptyNote = document.getElementById("empty-note");
+  const catRow = document.getElementById("cat-row");
+  const items = (data && Array.isArray(data.items)) ? data.items : [];
+  const caps  = (data && data.caps) || {};
+
+  // 期間表示
+  document.getElementById("t-period").textContent = (data && data.period) || "-";
+  document.getElementById("t-count").textContent  = items.length;
+  document.getElementById("t-goal").textContent   = fmtYen(ICH_GOAL);
+
+  if (items.length === 0){
+    if (emptyNote) emptyNote.style.display = "block";
+    catRow.innerHTML = "";
+    // 4分類ボックスは空
+    document.getElementById("t-actual").textContent = "0";
+    document.getElementById("t-cut").textContent    = "0";
+    document.getElementById("t-after").textContent  = "0";
+    document.getElementById("t-pct").textContent    = "0%";
+    document.getElementById("t-bar").style.width    = "0%";
+    // 既存の分類テーブル削除
+    Array.from(container.querySelectorAll(".section")).forEach(el => el.remove());
+    return;
+  }
+  if (emptyNote) emptyNote.style.display = "none";
+
+  const state = loadIchState();
+
+  // 分類ごとの集計
+  const byCat = {};
+  CATEGORIES.forEach(c => { byCat[c] = { actual: 0, cut: 0, items: [] }; });
+  items.forEach(it => {
+    const c = CATEGORIES.includes(it.category) ? it.category : "外注・その他";
+    const m = Number(it.monthly) || 0;
+    byCat[c].actual += m;
+    byCat[c].items.push(it);
+    const s = state[it.id];
+    if (s && s.status === "cut") byCat[c].cut += m;
+  });
+
+  // 4分類ボックス描画
+  catRow.innerHTML = CATEGORIES.map(c => {
+    const b = byCat[c];
+    const cap = Number(caps[c]) || 0;
+    const after = b.actual - b.cut;
+    const diff = cap - after;    // 上限 − 削った後
+    const over = diff < 0;
+    return `<div class="cat-box${over?' over':''}">
+      <div class="cat-name">${esc(c)}</div>
+      <div class="cat-lines">
+        <div class="cat-line"><span class="lbl">実績（月平均）</span><span class="val">${fmtYen(b.actual)}円</span></div>
+        <div class="cat-line"><span class="lbl">月の上限</span><span class="val">${cap?fmtYen(cap)+'円':'―'}</span></div>
+        <div class="cat-line after"><span class="lbl">削った後</span><span class="val">${fmtYen(after)}円</span></div>
+        <div class="cat-line diff${over?' over':''}"><span class="lbl">上限との差</span><span class="val">${cap?(over?'−'+fmtYen(-diff):'+'+fmtYen(diff))+'円':'―'}</span></div>
+      </div>
+    </div>`;
+  }).join("");
+
+  // 合計
+  const totalActual = CATEGORIES.reduce((a,c) => a + byCat[c].actual, 0);
+  const totalCut    = CATEGORIES.reduce((a,c) => a + byCat[c].cut, 0);
+  const totalAfter  = totalActual - totalCut;
+  document.getElementById("t-actual").textContent = fmtYen(totalActual);
+  document.getElementById("t-cut").textContent    = fmtYen(totalCut);
+  document.getElementById("t-after").textContent  = fmtYen(totalAfter);
+  const pct = ICH_GOAL > 0 ? Math.min(100, (totalCut / ICH_GOAL) * 100) : 0;
+  document.getElementById("t-pct").textContent    = pct.toFixed(1) + "%";
+  const bar = document.getElementById("t-bar");
+  bar.style.width = pct + "%";
+  if (totalCut >= ICH_GOAL) bar.classList.add("over"); else bar.classList.remove("over");
+
+  // 既存の分類テーブル削除して再描画
+  Array.from(container.querySelectorAll(".section")).forEach(el => el.remove());
+
+  const html = CATEGORIES.map(c => {
+    const b = byCat[c];
+    if (b.items.length === 0) return "";
+    // 月平均降順
+    const sorted = b.items.slice().sort((x,y) => (y.monthly||0) - (x.monthly||0));
+    const rows = sorted.map(it => {
+      const s = state[it.id];
+      const st = s && s.status ? s.status : null;
+      let cls = "";
+      if (st === "cut")  cls = "st-cut";
+      if (st === "keep") cls = "st-keep";
+      const dt = s && s.date ? s.date : "";
+      return `<tr class="${cls}">
+        <td class="actions">
+          <button data-id="${esc(it.id)}" data-act="cut"  class="${st==='cut' ?'on-cut' :''}">削る</button>
+          <button data-id="${esc(it.id)}" data-act="keep" class="${st==='keep'?'on-keep':''}">続ける</button>
+        </td>
+        <td class="merchant">${esc(it.merchant || "")}</td>
+        <td class="card">${esc(it.card || "")}</td>
+        <td class="user">${esc(it.user || "")}</td>
+        <td class="count">${Number(it.count||0).toLocaleString("ja-JP")}</td>
+        <td class="total-col">${fmtYen(Number(it.total||0))}円</td>
+        <td class="monthly-col">${fmtYen(Number(it.monthly||0))}円</td>
+        <td class="date">${esc(it.first||"")}<br>〜 ${esc(it.last||"")}</td>
+        <td class="note-col">${esc(it.note||"")}${dt?`<br><span style="color:var(--sub);font-size:10px;">押した日 ${esc(dt)}</span>`:""}</td>
+      </tr>`;
+    }).join("");
+    const cap = Number(caps[c]) || 0;
+    const after = b.actual - b.cut;
+    return `<div class="section">
+      <div class="section-head">
+        <h2>${esc(c)} <span class="section-sub">${b.items.length}件・月平均 ${fmtYen(b.actual)}円</span></h2>
+        <span class="section-sub">上限 ${cap?fmtYen(cap)+'円':'―'} ／ 削った後 <b style="color:var(--gold);">${fmtYen(after)}円</b></span>
+      </div>
+      <table>
+        <thead><tr>
+          <th style="width:170px;">判定</th>
+          <th>相手先</th>
+          <th>カード</th>
+          <th>使った人</th>
+          <th style="text-align:right;">回数</th>
+          <th style="text-align:right;">1〜7月合計</th>
+          <th style="text-align:right;">月平均</th>
+          <th>最初〜最後</th>
+          <th>見立ての理由</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+  }).join("");
+
+  container.insertAdjacentHTML("beforeend", html);
+
+  // ボタン
+  container.querySelectorAll("td.actions button").forEach(btn => {
+    btn.addEventListener("click", onClickAct);
+  });
+}
+
+function onClickAct(e){
+  const id  = e.currentTarget.getAttribute("data-id");
+  const act = e.currentTarget.getAttribute("data-act");
+  const state = loadIchState();
+  const cur = state[id] && state[id].status;
+  if (cur === act) delete state[id];
+  else state[id] = { status: act, date: todayStr() };
+  saveIchState(state);
+  render();
+}
+
+// 別タブ・タブ復帰・focus で即時再描画
+window.addEventListener("storage", (e) => {
+  if (!e.key || e.key === ICH_STATE_KEY) render();
+});
+document.addEventListener("visibilitychange", () => { if (!document.hidden) render(); });
+window.addEventListener("focus", () => render());
+
+render();
+
+(function(){
+  function updateTopnavTime(){
+    const el = document.getElementById("topnav-time");
+    if(!el) return;
+    const d = new Date();
+    const pad = n => String(n).padStart(2, "0");
+    el.textContent = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+  updateTopnavTime();
+})();
+</script>
+</body>
+</html>
