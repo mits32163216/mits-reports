@@ -84,7 +84,8 @@ td.paydate { font-size: 11px; color: var(--sub); width: 90px; white-space: nowra
 <h1>継続する経費 <span style="font-size:11px;color:var(--sub);font-weight:normal;">（財務整理 進捗表で「継続（パン）」ボタンを押した行のまとめ）</span></h1>
 
 <div class="summary">
-  <div class="total-line">毎月かかる継続経費（月額経費 ＋ 年額経費の月割り）：<b><span id="m-total">0</span>円</b></div>
+  <div id="m-split" style="font-size:12px;color:#374151;margin:0 0 6px;"></div>
+<div class="total-line">毎月かかる継続経費（月額経費 ＋ 年額経費の月割り）：<b><span id="m-total">0</span>円</b></div>
   <div class="sub-line">
     月額経費：<span id="m-monthly-sum">0</span>円（<span id="m-monthly-count">0</span>件）
     ／ 年額経費・月割り：<span id="m-annual-monthly-sum">0</span>円（<span id="m-annual-count">0</span>件）
@@ -110,8 +111,10 @@ td.paydate { font-size: 11px; color: var(--sub); width: 90px; white-space: nowra
   <br>この画面から編集や保存はできません。表示だけです（メモ・備考も表示のみ）。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789817391"></script>
-<script src="zaimu_seiri_state.js?v=1789817391"></script>
+<script src="zaimu_seiri_data.js?v=1789817434"></script>
+<script src="zaimu_seiri_state.js?v=1789817434"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789817434"></script>
+<script src="zaimu_seiri_kijun.js?v=1789817434"></script>
 <script>
 "use strict";
 
@@ -162,21 +165,14 @@ function collectKeepItems() {
       }
     });
   });
-  // 一覧外の経費（OUTSIDE_BREAKDOWN）で「継続」を押した行も取り込む
-  // 状態は別 localStorage キー zaimu_seiri_outside_v1 に入っている
-  try {
-    const outState = JSON.parse(localStorage.getItem("zaimu_seiri_outside_v1") || "{}");
-    if (typeof OUTSIDE_BREAKDOWN !== "undefined" && Array.isArray(OUTSIDE_BREAKDOWN)) {
-      OUTSIDE_BREAKDOWN.forEach(it => {
-        const s = outState[it.id];
-        const st = (s && s.status) ? s.status : (it.status || null);
-        if (st === "keep") {
-          if (it.cycle === "annual") annual.push({...it, _sec: "outside"});
-          else monthly.push({...it, _sec: "outside", _isIrregular: it.cycle === "irregular" || it.cycle === null || it.cycle === undefined });
-        }
-      });
-    }
-  } catch(e) { /* ignore */ }
+  // 一覧外の判定ページで「続ける」にした行も取り込む（zaimu_seiri_kijun.js・2026-09-19）
+  if (typeof ZS_KIJUN !== "undefined" && ZS_KIJUN) {
+    ZS_KIJUN.keepItems.forEach(it => {
+      monthly.push({ id: it.id, name: it.merchant, amount: Number(it.monthly) || 0, card: it.card || "",
+                     last_paid: it.last || "", next_due: "", memo: (it.category || "") + (it.sub ? "・" + it.sub : "") + "（一覧外の判定）",
+                     _sec: "ichirangai", _isIrregular: false });
+    });
+  }
   // 月払いは月額の大きい順、年払いは 次の更新日 が近い順
   monthly.sort((a,b) => b.amount - a.amount);
   annual.sort((a,b) => {
@@ -267,6 +263,9 @@ function render() {
   document.getElementById("m-annual-count").textContent = annual.length;
   document.getElementById("m-annual-yen-sum").textContent = fmtYen(annualYenSum);
   document.getElementById("m-total").textContent = fmtYen(monthlySum + annualMonthlySum);
+  const outSum = monthly.filter(it => it._sec === "ichirangai").reduce((a,b) => a + b.amount, 0);
+  const sp = document.getElementById("m-split");
+  if (sp) sp.textContent = `一覧（進捗表）${fmtYen(monthlySum + annualMonthlySum - outSum)}円 ＋ 一覧外（判定ページの「続ける」）${fmtYen(outSum)}円 ＝ ${fmtYen(monthlySum + annualMonthlySum)}円（TOP 4段目の継続と同じ）`;
 }
 
 render();
@@ -274,7 +273,7 @@ render();
 // localStorage 変更・タブ復帰・focus で即時再描画
 window.addEventListener("storage", (e) => {
   if (!e.key) { render(); return; }
-  if (["zaimu_seiri_progress_v1","zaimu_seiri_outside_v1","zaimu_seiri_user_notes_v1", H.STATE_KEY, H.NOTES_KEY].includes(e.key)) render();
+  if (["zaimu_seiri_progress_v1","zaimu_seiri_outside_v1","zaimu_seiri_user_notes_v1","zaimu_seiri_ichirangai_decision_v1", H.STATE_KEY, H.NOTES_KEY].includes(e.key)) render();
 });
 document.addEventListener("visibilitychange", () => { if (!document.hidden) render(); });
 window.addEventListener("focus", () => render());

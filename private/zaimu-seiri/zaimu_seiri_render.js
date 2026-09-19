@@ -376,12 +376,11 @@ function render() {
   // 借入セクション後の「参考」1行（家計全体の見当）
   const bottomLine = document.createElement("div");
   bottomLine.className = "bottom-total";
-  const nowRunning = A_BEFORE - totalCutA;
-  const nowTotal   = BEFORE - totalCut;
+  // 数字は下の5段目の計算のあとで入れる（出発点は zaimu_seiri_kijun.js）
   bottomLine.innerHTML = `
     <span style="color:var(--sub);">参考：</span>
-    ランニングコスト（A）<b>${fmtYen(nowRunning)}</b>円　＋　借入の返済 <b>${fmtYen(LOAN_MONTHLY_LATEST)}</b>円 <span style="color:#9aa1a8;font-size:10px;">（前 ${fmtYen(LOAN_MONTHLY_BEFORE)}・${LOAN_MONTHLY_LABEL}前）</span>　＝　今の月額 <b>${fmtYen(nowTotal - (LOAN_MONTHLY_BEFORE - LOAN_MONTHLY_LATEST))}</b>円
-    <span style="color:var(--sub);">（出発点 945,213円）</span>
+    ランニングコスト <b id="zs-now-running">-</b>円 <span style="color:#9aa1a8;font-size:10px;">（出発点 <span id="zs-now-start">-</span> − 削った額＋対応済み <span id="zs-now-cut">-</span>）</span>　＋　借入の返済 <b>${fmtYen(LOAN_MONTHLY_LATEST)}</b>円　＝　今の月額 <b id="zs-now-total">-</b>円
+    <span style="color:var(--sub);">（出発点 <span id="zs-now-start2">-</span>円・TOP 1段目）</span>
   `;
   if (container) container.appendChild(bottomLine);
 
@@ -456,28 +455,21 @@ function render() {
   const halfGoal = 361353;             // 訂正後の固定値（Math.round(586466/2)）── 6段目はこの値のまま
   // 5段目：一覧外の判定ページ（ICHIRANGAI_MEISAI）から計算する（2026-09-19 Mits様指示）
   //   目標＝4段目の削減対象総額 ÷ 2 ／ 削った額＋対応済み に判定ページの「削る」「一回性」を足す
-  const ich = (function(){
-    if (typeof ICHIRANGAI_MEISAI === "undefined" || !ICHIRANGAI_MEISAI) return null;
-    let saved = {}; try { saved = (SAVED_STATE && SAVED_STATE.ichirangai) || {}; } catch(e){}
-    let local = {}; try { local = JSON.parse(localStorage.getItem("zaimu_seiri_ichirangai_decision_v1") || "{}") || {}; } catch(e){}
-    const pick = id => { const s = saved[id], l = local[id]; if (s && l) return ((l.date||"") >= (s.date||"")) ? l : s; return l || s || null; };
-    let total = 0, keep = 0, cut = 0, once = 0;
-    (ICHIRANGAI_MEISAI.items || []).forEach(it => {
-      const m = Number(it.monthly) || 0; total += m;
-      const s = pick(it.id) || (it.status ? { status: it.status } : null);
-      const st = s && s.status;
-      if (st === "keep") keep += m; else if (st === "cut") cut += m; else if (st === "once") once += m;
-    });
-    const addA = (ICHIRANGAI_MEISAI.to_ichiran_a || []).filter(x => !x.dup_of).reduce((t,x) => t + (Number(x.monthly)||0), 0);
-    return { total, keep, cut, once, addA };
-  })();
-  const A_REMAIN = 374378 + (ich ? ich.addA : 0) - 129695;   // 一覧 A の残り（374,378 ＋ 判定ページからサブスク側へ移した分 − 継続）
+  const K = (typeof ZS_KIJUN !== "undefined" && ZS_KIJUN) ? ZS_KIJUN : null;   // zaimu_seiri_kijun.js
+  const ich = K ? { total: K.b, keep: K.bKeep, cut: K.bCut, once: K.bOnce, addA: K.addA } : null;
+  const A_REMAIN = K ? K.aRemain : 374378 - 129695;   // 一覧 A の残り（374,378 ＋ 判定ページからサブスク側へ移した分 − 継続）
   const r4Total  = ich ? A_REMAIN + (ich.total - ich.keep) : 722706;
   const halfGoal5 = Math.round(r4Total / 2);
   const ichCutOnce = ich ? ich.cut + ich.once : 0;
   const cutPlusHandled = totalCut + handledSum + ichCutOnce;
   const halfRemaining = halfGoal5 - cutPlusHandled;
-  window.ZS_CUT_PLUS_HANDLED = cutPlusHandled;   // 8段目の進み具合の分子（一覧Aの削った額＋対応済み ＋ 判定ページの削る・一回性）
+  window.ZS_CUT_PLUS_HANDLED = cutPlusHandled;
+  if (K) {   // 参考の行（進捗表・借入の返済）
+    setText("zs-now-start", fmtYen(K.start)); setText("zs-now-start2", fmtYen(K.start));
+    setText("zs-now-cut", fmtYen(cutPlusHandled));
+    setText("zs-now-running", fmtYen(K.start - cutPlusHandled));
+    setText("zs-now-total", fmtYen(K.start - cutPlusHandled + LOAN_MONTHLY_LATEST));
+  }   // 8段目の進み具合の分子（一覧Aの削った額＋対応済み ＋ 判定ページの削る・一回性）
   setText("m-half-goal", fmtYen(halfGoal5));
   setText("m-half-goal-src", fmtYen(r4Total));
   setText("m-ich-cutonce", fmtYen(ichCutOnce));
@@ -663,17 +655,11 @@ function renderKeepBreakdown() {
   const kb = document.getElementById("m-keep-breakdown");
   if (kb) kb.textContent = `月払い ${fmtYen(subMonthly)}円 ／ 年払い ${fmtYen(subAnnual)}円（月割り）`;
 
-  const outsideKeepIds = new Set(["o-01", "o-02", "o-03"]);
-  let outMonthly = 0, outAnnual = 0;
-  if (typeof OUTSIDE_BREAKDOWN !== "undefined") {
-    OUTSIDE_BREAKDOWN.forEach(it => {
-      if (!outsideKeepIds.has(it.id)) return;
-      if (it.cycle === "annual") outAnnual += it.amount || 0;
-      else                        outMonthly += it.amount || 0;
-    });
-  }
+  // 一覧外の継続は判定ページで「続ける」にした行（zaimu_seiri_kijun.js）
+  const outKeep = (typeof ZS_KIJUN !== "undefined" && ZS_KIJUN) ? ZS_KIJUN.keepItems : [];
+  const outMonthly = outKeep.reduce((t,it) => t + (Number(it.monthly)||0), 0), outAnnual = 0;
   const okb = document.getElementById("m-keepout-breakdown");
-  if (okb) okb.textContent = `月払い ${fmtYen(outMonthly)}円 ／ 年払い ${fmtYen(outAnnual)}円`;
+  if (okb) okb.textContent = `月払い ${fmtYen(outMonthly)}円 ／ 年払い ${fmtYen(outAnnual)}円（${outKeep.map(it => it.merchant).join('・')}）`;
 }
 
 // 月別の実績（MONTHLY_ACTUAL）── TOP の進み具合バーの下に、表と棒グラフを出す。
@@ -736,9 +722,9 @@ function renderMonthlyActual() {
   tbody.innerHTML = trs + avgTr;
 
   // 棒グラフ（ランニングの月次推移）
-  const START_POINT = 981465;              // 出発点（1段目 eq-start と同じ値）
-  const HALF_GOAL   = 361353;              // 半分経営の削減目標
-  const GOAL        = START_POINT - HALF_GOAL;  // 512,530
+  const KJ = (typeof ZS_KIJUN !== "undefined" && ZS_KIJUN) ? ZS_KIJUN : { start: 0, goal: 0 };
+  const START_POINT = KJ.start;             // 出発点（TOP 1段目・zaimu_seiri_kijun.js）
+  const GOAL        = KJ.goal;              // ゴール＝出発点 ÷ 2（TOP 6段目）
   const last3 = rows.slice(-3);
   const last3Avg = last3.length > 0
     ? Math.round(last3.reduce((a,m) => a + (m.running || 0), 0) / last3.length)
@@ -770,7 +756,7 @@ function renderMonthlyActual() {
 
   const legend = `<div style="margin-top:10px; font-size:11px; color:var(--sub); display:flex; flex-wrap:wrap; gap:16px;">
     <span><span style="display:inline-block; width:14px; height:2px; background:var(--red); vertical-align:middle; margin-right:4px;"></span>出発点 ${fmtYen(START_POINT)}円</span>
-    <span><span style="display:inline-block; width:14px; height:2px; background:var(--green); vertical-align:middle; margin-right:4px;"></span>目標 ${fmtYen(GOAL)}円（${fmtYen(START_POINT)} − ${fmtYen(HALF_GOAL)}）</span>
+    <span><span style="display:inline-block; width:14px; height:2px; background:var(--green); vertical-align:middle; margin-right:4px;"></span>ゴール ${fmtYen(GOAL)}円（出発点 ${fmtYen(START_POINT)} ÷ 2）</span>
     <span><span style="display:inline-block; width:14px; height:6px; background:var(--gold); vertical-align:middle; margin-right:4px;"></span>直近3ヶ月平均 ${fmtYen(last3Avg)}円</span>
   </div>`;
 

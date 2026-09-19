@@ -264,7 +264,7 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   <div class="eq-row eq-row-1">
     <div class="metric eq-before frozen"><div class="label">Before 総額</div><div class="value"><span id="r1-before">-</span><span class="yen">円</span><div class="src">出発点 <span id="r1-before-start">-</span> ＋ 借入の返済 142,286<br>（前の値 1,123,751 は 1〜7月の月平均 1,224,685 − 私用 100,934）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
     <div class="eq-op">−</div>
-    <div class="metric eq-loan frozen"><div class="label">借入の返済</div><div class="value">142,286<span class="yen">円</span><div class="src">1〜7月の実額の月平均：楽天 35,431 ／ Amex JP 96,687 ／ Amex US 10,169</div><span class="lock-note">2026-09-19 Mits様確認</span></div></div>
+    <div class="metric eq-loan frozen"><div class="label">借入の返済</div><div class="value"><span id="r1-borrow">142,286</span><span class="yen">円</span><div class="src">1〜7月の実額の月平均：楽天 35,431 ／ Amex JP 96,687 ／ Amex US 10,169</div><span class="lock-note">2026-09-19 Mits様確認</span></div></div>
     <div class="eq-op">＝</div>
     <div class="metric eq-start frozen"><div class="label">出発点総額（借入の返済を除く）</div><div class="value"><span id="r1-start">-</span><span class="yen">円</span><div class="src">一覧 A <span id="r1-start-a">-</span> ＋ 一覧外 B <span id="r1-start-b">-</span>（判定ページのデータ）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
   </div>
@@ -380,37 +380,30 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 </div>
 
 <!-- TOP: legend以下は無し -->
-<script src="zaimu_seiri_data.js?v=1789817391"></script>
-<script src="zaimu_seiri_state.js?v=1789817391"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789817391"></script>
-<script src="zaimu_seiri_render.js?v=1789817391"></script>
+<script src="zaimu_seiri_data.js?v=1789817434"></script>
+<script src="zaimu_seiri_state.js?v=1789817434"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789817434"></script>
+<script src="zaimu_seiri_kijun.js?v=1789817434"></script>
+<script src="zaimu_seiri_render.js?v=1789817434"></script>
 <script>
 // 3段目：一覧外の判定ページ（zaimu_seiri_ichirangai_meisai.js）から計算する（2026-09-19 Mits様指示・一覧外の経費ページは廃止）
 (function(){
-  if (typeof ICHIRANGAI_MEISAI === "undefined" || !ICHIRANGAI_MEISAI) return;
-  let saved = {}; try { saved = (SAVED_STATE && SAVED_STATE.ichirangai) || {}; } catch(e){}
-  let local = {}; try { local = JSON.parse(localStorage.getItem("zaimu_seiri_ichirangai_decision_v1") || "{}") || {}; } catch(e){}
-  const pick = id => { const s = saved[id], l = local[id]; if (s && l) return ((l.date||"") >= (s.date||"")) ? l : s; return l || s || null; };
-  let total = 0, keep = 0;
-  (ICHIRANGAI_MEISAI.items || []).forEach(it => {
-    const m = Number(it.monthly) || 0; total += m;
-    const s = pick(it.id) || (it.status ? { status: it.status } : null);
-    if (s && s.status === "keep") keep += m;
-  });
+  if (typeof ZS_KIJUN === "undefined" || !ZS_KIJUN) return;
+  const K = ZS_KIJUN;   // 数字は zaimu_seiri_kijun.js で計算（全ページ共通）
+  const total = K.b, keep = K.bKeep;
   const put = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = Math.round(v).toLocaleString("ja-JP"); };
   put("r3-b", total); put("r3-keep", keep); put("r3-rem", total - keep);
   // 4段目：一覧 A（固定 374,378・継続 129,695）＋ 一覧外 B（判定ページ）
   // 一覧 A＝374,378 ＋ 判定ページからサブスク側へ移した分（重複を除く・to_ichiran_a）
-  const ADD_A = (ICHIRANGAI_MEISAI.to_ichiran_a || []).filter(x => !x.dup_of).reduce((t,x) => t + (Number(x.monthly)||0), 0);
-  const A = 374378 + ADD_A, A_KEEP = 129695;
+  const ADD_A = K.addA, A = K.a, A_KEEP = K.A_KEEP;
   put("r2-a", A); put("r2-add", ADD_A); put("r2-rem", A - A_KEEP); put("r2-rem-a", A);
   put("r4-den", A + total); put("r4-den-b", total); put("r4-den-a", A); put("r4-rem-a", A - A_KEEP); put("r1-start-a", A);
   put("r4-keep", A_KEEP + keep); put("r4-keep-b", keep);
   put("r4-total", (A - A_KEEP) + (total - keep)); put("r4-total-b", total - keep);
   // 1段目：出発点＝一覧 A ＋ 一覧外 B（判定ページ）／ Before＝出発点＋借入の返済（142,286・1〜7月実額）
-  const BORROW = 142286;
+  const BORROW = K.LOAN_BEFORE;
   put("r1-start", A + total); put("r1-start-b", total);
-  put("r1-before", A + total + BORROW); put("r1-before-start", A + total);
+  put("r1-borrow", BORROW); put("r1-before", A + total + BORROW); put("r1-before-start", A + total);
   // 7段目：継続以外に使える額 ＋ 継続 ＝ ゴール（出発点総額 ÷ 2）
   const START = A + total, GOAL7 = Math.round(START / 2), KEEP_ALL = A_KEEP + keep;
   put("r7-start", GOAL7); put("r7-start-b", START);

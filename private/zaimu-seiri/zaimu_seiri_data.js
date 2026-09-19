@@ -3,12 +3,12 @@
 // var 宣言で window グローバルに載る（両ページの <script src="zaimu_seiri_data.js"> で読む）。
 // 2026-09-19 自動反映テスト行（launchd WatchPaths 動作確認用・そのまま残す）
 
-var BEFORE = 1123751;        // 1〜7月の月平均 1,288,580 − 私用（事業主貸）106,150 = 1,182,430（MF 仕訳の実額・2026-09-19 Mits様確認済）
+var BEFORE = null;         // zaimu_seiri_kijun.js が判定ページから入れる（出発点＋借入の返済）
 var TARGET_CUT = 472607;     // 出発点の半分 (945,213 ÷ 2 = 472,606.5 四捨五入・旧値のまま／2段目以下は Mits様が1段ずつ確認する)
 var TARGET_80  = 378085;     // 目標で削る額の8割 (472,607 × 0.8 = 378,085.6 切り捨て・旧値のまま)
 // A（借入返済を除く）ランニングコストの基準
-var LOAN_MONTHLY = 142286;   // 区分1 借入返済の月額合計。1〜7月の実額の月平均（楽天 35,431 ＋ Amex JP 96,687 ＋ Amex US 10,169・2026-09-19 Mits様確認済）
-var A_BEFORE = 981465;      // BEFORE − LOAN_MONTHLY = 1,182,430 − 142,286 = 1,040,144（2026-09-19 Mits様確認済）
+var LOAN_MONTHLY = null;   // zaimu_seiri_kijun.js が入れる（借入の返済 1〜7月の実額の月平均）
+var A_BEFORE = null;       // zaimu_seiri_kijun.js が入れる（出発点＝一覧A＋一覧外B）
 var A_TARGET_CUT = 402882;   // 805,763 ÷ 2 = 402,881.5 四捨五入・旧値のまま（2段目以下は Mits様が1段ずつ確認する）
 var A_TARGET_80  = 322305;   // 402,882 × 0.8 = 322,305.6 切り捨て・旧値のまま
 var LIST_SUM   = 462976;    // 区分1〜4 の月額合計（k2-08 まぐまぐMits様分 880円修正・2026-09-18）
@@ -17,9 +17,9 @@ var LIST_SUM   = 462976;    // 区分1〜4 の月額合計（k2-08 まぐまぐM
 // keep 以下は 2026-09-18 の値のまま。Mits様が1段ずつ確認しながら順次更新する。
 var BASELINE_20260918 = {
   date: "2026-09-18",
-  before: 1123751,       // Before 総額（2026-09-19 差し替え：旧 945,213）
-  borrow: 142286,        // 借入の返済（2026-09-19 差し替え：旧 139,450）
-  start: 981465,        // 出発点総額（借入の返済を除く）= before − borrow（2026-09-19 差し替え：旧 805,763）
+  before: null,           // Before 総額（2026-09-19 差し替え：旧 945,213）
+  borrow: null,           // 借入の返済（2026-09-19 差し替え：旧 139,450）
+  start: null,          // 出発点総額（借入の返済を除く）= before − borrow（2026-09-19 差し替え：旧 805,763）
   keep: 129695,          // 継続と決めた額（月額相当）── 進捗表の21行（2026-09-19 差し替え：旧 107,914／9/18 以降に継続にした6行を含む）
   keepOutside: 129064,   // 継続と決めた額（一覧外・月額相当）── 家賃 106,770 + 電気 4,695 + ガス 861
   circus: 697849,        // サーカス対象 = start − keep（旧値のまま／2段目以下は Mits様が1段ずつ確認する）
@@ -85,28 +85,7 @@ var MONTHLY_ACTUAL = [
 // 空配列のときは「内訳を集計中」と表示される。
 // 2026-09-18 BS-keiri 第3版反映。合計は 482,237 を分母にしているが、実測合計は 526,543 で 44,306 円の超過。
 // o-99 に「照合で合わない差（未解明）」として 482,237 − 12行合計 を負の値で置く。ボタンは付けない。
-var OUTSIDE_BREAKDOWN = [
-  { id:"o-01", name:"家賃（RKS：家賃＋管理費＋電気・1〜7月実額）",              amount:127388, cycle:"monthly",  card:"PayPay 銀行",    memo:"大和リビング D-ROOM・RKS（保証会社）経由", status:null, status_date:null },
-  { id:"o-02", name:"電気（家賃の RKS に含む・0）",                          amount:  0, cycle:"monthly",  card:"PayPay 銀行",    memo:"沖縄電力", status:null, status_date:null },
-  { id:"o-03", name:"ガス",                          amount:   1676, cycle:"monthly",  card:"Amex JP 42008",  memo:"りゅうせき（都市ガス）／1〜5月の明細から。6〜8月分は未取り込み", status:null, status_date:null },
-  { id:"o-04", name:"ATM の現金引き出し（生活費）",  amount: 77286, cycle:"monthly",  card:"銀行 ATM",       memo:"3万円 × 約21回", status:null, status_date:null },
-  { id:"o-05", name:"Amex JP 42008 の買い物・分割・その他", amount:13958, cycle:"monthly", card:"Amex JP 42008",  memo:"", status:null, status_date:null },
-  { id:"o-06", name:"Amex JP 42008 のサブスク（一覧に無い分）", amount:25486, cycle:"monthly", card:"Amex JP 42008",  memo:"", status:null, status_date:null },
-  { id:"o-07", name:"Amex JP 63000",                 amount:  2159, cycle:"monthly",  card:"Amex JP 63000",  memo:"", status:null, status_date:null },
-  { id:"o-08", name:"Amex US 44000 の旅行・飲食・買い物・その他", amount:196189, cycle:"monthly", card:"Amex US 44000",  memo:"旧176,867→196,189。理由：Mits様の 4カテゴリ実額から k2 一覧行と重複する 5加盟店（NOMAD.LOVE→k2-44・EWOKINAWA→k2-40・NOTE→k2-03・SUBLINE→k2-04・WEBLIO→k2-01）を除外して再集計。除外合計 187,696円/8mo = 23,462円/月。家族カード分は k4-01 に集約。年会費・手数料・利息 8,898円/月 は k1-03 と重複のため除外。Bonvoy 年会費 k3-06 は 2025-10-24 課金で window 外。仕事の外注 39,651円/月 は単発。", children:[
-    { id:"o-08-1", name:"旅行・宿泊・交通（Mits様）", amount: 61276, memo:"上位3: BOOKING.COM 163,803 / 横浜宿泊 94,027 / MIYASPO AIR OKINAWA 26,565（8ヶ月合計）。k2-44 NOMAD.LOVE 136,752 と k2-40 EWOKINAWA 44,327 は重複除外。" },
-    { id:"o-08-2", name:"飲食（Mits様）",            amount: 60471, memo:"上位3: IORI PG TOKYO 98,322 / JP FBA SAPPORO 85,429 / BAR COCCO OKINAWA 43,272（8ヶ月合計）。k2 と重複 0件。" },
-    { id:"o-08-3", name:"買い物（Mits様）",           amount: 56007, memo:"上位3: AMAZON.CO.JP 114,947 / AMAZON DOWNLOADS 61,598 / JUN DENTAL CL 50,657（8ヶ月合計）。Amazon は複数額の都度買い物（サブスク定額と異なる）と判定・k2 と重複 0件。" },
-    { id:"o-08-4", name:"その他（Mits様）",           amount: 18435, memo:"上位3: USAGI TOKYO 32,064 / SHIYOKUNOBAN OKINAWA 11,358 / NAMINOUE CRY OKINAWA 9,309（8ヶ月合計）。k2-03 NOTE 2,812・k2-04 SUBLINE 1,955・k2-01 WEBLIO 1,850 は重複除外。DMM 単発1件2,840円は irregular で k2-11 と量的不一致のため残置。" }
-  ], status:null, status_date:null },
-  { id:"o-09", name:"Amex US 81007 Delta（サブスク以外）",       amount: 33559, cycle:"monthly", card:"Amex US 81007",  memo:"8ヶ月実額@148円/USD: 飲食12,305 + 買い物9,294 + 旅行・宿泊・交通8,327 + その他395 + 家族カード追加カード年会費$175月割3,237 = 33,559円/月。年会費$650 Reserve本カード(月8,801) は k3-08 に移した。旧値44,846との差 -11,287円は「$650年会費控除(12,025) − 前回計算の丸めエラー(+738)」。", status:null, status_date:null },
-  { id:"o-10", name:"Amex US 72006 Hilton（サブスク以外）",     amount: 23796, cycle:"monthly", card:"Amex US 72006",  memo:"", status:null, status_date:null },
-  { id:"o-11", name:"BOA VISA 4452（単発以外）",     amount:  6242, cycle:"monthly",  card:"BOA VISA 4452",  memo:"", status:null, status_date:null },
-  { id:"o-12", name:"Chase Sapphire 0430（サブスク以外）",       amount: 41988, cycle:"monthly", card:"Chase Sapphire 0430", memo:"", status:null, status_date:null },
-  // o-99：照合で合わない差（未解明）。他の12行の合計と 482,237 の差。負の値になる場合もある。
-  // ボタン無し・灰色・斜体で末尾に固定表示（画面側で扱う）。
-  { id:"o-99", name:"照合で合わない差（未解明）",   amount:      0, cycle:null,       card:"",               memo:"単発の控除の過大（Hyatt・外注）とレートの丸め等。BS-keiri 調べ中。差は 482,237 − 12行合計で自動計算（マイナスになる場合は超過を意味する）。", status:null, status_date:null, residual:true }
-];
+var OUTSIDE_BREAKDOWN = [];   // 2026-09-19 廃止：一覧外は zaimu_seiri_ichirangai_meisai.js（判定ページ）が正本。旧12行は AI作業ゴミ箱/20260919_zaimu_OUTSIDE_BREAKDOWN_kyu/
 
 // データ配列。各行に status/status_date を持つ（null | "done" | "hold" | "keep"）。
 var DATA = {
