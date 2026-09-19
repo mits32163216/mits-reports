@@ -102,7 +102,7 @@ tr.st-keep { background: var(--keep2-bg); }
 tr.st-once { background: var(--once-bg); }
 
 /* 列 */
-td.actions { width: 170px; white-space: nowrap; }
+td.actions { width: 230px; white-space: nowrap; }
 td.actions button {
   border: 1px solid var(--line);
   background: #fafaf7;
@@ -204,9 +204,9 @@ td.note-col { font-size: 11px; color: var(--ink); min-width: 240px; max-width: 4
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789807458"></script>
-<script src="zaimu_seiri_state.js?v=1789807458"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789807458"></script>
+<script src="zaimu_seiri_data.js?v=1789807499"></script>
+<script src="zaimu_seiri_state.js?v=1789807499"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789807499"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -261,16 +261,25 @@ function render(){
   document.getElementById("t-count").textContent  = items.length;
   document.getElementById("t-goal").textContent   = fmtYen(ICH_GOAL);
 
+  // カテゴリは caps のキーで並ぶ順に決まる（BS-keiri が caps の並びで意図を伝える）
+  // caps に無い category を持つ item は末尾の CATEGORY_FALLBACK に落とす
+  const capKeys = Object.keys(caps);
+  const itemCats = items.map(it => it.category || "").filter(c => c && !capKeys.includes(c));
+  const extraCats = Array.from(new Set(itemCats));
+  const CATEGORIES = capKeys.slice();
+  extraCats.forEach(c => { if (!CATEGORIES.includes(c)) CATEGORIES.push(c); });
+  if (extraCats.length > 0 && !CATEGORIES.includes(CATEGORY_FALLBACK)) CATEGORIES.push(CATEGORY_FALLBACK);
+
   if (items.length === 0){
     if (emptyNote) emptyNote.style.display = "block";
     catRow.innerHTML = "";
-    // 4分類ボックスは空
     document.getElementById("t-actual").textContent = "0";
     document.getElementById("t-cut").textContent    = "0";
+    document.getElementById("t-once").textContent   = "0";
     document.getElementById("t-after").textContent  = "0";
     document.getElementById("t-pct").textContent    = "0%";
-    document.getElementById("t-bar").style.width    = "0%";
-    // 既存の分類テーブル削除
+    document.getElementById("t-bar-cut").style.width  = "0%";
+    document.getElementById("t-bar-once").style.width = "0%";
     Array.from(container.querySelectorAll(".section")).forEach(el => el.remove());
     return;
   }
@@ -282,7 +291,8 @@ function render(){
   const byCat = {};
   CATEGORIES.forEach(c => { byCat[c] = { actual: 0, cut: 0, once: 0, items: [] }; });
   items.forEach(it => {
-    const c = CATEGORIES.includes(it.category) ? it.category : "外注・その他";
+    const c = CATEGORIES.includes(it.category) ? it.category : CATEGORY_FALLBACK;
+    if (!byCat[c]) byCat[c] = { actual: 0, cut: 0, once: 0, items: [] };
     const m = Number(it.monthly) || 0;
     byCat[c].actual += m;
     byCat[c].items.push(it);
@@ -291,7 +301,7 @@ function render(){
     if (s && s.status === "once") byCat[c].once += m;
   });
 
-  // 4分類ボックス描画（「一回性」の行を1本追加・「これからの月額」= actual − cut − once）
+  // 分類ボックス描画（「一回性」の行を1本追加・「これからの月額」= actual − cut − once）
   catRow.innerHTML = CATEGORIES.map(c => {
     const b = byCat[c];
     const cap = Number(caps[c]) || 0;
@@ -345,11 +355,13 @@ function render(){
       let cls = "";
       if (st === "cut")  cls = "st-cut";
       if (st === "keep") cls = "st-keep";
+      if (st === "once") cls = "st-once";
       const dt = s && s.date ? s.date : "";
       return `<tr class="${cls}">
         <td class="actions">
           <button data-id="${esc(it.id)}" data-act="cut"  class="${st==='cut' ?'on-cut' :''}">削る</button>
           <button data-id="${esc(it.id)}" data-act="keep" class="${st==='keep'?'on-keep':''}">続ける</button>
+          <button data-id="${esc(it.id)}" data-act="once" class="${st==='once'?'on-once':''}">一回性</button>
         </td>
         <td class="merchant">${esc(it.merchant || "")}</td>
         <td class="card">${esc(it.card || "")}</td>
@@ -362,15 +374,15 @@ function render(){
       </tr>`;
     }).join("");
     const cap = Number(caps[c]) || 0;
-    const after = b.actual - b.cut;
+    const after = b.actual - b.cut - b.once;
     return `<div class="section">
       <div class="section-head">
         <h2>${esc(c)} <span class="section-sub">${b.items.length}件・月平均 ${fmtYen(b.actual)}円</span></h2>
-        <span class="section-sub">上限 ${cap?fmtYen(cap)+'円':'―'} ／ 削った後 <b style="color:var(--gold);">${fmtYen(after)}円</b></span>
+        <span class="section-sub">上限 ${cap?fmtYen(cap)+'円':'―'} ／ 一回性 <b style="color:#a68000;">${fmtYen(b.once)}円</b> ／ これからの月額 <b style="color:var(--gold);">${fmtYen(after)}円</b></span>
       </div>
       <table>
         <thead><tr>
-          <th style="width:170px;">判定</th>
+          <th style="width:230px;">判定</th>
           <th>相手先</th>
           <th>カード</th>
           <th>使った人</th>
