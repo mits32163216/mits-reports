@@ -19,7 +19,7 @@ function getSavedState() {
   try {
     if (typeof SAVED_STATE !== "undefined" && SAVED_STATE) return SAVED_STATE;
   } catch (e) {}
-  return { progress: {}, outside: {}, ichirangai: {}, notes: {}, saved_at: null };
+  return { progress: {}, outside: {}, ichirangai: {}, ichirangai_plan: {}, notes: {}, saved_at: null };
 }
 
 // 2つの状態オブジェクトをマージする。id ごとに「新しい方（status_date）が勝つ」。
@@ -800,6 +800,16 @@ function buildSavedStateJS() {
     progress:   mergeStatusStore(saved.progress || {}, loadLocalProgress()),
     outside:    mergeStatusStore(saved.outside  || {}, loadLocalOutside()),
     ichirangai: mergedIch,
+    ichirangai_plan: (function(){   // サブスク外の判定の「削る予定額」（大項目ごと）。新しい方が勝つ
+      const sv = saved.ichirangai_plan || {};
+      let lc = {}; try { lc = JSON.parse(localStorage.getItem("zaimu_seiri_ichirangai_plan_v1") || "{}") || {}; } catch(e){}
+      const out = {};
+      new Set([...Object.keys(sv), ...Object.keys(lc)]).forEach(k => {
+        const a = sv[k], b = lc[k];
+        out[k] = (a && b) ? (((b.date||"") >= (a.date||"")) ? b : a) : (b || a);
+      });
+      return out;
+    })(),
     notes:      mergeNotesStore(saved.notes    || {}, (function(){
       try { return JSON.parse(localStorage.getItem(NOTES_KEY) || "{}") || {}; } catch(e){ return {}; }
     })()),

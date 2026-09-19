@@ -214,9 +214,9 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789821181"></script>
-<script src="zaimu_seiri_state.js?v=1789821181"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789821181"></script>
+<script src="zaimu_seiri_data.js?v=1789821539"></script>
+<script src="zaimu_seiri_state.js?v=1789821539"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789821539"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -258,6 +258,18 @@ function subHidden(){ try { return localStorage.getItem(SUB_HIDE_KEY) === "1"; }
 function stOf(it, state){ const s = state[it.id]; if (s) return s; return it.status ? { status: it.status, date: it.status_date || "" } : null; }
 function loadIchState(){ return _mergeIch(_savedIchirangai(), _loadLocalIch()); }
 function saveIchState(s){ try { localStorage.setItem(ICH_STATE_KEY, JSON.stringify(s)); } catch(e){} }
+// 大項目ごとの「削る予定額」（月額・Mits様が入力）。保存ファイル SAVED_STATE.ichirangai_plan とブラウザの入力を、新しい方で重ねる
+const PLAN_KEY = "zaimu_seiri_ichirangai_plan_v1";
+function loadPlan(){
+  let saved = {}; try { saved = (SAVED_STATE && SAVED_STATE.ichirangai_plan) || {}; } catch(e){}
+  let local = {}; try { local = JSON.parse(localStorage.getItem(PLAN_KEY) || "{}") || {}; } catch(e){}
+  return _mergeIch(saved, local);
+}
+function savePlanOne(cat, n){
+  let local = {}; try { local = JSON.parse(localStorage.getItem(PLAN_KEY) || "{}") || {}; } catch(e){}
+  local[cat] = { plan: n, date: new Date().toISOString() };
+  try { localStorage.setItem(PLAN_KEY, JSON.stringify(local)); } catch(e){}
+}
 function todayStr(){ const d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
 function fmtYen(n){ return Math.round(n).toLocaleString("ja-JP"); }
 function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
@@ -437,9 +449,10 @@ function render(){
     }
     const cap = Math.round((byCat[c].actual - byCat[c].keep) / 2);
     const after = b.actual - b.keep - b.cut - b.once;
+    const plans = loadPlan();
     return `<div class="section${isRouhi && subHidden() ? ' hide-subs' : ''}">
       <div class="section-head">
-        <h2>${esc(c)} <span class="section-sub">${b.items.length}件・月平均 ${fmtYen(b.actual)}円・1〜7月の総額 ${fmtYen(b.items.reduce((t,i)=>t+(i.total||0),0))}円・<b style="color:#c0392b;">削る総額 ${fmtYen(b.items.filter(i=>(stOf(i,state)||{}).status==="cut").reduce((t,i)=>t+(i.total||0),0))}円（月 ${fmtYen(b.cut)}円）</b></span></h2>
+        <h2>${esc(c)} <span class="section-sub">${b.items.length}件・月平均 ${fmtYen(b.actual)}円・1〜7月の総額 ${fmtYen(b.items.reduce((t,i)=>t+(i.total||0),0))}円・<b style="color:#c0392b;">削る総額 ${fmtYen(b.items.filter(i=>(stOf(i,state)||{}).status==="cut").reduce((t,i)=>t+(i.total||0),0))}円（月 ${fmtYen(b.cut)}円）</b>・<label class="plan-box" style="white-space:nowrap;">削る予定額（月） <input class="plan-input" data-cat="${esc(c)}" type="text" inputmode="numeric" value="${(plans[c] && plans[c].plan) ? fmtYen(plans[c].plan) : ""}" placeholder="0" style="width:110px;text-align:right;font-size:14px;padding:2px 6px;border:1px solid #c8ccd3;border-radius:4px;">円</label></span></h2>
         <span class="section-sub">上限 ${cap?fmtYen(cap)+'円':'―'} ／ 一回性 <b style="color:#a68000;">${fmtYen(b.once)}円</b> ／ これからの月額 <b style="color:var(--gold);">${fmtYen(after)}円</b>${isRouhi ? `<button class="sub-toggle">${subHidden() ? "分類ボタンを出す" : "分類ボタンを消す"}</button>` : ""}</span>
       </div>
       <table>
@@ -478,6 +491,12 @@ function render(){
       render();
     });
   });
+  container.querySelectorAll(".plan-input").forEach(inp => inp.addEventListener("change", e => {
+    const t = e.currentTarget;
+    const n = parseInt(String(t.value).replace(/[^\d]/g, ""), 10) || 0;
+    savePlanOne(t.getAttribute("data-cat"), n);
+    t.value = n ? fmtYen(n) : "";
+  }));
   container.querySelectorAll(".sub-toggle").forEach(tg => tg.addEventListener("click", () => {
     try { localStorage.setItem(SUB_HIDE_KEY, subHidden() ? "0" : "1"); } catch(e){}
     render();
@@ -499,10 +518,10 @@ function onClickAct(e){
 
 // 別タブ・タブ復帰・focus で即時再描画
 window.addEventListener("storage", (e) => {
-  if (!e.key || e.key === ICH_STATE_KEY || e.key === SUB_KEY || e.key === SUB_HIDE_KEY) render();
+  if (!e.key || e.key === ICH_STATE_KEY || e.key === SUB_KEY || e.key === SUB_HIDE_KEY || e.key === PLAN_KEY) render();
 });
 document.addEventListener("visibilitychange", () => { if (!document.hidden) render(); });
-window.addEventListener("focus", () => render());
+window.addEventListener("focus", () => { const a = document.activeElement; if (!(a && a.classList && a.classList.contains("plan-input"))) render(); });
 
 render();
 
