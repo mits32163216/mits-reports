@@ -110,13 +110,13 @@ td.memo:empty::before{content:"＋ メモ・備考（クリックで書き込み
 <div class="summary">
   <h1>一覧外の経費（削減対象B）<span style="font-size:11px;color:var(--sub);font-weight:normal;">（家賃・水道光熱費・食費など・進捗表の一覧に載っていない月額の経費）</span><a href="財務整理_進捗表.html" class="back-link">← 進捗表に戻る</a></h1>
   <div class="eq-row">
-    <div class="metric eq-target-red frozen"><div class="label">削減対象B（このページの分母）</div><div class="value">483,866<span class="yen">円</span><div class="src">Before 総額 945,213 − 一覧の行の合計 461,347</div><span class="lock-note">2026-09-18 訂正後の値で固定</span></div></div>
+    <div class="metric eq-target-red frozen"><div class="label">削減対象B（このページの分母）</div><div class="value"><span id="o-total">-</span><span class="yen">円</span><div class="src">継続の3行 <span id="o-total-keep">-</span> ＋ 一覧外の判定ページの合計 <span id="o-total-hantei">-</span></div><span class="lock-note">判定ページのデータから自動で計算</span></div></div>
     <div class="eq-op">−</div>
-    <div class="metric eq-keep-decided frozen"><div class="label">継続と決めた額（月額相当）</div><div class="value"><span id="o-keep-sum">112,326</span><span class="yen">円</span><div class="src">家賃 106,770 ＋ 電気 4,695 ＋ ガス 861（9/18 の3行）</div><span class="lock-note">2026-09-18 時点で固定</span></div></div>
+    <div class="metric eq-keep-decided frozen"><div class="label">継続と決めた額（月額相当）</div><div class="value"><span id="o-keep-sum">112,326</span><span class="yen">円</span><div class="src">家賃（RKS：家賃＋管理費＋電気）127,388 ＋ 電気 0 ＋ ガス 1,676</div><span class="lock-note">2026-09-19 Mits様確認</span></div></div>
     <div class="eq-op">−</div>
     <div class="metric eq-cut"><div class="label">削った額（完了 <span id="o-done-count">0</span>件）</div><div class="value"><span id="o-cut">0</span><span class="yen">円</span><div class="src">「完了」を押した行の月額合計（可変）</div></div></div>
     <div class="eq-op">＝</div>
-    <div class="metric eq-remaining"><div class="label">残りの削減対象B（可変）</div><div class="value"><span id="o-remaining">-</span><span class="yen">円</span><div class="src">削減対象B − 継続（9/18 固定）− 削った額</div></div></div>
+    <div class="metric eq-remaining"><div class="label">残りの削減対象B（可変）</div><div class="value"><span id="o-remaining">-</span><span class="yen">円</span><div class="src">削減対象B − 継続 − 削った額</div></div></div>
   </div>
 </div>
 
@@ -125,13 +125,48 @@ td.memo:empty::before{content:"＋ メモ・備考（クリックで書き込み
 </div>
 
 <div class="footer-note">
-  このページは 財務整理_進捗表.html と同じデータ（zaimu_seiri_data.js の OUTSIDE_BREAKDOWN 配列）を読みます。<br>
+  継続の3行（家賃・電気・ガス）は zaimu_seiri_data.js の OUTSIDE_BREAKDOWN から、それ以外の行は一覧外の判定ページと同じデータ（zaimu_seiri_ichirangai_meisai.js）の大分類・中分類から、開くたびに作ります。<br>
   状態は同じブラウザに保存されます（キー <code>zaimu_seiri_outside_v1</code>）。メモ・備考は進捗表と共通の保存領域を使います（キー <code>zaimu_seiri_user_notes_v1</code>）。<br>
   ボタンは同じものをもう一度押すと外れて未着手に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789814357"></script>
-<script src="zaimu_seiri_state.js?v=1789814357"></script>
+<script src="zaimu_seiri_data.js?v=1789814827"></script>
+<script src="zaimu_seiri_state.js?v=1789814827"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789814827"></script>
+<script>
+// ── 一覧外の判定ページ（zaimu_seiri_ichirangai_meisai.js）のデータに合わせる（2026-09-19 Mits様指示） ──
+// 継続の3行（o-01 家賃・o-02 電気・o-03 ガス）はそのまま残し、
+// 旧12行の見込み（o-04〜o-12・o-99 照合差）は、判定ページの大分類（消費・浪費・投資・旅行…）の行に置き換える。
+// 大分類の中は中分類（現金（ATM）・食事・カフェ・飲み・ホテル・交通・Amazon など）を「└」で並べる。
+(function(){
+  if (typeof OUTSIDE_BREAKDOWN === "undefined" || typeof ICHIRANGAI_MEISAI === "undefined" || !ICHIRANGAI_MEISAI) return;
+  const M = ICHIRANGAI_MEISAI;
+  const KEEP_IDS = ["o-01","o-02","o-03"];
+  const keep = OUTSIDE_BREAKDOWN.filter(r => KEEP_IDS.includes(r.id));
+  const items = Array.isArray(M.items) ? M.items : [];
+  const catOrder = Object.keys(M.caps || {});
+  items.forEach(i => { if (!catOrder.includes(i.category)) catOrder.push(i.category); });
+  const SUB_ORDER = ["未分類","現金（ATM）","コンビニ・スーパー","Amazon","飲み","食事","カフェ","ホテル","交通"];
+  const rank = v => { const i = SUB_ORDER.indexOf(v); return i < 0 ? 99 : i; };
+  const yen = n => Math.round(n).toLocaleString("ja-JP");
+  const top3 = arr => arr.slice().sort((a,b) => (b.total||0) - (a.total||0)).slice(0,3).map(i => `${i.merchant} ${yen(i.total||0)}`).join(" / ");
+  const rows = catOrder.map((c, n) => {
+    const its = items.filter(i => i.category === c);
+    if (!its.length) return null;
+    const subs = Array.from(new Set(its.map(i => i.sub || "未分類"))).sort((a,b) => rank(a) - rank(b));
+    const children = subs.length > 1 || subs[0] !== "未分類" ? subs.map((g, k) => {
+      const gi = its.filter(i => (i.sub || "未分類") === g);
+      return { id: `o-c${n+1}-${k+1}`, name: g, amount: gi.reduce((t,i) => t + (Number(i.monthly)||0), 0),
+               memo: `${gi.length}件・上位3: ${top3(gi)}（1〜7月合計）` };
+    }) : undefined;
+    return { id: `o-c${n+1}`, name: c, amount: its.reduce((t,i) => t + (Number(i.monthly)||0), 0), cycle: "monthly", card: "",
+             memo: `一覧外の判定ページの ${its.length}件（1〜7月の月平均）。上位3: ${top3(its)}（1〜7月合計）`,
+             children, status: null, status_date: null };
+  }).filter(Boolean);
+  OUTSIDE_BREAKDOWN.length = 0;
+  keep.concat(rows).forEach(r => OUTSIDE_BREAKDOWN.push(r));
+})();
+</script>
 <script>
 "use strict";
 const OUT_STATE_KEY = "zaimu_seiri_outside_v1";
@@ -180,7 +215,9 @@ function todayStr(){ const d = new Date(); return d.getFullYear()+"-"+String(d.g
 function esc(s){ return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
 function escAttr(s){ return esc(s); }
 
-const OUTSIDE_TOTAL = 483866; // 訂正後：Before 945,213 − 一覧の行 461,347（2026-09-18 訂正後）
+// 分母＝継続の3行＋判定ページの大分類の合計（判定ページのデータから毎回計算・2026-09-19）
+const OUTSIDE_TOTAL = (typeof OUTSIDE_BREAKDOWN !== "undefined" ? OUTSIDE_BREAKDOWN : []).filter(r => r.residual !== true).reduce((t,r) => t + (r.amount||0), 0);
+const OUTSIDE_KEEP_NOW = (typeof OUTSIDE_BREAKDOWN !== "undefined" ? OUTSIDE_BREAKDOWN : []).filter(r => ["o-01","o-02","o-03"].includes(r.id)).reduce((t,r) => t + (r.amount||0), 0);
 
 function render(){
   const items = (typeof OUTSIDE_BREAKDOWN !== "undefined" && Array.isArray(OUTSIDE_BREAKDOWN)) ? OUTSIDE_BREAKDOWN.slice() : [];
@@ -305,6 +342,9 @@ function render(){
     <th>状態変更日</th>
   </tr></thead><tbody>${rows}${keepRows}</tbody></table>`;
 
+  document.getElementById("o-total").textContent = fmtYen(OUTSIDE_TOTAL);
+  document.getElementById("o-total-keep").textContent = fmtYen(OUTSIDE_KEEP_NOW);
+  document.getElementById("o-total-hantei").textContent = fmtYen(OUTSIDE_TOTAL - OUTSIDE_KEEP_NOW);
   // 上部の数字（継続は 9/18 固定値 BASELINE.keepOutside を使う）
   const keepFixed = (typeof BASELINE_20260918 !== "undefined" && BASELINE_20260918.keepOutside) ? BASELINE_20260918.keepOutside : 112326;
   document.getElementById("o-keep-sum").textContent = fmtYen(keepFixed);
