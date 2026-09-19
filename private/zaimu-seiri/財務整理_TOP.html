@@ -75,6 +75,10 @@ body { padding: 12px; max-width: 1980px; margin: 0 auto; }
 .metric.frozen .value::after { content:none !important; }
 .metric.frozen .src { color:#9ca3af !important; }
 .metric.frozen .lock-note { display:block; font-size:9px; color:#9ca3af; margin-top:3px; font-style:italic; }
+/* 出発点とゴールは同じ色の太枠（2026-09-19 Mits様指示） */
+.metric.frozen.eq-pair { background:#f0f7f0 !important; border-color:#4a8a4a !important; border-width:3px !important; border-style:solid !important; }
+.metric.frozen.eq-pair .label { color:#2e5e2e !important; font-weight:bold !important; }
+.metric.frozen.eq-pair .value { color:var(--green) !important; }
 .metric.eq-target-a { background:#fef7e0; border-color:#c9a54a; }
 .metric.eq-target-a .label { color:var(--gold); font-weight:bold; }
 .metric.eq-target-a .value { color:var(--gold); }
@@ -266,7 +270,7 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
     <div class="eq-op">−</div>
     <div class="metric eq-loan frozen"><div class="label">借入の返済</div><div class="value"><span id="r1-borrow">142,286</span><span class="yen">円</span><div class="src">1〜7月の実額の月平均：楽天 35,431 ／ Amex JP 96,687 ／ Amex US 10,169</div><span class="lock-note">2026-09-19 Mits様確認</span></div></div>
     <div class="eq-op">＝</div>
-    <div class="metric eq-start frozen"><div class="label">出発点総額（借入の返済を除く）</div><div class="value"><span id="r1-start">-</span><span class="yen">円</span><div class="src">一覧 A <span id="r1-start-a">-</span> ＋ 一覧外 B <span id="r1-start-b">-</span>（判定ページのデータ）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
+    <div class="metric eq-start eq-pair frozen"><div class="label">出発点総額（借入の返済を除く）</div><div class="value"><span id="r1-start">-</span><span class="yen">円</span><div class="src">一覧 A <span id="r1-start-a">-</span> ＋ 一覧外 B <span id="r1-start-b">-</span>（判定ページのデータ）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
   </div>
 
   <!-- 2段目 サブスク：全部固定 -->
@@ -313,7 +317,7 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
     <div class="eq-op">＋</div>
     <div class="metric frozen"><div class="label">継続と決めた額の合計</div><div class="value"><span id="r7-keep">-</span><span class="yen">円</span><div class="src">サブスク整理 <span class="zs-akeep">-</span> ＋ 一覧外 <span id="r7-keep-b">-</span>（判定ページの「続ける」）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
     <div class="eq-op">＝</div>
-    <div class="metric frozen"><div class="label">ゴール（出発点総額の半分）</div><div class="value"><span id="r7-start">-</span><span class="yen">円</span><div class="src">出発点総額 <span id="r7-start-b">-</span> ÷ 2（一覧 A ＋ 一覧外 B：判定ページのデータ）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
+    <div class="metric eq-start eq-pair frozen"><div class="label">ゴール（出発点総額の半分）</div><div class="value"><span id="r7-start">-</span><span class="yen">円</span><div class="src">出発点総額 <span id="r7-start-b">-</span> ÷ 2（一覧 A ＋ 一覧外 B：判定ページのデータ）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
   </div>
 
   <!-- 6段目：半分経営の目標 ＋ 継続の合計 ＋ 借入の返済(最新) ＝ 合計 -->
@@ -381,12 +385,12 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 </div>
 
 <!-- TOP: legend以下は無し -->
-<script src="zaimu_seiri_data.js?v=1789822148"></script>
-<script src="zaimu_seiri_state.js?v=1789822148"></script>
-<script src="zaimu_seiri_sync.js?v=1789822148"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789822148"></script>
-<script src="zaimu_seiri_kijun.js?v=1789822148"></script>
-<script src="zaimu_seiri_render.js?v=1789822148"></script>
+<script src="zaimu_seiri_data.js?v=1789822271"></script>
+<script src="zaimu_seiri_state.js?v=1789822271"></script>
+<script src="zaimu_seiri_sync.js?v=1789822271"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789822271"></script>
+<script src="zaimu_seiri_kijun.js?v=1789822271"></script>
+<script src="zaimu_seiri_render.js?v=1789822271"></script>
 <script>
 // 3段目：サブスク外の判定ページ（zaimu_seiri_ichirangai_meisai.js）から計算する（2026-09-19 Mits様指示・一覧外の経費ページは廃止）
 (function(){
