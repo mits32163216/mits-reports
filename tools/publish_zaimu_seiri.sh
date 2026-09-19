@@ -30,6 +30,7 @@ FILES=(
   "zaimu_seiri_ichirangai_meisai.js"
   "zaimu_seiri_kijun.js"
   "zaimu_seiri_sync.js"
+  "zaimu_seiri_8gatsu_jisseki.js"
 )
 
 # 1. 存在確認
