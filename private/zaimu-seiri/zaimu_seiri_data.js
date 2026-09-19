@@ -161,6 +161,7 @@ var DATA = {
   "k3": {
     title: "区分3　カードと口座を整理する（年会費・維持費）",
     items: [
+      { id:"k3-09", name:"JALカード 年会費（三菱UFJニコス）", amount:183, card:"PayPay 銀行から引落（三菱UFJニコス）", memo:"【2026-09-19 Mits様「JALカード　年会費と一つ決済」】PayPay 銀行の引落 2026-03-10 2,200円を年会費とした（JAL 普通カードの年会費と同額）。月割り＝2,200÷12＝183。もう1件の 6/10 20,900円は1回の決済としてサブスク外へ。", notion_url:null, url:null, cycle:"annual", annual_amount:"2,200円", annual_jpy:2200, last_paid:"2026-03-10", next_due:"2027-03-10予定", status:null, status_date:null },
       { id:"k3-01", name:"楽天プレミアムカード 年会費", amount:917, card:"", memo:"2026-09-18 楽天カードの引落全額が k1-01 に入っているため重複（年会費 11,000円は 3月の引落に含まれる）", notion_url:"https://app.notion.com/3c000782d90a81778312dd0a8111f2d7", cycle:"annual", annual_amount:"11,000円", annual_jpy:11000, last_paid:"2026-03-03", next_due:"2027-03-03予定", status:"excluded", status_date:"2026-09-18", excluded:true },
       { id:"k3-02", name:"Chase Hyatt 年会費", amount:1267, card:"", memo:"", notion_url:"https://app.notion.com/3b100782d90a81ffb981c6f1bbdad0d6", cycle:"annual", annual_amount:"$95（15,200円）", annual_jpy:15200, last_paid:"2026-03-01", next_due:"2027-03-01予定", status:null, status_date:null },
       { id:"k3-03", name:"BOA 普通預金 3245 口座維持", amount:1899, card:"", memo:"", notion_url:"https://app.notion.com/3bf00782d90a81f38fcad3138a4020fd", cycle:"monthly", annual_amount:null, annual_jpy:null, last_paid:"2026-09-15", next_due:"2026-10-15予定", status:null, status_date:null },
