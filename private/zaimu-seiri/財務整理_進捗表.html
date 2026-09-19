@@ -271,18 +271,18 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 <br>ボタンは同じものをもう一度押すと外れて未着手に戻ります。状態はこのブラウザに保存されます（他の端末には送りません）。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789820663"></script>
-<script src="zaimu_seiri_state.js?v=1789820663"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789820663"></script>
-<script src="zaimu_seiri_kijun.js?v=1789820663"></script>
-<script src="zaimu_seiri_render.js?v=1789820663"></script>
+<script src="zaimu_seiri_data.js?v=1789820996"></script>
+<script src="zaimu_seiri_state.js?v=1789820996"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789820996"></script>
+<script src="zaimu_seiri_kijun.js?v=1789820996"></script>
+<script src="zaimu_seiri_render.js?v=1789820996"></script>
 <script>
 // 一覧 A の合計（TOP 2段目と同じ）── サブスク外の判定から移した13行は k2-47〜k2-59 として上の表に入っている
 (function(){
   const box = document.getElementById("to-ichiran-a");
   if (!box || typeof ZS_KIJUN === "undefined" || !ZS_KIJUN) return;
   const K = ZS_KIJUN, f = n => Math.round(n).toLocaleString("ja-JP");
-  box.innerHTML = `<div class="sec-subtotal" style="line-height:1.8;">一覧 A ＝ 上の行の合計 ${f(K.rowSum)} ＋ 年払いを1〜7月の実額に直した差 ${f(K.A_ADJ)}（Notion・Genspark・年会費・2026-09-19 Mits様確認）＝ <b>${f(K.a)}円</b>（TOP 2段目と同じ）／ 継続 ${f(K.A_KEEP)}円</div>`;
+  box.innerHTML = `<div class="sec-subtotal" style="line-height:1.8;">一覧 A ＝ 上の行の合計 ${f(K.rowSum)} ＋ 年払いを1〜7月の実額に直した差 ${f(K.A_ADJ)}（Notion・Genspark・年会費・DOCPRO・2026-09-19 Mits様確認）＝ <b>${f(K.a)}円</b>（TOP 2段目と同じ）／ 継続 ${f(K.A_KEEP)}円</div>`;
 })();
 </script>
 </body>

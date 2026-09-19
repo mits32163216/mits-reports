@@ -271,7 +271,7 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 
   <!-- 2段目 サブスク：全部固定 -->
   <div class="eq-row eq-row-2" style="margin-top:6px;">
-    <div class="metric frozen"><div class="label">サブスクリプション型の削減対象A(分母)</div><div class="value"><span id="r2-a">-</span><span class="yen">円</span><div class="src">サブスク整理の行の合計 <span id="r2-add">-</span> ＋ 年払いの1〜7月実額との差 <span id="r2-adj">-</span>（Notion・Genspark・年会費）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
+    <div class="metric frozen"><div class="label">サブスクリプション型の削減対象A(分母)</div><div class="value"><span id="r2-a">-</span><span class="yen">円</span><div class="src">サブスク整理の行の合計 <span id="r2-add">-</span> ＋ 年払いの1〜7月実額との差 <span id="r2-adj">-</span>（Notion・Genspark・年会費・DOCPRO）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
     <div class="eq-op">−</div>
     <div class="metric eq-keep-decided frozen"><div class="label">継続と決めた額</div><div class="value"><span id="r2-keep">-</span><span class="yen">円</span><div class="src">サブスク整理で「継続」にした行の月額合計（年払いは月割り）</div><div class="src" id="m-keep-breakdown" style="font-size:11px;line-height:1.5;text-align:left;margin-top:4px;">―</div><span class="lock-note">2026-09-18 訂正後の値で固定</span></div></div>
     <div class="eq-op">＝</div>
@@ -381,11 +381,11 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 </div>
 
 <!-- TOP: legend以下は無し -->
-<script src="zaimu_seiri_data.js?v=1789820663"></script>
-<script src="zaimu_seiri_state.js?v=1789820663"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789820663"></script>
-<script src="zaimu_seiri_kijun.js?v=1789820663"></script>
-<script src="zaimu_seiri_render.js?v=1789820663"></script>
+<script src="zaimu_seiri_data.js?v=1789820996"></script>
+<script src="zaimu_seiri_state.js?v=1789820996"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789820996"></script>
+<script src="zaimu_seiri_kijun.js?v=1789820996"></script>
+<script src="zaimu_seiri_render.js?v=1789820996"></script>
 <script>
 // 3段目：サブスク外の判定ページ（zaimu_seiri_ichirangai_meisai.js）から計算する（2026-09-19 Mits様指示・一覧外の経費ページは廃止）
 (function(){
