@@ -2,30 +2,31 @@
 // 財務整理 進捗表 と 継続経費 が読む共通データ。
 // var 宣言で window グローバルに載る（両ページの <script src="zaimu_seiri_data.js"> で読む）。
 
-var BEFORE = 945213;         // 946,113 − まぐまぐMits様分修正 900円 = 945,213（2026-09-18）
-var TARGET_CUT = 472607;     // 出発点の半分 (945,213 ÷ 2 = 472,606.5 四捨五入)
-var TARGET_80  = 378085;     // 目標で削る額の8割 (472,607 × 0.8 = 378,085.6 切り捨て)
+var BEFORE = 1182430;        // 1〜7月の月平均 1,288,580 − 私用（事業主貸）106,150 = 1,182,430（MF 仕訳の実額・2026-09-19 Mits様確認済）
+var TARGET_CUT = 472607;     // 出発点の半分 (945,213 ÷ 2 = 472,606.5 四捨五入・旧値のまま／2段目以下は Mits様が1段ずつ確認する)
+var TARGET_80  = 378085;     // 目標で削る額の8割 (472,607 × 0.8 = 378,085.6 切り捨て・旧値のまま)
 // A（借入返済を除く）ランニングコストの基準
-var LOAN_MONTHLY = 139450;   // 区分1 借入返済の月額合計
-var A_BEFORE = 805763;       // BEFORE − LOAN_MONTHLY = 805,763
-var A_TARGET_CUT = 402882;   // 805,763 ÷ 2 = 402,881.5 四捨五入
-var A_TARGET_80  = 322305;   // 402,882 × 0.8 = 322,305.6 切り捨て
+var LOAN_MONTHLY = 142286;   // 区分1 借入返済の月額合計。1〜7月の実額の月平均（楽天 35,431 ＋ Amex JP 96,687 ＋ Amex US 10,169・2026-09-19 Mits様確認済）
+var A_BEFORE = 1040144;      // BEFORE − LOAN_MONTHLY = 1,182,430 − 142,286 = 1,040,144（2026-09-19 Mits様確認済）
+var A_TARGET_CUT = 402882;   // 805,763 ÷ 2 = 402,881.5 四捨五入・旧値のまま（2段目以下は Mits様が1段ずつ確認する）
+var A_TARGET_80  = 322305;   // 402,882 × 0.8 = 322,305.6 切り捨て・旧値のまま
 var LIST_SUM   = 462976;    // 区分1〜4 の月額合計（k2-08 まぐまぐMits様分 880円修正・2026-09-18）
 
-// 2026-09-18 サーカス解約本格スタート時点の基準値。1段目のカードはこれで固定表示。
-// 後から行の金額や状態が変わっても動かない。差分は 2段目の「9/18 以降に継続と決めた額」に集約される。
+// 2026-09-19 差し替え：1段目 3ボックスを Mits様確認済の実額に差し替え（before/borrow/start のみ）。
+// keep 以下は 2026-09-18 の値のまま。Mits様が1段ずつ確認しながら順次更新する。
 var BASELINE_20260918 = {
   date: "2026-09-18",
-  before: 945213,        // Before 総額
-  borrow: 139450,        // 借入の返済（区分1 月額合計）
-  start: 805763,         // 出発点総額（借入の返済を除く）= before − borrow
-  keep: 107914,          // 継続と決めた額（月額相当）── 進捗表の15行
+  before: 1182430,       // Before 総額（2026-09-19 差し替え：旧 945,213）
+  borrow: 142286,        // 借入の返済（2026-09-19 差し替え：旧 139,450）
+  start: 1040144,        // 出発点総額（借入の返済を除く）= before − borrow（2026-09-19 差し替え：旧 805,763）
+  keep: 129695,          // 継続と決めた額（月額相当）── 進捗表の21行（2026-09-19 差し替え：旧 107,914／9/18 以降に継続にした6行を含む）
   keepOutside: 112326,   // 継続と決めた額（一覧外・月額相当）── 家賃 106,770 + 電気 4,695 + ガス 861
-  circus: 697849,        // サーカス対象 = start − keep
-  outside: 482237,       // 削減対象B（一覧に載っていない月額の経費）= before − LIST_SUM
-  targetA: 215612,       // 削減対象A（このページの分母）= circus − outside
-  // 2026-09-18 時点で「継続（パン）」だった 15行の id。以降にこれ以外が継続になったら「9/18以降継続」の枠へ入る。
-  keptIds: ["k2-46","k2-45","k2-44","k2-35","k2-27","k2-04","k2-03","k2-06","k2-02","k2-25","k2-26","k2-10","k2-07","k2-36","k2-31"]
+  circus: 697849,        // サーカス対象 = start − keep（旧値のまま／2段目以下は Mits様が1段ずつ確認する）
+  outside: 482237,       // 削減対象B（一覧に載っていない月額の経費）= before − LIST_SUM（旧値のまま）
+  targetA: 215612,       // 削減対象A（このページの分母）= circus − outside（旧値のまま）
+  // 2026-09-18 時点で「継続（パン）」だった 15行 ＋ 9/18 以降に継続にした 6行 = 21行の id。
+  // 9/18 以降に追加した6行：k2-38 Chatwork ／ k3-06 Bonvoy 年会費 ／ k2-16 U-NEXT ／ k2-11 DMM ／ k2-08 まぐまぐ ／ k2-01 WEBLIO（2026-09-19 Mits様確認）
+  keptIds: ["k2-46","k2-45","k2-44","k2-35","k2-27","k2-04","k2-03","k2-06","k2-02","k2-25","k2-26","k2-10","k2-07","k2-36","k2-31","k2-38","k3-06","k2-16","k2-11","k2-08","k2-01"]
 };
 
 // 月別の実際に出ていった額（2026-09-19 第4版・BS-keiri・参謀確定）。
@@ -33,8 +34,8 @@ var BASELINE_20260918 = {
 //                    （第2版の作り方から「単発の平ならし」と「アドネス穴埋め」を外したもの・実額そのまま）
 // jigyounushi_kashi = 借方=事業主貸/西田光弘・貸方=未払金/カード の8仕訳（1〜8月 純額 ¥743,053・カード払いだが会社経費でない私用）
 // borrow            = 楽天引落確定額 + Amex JP 42008 リボ元本+手数料+分割新規 + Amex US 44000 年会費・手数料・利息（狭義・第2版と同一）
-// one_off           = 外注費 1件 ≥50,000 の当月合計（仕訳ID：Mar #49 のみ）
-// running           = total − jigyounushi_kashi − borrow − one_off
+// one_off           = 0（2026-09-19 Mits様確定：単発は分けず running に含める。3月 #49 も running へ戻した）
+// running           = total − jigyounushi_kashi − borrow（2026-09-19 差し替え：one_off を running に戻したため式から外した）
 //
 // jigyounushi_kashi 8件（1〜8月 純額 ¥743,053・MF仕訳ID・参謀確定）:
 //   #151 (2026-01-19) PRIORITY PASS AmexJP ANA ¥5,733
@@ -69,7 +70,7 @@ var BASELINE_20260918 = {
 var MONTHLY_ACTUAL = [
   { month:"2026-01", total:1480475, jigyounushi_kashi:117279, borrow:195584, one_off:     0, running:1167612 },
   { month:"2026-02", total:1767200, jigyounushi_kashi:609774, borrow:120820, one_off:     0, running:1036606 },
-  { month:"2026-03", total:1399157, jigyounushi_kashi: 11000, borrow:137706, one_off: 50371, running:1200080 },
+  { month:"2026-03", total:1399157, jigyounushi_kashi: 11000, borrow:137706, one_off:     0, running:1250451 },
   { month:"2026-04", total: 949744, jigyounushi_kashi:     0, borrow:146489, one_off:     0, running: 803255 },
   { month:"2026-05", total:1108630, jigyounushi_kashi:  5000, borrow:145694, one_off:     0, running: 957936 },
   { month:"2026-06", total:1305664, jigyounushi_kashi:     0, borrow:130769, one_off:     0, running:1174895 },
@@ -151,7 +152,7 @@ var DATA = {
       { id:"k2-31", name:"TeamViewer", amount:3768, card:"年払い", memo:"【Mits様 2026-09-18 進捗表でkeep】\n", notion_url:"https://app.notion.com/3b100782d90a8103ad2cd78a2377bb0c", url:null, cycle:"annual", annual_amount:"45,210円", annual_jpy:45210, last_paid:"2026-03-16", next_due:"2027-03-16予定", status:"keep", status_date:"2026-09-18" },
       { id:"k2-32", name:"Notta", amount:4093, card:"", memo:"【Mits様 2026-09-18 進捗表でdone】\n", notion_url:"https://app.notion.com/3c200782d90a81d6a514dcbb62f78889", url:null, cycle:"monthly", annual_amount:null, annual_jpy:null, last_paid:"2026-09-02", next_due:"2026-10-02予定", status:"done", status_date:"2026-09-18" },
       { id:"k2-33", name:"SCORESENSE", amount:5268, card:"Amex US 44000", memo:"【Mits様メモ 2026-09-18】Call our Customer Care department at 1-888-550-2159 or chat with a live agent. We are here to assist you every day of the week:\n\nMonday - Friday, 8AM to 8PM CT\nSaturday, 8AM to 5PM CT\nSunday, Noon to 6PM CT", notion_url:"https://app.notion.com/3b100782d90a811296e9e96beec4d7e7", url:null, cycle:"monthly", annual_amount:null, annual_jpy:null, last_paid:"2026-08-24", next_due:"2026-09-24予定", status:null, status_date:null },
-      { id:"k2-34", name:"PRIORITY PASS", amount:5431, card:"Amex JP ANA", memo:"【Mits様メモ 2026-09-18】営業時間に電話", notion_url:"https://app.notion.com/3c200782d90a813f8498fb083eeccfd3", url:null, cycle:null, annual_amount:null, annual_jpy:null, last_paid:"2026-06-08", next_due:"要調査", status:null, status_date:null },
+      { id:"k2-34", name:"PRIORITY PASS", amount:2467, card:"Amex JP ANA", memo:"【Mits様メモ 2026-09-18】営業時間に電話\n1〜7月の請求4回のうち 1/19 5,733 は事業主貸（私用）のため除外。残り3回 17,269 ÷ 7ヶ月＝2,467（2026-09-19 Mits様確認）", notion_url:"https://app.notion.com/3c200782d90a813f8498fb083eeccfd3", url:null, cycle:null, annual_amount:null, annual_jpy:null, last_paid:"2026-06-08", next_due:"要調査", status:null, status_date:null },
       { id:"k2-35", name:"TELLO", amount:6189, card:"Amex US 44000", memo:"【Mits様 2026-09-18 進捗表でkeep】\n", notion_url:"https://app.notion.com/3b100782d90a81eeb687f217ca1a12bb", url:null, cycle:"monthly", annual_amount:null, annual_jpy:null, last_paid:"2026-08-21", next_due:"2026-09-21予定", status:"keep", status_date:"2026-09-18" },
       { id:"k2-36", name:"ムームードメイン", amount:8538, card:"", memo:"【Mits様 2026-09-18 進捗表でkeep】\n", notion_url:"https://app.notion.com/3c200782d90a81208aaed814b7d8710d", url:null, cycle:"irregular", annual_amount:null, annual_jpy:null, last_paid:"2026-09-04", next_due:"要調査(通常は年払い)", status:"keep", status_date:"2026-09-18" },
       { id:"k2-37", name:"Notion", amount:8975, card:"年払い", memo:"【Mits様 2026-09-18 進捗表でdone】\n", notion_url:"https://app.notion.com/3c000782d90a8170bb19c310b91951c8", url:null, cycle:"annual", annual_amount:"$690.77（107,700円）", annual_jpy:107700, last_paid:"2026-01-01", next_due:"2027-01-01予定", status:"done", status_date:"2026-09-18" },
