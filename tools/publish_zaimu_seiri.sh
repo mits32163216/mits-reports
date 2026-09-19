@@ -15,10 +15,11 @@ REPO="/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジ�
 
 MSG="${1:-財務整理: 最新版で出し直し}"
 
-# 対象12本（HTML 6本＋JS 6本）。参照は grep で確認済み・これ以外は無い
+# 対象13本（HTML 7本＋JS 6本）。参照は grep で確認済み・これ以外は無い
 FILES=(
   "財務整理_TOP.html"
   "財務整理_TOP_年額.html"
+  "財務整理_2026年.html"
   "財務整理_進捗表.html"
   "継続経費.html"
   "借入の返済.html"

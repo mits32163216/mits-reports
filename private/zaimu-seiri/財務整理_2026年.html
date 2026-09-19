@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta name="robots" content="noindex,nofollow">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>財務整理 サブスク整理</title>
+<meta name="robots" content="noindex,nofollow">
+<title>財務整理 2026年</title>
 <style>
 :root {
   --bg: #f7f4ed;
@@ -19,7 +19,7 @@
   --gray: #9a9a9a;
   --line: #e0dcd0;
   --hover: #f0ede4;
-  --done-bg: #ececec;
+  --done-bg: #eef5ee;
   --hold-bg: #fdf7dc;
   --keep-bg: #ececec;
   --handled: #4a9cd9;
@@ -75,6 +75,10 @@ body { padding: 12px; max-width: 1980px; margin: 0 auto; }
 .metric.frozen .value::after { content:none !important; }
 .metric.frozen .src { color:#9ca3af !important; }
 .metric.frozen .lock-note { display:block; font-size:9px; color:#9ca3af; margin-top:3px; font-style:italic; }
+/* 出発点とゴールは同じ色の太枠（2026-09-19 Mits様指示） */
+.metric.frozen.eq-pair { background:#f0f7f0 !important; border-color:#4a8a4a !important; border-width:3px !important; border-style:solid !important; }
+.metric.frozen.eq-pair .label { color:#2e5e2e !important; font-weight:bold !important; }
+.metric.frozen.eq-pair .value { color:var(--green) !important; }
 .metric.eq-target-a { background:#fef7e0; border-color:#c9a54a; }
 .metric.eq-target-a .label { color:var(--gold); font-weight:bold; }
 .metric.eq-target-a .value { color:var(--gold); }
@@ -95,7 +99,8 @@ body { padding: 12px; max-width: 1980px; margin: 0 auto; }
 .bar-wrap { margin: 10px 0 4px; position: relative; }
 .bar-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--sub); margin-bottom: 4px; }
 .bar-outer { position: relative; height: 16px; background: #eee; border-radius: 8px; overflow: visible; }
-.bar-inner { height: 100%; background: linear-gradient(90deg, #4a7c59, #2e7d32); border-radius: 8px; transition: width 0.3s; }
+.bar-plan { position: absolute; top: 0; height: 100%; background: repeating-linear-gradient(45deg, #9b7fd1, #9b7fd1 6px, #b9a3e3 6px, #b9a3e3 12px); border-radius: 0 8px 8px 0; transition: width 0.3s; }
+.bar-inner { position: relative; height: 100%; background: linear-gradient(90deg, #4a7c59, #2e7d32); border-radius: 8px; transition: width 0.3s; }
 .bar-inner.over { background: linear-gradient(90deg, #b8860b, #d4a017); }
 .bar-mark-80 { position: absolute; top: -4px; bottom: -4px; left: 80%; width: 2px; background: var(--yellow); pointer-events: none; }
 .bar-mark-80-lbl { position: absolute; top: -18px; left: 80%; transform: translateX(-50%); font-size: 10px; color: var(--yellow); font-weight: bold; white-space: nowrap; }
@@ -231,6 +236,34 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 .topnav .nav-links a { padding:4px 10px; color:var(--navy); text-decoration:none; border-radius:4px; border:1px solid var(--line); font-size:12px; }
 .topnav .nav-links a:hover { background:var(--ivory); }
 .topnav .nav-links a.active { background:var(--navy); color:#fff; border-color:var(--navy); }
+
+.correction { color:#c62828 !important; font-size:11px !important; margin-top:4px !important; font-weight:bold !important; }
+
+/* 2・3・4段目：列ごとに同じ色（左＝分母・青／真ん中＝継続・緑） */
+.summary .eq-row-2 > .metric:nth-child(1), .summary .eq-row-3 > .metric:nth-child(1), .summary .eq-row-4 > .metric:nth-child(1) { background:#e3eefb !important; border-color:#7fa8d8 !important; }
+.summary .eq-row-2 > .metric:nth-child(3), .summary .eq-row-3 > .metric:nth-child(3), .summary .eq-row-4 > .metric:nth-child(3) { background:#e4f3e5 !important; border-color:#7dbb82 !important; }
+.summary .eq-row-2 > .metric:nth-child(5), .summary .eq-row-3 > .metric:nth-child(5), .summary .eq-row-4 > .metric:nth-child(5) { background:#fdecec !important; border-color:#e08a8a !important; }
+.summary .eq-row-6 > .metric:nth-child(3) { background:#e4f3e5 !important; border-color:#7dbb82 !important; }
+.summary .eq-row-5 > .metric:nth-child(1), .summary .eq-row-6 > .metric:nth-child(1) { background:#efe7f8 !important; border-color:#a88bd2 !important; }
+</style>
+<style>
+.y26 table { width:100%; border-collapse:collapse; background:#fff; font-size:13px; }
+.y26 th, .y26 td { border-bottom:1px solid var(--line); padding:6px 8px; }
+.y26 th { background:#eeeae0; font-size:12px; text-align:right; white-space:nowrap; }
+.y26 th:first-child, .y26 td:first-child { text-align:left; }
+.y26 td.n { text-align:right; font-family:"SF Mono",Menlo,monospace; white-space:nowrap; }
+.y26 tr.sub td { color:var(--sub); font-size:12px; }
+.y26 tr.sum td { font-weight:bold; border-top:2px solid var(--navy); }
+.y26 tr.grand td { font-weight:bold; font-size:15px; background:#f0f7f0; border-top:3px solid #4a8a4a; }
+.y26 .note { font-size:11px; color:var(--sub); line-height:1.7; margin-top:8px; }
+.y26-boxes { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:12px 0; }
+.y26-box { background:#fff; border:1px solid var(--line); border-radius:6px; padding:10px; text-align:center; }
+.y26-box .l { font-size:12px; color:var(--sub); }
+.y26-box .v { font-family:"SF Mono",Menlo,monospace; font-size:22px; font-weight:bold; color:var(--navy); margin-top:4px; }
+.y26-box .s { font-size:11px; color:var(--sub); margin-top:2px; }
+.y26-box.main { border:3px solid #4a8a4a; background:#f0f7f0; }
+.y26-box.main .v { color:var(--green); font-size:26px; }
+@media (max-width:900px){ .y26-boxes { grid-template-columns:1fr 1fr; } }
 </style>
 </head>
 <body>
@@ -240,36 +273,29 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   <span class="nav-links">
     <a href="財務整理_TOP.html">TOP</a>
     <a href="財務整理_TOP_年額.html">年額</a>
-    <a href="財務整理_2026年.html">2026年</a>
-    <a href="財務整理_進捗表.html" class="active">サブスク整理</a>
+    <a href="財務整理_2026年.html" class="active">2026年</a>
+    <a href="財務整理_進捗表.html">サブスク整理</a>
     <a href="継続経費.html">継続経費</a>
     <a href="借入の返済.html">借入の返済</a>
     <a href="一覧外_上限と判定.html">サブスク外の判定</a>
   </span>
 </div>
 
-<div id="save-state-bar" style="margin:0 0 12px 0;padding:8px 12px;background:#fff8ea;border:1px solid #b08d3a;border-radius:4px;font-size:12px;"></div>
+<div class="summary y26">
+  <h1>2026年の支出 <span style="font-size:11px;color:var(--sub);font-weight:normal;">（1〜7月は実績、8〜12月は「削った・対応済み・削る・一回性・削る予定額」を引いた見込み）</span></h1>
 
-<div class="legend">
-  <span><span class="box" style="background:#fff7d6;border:1px solid var(--yellow);"></span>累計が8割に届くまでの行（黄色い縦帯）</span>
-  <span><span class="box" style="background:var(--handled-bg);border:1px solid var(--handled);"></span>対応済み（手続き済み・課金停止待ち）</span>
-  <span><span class="box" style="background:var(--done-bg);"></span>完了</span>
-  <span><span class="box" style="background:var(--hold-bg);"></span>判断保留</span>
-  <span><span class="box" style="background:var(--keep-bg);"></span>継続（パン）＝サーカスに入れない・小計にも累計にも入れない</span>
-</div>
+  <div class="y26-boxes">
+    <div class="y26-box main"><div class="l">2026年の支出（見込み）</div><div class="v"><span id="y-total">-</span>円</div><div class="s">ランニング ＋ 借入の返済</div></div>
+    <div class="y26-box"><div class="l">何もしなかった場合</div><div class="v"><span id="y-nothing">-</span>円</div><div class="s">1〜7月のペースのまま12か月</div></div>
+    <div class="y26-box"><div class="l">減らせる額（見込み）</div><div class="v" style="color:var(--green);"><span id="y-saved">-</span>円</div><div class="s">何もしなかった場合 − 見込み</div></div>
+    <div class="y26-box"><div class="l">半分経営のゴールの年額</div><div class="v"><span id="y-goal">-</span>円</div><div class="s">ゴール <span id="y-goal-m">-</span> × 12 ＋ 借入の返済</div></div>
+  </div>
 
-<div id="sections" data-sections="k2m,k2a,k3,k4"></div>
-<div id="to-ichiran-a" style="margin-top:16px;"></div>
-
-<div class="actions-bar">
-  <button onclick="exportJSON()">状態一覧を書き出す（JSONをコピー）</button>
-  <pre class="export-out" id="export-out"></pre>
-</div>
-
-<div class="footer-note">
-サーカス（定期課金）の一覧の元：Notion「🎪 サーカス撤退監査」<a href="https://app.notion.com/p/467d5f10489f47e4a8b60c9baf3b9031" target="_blank">https://app.notion.com/p/467d5f10489f47e4a8b60c9baf3b9031</a>
-<br>継続（パン）＝意図的に続けるもの。サーカスには入れない。Notion の状態も「継続決定（パン）」にする。
-<br>ボタンは同じものをもう一度押すと外れて未着手に戻ります。状態はこのブラウザに保存されます（他の端末には送りません）。この画面から Notion は書き換えません。
+  <table>
+    <thead><tr><th>項目</th><th>1〜7月 実績</th><th>8〜12月 月額（見込み）</th><th>8〜12月 計</th><th>2026年 計</th></tr></thead>
+    <tbody id="y-body"></tbody>
+  </table>
+  <div class="note" id="y-note"></div>
 </div>
 
 <script src="zaimu_seiri_data.js?v=1789823008"></script>
@@ -277,14 +303,50 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 <script src="zaimu_seiri_sync.js?v=1789823008"></script>
 <script src="zaimu_seiri_ichirangai_meisai.js?v=1789823008"></script>
 <script src="zaimu_seiri_kijun.js?v=1789823008"></script>
-<script src="zaimu_seiri_render.js?v=1789823008"></script>
 <script>
-// 一覧 A の合計（TOP 2段目と同じ）── サブスク外の判定から移した13行は k2-47〜k2-59 として上の表に入っている
 (function(){
-  const box = document.getElementById("to-ichiran-a");
-  if (!box || typeof ZS_KIJUN === "undefined" || !ZS_KIJUN) return;
-  const K = ZS_KIJUN, f = n => Math.round(n).toLocaleString("ja-JP");
-  box.innerHTML = `<div class="sec-subtotal" style="line-height:1.8;">一覧 A ＝ 上の行の合計 ${f(K.rowSum)} ＋ 年払いを1〜7月の実額に直した差 ${f(K.A_ADJ)}（Notion・Genspark・年会費・DOCPRO・2026-09-19 Mits様確認）＝ <b>${f(K.a)}円</b>（TOP 2段目と同じ）／ 継続 ${f(K.A_KEEP)}円</div>`;
+  const K = (typeof ZS_KIJUN !== "undefined") ? ZS_KIJUN : null;
+  if (!K) return;
+  const f = n => Math.round(n).toLocaleString("ja-JP");
+  const esc = t => String(t == null ? "" : t).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const M1 = K.months || 7, M2 = 12 - M1;   // 実績の月数・見込みの月数
+  const rows = [];
+  // サブスク整理（一覧 A）：1〜7月＝月平均 × 7／8〜12月＝月平均 − 完了 − 対応済み
+  const aNext = K.a - K.aDone - K.aHandled;
+  rows.push({ name: "サブスク整理（一覧 A）", sub: `月 ${f(K.a)} − 完了 ${f(K.aDone)} − 対応済み ${f(K.aHandled)}`, h1: K.a * M1, m2: aNext });
+  // サブスク外（一覧外 B）：大分類ごと。1〜7月＝明細の総額／8〜12月＝月平均 − 削る − 一回性 − 削る予定額
+  let bH1 = 0, bM2 = 0;
+  Object.keys(K.byCat).forEach(c => {
+    const x = K.byCat[c], plan = (K.plans && K.plans[c]) || 0;
+    const m2 = Math.max(0, x.actual - x.cut - x.once - plan);
+    bH1 += x.total; bM2 += m2;
+    rows.push({ name: "サブスク外：" + c, sub: `月 ${f(x.actual)} − 削る ${f(x.cut)} − 一回性 ${f(x.once)} − 削る予定額 ${f(plan)}`, h1: x.total, m2: m2, indent: true });
+  });
+  const runH1 = K.a * M1 + bH1, runM2 = aNext + bM2;
+  // 借入の返済：1〜7月＝実額の月平均 × 7／8〜12月＝借入の返済ページの月ごとの見込み
+  const LOAN = [ ["8月", 139450, "①〜④ 全部"], ["9月", 131738, "④-1 8WEEKS.AI の分割を止めた後"], ["10月", K.LOAN_LATEST + 35671, "今の月々 ＋ 8WEEKS.AI 一括 35,671（10/10）"], ["11月", K.LOAN_LATEST, "今の月々"], ["12月", K.LOAN_LATEST, "今の月々"] ];
+  const loanH1 = K.LOAN_BEFORE * M1, loanH2 = LOAN.reduce((t, x) => t + x[1], 0);
+
+  const tr = (r) => `<tr class="${r.cls || ""}"><td>${r.indent ? "　" : ""}${esc(r.name)}${r.sub ? `<div style="font-size:10px;color:var(--sub);font-weight:normal;">${esc(r.sub)}</div>` : ""}</td><td class="n">${f(r.h1)}</td><td class="n">${r.m2 == null ? "―" : f(r.m2)}</td><td class="n">${f(r.h2 != null ? r.h2 : r.m2 * M2)}</td><td class="n">${f(r.h1 + (r.h2 != null ? r.h2 : r.m2 * M2))}</td></tr>`;
+  let html = rows.map(tr).join("");
+  html += tr({ name: "ランニングコスト 計", h1: runH1, m2: runM2, cls: "sum" });
+  html += tr({ name: "借入の返済", sub: LOAN.map(x => `${x[0]} ${f(x[1])}（${x[2]}）`).join("／"), h1: loanH1, m2: null, h2: loanH2 });
+  const total = runH1 + runM2 * M2 + loanH1 + loanH2;
+  html += `<tr class="grand"><td>2026年の支出（見込み）</td><td class="n">${f(runH1 + loanH1)}</td><td class="n">―</td><td class="n">${f(runM2 * M2 + loanH2)}</td><td class="n">${f(total)}</td></tr>`;
+  document.getElementById("y-body").innerHTML = html;
+
+  const nothing = (K.start + K.LOAN_BEFORE) * 12;
+  document.getElementById("y-total").textContent = f(total);
+  document.getElementById("y-nothing").textContent = f(nothing);
+  document.getElementById("y-saved").textContent = f(nothing - total);
+  document.getElementById("y-goal-m").textContent = f(K.goal);
+  document.getElementById("y-goal").textContent = f(K.goal * 12 + loanH1 + loanH2);
+  document.getElementById("y-note").innerHTML =
+    `・1〜7月：サブスク整理は月平均 × ${M1}（年払いは1〜7月の実額に直した差を含む）、サブスク外は明細の総額、借入は実額の月平均 ${f(K.LOAN_BEFORE)} × ${M1}。<br>` +
+    `・8〜12月：押した状態（完了・対応済み・削る・一回性）と、サブスク外の判定で入れた「削る予定額」を引いた月額 × ${M2}。「続ける」と未判定はそのまま残る。<br>` +
+    `・何もしなかった場合：出発点 ${f(K.start)} ＋ 借入 ${f(K.LOAN_BEFORE)} の × 12。ゴールの年額：ゴール ${f(K.goal)} × 12 ＋ 2026年の借入の返済。<br>` +
+    `・押した状態・削る予定額を変えると、ここも一緒に変わる（ローカルと web は自動で同期）。`;
+  const d = new Date(); document.getElementById("topnav-time").textContent = d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0") + " " + String(d.getHours()).padStart(2,"0") + ":" + String(d.getMinutes()).padStart(2,"0");
 })();
 </script>
 </body>
