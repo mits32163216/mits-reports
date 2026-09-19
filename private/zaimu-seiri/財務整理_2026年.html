@@ -300,17 +300,17 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 
 <!-- 2027年 予測（同じページに並べる・2026年の下に置く）── 2026年の表・計算は変えない -->
 <div class="summary y26" style="border-top:3px solid var(--gold); margin-top:20px;">
-  <h1>2027年の支出（予測） <span style="font-size:11px;color:var(--sub);font-weight:normal;">（今の判定〔継続・削る予定額〕と 借入の返済 の予定から作った予測。1〜12月すべて予測）</span></h1>
+  <h1>2027年の支出（予測） <span style="font-size:11px;color:var(--sub);font-weight:normal;">（今の判定〔継続・削る予定額〕から作った予測。1〜12月すべて予測・借入は 0）</span></h1>
 
   <div style="padding:8px 10px; background:#f5efe0; border:1px solid #c9a54a; border-radius:4px; font-size:12px; color:var(--sub); line-height:1.6; margin-bottom:10px;">
-    根拠：2027年は、今の判定（継続・削る予定額）と 借入の返済 の予定から作った予測。<b>サブスク整理は Chase Hyatt 年会費・Notion・JALカード 年会費（三菱UFJニコス） の3つを残し、他は全部解約した前提（Mits様 2026-09-20）。</b>ランニング月額のうち一覧Aは残す3行の月割り（Chase Hyatt 1,267 ＋ Notion 8,975 ＋ JALカード 1,742 ＝ 11,984 円/月・DATAから id で拾って足す）。他の行は 2027-01 から全部 0。サブスク外は2026年の8月以降と同じ月額（月平均 − 削る − 一回性 − 削る予定額）を12か月流す。借入の返済＝2026年12月の月々（77,598円・借入の返済ページ「合計（月々の返済）」の値）を12か月そのまま流した。2027年内に完済する借入は無い（⑤ペイディ 最終回 2028-04-27・③楽天デンタル 完済見込み 2029-04頃・①楽天キャッシングリボ・②Amex JP リボは残高から2027年中の完済なし）。2026年の A_ADJ（年払いを1〜8月の実額に直した差 37,215）は2027年には入れない（残す3行は月割りの amount で数えているため）。
+    根拠：2027年は、今の判定（継続・削る予定額）から作った予測。<b>サブスク整理は Chase Hyatt 年会費・Notion・JALカード 年会費（三菱UFJニコス） の3つを残し、他は全部解約した前提（Mits様 2026-09-20）。</b>ランニング月額のうち一覧Aは残す3行の月割り（Chase Hyatt 1,267 ＋ Notion 8,975 ＋ JALカード 1,742 ＝ 11,984 円/月・DATAから id で拾って足す）。他の行は 2027-01 から全部 0。サブスク外は2026年の8月以降と同じ月額（月平均 − 削る − 一回性 − 削る予定額）を12か月流す。<b>2027年は借入の返済なし（Mits様 2026-09-20「2027は借り入れ一切ナシに」）。</b>ペイディ・楽天キャッシングリボ・Amex JP リボ・楽天デンタル・Amex US 利息 は 2026年中に全部返し終わる前提。2026年の A_ADJ（年払いを1〜8月の実額に直した差 37,215）は2027年には入れない（残す3行は月割りの amount で数えているため）。
   </div>
 
   <div class="y26-boxes">
-    <div class="y26-box main"><div class="l">2027年の支出（予測）</div><div class="v"><span id="y2-total">-</span>円</div><div class="s">ランニング ＋ 借入の返済</div></div>
-    <div class="y26-box"><div class="l">何もしなかった場合</div><div class="v"><span id="y2-nothing">-</span>円</div><div class="s">出発点 × 12 ＋ 借入 × 12</div></div>
+    <div class="y26-box main"><div class="l">2027年の支出（予測）</div><div class="v"><span id="y2-total">-</span>円</div><div class="s">ランニング（借入なし）</div></div>
+    <div class="y26-box"><div class="l">何もしなかった場合</div><div class="v"><span id="y2-nothing">-</span>円</div><div class="s">出発点 × 12（借入は 0）</div></div>
     <div class="y26-box"><div class="l">減らせる額（予測）</div><div class="v" style="color:var(--green);"><span id="y2-saved">-</span>円</div><div class="s">何もしなかった場合 − 予測</div></div>
-    <div class="y26-box"><div class="l">ゴールどおりなら</div><div class="v"><span id="y2-goal">-</span>円</div><div class="s">ゴール <span id="y2-goal-m">-</span> × 12 ＋ 借入 × 12</div></div>
+    <div class="y26-box"><div class="l">ゴールどおりなら</div><div class="v"><span id="y2-goal">-</span>円</div><div class="s">ゴール <span id="y2-goal-m">-</span> × 12（借入は 0）</div></div>
   </div>
 
   <table>
@@ -320,11 +320,11 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   <div class="note" id="y2-note"></div>
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789833054"></script>
-<script src="zaimu_seiri_state.js?v=1789833054"></script>
-<script src="zaimu_seiri_sync.js?v=1789833054"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789833054"></script>
-<script src="zaimu_seiri_kijun.js?v=1789833054"></script>
+<script src="zaimu_seiri_data.js?v=1789833120"></script>
+<script src="zaimu_seiri_state.js?v=1789833120"></script>
+<script src="zaimu_seiri_sync.js?v=1789833120"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789833120"></script>
+<script src="zaimu_seiri_kijun.js?v=1789833120"></script>
 <script src="zaimu_seiri_8gatsu_jisseki.js"></script>
 <script>
 (function(){
