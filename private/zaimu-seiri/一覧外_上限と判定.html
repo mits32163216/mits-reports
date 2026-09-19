@@ -227,12 +227,28 @@ tr.sub-head.foldable td:hover { background: #e5d9f4; }
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789838503"></script>
-<script src="zaimu_seiri_state.js?v=1789838503"></script>
-<script src="zaimu_seiri_sync.js?v=1789838503"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789838503"></script>
-<script src="zaimu_seiri_kijun.js?v=1789838503"></script>
+<script src="zaimu_seiri_data.js?v=1789838553"></script>
+<script src="zaimu_seiri_state.js?v=1789838553"></script>
+<script src="zaimu_seiri_sync.js?v=1789838553"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789838553"></script>
+<script src="zaimu_seiri_kijun.js?v=1789838553"></script>
 <script>
+// 見立ての理由を読みやすく出す（Mits様 2026-09-20「見立ての理由が煩雑で読みづらい　整理して」）
+// note は「／」区切りで新しい順に積んである。1行目＝いまの置き場所の理由（いちばん新しい判断）、2行目＝元の記録、残りは「変更の記録」に畳む
+function noteHtml(note){
+  const segs = String(note||"").split("／").map(x => x.trim()).filter(Boolean);
+  if (!segs.length) return "";
+  const isHist = x => /Mits様|統合|へ移動|へ（|戻す|まとめる|抜けの追加|全探索/.test(x);
+  const plain = x => x.replace(/@\d+(\.\d+)?/g, "").replace(/CSV\((\d{4})(\d{2})(\d{2})\)集計/g, "カード明細書（$1-$2-$3 取得）から集計").replace(/[（(]Mits様 (\d{4}-\d{2}-\d{2})[^）)]*[）)]/g, "（Mits様 $1）").replace(/\s+/g, " ").trim();
+  const hist = segs.filter(isHist), base = segs.filter(x => !isHist(x));
+  const head = hist.length ? plain(hist[0]) : "";
+  const src = base.length ? plain(base.join("・")) : "";
+  let h = "";
+  if (head) h += `<div style="font-weight:bold;">${esc(head)}</div>`;
+  if (src) h += `<div style="color:var(--sub);font-size:10px;">元の記録：${esc(src)}</div>`;
+  if (hist.length > 1) h += `<details style="font-size:10px;color:var(--sub);"><summary>変更の記録（${hist.length}件）</summary><ol style="margin:2px 0 0 14px;padding:0;">${hist.map(x => `<li>${esc(plain(x))}</li>`).join("")}</ol></details>`;
+  return h;
+}
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
 // カテゴリは caps のキーからそのまま拾う（決め打ちしない・BS-keiri が増減できる）
@@ -445,7 +461,7 @@ function render(){
         <td class="total-col">${fmtYen(Number(it.total||0))}円</td>
         <td class="monthly-col">${fmtYen(Number(it.monthly||0))}円</td>
         <td class="date">${esc(it.first||"")}<br>〜 ${esc(it.last||"")}</td>
-        <td class="note-col">${esc(it.note||"")}${dt?`<br><span style="color:var(--sub);font-size:10px;">押した日 ${esc(dt)}</span>`:""}</td>
+        <td class="note-col">${noteHtml(it.note||"")}${dt?`<br><span style="color:var(--sub);font-size:10px;">押した日 ${esc(dt)}</span>`:""}</td>
       </tr>`;
     };
     // ボタンの無い分類（消費・投資）の見出し：データの中分類を使う。押した中分類は、消費へ移る「食事」「カフェ」だけ使う
