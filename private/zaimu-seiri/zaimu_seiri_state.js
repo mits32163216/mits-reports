@@ -50,8 +50,8 @@ var SAVED_STATE = {
       "status_date": "2026-09-18"
     },
     "k2-29": {
-      "status": "handled",
-      "status_date": "2026-09-18"
+      "status": "done",
+      "status_date": "2026-09-19"
     },
     "k2-28": {
       "status": "done",
@@ -90,8 +90,8 @@ var SAVED_STATE = {
       "status_date": "2026-09-18"
     },
     "k2-15": {
-      "status": "handled",
-      "status_date": "2026-09-18"
+      "status": "done",
+      "status_date": "2026-09-19"
     },
     "k2-11": {
       "status": "keep",
@@ -106,8 +106,8 @@ var SAVED_STATE = {
       "status_date": "2026-09-18"
     },
     "k2-05": {
-      "status": "handled",
-      "status_date": "2026-09-18"
+      "status": "done",
+      "status_date": "2026-09-19"
     },
     "k2-04": {
       "status": "keep",
@@ -172,6 +172,10 @@ var SAVED_STATE = {
     "k2-08": {
       "status": "keep",
       "status_date": "2026-09-18"
+    },
+    "k2-49": {
+      "status": "keep",
+      "status_date": "2026-09-19"
     }
   },
   "outside": {
@@ -194,5 +198,220 @@ var SAVED_STATE = {
     "k2-38": "下げると40日しか見られない　過去ログの為",
     "k2-30": "pixelの残債　払ってしまう"
   },
-  "saved_at": "2026-09-19T06:28:18.063Z"
+  "saved_at": "2026-09-19T12:44:18.578Z",
+  "ichirangai": {
+    "m-007": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-053": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-002": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-040": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-003": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-042": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-043": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-046": {
+      "status": "keep",
+      "date": "2026-09-19"
+    },
+    "m-047": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-049": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-050": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-054": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-055": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-057": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-021": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-006": {
+      "status": "keep",
+      "date": "2026-09-19"
+    },
+    "m-022": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-051": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-019": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-005": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-041": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-025": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-009": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-016": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-017": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-018": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-k008": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-k012": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-k015": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-k031": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-k041": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-k037": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-k173": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-k143": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-k085": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-k075": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-k065": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-k061": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-k057": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-k056": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-k052": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-k050": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-k048": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-k046": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-k042": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-k016": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-k027": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-k032": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-k080": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-044": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-k047": {
+      "status": "once",
+      "date": "2026-09-19"
+    },
+    "m-k070": {
+      "status": "cut",
+      "date": "2026-09-19"
+    },
+    "m-008": {
+      "status": "once",
+      "date": "2026-09-19"
+    }
+  },
+  "ichirangai_plan": {}
 };
