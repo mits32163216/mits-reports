@@ -304,13 +304,13 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
     <div class="metric frozen" style="border-width:3px; border-color:#c8ccd3;"><div class="label" style="font-weight:bold;">半分経営するための削減対象総額</div><div class="value" style="font-size:26px;"><span id="r4-total">-</span><span class="yen">円</span><div class="src">分母 − 継続（＝残り A <span id="r4-rem-a">-</span> ＋ 残り B <span id="r4-total-b">-</span>）</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
   </div>
 
-  <!-- 5段目：半分経営の削減目標 − (削った＋対応済み＋「削る」「一回性」) = 半分まで残り -->
+  <!-- 5段目：半分経営の削減目標 − (削った＋対応済み＋「削る」「一回性」ボタン) = 半分まで残り -->
   <div class="eq-row eq-row-5" style="margin-top:10px;">
     <div class="metric frozen"><div class="label">半分経営の削減目標(削減対象総額 ÷ 2)</div><div class="value"><span id="m-half-goal">-</span><span class="yen">円</span><div class="src">4段目 <span id="m-half-goal-src">-</span> ÷ 2</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
     <div class="eq-op">−</div>
-    <div class="metric eq-cut"><div class="label">削った＋対応済み＋「削る」「一回性」</div><div class="value"><span id="m-cut-plus-handled">-</span><span class="yen">円</span><div class="src">削った額(完了 <span id="m-eq2-done-count">0</span>件)<span id="m-eq2-cut">-</span> ＋ 対応済み(<span id="m-after-handled-sub">0件</span>)<span id="m-after-handled">-</span> ＋ サブスク外の判定の「削る」「一回性」<span id="m-ich-cutonce">-</span></div><div id="m-cut-breakdown" style="font-size:11px;color:var(--sub);margin-top:6px;text-align:left;line-height:1.5;"></div></div></div>
+    <div class="metric eq-cut"><div class="label">削った＋対応済み＋「削る」「一回性」ボタン</div><div class="value"><span id="m-cut-plus-handled">-</span><span class="yen">円</span><div class="src">削った額(完了 <span id="m-eq2-done-count">0</span>件)<span id="m-eq2-cut">-</span> ＋ 対応済み(<span id="m-after-handled-sub">0件</span>)<span id="m-after-handled">-</span> ＋ サブスク外の判定の「削る」「一回性」ボタン<span id="m-ich-cutonce">-</span></div><div id="m-cut-breakdown" style="font-size:11px;color:var(--sub);margin-top:6px;text-align:left;line-height:1.5;"></div></div></div>
     <div class="eq-op">＝</div>
-    <div class="metric eq-remaining" style="border-width:3px;"><div class="label">半分まで残り</div><div class="value" style="font-size:26px;"><span id="m-half-remaining">-</span><span class="yen">円</span><div class="src">半分経営の削減目標 − (削った＋対応済み＋「削る」「一回性」)</div><div class="src" style="color:#6a3fa0;font-weight:bold;margin-top:8px;font-size:16px;line-height:1.5;">削る予定額を全部やると 残り <span id="m-plan-remaining" style="font-size:22px;">-</span>円<br><span style="font-size:13px;">（削る予定額の合計 <span id="m-plan-sum">-</span>円・サブスク外の判定で入力）</span></div></div></div>
+    <div class="metric eq-remaining" style="border-width:3px;"><div class="label">半分まで残り</div><div class="value" style="font-size:26px;"><span id="m-half-remaining">-</span><span class="yen">円</span><div class="src">半分経営の削減目標 − (削った＋対応済み＋「削る」「一回性」ボタン)</div><div class="src" style="color:#6a3fa0;font-weight:bold;margin-top:8px;font-size:16px;line-height:1.5;">削る予定額を全部やると 残り <span id="m-plan-remaining" style="font-size:22px;">-</span>円<br><span style="font-size:13px;">（削る予定額の合計 <span id="m-plan-sum">-</span>円・サブスク外の判定で入力）</span></div></div></div>
   </div>
 
   <!-- 7段目：継続以外 ＋ 継続と決めた額の合計 ＝ ゴール（出発点総額の半分）（2026-09-19 Mits様指示・判定ページから計算） -->
@@ -335,14 +335,14 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 
   <!-- 8段目：削減目標① と 削減目標②（2026-09-19 Mits様指示・判定ページから計算） -->
   <div class="eq-row eq-row-8" style="margin-top:8px;">
-    <div class="metric frozen"><div class="label">削減目標①　半分経営の削減目標(削減対象総額 ÷ 2)</div><div class="value"><span id="r8-1">-</span><span class="yen">円</span><div class="src">4段目 <span id="r8-1-src">-</span> ÷ 2</div><div class="r8-pct-wrap" style="margin-top:6px;"><div style="font-size:11px;color:#374151;">進み具合 <b><span id="r8-1-pct" class="r8-pct">0%</span></b>　<span style="color:#6a3fa0;font-weight:bold;">予定込み <span id="r8-1-pct-plan">-</span></span>（<span id="r8-1-num">-</span> ÷ <span id="r8-1-den">-</span>）</div><div style="position:relative;height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden;margin-top:3px;"><div id="r8-1-bar-plan" style="position:absolute;top:0;left:0%;width:0%;height:100%;background:repeating-linear-gradient(45deg,#9b7fd1,#9b7fd1 4px,#b9a3e3 4px,#b9a3e3 8px);"></div><div id="r8-1-bar" style="position:relative;height:100%;width:0%;background:linear-gradient(90deg,#4a7c59,#2e7d32);"></div></div><div style="font-size:9px;color:#6b7280;margin-top:2px;"><span style="color:#2e7d32;">■ 削った＋対応済み＋「削る」「一回性」</span>　<span style="color:#6a3fa0;">■ 削る予定額（サブスク外の判定で入力）</span></div></div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
+    <div class="metric frozen"><div class="label">削減目標①　半分経営の削減目標(削減対象総額 ÷ 2)</div><div class="value"><span id="r8-1">-</span><span class="yen">円</span><div class="src">4段目 <span id="r8-1-src">-</span> ÷ 2</div><div class="r8-pct-wrap" style="margin-top:6px;"><div style="font-size:11px;color:#374151;">進み具合 <b><span id="r8-1-pct" class="r8-pct">0%</span></b>　<span style="color:#6a3fa0;font-weight:bold;">予定込み <span id="r8-1-pct-plan">-</span></span>（<span id="r8-1-num">-</span> ÷ <span id="r8-1-den">-</span>）</div><div style="position:relative;height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden;margin-top:3px;"><div id="r8-1-bar-plan" style="position:absolute;top:0;left:0%;width:0%;height:100%;background:repeating-linear-gradient(45deg,#9b7fd1,#9b7fd1 4px,#b9a3e3 4px,#b9a3e3 8px);"></div><div id="r8-1-bar" style="position:relative;height:100%;width:0%;background:linear-gradient(90deg,#4a7c59,#2e7d32);"></div></div><div style="font-size:9px;color:#6b7280;margin-top:2px;"><span style="color:#2e7d32;">■ 削った＋対応済み＋「削る」「一回性」ボタン</span>　<span style="color:#6a3fa0;">■ 削る予定額（サブスク外の判定で入力）</span></div></div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
     <div class="eq-op">　</div>
-    <div class="metric frozen"><div class="label">削減目標②　半分経営するための削減対象総額 − 継続以外に使える額</div><div class="value"><span id="r8-2">-</span><span class="yen">円</span><div class="src">4段目 <span id="r8-2-a">-</span> − 6段目 <span id="r8-2-b">-</span></div><div class="r8-pct-wrap" style="margin-top:6px;"><div style="font-size:11px;color:#374151;">進み具合 <b><span id="r8-2-pct" class="r8-pct">0%</span></b>　<span style="color:#6a3fa0;font-weight:bold;">予定込み <span id="r8-2-pct-plan">-</span></span>（<span id="r8-2-num">-</span> ÷ <span id="r8-2-den">-</span>）</div><div style="position:relative;height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden;margin-top:3px;"><div id="r8-2-bar-plan" style="position:absolute;top:0;left:0%;width:0%;height:100%;background:repeating-linear-gradient(45deg,#9b7fd1,#9b7fd1 4px,#b9a3e3 4px,#b9a3e3 8px);"></div><div id="r8-2-bar" style="position:relative;height:100%;width:0%;background:linear-gradient(90deg,#4a7c59,#2e7d32);"></div></div><div style="font-size:9px;color:#6b7280;margin-top:2px;"><span style="color:#2e7d32;">■ 削った＋対応済み＋「削る」「一回性」</span>　<span style="color:#6a3fa0;">■ 削る予定額（サブスク外の判定で入力）</span></div></div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
+    <div class="metric frozen"><div class="label">削減目標②　半分経営するための削減対象総額 − 継続以外に使える額</div><div class="value"><span id="r8-2">-</span><span class="yen">円</span><div class="src">4段目 <span id="r8-2-a">-</span> − 6段目 <span id="r8-2-b">-</span></div><div class="r8-pct-wrap" style="margin-top:6px;"><div style="font-size:11px;color:#374151;">進み具合 <b><span id="r8-2-pct" class="r8-pct">0%</span></b>　<span style="color:#6a3fa0;font-weight:bold;">予定込み <span id="r8-2-pct-plan">-</span></span>（<span id="r8-2-num">-</span> ÷ <span id="r8-2-den">-</span>）</div><div style="position:relative;height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden;margin-top:3px;"><div id="r8-2-bar-plan" style="position:absolute;top:0;left:0%;width:0%;height:100%;background:repeating-linear-gradient(45deg,#9b7fd1,#9b7fd1 4px,#b9a3e3 4px,#b9a3e3 8px);"></div><div id="r8-2-bar" style="position:relative;height:100%;width:0%;background:linear-gradient(90deg,#4a7c59,#2e7d32);"></div></div><div style="font-size:9px;color:#6b7280;margin-top:2px;"><span style="color:#2e7d32;">■ 削った＋対応済み＋「削る」「一回性」ボタン</span>　<span style="color:#6a3fa0;">■ 削る予定額（サブスク外の判定で入力）</span></div></div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
   </div>
 
   <div class="bar-wrap">
     <div class="bar-label"><span>進み具合(削った額＋対応済み ÷ 半分経営の削減目標)</span><span><span id="m-pct">0%</span><span class="plan-pct" style="color:#6a3fa0;font-weight:bold;margin-left:8px;">予定込み <span id="m-pct-plan">-</span></span></span></div>
-    <div style="font-size:11px;color:var(--sub);margin:2px 0 4px;"><span style="color:#2e7d32;">■ 削った＋対応済み＋「削る」「一回性」</span>　<span style="color:#6a3fa0;">■ 削る予定額（サブスク外の判定で入力）</span></div>
+    <div style="font-size:11px;color:var(--sub);margin:2px 0 4px;"><span style="color:#2e7d32;">■ 削った＋対応済み＋「削る」「一回性」ボタン</span>　<span style="color:#6a3fa0;">■ 削る予定額（サブスク外の判定で入力）</span></div>
     <div class="bar-outer">
       <div class="bar-plan" id="m-bar-plan" style="left:0%;width:0%"></div>
       <div class="bar-inner" id="m-bar" style="width:0%"></div>
@@ -389,12 +389,12 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 </div>
 
 <!-- TOP: legend以下は無し -->
-<script src="zaimu_seiri_data.js?v=1789834041"></script>
-<script src="zaimu_seiri_state.js?v=1789834041"></script>
-<script src="zaimu_seiri_sync.js?v=1789834041"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789834041"></script>
-<script src="zaimu_seiri_kijun.js?v=1789834041"></script>
-<script src="zaimu_seiri_render.js?v=1789834041"></script>
+<script src="zaimu_seiri_data.js?v=1789834116"></script>
+<script src="zaimu_seiri_state.js?v=1789834116"></script>
+<script src="zaimu_seiri_sync.js?v=1789834116"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789834116"></script>
+<script src="zaimu_seiri_kijun.js?v=1789834116"></script>
+<script src="zaimu_seiri_render.js?v=1789834116"></script>
 <script>
 // 3段目：サブスク外の判定ページ（zaimu_seiri_ichirangai_meisai.js）から計算する（2026-09-19 Mits様指示・一覧外の経費ページは廃止）
 (function(){
