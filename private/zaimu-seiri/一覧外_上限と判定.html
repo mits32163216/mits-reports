@@ -227,11 +227,11 @@ tr.sub-head.foldable td:hover { background: #e5d9f4; }
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789837496"></script>
-<script src="zaimu_seiri_state.js?v=1789837496"></script>
-<script src="zaimu_seiri_sync.js?v=1789837496"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789837496"></script>
-<script src="zaimu_seiri_kijun.js?v=1789837496"></script>
+<script src="zaimu_seiri_data.js?v=1789837875"></script>
+<script src="zaimu_seiri_state.js?v=1789837875"></script>
+<script src="zaimu_seiri_sync.js?v=1789837875"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789837875"></script>
+<script src="zaimu_seiri_kijun.js?v=1789837875"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -481,7 +481,8 @@ function render(){
     } else if (sorted.some(it => grpOf(it))) {
       // ボタンの無い分類でも、データに中分類があれば見出しで分けて並べる（消費：現金（ATM）／コンビニ・スーパー）
       const ORDER = ["未分類","現金（ATM）","コンビニ・スーパー","Amazon","飲み","食事","カフェ","ホテル","交通"];
-      const gs = Array.from(new Set(sorted.map(it => grpOf(it) || "未分類"))).sort((x,y) => { const r = v => { const i = ORDER.indexOf(v); return i < 0 ? 99 : i; }; return r(x) - r(y); });
+      const LAST = ["Amex US 44000 家族カード（41014）","家族カード（41014）コンビニ・スーパー","Amex US 81007"];   // Mits様 2026-09-20「44000家族／41014 コンビニ／81007 の順番に」
+      const gs = Array.from(new Set(sorted.map(it => grpOf(it) || "未分類"))).sort((x,y) => { const r = v => { const k = LAST.indexOf(v); if (k >= 0) return 100 + k; const i = ORDER.indexOf(v); return i < 0 ? 99 : i; }; return r(x) - r(y); });
       rows = gs.map(g => {
         const gi = sorted.filter(it => (grpOf(it) || "未分類") === g);
         return groupHtml(g, gi);
