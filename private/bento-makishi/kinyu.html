@@ -1,0 +1,70 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍱</text></svg>">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+:root{--bg:#f7f5ef;--card:#fff;--ink:#1f2a3a;--sub:#5b6575;--line:#e2ddd0;--navy:#1c2e4a;--gold:#b08a3e;--red:#b3261e;--green:#1e7a46}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14181f;--card:#1c222c;--ink:#e8e6e0;--sub:#a3abb8;--line:#303846;--navy:#9fb6dc;--gold:#d6b066;--red:#f28b82;--green:#7fd1a0}}
+:root[data-theme="dark"]{--bg:#14181f;--card:#1c222c;--ink:#e8e6e0;--sub:#a3abb8;--line:#303846;--navy:#9fb6dc;--gold:#d6b066;--red:#f28b82;--green:#7fd1a0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Zen Kaku Gothic New",sans-serif;line-height:1.7}
+.wrap{max-width:960px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:1.5rem;color:var(--navy);margin:.2em 0}h2{font-size:1.15rem;color:var(--navy);border-left:4px solid var(--gold);padding-left:.5em;margin-top:2em}
+.sub{color:var(--sub);font-size:.9rem}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 20px}nav a{padding:6px 12px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--navy);background:var(--card);font-size:.9rem}nav a.on{background:var(--navy);color:var(--bg)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.92rem}th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.tot td{font-weight:700;border-top:2px solid var(--navy)}.neg{color:var(--red)}.pos{color:var(--green)}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}.kpi div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}.kpi b{display:block;font-size:1.3rem;color:var(--navy)}
+.src{font-size:.82rem;color:var(--sub);word-break:break-all}
+</style><title>実数を記入</title></head><body><div class="wrap"><div class="sub">牧志の持ち帰り弁当店 試算（2026-09-19）</div><h1>実数を記入</h1><nav><a href="index.html">目次</a><a href="hinmoku.html">品目ごと</a><a href="kinyu.html" class=on>実数を記入</a><a href="pl.html">損益計算書</a><a href="shiire.html">仕入れ材料</a></nav><p class="sub">元の「品目ごと」は残したまま、このページで実際の数字を書き込めます。枠の数字を直すと、原価・粗利・損益がその場で計算し直されます。書き込んだ数字は、このブラウザに自動で残ります。</p>
+<div class="card"><button id="saveas">別名で保存（数字を入れたHTMLを書き出す）</button> <button id="reset">試算の数字に戻す</button>
+<p class="sub">書き出したHTMLは、開けば書き込んだ数字のまま出てきます。別の日の数字は、別の名前で保存すれば並べて残せます。</p></div>
+<h2>いまの数字での月の損益</h2><div id="sum"></div><div id="form"></div>
+<script id="saved"></script><script>
+const KEY='bento-makishi-kinyu-v1';
+const DEF={"days": 26, "fixed": [["家賃", 100000], ["電気", 43468], ["プロパンガス", 21575], ["水道", 4367], ["人件費", 0]], "base": [["ご飯200g（国産ブレンド米・生で約90g）", 40], ["キャベツと人参の炒め", 25], ["ポテサラ約10g", 10], ["梅干し", 8], ["白ごま", 1], ["容器一式（容器35・バラン1・輪ゴム1・袋と箸10）", 47], ["廃棄の見込み", 10]], "items": [{"n": "タコライス", "p": 750, "q": 5.0, "base": false, "parts": [["合挽き肉80g（100gあたり130円）", 104], ["チーズ30g", 60], ["レタス・トマトほか野菜", 30], ["ご飯200g", 40], ["容器一式ほか", 70]]}, {"n": "唐揚げ弁当", "p": 500, "q": 13.3, "base": true, "parts": [["鶏もも174g（3個×生58g・100gあたり100円）", 174], ["衣と揚げ油", 25]]}, {"n": "唐揚げ単品", "p": 120, "q": 50.0, "base": false, "parts": [["鶏もも58g（100gあたり100円）", 58], ["衣と揚げ油", 10], ["透明パック", 15]]}, {"n": "ゴーヤコロッケ弁当", "p": 500, "q": 6.7, "base": true, "parts": [["ゴーヤ半本と卵1個・大きなコロッケ1個・豚こま40gと野菜", 176]]}, {"n": "生姜焼き弁当", "p": 500, "q": 5.8, "base": true, "parts": [["豚100g（100gあたり130円）", 130], ["玉ねぎ・人参", 20], ["タレ", 10]]}, {"n": "おろしハンバーグ＋目玉焼き", "p": 500, "q": 5.8, "base": true, "parts": [["合挽き肉100g（100gあたり130円）", 130], ["つなぎ", 12], ["大根おろし", 12], ["目玉焼き", 30]]}, {"n": "ユーリンチー弁当", "p": 500, "q": 5.8, "base": true, "parts": [["鶏もも125g（100gあたり100円）", 125], ["衣", 20], ["あん", 25], ["卵焼き", 17]]}, {"n": "ピーマンの肉詰め", "p": 500, "q": 4.2, "base": true, "parts": [["合挽き肉125g（100gあたり130円）", 163], ["つなぎ", 15], ["ピーマン", 20]]}, {"n": "ステーキ弁当", "p": 950, "q": 3.3, "base": true, "parts": [["ヒレ（テンダーロイン）150g（業務用NZ産 100gあたり567円）", 850], ["ソース・付け合わせ", 49]]}]};
+let D;
+try{D=window.__SAVED__||JSON.parse(localStorage.getItem(KEY)||'null')||structuredClone(DEF)}catch(e){D=window.__SAVED__||structuredClone(DEF)}
+const $=s=>document.querySelector(s);
+const yen=v=>Math.round(v).toLocaleString('ja-JP')+'円';
+function inp(path,val,w){return `<input type="number" step="any" data-p="${path}" value="${val}" style="width:${w||90}px">`}
+function txt(path,val){return `<input type="text" data-p="${path}" value="${String(val).replace(/"/g,'&quot;')}" style="width:100%;min-width:180px">`}
+function render(){
+ let h='<h2>前提</h2><div class="card tw"><table><tr><td>月の営業日数</td><td class=n>'+inp('days',D.days,70)+' 日</td></tr></table></div>';
+ h+='<h2>固定費（月）</h2><div class="card tw"><table>'+D.fixed.map((f,i)=>`<tr><td>${txt('fixed.'+i+'.0',f[0])}</td><td class=n>${inp('fixed.'+i+'.1',f[1],110)} 円</td></tr>`).join('')+'<tr class=tot><td>計</td><td class=n id="fx"></td></tr></table></div>';
+ h+='<h2>弁当に共通の土台（1個あたり）</h2><div class="card tw"><table>'+D.base.map((b,i)=>`<tr><td>${txt('base.'+i+'.0',b[0])}</td><td class=n>${inp('base.'+i+'.1',b[1])} 円</td></tr>`).join('')+'<tr class=tot><td>計</td><td class=n id="bs"></td></tr></table></div>';
+ h+='<h2>品目</h2>';
+ D.items.forEach((it,k)=>{
+  h+=`<div class="card"><div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center"><b style="font-size:1.1rem">${it.n}</b>
+  <label>税込 ${inp('items.'+k+'.p',it.p)} 円</label><label>1日 ${inp('items.'+k+'.q',it.q,70)} 個</label>
+  <label><input type="checkbox" data-p="items.${k}.base" ${it.base?'checked':''}> 共通の土台を足す</label></div>
+  <div class="tw"><table>`+it.parts.map((p,j)=>`<tr><td>${txt('items.'+k+'.parts.'+j+'.0',p[0])}</td><td class=n>${inp('items.'+k+'.parts.'+j+'.1',p[1])} 円</td></tr>`).join('')+
+  `</table></div><button data-add="${k}">材料の行を足す</button> <span class="sub" id="r${k}"></span></div>`;
+ });
+ $('#form').innerHTML=h; calc();
+}
+function set(path,v){const ks=path.split('.');let o=D;for(let i=0;i<ks.length-1;i++)o=o[ks[i]];o[ks.at(-1)]=v}
+function calc(){
+ const days=+D.days||0, fx=D.fixed.reduce((a,f)=>a+(+f[1]||0),0), bs=D.base.reduce((a,b)=>a+(+b[1]||0),0);
+ $('#fx').textContent=yen(fx); $('#bs').textContent=yen(bs);
+ let S=0,C=0,rows='';
+ D.items.forEach((it,k)=>{const c=it.parts.reduce((a,p)=>a+(+p[1]||0),0)+(it.base?bs:0), net=(+it.p||0)/1.08, gp=net-c, q=+it.q||0;
+  S+=net*q*days; C+=c*q*days;
+  $('#r'+k).innerHTML=`原価 <b>${yen(c)}</b>・原価率 ${net?Math.round(c/net*100):0}%・1個の粗利 <b class="${gp<0?'neg':''}">${yen(gp)}</b>・月の粗利 <b class="${gp<0?'neg':''}">${yen(gp*q*days)}</b>`;
+  rows+=`<tr><td>${it.n}</td><td class=n>${yen(c)}</td><td class="n ${gp<0?'neg':''}">${yen(gp)}</td><td class=n>${q}個</td><td class="n ${gp<0?'neg':''}">${yen(gp*q*days)}</td></tr>`;});
+ const G=S-C, OP=G-fx;
+ $('#sum').innerHTML=`<div class="kpi"><div>売上（税抜）<b>${yen(S)}</b></div><div>原価率<b>${S?(C/S*100).toFixed(1):0}%</b></div><div>粗利<b>${yen(G)}</b></div><div>固定費<b>${yen(fx)}</b></div><div>営業利益<b class="${OP<0?'neg':''}">${yen(OP)}</b></div><div>＠（2人）<b>${yen(G/2)}</b></div></div><div class="card tw"><table><tr><th>品</th><th class=n>原価</th><th class=n>1個の粗利</th><th class=n>1日</th><th class=n>月の粗利</th></tr>${rows}</table></div>`;
+ try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){}
+}
+document.addEventListener('input',e=>{const p=e.target.dataset.p;if(!p)return;const t=e.target;set(p,t.type==='checkbox'?t.checked:(t.type==='number'?(t.value===''?0:+t.value):t.value));calc()});
+document.addEventListener('change',e=>{if(e.target.type==='checkbox'){set(e.target.dataset.p,e.target.checked);calc()}});
+document.addEventListener('click',e=>{const k=e.target.dataset.add;if(k===undefined)return;D.items[k].parts.push(['（材料名）',0]);render()});
+function saveAs(){
+ const name=prompt('保存する名前','弁当の実数_'+new Date().toISOString().slice(0,10));if(!name)return;
+ const html='<!doctype html>'+document.documentElement.outerHTML.replace('<scr'+'ipt id="saved"><\/scr'+'ipt>','<scr'+'ipt id="saved">window.__SAVED__='+JSON.stringify(D).replace(/</g,'\\u003c')+'<\/scr'+'ipt>');
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([html],{type:'text/html'}));a.download=name+'.html';a.click();
+}
+function reset(){if(!confirm('試算の数字に戻しますか（書き込んだ数字は消えます）'))return;D=structuredClone(DEF);try{localStorage.removeItem(KEY)}catch(e){};render()}
+$('#saveas').onclick=saveAs;$('#reset').onclick=reset;
+render();
+</script>
+<style>input{font:inherit;padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}input[type=number]{text-align:right}button{font:inherit;padding:6px 12px;border:1px solid var(--navy);border-radius:8px;background:var(--card);color:var(--navy);cursor:pointer;margin:4px 0}</style></div></body></html>
