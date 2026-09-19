@@ -8,9 +8,10 @@ const LOAN_MONTHLY_LATEST  = 43575;   // 現在の月々の返済（② + ③ + 
 const LOAN_MONTHLY_BEFORE  = 139450;  // 9/18 完済前（① + ④-1 + ④-2 + ④-3 が生きていた頃）
 const LOAN_MONTHLY_LABEL   = "① ＋ ④-1 ＋ ④-2 ＋ ④-3 完済後";
 
-const STORAGE_KEY   = "zaimu_seiri_progress_v1";
-const OUTSIDE_KEY   = "zaimu_seiri_outside_v1";
-const NOTES_KEY     = "zaimu_seiri_user_notes_v1";
+const STORAGE_KEY     = "zaimu_seiri_progress_v1";
+const OUTSIDE_KEY     = "zaimu_seiri_outside_v1";
+const ICHIRANGAI_KEY  = "zaimu_seiri_ichirangai_decision_v1";
+const NOTES_KEY       = "zaimu_seiri_user_notes_v1";
 
 // ─── SAVED_STATE：ファイルに残っている押し状態（zaimu_seiri_state.js が読み込まれる） ───
 // data.js の後・render.js の前に読み込まれている。無い場合は空扱い。
@@ -18,7 +19,7 @@ function getSavedState() {
   try {
     if (typeof SAVED_STATE !== "undefined" && SAVED_STATE) return SAVED_STATE;
   } catch (e) {}
-  return { progress: {}, outside: {}, notes: {}, saved_at: null };
+  return { progress: {}, outside: {}, ichirangai: {}, notes: {}, saved_at: null };
 }
 
 // 2つの状態オブジェクトをマージする。id ごとに「新しい方（status_date）が勝つ」。
@@ -108,6 +109,17 @@ function loadLocalOutside() {
 }
 function loadOutsideState() {
   return mergeStatusStore(getSavedState().outside, loadLocalOutside());
+}
+
+// 一覧外の判定（一覧外_上限と判定.html が書く localStorage）
+function loadLocalIchirangai() {
+  try {
+    const raw = localStorage.getItem(ICHIRANGAI_KEY);
+    if (!raw) return {};
+    return JSON.parse(raw) || {};
+  } catch (e) {
+    return {};
+  }
 }
 
 // 状態取得（後方互換：古い { done:true } を "done" として読む）
@@ -742,10 +754,28 @@ function renderMonthlyActual() {
 // 参謀が Downloads から 04_口座・明細/ に手動で移す。
 function buildSavedStateJS() {
   const saved = getSavedState();
+  // ichirangai は {status, date} 形式（他は {status, status_date}）。
+  // date キーを status_date に読み替えてマージし、書き出す時にまた date に戻す。
+  const savedIch = {};
+  const localIch = loadLocalIchirangai();
+  Object.entries(saved.ichirangai || {}).forEach(([id, v]) => {
+    if (v && typeof v === "object") savedIch[id] = { status: v.status || null, status_date: v.date || v.status_date || null };
+  });
+  const localIchNorm = {};
+  Object.entries(localIch).forEach(([id, v]) => {
+    if (v && typeof v === "object") localIchNorm[id] = { status: v.status || null, status_date: v.date || v.status_date || null };
+  });
+  const mergedIchNorm = mergeStatusStore(savedIch, localIchNorm);
+  const mergedIch = {};
+  Object.entries(mergedIchNorm).forEach(([id, v]) => {
+    if (v && v.status) mergedIch[id] = { status: v.status, date: v.status_date || null };
+  });
+
   const merged = {
-    progress: mergeStatusStore(saved.progress || {}, loadLocalProgress()),
-    outside:  mergeStatusStore(saved.outside  || {}, loadLocalOutside()),
-    notes:    mergeNotesStore(saved.notes    || {}, (function(){
+    progress:   mergeStatusStore(saved.progress || {}, loadLocalProgress()),
+    outside:    mergeStatusStore(saved.outside  || {}, loadLocalOutside()),
+    ichirangai: mergedIch,
+    notes:      mergeNotesStore(saved.notes    || {}, (function(){
       try { return JSON.parse(localStorage.getItem(NOTES_KEY) || "{}") || {}; } catch(e){ return {}; }
     })()),
     saved_at: new Date().toISOString()
@@ -815,7 +845,7 @@ initSaveStateBar();
 
 // 別タブでの状態変化・タブ復帰・focus で即時再描画（TOP と進捗表が同期する）
 function _refreshAll() { render(); renderKeepBreakdown(); renderMonthlyActual(); updateTopnavTime(); }
-const _WATCHED_KEYS = ["zaimu_seiri_progress_v1", "zaimu_seiri_outside_v1", "zaimu_seiri_user_notes_v1"];
+const _WATCHED_KEYS = ["zaimu_seiri_progress_v1", "zaimu_seiri_outside_v1", "zaimu_seiri_ichirangai_decision_v1", "zaimu_seiri_user_notes_v1"];
 window.addEventListener("storage", (e) => {
   if (!e.key) { _refreshAll(); return; }
   if (_WATCHED_KEYS.includes(e.key)) _refreshAll();
