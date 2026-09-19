@@ -214,9 +214,9 @@ tr.sub-head td { background: #efe7f8; font-weight: bold; font-size: 12px; paddin
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1789815018"></script>
-<script src="zaimu_seiri_state.js?v=1789815018"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1789815018"></script>
+<script src="zaimu_seiri_data.js?v=1789815133"></script>
+<script src="zaimu_seiri_state.js?v=1789815133"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1789815133"></script>
 <script>
 "use strict";
 const ICH_STATE_KEY = "zaimu_seiri_ichirangai_decision_v1";
@@ -338,7 +338,7 @@ function render(){
         <div class="cat-line"><span class="lbl">実績（月平均）</span><span class="val">${fmtYen(b.actual)}円</span></div>
         <div class="cat-line"><span class="lbl">月の上限（実績の半分）</span><span class="val">${cap?fmtYen(cap)+'円':'―'}</span></div>
         <div class="cat-line"><span class="lbl" style="color:#a68000;">一回性</span><span class="val" style="color:#a68000;">${fmtYen(b.once)}円</span></div>
-        <div class="cat-line"><span class="lbl" style="color:#c0392b;">削った金額</span><span class="val" style="color:#c0392b;">${fmtYen(b.cut)}円</span></div>
+        <div class="cat-line"><span class="lbl" style="color:#c0392b;">削る金額</span><span class="val" style="color:#c0392b;">${fmtYen(b.cut)}円</span></div>
         <div class="cat-line after"><span class="lbl">これからの月額</span><span class="val">${fmtYen(after)}円</span></div>
         <div class="cat-line diff${over?' over':''}"><span class="lbl">上限との差</span><span class="val">${cap?(over?'−'+fmtYen(-diff):'+'+fmtYen(diff))+'円':'―'}</span></div>
       </div>
@@ -431,7 +431,7 @@ function render(){
     const after = b.actual - b.cut - b.once;
     return `<div class="section${isRouhi && subHidden() ? ' hide-subs' : ''}">
       <div class="section-head">
-        <h2>${esc(c)} <span class="section-sub">${b.items.length}件・月平均 ${fmtYen(b.actual)}円・1〜7月の総額 ${fmtYen(b.items.reduce((t,i)=>t+(i.total||0),0))}円・<b style="color:#c0392b;">削った総額 ${fmtYen(b.items.filter(i=>(state[i.id]||{}).status==="cut").reduce((t,i)=>t+(i.total||0),0))}円（月 ${fmtYen(b.cut)}円）</b></span></h2>
+        <h2>${esc(c)} <span class="section-sub">${b.items.length}件・月平均 ${fmtYen(b.actual)}円・1〜7月の総額 ${fmtYen(b.items.reduce((t,i)=>t+(i.total||0),0))}円・<b style="color:#c0392b;">削る総額 ${fmtYen(b.items.filter(i=>(state[i.id]||{}).status==="cut").reduce((t,i)=>t+(i.total||0),0))}円（月 ${fmtYen(b.cut)}円）</b></span></h2>
         <span class="section-sub">上限 ${cap?fmtYen(cap)+'円':'―'} ／ 一回性 <b style="color:#a68000;">${fmtYen(b.once)}円</b> ／ これからの月額 <b style="color:var(--gold);">${fmtYen(after)}円</b>${isRouhi ? `<button class="sub-toggle">${subHidden() ? "分類ボタンを出す" : "分類ボタンを消す"}</button>` : ""}</span>
       </div>
       <table>
