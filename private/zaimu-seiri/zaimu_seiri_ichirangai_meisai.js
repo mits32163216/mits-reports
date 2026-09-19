@@ -1081,3 +1081,4 @@ var ICHIRANGAI_MEISAI = {
     }
   ]
 };
+// 監視の試験 18:00:15
