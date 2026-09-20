@@ -530,14 +530,10 @@ function calcPlan(plan){
   var ltv      = kounyu > 0 ? uriage / kounyu : 0;
   var need     = per_in > 0 ? 20000000 / per_in : 0;
   var k = "";
-  k += '<div class="k"><div class="t">登録→フロント購入</div><div class="v">' + pct(S.tf) + '%</div></div>';
   k += '<div class="k"><div class="t">ROAS</div><div class="v">' + pct(roas) + '%</div></div>';
-  k += '<div class="k"><div class="t">CPC</div><div class="v">' + yen(cpc) + ' 円</div></div>';
-  k += '<div class="k"><div class="t">投下する広告費</div><div class="v">' + yen(K) + ' 円</div></div>';
   k += '<div class="k"><div class="t">入口1人の粗利</div><div class="v">' + yen(per_in) + ' 円</div></div>';
   k += '<div class="k"><div class="t">登録1人の粗利</div><div class="v">' + yen(per_lead) + ' 円</div></div>';
   k += '<div class="k"><div class="t">買った人1人の売上</div><div class="v">' + yen(ltv) + ' 円</div></div>';
-  k += '<div class="k"><div class="t">粗利2,000万円に必要な入口</div><div class="v">' + yen(need) + ' 人</div></div>';
   document.getElementById("kpi_" + plan).innerHTML = k;
 }
 
