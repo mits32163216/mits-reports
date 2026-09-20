@@ -84,18 +84,23 @@ table.main6 tbody td.plan.B { background:var(--b-bg); }
 
 table.main6 td.dan { font-family:var(--mincho); font-size:12.5px; font-weight:600; color:var(--gold); vertical-align:top; padding-top:8px; line-height:1.35; }
 table.main6 td.lab { font-size:12.5px; line-height:1.4; }
-table.main6 td.plan { text-align:right; white-space:nowrap; }
-table.main6 td.plan .inp { display:flex; align-items:center; gap:3px; justify-content:flex-end; flex-wrap:wrap; }
+table.main6 td.plan { text-align:right; }
+table.main6 td.plan .inp { display:flex; align-items:center; gap:3px; justify-content:flex-end; flex-wrap:wrap; white-space:nowrap; }
 table.main6 td.plan input[type=number] { width:110px; padding:4px 6px; text-align:right; font-family:var(--mono); font-size:13px;
   border:1px solid var(--line); border-radius:6px; background:var(--card-bg); color:var(--fg); }
 table.main6 td.plan input[type=number]:focus { outline:none; }
 table.main6 td.plan.A input[type=number]:focus { border-color:var(--a-mark); }
 table.main6 td.plan.B input[type=number]:focus { border-color:var(--b-mark); }
 table.main6 td.plan .unit { font-family:var(--mono); font-size:11px; color:var(--muted); }
-table.main6 td.plan .stat { font-family:var(--mono); font-size:13px; font-weight:600; }
+table.main6 td.plan .stat { font-family:var(--mono); font-size:13px; font-weight:600; display:block; }
+table.main6 td.plan .stat .v { display:block; white-space:nowrap; }
+table.main6 td.plan .stat .ex { display:block; font-size:10px; color:var(--muted); font-family:var(--mono); font-weight:400; margin-top:3px; line-height:1.4; text-align:right; white-space:normal; overflow-wrap:anywhere; }
 table.main6 td.plan.A .stat { color:var(--a-mark); }
 table.main6 td.plan.B .stat { color:var(--b-mark); }
+table.main6 td.plan.A .stat .ex { color:var(--muted); }
+table.main6 td.plan.B .stat .ex { color:var(--muted); }
 table.main6 td.plan .dash { color:var(--muted); font-family:var(--mono); font-size:12px; }
+table.money td.n .ex { display:block; font-size:9.5px; color:var(--muted); font-family:var(--mono); font-weight:400; margin-top:2px; line-height:1.35; white-space:normal; overflow-wrap:anywhere; }
 
 @media (max-width:640px){
   table.main6 { font-size:12px; }
@@ -178,7 +183,7 @@ footer { margin-top:32px; padding-top:14px; border-top:1px dashed var(--line);
 <script>
 var DEFAULT = {
   koukoku_in:900000, cpm:6000, ctr:1.5, muryo:0,
-  optin:20, tf:20,
+  optin:20, tanka_optin:0, tf:20,
   oto:15, kikan:10, oto2:5,
   keizoku:0, tanka_keizoku:0, tsuki:0,
   tanka_front:29800, tanka_oto:58000, tanka_oto2:88000, genka:5
@@ -220,9 +225,11 @@ var SECTIONS = [
   { dan:"01 オプトインページ", rows:[
     {lab:"無料で来る人数（おまけ）", kind:"input", key:"muryo", unit:"人"},
     {lab:"入口ページに来た人数", kind:"calc", out:"entrance"},
-    {lab:"メルマガ登録率（CVR）", wasa:{amb:"20%"}, kijun:{label:"5〜20%"}, kind:"input", key:"optin", unit:"%"},
+    {lab:"メルマガ登録率（CVR）", kind:"input", key:"optin", unit:"%"},
     {lab:"メルマガ登録数", kind:"calc", out:"toroku"},
-    {lab:"登録1件の広告費（CPA）", wasa:{primary:"2,000円以下"}, kijun:{label:"3,000〜5,000円"}, kind:"calc", out:"cpa"}
+    {lab:"登録1件の広告費（CPA）", kind:"calc", out:"cpa"},
+    {lab:"01 の価格", kind:"input", key:"tanka_optin", unit:"円"},
+    {lab:"01 の売上", kind:"calc", out:"u_optin"}
   ]},
   { dan:"02 サンクスページ", rows:[
     {lab:"LINE登録率（参考）", kijun:{label:"60%"}, kind:"dash"}
@@ -369,7 +376,7 @@ function reverseKoukoku(plan, kind, X){
   if (S.optin <= 0 || S.ctr <= 0 || S.cpm <= 0) return false;
   var tfFrac = S.tf/100;
   var factor_kounyu = S.tanka_front + (S.oto/100)*S.tanka_oto + (S.keizoku/100)*S.tanka_keizoku*S.tsuki;
-  var factor_toroku = (S.kikan/100)*(S.oto2/100)*S.tanka_oto2;
+  var factor_toroku = (S.kikan/100)*(S.oto2/100)*S.tanka_oto2 + S.tanka_optin;
   var G = tfFrac * factor_kounyu + factor_toroku;
   var toroku_target;
   if (kind === "toroku")      toroku_target = X;
@@ -407,18 +414,14 @@ function syncInputs(){
   });
 }
 
-function setStat(plan, key, text){
-  document.querySelectorAll('[data-out-' + plan + '="' + key + '"]').forEach(function(e){ e.textContent = text; });
-}
-function markInput(plan, key, ok){
-  var el = document.querySelector('input[data-k="' + key + '"][data-plan="' + plan + '"]');
-  if (!el) return;
-  if (ok) el.classList.remove("warn"); else el.classList.add("warn");
-}
-function markCalc(plan, key, ok){
-  var el = document.querySelector('[data-out-' + plan + '="' + key + '"]');
-  if (!el) return;
-  if (ok) el.classList.remove("warn"); else el.classList.add("warn");
+function setStat(plan, key, text, formula){
+  document.querySelectorAll('[data-out-' + plan + '="' + key + '"]').forEach(function(e){
+    if (formula) {
+      e.innerHTML = '<span class="v">' + text + '</span><span class="ex">' + formula + '</span>';
+    } else {
+      e.innerHTML = '<span class="v">' + text + '</span>';
+    }
+  });
 }
 
 function calcPlan(plan){
@@ -439,33 +442,53 @@ function calcPlan(plan){
   var oto2 = oto2_access * S.oto2/100;
   var keizoku_ninzu = Math.floor(kounyu) * S.keizoku/100;
 
+  var u_optin    = toroku_i * S.tanka_optin;
   var u_front    = Math.floor(kounyu) * S.tanka_front;
   var u_oto      = Math.floor(oto)    * S.tanka_oto;
   var u_oto2     = Math.floor(oto2)   * S.tanka_oto2;
   var u_keizoku  = Math.floor(keizoku_ninzu) * S.tanka_keizoku * S.tsuki;
-  var uriage     = u_front + u_oto + u_oto2 + u_keizoku;
+  var uriage     = u_optin + u_front + u_oto + u_oto2 + u_keizoku;
   var genka      = uriage * S.genka/100;
   var arari      = uriage - genka;
   var eki        = arari - K;
   var roas       = K > 0 ? uriage/K*100 : 0;
 
-  setStat(plan, "imp",           yen(imp) + " 回");
-  setStat(plan, "clicks",        nin(clicks) + " 人");
-  setStat(plan, "cpc",           yen(cpc) + " 円");
-  setStat(plan, "entrance",      nin(p) + " 人");
-  setStat(plan, "toroku",        nin(toroku) + " 人");
-  setStat(plan, "cpa",           yen(cpa) + " 円");
-  setStat(plan, "mita",          nin(mita) + " 人");
-  setStat(plan, "kounyu",        nin(kounyu) + " 人");
-  setStat(plan, "u_front",       yen(u_front) + " 円");
-  setStat(plan, "oto",           nin(oto) + " 人");
-  setStat(plan, "u_oto",         yen(u_oto) + " 円");
-  setStat(plan, "oto2_access",   nin(oto2_access) + " 人");
-  setStat(plan, "oto2",          nin(oto2) + " 人");
-  setStat(plan, "u_oto2",        yen(u_oto2) + " 円");
-  setStat(plan, "keizoku_ninzu", nin(keizoku_ninzu) + " 人");
-  setStat(plan, "u_keizoku",     yen(u_keizoku) + " 円");
-  setStat(plan, "roas",          pct(roas) + "%");
+  setStat(plan, "imp",           yen(imp) + " 回",
+    yen(K) + "円 ÷ " + yen(S.cpm) + "円 × 1,000 ＝ " + yen(imp) + "回");
+  setStat(plan, "clicks",        nin(clicks) + " 人",
+    yen(imp) + "回 × " + pct(S.ctr) + "% ＝ " + nin(clicks) + "人");
+  setStat(plan, "cpc",           yen(cpc) + " 円",
+    yen(K) + "円 ÷ " + nin(clicks) + "人 ＝ " + yen(cpc) + "円");
+  setStat(plan, "entrance",      nin(p) + " 人",
+    nin(clicks) + "人 ＋ " + nin(S.muryo) + "人 ＝ " + nin(p) + "人");
+  setStat(plan, "toroku",        nin(toroku) + " 人",
+    nin(p) + "人 × " + pct(S.optin) + "% ＝ " + nin(toroku) + "人");
+  setStat(plan, "cpa",           yen(cpa) + " 円",
+    yen(K) + "円 ÷ " + nin(toroku) + "人 ＝ " + yen(cpa) + "円");
+  setStat(plan, "mita",          nin(mita) + " 人",
+    "登録者と同数 ＝ " + nin(mita) + "人");
+  setStat(plan, "u_optin",       yen(u_optin) + " 円",
+    nin(toroku) + "人 × " + yen(S.tanka_optin) + "円 ＝ " + yen(u_optin) + "円");
+  setStat(plan, "kounyu",        nin(kounyu) + " 人",
+    nin(toroku) + "人 × " + pct(S.tf) + "% ＝ " + nin(kounyu) + "人");
+  setStat(plan, "u_front",       yen(u_front) + " 円",
+    nin(kounyu) + "人 × " + yen(S.tanka_front) + "円 ＝ " + yen(u_front) + "円");
+  setStat(plan, "oto",           nin(oto) + " 人",
+    nin(kounyu) + "人 × " + pct(S.oto) + "% ＝ " + nin(oto) + "人");
+  setStat(plan, "u_oto",         yen(u_oto) + " 円",
+    nin(oto) + "人 × " + yen(S.tanka_oto) + "円 ＝ " + yen(u_oto) + "円");
+  setStat(plan, "oto2_access",   nin(oto2_access) + " 人",
+    nin(toroku) + "人 × " + pct(S.kikan) + "% ＝ " + nin(oto2_access) + "人");
+  setStat(plan, "oto2",          nin(oto2) + " 人",
+    nin(oto2_access) + "人 × " + pct(S.oto2) + "% ＝ " + nin(oto2) + "人");
+  setStat(plan, "u_oto2",        yen(u_oto2) + " 円",
+    nin(oto2) + "人 × " + yen(S.tanka_oto2) + "円 ＝ " + yen(u_oto2) + "円");
+  setStat(plan, "keizoku_ninzu", nin(keizoku_ninzu) + " 人",
+    nin(kounyu) + "人 × " + pct(S.keizoku) + "% ＝ " + nin(keizoku_ninzu) + "人");
+  setStat(plan, "u_keizoku",     yen(u_keizoku) + " 円",
+    nin(keizoku_ninzu) + "人 × " + yen(S.tanka_keizoku) + "円 × " + nin(S.tsuki) + "ヶ月 ＝ " + yen(u_keizoku) + "円");
+  setStat(plan, "roas",          pct(roas) + "%",
+    yen(uriage) + "円 ÷ " + yen(K) + "円 ＝ " + pct(roas) + "%");
 
   setStat(plan, "rev_toroku", "計算値 " + nin(toroku) + " 人");
   setStat(plan, "rev_kounyu", "計算値 " + nin(kounyu) + " 人");
@@ -473,10 +496,13 @@ function calcPlan(plan){
   setStat(plan, "rev_eki",    "計算値 " + yen(eki) + " 円");
 
   var h = '';
-  h += '<tr><td>売上の合計</td><td class="n">' + yen(uriage) + ' 円</td></tr>';
-  h += '<tr><td>売上原価（' + S.genka + '%）</td><td class="n">−' + yen(genka) + ' 円</td></tr>';
+  h += '<tr><td>売上の合計</td><td class="n">' + yen(uriage) + ' 円' +
+    '<span class="ex">' + yen(u_optin) + ' ＋ ' + yen(u_front) + ' ＋ ' + yen(u_oto) + ' ＋ ' + yen(u_oto2) + ' ＋ ' + yen(u_keizoku) + ' ＝ ' + yen(uriage) + '円</span></td></tr>';
+  h += '<tr><td>売上原価（' + S.genka + '%）</td><td class="n">−' + yen(genka) + ' 円' +
+    '<span class="ex">' + yen(uriage) + '円 × ' + pct(S.genka) + '% ＝ ' + yen(genka) + '円</span></td></tr>';
   h += '<tr><td>広告費</td><td class="n">−' + yen(K) + ' 円</td></tr>';
-  h += '<tr><td>手元に残る額</td><td class="n">' + yen(eki) + ' 円</td></tr>';
+  h += '<tr><td>手元に残る額</td><td class="n">' + yen(eki) + ' 円' +
+    '<span class="ex">' + yen(uriage) + ' − ' + yen(genka) + ' − ' + yen(K) + ' ＝ ' + yen(eki) + '円</span></td></tr>';
   document.getElementById("tbl_money_" + plan).innerHTML = h;
 
   var per_in   = p > 0 ? arari / p : 0;
