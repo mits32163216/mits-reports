@@ -483,10 +483,12 @@ function calc(){
   var K       = S.koukoku_in;
   var imp     = S.cpm > 0 ? K / S.cpm * 1000 : 0;
   var clicks  = imp * S.ctr / 100;
-  var cpc     = clicks > 0 ? K / clicks : 0;
+  var clicks_i = Math.floor(clicks);
+  var cpc     = clicks_i > 0 ? K / clicks_i : 0;
   var p       = clicks + S.muryo;
   var toroku  = p * S.optin/100;
-  var cpa     = toroku > 0 ? K / toroku : 0;
+  var toroku_i = Math.floor(toroku);
+  var cpa     = toroku_i > 0 ? K / toroku_i : 0;
   var tfActive = S.tf_override && S.tf_override > 0;
   var tfFrac  = currentTfFraction();
   var mita    = tfActive ? null : toroku * S.shicho/100;
