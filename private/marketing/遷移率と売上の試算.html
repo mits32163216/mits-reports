@@ -235,6 +235,7 @@ function saveNow(){
 function yen(n){ if (!isFinite(n)) return "—"; return Math.round(n).toLocaleString("ja-JP"); }
 function nin(n){ if (!isFinite(n)) return "—"; return Math.floor(n).toLocaleString("ja-JP"); }
 function pct(n){ if (!isFinite(n)) return "—"; return (Math.round(n*10)/10).toLocaleString("ja-JP"); }
+function pct2(n){ if (!isFinite(n)) return "—"; return (Math.round(n*100)/100).toLocaleString("ja-JP"); }
 
 var SECTIONS = [
   { dan:"広告先", rows:[
@@ -526,8 +527,8 @@ function calcPlan(plan){
     nin(oto) + "人 × " + pct(S.keizoku_06) + "% ＝ " + nin(keizoku_ninzu_06) + "人");
   setStat(plan, "u_keizoku_06",     yen(u_keizoku_06) + " 円",
     nin(keizoku_ninzu_06) + "人 × " + yen(S.tanka_keizoku_06) + "円 × " + nin(S.tsuki_06) + "ヶ月 ＝ " + yen(u_keizoku_06) + "円");
-  setStat(plan, "roas",          pct(roas) + "%",
-    yen(uriage) + "円 ÷ " + yen(K) + "円 ＝ " + pct(roas) + "%");
+  setStat(plan, "roas",          pct2(roas) + "%",
+    yen(uriage) + "円 ÷ " + yen(K) + "円 ＝ " + pct2(roas) + "%");
 
   setStat(plan, "rev_toroku", "計算値 " + nin(toroku) + " 人");
   setStat(plan, "rev_kounyu", "計算値 " + nin(kounyu) + " 人");
@@ -546,7 +547,7 @@ function calcPlan(plan){
   var ltv      = kounyu > 0 ? uriage / kounyu : 0;
   var need     = per_in > 0 ? 20000000 / per_in : 0;
   var k = "";
-  k += '<div class="k"><div class="t">ROAS</div><div class="v">' + pct(roas) + '%</div></div>';
+  k += '<div class="k"><div class="t">ROAS</div><div class="v">' + pct2(roas) + '%</div></div>';
   k += '<div class="k"><div class="t">入口1人の粗利</div><div class="v">' + yen(per_in) + ' 円</div></div>';
   k += '<div class="k"><div class="t">登録1人の粗利</div><div class="v">' + yen(per_lead) + ' 円</div></div>';
   k += '<div class="k"><div class="t">買った人1人の売上</div><div class="v">' + yen(ltv) + ' 円</div></div>';
