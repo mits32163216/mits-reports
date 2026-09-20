@@ -26,7 +26,8 @@
 }
 * { box-sizing:border-box; }
 html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
-body { padding:16px 12px 120px; max-width:820px; margin:0 auto; font-variant-numeric: tabular-nums; }
+body { padding:16px 12px 120px; max-width:820px; margin:0 auto; font-variant-numeric: tabular-nums; box-sizing:border-box; }
+table.main6, table.money { table-layout:fixed; }
 h1,h2,h3 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; }
 a { color:var(--gold); text-decoration:none; overflow-wrap:anywhere; }
 
@@ -103,12 +104,34 @@ table.main6 td.plan .dash { color:var(--muted); font-family:var(--mono); font-si
 table.money td.n .ex { display:block; font-size:9.5px; color:var(--muted); font-family:var(--mono); font-weight:400; margin-top:2px; line-height:1.35; white-space:normal; overflow-wrap:anywhere; }
 
 @media (max-width:640px){
-  table.main6 { font-size:12px; }
-  table.main6 col.col-dan { width:18%; }
-  table.main6 col.col-lab { width:34%; }
+  body { padding:12px 6px 100px; }
+  table.main6 { font-size:11.5px; }
+  table.main6 col.col-dan { width:22%; }
+  table.main6 col.col-lab { width:30%; }
   table.main6 col.col-A, table.main6 col.col-B { width:24%; }
-  table.main6 td.plan input[type=number] { width:74px; }
-  table.main6 td.dan { font-size:11.5px; padding-top:6px; }
+  table.main6 th, table.main6 td { padding:4px 4px; }
+  table.main6 td.plan input[type=number] { width:60px; font-size:11px; padding:3px 4px; }
+  table.main6 td.plan .unit { display:none; }
+  table.main6 td.plan .stat { font-size:11.5px; }
+  table.main6 td.plan .stat .ex { font-size:9.5px; }
+  table.main6 td.dan { font-size:11px; padding-top:5px; }
+  table.main6 td.lab { font-size:11.5px; }
+}
+@media (max-width:400px){
+  body { padding:10px 4px 80px; }
+  table.main6 { font-size:10.5px; }
+  table.main6 col.col-dan { width:24%; }
+  table.main6 col.col-lab { width:28%; }
+  table.main6 col.col-A, table.main6 col.col-B { width:24%; }
+  table.main6 th, table.main6 td { padding:3px 3px; }
+  table.main6 td.plan input[type=number] { width:44px; font-size:10.5px; padding:2px 3px; }
+  table.main6 td.plan .stat { font-size:11px; }
+  table.main6 td.plan .stat .ex { display:none; }
+  table.money td.n .ex { display:none; }
+  .plan-box { padding:8px 8px; }
+  .plan-box h3 { font-size:11.5px; }
+  .kpi { grid-template-columns:1fr; }
+  table.money { font-size:11px; }
 }
 
 .btns { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; align-items:center; }
