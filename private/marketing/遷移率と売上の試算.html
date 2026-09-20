@@ -10,130 +10,131 @@
 :root {
   --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
   --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
-  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06); --waga-bg:rgba(122,155,126,0.06); --rev-bg:rgba(199,123,112,0.06); --warn-fg:#B04A3A; --warn-bg:rgba(199,123,112,0.18);
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+  --zebra:rgba(15,27,46,0.055);
+  --a-bg:rgba(122,155,126,0.10); --b-bg:rgba(199,123,112,0.10);
+  --a-mark:var(--sage); --b-mark:var(--rose);
+  --warn-fg:#B04A3A; --warn-bg:rgba(199,123,112,0.22);
 }
-@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); --waga-bg:rgba(122,155,126,0.10); --rev-bg:rgba(199,123,112,0.12); --warn-fg:#E28575; --warn-bg:rgba(199,123,112,0.20); } }
+@media (prefers-color-scheme:dark){
+  :root {
+    --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09);
+    --zebra:rgba(245,239,225,0.065);
+    --a-bg:rgba(122,155,126,0.16); --b-bg:rgba(199,123,112,0.18);
+    --warn-fg:#E28575; --warn-bg:rgba(199,123,112,0.24);
+  }
+}
 * { box-sizing:border-box; }
 html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
-body { padding:24px 20px 120px; max-width:800px; margin:0 auto; font-variant-numeric: tabular-nums; }
+body { padding:16px 12px 120px; max-width:820px; margin:0 auto; font-variant-numeric: tabular-nums; }
 h1,h2,h3 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; }
-a { color:var(--gold); text-decoration:none; }
+a { color:var(--gold); text-decoration:none; overflow-wrap:anywhere; }
 
-.hero { text-align:center; padding:20px 0 4px; }
-.hero h1 { font-size:26px; margin:0 0 6px; }
-.hero .tag { font-family:var(--mono); font-size:12px; color:var(--muted); }
-.back { display:inline-block; margin-bottom:6px; font-family:var(--mono); font-size:11px; }
+.hero { text-align:center; padding:8px 0 4px; }
+.hero h1 { font-size:22px; margin:0 0 4px; }
+.hero .tag { font-family:var(--mono); font-size:11px; color:var(--muted); }
+.back { display:inline-block; margin-bottom:4px; font-family:var(--mono); font-size:11px; }
 
-.intro { margin:16px 0 6px; padding:12px 16px; border:1px dashed var(--line); border-radius:10px;
-  font-size:13px; line-height:1.8; background:var(--sub-bg); }
-.intro b { color:var(--fg); font-weight:600; }
-.intro .wasa-mark { color:var(--gold); font-weight:600; }
-.intro .waga-mark { color:var(--sage); font-weight:600; }
-.intro .rev-mark { color:var(--rose); font-weight:600; }
+.sticky-top { position:sticky; top:0; z-index:20; background:var(--bg); padding:8px 0; border-bottom:1px solid var(--line); margin-bottom:14px; }
+.plan-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+@media (max-width:640px){ .plan-grid { grid-template-columns:1fr; } }
+.plan-box { border:1px solid var(--line); border-radius:10px; padding:10px 12px; background:var(--card-bg); }
+.plan-box.A { border-color:var(--a-mark); background:var(--a-bg); }
+.plan-box.B { border-color:var(--b-mark); background:var(--b-bg); }
+.plan-box h3 { margin:0 0 6px; font-size:13px; font-family:var(--mono); letter-spacing:0.04em; }
+.plan-box.A h3 { color:var(--a-mark); }
+.plan-box.B h3 { color:var(--b-mark); }
 
-.genre { margin:26px 0 8px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
-.genre h2 { font-size:17px; margin:0; }
+table.money { width:100%; border-collapse:collapse; font-size:12px; }
+table.money td { padding:3px 6px; border-bottom:1px dashed var(--line); }
+table.money tr:last-child td { border-bottom:none; font-weight:600; font-family:var(--mincho); font-size:14px; }
+table.money td.n { font-family:var(--mono); text-align:right; white-space:nowrap; }
+
+.kpi { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:8px; }
+.kpi .k { border:1px solid var(--line); border-radius:8px; padding:6px 8px; background:rgba(255,255,255,0.4); }
+@media (prefers-color-scheme:dark){ .kpi .k { background:rgba(0,0,0,0.15); } }
+.kpi .k .t { font-family:var(--mono); font-size:10px; color:var(--muted); line-height:1.3; }
+.kpi .k .v { font-family:var(--mincho); font-size:16px; margin-top:2px; }
+.kpi .k .s { font-size:10px; color:var(--muted); margin-top:1px; line-height:1.3; }
+
+.genre { margin:24px 0 6px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.genre h2 { font-size:15px; margin:0; }
 .genre::after { content:""; flex:1; border-top:1px dashed var(--line); min-width:20px; }
 .genre .note { font-family:var(--mono); font-size:11px; color:var(--muted); }
 
-table.main5 { width:100%; border-collapse:collapse; font-size:12.5px; background:var(--card-bg);
-  border:1px solid var(--line); border-radius:12px; overflow:hidden; }
-table.main5 th, table.main5 td { padding:6px 8px; border-bottom:1px solid var(--line); vertical-align:middle; }
-table.main5 tr:last-child td { border-bottom:none; }
-table.main5 th { font-family:var(--mono); font-size:11px; color:var(--muted); font-weight:400; background:var(--sub-bg); text-align:left; white-space:nowrap; }
-table.main5 col.col-lab   { }
-table.main5 col.col-wasa  { }
-table.main5 col.col-kijun { }
-table.main5 col.col-waga  { }
-table.main5 col.col-pct   { }
-table.main5 tr.section-head td { background:var(--sub-bg); font-family:var(--mincho); font-size:15px; font-weight:600; color:var(--gold); padding:10px 12px; border-top:2px solid var(--gold); }
-table.main5 td.lab { font-size:13px; line-height:1.35; }
-table.main5 td.wasa { font-family:var(--mono); font-size:13px; color:var(--muted); text-align:right; white-space:nowrap; }
-table.main5 td.wasa b { color:var(--gold); font-weight:600; font-family:var(--mincho); font-size:14px; }
-table.main5 td.wasa .amb { color:var(--muted); font-size:12px; }
-table.main5 td.kijun { font-family:var(--mono); font-size:12px; color:var(--muted); text-align:right; white-space:nowrap; }
-table.main5 td.kijun b { color:var(--fg); font-weight:600; font-family:var(--mincho); font-size:13px; }
-table.main5 td.waga { background:var(--waga-bg); text-align:right; white-space:nowrap; }
-table.main5 td.waga .inp { display:flex; align-items:center; gap:5px; flex-wrap:wrap; justify-content:flex-end; }
-table.main5 td.waga input[type=number] { width:96px; padding:4px 6px; text-align:right; font-family:var(--mono); font-size:13px;
-  border:1px solid var(--line); border-radius:7px; background:var(--card-bg); color:var(--fg); }
-table.main5 td.waga input[type=number]:focus { outline:none; border-color:var(--sage); }
-table.main5 td.waga input.warn { border-color:var(--warn-fg); background:var(--warn-bg); color:var(--warn-fg); }
-table.main5 td.waga .unit { font-family:var(--mono); font-size:11px; color:var(--muted); }
-table.main5 td.waga .stat { font-family:var(--mono); font-size:14px; color:var(--sage); font-weight:600; }
-table.main5 td.waga .stat.warn { color:var(--warn-fg); }
-table.main5 td.waga .stat.override { color:var(--muted); font-style:italic; font-weight:400; font-size:13px; }
-table.main5 td.waga .dash { font-family:var(--mono); font-size:13px; color:var(--muted); }
-table.main5 td.pct { font-family:var(--mono); font-size:13px; color:var(--sage); text-align:right; }
+table.main6 { width:100%; border-collapse:collapse; font-size:12px; background:var(--card-bg);
+  border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+table.main6 th, table.main6 td { padding:5px 6px; border-bottom:1px solid var(--line); vertical-align:middle; }
+table.main6 tr:last-child td { border-bottom:none; }
+table.main6 tr.dan-start td { border-top:2px solid var(--gold); }
+table.main6 th { font-family:var(--mono); font-size:10.5px; color:var(--muted); font-weight:400; background:var(--sub-bg); text-align:left; white-space:nowrap; border-top:none; }
+table.main6 th.A { color:var(--a-mark); }
+table.main6 th.B { color:var(--b-mark); }
 
-table.dual5 { width:100%; border-collapse:collapse; font-size:13px; background:var(--card-bg);
-  border:1px solid var(--line); border-radius:12px; overflow:hidden; table-layout:fixed; }
-table.dual5 th, table.dual5 td { padding:9px 11px; border-bottom:1px solid var(--line); vertical-align:middle; }
-table.dual5 tr:last-child td { border-bottom:none; }
-table.dual5 th { font-family:var(--mono); font-size:11px; color:var(--muted); font-weight:400; background:var(--sub-bg); text-align:left; }
-table.dual5 col.col-lab-r { width:34%; }
-table.dual5 col.col-wasa-r { width:24%; }
-table.dual5 col.col-waga-r { width:42%; }
-table.dual5 td.lab { font-size:13px; }
-table.dual5 td.wasa { font-family:var(--mono); font-size:13px; color:var(--muted); }
-table.dual5 td.wasa b { color:var(--gold); font-weight:600; font-family:var(--mincho); font-size:14px; }
-table.dual5 td.waga { background:var(--rev-bg); }
-table.dual5 td.waga .inp { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
-table.dual5 td.waga input[type=number] { width:130px; padding:6px 8px; text-align:right; font-family:var(--mono); font-size:13px;
-  border:1px solid var(--line); border-radius:7px; background:var(--card-bg); color:var(--fg); }
-table.dual5 td.waga input[type=number]:focus { outline:none; border-color:var(--rose); }
-table.dual5 td.waga .unit { font-family:var(--mono); font-size:11px; color:var(--muted); }
-table.dual5 td.waga .out { font-family:var(--mono); font-size:12px; color:var(--rose); margin-top:4px; }
+table.main6 col.col-dan   { width:12%; }
+table.main6 col.col-lab   { width:23%; }
+table.main6 col.col-wasa  { width:15%; }
+table.main6 col.col-kijun { width:14%; }
+table.main6 col.col-A     { width:18%; }
+table.main6 col.col-B     { width:18%; }
+
+/* 縦罫 白灰交互（PLAN A / PLAN B は独自色で置換） */
+table.main6 tbody td.dan   { background:var(--zebra); }
+table.main6 tbody td.lab   { background:transparent; }
+table.main6 tbody td.wasa  { background:var(--zebra); }
+table.main6 tbody td.kijun { background:transparent; }
+table.main6 tbody td.plan.A { background:var(--a-bg); }
+table.main6 tbody td.plan.B { background:var(--b-bg); }
+
+table.main6 td.dan { font-family:var(--mincho); font-size:12.5px; font-weight:600; color:var(--gold); vertical-align:top; padding-top:8px; line-height:1.35; }
+table.main6 td.lab { font-size:12px; line-height:1.35; }
+table.main6 td.wasa { font-family:var(--mono); font-size:12px; color:var(--muted); text-align:right; white-space:nowrap; }
+table.main6 td.wasa b { color:var(--gold); font-weight:600; font-family:var(--mincho); font-size:12.5px; }
+table.main6 td.wasa .amb { color:var(--muted); font-size:11px; }
+table.main6 td.kijun { font-family:var(--mono); font-size:11px; color:var(--muted); text-align:right; white-space:nowrap; }
+table.main6 td.kijun b { color:var(--fg); font-weight:600; font-family:var(--mincho); font-size:12px; }
+table.main6 td.plan { text-align:right; white-space:nowrap; }
+table.main6 td.plan .inp { display:flex; align-items:center; gap:3px; justify-content:flex-end; flex-wrap:wrap; }
+table.main6 td.plan input[type=number] { width:78px; padding:3px 5px; text-align:right; font-family:var(--mono); font-size:12px;
+  border:1px solid var(--line); border-radius:6px; background:var(--card-bg); color:var(--fg); }
+table.main6 td.plan input[type=number]:focus { outline:none; }
+table.main6 td.plan.A input[type=number]:focus { border-color:var(--a-mark); }
+table.main6 td.plan.B input[type=number]:focus { border-color:var(--b-mark); }
+table.main6 td.plan input.warn { border-color:var(--warn-fg); background:var(--warn-bg); color:var(--warn-fg); }
+table.main6 td.plan .unit { font-family:var(--mono); font-size:10px; color:var(--muted); }
+table.main6 td.plan .stat { font-family:var(--mono); font-size:12px; font-weight:600; }
+table.main6 td.plan.A .stat { color:var(--a-mark); }
+table.main6 td.plan.B .stat { color:var(--b-mark); }
+table.main6 td.plan .stat.warn { color:var(--warn-fg); }
+table.main6 td.plan .dash { color:var(--muted); font-family:var(--mono); font-size:12px; }
 
 @media (max-width:640px){
-  table.main5, table.dual5 { display:block; }
-  table.main5 thead, table.dual5 thead { display:none; }
-  table.main5 tbody, table.main5 tr, table.main5 td,
-  table.dual5 tbody, table.dual5 tr, table.dual5 td { display:block; width:100%; }
-  table.main5 tr, table.dual5 tr { border-bottom:1px solid var(--line); padding:10px 0; }
-  table.main5 td, table.dual5 td { border:none; padding:3px 14px; }
-  table.main5 tr.section-head td { padding:10px 14px; border-top:2px solid var(--gold); }
-  table.main5 td.lab { font-weight:600; padding-top:6px; }
-  table.main5 td.wasa::before  { content:"和佐："; color:var(--gold); margin-right:4px; }
-  table.main5 td.kijun::before { content:"基準："; color:var(--muted); margin-right:4px; }
-  table.main5 td.waga::before  { content:"我が社："; color:var(--sage); margin-right:4px; }
-  table.main5 td.pct::before   { content:"入口比："; color:var(--sage); margin-right:4px; }
-  table.dual5 td.wasa::before  { content:"和佐："; color:var(--gold); margin-right:4px; }
-  table.dual5 td.waga::before  { content:"我が社："; color:var(--rose); margin-right:4px; }
+  table.main6 { font-size:11.5px; }
+  table.main6 col.col-dan { width:14%; }
+  table.main6 col.col-lab { width:26%; }
+  table.main6 col.col-wasa, table.main6 col.col-kijun { width:12%; }
+  table.main6 col.col-A, table.main6 col.col-B { width:18%; }
+  table.main6 td.plan input[type=number] { width:56px; }
+  table.main6 td.dan { font-size:11.5px; padding-top:6px; }
 }
 
-table.plain { width:100%; border-collapse:collapse; font-size:13px; background:var(--card-bg);
-  border:1px solid var(--line); border-radius:12px; overflow:hidden; }
-table.plain th, table.plain td { padding:9px 11px; border-bottom:1px solid var(--line); }
-table.plain th { font-family:var(--mono); font-size:11px; color:var(--muted); font-weight:400; background:var(--sub-bg); text-align:left; }
-table.plain td.n, table.plain th.n { font-family:var(--mono); text-align:right; white-space:nowrap; }
-table.plain tr:last-child td { border-bottom:none; }
-table.plain tr.sum td { background:var(--sub-bg); font-weight:600; }
-.dan { font-family:var(--mono); font-size:11px; color:var(--muted); }
-
-.kpi { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:14px; }
-@media (max-width:860px){ .kpi { grid-template-columns:repeat(2,1fr); } }
-.kpi .k { background:var(--card-bg); border:1px solid var(--line); border-radius:14px; padding:14px; }
-.kpi .k .t { font-family:var(--mono); font-size:10.5px; color:var(--muted); line-height:1.5; }
-.kpi .k .v { font-family:var(--mincho); font-size:23px; margin-top:5px; }
-.kpi .k .s { font-size:11px; color:var(--muted); margin-top:3px; line-height:1.5; }
-.kpi .k.hi { border-color:var(--gold); }
-
-.btns { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; align-items:center; }
-button.act { font-family:var(--sans); font-size:13px; padding:9px 16px; border-radius:9px;
+.btns { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; align-items:center; }
+button.act { font-family:var(--sans); font-size:12px; padding:7px 12px; border-radius:8px;
   border:1px solid var(--line); background:var(--card-bg); color:var(--fg); cursor:pointer; }
 button.act:hover { border-color:var(--gold); }
 button.act.p { background:var(--gold); border-color:var(--gold); color:#fff; }
 .act-msg { font-family:var(--mono); font-size:11px; color:var(--muted); }
 
-.memo { font-size:12px; color:var(--muted); line-height:1.9; margin-top:12px;
-  background:var(--card-bg); border:1px solid var(--line); border-radius:12px; padding:14px 16px;
+.memo { font-size:12px; color:var(--muted); line-height:1.85; margin-top:14px;
+  background:var(--card-bg); border:1px solid var(--line); border-radius:10px; padding:12px 14px;
   overflow-wrap:anywhere; word-break:break-word; }
 .memo b { color:var(--fg); font-weight:600; }
+.memo .a-mark { color:var(--a-mark); font-weight:600; }
+.memo .b-mark { color:var(--b-mark); font-weight:600; }
 .memo .wasa-mark { color:var(--gold); font-weight:600; }
 
-footer { margin-top:44px; padding-top:18px; border-top:1px dashed var(--line);
-  font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+footer { margin-top:32px; padding-top:14px; border-top:1px dashed var(--line);
+  font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.7; }
 </style>
 </head>
 <body>
@@ -141,30 +142,35 @@ footer { margin-top:44px; padding-top:18px; border-top:1px dashed var(--line);
 <div class="hero">
   <a class="back" href="https://reports.7years.life/private/marketing/">← マーケティング</a>
   <h1>📊 遷移率と売上の試算</h1>
-  <div class="tag">投下する広告費が起点。段名は「全体像の設計図」の正本に揃えてある</div>
+  <div class="tag">2026-09-20 ／ PLAN A と PLAN B を独立で回して見比べる</div>
 </div>
 
-<div class="intro">
-  <b>この表は予測型。</b>これから回す前に置く数字（投下する広告費・率）から、出てくる人数を読む。だから<b>率が上・人数が下</b>で並べてある。実際に回した後の数字（結果型）は、人数が先に出て率は後から計算されるので、並びが逆になる。
-  <br>
-  <b><span class="wasa-mark">和佐の列</span></b>は動かさない基準。濃字＝本人発言・薄字＝逆算値（末尾に ※）。<b>基準値の列</b>は Mits様のシートの基準（外れると色が付く）。<b><span class="waga-mark">我が社の列</span></b>は数値を打ち込む欄。一番上の「投下する広告費」を打つと下まで全部が動く。<b><span class="rev-mark">下流から逆に</span></b>は結果の数字を打つと 投下する広告費 が逆算される。
+<div class="sticky-top" id="topResult">
+  <div class="plan-grid">
+    <div class="plan-box A">
+      <h3>■ PLAN A ── 結果</h3>
+      <table class="money" id="tbl_money_A"></table>
+      <div class="kpi" id="kpi_A"></div>
+    </div>
+    <div class="plan-box B">
+      <h3>■ PLAN B ── 結果</h3>
+      <table class="money" id="tbl_money_B"></table>
+      <div class="kpi" id="kpi_B"></div>
+    </div>
+  </div>
 </div>
 
-<div class="genre"><h2>シート順に上から下へ</h2><span class="note">項目・和佐・基準値・我が社・入口を100%としたときの%</span></div>
-<table class="main5" id="tbl_main">
+<div class="genre"><h2>打ち込む数字</h2><span class="note">段・項目・和佐・基準値・PLAN A・PLAN B（縦罫は白灰交互）</span></div>
+<table class="main6" id="tbl_main">
   <colgroup>
-    <col class="col-lab"><col class="col-wasa"><col class="col-kijun"><col class="col-waga"><col class="col-pct">
+    <col class="col-dan"><col class="col-lab"><col class="col-wasa"><col class="col-kijun"><col class="col-A"><col class="col-B">
   </colgroup>
 </table>
 
-<div class="genre"><h2>売上と広告費と手元に残る額</h2></div>
-<table class="plain" id="tbl_money"></table>
-<div class="kpi" id="kpi"></div>
-
-<div class="genre"><h2>下流から逆に</h2><span class="note">打ち込むと 投下する広告費 が逆算される</span></div>
-<table class="dual5" id="tbl_rev">
+<div class="genre"><h2>下流から逆に</h2><span class="note">結果の数字を打つと 投下する広告費 が逆算される（PLAN A / PLAN B 独立）</span></div>
+<table class="main6" id="tbl_rev">
   <colgroup>
-    <col class="col-lab-r"><col class="col-wasa-r"><col class="col-waga-r">
+    <col class="col-dan"><col class="col-lab"><col class="col-wasa"><col class="col-kijun"><col class="col-A"><col class="col-B">
   </colgroup>
 </table>
 
@@ -185,152 +191,143 @@ footer { margin-top:44px; padding-top:18px; border-top:1px dashed var(--line);
 var DEFAULT = {
   koukoku_in:900000, cpm:6000, ctr:1.5, muryo:0,
   optin:20, tf:20,
-  bump:0, oto:15, kikan:10, oto2:5, keizoku:50,
-  tanka_front:29800, tanka_bump:0, tanka_oto:58000, tanka_oto2:88000, tanka_keizoku:5000, tsuki:6, genka:5
+  oto:15, kikan:10, oto2:5,
+  keizoku:0, tanka_keizoku:0, tsuki:0,
+  tanka_front:29800, tanka_oto:58000, tanka_oto2:88000, genka:5
 };
-var S = {};
-function loadDefault(){ S = {}; for (var k in DEFAULT) { S[k] = DEFAULT[k]; } }
+var SA = {}, SB = {};
+function loadDefault(){
+  SA = {}; SB = {};
+  for (var k in DEFAULT){ SA[k]=DEFAULT[k]; SB[k]=DEFAULT[k]; }
+}
 function load(){
   loadDefault();
   try {
-    var raw = localStorage.getItem("marketing_shisan_v2");
+    var raw = localStorage.getItem("marketing_shisan_v4");
     if (raw) {
       var o = JSON.parse(raw);
-      if (o && o.v) {
-        for (var k in o.v) {
-          if (S.hasOwnProperty(k) && typeof o.v[k] === "number" && isFinite(o.v[k])) S[k] = o.v[k];
-        }
-      }
+      if (o && o.A) for (var kA in o.A) if (SA.hasOwnProperty(kA) && typeof o.A[kA]==="number" && isFinite(o.A[kA])) SA[kA]=o.A[kA];
+      if (o && o.B) for (var kB in o.B) if (SB.hasOwnProperty(kB) && typeof o.B[kB]==="number" && isFinite(o.B[kB])) SB[kB]=o.B[kB];
     }
-  } catch(e) {}
+  } catch(e) { console.error("load failed:", e); }
+}
+function saveNow(){
+  try { localStorage.setItem("marketing_shisan_v4", JSON.stringify({A:SA, B:SB})); }
+  catch(e) { console.error("saveNow failed:", e); }
 }
 
 function yen(n){ if (!isFinite(n)) return "—"; return Math.round(n).toLocaleString("ja-JP"); }
 function nin(n){ if (!isFinite(n)) return "—"; return Math.floor(n).toLocaleString("ja-JP"); }
 function pct(n){ if (!isFinite(n)) return "—"; return (Math.round(n*10)/10).toLocaleString("ja-JP"); }
 
-// wasa.primary: 本人発言（濃字）／wasa.amb: 逆算値（薄字＋※）／null なら "—"
-// kijun.check(v): 外れなら false / label: 短い表示 / range: {min,max} or point: value
-// waga.kind: input / calc / dash
-// entryPct: string key で入口比を表示する行
-var LAYOUT_MAIN = [
-  {type:"header", title:"広告先"},
-  {type:"row", lab:"投下する広告費",            wasa:null,               kijun:null,   waga:{kind:"input", key:"koukoku_in", unit:"円"}, entryPct:null},
-  {type:"row", lab:"表示1,000回あたりの広告費（CPM）", wasa:{amb:"9,000円"}, kijun:{label:"3,000〜14,000円", check:function(v){return v>=3000 && v<=14000;}},
-                                                 waga:{kind:"input", key:"cpm", unit:"円"},        entryPct:null},
-  {type:"row", lab:"広告の表示回数（IMP）",     wasa:{amb:"111,000回"},  kijun:null,   waga:{kind:"calc",  out:"imp_show"},   entryPct:null},
-  {type:"row", lab:"クリック率（CTR）",         wasa:{amb:"1.5%"},       kijun:{label:"1.50%",   check:function(v){return Math.abs(v-1.5)<=0.5;}},
-                                                 waga:{kind:"input", key:"ctr", unit:"%"},         entryPct:null},
-  {type:"row", lab:"広告で買うアクセス（クリック数）", wasa:null,          kijun:null,   waga:{kind:"calc",  out:"clicks_show"}, entryPct:null},
-  {type:"row", lab:"クリック単価（CPC）",       wasa:{amb:"600円"},      kijun:{label:"300円",   check:function(v){return v>=200 && v<=400;}},
-                                                 waga:{kind:"calcJudge", out:"cpc_show", src:"cpc"}, entryPct:null},
-
-  {type:"header", title:"01 オプトインページ"},
-  {type:"row", lab:"無料で来る人数（おまけ）",  wasa:null, kijun:null,
-                                                 waga:{kind:"input", key:"muryo", unit:"人"}, entryPct:null},
-  {type:"row", lab:"入口ページに来た人数",      wasa:null, kijun:null,
-                                                 waga:{kind:"calc", out:"entrance_show"}, entryPct:"entrance"},
-  {type:"row", lab:"メルマガ登録率（CVR）",     wasa:{amb:"20%"}, kijun:{label:"5〜20%", check:function(v){return v>=5 && v<=20;}},
-                                                 waga:{kind:"input", key:"optin", unit:"%"}, entryPct:null},
-  {type:"row", lab:"メルマガ登録数",            wasa:null, kijun:null,
-                                                 waga:{kind:"calc", out:"toroku_show"}, entryPct:"toroku"},
-  {type:"row", lab:"登録1件の広告費（CPA）",    wasa:{primary:"2,000円以下"}, kijun:{label:"3,000〜5,000円", check:function(v){return v>=3000 && v<=5000;}},
-                                                 waga:{kind:"calcJudge", out:"cpa_show", src:"cpa"}, entryPct:null},
-
-  {type:"header", title:"02 サンクスページ"},
-  {type:"row", lab:"LINE登録率（参考・我が社モデル外）", wasa:null, kijun:{label:"60%", check:function(v){return v>=50 && v<=70;}},
-                                                 waga:{kind:"dash"}, entryPct:null},
-
-  {type:"header", title:"03 第0章の動画ページ"},
-  {type:"row", lab:"見た人",       wasa:null, kijun:null, waga:{kind:"calc", out:"mita_show"},    entryPct:"mita"},
-
-  {type:"header", title:"04 フロント商品のLP"},
-  {type:"row", lab:"登録 → フロント購入", wasa:{primary:"20%超"}, kijun:null,
-                                                 waga:{kind:"input", key:"tf", unit:"%"}, entryPct:null},
-  {type:"row", lab:"フロントを買った人", wasa:null, kijun:null, waga:{kind:"calc", out:"kounyu_show"}, entryPct:"kounyu"},
-  {type:"row", lab:"フロント単価", wasa:{primary:"39,800円"}, kijun:null,
-                                                 waga:{kind:"input", key:"tanka_front", unit:"円"}, entryPct:null},
-  {type:"row", lab:"フロント売上", wasa:null, kijun:null, waga:{kind:"calc", out:"u_front_show"}, entryPct:null},
-
-  {type:"header", title:"05 申込フォーム（重ね窓）"},
-  {type:"row", lab:"抱き合わせ率",       wasa:null, kijun:null, waga:{kind:"input", key:"bump", unit:"%"}, entryPct:null},
-  {type:"row", lab:"抱き合わせ購入人数", wasa:null, kijun:null, waga:{kind:"calc", out:"bump_show"}, entryPct:"bump"},
-  {type:"row", lab:"抱き合わせ単価",     wasa:{primary:"4,980円"}, kijun:null, waga:{kind:"input", key:"tanka_bump", unit:"円"}, entryPct:null},
-  {type:"row", lab:"抱き合わせ売上",     wasa:null, kijun:null, waga:{kind:"calc", out:"u_bump_show"}, entryPct:null},
-
-  {type:"header", title:"06 ワンタイムオファーのLP"},
-  {type:"row", lab:"直後の購入率",   wasa:null, kijun:null, waga:{kind:"input", key:"oto", unit:"%"}, entryPct:null},
-  {type:"row", lab:"直後の購入人数", wasa:null, kijun:null, waga:{kind:"calc", out:"oto_show"}, entryPct:"oto"},
-  {type:"row", lab:"直後の単価",     wasa:{primary:"27,500円"}, kijun:null, waga:{kind:"input", key:"tanka_oto", unit:"円"}, entryPct:null},
-  {type:"row", lab:"直後の売上",     wasa:null, kijun:null, waga:{kind:"calc", out:"u_oto_show"}, entryPct:null},
-
-  {type:"header", title:"06x ワンタイムオファーの定価ページ"},
-  {type:"row", lab:"ページ帰還率",   wasa:null, kijun:null, waga:{kind:"input", key:"kikan", unit:"%"}, entryPct:null},
-  {type:"row", lab:"アクセス数",     wasa:null, kijun:null, waga:{kind:"calc", out:"oto2_access_show"}, entryPct:"oto2_access"},
-  {type:"row", lab:"定価の購入率",   wasa:null, kijun:null, waga:{kind:"input", key:"oto2", unit:"%"}, entryPct:null},
-  {type:"row", lab:"買った人",       wasa:null, kijun:null, waga:{kind:"calc", out:"oto2_show"}, entryPct:"oto2"},
-  {type:"row", lab:"定価の単価",     wasa:{primary:"55,000円"}, kijun:null, waga:{kind:"input", key:"tanka_oto2", unit:"円"}, entryPct:null},
-  {type:"row", lab:"定価の売上",     wasa:null, kijun:null, waga:{kind:"calc", out:"u_oto2_show"}, entryPct:null},
-
-  {type:"header", title:"継続（AI経営PRO）"},
-  {type:"row", lab:"継続率",   wasa:null, kijun:null, waga:{kind:"input", key:"keizoku", unit:"%"}, entryPct:null},
-  {type:"row", lab:"継続人数", wasa:null, kijun:null, waga:{kind:"calc", out:"keizoku_show"}, entryPct:"keizoku"},
-  {type:"row", lab:"継続の月額", wasa:null, kijun:null, waga:{kind:"input", key:"tanka_keizoku", unit:"円"}, entryPct:null},
-  {type:"row", lab:"継続する月数", wasa:null, kijun:null, waga:{kind:"input", key:"tsuki", unit:"ヶ月"}, entryPct:null},
-  {type:"row", lab:"継続売上",     wasa:null, kijun:null, waga:{kind:"calc", out:"u_keizoku_show"}, entryPct:null},
-
-  {type:"header", title:"お金と基準"},
-  {type:"row", lab:"売上原価率", wasa:null, kijun:null, waga:{kind:"input", key:"genka", unit:"%"}, entryPct:null},
-  {type:"row", lab:"広告費の回収率（ROAS）", wasa:{primary:"500%（最低）／ 700%超（現行）"}, kijun:null,
-                                              waga:{kind:"calc", out:"roas_show"}, entryPct:null}
+var SECTIONS = [
+  { dan:"広告先", rows:[
+    {lab:"投下する広告費", kind:"input", key:"koukoku_in", unit:"円"},
+    {lab:"表示1,000回あたり（CPM）", wasa:{amb:"9,000円"}, kijun:{label:"3,000〜14,000円"}, kind:"input", key:"cpm", unit:"円"},
+    {lab:"広告の表示回数（IMP）", wasa:{amb:"111,000回"}, kind:"calc", out:"imp"},
+    {lab:"クリック率（CTR）", wasa:{amb:"1.5%"}, kijun:{label:"1.50%"}, kind:"input", key:"ctr", unit:"%"},
+    {lab:"広告で買うアクセス（クリック数）", kind:"calc", out:"clicks"},
+    {lab:"クリック単価（CPC）", wasa:{amb:"600円"}, kijun:{label:"300円"}, kind:"calc", out:"cpc"}
+  ]},
+  { dan:"01 オプトインページ", rows:[
+    {lab:"無料で来る人数（おまけ）", kind:"input", key:"muryo", unit:"人"},
+    {lab:"入口ページに来た人数", kind:"calc", out:"entrance"},
+    {lab:"メルマガ登録率（CVR）", wasa:{amb:"20%"}, kijun:{label:"5〜20%"}, kind:"input", key:"optin", unit:"%"},
+    {lab:"メルマガ登録数", kind:"calc", out:"toroku"},
+    {lab:"登録1件の広告費（CPA）", wasa:{primary:"2,000円以下"}, kijun:{label:"3,000〜5,000円"}, kind:"calc", out:"cpa"}
+  ]},
+  { dan:"02 サンクスページ", rows:[
+    {lab:"LINE登録率（参考）", kijun:{label:"60%"}, kind:"dash"}
+  ]},
+  { dan:"03 第0章の動画ページ", rows:[
+    {lab:"見た人", kind:"calc", out:"mita"}
+  ]},
+  { dan:"04 フロント商品のLP", rows:[
+    {lab:"登録 → フロント購入", wasa:{primary:"20%超"}, kind:"input", key:"tf", unit:"%"},
+    {lab:"フロントを買った人", kind:"calc", out:"kounyu"},
+    {lab:"フロント単価", wasa:{primary:"39,800円"}, kind:"input", key:"tanka_front", unit:"円"},
+    {lab:"フロント売上", kind:"calc", out:"u_front"}
+  ]},
+  { dan:"05 申込フォーム（重ね窓）", rows:[
+    {lab:"フォームは 04 の重ね窓（率の別項なし）", kind:"dash"}
+  ]},
+  { dan:"06 ワンタイムオファーのLP", rows:[
+    {lab:"直後の購入率", kind:"input", key:"oto", unit:"%"},
+    {lab:"直後の購入人数", kind:"calc", out:"oto"},
+    {lab:"直後の単価", wasa:{primary:"27,500円"}, kind:"input", key:"tanka_oto", unit:"円"},
+    {lab:"直後の売上", kind:"calc", out:"u_oto"}
+  ]},
+  { dan:"06x ワンタイムオファーの定価ページ", rows:[
+    {lab:"ページ帰還率", kind:"input", key:"kikan", unit:"%"},
+    {lab:"アクセス数", kind:"calc", out:"oto2_access"},
+    {lab:"定価の購入率", kind:"input", key:"oto2", unit:"%"},
+    {lab:"買った人", kind:"calc", out:"oto2"},
+    {lab:"定価の単価", wasa:{primary:"55,000円"}, kind:"input", key:"tanka_oto2", unit:"円"},
+    {lab:"定価の売上", kind:"calc", out:"u_oto2"}
+  ]},
+  { dan:"継続（AI経営PRO）", rows:[
+    {lab:"継続率（フロント購入者の何%が継続）", kind:"input", key:"keizoku", unit:"%"},
+    {lab:"継続の人数", kind:"calc", out:"keizoku_ninzu"},
+    {lab:"継続の価格（月額）", kind:"input", key:"tanka_keizoku", unit:"円"},
+    {lab:"継続の月数", kind:"input", key:"tsuki", unit:"ヶ月"},
+    {lab:"継続の売上", kind:"calc", out:"u_keizoku"}
+  ]},
+  { dan:"08 申込完了ページ", rows:[
+    {lab:"（人数・売上は上流で確定）", kind:"dash"}
+  ]},
+  { dan:"お金と基準", rows:[
+    {lab:"売上原価率", kind:"input", key:"genka", unit:"%"},
+    {lab:"広告費の回収率（ROAS）", wasa:{primary:"500%（最低）／ 700%超（現行）"}, kind:"calc", out:"roas"}
+  ]}
 ];
 
 var LAYOUT_REV = [
-  {type:"row", lab:"登録数",         waga:{kind:"rev", key:"toroku",  unit:"人", out:"rev_toroku_show"}},
-  {type:"row", lab:"フロントを買った人", waga:{kind:"rev", key:"kounyu",  unit:"人", out:"rev_kounyu_show"}},
-  {type:"row", lab:"売上の合計",     waga:{kind:"rev", key:"uriage",  unit:"円", out:"rev_uriage_show"}},
-  {type:"row", lab:"手元に残る額",   waga:{kind:"rev", key:"eki",     unit:"円", out:"rev_eki_show"}}
+  {lab:"登録数",           key:"toroku", unit:"人"},
+  {lab:"フロントを買った人", key:"kounyu", unit:"人"},
+  {lab:"売上の合計",       key:"uriage", unit:"円"},
+  {lab:"手元に残る額",     key:"eki",    unit:"円"}
 ];
+
+function wasaCell(r){
+  if (!r.wasa) return '<span class="dash">—</span>';
+  if (r.wasa.primary) return '<b>' + r.wasa.primary + '</b>';
+  if (r.wasa.amb)     return '<span class="amb">' + r.wasa.amb + ' ※</span>';
+  return '<span class="dash">—</span>';
+}
+function kijunCell(r){
+  if (!r.kijun) return '<span class="dash">—</span>';
+  return '<b>' + r.kijun.label + '</b>';
+}
+function cellHtml(r, plan){
+  var cls = 'plan ' + plan;
+  var html = '';
+  if (r.kind === "input") {
+    html = '<div class="inp"><input type="number" data-k="' + r.key + '" data-plan="' + plan + '" step="any"><span class="unit">' + r.unit + '</span></div>';
+  } else if (r.kind === "calc") {
+    html = '<div class="stat" data-out-' + plan + '="' + r.out + '"></div>';
+  } else if (r.kind === "dash") {
+    html = '<span class="dash">—</span>';
+  }
+  return '<td class="' + cls + '">' + html + '</td>';
+}
 
 function buildMain(){
   var t = document.getElementById("tbl_main");
-  var head = '<thead><tr><th>項目</th><th>和佐</th><th>基準値</th><th>我が社</th><th>入口=100%</th></tr></thead>';
+  var head = '<thead><tr><th>段</th><th>項目</th><th>和佐</th><th>基準値</th><th class="A">PLAN A</th><th class="B">PLAN B</th></tr></thead>';
   var body = '<tbody>';
-  for (var i=0;i<LAYOUT_MAIN.length;i++){
-    var r = LAYOUT_MAIN[i];
-    if (r.type === "header") {
-      body += '<tr class="section-head"><td colspan="5">■ ' + r.title + '</td></tr>';
-      continue;
+  for (var s=0; s<SECTIONS.length; s++){
+    var sec = SECTIONS[s];
+    for (var i=0; i<sec.rows.length; i++){
+      var r = sec.rows[i];
+      var isFirst = (i === 0);
+      body += '<tr' + (isFirst ? ' class="dan-start"' : '') + '>';
+      if (isFirst) body += '<td class="dan" rowspan="' + sec.rows.length + '">' + sec.dan + '</td>';
+      body += '<td class="lab">' + r.lab + '</td>';
+      body += '<td class="wasa">' + wasaCell(r) + '</td>';
+      body += '<td class="kijun">' + kijunCell(r) + '</td>';
+      body += cellHtml(r, "A") + cellHtml(r, "B");
+      body += '</tr>';
     }
-    body += '<tr>';
-    body += '<td class="lab">' + r.lab + '</td>';
-    var wh;
-    if (!r.wasa) wh = '<span class="dan">—</span>';
-    else if (r.wasa.primary) wh = '<b>' + r.wasa.primary + '</b>';
-    else if (r.wasa.amb)     wh = '<span class="amb">' + r.wasa.amb + ' ※</span>';
-    else                     wh = '<span class="dan">—</span>';
-    body += '<td class="wasa">' + wh + '</td>';
-    var kh = r.kijun ? ('<b>' + r.kijun.label + '</b>') : '<span class="dan">—</span>';
-    body += '<td class="kijun">' + kh + '</td>';
-    var g = r.waga;
-    var wagaHtml = "";
-    if (g.kind === "input") {
-      wagaHtml = '<div class="inp"><input type="number" data-k="' + g.key + '"' +
-                 (r.kijun ? ' data-kijun-idx="' + i + '"' : '') +
-                 ' step="any"><span class="unit">' + g.unit + '</span></div>';
-    } else if (g.kind === "calc") {
-      wagaHtml = '<div class="stat" data-out="' + g.out + '"></div>';
-    } else if (g.kind === "calcJudge") {
-      wagaHtml = '<div class="stat" data-out="' + g.out + '" data-judge="' + i + '"></div>';
-    } else if (g.kind === "rev") {
-      // 使わない（別テーブル）
-    } else if (g.kind === "dash") {
-      wagaHtml = '<div class="dash">—</div>';
-    }
-    body += '<td class="waga">' + wagaHtml + '</td>';
-    var ph = r.entryPct ? '<span data-pct="' + r.entryPct + '"></span>' : '<span class="dan">—</span>';
-    body += '<td class="pct">' + ph + '</td>';
-    body += '</tr>';
   }
   body += '</tbody>';
   t.innerHTML = head + body;
@@ -338,36 +335,38 @@ function buildMain(){
 
 function buildRev(){
   var t = document.getElementById("tbl_rev");
-  var head = '<thead><tr><th>項目</th><th>和佐</th><th>我が社（打つと逆算）</th></tr></thead>';
+  var head = '<thead><tr><th>段</th><th>項目</th><th>和佐</th><th>基準値</th><th class="A">PLAN A</th><th class="B">PLAN B</th></tr></thead>';
   var body = '<tbody>';
-  for (var i=0;i<LAYOUT_REV.length;i++){
+  for (var i=0; i<LAYOUT_REV.length; i++){
     var r = LAYOUT_REV[i];
-    body += '<tr>';
+    var isFirst = (i === 0);
+    body += '<tr' + (isFirst ? ' class="dan-start"' : '') + '>';
+    if (isFirst) body += '<td class="dan" rowspan="' + LAYOUT_REV.length + '">逆算入力</td>';
     body += '<td class="lab">' + r.lab + '</td>';
-    body += '<td class="wasa"><span class="dan">—</span></td>';
-    var g = r.waga;
-    body += '<td class="waga">' +
-      '<div class="inp"><input type="number" data-rev="' + g.key + '" step="any"><span class="unit">' + g.unit + '</span></div>' +
-      '<div class="out" data-out="' + g.out + '"></div>' +
-    '</td>';
+    body += '<td class="wasa"><span class="dash">—</span></td>';
+    body += '<td class="kijun"><span class="dash">—</span></td>';
+    ["A","B"].forEach(function(plan){
+      body += '<td class="plan ' + plan + '">' +
+        '<div class="inp"><input type="number" data-rev="' + r.key + '" data-plan="' + plan + '" step="any"><span class="unit">' + r.unit + '</span></div>' +
+        '<div class="stat" data-out-' + plan + '="rev_' + r.key + '"></div>' +
+      '</td>';
+    });
     body += '</tr>';
   }
   body += '</tbody>';
   t.innerHTML = head + body;
 }
 
-function saveNow(){
-  try { localStorage.setItem("marketing_shisan_v2", JSON.stringify({v:S})); }
-  catch(e) { console.error("saveNow failed:", e); }
-}
+function getS(plan){ return plan === "A" ? SA : SB; }
 
 function bindInputs(){
   document.querySelectorAll('input[type="number"][data-k]').forEach(function(el){
     el.addEventListener("input", function(ev){
       var k = ev.target.getAttribute("data-k");
+      var plan = ev.target.getAttribute("data-plan");
       var v = parseFloat(ev.target.value);
       if (!isFinite(v)) return;
-      S[k] = v;
+      getS(plan)[k] = v;
       clearReverseInputs();
       calc();
       saveNow();
@@ -376,9 +375,10 @@ function bindInputs(){
   document.querySelectorAll('input[type="number"][data-rev]').forEach(function(el){
     el.addEventListener("input", function(ev){
       var kind = ev.target.getAttribute("data-rev");
+      var plan = ev.target.getAttribute("data-plan");
       var v = parseFloat(ev.target.value);
       if (!isFinite(v) || v <= 0) return;
-      var ok = reverseKoukoku(kind, v);
+      var ok = reverseKoukoku(plan, kind, v);
       if (!ok) return;
       syncInputs();
       calc();
@@ -390,21 +390,12 @@ function clearReverseInputs(){
   document.querySelectorAll('input[type="number"][data-rev]').forEach(function(e){ e.value = ""; });
 }
 
-function currentTfFraction(){
-  return S.tf > 0 ? S.tf/100 : 0;
-}
-
-function reverseKoukoku(kind, X){
+function reverseKoukoku(plan, kind, X){
+  var S = getS(plan);
   if (S.optin <= 0 || S.ctr <= 0 || S.cpm <= 0) return false;
-  var tfFrac = currentTfFraction();
-  // kounyu 基準の売上寄与
-  var factor_kounyu = S.tanka_front
-                    + (S.bump/100)*S.tanka_bump
-                    + (S.oto/100)*S.tanka_oto
-                    + (S.keizoku/100)*S.tanka_keizoku*S.tsuki;
-  // toroku 基準の売上寄与（06x はメルマガ登録数×帰還率×購入率）
+  var tfFrac = S.tf/100;
+  var factor_kounyu = S.tanka_front + (S.oto/100)*S.tanka_oto + (S.keizoku/100)*S.tanka_keizoku*S.tsuki;
   var factor_toroku = (S.kikan/100)*(S.oto2/100)*S.tanka_oto2;
-  // uriage = toroku * G   (G = tf*factor_kounyu + factor_toroku)
   var G = tfFrac * factor_kounyu + factor_toroku;
   var toroku_target;
   if (kind === "toroku")      toroku_target = X;
@@ -412,7 +403,6 @@ function reverseKoukoku(kind, X){
   else if (kind === "uriage") { if (G <= 0) return false; toroku_target = X / G; }
   else if (kind === "eki") {
     var g = 1 - S.genka/100;
-    // eki = K * [CTR*optin*G*(1-genka/100)/(CPM*10) - 1] + muryo*optin*G*(1-genka/100)/100
     var A = (S.ctr * S.optin * G * g) / (S.cpm * 10);
     var B = (S.muryo * S.optin * G * g) / 100;
     var denom = A - 1;
@@ -436,152 +426,134 @@ function reverseKoukoku(kind, X){
 function syncInputs(){
   document.querySelectorAll('input[type="number"][data-k]').forEach(function(el){
     var k = el.getAttribute("data-k");
-    var v = S[k];
+    var plan = el.getAttribute("data-plan");
+    var v = getS(plan)[k];
     var display = (k === "koukoku_in") ? String(Math.round(v)) : String(v);
     if (el.value !== display) el.value = display;
   });
 }
 
-function setStat(key, text){
-  document.querySelectorAll('[data-out="' + key + '"]').forEach(function(e){ e.textContent = text; });
+function setStat(plan, key, text){
+  document.querySelectorAll('[data-out-' + plan + '="' + key + '"]').forEach(function(e){ e.textContent = text; });
 }
-function setPct(key, val){
-  document.querySelectorAll('[data-pct="' + key + '"]').forEach(function(e){ e.textContent = val; });
-}
-function markInput(key, ok){
-  var el = document.querySelector('input[data-k="' + key + '"]');
+function markInput(plan, key, ok){
+  var el = document.querySelector('input[data-k="' + key + '"][data-plan="' + plan + '"]');
   if (!el) return;
-  if (ok) el.classList.remove("warn");
-  else    el.classList.add("warn");
+  if (ok) el.classList.remove("warn"); else el.classList.add("warn");
 }
-function markCalc(outKey, ok){
-  var el = document.querySelector('[data-out="' + outKey + '"]');
+function markCalc(plan, key, ok){
+  var el = document.querySelector('[data-out-' + plan + '="' + key + '"]');
   if (!el) return;
-  if (ok) el.classList.remove("warn");
-  else    el.classList.add("warn");
+  if (ok) el.classList.remove("warn"); else el.classList.add("warn");
 }
 
-function calc(){
-  var K       = S.koukoku_in;
-  var imp     = S.cpm > 0 ? K / S.cpm * 1000 : 0;
-  var clicks  = imp * S.ctr / 100;
+function calcPlan(plan){
+  var S = getS(plan);
+  var K = S.koukoku_in;
+  var imp = S.cpm > 0 ? K / S.cpm * 1000 : 0;
+  var clicks = imp * S.ctr / 100;
   var clicks_i = Math.floor(clicks);
-  var cpc     = clicks_i > 0 ? K / clicks_i : 0;
-  var p       = clicks + S.muryo;
-  var toroku  = p * S.optin/100;
+  var cpc = clicks_i > 0 ? K / clicks_i : 0;
+  var p = clicks + S.muryo;
+  var toroku = p * S.optin/100;
   var toroku_i = Math.floor(toroku);
-  var cpa     = toroku_i > 0 ? K / toroku_i : 0;
-  var tfFrac  = currentTfFraction();
-  var mita    = toroku;         // 03 動画段は人数が通るだけ（率なし）
-  var kounyu  = toroku * tfFrac;
-  var bump        = kounyu * S.bump/100;
-  var oto         = kounyu * S.oto/100;
-  var oto2_access = toroku * S.kikan/100;   // 06x はメルマガ登録数を分母にする
-  var oto2        = oto2_access * S.oto2/100;
-  var keizoku     = kounyu * S.keizoku/100;
+  var cpa = toroku_i > 0 ? K / toroku_i : 0;
+  var mita = toroku;
+  var kounyu = toroku * S.tf/100;
+  var oto = kounyu * S.oto/100;
+  var oto2_access = toroku * S.kikan/100;
+  var oto2 = oto2_access * S.oto2/100;
+  var keizoku_ninzu = Math.floor(kounyu) * S.keizoku/100;
 
-  // 売上は人数（整数切り捨て）× 単価
-  var u_front   = Math.floor(kounyu)  * S.tanka_front;
-  var u_bump    = Math.floor(bump)    * S.tanka_bump;
-  var u_oto     = Math.floor(oto)     * S.tanka_oto;
-  var u_oto2    = Math.floor(oto2)    * S.tanka_oto2;
-  var u_keizoku = Math.floor(keizoku) * S.tanka_keizoku * S.tsuki;
-  var uriage    = u_front + u_bump + u_oto + u_oto2 + u_keizoku;
-  var genka     = uriage * S.genka/100;
-  var arari     = uriage - genka;
-  var eki       = arari - K;
-  var roas      = K > 0 ? uriage/K*100 : 0;
-  var tf_disp   = S.tf;
+  var u_front    = Math.floor(kounyu) * S.tanka_front;
+  var u_oto      = Math.floor(oto)    * S.tanka_oto;
+  var u_oto2     = Math.floor(oto2)   * S.tanka_oto2;
+  var u_keizoku  = Math.floor(keizoku_ninzu) * S.tanka_keizoku * S.tsuki;
+  var uriage     = u_front + u_oto + u_oto2 + u_keizoku;
+  var genka      = uriage * S.genka/100;
+  var arari      = uriage - genka;
+  var eki        = arari - K;
+  var roas       = K > 0 ? uriage/K*100 : 0;
 
-  // メイン表の calc セル
-  setStat("imp_show",      yen(imp) + " 回");
-  setStat("clicks_show",   nin(clicks) + " 人");
-  setStat("cpc_show",      yen(cpc) + " 円");
-  setStat("entrance_show", nin(p) + " 人");
-  setStat("toroku_show",   nin(toroku) + " 人");
-  setStat("cpa_show",      yen(cpa) + " 円");
-  setStat("mita_show",     nin(mita) + " 人");
-  setStat("kounyu_show",   nin(kounyu) + " 人");
-  setStat("u_front_show",  yen(u_front) + " 円");
-  setStat("bump_show",     nin(bump) + " 人");
-  setStat("u_bump_show",   yen(u_bump) + " 円");
-  setStat("oto_show",       nin(oto) + " 人");
-  setStat("u_oto_show",     yen(u_oto) + " 円");
-  setStat("oto2_access_show", nin(oto2_access) + " 人");
-  setStat("oto2_show",      nin(oto2) + " 人");
-  setStat("u_oto2_show",    yen(u_oto2) + " 円");
-  setStat("keizoku_show",  nin(keizoku) + " 人");
-  setStat("u_keizoku_show", yen(u_keizoku) + " 円");
-  setStat("roas_show",     pct(roas) + "%");
+  setStat(plan, "imp",           yen(imp) + " 回");
+  setStat(plan, "clicks",        nin(clicks) + " 人");
+  setStat(plan, "cpc",           yen(cpc) + " 円");
+  setStat(plan, "entrance",      nin(p) + " 人");
+  setStat(plan, "toroku",        nin(toroku) + " 人");
+  setStat(plan, "cpa",           yen(cpa) + " 円");
+  setStat(plan, "mita",          nin(mita) + " 人");
+  setStat(plan, "kounyu",        nin(kounyu) + " 人");
+  setStat(plan, "u_front",       yen(u_front) + " 円");
+  setStat(plan, "oto",           nin(oto) + " 人");
+  setStat(plan, "u_oto",         yen(u_oto) + " 円");
+  setStat(plan, "oto2_access",   nin(oto2_access) + " 人");
+  setStat(plan, "oto2",          nin(oto2) + " 人");
+  setStat(plan, "u_oto2",        yen(u_oto2) + " 円");
+  setStat(plan, "keizoku_ninzu", nin(keizoku_ninzu) + " 人");
+  setStat(plan, "u_keizoku",     yen(u_keizoku) + " 円");
+  setStat(plan, "roas",          pct(roas) + "%");
 
-  // 入口比%
-  setPct("entrance", pct(p > 0 ? 100 : 0) + "%");
-  setPct("toroku",   pct(p > 0 ? toroku/p*100 : 0) + "%");
-  setPct("mita",     pct(p > 0 ? mita/p*100 : 0) + "%");
-  setPct("kounyu",   pct(p > 0 ? kounyu/p*100 : 0) + "%");
-  setPct("bump",     pct(p > 0 ? bump/p*100 : 0) + "%");
-  setPct("oto",      pct(p > 0 ? oto/p*100 : 0) + "%");
-  setPct("oto2_access", pct(p > 0 ? oto2_access/p*100 : 0) + "%");
-  setPct("oto2",     pct(p > 0 ? oto2/p*100 : 0) + "%");
-  setPct("keizoku",  pct(p > 0 ? keizoku/p*100 : 0) + "%");
+  markInput(plan, "ctr",   Math.abs(S.ctr - 1.5) <= 0.5);
+  markInput(plan, "cpm",   S.cpm >= 3000 && S.cpm <= 14000);
+  markInput(plan, "optin", S.optin >= 5 && S.optin <= 20);
+  markCalc(plan, "cpc",   cpc >= 200 && cpc <= 400);
+  markCalc(plan, "cpa",   cpa >= 3000 && cpa <= 5000);
 
-  // 基準値外れ判定
-  markInput("ctr",   Math.abs(S.ctr - 1.5) <= 0.5);
-  markInput("cpm",   S.cpm >= 3000 && S.cpm <= 14000);
-  markInput("optin", S.optin >= 5 && S.optin <= 20);
-  markCalc("cpc_show", cpc >= 200 && cpc <= 400);
-  markCalc("cpa_show", cpa >= 3000 && cpa <= 5000);
+  setStat(plan, "rev_toroku", "計算値 " + nin(toroku) + " 人");
+  setStat(plan, "rev_kounyu", "計算値 " + nin(kounyu) + " 人");
+  setStat(plan, "rev_uriage", "計算値 " + yen(uriage) + " 円");
+  setStat(plan, "rev_eki",    "計算値 " + yen(eki) + " 円");
 
-  // 逆算セクション
-  setStat("rev_toroku_show", "計算値 " + nin(toroku) + " 人 ／ 投下広告費 " + yen(K) + " 円");
-  setStat("rev_kounyu_show", "計算値 " + nin(kounyu) + " 人 ／ 投下広告費 " + yen(K) + " 円");
-  setStat("rev_uriage_show", "計算値 " + yen(uriage) + " 円 ／ 投下広告費 " + yen(K) + " 円");
-  setStat("rev_eki_show",    "計算値 " + yen(eki) + " 円 ／ 投下広告費 " + yen(K) + " 円");
+  var h = '';
+  h += '<tr><td>売上の合計</td><td class="n">' + yen(uriage) + ' 円</td></tr>';
+  h += '<tr><td>売上原価（' + S.genka + '%）</td><td class="n">−' + yen(genka) + ' 円</td></tr>';
+  h += '<tr><td>広告費</td><td class="n">−' + yen(K) + ' 円</td></tr>';
+  h += '<tr><td>手元に残る額</td><td class="n">' + yen(eki) + ' 円</td></tr>';
+  document.getElementById("tbl_money_" + plan).innerHTML = h;
 
-  // 売上表（3行 + 手元に残る）
-  var h2 = '<tr><th>項目</th><th class="n">金額</th></tr>';
-  h2 += '<tr class="sum"><td>売上の合計</td><td class="n">' + yen(uriage) + ' 円</td></tr>';
-  h2 += '<tr class="sum"><td>売上原価（' + S.genka + '%）</td><td class="n">−' + yen(genka) + ' 円</td></tr>';
-  h2 += '<tr class="sum"><td>広告費</td><td class="n">−' + yen(K) + ' 円</td></tr>';
-  h2 += '<tr class="sum"><td>手元に残る額</td><td class="n">' + yen(eki) + ' 円</td></tr>';
-  document.getElementById("tbl_money").innerHTML = h2;
-
-  // KPI
   var per_in   = p > 0 ? arari / p : 0;
   var per_lead = toroku > 0 ? arari / toroku : 0;
   var ltv      = kounyu > 0 ? uriage / kounyu : 0;
   var need     = per_in > 0 ? 20000000 / per_in : 0;
   var k = "";
-  k += '<div class="k hi"><div class="t">登録 → フロント購入</div><div class="v">' + pct(tf_disp) + '%</div><div class="s">和佐の公言 20%超</div></div>';
-  k += '<div class="k hi"><div class="t">広告費の回収率（ROAS）</div><div class="v">' + pct(roas) + '%</div><div class="s">和佐 最低 500%・現行 700%超</div></div>';
-  k += '<div class="k"><div class="t">クリック単価（CPC）</div><div class="v">' + yen(cpc) + ' 円</div><div class="s">シート基準 300円</div></div>';
+  k += '<div class="k"><div class="t">登録→フロント購入</div><div class="v">' + pct(S.tf) + '%</div><div class="s">和佐 20%超</div></div>';
+  k += '<div class="k"><div class="t">ROAS</div><div class="v">' + pct(roas) + '%</div><div class="s">和佐 500〜700%</div></div>';
+  k += '<div class="k"><div class="t">CPC</div><div class="v">' + yen(cpc) + ' 円</div><div class="s">シート基準 300円</div></div>';
   k += '<div class="k"><div class="t">投下する広告費</div><div class="v">' + yen(K) + ' 円</div><div class="s">起点</div></div>';
-  k += '<div class="k"><div class="t">入口1人あたりの粗利</div><div class="v">' + yen(per_in) + ' 円</div><div class="s">広告に1人あたりここまで払える</div></div>';
-  k += '<div class="k"><div class="t">登録1人あたりの粗利</div><div class="v">' + yen(per_lead) + ' 円</div><div class="s">CPA との差が取り分</div></div>';
-  k += '<div class="k"><div class="t">買った人1人あたりの売上</div><div class="v">' + yen(ltv) + ' 円</div><div class="s">フロント＋抱き合わせ＋追加＋継続</div></div>';
-  k += '<div class="k"><div class="t">粗利 2,000万円に必要な入口の人数</div><div class="v">' + yen(need) + ' 人</div><div class="s">この商品だけで到達する場合</div></div>';
-  document.getElementById("kpi").innerHTML = k;
+  k += '<div class="k"><div class="t">入口1人の粗利</div><div class="v">' + yen(per_in) + ' 円</div><div class="s">1人あたりここまで払える</div></div>';
+  k += '<div class="k"><div class="t">登録1人の粗利</div><div class="v">' + yen(per_lead) + ' 円</div><div class="s">CPA との差</div></div>';
+  k += '<div class="k"><div class="t">買った人1人の売上</div><div class="v">' + yen(ltv) + ' 円</div><div class="s">フロント＋ワンタイムオファー＋定価ページ＋継続</div></div>';
+  k += '<div class="k"><div class="t">粗利2,000万円に必要な入口</div><div class="v">' + yen(need) + ' 人</div><div class="s">この商品だけで到達</div></div>';
+  document.getElementById("kpi_" + plan).innerHTML = k;
+}
+
+function calc(){
+  calcPlan("A");
+  calcPlan("B");
 }
 
 function memo(){
   var m = "";
-  m += '<b>読み方の印</b> ── ※ の付いた薄字は「和佐本人が言っていない値（逆算した参考値）」。濃字は「本人がページに書いている値」。基準値の外れは我が社の欄が色付きで示される。<br><br>';
-  m += '<b>投下する広告費が起点。</b>ここを打つと、下まで全部の人数と金額が同時に動く。率と単価は動かない。<br><br>';
+  m += '<b>この表は予測型。</b>これから回す前に置く数字（投下する広告費・率）から、出てくる人数を読む。だから<b>率が上・人数が下</b>で並べてある。実際に回した後の数字（結果型）は、人数が先に出て率は後から計算されるので、並びが逆になる。<br>';
+  m += '<b><span class="wasa-mark">和佐の列</span></b>は動かさない基準。濃字＝本人発言・薄字＝逆算値（末尾に ※）。<b>基準値の列</b>は Mits様のシートの基準（外れると色が付く）。<b><span class="a-mark">PLAN A</span> と <span class="b-mark">PLAN B</span></b> は数値を打ち込む欄で、2本を独立に回して見比べる。一番上の「投下する広告費」を打つと、その列の下まで全部が動く。もう1本の列は動かさない。<br>';
+  m += '<b>下流から逆に</b>は結果の数字（登録数・フロントを買った人・売上・手元に残る額）を打つと、その列の 投下する広告費 が逆算される。率と単価は動かない。<br><br>';
+
+  m += '<b>投下する広告費が起点。</b>ここを打つと、下まで全部の人数と金額が同時に動く。<br><br>';
   m += '<b>「登録 → フロント購入」は1本の率で入れる</b> ── 和佐が公表しているのはこの1本（20%超）だけ。段の細分化は持たない。<br><br>';
+  m += '<b>06x（ワンタイムオファーの定価ページ）はメルマガ登録数を分母にする</b> ── ステップメール・LINE で戻ってきた人が買うページなので、フロント購入者ではなく登録者全体が母数。アクセス数＝登録 × ページ帰還率、買った人＝アクセス × 定価の購入率。<br><br>';
+  m += '<b>継続（AI経営PRO）は 0 で回します。</b>Mits様 2026-09-20「消さなくていい　数字を0にするだけ」── 売り場ができたら数字を入れるだけで使える形にしてあります。継続率＝フロント購入者の何%が月額に入るか、価格は月額、月数は何ヶ月払うか。継続の売上＝人数×月額×月数。<br><br>';
   m += '<b>段名の出所</b> ── 我が社の正本「全体像の設計図」に揃えてある。00 note記事／01 オプトインページ／02 サンクスページ／03 第0章の動画ページ／03x 期限切れ／04 フロント商品のLP／04x 期限切れ／05 申込フォーム（重ね窓）／06 ワンタイムオファーのLP／06x ワンタイムオファーの定価ページ／07 銀行振込（使わない）／08 申込完了ページ。<br>';
-  m += 'https://reports.7years.life/private/marketing/%E5%85%A8%E4%BD%93%E5%83%8F%E3%81%AE%E8%A8%AD%E8%A8%88%E5%9B%B3.html<br>';
+  m += 'https://reports.7years.life/private/marketing/%E5%85%A8%E4%BD%93%E5%83%8F%E3%81%AE%E8%A8%AD%E8%A8%88%E5%9B%B3.html<br><br>';
   m += 'Mits様のシート（並べ方と基準値の借り元・シートの売り物は 550,000円 の高単価商品）<br>';
   m += 'https://docs.google.com/spreadsheets/d/1hxbtkoRhWctxbA2J-HTaBiSgqmQ90QSdX8kjWsvjwDk/edit?gid=0<br><br>';
+  m += '<b>Mits様のシート（結果型・2026-02-13 開始／広告費 50,000円 の回）の並び</b>：IMP 11,450 → クリック数 167 → CTR 1.46% → クリック単価 299円 → CPM 4,367円 → メルマガ登録数 17 → メルマガ登録率（CVR）10.18% → CPA 2,941円。結果型は「実際に回した結果、人数が先に出て、率はそこから計算される」ので、人数が上・率が下の並びになる。この表は予測型なので並びが逆（率が上・人数が下）。<br><br>';
+
   m += '<b>和佐の本人発言 10項目</b>（濃字の全て） ── 1リストの獲得費 2,000円以下／1日の広告費 150,000円以上／月の広告費 3,000,000円以上／登録 → フロント購入 20%超（LP見出し・7項目・DAY3タイトルの3箇所）／フロント 39,800円／抱き合わせ 4,980円／ワンタイムオファー直後 27,500円／同じ商品の定価 55,000円／広告費の回収率 500%（最低）・700%超（現行）／1日のワンタイムオファー売上 400,000円以上。<br><br>';
   m += '<b>和佐が言っていない項目（表では ※ 付き薄字）</b> ── 表示回数（IMP 111,000回）／クリック率（CTR 1.5%）／CPM 9,000円／クリック単価（CPC 600円）／オプトイン率（20%）。いずれも Mits様が 2026-09-20 に決めた「CTR 1.5%・オプトイン 20%」の下で「1リスト 3,000円」を成立させる逆算値（参謀の仮置き）。<br><br>';
   m += '<b>基準値の 6項目</b>（Mits様のシートの値） ── CTR 1.50%（±0.5%）／クリック単価 300円（200〜400円）／CPM 3,000〜14,000円／メルマガ登録率 5〜20%／CPA 3,000〜5,000円／LINE登録率 60%（参考・我が社モデル外）。<br><br>';
-  m += '<b>Mits様のシート（結果型・2026-02-13 開始／広告費 50,000円 の回）の並び</b>：IMP 11,450 → クリック数 167 → CTR 1.46% → クリック単価 299円 → CPM 4,367円 → メルマガ登録数 17 → メルマガ登録率（CVR）10.18% → CPA 2,941円。<br>';
-  m += '結果型は「実際に回した結果、人数が先に出て、率はそこから計算される」ので、人数が上・率が下の並びになる。この表は予測型なので並びが逆（率が上・人数が下）。<br>';
-  m += 'https://docs.google.com/spreadsheets/d/1hxbtkoRhWctxbA2J-HTaBiSgqmQ90QSdX8kjWsvjwDk/edit?gid=0<br><br>';
-  m += '<b>Mits様のシートの実測（続き）</b>：LINE 10人（58.8%）／予約 2件／成約 1件／成約単価 550,000円／ROAS 1,100%。<br><br>';
   m += '<b>無料で来る人数は 0 で回します。</b>Mits様 2026-09-20「Noteは当てにしないで回す　無料媒体はおまけくらいで考える」。この試算は広告で買ったアクセスだけで成り立つかを見るためのものです。<br><br>';
   m += '<b>和佐の自分の試算</b> ── 月 50万円の広告費で月売上 250万円（年 3,000万円）、月 100万円で月 500万円（年 6,000万円）、月 300万円で月 1,500万円（年 1億8,000万円）。いずれも ROAS 500% の計算です。<br><br>';
-  m += '<b>我が社の値段</b>（初期値） ── フロント 29,800円（定価 60,000円）／ワンタイムオファー直後 58,000円／後で 88,000円／4ヶ月目から月 5,000円（税別）。抱き合わせは外してあります（2026-09-06 確定）。';
+  m += '<b>我が社の値段</b>（初期値） ── フロント 29,800円（定価 60,000円）／ワンタイムオファー直後 58,000円／後で 88,000円。抱き合わせは外してあります（2026-09-06 確定）。継続（AI経営PRO）は売り場ができたら数字を入れます（現在 0）。';
   document.getElementById("memo").innerHTML = m;
 }
 
@@ -600,11 +572,10 @@ calc();
 memo();
 
 document.getElementById("save").addEventListener("click", function(){
-  try { localStorage.setItem("marketing_shisan_v2", JSON.stringify({v:S})); msg("保存しました"); }
-  catch(e) { msg("保存できませんでした"); }
+  saveNow(); msg("保存しました");
 });
 document.getElementById("reset").addEventListener("click", function(){
-  try { localStorage.removeItem("marketing_shisan_v2"); } catch(e) {}
+  try { localStorage.removeItem("marketing_shisan_v4"); localStorage.removeItem("marketing_shisan_v3"); localStorage.removeItem("marketing_shisan_v2"); } catch(e) {}
   loadDefault(); clearReverseInputs(); syncInputs(); calc(); msg("初期値に戻しました");
 });
 </script>
