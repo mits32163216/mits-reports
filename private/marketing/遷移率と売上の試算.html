@@ -71,50 +71,38 @@ table.main6 th { font-family:var(--mono); font-size:10.5px; color:var(--muted); 
 table.main6 th.A { color:var(--a-mark); }
 table.main6 th.B { color:var(--b-mark); }
 
-table.main6 col.col-dan   { width:12%; }
-table.main6 col.col-lab   { width:23%; }
-table.main6 col.col-wasa  { width:15%; }
-table.main6 col.col-kijun { width:14%; }
-table.main6 col.col-A     { width:18%; }
-table.main6 col.col-B     { width:18%; }
+table.main6 col.col-dan   { width:16%; }
+table.main6 col.col-lab   { width:32%; }
+table.main6 col.col-A     { width:26%; }
+table.main6 col.col-B     { width:26%; }
 
-/* 縦罫 白灰交互（PLAN A / PLAN B は独自色で置換） */
+/* 縦罫 白灰交互（4列：段=灰・項目=白・A=独自色・B=独自色） */
 table.main6 tbody td.dan   { background:var(--zebra); }
 table.main6 tbody td.lab   { background:transparent; }
-table.main6 tbody td.wasa  { background:var(--zebra); }
-table.main6 tbody td.kijun { background:transparent; }
 table.main6 tbody td.plan.A { background:var(--a-bg); }
 table.main6 tbody td.plan.B { background:var(--b-bg); }
 
 table.main6 td.dan { font-family:var(--mincho); font-size:12.5px; font-weight:600; color:var(--gold); vertical-align:top; padding-top:8px; line-height:1.35; }
-table.main6 td.lab { font-size:12px; line-height:1.35; }
-table.main6 td.wasa { font-family:var(--mono); font-size:12px; color:var(--muted); text-align:right; white-space:nowrap; }
-table.main6 td.wasa b { color:var(--gold); font-weight:600; font-family:var(--mincho); font-size:12.5px; }
-table.main6 td.wasa .amb { color:var(--muted); font-size:11px; }
-table.main6 td.kijun { font-family:var(--mono); font-size:11px; color:var(--muted); text-align:right; white-space:nowrap; }
-table.main6 td.kijun b { color:var(--fg); font-weight:600; font-family:var(--mincho); font-size:12px; }
+table.main6 td.lab { font-size:12.5px; line-height:1.4; }
 table.main6 td.plan { text-align:right; white-space:nowrap; }
 table.main6 td.plan .inp { display:flex; align-items:center; gap:3px; justify-content:flex-end; flex-wrap:wrap; }
-table.main6 td.plan input[type=number] { width:78px; padding:3px 5px; text-align:right; font-family:var(--mono); font-size:12px;
+table.main6 td.plan input[type=number] { width:110px; padding:4px 6px; text-align:right; font-family:var(--mono); font-size:13px;
   border:1px solid var(--line); border-radius:6px; background:var(--card-bg); color:var(--fg); }
 table.main6 td.plan input[type=number]:focus { outline:none; }
 table.main6 td.plan.A input[type=number]:focus { border-color:var(--a-mark); }
 table.main6 td.plan.B input[type=number]:focus { border-color:var(--b-mark); }
-table.main6 td.plan input.warn { border-color:var(--warn-fg); background:var(--warn-bg); color:var(--warn-fg); }
-table.main6 td.plan .unit { font-family:var(--mono); font-size:10px; color:var(--muted); }
-table.main6 td.plan .stat { font-family:var(--mono); font-size:12px; font-weight:600; }
+table.main6 td.plan .unit { font-family:var(--mono); font-size:11px; color:var(--muted); }
+table.main6 td.plan .stat { font-family:var(--mono); font-size:13px; font-weight:600; }
 table.main6 td.plan.A .stat { color:var(--a-mark); }
 table.main6 td.plan.B .stat { color:var(--b-mark); }
-table.main6 td.plan .stat.warn { color:var(--warn-fg); }
 table.main6 td.plan .dash { color:var(--muted); font-family:var(--mono); font-size:12px; }
 
 @media (max-width:640px){
-  table.main6 { font-size:11.5px; }
-  table.main6 col.col-dan { width:14%; }
-  table.main6 col.col-lab { width:26%; }
-  table.main6 col.col-wasa, table.main6 col.col-kijun { width:12%; }
-  table.main6 col.col-A, table.main6 col.col-B { width:18%; }
-  table.main6 td.plan input[type=number] { width:56px; }
+  table.main6 { font-size:12px; }
+  table.main6 col.col-dan { width:18%; }
+  table.main6 col.col-lab { width:34%; }
+  table.main6 col.col-A, table.main6 col.col-B { width:24%; }
+  table.main6 td.plan input[type=number] { width:74px; }
   table.main6 td.dan { font-size:11.5px; padding-top:6px; }
 }
 
@@ -142,7 +130,7 @@ footer { margin-top:32px; padding-top:14px; border-top:1px dashed var(--line);
 <div class="hero">
   <a class="back" href="https://reports.7years.life/private/marketing/">← マーケティング</a>
   <h1>📊 遷移率と売上の試算</h1>
-  <div class="tag">2026-09-20 ／ PLAN A と PLAN B を独立で回して見比べる</div>
+  <div class="tag">2026-09-20 ／ PLAN A と FBM式 を独立で回して見比べる</div>
 </div>
 
 <div class="sticky-top" id="topResult">
@@ -153,24 +141,24 @@ footer { margin-top:32px; padding-top:14px; border-top:1px dashed var(--line);
       <div class="kpi" id="kpi_A"></div>
     </div>
     <div class="plan-box B">
-      <h3>■ PLAN B ── 結果</h3>
+      <h3>■ FBM式 ── 結果</h3>
       <table class="money" id="tbl_money_B"></table>
       <div class="kpi" id="kpi_B"></div>
     </div>
   </div>
 </div>
 
-<div class="genre"><h2>打ち込む数字</h2><span class="note">段・項目・和佐・基準値・PLAN A・PLAN B（縦罫は白灰交互）</span></div>
+<div class="genre"><h2>打ち込む数字</h2><span class="note">段・項目・PLAN A・FBM式（縦罫は白灰交互）</span></div>
 <table class="main6" id="tbl_main">
   <colgroup>
-    <col class="col-dan"><col class="col-lab"><col class="col-wasa"><col class="col-kijun"><col class="col-A"><col class="col-B">
+    <col class="col-dan"><col class="col-lab"><col class="col-A"><col class="col-B">
   </colgroup>
 </table>
 
-<div class="genre"><h2>下流から逆に</h2><span class="note">結果の数字を打つと 投下する広告費 が逆算される（PLAN A / PLAN B 独立）</span></div>
+<div class="genre"><h2>下流から逆に</h2><span class="note">結果の数字を打つと 投下する広告費 が逆算される（PLAN A / FBM式 独立）</span></div>
 <table class="main6" id="tbl_rev">
   <colgroup>
-    <col class="col-dan"><col class="col-lab"><col class="col-wasa"><col class="col-kijun"><col class="col-A"><col class="col-B">
+    <col class="col-dan"><col class="col-lab"><col class="col-A"><col class="col-B">
   </colgroup>
 </table>
 
@@ -245,7 +233,7 @@ var SECTIONS = [
   { dan:"04 フロント商品のLP", rows:[
     {lab:"登録 → フロント購入", wasa:{primary:"20%超"}, kind:"input", key:"tf", unit:"%"},
     {lab:"フロントを買った人", kind:"calc", out:"kounyu"},
-    {lab:"フロント単価", wasa:{primary:"39,800円"}, kind:"input", key:"tanka_front", unit:"円"},
+    {lab:"フロントの価格", kind:"input", key:"tanka_front", unit:"円"},
     {lab:"フロント売上", kind:"calc", out:"u_front"}
   ]},
   { dan:"05 申込フォーム（重ね窓）", rows:[
@@ -254,7 +242,7 @@ var SECTIONS = [
   { dan:"06 ワンタイムオファーのLP", rows:[
     {lab:"直後の購入率", kind:"input", key:"oto", unit:"%"},
     {lab:"直後の購入人数", kind:"calc", out:"oto"},
-    {lab:"直後の単価", wasa:{primary:"27,500円"}, kind:"input", key:"tanka_oto", unit:"円"},
+    {lab:"直後の価格", kind:"input", key:"tanka_oto", unit:"円"},
     {lab:"直後の売上", kind:"calc", out:"u_oto"}
   ]},
   { dan:"06x ワンタイムオファーの定価ページ", rows:[
@@ -262,7 +250,7 @@ var SECTIONS = [
     {lab:"アクセス数", kind:"calc", out:"oto2_access"},
     {lab:"定価の購入率", kind:"input", key:"oto2", unit:"%"},
     {lab:"買った人", kind:"calc", out:"oto2"},
-    {lab:"定価の単価", wasa:{primary:"55,000円"}, kind:"input", key:"tanka_oto2", unit:"円"},
+    {lab:"定価の価格", kind:"input", key:"tanka_oto2", unit:"円"},
     {lab:"定価の売上", kind:"calc", out:"u_oto2"}
   ]},
   { dan:"継続（AI経営PRO）", rows:[
@@ -288,16 +276,6 @@ var LAYOUT_REV = [
   {lab:"手元に残る額",     key:"eki",    unit:"円"}
 ];
 
-function wasaCell(r){
-  if (!r.wasa) return '<span class="dash">—</span>';
-  if (r.wasa.primary) return '<b>' + r.wasa.primary + '</b>';
-  if (r.wasa.amb)     return '<span class="amb">' + r.wasa.amb + ' ※</span>';
-  return '<span class="dash">—</span>';
-}
-function kijunCell(r){
-  if (!r.kijun) return '<span class="dash">—</span>';
-  return '<b>' + r.kijun.label + '</b>';
-}
 function cellHtml(r, plan){
   var cls = 'plan ' + plan;
   var html = '';
@@ -313,7 +291,7 @@ function cellHtml(r, plan){
 
 function buildMain(){
   var t = document.getElementById("tbl_main");
-  var head = '<thead><tr><th>段</th><th>項目</th><th>和佐</th><th>基準値</th><th class="A">PLAN A</th><th class="B">PLAN B</th></tr></thead>';
+  var head = '<thead><tr><th>段</th><th>項目</th><th class="A">我が社 PLAN A</th><th class="B">FBM式</th></tr></thead>';
   var body = '<tbody>';
   for (var s=0; s<SECTIONS.length; s++){
     var sec = SECTIONS[s];
@@ -323,8 +301,6 @@ function buildMain(){
       body += '<tr' + (isFirst ? ' class="dan-start"' : '') + '>';
       if (isFirst) body += '<td class="dan" rowspan="' + sec.rows.length + '">' + sec.dan + '</td>';
       body += '<td class="lab">' + r.lab + '</td>';
-      body += '<td class="wasa">' + wasaCell(r) + '</td>';
-      body += '<td class="kijun">' + kijunCell(r) + '</td>';
       body += cellHtml(r, "A") + cellHtml(r, "B");
       body += '</tr>';
     }
@@ -335,7 +311,7 @@ function buildMain(){
 
 function buildRev(){
   var t = document.getElementById("tbl_rev");
-  var head = '<thead><tr><th>段</th><th>項目</th><th>和佐</th><th>基準値</th><th class="A">PLAN A</th><th class="B">PLAN B</th></tr></thead>';
+  var head = '<thead><tr><th>段</th><th>項目</th><th class="A">我が社 PLAN A</th><th class="B">FBM式</th></tr></thead>';
   var body = '<tbody>';
   for (var i=0; i<LAYOUT_REV.length; i++){
     var r = LAYOUT_REV[i];
@@ -343,8 +319,6 @@ function buildRev(){
     body += '<tr' + (isFirst ? ' class="dan-start"' : '') + '>';
     if (isFirst) body += '<td class="dan" rowspan="' + LAYOUT_REV.length + '">逆算入力</td>';
     body += '<td class="lab">' + r.lab + '</td>';
-    body += '<td class="wasa"><span class="dash">—</span></td>';
-    body += '<td class="kijun"><span class="dash">—</span></td>';
     ["A","B"].forEach(function(plan){
       body += '<td class="plan ' + plan + '">' +
         '<div class="inp"><input type="number" data-rev="' + r.key + '" data-plan="' + plan + '" step="any"><span class="unit">' + r.unit + '</span></div>' +
@@ -493,12 +467,6 @@ function calcPlan(plan){
   setStat(plan, "u_keizoku",     yen(u_keizoku) + " 円");
   setStat(plan, "roas",          pct(roas) + "%");
 
-  markInput(plan, "ctr",   Math.abs(S.ctr - 1.5) <= 0.5);
-  markInput(plan, "cpm",   S.cpm >= 3000 && S.cpm <= 14000);
-  markInput(plan, "optin", S.optin >= 5 && S.optin <= 20);
-  markCalc(plan, "cpc",   cpc >= 200 && cpc <= 400);
-  markCalc(plan, "cpa",   cpa >= 3000 && cpa <= 5000);
-
   setStat(plan, "rev_toroku", "計算値 " + nin(toroku) + " 人");
   setStat(plan, "rev_kounyu", "計算値 " + nin(kounyu) + " 人");
   setStat(plan, "rev_uriage", "計算値 " + yen(uriage) + " 円");
@@ -516,9 +484,9 @@ function calcPlan(plan){
   var ltv      = kounyu > 0 ? uriage / kounyu : 0;
   var need     = per_in > 0 ? 20000000 / per_in : 0;
   var k = "";
-  k += '<div class="k"><div class="t">登録→フロント購入</div><div class="v">' + pct(S.tf) + '%</div><div class="s">和佐 20%超</div></div>';
-  k += '<div class="k"><div class="t">ROAS</div><div class="v">' + pct(roas) + '%</div><div class="s">和佐 500〜700%</div></div>';
-  k += '<div class="k"><div class="t">CPC</div><div class="v">' + yen(cpc) + ' 円</div><div class="s">シート基準 300円</div></div>';
+  k += '<div class="k"><div class="t">登録→フロント購入</div><div class="v">' + pct(S.tf) + '%</div><div class="s">段の遷移率</div></div>';
+  k += '<div class="k"><div class="t">ROAS</div><div class="v">' + pct(roas) + '%</div><div class="s">広告費の回収率</div></div>';
+  k += '<div class="k"><div class="t">CPC</div><div class="v">' + yen(cpc) + ' 円</div><div class="s">1クリックの単価</div></div>';
   k += '<div class="k"><div class="t">投下する広告費</div><div class="v">' + yen(K) + ' 円</div><div class="s">起点</div></div>';
   k += '<div class="k"><div class="t">入口1人の粗利</div><div class="v">' + yen(per_in) + ' 円</div><div class="s">1人あたりここまで払える</div></div>';
   k += '<div class="k"><div class="t">登録1人の粗利</div><div class="v">' + yen(per_lead) + ' 円</div><div class="s">CPA との差</div></div>';
@@ -535,7 +503,7 @@ function calc(){
 function memo(){
   var m = "";
   m += '<b>この表は予測型。</b>これから回す前に置く数字（投下する広告費・率）から、出てくる人数を読む。だから<b>率が上・人数が下</b>で並べてある。実際に回した後の数字（結果型）は、人数が先に出て率は後から計算されるので、並びが逆になる。<br>';
-  m += '<b><span class="wasa-mark">和佐の列</span></b>は動かさない基準。濃字＝本人発言・薄字＝逆算値（末尾に ※）。<b>基準値の列</b>は Mits様のシートの基準（外れると色が付く）。<b><span class="a-mark">PLAN A</span> と <span class="b-mark">PLAN B</span></b> は数値を打ち込む欄で、2本を独立に回して見比べる。一番上の「投下する広告費」を打つと、その列の下まで全部が動く。もう1本の列は動かさない。<br>';
+  m += '表は <b>段・項目・<span class="a-mark">PLAN A</span>・<span class="b-mark">FBM式</span></b> の4列。PLAN A と FBM式 は数値を打ち込む欄で、2本を独立に回して見比べる。一番上の「投下する広告費」を打つと、その列の下まで全部が動く。もう1本の列は動かさない。<b>和佐の本人発言</b>と<b>Mits様のシートの基準値</b>は、この注記の下の方に置いてある（表の中には出さない）。<br>';
   m += '<b>下流から逆に</b>は結果の数字（登録数・フロントを買った人・売上・手元に残る額）を打つと、その列の 投下する広告費 が逆算される。率と単価は動かない。<br><br>';
 
   m += '<b>投下する広告費が起点。</b>ここを打つと、下まで全部の人数と金額が同時に動く。<br><br>';
