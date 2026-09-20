@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>和佐大輔（株式会社ICC）ファネル解剖 2026-09-05</title>
+<style>
+:root{
+  --bg:#ffffff;
+  --fg:#1b1f24;
+  --muted:#5a6472;
+  --line:#d9dee5;
+  --card:#f6f8fa;
+  --accent:#0b6ea8;
+  --accent-bg:#e6f2f9;
+  --warn:#a03000;
+  --warn-bg:#fdf0e8;
+  --thead:#eef2f6;
+  --code:#eceff3;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14171c;
+    --fg:#e6e9ee;
+    --muted:#a3adba;
+    --line:#333b46;
+    --card:#1c2129;
+    --accent:#63b8e8;
+    --accent-bg:#16303f;
+    --warn:#ffb37a;
+    --warn-bg:#3a2415;
+    --thead:#222933;
+    --code:#232a33;
+  }
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 96px;
+  background:var(--bg); color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP","Yu Gothic",sans-serif;
+  font-size:17px; line-height:1.85;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto}
+h1{font-size:23px;line-height:1.5;margin:0 0 6px;letter-spacing:.01em}
+h2{font-size:19px;margin:44px 0 12px;padding:8px 12px;background:var(--accent-bg);color:var(--accent);border-left:5px solid var(--accent);border-radius:0 5px 5px 0}
+h3{font-size:19px;margin:30px 0 8px;padding-bottom:5px;border-bottom:2px solid var(--line)}
+h4{font-size:17px;margin:20px 0 6px;color:var(--accent)}
+p{margin:8px 0}
+.lead{font-size:14.5px;color:var(--muted);margin:0 0 4px}
+.note{font-size:14.5px;color:var(--muted)}
+.meta{font-size:14.5px;color:var(--muted);border:1px solid var(--line);background:var(--card);border-radius:8px;padding:12px 16px;margin:16px 0 28px}
+.meta div{margin:3px 0}
+table{border-collapse:collapse;width:100%;margin:12px 0 20px;font-size:14.5px}
+th,td{border:1px solid var(--line);padding:8px 10px;vertical-align:top;text-align:left}
+th{background:var(--thead);font-weight:700;white-space:nowrap}
+td.num{white-space:nowrap;text-align:center;font-weight:700;color:var(--accent)}
+code,.u{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:13px;background:var(--code);padding:1px 5px;border-radius:4px;word-break:break-all}
+.tag{display:inline-block;font-size:12.5px;padding:1px 8px;border-radius:11px;border:1px solid var(--line);background:var(--card);color:var(--muted);margin-right:5px;white-space:nowrap}
+.tag.hot{background:var(--warn-bg);color:var(--warn);border-color:var(--warn)}
+.box{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:14px 18px;margin:16px 0}
+.box.warn{background:var(--warn-bg);border-color:var(--warn)}
+.box h4{margin-top:0}
+ul{margin:8px 0 8px 2px;padding-left:22px}
+li{margin:4px 0}
+.small{font-size:14.5px}
+hr{border:0;border-top:1px solid var(--line);margin:36px 0}
+.toc{font-size:14.5px}
+.toc a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>和佐大輔（株式会社ICC）「AI×広告×自動化ブートキャンプ」ファネル解剖</h1>
+<p class="lead">調査日 2026-09-05 ／ 実登録した読者アカウントから、入口から決済完了ページまでを実機で辿った記録</p>
+
+<div class="meta">
+  <div>登録に使ったアドレス：<code>ac_nishida@spro01.com</code>（2026-09-05 14:36 登録）</div>
+  <div>割り当てられた読者ID：<code>rid=HuZ1dVN1BjTE</code></div>
+  <div>販売元：株式会社ICC（代表責任者 和佐大輔／兵庫県神戸市灘区備後町4-1-2 605号／電話問い合わせ受付なし）</div>
+  <div>使っている仕組み：UTAGE（<code>utage.unchains.jp</code>／ファネルID 256949・<code>0RHlKrPZxPoX</code>）。入口LPだけ自社サイト <code>wasadaisuke.com</code></div>
+  <div>買っていません。決済していません。カード情報・住所・電話番号は一切入れていません。解除リンクも押していません。</div>
+</div>
+
+<!-- ===================== 第1部 ===================== -->
+<h2>第1部　辿った経路の一覧</h2>
+
+<p class="note">段0〜段3は参謀が実測済み。段4以降が今回新たに辿った範囲。段8で経路は終わり（それ以上の行き先は無い）。<br>2026-09-05 追記：段6・段7・段8の縦長キャプチャを撮り、部品を1つずつ数え直した。その過程で<b>段6' 定価販売ページ（<span class="u">/p/DAl5MSaxdOe4</span>）</b>を新たに見つけた（段6を2回目に開くと自動で飛ばされる先）。</p>
+
+<table>
+<thead><tr><th>段</th><th>URL</th><th>ページの題</th><th>そこで何をさせるか</th></tr></thead>
+<tbody>
+<tr><td class="num">0</td><td><span class="u">https://wasadaisuke.com/lp/optin-ai-ads-automation?r=note&amp;cp=ogcuexqq47</span></td><td>和佐大輔式・AI×広告×自動化ブートキャンプ（無料）｜和佐大輔 公式サイト</td><td>メールアドレスを1つ入れさせる。ボタン「今すぐ動画を受け取る」</td></tr>
+<tr><td class="num">1</td><td><span class="u">https://utage.unchains.jp/page/b7YOxHNO9FNU</span></td><td>登録ありがとうございます。</td><td>「まだ登録は完了していません」と言い、LINE登録だけをさせる</td></tr>
+<tr><td class="num">2</td><td><span class="u">https://utage.unchains.jp/line/link/b7YOxHNO9FNU/3rqz4Cp8Wl4l?rid=HuZ1dVN1BjTE</span></td><td>（LINE友だち追加）</td><td>PCではQRコード。スマホ判定だと <span class="u">https://liff.line.me/2010294573-hbuOeCF9</span> へ飛ぶ</td></tr>
+<tr><td class="num">3</td><td><span class="u">https://utage.unchains.jp/p/dUfRXXbrV6ws?rid=HuZ1dVN1BjTE</span></td><td>AI×広告×自動化ブートキャンプ第0章</td><td>48分19秒の動画を32分32秒まで観せる。そこを越えると売り込みボタンとPDFが出る</td></tr>
+<tr><td class="num">4</td><td><span class="u">https://utage.unchains.jp/p/aETvB4PAwBoH?rid=HuZ1dVN1BjTE</span></td><td>AI×広告×自動化ブートキャンプ</td><td>39,800円（税込）の3日間セミナーを売る長文の売り込みページ。買うボタン6個・締切カウント6個</td></tr>
+<tr><td class="num">5</td><td>段4の中に開く重ね窓（別URLなし）</td><td>お申込みフォーム</td><td>名前・メール・支払い方法・カード番号を入れさせる。ここで4,980円の抱き合わせをチェックさせる</td></tr>
+<tr><td class="num">6</td><td><span class="u">https://utage.unchains.jp/p/UekcISfzxDqJ</span></td><td>和佐大輔式・広告テストの極意</td><td>決済直後に出る1回限りの追加売り込み。27,500円をワンクリックで買わせる</td></tr>
+<tr><td class="num">7</td><td><span class="u">https://utage.unchains.jp/p/dQ31GSmUASff</span></td><td>注文ページ</td><td>段6の追加商品を銀行振込で買う場合の別ページ</td></tr>
+<tr><td class="num">8</td><td><span class="u">https://utage.unchains.jp/p/GXmF6qNSFLwe</span></td><td>（題は空）</td><td>「お申込みありがとうございます。」の1枚。行き先無し＝経路の終点</td></tr>
+</tbody>
+</table>
+
+<h4>本線から外れる行き先</h4>
+<table>
+<thead><tr><th>種類</th><th>URL</th><th>中身</th></tr></thead>
+<tbody>
+<tr><td>段6を2回目に開いたときの飛び先</td><td><span class="u">https://utage.unchains.jp/p/DAl5MSaxdOe4</span></td><td><b>段6と同じ商品を定価55,000円で売るページ</b>。段6の半額27,500円は「1回だけ」で、2回目からはここへ飛ばされる。判定はブラウザに置く印1個（<code>ug_oto_UekcISfzxDqJ</code>・1年有効）</td></tr>
+<tr><td>期限切れ後の飛び先（段3から）</td><td><span class="u">https://utage.unchains.jp/p/iud22ZyTOplT</span></td><td>「公開終了」の1枚。文言は「公開は終了しました。また次のチャンスをお待ちください。」</td></tr>
+<tr><td>期限切れ後の飛び先（段4から）</td><td><span class="u">https://utage.unchains.jp/p/j7HQis1d7qa6</span></td><td>同上。別ページだが文言は同一</td></tr>
+<tr><td>プレゼントPDF（段3）</td><td><span class="u">https://utagesystem.s3.ap-northeast-1.amazonaws.com/NI8fHWv9ndRq/AZSWBdml0l9VOgvY21R7PhnDI0IZNjPiZf99P9KN.pdf</span></td><td>「第0章のマインドマップ資料」。別窓で開く。<span class="tag hot">中身は未取得</span>ダウンロードは許可を取っていないので落としていない</td></tr>
+<tr><td>特定商取引法にもとづく表記</td><td><span class="u">https://utage.wasalab.jp/p/4SvvVtX6a1eK</span></td><td>株式会社ICC・代表責任者 和佐大輔・神戸市灘区・電話問い合わせ受付なし</td></tr>
+<tr><td>プライバシーポリシー</td><td><span class="u">https://utage.wasalab.jp/p/UTrVqXrrvQpP</span></td><td>全ページの下端に固定</td></tr>
+</tbody>
+</table>
+
+<div class="box">
+<h4>気付いたこと：入口だけドメインが違う</h4>
+<p class="small">段0だけ自社サイト <code>wasadaisuke.com</code>、段1以降は全部 UTAGE の <code>utage.unchains.jp</code>。さらに法律表記の2枚だけ <code>utage.wasalab.jp</code> という3本目のドメインに置いてある。UTAGE の別アカウント（別の事業）に法律表記を1組だけ作り、全ファネルからそこを指している形。</p>
+</div>
+
+<!-- ===================== 第2部 ===================== -->
+<h2>第2部　各ページの上から順のパーツ表</h2>
+
+<h3>段0　入口LP（<span class="u">wasadaisuke.com/lp/optin-ai-ads-automation</span>）</h3>
+<table>
+<thead><tr><th>順</th><th>パーツ</th><th>中身</th><th>役割</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>大見出し</td><td>和佐大輔式・AI×広告×自動化ブートキャンプ／無料オンラインセミナー</td><td>名乗り</td></tr>
+<tr><td class="num">2</td><td>小見出し</td><td>「SNS集客・個別相談セールスに疲れた人、限界を感じる人、さらにその『先』へと進みたい人へ。」</td><td>読み手の絞り込み</td></tr>
+<tr><td class="num">3</td><td>小見出し</td><td>「SNS運用ゼロ・個別相談セールスなし・広告集客で／最低ROAS500%超えの世界への招待状。」</td><td>約束</td></tr>
+<tr><td class="num">4</td><td>入力欄1組目</td><td>メールアドレス1欄（<code>you@example.com</code>）＋ボタン「今すぐ動画を受け取る」</td><td>登録</td></tr>
+<tr><td class="num">5</td><td>注記</td><td>「ご登録いただいたメールアドレスへ、視聴URLと関連情報をお送りします。配信はいつでも解除できます。」</td><td>不安消し</td></tr>
+<tr><td class="num">6</td><td>画像4枚</td><td><code>wasa-slide-1.webp</code>〜<code>4.webp</code>。見出し「このセミナーで無料で手に入るもの」「セミナー概要」の中身は全部この画像の中</td><td>内容の提示<span class="tag hot">画像なので文字は未読</span></td></tr>
+<tr><td class="num">7</td><td>講師プロフィール</td><td>写真＋「和佐 大輔／WASA DAISUKE ／ 株式会社ICC」＋「組織を持たず、たった一人で累計39億円を売ってきた。20年で投じた広告費は累計3億円超。」</td><td>信用付け</td></tr>
+<tr><td class="num">8</td><td>入力欄2組目</td><td>4と同じ組み合わせ</td><td>登録（2回目）</td></tr>
+<tr><td class="num">9</td><td>画面下に貼り付く帯</td><td>「登録されたアドレス宛に今すぐ動画が配信されます」＋メール欄＋ボタン</td><td>登録（常時表示・3組目）</td></tr>
+<tr><td class="num">10</td><td>下端リンク</td><td>公式サイトへ／プライバシーポリシー／特定商取引法／免責事項／商品・サービス／メール配信について／お問い合わせ</td><td>法律面</td></tr>
+</tbody>
+</table>
+<p class="note">入力欄は3組とも同じ宛先 <code>https://utage.unchains.jp/r/3rqz4Cp8Wl4l/store</code> に送る。見えない項目 <code>free30</code> が1つ付いていて、値は <code>-Poptinaiadsautomation-Rnote-Cogcuexqq47-Uuz9fd6-</code>。ページ名（optinaiadsautomation）・流入元（note）・広告の合言葉（ogcuexqq47）をそのまま埋め込んで、どこから来た読者かを UTAGE 側に渡している。</p>
+
+<h3>段1　サンクスページ（<span class="u">/page/b7YOxHNO9FNU</span>）</h3>
+<table>
+<thead><tr><th>順</th><th>パーツ</th><th>中身</th><th>役割</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>大見出し</td><td>「まだ登録は完了していません 今すぐ LINE 登録をお願いします。」</td><td>未完了だと思わせる</td></tr>
+<tr><td class="num">2</td><td>見出し</td><td>「『AI×広告×自動化ブートキャンプ』の案内はLINEでお送りしています。」</td><td>理由付け</td></tr>
+<tr><td class="num">3</td><td>緑ボタン1個</td><td>「今すぐLINEの友だち登録をする」／小文字「『AI×広告×自動化ブートキャンプ』を受け取る」<br>→ <span class="u">https://utage.unchains.jp/line/link/b7YOxHNO9FNU/3rqz4Cp8Wl4l?rid=HuZ1dVN1BjTE</span></td><td>LINE友だち化</td></tr>
+<tr><td class="num">4</td><td>下端</td><td>Copyright © ICC Inc.</td><td>—</td></tr>
+</tbody>
+</table>
+<p class="note">このページに置いてある部品は4つだけ。動画も本文も無い。LINEに送る以外の出口を作っていない。</p>
+
+<h3>段3　納品ページ 第0章（<span class="u">/p/dUfRXXbrV6ws</span>）</h3>
+<p class="note">部品は全部で14個。うち5個が「動画をどこまで観たか」で出し分けられる。</p>
+<table>
+<thead><tr><th>順</th><th>パーツ</th><th>中身</th><th>出し分け</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>画像</td><td>ヘッダー画像1枚</td><td>常に出る</td></tr>
+<tr><td class="num">2</td><td>動画</td><td>「AI×広告×自動化ブートキャンプ第0章v2_書き出し.mp4」<br>長さ 48分19秒（2899.57秒）・UTAGE内製プレイヤー・再生バー操作あり・速度変更あり<br>置き場所 <span class="u">https://s3.ap-northeast-1.wasabisys.com/utagesystem-video/NI8fHWv9ndRq/fmoiPC9q4YHo/video.m3u8</span></td><td>常に出る</td></tr>
+<tr><td class="num">3</td><td>小文字</td><td>「↑再生速度を変更できます」（右寄せ）</td><td>常に出る</td></tr>
+<tr><td class="num">4</td><td>ボタン（紫〜桃のグラデ）</td><td><b>「今すぐ完全版に参加する」</b>／小文字「超特価＆返金保証付き特別オファー」<br>→ 段4 <span class="u">/p/aETvB4PAwBoH</span></td><td><span class="tag hot">32分32秒を越えたら出る</span></td></tr>
+<tr><td class="num">5</td><td>カウントダウン（文字だけ）</td><td>「特別オファー締切まで...」＋ 日/時間/分/秒<br>ゼロで <span class="u">/p/iud22ZyTOplT</span> へ強制で飛ばす</td><td><span class="tag hot">32分32秒を越えたら出る</span></td></tr>
+<tr><td class="num">6</td><td>ボタン（青）</td><td>「今すぐプレゼントを受け取る」／小文字「第0章のマインドマップ資料です」→ PDFを別窓で開く</td><td><span class="tag hot">32分32秒を越えたら出る</span></td></tr>
+<tr><td class="num">7</td><td>本文（赤・下線）</td><td>「この動画には視聴期限があります。視聴期限終了まで残り...」</td><td>常に出る</td></tr>
+<tr><td class="num">8</td><td>カウントダウン（黒丸型）</td><td>5と同じ残り時間。ゼロで同じく <span class="u">/p/iud22ZyTOplT</span> へ飛ばす</td><td>常に出る</td></tr>
+<tr><td class="num">9</td><td>本文</td><td>「こちらのカウントがゼロになると無料公開期間は終了となります。」</td><td>常に出る</td></tr>
+<tr><td class="num">10</td><td>大見出し（45px）</td><td>「※必ず最後までご覧ください／動画を<u>32分32秒まで</u>観ると／こちらに<span style="color:#b51700">プレゼント</span>と<span style="color:#b51700">特別オファー</span>が表示されます」</td><td><span class="tag">越える前だけ出る</span></td></tr>
+<tr><td class="num">11</td><td>動くGIF</td><td>下向き矢印（幅20%）</td><td><span class="tag">越える前だけ出る</span></td></tr>
+<tr><td class="num">12</td><td>下端</td><td>特定商取引法にもとづく表記｜プライバシーポリシー／Copyright © ICC Inc.</td><td>常に出る</td></tr>
+</tbody>
+</table>
+
+<div class="box">
+<h4>カウントダウンが数えているもの（実測）</h4>
+<p class="small">5番と8番は同じ値を数えている。終点は <b>2026-09-10 00:00:59（日本時間）</b>。登録が 2026-09-05 14:36 なので「登録から5日後の日付の0時ちょうど」で切る作りになっている。<b>丸5日ではなく、実際に残るのは4日9時間ほど</b>。調査時点の表示は「4日 9時間 13分 38秒」だった。</p>
+</div>
+
+<h3>段4　売り込みページ（<span class="u">/p/aETvB4PAwBoH</span>）</h3>
+<p class="note">46の区画に部品274個。うち画像58枚・本文91個・見出し39個・折りたたみ質問10個。長さは HTML で330KB。</p>
+<table>
+<thead><tr><th>順</th><th>パーツ</th><th>中身</th><th>役割</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>画像の見出し（3枚）</td><td>「和佐大輔式 AI×広告×自動化 ブートキャンプ 完全版」「広告から完全自動で最低ROAS500%を叩き出すための3DAYSセミナー」「あなたのビジネスを無敵の永久機関に進化させませんか？」</td><td>名乗り・約束</td></tr>
+<tr><td class="num">2</td><td>画像の値札（4枚）</td><td>「3DAYSオンライン合宿セミナー」／<b>定価 99,000円 → 今だけ 39,800円（税込）</b>／「無条件の全額返金保証付き」＋「言い訳不能の2大特典付き」</td><td>値引きの提示</td></tr>
+<tr><td class="num">3</td><td>本文＋カウントダウン①</td><td>「割引が適応されるのは、残り…」＋ 日/時間/分/秒。ゼロで <span class="u">/p/j7HQis1d7qa6</span> へ飛ばす<br>下に「※カウントがゼロになった時点で募集は締切られます。このページにもアクセスできなくなるので注意してください。」</td><td>締切</td></tr>
+<tr><td class="num">4</td><td><b>買うボタン①（緑）</b></td><td>「≫ 完全版を今すぐ手に入れる」。行き先はURLではなく<b>その場で重ね窓（申込フォーム）を開く</b></td><td>申込</td></tr>
+<tr><td class="num">5</td><td>見出し</td><td>「『広告経由でフロント成約率20%』『最低ROAS500%』『個別相談なしでバックエンドが飛ぶように売れる』／あの"ありえない"7つが、全部あなたのものに。」</td><td>第0章の内容を受ける</td></tr>
+<tr><td class="num">6</td><td>本文</td><td>「どうも、和佐です。『第0章』はいかがでしたか？」＋7項目の箇条書き（フロント成約率20%超／1リスト2000円以下／フロントだけで黒字化／個別相談なしでバックエンドが売れる／月300万円以上の広告費／80%以上をAIが自動作成／ROAS500%が最低ライン）</td><td>前段との接続</td></tr>
+<tr><td class="num">7</td><td>見出し＋本文</td><td>「現在進行形でROAS700%越えの仕組み、その全てを3日間のセミナーに詰め込みました。」「過去にやって上手くいった話や机上の空論ではありません」</td><td>信用付け</td></tr>
+<tr><td class="num">8</td><td>見出し＋箇条書き</td><td>「1モジュール」の説明（集客用のLP／VSL／フロント商品のセールスレター／ステップメール／バック商品のセールスレター）＋「1日の広告費15万円以上・毎日のフロント売上も15万円以上・バックは全て利益」</td><td>考え方の提示</td></tr>
+<tr><td class="num">9</td><td>中身（DAY1〜3）</td><td>DAY1「完全自動でROAS700%オーバーの仕組みの全貌」約43分／DAY2「個別相談なしで売れまくる、フロント→バックエンド自動化ファネル大解剖」約37分／DAY3「1リスト2000円以下、フロント成約率20%越えの広告戦略大解剖」約80分。<b>合計 約160分</b>。各DAYに大見出し＋画像＋箇条書きの内訳</td><td>商品の中身</td></tr>
+<tr><td class="num">10</td><td>特典2つ</td><td>特典01「ROAS500%超の黄金の学習データ（非売品・現役のファネル全素材）」＝集客用LP・登録後のVSL台本・全ステップメール・フロント／バックのセールスレター・出稿中の広告素材・ファネル全体の設計図<br>特典02「究極ジョブものまね師になる AI・TTPメソッドセミナー」<br>※特典2つは<b>視聴期限なし</b>（本編だけ期限あり）</td><td>上乗せ</td></tr>
+<tr><td class="num">11</td><td>お客様の声（16件）</td><td>「初回募集に参加してくれた人たちから、すでに100件を超えるレビューが届いています」。1件ずつ見出し付き（例：「映画を1本観たような、感動がありました」「ROASは高い。それでも面談で疲弊していた」）。末尾に「※掲載の都合上、一部抜粋・改行調整しています。個人が特定できる情報は伏せています。」</td><td>証言</td></tr>
+<tr><td class="num">12</td><td>値段の話</td><td>「価格の10倍以上の価値を提供すべき」→ <b>39,800円（税込）</b>を提示</td><td>値段</td></tr>
+<tr><td class="num">13</td><td>返金保証</td><td>「視聴期間終了後、2日以内に、専用の返金フォームから申請」／「過去の平均返金率はたったの3〜4%」／<b>条件① DAY1〜3を最後まで観ること　条件② DAY1〜3のワーク（1つ10分）を提出していること</b></td><td>不安消し</td></tr>
+<tr><td class="num">14</td><td>買う区画②〜⑥</td><td>「お申込みはこちら」の見出し＋画像＋緑ボタン＋カウントダウン＋締切注記、を<b>そのまま5回くり返す</b>（ボタンは全部で6個・カウントダウンも6個）</td><td>申込（反復）</td></tr>
+<tr><td class="num">15</td><td>その間に挟む本文</td><td>「もしあなたが、SNS集客や個別相談セールスに限界を感じているならこれはチャンスです」／「このアタオカなオファーは5日間限定です。僕が冷静さを取り戻す前に今すぐどうぞ...」／「AI時代の天国へ行くか、地獄へ行くか。ここが分岐点かもしれません。」</td><td>締切・二択の提示</td></tr>
+<tr><td class="num">16</td><td>よくある質問（10個の折りたたみ）</td><td>Q1 広告・自動化は未経験／Q2 広告予算はいくらから（月3〜5万円のテストから）／Q3 業種の応用／Q4 結果が出る期間／Q5 UTAGEは「ほとんど必須」／Q6 学習データはそのまま使えるか／Q7 ChatGPTかClaudeのどちらか（月額版）が使えれば十分／Q8 代理店を使っていても意味はあるか／Q9 ダウンロード不可・オンライン視聴のみ／Q10 決済方法と申込後の流れ</td><td>反論つぶし</td></tr>
+<tr><td class="num">17</td><td>PS.</td><td>「実は今、僕は2007年の頃と近い感覚を持っています」＋「ネットビジネス大百科」（累計5万本・当時18歳・1万円で販売・スローガン『クソネット起業家撲滅』）の話</td><td>物語で締める</td></tr>
+<tr><td class="num">18</td><td>下端</td><td>特定商取引法にもとづく表記｜プライバシーポリシー／© ICC Inc.</td><td>—</td></tr>
+</tbody>
+</table>
+
+<div class="box warn">
+<h4>ページの中で数字が食い違っている箇所（2つ）</h4>
+<ul class="small">
+<li><b>元の値段</b>：ページ上部の画像には「定価 <b>99,000円</b> → 今だけ 39,800円」、申込フォームの中の文字には「参加費 <b>98,000円</b>（税込）→ 特別割引 39,800円（税込）」。1,000円ずれている。</li>
+<li><b>使えるカード</b>：申込フォームの上の文字は「クレジットカードはVISA/Master/<b>JCB</b>/AMEXが利用可能です」。同じページのQ10は「※<b>JCBには対応していません</b>のでご注意ください」。逆のことを書いている。</li>
+</ul>
+</div>
+
+<h3>段5　申込フォーム（段4の中に開く重ね窓）</h3>
+<table>
+<thead><tr><th>順</th><th>パーツ</th><th>中身</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>見出し</td><td>お申込みフォーム</td></tr>
+<tr><td class="num">2</td><td>値段</td><td><s>参加費98,000円（税込）</s> → 特別割引 <b>39,800円（税込）</b></td></tr>
+<tr><td class="num">3</td><td>中身の再掲</td><td>DAY1（43分）／DAY2（37分）／DAY3（80分）</td></tr>
+<tr><td class="num">4</td><td>注記3行</td><td>「配信開始は、購入日から30日後までの日程から自由に選ぶことができます」／「選んだ日程から開始すると<b>96時間</b>で視聴期限が切れます」／「開始すると最初から3日間分の動画へアクセス可能です」</td></tr>
+<tr><td class="num">5</td><td>注記（赤・小）</td><td>「@iCloud.com／@mac.com／@hotmail.com／@outlook.com のメールアドレスはご利用頂けません。GmailやYahooのアドレスを推奨です。」</td></tr>
+<tr><td class="num">6</td><td>入力項目</td><td>お名前（必須）／メールアドレス（必須）</td></tr>
+<tr><td class="num">7</td><td>支払い方法（選択）</td><td>「AI x 広告 x 自動化ブートキャンプ（カード決済）」39,800円／「同（銀行振込）」39,800円</td></tr>
+<tr><td class="num">8</td><td>カード欄</td><td>カード番号（必須）／有効期限 月・年（必須）／セキュリティコード（必須）。Stripe を使っている</td></tr>
+<tr><td class="num">9</td><td><b>抱き合わせのチェック欄</b></td><td>見出し「まとめて注文する」／「こちらも一緒にいかがですか？：今なら『AI x 広告 x 自動化ブートキャンプQ&amp;A集』を <b>4,980円（税込）</b>で手に入れることができます。」（音声と動画で質問に答える中身）</td></tr>
+<tr><td class="num">10</td><td>確定ボタン</td><td>「注文を確定する」→ 押すと段6 <span class="u">/p/UekcISfzxDqJ</span> へ進む</td></tr>
+</tbody>
+</table>
+<p class="note">重ね窓は開いて中身を読んだだけ。入力欄には何も打ち込んでいない。窓は Esc で閉じた。</p>
+
+<h3>段6　決済直後の追加売り込み（<span class="u">/p/UekcISfzxDqJ</span>）</h3>
+<p class="note"><b>何をさせる場か</b>：本体を買い終えた直後の人に、追加の1商品「和佐大輔式・広告テストの極意」を <b>27,500円（定価55,000円の半額）</b>で、カード情報を再入力させずに1クリックで買わせる場。<br>
+<b>キャプチャ</b>：<a href="wasa_capture_20260905/dan6_UekcISfzxDqJ.png">wasa_capture_20260905/dan6_UekcISfzxDqJ.png</a>（1440×14402・1枚）</p>
+<p class="note">区画18・行18・列18の中に、中身の部品が<b>36個</b>（合計90ノード）。内訳は本文14・見出し11・区切り線4・進行バー3・注文ボタン2・箇条書き1・下端1。画像は<b>0枚</b>（段4は58枚）。文字だけで組んである。</p>
+
+<table>
+<thead><tr><th>順</th><th>パーツ</th><th>中身</th><th>役割</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>進行バー①（動く縞）</td><td>「※まだこのページを閉じないでください」</td><td>離脱止め</td></tr>
+<tr><td class="num">2</td><td>見出し（黄地）①</td><td>「※これは一度限りの特別オファーです」</td><td>1回限りの提示</td></tr>
+<tr><td class="num">3</td><td>大見出し</td><td>「掛け算の世界を舐めてはいけない！ たった1%の違いの積み重ねが、数千万円・数億円の違いを生む。テストを制する者が、広告を制す。僕が20年かけて磨き上げてきた"テストの極意"を、本邦初公開します。」</td><td>約束</td></tr>
+<tr><td class="num">4</td><td>商品名</td><td>「和佐大輔式・広告テストの極意 〜広告反応率を5倍にするための正しいPDCAサイクルの回し方〜」</td><td>—</td></tr>
+<tr><td class="num">5</td><td>見出し（黄マーカー）</td><td>「今だけ"半額"オファー」</td><td>値引きの提示</td></tr>
+<tr><td class="num">6</td><td>見出し（紺帯）</td><td>「広告の勝敗の99%は"テスト"で決まります。」</td><td>—</td></tr>
+<tr><td class="num">7</td><td>本文</td><td>「どうも、和佐です。この度は『AI×広告×自動化ブートキャンプ完全版』へのお申込み、本当にありがとうございます。」→「このページはいわゆる、『ワンタイムオファー』と呼ばれるものです」「このページを閉じてしまうと、二度と表示されません」</td><td>買った直後の人への語りかけ・1回限りの宣言</td></tr>
+<tr><td class="num">8</td><td>見出し（紺帯）</td><td>「あなたのテストはちゃんと成果に直結していますか？」</td><td>—</td></tr>
+<tr><td class="num">9</td><td>本文</td><td>ABテストの話。「なんとなく広告を作って／なんとなく出してみて／なんとなく数字を眺めて／なんとなく『ダメだったな』で終わる」。「広告のクリエイティブ制作やテストはAIにやらせよう」は机上の空論だとする（理由＝テストは数を増やすほど広告費が嵩むから）</td><td>問題の提示</td></tr>
+<tr><td class="num">10</td><td>見出し（紺帯）</td><td>「…であなたが手に入るもの」</td><td>—</td></tr>
+<tr><td class="num">11</td><td>箇条書き（8項目）</td><td>テストPDCAの全体像と回し方／検証の優先順位の決め方／AIで量産した30パターンを5パターンに絞る「厳選の基準」／効果測定の正しいやり方／少ないパターンで実験結果を最大化するテスト設計／次の改善に積み上げる具体ステップ／絶対にやってはいけない「NGテスト」の落とし穴／現役で回しているリアルなテストの事例と数字の見方</td><td>中身</td></tr>
+<tr><td class="num">12</td><td>本文（中身の内訳）</td><td>「①解説動画　②AI学習用ファイル　③実際の広告テストデータ集」＋「AIに広告の極意をインストールするための広告設計思想ファイル」<br>末尾に<b>「※こちらのコンテンツの配信は2026年7月中旬ごろを予定しています。」</b></td><td>—</td></tr>
+<tr><td class="num">13</td><td>見出し（紺帯）</td><td>「正直、この価格で出すのは今回が最初で最後です。」</td><td>—</td></tr>
+<tr><td class="num">14</td><td>本文（値段の話）</td><td>「20年、そして3億円を超える広告費を投じて、ようやくたどり着いたテストの方程式」→ リスト単価3000円→2400円の試算（月100万円の広告費で333リスト→416リスト、売上133.2万円→166.4万円＝<b>33.2万円の差</b>、1年で398万円）→「本来50万円でもおかしくない」→ <b>定価55,000円（税込）→ ワンタイムで半額 27,500円（税込）</b></td><td>値段</td></tr>
+<tr><td class="num">15</td><td>見出し（紺帯）</td><td>「1%の積み重ねとレバレッジの世界へようこそ。」</td><td>—</td></tr>
+<tr><td class="num">16</td><td>本文</td><td>「半額の27,500円（税込）でお渡しできるのは、このページを開いている『今』だけです。このページを一度閉じてしまえば、<b>次は定価55,000円でのご案内になります</b>。」</td><td>締切（時刻ではなく「閉じたら終わり」）</td></tr>
+<tr><td class="num">17</td><td><b>注文ボタン①（朱色・拡大の動き付き）</b></td><td>大文字「今すぐ半額オファーに申込む」／小文字「『和佐大輔式・広告テストの極意』を手に入れる」</td><td>1クリック注文</td></tr>
+<tr><td class="num">18</td><td>注記（黄マーカー＋黒）</td><td>「※この注文はワンクリック(タップ)で完了します。再度情報入力の手間は要りません。」／「※こちらのコンテンツの配信は2026年7月中旬ごろを予定しています。」</td><td>—</td></tr>
+<tr><td class="num">19</td><td>細字リンク</td><td>「＜銀行振込をご希望の場合はこちら＞」</td><td>段7へ逃がす</td></tr>
+<tr><td class="num">20</td><td>進行バー②＋見出し②</td><td>1・2と同文</td><td>離脱止め（反復）</td></tr>
+<tr><td class="num">21</td><td>本文（PS.）</td><td>「正直に、白状します。今でこそ『テストを制する者が広告を制す』なんて偉そうに語っていますが、実は僕も昔はテストを完全に舐めていました。」→「過去に僕が使ってきた3億円を超える広告費のうち、少なく見積もっても<b>5000万円は無駄打ち</b>しています」→ ROAS300%なら1億5000万円、500%なら2億5000万円を逃した、という話</td><td>物語で締める</td></tr>
+<tr><td class="num">22</td><td>注文ボタン②＋注記＋細字リンク</td><td>17〜19とまったく同じ組をもう1回</td><td>申込（反復）</td></tr>
+<tr><td class="num">23</td><td>進行バー③＋見出し③</td><td>1・2と同文（3回目）</td><td>離脱止め（反復）</td></tr>
+<tr><td class="num">24</td><td>下端</td><td>特定商取引法にもとづく表記｜プライバシーポリシー／© ICC Inc.</td><td>—</td></tr>
+</tbody>
+</table>
+
+<h4>段6の実測数（段4と同じ数え方）</h4>
+<table>
+<thead><tr><th>数えたもの</th><th>個数</th><th>備考</th></tr></thead>
+<tbody>
+<tr><td>注文ボタンの文言「今すぐ半額オファーに申込む」</td><td class="num">2</td><td>小文字「『和佐大輔式・広告テストの極意』を手に入れる」も同じく2</td></tr>
+<tr><td>進行バー「※まだこのページを閉じないでください」</td><td class="num">3</td><td>動く縞。段4のカウントダウンの位置に置き換わっている</td></tr>
+<tr><td>見出し「※これは一度限りの特別オファーです」</td><td class="num">3</td><td>進行バーと必ず対で出る</td></tr>
+<tr><td>細字リンク「＜銀行振込をご希望の場合はこちら＞」</td><td class="num">2</td><td>行き先は2本とも段7</td></tr>
+<tr><td>注記「※この注文はワンクリック(タップ)で完了します。」</td><td class="num">2</td><td>部品としては4個あるが、うち2個は <code>device:only-pc</code>、2個は <code>device:only-sp</code> のPC／スマホ出し分け。<b>1画面に出るのは2回</b></td></tr>
+<tr><td>注記「※こちらのコンテンツの配信は2026年7月中旬ごろ…」</td><td class="num">3</td><td>中身の内訳に1回＋注文ボタンの下に2回</td></tr>
+<tr><td><b>カウントダウン</b></td><td class="num">0</td><td>時刻で数えるものは1つも無い</td></tr>
+<tr><td><b>断りのリンク（いいえ／結構です／スキップ）</b></td><td class="num">0</td><td>探して0件。断るには画面を閉じるしかない</td></tr>
+<tr><td>画像</td><td class="num">0</td><td>すべて文字組み</td></tr>
+</tbody>
+</table>
+
+<h4>段6の行き先（<code>&lt;a href&gt;</code> の生値・全部）</h4>
+<table>
+<thead><tr><th>置き場所</th><th>文言</th><th>行き先の生値</th><th>本数</th></tr></thead>
+<tbody>
+<tr><td>注文ボタン①②</td><td>今すぐ半額オファーに申込む</td><td><span class="u">https://utage.unchains.jp/p/GXmF6qNSFLwe</span>（＝段8）</td><td class="num">2</td></tr>
+<tr><td>本文中の細字</td><td>銀行振込をご希望の場合はこちら</td><td><span class="u">https://utage.unchains.jp/p/dQ31GSmUASff</span>（＝段7）</td><td class="num">2</td></tr>
+<tr><td>下端</td><td>特定商取引法にもとづく表記</td><td><span class="u">https://utage.wasalab.jp/p/4SvvVtX6a1eK</span></td><td class="num">1</td></tr>
+<tr><td>下端</td><td>プライバシーポリシー</td><td><span class="u">https://utage.wasalab.jp/p/UTrVqXrrvQpP</span></td><td class="num">1</td></tr>
+</tbody>
+</table>
+<p class="note">段4は買うボタン6個の行き先が全部 <code>#</code>（同じページ内に開く重ね窓）だったが、<b>段6の注文ボタンは <code>#</code> ではなく段8のURLを直接指している</b>。フォームを挟まず、押した瞬間に決済が確定して完了ページへ抜ける作り。押していないので実際の挙動は確認していない。<br>
+段6に紐づく商品は <b>「[特別割引]和佐大輔式・広告テストの極意（カード決済）」27,500円・one_time・Stripe</b> の1件のみ。抱き合わせ（<code>is_bump</code>）は付いていない。</p>
+
+<div class="box warn">
+<h4>「一度限り」の正体は、ブラウザに置く印1個だった（実機で確認）</h4>
+<p class="small">段6のHTMLの先頭に、こういう仕掛けが書いてある。</p>
+<pre class="small" style="background:var(--code);padding:10px 12px;border-radius:6px;overflow-x:auto"><code>showOto();
+function showOto() {
+    if (getParam('preview')) { return; }
+    if (Cookies.get('ug_oto_UekcISfzxDqJ')) {
+        location.href = 'https://utage.unchains.jp/p/DAl5MSaxdOe4';
+    } else {
+        Cookies.set('ug_oto_UekcISfzxDqJ', 'true', {expires:365, path:'/'});
+    }
+}</code></pre>
+<ul class="small">
+<li><b>1回目</b>：ブラウザに <code>ug_oto_UekcISfzxDqJ</code> という印を1年間有効で置き、半額27,500円のページを見せる。</li>
+<li><b>2回目以降</b>：印があるので <span class="u">/p/DAl5MSaxdOe4</span>（<b>定価55,000円のページ</b>）へ問答無用で飛ばす。</li>
+<li><b>実測</b>：今日この読者で段6を開いたら、まさにこの通り定価ページへ飛ばされた。前回の調査で印が置かれていたため。印を持たないまっさらなブラウザで開き直したところ、半額ページが正しく出た（上のキャプチャはその状態）。</li>
+<li><b>抜け道が3つある</b>。①URLに <code>?preview=</code> を付けると判定を丸ごと飛ばして半額ページが何度でも出る（印も置かれない）　②別のブラウザ・シークレット窓で開く　③ブラウザの記録を消す。<b>「一度限り」はサーバー側でも読者ID側でも管理していない</b>。<code>rid</code> は判定に使われていない。</li>
+</ul>
+</div>
+
+<h3>段6' 　定価販売ページ（<span class="u">/p/DAl5MSaxdOe4</span>）<span class="tag hot">今回新たに見つけた</span></h3>
+<p class="note"><b>何をさせる場か</b>：段6を1回見て買わなかった人が、もう一度段6のURLを開いたときに飛ばされる先。同じ商品を<b>定価55,000円</b>で売る。<br>
+<b>キャプチャ</b>：<a href="wasa_capture_20260905/dan6b_teika_DAl5MSaxdOe4.png">wasa_capture_20260905/dan6b_teika_DAl5MSaxdOe4.png</a>（1440×13525・1枚）</p>
+<table>
+<thead><tr><th>項目</th><th>段6（<span class="u">UekcISfzxDqJ</span>）</th><th>段6'（<span class="u">DAl5MSaxdOe4</span>）</th></tr></thead>
+<tbody>
+<tr><td>冒頭</td><td>進行バー「※まだこのページを閉じないでください」＋「※これは一度限りの特別オファーです」</td><td>「※こちらはワンタイムオファーで案内した『和佐大輔式・テストの極意』の定価販売ページです。」「ワンタイムのチャンスを逃してしまった人はこちらから定価でご購入いただけます。」「※以下はワンタイムオファーの時と同じ案内になっていますが<b>ワンタイムではないのでご安心ください。</b>」</td></tr>
+<tr><td>値段</td><td>27,500円（税込）</td><td><b>55,000円（税込）</b></td></tr>
+<tr><td>本文</td><td colspan="2">冒頭の断り書き以外は<b>同一の原稿</b>（掛け算の世界〜／ABテストの話／箇条書き8項目／値段の試算／PS.）。「今だけ"半額"オファー」の見出しだけ段6'では消えている</td></tr>
+<tr><td>買うボタン</td><td>注文ボタン2個（1クリックで決済確定→段8へ直行）</td><td>ボタン2個「広告テストの極意を手に入れる」。行き先は <code>#</code>＝<b>同じページ内に重ね窓の申込フォームを開く</b></td></tr>
+<tr><td>申込の形</td><td>カード情報の再入力なし（1クリック）</td><td>重ね窓のフォームで支払い方法を選ぶ（カード決済 55,000円／銀行振込 55,000円の2択）。確定後の行き先は段8と同じ <span class="u">/p/GXmF6qNSFLwe</span></td></tr>
+<tr><td>進行バー・「一度限り」の文言</td><td>各3回</td><td><b>0回</b>（急かす部品を全部外している）</td></tr>
+<tr><td>中身の部品の数</td><td>36（合計90ノード）</td><td>29（合計80ノード）＋重ね窓の中に3</td></tr>
+<tr><td>飛ばす仕掛け</td><td>あり（<code>showOto()</code>）</td><td>なし（このページは何度開いても同じ）</td></tr>
+</tbody>
+</table>
+
+<h3>段7　銀行振込の注文ページ（<span class="u">/p/dQ31GSmUASff</span>）</h3>
+<p class="note"><b>何をさせる場か</b>：段6の追加商品を、カードではなく銀行振込で買う人に、名前とメールアドレスだけ書かせて申込を確定させる場。<br>
+<b>キャプチャ</b>：<a href="wasa_capture_20260905/dan7_dQ31GSmUASff.png">wasa_capture_20260905/dan7_dQ31GSmUASff.png</a>（1440×576・1枚）</p>
+<p class="note">中身の部品は<b>3個</b>だけ（本文2・注文欄1／合計11ノード）。注文欄の1個が、名前・メール・商品選択・ボタンにまとめて展開される。ページの高さは <b>557px</b>（段6は14,402px）。画像0枚。</p>
+<table>
+<thead><tr><th>順</th><th>パーツ</th><th>中身</th><th>役割</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>帯見出し（黒地・白抜き）</td><td>「『和佐大輔式・広告テストの極意』銀行振込注文ページ」</td><td>名乗り</td></tr>
+<tr><td class="num">2</td><td>注記（赤）</td><td>「※「@iCloud.com」や「@mac.com」や「@hotmail.com」や「@outlook.com」のメールアドレスはご利用頂けません。GmailやYahooのアドレスを推奨です。」（段5と同文）</td><td>届かないアドレスの排除</td></tr>
+<tr><td class="num">3</td><td>入力欄</td><td>お名前 <span class="tag hot">必須</span>（欄の中の薄字「お名前を入力」）／メールアドレス <span class="tag hot">必須</span>（薄字「メールアドレスを入力」・形式はメール専用）</td><td>2項目だけ</td></tr>
+<tr><td class="num">4</td><td>商品の選択（丸印1つ）</td><td>「商品／価格」の見出し行＋「[特別割引]和佐大輔式・広告テストの極意（銀行振込）　<b>27,500円(税込)</b>」。選択肢は<b>1つだけ</b>で最初から選ばれている</td><td>金額の確認</td></tr>
+<tr><td class="num">5</td><td>ボタン（緑）</td><td>「申し込む」</td><td>確定</td></tr>
+</tbody>
+</table>
+<h4>段7の実測数・行き先</h4>
+<table>
+<thead><tr><th>数えたもの</th><th>個数／値</th></tr></thead>
+<tbody>
+<tr><td>ボタン「申し込む」</td><td class="num">1</td></tr>
+<tr><td>カウントダウン</td><td class="num">0</td></tr>
+<tr><td>画面に出る <code>&lt;a href&gt;</code></td><td class="num">0</td></tr>
+<tr><td><b>特定商取引法・プライバシーポリシーの下端</b></td><td><b>無し</b>。他の全ページに付いている下端が、このページだけ付いていない</td></tr>
+<tr><td>「申し込む」の行き先（設定値）</td><td><span class="u">https://utage.unchains.jp/p/GXmF6qNSFLwe</span>（＝段8）</td></tr>
+<tr><td>画面に出ない入力欄</td><td><code>page_id</code>／<code>sid</code>／<code>rid</code>／<code>scid</code> の4つ。<code>rid</code> にこの読者のID <code>HuZ1dVN1BjTE</code> が入る</td></tr>
+</tbody>
+</table>
+<div class="box warn">
+<p class="small"><b>設定に残っているが画面に出ていないもの（2つ）</b></p>
+<ul class="small">
+<li><b>抱き合わせの1商品</b>：この注文欄には「まとめて注文する」という見出しと、<b>「痒いところへお届けQ&amp;Aパッケージ」4,980円（税込）</b>を勧める文（「AI×広告×自動化ブートキャンプに寄せられた質問・リクエストに音声と動画でお答えしていきます」「その名の通り、あなたの『痒いところ』を徹底的にフォローさせていただきます」）が設定として入っている。しかし<b>画面には1文字も出ていない</b>（部品としても組み立てられていない）。商品側の紐付けが外れたまま文言だけ残っている状態。<br>なお段5（本体の申込フォーム）に出る4,980円の抱き合わせは、画面上の名前が<b>「AI x 広告 x 自動化ブートキャンプQ&amp;A集」</b>で、こちらの設定名<b>「痒いところへお届けQ&amp;Aパッケージ」</b>と<b>呼び名が食い違っている</b>（金額はどちらも4,980円）。</li>
+<li><b>2日間の期限設定</b>：この注文欄には「読者ごとの日付を起点に2日」という期限が設定されている（<code>deadline_item: reader_date</code>／<code>deadline_to_day: 2</code>）。ただし画面にはカウントダウンも締切の文言も一切出ていないので、<span class="tag hot">⚠️ 確かめていない</span> 期限が切れたときに何が起きるかは分からない。</li>
+</ul>
+</div>
+
+<h3>段8　終点（<span class="u">/p/GXmF6qNSFLwe</span>）</h3>
+<p class="note"><b>何をさせる場か</b>：何もさせない。申込が終わったことを伝えて、メール（迷惑メールフォルダ含む）を見に行かせるだけの1枚。<br>
+<b>キャプチャ</b>：<a href="wasa_capture_20260905/dan8_GXmF6qNSFLwe.png">wasa_capture_20260905/dan8_GXmF6qNSFLwe.png</a>（1440×407・1枚）</p>
+<p class="note">中身の部品は<b>4個</b>（見出し1・本文2・下端1／合計10ノード）。ページの高さは <b>344px</b>。<code>&lt;title&gt;</code> が空（ブラウザのタブにURLがそのまま出る）。</p>
+<table>
+<thead><tr><th>順</th><th>パーツ</th><th>中身</th><th>役割</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>大見出し（黒・太字）</td><td>「お申込みありがとうございます。」</td><td>完了の告知</td></tr>
+<tr><td class="num">2</td><td>本文（下線＋赤字）</td><td>下線「メールで案内を送らせていただいていますのでご確認ください。」／赤字「迷惑メールに届いている可能性もありますので、迷惑メールフォルダのチェックもよろしくお願いします。」</td><td>メールを開かせる</td></tr>
+<tr><td class="num">3</td><td>下端（灰帯）</td><td>特定商取引法にもとづく表記｜プライバシーポリシー</td><td>—</td></tr>
+<tr><td class="num">4</td><td>下端</td><td>「Copyright © ICC Inc. All Rights Reserved.」</td><td>—</td></tr>
+</tbody>
+</table>
+<h4>段8の実測数・行き先</h4>
+<table>
+<thead><tr><th>数えたもの</th><th>個数／値</th></tr></thead>
+<tbody>
+<tr><td>買うボタン・申込ボタン</td><td class="num">0</td></tr>
+<tr><td>カウントダウン</td><td class="num">0</td></tr>
+<tr><td>入力欄</td><td class="num">0</td></tr>
+<tr><td>画像</td><td class="num">0</td></tr>
+<tr><td><code>&lt;a href&gt;</code>（全部）</td><td><span class="u">https://utage.wasalab.jp/p/4SvvVtX6a1eK</span>（特定商取引法にもとづく表記）／<span class="u">https://utage.wasalab.jp/p/UTrVqXrrvQpP</span>（プライバシーポリシー）の<b>2本だけ</b></td></tr>
+</tbody>
+</table>
+<p class="note">先へ進む出口が1つも無い。段6・段7・段6' の3つの入口が、全部この同じ1枚に合流する。<b>買った商品名も金額も注文番号もこのページには出ない</b>（全部メール任せ）。</p>
+
+<div class="box">
+<h4>読者ID（<code>rid</code>）の有無で見え方が変わるか ── 段6・7・8 は変わらない</h4>
+<p class="small">3ページとも <code>?rid=HuZ1dVN1BjTE</code> を付けた場合と付けない場合の両方を取って、ページの中身の定義を1行ずつ突き合わせた。<b>違いは2種類だけ</b>だった。</p>
+<ul class="small">
+<li>各部品に <code>rid</code> の値が刻まれるかどうか（段6で90箇所・段7で11箇所・段8で10箇所）。表示には影響しない。</li>
+<li>取得した時刻（<code>today</code>）。これは取りに行った時刻がそのまま入るだけ。</li>
+</ul>
+<p class="small">文言・ボタン・値段・行き先は<b>1文字も変わらない</b>。段3（動画の視聴位置で買うボタンを出し分ける）や段4（読者ごとの締切カウント）と違い、<b>段6以降は読者ごとの出し分けを一切していない</b>。段6の「一度限り」もブラウザの印で判定していて <code>rid</code> を見ていない。</p>
+</div>
+
+<h3>期限切れページ（<span class="u">/p/iud22ZyTOplT</span> と <span class="u">/p/j7HQis1d7qa6</span>）</h3>
+<p class="note">どちらも部品は本文1つだけ。「公開は終了しました。また次のチャンスをお待ちください。」。<b>2枚は別のファネルに属している</b>（<code>iud22ZyTOplT</code> はファネル115275、<code>j7HQis1d7qa6</code> は本ファネル256949）。前者は他の商品でも使い回している共通の終了ページと見える。</p>
+
+<!-- ===================== 第3部 ===================== -->
+<h2>第3部　仕掛けの一覧</h2>
+
+<h3>1. カウントダウンは何回どこに出るか</h3>
+<table>
+<thead><tr><th>置き場所</th><th>個数</th><th>見た目</th><th>数えているもの</th><th>ゼロになったら</th></tr></thead>
+<tbody>
+<tr><td>段3 納品ページ</td><td>2個</td><td>文字だけ／黒い丸型</td><td>2026-09-10 00:00:59（日本時間）まで。登録日 09-05 の5日後の日付の0時</td><td><span class="u">/p/iud22ZyTOplT</span> へ強制で飛ばす</td></tr>
+<tr><td>段4 売り込みページ</td><td>6個</td><td>青い箱（日/時間/分/秒）</td><td><b>段3とまったく同じ終点</b>。別の締切ではない</td><td><span class="u">/p/j7HQis1d7qa6</span> へ強制で飛ばす</td></tr>
+<tr><td>段6 追加売り込み</td><td>0個</td><td>—</td><td>—</td><td>代わりに「まだ閉じないでください」の動く帯が3回</td></tr>
+<tr><td>段6' 定価販売</td><td>0個</td><td>—</td><td>—</td><td>動く帯も無し。急かす部品を全部外している</td></tr>
+<tr><td>段7 銀行振込の注文</td><td>0個</td><td>—</td><td>画面には何も出ない。ただし注文欄の設定に「読者ごとの日付から2日」が入っている</td><td><span class="tag hot">⚠️ 確かめていない</span></td></tr>
+<tr><td>段8 終点</td><td>0個</td><td>—</td><td>—</td><td>—</td></tr>
+</tbody>
+</table>
+<p class="note">つまり<b>締切は全ファネルで1本だけ</b>。「動画の視聴期限」と「割引の締切」と「募集の締切」は文言を変えているが、中身は同じ1つの日時（読者ごとに登録日から起算）を3つの言い方で見せている。</p>
+
+<h3>2. 動画の視聴時間で出し分ける仕組み（実機で中身を確認）</h3>
+<div class="box">
+<p><b>設定値</b>：区切りは 32分32秒（1952秒）。動画の長さは 48分19秒（2899.57秒）なので、<b>全体の67.3%の地点</b>。</p>
+<p><b>動き方</b>（UTAGE の <code>pagevideo.js</code> を読んで確認）：</p>
+<ul class="small">
+<li>ページの部品には「関係付け番号」が振ってある。番号1＝「32分32秒まで観ると…」の見出しと矢印GIF。番号2＝買うボタン・締切カウント・プレゼントPDFボタン。</li>
+<li>最初は番号2を隠し、番号1を出す。</li>
+<li>再生位置が1952秒を越えた瞬間に入れ替える（番号1を隠し、番号2を出す）。<b>この判定は「連続して観た時間」ではなく「再生バーの現在位置」</b>なので、バーを掴んで先へ送るだけで越えられる作りになっている（再生バーは操作できる設定＝<code>has_control</code> が有効）。</li>
+<li>越えた瞬間に <code>POST /page/video/{ページID}</code> をサーバーへ送り、<b>「この読者はもう開けた」を記録する</b>。以後は再読み込みしても最初から買うボタンが出る（サーバーが返すデータに <code>"toggled": true</code> が入る）。</li>
+</ul>
+<p><b>実測</b>：調査時点でこの読者はすでに開錠済みだった。まっさらな読み込みでも、動画を1秒も再生していない状態（<code>currentTime = 0</code>・停止中）で買うボタンとPDFボタンが出ており、「32分32秒まで観ると」の見出しの方は消えていた。サーバーからの応答に <code>"toggled": true</code> が入っていることを実機で確認した。<br>この開錠は<b>ブラウザの通しの記録に紐づいている</b>。<code>rid</code> を付けただけの外部からの取得（cookie 無し）では <code>toggled</code> は付かず、番号2は隠れたまま返ってくる。ブラウザに残っている cookie・localStorage には開錠の痕跡は無い（localStorage は空）。</p>
+</div>
+
+<h3>3. メールとLINEの二重化</h3>
+<ul>
+<li>入口LPで取るのは<b>メールアドレスだけ</b>。段1のサンクスページは「まだ登録は完了していません」と書いて、<b>LINE友だち追加以外の出口を一切置いていない</b>（部品4個のみ）。</li>
+<li>実際にはメール登録の時点で配信は動いており、メール1通目（14:36）とLINE1通目（14:37）は<b>どちらも同じ第0章の動画リンク</b>。「まだ完了していない」は、LINEも取るための言い方。</li>
+<li>1人の読者に対して<b>2本の連絡経路</b>を確保する形。片方を切られても、もう片方で締切前の追い込みが届く。</li>
+</ul>
+
+<h3>4. 期限の種類（4つあり、全部長さが違う）</h3>
+<table>
+<thead><tr><th>何の期限か</th><th>長さ</th><th>起点</th><th>切れたらどうなるか</th></tr></thead>
+<tbody>
+<tr><td>無料の第0章の視聴期限＝割引の締切＝募集の締切</td><td>登録日の5日後の0時（実質4日9時間）</td><td>メール登録した日</td><td>納品ページも売り込みページも「公開終了」へ飛ばされる</td></tr>
+<tr><td>本編（有料の3DAYS）の視聴期限</td><td><b>96時間（4日間）</b></td><td>買った人が選んだ開始日時</td><td>観られなくなる。ダウンロード不可・オンライン視聴のみ</td></tr>
+<tr><td>本編の開始日時を選べる範囲</td><td>購入日から30日以内</td><td>購入日</td><td>—</td></tr>
+<tr><td>2つの特典（黄金の学習データ／AI・TTPメソッド）</td><td><b>期限なし</b></td><td>—</td><td>いつでも何度でも観られる</td></tr>
+</tbody>
+</table>
+<p class="note">返金の申請期限も別にあり、「視聴期間終了後2日以内」。条件は「DAY1〜3を最後まで観ること」と「DAY1〜3のワーク（1つ10分）を提出していること」の2つ。</p>
+
+<h3>5. お金の積み上げ方（1人の買い手から取る最大額）</h3>
+<table>
+<thead><tr><th>段</th><th>商品</th><th>値段（税込）</th><th>取り方</th></tr></thead>
+<tbody>
+<tr><td>段5</td><td>AI x 広告 x 自動化ブートキャンプ</td><td>39,800円</td><td>本体（カード決済／銀行振込の2通り）</td></tr>
+<tr><td>段5</td><td>同 Q&amp;A集</td><td>4,980円</td><td>申込フォームの中のチェック欄（抱き合わせ）</td></tr>
+<tr><td>段6</td><td>和佐大輔式・広告テストの極意</td><td>27,500円（定価55,000円の半額）</td><td>決済直後の1回限り・ワンクリックで確定</td></tr>
+<tr><td>段6'</td><td>同上（段6を買わずに閉じた人向け）</td><td>55,000円</td><td>2回目以降に自動で飛ばされる先。重ね窓のフォームで申込</td></tr>
+<tr><td colspan="2"><b>合計</b></td><td><b>72,280円</b></td><td>入口は「無料の動画1本」</td></tr>
+</tbody>
+</table>
+<p class="note">段6は「再度情報入力の手間は要りません」と書いてある通り、段5で預けたカードをそのまま使って1クリックで確定する作り。断るための部品は置かれていない。</p>
+
+<h3>6. 部品の数で見た力の入れ方</h3>
+<table>
+<thead><tr><th>ページ</th><th>部品の総数</th><th>画像</th><th>本文</th><th>買うボタン</th><th>カウント</th></tr></thead>
+<tbody>
+<tr><td>段3 納品（第0章）</td><td>14</td><td>2</td><td>4</td><td>2</td><td>2</td></tr>
+<tr><td>段4 売り込み</td><td>274</td><td>58</td><td>91</td><td>6</td><td>6</td></tr>
+<tr><td>段6 追加売り込み</td><td><b>36</b></td><td>0</td><td>14</td><td>2</td><td>0</td></tr>
+<tr><td>段1 サンクス</td><td>4</td><td>0</td><td>1</td><td>1（LINE）</td><td>0</td></tr>
+<tr><td>段8 終点</td><td><b>4</b></td><td>0</td><td>2</td><td>0</td><td>0</td></tr>
+<tr><td>段6' 定価販売</td><td><b>29</b></td><td>0</td><td>10</td><td>2</td><td>0</td></tr>
+<tr><td>段7 銀行振込の注文</td><td><b>3</b></td><td>0</td><td>2</td><td>1</td><td>0</td></tr>
+</tbody>
+</table>
+<p class="note">太字の4つ（段6・段6'・段7・段8）は 2026-09-05 に数え直した値で、区画・行・列を除いた「中身の部品」の数。段3・段4・段1の行は前回のまま。段4だけは数え方が合っておらず、今回数え直すと中身228個だった（第3部10の表を参照）。<br>
+段4の見出し・値札・特典名・「お申込みはこちら」は<b>ほぼ全部が画像</b>（58枚）。文字で組んでいるのは本文と質問欄。値段や特典名を差し替えるには画像を作り直す必要がある作りになっている。</p>
+
+
+<h3>7. 「一度限り」をどう作っているか（段6・実機で確認）</h3>
+<div class="box">
+<p>段6は「このページを閉じてしまうと、二度と表示されません」と本文で宣言している。その実装は<b>ブラウザに置く印1個</b>だけだった。</p>
+<table>
+<thead><tr><th>回</th><th>起きること</th><th>見えるページ</th><th>値段</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td><code>ug_oto_UekcISfzxDqJ</code> という印を1年間有効で置く</td><td>段6（ワンタイムオファー）</td><td><b>27,500円</b></td></tr>
+<tr><td class="num">2〜</td><td>印があるので即座に飛ばす</td><td>段6' <span class="u">/p/DAl5MSaxdOe4</span>（定価販売）</td><td><b>55,000円</b></td></tr>
+</tbody>
+</table>
+<p class="small">つまり<b>「二度と表示されません」は正しくない</b>。二度目は定価のページが表示される。商品は同じ（解説動画・AI学習用ファイル・広告テストデータ集）で、原稿も冒頭の断り書き以外は同一。段6' は「ワンタイムではないのでご安心ください」と書いて、急かす部品（動く帯・一度限りの見出し）を全部外している。</p>
+<p class="small"><b>読者IDでは管理していない。</b>判定に使うのはブラウザの印だけで <code>rid</code> を見ていないため、①URLに <code>?preview=</code> を付ける ②別のブラウザ・シークレット窓で開く ③ブラウザの記録を消す ── のどれでも半額ページに戻れる。段3の動画の開錠がサーバー側に記録される（<code>toggled</code>）のとは対照的に、<b>こちらはサーバーに何も残していない</b>。</p>
+</div>
+
+<h3>8. 急かし方が段によって入れ替わる</h3>
+<table>
+<thead><tr><th>段</th><th>急かす部品</th><th>数えているもの</th><th>逃げ道</th></tr></thead>
+<tbody>
+<tr><td>段3・段4</td><td>カウントダウン（計8個）</td><td>時刻（読者の登録日から5日後の0時）</td><td>時刻が来たら本当に「公開終了」へ飛ぶ</td></tr>
+<tr><td>段6</td><td>動く帯「※まだこのページを閉じないでください」3回＋「※これは一度限りの特別オファーです」3回</td><td><b>何も数えていない</b>（ただ動いているだけの飾り）</td><td>閉じると定価ページへ回される</td></tr>
+<tr><td>段6'・段7・段8</td><td>無し</td><td>—</td><td>—</td></tr>
+</tbody>
+</table>
+<p class="note">段4までは「時刻で締め切る」、段6は「閉じたら終わり」と、急かす軸を<b>時間から行動へ入れ替えている</b>。決済直後で時計を出しても効かないため、代わりに「今この画面を閉じるかどうか」を締切にしている形。段6の帯は進行状況を表す部品を流用したもので、実際には何の進み具合も表していない。</p>
+
+<h3>9. 断るための出口が用意されていない（段6）</h3>
+<ul>
+<li>段6にある行き先は<b>4本だけ</b>。注文ボタン2本（→段8）・銀行振込2本（→段7）。ほかに下端の法律表記2本。</li>
+<li><b>「いいえ」「結構です」「スキップ」「後で」に当たる部品は0個</b>。探して1つも無かった。</li>
+<li>断る唯一の方法が「画面を閉じる」で、その画面には「※まだこのページを閉じないでください」が3回出ている。<b>断る動作そのものを止めにいく作り</b>。</li>
+<li>ただし閉じても損はしない。閉じた先には定価55,000円のページが用意されている（上の7）。</li>
+</ul>
+
+<h3>10. 段が進むほどページが薄くなる</h3>
+<table>
+<thead><tr><th>段</th><th>ページの高さ</th><th>中身の部品</th><th>画像</th><th>買うボタン</th><th>役割</th></tr></thead>
+<tbody>
+<tr><td>段4 売り込み</td><td>—（HTMLで330KB）</td><td>228</td><td>58</td><td>6</td><td>説得しきる</td></tr>
+<tr><td>段6 追加売り込み</td><td><b>14,402px</b></td><td>36</td><td>0</td><td>2</td><td>もう1品だけ足す</td></tr>
+<tr><td>段6' 定価販売</td><td><b>13,525px</b></td><td>29</td><td>0</td><td>2</td><td>取りこぼしを拾う</td></tr>
+<tr><td>段7 銀行振込の注文</td><td><b>557px</b></td><td>3</td><td>0</td><td>1</td><td>名前とメールだけ取る</td></tr>
+<tr><td>段8 終点</td><td><b>344px</b></td><td>4</td><td>0</td><td>0</td><td>メールを見に行かせる</td></tr>
+</tbody>
+</table>
+<p class="note">高さは横幅1440pxで撮ったときの実測。段6は段4より短いが、それでも<b>14,402px＝画面16枚分</b>ある。決済を終えた直後の人に、この長さの売り込みをもう1本読ませる設計になっている。</p>
+
+<h3>11. 段7に法律表記が付いていない</h3>
+<p>段0・段3・段4・段6・段6'・段8 のすべてに「特定商取引法にもとづく表記｜プライバシーポリシー」の下端が付いている。<b>段7（銀行振込の注文ページ）だけ付いていない</b>。画面に出る <code>&lt;a href&gt;</code> が0本で、27,500円の申込を確定させるページでありながら、そこから販売条件を見に行く道が無い。</p>
+
+<h3>12. 設定に残っているが画面に出ていないもの</h3>
+<ul>
+<li><b>段7の抱き合わせ</b>：「まとめて注文する」＋「痒いところへお届けQ&amp;Aパッケージ 4,980円（税込）」の文言が設定に入っているが、画面には出ない（商品の紐付けが外れている）。同じ4,980円の商品が段5では<b>「AI x 広告 x 自動化ブートキャンプQ&amp;A集」</b>という別の名前で出ており、<b>呼び名が2つある</b>。</li>
+<li><b>段7の2日間の期限</b>：注文欄に「読者ごとの日付を起点に2日」の設定が入っているが、画面にはカウントダウンも締切の文言も出ない。<span class="tag hot">⚠️ 確かめていない</span></li>
+<li><b>配信予定日が過ぎたまま</b>：段6・段6' の「※こちらのコンテンツの配信は<b>2026年7月中旬</b>ごろを予定しています。」が、2026年9月5日の今も直っていない。段6の中に3回出る。</li>
+</ul>
+
+<hr>
+
+<h3>読めなかったもの</h3>
+<ul class="small">
+<li><span class="tag hot">⚠️ 読めなかった</span> 第0章の動画そのものの中身（48分19秒）。再生していない。</li>
+<li><span class="tag hot">⚠️ 読めなかった</span> プレゼントPDF「第0章のマインドマップ資料」の中身。ダウンロードは許可を取っていないので落としていない。URLだけ記録した。</li>
+<li><span class="tag hot">⚠️ 読めなかった</span> 入口LPの画像4枚（<code>wasa-slide-1〜4.webp</code>）と、段4の画像58枚のうち上部の値札まわり以外。値札・見出しの主要部分は画面を見て文字を起こしたが、途中の装飾画像の文字は起こしていない。</li>
+<li><span class="tag hot">⚠️ 確かめていない</span> 段5で「注文を確定する」を押した先、および段6でボタンを押した先の実際の挙動。買っていないため、行き先URLは設定値として読み取っただけで、押して確認してはいない。</li>
+<li><span class="tag hot">⚠️ 確かめていない</span> 締切が切れた後に段3・段4が実際に「公開終了」へ飛ぶかどうか（2026-09-10 以降でないと確認できない）。</li>
+<li><span class="tag hot">⚠️ 確かめていない</span> 段6' の買うボタンを押すと開く重ね窓（申込フォーム）の中身。設定として「カード決済 55,000円／銀行振込 55,000円の2択」を読み取っただけで、窓は開いていない。</li>
+<li><span class="tag hot">⚠️ 確かめていない</span> 段7の注文欄に入っている「読者ごとの日付から2日」の期限が切れたとき何が起きるか。画面には何も出ておらず、飛び先の設定も見当たらない。</li>
+<li><span class="tag hot">⚠️ 読めなかった</span> 追加商品「和佐大輔式・広告テストの極意」の中身（解説動画・AI学習用ファイル・実際の広告テストデータ集）。買っていないため売り文句しか読めていない。</li>
+<li><span class="tag hot">⚠️ 確かめていない</span> 段7・段8のフォームには何も入力していない。段7の「申し込む」も段6の注文ボタンも押していないため、行き先は設定値として読み取っただけ。</li>
+<li><span class="tag hot">⚠️ 数え直した</span> 第3部10の表にある段4の「中身228」は今回自分で数え直した値。第2部の段4の説明にある「部品274個」とは合っていない。段4は今回の対象外なので元の記述はそのままにしてある。</li>
+</ul>
+
+<p class="note" style="margin-top:28px">記録：2026-09-05 ／ BA-researcher</p>
+
+</div>
+
+<!-- ===================== 第4部 ===================== -->
+<h2>第4部　みかみ と 和佐 の同じ段を並べた対比表</h2>
+
+<div class="meta">
+  <div><b>この部で新しく読んだもの</b>：みかみ｜本質のSNSマーケター（<code>admin@snsers.com</code>／アドネス株式会社・代表取締役 三上功太）のページを Mits様が 2026-06-28 に実機で撮られた縦長キャプチャ<b>4枚</b>。ドメインは <code>school.addness.co.jp</code>。</div>
+  <div>読み方：横幅1400pxに縮めてから縦3200pxずつに切り、1枚ずつ開いて上から順に文字を書き写した。<b>推測で埋めた箇所は1つも無い。</b>読めなかった箇所には「⚠️ 読めなかった」と書いてある。</div>
+  <div>時刻の順：<b>18:20 売り込み → 18:28 追加オファー → 18:31 注文完了 → 18:46 入口LP（買った後に開き直したもの）</b>。購入完了メールは 18:30／18:33。</div>
+  <div>和佐側は第1部〜第3部の実測値をそのまま使っている（2026-09-05・読者ID <code>HuZ1dVN1BjTE</code>）。</div>
+</div>
+
+<h3>4-1　みかみの4枚が、それぞれ何のページだったか</h3>
+
+<table>
+<thead><tr><th>撮った時刻</th><th>URL</th><th>何のページか</th><th>2026-09-04 の紙（<span class="u">tasha_funnel_kaibou_sekkeizu_20260904.html</span>）のどれか</th></tr></thead>
+<tbody>
+<tr><td class="num">18:20</td><td><span class="u">school.addness.co.jp/p/BDDVNnsFzVO9</span></td><td><b>ウェビナーを見せながら、その場で売り、その場で決済まで取るページ</b>（2,980円）</td><td>キャプチャ A と同じページ</td></tr>
+<tr><td class="num">18:28</td><td><span class="u">school.addness.co.jp/p/2WuXkR9xX2x9</span></td><td><b>決済直後の追加オファー1枚</b>（「AIみかみの秘密の部屋」9,800円）</td><td><b>キャプチャ C と B は、この1枚の前半と後半だった</b>。別ページではない<span class="tag hot">今回わかった</span></td></tr>
+<tr><td class="num">18:31</td><td><span class="u">school.addness.co.jp/p/jCS9oz5bHIpd</span></td><td><b>注文完了ページ</b>。明細に出ているのは「AIみかみの秘密の部屋　9,800円」</td><td>キャプチャ D と同じページ。ただし<b>金額は 19,800円ではなく 9,800円</b><span class="tag hot">前の紙の誤り</span></td></tr>
+<tr><td class="num">18:46</td><td><span class="u">school.addness.co.jp/p/QNuN6zXs2RAA</span></td><td><b>入口の登録LP</b>（無料ウェビナーの登録）</td><td>キャプチャ E と同じページ</td></tr>
+</tbody>
+</table>
+
+<div class="box">
+<h4>この4枚でわかった、前の紙の直し3つ</h4>
+<ul class="small">
+<li><b>C と B は別々の段ではない。</b>同じ <code>2WuXkR9xX2x9</code> の上半分と下半分。前の紙は「STAGE 3 次の商品のレター」「STAGE 4 その締め」と2段に分けていたが、<b>実際は追加オファー1枚</b>。段の数は5ではなく4になる。</li>
+<li><b>注文完了ページの金額は 9,800円</b>（前の紙は 19,800円）。しかも売り物は 2,980円の合宿ではなく、追加オファーの「AIみかみの秘密の部屋」。</li>
+<li><b>売り込みページの特典は 6＋2 ではなく 5＋2 の7個</b>（豪華特別特典5個＋15分限定特典2個）。特典の中身も前の紙とは違い、実物は下の 4-2 の表のとおり。</li>
+</ul>
+</div>
+
+<h3>4-2　各ページの上から順のパーツ表（みかみ・4枚）</h3>
+
+<h4>みかみ①　入口の登録LP（<span class="u">/p/QNuN6zXs2RAA</span>・18:46 撮影）</h4>
+<p class="note"><b>何をさせる場か</b>：メールアドレスを1つ預けさせて、ウェビナーの視聴ページへ送る。値段は1つも出さない。<br>
+<b>キャプチャ</b>：<code>/Users/nishidamitsuhiro/Downloads/screencapture-school-addness-co-jp-p-QNuN6zXs2RAA-2026-06-28-18_46_49.png</code>（2734×28800）</p>
+<table>
+<thead><tr><th>順</th><th>パーツ</th><th>中身</th><th>役割</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>上帯（画像）</td><td>「AMAZONビジネス書ランキング1位　TV出演多数のみかみが完全解説！」</td><td>名乗り</td></tr>
+<tr><td class="num">2</td><td>主見出し（画像）</td><td>「みかみ式4ステップで学ぶ　AIマネタイズウェビナー」／縦組みで「基礎から応用までわかりやすく」／小さく「Claudeなど新時代の生成AIを使いこなしたいあなたへ」</td><td>約束</td></tr>
+<tr><td class="num">3</td><td>丸バッジ3つ</td><td>「将来性があるスキル」「自由な時間を手にするスキル」「時代を先取りできるスキル」</td><td>言い換え</td></tr>
+<tr><td class="num">4</td><td>本文</td><td>「累計1,000名以上のAIコンサルをしてきた『みかみ』が　<u>未経験から本質のAIスキルを習得して</u>　<u>マネタイズするまでのロードマップ</u> を　無料でお伝えします。」</td><td>誰が・何を</td></tr>
+<tr><td class="num">5</td><td>見出し＋本文</td><td>「このウェビナーを見ると…」→「ChatGPTや生成AIスキルの基礎や　マネタイズの本質 が<b>たった30分</b>で丸分かり！」</td><td>所要時間の提示</td></tr>
+<tr><td class="num">6</td><td>バナー画像</td><td>「ChatGPT?生成AIって何？どうやってマネタイズするの？」「たった30分で丸分かり！本質のAI活用スキルを身につけAIマネタイズを実現する　4STEPテンプレウェビナー」＋枠「参加費無料」「オンライン受講」</td><td>商品の絵</td></tr>
+<tr><td class="num">7</td><td>特典（3つ）</td><td>「豪華3大特典　Claude Codeマニュアルセット」＝カード3枚「Claude Code 導入完全マニュアル」「Claude Code 基本活用マニュアル」「Claude Code 上級活用マニュアル」</td><td>登録の見返り</td></tr>
+<tr><td class="num">8</td><td><b>入力欄1組目</b></td><td>「＼無料ウェビナーはすぐに視聴できます／」＋メール1欄（撮影時は <code>3216.fun@gmail.com</code> が既に入っていた）＋青の大ボタン<b>「無料ウェビナーを今すぐ見る！」</b></td><td>登録</td></tr>
+<tr><td class="num">9</td><td>注記3行（極小）</td><td>「※当社サービスの利用にあたっては、スクールについてご案内させていただく場合がございます。特商法に定められた<u>コチラ</u>を必ずご確認ください。」／「※yahooメールやキャリアメールは届かない場合があります。」／「※メールはいつでも購読解除できます。」</td><td>不安消し</td></tr>
+<tr><td class="num">10</td><td>問題の提示</td><td>「DANGEROUS」の背景に「今、あなたは<b>こんな状況</b>に陥っていませんか？」＋チェック4項目（ChatGPTは使っているけど、全く使いこなせなかった…／大量のAI情報を保存するだけで、ほとんど見返さない現状…／「これは使える！」と試したAIツールが、すぐに古い情報になってしまう…／次々と新しいAIツールを試しては、どれも中途半端に…）</td><td>刺す</td></tr>
+<tr><td class="num">11</td><td>原因</td><td>「その根本原因は… <b>AI情報が多すぎる！</b>からです。」＋画像＋本文「脅威的なスピードでAIツールが登場しSNSでは毎日100以上のAI活用法が投稿されるこの時代。『AIを使いこなしたいのに無駄な情報に振り回されてしまい何も手をつけられない。』そんな、AI難民が続出しています。」</td><td>原因の名付け</td></tr>
+<tr><td class="num">12</td><td>転換</td><td>「しかし　これらを解決するのが　<b>本質のAI活用スキル</b>」</td><td>言葉の提示</td></tr>
+<tr><td class="num">13</td><td>理由3つ</td><td>「今、本質のAI活用スキルを身につける<b>3つの理由</b>」／Reason1「新しいAIツールが登場しても対応可能」／Reason2「本質を理解することでマネタイズまでの道筋が明確に！」／Reason3「新しいAI情報に踊らされる側からAIを使いこなす人材に」（各に写真＋本文）</td><td>納得づけ</td></tr>
+<tr><td class="num">14</td><td>受け</td><td>「今回の無料ウェビナーではそんな　本質のAI活用スキル を習得し　AIマネタイズするまでの方法を　徹底解説します！」＋6のバナー再掲</td><td>商品に戻す</td></tr>
+<tr><td class="num">15</td><td><b>お客様の声5名</b></td><td>「AIで事業を前進させた実践者たちの声!!」。1人ずつ 顔写真＋見出し＋<b>BEFORE→AFTER</b>＋「成功のポイント」本文2段。<br>さなえさん（Youtube台本のみ／AI初心者 → SNS運用代行3案件獲得・月20万円の売り上げ・継続的な収入）／ゆきさん（IT知識ゼロ／副業初心者 → 本業と両立してマネタイズ・健康医療系で専門性発揮・複数案件獲得）／せいやさん（何から始めればいいかわからない → 2名のクライアントと継続契約を締結し、安定した収入を実現）／神田さん（ノウハウコレクター → 3ヶ月でインスタ0→1達成・フォロワー200人で3件成約・安定したマネタイズ）／山本さん（SNSサポート単発支援 → AIコンサル・3週間で180万円の受注・6社中6社で契約獲得）</td><td>証言</td></tr>
+<tr><td class="num">16</td><td>中身の提示4つ</td><td>「今回の無料ウェビナーで学べること」＝「今、AIを学ぶべき真の理由」「従来のAIとこれからのAIの決定的な違い」「本質的なAIスキル活用法」「AIマネタイズを実現する4STEPテンプレ」（各に本文3〜4行）</td><td>中身</td></tr>
+<tr><td class="num">17</td><td>講師の実績</td><td>写真＋「広島県広島市出身。東京大学に入学するも、自主退学して教育分野で起業。SNS総フォロワー30万／年商30億／元上場企業役員　KADOKAWAにて書籍出版など、さまざまな実績によりメディアにも多数出演。さらに、AI時代の起業家として大学への登壇も行っている。TVCMにも紹介されたスキル習得プログラム“スキルプラス”の主催者でもあり、受講生は5,000名を突破した。」</td><td>信用付け</td></tr>
+<tr><td class="num">18</td><td>メディア5枠</td><td>「テレビなどの<b>メディア出演多数</b>」＝①「TV出演で話題！ビジネスSwitch（フジテレビ系列）」＋テレビ画面（テロップ「アドネス株式会社　代表取締役　三上 功太」）②「KADOKAWAから出版された本も好評発売中！」（書影『非常識な頭の使い方』）③「近畿大学でも公演！」（登壇写真）④「渋谷スクランブル交差点の大型広告で話題！」（街頭ビジョンに「スキルプラス」）⑤「Yahoo!ニュースや日経トレンディにも掲載されました！」（記事と誌面）</td><td>信用付け（外部の証拠）</td></tr>
+<tr><td class="num">19</td><td>追伸</td><td>「最後に、私たちがこのセミナーを開催する理由をお話しさせてください。これから訪れるAI時代。その波に乗るチャンスは、誰にでも平等に訪れています。…本当に必要なのは『AIの本質を学ぶこと』これこそが、この不安な時代を突き抜けるための、最も重要な一歩ではないか。…本質のAI活用スキルを学ぶその一歩を、このセミナーで一緒に踏み出しましょう。」</td><td>締め</td></tr>
+<tr><td class="num">20</td><td><b>画面下に貼り付く帯（入力欄2組目）</b></td><td>紫の枠で「＼無料ウェビナーはすぐに視聴できます／」＋薄字「メールアドレスをご入力ください」の欄＋青ボタン「無料ウェビナーを今すぐ見る！」</td><td>登録（常時表示）</td></tr>
+</tbody>
+</table>
+<h4>みかみ①の数</h4>
+<table>
+<thead><tr><th>数えたもの</th><th>個数</th><th>備考</th></tr></thead>
+<tbody>
+<tr><td>カウントダウン</td><td class="num">0</td><td>時刻で数えるものは1つも無い</td></tr>
+<tr><td>登録ボタン</td><td class="num">2</td><td>「無料ウェビナーを今すぐ見る！」（本文中1・貼り付く帯1）</td></tr>
+<tr><td>入力欄</td><td class="num">2組</td><td>どちらもメールアドレス1欄だけ。名前も電話も聞かない</td></tr>
+<tr><td>価格の提示</td><td class="num">0</td><td>金額は1つも書かれていない</td></tr>
+<tr><td>特典</td><td class="num">3</td><td>Claude Code マニュアル3種</td></tr>
+<tr><td>お客様の声</td><td class="num">5名</td><td>全員 BEFORE→AFTER の形</td></tr>
+<tr><td>返金保証</td><td class="num">0</td><td>—</td></tr>
+<tr><td>動画</td><td class="num">0</td><td>ページ内に再生するものは無い</td></tr>
+</tbody>
+</table>
+
+<h4>みかみ②　ウェビナー＋その場売り＋その場決済（<span class="u">/p/BDDVNnsFzVO9</span>・18:20 撮影）</h4>
+<p class="note"><b>何をさせる場か</b>：ウェビナーを見せながら、同じ1枚の中で 2,980円を売り、<b>同じ1枚の中でカード番号まで入れさせて決済を確定させる</b>。<br>
+<b>キャプチャ</b>：<code>/Users/nishidamitsuhiro/Downloads/screencapture-school-addness-co-jp-p-BDDVNnsFzVO9-2026-06-28-18_20_40.png</code>（2734×25112）</p>
+<table>
+<thead><tr><th>順</th><th>パーツ</th><th>中身</th><th>役割</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td><b>カウントダウン①</b></td><td>黒帯に「<span style="color:#c8a000">【注意】</span>動画はすでに始まっています。」／「動画が観れるのは、<b>タイマーが0になるまで</b>」＋<b>0 : 21 : 34</b>（時間／分／秒）</td><td>視聴の締切</td></tr>
+<tr><td class="num">2</td><td>動画</td><td>再生中の画面（左上のラベル「AIXコンサルタント3日間完全攻略合宿」・字幕「「はい!そうです!」」）</td><td>ウェビナー本体</td></tr>
+<tr><td class="num">3</td><td>見出し</td><td>「AIを使ってマネタイズを成功させるための　<b>「4STEPテンプレ」徹底解説ウェビナー</b>」／「生成AIを使ったマネタイズの本質を基礎から超わかりやすく解説。あなたが今から身に付けるのは “AIを使いこなす力” です。」</td><td>名乗り</td></tr>
+<tr><td class="num">4</td><td>大見出し</td><td>「<b>ウェビナーはもう始まっています！</b>」／「【注意】必ず“今”観てください。今見ないと後悔します。必ず…」</td><td>今すぐ観させる</td></tr>
+<tr><td class="num">5</td><td>注記</td><td>「※アクセスが集中して正常に動画や案内が流れない場合がございます。その際は<u>こちら</u>からご視聴ください。」</td><td>逃げ道</td></tr>
+<tr><td class="num">6</td><td><b>カウントダウン②</b></td><td>「15分限定オファー付きは以下のタイマーが0になるまで…」＋<b>0 : 21 : 33</b>／下に「このページは、タイマーが0になった時点で閉じるよう設定されています。それ以降ページを開いても2度とこのページを見ることはできません。」</td><td>締切＋1回限りの宣言</td></tr>
+<tr><td class="num">7</td><td>商品名（画像）</td><td>「ついに開催　みかみの『AIXコンサルタント3日間完全攻略合宿』」＋人物写真</td><td>商品の提示</td></tr>
+<tr><td class="num">8</td><td>3日の内訳</td><td><b>01DAY ビジネスの本質</b>／<b>02DAY AIマネタイズ方法</b>／<b>03DAY AIマネタイズ実行の5STEP</b></td><td>中身</td></tr>
+<tr><td class="num">9</td><td>チェック4項目</td><td>「あなたが合宿で習得できるもの」＝「ビジネスってコレだけ！全てのAIビジネスに通じる超貴重なビジネスの本質」／「知らないと時代に乗り遅れる!!　生成AIと今までのAIの決定的な違いとは?!」／「9割の人がやってない!!　AIを使った最短最速のマネタイズ方法とは？たった4つの方法を徹底解説!」／「超具体的！即実践できるAIXコンサルタント実行5STEPとは!?」</td><td>中身</td></tr>
+<tr><td class="num">10</td><td><b>返金保証</b></td><td>紫帯「<b>全額返金保証</b>」＋「内容に満足いただけなかった場合、<b>購入から1週間以内</b>であれば<b>無条件にて全額返金</b>いたします。<b>無理に返金理由を聞くこともありません。</b>これは、あなたに本気で成功して欲しいからです。」</td><td>不安消し</td></tr>
+<tr><td class="num">11</td><td><b>買うボタン①</b></td><td>紫〜青のグラデ「<b>今すぐ参加する</b>」</td><td>申込</td></tr>
+<tr><td class="num">12</td><td><b>特典5つ</b></td><td>「豪華　特別特典　すぐ始められる！生成スターターキット」＝特典1「超実用的なChatGPTプロンプト<b>300選</b>」／特典2「ChatGPT×コピーライティングですぐに稼げる3STEP」／特典3「初めてのMidjourney完全講義 <b>60分!</b>」／特典4「企業向けAIXコンサルタント<b>実例紹介</b>」／特典5「1分でできる！AI活用で爆速ロゴ作成術！」</td><td>上乗せ</td></tr>
+<tr><td class="num">13</td><td><b>15分限定特典2つ</b></td><td>「しかも　<b>15分限定特典</b>　今を逃せば2度と貰えません！」＝「タイトル入力だけ！<b>YouTube動画作成術</b>」／「無料で使える！便利な最強AI <b>200選</b>」</td><td>期限つきの上乗せ</td></tr>
+<tr><td class="num">14</td><td><b>値段</b></td><td>「<b>通常価格は29,800円</b>」→「でも、なんと今回のオファーでは」→ 赤い札「<b>90%OFFの 2,980円！</b>」</td><td>値引き</td></tr>
+<tr><td class="num">15</td><td><b>カウントダウン③＋買うボタン②</b></td><td><b>0 : 21 : 30</b>＋「上のタイマーが0になると15分オファーの特典はもらえません」＋ボタン「<b>15分オファー付きで合宿に参加する</b>」</td><td>締切＋申込</td></tr>
+<tr><td class="num">16</td><td>中身カード3枚</td><td>「この3日間合宿で学べる<b>3つのこと</b>」＝①「目から鱗が止まらない！AIビジネスの必須知識」②「これなら稼げる！新時代型！AIを使ったマネタイズ手法4パターン」③「順番通り実行するだけ！AIXコンサルタント実行の5STEP」（各に写真＋本文6〜8行・要所に黄色マーカー）</td><td>中身（詳しく）</td></tr>
+<tr><td class="num">17</td><td>帯</td><td>水色帯「今すぐ、以下からお受け取りください」</td><td>受け渡し</td></tr>
+<tr><td class="num">18</td><td><b>カウントダウン④</b></td><td>「15分限定特典付きで購入できるのは残り…」＋<b>0 : 21 : 27</b></td><td>締切</td></tr>
+<tr><td class="num">19</td><td><b>申込フォーム（このページの中に直接）</b></td><td>お名前 <span class="tag hot">必須</span>（薄字「お名前を入力」）／メールアドレス <span class="tag hot">必須</span>（撮影時は <code>3216.fun@gmail.com</code> が入っていた）／電話番号 <span class="tag hot">必須</span>／商品行「【"超特価"割引】AIXコンサルタント3日間完全攻略合宿　2,980」／丸印1つ「【15分限定特典付き】AIXコンサルタント3日間完全攻略合宿　<b>2,980円(税込)</b>」（選択肢は1つだけ・最初から選ばれている）／Name on card（薄字 TARO YAMADA）／Card number（薄字 4444 3333 2222 1111）／Expiration date (MM/YY)（薄字 12/26）／Security code（薄字 123）</td><td>決済</td></tr>
+<tr><td class="num">20</td><td><b>確定ボタン③</b></td><td>「購入商品／価格」の再掲行（【15分限定特典付き】…　2,980円(税込)）＋紫〜桃のボタン「<b>注文を確定する</b>」／小文字「メールアドレスの入力間違いが多発しています。再度ご確認の上、クリックして下さい。」／下に赤字「ご入力されたメールアドレス宛に商品案内が届きます。ご確認下さい。」</td><td>決済確定</td></tr>
+<tr><td class="num">21</td><td>下端</td><td>「Copyright - All Right Reserved」／「特定商取引法に基づく表記｜プライバシーポリシー｜サービス利用規約」</td><td>—</td></tr>
+</tbody>
+</table>
+<h4>みかみ②の数</h4>
+<table>
+<thead><tr><th>数えたもの</th><th>個数</th><th>備考</th></tr></thead>
+<tbody>
+<tr><td><b>カウントダウン</b></td><td class="num">4</td><td>21:34／21:33／21:30／21:27。<b>全部が同じ1本の残り時間</b>（撮影の秒差でずれているだけ）</td></tr>
+<tr><td>買う／申し込むボタン</td><td class="num">3</td><td>「今すぐ参加する」「15分オファー付きで合宿に参加する」「注文を確定する」</td></tr>
+<tr><td>入力欄</td><td class="num">1組</td><td>名前・メール・電話＋カード4項目。<b>別ページにも重ね窓にも飛ばさない</b></td></tr>
+<tr><td>特典</td><td class="num">7</td><td>豪華特別特典5＋15分限定特典2</td></tr>
+<tr><td>返金保証</td><td class="num">1</td><td>購入から1週間以内・無条件・理由を聞かない</td></tr>
+<tr><td>価格の提示</td><td class="num">2</td><td>通常価格29,800円 → 90%OFFの2,980円</td></tr>
+<tr><td>お客様の声</td><td class="num">0</td><td>この段には1件も無い</td></tr>
+<tr><td>動画</td><td class="num">1</td><td>—</td></tr>
+</tbody>
+</table>
+
+<h4>みかみ③　決済直後の追加オファー（<span class="u">/p/2WuXkR9xX2x9</span>・18:28 撮影）</h4>
+<p class="note"><b>何をさせる場か</b>：2,980円を買い終えた直後の人だけに、「AIみかみの秘密の部屋」9,800円を30分の締切つきで1枚売る。<br>
+<b>キャプチャ</b>：<code>…-2WuXkR9xX2x9-2026-06-28-18_28_41.png</code>（2734×28800）＋続き <code>…-18_28_41-2.png</code>（2734×4234）の2枚で1ページ</p>
+<table>
+<thead><tr><th>順</th><th>パーツ</th><th>中身</th><th>役割</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td><b>進行バー</b></td><td>赤い縞のバーが右へ8割ほど伸びていて「<b>80%完了</b>」</td><td>まだ終わっていないと思わせる</td></tr>
+<tr><td class="num">2</td><td>見出し（黄）</td><td>「<b>ご購入ありがとうございます</b>」／小さく「ご購入確認メールが、迷惑メールに入っている場合がございます。必ずご確認ください。」</td><td>直前の買い物の確認</td></tr>
+<tr><td class="num">3</td><td>直前商品の画像</td><td>「みかみのAIXコンサルタント3日間完全攻略合宿」＋1日目 ビジネスの本質／2日目 AIマネタイズの真髄／3日目 AIマネタイズ実践編＋黄枠「特別特典　・生成AIの原理原則9選　・AIXコンサルタントの実行5STEP　・動画編集のプロンプト大公開　・AIマネタイズ0→100ロードマップ　・台本作成プロンプト大公開」</td><td>買ったものの再掲</td></tr>
+<tr><td class="num">4</td><td>大見出し</td><td>「<b>ちょっと待って！</b>」（手のひらのアイコン付き）</td><td>足止め</td></tr>
+<tr><td class="num">5</td><td>問いかけ</td><td>「成功者の<span style="color:#b51700">裏</span>側を知りたいと思いませんか？」／枠「大いなる飛躍への一歩を踏み出したあなただけに特別な "翼" をご用意しました」＋「↓↓↓」</td><td>次へ引く</td></tr>
+<tr><td class="num">6</td><td>動画</td><td>人物が話している画面（右上に「音の有効化」ボタン＝音を消して自動再生されている）・字幕「全力でサポートしていきます」</td><td>語りかけ</td></tr>
+<tr><td class="num">7</td><td><b>警告（赤枠）</b></td><td>「⚠️ご注意ください⚠️　<b>このページを閉じると2度と開けなくなります。</b>」</td><td>1回限りの宣言</td></tr>
+<tr><td class="num">8</td><td>黄帯</td><td>「<b>このページは30分間限定です。</b>」</td><td>締切の宣言</td></tr>
+<tr><td class="num">9</td><td><b>カウントダウン①</b></td><td>「特別オファー終了まで残り…」＋橙の丸4つ <b>0日 0時間 29分 36秒</b></td><td>締切</td></tr>
+<tr><td class="num">10</td><td><b>買うボタン①（黄）</b></td><td>「<b>今すぐ全額返金保証付きで参加する！≫</b>」</td><td>申込</td></tr>
+<tr><td class="num">11</td><td><b>断るボタン①（灰）</b></td><td>「<b>いいえ、私はこのチャンスを "捨てます"</b>」／小文字「自分で一から学んで、大量の時間と大量のコストをドブに捨てる余裕が私にはあります」</td><td>断る側に痛みを付ける</td></tr>
+<tr><td class="num">12</td><td>祝いの区画</td><td>赤帯「あなたの門出をお祝いします ＼おめでとうございます！／」＋乾杯の写真＋本文「あなたがこれからAIを活用していこうと思っているなら、今回あなたが手に入れた ✅AIXコンサルタント3日間完全攻略合宿ほど、頼りになるものは他にありません。…僕も<u>全力でサポート</u>していくので、これから一緒に頑張っていきましょう✨」</td><td>ねぎらい</td></tr>
+<tr><td class="num">13</td><td>青帯＋本文</td><td>「一歩を踏み出したあなたの飛躍を　<b>加速させる "翼" があります</b>」＋空の写真＋「先人たちが残した成功の軌跡を<b>丸パクリ</b>することで、AIを、より<u>早く</u>、より<u>効率的に</u>、<u>攻略できる。</u>そんな方法があるとしたら…あなたは<b>興味ありますか？</b>」</td><td>引っぱる</td></tr>
+<tr><td class="num">14</td><td>黄帯＋本文</td><td>「このオファーは<b>誰でも見れるものではありません</b>」＋「僕のサービスを購入してくださった<b>あなただけ</b>にお送りしています。なぜなら、<u>ガンガン学んで、貪欲に成長しようとしている</u>あなたならきっと、ここで何か行動を起こしてくれる、<b>と勝手に僕は信じているからです。</b>」</td><td>選ばれた感</td></tr>
+<tr><td class="num">15</td><td><b>商品名</b></td><td>「✨＼より早く／＼より効率的に／✨　AIを…ビジネスを…<b>攻略できる唯一の方法</b>」→「↓↓↓」→「その名も…」→ 赤札「<b>AIみかみの秘密の部屋</b>」＋画像（金の王冠・1st・「<b>動画講義100本超</b>」のバッジ）</td><td>商品の提示</td></tr>
+<tr><td class="num">16</td><td>商品の説明</td><td>「AIみかみの秘密の部屋は簡単にいうと、すぐに使える<b>『合法カンニングペーパー』</b>です。先人たちが残した成功の軌跡が、<u>図書館の様にいつでも閲覧可能な状態</u>で、保管庫ページに並んでいます。あなたは、自分に合ったビジネスに近い事例を<b>丸パクリ</b>できるので、AIを、ビジネスを、より<u>早く</u>、より<u>効率的に</u>、<b>攻略することが可能</b>になります。」</td><td>中身の言い換え</td></tr>
+<tr><td class="num">17</td><td>中身①（バックナンバー）</td><td>黄帯「このコミュニティに参加することであなたがすぐに受け取れるものを一部だけ紹介すると次の通り」＋枠「僕が過去にやって成功した施策のバックナンバー」＋画像「未経験からでも実践できる！プロが教える<b>AIマネタイズ28選</b>　総文字数5万超え！大ボリューム講座」＋チェック「動画講義100本以上／総再生時間60時間超え／記事テキスト5万文字以上（※2023/1/4時点）」<br>さらに赤チェック5項目：「AIマネタイズの新革命 本質のAI活用術を使ったマネタイズ方法28選徹底解説！<span class="tag hot">（10万円相当）</span>」／「僕以外の売れっ子ファネルも大公開 ただの教員から成り上がった “イングリッシュおさるさん” をはじめ “迫 祐樹さん” など豪華メンツ多数<span class="tag hot">（非売品）</span>」／「【AIライティングをもっと質高く！】東大生社長みかみの鬼フィードバック（ライティング編）<span class="tag hot">（非売品）</span>」／「【効率的にAIXコンサルタントへ！】東大生社長みかみの鬼フィードバック（営業編）<span class="tag hot">（非売品）</span>」／「これさえ押さえれば間違いなし！結果を残す人の考え方や動き方を徹底解剖 究極のアドネスぶち上げ朝礼！<span class="tag hot">（非売品）</span>」＋「などなど…」</td><td>物量</td></tr>
+<tr><td class="num">18</td><td>中身②（これから追加）</td><td>黄枠「これから僕が生み出す最新爆益事例もどんどん追加」＋宝箱の画像「これから新たに生み出されていく<b>最強の手法</b>」＋チェック「最新！検証済み生データ／限定講義の裏口参加チケットも」＋赤チェック4項目（海外のマーケティングにも注目！みかみが輸入した最新手法徹底解説！／最先端最強ツールと売上を10倍にする使い方／『あの人売れてそうだな』って人のファネルを考察して再現可能なレベルで大解剖・大暴露／バズった施策、売上向上したクリエイティブ、売上に直結する施策、マインド）＋「※これらはほんの一部です※」</td><td>続く感</td></tr>
+<tr><td class="num">19</td><td>悩みの区画</td><td>「僕の成功事例たちをトレースすることができたら…」＋黒丸「どれだけビジネスが楽になるでしょうか？」＋写真2枚（頭を抱える人／うつむく人）＋「なんて悩む必要ありません。あなたがビジネスで悩むポイントは、<u>既に僕が通った道です。</u>秘密の部屋には多くの<b>答えがあります。</b>」</td><td>刺す→受ける</td></tr>
+<tr><td class="num">20</td><td><b>特典2つ</b></td><td>黒帯「さらに今、行動した方には特典として…」＋黄背景。<b>特典1</b>「【AIのプロが教える！】クラウドソーシングサイト案件獲得講座」＋チェック「<b>19,800円相当</b>／受講生1,000人以上の方から大好評！」／<b>特典2</b>「【AIXコンサルタントで売上192万円達成！】実績者対談（猪田さん｜元営業職）」＋チェック「AI初心者からの大逆転劇！／再現性のある〇〇を大公開！」／締め「上記2つの特典をプレゼント。<span style="color:#b51700">きっと今よりもずっと人生単位で豊かになると思います</span>　そんな状況最高ですね！」</td><td>上乗せ</td></tr>
+<tr><td class="num">21</td><td>値段の前振り</td><td>黒帯「でも、流石にお高いんでしょ？」＋「このAIみかみの秘密の部屋、いくらで提供するか正直すごく悩みました。だってどこを探しても手に入らない生のデータたちです。<b>月額10万円！</b>って言っても<u>僕なら躊躇なく入ります。</u>だけど、あなたは僕を信頼して、✅AIXコンサルタント3日間完全攻略合宿を手に取ってくださいました。<u>一歩を踏み出してくれました。</u>ですから…」</td><td>値段の錨</td></tr>
+<tr><td class="num">22</td><td><b>返金保証</b></td><td>「＼出血大サービス／<b>全額返金保証で</b>　AIみかみの秘密の部屋をお試しください。」／赤字「<b>※全額返金保証の適応期間は購入から【1週間以内】となります。</b>」</td><td>不安消し</td></tr>
+<tr><td class="num">23</td><td><b>値段</b></td><td>「<b>しかも！！</b>　今入っていただければ、その後継続することになったとしても、<u>10万円！なんて言いません。</u>　たった<b>9,800円(税込)</b>で利用いただけるようにいたしました。間違いなく最高のご案内です。今すぐ下のボタンをタップして、みかみの秘密の部屋を、お試しください。」＋黒帯「<b>これは最高のご案内です</b>」</td><td>値段</td></tr>
+<tr><td class="num">24</td><td><b>カウントダウン②＋買うボタン②＋断るボタン②</b></td><td>「全額返金保証付きで「AIみかみ秘密の部屋」に入会できるのはあと…」＋<b>0日 0時間 29分 29秒</b>＋黄ボタン「今すぐ全額返金保証付きで参加する！≫」＋灰ボタン「いいえ、私はこのチャンスを "捨てます"」（10・11とまったく同じ組）</td><td>申込（反復）</td></tr>
+<tr><td class="num">25</td><td>ノーリスク宣言</td><td>「＼あとは、あなたは稼ぐだけ／　<b>完全ノーリスク保証</b>」＋手でハートを作る写真＋「もちろん、入ってみて、「こりゃ価値がねえや」そう思った方は、<u>いつでも退会することが可能です。</u>これであなたは<b>完全ノーリスク</b>です。」</td><td>不安消し（2つ目）</td></tr>
+<tr><td class="num">26</td><td>締めの本文</td><td>「僕の、<u>『本気であなたを成功させたい！』</u>という熱い思いが、伝わったんじゃないでしょうか。繰り返しますが、このスペシャルすぎるオファーは<b>このページ限定。</b>しかも<b>30分限定の特別オファー</b>です。完全ノーリスクですぐに使える<b>「合法カンニングペーパー」</b>を手に入れるチャンスを見逃しちゃいけません。今すぐ参加のボタンをクリックして、<u>みかみの秘密の部屋をお試しください。</u>きっと、後悔はさせません。以下のボタンをクリックして今すぐ参加をしてください。」</td><td>締め</td></tr>
+<tr><td class="num">27</td><td>この後どうなるかの図</td><td>白帯「<b>参加方法と参加後のステップ</b>」＋3コマ「CLICK（指）≫ MAIL（封筒）≫ START（黒板）」＋「ワンクリックで参加後、すぐにご登録のメールアドレスに ・大量の講義が保管されたページ ・『秘密の部屋』専用グループ をご案内するメールをお届けします。簡単ステップで、コンテンツの視聴を今日からすぐに始められます。」</td><td>不安消し（手順）</td></tr>
+<tr><td class="num">28</td><td><b>カウントダウン③＋買うボタン③（緑）</b></td><td>「全額返金保証で「AIみかみ秘密の部屋」に入会できるのはあと…」＋<b>0日 0時間 29分 27秒</b>＋緑の大ボタン「<b>AIみかみの秘密の部屋に参加する！</b>」／小文字「こちらから購入が可能です」／下に赤字「※全額返金保証の適応期間は購入から【1週間以内】となります。」</td><td>最後の申込</td></tr>
+<tr><td class="num">29</td><td>下端</td><td>「Copyright - All Right Reserved」／「特定商取引法に基づく表記｜プライバシーポリシー｜サービス利用規約」</td><td>—</td></tr>
+</tbody>
+</table>
+<h4>みかみ③の数</h4>
+<table>
+<thead><tr><th>数えたもの</th><th>個数</th><th>備考</th></tr></thead>
+<tbody>
+<tr><td><b>カウントダウン</b></td><td class="num">3</td><td>29:36／29:29／29:27。同じ1本の30分の残り時間</td></tr>
+<tr><td>買うボタン</td><td class="num">3</td><td>黄2個（「今すぐ全額返金保証付きで参加する！≫」）＋緑1個（「AIみかみの秘密の部屋に参加する！」）</td></tr>
+<tr><td><b>断るボタン</b></td><td class="num">2</td><td>「いいえ、私はこのチャンスを "捨てます"」。<b>断る道が画面に置いてある</b></td></tr>
+<tr><td>進行バー</td><td class="num">1</td><td>「80%完了」。上端に1本だけ</td></tr>
+<tr><td>特典</td><td class="num">2</td><td>案件獲得講座（19,800円相当）／実績者対談（猪田さん）</td></tr>
+<tr><td>返金保証</td><td class="num">4</td><td>「出血大サービス」の見出し／赤字の注記2回／完全ノーリスク保証（いつでも退会可）</td></tr>
+<tr><td>価格の提示</td><td class="num">2</td><td>月額10万円（引き合い）→ 9,800円(税込)</td></tr>
+<tr><td>お客様の声</td><td class="num">0</td><td><b>1件も無い</b>。前の紙の「受講者の声のグリッド5〜6名」は<span class="tag hot">見当たらなかった</span></td></tr>
+<tr><td>動画</td><td class="num">1</td><td>音を消して自動再生（「音の有効化」ボタン付き）</td></tr>
+<tr><td>入力欄</td><td class="num">0</td><td>ボタンから先は<span class="tag hot">押していないので未確認</span></td></tr>
+</tbody>
+</table>
+
+<h4>みかみ④　注文完了ページ（<span class="u">/p/jCS9oz5bHIpd</span>・18:31 撮影）</h4>
+<p class="note"><b>何をさせる場か</b>：商品の受け渡しを、LINE の友だち登録に置き換える。<br>
+<b>キャプチャ</b>：<code>/Users/nishidamitsuhiro/Downloads/screencapture-school-addness-co-jp-p-jCS9oz5bHIpd-2026-06-28-18_31_35.png</code>（2734×2628・<b>4枚の中でいちばん短い</b>）</p>
+<table>
+<thead><tr><th>順</th><th>パーツ</th><th>中身</th><th>役割</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>祝いの画像</td><td>黄色の紙吹雪の上に黒帯「<b>おめでとうございます！</b>」</td><td>—</td></tr>
+<tr><td class="num">2</td><td>紫の箱</td><td>「<b>注文が完了しました！</b>」</td><td>完了の告知</td></tr>
+<tr><td class="num">3</td><td>本文＋点3つ</td><td>「あなたが購入した商品は …」＋青い丸が縦に3つ（読み込み中の絵）</td><td>ためを作る</td></tr>
+<tr><td class="num">4</td><td><b>明細（枠1行）</b></td><td>「<b>AIみかみの秘密の部屋</b>　（1週間全額返金保証付き）　<b>9,800円</b>」</td><td>買ったものの提示</td></tr>
+<tr><td class="num">5</td><td>紫枠の見出し</td><td>「<b>コースの試聴方法</b>」</td><td>受け取り方</td></tr>
+<tr><td class="num">6</td><td>本文</td><td>「<b>以下の公式LINEからご視聴いただけます！</b>」＋「↓↓↓」</td><td>行き先を1本に絞る</td></tr>
+<tr><td class="num">7</td><td><b>赤い大ボタン</b></td><td>「<b>LINE登録</b>で商品を受け取る」＋丸バッジ「<b>10秒で登録完了</b>」＋指のアイコン</td><td>LINE友だち化</td></tr>
+<tr><td class="num">8</td><td>注記2行</td><td>「※購入時にご登録いただいたメールにも視聴リンクをお送りしております。」／「※メールが確認できない場合、迷惑メールに届いていることがあります。」</td><td>逃げ道</td></tr>
+<tr><td class="num">9</td><td>下端</td><td>極小の注記（当社サービスの利用にあたっては…特商法に定められた<u>コチラ</u>）／「Copyright - All Right Reserved」／「特定商取引法に基づく表記｜プライバシーポリシー｜サービス利用規約」</td><td>—</td></tr>
+</tbody>
+</table>
+<h4>みかみ④の数</h4>
+<table>
+<thead><tr><th>数えたもの</th><th>個数</th><th>備考</th></tr></thead>
+<tbody>
+<tr><td>カウントダウン</td><td class="num">0</td><td>急かす部品を全部外している</td></tr>
+<tr><td>ボタン</td><td class="num">1</td><td>「LINE登録で商品を受け取る」だけ</td></tr>
+<tr><td>特典</td><td class="num">0</td><td>—</td></tr>
+<tr><td>価格の提示</td><td class="num">1</td><td>明細の 9,800円のみ</td></tr>
+<tr><td>返金保証</td><td class="num">1</td><td>明細の中に「（1週間全額返金保証付き）」と書いてあるだけ</td></tr>
+<tr><td>先へ進む出口</td><td class="num">1</td><td>LINE。<b>ここから先は LINE の中</b></td></tr>
+</tbody>
+</table>
+
+<h3>4-3　みかみ と 和佐 の同じ段を並べた対比表</h3>
+<p class="note">みかみ側は今回の4枚に写っていたものだけ。写っていない段は「⚠️ この4枚には無い」と書いてある。和佐側は第1部〜第3部の実測値。</p>
+
+<table>
+<thead><tr><th style="width:8%">段</th><th style="width:27%">みかみ</th><th style="width:27%">和佐</th><th style="width:19%">両方がやっている</th><th style="width:19%">片方だけ</th></tr></thead>
+<tbody>
+
+<tr>
+<td><b>入口LP</b></td>
+<td><span class="u">/p/QNuN6zXs2RAA</span>（自社ドメイン school.addness.co.jp）<br>入力＝<b>メール1欄だけ</b>／ボタン「<b>無料ウェビナーを今すぐ見る！</b>」（2組）<br>登録の見返り＝<b>Claude Codeマニュアル3種</b><br>お客様の声<b>5名</b>（BEFORE→AFTER）<br>メディア5枠（フジテレビ／KADOKAWA／近畿大学／渋谷の大型広告／Yahoo!ニュース）<br><b>カウントダウン0・金額0</b></td>
+<td><span class="u">wasadaisuke.com/lp/optin-ai-ads-automation</span>（<b>入口だけ自社ドメイン</b>）<br>入力＝<b>メール1欄だけ</b>／ボタン「<b>今すぐ動画を受け取る</b>」（3組）<br>登録の見返り＝セミナー本編（無料）<br>お客様の声<b>0</b><br>実績1行「組織を持たず、たった一人で累計39億円を売ってきた。20年で投じた広告費は累計3億円超。」<br><b>カウントダウン0・金額0</b></td>
+<td>・入口では<b>メールアドレス1つしか聞かない</b>（名前も電話も聞かない）<br>・入口では<b>金額を1円も出さない</b><br>・入口では<b>カウントダウンを1本も置かない</b><br>・入力欄を複数組くり返す<br>・入口だけ本体と別のドメイン</td>
+<td>みかみ＝<b>登録の見返りに別の物（マニュアル3種）を付ける</b>／お客様の声5名／外部メディアの写真を5枠<br>和佐＝<b>見返りはセミナー本編そのもの</b>／声は0で、実績を文章1行に圧縮</td>
+</tr>
+
+<tr>
+<td><b>サンクス</b></td>
+<td><span class="tag hot">⚠️ この4枚には無い</span><br>ただし入口LPのボタン文言「無料ウェビナーを<b>今すぐ見る</b>！」と、売り込みページ冒頭の「ウェビナーは<b>もう始まっています！</b>」から、<b>登録の直後にそのまま動画のページへ入る</b>作りだと読める（サンクス1枚を挟んでいるかどうかは⚠️ 未確認）</td>
+<td><span class="u">/page/b7YOxHNO9FNU</span><br>部品<b>4個だけ</b>。動画も本文も無い<br>大見出し「<b>まだ登録は完了していません</b>　今すぐLINE登録をお願いします。」<br>緑ボタン1個「今すぐLINEの友だち登録をする」</td>
+<td><span class="tag hot">みかみ側が未確認のため比べられない</span></td>
+<td>和佐＝サンクスを<b>LINE登録専用の1枚</b>にしている。出口はLINE1本だけで、動画へ進む道をここには置いていない</td>
+</tr>
+
+<tr>
+<td><b>LINE</b></td>
+<td>使う位置が<b>いちばん最後</b>。注文完了ページの赤いボタン「<b>LINE登録で商品を受け取る</b>」＋「10秒で登録完了」<br>入口〜売り込み〜追加オファーには<b>LINEが1つも出てこない</b></td>
+<td>使う位置が<b>いちばん最初</b>。登録の直後（サンクス）<br><span class="u">/line/link/b7YOxHNO9FNU/3rqz4Cp8Wl4l</span>。PCではQRコード、スマホ判定なら <span class="u">liff.line.me/2010294573-hbuOeCF9</span> へ<br>買った後の段（段6〜段8）には<b>LINEが1つも出てこない</b></td>
+<td>・<b>どちらもLINEを1箇所にしか置いていない</b>（何度も出さない）<br>・どちらもLINEを「押さないと先へ進めない」位置に置いている</td>
+<td><b>置く位置が正反対</b>。みかみ＝<b>買った後の受け渡し口</b>／和佐＝<b>買う前の入口の関所</b>。<br>みかみは「LINEに登録しないと商品が届かない」、和佐は「LINEに登録しないと動画が始まらない」</td>
+</tr>
+
+<tr>
+<td><b>納品ページ</b></td>
+<td><span class="tag hot">⚠️ この4枚には無い</span><br>完了ページの文言から、納品先は<b>LINE と メール の2本</b>（「以下の公式LINEからご視聴いただけます！」「※購入時にご登録いただいたメールにも視聴リンクをお送りしております。」）<br>追加オファーの文言では「大量の講義が保管されたページ」「『秘密の部屋』専用グループ」の2つを<b>メールで案内</b>すると書いてある</td>
+<td><span class="u">/p/dUfRXXbrV6ws</span>（第0章）<br>48分19秒の動画1本。部品14個のうち<b>5個が動画の視聴位置で出し分け</b><br><b>32分32秒を越えると</b>買うボタン・締切カウント・プレゼントPDFの3つが出る<br>視聴期限のカウント2本（終点 <b>2026-09-10 00:00:59</b>＝登録5日後の0時）。ゼロで <span class="u">/p/iud22ZyTOplT</span> へ強制で飛ばす</td>
+<td><span class="tag hot">みかみ側が未確認のため比べられない</span></td>
+<td>和佐＝<b>動画を32分32秒まで観た人にしか売り込みを見せない</b>（時間で門を開ける）。<br>みかみ＝<b>売り込みが動画と同じ1枚に最初から載っている</b>（門が無い・この表の1つ下「オファーLP」の行を参照）</td>
+</tr>
+
+<tr>
+<td><b>オファーLP</b></td>
+<td><span class="u">/p/BDDVNnsFzVO9</span>。<b>動画・売り込み・決済が全部1枚</b><br>値段「<b>通常価格は29,800円</b>」→「<b>90%OFFの 2,980円！</b>」<br><b>カウントダウン4本</b>（0:21:34／0:21:33／0:21:30／0:21:27・全部同じ1本の残り時間）<br>文言「動画が観れるのは、タイマーが0になるまで」「このページは、タイマーが0になった時点で閉じるよう設定されています。それ以降ページを開いても2度とこのページを見ることはできません。」<br><b>特典7個</b>（豪華特別特典5＋<b>15分限定特典2</b>「今を逃せば2度と貰えません！」）<br>返金保証＝<b>購入から1週間以内・無条件・「無理に返金理由を聞くこともありません」</b><br>買うボタン3個・画像多数</td>
+<td><span class="u">/p/aETvB4PAwBoH</span>。売り込み専用の1枚（決済は重ね窓）<br>値段「<b>定価 99,000円</b>」→「<b>今だけ 39,800円（税込）</b>」<br><b>カウントダウン6本</b>（「割引が適応されるのは、残り…」）。ゼロで <span class="u">/p/j7HQis1d7qa6</span> へ飛ばす<br>文言「※カウントがゼロになった時点で募集は締切られます。このページにもアクセスできなくなるので注意してください。」<br><b>特典2個</b>（ROAS500%超の黄金の学習データ／AI・TTPメソッドセミナー・<b>特典だけ視聴期限なし</b>）<br>返金保証＝<b>条件2つ付き</b>（①DAY1〜3を最後まで観ること ②DAY1〜3のワーク〈1つ10分〉を提出していること）／「過去の平均返金率はたったの3〜4%」<br>買うボタン6個・部品274個・画像58枚・お客様の声16件</td>
+<td>・<b>定価を先に出して割り引く</b>（29,800→2,980／99,000→39,800）<br>・<b>カウントダウンを1本の残り時間で何度も出す</b>（4本／6本）<br>・<b>ゼロになったら二度と見られない、と文字で宣言する</b><br>・全額返金保証を付ける<br>・買うボタンを繰り返す（3個／6個）</td>
+<td>みかみ＝<b>割引率が90%OFF</b>／<b>特典が7個</b>で、うち2個に「15分限定」の別の期限を重ねている／返金保証は<b>無条件・理由も聞かない</b>／<b>この1枚でカード番号まで入れさせる</b>／お客様の声0<br>和佐＝割引率は約60%OFF／特典2個／返金保証に<b>「最後まで観る」「ワークを出す」という条件</b>を付けている／お客様の声16件／<b>決済は重ね窓に分ける</b></td>
+</tr>
+
+<tr>
+<td><b>申込</b></td>
+<td><b>別ページも重ね窓も無い。オファーLPの下端にそのまま置いてある</b><br>入力＝お名前 必須／メールアドレス 必須／<b>電話番号 必須</b>／Name on card／Card number／Expiration date (MM/YY)／Security code<br>商品の選択は<b>丸印1つだけ</b>「【15分限定特典付き】AIXコンサルタント3日間完全攻略合宿　2,980円(税込)」<br>ボタン「<b>注文を確定する</b>」／小文字「メールアドレスの入力間違いが多発しています。再度ご確認の上、クリックして下さい。」<br><b>抱き合わせ0</b>／すぐ上にカウントダウン④（0:21:27）</td>
+<td><b>段4の中に開く重ね窓</b>（別URL無し）<br>入力＝お名前 必須／メールアドレス 必須／<b>電話番号は聞かない</b>／カード番号・有効期限・セキュリティコード（Stripe）<br>支払い方法の選択は<b>2つ</b>（カード決済 39,800円／銀行振込 39,800円）<br>ボタン「<b>注文を確定する</b>」<br><b>抱き合わせ1個</b>「まとめて注文する」＝「AI x 広告 x 自動化ブートキャンプQ&amp;A集」<b>4,980円（税込）</b>のチェック欄<br>注記「@iCloud.com／@mac.com／@hotmail.com／@outlook.com のメールアドレスはご利用頂けません。GmailやYahooのアドレスを推奨です。」</td>
+<td>・確定ボタンの文言が<b>「注文を確定する」で一致</b><br>・名前とメールは必須<br>・カード情報をその場で入れさせる<br>・<b>商品の選択肢を実質1つに固定している</b>（みかみ＝丸印1つ／和佐＝同額の支払い方法2つ）<br>・メールの入力ミスへの注意書きを添える</td>
+<td>みかみ＝<b>電話番号を必須にしている</b>／申込を<b>別の場所に分けない</b>／抱き合わせ無し<br>和佐＝<b>抱き合わせ 4,980円を1個</b>／届かないメールのドメインを名指しで拒否／申込を重ね窓に分ける</td>
+</tr>
+
+<tr>
+<td><b>追加オファー</b></td>
+<td><span class="u">/p/2WuXkR9xX2x9</span>（9,800円／「AIみかみの秘密の部屋」）<br><b>締切は時刻</b>：「このページは30分間限定です。」＋<b>カウントダウン3本</b>（0日0時間29分36秒→29分29秒→29分27秒）<br>「⚠️ご注意ください⚠️　<b>このページを閉じると2度と開けなくなります。</b>」<br>進行バー<b>1本「80%完了」</b><br><b>断るボタン2個</b>「いいえ、私はこのチャンスを "捨てます"」／「自分で一から学んで、大量の時間と大量のコストをドブに捨てる余裕が私にはあります」<br>買うボタン3個・動画1本・画像多数<br>特典2個（案件獲得講座 19,800円相当／実績者対談）<br>返金保証4箇所＋「いつでも退会することが可能です」<br>買った直後の商品を<b>画像で再掲</b>してから話し始める</td>
+<td><span class="u">/p/UekcISfzxDqJ</span>（27,500円＝定価55,000円の半額）<br><b>締切は時刻ではない</b>：「このページを一度閉じてしまえば、次は定価55,000円でのご案内になります。」<b>カウントダウン0</b><br>「※これは一度限りの特別オファーです」＋進行バー<b>3本</b>「※まだこのページを閉じないでください」<br><b>断るリンク0</b>（探して0件・断るには画面を閉じるしかない）<br>買うボタン2個・<b>画像0枚</b>（全部文字組み）<br>特典0個<br>返金保証0<br>「※この注文は<b>ワンクリック(タップ)で完了します。再度情報入力の手間は要りません。</b>」<br>2回目に開くと <b>ブラウザの印1個</b>（<code>ug_oto_UekcISfzxDqJ</code>・1年有効）で定価ページ <span class="u">/p/DAl5MSaxdOe4</span> へ飛ばす</td>
+<td>・<b>本体を買った直後の人にだけ、その場で1枚出す</b><br>・<b>「一度きり」を画面の文字で宣言する</b><br>・上端に離脱を止める部品を置く（みかみ＝進行バー1／和佐＝進行バー3）<br>・買うボタンを複数回くり返す<br>・銀行振込／別経路の逃がし先を用意する（みかみ＝⚠️未確認／和佐＝段7 <span class="u">/p/dQ31GSmUASff</span>）</td>
+<td>みかみ＝<b>時計で締める</b>（30分・カウント3本）／<b>断る道を画面に置く</b>／<b>特典と返金保証を厚く積む</b>／動画と画像で見せる<br>和佐＝<b>時計を使わず「閉じたら定価」で締める</b>／<b>断る道を置かない</b>／特典も返金保証も0／<b>画像0枚の文字だけ</b>／<b>1クリックで決済が確定</b>（カード再入力なし）／2回目は自動で定価ページへ</td>
+</tr>
+
+<tr>
+<td><b>完了</b></td>
+<td><span class="u">/p/jCS9oz5bHIpd</span>（高さ2628px・4枚でいちばん短い）<br>「おめでとうございます！」→「注文が完了しました！」→「あなたが購入した商品は …」→ <b>明細1行「AIみかみの秘密の部屋（1週間全額返金保証付き）　9,800円」</b><br>→「コースの試聴方法」→「以下の公式LINEからご視聴いただけます！」<br><b>出口1本＝赤ボタン「LINE登録で商品を受け取る」</b>＋「10秒で登録完了」<br>注記「※購入時にご登録いただいたメールにも視聴リンクをお送りしております。」</td>
+<td><span class="u">/p/GXmF6qNSFLwe</span>（高さ344px・部品4個・<code>&lt;title&gt;</code>が空）<br>「お申込みありがとうございます。」<br>「メールで案内を送らせていただいていますのでご確認ください。」＋赤字「迷惑メールに届いている可能性もありますので、迷惑メールフォルダのチェックもよろしくお願いします。」<br><b>買った商品名も金額も注文番号も出ない</b><br><b>出口0本</b>（下端の特商法とプライバシーポリシーの2リンクだけ）<br>段6・段7・段6' の3つの入口が全部この1枚に合流する</td>
+<td>・<b>完了の段からカウントダウンも特典も全部外している</b>（みかみ0本／和佐0本）<br>・<b>「迷惑メールを見てください」を必ず書く</b><br>・完了ページの高さが、他の段に比べて極端に短い</td>
+<td>みかみ＝<b>買った商品名と金額を画面に出す</b>／<b>受け取り口を1つ置く（LINE）</b>／祝いの絵で気分を上げる<br>和佐＝<b>商品名も金額も出さず、全部メール任せ</b>／<b>先へ進む出口が1つも無い</b>（ここで手が止まる）</td>
+</tr>
+
+</tbody>
+</table>
+
+<div class="box">
+<h4>この表から読める、2社の分かれ目3つ</h4>
+<ul class="small">
+<li><b>締切の道具が違う。</b>みかみは<b>時計</b>（入口以外の全段にカウントダウン。売り込み4本・追加オファー3本）。和佐は<b>時計と印を使い分ける</b>（納品ページ2本・売り込み6本までは時計だが、追加オファーだけは時計を0本にして「閉じたら定価55,000円」というブラウザの印1個に切り替えている）。<b>追加オファーの段で、2社は正反対のやり方をしている。</b></li>
+<li><b>断る道の有無。</b>みかみの追加オファーには「いいえ、私はこのチャンスを "捨てます"」という灰色のボタンが2個ある。和佐の追加オファーには断るリンクが0個で、断るには画面を閉じるしかない。<b>ただし和佐は閉じた人を定価ページで拾い直す。</b>みかみが断った人をどこへ送るかは<span class="tag hot">⚠️ 押していないので未確認</span>。</li>
+<li><b>LINEを置く位置が正反対。</b>和佐は<b>買う前の入口</b>（登録直後のサンクスでLINEに入れないと動画が始まらない）。みかみは<b>買った後の受け渡し口</b>（LINEに入れないと買った商品が届かない）。どちらも<b>1箇所にしか置いていない</b>点は同じ。</li>
+</ul>
+</div>
+
+<h3>4-4　和佐 段6 の2枚（Mits様が撮られたもの／こちらが撮ったもの）の突き合わせ</h3>
+<p class="note">同じ <span class="u">https://utage.unchains.jp/p/UekcISfzxDqJ</span> を、別々の手で撮った2枚。<b>違いは1つも無かった。</b></p>
+<table>
+<thead><tr><th>見たところ</th><th>Mits様が撮られた1枚<br><code>screencapture-utage-unchains-jp-p-UekcISfzxDqJ-2026-09-05-15_00_27.png</code><br>2856×28688（15:00 撮影）</th><th>こちらが撮った1枚<br><code>wasa_capture_20260905/dan6_UekcISfzxDqJ.png</code><br>1440×14402</th><th>差</th></tr></thead>
+<tbody>
+<tr><td><b>飛ばされたか</b></td><td>飛ばされていない。<span class="u">UekcISfzxDqJ</span> がそのまま出ている</td><td>飛ばされていない。同じ</td><td><b>無し</b></td></tr>
+<tr><td><b>ブラウザの印（<code>ug_oto_UekcISfzxDqJ</code>）</b></td><td>撮影時点で<b>付いていなかった</b>（付いていれば定価ページ <span class="u">/p/DAl5MSaxdOe4</span> へ飛ばされて、冒頭の断り書き「※こちらはワンタイムオファーで案内した…定価販売ページです。」が出るはずだが、出ていない）</td><td>同じく付いていない状態で撮った（印を持たないまっさらなブラウザで開き直した）</td><td><b>無し</b></td></tr>
+<tr><td><b>カウントダウン</b></td><td><b>0本。</b>時刻を数える部品は1つも写っていない</td><td><b>0本。</b>ページの設定でも数えたところ、部品の種類は section18／row18／col18／progress3／head11／text14／bullet1／divider4／order-button2／html1 で、カウントダウンの部品は<b>存在しない</b></td><td><b>無し</b></td></tr>
+<tr><td><b>進行バー</b></td><td>「※まだこのページを閉じないでください」＋「※これは一度限りの特別オファーです」が<b>3回</b>（冒頭／1つ目の注文ボタンの下／末尾）</td><td>同じく<b>3回</b>。設定でも progress が3個</td><td><b>無し</b></td></tr>
+<tr><td><b>商品名</b></td><td>「<b>和佐大輔式・広告テストの極意　〜広告反応率を5倍にするための正しいPDCAサイクルの回し方〜</b>」</td><td>同じ</td><td><b>無し</b></td></tr>
+<tr><td><b>価格</b></td><td>「今だけ"<b>半額</b>"オファー」／「<b>定価55,000円（税込）</b>として、さらにワンタイムで、半額の <b>27,500円（税込）</b>」／「半額の27,500円（税込）でお渡しできるのは、このページを開いている『今』だけです。このページを一度閉じてしまえば、次は定価55,000円でのご案内になります。」</td><td>同じ（1文字も違わない）</td><td><b>無し</b></td></tr>
+<tr><td><b>注文ボタン</b></td><td>朱色「<b>今すぐ半額オファーに申込む</b>」／小文字「『和佐大輔式・広告テストの極意』を手に入れる」が<b>2個</b></td><td>同じく<b>2個</b>。設定でも order-button が2個</td><td><b>無し</b></td></tr>
+<tr><td><b>注文ボタンの下の注記</b></td><td>「※この注文はワンクリック(タップ)で完了します。再度情報入力の手間は要りません。」／「※こちらのコンテンツの配信は<b>2026年7月中旬ごろ</b>を予定しています。」／「＜銀行振込をご希望の場合はこちら＞」</td><td>同じ</td><td><b>無し</b></td></tr>
+<tr><td><b>下端</b></td><td>「特定商取引法にもとづく表記　プライバシーポリシー」／「© ICC Inc.」</td><td>同じ</td><td><b>無し</b></td></tr>
+<tr><td><b>ページの丈</b></td><td>横幅700pxに揃えて測ると本文の高さ <b>7,031px</b></td><td>同じ測り方で <b>6,973px</b></td><td><b>0.8%</b>。文字の折り返しが1〜2行ずれた分で、中身の差ではない</td></tr>
+</tbody>
+</table>
+<p class="note">つまり、Mits様が15:00に開かれた画面と、こちらが撮った画面は<b>同じ状態</b>。どちらも印を持たない側（＝1回目）で、半額27,500円の側が出ていた。<b>「2回目は定価55,000円へ飛ばされる」の裏返し（1回目は半額が出る）が、別の手でもう一度確かめられた</b>ことになる。</p>
+
+<div class="box warn">
+<h4>この第4部で確かめていないこと</h4>
+<ul class="small">
+<li>みかみの<b>サンクスページ</b>と<b>納品ページ</b>は、この4枚に写っていない。存在するかどうかも確かめていない。</li>
+<li>みかみの<b>ボタンを1つも押していない</b>。「いいえ、私はこのチャンスを "捨てます"」を押した先、「LINE登録で商品を受け取る」を押した先は分からない。</li>
+<li>みかみの追加オファーで<b>カード情報をどう受け渡すか</b>（1クリックで済むのか、もう一度入力させるのか）は、ボタンを押していないので分からない。</li>
+<li>18:31の注文完了ページに出ている商品が「AIみかみの秘密の部屋 9,800円」であることは<b>画面で確認した事実</b>。ただし 18:30／18:33 の購入完了メールの件名は「3日間合宿の購入が完了しました！」で、<b>金額と商品名が食い違っている</b>。メール本文は1通も開いていないので、どちらが何の決済かは<span class="tag hot">⚠️ 確かめていない</span>。</li>
+<li>キャプチャに写っていた画像の中の細かい文字（バナー内の小さいテロップなど）で、縮小して読めなくなったものは書いていない。</li>
+</ul>
+</div>
+
+</body>
+</html>

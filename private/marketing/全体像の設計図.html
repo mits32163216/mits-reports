@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ファネルメイク</title>
+<style>
+:root{
+  --bg:#ffffff; --fg:#1b1f24; --muted:#5a6472; --line:#d9dee5;
+  --card:#f6f8fa; --accent:#0b6ea8; --accent-bg:#e6f2f9;
+  --warn:#a03000; --warn-bg:#fdf0e8; --kari:#7a4a00; --kari-bg:#fff4d9;
+  --thead:#eef2f6; --code:#eceff3; --box:#0b6ea8;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14171c; --fg:#e6e9ee; --muted:#a3adba; --line:#333b46;
+    --card:#1c2129; --accent:#63b8e8; --accent-bg:#16303f;
+    --warn:#ffb37a; --warn-bg:#3a2415; --kari:#ffd77a; --kari-bg:#3a2a08;
+    --thead:#222933; --code:#232a33; --box:#63b8e8;
+  }
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 20px 96px;
+  background:var(--bg); color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP","Yu Gothic",sans-serif;
+  font-size:16px; line-height:1.85; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto}
+h1{font-size:24px;line-height:1.5;margin:0 0 6px}
+h2{font-size:20px;margin:44px 0 12px;padding:9px 14px;background:var(--accent-bg);color:var(--accent);border-left:6px solid var(--accent);border-radius:0 5px 5px 0}
+h3{font-size:18px;margin:30px 0 8px;padding-bottom:5px;border-bottom:2px solid var(--line)}
+h4{font-size:16px;margin:20px 0 6px;color:var(--accent)}
+p{margin:8px 0}
+.lead{font-size:14px;color:var(--muted);margin:0 0 4px}
+.note{font-size:14px;color:var(--muted)}
+.meta{font-size:14px;color:var(--muted);border:1px solid var(--line);background:var(--card);border-radius:8px;padding:12px 16px;margin:16px 0 28px}
+.meta div{margin:3px 0}
+.tbl-wrap{overflow-x:auto;margin:10px 0 22px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:900px}
+th,td{border:1px solid var(--line);padding:7px 9px;vertical-align:top;text-align:left}
+th{background:var(--thead);font-weight:700;white-space:nowrap}
+td.num{white-space:nowrap;text-align:center;font-weight:700;color:var(--accent);width:36px}
+td.kari{color:var(--kari);background:var(--kari-bg)}
+.kari-mark{display:inline-block;font-size:11.5px;padding:1px 6px;border-radius:9px;background:var(--kari-bg);color:var(--kari);border:1px solid var(--kari);margin-left:5px;white-space:nowrap}
+code,.u{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:12.5px;background:var(--code);padding:1px 5px;border-radius:4px;word-break:break-all}
+.box{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:14px 18px;margin:16px 0}
+.box.warn{background:var(--warn-bg);border-color:var(--warn)}
+.role{font-size:14px;color:var(--muted);margin:6px 0 4px;padding-left:8px;border-left:3px solid var(--accent)}
+ul{margin:6px 0 6px 2px;padding-left:22px}
+li{margin:3px 0}
+
+/* 遷移図 */
+.diagram{
+  border:1px solid var(--line);background:var(--card);border-radius:10px;
+  padding:24px 18px;margin:16px 0 24px;overflow-x:auto;
+}
+.dgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px 12px;min-width:900px;align-items:stretch}
+.dbox{
+  border:2px solid var(--box);border-radius:8px;background:var(--bg);
+  padding:10px 10px;text-align:center;font-size:13px;line-height:1.55;
+  display:flex;flex-direction:column;justify-content:center;min-height:76px;
+}
+.dbox b{display:block;font-size:12px;color:var(--accent);margin-bottom:3px}
+.dbox .sub{font-size:11.5px;color:var(--muted);margin-top:3px}
+.dbox.pop{border-style:dashed}
+.dbox.end{background:var(--accent-bg)}
+.dbox.exp{border-color:var(--warn);color:var(--warn)}
+.arrow{text-align:center;font-size:22px;color:var(--muted);align-self:center;font-weight:700}
+.legend{font-size:12.5px;color:var(--muted);margin-top:12px}
+.legend .lg{display:inline-block;margin-right:14px}
+.legend .sw{display:inline-block;width:14px;height:14px;border:2px solid var(--box);vertical-align:middle;margin-right:4px}
+.legend .sw.pop{border-style:dashed}
+.legend .sw.exp{border-color:var(--warn)}
+
+
+/* 2026-09-10 最新表：修正は取消線＋薄字で残す */
+.old{text-decoration:line-through;color:var(--muted);opacity:.55}
+.new{font-weight:700}
+.upd{font-size:12px;color:var(--muted);display:block;margin-top:2px}
+td.lnk a{display:inline-block;margin:0 8px 3px 0;color:var(--accent);text-decoration:underline;white-space:nowrap}
+td.lnk{min-width:260px}
+.tbl-wrap.top table{min-width:1100px}
+hr{border:0;border-top:1px solid var(--line);margin:36px 0}
+.footer{font-size:12.5px;color:var(--muted);margin-top:40px;border-top:1px solid var(--line);padding-top:12px;word-break:break-all}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>ファネルメイク <span class="old" style="font-size:15px;font-weight:400">和佐式ファネル・我が社版　全体像＋設計図</span></h1>
+<p class="lead">作成 2026-09-05 ／ 参謀（BA-strategist） ／ Mits様音声「では、全体像と設計図を書き上げてもらおうか」を受けて</p>
+
+<div class="meta">
+  <div>対象ファネル：UTAGE 新設ファネル <code>B7rcluDi86bF</code>（器のみ作成済・中身は空）</div>
+  <div>公開URLの形：<code>https://change.7years.life/page/&lt;page_id&gt;</code></div>
+  <div>正本：<code>_wip/wasa_shiki_zentaizo_20260905.md</code>（Mits様の言葉が正）</div>
+  <div>解剖の参照：<code>_wip/wasa_funnel_kaibou_20260905.html</code>（和佐9段の構造）／ <code>_wip/tasha_funnel_kaibou_sekkeizu_20260904.html</code>（みかみ5枚＋ホワイトボード）</div>
+  <div>最終更新 2026-09-10（午後：遷移図を本編／機能ページの2列に）：一番上の表を最新にした（修正は取消線で残す）。前半・後半の本文は 2026-09-05 のまま（旧名「入口LP／オファーLP／追加オファー」が残る）。</div>
+  <div>本設計図の <span class="kari-mark">仮</span> は Mits様が後で決める箇所。空欄にせず、地図の数字で仮置きしている。</div>
+</div>
+
+
+<!-- ==================== 最新表（2026-09-10・一番上） ==================== -->
+<h2 id="shukei-top">段ごとのブロック数と 仮 印の数（最新 2026-09-10）</h2>
+<p class="note">2026-09-05 の値は<span class="old">取消線＋薄字</span>で残し、その右／下に最新を書く。段の呼び方は Mits様確定の用語（2026-09-06・<a href="wasa_shiki_yougo_ichiran_20260906.html" target="_blank" rel="noopener">用語一覧</a>）に合わせた。「見るもの」は同じフォルダの HTML／md と公開URL。「設計図」はこのページの中の該当の段へ飛ぶ。右端の「和佐の実物」は同じ段の和佐のページ（目的：目視で較べながら作る・Mits様 2026-09-10）。<span class="new">和佐の公開は 2026-09-10 に終了（入口は 404）。各行の「ローカル再現（9/10）」で、手元の記録（キャプチャ・部品表・原文控え）を開く。</span><span class="new">「段（本編）」と「機能ページ」を列で分けた（Mits様 2026-09-10「サンクス、期限切れ、完了など必ず必要な機能を機能ページとして列を分ける」）。機能ページ＝02 サンクス・03x／04x 期限切れ・07 銀行振込（使わない）・08 申込完了。</span></p>
+<div class="tbl-wrap top"><table>
+<thead><tr><th>順</th><th>段（本編）</th><th>機能ページ</th><th>step_id</th><th>page_id</th><th>ブロック数</th><th>仮 印</th><th>見るもの（クリックで開く）</th><th>和佐の実物（目視で較べる）</th></tr></thead>
+<tbody>
+<tr><td class="num">0</td><td><span class="old">00 note（入口の前・UTAGE 外）</span><br><span class="new">00 note 記事</span><span class="upd">仮 1＝Mits様が入れる差し込み口（タイトル・アイキャッチ・冒頭と追伸の生活ネタ・所要時間）。記事案あり・未公開</span></td><td class="num">—</td><td>—</td><td>—</td><td class="num">3</td><td class="num">1</td><td class="lnk"><a href="wasa_shiki_00_note_kiji_an_20260905.html" target="_blank" rel="noopener">記事案</a> <a href="note_mits_nis_kanri_20260906.html" target="_blank" rel="noopener">note 管理画面の実測</a> <a href="#dan-00" target="_blank" rel="noopener">設計図</a></td><td class="lnk"><a href="wasa_lp_saigen_20260910.html#w-00" target="_blank" rel="noopener"><b>ローカル再現（9/10）</b></a> <a href="https://note.com/daisukewasa/n/n75dad01e5f78" target="_blank" rel="noopener">和佐 note 記事</a><span class="upd">https://note.com/daisukewasa/n/n75dad01e5f78</span></td></tr>
+<tr><td class="num">1</td><td><span class="old">01 入口LP（和佐段0との1対1・10部品に組み直し・2026-09-05）</span><br><span class="new">01 オプトインページ</span><span class="upd">仮 1＝オプトイン動画①〜⑤のどれを初期配置にするか</span></td><td class="num">—</td><td><code>eratJM7n0m6y</code></td><td><code>Evbui5Gwwy1f</code></td><td class="num">10</td><td class="num">1</td><td class="lnk"><a href="optin_page_local_v3_concept_20260910.html" target="_blank" rel="noopener"><b>コンセプト作り直し版（9/10 17:00）</b></a> <a href="concept_kyuhai_issho_20260910.html" target="_blank" rel="noopener">設計書</a> <a href="optin_page_local_v2_wasamane_20260910.html" target="_blank" rel="noopener"><b>和佐の型を真似た版（9/10 16:30）</b></a> <a href="optin_page_local_v1_20260910.html" target="_blank" rel="noopener"><b>完成モック v1（9/10）</b></a> <a href="optin_dai0sho_parts_haichi_20260910.html" target="_blank" rel="noopener">配置表（ペルソナ固定・9/10）</a> <a href="https://change.7years.life/page/Evbui5Gwwy1f" target="_blank" rel="noopener">公開URL</a> <a href="optin_douga_scenario_1min_20260904.html" target="_blank" rel="noopener">動画台本5本</a> <a href="#dan-01" target="_blank" rel="noopener">設計図</a></td><td class="lnk"><a href="wasa_lp_saigen_20260910.html#w-00" target="_blank" rel="noopener"><b>ローカル再現（9/10）</b></a> <a class="old" href="https://wasadaisuke.com/lp/optin-ai-ads-automation?r=note&amp;cp=ogcuexqq47" target="_blank" rel="noopener" title="2026-09-10 実測 HTTP 404（公開終了）">和佐 入口（メール1欄）</a><span class="upd">https://wasadaisuke.com/lp/optin-ai-ads-automation?r=note&cp=ogcuexqq47</span></td></tr>
+<tr><td class="num">2</td><td class="num">—</td><td><span class="old">02 サンクス</span><br><span class="new">02 サンクスページ</span><span class="upd">LINE 連携はシナリオ側・投入後</span></td><td><code>Ol9cCwfrP4Hd</code></td><td><code>LHCPBw6d2sTt</code></td><td class="num">4</td><td class="num">0</td><td class="lnk"><a href="optin_dai0sho_parts_haichi_20260910.html" target="_blank" rel="noopener">配置表（ペルソナ固定・9/10）</a> <a href="https://change.7years.life/page/LHCPBw6d2sTt" target="_blank" rel="noopener">公開URL</a> <a href="#dan-02" target="_blank" rel="noopener">設計図</a></td><td class="lnk"><a href="wasa_lp_saigen_20260910.html#w-02" target="_blank" rel="noopener"><b>ローカル再現（9/10）</b></a> <a href="https://utage.unchains.jp/page/b7YOxHNO9FNU" target="_blank" rel="noopener">和佐 サンクス（LINE）</a><span class="upd">https://utage.unchains.jp/page/b7YOxHNO9FNU</span></td></tr>
+<tr><td class="num">3</td><td><span class="old">03 動画</span><br><span class="new">03 第0章の動画ページ</span><span class="upd">仮 4＝ヘッダー画像・動画の尺と撮影日・オファー表示ポイント・プレゼントPDF。コンセプトの正本は第4回（8/23）の発話</span></td><td class="num">—</td><td><code>JW10kujLs5H7</code></td><td><code>t4zFnkwTzYYG</code></td><td class="num">12</td><td class="num">4</td><td class="lnk"><a href="dai0sho_douga_local_v3_concept_20260910.html" target="_blank" rel="noopener"><b>コンセプト作り直し版（9/10 17:00）</b></a> <a href="concept_kyuhai_issho_20260910.html" target="_blank" rel="noopener">設計書</a> <a href="dai0sho_douga_local_v2_wasamane_20260910.html" target="_blank" rel="noopener"><b>和佐の型を真似た版（9/10 16:30）</b></a> <a href="dai0sho_douga_local_v1_20260910.html" target="_blank" rel="noopener"><b>完成モック v1（9/10）</b></a> <a href="optin_dai0sho_parts_haichi_20260910.html" target="_blank" rel="noopener">配置表（ペルソナ固定・9/10）</a> <a href="https://change.7years.life/page/t4zFnkwTzYYG" target="_blank" rel="noopener">公開URL</a> <a href="be02_kougi4_20260905/kougi4_0823_main_concept_0028-0046.md" target="_blank" rel="noopener">第4回 原文控え（コンセプト正本）</a> <a href="#dan-03" target="_blank" rel="noopener">設計図</a></td><td class="lnk"><a href="wasa_lp_saigen_20260910.html#w-03" target="_blank" rel="noopener"><b>ローカル再現（9/10）</b></a> <a href="https://utage.unchains.jp/p/dUfRXXbrV6ws?rid=HuZ1dVN1BjTE" target="_blank" rel="noopener">和佐 第0章の動画</a><span class="upd">https://utage.unchains.jp/p/dUfRXXbrV6ws?rid=HuZ1dVN1BjTE</span></td></tr>
+<tr><td class="num">4</td><td class="num">—</td><td><span class="old">03x 期限切れ</span><br><span class="new">03x 期限切れページ（動画）</span><span class="upd">受け皿シナリオ 4Eawplgf3xGB</span></td><td><code>Zw1A5aixknp0</code></td><td><code>9hEadJmhVnr8</code></td><td class="num">4</td><td class="num">0</td><td class="lnk"><a href="https://change.7years.life/page/9hEadJmhVnr8" target="_blank" rel="noopener">公開URL</a> <a href="#dan-03x" target="_blank" rel="noopener">設計図</a></td><td class="lnk"><a href="wasa_lp_saigen_20260910.html#w-03x-04x" target="_blank" rel="noopener"><b>ローカル再現（9/10）</b></a> <a href="https://utage.unchains.jp/p/iud22ZyTOplT" target="_blank" rel="noopener">和佐 期限切れ（動画）</a><span class="upd">https://utage.unchains.jp/p/iud22ZyTOplT</span></td></tr>
+<tr><td class="num">5</td><td><span class="old">04 オファーLP</span><br><span class="new">04 フロント商品のLP</span><span class="upd">18＝和佐段4 の 18パーツに組み直し（2026-09-06）。UTAGE の page は 21 のまま未反映（発注書あり・発注GO 待ち）。仮 6＝#1 見出し画像・#2 値札画像・#3 締切の日数・#10 特典のまとめ方・#12 値段の話（6段・2026-09-10）・#13 返金保証（和佐型）。オファー＝4回の基礎動画＋AI経営PRO 3ヶ月（個別相談無し）・定価 60,000円→29,800円・4ヶ月目から月 5,000円</span></td><td class="num">—</td><td><code>glLUOrmwkpAc</code></td><td><code>rnos0kpayUmI</code></td><td class="num"><span class="old">21</span> 18</td><td class="num"><span class="old">4</span> 6</td><td class="lnk"><a href="front_shohin_lp_local_v4_concept_20260910.html" target="_blank" rel="noopener"><b>コンセプト作り直し版（9/10 17:00）</b></a> <a href="concept_kyuhai_issho_20260910.html" target="_blank" rel="noopener">設計書</a> <a href="front_shohin_lp_local_v3_wasamane_20260910.html" target="_blank" rel="noopener"><b>和佐の型を真似た版（9/10 16:30）</b></a> <a href="front_shohin_lp_local_v2_20260910.html" target="_blank" rel="noopener"><b>完成モック v2（9/10）</b></a> <a href="https://change.7years.life/page/rnos0kpayUmI" target="_blank" rel="noopener">公開URL</a> <a href="front_shohin_lp_parts_haichi_20260906.html" target="_blank" rel="noopener">配置表（18パーツ）</a> <a href="front_shohin_lp_local_parts_20260906.html" target="_blank" rel="noopener">部品配置版 LP</a> <a href="front_shohin_lp_local_v1_20260906.html" target="_blank" rel="noopener">v1 本文 LP</a> <a href="wasa_dan4_nedan_no_hanashi_genbun_20260906.md" target="_blank" rel="noopener">和佐 値段の話 原文控え</a> <a href="be01_2kagetsu_consul_lp_C0KpHEpunK2k_jisseki_20260906.md" target="_blank" rel="noopener">証明②（2ヶ月コンサルLP の実績）</a> <a href="hachu_FS-utage-pm_04_front_lp_parts_20260906.md" target="_blank" rel="noopener">発注書（UTAGE 反映・未発注）</a> <a href="hachu_FA-writer_front_lp_bunsho_v1_20260906.md" target="_blank" rel="noopener">発注書（本文 v1・実行済み）</a> <a href="#dan-04" target="_blank" rel="noopener">設計図</a></td><td class="lnk"><a href="wasa_lp_saigen_20260910.html#w-04" target="_blank" rel="noopener"><b>ローカル再現（9/10）</b></a> <a href="https://utage.unchains.jp/p/aETvB4PAwBoH?rid=HuZ1dVN1BjTE" target="_blank" rel="noopener">和佐 完全版の売り込み</a><span class="upd">https://utage.unchains.jp/p/aETvB4PAwBoH?rid=HuZ1dVN1BjTE</span></td></tr>
+<tr><td class="num">6</td><td><span class="old">05 申込(04の重ね窓・抱き合わせ削除)</span><br><span class="new">05 申込フォーム（04 の中の重ね窓）</span><span class="upd">支払いはカード（Stripe）のみ・銀行振込は外す（2026-09-06）。仮 1＝商品を UTAGE に登録するタイミング</span></td><td class="num">—</td><td>—</td><td>—</td><td class="num">8</td><td class="num">1</td><td class="lnk"><a href="#dan-05" target="_blank" rel="noopener">設計図</a></td><td class="lnk"><a href="wasa_lp_saigen_20260910.html#w-05" target="_blank" rel="noopener"><b>ローカル再現（9/10）</b></a> <span class="note">和佐 04 の中の重ね窓（URL なし）</span></td></tr>
+<tr><td class="num">7</td><td class="num">—</td><td><span class="old">04x 期限切れ</span><br><span class="new">04x 期限切れページ（フロント商品）</span><span class="upd">03x と同じ受け皿</span></td><td><code>zyEVNKHVp8Qj</code></td><td><code>EdPWoFiPcMNJ</code></td><td class="num">4</td><td class="num">0</td><td class="lnk"><a href="https://change.7years.life/page/EdPWoFiPcMNJ" target="_blank" rel="noopener">公開URL</a> <a href="#dan-04x" target="_blank" rel="noopener">設計図</a></td><td class="lnk"><a href="wasa_lp_saigen_20260910.html#w-03x-04x" target="_blank" rel="noopener"><b>ローカル再現（9/10）</b></a> <a href="https://utage.unchains.jp/p/j7HQis1d7qa6" target="_blank" rel="noopener">和佐 期限切れ（売り込み）</a><span class="upd">https://utage.unchains.jp/p/j7HQis1d7qa6</span></td></tr>
+<tr><td class="num">8</td><td><span class="old">06 追加オファー(半額)</span><br><span class="new">06 ワンタイムオファーのLP</span><span class="upd">21＝#15 銀行振込リンクを外す（−1）・補の 30分カウントダウンを数に入れる（+1）。仮 0＝オファー確定：3ヶ月グルコン（定価 142,000円）を買った直後 30分だけ 58,000円（合計約 88,000円）。Mits様「後で整合性が悪かったらまた修正する。今はこれで」（2026-09-06）</span></td><td class="num">—</td><td><code>Ty1IEZQLUfQC</code></td><td><code>phyGveupPEcC</code></td><td class="num">21</td><td class="num"><span class="old">2</span> 0</td><td class="lnk"><a href="https://change.7years.life/page/phyGveupPEcC" target="_blank" rel="noopener">公開URL</a> <a href="wasa_shiki_yougo_ichiran_20260906.html" target="_blank" rel="noopener">価格表（用語一覧 3-4）</a> <a href="#dan-06" target="_blank" rel="noopener">設計図</a></td><td class="lnk"><a href="wasa_lp_saigen_20260910.html#w-06" target="_blank" rel="noopener"><b>ローカル再現（9/10）</b></a> <a href="https://utage.unchains.jp/p/UekcISfzxDqJ" target="_blank" rel="noopener">和佐 一度限りの追加売り込み</a><span class="upd">https://utage.unchains.jp/p/UekcISfzxDqJ</span></td></tr>
+<tr><td class="num">9</td><td><span class="old">06x 2回目 定価</span><br><span class="new">06x ワンタイムオファーの定価ページ</span><span class="upd">仮 0＝88,000円で確定（後で戻ってきたときの値段・合計約 118,000円）</span></td><td class="num">—</td><td><code>gHDQjHHBRn6d</code></td><td><code>P0A4FQStsZNu</code></td><td class="num">9</td><td class="num"><span class="old">1</span> 0</td><td class="lnk"><a href="https://change.7years.life/page/P0A4FQStsZNu" target="_blank" rel="noopener">公開URL</a> <a href="#dan-06x" target="_blank" rel="noopener">設計図</a></td><td class="lnk"><a href="wasa_lp_saigen_20260910.html#w-06x" target="_blank" rel="noopener"><b>ローカル再現（9/10）</b></a> <a href="https://utage.unchains.jp/p/DAl5MSaxdOe4" target="_blank" rel="noopener">和佐 2回目・定価</a><span class="upd">https://utage.unchains.jp/p/DAl5MSaxdOe4</span></td></tr>
+<tr><td class="num">10</td><td class="num">—</td><td><span class="old">07 銀行振込</span><br><span class="new">07 銀行振込ページ ── 使わない</span><span class="upd">Mits様「銀行振込は使わない」（2026-09-06）。UTAGE の page とシナリオ vnPZ5NqIbZnr は残っているが経路から外す</span></td><td><code>bhAw9pgwhj0q</code></td><td><code>48MHHxQEnTVc</code></td><td class="num"><span class="old">3</span> 0</td><td class="num"><span class="old">1</span> 0</td><td class="lnk"><a href="https://change.7years.life/page/48MHHxQEnTVc" target="_blank" rel="noopener">公開URL（残骸）</a> <a href="#dan-07" target="_blank" rel="noopener">設計図</a></td><td class="lnk"><a href="wasa_lp_saigen_20260910.html#w-07" target="_blank" rel="noopener"><b>ローカル再現（9/10）</b></a> <a href="https://utage.unchains.jp/p/dQ31GSmUASff" target="_blank" rel="noopener">和佐 銀行振込</a><span class="upd">https://utage.unchains.jp/p/dQ31GSmUASff</span></td></tr>
+<tr><td class="num">11</td><td class="num">—</td><td><span class="old">08 申込完了</span><br><span class="new">08 申込完了ページ</span><span class="upd">経路の終点</span></td><td><code>4sVV30dbBeon</code></td><td><code>9VYCc1zf6rAI</code></td><td class="num">3</td><td class="num">0</td><td class="lnk"><a href="https://change.7years.life/page/9VYCc1zf6rAI" target="_blank" rel="noopener">公開URL</a> <a href="#dan-08" target="_blank" rel="noopener">設計図</a></td><td class="lnk"><a href="wasa_lp_saigen_20260910.html#w-08" target="_blank" rel="noopener"><b>ローカル再現（9/10）</b></a> <a href="https://utage.unchains.jp/p/GXmF6qNSFLwe" target="_blank" rel="noopener">和佐 申込完了</a><span class="upd">https://utage.unchains.jp/p/GXmF6qNSFLwe</span></td></tr>
+<tr><th colspan="5">合計</th><th style="text-align:center"><span class="old">99</span> 96</th><th style="text-align:center"><span class="old">14</span> 13</th><th>全 10段の公開URLは 2026-09-05 に 200 を実測。07 は経路から外す</th><th>和佐 9段＋note。03・04 の rid 付きは登録済みの Chrome で開く</th></tr>
+</tbody>
+</table></div>
+<p class="note">仮 13 の内訳：00 差し込み口（1）／01 動画の初期配置（1）／03 画像・尺・表示ポイント・PDF（4）／04 画像2・日数・特典のまとめ方・値段の話・返金保証（6）／05 商品登録のタイミング（1）。06・06x・07 の価格の仮 4つは 2026-09-06 に外れた。</p>
+
+<!-- ==================== 前半：全体像 ==================== -->
+<h2>前半　全体像</h2>
+
+<h3>1. 遷移図（本編＋機能ページの2列・10段＋重ね窓＋期限切れ2本）</h3>
+<p class="note">2026-09-10 作り直し。Mits様「このサイト（Geru）を参考に作り直し」「今の設計を参考にするのでは無くパーツの考え方」。Geru の考え方＝①段を「部品の型」で置く（流入元・オプトインページ・サンクスページ・コンテンツページ・セールスページ・注文フォーム／重ね窓・アップセルページ・メール・待つ）②部品ごとに <b style="color:#2fa84f">Y</b>（やった）と <b style="color:#d64545">N</b>（やらなかった）の出口を持ち、N の先も描く ③メールと「待つ」も部品として線でつなぐ ④本流は左から右へ 1本、分岐は下へ。升目に詰めず、空箱を置かない。</p>
+<p class="note"><span class="new">2026-09-10 午後 組み直し。</span>Mits様「左から順、段となっているが右側に1列足して機能ページとして　サンクス、期限切れ、完了など必ず必要な機能と販売自体の本編を2列に分けて」。左＝<b>本編（販売そのもの）</b>：00 note 記事 → 01 オプトインページ → 03 第0章の動画ページ → 04 フロント商品のLP → 05 申込フォーム（重ね窓）→ 06 ワンタイムオファーのLP（下にメール・待つ・06x 定価ページ）。右の1列＝<b>機能ページ（必ず要る）</b>：02 サンクスページ・03x 期限切れ（動画）・04x 期限切れ（フロント商品）・08 申込完了ページ。本編の Y／N の出口から右の列へ線が入る。</p>
+<p class="note">図は画面の幅に合わせて縮みます。文字が小さいときは <a href="funnel_make_seniizu_20260910_2retsu.svg" target="_blank" rel="noopener">原寸の図を別窓で開く</a>（ブラウザの拡大が効きます）。<span class="old">前の図の原寸 funnel_make_seniizu_20260910.svg</span></p>
+<div class="diagram" style="padding:12px 1.5vw;background:#fff;width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);border-radius:0;overflow:visible">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1100" style="width:100%;height:auto;display:block" font-family="-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif" style="display:block">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7b8794"/></marker>
+<pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20,0 L0,0 0,20" fill="none" stroke="#e5e9ee" stroke-width="0.6"/></pattern></defs>
+<rect x="0" y="0" width="1800" height="1100" fill="url(#grid)"/>
+<rect x="1582" y="30" width="196" height="1070" rx="6" fill="#f3f6fa" stroke="#c9cfd6" stroke-dasharray="6 4"/>
+<text x="1680.0" y="52" font-size="14" font-weight="800" fill="#1f2937" text-anchor="middle">機能ページ（必ず要る）</text>
+<text x="20" y="52" font-size="14" font-weight="800" fill="#1f2937">本編（販売そのもの）　左から右へ</text>
+<text x="20" y="18" font-size="13" fill="#6b7280">左＝本編（00 → 01 → 03 → 04 → 05 → 06、下にメール・待つ・2回目）／右の1列＝機能ページ（サンクス・期限切れ・完了）。緑 Y＝やった、赤 N＝やらなかった、N の先も描く。07 銀行振込ページは使わないので描いていない。</text>
+<polyline points="180,192.0 270,192.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<polyline points="680,192.0 770,192.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="692" y="176.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">動画の途中の</text>
+<text x="692" y="189.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">オファーのボタン</text>
+<polyline points="930,192.0 1020,192.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="942" y="176.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">買うボタン</text>
+<text x="942" y="189.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">（6個のどれか）</text>
+<polyline points="1180,192.0 1270,192.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="1192" y="186.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">決済 確定</text>
+<polyline points="430,192.0 470,192.0 470,72 1680.0,72 1680.0,103" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="482" y="66" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">メール登録 → 02 サンクスページ（登録の直後に出る）</text>
+<polyline points="350.0,280 350.0,412.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="358.0" y="390.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">登録で自動送信</text>
+<polyline points="390.0,442.0 542,442.0 542,281" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="398.0" y="434.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">メールの URL から 03 へ</text>
+<polyline points="600.0,280 600.0,407.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<polyline points="634.0,442.0 1600,442.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="646.0" y="434.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">期限が切れた</text>
+<polyline points="850.0,280 850.0,657.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<polyline points="884.0,692.0 1600,692.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="896.0" y="684.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">期限が切れた</text>
+<polyline points="1600,486.0 1568,486.0 1568,832 1136.0,832 1136.0,912.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="1144.0" y="824" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">次回案内メールへ（03x・04x）</text>
+<polyline points="1600,736.0 1568,736.0 1568,832" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<polyline points="1430,192.0 1542,192.0 1542,942.0 1600,942.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="1442" y="164.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">Y 1クリック</text>
+<text x="1442" y="177.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">N 買わない</text>
+<text x="1442" y="190.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">どちらも 08 へ</text>
+<polyline points="1380.0,280 1380.0,853" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="1390.0" y="502.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">2回目に開いた</text>
+<text x="1390.0" y="515.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">（Cookie で判定）</text>
+<polyline points="1430,942.0 1600,942.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="1442" y="966.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">88,000円で申込</text>
+<g class="node" transform="translate(20,104)">
+<rect x="0" y="64.0" width="40" height="48" fill="#111"/>
+<text x="20" y="96.0" font-size="22" font-weight="800" fill="#fff" text-anchor="middle">1</text>
+<rect x="40" y="64.0" width="120" height="48" fill="#ffffff" stroke="#c9cfd6"/>
+<text x="100.0" y="92.0" font-size="12" font-weight="700" fill="#1f2937" text-anchor="middle">00 note 記事</text>
+<text x="80.0" y="132.0" font-size="10" font-weight="700" fill="#4b5563" text-anchor="middle">TRAFFIC ENTRY</text>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">記事の末尾から 01 へ</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">（他の流入は地図の販路表）</text>
+</g>
+<g class="node" transform="translate(270,104)">
+<rect x="0" y="0" width="160" height="176" rx="4" fill="#ffffff" stroke="#c9cfd6" stroke-width="1.5"/>
+<rect x="0" y="0" width="160" height="20" rx="4" fill="#eef1f5"/>
+<circle cx="9" cy="10" r="2.6" fill="#e8564f"/>
+<circle cx="16" cy="10" r="2.6" fill="#f0b232"/>
+<circle cx="23" cy="10" r="2.6" fill="#5ec25a"/>
+<text x="34" y="14" font-size="12" font-weight="700" fill="#1f2937">01 オプトインページ</text>
+<rect x="0" y="154" width="160" height="22" fill="#4b5563"/>
+<text x="80.0" y="169" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0.5">OPT-IN PAGE</text>
+<rect x="12" y="26" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="34" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="42" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="50" width="95.19999999999999" height="3" fill="#c9cfd6"/><rect x="20" y="66" width="120" height="16" fill="#fff" stroke="#c9cfd6"/><rect x="20.0" y="88" width="120" height="12" rx="2" fill="#6f9fd8"/><rect x="12" y="110" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="118" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="126" width="95.19999999999999" height="3" fill="#c9cfd6"/>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">メール1欄＋動画</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">Evbui5Gwwy1f</text>
+</g>
+<g class="node" transform="translate(520,104)">
+<rect x="0" y="0" width="160" height="176" rx="4" fill="#ffffff" stroke="#c9cfd6" stroke-width="1.5"/>
+<rect x="0" y="0" width="160" height="20" rx="4" fill="#eef1f5"/>
+<circle cx="9" cy="10" r="2.6" fill="#e8564f"/>
+<circle cx="16" cy="10" r="2.6" fill="#f0b232"/>
+<circle cx="23" cy="10" r="2.6" fill="#5ec25a"/>
+<text x="34" y="14" font-size="12" font-weight="700" fill="#1f2937">03 第0章の動画ページ</text>
+<rect x="0" y="154" width="160" height="22" fill="#4b5563"/>
+<text x="80.0" y="169" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0.5">CONTENT PAGE</text>
+<rect x="12" y="26" width="136" height="44" fill="#6f9fd8"/><circle cx="80.0" cy="48.0" r="10" fill="#fff"/><polygon points="77.0,43.0 85.0,48.0 77.0,53.0" fill="#6f9fd8"/><rect x="12" y="80" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="88" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="96" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="104" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="112" width="95.19999999999999" height="3" fill="#c9cfd6"/>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">前提を話す動画・視聴期限 5日</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">プレゼント＋運転台配布</text>
+<text x="80.0" y="238" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">t4zFnkwTzYYG</text>
+</g>
+<g class="node" transform="translate(770,104)">
+<rect x="0" y="0" width="160" height="176" rx="4" fill="#ffffff" stroke="#c9cfd6" stroke-width="1.5"/>
+<rect x="0" y="0" width="160" height="20" rx="4" fill="#eef1f5"/>
+<circle cx="9" cy="10" r="2.6" fill="#e8564f"/>
+<circle cx="16" cy="10" r="2.6" fill="#f0b232"/>
+<circle cx="23" cy="10" r="2.6" fill="#5ec25a"/>
+<text x="34" y="14" font-size="12" font-weight="700" fill="#1f2937">04 フロント商品のLP</text>
+<rect x="0" y="154" width="160" height="22" fill="#4b5563"/>
+<text x="80.0" y="169" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0.5">SALES PAGE</text>
+<rect x="12" y="26" width="136" height="36" fill="#6f9fd8"/><circle cx="80.0" cy="44.0" r="10" fill="#fff"/><polygon points="77.0,39.0 85.0,44.0 77.0,49.0" fill="#6f9fd8"/><rect x="14" y="70" width="27" height="14" fill="#6f9fd8"/><rect x="47" y="70" width="27" height="14" fill="#6f9fd8"/><rect x="80" y="70" width="27" height="14" fill="#6f9fd8"/><rect x="113" y="70" width="27" height="14" fill="#6f9fd8"/><rect x="12" y="92" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="100" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="108" width="95.19999999999999" height="3" fill="#c9cfd6"/><rect x="20.0" y="120" width="120" height="12" rx="2" fill="#6f9fd8"/>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">4回の基礎動画＋AI経営PRO 3ヶ月</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">定価 60,000円 → 29,800円</text>
+<text x="80.0" y="238" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">rnos0kpayUmI</text>
+</g>
+<g class="node" transform="translate(1020,104)">
+<rect x="0" y="0" width="160" height="176" rx="4" fill="#ffffff" stroke="#c9cfd6" stroke-width="1.5"/>
+<rect x="0" y="0" width="160" height="20" rx="4" fill="#eef1f5"/>
+<circle cx="9" cy="10" r="2.6" fill="#e8564f"/>
+<circle cx="16" cy="10" r="2.6" fill="#f0b232"/>
+<circle cx="23" cy="10" r="2.6" fill="#5ec25a"/>
+<text x="34" y="14" font-size="12" font-weight="700" fill="#1f2937">05 申込フォーム（重ね窓）</text>
+<rect x="0" y="154" width="160" height="22" fill="#4b5563"/>
+<text x="80.0" y="169" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0.5">POP-UP</text>
+<rect x="12" y="26" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="34" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="42" width="95.19999999999999" height="3" fill="#c9cfd6"/><rect x="22" y="56" width="116" height="66" rx="3" fill="#fff" stroke="#4b5563" stroke-width="1.5"/><rect x="30" y="64" width="100" height="8" fill="#fff" stroke="#c9cfd6"/><rect x="30" y="77" width="100" height="8" fill="#fff" stroke="#c9cfd6"/><rect x="30" y="90" width="100" height="8" fill="#fff" stroke="#c9cfd6"/><rect x="45.0" y="108" width="70" height="12" rx="2" fill="#2fa84f"/>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">04 の中に開く・別URL無し</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">カードのみ・29,800円</text>
+<text x="80.0" y="238" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">ORDER FORM</text>
+</g>
+<g class="node" transform="translate(1270,104)">
+<rect x="0" y="0" width="160" height="176" rx="4" fill="#ffffff" stroke="#c9cfd6" stroke-width="1.5"/>
+<rect x="0" y="0" width="160" height="20" rx="4" fill="#eef1f5"/>
+<circle cx="9" cy="10" r="2.6" fill="#e8564f"/>
+<circle cx="16" cy="10" r="2.6" fill="#f0b232"/>
+<circle cx="23" cy="10" r="2.6" fill="#5ec25a"/>
+<text x="34" y="14" font-size="12" font-weight="700" fill="#1f2937">06 ワンタイムオファーのLP</text>
+<rect x="0" y="154" width="160" height="22" fill="#4b5563"/>
+<text x="80.0" y="169" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0.5">UPSELL PAGE</text>
+<polygon points="80.0,28 92.0,44 85.0,44 85.0,66 75.0,66 75.0,44 68.0,44" fill="#4b5563"/><rect x="12" y="76" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="84" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="92" width="95.19999999999999" height="3" fill="#c9cfd6"/><rect x="22" y="106" width="46" height="12" rx="2" fill="#2fa84f"/><rect x="82" y="106" width="46" height="12" rx="2" fill="#c9cfd6"/><text x="45" y="116" font-size="9" fill="#fff" text-anchor="middle">✓</text><text x="105" y="116" font-size="9" fill="#fff" text-anchor="middle">✕</text>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">3ヶ月グルコン・買った直後 30分だけ</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">58,000円・1クリック決済</text>
+<text x="80.0" y="238" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">phyGveupPEcC</text>
+</g>
+<g class="node" transform="translate(270,354)">
+<rect x="40.0" y="60.0" width="80" height="56" rx="3" fill="#ffffff" stroke="#4b5563" stroke-width="2"/>
+<polyline points="40.0,60.0 80.0,94.0 120.0,60.0" fill="none" stroke="#4b5563" stroke-width="2"/>
+<text x="80.0" y="50.0" font-size="12" font-weight="700" fill="#1f2937" text-anchor="middle">登録直後メール</text>
+<text x="80.0" y="136.0" font-size="10" font-weight="700" fill="#4b5563" text-anchor="middle">EMAIL</text>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">第0章の動画の URL を送る</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">（新設シナリオ・投入時に作る）</text>
+</g>
+<g class="node" transform="translate(520,354)">
+<circle cx="80.0" cy="88.0" r="34" fill="#ffffff" stroke="#4b5563" stroke-width="2"/>
+<text x="80.0" y="86.0" font-size="15" font-weight="800" fill="#4b5563" text-anchor="middle">5</text>
+<text x="80.0" y="101.0" font-size="9" font-weight="700" fill="#4b5563" text-anchor="middle">DAYS</text>
+<text x="80.0" y="44.0" font-size="12" font-weight="700" fill="#1f2937" text-anchor="middle">03 の期限まで待つ</text>
+<text x="80.0" y="144.0" font-size="10" font-weight="700" fill="#4b5563" text-anchor="middle">WAIT</text>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">視聴期限 5日</text>
+</g>
+<g class="node" transform="translate(770,604)">
+<circle cx="80.0" cy="88.0" r="34" fill="#ffffff" stroke="#4b5563" stroke-width="2"/>
+<text x="80.0" y="86.0" font-size="15" font-weight="800" fill="#4b5563" text-anchor="middle">5</text>
+<text x="80.0" y="101.0" font-size="9" font-weight="700" fill="#4b5563" text-anchor="middle">DAYS</text>
+<text x="80.0" y="44.0" font-size="12" font-weight="700" fill="#1f2937" text-anchor="middle">04 の期限まで待つ</text>
+<text x="80.0" y="144.0" font-size="10" font-weight="700" fill="#4b5563" text-anchor="middle">WAIT</text>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">申込期限（日数は仮）</text>
+</g>
+<g class="node" transform="translate(1020,854)">
+<rect x="40.0" y="60.0" width="80" height="56" rx="3" fill="#ffffff" stroke="#4b5563" stroke-width="2"/>
+<polyline points="40.0,60.0 80.0,94.0 120.0,60.0" fill="none" stroke="#4b5563" stroke-width="2"/>
+<text x="80.0" y="50.0" font-size="12" font-weight="700" fill="#1f2937" text-anchor="middle">次回案内メール</text>
+<text x="80.0" y="136.0" font-size="10" font-weight="700" fill="#4b5563" text-anchor="middle">EMAIL</text>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">受け皿シナリオ 4Eawplgf3xGB</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">03x・04x の両方から入る</text>
+</g>
+<g class="node" transform="translate(1270,854)">
+<rect x="0" y="0" width="160" height="176" rx="4" fill="#ffffff" stroke="#c9cfd6" stroke-width="1.5"/>
+<rect x="0" y="0" width="160" height="20" rx="4" fill="#eef1f5"/>
+<circle cx="9" cy="10" r="2.6" fill="#e8564f"/>
+<circle cx="16" cy="10" r="2.6" fill="#f0b232"/>
+<circle cx="23" cy="10" r="2.6" fill="#5ec25a"/>
+<text x="34" y="14" font-size="12" font-weight="700" fill="#1f2937">06x 定価ページ</text>
+<rect x="0" y="154" width="160" height="22" fill="#4b5563"/>
+<text x="80.0" y="169" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0.5">UPSELL PAGE</text>
+<polygon points="80.0,28 92.0,44 85.0,44 85.0,66 75.0,66 75.0,44 68.0,44" fill="#4b5563"/><rect x="12" y="76" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="84" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="92" width="95.19999999999999" height="3" fill="#c9cfd6"/><rect x="22" y="106" width="46" height="12" rx="2" fill="#2fa84f"/><rect x="82" y="106" width="46" height="12" rx="2" fill="#c9cfd6"/><text x="45" y="116" font-size="9" fill="#fff" text-anchor="middle">✓</text><text x="105" y="116" font-size="9" fill="#fff" text-anchor="middle">✕</text>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">ワンタイムオファーの定価ページ</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">2回目に開いた人・88,000円</text>
+<text x="80.0" y="238" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">急かす部品なし・P0A4FQStsZNu</text>
+</g>
+<g class="node" transform="translate(1600,104)">
+<rect x="0" y="0" width="160" height="176" rx="4" fill="#ffffff" stroke="#c9cfd6" stroke-width="1.5"/>
+<rect x="0" y="0" width="160" height="20" rx="4" fill="#eef1f5"/>
+<circle cx="9" cy="10" r="2.6" fill="#e8564f"/>
+<circle cx="16" cy="10" r="2.6" fill="#f0b232"/>
+<circle cx="23" cy="10" r="2.6" fill="#5ec25a"/>
+<text x="34" y="14" font-size="12" font-weight="700" fill="#1f2937">02 サンクスページ</text>
+<rect x="0" y="154" width="160" height="22" fill="#4b5563"/>
+<text x="80.0" y="169" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0.5">THANK YOU PAGE</text>
+<rect x="12" y="26" width="136" height="34" fill="#6f9fd8"/><polyline points="70.0,43 77.0,50 91.0,35" fill="none" stroke="#fff" stroke-width="3.5"/><rect x="12" y="70" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="78" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="86" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="94" width="95.19999999999999" height="3" fill="#c9cfd6"/><rect x="50.0" y="108" width="60" height="12" rx="2" fill="#6f9fd8"/>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">LINE 登録へ寄せる</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">登録しなくても、メールの URL から 03 へ</text>
+<text x="80.0" y="238" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">LHCPBw6d2sTt</text>
+</g>
+<g class="node" transform="translate(1600,354)">
+<rect x="0" y="0" width="160" height="176" rx="4" fill="#ffffff" stroke="#c9cfd6" stroke-width="1.5"/>
+<rect x="0" y="0" width="160" height="20" rx="4" fill="#eef1f5"/>
+<circle cx="9" cy="10" r="2.6" fill="#e8564f"/>
+<circle cx="16" cy="10" r="2.6" fill="#f0b232"/>
+<circle cx="23" cy="10" r="2.6" fill="#5ec25a"/>
+<text x="34" y="14" font-size="12" font-weight="700" fill="#1f2937">03x 期限切れ（動画）</text>
+<rect x="0" y="154" width="160" height="22" fill="#4b5563"/>
+<text x="80.0" y="169" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0.5">OPT-IN PAGE</text>
+<rect x="12" y="26" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="34" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="42" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="50" width="95.19999999999999" height="3" fill="#c9cfd6"/><rect x="20" y="66" width="120" height="16" fill="#fff" stroke="#c9cfd6"/><rect x="20.0" y="88" width="120" height="12" rx="2" fill="#6f9fd8"/><rect x="12" y="110" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="118" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="126" width="95.19999999999999" height="3" fill="#c9cfd6"/>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">次回案内を受け取るメール1欄</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">9hEadJmhVnr8</text>
+</g>
+<g class="node" transform="translate(1600,604)">
+<rect x="0" y="0" width="160" height="176" rx="4" fill="#ffffff" stroke="#c9cfd6" stroke-width="1.5"/>
+<rect x="0" y="0" width="160" height="20" rx="4" fill="#eef1f5"/>
+<circle cx="9" cy="10" r="2.6" fill="#e8564f"/>
+<circle cx="16" cy="10" r="2.6" fill="#f0b232"/>
+<circle cx="23" cy="10" r="2.6" fill="#5ec25a"/>
+<text x="34" y="14" font-size="12" font-weight="700" fill="#1f2937">04x 期限切れ（フロント商品）</text>
+<rect x="0" y="154" width="160" height="22" fill="#4b5563"/>
+<text x="80.0" y="169" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0.5">OPT-IN PAGE</text>
+<rect x="12" y="26" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="34" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="42" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="50" width="95.19999999999999" height="3" fill="#c9cfd6"/><rect x="20" y="66" width="120" height="16" fill="#fff" stroke="#c9cfd6"/><rect x="20.0" y="88" width="120" height="12" rx="2" fill="#6f9fd8"/><rect x="12" y="110" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="118" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="126" width="95.19999999999999" height="3" fill="#c9cfd6"/>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">次回案内を受け取るメール1欄</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">EdPWoFiPcMNJ</text>
+</g>
+<g class="node" transform="translate(1600,854)">
+<rect x="0" y="0" width="160" height="176" rx="4" fill="#ffffff" stroke="#c9cfd6" stroke-width="1.5"/>
+<rect x="0" y="0" width="160" height="20" rx="4" fill="#eef1f5"/>
+<circle cx="9" cy="10" r="2.6" fill="#e8564f"/>
+<circle cx="16" cy="10" r="2.6" fill="#f0b232"/>
+<circle cx="23" cy="10" r="2.6" fill="#5ec25a"/>
+<text x="34" y="14" font-size="12" font-weight="700" fill="#1f2937">08 申込完了ページ</text>
+<rect x="0" y="154" width="160" height="22" fill="#4b5563"/>
+<text x="80.0" y="169" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0.5">THANK YOU PAGE</text>
+<rect x="12" y="26" width="136" height="34" fill="#6f9fd8"/><polyline points="70.0,43 77.0,50 91.0,35" fill="none" stroke="#fff" stroke-width="3.5"/><rect x="12" y="70" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="78" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="86" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="94" width="95.19999999999999" height="3" fill="#c9cfd6"/><rect x="50.0" y="108" width="60" height="12" rx="2" fill="#6f9fd8"/>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">経路の終点</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">9VYCc1zf6rAI</text>
+</g>
+<circle cx="430" cy="192.0" r="9" fill="#2fa84f"/>
+<text x="430" y="195.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">Y</text>
+<circle cx="400.0" cy="280" r="9" fill="#d64545"/>
+<text x="400.0" y="283.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">N</text>
+<text x="412.0" y="284" font-size="11" font-weight="700" fill="#d64545" text-anchor="start" stroke="#fff" stroke-width="3" paint-order="stroke">登録しない＝離脱</text>
+<circle cx="680" cy="192.0" r="9" fill="#2fa84f"/>
+<text x="680" y="195.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">Y</text>
+<circle cx="600.0" cy="280" r="9" fill="#d64545"/>
+<text x="600.0" y="283.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">N</text>
+<text x="612.0" y="284" font-size="11" font-weight="700" fill="#d64545" text-anchor="start" stroke="#fff" stroke-width="3" paint-order="stroke">押さないまま</text>
+<text x="612.0" y="297" font-size="11" font-weight="700" fill="#d64545" text-anchor="start" stroke="#fff" stroke-width="3" paint-order="stroke">期限切れ</text>
+<circle cx="930" cy="192.0" r="9" fill="#2fa84f"/>
+<text x="930" y="195.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">Y</text>
+<circle cx="850.0" cy="280" r="9" fill="#d64545"/>
+<text x="850.0" y="283.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">N</text>
+<text x="862.0" y="284" font-size="11" font-weight="700" fill="#d64545" text-anchor="start" stroke="#fff" stroke-width="3" paint-order="stroke">買わないまま</text>
+<text x="862.0" y="297" font-size="11" font-weight="700" fill="#d64545" text-anchor="start" stroke="#fff" stroke-width="3" paint-order="stroke">期限切れ</text>
+<circle cx="1180" cy="192.0" r="9" fill="#2fa84f"/>
+<text x="1180" y="195.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">Y</text>
+<circle cx="1100.0" cy="280" r="9" fill="#d64545"/>
+<text x="1100.0" y="283.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">N</text>
+<text x="1112.0" y="284" font-size="11" font-weight="700" fill="#d64545" text-anchor="start" stroke="#fff" stroke-width="3" paint-order="stroke">閉じる＝04 のまま</text>
+<circle cx="1430" cy="192.0" r="9" fill="#2fa84f"/>
+<text x="1430" y="195.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">Y</text>
+<circle cx="1430" cy="942.0" r="9" fill="#2fa84f"/>
+<text x="1430" y="945.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">Y</text>
+<circle cx="1680.0" cy="280" r="9" fill="#2fa84f"/>
+<text x="1680.0" y="283.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">Y</text>
+<text x="1680.0" y="300" font-size="11" font-weight="700" fill="#2fa84f" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">LINE 友だち追加</text>
+<circle cx="1600" cy="486.0" r="9" fill="#2fa84f"/>
+<text x="1600" y="489.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">Y</text>
+<circle cx="1600" cy="736.0" r="9" fill="#2fa84f"/>
+<text x="1600" y="739.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">Y</text>
+</svg>
+</div>
+<p class="note">部品の数え方（Geru の型）：流入元 1／オプトインページ 3（01・03x・04x）／サンクスページ 2（02・08）／コンテンツページ 1（03）／セールスページ 1（04）／重ね窓の注文フォーム 1（05）／アップセルページ 2（06・06x）／メール 2（登録直後・次回案内）／待つ 2 ＝ 15部品。<span class="new">内訳：本編 11（00・01・03・04・05・06・06x・メール 2・待つ 2）／機能ページ 4（02・03x・04x・08）。</span><span class="old">07 銀行振込ページ</span>は使わないので描いていない。</p>
+<details><summary class="note" style="cursor:pointer">前の遷移図（2026-09-10 午前・Geru 型・本流1本＋下段・取り消し：機能ページを別の列に分けていなかった）</summary>
+<div class="old" style="text-decoration:none;opacity:.55"><div class="diagram" style="padding:12px 1.5vw;background:#fff;width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);border-radius:0;overflow:visible">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1950 860" style="width:100%;height:auto;display:block" font-family="-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif" style="display:block">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7b8794"/></marker>
+<pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20,0 L0,0 0,20" fill="none" stroke="#e5e9ee" stroke-width="0.6"/></pattern></defs>
+<rect x="0" y="0" width="1950" height="860" fill="url(#grid)"/>
+<text x="20" y="24" font-size="13" fill="#6b7280">上の段＝本流（左から右）／下の段＝Y・N の出口の先（期限切れの受け皿・メール・2回目）。07 銀行振込ページは使わないので描いていない。</text>
+<polyline points="180,128.0 270,128.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<polyline points="430,128.0 520,128.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="442" y="122.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">メール登録</text>
+<polyline points="680,128.0 770,128.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="692" y="100.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">LINE 友だち追加</text>
+<text x="692" y="113.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">（しなくても</text>
+<text x="692" y="126.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">03 へ）</text>
+<polyline points="930,128.0 1020,128.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="942" y="112.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">動画の途中の</text>
+<text x="942" y="125.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">オファーのボタン</text>
+<polyline points="1180,128.0 1270,128.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="1192" y="112.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">買うボタン</text>
+<text x="1192" y="125.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">（6個のどれか）</text>
+<polyline points="1430,128.0 1520,128.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="1442" y="122.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">決済 確定</text>
+<polyline points="1680,128.0 1770,128.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="1692" y="100.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">Y 1クリック</text>
+<text x="1692" y="113.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">N 買わない</text>
+<text x="1692" y="126.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">どちらも 08 へ</text>
+<polyline points="316.0,216 316.0,428.0 520,428.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="322.0" y="420.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">登録で自動送信</text>
+<polyline points="680,428.0 850.0,428.0 850.0,216" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="688" y="420.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">メールの URL から 03 へ</text>
+<polyline points="888.0,216 888.0,614" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<polyline points="930,703.0 1020,703.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="942" y="697.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">期限が切れた</text>
+<polyline points="1180,703.0 1520,703.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="1188" y="695.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">期限切れ後の受け皿へ</text>
+<polyline points="1100.0,216 1100.0,339" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<polyline points="1180,428.0 1270,428.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="1192" y="422.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">期限が切れた</text>
+<polyline points="1430,428.0 1570.0,428.0 1570.0,614" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<polyline points="1630.0,216 1630.0,428.0 1770,428.0" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="1638.0" y="408.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">2回目に開いた</text>
+<text x="1638.0" y="421.0" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">（Cookie で判定）</text>
+<polyline points="1850.0,339 1850.0,217" fill="none" stroke="#7b8794" stroke-width="1.8" marker-end="url(#ah)"/>
+<text x="1854.0" y="300" font-size="11" fill="#6b7280" stroke="#fff" stroke-width="3" paint-order="stroke">定価 88,000円で申込</text>
+<g class="node" transform="translate(20,40)">
+<rect x="0" y="64.0" width="40" height="48" fill="#111"/>
+<text x="20" y="96.0" font-size="22" font-weight="800" fill="#fff" text-anchor="middle">1</text>
+<rect x="40" y="64.0" width="120" height="48" fill="#ffffff" stroke="#c9cfd6"/>
+<text x="100.0" y="92.0" font-size="12" font-weight="700" fill="#1f2937" text-anchor="middle">00 note 記事</text>
+<text x="80.0" y="132.0" font-size="10" font-weight="700" fill="#4b5563" text-anchor="middle">TRAFFIC ENTRY</text>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">記事の末尾から 01 へ</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">（他の流入は地図の販路表）</text>
+</g>
+<g class="node" transform="translate(270,40)">
+<rect x="0" y="0" width="160" height="176" rx="4" fill="#ffffff" stroke="#c9cfd6" stroke-width="1.5"/>
+<rect x="0" y="0" width="160" height="20" rx="4" fill="#eef1f5"/>
+<circle cx="9" cy="10" r="2.6" fill="#e8564f"/>
+<circle cx="16" cy="10" r="2.6" fill="#f0b232"/>
+<circle cx="23" cy="10" r="2.6" fill="#5ec25a"/>
+<text x="34" y="14" font-size="12" font-weight="700" fill="#1f2937">01 オプトインページ</text>
+<rect x="0" y="154" width="160" height="22" fill="#4b5563"/>
+<text x="80.0" y="169" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0.5">OPT-IN PAGE</text>
+<rect x="12" y="26" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="34" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="42" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="50" width="95.19999999999999" height="3" fill="#c9cfd6"/><rect x="20" y="66" width="120" height="16" fill="#fff" stroke="#c9cfd6"/><rect x="20.0" y="88" width="120" height="12" rx="2" fill="#6f9fd8"/><rect x="12" y="110" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="118" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="126" width="95.19999999999999" height="3" fill="#c9cfd6"/>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">メール1欄＋動画</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">Evbui5Gwwy1f</text>
+</g>
+<g class="node" transform="translate(520,40)">
+<rect x="0" y="0" width="160" height="176" rx="4" fill="#ffffff" stroke="#c9cfd6" stroke-width="1.5"/>
+<rect x="0" y="0" width="160" height="20" rx="4" fill="#eef1f5"/>
+<circle cx="9" cy="10" r="2.6" fill="#e8564f"/>
+<circle cx="16" cy="10" r="2.6" fill="#f0b232"/>
+<circle cx="23" cy="10" r="2.6" fill="#5ec25a"/>
+<text x="34" y="14" font-size="12" font-weight="700" fill="#1f2937">02 サンクスページ</text>
+<rect x="0" y="154" width="160" height="22" fill="#4b5563"/>
+<text x="80.0" y="169" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0.5">THANK YOU PAGE</text>
+<rect x="12" y="26" width="136" height="34" fill="#6f9fd8"/><polyline points="70.0,43 77.0,50 91.0,35" fill="none" stroke="#fff" stroke-width="3.5"/><rect x="12" y="70" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="78" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="86" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="94" width="95.19999999999999" height="3" fill="#c9cfd6"/><rect x="50.0" y="108" width="60" height="12" rx="2" fill="#6f9fd8"/>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">LINE 登録へ寄せる</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">LHCPBw6d2sTt</text>
+</g>
+<g class="node" transform="translate(770,40)">
+<rect x="0" y="0" width="160" height="176" rx="4" fill="#ffffff" stroke="#c9cfd6" stroke-width="1.5"/>
+<rect x="0" y="0" width="160" height="20" rx="4" fill="#eef1f5"/>
+<circle cx="9" cy="10" r="2.6" fill="#e8564f"/>
+<circle cx="16" cy="10" r="2.6" fill="#f0b232"/>
+<circle cx="23" cy="10" r="2.6" fill="#5ec25a"/>
+<text x="34" y="14" font-size="12" font-weight="700" fill="#1f2937">03 第0章の動画ページ</text>
+<rect x="0" y="154" width="160" height="22" fill="#4b5563"/>
+<text x="80.0" y="169" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0.5">CONTENT PAGE</text>
+<rect x="12" y="26" width="136" height="44" fill="#6f9fd8"/><circle cx="80.0" cy="48.0" r="10" fill="#fff"/><polygon points="77.0,43.0 85.0,48.0 77.0,53.0" fill="#6f9fd8"/><rect x="12" y="80" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="88" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="96" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="104" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="112" width="95.19999999999999" height="3" fill="#c9cfd6"/>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">前提を話す動画・視聴期限 5日</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">プレゼント＋運転台配布</text>
+<text x="80.0" y="238" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">t4zFnkwTzYYG</text>
+</g>
+<g class="node" transform="translate(1020,40)">
+<rect x="0" y="0" width="160" height="176" rx="4" fill="#ffffff" stroke="#c9cfd6" stroke-width="1.5"/>
+<rect x="0" y="0" width="160" height="20" rx="4" fill="#eef1f5"/>
+<circle cx="9" cy="10" r="2.6" fill="#e8564f"/>
+<circle cx="16" cy="10" r="2.6" fill="#f0b232"/>
+<circle cx="23" cy="10" r="2.6" fill="#5ec25a"/>
+<text x="34" y="14" font-size="12" font-weight="700" fill="#1f2937">04 フロント商品のLP</text>
+<rect x="0" y="154" width="160" height="22" fill="#4b5563"/>
+<text x="80.0" y="169" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0.5">SALES PAGE</text>
+<rect x="12" y="26" width="136" height="36" fill="#6f9fd8"/><circle cx="80.0" cy="44.0" r="10" fill="#fff"/><polygon points="77.0,39.0 85.0,44.0 77.0,49.0" fill="#6f9fd8"/><rect x="14" y="70" width="27" height="14" fill="#6f9fd8"/><rect x="47" y="70" width="27" height="14" fill="#6f9fd8"/><rect x="80" y="70" width="27" height="14" fill="#6f9fd8"/><rect x="113" y="70" width="27" height="14" fill="#6f9fd8"/><rect x="12" y="92" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="100" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="108" width="95.19999999999999" height="3" fill="#c9cfd6"/><rect x="20.0" y="120" width="120" height="12" rx="2" fill="#6f9fd8"/>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">4回の基礎動画＋AI経営PRO 3ヶ月</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">定価 60,000円 → 29,800円</text>
+<text x="80.0" y="238" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">rnos0kpayUmI</text>
+</g>
+<g class="node" transform="translate(1270,40)">
+<rect x="0" y="0" width="160" height="176" rx="4" fill="#ffffff" stroke="#c9cfd6" stroke-width="1.5"/>
+<rect x="0" y="0" width="160" height="20" rx="4" fill="#eef1f5"/>
+<circle cx="9" cy="10" r="2.6" fill="#e8564f"/>
+<circle cx="16" cy="10" r="2.6" fill="#f0b232"/>
+<circle cx="23" cy="10" r="2.6" fill="#5ec25a"/>
+<text x="34" y="14" font-size="12" font-weight="700" fill="#1f2937">05 申込フォーム（重ね窓）</text>
+<rect x="0" y="154" width="160" height="22" fill="#4b5563"/>
+<text x="80.0" y="169" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0.5">POP-UP</text>
+<rect x="12" y="26" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="34" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="42" width="95.19999999999999" height="3" fill="#c9cfd6"/><rect x="22" y="56" width="116" height="66" rx="3" fill="#fff" stroke="#4b5563" stroke-width="1.5"/><rect x="30" y="64" width="100" height="8" fill="#fff" stroke="#c9cfd6"/><rect x="30" y="77" width="100" height="8" fill="#fff" stroke="#c9cfd6"/><rect x="30" y="90" width="100" height="8" fill="#fff" stroke="#c9cfd6"/><rect x="45.0" y="108" width="70" height="12" rx="2" fill="#2fa84f"/>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">04 の中に開く・別URL無し</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">カードのみ・29,800円</text>
+<text x="80.0" y="238" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">ORDER FORM</text>
+</g>
+<g class="node" transform="translate(1520,40)">
+<rect x="0" y="0" width="160" height="176" rx="4" fill="#ffffff" stroke="#c9cfd6" stroke-width="1.5"/>
+<rect x="0" y="0" width="160" height="20" rx="4" fill="#eef1f5"/>
+<circle cx="9" cy="10" r="2.6" fill="#e8564f"/>
+<circle cx="16" cy="10" r="2.6" fill="#f0b232"/>
+<circle cx="23" cy="10" r="2.6" fill="#5ec25a"/>
+<text x="34" y="14" font-size="12" font-weight="700" fill="#1f2937">06 ワンタイムオファーのLP</text>
+<rect x="0" y="154" width="160" height="22" fill="#4b5563"/>
+<text x="80.0" y="169" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0.5">UPSELL PAGE</text>
+<polygon points="80.0,28 92.0,44 85.0,44 85.0,66 75.0,66 75.0,44 68.0,44" fill="#4b5563"/><rect x="12" y="76" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="84" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="92" width="95.19999999999999" height="3" fill="#c9cfd6"/><rect x="22" y="106" width="46" height="12" rx="2" fill="#2fa84f"/><rect x="82" y="106" width="46" height="12" rx="2" fill="#c9cfd6"/><text x="45" y="116" font-size="9" fill="#fff" text-anchor="middle">✓</text><text x="105" y="116" font-size="9" fill="#fff" text-anchor="middle">✕</text>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">3ヶ月グルコン・買った直後 30分だけ</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">58,000円・1クリック決済</text>
+<text x="80.0" y="238" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">phyGveupPEcC</text>
+</g>
+<g class="node" transform="translate(1770,40)">
+<rect x="0" y="0" width="160" height="176" rx="4" fill="#ffffff" stroke="#c9cfd6" stroke-width="1.5"/>
+<rect x="0" y="0" width="160" height="20" rx="4" fill="#eef1f5"/>
+<circle cx="9" cy="10" r="2.6" fill="#e8564f"/>
+<circle cx="16" cy="10" r="2.6" fill="#f0b232"/>
+<circle cx="23" cy="10" r="2.6" fill="#5ec25a"/>
+<text x="34" y="14" font-size="12" font-weight="700" fill="#1f2937">08 申込完了ページ</text>
+<rect x="0" y="154" width="160" height="22" fill="#4b5563"/>
+<text x="80.0" y="169" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0.5">THANK YOU PAGE</text>
+<rect x="12" y="26" width="136" height="34" fill="#6f9fd8"/><polyline points="70.0,43 77.0,50 91.0,35" fill="none" stroke="#fff" stroke-width="3.5"/><rect x="12" y="70" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="78" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="86" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="94" width="95.19999999999999" height="3" fill="#c9cfd6"/><rect x="50.0" y="108" width="60" height="12" rx="2" fill="#6f9fd8"/>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">経路の終点</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">9VYCc1zf6rAI</text>
+</g>
+<g class="node" transform="translate(520,340)">
+<rect x="40.0" y="60.0" width="80" height="56" rx="3" fill="#ffffff" stroke="#4b5563" stroke-width="2"/>
+<polyline points="40.0,60.0 80.0,94.0 120.0,60.0" fill="none" stroke="#4b5563" stroke-width="2"/>
+<text x="80.0" y="50.0" font-size="12" font-weight="700" fill="#1f2937" text-anchor="middle">登録直後メール</text>
+<text x="80.0" y="136.0" font-size="10" font-weight="700" fill="#4b5563" text-anchor="middle">EMAIL</text>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">第0章の動画の URL を送る</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">（新設シナリオ・投入時に作る）</text>
+</g>
+<g class="node" transform="translate(1020,340)">
+<circle cx="80.0" cy="88.0" r="34" fill="#ffffff" stroke="#4b5563" stroke-width="2"/>
+<text x="80.0" y="86.0" font-size="15" font-weight="800" fill="#4b5563" text-anchor="middle">5</text>
+<text x="80.0" y="101.0" font-size="9" font-weight="700" fill="#4b5563" text-anchor="middle">DAYS</text>
+<text x="80.0" y="44.0" font-size="12" font-weight="700" fill="#1f2937" text-anchor="middle">04 の期限まで待つ</text>
+<text x="80.0" y="144.0" font-size="10" font-weight="700" fill="#4b5563" text-anchor="middle">WAIT</text>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">申込期限（日数は仮）</text>
+</g>
+<g class="node" transform="translate(1270,340)">
+<rect x="0" y="0" width="160" height="176" rx="4" fill="#ffffff" stroke="#c9cfd6" stroke-width="1.5"/>
+<rect x="0" y="0" width="160" height="20" rx="4" fill="#eef1f5"/>
+<circle cx="9" cy="10" r="2.6" fill="#e8564f"/>
+<circle cx="16" cy="10" r="2.6" fill="#f0b232"/>
+<circle cx="23" cy="10" r="2.6" fill="#5ec25a"/>
+<text x="34" y="14" font-size="12" font-weight="700" fill="#1f2937">04x 期限切れページ（フロント商品）</text>
+<rect x="0" y="154" width="160" height="22" fill="#4b5563"/>
+<text x="80.0" y="169" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0.5">OPT-IN PAGE</text>
+<rect x="12" y="26" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="34" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="42" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="50" width="95.19999999999999" height="3" fill="#c9cfd6"/><rect x="20" y="66" width="120" height="16" fill="#fff" stroke="#c9cfd6"/><rect x="20.0" y="88" width="120" height="12" rx="2" fill="#6f9fd8"/><rect x="12" y="110" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="118" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="126" width="95.19999999999999" height="3" fill="#c9cfd6"/>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">次回案内を受け取るメール1欄</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">EdPWoFiPcMNJ</text>
+</g>
+<g class="node" transform="translate(1770,340)">
+<rect x="0" y="0" width="160" height="176" rx="4" fill="#ffffff" stroke="#c9cfd6" stroke-width="1.5"/>
+<rect x="0" y="0" width="160" height="20" rx="4" fill="#eef1f5"/>
+<circle cx="9" cy="10" r="2.6" fill="#e8564f"/>
+<circle cx="16" cy="10" r="2.6" fill="#f0b232"/>
+<circle cx="23" cy="10" r="2.6" fill="#5ec25a"/>
+<text x="34" y="14" font-size="12" font-weight="700" fill="#1f2937">06x 定価ページ</text>
+<rect x="0" y="154" width="160" height="22" fill="#4b5563"/>
+<text x="80.0" y="169" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0.5">UPSELL PAGE</text>
+<polygon points="80.0,28 92.0,44 85.0,44 85.0,66 75.0,66 75.0,44 68.0,44" fill="#4b5563"/><rect x="12" y="76" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="84" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="92" width="95.19999999999999" height="3" fill="#c9cfd6"/><rect x="22" y="106" width="46" height="12" rx="2" fill="#2fa84f"/><rect x="82" y="106" width="46" height="12" rx="2" fill="#c9cfd6"/><text x="45" y="116" font-size="9" fill="#fff" text-anchor="middle">✓</text><text x="105" y="116" font-size="9" fill="#fff" text-anchor="middle">✕</text>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">ワンタイムオファーの定価ページ</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">2回目に開いた人・88,000円</text>
+<text x="80.0" y="238" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">急かす部品なし・P0A4FQStsZNu</text>
+</g>
+<g class="node" transform="translate(770,615)">
+<circle cx="80.0" cy="88.0" r="34" fill="#ffffff" stroke="#4b5563" stroke-width="2"/>
+<text x="80.0" y="86.0" font-size="15" font-weight="800" fill="#4b5563" text-anchor="middle">5</text>
+<text x="80.0" y="101.0" font-size="9" font-weight="700" fill="#4b5563" text-anchor="middle">DAYS</text>
+<text x="80.0" y="44.0" font-size="12" font-weight="700" fill="#1f2937" text-anchor="middle">03 の期限まで待つ</text>
+<text x="80.0" y="144.0" font-size="10" font-weight="700" fill="#4b5563" text-anchor="middle">WAIT</text>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">視聴期限 5日</text>
+</g>
+<g class="node" transform="translate(1020,615)">
+<rect x="0" y="0" width="160" height="176" rx="4" fill="#ffffff" stroke="#c9cfd6" stroke-width="1.5"/>
+<rect x="0" y="0" width="160" height="20" rx="4" fill="#eef1f5"/>
+<circle cx="9" cy="10" r="2.6" fill="#e8564f"/>
+<circle cx="16" cy="10" r="2.6" fill="#f0b232"/>
+<circle cx="23" cy="10" r="2.6" fill="#5ec25a"/>
+<text x="34" y="14" font-size="12" font-weight="700" fill="#1f2937">03x 期限切れページ（動画）</text>
+<rect x="0" y="154" width="160" height="22" fill="#4b5563"/>
+<text x="80.0" y="169" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0.5">OPT-IN PAGE</text>
+<rect x="12" y="26" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="34" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="42" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="50" width="95.19999999999999" height="3" fill="#c9cfd6"/><rect x="20" y="66" width="120" height="16" fill="#fff" stroke="#c9cfd6"/><rect x="20.0" y="88" width="120" height="12" rx="2" fill="#6f9fd8"/><rect x="12" y="110" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="118" width="136" height="3" fill="#c9cfd6"/>
+<rect x="12" y="126" width="95.19999999999999" height="3" fill="#c9cfd6"/>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">次回案内を受け取るメール1欄</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">9hEadJmhVnr8</text>
+</g>
+<g class="node" transform="translate(1520,615)">
+<rect x="40.0" y="60.0" width="80" height="56" rx="3" fill="#ffffff" stroke="#4b5563" stroke-width="2"/>
+<polyline points="40.0,60.0 80.0,94.0 120.0,60.0" fill="none" stroke="#4b5563" stroke-width="2"/>
+<text x="80.0" y="50.0" font-size="12" font-weight="700" fill="#1f2937" text-anchor="middle">次回案内メール</text>
+<text x="80.0" y="136.0" font-size="10" font-weight="700" fill="#4b5563" text-anchor="middle">EMAIL</text>
+<text x="80.0" y="210" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">受け皿シナリオ 4Eawplgf3xGB</text>
+<text x="80.0" y="224" font-size="11" fill="#6b7280" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">03x・04x の両方から入る</text>
+</g>
+<circle cx="430" cy="128.0" r="9" fill="#2fa84f"/>
+<text x="430" y="131.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">Y</text>
+<circle cx="384.0" cy="216" r="9" fill="#d64545"/>
+<text x="384.0" y="219.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">N</text>
+<text x="396.0" y="220" font-size="11" font-weight="700" fill="#d64545" text-anchor="start" stroke="#fff" stroke-width="3" paint-order="stroke">登録しない＝離脱</text>
+<circle cx="930" cy="128.0" r="9" fill="#2fa84f"/>
+<text x="930" y="131.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">Y</text>
+<circle cx="888.0" cy="216" r="9" fill="#d64545"/>
+<text x="888.0" y="219.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">N</text>
+<text x="900.0" y="220" font-size="11" font-weight="700" fill="#d64545" text-anchor="start" stroke="#fff" stroke-width="3" paint-order="stroke">押さないまま</text>
+<text x="900.0" y="233" font-size="11" font-weight="700" fill="#d64545" text-anchor="start" stroke="#fff" stroke-width="3" paint-order="stroke">期限切れ</text>
+<circle cx="1180" cy="128.0" r="9" fill="#2fa84f"/>
+<text x="1180" y="131.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">Y</text>
+<circle cx="1100.0" cy="216" r="9" fill="#d64545"/>
+<text x="1100.0" y="219.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">N</text>
+<text x="1112.0" y="220" font-size="11" font-weight="700" fill="#d64545" text-anchor="start" stroke="#fff" stroke-width="3" paint-order="stroke">買わないまま</text>
+<text x="1112.0" y="233" font-size="11" font-weight="700" fill="#d64545" text-anchor="start" stroke="#fff" stroke-width="3" paint-order="stroke">期限切れ</text>
+<circle cx="1430" cy="128.0" r="9" fill="#2fa84f"/>
+<text x="1430" y="131.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">Y</text>
+<circle cx="1350.0" cy="216" r="9" fill="#d64545"/>
+<text x="1350.0" y="219.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">N</text>
+<text x="1362.0" y="220" font-size="11" font-weight="700" fill="#d64545" text-anchor="start" stroke="#fff" stroke-width="3" paint-order="stroke">閉じる＝04 のまま</text>
+<circle cx="1680" cy="128.0" r="9" fill="#2fa84f"/>
+<text x="1680" y="131.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">Y</text>
+<circle cx="1850.0" cy="340" r="9" fill="#2fa84f"/>
+<text x="1850.0" y="343.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">Y</text>
+<circle cx="1180" cy="703.0" r="9" fill="#2fa84f"/>
+<text x="1180" y="706.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">Y</text>
+<circle cx="1430" cy="428.0" r="9" fill="#2fa84f"/>
+<text x="1430" y="431.5" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">Y</text>
+</svg>
+</div></div></details>
+<details><summary class="note" style="cursor:pointer">旧の遷移図（2026-09-05・5列の升目・取り消し）</summary>
+<div class="old" style="text-decoration:none;opacity:.55">
+<div class="diagram">
+<div class="dgrid">
+  <div class="dbox"><b>00</b><span class="old">note</span> note 記事<div class="sub">入口の前・UTAGE 外<br>記事末尾→01</div></div>
+  <div class="arrow">↓</div>
+  <div class="dbox"></div>
+  <div class="dbox"></div>
+  <div class="dbox"></div>
+
+  <div class="dbox"><b>01</b><span class="old">入口LP</span> オプトインページ<div class="sub">二刀流セミナーの方向<br>メール1欄＋動画</div></div>
+  <div class="arrow">→</div>
+  <div class="dbox"><b>02</b><span class="old">サンクス</span> サンクスページ<div class="sub">LINE登録へ寄せる<br>ボタン1個</div></div>
+  <div class="arrow">→</div>
+  <div class="dbox"><b>03</b><span class="old">動画_第0章</span> 第0章の動画ページ<div class="sub">前提を話す動画<br>プレゼント＋運転台配布</div></div>
+
+  <div class="dbox"></div>
+  <div class="dbox"></div>
+  <div class="dbox"></div>
+  <div class="dbox"></div>
+  <div class="arrow">↓</div>
+
+  <div class="dbox end"><b>08</b><span class="old">申込完了</span> 申込完了ページ<div class="sub">お礼の1枚<br>行き先無し＝終点</div></div>
+  <div class="arrow">←</div>
+  <div class="dbox exp"><b>07</b><span class="old">銀行振込</span> 使わない<div class="sub"><span class="old">名前とメールだけの申込</span><br>経路から外す（2026-09-06）</div></div>
+  <div class="arrow">←</div>
+  <div class="dbox"><b>04</b><span class="old">オファーLP</span> フロント商品のLP<div class="sub"><span class="old">フロント（4回動画）を売る本編</span><br>フロント商品（4回の基礎動画＋AI経営PRO 3ヶ月）のオファー</div></div>
+
+  <div class="dbox"></div>
+  <div class="dbox"></div>
+  <div class="arrow">↑</div>
+  <div class="arrow">↑</div>
+  <div class="arrow">↓</div>
+
+  <div class="dbox exp"><b>03x</b><span class="old">期限切れ</span> 期限切れページ（動画）<div class="sub">03の動画期限が切れた人の受け皿</div></div>
+  <div class="arrow">←</div>
+  <div class="dbox exp"><b>04x</b><span class="old">期限切れ</span> 期限切れページ（フロント商品）<div class="sub">04の申込期限が切れた人の受け皿</div></div>
+  <div class="arrow">←</div>
+  <div class="dbox pop"><b>05</b>申込フォーム<div class="sub">04の中に開く重ね窓（別URLなし）<br><span class="old">カード／銀行振込</span> カードのみ</div></div>
+
+  <div class="dbox"></div>
+  <div class="dbox"></div>
+  <div class="dbox"></div>
+  <div class="dbox"></div>
+  <div class="arrow">↓</div>
+
+  <div class="dbox"></div>
+  <div class="dbox"></div>
+  <div class="dbox"></div>
+  <div class="dbox"></div>
+  <div class="dbox"><b>06</b><span class="old">追加オファー</span> ワンタイムオファーのLP<div class="sub"><span class="old">一度限り 半額</span> 買った直後 30分だけ 58,000円<br>1クリック決済</div></div>
+
+  <div class="dbox"></div>
+  <div class="dbox"></div>
+  <div class="dbox"></div>
+  <div class="arrow">↓</div>
+  <div class="arrow">↓</div>
+
+  <div class="dbox"></div>
+  <div class="dbox"></div>
+  <div class="dbox"></div>
+  <div class="dbox end"><b>08</b><span class="old">申込完了</span> 申込完了ページ</div>
+  <div class="dbox"><b>06x</b><span class="old">2回目 定価</span> ワンタイムオファーの定価ページ<div class="sub">1回見て買わなかった人が<br>再度開いた時の飛び先（88,000円）</div></div>
+</div>
+<div class="legend">
+  <span class="lg"><span class="sw"></span> 通常の段</span>
+  <span class="lg"><span class="sw pop"></span> 重ね窓（別URLなし）</span>
+  <span class="lg"><span class="sw exp"></span> 期限切れ受け皿</span>
+</div>
+<p class="note" style="margin-top:10px">
+  矢印に付く条件：01→02 メール登録／02→03 LINE友だち追加／03→04 動画の途中でオファー表示ボタン／03→03x 動画の視聴期限切れ／04→05 申込ボタン（04の中で重ね窓）／05→06 決済確定／04→04x 申込期限切れ／06→08 <span class="old">半額を</span>58,000円を1クリック／<span class="old">06→07 銀行振込リンク／07→08 銀行振込申込</span>（銀行振込は使わない・2026-09-06）／06を2回目開く→06x（ブラウザに置く印1個で判定）／06x→08 定価で申込。
+</p>
+</div>
+</div>
+</details>
+
+<h3>2. 呼び方（Mits様確定）</h3>
+<div class="tbl-wrap"><table>
+<thead><tr><th>語</th><th>指すもの</th><th>出典</th></tr></thead>
+<tbody>
+<tr><td>フロント</td><td>和佐式で「第0章の後に売る1つ目の商品」の位置。我が社では<b>3〜4万円のコンテンツだけの商品</b>（4回の基礎動画をコンテンツとして売る／グルコンは付けない）</td><td>地図</td></tr>
+<tr><td>バックエンド</td><td>グルコン</td><td>地図</td></tr>
+<tr><td>レポートmits</td><td><code>https://reports.7years.life/</code>（特典に）</td><td>地図</td></tr>
+<tr><td><span class="old">AI 3つ</span><br>AI-Mits</td><td>運転台（untendai）の中で顧客が選ぶ AI-Mits の3段階<br>　A 素のLLM（<b>FAST</b>）／ <span class="old">B コーパス（NORMAL）／ C 西田メソッド（DEEP）</span> C 西田メソッド（<b>NORMAL</b>・既定）／ B コーパス（<b>DEEP</b>）<span class="upd">段階の順は A→C→B（memory project_aimits_engine_naming・Mits様確定 2026-08-28）</span></td><td>地図＋<code>memory/project_aimits_engine_naming.md</code></td></tr>
+<tr><td>1人型起業家</td><td>本人＋スタッフ2人まで（最大3人体制）で事業を起こしている人。<b>「1人企業」「経営者になる」は使わない</b></td><td>The Innovation CLAUDE.md</td></tr>
+</tbody>
+</table></div>
+
+<h3>3. 販路の順（Mits様追記 2026-09-05）</h3>
+<div class="tbl-wrap"><table>
+<thead><tr><th>順</th><th>販路</th><th>中身</th><th>実測</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>UTAGE 既存リスト＝〈メルマガ〉メインメルマガ（シナリオ <code>bjDd8NXsSPMa</code>）</td><td>まずこのファネルを作り、既存リストに送信して<b>販売と改善</b>を回す。メルマガなので広告費は掛からない</td><td>2026-09-05 16:25：読者行 2,314・購読中 <b>2,210</b>・解除 104</td></tr>
+<tr><td class="num">2</td><td>広告</td><td>その後に広告へ回す。<b>ROAS 500% が出る広告運用ができる前提</b>で作る（和佐の段4の数字と同じ物差し）</td><td>—</td></tr>
+<tr><td class="num">3</td><td>note</td><td>もともとやっているので note にも書く</td><td>—</td></tr>
+<tr><td class="num">4</td><td>Threads のような SNS 発信</td><td>これから始める</td><td>—</td></tr>
+</tbody>
+</table></div>
+
+<h3>3-B. 採用の比率（Mits様 2026-09-05・原文）</h3>
+<div class="box">
+<p style="margin:0"><b>Mits様原文：</b>「和佐をほぼ、メインで、補足でみかみ型」</p>
+<p style="margin:10px 0 0"><b>参謀の読み：</b>段の並び・重ね窓の申込・一度限りの追加オファー・期限切れの受け皿は <b>和佐の構造</b> をそのまま使う。みかみから補足で取るのは、<code>wasa_funnel_kaibou_20260905.html</code> 第4部 4-3 の対比表で「みかみだけにある」と出た部分。設計図の側に <b>みかみ型（補足候補）</b> の印付きで置いてある。<b>どれを補足に入れるかは Mits様が選ぶ</b>（この設計図で採否を打っていない）。</p>
+<p style="margin:10px 0 0"><b>みかみ型の補足候補（4つ）：</b></p>
+<ul>
+<li>同じ1枚の中で見せて売って決済まで済ませる形（04 オファーLPの申込を重ね窓ではなくページ下端に直接置く）</li>
+<li>購入直後の追加オファーに<b>時間の限定</b>を付ける形（06 に「30分間限定」＋カウントダウンを重ねる）</li>
+<li>購入後の講義メールを毎日同時刻に送り、<b>1時間後に「受け取りましたか」</b>を重ねる形（メール系・末尾表）</li>
+<li>27〜32日目の期限つき案内（メール系・末尾表）</li>
+</ul>
+</div>
+
+<h3>3-C. 二刀流セミナーとの対応（動画 <code>iaU887PLrHmG</code>・79分57秒・2026-06-11 収録）</h3>
+<div class="tbl-wrap"><table>
+<thead><tr><th>時刻（srt 実測）</th><th>セミナーで話したこと（Mits様原文 抜粋）</th><th>我が社ファネルのどの段に効くか</th></tr></thead>
+<tbody>
+<tr><td>00:00〜02:11</td><td>「コワークでは経営は実現しないです」「コード一択」「2ヶ月のグループ講座の大前提」</td><td>04 オファーLP（4回動画）の前提</td></tr>
+<tr><td>02:11〜07:00（内 <b>00:02:48〜00:03:10</b> に「せっかくこんなチャンス／事業を大きくできるチャンス」の verbatim）</td><td>「脳は AI に絶対勝てない／脳は AI に委ねる」「腹と手」「せっかくこんなチャンス」「2年間の大きな絵」</td><td>03 動画_第0章 の骨②（<b>チャンス verbatim</b>）／01 入口LP のフック／<b>04 オファーLP #6（チャンス）</b></td></tr>
+<tr><td>07:00〜08:07</td><td>「一人型 60業種を 6つのタイプに分類」</td><td>03 動画_第0章 の骨③</td></tr>
+<tr><td>08:07〜19:37（内 <b>00:10:09</b>「検索時代／AI時代」・<b>00:19:15〜00:19:29</b>「プロに依頼のチャンスがなくなる／未体験のまま比較対象から外れる」）</td><td>タイプ1／「AI時代は探されない・比較されない・見つけてくれない」「出会い頭がなくなる」「既存客もAIに聞く」</td><td>01 入口LP #3・#9／03 動画_第0章 の骨④／<b>04 オファーLP #6（危機感）</b></td></tr>
+<tr><td>19:37〜21:58</td><td>タイプ2／「動画認知が上がると信頼してる先生でも AI に聞くに決まってる」</td><td>03 動画_第0章 の骨⑤（危機感）</td></tr>
+<tr><td>21:58〜27:09</td><td>タイプ3／「5〜6割はここ／頭の中を売っているビジネス／最大危機／死亡確定」／税理士の例</td><td>01 入口LP 対象読者／03 動画_第0章 の骨⑤／04 オファーLP #5 見出し</td></tr>
+<tr><td>27:09〜31:27</td><td>タイプ4／タイプ5（バイブコーディング／AIスタッフさん）</td><td>04 オファーLP #10 声リスト（エージェントチーム／2時間で動くプログラム）</td></tr>
+<tr><td>31:27〜39:37</td><td>タイプ6／全タイプの統合／「セッションを売るコンサルは死ぬ／ナレッジをプロダクトに」</td><td>04 オファーLP「コンテンツとして売る」の根拠</td></tr>
+<tr><td>39:37〜44:27</td><td>「二刀流＝脳の外部化」／「頭が良くなる外部化 ＋ AI商品高速化」／「接点の量は有効じゃない／親よりチャット GPT」</td><td>03 動画_第0章 の骨⑦</td></tr>
+<tr><td>44:27〜54:39（内 <b>00:45:21〜00:45:30</b>「もう仕事どんどんなくなってる／AI作ってくれるから」・<b>00:47:57〜00:48:04</b>「一人型 400万人／危機感を持っているのでもっと早い／2年で」）</td><td>「2年で 51%／3年で 80%／AIエージェント経営は 2年で全員が終わっている／今年が 1年目」「AIは責任を取らない／ケツを取るのが仕事に」「逆行スタイル・現場訪問」</td><td>03 動画_第0章 の骨⑥（時間軸の根拠・<b>危機感 verbatim</b>）／バックエンド（グルコン）の位置づけ／<b>04 オファーLP #6（危機感）</b></td></tr>
+<tr><td>54:39〜01:01:03（内 <b>00:59:21〜00:59:43</b>「顧客リスト内のコンバージョンは落ちる／10人に1人が100人に1人／AI時代まだ誰も経験してない」）</td><td>「AI導入期／成長期はみんなと同じでいい」「3C→4C（キャッシュ・コンテンツ・クライアント・クリエイティビティ）」「顧客リストは一桁上げる／100人 →1000人」</td><td>販路の順（メルマガ → 広告 → note → Threads）の根拠／<b>04 オファーLP #6（危機感）</b></td></tr>
+<tr><td>01:01:03〜01:08:23</td><td>「自社サービス × AIなんちゃら」「ひとまずAI」「記録／大副長／Fの質／デタラメを許容するリスト／コミュニティ」</td><td>04 オファーLP フロント商品の位置づけ／03 動画_第0章 のバックエンド示唆</td></tr>
+<tr><td>01:08:23〜01:17:00</td><td>「クリエイティビティ 3層（完全自動／半自動／完全組み込み）」「タイプライターの筆致／道具を作る」「2つだけ（脳を賢く外部化 × AI商品高速化）」</td><td>03 動画_第0章 プレゼント（二刀流1枚地図 ＋ 運転台配布＝完全組み込みの実物例）</td></tr>
+<tr><td>01:17:00〜01:19:57</td><td>「2ヶ月で 100時間／週 12時間／1日 2時間／仕事中に AI でできないかを考える」「AIエージェント経営／AIスタッフさん経営」「コアークではメッセンジャーボーイになる／コード一択」「FBAS でエージェント」</td><td>04 オファーLP #6 本文／#8 内訳／追伸／値付けの根拠</td></tr>
+</tbody>
+</table></div>
+<p class="note" style="margin-top:8px"><b>言葉ごとの出所（Mits様確認 2026-09-05・訂正）：</b>参謀は当初「二刀流セミナー本編には無い」と書いたが、<b>単語 grep の 0件を「言っていない」に置き換えた誤り</b>。文脈で照合すると次の通り。
+<ul style="margin:8px 0 0">
+<li><b>千載一遇・産業革命レベルのチャンス／変えないといけない危機感</b>は<b>二刀流セミナー本編で別の言葉で言っている</b>。該当区間（srt 実測）：<code>transcript 00:02:48〜00:03:10</code>「せっかくこんなチャンス／事業を大きくできるチャンス」／<code>00:10:09</code>「検索時代があって今のAI時代があって」／<code>00:19:15〜00:19:29</code>「プロに依頼することのチャンスがなくなる／プロの価値が未体験のまま比較対象から外れる」／<code>00:45:21〜00:45:30</code>「仕事どんどんなくなってる／AI作ってくれるから」／<code>00:47:57〜00:48:04</code>「一人型 400万人／危機感を持っているのでもっと早い／2年で」／<code>00:59:21〜00:59:43</code>「顧客リスト内のコンバージョンは落ちる／10人に1人が100人に1人／AI時代まだ誰も経験してない」</li>
+<li><b>トンカチ・ノコギリ（4回目まで＝基礎の比喩）</b>は<b>AIグループ講座 第4回（2026-08-23 グルコン「運用サイクル〜経営に活かす本番」・2:12:56・文字起こし <code>_wip/be02_kougi4_20260905/kougi4_0823_transcript.srt</code> 完了 2026-09-05）</b>。時刻つき原文引用（5区間）：<br>① <code>kougi4_0823 00:28:50〜00:29:13</code>「金槌、金槌とトンカチ（文字起こし原文：トンカチョ）でしょ。／金槌、ノコギ（文字起こし原文：ノコギ）、金槌、ノコギ、場合によっては、／チェーンソーを持ってきてとか、／ドリルとか、ドライバーとか、ネジ回しですね、／持ってきて、ネジを入れるとこは、／ドライバーを使わなきゃいけないのに、／トンカチで叩いちゃダメなケースもあるじゃないですか、みたいなですね。／そこまでを今までやっただけのことじゃないですか。」<br>② <code>kougi4_0823 00:29:23〜00:30:03</code>「AIを使っているのは経営じゃないですか。／AI社員を育てていくっていうのは、／金槌、ノコギの使い方を覚えて、／楽しかったって、何の趣味に終わっちゃうじゃないですか。／僕のやっているのは、そこじゃないですよね、／…／ビジネスのために、／トンカチを覚えているだけの話なので。」<br>③ <code>kougi4_0823 00:30:06〜00:30:21</code>「ビジネスの中で使わない道具だったら、／別に工具箱に入れっぱなしでもいいし、／工具箱にすら入れなくてもいいかもしれないじゃないですか。／でも、どんな家作るかわからないと、／やっぱり工具箱にいろんなもの入れとかないと、／ちょっと分かんないよねと。」<br>④ <code>kougi4_0823 00:41:31〜00:41:36</code>「ここまで3回ぐらいまでで、／金槌と、／ノコギリ使えるようになったので、／いっぱいコンテンツ作っていきましょう」<br>⑤ <code>kougi4_0823 00:45:47〜00:45:54</code>「まあ、金槌のこぎり使えるようになったかな、／みたいな感じの目安かなって思ってます。／そしたらそこから先は、／もっとビジネスのことに踏み込んでいって、」</li>
+<li><b>「AIで何ができるの」と 100回聞かれた答え＝「AIで経営そのものを変えられる」</b>は 2026-09-05 の Mits様の音声入力で出た言葉。二刀流本編・第4回での有無は未確認（単語一致は二刀流で 0件・意味での照合は未実施）</li>
+</ul>
+上の6区間は 03 動画（危機感・チャンス）／04 オファーLP（危機感）に効く（本節の 3-C 表・03 表 #2 骨②⑥・04 表 #6 で参照）。<b>教訓</b>：単語 grep の 0件を「言っていない」に変換しない（<code>memory/feedback_zero_hits_is_not_absence.md</code> 2026-09-05 追記）。</p>
+
+<h3>3-D. 段ごとの部品数：和佐／うち（2026-09-05 追加）</h3>
+<p class="note">和佐側は解剖 HTML（<code>_wip/wasa_funnel_kaibou_20260905.html</code>）の各段の表の行数。段4 だけ Mits様指定の <b>274部品／46区画</b> を用いる（他は「順」の行数）。うち側は後半設計図の各表の行数。数が違う段には一言添える。</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>段</th><th>和佐</th><th>うち</th><th>一言</th></tr></thead>
+<tbody>
+<tr><td>00 note</td><td>—（和佐は note を段として持たない・別サイトの記事のみ）</td><td class="num">3</td><td>うちが1段追加（Mits様追記 2026-09-05・note からの流入）</td></tr>
+<tr><td>01 入口LP</td><td class="num">10</td><td class="num">10</td><td>1対1で揃えた（本日訂正）</td></tr>
+<tr><td>02 サンクス</td><td class="num">4</td><td class="num">4</td><td>1対1</td></tr>
+<tr><td>03 動画_第0章</td><td>12〜14（表14行・うち5個が出し分け）</td><td class="num">12</td><td>ほぼ揃い（うちは出し分けを 4件で運用）</td></tr>
+<tr><td>03x 期限切れ</td><td>1（本文1つだけの共通終了ページ・別ファネル）</td><td class="num">4</td><td>うちが多い（次回案内の受け皿フォームを持たせている）</td></tr>
+<tr><td>04 オファーLP</td><td>274部品／46区画（Mits様指定）</td><td class="num">21</td><td>単位が違う（うちは「行」・和佐は「部品／区画」）／うちが少ない・買う区画の反復が要検討</td></tr>
+<tr><td>04x 期限切れ</td><td>1（03x と同じ共通ページ）</td><td class="num">4</td><td>うちが多い（受け皿フォーム）</td></tr>
+<tr><td>06 追加オファー（半額）</td><td class="num">36</td><td class="num">21</td><td>うちが少ない</td></tr>
+<tr><td>06x 2回目 定価</td><td class="num">29</td><td class="num">9</td><td>うちが少ない</td></tr>
+<tr><td>07 銀行振込</td><td class="num">3</td><td class="num">3</td><td>1対1</td></tr>
+<tr><td>08 申込完了</td><td class="num">4</td><td class="num">3</td><td>うちが1少ない（下端の Copyright を1行で運用）</td></tr>
+</tbody>
+</table></div>
+
+<h3>4. このファネルが持つもう1つの意味</h3>
+<div class="box">
+<p style="margin:0"><b>広告を回しながらリストを取り、運転台（untendai）を使ってもらって AI-MITS を広めていく。</b>大きなプロジェクトの意味も持っている。運転台の中で顧客が選ぶ 3つのエンジン（A 素のLLM＝FAST／B コーパス＝NORMAL／C 西田メソッド＝DEEP）を広めることが同時に含まれている。</p>
+<p class="note" style="margin:8px 0 0">出所：Mits様 2026-08-27 09:26 JST「A 素のLLM　Bのコーパス　これから作るCが私のナレッジを呼び出すもの　AI-MITSを使うときにどのエンジンを選ぶかを1画面の中にスイッチを入れる」／2026-08-28「3つのモデルが使える　社外取締役にすることができる　無料で使えること」／Apache-2.0 を選んだ理由「爆発的に広めたい」</p>
+</div>
+
+<h3>5. 03 動画（第0章）の骨</h3>
+<div class="box">
+<p style="margin:0"><b>前提（Mits様の言葉そのまま）</b></p>
+<ul>
+<li>AIグルコン講座の <b>4回目まで</b>は「AIを使えるようになる」＝<b>トンカチ・ノコギリが使える基礎</b>（出典：<code>kougi4_0823 00:29:23〜00:30:03</code>「AI社員を育てていくっていうのは、金槌、ノコギの使い方を覚えて、楽しかったって、何の趣味に終わっちゃうじゃないですか。僕のやっているのは、そこじゃないですよね、…ビジネスのために、トンカチを覚えているだけの話なので。」／<code>kougi4_0823 00:30:06〜00:30:21</code>「ビジネスの中で使わない道具だったら、別に工具箱に入れっぱなしでもいいし、工具箱にすら入れなくてもいいかもしれないじゃないですか。でも、どんな家作るかわからないと、やっぱり工具箱にいろんなもの入れとかないと、ちょっと分かんないよねと。」）</li>
+<li>4回目、あるいは <b>100時間</b>を象徴として、100時間を通過することで、<b>経営にAIエージェントを使っていけるようになる</b>ことが目的</li>
+<li><b>効率化ができることなんて大したことではない</b></li>
+<li>「AIで何ができるの」と<b>100回聞かれている</b>ことの答えは「<b>AIで経営そのものを変えられる</b>」であって、効率化のレベルではない</li>
+<li><b>変えないといけない危機感</b>と、<b>千載一遇、産業革命レベルのチャンス</b></li>
+</ul>
+<p style="margin:12px 0 0"><b>プレゼント（Mits様追記 2026-09-05）</b></p>
+<ul>
+<li>和佐が動画の途中でPDFをプレゼントしたのと同じ位置で、<b>二刀流を話してプレゼント</b>する</li>
+<li><b>同時に運転台も配布</b>（<code>untendai.app</code>・現行 v0.73.1）</li>
+<li>運転台は「<b>これがAIで作れる</b>」という<b>証左</b>であり、「<b>あなたも作ってみませんか</b>」へ繋ぐ構造にする</li>
+</ul>
+</div>
+
+<h3>6. 和佐との違い</h3>
+<div class="tbl-wrap"><table>
+<thead><tr><th>—</th><th>和佐</th><th>我が社</th></tr></thead>
+<tbody>
+<tr><td>04 で売るもの</td><td>3DAYSセミナー完全版 39,800円（グルコン抜きの完全パッケージ）</td><td>フロント商品＝AIグルコン講座で実際にやった<b>4回の基礎動画</b>をコンテンツとして。<b>グルコンは付けない</b>。<b>30,000円 確定（2026-09-05）</b></td></tr>
+<tr><td>04 の後ろ</td><td>広告を回す</td><td>その後ろで<b>バックエンド（グルコン）</b>を売る</td></tr>
+<tr><td>06 の中身</td><td>広告テストの極意 27,500円（一度限り・半額）</td><td>バックエンド＝<b>グルコン 確定（2026-09-05）</b></td></tr>
+</tbody>
+</table></div>
+
+<h3>7. Mits様が後で決める（空けない・地図の数字で仮置き）</h3>
+<div class="box">
+<p style="margin:0">商品名・価格の確定値・オファーの中身・特典の組み合わせ・アップセルの選択（グルコン or 50,000円3回個別相談）。全て <span class="kari-mark">仮</span> 印を付けて、地図に書かれた数字で仮置きしている。</p>
+</div>
+
+<hr>
+
+<!-- ==================== 後半：設計図 ==================== -->
+<h2>後半　設計図（UTAGE 新設ファネル <code>B7rcluDi86bF</code>）</h2>
+
+<p class="note">列の意味：<code>#</code> 上からの順／<code>section</code> 区画名／<code>row/col</code> 1列・2列／<code>要素</code> 見出し・文章・画像・動画・ボタン・フォーム・カウントダウン・区切り線・重ね窓／<code>入る文字</code> 実文（空欄禁止）／<code>出典</code> 材料のどれから取ったか／<code>行き先</code> ボタンとフォームだけ／<span class="kari-mark">仮</span> Mits様が決める箇所（地図の数字で仮置き）</p>
+
+<!-- ============ 00 ============ -->
+<h3 id="dan-00">00　note（入口の前・UTAGE 外）</h3>
+<div class="role">和佐の対応：入口LPの前に置く note 記事（広告の受け皿にもなる紹介記事・末尾から入口LPへ）。<b>UTAGE の外（note.com）</b>にあり、UTAGE のファネルには含まれない。Mits様「ノートももともとやっているのでノートにも書く」（2026-09-05・段0として数える）。</div>
+<div class="tbl-wrap"><table>
+<thead><tr><th>#</th><th>section</th><th>row/col</th><th>要素</th><th>入る文字</th><th>出典</th><th>行き先</th><th>印</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>記事本文</td><td>1列</td><td>note 記事</td><td>未作成・Mits様が書く <span class="kari-mark">仮</span></td><td>Mits様追記 2026-09-05</td><td>—</td><td>仮</td></tr>
+<tr><td class="num">2</td><td>記事末尾</td><td>1列</td><td>リンク</td><td>01 入口LPへ誘導するリンク（記事の末尾に置く）</td><td>和佐の記事構造</td><td>01 <code>https://change.7years.life/page/Evbui5Gwwy1f</code></td><td>—</td></tr>
+<tr><td class="num">3</td><td>参照</td><td>1列</td><td>和佐の対応</td><td>和佐の note 記事 <code>https://note.com/daisukewasa/n/n75dad01e5f78</code></td><td>Mits様指定 2026-09-05</td><td>—</td><td>—</td></tr>
+</tbody>
+</table></div>
+
+<!-- ============ 01 ============ -->
+<h3 id="dan-01">01　入口LP（step <code>eratJM7n0m6y</code> / page <code>Evbui5Gwwy1f</code>）</h3>
+<div class="role">和佐の対応：段0 入口LP。我が社では、<b>二刀流セミナーLPの方向</b>で「AIを学んでも数字が変わらない1人型起業家」に絞り、動画1本＋メール1欄で登録させる段。地図と読み方は03の動画で渡す前振り。<b>登録先＝このファネル専用の新設シナリオ（投入時に作る）・Mits様確定 2026-09-05</b>。LINE 連携はこのシナリオの設定で投入後に行う。</div>
+<p>公開URL：<code>https://change.7years.life/page/Evbui5Gwwy1f</code></p>
+<p class="note">和佐の段0（入口LP）の10部品と<b>1対1</b>に組み直した（2026-09-05 Mits様訂正発注「うちのバージョンが過剰／要素として対応していない」）。列末に <b>和佐の対応部品（役割）</b> を追加。文字は変えず、旧15行のうち5つ（旧 #3 の長い本文・旧 #4 動画枠・旧 #5 川田さんの声・旧 #8 見出し・旧 #9 本文）は本表の直後の「01 から外した文字」表に全文で退避（03 動画・04 オファーLP で使う）。</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>#</th><th>section</th><th>row/col</th><th>要素</th><th>入る文字</th><th>出典</th><th>行き先</th><th>印</th><th>和佐の対応部品（役割）</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>ヘッダー</td><td>1列</td><td>大見出し</td><td>一人型で経営をするあなたへ。<br>コワークでは、経営はもうできません ── 800時間 触ってきて、僕が出した結論です。<br>「2年間の大きな絵」を、無料の動画でお渡しします。</td><td>transcript 00:00:07（コワークでは経営は実現しない）／00:04:23（2年間の大きな絵）／02:11（今日の本編）／旧 #2</td><td>—</td><td>—</td><td>和佐段0 #1 大見出し（名乗り）</td></tr>
+<tr><td class="num">2</td><td>ヘッダー</td><td>1列</td><td>小見出し</td><td>1人型起業家・コンサル・士業・業種専門家へ</td><td>二刀流セミナーLP／旧 #1</td><td>—</td><td>—</td><td>和佐段0 #2 小見出し（読み手の絞り込み）</td></tr>
+<tr><td class="num">3</td><td>ヘッダー</td><td>1列</td><td>小見出し</td><td>だから、二刀流です。脳は AI に委ねる。腹と手は、人間に残す。この 2つだけです。</td><td>transcript 00:02:28（脳はAIに委ねる／腹と手）／旧 #3 本文の最後の2文</td><td>—</td><td>—</td><td>和佐段0 #3 小見出し（約束）</td></tr>
+<tr><td class="num">4</td><td>登録欄①</td><td>1列</td><td>フォーム</td><td>メールアドレス1欄（プレースホルダ「you@example.com」）＋ボタン「今すぐ動画と地図を受け取る」</td><td>和佐段0 #4／旧 #6</td><td>02 <code>https://change.7years.life/page/LHCPBw6d2sTt</code></td><td>—</td><td>和佐段0 #4 入力欄1組目（登録）</td></tr>
+<tr><td class="num">5</td><td>登録欄①</td><td>1列</td><td>注記</td><td>ご登録いただいたメールアドレスへ、動画の視聴URLをお送りします。配信はいつでも解除できます。</td><td>和佐段0 #5／旧 #7</td><td>—</td><td>—</td><td>和佐段0 #5 注記（不安消し）</td></tr>
+<tr><td class="num">6</td><td>本編</td><td>2列</td><td>画像4枚＋見出し＋3ブロック</td><td>見出し「この動画で、あなたが持って帰るもの」＋画像4枚（差し込み口 <span class="kari-mark">仮</span>・「あなたが持って帰るもの」「動画の中身」の要点を全部この画像の中に入れる）／3ブロック：Ⅰ 一人型 60業種を分けた 6タイプ分類（あなたの事業はどこか）／Ⅱ 二刀流（脳は AI に委ねる／腹と手は人間に残す）／Ⅲ 100時間で AIエージェント経営に立てるようになる、その入口</td><td>二刀流セミナーLPの構造／transcript 00:07:20（60業種を6タイプ）／00:02:28（脳はAI・腹と手）／01:17:00（100時間・AIエージェント経営）／旧 #10 見出し＋#11 の3ブロックを1つに</td><td>—</td><td>仮</td><td>和佐段0 #6 画像4枚（手に入るもの・概要＝内容の提示）</td></tr>
+<tr><td class="num">7</td><td>講師</td><td>2列</td><td>画像＋文章</td><td>顔写真＋「西田 光弘 ／ 戦略のスペシャリストとして20年、1,000人超の1人型起業家の経営をサポート」</td><td>LP <code>lp_v8pQL82x2Am1_local_koe_bpa_20260903.html</code>／旧 #12</td><td>—</td><td>—</td><td>和佐段0 #7 講師プロフィール（信用付け）</td></tr>
+<tr><td class="num">8</td><td>登録欄②</td><td>1列</td><td>フォーム</td><td>#4と同じ組み合わせ（メール欄＋ボタン「今すぐ動画と地図を受け取る」）</td><td>和佐段0 #8／旧 #13</td><td>02 <code>https://change.7years.life/page/LHCPBw6d2sTt</code></td><td>—</td><td>和佐段0 #8 入力欄2組目（登録・2回目）</td></tr>
+<tr><td class="num">9</td><td>下端固定帯</td><td>1列</td><td>フォーム</td><td>「登録されたアドレス宛に今すぐ動画が配信されます」＋メール欄＋ボタン（画面下に貼り付く常時表示）</td><td>和佐段0 #9／旧 #14</td><td>02 <code>https://change.7years.life/page/LHCPBw6d2sTt</code></td><td>—</td><td>和佐段0 #9 画面下に貼り付く帯（登録・3組目）</td></tr>
+<tr><td class="num">10</td><td>下端</td><td>1列</td><td>リンク</td><td>プライバシーポリシー ／ 特定商取引法にもとづく表記 ／ お問い合わせ</td><td>UTAGE 既定／旧 #15</td><td>UTAGE 既定リンク</td><td>—</td><td>和佐段0 #10 下端リンク（法律面）</td></tr>
+</tbody>
+</table></div>
+
+<h4 style="margin-top:16px">01 から外した文字（03 動画・04 オファーLP で使う・原文のまま退避）</h4>
+<div class="tbl-wrap"><table>
+<thead><tr><th>旧#</th><th>要素</th><th>外した文字（全文）</th><th>出典</th><th>使う先</th></tr></thead>
+<tbody>
+<tr><td class="num">3</td><td>ヘッダー本文（最後の2文を除く前半）</td><td>AI時代は、探されないんです。比較されないんです。もう見つけてくれないんです。出会い頭がなくなって、1位か2位だけがピックアップされて買われる ── うちの技術がどんなにすごくても、未体験のまま比較の外に出される。既存客ですら、AIに聞くに決まっている。ここまで、僕はもう 800時間 触ってきて分かりました。</td><td>transcript 00:11:36（AI時代は探されない）／00:14:32（出会い頭がなくなる）／00:16:36（既存客もAIに聞く）</td><td>03 動画_第0章 の骨④（危機感）／04 オファーLP #6（危機感）</td></tr>
+<tr><td class="num">4</td><td>動画枠（動画）</td><td>オプトイン動画（60秒・顧客の声入り）。5本のうち1本を配置。初期配置は <b>①「AIですごいことができた。でも仕事の1%」（川田さん）</b>。残り4本（②高田／③渡邉／④田中／⑤森田）はA/Bで差し替え <span class="kari-mark">仮</span></td><td><code>_wip/optin_douga_scenario_1min_20260904.html</code></td><td>03 動画_第0章 の中で顧客の声として差し込む／04 オファーLP #10 声リスト</td></tr>
+<tr><td class="num">5</td><td>動画枠（文章）</td><td>受講中の川田さんが、こう言ってくれました。「会計が丸一日かかっていた」。それが翌月には「三時間ぐらいで終わった」。大事なのは、なんでそうなったか、です。</td><td>オプトイン動画①の要旨</td><td>04 オファーLP #10 声リスト（川田さんの1件）</td></tr>
+<tr><td class="num">8</td><td>本編（見出し）</td><td>頭の中を売っているビジネスは、「死亡確定」です。5割6割の一人型起業家は、ここにいます。</td><td>transcript 00:21:58（5〜6割はこの方）／00:22:23（ここが一番危機）／00:24:47（死亡確定）</td><td>03 動画_第0章 の骨⑤（最大危機・死亡確定）／04 オファーLP #5 見出し</td></tr>
+<tr><td class="num">9</td><td>本編（文章）</td><td>一人型起業家の5〜6割は、頭の中を売っているビジネスです。コンサル、士業、業種の専門家。ここが一番危機なわけです ── なぜなら、脳みそ売っているんで、AI の方が強いに決まっている。壁打ちだって、AI は素晴らしくやってくれる。だから僕は「このジャンルは死亡確定」と言っています。じゃあどうするか。二刀流です。脳は AI に委ねる。腹と手は、人間に残す。この 2つだけです。</td><td>transcript 00:21:58／00:22:23／00:23:12（脳みそ売り）／00:24:13（壁打ち）／00:24:47（死亡確定）／00:02:28（脳はAIに委ねる）</td><td>03 動画_第0章 の骨⑤／04 オファーLP #6（危機感）</td></tr>
+</tbody>
+</table></div>
+
+<!-- ============ 02 ============ -->
+<h3 id="dan-02">02　サンクス／LINE登録へ（step <code>Ol9cCwfrP4Hd</code> / page <code>LHCPBw6d2sTt</code>）</h3>
+<div class="role">和佐の対応：段1 サンクス。<b>同じ形</b>（地図の指示）。LINE登録だけをさせて次に進める。動画も本文も置かない・出口を1本にする。</div>
+<p>公開URL：<code>https://change.7years.life/page/LHCPBw6d2sTt</code></p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>#</th><th>section</th><th>row/col</th><th>要素</th><th>入る文字</th><th>出典</th><th>行き先</th><th>印</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>本体</td><td>1列</td><td>大見出し</td><td>まだ登録は完了していません。今すぐ LINE 登録をお願いします。</td><td>和佐段1</td><td>—</td><td>—</td></tr>
+<tr><td class="num">2</td><td>本体</td><td>1列</td><td>見出し</td><td>動画の視聴URLと、地図の続きの案内は、LINE でお送りしています。</td><td>和佐段1の型</td><td>—</td><td>—</td></tr>
+<tr><td class="num">3</td><td>本体</td><td>1列</td><td>ボタン</td><td>今すぐLINEの友だち登録をする<br>小文字：「AI時代の1人型起業家の地図」を受け取る</td><td>和佐段1</td><td>UTAGE の LINE 連携URL(03へ自動遷移する形) ── <b>投入後(シナリオ側で LINE 連携・Mits様確定 2026-09-05)</b></td><td>投入後</td></tr>
+<tr><td class="num">4</td><td>下端</td><td>1列</td><td>文章</td><td>Copyright © Mits株式会社</td><td>UTAGE 既定</td><td>—</td><td>—</td></tr>
+</tbody>
+</table></div>
+
+<!-- ============ 03 ============ -->
+<h3 id="dan-03">03　動画_第0章（step <code>JW10kujLs5H7</code> / page <code>t4zFnkwTzYYG</code>）</h3>
+<div class="role">和佐の対応：段3 動画（第0章・視聴期限5日・途中でオファー表示）。我が社では、地図と読み方の <b>「前提」</b> を話し、途中で <b>二刀流のプレゼント＋運転台の配布</b>を出し、越えたところで<b>04 オファーLP のボタンを表示</b>する。</div>
+<p>公開URL：<code>https://change.7years.life/page/t4zFnkwTzYYG</code></p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>#</th><th>section</th><th>row/col</th><th>要素</th><th>入る文字</th><th>出典</th><th>行き先</th><th>印</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>ヘッダー</td><td>1列</td><td>画像</td><td>ヘッダー画像1枚（表題「1人型起業家のためのAIエージェント経営 第0章」を含む）<span class="kari-mark">仮</span>（画像制作 Mits様指示待ち）</td><td>和佐段3構造</td><td>—</td><td>仮</td></tr>
+<tr><td class="num">2</td><td>本体</td><td>1列</td><td>動画</td><td>「第0章」動画。想定尺 <b>60〜90分</b><span class="kari-mark">仮</span>。骨は10項目（<b>二刀流セミナー本編の該当区間を第0章に持ち込む</b>）：<br>①コワークではもう経営はできない・コード一択（<code>transcript 00:00:00〜00:00:41 / 00:02:11</code>）／<br>②二刀流の結論：脳は AI に委ねる／腹と手は人間に残す・生存戦略ではなくチャンス・2年間の大きな絵（<code>transcript 00:02:11〜00:07:00</code>）── 引用（<code>transcript 00:02:48〜00:03:10</code>）「でもこれって生き残りとかそういうのももちろんあるんですけど／ちょっと悲痛な感じの生き残りじゃなくて／せっかくこんなチャンスみたいな感じなので／どう楽しんでいけるかみたいなことじゃないのかな／事業を大きくできるチャンスだったりとか」／<br>③一人型 60業種を 6タイプに分類（<code>transcript 00:07:00〜00:08:07</code>）／<br>④AI時代は「探されない・比較されない・見つけてくれない／出会い頭がなくなる／既存客もAIに聞く」（<code>transcript 00:08:07〜00:19:37</code>／タイプ1）／<br>⑤タイプ3（頭の中を売っているビジネス）が最大危機・「死亡確定」／税理士の例（<code>transcript 00:21:58〜00:27:09</code>）／<br>⑥AIエージェント経営は 2年で全員が終わっている・今年が 1年目・来年末には終わっている・AIは責任を取らない・「ケツを取る」のが仕事に（<code>transcript 00:47:26〜00:54:39</code>）── 危機感の verbatim（<code>00:45:21〜00:45:30</code>）「もう仕事どんどんなくなってるはずですよね／だって僕ら頼まない／頼んだことないですよね／AI作ってくれるから」／（<code>00:47:57〜00:48:04</code>）「一人型とか小さい企業とか／言うと400万人ぐらい／こういうところって／いろんな危機感を持っているので／もっと早いじゃないですか／僕は2年で」／（<code>00:59:21〜00:59:43</code>）「顧客リスト内のコンバージョンは落ちるに決まってる／10人に1人が100人に1人／AI時代まだ誰も経験してない」／<br>⑦二刀流＝脳の外部化（頭が良くなる外部化＋AI商品高速化＝「自社サービス × AIなんちゃら」）（<code>transcript 00:39:37〜00:44:27 / 01:01:03</code>）／<br>⑧成長期の 4C（キャッシュ・コンテンツ・クライアント・クリエイティビティ）／リストは一桁上げる（<code>transcript 00:54:39〜01:01:03</code>）／<br>⑨100時間・2ヶ月・週 12〜16時間・「新たに勉強時間を作れとは 1ミリも言わない」（<code>transcript 01:17:00〜01:19:57</code> ＋ レジメPDF 2-3 招待）／<br>⑩プレゼント：二刀流の 1枚地図 ＋ 運転台配布 ── 「クリエイティビティ 3層の "完全組み込み" の実物例＝運転台」を証左として渡し「あなたも作ってみませんか」へ繋ぐ（<code>transcript 01:08:23〜01:13:32</code>）</td><td>transcript iaU887PLrHmG（14 区切りの該当区間を持ち込む）＋ 地図 03</td><td>—</td><td>仮</td></tr>
+<tr><td class="num">3</td><td>本体</td><td>1列</td><td>小文字</td><td>↑再生速度を変更できます</td><td>和佐段3</td><td>—</td><td>—</td></tr>
+<tr><td class="num">4</td><td>本体</td><td>1列</td><td>ボタン</td><td>「今すぐフロント（4回の基礎動画）に参加する」／小文字：<b>30,000円（税込）確定（2026-09-05）</b>のコンテンツ＋特典付き特別オファー <span class="kari-mark">仮</span>（オファー表示は動画尺の 40%〜50% 通過時）</td><td>和佐段3の出し分け構造</td><td>04 <code>https://change.7years.life/page/rnos0kpayUmI</code></td><td>仮</td></tr>
+<tr><td class="num">5</td><td>本体</td><td>1列</td><td>カウントダウン</td><td>特別オファー締切まで... 日／時間／分／秒（登録から <b>5日後の0時</b> で切る）</td><td>和佐段3の実測</td><td>ゼロで 03x <code>https://change.7years.life/page/9hEadJmhVnr8</code> へ強制遷移</td><td>—</td></tr>
+<tr><td class="num">6</td><td>本体</td><td>1列</td><td>ボタン</td><td>今すぐプレゼントを受け取る／小文字：「二刀流の 1枚地図」PDF（脳は AI に委ねる／腹と手は人間に残す）＋ 運転台（untendai）配布ページ ── 運転台はセミナー本編で話した「クリエイティビティ 3層の "完全組み込み" の実物例」＝<b>これが AI で作れる証左</b>としてお渡しし、「あなたも作ってみませんか」へ繋ぐ</td><td>transcript 00:02:11（二刀流の定義）／01:08:23〜01:13:32（クリエイティビティ 3層・完全組み込み）／地図 03 プレゼント（Mits様追記 2026-09-05）</td><td>プレゼントPDF <span class="kari-mark">仮</span>（S3 URL は Mits様アップ後に確定） ／ 運転台配布 <code>https://change.7years.life/page/oHtrsl52qpXg</code></td><td>仮</td></tr>
+<tr><td class="num">7</td><td>本体</td><td>1列</td><td>文章</td><td>この動画には視聴期限があります。視聴期限終了まで残り...</td><td>和佐段3</td><td>—</td><td>—</td></tr>
+<tr><td class="num">8</td><td>本体</td><td>1列</td><td>カウントダウン</td><td>#5 と同じ残り時間（丸型のもう1個）</td><td>和佐段3</td><td>ゼロで 03x <code>https://change.7years.life/page/9hEadJmhVnr8</code></td><td>—</td></tr>
+<tr><td class="num">9</td><td>本体</td><td>1列</td><td>文章</td><td>こちらのカウントがゼロになると、無料公開期間は終了となります。</td><td>和佐段3</td><td>—</td><td>—</td></tr>
+<tr><td class="num">10</td><td>本体</td><td>1列</td><td>大見出し</td><td>※必ず最後までご覧ください／動画を（オファー表示ポイント）まで観ると／こちらに<b>プレゼント</b>と<b>特別オファー</b>が表示されます</td><td>和佐段3</td><td>—</td><td>—</td></tr>
+<tr><td class="num">11</td><td>本体</td><td>1列</td><td>画像</td><td>下向き矢印の GIF（幅20%・オファー表示前だけ出る）</td><td>和佐段3</td><td>—</td><td>—</td></tr>
+<tr><td class="num">12</td><td>下端</td><td>1列</td><td>リンク</td><td>特定商取引法にもとづく表記 ／ プライバシーポリシー ／ Copyright © Mits株式会社</td><td>UTAGE 既定</td><td>—</td><td>—</td></tr>
+</tbody>
+</table></div>
+
+<!-- ============ 03x ============ -->
+<h3 id="dan-03x">03x　03の期限切れ受け皿（step <code>Zw1A5aixknp0</code> / page <code>9hEadJmhVnr8</code>）</h3>
+<div class="role">和佐の対応：期限切れの1枚。<b>同じ形</b>（地図の指示）。動画の視聴期限を過ぎた人が飛ばされる先。次のチャンスの受付だけ用意する。</div>
+<p>公開URL：<code>https://change.7years.life/page/9hEadJmhVnr8</code></p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>#</th><th>section</th><th>row/col</th><th>要素</th><th>入る文字</th><th>出典</th><th>行き先</th><th>印</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>本体</td><td>1列</td><td>大見出し</td><td>公開は終了しました。また次のチャンスをお待ちください。</td><td>和佐 <code>/p/iud22ZyTOplT</code> の文言そのまま</td><td>—</td><td>—</td></tr>
+<tr><td class="num">2</td><td>本体</td><td>1列</td><td>文章</td><td>「1人型起業家のためのAIエージェント経営 第0章」の無料視聴期間は終了しました。次回開催のご案内をご希望の方は、下記からご登録ください。</td><td>和佐 期限切れの型</td><td>—</td><td>—</td></tr>
+<tr><td class="num">3</td><td>本体</td><td>1列</td><td>フォーム</td><td>メール1欄＋ボタン「次回開催の案内を受け取る」 <b>確定（2026-09-05）</b></td><td>和佐との差分（次回リスト取り）・Mits様確定 2026-09-05</td><td>受け皿シナリオ（新設・名前は投入時に『和佐式_次回案内』の形で付ける）</td><td>確定</td></tr>
+<tr><td class="num">4</td><td>下端</td><td>1列</td><td>リンク</td><td>特定商取引法にもとづく表記 ／ プライバシーポリシー</td><td>UTAGE 既定</td><td>—</td><td>—</td></tr>
+</tbody>
+</table></div>
+
+<!-- ============ 04 ============ -->
+<h3 id="dan-04">04　オファーLP（本編）（step <code>glLUOrmwkpAc</code> / page <code>rnos0kpayUmI</code>）</h3>
+<div class="role">和佐の対応：段4 完全版セールスレター（CTA6回・締切カウント6回・お客様の声14件・返金保証）。我が社では、<b>フロント商品＝AIグルコン講座で実際にやった4回の基礎動画を「コンテンツとして」売る</b>（グルコン抜き）。20,000〜40,000円レンジで<span class="kari-mark">仮</span> 30,000円。実効価格の根拠：3ヶ月 140,000円 ＝ グルコン付き月あたり約45,000円 → グルコン無しで30,000〜40,000円。</div>
+<p>公開URL：<code>https://change.7years.life/page/rnos0kpayUmI</code></p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>#</th><th>section</th><th>row/col</th><th>要素</th><th>入る文字</th><th>出典</th><th>行き先</th><th>印</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>ヘッダー</td><td>1列</td><td>画像</td><td>大見出し画像「1人型起業家のためのAIエージェント経営 ── 4回の基礎動画 フロント版」／小見出し「100時間で経営にAIエージェントを使えるようになる、トンカチ・ノコギリの4回」<span class="kari-mark">仮</span>（画像制作 Mits様指示待ち）</td><td>地図（04の中身）</td><td>—</td><td>仮</td></tr>
+<tr><td class="num">2</td><td>ヘッダー</td><td>1列</td><td>画像</td><td>値札画像「4回の基礎動画（コンテンツ版）／<b>通常 45,000円 → 今だけ 30,000円（税込）確定（2026-09-05）</b>」<span class="kari-mark">仮</span>（値札画像の制作のみ）</td><td>地図（定価→割引型で確定・Mits様確定 2026-09-05）</td><td>—</td><td>仮</td></tr>
+<tr><td class="num">3</td><td>ヘッダー</td><td>1列</td><td>カウントダウン</td><td>特別価格の締切まで... 日／時間／分／秒。下に「※カウントがゼロになった時点でこのページにはアクセスできなくなります」</td><td>和佐段4</td><td>ゼロで 04x <code>https://change.7years.life/page/EdPWoFiPcMNJ</code></td><td>—</td></tr>
+<tr><td class="num">4</td><td>ヘッダー</td><td>1列</td><td>ボタン</td><td>≫ 4回の基礎動画を今すぐ手に入れる（買うボタン①・緑）</td><td>和佐段4</td><td><code>#</code>（同ページ内に 05 の重ね窓を開く）</td><td>—</td></tr>
+<tr><td class="num">5</td><td>本編</td><td>1列</td><td>見出し</td><td>第0章はいかがでしたか？　最初からコードを触って、2ヶ月で 100時間 ── AIエージェント経営（＝AIスタッフさん経営）に立てるようになる、その入口の 4回です。</td><td>transcript 01:17:00（最初からコードを触って 2ヶ月で 100時間）／01:19:16（FBAS でエージェント）／00:00:07（コワークではもう経営はできない）</td><td>—</td><td>—</td></tr>
+<tr><td class="num">6</td><td>本編</td><td>1列</td><td>文章</td><td>どうも、西田です。コワークではもう経営はできない ── これが僕が 800時間 触ってきて出した結論です。だからコード一択。この 4回で、コードを使って AIエージェントを「AIスタッフさん」として動かす、その入口に立てるようになります。<br><br><b>いま、危機感の中身を先に言っておきます。</b>Mits様の原文で（<code>transcript 00:45:21〜00:45:30</code>）「もう仕事どんどんなくなってるはずですよね／だって僕ら頼まない／頼んだことないですよね／AI作ってくれるから」。（<code>00:47:57〜00:48:04</code>）「一人型とか小さい企業とか、言うと400万人ぐらい／こういうところって、いろんな危機感を持っているので／もっと早いじゃないですか／僕は2年で」。（<code>00:59:21〜00:59:43</code>）「顧客リスト内のコンバージョンは落ちるに決まってるじゃないですか／今まで10人に1人だったのが／100人に1人しか買ってくれなくなる／AI時代まだ誰も経験してないので、何が当たるかさっぱりわからない」。<b>ただ、これは悲痛な生き残りではありません。</b>（<code>00:02:48〜00:03:10</code>）「ちょっと悲痛な感じの生き残りじゃなくて／せっかくこんなチャンスみたいな感じ／事業を大きくできるチャンスだったりとか」。<br><br>2ヶ月で 100時間。8週間ですから 1週間で 12時間。1日せいぜい 1〜2時間、多くても 2〜3時間。しかも、今使ってる仕事を「これ AI でできないかな」と考える時間で足ります。<b>新たに勉強時間を作れとは 1ミリも言いません。</b>週 4〜5日 × 8週間 ＝ 40日、2時間ずつで 80時間。このぐらい使ってれば、AIエージェント経営はできるようになります。</td><td>transcript 00:00:07（コワーク結論）／02:11（コード大前提）／27:20（AIスタッフさん）／01:17:00〜01:19:57（100時間・週12時間・仕事中に）＋ レジメPDF 2-3 招待（同じ数字）</td><td>—</td><td>—</td></tr>
+<tr><td class="num">7</td><td>本編</td><td>1列</td><td>見出し</td><td>4回の内訳</td><td>LP <code>lp_v8pQL82x2Am1_local_koe_bpa_20260903.html</code> Q&amp;A A2</td><td>—</td><td>—</td></tr>
+<tr><td class="num">8</td><td>本編</td><td>1列</td><td>箇条書き</td><td>講義#1〜#4 の <b>90分〜120分程度の動画</b>（過去のグループ講座・コンサルティングのブレイクアウトタイム等を編集した本編）＋ <b>準備動画</b>＋ <b>AIエージェント基本講座</b>＋ <b>Claude Code 基本設定動画</b>＋ たくさんの資料</td><td>LP Q&amp;A A2＋A1</td><td>—</td><td>—</td></tr>
+<tr><td class="num">9</td><td>本編</td><td>1列</td><td>見出し</td><td>受講中の方の声</td><td>LP element_id=12</td><td>—</td><td>—</td></tr>
+<tr><td class="num">10</td><td>本編</td><td>1列</td><td>声10名</td><td>①高田 昇浩さん「AIに任せりゃいい」を、僕がボトルネックで止めていた／②大高 邦男さん 事故ってためていくのも大事。エージェントチームを、やり始めた／③森田 悦章さん 頭では分かっていても、やれないのが、もどかしかった／④足立 直樹さん エージェントとサブエージェントのチームが今、動いている／⑤鈴木 深貴さん「はっきり言いすぎない」プロンプト、それでいいのかと衝撃だった／⑥田中 祐介さん オーナーさんが「欲しいとも思っていなかった」ものが、自動で1枚に／⑦渡邉 秀美さん 別の高額な講座では全く身につかなかった。ここでは、2時間で動くプログラムが／⑧川田 岳史さん 会計 丸1日が、翌月には3時間で終わった／⑨杉浦 元記さん 作業効率が増える、じゃなく、革命レベルで変わっていく／⑩山口 桃子さん「AI秘書30万円」の焦り。でも、この価格は絶対に安いと思った。<b>各声にはビフォー→アフター→「なぜそうなったか」（講座の側の何が効いてそうなったか）が必ず入る</b></td><td>LP element_id=12（本番LPに載っている10名の短文）</td><td>—</td><td>—</td></tr>
+<tr><td class="num">11</td><td>本編</td><td>1列</td><td>見出し</td><td>動画版の声（相談者ご本人が語る）</td><td>LP element_id=12 続き</td><td>—</td><td>—</td></tr>
+<tr><td class="num">12</td><td>本編</td><td>2列</td><td>動画カード10枚</td><td>高田 昇浩さん 0:53／大高 邦男さん 0:52／森田 悦章さん 0:30／足立 直樹さん 0:38／鈴木 深貴さん 1:02／田中 祐介さん 0:44／渡邉 秀美さん 0:41／川田 岳史さん 1:00／杉浦 元記さん 1:02／（山口さんは動画なし）</td><td>LP の動画カード（UTAGE video IDs 実在）</td><td>—</td><td>—</td></tr>
+<tr><td class="num">13</td><td>本編</td><td>1列</td><td>見出し</td><td>受講中に、こういうことが「できる」ようになる</td><td>LP</td><td>—</td><td>—</td></tr>
+<tr><td class="num">14</td><td>本編</td><td>1列</td><td>文章</td><td>会計の月次が丸1日→3時間／月次レポートが全部AIで1枚に／2時間で動くプログラム／エージェントのチームが動く／営業の自動化・業務効率化に着手／「絶対にできる」の確信で指示が出せる ── これらは、受講中の方が実際に手に入れているものです。<b>全部、4回の基礎の上に立っています。</b></td><td>LP 受講中の方の声 抜粋</td><td>—</td><td>—</td></tr>
+<tr><td class="num">15</td><td>本編</td><td>1列</td><td>値段</td><td>今回、この <b>4回の基礎動画(コンテンツ版)</b> を、<s>通常 45,000円</s> → <b>30,000円(税込)</b>でお渡しします。<b>定価→割引型で確定(2026-09-05)</b></td><td>地図（定価→割引型で確定・Mits様確定 2026-09-05）</td><td>—</td><td>確定</td></tr>
+<tr><td class="num">16</td><td>本編</td><td>1列</td><td>特典</td><td>特典① Claude Code の基本設定動画（申込直後に配信）／特典② AIエージェント基本講座（申込直後に配信）／特典③ レポートmits の月次配信の閲覧権 <span class="kari-mark">仮</span></td><td>LP 基本特典3つ＋地図（レポートmits を特典に）</td><td>—</td><td>仮</td></tr>
+<tr><td class="num">17</td><td>本編</td><td>1列</td><td>返金保証</td><td>視聴期間終了後、2日以内に、専用の返金フォームから申請可能。条件① 4回の講義動画をすべて最後まで観ること　条件② 各回のワーク（1つ10分）を提出していること <span class="kari-mark">仮</span>（保証条件を Mits様が確定）</td><td>和佐段4の型（我が社は Mits様確定）</td><td>—</td><td>仮</td></tr>
+<tr><td class="num">18</td><td>申込①〜⑤</td><td>1列</td><td>反復ブロック</td><td>「お申込みはこちら」の見出し＋値札画像＋緑ボタン「≫ 4回の基礎動画を今すぐ手に入れる」＋カウントダウン＋締切注記、を<b>ページ内に計5回くり返す</b>（買うボタンは #4 と合わせて全6個）。合間に短い本文（① 「一人型で経営をする、あなたに」／② 「2ヶ月で 100時間、ここで開けます」／③ 「AIエージェント経営は 2年で全員が終わっている ── その入口の 4回」／④ 「今のカウントがゼロになる前に」／⑤ 「決めるのは、あなたです」）を挟む</td><td>和佐段4の反復構造＋ transcript 00:00:15（一人型で経営）／01:17:00（2ヶ月で100時間）／00:48:30（2年で全員終わっている）</td><td>全て <code>#</code>（05 の重ね窓）</td><td>—</td></tr>
+<tr><td class="num">19</td><td>Q&amp;A</td><td>1列</td><td>折りたたみ</td><td>Q1 AI初心者でも大丈夫？／Q2 動画の配信ペースは？／Q3 グルコンは付きますか？（付きません。付ける場合はバックエンドをご案内します）／Q4 対応デバイスは？／Q5 Claude Code Max は必須ですか？／Q6 決済方法と申込後の流れ／Q7 返金の条件／Q8 期限切れ後の再受講／Q9 コミュニティ／Q10 質問はどこでできる？</td><td>LP Q&amp;A 構造</td><td>—</td><td>—</td></tr>
+<tr><td class="num">20</td><td>PS</td><td>1列</td><td>文章</td><td>追伸。1人型起業家はそんなに雇わないので、2人としても、時給1,000円で <b>1,000円 × 6時間 × 2人 ＝ 12,000円/日</b>。25日稼働なら30万円ですね。この講座の投資で、向こう2年は有効なコスト節約です。しかも、これだけの「AI社員さん」が<b>「攻めて」稼ぎ出すお金は、まだ計算に入っていません</b>。</td><td>LP 追伸ブロック</td><td>—</td><td>—</td></tr>
+<tr><td class="num">21</td><td>下端</td><td>1列</td><td>リンク</td><td>特定商取引法にもとづく表記 ／ プライバシーポリシー ／ Copyright © Mits株式会社</td><td>UTAGE 既定</td><td>—</td><td>—</td></tr>
+<tr><td class="num">補</td><td>申込直</td><td>1列</td><td>申込フォーム（ページ埋め込み）</td><td>#18 の反復ブロックの末尾に、重ね窓を開かず <b>お名前・メール・電話番号・カード欄</b> をこのページの下端に直接置く。<b>同じ1枚の中で見せて売って決済まで済ませる形</b>（本行を採る場合は 05 の重ね窓を廃止）</td><td>みかみ /p/BDDVNnsFzVO9（第4部 4-3 オファーLP 行）</td><td>08 <code>https://change.7years.life/page/9VYCc1zf6rAI</code></td><td>みかみ型（補足候補）</td></tr>
+</tbody>
+</table></div>
+
+<!-- ============ 05 ============ -->
+<h3 id="dan-05">05　申込フォーム（04の中に開く重ね窓・別URLなし）</h3>
+<div class="role">和佐の対応：段5 重ね窓の申込フォーム。<b>同じ形</b>。<b>商品はまだ登録しない。ボタンは置く</b>（地図の指示）。<b>抱き合わせ（「まとめて注文する」）は置かない（Mits様確定 2026-09-05）</b> ── 和佐の段5にある抱き合わせブロックは我が社では採用しない。</div>
+<div class="tbl-wrap"><table>
+<thead><tr><th>#</th><th>section</th><th>row/col</th><th>要素</th><th>入る文字</th><th>出典</th><th>行き先</th><th>印</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>重ね窓</td><td>1列</td><td>見出し</td><td>お申込みフォーム</td><td>和佐段5</td><td>—</td><td>—</td></tr>
+<tr><td class="num">2</td><td>重ね窓</td><td>1列</td><td>値段</td><td><s>通常 45,000円(税込)</s> → 特別価格 <b>30,000円(税込)</b> ── <b>定価→割引型で確定(2026-09-05)</b></td><td>#04-15 と一致・Mits様確定 2026-09-05</td><td>—</td><td>確定</td></tr>
+<tr><td class="num">3</td><td>重ね窓</td><td>1列</td><td>中身の再掲</td><td>4回の基礎動画（各回 90〜120分）＋準備動画＋AIエージェント基本講座＋Claude Code 基本設定動画</td><td>#04-8</td><td>—</td><td>—</td></tr>
+<tr><td class="num">4</td><td>重ね窓</td><td>1列</td><td>注記</td><td>「@iCloud.com／@mac.com／@hotmail.com／@outlook.com のメールアドレスはご利用頂けません。GmailやYahooのアドレスを推奨です。」</td><td>和佐段5・段7 と同文</td><td>—</td><td>—</td></tr>
+<tr><td class="num">5</td><td>重ね窓</td><td>1列</td><td>入力欄</td><td>お名前（必須）／メールアドレス（必須）</td><td>和佐段5</td><td>—</td><td>—</td></tr>
+<tr><td class="num">6</td><td>重ね窓</td><td>1列</td><td>支払い方法</td><td>「フロント 4回の基礎動画（カード決済）」<b>30,000円 確定（2026-09-05）</b>／「同（銀行振込）」<b>30,000円 確定（2026-09-05）</b> の2択<span class="kari-mark">仮</span>（<b>商品は UTAGE にまだ登録しない。ここはボタンとフォーム枠のみ置く</b>）</td><td>地図（商品未登録・ボタンは置く）</td><td>—</td><td>仮</td></tr>
+<tr><td class="num">7</td><td>重ね窓</td><td>1列</td><td>カード欄</td><td>カード番号／有効期限（月・年）／セキュリティコード（Stripe）</td><td>和佐段5</td><td>—</td><td>—</td></tr>
+<tr><td class="num">8</td><td>重ね窓</td><td>1列</td><td>確定ボタン</td><td>注文を確定する</td><td>和佐段5</td><td>06 <code>https://change.7years.life/page/phyGveupPEcC</code></td><td>—</td></tr>
+</tbody>
+</table></div>
+
+<!-- ============ 04x ============ -->
+<h3 id="dan-04x">04x　04の期限切れ受け皿（step <code>zyEVNKHVp8Qj</code> / page <code>EdPWoFiPcMNJ</code>）</h3>
+<div class="role">和佐の対応：期限切れの1枚。<b>同じ形</b>。04 の申込期限が切れた人が飛ばされる先。</div>
+<p>公開URL：<code>https://change.7years.life/page/EdPWoFiPcMNJ</code></p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>#</th><th>section</th><th>row/col</th><th>要素</th><th>入る文字</th><th>出典</th><th>行き先</th><th>印</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>本体</td><td>1列</td><td>大見出し</td><td>公開は終了しました。また次のチャンスをお待ちください。</td><td>和佐 <code>/p/j7HQis1d7qa6</code> の文言そのまま</td><td>—</td><td>—</td></tr>
+<tr><td class="num">2</td><td>本体</td><td>1列</td><td>文章</td><td>「4回の基礎動画（コンテンツ版）」の特別価格での募集は終了しました。次回開催のご案内をご希望の方は、下記からご登録ください。</td><td>和佐 期限切れの型</td><td>—</td><td>—</td></tr>
+<tr><td class="num">3</td><td>本体</td><td>1列</td><td>フォーム</td><td>メール1欄＋ボタン「次回開催の案内を受け取る」 <b>確定(2026-09-05)</b></td><td>和佐との差分(次回リスト取り)・Mits様確定 2026-09-05</td><td>受け皿シナリオ(新設・名前は投入時に『和佐式_次回案内』の形で付ける)</td><td>確定</td></tr>
+<tr><td class="num">4</td><td>下端</td><td>1列</td><td>リンク</td><td>特定商取引法にもとづく表記 ／ プライバシーポリシー</td><td>UTAGE 既定</td><td>—</td><td>—</td></tr>
+</tbody>
+</table></div>
+
+<!-- ============ 06 ============ -->
+<h3 id="dan-06">06　追加オファー（一度限り・半額）（step <code>Ty1IEZQLUfQC</code> / page <code>phyGveupPEcC</code>）</h3>
+<div class="role">和佐の対応：段6 決済直後の追加売り込み（27,500円・定価55,000円の半額・1クリック決済・断るリンクなし・カウントダウン0・「一度限り」判定はブラウザ Cookie 1個）。我が社では、<b>バックエンド＝グルコン</b>を売ってもいい／または、いまグループ講座LPのアップセルに付いている「<b>50,000円で3回個別相談</b>」を打ってもいい（地図の指示）。<b>案 A：グルコン（バックエンド）／案 B：3回個別相談 50,000円</b>。ここでは案Aで仮組み。</div>
+<p>公開URL：<code>https://change.7years.life/page/phyGveupPEcC</code></p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>#</th><th>section</th><th>row/col</th><th>要素</th><th>入る文字</th><th>出典</th><th>行き先</th><th>印</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>ヘッダー</td><td>1列</td><td>進行バー</td><td>※まだこのページを閉じないでください</td><td>和佐段6</td><td>—</td><td>—</td></tr>
+<tr><td class="num">2</td><td>ヘッダー</td><td>1列</td><td>見出し（黄地）</td><td>※これは一度限りの特別オファーです</td><td>和佐段6</td><td>—</td><td>—</td></tr>
+<tr><td class="num">3</td><td>本文</td><td>1列</td><td>大見出し</td><td>4回で「使える」ようになった。次は「100時間で経営そのものを変える」ステージへ。<b>バックエンド＝グルコン 確定（2026-09-05）</b>を、いま参加された方だけの半額でご案内します。</td><td>地図（グルコン確定）</td><td>—</td><td>—</td></tr>
+<tr><td class="num">4</td><td>本文</td><td>1列</td><td>商品名</td><td>1人型起業家のためのAIエージェント経営 <b>グルコン 確定（2026-09-05）</b>（バックエンド） 3ヶ月プラン</td><td>LP 3ヶ月プラン</td><td>—</td><td>—</td></tr>
+<tr><td class="num">5</td><td>本文</td><td>1列</td><td>見出し（黄マーカー）</td><td>今だけ「半額」オファー</td><td>和佐段6</td><td>—</td><td>—</td></tr>
+<tr><td class="num">6</td><td>本文</td><td>1列</td><td>見出し（紺帯）</td><td>4回の基礎の先で、あなたに何が起こるのか</td><td>—（新規）</td><td>—</td><td>—</td></tr>
+<tr><td class="num">7</td><td>本文</td><td>1列</td><td>文章</td><td>どうも、西田です。この度は「4回の基礎動画」へのお申込み、ありがとうございます。このページはいわゆる「ワンタイムオファー」です。このページを閉じてしまうと、二度と半額では表示されません。</td><td>和佐段6 冒頭の型</td><td>—</td><td>—</td></tr>
+<tr><td class="num">8</td><td>本文</td><td>1列</td><td>箇条書き</td><td>グルコンで手に入るもの ── ①3週間毎に開催のグループ講座（火曜夜／水曜午前／水曜午後の3枠・都合のよいタイミングで自由参加・期間中何回でも参加可能）／②コミュニティ（会員サイト）で質問を受付し西田から動画で回答／③個別の事業設計に踏み込んだ質問は【AI活用オーダーメードコンサルティング（45分）】で対応（早期特典）／④100時間の投じ方を伴走／⑤AI社員を育てて、経営に使う</td><td>LP Q&amp;A A3・A5＋LP 特典</td><td>—</td><td>—</td></tr>
+<tr><td class="num">9</td><td>本文</td><td>1列</td><td>見出し（紺帯）</td><td>正直、この価格で出すのは今回だけです。</td><td>和佐段6</td><td>—</td><td>—</td></tr>
+<tr><td class="num">10</td><td>本文</td><td>1列</td><td>値段</td><td><s>通常 176,000円（3ヶ月・約$1,100）</s> → ワンタイムで半額 <b>88,000円（税込）</b><span class="kari-mark">仮</span>（Mits様が価格確定）</td><td>LP 3ヶ月 $1,100（約17万6,000円）</td><td>—</td><td>仮</td></tr>
+<tr><td class="num">11</td><td>本文</td><td>1列</td><td>見出し（紺帯）</td><td>半額でお渡しできるのは、このページを開いている「今」だけです。</td><td>和佐段6</td><td>—</td><td>—</td></tr>
+<tr><td class="num">12</td><td>本文</td><td>1列</td><td>文章</td><td>このページを一度閉じてしまえば、次は<b>定価176,000円でのご案内</b>になります。<span class="kari-mark">仮</span></td><td>和佐段6 の型</td><td>—</td><td>仮</td></tr>
+<tr><td class="num">13</td><td>申込①</td><td>1列</td><td>注文ボタン</td><td>今すぐ半額オファーに申込む／小文字：「AIエージェント経営 グルコン（3ヶ月）」を手に入れる</td><td>和佐段6</td><td>08 <code>https://change.7years.life/page/9VYCc1zf6rAI</code></td><td>—</td></tr>
+<tr><td class="num">14</td><td>申込①</td><td>1列</td><td>注記</td><td>※この注文はワンクリック(タップ)で完了します。再度情報入力の手間は要りません。</td><td>和佐段6</td><td>—</td><td>—</td></tr>
+<tr><td class="num">15</td><td>申込①</td><td>1列</td><td>リンク（細字）</td><td>＜銀行振込をご希望の場合はこちら＞</td><td>和佐段6</td><td>07 <code>https://change.7years.life/page/48MHHxQEnTVc</code></td><td>—</td></tr>
+<tr><td class="num">16</td><td>反復②</td><td>1列</td><td>進行バー＋見出し</td><td>#1・#2 と同文（2回目）</td><td>和佐段6</td><td>—</td><td>—</td></tr>
+<tr><td class="num">17</td><td>反復②</td><td>1列</td><td>文章（PS）</td><td>PS. 4回の基礎で「使える」までは、実は誰でも辿り着けます。ここで止まってしまう人と、「経営そのものを変える」まで進む人を分けているのは、能力ではありません。伴走の有無です。あなたには、100時間の投じ方を、伴走して受け取ってほしい。</td><td>—（新規・地図の骨に沿う）</td><td>—</td><td>—</td></tr>
+<tr><td class="num">18</td><td>反復②</td><td>1列</td><td>注文ボタン＋注記＋細字リンク</td><td>#13〜#15 と同じ組をもう1回</td><td>和佐段6</td><td>08 <code>https://change.7years.life/page/9VYCc1zf6rAI</code> ／ 07 <code>https://change.7years.life/page/48MHHxQEnTVc</code></td><td>—</td></tr>
+<tr><td class="num">19</td><td>反復③</td><td>1列</td><td>進行バー＋見出し</td><td>#1・#2 と同文（3回目）</td><td>和佐段6</td><td>—</td><td>—</td></tr>
+<tr><td class="num">20</td><td>下端</td><td>1列</td><td>リンク</td><td>特定商取引法にもとづく表記 ／ プライバシーポリシー ／ Copyright © Mits株式会社</td><td>UTAGE 既定</td><td>—</td><td>—</td></tr>
+<tr><td class="num">21</td><td>仕掛け</td><td>—</td><td>スクリプト</td><td>1回目：Cookie <code>ug_oto_phyGveupPEcC</code> を1年有効で置き、半額ページを見せる／2回目以降：Cookie があるので 06x <code>P0A4FQStsZNu</code> へ強制遷移（和佐と同じ形）</td><td>和佐段6 の実装</td><td>2回目遷移先 06x <code>https://change.7years.life/page/P0A4FQStsZNu</code></td><td>—</td></tr>
+<tr><td class="num">補</td><td>ヘッダー</td><td>1列</td><td>カウントダウン（時計）</td><td>#2 の見出し（黄地）の下に、<b>「このページは30分間限定です。」</b> の一文＋<b>30分の残り時間を1本の時計で数え、ページ上に3〜4本くり返す</b>。閉じ判定（Cookie）に <b>時計の限定</b> を重ねる形</td><td>みかみ /p/2WuXkR9xX2x9（第4部 4-3 追加オファー 行・カウントダウン3本）</td><td>ゼロで 06x <code>https://change.7years.life/page/P0A4FQStsZNu</code></td><td>みかみ型（補足候補）</td></tr>
+</tbody>
+</table></div>
+
+<!-- ============ 06x ============ -->
+<h3 id="dan-06x">06x　2回目・定価（step <code>gHDQjHHBRn6d</code> / page <code>P0A4FQStsZNu</code>）</h3>
+<div class="role">和佐の対応：段6' 定価販売ページ。<b>同じ形</b>。急かす部品を全部外し、断り書きを冒頭に置く。</div>
+<p>公開URL：<code>https://change.7years.life/page/P0A4FQStsZNu</code></p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>#</th><th>section</th><th>row/col</th><th>要素</th><th>入る文字</th><th>出典</th><th>行き先</th><th>印</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>ヘッダー</td><td>1列</td><td>断り書き</td><td>※こちらはワンタイムオファーで案内した「AIエージェント経営 グルコン（3ヶ月）」の定価販売ページです。ワンタイムのチャンスを逃してしまった人はこちらから定価でご購入いただけます。※以下はワンタイムオファーの時と同じ案内になっていますが<b>ワンタイムではないのでご安心ください。</b></td><td>和佐段6'</td><td>—</td><td>—</td></tr>
+<tr><td class="num">2</td><td>本文</td><td>1列</td><td>大見出し</td><td>4回で「使える」ようになった。次は「100時間で経営そのものを変える」ステージへ。<b>バックエンド＝グルコン 確定（2026-09-05）</b>を定価でご案内します。</td><td>#06-3 と同文（「半額」だけ落とす）</td><td>—</td><td>—</td></tr>
+<tr><td class="num">3</td><td>本文</td><td>1列</td><td>商品名</td><td>1人型起業家のためのAIエージェント経営 <b>グルコン 確定（2026-09-05）</b>（バックエンド） 3ヶ月プラン</td><td>#06-4</td><td>—</td><td>—</td></tr>
+<tr><td class="num">4</td><td>本文</td><td>1列</td><td>本文</td><td>#06 の #6〜#12 と同一（「半額」「一度限り」の見出しと文言だけ外す）</td><td>#06 本文</td><td>—</td><td>—</td></tr>
+<tr><td class="num">5</td><td>本文</td><td>1列</td><td>値段</td><td>定価 <b>176,000円（税込）</b><span class="kari-mark">仮</span></td><td>#06-10 の定価</td><td>—</td><td>仮</td></tr>
+<tr><td class="num">6</td><td>申込①</td><td>1列</td><td>ボタン</td><td>グルコン（3ヶ月）を手に入れる</td><td>和佐段6'</td><td><code>#</code>（同ページ内に重ね窓の申込フォームを開く）</td><td>—</td></tr>
+<tr><td class="num">7</td><td>申込①</td><td>1列</td><td>重ね窓</td><td>お申込みフォーム（お名前・メール／支払い方法：カード決済 176,000円／銀行振込 176,000円 の2択／Stripe カード欄）</td><td>和佐段6' の重ね窓</td><td>08 <code>https://change.7years.life/page/9VYCc1zf6rAI</code></td><td>—</td></tr>
+<tr><td class="num">8</td><td>申込②</td><td>1列</td><td>ボタン</td><td>#6 と同じもう1回</td><td>和佐段6'</td><td><code>#</code></td><td>—</td></tr>
+<tr><td class="num">9</td><td>下端</td><td>1列</td><td>リンク</td><td>特定商取引法にもとづく表記 ／ プライバシーポリシー ／ Copyright © Mits株式会社</td><td>UTAGE 既定</td><td>—</td><td>—</td></tr>
+</tbody>
+</table></div>
+
+<!-- ============ 07 ============ -->
+<h3 id="dan-07">07　銀行振込 申込（step <code>bhAw9pgwhj0q</code> / page <code>48MHHxQEnTVc</code>）</h3>
+<div class="role">和佐の対応：段7 銀行振込の注文ページ（部品3個・名前とメールだけ・画像0枚・高さ 557px）。<b>同じ形</b>。</div>
+<p>公開URL：<code>https://change.7years.life/page/48MHHxQEnTVc</code></p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>#</th><th>section</th><th>row/col</th><th>要素</th><th>入る文字</th><th>出典</th><th>行き先</th><th>印</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>本体</td><td>1列</td><td>帯見出し</td><td>「AIエージェント経営 <b>グルコン 確定（2026-09-05）</b>（3ヶ月）」銀行振込注文ページ</td><td>和佐段7</td><td>—</td><td>—</td></tr>
+<tr><td class="num">2</td><td>本体</td><td>1列</td><td>注記（赤）</td><td>※「@iCloud.com」や「@mac.com」や「@hotmail.com」や「@outlook.com」のメールアドレスはご利用頂けません。GmailやYahooのアドレスを推奨です。</td><td>和佐段7 と同文</td><td>—</td><td>—</td></tr>
+<tr><td class="num">3</td><td>本体</td><td>1列</td><td>入力欄＋ボタン</td><td>お名前（必須・プレースホルダ「お名前を入力」）／メールアドレス（必須・プレースホルダ「メールアドレスを入力」・形式はメール専用）／商品：AIエージェント経営 <b>グルコン 確定（2026-09-05）</b>（3ヶ月・銀行振込 <span class="kari-mark">仮</span> 88,000円）／ボタン「注文を確定する」</td><td>和佐段7</td><td>08 <code>https://change.7years.life/page/9VYCc1zf6rAI</code></td><td>仮</td></tr>
+</tbody>
+</table></div>
+
+<!-- ============ 08 ============ -->
+<h3 id="dan-08">08　申込完了（step <code>4sVV30dbBeon</code> / page <code>9VYCc1zf6rAI</code>）</h3>
+<div class="role">和佐の対応：段8 「お申込みありがとうございます。」の1枚（題は空・行き先無し＝経路の終点）。<b>同じ形</b>。</div>
+<p>公開URL：<code>https://change.7years.life/page/9VYCc1zf6rAI</code></p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>#</th><th>section</th><th>row/col</th><th>要素</th><th>入る文字</th><th>出典</th><th>行き先</th><th>印</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>本体</td><td>1列</td><td>大見出し</td><td>お申込みありがとうございます。</td><td>和佐段8 と同文</td><td>—</td><td>—</td></tr>
+<tr><td class="num">2</td><td>本体</td><td>1列</td><td>文章</td><td>ご登録いただいたメールアドレスへ、会員サイトのログイン情報をお送りしています。数分以内に届かない場合は、迷惑メールフォルダをご確認ください。それでも届かない場合は下記までご連絡ください。</td><td>UTAGE 申込完了の一般型</td><td>—</td><td>—</td></tr>
+<tr><td class="num">3</td><td>下端</td><td>1列</td><td>リンク</td><td>お問い合わせ ／ Copyright © Mits株式会社</td><td>UTAGE 既定</td><td>—</td><td>—</td></tr>
+</tbody>
+</table></div>
+
+<!-- ============ メール（みかみ型・補足候補） ============ -->
+<h3>メール（みかみ型・補足候補）</h3>
+<div class="role">段ではないので設計図の末尾に別表で並べる。<b>件名と1行の役割だけ</b>置く（本文は書かない・Mits様が採否と本文を決める）。<b>採るなら、既存のステップメールに重ねて配信する形</b>。</div>
+<div class="tbl-wrap"><table>
+<thead><tr><th>#</th><th>種類</th><th>配信時刻</th><th>件名（案）</th><th>1行の役割</th><th>出典</th><th>印</th></tr></thead>
+<tbody>
+<tr><td class="num">M1</td><td>講義配信</td><td>購入翌日から毎日同時刻（例：朝9:00）</td><td>【第1回】1人型起業家のためのAIエージェント経営 ── トンカチ・ノコギリを持つ</td><td>その日の講義動画の視聴URLを配る（1日1通・4日連続）</td><td>みかみ型（毎日同時刻・4回の基礎動画に対応）</td><td>みかみ型（補足候補）</td></tr>
+<tr><td class="num">M2</td><td>受け取り確認</td><td>M1 の <b>1時間後</b>（例：朝10:00）</td><td>【第1回】受け取れましたか？</td><td>「動画は届きましたか」を重ねて配信・迷惑メール確認の一言＋再送URL</td><td>みかみ型（1時間後の重ね）</td><td>みかみ型（補足候補）</td></tr>
+<tr><td class="num">M3</td><td>講義配信</td><td>翌々日 同時刻</td><td>【第2回】〜</td><td>M1 と同じ型で第2回</td><td>みかみ型</td><td>みかみ型（補足候補）</td></tr>
+<tr><td class="num">M4</td><td>受け取り確認</td><td>M3 の1時間後</td><td>【第2回】受け取れましたか？</td><td>M2 と同じ型</td><td>みかみ型</td><td>みかみ型（補足候補）</td></tr>
+<tr><td class="num">M5</td><td>講義配信</td><td>3日目 同時刻</td><td>【第3回】〜</td><td>M1 と同じ型で第3回</td><td>みかみ型</td><td>みかみ型（補足候補）</td></tr>
+<tr><td class="num">M6</td><td>受け取り確認</td><td>M5 の1時間後</td><td>【第3回】受け取れましたか？</td><td>M2 と同じ型</td><td>みかみ型</td><td>みかみ型（補足候補）</td></tr>
+<tr><td class="num">M7</td><td>講義配信</td><td>4日目 同時刻</td><td>【第4回】〜</td><td>M1 と同じ型で第4回（最終回）</td><td>みかみ型</td><td>みかみ型（補足候補）</td></tr>
+<tr><td class="num">M8</td><td>受け取り確認</td><td>M7 の1時間後</td><td>【第4回】受け取れましたか？</td><td>M2 と同じ型</td><td>みかみ型</td><td>みかみ型（補足候補）</td></tr>
+<tr><td class="num">M9</td><td>期限つき案内</td><td>購入 <b>27日目</b> 同時刻</td><td>【期限のご案内】4回の基礎の先へ ── 次のご案内があります</td><td>バックエンド（グルコン）or 3回個別相談への案内・期限を明記（32日目 24:00 で締切）<span class="kari-mark">仮</span></td><td>みかみ型（27〜32日目の期限つき案内）</td><td>みかみ型（補足候補）</td></tr>
+<tr><td class="num">M10</td><td>期限つき案内</td><td>購入 <b>30日目</b> 同時刻</td><td>【残り2日】次のご案内の締切について</td><td>M9 の再告知・期限までの残り日数を明記</td><td>みかみ型</td><td>みかみ型（補足候補）</td></tr>
+<tr><td class="num">M11</td><td>期限つき案内</td><td>購入 <b>32日目</b> 同時刻</td><td>【本日締切】次のご案内は本日24時までです</td><td>M9 の最終告知・24時で締切</td><td>みかみ型</td><td>みかみ型（補足候補）</td></tr>
+</tbody>
+</table></div>
+
+<hr>
+
+<h2>集計（Mits様への引き渡し用）</h2>
+
+
+
+<h3>Mits様確定（2026-09-05・第1弾＋第2弾）で外れた 13件</h3>
+<div class="tbl-wrap"><table>
+<thead><tr><th>段</th><th>ブロック</th><th>確定内容</th></tr></thead>
+<tbody>
+<tr><td>04</td><td>#15</td><td>フロント価格 30,000円（税込）確定</td></tr>
+<tr><td>06</td><td>#3</td><td>アップセル ＝ グルコン 確定（案A採用・「50,000円で3回個別相談」は取らない）</td></tr>
+<tr><td>06</td><td>#4</td><td>商品名 ＝ AIエージェント経営 グルコン（3ヶ月プラン）確定</td></tr>
+<tr><td>06x</td><td>#2</td><td>大見出し ＝ グルコン定価案内 確定</td></tr>
+<tr><td>06x</td><td>#3</td><td>商品名 ＝ グルコン 確定</td></tr>
+<tr><td>07</td><td>#1</td><td>帯見出し ＝ グルコン 銀行振込注文ページ 確定</td></tr>
+<tr><td>06</td><td>#3 追伸</td><td>案A採用時の追伸文言は 06 #17 で確定に組み込み（案A確定に伴い自動確定）</td></tr>
+<tr><td>04</td><td>#2</td><td>値札画像「通常 45,000円 → 30,000円(税込)」 <b>定価→割引型で確定(第2弾)</b>（値札画像の制作のみ 仮 として残る）</td></tr>
+<tr><td>04</td><td>#15</td><td>値段「通常 45,000円 → 30,000円(税込)」 <b>定価→割引型で確定(第2弾)</b></td></tr>
+<tr><td>05</td><td>#2</td><td>重ね窓 値段「通常 45,000円(税込) → 特別価格 30,000円(税込)」 <b>定価→割引型で確定(第2弾)</b></td></tr>
+<tr><td>05</td><td>#8 削除</td><td>抱き合わせ(まとめて注文する)ブロック <b>置かないで確定(第2弾)</b> ── 表から #8 を削除しブロック数 9→8</td></tr>
+<tr><td>03x</td><td>#3</td><td>受け皿フォーム 確定・行き先＝受け皿シナリオ(新設・投入時に『和佐式_次回案内』の形で命名) <b>確定(第2弾)</b></td></tr>
+<tr><td>04x</td><td>#3</td><td>受け皿フォーム 確定・行き先＝受け皿シナリオ(新設・投入時に『和佐式_次回案内』の形で命名) <b>確定(第2弾)</b></td></tr>
+<tr><td>02</td><td>#3</td><td>LINE ボタンの行き先 ── <b>投入後(シナリオ側で LINE 連携)で確定(第2弾)</b></td></tr>
+<tr><td>01</td><td>役割説明</td><td>登録先＝このファネル専用の新設シナリオ(投入時に作る) <b>確定(第2弾)</b></td></tr>
+</tbody>
+</table></div>
+
+<h3>Mits様が確定する必要のある「仮」印14箇所の一覧（残）</h3>
+<div class="tbl-wrap"><table>
+<thead><tr><th>#</th><th>段</th><th>ブロック</th><th>Mits様が決めること</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>01</td><td>#4</td><td>入口LPに置くオプトイン動画を①〜⑤のどれで初期配置するか（A/B の順番）</td></tr>
+<tr><td class="num">2</td><td>03</td><td>#1</td><td>ヘッダー画像の制作指示</td></tr>
+<tr><td class="num">4</td><td>03</td><td>#2</td><td>動画の想定尺（60〜90分の中で）／撮影スケジュール</td></tr>
+<tr><td class="num">5</td><td>03</td><td>#4</td><td>オファー表示ポイント（動画尺の何%で出すか）</td></tr>
+<tr><td class="num">6</td><td>03</td><td>#6</td><td>プレゼントPDF（二刀流の1枚地図）の中身確定</td></tr>
+<tr><td class="num">8</td><td>04</td><td>#1</td><td>ヘッダー画像の制作指示</td></tr>
+<tr><td class="num">9</td><td>04</td><td>#2</td><td>値札画像の制作指示（定価 45,000円 の表記可否含む）</td></tr>
+<tr><td class="num">10</td><td>04</td><td>#16</td><td>特典の組み合わせ（レポートmits を入れるかを含む）</td></tr>
+<tr><td class="num">11</td><td>04</td><td>#17</td><td>返金保証の条件</td></tr>
+<tr><td class="num">12</td><td>05</td><td>#6</td><td>商品を UTAGE に登録するタイミング（フロント価格自体は 30,000円 確定）</td></tr>
+<tr><td class="num">16</td><td>06</td><td>#10</td><td>価格の確定（半額 88,000円 で仮置き）</td></tr>
+<tr><td class="num">17</td><td>06</td><td>#12</td><td>2回目の定価（176,000円 で仮置き）</td></tr>
+<tr><td class="num">18</td><td>06x</td><td>#5</td><td>定価の確定（176,000円 で仮置き）</td></tr>
+<tr><td class="num">19</td><td>07</td><td>#3</td><td>銀行振込の商品価格（88,000円 で仮置き）</td></tr>
+</tbody>
+</table></div>
+
+<div class="footer">
+/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/_wip/wasa_shiki_zentaizo_sekkeizu_20260905.html
+</div>
+
+</div>
+</body>
+</html>

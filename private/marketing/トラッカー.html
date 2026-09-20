@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI講座オプトイン 〜 2ヶ月コンサル トラッカー｜最終更新 2026-09-04</title>
+<style>
+:root{
+  --navy:#11159f; --navy-deep:#0a0d6b; --gold:#C9A84C; --paper:#faf8f3;
+  --ink:#1a1a1a; --sub:#5f5f5f; --line:#e3ddcd; --card:#ffffff;
+  --p0:#c0392b; --p1:#d68910; --p2:#2471a3; --p3:#7f8c8d; --p9:#1e7a3c;
+  --done:#9a9a9a;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#14161d; --ink:#f0ede6; --sub:#b3aea3; --line:#3a3f4d; --card:#1c1f28;
+    --navy:#8f97ff; --navy-deep:#c9cdff; --gold:#e0c377;
+    --p0:#ff8f7a; --p1:#f0c060; --p2:#79b8e8; --p3:#a9b2b6; --p9:#7bd39a;
+    --done:#8a8a8a;
+  }
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+  line-height:1.8;font-size:17px;padding:0 0 100px;}
+header{background:var(--navy-deep);color:#fff;padding:28px 24px 24px;border-bottom:6px solid var(--gold);}
+header h1{margin:0 0 8px;font-size:21px;letter-spacing:.03em;}
+header .meta{font-size:14px;opacity:.9;}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px;}
+.panel{background:var(--card);border:1px solid var(--line);padding:16px 20px;margin:22px 0;}
+.panel h3{margin:0 0 8px;font-size:19px;color:var(--navy);}
+.panel p, .panel li{font-size:14.5px;color:var(--sub);margin:6px 0;}
+.panel b{color:var(--ink);}
+.counter{font-size:14.5px;color:var(--sub);margin:8px 0 0;}
+.counter b{font-size:19px;color:var(--navy);}
+
+.grp{margin:30px 0 0;border:1px solid var(--line);background:var(--card);}
+.grp > summary{list-style:none;cursor:pointer;padding:13px 18px;font-size:19px;font-weight:700;
+  display:flex;align-items:center;gap:10px;background:rgba(127,127,127,.07);border-left:10px solid var(--gcol);}
+.grp > summary::-webkit-details-marker{display:none;}
+.grp > summary .tri{font-size:14px;color:var(--sub);}
+.grp > summary .cnt{margin-left:auto;font-size:14px;font-weight:400;color:var(--sub);}
+.grp[data-g="s1"]{--gcol:var(--p0);} .grp[data-g="s2"]{--gcol:var(--p0);}
+.grp[data-g="s7"]{--gcol:var(--p0);}
+.grp[data-g="s3"]{--gcol:var(--p1);} .grp[data-g="s4"]{--gcol:var(--p1);}
+.grp[data-g="s5"]{--gcol:var(--p1);} .grp[data-g="s6"]{--gcol:var(--p2);}
+.grp[data-g="s9"]{--gcol:var(--p9);}
+.gbody{padding:6px 16px 16px;}
+.gnote{font-size:14.5px;color:var(--sub);margin:8px 2px 12px;}
+
+.item{display:flex;gap:12px;align-items:flex-start;border-left:7px solid var(--gcol);
+  background:transparent;padding:11px 12px;margin:8px 0;border-bottom:1px solid var(--line);}
+.item input{width:20px;height:20px;margin-top:5px;flex:0 0 auto;cursor:pointer;}
+.item .txt{flex:1 1 auto;min-width:0;}
+.item .lab{font-size:17px;font-weight:600;}
+.item .lab .id{font-family:"SF Mono",Menlo,monospace;font-size:14px;color:var(--sub);font-weight:400;margin-right:8px;}
+.item .lab .tag{display:inline-block;font-size:13px;color:var(--navy);background:rgba(201,168,76,.2);
+  padding:1px 8px;margin-right:8px;font-weight:700;}
+.item .sub{font-size:14.5px;color:var(--sub);margin-top:3px;}
+.item .sub code{font-family:"SF Mono",Menlo,monospace;font-size:13.5px;background:rgba(127,127,127,.14);padding:1px 5px;}
+.item.on .lab, .item.on .sub, .item.on .taisha, .item.on .blank{text-decoration:line-through;color:var(--done);}
+.item.on .lab .tag{opacity:.5;}
+.taisha{font-size:14px;color:var(--sub);margin-top:5px;border-left:4px solid var(--line);
+  background:rgba(127,127,127,.06);padding:5px 10px;}
+.taisha b{color:var(--ink);}
+.blank{font-family:"SF Mono",Menlo,monospace;font-size:14px;color:var(--sub);margin-top:5px;line-height:2.1;white-space:pre-line;}
+
+.donebox{margin:10px 0 0;}
+.donebox > summary{list-style:none;cursor:pointer;font-size:14.5px;color:var(--sub);padding:7px 4px;}
+.donebox > summary::-webkit-details-marker{display:none;}
+
+.siryo{margin:34px 0 0;border:1px solid var(--line);background:var(--card);padding:16px 20px;}
+.siryo h3{margin:0 0 6px;font-size:19px;color:var(--navy);}
+.siryo ul{margin:8px 0 0;padding-left:20px;}
+.siryo li{font-size:14.5px;margin:5px 0;}
+.siryo a{color:var(--navy);}
+footer{max-width:1000px;margin:36px auto 0;padding:0 20px;font-size:13.5px;color:var(--sub);}
+@media(max-width:720px){body{font-size:16px;} .item .lab{font-size:16px;}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>AI講座オプトイン 〜 2ヶ月コンサル　トラッカー</h1>
+  <div class="meta">Mits様のホワイトボードの図の段ごとに並べています ／ The Innovation ／ 最終更新 2026-09-04</div>
+</header>
+
+<div class="wrap">
+
+<div class="panel">
+  <h3>この紙の読み方</h3>
+  <p>束は、<b>Mits様がホワイトボードに描かれた図の段</b>で分かれています。①AI講座オプトイン ②サンクス ③OTO BE-02 ④体験セミナー ⑤BE-02 ⑥円柱と2ヶ月コンサル ⑦フォローメール。</p>
+  <p><b>Mits様の指示は2行です ── 「全部　既存を使い回さない　新設」「材料は流用する」。</b>ファネルは新しく作ります。既存のファネル（F0-01 <code>wxjxoJwlZlQ6</code> ／ F0-04 <code>ITXrzQTAcshE</code> ／ BE-02 <code>h4u4ymLB6NMl</code>）には手を入れません。中の材料だけを流用します。</p>
+  <p><b>名前の左にある記号（n01 など）は、ただの通し番号です。分類の意味はありません。覚えなくて構いません。</b>番号の隣に一語の摘要（置き場・撮影・記入待ち …）が出ているので、そちらで見分けてください。</p>
+  <p><b>印（🔴🟡🔵🟢）は、いつやるかだけを表します。</b>判断を待っている項目は印では表さず、名前の頭に <span style="background:rgba(201,168,76,.2);padding:1px 6px;font-weight:700;color:var(--ink)">【Mits様判定】</span> と書いてあります。</p>
+  <p>済んだものは消しません。チェックを入れると、その場に取消線とグレーで残ります。済んだ束は初めから畳んであります。</p>
+  <p class="counter">全部で <b id="total">0</b> 件 ／ 済 <b id="donecnt">0</b> 件</p>
+</div>
+
+<div id="board"></div>
+
+<div class="siryo">
+  <h3>資料の棚</h3>
+  <p style="font-size:14.5px;color:var(--sub);margin:0">この紙と同じ場所から辿れます。<b id="siryocnt">0</b> 本。</p>
+  <ul id="siryolist"></ul>
+</div>
+
+</div>
+
+<footer>
+  この紙の絶対パス：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/optin_funnel_トラッカー_20260904.html<br>
+  チェックの状態はこの端末のブラウザに保存されます（別の端末には引き継がれません）。
+</footer>
+
+<script>
+var GROUPS = [
+  {g:"s1", mark:"🔴", pri:"P0", name:"段1　AI講座 オプトイン（入口・DL 無料講座）",
+   note:"新しいファネルを1本立てます。台本5本は書き上がっていますが、撮影も、載せる場所も、まだありません。既存の F0-01・F0-04 は参照するだけで、使い回しません。"},
+  {g:"s2", mark:"🔴", pri:"P0", name:"段2　サンクス（20分くらいの動画／体験セミナー／カレンダー）",
+   note:"Mits様の図では、この1枚に3つ載ります。20分くらいの動画・体験セミナーの案内・日程を選ぶカレンダー。体験セミナーの行から右へ OTO、カレンダーから下へ体験セミナー本番へ抜けます。"},
+  {g:"s7", mark:"🔴", pri:"P0", name:"段7　フォローメール（他社の型を左に置き、我が社の欄を埋める）",
+   note:"他社（みかみ｜本質のSNSマーケター admin@snsers.com）から Mits様に届いた16通を、Gmail の実機で全件取り出しました。時刻は日本時間。本文はまだ1通も開いていません。左に他社の時刻と件名、下に我が社の欄。件名も本文も写さず、時刻の置き方だけを見ます。"},
+  {g:"s3", mark:"🟡", pri:"P1", name:"段3　OTO　BE-02（買った直後に1回だけ出す案内）",
+   note:"我が社にこのページの前例はありません。BE-02 ファネルの8ステップを 2026-09-04 に funnel_step_list で全件実測して確認済み。"},
+  {g:"s4", mark:"🟡", pri:"P1", name:"段4　体験セミナー（実際の開催）",
+   note:"Mits様の図では、この箱から右へ矢印が伸びていますが、その先は空欄です。埋めません。"},
+  {g:"s5", mark:"🟡", pri:"P1", name:"段5　BE-02（AIエージェント経営 2ヶ月グルコン）",
+   note:"この道から来た人が着地するレターを、新しいファネルに1枚作ります。本文は既存の本番 LP から流用します。"},
+  {g:"s6", mark:"🔵", pri:"P2", name:"段6　円柱（⚠️ 未確認） → 2ヶ月コンサル",
+   note:"Mits様の図で、BE-02 から右へ出た線と、OTO BE-02 から下へ降りた線の2本が、円柱の側へ入っています。参謀は円柱の絵の中身を読み取れませんでした。"},
+  {g:"s9", mark:"🟢", pri:"済", name:"もう手元にある材料（流用する分）",
+   note:"新しく作らなくてよいもの。ここに並んでいるのは材料であって、ファネルではありません。既存ファネルは参照するだけで使い回しません。"}
+];
+
+var ITEMS = [
+  // ---------- 段1 ----------
+  {id:"n01", g:"s1", tag:"置き場", lab:"オプトイン用のファネルを1本、新規に立てる",
+   sub:"既存に足さない。2026-09-04 に funnel_list を per_page=100 で引いて42件を全部見た結果、この入口に当たるファネルは無い。直近に作られた3件は 301広告コピー（2026-08-29）／【テスト】経営の運転台_紹介（2026-08-27）／devils-advocate α版 モニター募集（2026-07-26）。"},
+  {id:"n02", g:"s1", tag:"登録欄", lab:"登録ページにメールアドレスの入力欄を置く",
+   sub:"UTAGE の raw_html 型ページに置いたフォームは本番で動かない。elements 型＋form 要素＋js_body 上書きが本番構造（snapshot の F1-XX 共通仕様に記載・⚠️ 本日は未検証）。"},
+  {id:"n03", g:"s1", tag:"配布物", lab:"【Mits様判定】入口で渡す「DL 無料講座」を何にするか",
+   sub:"Mits様の図では、入口の箱の中に「DL 無料講座」と書かれています。中身は空欄。既存の F0-04_AIサポマニュ無料DL ITXrzQTAcshE の配布物を流用するのか、新しく作るのかも含めて経営判断。"},
+  {id:"n04", g:"s1", tag:"撮影", lab:"台本①を撮る（川田 岳史さんの声を使う1本）",
+   sub:"台本は5本とも完成済み。_wip/optin_douga_scenario_1min_20260904.html の SCENARIO ①「AIですごいことができた。でも、仕事の1%」から入る型。1分・顔出し・カメラ正対のワンカット。読み上げ用のプレーン文349字つき。"},
+  {id:"n05", g:"s1", tag:"撮影", lab:"残り4本を撮る（高田さん／渡邉さん／田中さん／森田さん）",
+   sub:"②「AI、学ばなくていい」の逆説から入る（高田 昇浩さん・334字）／③「AIを教えている人が、実は」の意外性から入る（渡邉 秀美さん・349字）／④「毎月、同じ資料を手で作っていませんか」の現場から入る（田中 祐介さん・328字）／⑤「頭では分かってる。でも、やれてない」の感情から入る（森田 悦章さん・325字）。5本は順位ではなく、入り方と使う声を別にした5つの型。"},
+  {id:"n06", g:"s1", tag:"見出し", lab:"【Mits様判定】入口の見出しと、渡すものの言い方",
+   sub:"他社は「参加された方全員に Claude Code のマニュアルセット」と1つだけ明示していました。我が社が何を1つ明示するか。"},
+
+  // ---------- 段2 ----------
+  {id:"n07", g:"s2", tag:"置き場", lab:"サンクスページを1枚、新規に作る",
+   sub:"Mits様の図の【サンクス】。既存のサンクスに追記するのではなく、新しいファネルの中に新しく1枚。"},
+  {id:"n08", g:"s2", tag:"動画", lab:"サンクスに載せる20分くらいの動画を撮る",
+   sub:"Mits様の図には「20分くらい」と書かれています。話す材料は BE-02 レターにあるもの ── AI社員の6つの癖（着手癖・完了癖・捏造癖・詭弁癖・逆委任癖・健忘症）／たたき込み方（アラジンの魔法のランプ法・昭和ブラックスタイル・ぼんやり壁打ち法）。"},
+  {id:"n09", g:"s2", tag:"案内", lab:"体験セミナーの案内をサンクスに載せる",
+   sub:"文面は F0-03_AIエージェント/Claude Code無料体験会 D5lsFe9s3xPx から流用。ファネルは使い回さない。"},
+  {id:"n10", g:"s2", tag:"カレンダー", lab:"日程を選んで予約するカレンダーの枠を作る",
+   sub:"Mits様の図で、サンクスの中の3つ目。ここから下へ、体験セミナー本番へ抜けます。何曜日の何時を何枠出すかは Mits様の判断。"},
+  {id:"n11", g:"s2", tag:"絞り方", lab:"行き先の書き方を、F0-01 サンクスの型で写す",
+   sub:"F0-01 サンクス page 3J7CNvpkChFU（2026-09-04 に funnel_page_get で全文取得）は「★ まず、これだけ。／LINEを、追加してください。／✓ 30秒で終わります」で1本に絞れている。この書き方を写す。"},
+  {id:"n12", g:"s2", tag:"動線", lab:"体験セミナーの行から OTO へ抜ける道を1本引く",
+   sub:"Mits様の図では、サンクスの中の「体験セミナー」の行から右へ矢印が出て、OTO BE-02 に入っています。"},
+
+  // ---------- 段7（フォローメール） ----------
+  {id:"n13", g:"s7", tag:"本文", lab:"他社16通の本文を開いて、1通ずつ役割を確かめる",
+   sub:"いま分かっているのは件名と時刻だけ。何通目で売りに行き、何通目が読み物なのかは、本文を開かないと決まりません。"},
+  {id:"n14", g:"s7", tag:"0分", lab:"買った直後（0分）に、我が社は何を出すか",
+   taisha:"他社 ── 06-28 18:29（0分）／【1日目の講義をお送りします！】", blank:true},
+  {id:"n15", g:"s7", tag:"1分", lab:"購入完了の知らせを、いつ出すか",
+   taisha:"他社 ── 06-28 18:30（1分）／3日間合宿の購入が完了しました！（AI完全攻略）　※講義より後に届いている", blank:true},
+  {id:"n16", g:"s7", tag:"4分", lab:"同じ知らせが2通来る形を、我が社は取るか",
+   taisha:"他社 ── 06-28 18:33（4分）／3日間合宿の購入が完了しました！（AI完全攻略）　※同じ件名の2通目", blank:true},
+  {id:"n17", g:"s7", tag:"1日", lab:"1日後に、我が社は何を出すか",
+   taisha:"他社 ── 06-29 18:32（1日）／【2日目の講義をお送りします！】", blank:true},
+  {id:"n18", g:"s7", tag:"1日1h", lab:"1日1時間後の、受け取らせる列を我が社は置くか",
+   taisha:"他社 ── 06-29 19:34（1日1時間）／【もう受け取りましたか？】あなた専用オリジナル0→100ロードマップ作成中", blank:true},
+  {id:"n19", g:"s7", tag:"2日", lab:"2日後に、我が社は何を出すか",
+   taisha:"他社 ── 06-30 18:36（2日）／【3日目の講義をお送りします！】", blank:true},
+  {id:"n20", g:"s7", tag:"2日1h", lab:"2日1時間後の、もう一度の呼びかけを置くか",
+   taisha:"他社 ── 06-30 19:38（2日1時間）／【もしかして、忘れていませんか？】あなた専用オリジナル0→100ロードマップ配布中", blank:true},
+  {id:"n21", g:"s7", tag:"4日", lab:"4日後に、我が社は何を出すか",
+   taisha:"他社 ── 07-02 14:23（4日）／【暴露】新しいAIモデルがでましたが、あれ意味ないです", blank:true},
+  {id:"n22", g:"s7", tag:"5日", lab:"5日後に、我が社は何を出すか",
+   taisha:"他社 ── 07-03 17:34（5日）／アメリカ政府が止めたAIが、昨日復活しました", blank:true},
+  {id:"n23", g:"s7", tag:"5日夜", lab:"同じ日にもう1通出す形を、我が社は取るか",
+   taisha:"他社 ── 07-03 22:04（5日）／ワールドカップより悔しい、日本の”もう一つの敗北”", blank:true},
+  {id:"n24", g:"s7", tag:"7日", lab:"7日後に、我が社は何を出すか",
+   taisha:"他社 ── 07-05 07:01（7日）／【㊗️】24時間で、600人以上が参加中...💨", blank:true},
+  {id:"n25", g:"s7", tag:"27日", lab:"27日後の、期限つきの押しを我が社は置くか",
+   taisha:"他社 ── 07-25 23:04（27日）／🚨【24時間限定】🚨 みかみのAIノウハウ、5年分あげます", blank:true},
+  {id:"n26", g:"s7", tag:"28日", lab:"28日後の、締切直前の1通を置くか",
+   taisha:"他社 ── 07-26 22:50（28日）／🚨【残り90分で終了...】🚨 みかみのAIノウハウ、5年分あげます", blank:true},
+  {id:"n27", g:"s7", tag:"29日", lab:"29日後に、我が社は何を出すか",
+   taisha:"他社 ── 07-27 22:47（29日）／🚨【あなた専用】🚨 24h働くAI社員、無料で作ります。", blank:true},
+  {id:"n28", g:"s7", tag:"32日", lab:"32日後に、我が社は何を出すか",
+   taisha:"他社 ── 07-30 23:18（32日）／🚨【総額〇〇万円分】🚨 みかみのAIノウハウ、全てあげます", blank:true},
+  {id:"n29", g:"s7", tag:"44日", lab:"44日後に、我が社は何を出すか",
+   taisha:"他社 ── 08-11 23:23（44日）／【人生ゲーム🎲】でボロ負けしました...", blank:true},
+  {id:"n30", g:"s7", tag:"列", lab:"埋まった行を並べて、我が社の列を1本に確定する",
+   sub:"入口で登録した人を、体験セミナーの予約と BE-02 まで運ぶ列。新しいシナリオを1本立てる。既存の F0-01 シナリオ 2JPgrcZIciae には合流させない。"},
+  {id:"n31", g:"s7", tag:"戻し", lab:"予約しなかった人を、もう一度カレンダーへ戻す列を作る",
+   sub:"他社は買わなかった人への列を、件名からは切り分けられません。我が社は、カレンダーで日にちを取る形なので、予約が無い人だけを戻す列が要ります。"},
+
+  // ---------- 段3 ----------
+  {id:"n32", g:"s3", tag:"置き場", lab:"OTO のページを1枚、新規に作る",
+   sub:"BE-02 ファネル h4u4ymLB6NMl の8ステップを 2026-09-04 に funnel_step_list で全件実測（メインレターVer.2 xswhmpKSJJH0 ／ サンクス yUxScVSkUych ／ 日程 ETlpBtYKfHFo ／ 現在地チェック登録 0kSYvbsF3fj1 ／ 現在地チェック_サンクス 84kpdW79ZyAo ／ 何ができる13項目 0KBdVC66r4CZ ／ CoworkとCODEの比較 Z19zzItBYKgr ／ メインステップ HP7g0Lhg2SyY）。買った直後の人だけに見せるページは、この8件の中に無い。"},
+  {id:"n33", g:"s3", tag:"出し方", lab:"1回だけ出す形にする（一度離れたら戻れない作り）",
+   sub:"Mits様の図では、サンクスの体験セミナーの行から右へ抜けた先が OTO です。ここを通るのは1回だけ。"},
+  {id:"n34", g:"s3", tag:"中身", lab:"【Mits様判定】OTO の値段・付けるもの・締め切り",
+   sub:"他社は30分の締め切りを立てていました。写しません。何をいくらで置くかは経営判断。"},
+  {id:"n35", g:"s3", tag:"流用", lab:"BE-02 の売り文句から、OTO に載せる分を抜き出す",
+   sub:"元は _wip/lp_v8pQL82x2Am1_local_koe_bpa_20260903.html。疑似エージェントとリアルエージェントの対比／AI社員の6つの癖／たたき込み方2つ／なぜ100時間か／講義#1〜#4／Q&A 5問／追伸。"},
+
+  // ---------- 段4 ----------
+  {id:"n36", g:"s4", tag:"開催枠", lab:"体験セミナーの開催の枠を作る（日程・入口・当日の進め方）",
+   sub:"運び方は F0-03 D5lsFe9s3xPx から流用。⚠️ 中のステップ構成と付随メール7通のシナリオ tcfsFyqw9Elh は .claude/utage_ids_snapshot.md（最終確認 2026-07-27）の記載で、本日はファネルの実在までしか確認していない。毎時開催の型は F0-02 9BFQgSiVSShz。"},
+  {id:"n37", g:"s4", tag:"連絡", lab:"予約した人への前日・当日の連絡を作る",
+   sub:"文面は BE-02 シナリオ D87uWEktb5EP から流用（2026-09-04 に message_list で実測。7日前／3日前／1日前／翌日を、メールとLINEの2本立て）。"},
+  {id:"n38", g:"s4", tag:"記入待ち", lab:"【Mits様判定】体験セミナーから右へ伸びる矢印の先",
+   sub:"Mits様のホワイトボードでは、この矢印の先は空欄です。参謀は埋めません。"},
+
+  // ---------- 段5 ----------
+  {id:"n39", g:"s5", tag:"レター", lab:"この道から来た人が着地する販売レターを、新しいファネルに1枚作る",
+   sub:"既存の h4u4ymLB6NMl には手を入れない。本文は本番 page v8pQL82x2Am1（https://utage-system.com/page/v8pQL82x2Am1）と、ローカル版 _wip/lp_v8pQL82x2Am1_local_koe_bpa_20260903.html から流用。"},
+  {id:"n40", g:"s5", tag:"サンクス", lab:"申込後のサンクスを1枚作る",
+   sub:"行き先を1本に絞る書き方は F0-01 サンクス 3J7CNvpkChFU の型を写す。既存の BE-02 サンクス UVTQmaKYP0jR は、申込確認メールの案内・The Library の初期パスワード・受講講座2つ・公式LINE・今後の案内が横並びで、どれが最初かがページ側で決まっていない（2026-09-04 に funnel_page_get で全文確認）。"},
+  {id:"n41", g:"s5", tag:"声", lab:"レターに載せる声を、11名の中から選ぶ",
+   sub:"見本は本番 LP の element_id=12 にある3つ（のっさん・kuri さん・Hideki.T さん）。ビフォー → アフター → 何が起きたか が1つの声の中に揃っている形。全文は _wip/koe_bpa_11mei_zenbun.md、動画は /Users/nishidamitsuhiro/Movies/koe_cut_bpa_1nin/ に10本（検収済み・触らない）。"},
+  {id:"n42", g:"s5", tag:"期限", lab:"【Mits様判定】期限の出し方",
+   sub:"いまは講義日程からの逆算（LP の gulconStartDates）。他社は分・秒の秒読みを4本置いていました。どちらを取るかは経営判断。"},
+
+  // ---------- 段6 ----------
+  {id:"n43", g:"s6", tag:"記入待ち", lab:"【Mits様判定】円柱の中身",
+   sub:"⚠️ 未確認。Mits様がホワイトボードに描かれた円柱の絵の中身を、参謀は読み取れませんでした。ここが決まるまで、材料の割り当てもしません。"},
+  {id:"n44", g:"s6", tag:"合流", lab:"OTO BE-02 から降りている線の、合流先を確定する",
+   sub:"Mits様の図では、OTO BE-02 の箱から下へ線が伸びて、円柱の側へ入っています。円柱の中身が決まってから確定します。"},
+  {id:"n45", g:"s6", tag:"案内", lab:"2ヶ月コンサルの案内ページと、申し込みの受け口を作る",
+   sub:"値段と中身は Mits様の経営判断。"},
+
+  // ---------- 済（材料） ----------
+  {id:"n46", g:"s9", tag:"台本", lab:"オプトイン動画の台本5本",
+   sub:"_wip/optin_douga_scenario_1min_20260904.html（2026-09-04 作成）。5本とも別の入り方・別の方の声・1分・読み上げ用のプレーン文つき。"},
+  {id:"n47", g:"s9", tag:"声の動画", lab:"お客様の声の動画10本",
+   sub:"/Users/nishidamitsuhiro/Movies/koe_cut_bpa_1nin/ に 01_takada / 02_otaka / 04_morita / 06_adachi / 10_suzuki / 12_tanaka / 13_watanabe / 15_kawada / 18_yamaguchi / 19_tatsuno の10本。検収済み。触らない。"},
+  {id:"n48", g:"s9", tag:"声の全文", lab:"お客様の声 11名の全文",
+   sub:"_wip/koe_bpa_11mei_zenbun.md。話者名つき・誤変換は ⚠️ で残してある。"},
+  {id:"n49", g:"s9", tag:"販売LP", lab:"BE-02 の販売レター（本番）",
+   sub:"ファネル h4u4ymLB6NMl ／ step xswhmpKSJJH0「BE-02　メインレターVer.2」／ page v8pQL82x2Am1。同じ step にもう1枚 cRGkve6IayiO。2026-09-04 に funnel_step_list ＋ funnel_page_list で実測。文章を流用する元であって、このファネルは使い回さない。"},
+  {id:"n50", g:"s9", tag:"ローカル版", lab:"BE-02 レターのローカル版（お客様の声 BPA版）",
+   sub:"_wip/lp_v8pQL82x2Am1_local_koe_bpa_20260903.html。冒頭に「本番未投入・動画は旧版のまま」と明記されている。値段（2ヶ月 $800 ／ 3ヶ月 通常 $1,000 → $888）・早期特典2つ・基本特典3つ・Q&A 5問が全部入っている。"},
+  {id:"n51", g:"s9", tag:"絞り型", lab:"行き先を1本に絞れているサンクスの見本",
+   sub:"F0-01 サンクス page 3J7CNvpkChFU。2026-09-04 に funnel_page_get で確認。「★ まず、これだけ。／LINEを、追加してください。／✓ 30秒で終わります」のあとに The Library・SKOOL・AI-MITS の3つ。"},
+  {id:"n52", g:"s9", tag:"育成文面", lab:"F0-01 のステップメール15通＋LINE1通の文面",
+   sub:"シナリオ 2JPgrcZIciae。件名は .claude/utage_ids_snapshot.md に全件記載（即時／1日後／2日後／3日後／4日後／5日後／7日後／10日後／14日後／18日後／22日後／28日後／40日後／60日後／85日後・全て 8:00）。⚠️ 本日は API で件数を再確認していない（2026-04-22 構築時の記載）。文面を流用する元であって、この列に合流させない。"},
+  {id:"n53", g:"s9", tag:"日程文面", lab:"BE-02 の講義前後リマインダの文面",
+   sub:"シナリオ D87uWEktb5EP。2026-09-04 に message_list で実測。第3回 8/9 の7日前・3日前・翌日／第4回 8/23 の7日前・1日前・翌日を、それぞれメールとLINEで。"},
+  {id:"n54", g:"s9", tag:"他社実測", lab:"他社のフォローメール16通（件名と時刻）",
+   sub:"admin@snsers.com（みかみ｜本質のSNSマーケター）→ ac_nishida@spro01.com。Mits様の登録と購入は 2026-06-28。2026-09-04 に Gmail の実機で全件取得。時刻は日本時間。本文は未読。"},
+  {id:"n55", g:"s9", tag:"設計図", lab:"他社ファネルの解剖と、我が社の設計図",
+   sub:"_wip/tasha_funnel_kaibou_sekkeizu_20260904.html。第1部＝他社の5段とフォローメール16通、第2部＝Mits様のホワイトボードの図、第3部＝段ごとの新設／流用。"}
+];
+
+var SIRYO = [
+  {f:"_wip/tasha_funnel_kaibou_sekkeizu_20260904.html", t:"他社ファネルの解剖と、我が社の設計図（この紙の対）"},
+  {f:"_wip/optin_douga_scenario_1min_20260904.html", t:"オプトイン動画シナリオ（1分）5本"},
+  {f:"_wip/lp_v8pQL82x2Am1_local_koe_bpa_20260903.html", t:"BE-02 販売レター ローカル版（お客様の声 BPA版・本番未投入）"},
+  {f:"_wip/koe_bpa_11mei_zenbun.md", t:"お客様の声 11名 全文"},
+  {f:"/Users/nishidamitsuhiro/Movies/koe_cut_bpa_1nin/", t:"お客様の声の動画10本（検収済み・触らない）"},
+  {f:"CLAUDE.md", t:"The Innovation プロジェクト指示書（売り物は AI技術ではない・用語ルール・禁止事項）"},
+  {f:"../../../context/persona_master.md", t:"公式ペルソナ"},
+  {f:"../../../.claude/utage_ids_snapshot.md", t:"UTAGE の実ID一覧（最終確認 2026-07-27）"}
+];
+
+(function(){
+  var KEY_CHECK = "optin_funnel_tracker_wb_check";
+  var KEY_OPEN  = "optin_funnel_tracker_wb_open";
+  var checks = {}, opens = {}, saved = null;
+  try{ saved = localStorage.getItem(KEY_CHECK); checks = JSON.parse(saved || "{}") || {}; }catch(e){ checks = {}; }
+  try{ opens  = JSON.parse(localStorage.getItem(KEY_OPEN)  || "{}") || {}; }catch(e){ opens  = {}; }
+  // 初回だけ：s9（もう手元にある材料）は最初から済みにする
+  if(!saved){
+    ITEMS.forEach(function(x){ if(x.g === "s9"){ checks[x.id] = true; } });
+    localStorage.setItem(KEY_CHECK, JSON.stringify(checks));
+  }
+
+  // ID の重複を数える
+  var seen = {}, dup = [];
+  ITEMS.forEach(function(it){ if(seen[it.id]){ dup.push(it.id); } seen[it.id] = 1; });
+  if(dup.length){ console.error("ID が重複しています：" + dup.join(", ")); }
+  console.log("項目 " + ITEMS.length + " 件 ／ ID 重複 " + dup.length + " 件");
+
+  var board = document.getElementById("board");
+
+  function makeItem(it){
+    var wrap = document.createElement("div");
+    wrap.className = "item" + (checks[it.id] ? " on" : "");
+    var box = document.createElement("input");
+    box.type = "checkbox"; box.checked = !!checks[it.id]; box.id = "cb_" + it.id;
+    var txt = document.createElement("div"); txt.className = "txt";
+    var lab = document.createElement("label");
+    lab.className = "lab"; lab.setAttribute("for", box.id);
+    lab.innerHTML = '<span class="id">' + it.id + '</span><span class="tag">' + it.tag + '</span>' + it.lab;
+    txt.appendChild(lab);
+    if(it.taisha){
+      var t = document.createElement("div"); t.className = "taisha"; t.textContent = it.taisha;
+      txt.appendChild(t);
+    }
+    if(it.sub){
+      var s = document.createElement("div"); s.className = "sub"; s.textContent = it.sub;
+      txt.appendChild(s);
+    }
+    if(it.blank){
+      var b = document.createElement("div"); b.className = "blank";
+      b.textContent = "我が社　何日目・何時：____________　／　件名：________________________________"
+        + "\n" + "役割：________________________________　／　行き先：________________________________";
+      txt.appendChild(b);
+    }
+    box.addEventListener("change", function(){
+      checks[it.id] = box.checked;
+      wrap.className = "item" + (box.checked ? " on" : "");
+      localStorage.setItem(KEY_CHECK, JSON.stringify(checks));
+      render();
+    });
+    wrap.appendChild(box); wrap.appendChild(txt);
+    return wrap;
+  }
+
+  function render(){
+    board.innerHTML = "";
+    var doneAll = 0;
+    GROUPS.forEach(function(gr){
+      var mine = ITEMS.filter(function(x){ return x.g === gr.g; });
+      if(!mine.length) return;
+      var yet  = mine.filter(function(x){ return !checks[x.id]; });
+      var done = mine.filter(function(x){ return  checks[x.id]; });
+      doneAll += done.length;
+
+      var d = document.createElement("details");
+      d.className = "grp"; d.setAttribute("data-g", gr.g);
+      var defOpen = (gr.g !== "s9") && (yet.length > 0);
+      d.open = (typeof opens[gr.g] === "boolean") ? opens[gr.g] : defOpen;
+      d.addEventListener("toggle", function(){
+        opens[gr.g] = d.open;
+        localStorage.setItem(KEY_OPEN, JSON.stringify(opens));
+      });
+
+      var sm = document.createElement("summary");
+      sm.innerHTML = '<span class="tri">' + (d.open ? "▼" : "▶") + '</span>'
+        + gr.mark + " " + gr.pri + "　" + gr.name
+        + '<span class="cnt">残り ' + yet.length + " ／ 全 " + mine.length + " 件</span>";
+      d.appendChild(sm);
+      d.addEventListener("toggle", function(){ sm.querySelector(".tri").textContent = d.open ? "▼" : "▶"; });
+
+      var body = document.createElement("div"); body.className = "gbody";
+      if(gr.note){
+        var n = document.createElement("div"); n.className = "gnote"; n.textContent = gr.note;
+        body.appendChild(n);
+      }
+      mine.forEach(function(it){ if(!checks[it.id]) body.appendChild(makeItem(it)); });
+
+      if(done.length){
+        var dd = document.createElement("details"); dd.className = "donebox";
+        var key = "done_" + gr.g;
+        dd.open = !!opens[key];
+        dd.addEventListener("toggle", function(){
+          opens[key] = dd.open;
+          localStorage.setItem(KEY_OPEN, JSON.stringify(opens));
+          ds.textContent = (dd.open ? "▼ " : "▶ ") + "済んだもの " + done.length + " 件を開く";
+        });
+        var ds = document.createElement("summary");
+        ds.textContent = (dd.open ? "▼ " : "▶ ") + "済んだもの " + done.length + " 件を開く";
+        dd.appendChild(ds);
+        done.forEach(function(it){ dd.appendChild(makeItem(it)); });
+        body.appendChild(dd);
+      }
+      d.appendChild(body);
+      board.appendChild(d);
+    });
+    document.getElementById("total").textContent = ITEMS.length;
+    document.getElementById("donecnt").textContent = doneAll;
+  }
+
+  var ul = document.getElementById("siryolist");
+  SIRYO.forEach(function(s){
+    var li = document.createElement("li");
+    var a = document.createElement("a");
+    a.href = s.f; a.textContent = s.t;
+    li.appendChild(a);
+    var sp = document.createElement("span");
+    sp.style.color = "var(--sub)"; sp.style.fontSize = "13px";
+    sp.textContent = "　" + s.f;
+    li.appendChild(sp);
+    ul.appendChild(li);
+  });
+  document.getElementById("siryocnt").textContent = SIRYO.length;
+
+  render();
+})();
+</script>
+
+</body>
+</html>
