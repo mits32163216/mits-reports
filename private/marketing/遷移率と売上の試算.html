@@ -207,7 +207,8 @@ var DEFAULT = {
   koukoku_in:900000, cpm:6000, ctr:1.5, muryo:0,
   optin:20, tanka_optin:0, tf:20,
   oto:15, kikan:10, oto2:5,
-  keizoku:0, tanka_keizoku:0, tsuki:0,
+  keizoku_04:0, tanka_keizoku_04:0, tsuki_04:0,
+  keizoku_06:0, tanka_keizoku_06:0, tsuki_06:0,
   tanka_front:29800, tanka_oto:58000, tanka_oto2:88000, genka:5
 };
 var SA = {}, SB = {};
@@ -260,10 +261,17 @@ var SECTIONS = [
     {lab:"見た人", kind:"calc", out:"mita"}
   ]},
   { dan:"04 フロント商品のLP", rows:[
-    {lab:"登録 → フロント購入", wasa:{primary:"20%超"}, kind:"input", key:"tf", unit:"%"},
+    {lab:"登録 → フロント購入", kind:"input", key:"tf", unit:"%"},
     {lab:"フロントを買った人", kind:"calc", out:"kounyu"},
     {lab:"フロントの価格", kind:"input", key:"tanka_front", unit:"円"},
     {lab:"フロント売上", kind:"calc", out:"u_front"}
+  ]},
+  { dan:"継続（AI経営PRO）", rows:[
+    {lab:"継続率(フロント購入者の何%が継続)", kind:"input", key:"keizoku_04", unit:"%"},
+    {lab:"継続の人数", kind:"calc", out:"keizoku_ninzu_04"},
+    {lab:"継続の価格（月額）", kind:"input", key:"tanka_keizoku_04", unit:"円"},
+    {lab:"継続の月数", kind:"input", key:"tsuki_04", unit:"ヶ月"},
+    {lab:"継続の売上", kind:"calc", out:"u_keizoku_04"}
   ]},
   { dan:"05 申込フォーム（重ね窓）", rows:[
     {lab:"フォームは 04 の重ね窓（率の別項なし）", kind:"dash"}
@@ -274,6 +282,13 @@ var SECTIONS = [
     {lab:"直後の価格", kind:"input", key:"tanka_oto", unit:"円"},
     {lab:"直後の売上", kind:"calc", out:"u_oto"}
   ]},
+  { dan:"継続", rows:[
+    {lab:"継続率(バック購入者の何%が継続)", kind:"input", key:"keizoku_06", unit:"%"},
+    {lab:"継続の人数", kind:"calc", out:"keizoku_ninzu_06"},
+    {lab:"継続の価格（月額）", kind:"input", key:"tanka_keizoku_06", unit:"円"},
+    {lab:"継続の月数", kind:"input", key:"tsuki_06", unit:"ヶ月"},
+    {lab:"継続の売上", kind:"calc", out:"u_keizoku_06"}
+  ]},
   { dan:"06x ワンタイムオファーの定価ページ", rows:[
     {lab:"ページ帰還率", kind:"input", key:"kikan", unit:"%"},
     {lab:"アクセス数", kind:"calc", out:"oto2_access"},
@@ -281,13 +296,6 @@ var SECTIONS = [
     {lab:"買った人", kind:"calc", out:"oto2"},
     {lab:"定価の価格", kind:"input", key:"tanka_oto2", unit:"円"},
     {lab:"定価の売上", kind:"calc", out:"u_oto2"}
-  ]},
-  { dan:"継続（AI経営PRO）", rows:[
-    {lab:"継続率（フロント購入者の何%が継続）", kind:"input", key:"keizoku", unit:"%"},
-    {lab:"継続の人数", kind:"calc", out:"keizoku_ninzu"},
-    {lab:"継続の価格（月額）", kind:"input", key:"tanka_keizoku", unit:"円"},
-    {lab:"継続の月数", kind:"input", key:"tsuki", unit:"ヶ月"},
-    {lab:"継続の売上", kind:"calc", out:"u_keizoku"}
   ]},
   { dan:"08 申込完了ページ", rows:[
     {lab:"（人数・売上は上流で確定）", kind:"dash"}
@@ -397,7 +405,10 @@ function reverseKoukoku(plan, kind, X){
   var S = getS(plan);
   if (S.optin <= 0 || S.ctr <= 0 || S.cpm <= 0) return false;
   var tfFrac = S.tf/100;
-  var factor_kounyu = S.tanka_front + (S.oto/100)*S.tanka_oto + (S.keizoku/100)*S.tanka_keizoku*S.tsuki;
+  var factor_kounyu = S.tanka_front
+    + (S.oto/100)*S.tanka_oto
+    + (S.oto/100)*(S.keizoku_06/100)*S.tanka_keizoku_06*S.tsuki_06
+    + (S.keizoku_04/100)*S.tanka_keizoku_04*S.tsuki_04;
   var factor_toroku = (S.kikan/100)*(S.oto2/100)*S.tanka_oto2 + S.tanka_optin;
   var G = tfFrac * factor_kounyu + factor_toroku;
   var toroku_target;
@@ -462,14 +473,16 @@ function calcPlan(plan){
   var oto = kounyu * S.oto/100;
   var oto2_access = toroku * S.kikan/100;
   var oto2 = oto2_access * S.oto2/100;
-  var keizoku_ninzu = Math.floor(kounyu) * S.keizoku/100;
+  var keizoku_ninzu_04 = Math.floor(kounyu) * S.keizoku_04/100;
+  var keizoku_ninzu_06 = Math.floor(oto)    * S.keizoku_06/100;
 
-  var u_optin    = toroku_i * S.tanka_optin;
-  var u_front    = Math.floor(kounyu) * S.tanka_front;
-  var u_oto      = Math.floor(oto)    * S.tanka_oto;
-  var u_oto2     = Math.floor(oto2)   * S.tanka_oto2;
-  var u_keizoku  = Math.floor(keizoku_ninzu) * S.tanka_keizoku * S.tsuki;
-  var uriage     = u_optin + u_front + u_oto + u_oto2 + u_keizoku;
+  var u_optin       = toroku_i * S.tanka_optin;
+  var u_front       = Math.floor(kounyu) * S.tanka_front;
+  var u_oto         = Math.floor(oto)    * S.tanka_oto;
+  var u_oto2        = Math.floor(oto2)   * S.tanka_oto2;
+  var u_keizoku_04  = Math.floor(keizoku_ninzu_04) * S.tanka_keizoku_04 * S.tsuki_04;
+  var u_keizoku_06  = Math.floor(keizoku_ninzu_06) * S.tanka_keizoku_06 * S.tsuki_06;
+  var uriage        = u_optin + u_front + u_oto + u_oto2 + u_keizoku_04 + u_keizoku_06;
   var genka      = uriage * S.genka/100;
   var arari      = uriage - genka;
   var eki        = arari - K;
@@ -505,10 +518,14 @@ function calcPlan(plan){
     nin(oto2_access) + "人 × " + pct(S.oto2) + "% ＝ " + nin(oto2) + "人");
   setStat(plan, "u_oto2",        yen(u_oto2) + " 円",
     nin(oto2) + "人 × " + yen(S.tanka_oto2) + "円 ＝ " + yen(u_oto2) + "円");
-  setStat(plan, "keizoku_ninzu", nin(keizoku_ninzu) + " 人",
-    nin(kounyu) + "人 × " + pct(S.keizoku) + "% ＝ " + nin(keizoku_ninzu) + "人");
-  setStat(plan, "u_keizoku",     yen(u_keizoku) + " 円",
-    nin(keizoku_ninzu) + "人 × " + yen(S.tanka_keizoku) + "円 × " + nin(S.tsuki) + "ヶ月 ＝ " + yen(u_keizoku) + "円");
+  setStat(plan, "keizoku_ninzu_04", nin(keizoku_ninzu_04) + " 人",
+    nin(kounyu) + "人 × " + pct(S.keizoku_04) + "% ＝ " + nin(keizoku_ninzu_04) + "人");
+  setStat(plan, "u_keizoku_04",     yen(u_keizoku_04) + " 円",
+    nin(keizoku_ninzu_04) + "人 × " + yen(S.tanka_keizoku_04) + "円 × " + nin(S.tsuki_04) + "ヶ月 ＝ " + yen(u_keizoku_04) + "円");
+  setStat(plan, "keizoku_ninzu_06", nin(keizoku_ninzu_06) + " 人",
+    nin(oto) + "人 × " + pct(S.keizoku_06) + "% ＝ " + nin(keizoku_ninzu_06) + "人");
+  setStat(plan, "u_keizoku_06",     yen(u_keizoku_06) + " 円",
+    nin(keizoku_ninzu_06) + "人 × " + yen(S.tanka_keizoku_06) + "円 × " + nin(S.tsuki_06) + "ヶ月 ＝ " + yen(u_keizoku_06) + "円");
   setStat(plan, "roas",          pct(roas) + "%",
     yen(uriage) + "円 ÷ " + yen(K) + "円 ＝ " + pct(roas) + "%");
 
