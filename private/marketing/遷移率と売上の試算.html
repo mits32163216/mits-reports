@@ -249,7 +249,7 @@ var LAYOUT_MAIN = [
   {type:"row", lab:"登録 → フロント購入", wasa:{primary:"20%超"}, kijun:null,
                                                  waga:{kind:"tfOverride", key:"tf_override", unit:"%"}, entryPct:null},
   {type:"row", lab:"フロント購入人数", wasa:null, kijun:null, waga:{kind:"calc", out:"kounyu_show"}, entryPct:"kounyu"},
-  {type:"row", lab:"成約率",       wasa:null, kijun:{label:"予約 50〜90%", check:function(v){return v>=50 && v<=90;}},
+  {type:"row", lab:"成約率",       wasa:null, kijun:null,
                                                  waga:{kind:"inputBreak", key:"cvr", unit:"%"}, entryPct:null},
   {type:"row", lab:"フロント単価", wasa:{primary:"39,800円"}, kijun:null,
                                                  waga:{kind:"input", key:"tanka_front", unit:"円"}, entryPct:null},
@@ -561,7 +561,6 @@ function calc(){
   markInput("ctr",   Math.abs(S.ctr - 1.5) <= 0.5);
   markInput("cpm",   S.cpm >= 3000 && S.cpm <= 14000);
   markInput("optin", S.optin >= 5 && S.optin <= 20);
-  markInput("cvr",   S.cvr >= 50 && S.cvr <= 90);
   markCalc("cpc_show", cpc >= 200 && cpc <= 400);
   markCalc("cpa_show", cpa >= 3000 && cpa <= 5000);
 
@@ -607,7 +606,7 @@ function memo(){
   m += 'https://docs.google.com/spreadsheets/d/1hxbtkoRhWctxbA2J-HTaBiSgqmQ90QSdX8kjWsvjwDk/edit?gid=0<br><br>';
   m += '<b>和佐の本人発言 10項目</b>（濃字の全て） ── 1リストの獲得費 2,000円以下／1日の広告費 150,000円以上／月の広告費 3,000,000円以上／登録 → フロント購入 20%超（LP見出し・7項目・DAY3タイトルの3箇所）／フロント 39,800円／抱き合わせ 4,980円／ワンタイムオファー直後 27,500円／同じ商品の定価 55,000円／広告費の回収率 500%（最低）・700%超（現行）／1日のワンタイムオファー売上 400,000円以上。<br><br>';
   m += '<b>和佐が言っていない項目（表では ※ 付き薄字）</b> ── 表示回数（IMP 111,000回）／クリック率（CTR 1.5%）／CPM 9,000円／クリック単価（CPC 600円）／オプトイン率（20%）。いずれも Mits様が 2026-09-20 に決めた「CTR 1.5%・オプトイン 20%」の下で「1リスト 3,000円」を成立させる逆算値（参謀の仮置き）。<br><br>';
-  m += '<b>基準値の 7項目</b>（Mits様のシートの値） ── CTR 1.50%（±0.5%）／クリック単価 300円（200〜400円）／CPM 3,000〜14,000円／メルマガ登録率 5〜20%／CPA 3,000〜5,000円／LINE登録率 60%（参考）／予約率 50〜90%（我が社の成約率で代替）。<br><br>';
+  m += '<b>基準値の 6項目</b>（Mits様のシートの値） ── CTR 1.50%（±0.5%）／クリック単価 300円（200〜400円）／CPM 3,000〜14,000円／メルマガ登録率 5〜20%／CPA 3,000〜5,000円／LINE登録率 60%（参考・我が社モデル外）。<br><br>';
   m += '<b>Mits様のシートの実測</b>（2026-02-13 開始・広告費 50,000円 の回）：IMP 11,450／クリック 167／CTR 1.46%／クリック単価 299円／CPM 4,367円／メルマガ登録 17件／登録率 10.18%／CPA 2,941円／LINE 10人（58.8%）／予約 2件／成約 1件／成約単価 550,000円／ROAS 1,100%。<br><br>';
   m += '<b>無料で来る人数は 0 で回します。</b>Mits様 2026-09-20「Noteは当てにしないで回す　無料媒体はおまけくらいで考える」。この試算は広告で買ったアクセスだけで成り立つかを見るためのものです。<br><br>';
   m += '<b>和佐の自分の試算</b> ── 月 50万円の広告費で月売上 250万円（年 3,000万円）、月 100万円で月 500万円（年 6,000万円）、月 300万円で月 1,500万円（年 1億8,000万円）。いずれも ROAS 500% の計算です。<br><br>';
