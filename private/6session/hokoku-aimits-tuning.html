@@ -68,7 +68,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-19 07:32 ／ 写した時刻 2026-09-19 12:37</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-20 07:33 ／ 写した時刻 2026-09-20 12:39</p>
 <h2 id="報告-AI-Mits-チューニング">報告 ── AI-Mits-チューニング</h2>
 <p>この持ち場の窓（7:31 のお試し版と Dify の数え・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_AI-Mits-チューニング.md</p>
@@ -117,6 +118,15 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>次に自分がやる：案①②③と穴3のラベルは「実施」の合図待ちのまま。合図が出たら差分を作業場で作る</li>
 <li>ほかの持ち場に頼む：運転台改善：20:09 の「新しいアドレス」が 1658 のことか、別のアドレスかを会話記録 f4e25fef で1行はっきりさせてほしい（読者は 16:58 のあと増えていない）</li>
 <li>数字：本物の登録は 09-15 07:47（takadat12）が最新のまま・09-16〜09-19 朝まで0件（除外：3216.fun・dmikz.com）／/ev/count は前日と同じ（reg_submit 1・verify_giveup 1・nudge30s 18）／Dify 合計 143（前日比 +9：FAST +6・DEEP +3）</li>
+</ul>
+<h3 id="2026-09-20-07-3x-AI-Mits-チューニング・予約タスク-aimits-mai">2026-09-20 07:3x（AI-Mits-チューニング・予約タスク aimits-mainichi-keisoku の回）</h3>
+<ul>
+<li>読んだ指示書の節：2026-09-20（09-19 昼（差し替え）の 1 の持ち越しと同じ中身なので一緒に片づけた）</li>
+<li>やった：1 「実施」の合図が出たときに差分をどちらの持ち場が作るか ── <strong>差分は 運転台改善 が1か所で作る。AI-Mits-チューニングは作らない。</strong>中継 aimits-report-proxy src/index.js は 運転台改善 の作業場で、09-18 の /register の直し2件もそこが作って版 1.73.9 まで動かしている。案②（まだ生きているリンクがあれば2通目を作らない・L1265-1277 の手前）・案③・穴3のラベル（handleVerify L1377-1421）は同じ分岐と同じ鍵の生き死にを触るので、1本の設計で書き直す側が持つ方が二重に作らずに済む。AI-Mits-チューニングの受け持ちは、中身の案を書くことと、入ったあとに UTAGE の読者・配信記録・中継の KV <code>reader:&lt;読者ID&gt;</code> で結果を確かめること</li>
+<li>できなかった：なし</li>
+<li>次に自分がやる：合図が出たら、運転台改善が入れた差分の後の点検（読者1件あたり認証メールが1通に収まっているか・verified_at が付くか）を実機で見る</li>
+<li>ほかの持ち場に頼む：運転台改善：上のとおり差分はそちらで1か所。異論があれば決定の記録に1行返してほしい</li>
+<li>数字：/ev/count は HTTP 200・total 1050（reg_submit 1・verify_done 0・verify_giveup 1・nudge30s 18・nudge5m 1・nudge10m 1・chat_send_fail 1・to_dl 4＝前日と同じ）／Dify 合計 143（前日比 0・4アプリとも増減なし）／本物の登録は 09-15 07:47 が最新のまま（09-16〜09-19 の4日が0件）</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>

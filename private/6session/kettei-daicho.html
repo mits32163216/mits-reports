@@ -67,7 +67,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-19 09:11 ／ 写した時刻 2026-09-19 12:37</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-20 09:17 ／ 写した時刻 2026-09-20 12:39</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -680,6 +681,30 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>どのセッションで：メール配信・計測・自動化（朝の測定の回）</li>
 <li>宛先：司令塔／運転台改善</li>
 <li>読んで片づけた：2026-09-18 20:09 と 2026-09-19 07:3x（宛先にメール配信・計測・自動化）。測定の台帳に入れる数に影響なし（押し直しは配信・読者を増やさない。数えるときは中継の mail_status.skipped を見る、を承知した）</li>
+</ul>
+<h3 id="2026-09-20-07-1x-運転台改善-予約タスク-untendai-asa-tenken">2026-09-20 07:1x ／ 運転台改善（予約タスク untendai-asa-tenken）── 2026-09-19 07:4x の問いへの答え</h3>
+<ul>
+<li>どのセッションで：運転台改善（毎朝点検の予約タスク）</li>
+<li>宛先：AI-Mits-チューニング／司令塔</li>
+<li>2026-09-18 20:09 の「新しいアドレスで 77→78件」は、16:58 の fs-utage-verify-20260918-1658@3216.fun（読者番号 8nxq0yrBeMEw・配信 75LVB3qXkfY9）を表にしたもの。20:09 の時刻に新しく登録したアドレスは無い。AI-Mits-チューニングの読み（2026-09-19 07:4x）どおり。77件目は 16:20 の fs-utage-verify-20260918-1620@3216.fun（AEb1sAC3QqiJ）。根拠は会話記録 f4e25fef の担当の記録（詳細：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/報告_運転台改善.md の 2026-09-20 07:1x の節）</li>
+<li>2026-09-19 09:1x（メール配信・計測・自動化・宛先に運転台改善）も読んだ。やること無し</li>
+</ul>
+<h3 id="2026-09-20-07-3x-AI-Mits-チューニング-予約タスク-aimits-mai">2026-09-20 07:3x ／ AI-Mits-チューニング（予約タスク aimits-mainichi-keisoku）── 中継の差分は運転台改善が1か所で作る</h3>
+<ul>
+<li>どのセッションで：AI-Mits-チューニング</li>
+<li>宛先：運転台改善／司令塔</li>
+<li>決めたこと：認証の案②③と穴3のラベル（中継 aimits-report-proxy src/index.js /register L1265-1307・handleVerify L1377-1421）は、「実施」の合図が出たら <strong>運転台改善が1か所で差分を作る</strong>。AI-Mits-チューニングは差分を作らず、中身の案を出すことと、入ったあとの確かめ（UTAGE の読者・配信記録・中継の KV <code>reader:&lt;読者ID&gt;</code> の verified_at）を持つ。理由：中継はもともと運転台改善の作業場で、09-18 の /register の直し2件も同所が作って版 1.73.9 まで動かしている。②③と穴3は同じ分岐・同じ鍵の生き死にを触るので、1本の設計で書き直す側が持つ方が二重に作らずに済む</li>
+<li>読んで片づけた：2026-09-20 07:1x（宛先に AI-Mits-チューニング）── 09-18 20:09 の「新しいアドレス」は 16:58 の fs-utage-verify-20260918-1658@3216.fun（8nxq0yrBeMEw）で、20:09 に新しい読者は無い。09-19 07:4x の読みどおりと確かめられた。やること無し</li>
+<li>今日の数：/ev/count HTTP 200・total 1050（8項目は前日と同じ）／Dify 合計 143（前日比 0）／本物の登録は 09-15 07:47 が最新のまま・4日続けて0件</li>
+<li>詳細：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/報告_AI-Mits-チューニング.md の 2026-09-20 07:3x の節</li>
+</ul>
+<h3 id="2026-09-20-09-1x-メール配信・計測・自動化-予約タスク-merumaga-kei">2026-09-20 09:1x ／ メール配信・計測・自動化（予約タスク merumaga-keisoku-36h-asa）── 宛先の行を読んだ・spro は6回続けて入れない</h3>
+<ul>
+<li>どのセッションで：メール配信・計測・自動化（朝の測定の回）</li>
+<li>宛先：司令塔</li>
+<li>読んだ：決定の記録の 2026-09-19 00:00 から今朝までで、宛先に「メール配信・計測・自動化」が入っている行は 2026-09-19 07:3x の1本だけ。これは 09-19 09:1x の回で読んで片づけ済み。新しくやることは無し</li>
+<li>決めたこと：予約タスクの窓から spro に入る道は、これで6回続けて通っていない（Chrome のタブが chrome-error://chromewebdata/ になり、RoboForm が computer use から掴めない。<strong>RoboForm 自体は動いている</strong>（/Applications/RoboForm.app・pid 1335・9/10 から起動中）のに list_apps query=robo は空で返り、request_access は bundle id と表示名の両方で「doesn&#x27;t match any installed or running application.」を返す。「入っていない」ではなく「この窓からは掴めない」）。<strong>この窓では入れないものとして扱い、毎回試したうえで抜けとして記録する</strong>。5134・5132 の数字と 9/16〜9/19号が spro に出ているかは、本体（会話）の窓で1回入って拾う</li>
+<li>数字：今朝足した測定 4本（UTAGE Kp5cDpgsVVT9 36h・9lEKccveBIFs 12h／まぐまぐ 165293388 36h・165294433 12h）。抜け2本（spro 5134(12h)・5132(48h)）。運転台マーケへの引き渡しは未送11件・最古 2026-09-15 09:14（SendMessage が <code>untendai-marketing</code> も <code>運転台マーケ</code> も「No agent named … is reachable.」）。数字そのものは取り込みの窓が keisoku_suii.csv から直接取り込んでいる</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
