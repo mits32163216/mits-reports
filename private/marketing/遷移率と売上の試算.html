@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+<title>遷移率と売上の試算 ── 出し続ける AI経営 3DAYS</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:24px 20px 120px; max-width:1060px; margin:0 auto; }
+h1,h2,h3 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; }
+a { color:var(--gold); text-decoration:none; }
+
+.hero { text-align:center; padding:20px 0 4px; }
+.hero h1 { font-size:26px; margin:0 0 6px; }
+.hero .tag { font-family:var(--mono); font-size:12px; color:var(--muted); }
+.back { display:inline-block; margin-bottom:6px; font-family:var(--mono); font-size:11px; }
+
+.preset { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin:16px 0 4px; }
+.preset button { font-family:var(--sans); font-size:13px; padding:10px 18px; border-radius:10px;
+  border:1px solid var(--line); background:var(--card-bg); color:var(--fg); cursor:pointer; }
+.preset button:hover { border-color:var(--gold); }
+.preset button.on { background:var(--gold); border-color:var(--gold); color:#fff; }
+.preset .who { width:100%; text-align:center; font-size:12px; color:var(--muted); margin-top:4px; line-height:1.8; }
+
+.genre { margin:30px 0 10px; display:flex; align-items:center; gap:12px; }
+.genre h2 { font-size:17px; margin:0; white-space:nowrap; }
+.genre::after { content:""; flex:1; border-top:1px dashed var(--line); }
+.genre .note { font-family:var(--mono); font-size:11px; color:var(--muted); white-space:nowrap; }
+
+.card { background:var(--card-bg); border:1px solid var(--line); border-radius:14px; padding:16px 18px; }
+
+.row { display:grid; grid-template-columns:174px 1fr 96px 112px; gap:10px; align-items:center;
+  padding:9px 0; border-bottom:1px dashed var(--line); }
+.row:last-child { border-bottom:none; }
+.row .lab { font-size:13px; line-height:1.4; }
+.row .lab small { display:block; font-size:11px; color:var(--muted); }
+.row .lab .w { display:inline-block; font-family:var(--mono); font-size:9.5px; color:#fff; background:var(--sage);
+  border-radius:4px; padding:1px 5px; margin-left:5px; vertical-align:1px; }
+.row input[type=range] { width:100%; accent-color:var(--gold); }
+.row .num { display:flex; align-items:center; gap:4px; justify-content:flex-end; }
+.row input[type=number] { width:76px; padding:5px 6px; text-align:right; font-family:var(--mono); font-size:13px;
+  border:1px solid var(--line); border-radius:7px; background:var(--bg); color:var(--fg); }
+.row .unit { font-family:var(--mono); font-size:11px; color:var(--muted); width:24px; }
+.row .out { font-family:var(--mono); font-size:13px; text-align:right; color:var(--gold); }
+@media (max-width:760px){
+  .row { grid-template-columns:1fr 104px; grid-template-areas:"lab num" "rng rng" "out out"; }
+  .row .lab{grid-area:lab} .row .num{grid-area:num} .row input[type=range]{grid-area:rng} .row .out{grid-area:out;text-align:left}
+}
+
+table { width:100%; border-collapse:collapse; font-size:13px; background:var(--card-bg);
+  border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+th,td { padding:9px 11px; border-bottom:1px solid var(--line); }
+th { font-family:var(--mono); font-size:11px; color:var(--muted); font-weight:400; background:var(--sub-bg); text-align:left; }
+td.n, th.n { font-family:var(--mono); text-align:right; white-space:nowrap; }
+tr:last-child td { border-bottom:none; }
+tr.sum td { background:var(--sub-bg); font-weight:600; }
+.bar { display:block; height:7px; border-radius:4px; background:var(--gold); opacity:.75; min-width:2px; }
+.dan { font-family:var(--mono); font-size:11px; color:var(--muted); }
+
+.kpi { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:14px; }
+@media (max-width:860px){ .kpi { grid-template-columns:repeat(2,1fr); } }
+.kpi .k { background:var(--card-bg); border:1px solid var(--line); border-radius:14px; padding:14px; }
+.kpi .k .t { font-family:var(--mono); font-size:10.5px; color:var(--muted); line-height:1.5; }
+.kpi .k .v { font-family:var(--mincho); font-size:23px; margin-top:5px; }
+.kpi .k .s { font-size:11px; color:var(--muted); margin-top:3px; line-height:1.5; }
+.kpi .k.hi { border-color:var(--gold); }
+.kpi .k.ng .v { color:var(--rose); }
+.kpi .k.ok .v { color:var(--sage); }
+
+.btns { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; align-items:center; }
+button.act { font-family:var(--sans); font-size:13px; padding:9px 16px; border-radius:9px;
+  border:1px solid var(--line); background:var(--card-bg); color:var(--fg); cursor:pointer; }
+button.act:hover { border-color:var(--gold); }
+button.act.p { background:var(--gold); border-color:var(--gold); color:#fff; }
+
+.memo { font-size:12px; color:var(--muted); line-height:1.9; margin-top:12px;
+  background:var(--card-bg); border:1px solid var(--line); border-radius:12px; padding:14px 16px; }
+.memo b { color:var(--fg); font-weight:600; }
+.memo .w { display:inline-block; font-family:var(--mono); font-size:9.5px; color:#fff; background:var(--sage);
+  border-radius:4px; padding:1px 5px; vertical-align:1px; }
+footer { margin-top:44px; padding-top:18px; border-top:1px dashed var(--line);
+  font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <a class="back" href="https://reports.7years.life/private/marketing/">← マーケティング</a>
+  <h1>📊 遷移率と売上の試算</h1>
+  <div class="tag">段ごとのブロック数と 仮 印の数（最新 2026-09-10）の段を元にした ／ 数字は全部動かせる</div>
+</div>
+
+<div class="preset">
+  <button id="p_wasa">和佐の数字を入れる</button>
+  <button id="p_jisha">我が社の数字を入れる</button>
+  <div class="who" id="who"></div>
+</div>
+
+<div class="genre"><h2>1. 入口に何人来るか</h2><span class="note">起点</span></div>
+<div class="card" id="in1"></div>
+
+<div class="genre"><h2>2. 段ごとの遷移率</h2><span class="note">緑の印は和佐が実際に言っている数字</span></div>
+<div class="card" id="in2"></div>
+
+<div class="genre"><h2>3. 単価と広告費</h2></div>
+<div class="card" id="in3"></div>
+
+<div class="genre"><h2>4. 段ごとに何人残るか</h2></div>
+<table id="tbl"></table>
+
+<div class="genre"><h2>5. お金</h2></div>
+<table id="uri"></table>
+<div class="kpi" id="kpi"></div>
+
+<div class="btns">
+  <button class="act p" id="save">この数字を保存</button>
+  <button class="act" id="reset">保存を消す</button>
+  <span class="dan" id="msg"></span>
+</div>
+
+<div class="memo" id="memo"></div>
+
+<footer>
+  プライベート・非公開エリア（noindex, nofollow）<br>
+  数字はこのブラウザにだけ保存されます。他の人には共有されません。
+</footer>
+
+<script>
+var W = "和佐";
+
+var FIELDS = [
+  {g:1, k:"nyuryoku", lab:"入口ページに来た人数", sub:"01 オプトインページの表示", min:0, max:20000, step:10, unit:"人", wasa:false},
+  {g:2, k:"optin",    lab:"01 → 登録", sub:"オプトイン率", min:0, max:100, step:0.1, unit:"%", wasa:false},
+  {g:2, k:"shicho",   lab:"登録 → 動画を見る", sub:"視聴率", min:0, max:100, step:1, unit:"%", wasa:false},
+  {g:2, k:"toutatsu", lab:"動画 → 売り場に来る", sub:"LP 到達率", min:0, max:100, step:1, unit:"%", wasa:false},
+  {g:2, k:"cvr",      lab:"売り場 → 購入", sub:"LP の CVR", min:0, max:100, step:0.1, unit:"%", wasa:false},
+  {g:2, k:"bump",     lab:"購入者 → 抱き合わせを足す", sub:"申込フォームのチェック欄", min:0, max:100, step:1, unit:"%", wasa:false},
+  {g:2, k:"oto",      lab:"購入者 → 追加オファー（直後）", sub:"半額・1回限り", min:0, max:100, step:1, unit:"%", wasa:false},
+  {g:2, k:"oto2",     lab:"購入者 → 追加オファー（後で）", sub:"定価の方", min:0, max:100, step:1, unit:"%", wasa:false},
+  {g:2, k:"keizoku",  lab:"購入者 → 4ヶ月目も続ける", sub:"継続率（和佐は継続商品なし）", min:0, max:100, step:1, unit:"%", wasa:false},
+  {g:3, k:"tanka_front",   lab:"フロント商品", sub:"", min:0, max:200000, step:100, unit:"円", wasa:true},
+  {g:3, k:"tanka_bump",    lab:"抱き合わせ", sub:"", min:0, max:50000, step:10, unit:"円", wasa:true},
+  {g:3, k:"tanka_oto",     lab:"追加オファー・直後", sub:"", min:0, max:300000, step:500, unit:"円", wasa:true},
+  {g:3, k:"tanka_oto2",    lab:"追加オファー・後で", sub:"", min:0, max:300000, step:500, unit:"円", wasa:true},
+  {g:3, k:"tanka_keizoku", lab:"継続の月額", sub:"", min:0, max:50000, step:500, unit:"円", wasa:false},
+  {g:3, k:"tsuki",         lab:"継続する月数", sub:"", min:0, max:36, step:1, unit:"ヶ月", wasa:false},
+  {g:3, k:"list_tanka",    lab:"登録 1件の広告費", sub:"リスト単価", min:0, max:20000, step:100, unit:"円", wasa:true},
+  {g:3, k:"genka",         lab:"売上原価率", sub:"決済手数料・外注など", min:0, max:50, step:0.5, unit:"%", wasa:false}
+];
+
+var PRESET = {
+  wasa: {
+    name: "和佐の数字",
+    who: "和佐大輔式 AI×広告×自動化 ブートキャンプ（3DAYS）。値段と広告の数字は和佐のページから実読した値。",
+    v: { nyuryoku:1000, optin:33.3, shicho:80, toutatsu:50, cvr:50, bump:30, oto:15, oto2:3, keizoku:0,
+         tanka_front:39800, tanka_bump:4980, tanka_oto:27500, tanka_oto2:55000, tanka_keizoku:0, tsuki:0,
+         list_tanka:3000, genka:5 }
+  },
+  jisha: {
+    name: "我が社の数字",
+    who: "出し続ける AI経営 3DAYS。値段は「用語と段の一覧」の確定値。遷移率は和佐と同じ値を置いてある（実測が出たら入れ替える）。",
+    v: { nyuryoku:1000, optin:33.3, shicho:80, toutatsu:50, cvr:50, bump:0, oto:15, oto2:3, keizoku:50,
+         tanka_front:29800, tanka_bump:0, tanka_oto:58000, tanka_oto2:88000, tanka_keizoku:5000, tsuki:6,
+         list_tanka:2000, genka:5 }
+  }
+};
+
+var S = {};
+var CUR = "wasa";
+
+function apply(name){
+  CUR = name;
+  var p = PRESET[name];
+  S = {};
+  for (var k in p.v) { S[k] = p.v[k]; }
+  document.getElementById("p_wasa").className  = (name === "wasa")  ? "on" : "";
+  document.getElementById("p_jisha").className = (name === "jisha") ? "on" : "";
+  document.getElementById("who").textContent = p.who;
+}
+
+function load(){
+  apply("wasa");
+  try {
+    var raw = localStorage.getItem("marketing_shisan_v2");
+    if (raw) {
+      var o = JSON.parse(raw);
+      if (o && o.preset && PRESET[o.preset]) apply(o.preset);
+      if (o && o.v) { for (var k in o.v) { if (S.hasOwnProperty(k) && typeof o.v[k] === "number" && isFinite(o.v[k])) S[k] = o.v[k]; } }
+    }
+  } catch(e) {}
+}
+
+function yen(n){ if (!isFinite(n)) return "—"; return Math.round(n).toLocaleString("ja-JP"); }
+function nin(n){ if (!isFinite(n)) return "—"; return (Math.round(n*10)/10).toLocaleString("ja-JP"); }
+function pct(n){ if (!isFinite(n)) return "—"; return (Math.round(n*10)/10).toLocaleString("ja-JP"); }
+
+function build(){
+  for (var g=1; g<=3; g++){
+    var host = document.getElementById("in"+g);
+    host.innerHTML = "";
+    for (var i=0;i<FIELDS.length;i++){
+      var f = FIELDS[i];
+      if (f.g !== g) continue;
+      var badge = f.wasa ? '<span class="w">' + W + '</span>' : '';
+      var d = document.createElement("div");
+      d.className = "row";
+      d.innerHTML =
+        '<div class="lab">' + f.lab + badge + (f.sub ? '<small>' + f.sub + '</small>' : '') + '</div>' +
+        '<input type="range" data-k="' + f.k + '" min="' + f.min + '" max="' + f.max + '" step="' + f.step + '">' +
+        '<div class="num"><input type="number" data-k="' + f.k + '" min="' + f.min + '" max="' + f.max + '" step="' + f.step + '"><span class="unit">' + f.unit + '</span></div>' +
+        '<div class="out" data-out="' + f.k + '"></div>';
+      host.appendChild(d);
+    }
+  }
+  var ins = document.querySelectorAll("input[data-k]");
+  for (var j=0;j<ins.length;j++){
+    ins[j].addEventListener("input", function(ev){
+      var k = ev.target.getAttribute("data-k");
+      var v = parseFloat(ev.target.value);
+      if (!isFinite(v)) return;
+      S[k] = v; sync(); calc();
+    });
+  }
+}
+
+function sync(){
+  var ins = document.querySelectorAll("input[data-k]");
+  for (var j=0;j<ins.length;j++){
+    var k = ins[j].getAttribute("data-k");
+    if (ins[j].value !== String(S[k])) ins[j].value = S[k];
+  }
+}
+
+function calc(){
+  var p       = S.nyuryoku;
+  var toroku  = p * S.optin/100;
+  var mita    = toroku * S.shicho/100;
+  var lp      = mita * S.toutatsu/100;
+  var kounyu  = lp * S.cvr/100;
+  var bump    = kounyu * S.bump/100;
+  var oto     = kounyu * S.oto/100;
+  var oto2    = kounyu * S.oto2/100;
+  var keizoku = kounyu * S.keizoku/100;
+  var toroku_cvr = toroku > 0 ? kounyu/toroku*100 : 0;
+
+  var steps = [
+    ["01",  "入口ページに来た", p, ""],
+    ["01",  "メールアドレスを登録した", toroku, S.optin + "%"],
+    ["03",  "動画を見た", mita, S.shicho + "%"],
+    ["04",  "売り場に来た", lp, S.toutatsu + "%"],
+    ["05",  "フロント商品を買った", kounyu, S.cvr + "%"],
+    ["05",  "抱き合わせも足した", bump, S.bump + "%"],
+    ["06",  "追加オファー（直後）を買った", oto, S.oto + "%"],
+    ["06x", "追加オファー（後で）を買った", oto2, S.oto2 + "%"],
+    ["PRO", "4ヶ月目も続けた", keizoku, S.keizoku + "%"]
+  ];
+  var h = '<tr><th>段</th><th>ここまで来た人</th><th class="n">人数</th><th class="n">前から</th><th class="n">入口から</th><th style="width:20%">ふるい落ち方</th></tr>';
+  for (var i=0;i<steps.length;i++){
+    var s = steps[i];
+    var r = p > 0 ? (s[2]/p*100) : 0;
+    var w = p > 0 ? Math.max(0.6, r) : 0;
+    h += '<tr><td class="dan">' + s[0] + '</td><td>' + s[1] + '</td><td class="n">' + nin(s[2]) + ' 人</td>' +
+         '<td class="n">' + (s[3] || "—") + '</td><td class="n">' + pct(r) + '%</td>' +
+         '<td><span class="bar" style="width:' + w + '%"></span></td></tr>';
+  }
+  document.getElementById("tbl").innerHTML = h;
+
+  var u_front   = kounyu  * S.tanka_front;
+  var u_bump    = bump    * S.tanka_bump;
+  var u_oto     = oto     * S.tanka_oto;
+  var u_oto2    = oto2    * S.tanka_oto2;
+  var u_keizoku = keizoku * S.tanka_keizoku * S.tsuki;
+  var uriage    = u_front + u_bump + u_oto + u_oto2 + u_keizoku;
+  var koukoku   = toroku * S.list_tanka;
+  var genka     = uriage * S.genka/100;
+  var arari     = uriage - genka;
+  var eki       = arari - koukoku;
+  var roas      = koukoku > 0 ? uriage/koukoku*100 : 0;
+
+  var lines = [
+    ["04",  "フロント商品", kounyu,  S.tanka_front,   u_front,   ""],
+    ["05",  "抱き合わせ", bump,    S.tanka_bump,    u_bump,    ""],
+    ["06",  "追加オファー（直後）", oto, S.tanka_oto, u_oto, ""],
+    ["06x", "追加オファー（後で）", oto2, S.tanka_oto2, u_oto2, ""],
+    ["PRO", "継続", keizoku, S.tanka_keizoku, u_keizoku, S.tsuki + "ヶ月分"]
+  ];
+  var h2 = '<tr><th>段</th><th>何で</th><th class="n">人数</th><th class="n">単価</th><th class="n">売上</th><th class="n">内訳</th></tr>';
+  for (var i2=0;i2<lines.length;i2++){
+    var L = lines[i2];
+    if (L[4] <= 0) continue;
+    var share = uriage > 0 ? L[4]/uriage*100 : 0;
+    h2 += '<tr><td class="dan">' + L[0] + '</td><td>' + L[1] + (L[5] ? ' <span class="dan">' + L[5] + '</span>' : '') + '</td>' +
+          '<td class="n">' + nin(L[2]) + '</td><td class="n">' + yen(L[3]) + '</td>' +
+          '<td class="n">' + yen(L[4]) + '</td><td class="n">' + pct(share) + '%</td></tr>';
+  }
+  h2 += '<tr class="sum"><td class="dan">計</td><td>売上</td><td class="n">—</td><td class="n">—</td><td class="n">' + yen(uriage) + '</td><td class="n">100%</td></tr>';
+  h2 += '<tr class="sum"><td class="dan">−</td><td>売上原価（' + S.genka + '%）</td><td class="n">—</td><td class="n">—</td><td class="n">−' + yen(genka) + '</td><td class="n">—</td></tr>';
+  h2 += '<tr class="sum"><td class="dan">−</td><td>広告費（登録 ' + nin(toroku) + ' 人 × ' + yen(S.list_tanka) + ' 円）</td><td class="n">—</td><td class="n">—</td><td class="n">−' + yen(koukoku) + '</td><td class="n">—</td></tr>';
+  h2 += '<tr class="sum"><td class="dan">=</td><td>手元に残る</td><td class="n">—</td><td class="n">—</td><td class="n">' + yen(eki) + '</td><td class="n">—</td></tr>';
+  document.getElementById("uri").innerHTML = h2;
+
+  var per_in   = p > 0 ? arari / p : 0;
+  var per_lead = toroku > 0 ? arari / toroku : 0;
+  var ltv      = kounyu > 0 ? uriage / kounyu : 0;
+  var need     = per_in > 0 ? 20000000 / per_in : 0;
+
+  var roasCls = "k hi";
+  var roasMsg = "この表はフロントと追加オファーまで。和佐の 500% はバックエンド込みの仕組み全体の数字";
+
+  var k = "";
+  k += '<div class="' + roasCls + '"><div class="t">ROAS（売上 ÷ 広告費）</div><div class="v">' + pct(roas) + '%</div><div class="s">' + roasMsg + '</div></div>';
+  k += '<div class="k hi"><div class="t">入口 1人あたりの粗利</div><div class="v">' + yen(per_in) + ' 円</div><div class="s">広告に 1人あたりここまで払える</div></div>';
+  k += '<div class="k"><div class="t">登録 1人あたりの粗利</div><div class="v">' + yen(per_lead) + ' 円</div><div class="s">広告費 ' + yen(S.list_tanka) + ' 円との差が取り分</div></div>';
+  k += '<div class="k"><div class="t">登録 → 購入の率</div><div class="v">' + pct(toroku_cvr) + '%</div><div class="s">和佐の公言は 20% 超え</div></div>';
+  k += '<div class="k"><div class="t">買った人 1人あたりの売上</div><div class="v">' + yen(ltv) + ' 円</div><div class="s">フロント＋抱き合わせ＋追加＋継続</div></div>';
+  k += '<div class="k"><div class="t">手元に残る額</div><div class="v">' + yen(eki) + ' 円</div><div class="s">粗利 − 広告費</div></div>';
+  k += '<div class="k hi"><div class="t">粗利 2,000万円に必要な入口の人数</div><div class="v">' + yen(need) + ' 人</div><div class="s">この商品だけで到達する場合</div></div>';
+  k += '<div class="k"><div class="t">広告費合計</div><div class="v">' + yen(koukoku) + ' 円</div><div class="s">登録 ' + nin(toroku) + ' 件分</div></div>';
+  document.getElementById("kpi").innerHTML = k;
+
+  var outs = document.querySelectorAll("[data-out]");
+  var map = {
+    nyuryoku: nin(p) + " 人", optin: nin(toroku) + " 人", shicho: nin(mita) + " 人",
+    toutatsu: nin(lp) + " 人", cvr: nin(kounyu) + " 人", bump: nin(bump) + " 人",
+    oto: nin(oto) + " 人", oto2: nin(oto2) + " 人", keizoku: nin(keizoku) + " 人",
+    tanka_front: yen(u_front) + " 円", tanka_bump: yen(u_bump) + " 円",
+    tanka_oto: yen(u_oto) + " 円", tanka_oto2: yen(u_oto2) + " 円",
+    tanka_keizoku: yen(u_keizoku) + " 円", tsuki: yen(u_keizoku) + " 円",
+    list_tanka: "−" + yen(koukoku) + " 円", genka: "−" + yen(genka) + " 円"
+  };
+  for (var o=0;o<outs.length;o++){
+    var key = outs[o].getAttribute("data-out");
+    outs[o].textContent = map[key] || "";
+  }
+}
+
+function memo(){
+  var m = "";
+  m += '<b>緑の印 <span class="w">' + W + '</span> が付いている数字は、和佐が実際にページに書いている値です。</b><br>';
+  m += 'フロント 39,800円（定価 98,000円・画像は 99,000円）／抱き合わせ 4,980円／追加オファーの直後 27,500円／同じ商品の定価 55,000円／リスト単価は和佐の試算の分母 3,000円（月 100万円の広告費で 333リスト）。和佐が目標として掲げるのは「1リスト 2,000円以下」。出所は「和佐ファネルの解剖」と「段4 値段の話の原文控え」。<br><br>';
+  m += '<b>和佐が言っていない数字</b> ── オプトイン率・視聴率・LP 到達率・追加オファーの購入率は、和佐は公開していません。公言しているのは「広告経由でフロント成約率 20%超え」と「1リスト 2,000円以下」と「最低 ROAS 500%（現行 700%）」の3つだけです。<br>';
+  m += 'このページの初期値は、その「登録 → 購入 20%」になるよう 80% × 50% × 50% と割ってあります（割り方は噂ではなく参謀の仮置き）。<br><br>';
+  m += '<b>和佐の自分の試算</b> ── 月 50万円の広告費で月売上 250万円（年 3,000万円）、月 100万円で月 500万円（年 6,000万円）、月 300万円で月 1,500万円（年 1億8,000万円）。いずれも ROAS 500% の計算です。<br><br>';
+  m += '<b>我が社の値段</b> ── フロント 29,800円（定価 60,000円）／追加オファーの直後 58,000円／後で 88,000円／4ヶ月目から月 5,000円（税別）。抱き合わせは外してあります（2026-09-06 確定）。';
+  document.getElementById("memo").innerHTML = m;
+}
+
+function msg(t){
+  var el = document.getElementById("msg");
+  el.textContent = t;
+  setTimeout(function(){ el.textContent = ""; }, 2600);
+}
+
+document.getElementById("p_wasa").addEventListener("click", function(){ apply("wasa"); sync(); calc(); });
+document.getElementById("p_jisha").addEventListener("click", function(){ apply("jisha"); sync(); calc(); });
+document.getElementById("save").addEventListener("click", function(){
+  try { localStorage.setItem("marketing_shisan_v2", JSON.stringify({preset:CUR, v:S})); msg("保存しました"); }
+  catch(e) { msg("保存できませんでした"); }
+});
+document.getElementById("reset").addEventListener("click", function(){
+  try { localStorage.removeItem("marketing_shisan_v2"); } catch(e) {}
+  apply(CUR); sync(); calc(); msg("保存を消して初期値に戻しました");
+});
+
+load(); build(); sync(); calc(); memo();
+</script>
+
+</body>
+</html>
