@@ -38,7 +38,11 @@ a { color:var(--gold); text-decoration:none; }
 
 .card { background:var(--card-bg); border:1px solid var(--line); border-radius:14px; padding:16px 18px; }
 
-.row { display:grid; grid-template-columns:174px 1fr 96px 112px; gap:10px; align-items:center;
+.calc-note { margin-top:8px; padding:8px 14px; font-family:var(--mono); font-size:12px; color:var(--muted);
+  border:1px dashed var(--line); border-radius:10px; background:var(--sub-bg); }
+.calc-note b { color:var(--gold); font-weight:600; }
+
+.row { display:grid; grid-template-columns:190px 1fr 96px 118px; gap:10px; align-items:center;
   padding:9px 0; border-bottom:1px dashed var(--line); }
 .row:last-child { border-bottom:none; }
 .row .lab { font-size:13px; line-height:1.4; }
@@ -63,6 +67,7 @@ th { font-family:var(--mono); font-size:11px; color:var(--muted); font-weight:40
 td.n, th.n { font-family:var(--mono); text-align:right; white-space:nowrap; }
 tr:last-child td { border-bottom:none; }
 tr.sum td { background:var(--sub-bg); font-weight:600; }
+tr.pre td { color:var(--muted); }
 .bar { display:block; height:7px; border-radius:4px; background:var(--gold); opacity:.75; min-width:2px; }
 .dan { font-family:var(--mono); font-size:11px; color:var(--muted); }
 
@@ -96,7 +101,7 @@ footer { margin-top:44px; padding-top:18px; border-top:1px dashed var(--line);
 <div class="hero">
   <a class="back" href="https://reports.7years.life/private/marketing/">← マーケティング</a>
   <h1>📊 遷移率と売上の試算</h1>
-  <div class="tag">段ごとのブロック数と 仮 印の数（最新 2026-09-10）の段を元にした ／ 数字は全部動かせる</div>
+  <div class="tag">広告の表示回数から 手元に残る額まで／段ごとがすべて改善対象／数字は全部動かせる</div>
 </div>
 
 <div class="preset">
@@ -105,13 +110,14 @@ footer { margin-top:44px; padding-top:18px; border-top:1px dashed var(--line);
   <div class="who" id="who"></div>
 </div>
 
-<div class="genre"><h2>1. 入口に何人来るか</h2><span class="note">起点</span></div>
+<div class="genre"><h2>1. 流入（広告で買うアクセス）</h2><span class="note">起点。基本は広告でアクセスを買う</span></div>
 <div class="card" id="in1"></div>
+<div class="calc-note" id="cpc_info"></div>
 
 <div class="genre"><h2>2. 段ごとの遷移率</h2><span class="note">緑の印は和佐が実際に言っている数字</span></div>
 <div class="card" id="in2"></div>
 
-<div class="genre"><h2>3. 単価と広告費</h2></div>
+<div class="genre"><h2>3. 単価</h2></div>
 <div class="card" id="in3"></div>
 
 <div class="genre"><h2>4. 段ごとに何人残るか</h2></div>
@@ -138,8 +144,12 @@ footer { margin-top:44px; padding-top:18px; border-top:1px dashed var(--line);
 var W = "和佐";
 
 var FIELDS = [
-  {g:1, k:"nyuryoku", lab:"入口ページに来た人数", sub:"01 オプトインページの表示", min:0, max:20000, step:10, unit:"人", wasa:false},
-  {g:2, k:"optin",    lab:"01 → 登録", sub:"オプトイン率", min:0, max:100, step:0.1, unit:"%", wasa:false},
+  {g:1, k:"imp",   lab:"広告の表示回数", sub:"広告が出た回数", min:0, max:1000000, step:1000, unit:"回", wasa:false},
+  {g:1, k:"ctr",   lab:"クリック率", sub:"表示のうち何%が押すか", min:0.1, max:5.0, step:0.01, unit:"%", wasa:false},
+  {g:1, k:"cpm",   lab:"表示1,000回あたりの広告費", sub:"CPM（相場）", min:3000, max:10000, step:100, unit:"円", wasa:false},
+  {g:1, k:"muryo", lab:"無料で来る人数", sub:"note・YouTube など。当てにしない。入ったらおまけ", min:0, max:20000, step:100, unit:"人", wasa:false},
+
+  {g:2, k:"optin",    lab:"入口 → 登録", sub:"オプトインページの登録率", min:0, max:100, step:0.1, unit:"%", wasa:false},
   {g:2, k:"shicho",   lab:"登録 → 動画を見る", sub:"視聴率", min:0, max:100, step:1, unit:"%", wasa:false},
   {g:2, k:"toutatsu", lab:"動画 → 売り場に来る", sub:"LP 到達率", min:0, max:100, step:1, unit:"%", wasa:false},
   {g:2, k:"cvr",      lab:"売り場 → 購入", sub:"LP の CVR", min:0, max:100, step:0.1, unit:"%", wasa:false},
@@ -147,30 +157,30 @@ var FIELDS = [
   {g:2, k:"oto",      lab:"購入者 → 追加オファー（直後）", sub:"半額・1回限り", min:0, max:100, step:1, unit:"%", wasa:false},
   {g:2, k:"oto2",     lab:"購入者 → 追加オファー（後で）", sub:"定価の方", min:0, max:100, step:1, unit:"%", wasa:false},
   {g:2, k:"keizoku",  lab:"購入者 → 4ヶ月目も続ける", sub:"継続率（和佐は継続商品なし）", min:0, max:100, step:1, unit:"%", wasa:false},
+
   {g:3, k:"tanka_front",   lab:"フロント商品", sub:"", min:0, max:200000, step:100, unit:"円", wasa:true},
   {g:3, k:"tanka_bump",    lab:"抱き合わせ", sub:"", min:0, max:50000, step:10, unit:"円", wasa:true},
   {g:3, k:"tanka_oto",     lab:"追加オファー・直後", sub:"", min:0, max:300000, step:500, unit:"円", wasa:true},
   {g:3, k:"tanka_oto2",    lab:"追加オファー・後で", sub:"", min:0, max:300000, step:500, unit:"円", wasa:true},
   {g:3, k:"tanka_keizoku", lab:"継続の月額", sub:"", min:0, max:50000, step:500, unit:"円", wasa:false},
   {g:3, k:"tsuki",         lab:"継続する月数", sub:"", min:0, max:36, step:1, unit:"ヶ月", wasa:false},
-  {g:3, k:"list_tanka",    lab:"登録 1件の広告費", sub:"リスト単価", min:0, max:20000, step:100, unit:"円", wasa:true},
   {g:3, k:"genka",         lab:"売上原価率", sub:"決済手数料・外注など", min:0, max:50, step:0.5, unit:"%", wasa:false}
 ];
 
 var PRESET = {
   wasa: {
     name: "和佐の数字",
-    who: "和佐大輔式 AI×広告×自動化 ブートキャンプ（3DAYS）。値段と広告の数字は和佐のページから実読した値。",
-    v: { nyuryoku:1000, optin:33.3, shicho:80, toutatsu:50, cvr:50, bump:30, oto:15, oto2:3, keizoku:0,
-         tanka_front:39800, tanka_bump:4980, tanka_oto:27500, tanka_oto2:55000, tanka_keizoku:0, tsuki:0,
-         list_tanka:3000, genka:5 }
+    who: "和佐大輔式 AI×広告×自動化 ブートキャンプ（3DAYS）。値段は和佐のページから実読した値。上流は Mits様が置いた CTR 1.5%・オプトイン 20% の下で「1リスト 3,000円」を成立させる逆算値（和佐本人が言っている数字ではない）。",
+    v: { imp:111000, ctr:1.5, cpm:9000, muryo:0,
+         optin:20, shicho:80, toutatsu:50, cvr:50, bump:30, oto:15, oto2:3, keizoku:0,
+         tanka_front:39800, tanka_bump:4980, tanka_oto:27500, tanka_oto2:55000, tanka_keizoku:0, tsuki:0, genka:5 }
   },
   jisha: {
     name: "我が社の数字",
-    who: "出し続ける AI経営 3DAYS。値段は「用語と段の一覧」の確定値。遷移率は和佐と同じ値を置いてある（実測が出たら入れ替える）。",
-    v: { nyuryoku:1000, optin:33.3, shicho:80, toutatsu:50, cvr:50, bump:0, oto:15, oto2:3, keizoku:50,
-         tanka_front:29800, tanka_bump:0, tanka_oto:58000, tanka_oto2:88000, tanka_keizoku:5000, tsuki:6,
-         list_tanka:2000, genka:5 }
+    who: "出し続ける AI経営 3DAYS。値段は「用語と段の一覧」の確定値。CTR 1.5%・オプトイン 20% は Mits様が 2026-09-20 に決めた値。CPM 6,000円は「登録1件 2,000円」を成立させる目標値。",
+    v: { imp:150000, ctr:1.5, cpm:6000, muryo:0,
+         optin:20, shicho:80, toutatsu:50, cvr:50, bump:0, oto:15, oto2:3, keizoku:50,
+         tanka_front:29800, tanka_bump:0, tanka_oto:58000, tanka_oto2:88000, tanka_keizoku:5000, tsuki:6, genka:5 }
   }
 };
 
@@ -241,35 +251,55 @@ function sync(){
 }
 
 function calc(){
-  var p       = S.nyuryoku;
-  var toroku  = p * S.optin/100;
-  var mita    = toroku * S.shicho/100;
-  var lp      = mita * S.toutatsu/100;
-  var kounyu  = lp * S.cvr/100;
-  var bump    = kounyu * S.bump/100;
-  var oto     = kounyu * S.oto/100;
-  var oto2    = kounyu * S.oto2/100;
-  var keizoku = kounyu * S.keizoku/100;
+  var clicks     = S.imp * S.ctr / 100;
+  var cpc        = S.ctr > 0 ? S.cpm / (S.ctr * 10) : 0;
+  var koukoku    = clicks * cpc;
+  var p          = clicks + S.muryo;
+  var toroku     = p * S.optin/100;
+  var mita       = toroku * S.shicho/100;
+  var lp         = mita * S.toutatsu/100;
+  var kounyu     = lp * S.cvr/100;
+  var bump       = kounyu * S.bump/100;
+  var oto        = kounyu * S.oto/100;
+  var oto2       = kounyu * S.oto2/100;
+  var keizoku    = kounyu * S.keizoku/100;
   var toroku_cvr = toroku > 0 ? kounyu/toroku*100 : 0;
+  var list_tanka = toroku > 0 ? koukoku/toroku : 0;
+  var cpm_actual = S.imp > 0 ? koukoku/S.imp*1000 : 0;
+
+  document.getElementById("cpc_info").innerHTML =
+    '<b>1アクセス単価 = ' + yen(cpc) + ' 円</b>（CPM ' + yen(S.cpm) + ' 円 ÷ 1000 ÷ クリック率 ' + S.ctr + '%）';
 
   var steps = [
-    ["01",  "入口ページに来た", p, ""],
-    ["01",  "メールアドレスを登録した", toroku, S.optin + "%"],
-    ["03",  "動画を見た", mita, S.shicho + "%"],
-    ["04",  "売り場に来た", lp, S.toutatsu + "%"],
-    ["05",  "フロント商品を買った", kounyu, S.cvr + "%"],
-    ["05",  "抱き合わせも足した", bump, S.bump + "%"],
-    ["06",  "追加オファー（直後）を買った", oto, S.oto + "%"],
-    ["06x", "追加オファー（後で）を買った", oto2, S.oto2 + "%"],
-    ["PRO", "4ヶ月目も続けた", keizoku, S.keizoku + "%"]
+    ["00",  "広告が表示された",         S.imp,   "",             "回", true],
+    ["00",  "広告をクリックした",       clicks,  S.ctr + "%",    "回", true],
+    ["00",  "無料で来た（おまけ）",     S.muryo, "",             "人", true],
+    ["01",  "入口ページに来た",         p,       "",             "人", false],
+    ["01",  "メールアドレスを登録した", toroku,  S.optin + "%",  "人", false],
+    ["03",  "動画を見た",               mita,    S.shicho + "%", "人", false],
+    ["04",  "売り場に来た",             lp,      S.toutatsu + "%","人", false],
+    ["05",  "フロント商品を買った",     kounyu,  S.cvr + "%",    "人", false],
+    ["05",  "抱き合わせも足した",       bump,    S.bump + "%",   "人", false],
+    ["06",  "追加オファー（直後）を買った", oto,  S.oto + "%",    "人", false],
+    ["06x", "追加オファー（後で）を買った", oto2, S.oto2 + "%",   "人", false],
+    ["PRO", "4ヶ月目も続けた",          keizoku, S.keizoku + "%","人", false]
   ];
   var h = '<tr><th>段</th><th>ここまで来た人</th><th class="n">人数</th><th class="n">前から</th><th class="n">入口から</th><th style="width:20%">ふるい落ち方</th></tr>';
   for (var i=0;i<steps.length;i++){
     var s = steps[i];
-    var r = p > 0 ? (s[2]/p*100) : 0;
-    var w = p > 0 ? Math.max(0.6, r) : 0;
-    h += '<tr><td class="dan">' + s[0] + '</td><td>' + s[1] + '</td><td class="n">' + nin(s[2]) + ' 人</td>' +
-         '<td class="n">' + (s[3] || "—") + '</td><td class="n">' + pct(r) + '%</td>' +
+    var isPre = s[5];
+    var r, w, rDisp;
+    if (isPre) {
+      r = S.imp > 0 ? (s[2]/S.imp*100) : 0;
+      w = Math.min(100, Math.max(0.6, r));
+      rDisp = "—";
+    } else {
+      r = p > 0 ? (s[2]/p*100) : 0;
+      w = Math.min(100, Math.max(0.6, r));
+      rDisp = pct(r) + "%";
+    }
+    h += '<tr' + (isPre ? ' class="pre"' : '') + '><td class="dan">' + s[0] + '</td><td>' + s[1] + '</td><td class="n">' + nin(s[2]) + ' ' + s[4] + '</td>' +
+         '<td class="n">' + (s[3] || "—") + '</td><td class="n">' + rDisp + '</td>' +
          '<td><span class="bar" style="width:' + w + '%"></span></td></tr>';
   }
   document.getElementById("tbl").innerHTML = h;
@@ -280,7 +310,6 @@ function calc(){
   var u_oto2    = oto2    * S.tanka_oto2;
   var u_keizoku = keizoku * S.tanka_keizoku * S.tsuki;
   var uriage    = u_front + u_bump + u_oto + u_oto2 + u_keizoku;
-  var koukoku   = toroku * S.list_tanka;
   var genka     = uriage * S.genka/100;
   var arari     = uriage - genka;
   var eki       = arari - koukoku;
@@ -304,7 +333,7 @@ function calc(){
   }
   h2 += '<tr class="sum"><td class="dan">計</td><td>売上</td><td class="n">—</td><td class="n">—</td><td class="n">' + yen(uriage) + '</td><td class="n">100%</td></tr>';
   h2 += '<tr class="sum"><td class="dan">−</td><td>売上原価（' + S.genka + '%）</td><td class="n">—</td><td class="n">—</td><td class="n">−' + yen(genka) + '</td><td class="n">—</td></tr>';
-  h2 += '<tr class="sum"><td class="dan">−</td><td>広告費（登録 ' + nin(toroku) + ' 人 × ' + yen(S.list_tanka) + ' 円）</td><td class="n">—</td><td class="n">—</td><td class="n">−' + yen(koukoku) + '</td><td class="n">—</td></tr>';
+  h2 += '<tr class="sum"><td class="dan">−</td><td>広告費（クリック ' + nin(clicks) + ' 回 × 1アクセス単価 ' + yen(cpc) + ' 円）</td><td class="n">—</td><td class="n">—</td><td class="n">−' + yen(koukoku) + '</td><td class="n">—</td></tr>';
   h2 += '<tr class="sum"><td class="dan">=</td><td>手元に残る</td><td class="n">—</td><td class="n">—</td><td class="n">' + yen(eki) + '</td><td class="n">—</td></tr>';
   document.getElementById("uri").innerHTML = h2;
 
@@ -313,29 +342,41 @@ function calc(){
   var ltv      = kounyu > 0 ? uriage / kounyu : 0;
   var need     = per_in > 0 ? 20000000 / per_in : 0;
 
-  var roasCls = "k hi";
-  var roasMsg = "この表はフロントと追加オファーまで。和佐の 500% はバックエンド込みの仕組み全体の数字";
-
   var k = "";
-  k += '<div class="' + roasCls + '"><div class="t">ROAS（売上 ÷ 広告費）</div><div class="v">' + pct(roas) + '%</div><div class="s">' + roasMsg + '</div></div>';
+  k += '<div class="k hi"><div class="t">登録 1件の広告費</div><div class="v">' + yen(list_tanka) + ' 円</div><div class="s">広告費 ÷ 登録数（結果として出る値）</div></div>';
+  k += '<div class="k"><div class="t">表示 1,000回あたりの広告費</div><div class="v">' + yen(cpm_actual) + ' 円</div><div class="s">広告費 ÷ 表示回数 × 1000（入力 CPM と一致）</div></div>';
+  k += '<div class="k"><div class="t">1アクセス単価</div><div class="v">' + yen(cpc) + ' 円</div><div class="s">CPM ÷ 1000 ÷ クリック率</div></div>';
+  k += '<div class="k hi"><div class="t">ROAS（売上 ÷ 広告費）</div><div class="v">' + pct(roas) + '%</div><div class="s">この表はフロントと追加オファーまで。和佐の 500% はバックエンド込み</div></div>';
   k += '<div class="k hi"><div class="t">入口 1人あたりの粗利</div><div class="v">' + yen(per_in) + ' 円</div><div class="s">広告に 1人あたりここまで払える</div></div>';
-  k += '<div class="k"><div class="t">登録 1人あたりの粗利</div><div class="v">' + yen(per_lead) + ' 円</div><div class="s">広告費 ' + yen(S.list_tanka) + ' 円との差が取り分</div></div>';
+  k += '<div class="k"><div class="t">登録 1人あたりの粗利</div><div class="v">' + yen(per_lead) + ' 円</div><div class="s">広告費 ' + yen(list_tanka) + ' 円との差が取り分</div></div>';
   k += '<div class="k"><div class="t">登録 → 購入の率</div><div class="v">' + pct(toroku_cvr) + '%</div><div class="s">和佐の公言は 20% 超え</div></div>';
   k += '<div class="k"><div class="t">買った人 1人あたりの売上</div><div class="v">' + yen(ltv) + ' 円</div><div class="s">フロント＋抱き合わせ＋追加＋継続</div></div>';
   k += '<div class="k"><div class="t">手元に残る額</div><div class="v">' + yen(eki) + ' 円</div><div class="s">粗利 − 広告費</div></div>';
   k += '<div class="k hi"><div class="t">粗利 2,000万円に必要な入口の人数</div><div class="v">' + yen(need) + ' 人</div><div class="s">この商品だけで到達する場合</div></div>';
-  k += '<div class="k"><div class="t">広告費合計</div><div class="v">' + yen(koukoku) + ' 円</div><div class="s">登録 ' + nin(toroku) + ' 件分</div></div>';
+  k += '<div class="k"><div class="t">広告費合計</div><div class="v">' + yen(koukoku) + ' 円</div><div class="s">クリック ' + nin(clicks) + ' 回分</div></div>';
   document.getElementById("kpi").innerHTML = k;
 
   var outs = document.querySelectorAll("[data-out]");
   var map = {
-    nyuryoku: nin(p) + " 人", optin: nin(toroku) + " 人", shicho: nin(mita) + " 人",
-    toutatsu: nin(lp) + " 人", cvr: nin(kounyu) + " 人", bump: nin(bump) + " 人",
-    oto: nin(oto) + " 人", oto2: nin(oto2) + " 人", keizoku: nin(keizoku) + " 人",
-    tanka_front: yen(u_front) + " 円", tanka_bump: yen(u_bump) + " 円",
-    tanka_oto: yen(u_oto) + " 円", tanka_oto2: yen(u_oto2) + " 円",
-    tanka_keizoku: yen(u_keizoku) + " 円", tsuki: yen(u_keizoku) + " 円",
-    list_tanka: "−" + yen(koukoku) + " 円", genka: "−" + yen(genka) + " 円"
+    imp:   "クリック " + nin(clicks) + " 回",
+    ctr:   "クリック " + nin(clicks) + " 回",
+    cpm:   "1アクセス " + yen(cpc) + " 円",
+    muryo: "入口 " + nin(p) + " 人",
+    optin:  nin(toroku) + " 人",
+    shicho: nin(mita) + " 人",
+    toutatsu: nin(lp) + " 人",
+    cvr:  nin(kounyu) + " 人",
+    bump: nin(bump) + " 人",
+    oto:  nin(oto) + " 人",
+    oto2: nin(oto2) + " 人",
+    keizoku: nin(keizoku) + " 人",
+    tanka_front: yen(u_front) + " 円",
+    tanka_bump:  yen(u_bump) + " 円",
+    tanka_oto:   yen(u_oto) + " 円",
+    tanka_oto2:  yen(u_oto2) + " 円",
+    tanka_keizoku: yen(u_keizoku) + " 円",
+    tsuki: yen(u_keizoku) + " 円",
+    genka: "−" + yen(genka) + " 円"
   };
   for (var o=0;o<outs.length;o++){
     var key = outs[o].getAttribute("data-out");
@@ -346,9 +387,13 @@ function calc(){
 function memo(){
   var m = "";
   m += '<b>緑の印 <span class="w">' + W + '</span> が付いている数字は、和佐が実際にページに書いている値です。</b><br>';
-  m += 'フロント 39,800円（定価 98,000円・画像は 99,000円）／抱き合わせ 4,980円／追加オファーの直後 27,500円／同じ商品の定価 55,000円／リスト単価は和佐の試算の分母 3,000円（月 100万円の広告費で 333リスト）。和佐が目標として掲げるのは「1リスト 2,000円以下」。出所は「和佐ファネルの解剖」と「段4 値段の話の原文控え」。<br><br>';
-  m += '<b>和佐が言っていない数字</b> ── オプトイン率・視聴率・LP 到達率・追加オファーの購入率は、和佐は公開していません。公言しているのは「広告経由でフロント成約率 20%超え」と「1リスト 2,000円以下」と「最低 ROAS 500%（現行 700%）」の3つだけです。<br>';
-  m += 'このページの初期値は、その「登録 → 購入 20%」になるよう 80% × 50% × 50% と割ってあります（割り方は噂ではなく参謀の仮置き）。<br><br>';
+  m += 'フロント 39,800円（定価 98,000円・画像は 99,000円）／抱き合わせ 4,980円／追加オファーの直後 27,500円／同じ商品の定価 55,000円。和佐が公言しているのは「月 100万円の広告費で 333リスト（1リスト 3,000円）」「1リスト 2,000円以下」「最低 ROAS 500%（現行 700%）」「フロント成約率 20%超え」の 4つだけです。<br><br>';
+  m += '<b>上流の初期値の出どころ（2026-09-20 Mits様確定）</b> ── クリック率 1.5%・1アクセス単価 300円・CPM 5,000〜7,000円・オプトイン率 20% は Mits様が決められた値。和佐本人の公表値ではありません。<br>';
+  m += '和佐プリセットの imp 111,000 と CPM 9,000 は、和佐本人が言っている「月 100万円の広告費で 333リスト（1リスト 3,000円）」を、Mits様が決めたクリック率 1.5%・オプトイン率 20% の下で成り立たせるために逆算した値です。和佐本人が言っている数字ではありません。<br>';
+  m += '緑の <span class="w">' + W + '</span> 印は、これまで通り 表示回数・クリック率・CPM・オプトイン率には付けません。<br><br>';
+  m += '<b>無料で来る人数は 0 で回します。</b>Mits様 2026-09-20「Noteは当てにしないで回す　無料媒体はおまけくらいで考える」。この試算は広告で買ったアクセスだけで成り立つかを見るためのものです。<br><br>';
+  m += '<b>和佐が言っていない数字</b> ── 表示回数・クリック率・CPM・オプトイン率・視聴率・LP 到達率・追加オファーの購入率は、和佐は公開していません。<br>';
+  m += 'このページの遷移率の初期値は、「登録 → 購入 20%」になるよう 80% × 50% × 50% と割ってあります（割り方は参謀の仮置き）。<br><br>';
   m += '<b>和佐の自分の試算</b> ── 月 50万円の広告費で月売上 250万円（年 3,000万円）、月 100万円で月 500万円（年 6,000万円）、月 300万円で月 1,500万円（年 1億8,000万円）。いずれも ROAS 500% の計算です。<br><br>';
   m += '<b>我が社の値段</b> ── フロント 29,800円（定価 60,000円）／追加オファーの直後 58,000円／後で 88,000円／4ヶ月目から月 5,000円（税別）。抱き合わせは外してあります（2026-09-06 確定）。';
   document.getElementById("memo").innerHTML = m;
