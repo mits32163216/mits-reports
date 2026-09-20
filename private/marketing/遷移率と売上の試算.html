@@ -185,7 +185,7 @@ footer { margin-top:44px; padding-top:18px; border-top:1px dashed var(--line);
 var DEFAULT = {
   koukoku_in:900000, cpm:6000, ctr:1.5, muryo:0,
   optin:20, tf:20,
-  bump:0, oto:15, oto2:3, keizoku:50,
+  bump:0, oto:15, kikan:10, oto2:5, keizoku:50,
   tanka_front:29800, tanka_bump:0, tanka_oto:58000, tanka_oto2:88000, tanka_keizoku:5000, tsuki:6, genka:5
 };
 var S = {};
@@ -265,8 +265,10 @@ var LAYOUT_MAIN = [
   {type:"row", lab:"直後の売上",     wasa:null, kijun:null, waga:{kind:"calc", out:"u_oto_show"}, entryPct:null},
 
   {type:"header", title:"06x ワンタイムオファーの定価ページ"},
+  {type:"row", lab:"ページ帰還率",   wasa:null, kijun:null, waga:{kind:"input", key:"kikan", unit:"%"}, entryPct:null},
+  {type:"row", lab:"アクセス数",     wasa:null, kijun:null, waga:{kind:"calc", out:"oto2_access_show"}, entryPct:"oto2_access"},
   {type:"row", lab:"定価の購入率",   wasa:null, kijun:null, waga:{kind:"input", key:"oto2", unit:"%"}, entryPct:null},
-  {type:"row", lab:"定価の購入人数", wasa:null, kijun:null, waga:{kind:"calc", out:"oto2_show"}, entryPct:"oto2"},
+  {type:"row", lab:"買った人",       wasa:null, kijun:null, waga:{kind:"calc", out:"oto2_show"}, entryPct:"oto2"},
   {type:"row", lab:"定価の単価",     wasa:{primary:"55,000円"}, kijun:null, waga:{kind:"input", key:"tanka_oto2", unit:"円"}, entryPct:null},
   {type:"row", lab:"定価の売上",     wasa:null, kijun:null, waga:{kind:"calc", out:"u_oto2_show"}, entryPct:null},
 
@@ -395,19 +397,24 @@ function currentTfFraction(){
 function reverseKoukoku(kind, X){
   if (S.optin <= 0 || S.ctr <= 0 || S.cpm <= 0) return false;
   var tfFrac = currentTfFraction();
-  var factor = S.tanka_front
-             + (S.bump/100)*S.tanka_bump
-             + (S.oto/100)*S.tanka_oto
-             + (S.oto2/100)*S.tanka_oto2
-             + (S.keizoku/100)*S.tanka_keizoku*S.tsuki;
+  // kounyu 基準の売上寄与
+  var factor_kounyu = S.tanka_front
+                    + (S.bump/100)*S.tanka_bump
+                    + (S.oto/100)*S.tanka_oto
+                    + (S.keizoku/100)*S.tanka_keizoku*S.tsuki;
+  // toroku 基準の売上寄与（06x はメルマガ登録数×帰還率×購入率）
+  var factor_toroku = (S.kikan/100)*(S.oto2/100)*S.tanka_oto2;
+  // uriage = toroku * G   (G = tf*factor_kounyu + factor_toroku)
+  var G = tfFrac * factor_kounyu + factor_toroku;
   var toroku_target;
   if (kind === "toroku")      toroku_target = X;
   else if (kind === "kounyu") { if (tfFrac <= 0) return false; toroku_target = X / tfFrac; }
-  else if (kind === "uriage") { if (tfFrac <= 0 || factor <= 0) return false; toroku_target = X / (tfFrac * factor); }
+  else if (kind === "uriage") { if (G <= 0) return false; toroku_target = X / G; }
   else if (kind === "eki") {
     var g = 1 - S.genka/100;
-    var A = (S.ctr * S.optin * tfFrac * factor * g) / (S.cpm * 10);
-    var B = (S.muryo * S.optin * tfFrac * factor * g) / 100;
+    // eki = K * [CTR*optin*G*(1-genka/100)/(CPM*10) - 1] + muryo*optin*G*(1-genka/100)/100
+    var A = (S.ctr * S.optin * G * g) / (S.cpm * 10);
+    var B = (S.muryo * S.optin * G * g) / 100;
     var denom = A - 1;
     if (denom === 0) return false;
     var K_new = (X - B) / denom;
@@ -467,10 +474,11 @@ function calc(){
   var tfFrac  = currentTfFraction();
   var mita    = toroku;         // 03 動画段は人数が通るだけ（率なし）
   var kounyu  = toroku * tfFrac;
-  var bump    = kounyu * S.bump/100;
-  var oto     = kounyu * S.oto/100;
-  var oto2    = kounyu * S.oto2/100;
-  var keizoku = kounyu * S.keizoku/100;
+  var bump        = kounyu * S.bump/100;
+  var oto         = kounyu * S.oto/100;
+  var oto2_access = toroku * S.kikan/100;   // 06x はメルマガ登録数を分母にする
+  var oto2        = oto2_access * S.oto2/100;
+  var keizoku     = kounyu * S.keizoku/100;
 
   // 売上は人数（整数切り捨て）× 単価
   var u_front   = Math.floor(kounyu)  * S.tanka_front;
@@ -497,10 +505,11 @@ function calc(){
   setStat("u_front_show",  yen(u_front) + " 円");
   setStat("bump_show",     nin(bump) + " 人");
   setStat("u_bump_show",   yen(u_bump) + " 円");
-  setStat("oto_show",      nin(oto) + " 人");
-  setStat("u_oto_show",    yen(u_oto) + " 円");
-  setStat("oto2_show",     nin(oto2) + " 人");
-  setStat("u_oto2_show",   yen(u_oto2) + " 円");
+  setStat("oto_show",       nin(oto) + " 人");
+  setStat("u_oto_show",     yen(u_oto) + " 円");
+  setStat("oto2_access_show", nin(oto2_access) + " 人");
+  setStat("oto2_show",      nin(oto2) + " 人");
+  setStat("u_oto2_show",    yen(u_oto2) + " 円");
   setStat("keizoku_show",  nin(keizoku) + " 人");
   setStat("u_keizoku_show", yen(u_keizoku) + " 円");
   setStat("roas_show",     pct(roas) + "%");
@@ -512,6 +521,7 @@ function calc(){
   setPct("kounyu",   pct(p > 0 ? kounyu/p*100 : 0) + "%");
   setPct("bump",     pct(p > 0 ? bump/p*100 : 0) + "%");
   setPct("oto",      pct(p > 0 ? oto/p*100 : 0) + "%");
+  setPct("oto2_access", pct(p > 0 ? oto2_access/p*100 : 0) + "%");
   setPct("oto2",     pct(p > 0 ? oto2/p*100 : 0) + "%");
   setPct("keizoku",  pct(p > 0 ? keizoku/p*100 : 0) + "%");
 
