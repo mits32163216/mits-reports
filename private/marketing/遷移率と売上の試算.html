@@ -497,11 +497,12 @@ function calc(){
   var oto2    = kounyu * S.oto2/100;
   var keizoku = kounyu * S.keizoku/100;
 
-  var u_front   = kounyu  * S.tanka_front;
-  var u_bump    = bump    * S.tanka_bump;
-  var u_oto     = oto     * S.tanka_oto;
-  var u_oto2    = oto2    * S.tanka_oto2;
-  var u_keizoku = keizoku * S.tanka_keizoku * S.tsuki;
+  // 売上は人数（整数切り捨て）× 単価
+  var u_front   = Math.floor(kounyu)  * S.tanka_front;
+  var u_bump    = Math.floor(bump)    * S.tanka_bump;
+  var u_oto     = Math.floor(oto)     * S.tanka_oto;
+  var u_oto2    = Math.floor(oto2)    * S.tanka_oto2;
+  var u_keizoku = Math.floor(keizoku) * S.tanka_keizoku * S.tsuki;
   var uriage    = u_front + u_bump + u_oto + u_oto2 + u_keizoku;
   var genka     = uriage * S.genka/100;
   var arari     = uriage - genka;
@@ -604,7 +605,7 @@ function memo(){
   m += 'https://reports.7years.life/private/marketing/%E5%85%A8%E4%BD%93%E5%83%8F%E3%81%AE%E8%A8%AD%E8%A8%88%E5%9B%B3.html<br>';
   m += 'Mits様のシート（並べ方と基準値の借り元・シートの売り物は 550,000円 の高単価商品）<br>';
   m += 'https://docs.google.com/spreadsheets/d/1hxbtkoRhWctxbA2J-HTaBiSgqmQ90QSdX8kjWsvjwDk/edit?gid=0<br><br>';
-  m += '<b>和佐の本人発言 10項目</b>（濃字の全て） ── 1リストの獲得費 2,000円以下／1日の広告費 150,000円以上／月の広告費 3,000,000円以上／登録 → フロント購入 20%超（LP見出し・7項目・DAY3タイトルの3箇所）／フロント 39,800円／抱き合わせ 4,980円／ワンタイムオファー直後 27,500円／同じ商品の定価 55,000円／広告費の回収率 500%（最低）・700%超（現行）／1日のバックエンド売上 400,000円以上。<br><br>';
+  m += '<b>和佐の本人発言 10項目</b>（濃字の全て） ── 1リストの獲得費 2,000円以下／1日の広告費 150,000円以上／月の広告費 3,000,000円以上／登録 → フロント購入 20%超（LP見出し・7項目・DAY3タイトルの3箇所）／フロント 39,800円／抱き合わせ 4,980円／ワンタイムオファー直後 27,500円／同じ商品の定価 55,000円／広告費の回収率 500%（最低）・700%超（現行）／1日のワンタイムオファー売上 400,000円以上。<br><br>';
   m += '<b>和佐が言っていない項目（表では ※ 付き薄字）</b> ── 表示回数（IMP 111,000回）／クリック率（CTR 1.5%）／CPM 9,000円／クリック単価（CPC 600円）／オプトイン率（20%）。いずれも Mits様が 2026-09-20 に決めた「CTR 1.5%・オプトイン 20%」の下で「1リスト 3,000円」を成立させる逆算値（参謀の仮置き）。<br><br>';
   m += '<b>基準値の 7項目</b>（Mits様のシートの値） ── CTR 1.50%（±0.5%）／クリック単価 300円（200〜400円）／CPM 3,000〜14,000円／メルマガ登録率 5〜20%／CPA 3,000〜5,000円／LINE登録率 60%（参考）／予約率 50〜90%（我が社の成約率で代替）。<br><br>';
   m += '<b>Mits様のシートの実測</b>（2026-02-13 開始・広告費 50,000円 の回）：IMP 11,450／クリック 167／CTR 1.46%／クリック単価 299円／CPM 4,367円／メルマガ登録 17件／登録率 10.18%／CPA 2,941円／LINE 10人（58.8%）／予約 2件／成約 1件／成約単価 550,000円／ROAS 1,100%。<br><br>';
