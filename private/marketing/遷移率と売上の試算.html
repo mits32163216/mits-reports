@@ -519,13 +519,10 @@ function calcPlan(plan){
   setStat(plan, "rev_eki",    "計算値 " + yen(eki) + " 円");
 
   var h = '';
-  h += '<tr><td>売上の合計</td><td class="n">' + yen(uriage) + ' 円' +
-    '<span class="ex">' + yen(u_optin) + ' ＋ ' + yen(u_front) + ' ＋ ' + yen(u_oto) + ' ＋ ' + yen(u_oto2) + ' ＋ ' + yen(u_keizoku) + ' ＝ ' + yen(uriage) + '円</span></td></tr>';
-  h += '<tr><td>売上原価（' + S.genka + '%）</td><td class="n">−' + yen(genka) + ' 円' +
-    '<span class="ex">' + yen(uriage) + '円 × ' + pct(S.genka) + '% ＝ ' + yen(genka) + '円</span></td></tr>';
+  h += '<tr><td>売上の合計</td><td class="n">' + yen(uriage) + ' 円</td></tr>';
+  h += '<tr><td>売上原価（' + S.genka + '%）</td><td class="n">−' + yen(genka) + ' 円</td></tr>';
   h += '<tr><td>広告費</td><td class="n">−' + yen(K) + ' 円</td></tr>';
-  h += '<tr><td>手元に残る額</td><td class="n">' + yen(eki) + ' 円' +
-    '<span class="ex">' + yen(uriage) + ' − ' + yen(genka) + ' − ' + yen(K) + ' ＝ ' + yen(eki) + '円</span></td></tr>';
+  h += '<tr><td>手元に残る額</td><td class="n">' + yen(eki) + ' 円</td></tr>';
   document.getElementById("tbl_money_" + plan).innerHTML = h;
 
   var per_in   = p > 0 ? arari / p : 0;
@@ -533,14 +530,14 @@ function calcPlan(plan){
   var ltv      = kounyu > 0 ? uriage / kounyu : 0;
   var need     = per_in > 0 ? 20000000 / per_in : 0;
   var k = "";
-  k += '<div class="k"><div class="t">登録→フロント購入</div><div class="v">' + pct(S.tf) + '%</div><div class="s">段の遷移率</div></div>';
-  k += '<div class="k"><div class="t">ROAS</div><div class="v">' + pct(roas) + '%</div><div class="s">広告費の回収率</div></div>';
-  k += '<div class="k"><div class="t">CPC</div><div class="v">' + yen(cpc) + ' 円</div><div class="s">1クリックの単価</div></div>';
-  k += '<div class="k"><div class="t">投下する広告費</div><div class="v">' + yen(K) + ' 円</div><div class="s">起点</div></div>';
-  k += '<div class="k"><div class="t">入口1人の粗利</div><div class="v">' + yen(per_in) + ' 円</div><div class="s">1人あたりここまで払える</div></div>';
-  k += '<div class="k"><div class="t">登録1人の粗利</div><div class="v">' + yen(per_lead) + ' 円</div><div class="s">CPA との差</div></div>';
-  k += '<div class="k"><div class="t">買った人1人の売上</div><div class="v">' + yen(ltv) + ' 円</div><div class="s">フロント＋ワンタイムオファー＋定価ページ＋継続</div></div>';
-  k += '<div class="k"><div class="t">粗利2,000万円に必要な入口</div><div class="v">' + yen(need) + ' 人</div><div class="s">この商品だけで到達</div></div>';
+  k += '<div class="k"><div class="t">登録→フロント購入</div><div class="v">' + pct(S.tf) + '%</div></div>';
+  k += '<div class="k"><div class="t">ROAS</div><div class="v">' + pct(roas) + '%</div></div>';
+  k += '<div class="k"><div class="t">CPC</div><div class="v">' + yen(cpc) + ' 円</div></div>';
+  k += '<div class="k"><div class="t">投下する広告費</div><div class="v">' + yen(K) + ' 円</div></div>';
+  k += '<div class="k"><div class="t">入口1人の粗利</div><div class="v">' + yen(per_in) + ' 円</div></div>';
+  k += '<div class="k"><div class="t">登録1人の粗利</div><div class="v">' + yen(per_lead) + ' 円</div></div>';
+  k += '<div class="k"><div class="t">買った人1人の売上</div><div class="v">' + yen(ltv) + ' 円</div></div>';
+  k += '<div class="k"><div class="t">粗利2,000万円に必要な入口</div><div class="v">' + yen(need) + ' 人</div></div>';
   document.getElementById("kpi_" + plan).innerHTML = k;
 }
 
