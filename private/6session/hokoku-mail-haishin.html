@@ -70,7 +70,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-20 09:17 ／ 写した時刻 2026-09-20 12:39</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-20 21:14 ／ 写した時刻 2026-09-21 06:40</p>
 <h2 id="報告-メール配信・計測・自動化">報告 ── メール配信・計測・自動化</h2>
 <p>この持ち場の窓（9:06 の朝の測定・19:39 のメルマガ・23:13 の見張り・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_メール配信・計測・自動化.md</p>
@@ -145,6 +146,26 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>ほかの持ち場に頼む：司令塔：spro は予約の窓からは入れない（RoboForm は動いているが computer use が掴めない・6回連続）。本体の窓で1回入って、①9/18号・9/19号が spro に出ていないことの確定 ②5134・5132 の数字 ③9/16号の有無 を拾ってほしい。今夜 9/20号も、予約の窓では spro だけ出ない見込み</li>
 <li>数字：足した行 4／抜け 2本（spro 5134(12h)・5132(48h)）／未送 11件（最古 2026-09-15 09:14・運転台マーケ宛。SendMessage は <code>untendai-marketing</code> と <code>運転台マーケ</code> の両方で「No agent named … is reachable.」。試行9回目のものが1件ある）</li>
 <li>補足：指示書 2026-09-20 の末尾にあるとおり、引き渡しの数字そのものは取り込みの窓が keisoku_suii.csv から直接取り込んでいる（09-19 23:19 に台帳107行）。未送11件は連絡の控えが溜まっているという意味で、数字が届いていないという意味ではない</li>
+</ul>
+<h3 id="2026-09-20-21-05-メルマガ測定の窓・夜">2026-09-20 21:05（メルマガ測定の窓・夜）</h3>
+<ul>
+<li>やったこと：夜の測定（24h・48h）4本を台帳に足した。UTAGE 2本は API、まぐまぐ 2本は画面（配送履歴・読者数）から <code>--manual</code> で入れた</li>
+  <li>UTAGE 48h Kp5cDpgsVVT9「費目の差で、膨らんだ科目を見る」 送信1795 開封292(+9) クリック1(+0) 解除0 → <strong>48時間の測定まで完了</strong></li>
+  <li>UTAGE 24h 9lEKccveBIFs「必要粗利に、今月いくら届いたか」 送信1795 開封283(+34) クリック6(+1) 解除2</li>
+  <li>まぐまぐ 48h 165293388「費目の差で、膨らんだ科目を見る」 発行部数1443 読者数1796 → <strong>48時間の測定まで完了</strong></li>
+  <li>まぐまぐ 24h 165294433「必要粗利に、今月いくら届いたか」 発行部数1443 読者数1796</li>
+  <li>まぐまぐの開封・クリックは測れないため空欄のまま（<code>0</code> を入れていない）</li>
+<li>数字：この回に足した行 4行／抜け 0本／未送 12件・最古 2026-09-15 09:14（試行9回目・仕組みのどこかが壊れている）</li>
+<li>できなかった</li>
+  <li>spro は8回続けてこの窓から入れない。<code><a href="https://spro01.com/smail/admin/mailmag.php?act=magazinelistsd&amp;pid=step_R120ta&amp;pcol=">https://spro01.com/smail/admin/mailmag.php?act=magazinelistsd&amp;pid=step_R120ta&amp;pcol=</a></code> を開くと <code>chrome-error://chromewebdata/</code>（document.title 空・本文0文字）。ログインの RoboForm は <code>list_apps query=robo</code> が <code>{&quot;apps&quot;:[]}</code>、<code>request_access</code> は「&quot;RoboForm&quot; doesn&#x27;t match any installed or running application.」</li>
+  <li>窓を過ぎた未測定が残っている：spro 5134（2026-09-17 便・12h/24h/36h/48h の4点すべて未測定）・spro 5132（48h）。今夜の測定の対象（±3時間の幅）には入らないので、この回の抜けには数えていない</li>
+  <li>引き渡しの SendMessage は <code>untendai-marketing</code> も <code>運転台マーケ</code> も「No agent named … is reachable.」。書き置き（untendai_marketing_hikiwatashi.md）と soushin_machi.json に積んだ</li>
+<li>気づいたこと：今夜 20:05 に出したまぐまぐ 165295482（サブスクの号）は、21:1x 時点でまぐまぐの配送履歴（2026年9月）にまだ並んでいない。最新は 165294433（9/19 21:04:34）。配送に時間がかかっているだけとも読めるが、確かめていない。12h の測定は明朝の窓</li>
+<li>ほかの持ち場に頼む</li>
+  <li>司令塔へ：spro の道（RoboForm が予約の窓から掴めない）は8回続けて同じ。本体（会話）の窓で1回入って、5134 の4点・5132 の48h・9/16〜9/20号が spro に出ているかを拾う仕事が残っている</li>
+  <li>司令塔へ：引き渡しの宛先（<code>untendai-marketing</code> / <code>運転台マーケ</code>）が6日届いていない。未送 12件・最古 09-15 09:14・試行9回目。宛先の立て直しか、台帳直読みに一本化するかの判断が要る</li>
+<li>この回の事故と直し：9lEKccveBIFs の 24h を<strong>二重に書いた</strong>。1回目を背景で走らせたところ出力ファイルが空（<code>Bash completed with no output</code>）で、台帳の行数も増えて見えなかったため「入っていない」と読んで前面で再実行した。実際は1回目（21:08:59）も入っていた。数字は2行とも同じ（送信1795 開封283 クリック6 解除2）。後の行（21:09:42）を消して1行に戻した。消す前の控え：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20260920_2110_keisoku_suii.csv_beforeChange_dup9lEK24h</li>
+  <li>次からの決まり：<strong>測定スクリプトを背景で走らせない。</strong>前面で1本ずつ走らせ、入ったかは <code>grep &quot;&lt;配信ID&gt;&quot; keisoku_suii.csv</code> の行数で確かめる（行数の総数で見ない・他の行が同時に増える）</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>

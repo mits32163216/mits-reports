@@ -68,7 +68,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-20 09:17 ／ 写した時刻 2026-09-20 12:39</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-21 06:40 ／ 写した時刻 2026-09-21 06:40</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -705,6 +706,36 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>読んだ：決定の記録の 2026-09-19 00:00 から今朝までで、宛先に「メール配信・計測・自動化」が入っている行は 2026-09-19 07:3x の1本だけ。これは 09-19 09:1x の回で読んで片づけ済み。新しくやることは無し</li>
 <li>決めたこと：予約タスクの窓から spro に入る道は、これで6回続けて通っていない（Chrome のタブが chrome-error://chromewebdata/ になり、RoboForm が computer use から掴めない。<strong>RoboForm 自体は動いている</strong>（/Applications/RoboForm.app・pid 1335・9/10 から起動中）のに list_apps query=robo は空で返り、request_access は bundle id と表示名の両方で「doesn&#x27;t match any installed or running application.」を返す。「入っていない」ではなく「この窓からは掴めない」）。<strong>この窓では入れないものとして扱い、毎回試したうえで抜けとして記録する</strong>。5134・5132 の数字と 9/16〜9/19号が spro に出ているかは、本体（会話）の窓で1回入って拾う</li>
 <li>数字：今朝足した測定 4本（UTAGE Kp5cDpgsVVT9 36h・9lEKccveBIFs 12h／まぐまぐ 165293388 36h・165294433 12h）。抜け2本（spro 5134(12h)・5132(48h)）。運転台マーケへの引き渡しは未送11件・最古 2026-09-15 09:14（SendMessage が <code>untendai-marketing</code> も <code>運転台マーケ</code> も「No agent named … is reachable.」）。数字そのものは取り込みの窓が keisoku_suii.csv から直接取り込んでいる</li>
+</ul>
+<h3 id="2026-09-20-20-3x-メール配信・計測・自動化-予約タスク-mainichi-mer">2026-09-20 20:3x ／ メール配信・計測・自動化（予約タスク mainichi-merumaga-21-24）── 3スタンド用のファイルで丸括弧が半角に潰れていた</h3>
+<ul>
+<li>どのセッションで：メール配信・計測・自動化（毎日メルマガの回）</li>
+<li>宛先：メール配信・計測・自動化／司令塔</li>
+<li>起きたこと：9/20号（サブスク）の 3スタンド用ファイル（magmag_table.html・spro.html・spro_テキスト版.txt）で、草稿の全角 <code>（</code> <code>）</code> が全部 半角 <code>(</code> <code>)</code> に置き換わっていた。テスト便にも「サブスク (毎月入るお金)」の形で届いた。本配信のボタンを押す直前に参謀が気付いて止め、3ファイルを直して入れ直し、テスト便を取り直した（20:21:28）。直したあとの突き合わせは「出してよい: 違う字は 0件」</li>
+<li>なぜ検査を抜けたか：<code>tsukiawase.py</code> は「原稿ファイル」と「届いた便」を比べる。原稿ファイル側がすでに半角に潰れていたので、0件で通ってしまう。<strong>草稿と原稿ファイルを比べる目が無かった</strong></li>
+<li>決めたこと：3スタンド用のファイルを作ったら、<strong>草稿と全角 <code>（</code> の個数を突き合わせる</strong>。正本に足した → /Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/skills/merumaga-3stand-haishin/SKILL.md の Step 1「🔴 丸括弧を半角に潰さない」</li>
+<li>読んで片づけた：決定の記録の 2026-09-19 00:00 から今夜までで、宛先に「メール配信・計測・自動化」が入っている行は 2026-09-19 07:3x の1本だけ。これは 09-19 09:1x の回で片づけ済み。新しくやること無し</li>
+<li>spro：この窓からは7日続けて入れない（<code>list_apps</code> で RoboForm が 0件・<code><a href="https://spro01.com/smail/admin/">https://spro01.com/smail/admin/</a></code> は error page）。今夜も3回叩いて同じ。2026-09-20 09:1x の決めごとどおり抜けとして記録する</li>
+</ul>
+<h3 id="2026-09-20-21-1x-メール配信・計測・自動化-予約タスク-merumaga-kei">2026-09-20 21:1x ／ メール配信・計測・自動化（予約タスク merumaga-keisoku-24h-36h-48h）── 宛先の行を読んだ・窓を過ぎた未測定は抜けに数えない</h3>
+<ul>
+<li>どのセッションで：メール配信・計測・自動化（夜の測定の回）</li>
+<li>宛先：司令塔</li>
+<li>読んで片づけた：決定の記録の 2026-09-19 00:00 から今夜までで、宛先に「メール配信・計測・自動化」が入っている行は 2026-09-19 07:3x と 2026-09-20 20:3x の2本。どちらも片づけ済み（20:3x はこの持ち場が自分で書いた行・丸括弧の全角を突き合わせる決まり）。新しくやること無し</li>
+<li>決めたこと：<strong>±3時間の幅に入らないラベルは、その回の「抜け」に数えない。</strong>窓を過ぎた未測定（spro 5134 の4点・5132 の48h）は報告の「できなかった」に名前と配信IDで残し、回の記録（keisoku_kai_kiroku.csv）の抜けの列には入れない。理由：抜けの列は「この回に測るはずだったのに測れなかったもの」を数える列で、過ぎた窓を毎回積むと回ごとの本数が読めなくなる</li>
+<li>数字：今夜足した測定 4本（UTAGE Kp5cDpgsVVT9 48h・9lEKccveBIFs 24h／まぐまぐ 165293388 48h・165294433 24h）。抜け 0本。運転台マーケへの引き渡しは未送12件・最古 2026-09-15 09:14（試行9回目）</li>
+<li>spro：この窓から8回続けて入れない（画面 <code>chrome-error://chromewebdata/</code>・<code>list_apps query=robo</code> が 0件）</li>
+<li>詳細：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/報告_メール配信・計測・自動化.md の 2026-09-20 21:05 の節</li>
+<li>追記（21:2x）：この回に 9lEKccveBIFs の 24h を二重に書いた（背景実行の出力が空で「入っていない」と読み、前面で再実行）。後の行を消して1行に戻した。<strong>測定スクリプトは背景で走らせない。</strong>確かめは配信IDで grep する（台帳の総行数で見ない）</li>
+</ul>
+<h3 id="2026-09-21-06-4x-司令塔-朝の定時報告の回-測定の引き渡しは-SendMessa">2026-09-21 06:4x ／ 司令塔（朝の定時報告の回）── 測定の引き渡しは SendMessage をやめ、台帳の直読みに一本化する</h3>
+<ul>
+<li>どのセッションで：司令塔（定時報告の予約タスク）</li>
+<li>宛先：メール配信・計測・自動化／運転台マーケ</li>
+<li>決めたこと：メルマガ測定の引き渡しは、<strong>書き置き（untendai_marketing_hikiwatashi.md）と台帳 keisoku_suii.csv の直読みに一本化する。SendMessage による引き渡しはやめる。</strong>「未送 N件」を積み上げるのもやめてよい（soushin_machi.json は記録として残すが、未送の件数を報告の数字に載せない）</li>
+<li>理由：①6日・試行9回、宛先を <code>untendai-marketing</code> でも <code>運転台マーケ</code> でも「No agent named … is reachable.」で断られ続けている ②その間も<strong>数字は届いている</strong> ── 取り込みの窓が keisoku_suii.csv を直接読み、09-19 23:19 時点で台帳107行・いちばん新しい測定 09-19 21:12:17 まで追いついている（keiki_maiasa_kensan.md 2026-09-20 07:51 の行）③<code>ListAgents</code> は予約タスクの窓の道具の一覧に無く、<code>ToolSearch</code> でも引けないので、宛先の名前を実測で取り直す道がこの窓には無い（2026-09-20 の朝・昼・夕と本日の4回とも同じ）</li>
+<li>取り消さないこと：司令塔の決まり1（計測・除外・数え方の<strong>決定</strong>は他の5つへ即送る）は生きている。決定は決定の記録に「宛先」付きで書く形で回っている（2026-09-16 Mits様の案）。今回やめるのは<strong>測定の数字の引き渡しだけ</strong></li>
+<li>やること：メール配信・計測・自動化 は、測定の回の報告から「未送 N件・最古 …・試行 N回目」の行を落としてよい。運転台マーケ は今までどおり keisoku_suii.csv から直接取り込む</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
