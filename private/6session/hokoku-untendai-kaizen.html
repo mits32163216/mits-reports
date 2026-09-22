@@ -69,7 +69,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-21 09:02 ／ 写した時刻 2026-09-21 12:38</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-22 07:34 ／ 写した時刻 2026-09-22 12:39</p>
 <h2 id="報告-運転台改善">報告 ── 運転台改善</h2>
 <p>この持ち場の窓（7:12 の毎朝点検・6時間ごとの機能要望の窓・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_運転台改善.md</p>
@@ -145,6 +146,42 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li><strong>「欄に触った」の待ち受けの数は 0・0・0 ではない。</strong>お試し版に <code>input</code> が1件ある（L1124・チャット欄の高さ調整）。メアド欄（L549／L560／L1357 の <code>type=&quot;email&quot;</code>）には付いていないので、結論は変わらない</li>
 <li><strong>同じ名前の紙が 2026-09-19 にもあった</strong>（/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/案_入れずに離れた瞬間の記録_20260919.md・163行・09-19 07:22:18 作成）。今日の紙（343行・のち358行）は冒頭でこれを引いて食い違いを1件名指ししている。2本の設計は別物（今日＝名前を2つ足す／09-19＝名前5つ新設＋中継に uid2reader: を足す）。<strong>どちらを採るかは決めていない。2本並べて出す</strong></li>
 </ul>
+<h3 id="2026-09-22-07-4x-毎朝点検の窓-untendai-asa-tenken">2026-09-22 07:4x（毎朝点検の窓 untendai-asa-tenken）</h3>
+<ul>
+<li>読んだ指示書の節：2026-09-22（1〜3）</li>
+<li>やった：</li>
+</ul>
+<p>  1. 中継 untendai-update の Windows のダウンロードの道：<strong>503 は続いていない（一時）。</strong>07:23:12／07:24:13／07:25:48（担当 BS-engineer）と 07:27:22（参謀）の4回とも <code>/dl/569988552/untendai_1.73.8_x64-setup.exe</code> 200・<code>/get/windows</code> 302・<code>/get/mac</code> 302。直近3日で <code>/dl/</code> 経由 73件（<code>/count?days=3&amp;detail=1</code> の by_version 1.73.8: 73）。updater/index.js では <code>/dl/</code> の失敗は L90 の 502 と L85 の 400 だけで、503 を返すのは L347・L453（KV が無いときの <code>/ev/count</code>・<code>/count</code>）だけ ── 02:2x の 503 は中継の外（Cloudflare の縁か GitHub 側）の一時的なものと見る。<strong>古い版の直リンク（<code>workers.dev/dl/&lt;番号&gt;/</code>）は0件</strong>（範囲：司令塔・経営の運転台・untendai-seiri・untendai-marketing〔追跡外含む〕・本番に上げた写し okuru_20260922_0208.html）。本番ページの口は <code>/get/windows</code>・<code>/get/mac</code>（と <code>/prev</code>）の名前の形だけなので、版を出すたびにページを書き換える要は無い。<strong>6つの新しい名前は /ev/count に届いている</strong>（07:27:22・days=3：top_view 13／btn_view 13／stay_30s 7／top_img_click 1／scroll_50 1／scroll_90 1。人は1〜2で試しの範囲、号の読者はまだ通っていない）。中継の直しは要らない</p>
+<p>  2. 討議の返事：下の「## 討議 2026-09-21（ダウンロードページ）」に3案。下書き（BA-strategist）の数字7件を devils-advocate が裏取りし、否1件（reg_open 5→6／4・reg_close 3→4／4）・値の違い2件（140→14 を 145→16、本番は 01:4x でなく 02:09:16）・出どころ不明1件（img_ 24人・印なし 10/30 → 未集計と書き直し）・言い過ぎ1件（gate_leave 相当）を直してから貼った</p>
+<p>  3. 控え（_mock/utm_registration_review_20260913/otameshi_current.html ほか）を git に入れる：<strong>やっていない。</strong>毎朝点検の窓の手順書は「git は読むだけ・commit しない」なので、この窓では当てられない。チャットの窓の回に回す</p>
+<ul>
+<li>できなかった：3（上の理由）</li>
+<li>次に自分がやる：チャットの窓で 3（控えを git に入れる → 公開ページ2枚を作業場に写す）</li>
+<li>ほかの持ち場に頼む：なし</li>
+<li>数字：テスト 通った 216・落ちた 0（飛ばした 11）／版 1.73.11 で5か所一致／未提出 5件</li>
+</ul>
+<h3 id="討議-2026-09-21-ダウンロードページ">討議 2026-09-21（ダウンロードページ）</h3>
+<p>持ち場：運転台改善（運転台アプリ＝AI-Mits＆経営アプリの質を上げる係・中継 untendai-update と aimits-report-proxy を見る）。1周目の見本（reports.7years.life/aimits-go/&lt;utm&gt;.json を段に差し込む形）は 2026-09-22 01:4x に検証（devils-advocate 10本）が通り、01:54:24 の1回目の投入で行が切れる事故（6分29秒）→02:00:53 に戻し→02:09:16 が確定版として本番に載った（決定の記録 L805・L808）。以下は「計器・中継・アプリの側から見て、まだ塞げていない所」に絞った3案。</p>
+<h4 id="案1-メアドを入れる-の中を-a-b-に割る計器を段の実装と同じ本番に入れる">案1：③（メアドを入れる）の中を a/b に割る計器を段の実装と同じ本番に入れる</h4>
+<ul>
+<li>何を変えるか：公開2ページ（oHtrsl52qpXg／UgSfW8MCzHqv）の窓の JavaScript に <code>reg_touch</code>／<code>gate_touch</code>（欄に指かカーソルが入った・1回だけ）と、閉じる時の自由欄 <code>detail</code> に「空のまま／入れたまま」の2値を足す。中継 updater/index.js は触らない（受け口は名前で弾かない・by_name に自動で載る）。案の紙 3-3・4節に手順あり</li>
+<li>根拠：実測 ── 窓まで来た（dl_start）14端末中12端末がメアドを送っている（gate_submit・③は86%。gate_open 基準なら 12/21＝57%）（2026-09-22 07:26 JST・/ev/count?days=30）／落ちているのは 見た人145→押した人16 の側（09-12〜09-21・決定の記録 L710）／お試し版の30日は reg_open 延べ6・端末4 に対し reg_submit 1／1 と reg_close 4／4（同じ時刻の実測）。お試し版は「入れずに閉じた」を reg_close で捉えているが、ダウンロードページの gate_leave（窓を開けたまま離れた）に当たる記録は無い（公開版 UgSfW8MCzHqv L1674-1677）。知見：MECLABS C=4m+3v+2(i−f)−2a の「摩擦（f）」がどの段で効いているかは、押した→触った→送った を割らないと分からない</li>
+<li>測る数字と外れの線：③-a＝<code>by_name_uniq[&quot;reg_touch&quot;] ÷ by_name_uniq[&quot;reg_open&quot;]</code>。7日で30件の分母が集まらなければ計器として機能しない＝外れ。集まったら③-aと③-bの片方が20ポイント以上落ちている段を「直す1か所」の根拠にする</li>
+</ul>
+<h4 id="案2-段の画像を-触れる部品-に置き換える-img-経路だけ・A-B">案2：段の画像を「触れる部品」に置き換える（img_ 経路だけ・A/B）</h4>
+<ul>
+<li>何を変えるか：<code>utm_content=img_...</code>（画像リンク経由。img_ 単独の人数は未集計。bun_ と合わせて 09-15 以降 63人・押した2人＝決定の記録 L710）で来た人にだけ、段の画像を、その号の画面の動く模型（数字だけ動く軽いインライン SVG＋JS・アプリの一画面を模す）に差し替える。JSON に <code>widget_url</code> 欄を1本足すだけで、印なし・bun_ 経路は静止画像のまま</li>
+<li>根拠：検証役 BA-council-genba-gaibu（4a）の事前検死1位 ──「毎朝この画面を開いておくだけ」の語句が「配っているのはパソコンに入れるアプリ」との橋渡しを欠く／触れる部品なら「入れると自分でできる」が最初の画面で伝わる。知見：Fogg B=MAT ── 動機と能力が揃った瞬間にきっかけが要る／Campaign Monitor 検索語→着地の合わせ +31.4%。<strong>見立て</strong>：img_ 経路は画像を押して来た人＝画像そのものへの関心が高い層なので、他経路より反応が大きい可能性</li>
+<li>測る数字と外れの線：img_ 経路の <code>dl_click ÷ page_view</code>（まず img_ 単独の今の値を数えるところから。未集計）。印なし経路は 09-16〜09-21 で 14人・押した1（決定の記録 L755）。7日で分母24人以上集めて押し率が印なし経路を上回らない、または触れる部品を触った率（<code>top_img_click ÷ top_view</code>）が20%未満なら外れ</li>
+</ul>
+<h4 id="案3-段が-見えた-読まれた-通り過ぎた-を分けて記録する-納得点の実測">案3：段が「見えた／読まれた／通り過ぎた」を分けて記録する（納得点の実測）</h4>
+<ul>
+<li>何を変えるか：段の DOM に IntersectionObserver で <code>top_view</code>（先頭50%が見えた）／<code>top_read_30s</code>（30秒以上見えていた）／<code>top_scroll_past</code>（段を通り越して下へ）を打つ。段の中の答えの文が読まれているかを、時間で見る</li>
+<li>根拠：22組の点検（司令塔・2026-09-22 01:1x）で「全部に答えている9組／一部だけ12組／答えていない1組」。<strong>答えの文が読まれているかは、選び方の当たり外れを実測で切り分ける根拠になる</strong>（読まれずに通り過ぎているなら答えの文の問題ではなく段の位置・見出しの問題）。知見：NN/g の視線調査でファーストビューは3秒で残るか離れるかが決まる</li>
+<li>測る数字と外れの線：<code>top_read_30s ÷ top_view</code>。7日30件で 30%未満なら「段は見られていない」が主因＝段の位置と見出しを次の周で直す。30%以上なら「見られているのに押されない」＝答えの文の選び方（過去22組点検の12組の一部だけ）が主因</li>
+</ul>
+<h4 id="3つに共通の前提">3つに共通の前提</h4>
+<p>段は既に本番に入り数字が動き始めている（09-22 未明〜）。3案とも段そのものを差し替えない。段の周りに計器と部品を足すだけ。1・3は中継を触らず、2は JSON の欄が1本増えるだけ。作業場：/Users/nishidamitsuhiro/untendai-seiri（公開ページ2枚の作業場写しは案_入れずに離れた瞬間の記録 の発注 #1 と同じで、そこが未着手だと1〜3のどれも本番反映で消える）</p>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
 </body>
