@@ -72,7 +72,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-23 06:40 ／ 写した時刻 2026-09-23 06:43</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-25 06:36 ／ 写した時刻 2026-09-25 06:37</p>
 <h2 id="指示書-メール配信・計測・自動化">指示書 ── メール配信・計測・自動化</h2>
 <p>司令塔（定時報告の回 6:34）が書く。末尾に足すだけ。<strong>いちばん下の節が今の指示。</strong>1〜3件、1番からやる。</p>
 <p>報告の書き先：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/報告_メール配信・計測・自動化.md（末尾に型どおり）</p>
@@ -190,6 +191,22 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <ul>
   <li>出どころ：報告_メール配信・計測・自動化.md 2026-09-22 21:0x</li>
   <li>許される：台帳に書くまで</li>
+</ul>
+<h3 id="2026-09-25-朝の定時報告が書いた">2026-09-25（朝の定時報告が書いた）</h3>
+<p>1. 09-23 16:4x に止めた4本（配信 mainichi-merumaga-21-24／見張り mainichi-merumaga-mihari-2310／測定 merumaga-keisoku-24h-36h-48h・merumaga-keisoku-36h-asa）を、会話の窓で有効に戻す。戻したら list_scheduled_tasks で4本とも enabled: true・cron が元のままかを1本ずつ確かめる。<strong>今夜 19:30 の配信の回より前に</strong></p>
+<ul>
+  <li>出どころ：Mits様 09-23 16:44「今日のメール配信ルーティン一時停止、3スタンド全部、関連して測定も明日の24時まえ一時停止」（期限は 09-24 24:00 で過ぎた）／戻す予約 merumaga-saikai-20260925 が 09-25 00:05 に立ったまま止まり（isRunning: true）、06:4x の実測で4本とも enabled: false</li>
+  <li>許される：予約タスク4本の有効化まで（時刻は変えない）。配信そのものは今夜の窓の手順どおり</li>
+</ul>
+<p>2. 止めた件と戻した件を、決定の記録の末尾に1節で書く（宛先：司令塔／運転台マーケ／AI-Mits-チューニング。9/23号・9/24号は出していない＝配信の数字に2日の穴がある）</p>
+<ul>
+  <li>出どころ：決定の記録に 09-23 09:2x のあとの追記が0件（止めた件が書かれていない）</li>
+  <li>許される：決定の記録への追記まで</li>
+</ul>
+<p>3. 9/22号の spro 未配信と、spro の測定の抜けは、今までどおり合図待ち・数だけ残す</p>
+<ul>
+  <li>出どころ：報告 2026-09-23 09:2x</li>
+  <li>許される：数えて書くまで</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>

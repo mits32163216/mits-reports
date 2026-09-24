@@ -71,7 +71,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-22 07:39 ／ 写した時刻 2026-09-22 12:39</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-23 07:34 ／ 写した時刻 2026-09-25 06:37</p>
 <h2 id="報告-AI-Mits-チューニング">報告 ── AI-Mits-チューニング</h2>
 <p>この持ち場の窓（7:31 のお試し版と Dify の数え・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_AI-Mits-チューニング.md</p>
@@ -190,6 +191,24 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
   <li>根拠：送りの回数ぶん認証メールが出る（今朝 3通／読者1件）・本物 23人中8人が2〜3通・takadat12 は1通目を送信の1時間7分後に開いた（15分の期限は切れている）</li>
   <li>測る数字：読者1件あたりの認証メールの数（いま 送った回数と同じ）→ 1通。認証済み ÷ 読者（いま 数える口が無い・穴3のラベルが入ってから）。直してから14日で 認証済み ÷ 本物の読者 が 50% に届かなければ外れ</li>
 </ul>
+<h3 id="2026-09-23-07-3x-予約タスク-aimits-mainichi-keisoku">2026-09-23 07:3x（予約タスク aimits-mainichi-keisoku）</h3>
+<p><strong>指示書：2026-09-23（朝の定時報告が書いた）の 1・2</strong></p>
+<h4 id="1-お試し版-UgSfW8MCzHqv-のスマホ幅-320・375・414-の横のはみ出し-出た">1. お試し版（UgSfW8MCzHqv）のスマホ幅 320・375・414 の横のはみ出し ── <strong>出た。ダウンロードページと同じ形が1か所ある</strong></h4>
+<p>測り方：本番のページ <a href="https://change.7years.life/page/UgSfW8MCzHqv">https://change.7years.life/page/UgSfW8MCzHqv</a> を browser pane で開き、幅を 320／375／414 に変えて、画面の右端（documentElement.clientWidth）より右に出ている要素を全部拾った。</p>
+<p>はみ出しているのは <strong>エンジンを選ぶ帯（<code>.eng-bar</code>）1か所</strong>。FAST／NORMAL／DEEP の3つのボタンが1行に並び、帯の幅が <strong>514px で固定</strong>。入れ物（<code>.sform-l</code>）は画面幅に合わせて縮むので、はみ出した分は <code>body { overflow-x: hidden }</code> で<strong>切り落とされる</strong>。横スクロールも出ないので、切れた所には<strong>指が届かない</strong>。</p>
+<table>
+<tr><th>画面幅</th><th>帯の幅</th><th>入れ物の幅</th><th>切れる幅</th><th>DEEP ボタン（左端→右端 536px）</th></tr>
+<tr><td>320</td><td>514</td><td>276</td><td>238</td><td>288→536。<strong>32px しか見えない</strong></td></tr>
+<tr><td>375</td><td>514</td><td>331</td><td>183</td><td>288→536。<strong>87px しか見えない</strong></td></tr>
+<tr><td>414</td><td>514</td><td>370</td><td>144</td><td>288→536。<strong>126px しか見えない</strong>（画面では「DE」で切れている）</td></tr>
+</table>
+<p>414 の画面を見たところ、右端の表示は「DE」で切れていた。<strong>3つの幅のどれでも DEEP は選べない。</strong>NORMAL（150→285）と FAST（22→147）は3つの幅とも全部見えている。</p>
+<p>ダウンロードページの時（長い英字 untendai.app.tar.gz が改行できず幅を押し広げた）とは<strong>出方が違う</strong>。あちらは横スクロールが出る形、こちらは切り落とされて届かない形。切れる幅は 320 で最大（238px）。</p>
+<p>直しの見本はまだ作っていない（許されるのは「測って書くまで・直しは見本（ローカル）まで」）。<strong>直す向きは2つ</strong>：①帯を横スクロールできるようにする（<code>.sform-l</code> に <code>overflow-x:auto</code>）②狭い幅では3つを縦に積む。どちらも見本はローカルで作れるので、次の回に回す。</p>
+<h4 id="2-認証メールの直し-と穴3のラベル-動かしていない">2. 認証メールの直し①②③と穴3のラベル ── 動かしていない</h4>
+<p>状態は 09-18 11:25 から変わらず（Mits様の「実施」の合図待ち）。</p>
+<h4 id="今日の数-CSV-に1行足した">今日の数（CSV に1行足した）</h4>
+<p>/ev/count は untendai-update で HTTP 200（days=30・total 1530・counted 1301）。8項目は nudge30s だけ 18→19、他7つは前日と同じ。verify_done は by_name に無いが、送る実装がページに5か所あるので <strong>0</strong>（測れた0）。Dify は4アプリとも +1（FAST 15／NORMAL 23／DEEP 18／NORMAL-WEB v2 93・合計 145→149）。</p>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
 </body>
