@@ -55,7 +55,7 @@ function calc(){
  let QD=0;D.items.forEach((it,k)=>{QD+=+it.q||0;document.querySelectorAll('[data-p="items.'+k+'.q"]').forEach(el=>{if(el!==document.activeElement)el.value=+(+it.q||0).toFixed(2)});const m=document.querySelector('[data-m="'+k+'"]');if(m&&m!==document.activeElement)m.value=Math.round((+it.q||0)*days)});
  $('#qd').textContent=(+QD.toFixed(2))+'個';$('#qm').textContent=Math.round(QD*days).toLocaleString('ja-JP')+'個';
  const G=S-C, OP=G-fx;
- $('#sum').innerHTML=`<div class="kpi"><div>売上（税抜）<b>${yen(S)}</b></div><div>原価率<b>${S?(C/S*100).toFixed(1):0}%</b></div><div>粗利<b>${yen(G)}</b></div><div>固定費<b>${yen(fx)}</b></div><div>営業利益<b class="${OP<0?'neg':''}">${yen(OP)}</b></div><div>＠（2人）<b>${yen(G/2)}</b></div></div><div class="card tw"><table><tr><th>品</th><th class=n>原価</th><th class=n>1個の粗利</th><th class=n>1日</th><th class=n>月の粗利</th></tr>${rows}</table></div>`;
+ $('#sum').innerHTML=`<div class="kpi"><div>売上（税抜）<b>${yen(S)}</b></div><div>原価率<b>${S?(C/S*100).toFixed(1):0}%</b></div><div>粗利<b>${yen(G)}</b></div><div>固定費<b>${yen(fx)}</b></div><div>営業利益<b class="${OP<0?'neg':''}">${yen(OP)}</b></div></div><div class="card tw"><table><tr><th>品</th><th class=n>原価</th><th class=n>1個の粗利</th><th class=n>1日</th><th class=n>月の粗利</th></tr>${rows}</table></div>`;
  try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){}
 }
 document.addEventListener('input',e=>{const m=e.target.dataset.m;if(m!==undefined){const d=+D.days||1;D.items[m].q=(e.target.value===''?0:+e.target.value)/d;calc();return}const p=e.target.dataset.p;if(!p)return;const t=e.target;set(p,t.type==='checkbox'?t.checked:(t.type==='number'?(t.value===''?0:+t.value):t.value));calc()});
