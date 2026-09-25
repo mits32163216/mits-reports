@@ -71,7 +71,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-23 07:35 ／ 写した時刻 2026-09-25 06:37</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-25 07:28 ／ 写した時刻 2026-09-25 12:36</p>
 <h2 id="報告-運転台改善">報告 ── 運転台改善</h2>
 <p>この持ち場の窓（7:12 の毎朝点検・6時間ごとの機能要望の窓・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_運転台改善.md</p>
@@ -195,6 +196,26 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>次に自分がやる：チャットの窓で 控えを git に入れる →公開ページ2枚を作業場に写す</li>
 <li>ほかの持ち場に頼む：なし</li>
 <li>数字：テスト 通った 216・落ちた 0（飛ばした 11）／版 1.73.11 で5か所一致／未提出 5件</li>
+</ul>
+<h3 id="2026-09-25-07-2x-毎朝点検の窓-untendai-asa-tenken">2026-09-25 07:2x（毎朝点検の窓 untendai-asa-tenken）</h3>
+<ul>
+<li>読んだ指示書の節：2026-09-25（1〜2）</li>
+<li>やった：</li>
+</ul>
+<p>  1. お試し版 UgSfW8MCzHqv のエンジンの帯 <code>.eng-bar</code> の直しの見本をローカルで2枚作った（担当 BS-engineer に振り、出た物を開いて確かめた）。本番は curl で読むだけで取り直し（09-13 の古い写しは使っていない）、元の CSS は消さず <code>&lt;style id=&quot;engbar-mobile-fix&quot;&gt;</code> を1つ足しただけ。本番には書き込んでいない</p>
+<ul>
+  <li>出た物：/Users/nishidamitsuhiro/untendai-seiri/_mock/engbar_mobile_20260925/mihon_1_overflow_auto.html（横に送る）／/Users/nishidamitsuhiro/untendai-seiri/_mock/engbar_mobile_20260925/mihon_2_tate_ni_tsumu.html（縦に積む）／本番の写し otameshi_honban_20260925.html／幅ごとのスクショ12枚／測った値 measure_results.json</li>
+  <li>測った値（DEEP の右端・画面幅）：直す前 320→536（216px 切れ）・375→536（161px）・414→536（122px）。②縦に積む 320→298・375→353・414→392＝3つとも切れ 0px。①横に送る は最初は同じだけ切れていて、送り切ると 298／353／392。1280 は3枚とも3つのボタンが1行（top 686 がそろう）</li>
+  <li>console のエラーは3枚とも同じ3件で、ファイルを直に開いたために出る読み込みの失敗（file:///page/data/…）。直しの前後で数は変わらない</li>
+  <li>09-23 の実測（320 で 238px 切れ）と切れ幅が 22px 違う。DEEP の位置（288→536）は同じなので、測り方の違い（09-23 は画面の右端より右に出た分をまとめて拾った）と読む</li>
+  <li>勧めるのは②縦に積む。①は指で送るまで DEEP が見えず、そこにあると気付けない。②は最初から3つとも見えて押せる</li>
+</ul>
+<p>  2. 控えを git に入れる：この窓の手順書 /Users/nishidamitsuhiro/.claude/scheduled-tasks/untendai-asa-tenken/SKILL.md の「git は読むだけ」で禁じられているので、会話の窓に持ち越し（3日目）</p>
+<ul>
+<li>できなかった：2（上のとおり・決まりによる）</li>
+<li>次に自分がやる：会話の窓で 控えを git に入れる →公開ページ2枚を作業場に写す。見本②を本番に入れるのは Mits様の合図が出てから（入れるのはこの持ち場の1か所で・入れる前に本番を取り直す）</li>
+<li>ほかの持ち場に頼む：AI-Mits-チューニングへ ── 見本2枚を見て、向きが②でよいかを報告に1行（本番に入れる合図は Mits様）</li>
+<li>数字：テスト 通った 216・落ちた 0（飛ばした 11）／版 1.73.11 で5か所一致／未提出 6件（終わりの時点で 7件）</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>

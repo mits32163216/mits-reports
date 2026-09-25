@@ -72,7 +72,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-23 07:34 ／ 写した時刻 2026-09-25 06:37</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-25 07:43 ／ 写した時刻 2026-09-25 12:36</p>
 <h2 id="報告-AI-Mits-チューニング">報告 ── AI-Mits-チューニング</h2>
 <p>この持ち場の窓（7:31 のお試し版と Dify の数え・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_AI-Mits-チューニング.md</p>
@@ -209,6 +210,28 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <p>状態は 09-18 11:25 から変わらず（Mits様の「実施」の合図待ち）。</p>
 <h4 id="今日の数-CSV-に1行足した">今日の数（CSV に1行足した）</h4>
 <p>/ev/count は untendai-update で HTTP 200（days=30・total 1530・counted 1301）。8項目は nudge30s だけ 18→19、他7つは前日と同じ。verify_done は by_name に無いが、送る実装がページに5か所あるので <strong>0</strong>（測れた0）。Dify は4アプリとも +1（FAST 15／NORMAL 23／DEEP 18／NORMAL-WEB v2 93・合計 145→149）。</p>
+<h3 id="2026-09-25-07-4x-予約タスク-aimits-mainichi-keisoku">2026-09-25 07:4x（予約タスク aimits-mainichi-keisoku）</h3>
+<p><strong>指示書：2026-09-25（朝の定時報告が書いた）の 1〜3</strong></p>
+<h4 id="1-09-24-の行-取れず-の行を足し-今日の前日比は-09-23-と比べた">1. 09-24 の行 ── 「取れず」の行を足し、今日の前日比は 09-23 と比べた</h4>
+<p>CSV に <code>2026-09-24</code> の行を数の欄を空欄のまま足し、備考に「取れず（利用上限で空振り）」と書いた。今日の行の前日比は 09-23 の行との差。</p>
+<ul>
+<li>Dify：FAST-APP(ナレッジ無し) 14d6df13=15（±0）／NORMAL-APP(RAG) 43d47f25=25（+2）／DEEP-APP(Corpus2Skill) 1a8d8b9c=18（±0）／NORMAL-WEB v2 e472bc1f=93（±0）・合計 149→151</li>
+<li>計測の口 untendai-update /ev/count（HTTP 200・days=30・total 1658）：8項目は 09-23 と同じ（reg_submit 1・verify_done 0・verify_giveup 1・nudge30s 19・nudge5m 1・nudge10m 1・chat_send_fail 1・to_dl 4）。verify_done は送る実装5か所を grep で確認したので 0（測れた0）</li>
+</ul>
+<h4 id="2-運転台改善の見本2枚を幅-320・375・414-で測り直した-運転台改善の数字と一致-向き">2. 運転台改善の見本2枚を幅 320・375・414 で測り直した ── 運転台改善の数字と一致。向きは②でよい</h4>
+<p>測り方：/Users/nishidamitsuhiro/untendai-seiri/_mock/engbar_mobile_20260925/ の3本を手元で一時的に配って browser pane で開き、幅を切り替えて <code>.eng-bar</code> の中の3つのボタンの左端・右端を読んだ（見本のファイルには手を入れていない）。</p>
+<table>
+<tr><th>幅</th><th>本番の写し（DEEP の左→右）</th><th>①横に送る（送る前 → 送り切った後の DEEP）</th><th>②縦に積む（3つの左→右・上端）</th></tr>
+<tr><td>320</td><td>288→536（216px 切れ）</td><td>288→536 → 50→298</td><td>22→298・上端 588／659／730</td></tr>
+<tr><td>375</td><td>288→536（161px 切れ）</td><td>288→536 → 105→353</td><td>22→353（写真で3つとも全部見えた）</td></tr>
+<tr><td>414</td><td>288→536（122px 切れ）</td><td>288→536 → 144→392</td><td>22→392・上端 584／655／726・横のはみ出し 0（scrollWidth 414）</td></tr>
+</table>
+<ul>
+<li>②は3つの幅とも DEEP が画面の中に収まり、最初から押せる。①は送り切れば収まるが、送る前は 3つの幅とも DEEP が本番と同じだけ切れている</li>
+<li><strong>この持ち場の見立ても②</strong>（運転台改善の勧めと同じ）。本番に入れるのは Mits様の合図が出てから</li>
+<li>手順の控え：ヘッドレスの Chrome（--dump-dom）で測ろうとしたが3分で返ってこなかったので止め、上のやり方に替えた</li>
+</ul>
+<h4 id="3-認証メールの直し-動かしていない-合図待ち">3. 認証メールの直し①②③ ── 動かしていない（合図待ち）</h4>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
 </body>

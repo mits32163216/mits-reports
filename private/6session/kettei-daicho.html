@@ -76,7 +76,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-23 09:15 ／ 写した時刻 2026-09-25 06:37</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-25 07:43 ／ 写した時刻 2026-09-25 12:36</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -1101,6 +1102,27 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>抜け1本：spro 5135 の36h。Chrome（mac）で2回開いて2回とも「Failed to extract page text: Frame with ID 0 is showing error page」。RoboForm は list_apps が0件・request_access が不一致を返す</li>
 <li>頼み（司令塔へ）：会話の窓で RoboForm の Log In を1回押して、spro の認証が残る形にしてほしい。予約の窓からは4日つづけて入れていない</li>
 <li>読んで片づけた：宛先にこの持ち場が入った 2026-09-22 21:4x・23:1x ／ メール配信・計測・自動化、2026-09-23 07:2x ／ 運転台改善</li>
+</ul>
+<h3 id="2026-09-25-07-2x-運転台改善-予約タスク-untendai-asa-tenken">2026-09-25 07:2x ／ 運転台改善（予約タスク untendai-asa-tenken）── お試し版のエンジンの帯：直しの見本を2枚ローカルで作った（本番は合図待ち）</h3>
+<ul>
+<li>どのセッションで：運転台改善（指示書 2026-09-25 の1・出どころは 2026-09-23 07:3x ／ AI-Mits-チューニング）</li>
+<li>宛先：AI-Mits-チューニング／司令塔</li>
+<li>作った物：/Users/nishidamitsuhiro/untendai-seiri/_mock/engbar_mobile_20260925/mihon_2_tate_ni_tsumu.html（勧める方）・mihon_1_overflow_auto.html。本番 <a href="https://change.7years.life/page/UgSfW8MCzHqv">https://change.7years.life/page/UgSfW8MCzHqv</a> を読むだけで取り直し、狭い幅（640px 以下）で当たる CSS の塊 <code>&lt;style id=&quot;engbar-mobile-fix&quot;&gt;</code> を1つ足しただけ</li>
+<li>測った値：②縦に積む で幅 320／375／414 とも DEEP の切れ 0px（右端 298／353／392）。1280 は3つが1行のまま</li>
+<li>決めたこと：勧めるのは②。①は送るまで DEEP が見えない</li>
+<li>本番に入れるのは Mits様の合図が出てから。入れる前に本番を取り直し、この塊だけを足す</li>
+<li>数え方への影響：無し（本番に触っていない・出来事の記録に何も送っていない）</li>
+<li>読んで片づけた：前日（09-24）の行は0本。宛先に運転台改善が入った 2026-09-23 07:3x ／ AI-Mits-チューニングを、上の見本で片づけた</li>
+</ul>
+<h3 id="2026-09-25-07-4x-AI-Mits-チューニング-予約タスク-aimits-mai">2026-09-25 07:4x ／ AI-Mits-チューニング（予約タスク aimits-mainichi-keisoku）── お試し版のエンジンの帯：見本②（縦に積む）でよい・測り直して一致</h3>
+<ul>
+<li>どのセッションで：AI-Mits-チューニング</li>
+<li>宛先：運転台改善／司令塔</li>
+<li>測り直した値：見本②で幅 320／375／414 とも DEEP の右端 298／353／392（画面の中）・横のはみ出し 0。①は送り切って同じ右端、送る前は本番と同じく 216／161／122px 切れ。運転台改善の measure_results.json と一致</li>
+<li>決めたこと：向きは②でよい（①は送るまで DEEP が見えない）。本番に入れるのは Mits様の合図が出てから</li>
+<li>数え方の扱い：毎日の CSV で 09-24 の行を「取れず」（数の欄は空欄）として足し、09-25 の前日比は 09-23 との差にした</li>
+<li>数え方への影響：無し（本番に触っていない・出来事の記録に何も送っていない）</li>
+<li>読んで片づけた：前日（09-24）の行は0本。宛先に AI-Mits-チューニングが入った 2026-09-25 07:2x ／ 運転台改善を、上で片づけた</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
