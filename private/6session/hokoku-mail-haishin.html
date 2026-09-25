@@ -76,7 +76,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-23 09:16 ／ 写した時刻 2026-09-25 06:37</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-25 18:35 ／ 写した時刻 2026-09-25 18:38</p>
 <h2 id="報告-メール配信・計測・自動化">報告 ── メール配信・計測・自動化</h2>
 <p>この持ち場の窓（9:06 の朝の測定・19:39 のメルマガ・23:13 の見張り・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_メール配信・計測・自動化.md</p>
@@ -283,6 +284,49 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>ほかの持ち場に頼む</li>
   <li>司令塔へ：<strong>spro が4日つづけて測れない／出せない</strong>（9/18・9/19・9/20 と今朝）。Chrome の Basic 認証の窓を、予約の窓から通す道がまだ無い（RoboForm が computer use から見えない）。会話の窓で RoboForm を1回押して、認証が残る形にしてほしい</li>
   <li>運転台マーケへ：今朝の5行は上のとおり。書き置き untendai_marketing_hikiwatashi.md にも同じ中身。<code>事後60h</code> の行は12/24/36/48の並びに混ぜない</li>
+</ul>
+<h3 id="2026-09-25-18-3x-会話の窓">2026-09-25 18:3x（会話の窓）</h3>
+<ul>
+<li>指示書 2026-09-25 から片づけたもの</li>
+  <li>1（4本の予約を有効に戻す）── <strong>参謀が 18:2x に済ませた</strong>。会話の窓では実測で確かめた：<code>list_scheduled_tasks</code> で4本とも enabled: true・cron は元のまま。次に走る時刻（JST）は mainichi-merumaga-21-24 → 19:41／mainichi-merumaga-mihari-2310 → 23:13／merumaga-keisoku-24h-36h-48h → 21:00／merumaga-keisoku-36h-asa → 2026-09-26 09:12。<strong>今夜 19:30 の配信の回に間に合った</strong></li>
+  <li>2（止めた件と戻した件を決定の記録に1節で書く）── 決定台帳の末尾に <code>## 2026-09-25 18:3x ／ メール配信・計測・自動化 ── 配信と測定を2日止めて戻した（数字に穴がある）</code> を1件足した。宛先は司令塔・運転台マーケ・AI-Mits-チューニングの3つ</li>
+  <li>3（9/22号の spro 未配信と spro 測定の抜けを数えて残す）── 下の「実測した穴」に書いた。<strong>押し直し・再配信は一切していない</strong></li>
+<li>実測した穴（推測ではなく <code>dashita_kiroku.csv</code> と <code>keisoku_suii.csv</code> を数えた値）</li>
+  <li>配信の穴（<code>dashita_kiroku.csv</code> 2026-09-22〜09-25 の日ごと・スタンド別の件数）：</li>
+  <li>2026-09-22：utage 1・magmag 1・spro 0（9/22号が spro に出ていない）</li>
+  <li>2026-09-23：utage 0・magmag 0・spro 0（<strong>9/23号は3スタンドとも出ていない</strong>）</li>
+  <li>2026-09-24：utage 0・magmag 0・spro 0（<strong>9/24号は3スタンドとも出ていない</strong>）</li>
+  <li>2026-09-25：0（今日の号はまだ・19:30 の予約から出る）</li>
+  <li>測定の穴（<code>keisoku_suii.csv</code> の 2026-09-23 00:00 以降に足された行の件数）：5行のみ・すべて 2026-09-23 09:08〜09:14 の朝の窓（Mits様の停止指示 16:44 より前）。停止指示より後の 09-23 21:00・09-24 09:12・09-24 21:00・09-25 09:12 の4窓ぶんが空</li>
+  <li>spro の測定：<code>keisoku_suii.csv</code> で spro の最後の測定は 2026-09-22 09:21:02（haishin_id 5135・9/21号 36h）。<strong>2026-09-22 の夜の窓（5135 の48h）から今日まで、spro の測定は0行</strong></li>
+<li>数え方への影響</li>
+  <li>9/23号・9/24号は号が存在しない扱いで台帳に行を作らない（<code>dashita_kiroku.csv</code> に足さない）</li>
+  <li>9/22号の spro も台帳に行を作らない（送っていない）</li>
+  <li>9/22号夜以降の spro 測定4件（5135 の48h・24h・9/21号 5135 の 事後60h、9/22号 aC59yzhkcH0B の spro 側は元から存在しない）と、9/23夜〜9/25朝の測定4窓（合計8点）は<strong>「取れず」で穴として残る</strong>（時刻の点を過ぎたため後から埋められない）</li>
+<li>戻す予約 merumaga-saikai-20260925 が動かなかったこと（実測）：<code>list_scheduled_tasks</code> の一覧に0件・フォルダ <code>/Users/nishidamitsuhiro/.claude/scheduled-tasks/merumaga-saikai-20260925/</code> に残っているのは SKILL.md だけで、書くはずだった <code>saikai_kekka.log</code> は無い（<code>cat</code> が No such file (os error 2) を返す）</li>
+<li>触っていない：<code>untendai-mkt-haishin-torikomi</code>（<code>0 11,23 * * *</code>・別の持ち場・止めていない）</li>
+<li>決定の記録から片づけたもの（2026-09-23 09:2x 以降で宛先にこの持ち場が入る行）</li>
+  <li>2026-09-25 18:0x ／ AI-Mits-チューニング（宛先にメール配信・計測・自動化が入る）── 読んだ。除外の考え方（自分の買い物・二重計上・外貨の扱い）は運転台の売上の話で、いまの配信の除外（<code>jogai_settei.json</code>）とは別立て。この窓では触らない（決定は運転台改善が書く）</li>
+<li>ほかの持ち場に頼む</li>
+  <li>司令塔へ：9/23号・9/24号の穴と、spro の測定4窓の穴は上のとおり。今夜 19:30 から配信は普通に回る予定</li>
+  <li>運転台マーケへ：<code>dashita_kiroku.csv</code> の 9/23・9/24 に行が無いこと、<code>keisoku_suii.csv</code> の 09-23 21:00 以降が空であることを、書き置き <code>untendai_marketing_hikiwatashi.md</code> に載せる（別窓で足す）</li>
+</ul>
+<h3 id="2026-09-25-18-5x-会話の窓-メルマガの予約5本を-Mits様が手動で削除された">2026-09-25 18:5x（会話の窓）── メルマガの予約5本を Mits様が手動で削除された</h3>
+<ul>
+<li><strong>Mits様の指示（原文）</strong>：「ここで作ったルーティンは自動ログイン、自動で配信、自動で数字取得、分析、運転台に渡す、の目的達したので手動で削除した、確認して」／続けて「untendai-mkt-haishin-torikomi も消していい」</li>
+<li><strong>経緯</strong>：18:27 に参謀が停止中の4本を enabled: true に戻した（申し送り 2026-09-25 の🔴行のとおり）。その直後に Mits様が4本と戻し用の一回限り 1本を手動で削除された。参謀の有効化は、この削除で上書きされている</li>
+<li><strong>参謀が消したもの（1本）</strong>：<code>untendai-mkt-haishin-torikomi</code>（毎日 11:00 と 23:00）。Mits様の「消していい」を受けて <code>delete_scheduled_task</code> で削除。実行記録25件は保管に回った</li>
+<li><strong>いまの状態（<code>list_scheduled_tasks</code> の実測）</strong>：一覧にメルマガ関係の予約は 0件</li>
+  <li>mainichi-merumaga-21-24 ── 一覧に無い</li>
+  <li>mainichi-merumaga-mihari-2310 ── 一覧に無い</li>
+  <li>merumaga-keisoku-24h-36h-48h ── 一覧に無い</li>
+  <li>merumaga-keisoku-36h-asa ── 一覧に無い</li>
+  <li>merumaga-saikai-20260925 ── 一覧に無い</li>
+  <li>untendai-mkt-haishin-torikomi ── 一覧に無い（参謀が削除）</li>
+<li><strong>今夜の予定</strong>：19:41 の配信・21:00 の夜の測定・23:05 の取り込み・23:13 の見張りは、どれも立たない</li>
+<li><strong>残っているもの</strong>：手順書のフォルダは <code>/Users/nishidamitsuhiro/.claude/scheduled-tasks/</code> に6つとも残っている（SKILL.md・配信の関所スクリプト4本・見張りの記録 mihari_kekka.log）。予約は消えても中身は消えていない</li>
+<li><strong>司令塔からの依頼への返し</strong>：18:3x に司令塔から「4本を true に戻してほしい・期限は今夜 19:30」と来たが、<strong>戻していない</strong>。Mits様が目的を達したとして手動で削除された後なので、戻すと Mits様の指示を打ち消すことになる。司令塔へはその旨を1通返した</li>
+<li><strong>止めたもの</strong>：走らせていた spro の購読解除の検収（BS-engineer）は、配信ルーティンごと終わったので止めた</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>

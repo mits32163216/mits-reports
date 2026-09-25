@@ -77,7 +77,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-25 07:43 ／ 写した時刻 2026-09-25 12:36</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-25 18:36 ／ 写した時刻 2026-09-25 18:38</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -1123,6 +1124,298 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>数え方の扱い：毎日の CSV で 09-24 の行を「取れず」（数の欄は空欄）として足し、09-25 の前日比は 09-23 との差にした</li>
 <li>数え方への影響：無し（本番に触っていない・出来事の記録に何も送っていない）</li>
 <li>読んで片づけた：前日（09-24）の行は0本。宛先に AI-Mits-チューニングが入った 2026-09-25 07:2x ／ 運転台改善を、上で片づけた</li>
+</ul>
+<h3 id="2026-09-25-13-0x-運転台改善-パスワードを忘れた人の戻り道が塞がっている-中継に">2026-09-25 13:0x ／ 運転台改善 ── パスワードを忘れた人の戻り道が塞がっている（中継に口が1本足りない・3本のアプリ共通）</h3>
+<ul>
+<li>どのセッションで：運転台改善（Mits様「パスワードを忘れた人対策がない」「パスワードを忘れた人の導線を設計して見せて」）</li>
+<li>宛先：AI-Mits-チューニング／メール配信・計測・自動化／司令塔</li>
+<li>確かめた事実：入り口の中継は Cloudflare Worker <code>aimits-report-proxy.3216-fun.workers.dev</code>。ソースは /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits-report-proxy/src/index.js（2490行）。口は10本（<code>/</code> <code>/health</code> <code>/register</code> <code>/login</code> <code>/set-password</code> <code>/verify</code> <code>/member-signin</code> <code>/resolve</code> <code>/paid</code> <code>/track/fin</code>）</li>
+<li>行き止まりの出どころ：2026-09-18 の直し（1225〜1258行）。<code>verified_at</code> と <code>pw</code> の両方があるアドレスで登録し直すと <code>already_registered</code> で止まる。他人のアドレスを知っているだけでその人として入れる穴を塞いだが、忘れた本人の戻り道も同時に閉じた</li>
+<li><code>/set-password</code>（1567〜1597行）は既にあるが cookie <code>aimits_session</code> が要り、それは確認メールのリンクを踏んだ直後にだけ出る（1437・1476行）＝初回の設定専用</li>
+<li>アプリ側に「お忘れの方」に当たる文言は0件（<code>パスワード</code> 27件・<code>忘れ</code> はコメント3件・<code>再設定</code>『リセット』『再発行』『forgot』は 0件）</li>
+<li>3本のアプリが同じ中継を共有：/Users/nishidamitsuhiro/untendai・untendai-freee・aimits-app。<strong>中継を1本直せば3本とも直る</strong></li>
+<li>設計（足すのは2つだけ）：①ログインの窓に「パスワードをお忘れの方はこちら」を1行（最初の画面と 設定→アカウント の2か所）②中継に <code>POST /forgot-password</code> を1本（<code>/register</code> と同じ仕組みでトークンつきメールを送る・15分・1回で切れる）。メールのリンクから先は既存をそのまま通す（<code>GET /verify</code> → <code>/set-password</code> → 普通にログイン）</li>
+<li>登録されていないアドレスでも同じ「送りました」を出す（どのアドレスが登録済みか外から探れないように）</li>
+<li>見本：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/_mock/mock_password_wasureta_20260925.html（画面5枚＋流れ図1枚）</li>
+<li>いまの状態：<strong>Mits様の OK 待ち。まだ実装していない</strong></li>
+<li>数え方への影響：いまは無し（中継に触っていない）。<strong>入れる時は、再設定のメールを配信の数に混ぜない</strong>。<code>/register</code> と同じ経路でメールが出るので、メール配信・計測・自動化の側で <code>/forgot-password</code> 由来の1通を除ける形（jogai_settei.json か送信元の別立て）を先に決める必要がある</li>
+</ul>
+<h3 id="2026-09-25-14-0x-運転台改善-モックは必ず明るい画面で-2回目・届いていなかった">2026-09-25 14:0x ／ 運転台改善 ── モックは必ず明るい画面で（2回目・届いていなかったので全体規約に上げた）</h3>
+<ul>
+<li>どのセッションで：運転台改善（Mits様「モックでも必ず明るい画面で」「戦略の決定が作ったモックが暗い画面だけど、全体に影響するように記録を確認」）</li>
+<li>宛先：運転台マーケ／司令塔／AI-Mits-チューニング／メール配信・計測・自動化／伽藍とバザールの実現</li>
+<li><strong>決まり</strong>：モックは必ず明るい画面で出す。どの持ち場・どの作業場でも同じ</li>
+  <li><code>body</code> の地を明るくする</li>
+  <li><code>@media (prefers-color-scheme: dark)</code> の塊を書かない（Mits様の Mac がダークになった瞬間に暗くなる）</li>
+  <li><code>&lt;head&gt;</code> に <code>&lt;meta name=&quot;color-scheme&quot; content=&quot;light&quot;&gt;</code> を入れて明るい側に固定する</li>
+  <li><strong>確かめ方は grep ではなく、自分で1回開いて見る</strong>（grep は文字色 <code>#1a1a2e</code> や Mac の窓の丸 <code>#ff5f57</code> まで拾って、明るいモックを暗いと誤判定する）</li>
+<li><strong>なぜ届いていなかったか（実測）</strong>：決まりは 2026-09-10 から <code>経営の運転台/CLAUDE.md</code> にあったが、そこは My Drive の下で、<strong>コードの作業場（/Users/nishidamitsuhiro/untendai・untendai-seiri・untendai-marketing・untendai-freee）で走る担当からは自動で読まれない。</strong>その4つの CLAUDE.md を「明るい配色／明るい画面／prefers-color-scheme／モックは明るい」で引くと<strong>4つとも0件</strong>だった</li>
+<li><strong>直した場所</strong>：全体規約 <code>/Users/nishidamitsuhiro/.claude/CLAUDE.md</code> 18行目に1行入れた（この層だけが、どの窓でも必ず読まれる）。正本の詳しい中身は共有 memory <code>feedback_mock_wa_kanarazu_akarui_gamen.md</code>。運転台の色の値は <code>経営の運転台/CLAUDE.md</code> に残した（同じ規約を2箇所に書かないため）</li>
+<li><strong>各持ち場でしてほしいこと</strong>：自分の作業場の <code>_mock</code> を1回数えて、地が暗いモックと <code>prefers-color-scheme: dark</code> を持つモックが何本あるかを報告に書く。測り方は共有 memory の中の python を使う</li>
+<li>実測（2026-09-25 14:0x・運転台の作業場3つ＋経営の運転台/_mock の重複を除いた42本）：地が暗い 8本／<code>prefers-color-scheme: dark</code> を持つ 8本／<code>body</code> に背景の指定が無く判定できない 3本。<strong>16本とも 2026-09-10 の決まりより前の作</strong></li>
+<li>直しはまだ入れていない（発注書 <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/_mock/hachusho_mock_akaruku_suru_20260925.md</code> を書いて止めてある・Mits様の「発注GO」待ち）</li>
+<li>数え方への影響：無し</li>
+</ul>
+<h3 id="2026-09-25-14-1x-運転台改善-暗いモック-の正体は-閉じ忘れたアプリ本体のタブだ">2026-09-25 14:1x ／ 運転台改善 ── 「暗いモック」の正体は、閉じ忘れたアプリ本体のタブだった</h3>
+<ul>
+<li>どのセッションで：運転台改善（Mits様「戦略の決定が作ったモックが暗い画面」）</li>
+<li>宛先：運転台マーケ／AI-Mits-チューニング／司令塔</li>
+<li><strong>正体</strong>：モックではなく、Mits様の Chrome に残っていたアプリ本体のタブ <code><a href="http://localhost:8791/index.html?nocache=devils20260925">http://localhost:8791/index.html?nocache=devils20260925</a></code>。「戦略の決定」の不具合の答え合わせで開かれ、そのまま残っていた</li>
+<li><strong>なぜモックに見えたか（実測）</strong>：①アプリ本体の title が <code>&lt;title&gt;AI-Mits＆経営アプリ（モック）&lt;/title&gt;</code>（src/index.html:6）②アプリ本体の既定の配色が暗い側（<code>--bg:#0b0f14</code>・src/index.html:70）。<code>data-theme=&quot;light&quot;</code> を当てずに開くと地が真っ黒に出る。この2つが重なると、開きっぱなしのタブが「暗いモック」そのものに見える</li>
+<li><strong>参謀の回り道</strong>：モック42本を全部測り、1本も暗いものを見つけられなかった。モックは全部明るかった。<strong>ファイルの中を探しても、画面に出ているものは見つからない</strong></li>
+<li><strong>決まり（新）</strong>：<code>python3 -m http.server 8791</code> で答え合わせをしたら、<strong>タブを閉じ、口も止めるところまでを1続きにする</strong>。確かめ方は <code>lsof -nP -iTCP:8791 -sTCP:LISTEN</code> が0行＋Chrome のタブ0件。置き場所は案件 <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/CLAUDE.md</code> の「🛑 答え合わせで 8791 を開いたら、閉じるまでが一続き」</li>
+<li>始末済み：タブを閉じ、8791 の口（PID 5940）を止めた。いま LISTEN 0行</li>
+<li>直したもの：モック <code>mock_jishajoho_midashi_20260925.html</code> に <code>&lt;meta name=&quot;color-scheme&quot; content=&quot;light&quot;&gt;</code> と <code>color-scheme:light</code> が入った（入る前は 0件）。地は元から白</li>
+<li>数え方への影響：無し</li>
+</ul>
+<h3 id="2026-09-25-15-4x-運転台改善-パスワードを忘れた人の戻り道を本番に出した-中継の">2026-09-25 15:4x ／ 運転台改善 ── パスワードを忘れた人の戻り道を本番に出した（中継のみ・アプリは未配布）</h3>
+<ul>
+<li>どのセッションで：運転台改善（Mits様「パスワード再設定を本番に出すか　出して」「『あとで決める』は出さない。逃げ道を作ると、元の行き止まりに戻ります　これで実装」）</li>
+<li>宛先：AI-Mits-チューニング／メール配信・計測・自動化／司令塔</li>
+<li><strong>出した物</strong>：Cloudflare Worker <code>aimits-report-proxy</code>。Version ID <code>2e73896b-ad9c-44d0-a6c0-7ce2783e4ea0</code></li>
+<li><strong>出た後に本番を直に叩いた結果</strong>：<code>GET /forgot-password</code> 200（出す前は404）／<code>POST /forgot-password</code> 400（空の body なので400・口は動いている）／<code>GET /health</code> 200／<code>POST /set-password</code> 401／<code>POST /register</code> 400／<code>POST /login</code> 400。<strong>既存の3つの口は出す前と同じ返り＝壊していない</strong></li>
+<li><strong>画面は2枚</strong>：①メールアドレスを入れる面（<code>GET /forgot-password</code>・本番で題「パスワードを再設定します」を確認）②新しいパスワードを2回入れる面（<code>/set-password</code> の再設定の顔）。<strong>②に「あとで決める」は0件</strong>（本番の HTML を取って実測）</li>
+<li><strong>画面に2つの顔を持たせた</strong>：<code>setPasswordPage(nextUrl, fromApp, isReset)</code>。トークンの <code>purpose</code> が <code>password_reset</code> のときだけ再設定の顔。<strong>登録で来た人に出る文は1文字も変えていない</strong></li>
+<li><strong>メールの文面（参謀が決めた・<code>%cancel%</code> は入れない）</strong>：件名「パスワード再設定のご案内」／本文「パスワードの再設定をご案内します。／下のリンクを押して、新しいパスワードを決めてください。／15分で切れます。1回しか使えません。／{verifyUrl}／心当たりがない場合は、このメールを捨ててください。何も起きません。」</li>
+  <li><strong><code>%cancel%</code> を入れない理由</strong>：メルマガではなく、本人が押した直後に届く手続きのメール。解除させると二度と再設定できなくなる</li>
+<li><strong>数え方への影響（メール配信・計測・自動化へ）</strong>：再設定のメールは UTAGE のシナリオ <code>XU7Gfd7XoiCQ</code> に <code>type:broadcast</code>・<code>status:reserved</code>・<code>send_type:immediately</code>・宛先1人の条件で入る。<strong>配信の数に混ぜないこと。</strong>題が <code>AI-MITS パスワード再設定（&lt;メールアドレス&gt;）</code> で始まるので、その形で除ける</li>
+<li><strong>アプリはまだ世に出していない。</strong>「パスワードをお忘れの方はこちら」は <code>/Users/nishidamitsuhiro/untendai-seiri/src/index.html</code> の2か所（5777・8806行）に入っているが、版を上げてまとめて世に出す決まり（2026-09-14 Mits様確定）に従って保留。いま登録済みの方は下の URL を直接開けば再設定できる</li>
+</ul>
+<p>  <a href="https://aimits-report-proxy.3216-fun.workers.dev/forgot-password">https://aimits-report-proxy.3216-fun.workers.dev/forgot-password</a></p>
+<h3 id="2026-09-25-16-0x-運転台改善-取消-再設定メールから-cancel-を外す-上の">2026-09-25 16:0x ／ 運転台改善 ── 取消：再設定メールから <code>%cancel%</code> を外す（上の 15:4x の決定の一部を取り消す）</h3>
+<ul>
+<li>どのセッションで：運転台改善（Mits様「実機で試し登録して通しで確かめて」の通しの試しで発覚）</li>
+<li>宛先：メール配信・計測・自動化／AI-Mits-チューニング／司令塔</li>
+<li><strong>取消するもの</strong>：上の 15:4x の「<code>%cancel%</code> は入れない（参謀が決めた）」。<strong>外せない。</strong>戻す</li>
+<li><strong>なぜ（実測した生の返り）</strong>：UTAGE の messages 作成 API に同じ本文を直に投げると拒否される</li>
+</ul>
+<p>  ```</p>
+<p>  {&quot;error&quot;:{&quot;code&quot;:&quot;validation_error&quot;,&quot;message&quot;:&quot;入力内容に誤りがあります&quot;,</p>
+<p>   &quot;details&quot;:{&quot;mail.text&quot;:[&quot;メール本文に配信解除URL（%cancel% または %cancelall%）を含めてください。&quot;]}}}</p>
+<p>  ```</p>
+<ul>
+<li><strong>その結果どうなっていたか</strong>：<code>POST /forgot-password</code> は 200 で <code>{&quot;sent&quot;:true}</code> を返すのに、UTAGE にメッセージが<strong>1件も増えない</strong></li>
+</ul>
+<p>  （16:0x 時点の総件数 120件・最新は 15:49:38 の「メール認証」のまま）。<strong>再設定のメールは1通も作られていなかった</strong></p>
+<ul>
+<li><strong>なぜ黙って壊れたか</strong>：<code>handleForgotPasswordSubmit</code> が <code>await utageSendResetMail(...)</code> の返り値を捨てている。</li>
+</ul>
+<p>  失敗しても記録が1行も残らない（<code>wrangler tail</code> を繋いだ状態で叩いても、この失敗の行は出なかった）</p>
+<ul>
+<li><strong>参謀の誤り2つ</strong>：①UTAGE の必須項目を確かめずに文面を決めた ②Mits様の決定</li>
+</ul>
+<p>  「UTAGE メール末尾の配信解除ブロックは決定事項」（共有 memory <code>feedback_utage_cancel_block_is_decided.md</code>）に反していた</p>
+<ul>
+<li><strong>直し（発注済み・走行中）</strong>：本文の末尾に <code>配信解除：%cancel%</code> を戻す／失敗を <code>console.log</code> で残す（外に返す返事は変えない＝どのアドレスが登録済みか外から探れないため）</li>
+<li>数え方への影響：上の 15:4x に書いた除き方（題が <code>AI-MITS パスワード再設定（…）</code> で始まる）はそのまま有効</li>
+</ul>
+<h3 id="2026-09-25-16-0x-運転台改善-通しの試し登録を1件やった-数え方への影響あり">2026-09-25 16:0x ／ 運転台改善 ── 通しの試し登録を1件やった（数え方への影響あり）</h3>
+<ul>
+<li>どのセッションで：運転台改善（Mits様「実機で試し登録して通しで確かめて」）</li>
+<li>宛先：メール配信・計測・自動化／司令塔</li>
+<li><strong>使った別名</strong>：<code>3216.fun+pwreset20260925@gmail.com</code>（試験用・<code>jogai_settei.json</code> の正規表現に当たる形）</li>
+<li><strong>UTAGE に増えたもの</strong>：読者 <code>D7fizmuOyE7S</code>（共通読者 <code>IS9VHbFrTvmx</code>）／登録 2026-09-25 15:49:36／</li>
+</ul>
+<p>  broadcast 1件 <code>qLMcZIQXIjYw</code>「AI-MITS メール認証（3216.fun+pwreset20260925@gmail.com）」／</p>
+<p>  00日のステップメール1通（15:49:36 に届いた）</p>
+<ul>
+<li><strong>数え方への影響</strong>：9月25日の登録者数・配信数・開封・クリックから、この読者と上の broadcast 1件を除く。</li>
+</ul>
+<p>  除き方は読者ID <code>D7fizmuOyE7S</code> か、メールアドレスの <code>+pwreset20260925</code> の形</p>
+<ul>
+<li><strong>通しで確かめた結果（ここまで合格）</strong>：登録 200 → 認証リンク 200（登録の顔が出た・題「登録できました」）→</li>
+</ul>
+<p>  パスワードを決める 200 → そのパスワードでログイン 200</p>
+<ul>
+<li><strong>合格していないところ</strong>：①認証メールが Gmail に届いていない（UTAGE は 15:51:03 に送信済みと記録・16:0x 時点で受信箱・迷惑メール・ゴミ箱に0件。</li>
+</ul>
+<p>  同じ件名のメールは 09-05／09-17／09-18 には届いている＝いつも届かないわけではない）②再設定のメールは上のとおり1通も作られていなかった</p>
+<h3 id="2026-09-25-16-1x-運転台改善-再設定の直しを本番に出し-通しで最後まで動いた-メ">2026-09-25 16:1x ／ 運転台改善 ── 再設定の直しを本番に出し、通しで最後まで動いた（メールの配達だけ未確認）</h3>
+<ul>
+<li>どのセッションで：運転台改善</li>
+<li>宛先：AI-Mits-チューニング／メール配信・計測・自動化／司令塔</li>
+<li><strong>出した物</strong>：Cloudflare Worker <code>aimits-report-proxy</code> Version ID <code>b1e7363d-d44f-4f92-8707-c6f52e5ffd7e</code>（16:05）</li>
+<li>直した3か所：①本文の末尾に <code>配信解除：%cancel%</code> を戻した ②関数の上のコメントを実測に基づく事実に書き換えた</li>
+</ul>
+<p>  ③<code>handleForgotPasswordSubmit</code> が <code>utageSendResetMail</code> の返り値を捨てず <code>console.log</code> に残すようにした（外に返す返事は変えていない）</p>
+<ul>
+<li><strong>直した版で UTAGE に1件増えた</strong>：<code>6Z9CUCF87dzJ</code>「AI-MITS パスワード再設定（3216.fun+pwreset20260925@gmail.com）」・<code>reserved</code>・16:06:01・本文に <code>%cancel%</code> 1個。総件数 120件 → 121件</li>
+<li><strong>通しの結果（本番で実測・全部合格）</strong></li>
+  <li>再設定のリンクを押す → 200・題「新しいパスワードを決めてください」・「このリンクは15分で切れます」1件・入力欄2つ・<strong>「あとで決める」0件</strong>・「登録できました」0件</li>
+  <li>古いパスワードが消えているか → <code>POST /login</code> が <strong>409 <code>{&quot;error&quot;:&quot;no_password&quot;}</code></strong>（リンクを押した時点で古いものが消えている）</li>
+  <li>新しいパスワードを決める → 200</li>
+  <li>新しいパスワードで入る → 200</li>
+  <li>同じリンクをもう1回押す → <strong>400 <code>{&quot;error&quot;:&quot;token_invalid_or_expired&quot;}</code></strong>（1回使い切り）</li>
+<li>数え方への影響：上の 15:4x の除き方（題が <code>AI-MITS パスワード再設定（…）</code> で始まる）のまま</li>
+</ul>
+<h3 id="2026-09-25-16-2x-運転台改善-訂正-メールが届いていない-は自分の受信箱1つの話">2026-09-25 16:2x ／ 運転台改善 ── 訂正：「メールが届いていない」は自分の受信箱1つの話だった（配信は生きている）</h3>
+<ul>
+<li>どのセッションで：運転台改善（見張りが参謀の断定4件を叩き直した）</li>
+<li>宛先：メール配信・計測・自動化／AI-Mits-チューニング／司令塔</li>
+<li><strong>訂正①</strong>：参謀は「今日から届いていない」ように扱ったが、<strong>1週間続いていた</strong>。</li>
+</ul>
+<p>  <code>3216.fun@gmail.com</code> に <code>noreply@utage-system.com</code> から入った最後のメールは <strong>2026-09-18 07:10（UTC）</strong></p>
+<ul>
+<li><strong>訂正②</strong>：参謀は1件だけ見て「届いている」と言った。<strong>9/18 以降の認証メール12通を全部叩いた結果は 12通中9通が開封1</strong></li>
+</ul>
+<p>  （tetsuyaitv／ppocket.shimizu／momozato／blueoceanoffice2016／h-tanahara／shishishi2121／mailzou777／asspinfo／nishida@dmikz）。</p>
+<p>  うち5通はクリックまで至っている。<strong>お客様への配信は生きている。壊れているのは <code>3216.fun@gmail.com</code> の受け側</strong></p>
+<ul>
+<li><strong>残る1つの食い違い</strong>：再設定メール <code>6Z9CUCF87dzJ</code> は UTAGE 側で <strong>開封1</strong> が付いているのに、Gmail の検索（宛先・差出人・件名・本文の語・</li>
+</ul>
+<p>  迷惑メール・ゴミ箱・時刻での全件）では0件。<strong>まだ説明が付いていない</strong></p>
+<ul>
+<li><strong>叩いた範囲（全件）</strong>：Gmail 8本の検索（宛先4つ・差出人3つ・件名4つ・本文の語3つ・<code>in:spam</code>・<code>in:trash</code>・<code>in:anywhere</code>・</li>
+</ul>
+<p>  <code>newer_than:1h/2h/3h</code>・<code>after:2026/09/25</code>）／UTAGE は認証メール12件の <code>send_count</code>・<code>open_count</code>・<code>click_count</code></p>
+<ul>
+<li><strong>決まり（新）</strong>：自分が見られる受信箱1つに届かないことを、配信の故障として報告しない。</li>
+</ul>
+<p>  配信の生死は<strong>直近の同じ形のメール全件の開封の数</strong>で見る。1件で全体の結論を出さない。</p>
+<p>  正本：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/feedback_jibun_no_juushinbako_de_haishin_wo_handan_shinai.md</code></p>
+<ul>
+<li>数え方への影響：無し（見ただけ・設定も送信も変えていない）</li>
+</ul>
+<h3 id="2026-09-25-17-0x-運転台マーケ-試し登録の2件は配信の計測に入らない-読者数だけ">2026-09-25 17:0x ／ 運転台マーケ ── 試し登録の2件は配信の計測に入らない（読者数だけ1人ぶん動く）</h3>
+<ul>
+<li>どのセッションで：運転台マーケ（2026-09-25 16:0x／16:1x ／ 運転台改善 の「数え方への影響」を、計器の側で実測した）</li>
+<li>宛先：メール配信・計測・自動化／運転台改善／司令塔</li>
+<li><strong>結論</strong>：<code>3216.fun+pwreset20260925@gmail.com</code> の試し登録で増えた broadcast 2件</li>
+</ul>
+<p>  （<code>qLMcZIQXIjYw</code> メール認証・<code>6Z9CUCF87dzJ</code> パスワード再設定）は、<strong>配信数・開封・クリック・解除のどれにも入らない。</strong></p>
+<p>  除外IDに足す必要も無い</p>
+<ul>
+<li><strong>なぜ</strong>：計測 CSV が測っているのはメルマガの配信だけで、自動で返るメールは測っていない。</li>
+</ul>
+<p>  CSV の全122行で件名に「認証」0件・「再設定」0件・「パスワード」0件（1通も入ったことが無い）</p>
+<ul>
+<li><strong>叩いた範囲（全件）</strong>：計測 CSV <code>keisoku_suii.csv</code> 123行（見出し1＋データ122）／</li>
+</ul>
+<p>  マーケ開発版の台帳 <code>com.mits.untendai.mkt/untendai.db</code> の <code>haishin_keisoku</code> 137行。</p>
+<p>  両方で <code>qLMcZIQXIjYw</code> 0件・<code>6Z9CUCF87dzJ</code> 0件・<code>2026-09-25</code> の行0件</p>
+<ul>
+<li><strong>ただし読者数（<code>dokusha_su</code>）には出る</strong>：経路ごとの合計値なので、1人を引けない。</li>
+</ul>
+<p>  読者 <code>D7fizmuOyE7S</code> が 2026-09-25 15:49:36 に UTAGE へ増えたので、<strong>次に測ると UTAGE の読者数が 2310 → 2311 になる</strong></p>
+<p>  （9/23 09:10:35 時点 2310・まぐまぐ 1796）。引くかどうかは測って CSV に書く側（メール配信・計測・自動化）の判断</p>
+<ul>
+<li><strong>いまの台帳の最新</strong>：2026-09-23 09:14:22。9/24・9/25 の行はまだ入っていない</li>
+</ul>
+<h3 id="2026-09-25-17-3x-運転台マーケ-他の持ち場が自分の作業場に入れた直しは-申告の本">2026-09-25 17:3x ／ 運転台マーケ ── 他の持ち場が自分の作業場に入れた直しは、申告の本数でなく <code>git status</code> の実測で数える</h3>
+<ul>
+<li>どのセッションで：運転台マーケ（運転台改善が 1.73.29 をマーケ版に入れた回の検収）</li>
+<li>宛先：運転台改善／司令塔</li>
+<li><strong>起きたこと</strong>：申告は「触るのは3本だけ」だった。実測は6本で、<code>src/index.html</code> の中身も申告と違った</li>
+</ul>
+<p>  （申告2行のつもりが +23 −1。内訳は 20行＝左バーの AI-Mits の CSS・2行＝パスワード再設定・1行＝画面の版表示）</p>
+<ul>
+<li><strong>受け手の決まり（新）</strong>：申告された本数を検収の線にしない。<strong><code>git status --porcelain</code> で数え、<code>git diff</code> で1本ずつ中身を見る。</strong></li>
+</ul>
+<p>  版を上げる作業なら、版の4か所（<code>Cargo.toml</code>／<code>Cargo.lock</code>／<code>tauri.conf.json</code>／画面の版表示）が必ず動く</p>
+<ul>
+<li><strong>送り手の決まり（運転台改善が自分で直す）</strong>：発注書に「触る3本＋版の4か所」と書く</li>
+<li><strong>同じ時間帯に2つの発注が重なることがある</strong>：左バーの AI-Mits の CSS は別の担当が3つの作業場に入れていたもので、</li>
+</ul>
+<p>  1つの <code>.app</code> に同居した。中身は Mits様のご指示どおりで異議なし。<strong>申告に無いものが入っていても、まず中身を読んでから言う</strong></p>
+<ul>
+<li><strong><code>sample.db</code> は commit に入れない</strong>：組み立てるたびにバイナリだけが変わる（中身は同じ）。</li>
+</ul>
+<p>  実測 ── 表29個・行数はどの表も同じ・ダンプの md5 は旧新とも <code>2dcf15f8b3d0cfb28c137c32b6e132e9</code> で一致。</p>
+<p>  Mits様の実データの焼き付きは無い。差分のまま置き、commit には入れない（両方の持ち場で合意）</p>
+<ul>
+<li><strong>commit</strong>：<code>c4fec82</code>（6 files changed, 35 insertions, 4 deletions）。tag も push も作っていない</li>
+</ul>
+<ul>
+<li>2026-09-25 17:0x ／ 運転台改善：相談の画面の下の帯の見本で、エンジンの軸の線を<strong>帯と同じ幅</strong>にした（<code>width:100%</code>・v0.73.0 にあった <code>max-width:160px</code> を廃止）。太さは左端 2px → 右端 10px の台形（<code>height:10px</code> に <code>clip-path:polygon(0 40%,100% 0,100% 100%,0 60%)</code>）。色は <code>var(--line2)</code> → <code>var(--amber)</code> の左右のグラデーションで、金の側を 40% から先ずっと。ラベル「速い」「西田メソッドが濃い」は線の上に別置き（線を左右から挟まない）。出どころ：Mits様「この帯を左から右に同じ幅で描き、かつ線の太さ、色でのグラデーションも強調する」。まだ見本だけ・アプリには入れていない</li>
+  <li>宛先：なし（運転台改善の中の見本）</li>
+<li>2026-09-25 17:0x ／ 運転台改善：ログアウトで呼び名が消える件の原因は、<strong>呼び名と登録の名前が同じ鍵（<code>auth.name</code>）を使っていたこと</strong>。<code>src-tauri/src/auth.rs</code> に <code>auth.call_name</code> を新設し、<code>set_call_name</code> は新しい鍵にだけ書き、<code>signout</code> は新しい鍵を消さない形にした（古い鍵への読み落ちは残して、いまの値が消えないようにした）。<code>cargo test --lib auth::tests</code> 8件通過。<strong>まだ組み立てていない</strong>ので製品版では直っていない</li>
+  <li>併せて測ったこと：<strong>自社情報（<code>untandai_jigyosha</code>）を消す仕組みは、ログアウトの経路には無い</strong>（Rust から localStorage を触る行は 0件）。ただし <code>src/index.html</code> 8744〜8753行に、v1.60.6 に置いてあった作った人の事業所の名前・番号を消すための移行のしかけがあり、名前と番号を 32bit に畳んだ値が固定値と一致したときだけ消す作りになっている。畳んだ値は別の文字列でも一致し得るので、ここを「一度やったら印を付けて二度とやらない」形に直す</li>
+  <li>宛先：なし（運転台改善の中の直し）</li>
+</ul>
+<ul>
+<li>2026-09-25 17:1x ／ 運転台改善：<strong>「ログアウトの経路に自社情報を消す仕組みはありません」は誤り</strong>（参謀が1本の grep で出した結論）。実物は <code>src/index.html:8749-8753</code> にあり、自社情報（<code>untendai_jigyosha</code>）を条件付きで消している。判定の値 <code>FURUI_NA=1371589027</code> / <code>FURUI_BAN=3410639217</code> は、v1.61.1（commit <code>65c2ec0</code>）まで平文で <code>&#x27;西田光弘個人事務所&#x27;</code> / <code>&#x27;0641-8917&#x27;</code> と書いてあったものを 32bit に畳んだ値。自社情報の画面が読まれるたびに走るので、<strong>ログアウトが消しているのではなく、再ログイン後にその画面を開いた瞬間に消えている</strong>。入っている枝は <code>main</code> / <code>marketing</code> / <code>freee</code> / <code>freee-win</code> / <code>demobuild</code> の5本</li>
+  <li>直し方：この移行のしかけを「一度やったら印を付けて二度とやらない」形にする。次の版に入れる</li>
+  <li>宛先：なし（運転台改善の中の直し）</li>
+</ul>
+<ul>
+<li>2026-09-25 17:2x ／ 運転台改善：<strong>相談の画面の下部は Ⓑ に決定</strong>（Mits様「これがいい」・直した Ⓑ の画面を見て）。形は ①囲みの中は <code>textarea</code> と <code>送る ↵</code> だけ ②<code>やることを決めて終える</code> は囲みの外・右上 ③その下に <code>AI-Mitsをかかりつけにする</code>（2つの右端を揃える） ④左はエンジンの帯（FAST/NORMAL/DEEP）＋その下に軸線「速い ── 西田メソッドが濃い」（帯と同じ幅・左2px→右10px の台形・灰から金）。Ⓐ と Ⓒ は採らない。言葉は1字も変えない</li>
+  <li>見本：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/_mock/mock_sodan_kabu_20260925.html</code> の Ⓑ</li>
+  <li>次：アプリの <code>src/index.html</code> に入れる（いま走っている 1.73.32 の組み立てが終わってから・同じ作業場で2本同時に動かさない）</li>
+  <li>宛先：なし（運転台改善の中の直し）</li>
+</ul>
+<ul>
+<li>2026-09-25 18:0x ／ AI-Mits-チューニング：製品版の相談で出た「会計の売上と決済明細が約411万円ずれている」「名簿1863人の層・タイプ・DMi位置・強み枠が1件も入っていない」は、<strong>どちらも AI-Mits が作った数字ではなく、運転台が数えて渡した数字</strong>。実物は <code>untendai-seiri/src-tauri/src/sanbo.rs</code> の <code>format_uriage_gap_prefix</code>（会計の売上／決済の明細／差 を3行で渡す）と <code>format_seigousei_prefix</code>（名簿の4項目が全部0件なら食い違いに書く）。製品版の DB（<code>~/Library/Application Support/com.mits.untendai/untendai.db</code>）で突き合わせ済み ── 会計 1〜9月 11,525,469円（<code>strac</code> の moneyforward・sales を月ごとに足した値と一致）／決済明細 15,639,520円（327件・2026-01-01〜09-17）／名簿 1863人・層0・タイプ0・DMi0・強み枠0</li>
+  <li>差 411万 の作られ方（3つとも渡し方の欠け）：①<strong>USD の 22件を米ドルの最小単位のまま円として足している</strong>（<code>amount</code> 2,325,000／<code>amount_jpy</code> 3,692,079 が同じ行に入っているのに使っていない）②<strong>UTAGE と Stripe の二重計上</strong>（同じ日・同じ額・同じお客様が両方にある UTAGE 行が 106件／5,008,380円。1件を実物で確認：<code>nobu@forestland.jp</code> 2026-05-30 132,000円 が Stripe の <code>ch_3TcmFLGIuMEwQDLT1R9ALzIw</code> と UTAGE の CSV <code>utage_csv_d15b7e4f4fc598d6</code> の両方にある）③<strong>自分の買い物が入ったまま</strong>（<code>ac_nishida@spro01.com</code> 名義が 9件／1,999,900円）</li>
+  <li>①②③を直すと決済明細は 215件／10,718,319円。会計 11,525,469円との差は 807,150円で、<strong>会計のほうが大きい向き</strong>に戻る（コードの前置きが想定している向き＝決済を通らない入金がある、と読める形）</li>
+  <li>いまの前置きは「会計の売上は決済の明細より必ず大きくなる」前提の言葉だけを持っていて、差がマイナスのときの言葉が無い。だから AI-Mits は渡された差をそのまま読み上げるしかない</li>
+  <li>宛先：運転台改善（数字の作り方の直し）／メール配信・計測・自動化（除外の考え方が同じ形）</li>
+</ul>
+<ul>
+<li>2026-09-25 17:4x ／ 運転台改善：<strong>決済明細の合計の数え方を3つ直す</strong>（会計とのずれ 約411万円の出どころ。AI-Mits-チューニングが突き止め、参謀が DB で測り直した）</li>
+  <li>① <strong>外貨は <code>amount_jpy</code> で足す</strong>（いまはドルの額をそのまま円として足している。実測：<code>stripe|usd|22件|amount 2,325,000|amount_jpy 3,692,079</code>）。式は <code>SUM(CASE WHEN currency&lt;&gt;&#x27;jpy&#x27; AND amount_jpy IS NOT NULL THEN amount_jpy ELSE amount END)</code>。<strong>直す口は <code>sanbo.rs</code> だけではない</strong> ── <code>commands.rs</code> / <code>csv_import.rs</code> / <code>mf.rs</code> にもあり <code>SUM(amount)</code> は20か所以上。<code>import_payment</code> を相手にした口を全部そろえる</li>
+  <li>② <strong>同じ決済が Stripe と UTAGE の CSV で二重に入っている分は、Stripe を本にして UTAGE 側を合計から外す</strong>（参謀の決定。実際にカードを切った記録が Stripe 側で、UTAGE の CSV の「クレジットカード払い」は同じ決済の写しだから）。行は消さずに合計から外す</li>
+  <li>③ <strong><code>ac_nishida@spro01.com</code>（自分の買い物）を合計から外す</strong>（実測：stripe 4件・utage_kessai 5件・deprecated_applicant 1件）</li>
+  <li>④ 差がマイナス（決済の側が大きい）ときの一文を前置きに足す（いまは符号を見ずに印字し、締めの固定文が1つだけ）</li>
+  <li>参謀が見落としていたもの：出どころは <code>stripe</code> / <code>utage_kessai</code> の2つだけでなく、<code>utage_kessai_deprecated_applicant</code>（15件・75,000円）と <code>utage_kessai_deprecated_daily</code>（61件・3,685,980円）もある</li>
+  <li><strong>宛先：AI-Mits-チューニング／メール配信・計測・自動化／運転台マーケ／司令塔</strong>（数え方の決定なので・6セッション共通の決まり1）</li>
+</ul>
+<ul>
+<li>2026-09-25 17:5x ／ 運転台改善：<strong>取消</strong> ── 直前の節に書いた「参謀が見落としていたもの：出どころは stripe / utage_kessai の2つだけでなく <code>utage_kessai_deprecated_applicant</code> と <code>_daily</code> もある」は<strong>誤り</strong>。AI-Mits-チューニングの側が正しく、この2つは <code>PAY_LIVE_WHERE</code>（<code>sanbo.rs:2295</code> の <code>source NOT LIKE &#x27;%\_deprecated\_%&#x27; ESCAPE &#x27;\&#x27;</code>）で既に落ちている。参謀が自分で測った出力：</li>
+</ul>
+<p>  ```</p>
+<p>  同じ条件で残る：stripe 190件 9,070,760 ／ utage_kessai 137件 6,568,760（合計 15,639,520）</p>
+<p>  同じ条件の中の自分の買い物：9件 1,999,900</p>
+<p>  ```</p>
+<p>  参謀は <code>GROUP BY source</code> を条件なしで叩き、<code>PAY_LIVE_WHERE</code> を当てずに「相手が2つ見落としている」と書いた。<strong>条件付きの数字に、条件なしの数字を突き合わせた。</strong>①②③の直しの中身は変わらない</p>
+<ul>
+  <li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-09-25-18-3x-メール配信・計測・自動化-配信と測定を2日止めて戻した-数字に">2026-09-25 18:3x ／ メール配信・計測・自動化 ── 配信と測定を2日止めて戻した（数字に穴がある）</h3>
+<ul>
+<li>どのセッションで：メール配信・計測・自動化</li>
+<li>宛先：司令塔／運転台マーケ／AI-Mits-チューニング</li>
+<li>出どころ：Mits様 2026-09-23 16:44「今日のメール配信ルーティン一時停止、3スタンド全部、関連して測定も明日の24時まえ一時停止」／戻す予約 merumaga-saikai-20260925 が 09-25 00:05 に立ったまま止まり、06:4x の実測で4本とも enabled: false のままだった</li>
+<li>止めた4本（09-23 16:4x に enabled: false）：mainichi-merumaga-21-24（cron <code>30 19 * * *</code>・配信の口）／mainichi-merumaga-mihari-2310（<code>10 23 * * *</code>・見張り）／merumaga-keisoku-24h-36h-48h（<code>0 21 * * *</code>・夜の測定）／merumaga-keisoku-36h-asa（<code>5 9 * * *</code>・朝の測定）</li>
+<li>戻す予約 merumaga-saikai-20260925 が動かなかったこと（実測）：<code>list_scheduled_tasks</code> の一覧に0件・フォルダ <code>/Users/nishidamitsuhiro/.claude/scheduled-tasks/merumaga-saikai-20260925/</code> に残っているのは SKILL.md だけで、書くはずだった <code>saikai_kekka.log</code> は無い（<code>cat</code> が No such file or directory を返す）</li>
+<li>戻した（18:2x に会話の窓が <code>update_scheduled_task</code> で enabled: true・cron は4本とも元のまま・<code>list_scheduled_tasks</code> で確かめた）。戻したあとの次に走る時刻（JST）：</li>
+  <li>mainichi-merumaga-21-24 → 2026-09-25 19:41（<strong>今夜の配信は普通に動く</strong>）</li>
+  <li>mainichi-merumaga-mihari-2310 → 2026-09-25 23:13</li>
+  <li>merumaga-keisoku-24h-36h-48h → 2026-09-25 21:00</li>
+  <li>merumaga-keisoku-36h-asa → 2026-09-26 09:12</li>
+<li>触っていない：<code>untendai-mkt-haishin-torikomi</code>（<code>0 11,23 * * *</code>・別の持ち場・止めていない）</li>
+<li>配信の数字の穴（<code>dashita_kiroku.csv</code> の実測 2026-09-22〜09-25）：</li>
+  <li>2026-09-22：utage 1・magmag 1・<strong>spro 0</strong>（9/22号が spro に出ていない・9/17 以降で2回目）</li>
+  <li>2026-09-23：utage 0・magmag 0・spro 0（<strong>9/23号は3スタンドとも出ていない</strong>）</li>
+  <li>2026-09-24：utage 0・magmag 0・spro 0（<strong>9/24号は3スタンドとも出ていない</strong>）</li>
+  <li>2026-09-25：18:3x 時点で 0（19:30 の予約から出る予定）</li>
+<li>測定の穴（<code>keisoku_suii.csv</code> の実測・2026-09-23 00:00 以降に足された行）：5行のみ・すべて 2026-09-23 09:08〜09:14 の朝の窓（Mits様の停止指示 16:44 より前の測定）。停止指示より後の 2026-09-23 21:00 の測定・09-24 の朝夜の測定・09-25 の朝の測定はすべて走っていない（合計4窓ぶんが空）</li>
+  <li>内訳：UTAGE 36h J1DHqMOqQ4Dd／UTAGE 12h aC59yzhkcH0B／まぐまぐ 36h 165296439／まぐまぐ 12h 165297417／まぐまぐ 事後60h 165295482</li>
+<li>spro の測定の穴：<code>keisoku_suii.csv</code> で spro の最後の測定は 2026-09-22 09:21:02（haishin_id 5135・9/21号 36h）。<strong>2026-09-22 の夜の窓（5135 の48h）から今日まで、spro の測定は0行</strong>。9/22号 5135 の48h・24h・9/21号 5135 の 事後60h が永久に欠ける形（時刻幅を過ぎた）</li>
+<li><strong>押し直し・再配信・テスト送信はしていない</strong>（お客様に届くのでこの窓では触らない・Mits様の合図待ち）</li>
+<li>数え方への影響：9/23号・9/24号は号が存在しない扱いで台帳に行を作らない（<code>dashita_kiroku.csv</code> に足さない）。9/22号の spro も台帳に行を作らない。9/22号夜以降の spro 測定4件と、9/23夜〜9/25朝の測定4窓は「取れず」で穴として残る（時刻の点を過ぎたため後から埋められない）</li>
+</ul>
+<h3 id="2026-09-25-18-3x-司令塔-止めたメルマガの予約4本がまだ止まったまま-今夜19">2026-09-25 18:3x ／ 司令塔 ── 止めたメルマガの予約4本がまだ止まったまま（今夜19:30の号が出ない）・持ち場の窓に戻す頼みを出した</h3>
+<ul>
+<li>どのセッションで：司令塔（3日ぶりに動き、記録7か所を横断して見つけた。横断の紙 /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/_wip/catchup_20260925.md）</li>
+<li>宛先：メール配信・計測・自動化</li>
+<li>事実：Mits様 2026-09-23 16:44「今日のメール配信ルーティン一時停止、3スタンド全部、関連して測定も明日の24時まえ一時停止」の解除どきは 2026-09-24 24:00。2026-09-25 18:3x の時点で4本とも enabled: false（mainichi-merumaga-21-24／mainichi-merumaga-mihari-2310／merumaga-keisoku-24h-36h-48h／merumaga-keisoku-36h-asa）。戻す予約 merumaga-saikai-20260925 の回は 00:05 に立ったまま動いていない</li>
+<li>司令塔の窓の予約の一覧は18本で、この4本は出ない（手順書のファイルは ~/.claude/scheduled-tasks/ にある）。予約は持ち場の窓からしか戻せない（2026-09-16 の決定）。だから司令塔の窓からは戻せない</li>
+<li>やったこと：18:3x に名前あてで1通送った（頼み3つ：4本を true に戻す／今夜の号の下書きの有無を見る／報告に戻した時刻と次の起動の時刻を書く）。期限は今夜 19:30</li>
+<li>2周目の数え方への影響：2026-09-22 13:02:20 からの期間は、配信が 9/22号 1通だけ（09-23〜09-25 は止まっていた）。だから来た人が少ない（3日で日本から16人）。2026-09-29 の判定は「3〜5人なら7日延ばす」に当たる見込み。いまの数字は 押した4 ÷ 開いた16（段が出た7人は押した0・段が出なかった9人が押した4）</li>
+</ul>
+<h3 id="2026-09-25-18-4x-司令塔-夕の定時報告の回-メルマガの配信と測定の予約は-Mit">2026-09-25 18:4x ／ 司令塔（夕の定時報告の回）── メルマガの配信と測定の予約は、Mits様が手で削除された（戻さない）</h3>
+<ul>
+<li>どのセッションで：司令塔（夕の定時報告の回）。出来事はメール配信・計測・自動化の会話の窓（18:32）</li>
+<li>宛先：メール配信・計測・自動化／運転台マーケ／AI-Mits-チューニング／運転台改善／伽藍とバザールの実現</li>
+<li>出どころ：Mits様 2026-09-25 18:32（メール配信・計測・自動化の会話の窓）原文「ここで作ったルーティンは自動ログイン、自動で配信、自動で数字取得、分析、運転台に渡す、の目的達したので手動で削除した、確認して」</li>
+<li>実測（18:3x・定時報告の窓の <code>list_scheduled_tasks</code>）：mainichi-merumaga-21-24／mainichi-merumaga-mihari-2310／merumaga-keisoku-24h-36h-48h／merumaga-keisoku-36h-asa／merumaga-saikai-20260925 の5本とも一覧に0件。メール配信・計測・自動化の窓も 18:32 に同じ結果を返した。手順書のフォルダは <code>/Users/nishidamitsuhiro/.claude/scheduled-tasks/</code> に残っている</li>
+<li>取消：上の「2026-09-25 18:3x ／ メール配信・計測・自動化」の「今夜の配信は普通に動く」と、「2026-09-25 18:3x ／ 司令塔」の頼み（4本を true に戻す）は、この削除で成り立たない。<strong>戻さない</strong>（Mits様が目的を果たしたとして削除されたもの。戻すのは Mits様の合図があるときだけ）</li>
+<li>数え方への影響：</li>
+  <li>今夜 19:30 以降、自動の号は出ない。<code>dashita_kiroku.csv</code> と <code>keisoku_suii.csv</code> には新しい行が入らない（最新は 09-22 の号・09-23 09:14 の測定のまま）</li>
+  <li>運転台マーケの取り込み <code>untendai-mkt-haishin-torikomi</code> は、足す行が来ない</li>
+  <li>改善の回1回目（本文の長さ・画像リンク）の「3通の合計で判定」は、3通目が来ないので <strong>2通の合計で打ち切る</strong>かを、判定の日に書く</li>
+  <li>2周目の判定（2026-09-29 13:02）は、メールから来る人が 09-22 の号1通ぶんだけになる。判定の線（2人以下で外れ・6人以上で残す・3〜5人で7日延ばす）はそのまま使い、「来た道」を判定の行に書き添える</li>
+<li>この回でやらないこと：配信を再開する・号を手で送る・予約を作り直す（外に出る・お客様に届くので Mits様の合図）</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
