@@ -73,7 +73,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-25 07:43 ／ 写した時刻 2026-09-25 12:36</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-26 07:42 ／ 写した時刻 2026-09-26 12:42</p>
 <h2 id="報告-AI-Mits-チューニング">報告 ── AI-Mits-チューニング</h2>
 <p>この持ち場の窓（7:31 のお試し版と Dify の数え・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_AI-Mits-チューニング.md</p>
@@ -232,6 +233,23 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>手順の控え：ヘッドレスの Chrome（--dump-dom）で測ろうとしたが3分で返ってこなかったので止め、上のやり方に替えた</li>
 </ul>
 <h4 id="3-認証メールの直し-動かしていない-合図待ち">3. 認証メールの直し①②③ ── 動かしていない（合図待ち）</h4>
+<h3 id="2026-09-26-07-4x-予約タスク-aimits-mainichi-keisoku">2026-09-26 07:4x（予約タスク aimits-mainichi-keisoku）</h3>
+<p><strong>指示書：2026-09-26（朝の定時報告が書いた）の 1〜3</strong></p>
+<h4 id="1-製品版-1-73-43-の二重の落とし方を製品版の帳簿で測り直す-測れていない-会話の窓へ持">1. 製品版 1.73.43 の二重の落とし方を製品版の帳簿で測り直す ── <strong>測れていない（会話の窓へ持ち越し）</strong></h4>
+<ul>
+<li>見たこと：main の作業場 /Users/nishidamitsuhiro/untendai-seiri（最新 commit <code>f5fbde7</code>・v1.73.43）の <code>src-tauri/src/sanbo.rs:2357</code> の <code>PAY_LIVE_WHERE</code> は「1対1で組にする」形（<code>ROW_NUMBER() OVER (PARTITION BY lower(trim(customer_ref)), amount ORDER BY txn_date)</code> を Stripe の本数以下で落とす）。<code>raw LIKE &#x27;%クレジットカード払い%&#x27;</code> と julianday の窓は無い。<code>/Applications/untendai.app</code> の版は 1.73.43</li>
+<li>測れなかったこと：製品版の帳簿（<code>~/Library/Application Support/com.mits.untendai/untendai.db</code>）の写しを取って 192件・9,998,039円 を数え直す操作と、組み上がった <code>.app</code> の中の文字を読む操作が、予約の回では権限で断られた（お客様の情報を扱う操作として）。<strong>だから「直った」とも「直っていない」とも書かない</strong></li>
+<li>次：会話の窓で同じ SQL（<code>SELECT COUNT(*), SUM(CASE WHEN currency&lt;&gt;&#x27;jpy&#x27; AND amount_jpy IS NOT NULL THEN amount_jpy ELSE amount END) FROM import_payment WHERE &lt;PAY_LIVE_WHERE&gt;</code>）を製品版の帳簿の写しに当てて、192件・9,998,039円 と突き合わせる</li>
+</ul>
+<h4 id="2-この持ち場が作った試し登録-0件">2. この持ち場が作った試し登録 ── <strong>0件</strong></h4>
+<ul>
+<li>範囲：報告_AI-Mits-チューニング.md 全文／aimits_mainichi_keisoku.csv 全行／決定の記録で「AI-Mits-チューニング」と署名した行 を <code>3216.fun+</code> で全部叩いた</li>
+<li>出たのは <code>3216.fun+honban20260922</code> 1件だけで、これは司令塔が作った分（09-22 の本番差し替えの確かめ・この持ち場は認証メールの数を数えただけ）。司令塔が 2026-09-26 03:2x に消し済み</li>
+<li>消したもの：なし</li>
+</ul>
+<h4 id="3-認証メールの直し-動かしていない-合図待ち">3. 認証メールの直し①②③ ── 動かしていない（合図待ち）</h4>
+<h4 id="今日の数-CSV-に1行足した">今日の数（CSV に1行足した）</h4>
+<p>/ev/count は untendai-update で HTTP 200（days=30・total 1684・counted 1423）。8項目は前日と同じ（reg_submit 1・verify_done 0・verify_giveup 1・nudge30s 19・nudge5m 1・nudge10m 1・chat_send_fail 1・to_dl 4）。Dify は FAST-APP(ナレッジ無し) 14d6df13=16（+1）／NORMAL-APP(RAG) 43d47f25=26（+1）／DEEP-APP(Corpus2Skill) 1a8d8b9c=20（+2）／NORMAL-WEB v2 e472bc1f=93（±0）・合計 151→155</p>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
 </body>

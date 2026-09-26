@@ -57,7 +57,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-25 07:52 ／ 写した時刻 2026-09-25 12:36</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-26 07:20 ／ 写した時刻 2026-09-26 12:42</p>
 <h2 id="マーケ経路で決まったこと-運転台-marketing-枝が実装する側の写し">マーケ経路で決まったこと（運転台 marketing 枝が実装する側の写し）</h2>
 <p>Mits様（2026-09-08）「メルマガ経路関係で決まったことは、untendai マーケティングがアプリに実装していくので、常に P2P で共有する」。</p>
 <p>正本はセッション「メール配信と計測と自動化」の</p>
@@ -568,6 +569,16 @@ wc -l 可  最後に必ず改行が付く出力だけ（keisoku_suii.csv は末�
 中身      09-23・09-24 は配信を止めていた。この2日に配信の数字が無いのは計器の抜けとして数えない
 実測      keisoku_suii.csv の最新行 2026-09-23 09:14:22 ／ マーケ開発版の台帳の最新も同じ（2026-09-25 07:53 に確認）
 </code></pre>
+<hr>
+<h3 id="試し登録のアドレスは-作った窓が自分で消す-2026-09-26-Mits様のご指示・司令塔が伝">試し登録のアドレスは、作った窓が自分で消す（2026-09-26 Mits様のご指示・司令塔が伝達）</h3>
+<p>Mits様原文「登録をテストしているセッションにテストの用事が済んだら、自律的にテストアドレスを消すように言って」。UTAGE の読者一覧に <code>3216.fun+…@gmail.com</code> が溜まっているのを画面でご覧になってのご指示。</p>
+<p><strong>この持ち場が試し登録をしたときの手順</strong></p>
+<p>1. その試しで確かめたいことを確かめ、<strong>結果を先にこの台帳へ書く</strong>（消したら二度と測れない）</p>
+<p>2. 確かめ終わった時点で、<strong>その場で消す。</strong>次の回に持ち越さない・言われてから消さない</p>
+<p>3. 消すのは UTAGE の管理画面から。<strong>API では消せない</strong>（40x が返る・正本 <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/reference_utage_reader_delete_via_gui.md</code>）。画面のボタンは AI が押す</p>
+<p>4. 消したら、決定の記録（<code>…/司令塔/決定台帳_6セッション共通.md</code>）に1行 ── <strong>消した日時・アドレス・何の試しだったか・消した後の読者数</strong></p>
+<p><strong>2026-09-26 02:4x の洗い出し</strong>：この持ち場が自分で消すべき試し登録は <strong>0件</strong>。上の「2. 中継から登録した読者にも経路の印が入る」に書いた <code>3216.fun+utm20260914b@gmail.com</code> / reader <code>FrUeVEYDj84s</code> は、<code>message_reader_get</code> が <code>not_found</code>「読者が見つかりません」を返すので<strong>既に消えている</strong>（L614 の記述は、埋め直さない決まりに合わせて書き換えずに残す）。</p>
+<p>UTAGE に残っている <code>3216.fun+</code> の読者は2件だけで、どちらも司令塔が作った分（<code>+honban20260922</code>・<code>+keiro20260921</code>）。司令塔が消す。</p>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
 </body>

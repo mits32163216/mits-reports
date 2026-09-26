@@ -61,7 +61,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-25 07:43 ／ 写した時刻 2026-09-25 12:36</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-26 07:40 ／ 写した時刻 2026-09-26 12:42</p>
 <table>
 <tr><th>日付</th><th>取った時刻</th><th>reg_submit</th><th>verify_done</th><th>verify_giveup</th><th>nudge30s</th><th>nudge5m</th><th>nudge10m</th><th>chat_send_fail</th><th>to_dl</th><th>dify_fast</th><th>dify_normal</th><th>dify_deep</th><th>dify_v2</th><th>dify_合計</th><th>前日比_dify_fast</th><th>前日比_dify_normal</th><th>前日比_dify_deep</th><th>前日比_dify_v2</th><th>前日比_dify_合計</th><th>備考</th></tr>
 <tr><td>2026-09-16</td><td>12:29</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>7</td><td>20</td><td>14</td><td>92</td><td>133</td><td></td><td></td><td></td><td></td><td></td><td>中継 /ev/count が HTTP 404（not_found）。ルート / は 200。初回のため前日比なし</td></tr>
@@ -74,6 +75,7 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <tr><td>2026-09-23</td><td>07:31</td><td>1</td><td>0</td><td>1</td><td>19</td><td>1</td><td>1</td><td>1</td><td>4</td><td>15</td><td>23</td><td>18</td><td>93</td><td>149</td><td>1</td><td>1</td><td>1</td><td>1</td><td>4</td><td>/ev/count は untendai-update で HTTP 200（days=30・total 1530・counted 1301）。nudge30s が 18→19 に増えた（他7項目は前日と同じ）。verify_done は 0（お試し版ページに送る実装5か所を grep で確認・測れた0）。Dify は4アプリとも +1（FAST-APP(ナレッジ無し) 14d6df13=15／NORMAL-APP(RAG) 43d47f25=23／DEEP-APP(Corpus2Skill) 1a8d8b9c=18／NORMAL-WEB v2 e472bc1f=93）・合計 145→149。by_day は 2026-09-22=178。by_campaign に 20260923_nai=2 が出ている。指示書 09-23 の1：お試し版のスマホ幅 320/375/414 でエンジンの帯 .eng-bar が切れ DEEP を押せない（報告に記載）。運転台改善へ1行（SendMessage は不達）</td></tr>
 <tr><td>2026-09-24</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>取れず（09-24 の予約の窓は利用上限で空振り・後から取れない数なので空欄のまま。09-25 の行が 09-23 と比べる）</td></tr>
 <tr><td>2026-09-25</td><td>07:37</td><td>1</td><td>0</td><td>1</td><td>19</td><td>1</td><td>1</td><td>1</td><td>4</td><td>15</td><td>25</td><td>18</td><td>93</td><td>151</td><td>0</td><td>2</td><td>0</td><td>0</td><td>2</td><td>前日比は 09-23 の行と比べた差（09-24 は取れず・指示書 2026-09-25 の1）。/ev/count は untendai-update で HTTP 200（days=30・total 1658・counted 1401）。8項目は 09-23 と同じ。verify_done は 0（お試し版ページに送る実装5か所を grep で確認・測れた0）。Dify は NORMAL-APP(RAG) 43d47f25 だけ +2（23→25）・FAST-APP(ナレッジ無し) 14d6df13=15／DEEP-APP(Corpus2Skill) 1a8d8b9c=18／NORMAL-WEB v2 e472bc1f=93 は同数・合計 149→151。by_day は 2026-09-23=58・2026-09-24=56。指示書 2026-09-25 の2：運転台改善の見本2枚を幅 320／375／414 で測り直し、数字は一致（報告に記載）</td></tr>
+<tr><td>2026-09-26</td><td>07:37</td><td>1</td><td>0</td><td>1</td><td>19</td><td>1</td><td>1</td><td>1</td><td>4</td><td>16</td><td>26</td><td>20</td><td>93</td><td>155</td><td>1</td><td>1</td><td>2</td><td>0</td><td>4</td><td>/ev/count は untendai-update で HTTP 200（days=30・total 1684・counted 1423）。8項目は前日と同じ。verify_done は 0（お試し版ページに送る実装5か所を grep で確認・測れた0）。Dify は FAST-APP(ナレッジ無し) 14d6df13 +1（16）・NORMAL-APP(RAG) 43d47f25 +1（26）・DEEP-APP(Corpus2Skill) 1a8d8b9c +2（20）・NORMAL-WEB v2 e472bc1f ±0（93）・合計 151→155。by_day は 2026-09-24=59・2026-09-25=23。指示書 2026-09-26 の1（製品版 1.73.43 の二重の落とし方を製品版の帳簿で測り直す）は予約の回では帳簿の写しを取る操作が断られたので測れず・会話の窓へ持ち越し。2 は自分の試し登録 0件</td></tr>
 </table>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>

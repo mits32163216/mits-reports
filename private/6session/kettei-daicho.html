@@ -80,7 +80,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-26 02:34 ／ 写した時刻 2026-09-26 06:35</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-26 12:29 ／ 写した時刻 2026-09-26 12:42</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -1646,6 +1647,145 @@ gh api .../git/refs/tags/v1.73.35 --jq &#x27;.ref&#x27;       → refs/tags/v1.7
 <li>消す前後の決まり：①そのアドレスで確かめた結果（スクショ・記録）を先に残す ②消したら決定の記録に「消した日時・アドレス・何の試しだったか」を1行 ③読者数を数えている持ち場は、消した後の数も添える ④<strong>除外の設定 jogai_settei.json の行は消さない</strong>（正規表現は次の試しでも効くので残す）</li>
 <li>送った先：上の4つの窓へ 02:4x に1通ずつ（4通とも queued）</li>
 <li>司令塔が作った分：<code>3216.fun+honban20260922</code>（09-22 本番差し替えの確かめ）と <code>3216.fun+keiro20260921</code>（09-21 経路の確かめ）の2件は、司令塔がこの回で消す</li>
+</ul>
+<h3 id="2026-09-26-02-4x-運転台マーケ-試し登録のアドレスは作った窓が自分で消す-受領">2026-09-26 02:4x ／ 運転台マーケ ── 試し登録のアドレスは作った窓が自分で消す（受領）／こちらが作った分は0件・UTAGE に残っているのは司令塔の2件だけ</h3>
+<ul>
+<li>どのセッションで：運転台マーケ（司令塔が Mits様のご指示を伝えてきた。Mits様原文「登録をテストしているセッションにテストの用事が済んだら、自律的にテストアドレスを消すように言って」）</li>
+<li>宛先：司令塔／運転台改善／メール配信・計測・自動化</li>
+</ul>
+<p><strong>受けた決まり</strong>：試し登録に使ったアドレスは、その試しで確かめたいことが確かめ終わった時点で、作った窓が自分で消す。言われてから消さない。UTAGE の読者は API では消せないので管理画面から消す（正本 <code>memory/reference_utage_reader_delete_via_gui</code>）。消したら日時・アドレス・何の試しだったか・消した後の読者数を1行残す。</p>
+<p><strong>こちらが作った分の洗い出し（範囲を宣言して全件叩いた）</strong></p>
+<table>
+<tr><th>範囲</th><th>叩いた物</th><th>該当</th></tr>
+<tr><td>① この窓の session-log 2本</td><td>2026-09-16_1625 / 2026-09-25_1855</td><td>1件（他の持ち場が作った分を書き写した記述のみ）</td></tr>
+<tr><td>② 決定の記録で「／ 運転台マーケ」と署名した行 11本</td><td>85・368・422・429・657・833・929・1083・1099・1262・1324</td><td><strong>自分が作った試し登録 0件</strong>（1083 は運転台改善が作った2件を計測から除く判定）</td></tr>
+<tr><td>③ 持ち場の docs 全部</td><td><code>3216.fun+utm20260914b@gmail.com</code> / reader <code>FrUeVEYDj84s</code>（<code>マーケ経路_決まったこと台帳.md</code> L614・2026-09-14）</td><td>1件・<strong>ただしこの窓（09-16 開始）より前の窓が作った分</strong></td></tr>
+<tr><td>④ この窓の jsonl 本体</td><td>別名6種（aimits20260914・pwreset20260925・tsushi1・tsushi2・tsushi20260914c・utm20260914b）</td><td>全部、他の持ち場の連絡文に出てきた文字</td></tr>
+</table>
+<p><strong>UTAGE の実測（2026-09-26 02:4x・<code>message_reader_list_all</code> で mail に <code>3216.fun+</code> を含む読者を全件）</strong></p>
+<pre><code>
+総数 2件
+  GTxHee9Jwqi9  3216.fun+honban20260922@gmail.com  XU7Gfd7XoiCQ  2026-09-22 02:21:59
+  8cwzObgRArpf  3216.fun+keiro20260921@gmail.com   XU7Gfd7XoiCQ  2026-09-21 12:49:05
+</code></pre>
+<p>この2件は司令塔が「こちらで消します」と言っている分。</p>
+<p><strong>消えていたもの2件</strong>（こちらが消したのではなく、既に無い）</p>
+<pre><code>
+FrUeVEYDj84s（utm20260914b・持ち場の台帳 L614）  message_reader_get → not_found「読者が見つかりません」
+D7fizmuOyE7S（pwreset20260925・運転台改善が 09-25 15:49 に作った） 上の全件2件に入っていない
+</code></pre>
+<p><strong>いまの読者数</strong>：シナリオ <code>XU7Gfd7XoiCQ</code>（★【AI-Mits登録】）の読者 <strong>37件</strong>。</p>
+<p><strong>結論</strong>：この持ち場に、自分で消すべき試し登録は <strong>0件</strong>。次にこの持ち場が試し登録をしたら、確かめ終わった時点で自分で消し、この形で1行残す。持ち場の台帳 L614 の <code>FrUeVEYDj84s</code> は読者が既に無いので、記述は「消えた」と添えて残す（埋め直さない決まりに合わせ、書き換えない）。</p>
+<h3 id="2026-09-26-03-2x-司令塔-司令塔が作った試し登録2件を消した-実測で確かめた">2026-09-26 03:2x ／ 司令塔 ── 司令塔が作った試し登録2件を消した（実測で確かめた）</h3>
+<ul>
+<li>どのセッションで：司令塔（会話の回）</li>
+<li>宛先：運転台改善／運転台マーケ／メール配信・計測・自動化</li>
+<li>消したもの（シナリオ ★【AI-Mits登録】XU7Gfd7XoiCQ）</li>
+  <li><code>3216.fun+honban20260922@gmail.com</code>（読者ID GTxHee9Jwqi9・2026-09-22 02:21:59 登録）── 09-22 のダウンロードページ差し替えの確かめ</li>
+  <li><code>3216.fun+keiro20260921@gmail.com</code>（読者ID 8cwzObgRArpf・2026-09-21 12:49:05 登録）── 09-21 の配信〜登録の経路の確かめ</li>
+<li>消し方：管理画面から（API に読者を消す口が無い）。<code><a href="https://change.7years.life/account/vNItAbojIgEK/scenario/XU7Gfd7XoiCQ/reader">https://change.7years.life/account/vNItAbojIgEK/scenario/XU7Gfd7XoiCQ/reader</a></code> で、押す前に確認ダイアログを上書きし、同じ行の詳細リンクに読者IDが入っていることを確かめてから「削除」を押した。ログインは Chrome の保存された合言葉（欄に文字は打っていない）</li>
+<li>確かめ方：画面ではなく API で。<code>message_reader_list</code> の条件 <code>mail including &quot;3216.fun+&quot;</code> が <strong>0件</strong>。シナリオの読者は <strong>37件 → 35件</strong></li>
+<li>残したもの：<code>3216.fun@gmail.com</code>（+なし・Mits様の客視点の受け取り用・読者ID xm8UdVyBfAX2）は試し登録ではないので<strong>残す</strong>（実測で1件あることを確認）</li>
+<li>数え方への影響：<strong>無し。</strong>この2件は jogai_settei.json の正規表現で元から除いてあるので、登録の数字は動かない</li>
+<li>あわせて分かったこと：運転台改善の <code>3216.fun+pwreset20260925</code>（09-25 15:49）は、<strong>この一覧に入っていない＝既に UTAGE に居ない</strong>（運転台マーケの実測とも一致）。二重に探さないよう運転台改善へ知らせる</li>
+</ul>
+<h3 id="2026-09-26-07-3x-運転台改善-予約タスク-untendai-asa-tenken">2026-09-26 07:3x ／ 運転台改善（予約タスク untendai-asa-tenken）── 試し登録 3216.fun+pwreset20260925 は UTAGE に残っていない</h3>
+<ul>
+<li>どのセッションで：運転台改善（毎朝点検のセッション）</li>
+<li>宛先：司令塔／運転台マーケ／メール配信・計測・自動化</li>
+<li>出どころ：指示書_運転台改善.md 2026-09-26 の1・決定の記録 2026-09-26 02:4x ／ 司令塔（作ったセッションが自分で消す）</li>
+<li>実測：<code>message_reader_get</code>（シナリオ ★【AI-Mits登録】XU7Gfd7XoiCQ・読者 D7fizmuOyE7S＝3216.fun+pwreset20260925@gmail.com・09-25 15:49 に運転台改善が作った分）→ <code>not_found「読者が見つかりません」</code>（2026-09-26 07:2x）。運転台マーケ 02:4x の一覧（総数2件に入っていない）と同じ結果</li>
+<li>消した記録：決定の記録に「誰がいつ消したか」の行は無い。このセッションは画面を触らないので、消したのはこのセッションではない。<strong>この持ち場が作った試し登録で、残っているものは 0件</strong></li>
+<li>数え方への影響：読者数から外す手間は無し（既に居ない）。09-25 の broadcast 2件（認証・再設定）は決定の記録 2026-09-25 17:0x ／ 運転台マーケ のとおり計測に入らない</li>
+<li>ペルソナの写真2枚は画面の施錠が解けたセッションで撮る（このセッションは画面を触らない）</li>
+</ul>
+<h3 id="2026-09-26-03-5x-運転台マーケ-03-39-に入れ替わった-untendai-m">2026-09-26 03:5x ／ 運転台マーケ ── 🛑 03:39 に入れ替わった untendai-mkt.app は marketing 枝から組んだものではない（マーケ画面が入っていない）</h3>
+<ul>
+<li>どのセッションで：運転台マーケ（司令塔経由で運転台改善から「1.73.43 が他の5本の作業場に入っていない」と連絡を受け、自分の持ち場を実測した）</li>
+<li>宛先：運転台改善／司令塔</li>
+</ul>
+<p><strong>入っている4本（2026-09-26 03:5x 実測）</strong></p>
+<pre><code>
+untendai         版=1.73.43  組立=2026-09-26 03:38:02  Bundle=com.mits.untendai         中身6件
+untendai-dev     版=1.73.43  組立=2026-09-26 03:38:56  Bundle=com.mits.untendai.dev     中身4件
+untendai-mkt     版=1.73.43  組立=2026-09-26 03:39:20  Bundle=com.mits.untendai.mkt     中身4件  ← 5件のはず
+untendai-client  版=1.73.43  組立=2026-09-26 03:39:44  Bundle=com.mits.untendai.client  中身4件
+</code></pre>
+<p><strong>marketing 枝から組んだものではない証拠3つ</strong></p>
+<pre><code>
+① /Applications/untendai-mkt.app/Contents/MacOS/ の中身
+     untendai          ← これだけ。haishin_torikomi が居ない
+   marketing 枝から組むと haishin_torikomi も入る（CLAUDE.md 2053行・先方が 18:5x に実測した事実）
+
+② main に マーケ画面の実装が無い
+   mk-koshin-btn      main=0   marketing=4
+   mk-koshin-daicho   main=0   marketing=2
+   src-tauri/src/bin/haishin_torikomi.rs   main=0   marketing=1
+
+③ CFBundleName=untendai-mkt ／ marketing 枝の tauri.conf.json の productName=untendai
+   名前の付け方が marketing 枝の設定と違う
+</code></pre>
+<p><strong>marketing 作業場の実測</strong></p>
+<pre><code>
+枝=marketing  HEAD=712b5be  版=1.73.35
+遅れ（HEAD..main）57本 ／ 先行（main..HEAD）49本
+未コミット 19件
+組み立て産物 src-tauri/target/release/untendai の時刻 = 2026-09-25 19:06:30（1.73.35 のまま）
+</code></pre>
+<p><strong>壊れたもの・壊れていないもの</strong></p>
+<table>
+<tr><th></th><th>どうなったか</th></tr>
+<tr><td>マーケ版のアプリを開いて計測の画面を見る</td><td><strong>壊れた。</strong>更新ボタン（<code>mk-koshin-btn</code>）・台帳のいちばん新しい測定（<code>mk-koshin-daicho</code>）・60秒の自動更新が入っていない</td></tr>
+<tr><td>計測の取り込み（予約タスク 11:00・23:00）</td><td><strong>壊れていない。</strong>呼んでいるのは <code>.app</code> ではなく <code>…/untendai-marketing/src-tauri/target/debug/haishin-torikomi</code>（予約タスクの SKILL.md 19行）</td></tr>
+<tr><td>台帳の置き場</td><td><strong>変わらない。</strong>Bundle ID が <code>com.mits.untendai.mkt</code> のままなので <code>~/Library/Application Support/com.mits.untendai.mkt/untendai.db</code> を指し続ける</td></tr>
+</table>
+<p><strong>直し方</strong>：marketing 枝で <code>git merge main</code>（57本）→ <code>bash tools/build-mkt.sh</code>。<code>tools/release.sh</code> は marketing 枝では動かない。<strong>配りは運転台改善の窓が順に出すと言っているので、こちらからは組み立てない。</strong>先方が「マーケ版の作業場を触るときは先に一声かける」と言っているので、その一声を待つ。</p>
+<p><strong>先行49本を捨てないこと</strong>：main から組み直すだけでは、marketing 枝だけの49本（マーケ画面・配信取り込み・計測の台帳）が消える。必ず <code>git merge main</code> で両方を残す。</p>
+<ul>
+<li>2026-09-26 03:5x ／ 運転台マーケ ── 【訂正】同日 02:4x の節に書いた「読者 37件」を 35件 に直す。司令塔が試し登録2件を管理画面から消したため。こちらの実機で確かめた。</li>
+  <li>宛先：メール配信・計測・自動化／司令塔</li>
+  <li><code>message_reader_list_all</code> scenario_id=XU7Gfd7XoiCQ → <strong>total 35</strong></li>
+  <li><code>mail including &quot;3216.fun+&quot;</code> → <strong>total 0</strong>（02:4x は2件だった）</li>
+  <li><code>mail including &quot;3216.fun&quot;</code>（+なし）→ total 20・全部 <code>3216.fun@gmail.com</code>・シナリオ13本にまたがる。うち <code>xm8UdVyBfAX2</code>（XU7Gfd7XoiCQ・2026-06-16）が35件の中に入っている。司令塔が「+なしは残した」と言っているとおり</li>
+  <li><strong>数え方</strong>：以後の読者数の基準は <strong>35件</strong></li>
+</ul>
+<h3 id="2026-09-26-07-4x-AI-Mits-チューニング-予約タスク-aimits-mai">2026-09-26 07:4x ／ AI-Mits-チューニング（予約タスク aimits-mainichi-keisoku）── 試し登録は0件／二重の落とし方の測り直しは会話の窓へ持ち越し</h3>
+<ul>
+<li>どのセッションで：AI-Mits-チューニング</li>
+<li>宛先：司令塔／運転台改善</li>
+<li>試し登録：この持ち場が作ったものは <strong>0件</strong>（範囲：報告_AI-Mits-チューニング.md・aimits_mainichi_keisoku.csv・決定の記録の自署名行を <code>3216.fun+</code> で全件）。出た <code>3216.fun+honban20260922</code> は司令塔の分で 03:2x に消し済み</li>
+<li>1.73.43 の「1対1で組にする」：main <code>f5fbde7</code> の <code>sanbo.rs:2357</code> には入っている。<strong>製品版の帳簿での数え直し（192件・9,998,039円）は、予約の回では帳簿の写しを取る操作が権限で断られて未了。</strong>直ったとはまだ書かない。会話の窓で測る</li>
+</ul>
+<ul>
+<li>2026-09-26 09:0x ／ 運転台改善 ── <strong>説明会で見せるデモの数字は、製品版のコード（<code>src/index.html</code> の <code>value=</code> 属性）に焼かない。</strong>入れていいのは ①開発版の帳簿 <code>~/Library/Application Support/com.mits.untendai.dev/</code> ②<code>window.__DS.state === &#x27;sample&#x27;</code> の分岐の中の JS の2箇所だけ。発注書に「デモデータを入れて」と書くときは、この2箇所に限る一文を必ず添える。版を上げた後の検収に「製品版のアプリを開いて、その欄が空欄であること」を1行入れる。</li>
+  <li>出どころ：1.73.45 で人生の時間割の「いまの歳 45」「寿命 85」など7つの空欄に見本の値が焼かれ、Mits様の製品版に入った（参謀が実測。1.73.46 で戻した）</li>
+  <li>宛先：運転台マーケ（同じ <code>src/index.html</code> を持つ・組み直すとき 1.73.46 以降を取る）／伽藍とバザールの実現（説明会で開発版を見せるため）</li>
+<li>2026-09-26 09:0x ／ 運転台改善 ── <strong>アプリの画面の写真は <code>screencapture -l&lt;CGWindowID&gt;</code> で撮る。</strong>アクセシビリティの許可は要らない（画面収録の許可だけで通る）。窓のIDは Python の Quartz <code>CGWindowListCopyWindowInfo</code> から取り、<code>osascript</code> の System Events を経由しない。担当が「アクセシビリティが無いので撮れない」と言ってきたら成り立たない。</li>
+  <li>宛先：全持ち場（実機の写真を撮る仕事がある持ち場すべて）</li>
+</ul>
+<ul>
+<li>2026-09-26 12:2x ／ 運転台改善 ── <strong>運転台 freee版のセッションは、もう使わない（Mits様の決定）。</strong>Mits様原文「もう、運転台freee版セッションは使わない、決定でいいんだよ？？？」。セッション <code>local_bb091b92</code>（画面の名前「運転台 freee版」）を畳んだ。freee 版の仕事は 運転台改善 が引き取る。</li>
+  <li>済んでいること：09-25 に枝 <code>freee</code> を <code>main</code> に統合済み（合流 <code>5eb0ec9</code>）。お渡し用アプリ <code>untendai-client.app</code> は <strong>main から組んでいる</strong>（いま 1.73.50）。<code>git rev-list main..freee</code> は 0件で、freee 側に main へ来ていない直しは無い</li>
+  <li>枝 <code>freee</code> と作業場 <code>/Users/nishidamitsuhiro/untendai-freee</code> は<strong>残す</strong>（<code>tools/check-5hon-soroi.sh</code> が5本の作業場のそろいを数えるのに使っている）</li>
+  <li>宛先：司令塔（6セッションの数が5つになる）／運転台マーケ（そろいを数える道具の対象が変わらないことの確認）</li>
+</ul>
+<ul>
+<li>2026-09-26 12:2x ／ OEM提供考察（会計事務所のOEM検討のセッション）── <strong>会計事務所のOEMを考えるときも、第一義は AI-Mits 利用者が増えること（Mits様の決定）。</strong>Mits様原文「ウエが連動していて、OEMであろうとなかろうと、AI-Mits利用者が増えること　第一義」。</li>
+  <li>方針案の判断ウ（顧問先の登録に Mits様側のメールを送るか）と判断エ（事務所経由の登録を AI-Mits 登録数にどう数えるか）は、1組で考える。どちらも、AI-Mits の利用者が増えるかどうかで決める</li>
+  <li>判断ウ・判断エの中身そのもの（送るか、分けて数えるか）は、まだ決まっていない</li>
+  <li>出どころ：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_case_tsubushi_20260926.html</li>
+  <li>宛先：司令塔／運転台マーケ／メール配信・計測・自動化（事務所経由の登録の数え方に関わるため）</li>
+</ul>
+<ul>
+<li>2026-09-26 12:3x ／ OEM提供考察 ── <strong>利用規約は、開発初期に決めたものでも、今と今以降の最重要方針が変われば変える（Mits様の決定）。</strong>Mits様原文「オにしろ、開発初期に決めたことでも、今、及び今以降の最重要方針が変われば規約が変わる」。</li>
+  <li>方針案の判断オ（利用規約と実物のどちらに合わせるか）は、「今の規約を正として実物を戻す」前提では考えない。規約は、最重要方針（AI-Mits 利用者が増えること・同日 12:2x の決定）に合わせて書き換える側にある</li>
+  <li>規約をどう書き換えるかの中身は、まだ決まっていない</li>
+  <li>宛先：司令塔／運転台改善（利用規約と製品版の送る中身を持つ）／AI-Mits-チューニング（Dify の記録・相談の受け取りに関わる）</li>
+</ul>
+<ul>
+<li>2026-09-26 12:4x ／ OEM提供考察 ── <strong>会計事務所の「事務所の名前で使いたい」を叶える2つの道は、現段階ではやらない（Mits様の決定）。</strong>Mits様原文「これは、現段階ナシ」。</li>
+  <li>やらないもの：①事務所が自分でコードから組む道＝GitHub のコード（mits32163216/untendai）の公開（方針案の判断ク）②事務所の名前入りの出力（判断ケ）</li>
+  <li>宛先：司令塔／伽藍とバザールの実現（コードを開けて広める話と重なる）／運転台改善</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
