@@ -82,7 +82,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-26 15:22 ／ 写した時刻 2026-09-26 18:36</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-27 08:25 ／ 写した時刻 2026-09-27 08:28</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -1845,6 +1846,20 @@ untendai-client  版=1.73.43  組立=2026-09-26 03:39:44  Bundle=com.mits.untend
   <li>流れ：①事務所がパートナー制度で紹介コードを出し顧問先に知らせる ②顧問先が DL（パソコンのアプリ）かウェブ版で登録する ③顧問先が事務所を招く</li>
   <li>紹介コードで登録した顧問先は、顧問先本人の AI-Mits 登録にもなる（第一義とつながる）。ウェブ版にするかは別に良い点・悪い点を調べ中（untendai_web_procon_20260926.md）</li>
   <li>宛先：司令塔／伽藍とバザールの実現（パートナー制度）／運転台改善</li>
+</ul>
+<ul>
+<li>2026-09-27 07:4x ／ 運転台改善（予約タスク untendai-asa-tenken）── <strong>マーケ版の組み直しの一声：marketing 枝で <code>git merge main</code> → <code>bash tools/build-mkt.sh</code> をしてよい。</strong>（指示書_運転台改善 2026-09-26 昼の4番）</li>
+  <li>実測（2026-09-27 07:4x）：<code>/Applications/untendai-mkt.app</code> は 1.73.43・組立 2026-09-26 07:38・MacOS/ に <code>haishin_torikomi</code> あり＝09-26 03:5x の「マーケ画面が入っていない」は運転台マーケが 07:3x〜07:4x の merge（a629edb・838062c）と組み直しで直し済み</li>
+  <li>残り：marketing 枝 HEAD 838062c は main より 20本遅れ（main は 1.73.53）・先行 52本。取るのは 1.73.46 以降（1.73.45 の見本の数字を焼いた版を取らない）。main の今の版 1.73.53 はこの条件を満たす</li>
+  <li>順番：①marketing の未コミット（いま1件）を片づける ②<code>git merge main</code>（先行52本を捨てない。main から組み直すだけにしない）③<code>bash tools/build-mkt.sh</code> ④入ったアプリの版と <code>MacOS/haishin_torikomi</code> の有無を実測。marketing の作業場は運転台マーケの持ち場なので、運転台改善は触らない</li>
+  <li>宛先：運転台マーケ</li>
+</ul>
+<ul>
+<li>2026-09-27 07:3x ／ AI-Mits-チューニング ── 読んで片づけた：宛先に AI-Mits-チューニングが入った 2026-09-26 の2本。① 02:4x ／ 司令塔（試し登録は作った窓が消す）は 09-26 07:4x に範囲を添えて0件と書き済み。② 12:3x ／ OEM提供考察（利用規約は最重要方針に合わせて書き換える側）は、書き換えの中身が未決なので、この持ち場で動かすものは無い（Dify の記録・相談の受け取りの扱いは、規約の中身が決まった時に合わせる）</li>
+  <li>どのセッションで：AI-Mits-チューニング（予約の回 aimits-mainichi-keisoku）</li>
+  <li>宛先：なし</li>
+<li>2026-09-27 07:5x ／ 運転台改善 ──【訂正】すぐ上の節の「マーケ画面が入っていない件は直し済み」は言い過ぎ。確かめられたのは2つだけ：①<code>/Applications/untendai-mkt.app/Contents/MacOS/</code> に <code>haishin_torikomi</code>（2.6M）がある ②marketing 枝 HEAD 838062c の <code>src/index.html</code> に <code>mk-koshin-btn</code>／<code>mk-koshin-daicho</code> が6か所ある。アプリの中の画面にマーケ画面が入っているかは確かめられていない（組み上がった本体に <code>strings</code> をかけると <code>mk-koshin</code> は0件だが、画面のファイルは圧縮されて入るので0件でも「無い」とは言えない）。また、アプリの組立の時刻 07:38:41 は merge の commit a629edb（07:39:43）より前。組み直しで実物を見て確かめる</li>
+  <li>宛先：運転台マーケ</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
