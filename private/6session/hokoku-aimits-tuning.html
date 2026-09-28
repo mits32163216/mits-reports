@@ -74,7 +74,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-26 07:42 ／ 写した時刻 2026-09-26 12:42</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-28 07:42 ／ 写した時刻 2026-09-28 18:38</p>
 <h2 id="報告-AI-Mits-チューニング">報告 ── AI-Mits-チューニング</h2>
 <p>この持ち場の窓（7:31 のお試し版と Dify の数え・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_AI-Mits-チューニング.md</p>
@@ -250,6 +251,24 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <h4 id="3-認証メールの直し-動かしていない-合図待ち">3. 認証メールの直し①②③ ── 動かしていない（合図待ち）</h4>
 <h4 id="今日の数-CSV-に1行足した">今日の数（CSV に1行足した）</h4>
 <p>/ev/count は untendai-update で HTTP 200（days=30・total 1684・counted 1423）。8項目は前日と同じ（reg_submit 1・verify_done 0・verify_giveup 1・nudge30s 19・nudge5m 1・nudge10m 1・chat_send_fail 1・to_dl 4）。Dify は FAST-APP(ナレッジ無し) 14d6df13=16（+1）／NORMAL-APP(RAG) 43d47f25=26（+1）／DEEP-APP(Corpus2Skill) 1a8d8b9c=20（+2）／NORMAL-WEB v2 e472bc1f=93（±0）・合計 151→155</p>
+<h3 id="2026-09-28-07-4x-AI-Mits-チューニング・予約タスク-aimits-mai">2026-09-28 07:4x（AI-Mits-チューニング・予約タスク aimits-mainichi-keisoku の回）</h3>
+<ul>
+<li>読んだ指示書の節：2026-09-28</li>
+<li>やった：1 登録の経路の点検 ── <strong>故障は見つからなかった。ただし「ダウンロードページ → 押す → メアドの窓」と、今日の通しの試し登録は確かめられていない</strong>（予約の回ではダウンロードページを開く操作が断られた）</li>
+  <li>配信：09-23〜09-26 は号なし。09-27 19:3x の「生き死にがかかっている」は UTAGE・spro・まぐまぐの3つとも、リンクが全部 AIグループ講座のページ v8pQL82x2Am1（ページの題も「AIグループ講座」）。<strong>ダウンロードページ oHtrsl52qpXg へのリンクは入っていない</strong>（09-18〜09-22 の号には毎号5〜6本あった）。計測に 9/27号の印 20260927_ikishini が0件なのは、この号がダウンロードページに人を送っていないから。故障ではない</li>
+  <li>ダウンロードページ → 押す → メアドの窓：<strong>未確認</strong>（開く操作が断られた）</li>
+  <li>中継 aimits-report-proxy：/health 200・endpoints.register true・verify true・utage_api_key true</li>
+  <li>UTAGE の読者（シナリオ「AI-Mits登録20260612」XU7Gfd7XoiCQ・total 35）：いちばん新しい本物の登録は 2026-09-24 14:12:26 の読者 UBAocI1fwlVN。09-25・09-26・09-27 は0件（事実）</li>
+  <li>00日のメール → 認証メール：UBAocI1fwlVN に「00日 使えるようになりました」14:12:27・認証メールの一斉配信 14:14:02（1通）・01日〜03日も 09-25〜09-27 の 8:0x に出ている。09-24 の時点では、登録 → 読者 → 00日 → 認証メールは通っている</li>
+  <li>認証リンク：計測の verify_done が 09-26 に 0→1（初めて1件）。認証の成功の画面までは通っていると読める（この読者の分かは中継の控えを開いていないので未確認）</li>
+  <li>計測：/ev/count HTTP 200・write_failed_days なし</li>
+<li>できなかった：ダウンロードページを開く操作と、試験用の別名での通しの試し登録（予約の回で断られたので、同じ結果を別の道具でも取りにいっていない）。<strong>試し登録は0件＝消すものも無い</strong></li>
+<li>2 製品版の帳簿の写しに SQL を当てる（持ち越し3日目）：予約の回ではできない（09-26 と同じ）。会話の窓に残す</li>
+<li>3 認証メールの直し①②③：動かしていない（合図待ち）</li>
+<li>次に自分がやる：会話の窓で ①ダウンロードページ oHtrsl52qpXg を開き「Mac 版をダウンロード」→ メアドの窓が出るか ②試験用の別名 3216.fun+tenken20260928@gmail.com で通しの試し登録1回と片づけ ③帳簿の写しの SQL</li>
+<li>ほかの持ち場に頼む：なし</li>
+<li>数字：/ev/count は前日と同じ（reg_submit 1・verify_done 1・verify_giveup 1・nudge30s 20・nudge5m 2・nudge10m 1・chat_send_fail 1・to_dl 5）／Dify は FAST-APP(ナレッジ無し) 14d6df13=16／NORMAL-APP(RAG) 43d47f25=26／DEEP-APP(Corpus2Skill) 1a8d8b9c=21／NORMAL-WEB v2 e472bc1f=94・合計 157（09-27 は未ログインで空欄なので、前日比の列は空欄。09-26 と比べると +2）</li>
+</ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
 </body>
