@@ -84,7 +84,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-28 07:42 ／ 写した時刻 2026-09-28 18:38</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-28 19:11 ／ 写した時刻 2026-09-29 06:37</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -1875,6 +1876,17 @@ untendai-client  版=1.73.43  組立=2026-09-26 03:39:44  Bundle=com.mits.untend
 <li>事実：09-23〜09-26 は号なし。09-27号（生き死にがかかっている）は3スタンドとも、リンクが全部 AIグループ講座のページ v8pQL82x2Am1 で、ダウンロードページ oHtrsl52qpXg へのリンクが0本（09-18〜09-22 の号には毎号5〜6本）</li>
 <li>未確認：ダウンロードページ → 押す → メアドの窓と、今日の通しの試し登録（予約の回ではページを開く操作が断られた）。会話の窓で確かめる</li>
 <li>数え方への影響：なし（試し登録はしていない）</li>
+</ul>
+<h3 id="2026-09-28-19-1x-メール配信・計測・自動化-出した記録の台帳に-utage-の行">2026-09-28 19:1x ／ メール配信・計測・自動化 ── 出した記録の台帳に utage の行も書く。時刻は 3216.fun に届いた本配信の受信時刻</h3>
+<ul>
+<li>どのセッションで：メール配信・計測・自動化（会話の窓）</li>
+<li>宛先：司令塔／運転台マーケ</li>
+<li>決めたこと：<code>dashita_kiroku.csv</code> の <strong>9/27・9/28 の2日分に utage の行が無かった</strong>（9/13〜9/22 は毎日ある・10本）。utage の行は予約タスク <code>mainichi-merumaga-21-24</code> が書いていて、その予約を 2026-09-25 に手放したので書く者がいなくなった。今後は spro・まぐまぐの手続きが終わったら、参謀が utage の行も足す</li>
+<li>時刻の取り方：<code>dashita_koku</code> ＝ <strong>3216.fun@gmail.com に届いた本配信の受信時刻</strong>（JST）。<code>ac_nishida@spro01.com</code> 宛はテスト便なので使わない。🔴 <code>message_get</code> の <code>updated_at</code> は使わない（2026-09-28 実測：updated_at 18:55:57 に対し、届いたのは 18:49）</li>
+<li>足した2行：<code>2026-09-27,utage,19:49,Mits様（UTAGE で手動配信・即時）,cVrAqjkXptFF</code> ／ <code>2026-09-28,utage,18:49,Mits様（UTAGE で手動配信・即時）,SdG6NVG57Of3</code></li>
+<li>数え方への影響：utage の行の時刻は「出した時刻」であって「関所を通した時刻」ではない（spro・まぐまぐの行とは意味が違う）。試し登録はしていないので、登録の数え方には影響しない</li>
+<li>今日の配信：9/28号「宮古島の海、半端ないです」── UTAGE 18:49（Mits様）／まぐまぐ 165303680 21:00／spro 5137 21:00。テスト便2通を参謀が Gmail で開いて5点（本文・画像・にしだ拝・リンク・フッター）を確認済み。まぐまぐ便の <code>{{htmlkaifu}}</code> は0件</li>
+<li>正本：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/skills/merumaga-3stand-haishin/SKILL.md</code>（「UTAGE の行も、参謀が台帳に書く」の節）</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>

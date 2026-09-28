@@ -77,7 +77,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-25 18:35 ／ 写した時刻 2026-09-25 18:38</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-28 19:11 ／ 写した時刻 2026-09-29 06:37</p>
 <h2 id="報告-メール配信・計測・自動化">報告 ── メール配信・計測・自動化</h2>
 <p>この持ち場の窓（9:06 の朝の測定・19:39 のメルマガ・23:13 の見張り・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_メール配信・計測・自動化.md</p>
@@ -327,6 +328,29 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li><strong>残っているもの</strong>：手順書のフォルダは <code>/Users/nishidamitsuhiro/.claude/scheduled-tasks/</code> に6つとも残っている（SKILL.md・配信の関所スクリプト4本・見張りの記録 mihari_kekka.log）。予約は消えても中身は消えていない</li>
 <li><strong>司令塔からの依頼への返し</strong>：18:3x に司令塔から「4本を true に戻してほしい・期限は今夜 19:30」と来たが、<strong>戻していない</strong>。Mits様が目的を達したとして手動で削除された後なので、戻すと Mits様の指示を打ち消すことになる。司令塔へはその旨を1通返した</li>
 <li><strong>止めたもの</strong>：走らせていた spro の購読解除の検収（BS-engineer）は、配信ルーティンごと終わったので止めた</li>
+</ul>
+<h3 id="2026-09-28-19-1x-会話の窓-9-27号・9-28号を3スタンドとも出し終えた">2026-09-28 19:1x（会話の窓）── 9/27号・9/28号を3スタンドとも出し終えた</h3>
+<ul>
+<li><strong>Mits様の指示（原文）</strong>：9/27「UTAGEで私が直接書いたメルマガを配信した。…生き死にがかかっている？ sproとまぐまぐにも配信して」／9/28「本日分私がUTAGEで手動設定した　sproとまぐまぐ　頼む」</li>
+<li><strong>形が変わった</strong>：予約の窓が全部消えたので、<strong>Mits様が UTAGE で号を書いて出される → 参謀がその HTML を取って spro とまぐまぐに出す</strong>、という形になった。9/27・9/28 と2日続いている</li>
+<li><strong>9/28号「宮古島の海、半端ないです」の結果</strong></li>
+  <li>UTAGE ── Mits様が 18:49 に配信（<code>SdG6NVG57Of3</code>・即時）</li>
+  <li>まぐまぐ ── 配送予約ID <code>165303680</code>・<strong>21:00</strong>（配送予約受付 19:02）</li>
+  <li>spro ── 配信ID <code>5137</code>・<strong>21:00</strong>（テスト送信 18:58:21）</li>
+<li><strong>参謀が自分で見た5点</strong>（Gmail に届いた両方のテスト便を開いて確認）</li>
+  <li>本文 ── Mits様の文のまま。一字も変えていない</li>
+  <li>画像 ── 2本（ヘッダーの印・宮古の海の写真）。両方 <code>curl</code> で 200（168,648B／174,618B）</li>
+  <li>にしだ拝 ── あり。追伸もあり</li>
+  <li>リンク ── 本文3か所。まぐまぐ便は <code>utm_source=magmag</code>、spro 便は <code>utm_source=spro</code>。飛び先 <code>v8pQL82x2Am1</code> は両方とも 200。リンクの文字も空になっていない（<code>[](url)</code> に見えるのは Gmail の読み取りのクセ）</li>
+  <li>フッター ── spro 便は解除リンクが <strong>実際の値に置き換わっていた</strong>（<code>byeform.php?pid=step_R120ta&amp;ml=ac_nishida%40spro01.com</code>・200）。まぐまぐ便に <code>{{htmlkaifu}}</code> の文字は <strong>0件</strong></li>
+<li><strong>9/27号「生き死にがかかっている？」</strong>：UTAGE 19:49（Mits様）／まぐまぐ <code>165302537</code> 22:00（最初の <code>165302532</code> は <code>{{htmlkaifu}}</code> が文字で出たため解除して入れ直し）／spro <code>5136</code> 01:00</li>
+<li><strong>台帳の穴を埋めた</strong>：<code>dashita_kiroku.csv</code> の <strong>9/27・9/28 の2日分に utage の行が無かった</strong>。9/13〜9/22 は毎日ある（10本・書き手はほぼ予約タスク <code>mainichi-merumaga-21-24</code>）。その予約を 9/25 に手放したので、9/27 以降は utage を書く者がいなくなっていた。2行を足した。出した時刻は 3216.fun@gmail.com に届いた本配信の受信時刻（19:49／18:49）</li>
+<li><strong>手順書・規約の直し3件</strong></li>
+  <li><code>skills/merumaga-3stand-haishin/SKILL.md</code> ── 「UTAGE の行も参謀が台帳に書く」を新設（636行）。<code>message_get</code> の <code>updated_at</code> を出した時刻に使わない（9/28 実測：updated_at 18:55:57 に対し届いたのは 18:49）</li>
+  <li>同 ── 9/27 の分として「<code>{{htmlkaifu}}</code> は spro の便だけ・まぐまぐと UTAGE には入れない」を2か所に入れた</li>
+  <li><code>.claude/org/00_参謀/CLAUDE.md</code> ── 「触ったタブが1本であること」という検収の線が実務に合っていなかった件を実例として追記（583行）</li>
+<li><strong>ほかの持ち場に頼む</strong></li>
+  <li>司令塔へ：台帳に utage の行を足したので、3スタンドの出た記録が 9/27・9/28 とも3行そろった。数え方への影響は「utage の時刻は本配信の受信時刻であって、関所を通した時刻ではない」こと</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
