@@ -85,7 +85,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-28 19:11 ／ 写した時刻 2026-09-29 06:37</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-29 19:36 ／ 写した時刻 2026-09-30 06:36</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -1887,6 +1888,17 @@ untendai-client  版=1.73.43  組立=2026-09-26 03:39:44  Bundle=com.mits.untend
 <li>数え方への影響：utage の行の時刻は「出した時刻」であって「関所を通した時刻」ではない（spro・まぐまぐの行とは意味が違う）。試し登録はしていないので、登録の数え方には影響しない</li>
 <li>今日の配信：9/28号「宮古島の海、半端ないです」── UTAGE 18:49（Mits様）／まぐまぐ 165303680 21:00／spro 5137 21:00。テスト便2通を参謀が Gmail で開いて5点（本文・画像・にしだ拝・リンク・フッター）を確認済み。まぐまぐ便の <code>{{htmlkaifu}}</code> は0件</li>
 <li>正本：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/skills/merumaga-3stand-haishin/SKILL.md</code>（「UTAGE の行も、参謀が台帳に書く」の節）</li>
+</ul>
+<ul>
+<li>2026-09-29 19:3x ／ 運転台改善 ── <strong>運転台は「1台で複数の事業所を見る」形で作る。freee は <code>&amp;prompt=select_company</code> を外した認証用URL（freee が非推奨とする方式）を使う。マネーフォワードも選べるようにする。将来は弥生とも連携する（Mits様の決定）。</strong>Mits様原文「非推奨方法：&amp;prompt=select_company を外した認証用URLを使用　・アカウント内の全事業所へのアクセスが可能になります　こっちの方法で運転台自体を開発していきたい　当然MFも選べるように　さらに将来は弥生も連携したい　そうすれば、ほぼ、90%のシェアを抑えられる」</li>
+  <li>freee：<code>prompt=select_company</code> を付けると「選んだ1事業所にのみアクセス可能」。外すと「アカウント内の全事業所へのアクセスが可能」。原文 <a href="https://developer.freee.co.jp/reference/select-company">https://developer.freee.co.jp/reference/select-company</a></li>
+  <li>freee 自身が、外す方式の適切なユースケースとして「アドバイザーが顧問先の管理に使うレポーティング系アプリで、1度のログインで事業所を切り替えながらデータを参照する」を例示している（同ページ）</li>
+  <li>外す方式には freee が「将来的に本方式は廃止予定になります」と書いているが、<strong>時期は公表されていない</strong>（2026-09-29 に developer.freee.co.jp の reference・info・info/news・info/release-note・news/8266・news/7879・faq/switch-obsolete-authorization・community の10か所を当てて0件。過去の同種の廃止告知（旧い認可の入口）では「2020年12月に廃止されるため」と月まで書かれていたので、時期が決まれば開発者向けのニュースに出る形）</li>
+  <li>外す方式は、freee アプリストアに公開するとき「事業所選択が考慮されているか」を審査され、考慮がなければ公開が承認されない（同ページ）。運転台は自前で事業所を選ぶ画面を持つことになる</li>
+  <li>今の運転台は <code>prompt=select_company</code> を付けている（<code>/Users/nishidamitsuhiro/untendai-seiri/src-tauri/src/freee.rs:208</code>・試験も同 1377行）。この決定で、ここを外す向きになる</li>
+  <li>マネーフォワード：OAuth 2.0 は1事業者しか返さない（2026-09-26 に Mits様のアカウントで実測・事業者2件あるのに返りは1件）。複数を見るには 2026-09-24 に MF が公開した「複数事業者APIキー」（APIキー認証）に切り替える作りが要る。今の <code>mf.rs</code> 全3369行に APIキー認証の印は0件</li>
+  <li>弥生：連携の可否・API の有無は未調査</li>
+  <li>宛先：司令塔／運転台改善／伽藍とバザールの実現（経営アプリの普及・仲間募集）</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
