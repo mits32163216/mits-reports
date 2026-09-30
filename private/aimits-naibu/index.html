@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="color-scheme" content="light">
+<title>管理者版プレゼン 内部用 2026-09-30</title>
+<style>
+:root{--bg:#ffffff;--card:#fcfcff;--card2:#f7f8fc;--line:#e3e6f0;--line2:#ccd2e4;--tx:#212529;--sub:#505461;--dim:#525764;--info:#11159f;--purple:#0a0d6b;--amber:#7a5e1f;--good:#1f6b45;--bad:#a63f3f;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:-apple-system,"Hiragino Sans","Yu Gothic UI",sans-serif;font-size:16px;line-height:1.75;padding:36px 30px 80px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto}
+h1{font-size:24px;font-weight:800;line-height:1.45;margin-bottom:6px}
+.lead{font-size:14px;color:var(--dim);margin-bottom:28px}
+h2{font-size:19px;font-weight:800;margin:40px 0 14px;padding:10px 14px;background:var(--card2);border-left:5px solid var(--info);border-radius:0 6px 6px 0}
+h3{font-size:16px;font-weight:800;margin:24px 0 8px;color:var(--purple)}
+h4{font-size:15px;font-weight:800;margin:16px 0 6px}
+p{margin:8px 0}
+ul,ol{margin:8px 0 8px 22px}
+li{margin:4px 0}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:14.5px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--card2);font-weight:800}
+code{background:var(--card2);border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:13.5px;font-family:ui-monospace,Menlo,monospace}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:14px 0}
+.box.hi{background:var(--card2);border-color:var(--line2)}
+.box.warn{background:#fdf7ee;border-color:#e5d3a3}
+.box.good{background:#f0f7f3;border-color:#b8d6c4}
+.tag{display:inline-block;font-size:12.5px;font-weight:800;border-radius:5px;padding:1px 8px;margin-right:7px;border:1px solid var(--line2);background:var(--card2);color:var(--info)}
+.src{font-size:13.5px;color:var(--dim);margin-top:6px;word-break:break-all}
+.src a,a{color:var(--info);text-decoration:underline}
+.path{font-family:ui-monospace,Menlo,monospace;font-size:13.5px;color:var(--sub);word-break:break-all}
+blockquote{border-left:3px solid var(--line2);padding:6px 14px;margin:10px 0;color:var(--sub);background:var(--card2)}
+.pill{display:inline-block;padding:1px 8px;border-radius:4px;font-size:12.5px;font-weight:800;margin-right:6px}
+.pill.k{background:#eef0fb;color:var(--info);border:1px solid #ccd2e4}
+.pill.f{background:#f6ecec;color:var(--bad);border:1px solid #e0c3c3}
+.pill.g{background:#eef5f0;color:var(--good);border:1px solid #b8d6c4}
+.pill.a{background:#faf3e2;color:var(--amber);border:1px solid #e5d3a3}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>管理者版プレゼン ── 内部用（Mits様と参謀）</h1>
+<div class="lead">2026-09-30 ／ BA-strategist が書いた ／ 内部の事情も判定待ちも実データも全部入りの版</div>
+<!-- 伽藍とバザールの実現として（ページトップ） -->
+<div class="section">
+<h2>伽藍とバザールの実現として</h2>
+<ul>
+<li>メソッドを広めることが目的。売ることではない</li>
+<li>BMI 化＝出所を知られないまま普通名詞として使われる状態がゴール</li>
+<li>売るのは道具ではなく、「その数字を見て次に何をするかの判断」</li>
+<li>数字はお客様のパソコンの中に置いたまま。事務所にも Mits様にも移らない</li>
+<li>スマホ版は作らない</li>
+<li>中核は 計器盤を通した西田メソッドの普及。AI-Mits も大事ではあるが、画面14枚のうち AI-Mits が要るのは1枚だけ</li>
+<li>コーパス／西田メソッド（B・C エンジン）は会員だけ（守れる唯一のもの）</li>
+<li>知性ある無知を拾う ── 分からない言葉のまま動ける入口を置く／「学び」への導線を結ぶ</li>
+<li>商品名は「AI-Mits＆経営アプリ」（外に出る名前）</li>
+<li>OEM であろうとなかろうと、AI-Mits 利用者が増えることが第一義</li>
+<li>それと<b>同等に第一義</b>として西田経営メソッドが広まること</li>
+</ul>
+</div>
+
+
+<div class="box hi">
+<p><b>この版の位置づけ</b>：Mits様と参謀が読む土台。プレゼン用（②）と事務所渡し用（③）は、この版から「相手が要らない情報」を落として作る。</p>
+<ul>
+<li>入っている：実装の進み具合・実データ（西田光弘事務所・棚原さんU-WAN）・freee の非推奨方式に付いた廃止（時期不明）・自作道具の5事業所の壁・freee アドバイザー未申請・エスコート側の403・未決事項・「運転台」という社内の呼び名</li>
+<li>出典URLは全部添える</li>
+</ul>
+</div>
+
+<!-- ============================ -->
+<h2>論点1 ── なぜデスクトップアプリなのか</h2>
+
+<h3>言い切り</h3>
+<p><b>数字はお客様のパソコンの中に置いたままにするため。</b>Web版・スマホ版・SaaS版は、この道具の看板を壊す。</p>
+
+<h3>Mits様が公開されている文（一字も変えない・出典 UTAGE 公開ページ）</h3>
+<blockquote>
+経営の運転台は、ブラウザで開くウェブのサービスではありません。あなたのパソコンに入れて使うアプリです。<br><br>
+freee やマネーフォワードから取り込んだ数字は、あなたのパソコンの中に保存されます。私たちの側のサーバには置きません。<br>
+AI-Mits に相談するとき、「社外取締役スイッチ」を入れた場合に限り、数字の要約を相談に添えて送ります。スイッチは最初は切ってあります。<br><br>
+freee やマネーフォワードとつなぐ手続きは、あなたのパソコンと各社の間で直接行います。受け取った鍵は、暗号にして、あなたのパソコンの中に保存します。私たちは、あなたの会計ソフトの鍵を預かりません。<br><br>
+ウェブのサービスでは、利用している会社全部の帳簿と顧客の名前が、運営する会社のサーバに集まります。そこで1回事故が起きると、全員の数字に届きます。経営の運転台では、数字は1社ずつ、それぞれのパソコンに分かれています。<br><br>
+大勢の会社の帳簿を預かるサービスは、それを守るために大きな費用をかけ続けます。見張りの仕組み、外部の監査、認証の取得、事故に備える保険などです。その費用は、最後は利用料に乗ります。経営の運転台は数字を預からないので、その費用がかかりません。守りの中心は、あなたが毎日使っているパソコンそのものです。
+</blockquote>
+<div class="src">出典（Mits様が公開されている素材）</div>
+<div class="src"><a href="https://change.7years.life/page/aUXR4mAVXBZK" target="_blank" rel="noopener">https://change.7years.life/page/aUXR4mAVXBZK</a></div>
+
+<h3>裏付け（実測）</h3>
+<ul>
+<li>画面14枚のうち AI-Mits が要るのは1枚だけ。残り13枚はオフラインで動く</li>
+<li>Web版は入口を塞がないための1枚（相談画面）。AI を呼ぶ手が出たところで初めてメール認証。<b>アプリ版とWeb版の違いはそこ1点だけ</b>にする（2026-09-06 Mits様確定）</li>
+<li>Tauri v2 は iOS・Android に対応しているので技術的にはスマホ版を作れる。<b>ただしスマホで同じデータを見せれば外を経由する。その時点で「自分のパソコンの中に置く」の看板が消える</b>。2026-08-29 Mits様「いらないな」</li>
+</ul>
+
+<div class="src">出典（内部memory）：<span class="path">/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/project_untendai_daihoshin.md §6</span></div>
+
+<h3>本日 2026-09-30 に動いたゴール（実測）</h3>
+<div class="box good">
+<p><b>3216.fun@gmail.com で freee版に入った管理者としての Mits様が、顧客を切り替えると計器が丸ごと入れ替わる。</b></p>
+<table>
+<tr><th></th><th>自分の事務所（マネーフォワード）</th><th>棚原さんの U-WAN（freee）</th></tr>
+<tr><td>売上高</td><td>11,525,469円</td><td>12,334,712円</td></tr>
+<tr><td>経費合計</td><td>8,771,009円</td><td>7,267,462円</td></tr>
+<tr><td>現預金</td><td>674,900円</td><td>42,434,493円</td></tr>
+</table>
+<p>実装は段1〜段4まで通り、切り替えの動きが出ている（<span class="path">jissou_plan_kanrisha_ban_20260930.html</span> §3）。</p>
+</div>
+
+<!-- ============================ -->
+<h2>ダッシュボードモック</h2>
+<p>2026-09-25 に作った見本。計器13個を、計算のプロセスではなく<b>形（針と弧・輪・棒・帯・面積図）</b>で見せる部品案。1つの計器につき型を3つ並べている。数字は全部アプリの見本データ <span class="path">/Users/nishidamitsuhiro/untendai-seiri/src/mihon.js</span> から取っていて、発明した数字は0件。アプリにはまだ1行も入っていない。</p>
+<img src="_mock/mock_keiki_buhin_20260925_top.png" alt="ダッシュボードモック（計器13個・上）" style="width:100%;border:1px solid #d9dde3;border-radius:10px;display:block;margin-bottom:12px">
+<img src="_mock/mock_keiki_buhin_20260925_bottom.png" alt="ダッシュボードモック（計器13個・下）" style="width:100%;border:1px solid #d9dde3;border-radius:10px;display:block">
+<div class="src">見本：<span class="path">/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/_mock/mock_dashboard_20260925.html</span></div>
+<div class="src">並べ替えの版：<span class="path">/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/_mock/mock_dashboard_dnd_20260925.html</span></div>
+<div class="src">計器13個の部品見本帳：<span class="path">/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/_mock/mock_keiki_buhin_20260925.html</span></div>
+
+<!-- ============================ -->
+<h2>論点2 ── マネーフォワードと freee の共通・違い（7軸）</h2>
+
+<p>調査：BA-researcher が 2026-09-30 に一次資料 22本を叩いて確定。二次資料は使っていない。</p>
+
+<h3>軸1 ── 外の道具からつなぐ形（1回つなぐと何社見えるか）</h3>
+<table>
+<tr><th style="width:200px">項目</th><th>freee</th><th>マネーフォワード</th></tr>
+<tr><td>認証方式</td><td>OAuth 2.0 のみ</td><td>OAuth 2.0 ＋ APIキー（2026-03-26 公表・2026-09-24 会計API対応）</td></tr>
+<tr><td>1本で何社</td><td>原則1事業所。複数を1回で扱うには <code>&prompt=select_company</code> を外す方式（<b>非推奨・将来廃止予定・時期非公表</b>）</td><td>2026-09-24 以降、複数事業者APIキー（正規の道）</td></tr>
+</table>
+<div class="src"><a href="https://developer.freee.co.jp/reference/select-company" target="_blank" rel="noopener">https://developer.freee.co.jp/reference/select-company</a></div>
+<div class="src"><a href="https://biz.moneyforward.com/support/account/news/new-feature/20260326.html" target="_blank" rel="noopener">https://biz.moneyforward.com/support/account/news/new-feature/20260326.html</a></div>
+<div class="src"><a href="https://biz.moneyforward.com/support/account/news/new-feature/202609242.html" target="_blank" rel="noopener">https://biz.moneyforward.com/support/account/news/new-feature/202609242.html</a></div>
+<div class="src"><a href="https://developers.biz.moneyforward.com/docs/common/api-keys/multi-tenant-api-key/" target="_blank" rel="noopener">https://developers.biz.moneyforward.com/docs/common/api-keys/multi-tenant-api-key/</a></div>
+
+<div class="box warn">
+<p><b>内部の判定待ち</b>：freee の <code>&prompt=select_company</code> を外す方式は「将来的に廃止予定」とだけ書かれ時期は公表されていない。決まれば開発者向けニュースに出る。参謀の判定：<b>短期でOEM相手に配るのは可。中長期は複数事業者APIキー相当の正規道が freee 側に出るのを待つか、アプリストア審査を通すかの分岐が要る</b>。</p>
+</div>
+
+<h3>軸2 ── 顧問先を束ねる資格・審査・会費</h3>
+<table>
+<tr><th></th><th>freee アドバイザー</th><th>MF クラウド公認メンバー</th></tr>
+<tr><td>士業資格</td><td>不要（規約 第5条第2項1「経営・事業等のコンサルタント」等が並ぶ）</td><td>不要（FAQ で記帳代行会社も加入可と明記）</td></tr>
+<tr><td>審査</td><td>あり</td><td>ランクにより</td></tr>
+<tr><td>入る形と会費</td><td>シンプル 49,800円/年・プライム 357,600円/年</td><td>ブロンズ 0円・シルバー 5万+24万/年・ゴールド 24万/年（10社以上）・プラチナ 50万/年（30社以上）・新規開業 2万/月</td></tr>
+</table>
+<div class="src"><a href="https://adv.freee.co.jp/terms" target="_blank" rel="noopener">https://adv.freee.co.jp/terms</a></div>
+<div class="src"><a href="https://adv.freee.co.jp/advisor" target="_blank" rel="noopener">https://adv.freee.co.jp/advisor</a></div>
+<div class="src"><a href="https://biz.moneyforward.com/mfc-partner/about-member/" target="_blank" rel="noopener">https://biz.moneyforward.com/mfc-partner/about-member/</a></div>
+<div class="src"><a href="https://biz.moneyforward.com/mfc-partner/fee-terms-of-membership/" target="_blank" rel="noopener">https://biz.moneyforward.com/mfc-partner/fee-terms-of-membership/</a></div>
+<div class="src"><a href="https://biz.moneyforward.com/support/partner/faq/f0002.html" target="_blank" rel="noopener">https://biz.moneyforward.com/support/partner/faq/f0002.html</a></div>
+
+<div class="box warn"><p><b>内部の判定待ち</b>：<b>Mits様はどちらのアドバイザー制度にもまだ申請されていない。</b>OEM相手事務所を紹介する場合、Mits様側で「認定アドバイザー」バッジを持つか、事務所側が自分の名前で入るかで、値付けが変わる。</p></div>
+
+<h3>軸3 ── 顧問先の人数の枠を食うか</h3>
+<table>
+<tr><th></th><th>freee</th><th>MF</th></tr>
+<tr><td>枠の扱い</td><td>アドバイザー登録は本サービスの契約者数に含めない（規約 第6条第3項）</td><td>ランクに応じて社数配布（ブロンズ1社・シルバー以上5社）。「記帳代行プラン」は無制限</td></tr>
+</table>
+
+<h3>軸4 ── 料金</h3>
+<table>
+<tr><th></th><th>freee</th><th>MF</th></tr>
+<tr><td>API利用料</td><td>公開情報からは特定できず。有償アプリ公開時に情報料の20%が収納代行手数料（デベロッパー規約 第29条）</td><td>API利用は規約で「無償」と明記（第6条）</td></tr>
+<tr><td>API上限</td><td>プラン別上限を公開情報の範囲で特定できず</td><td>クラウド経費：チーム300回/h・ビジネス3,600回/h・エンタープライズ無制限</td></tr>
+</table>
+<div class="src"><a href="https://biz.moneyforward.com/agreement/api/" target="_blank" rel="noopener">https://biz.moneyforward.com/agreement/api/</a></div>
+<div class="src"><a href="https://app.secure.freee.co.jp/terms-developers.html" target="_blank" rel="noopener">https://app.secure.freee.co.jp/terms-developers.html</a></div>
+
+<h3>軸5 ── 上限（何社まで／公開の条件）</h3>
+<table>
+<tr><th></th><th>freee</th><th>MF</th></tr>
+<tr><td>自作道具（プライベート）</td><td><b>5事業所まで</b></td><td>複数事業者APIキーの上限は公開情報で見つからず</td></tr>
+<tr><td>公開（パブリック）</td><td>初期20事業所。アプリストア審査を通すと無制限。15事業所到達後に上限増加申請＋セキュリティ審査</td><td>申請なし・審査なし・追加課金なしで発行可（実測確認済）</td></tr>
+</table>
+<div class="src"><a href="https://developer.freee.co.jp/reference/application-types" target="_blank" rel="noopener">https://developer.freee.co.jp/reference/application-types</a></div>
+<div class="src"><a href="https://developer.freee.co.jp/reference/deploy-app" target="_blank" rel="noopener">https://developer.freee.co.jp/reference/deploy-app</a></div>
+
+<div class="box warn"><p><b>内部の判定待ち</b>：<b>OEM相手が6社目の顧問先を運転台につないだ瞬間、freee 側は自作道具では動かなくなる。</b>そこで「アプリストア審査を通す」か「事務所ごとに freee アドバイザー登録＋自分名義の自作道具を持ってもらう」かの分岐。当面は棚原さん1社なので急がないが、下位版3社の設計と地続き。</p></div>
+
+<h3>軸6 ── 審査</h3>
+<table>
+<tr><th></th><th>freee</th><th>MF</th></tr>
+<tr><td>建て付け</td><td>アプリ審査あり（1〜2週間）。銀行明細取得はセキュリティチェック必須。デベロッパーは日本国内登記法人</td><td>明示的な審査条項は無し。表示義務のみ（第8条）</td></tr>
+<tr><td>命名制限</td><td>「for freee」「by freee」は使用不可</td><td>「当社より提供されたものである旨を表示」</td></tr>
+</table>
+<div class="src"><a href="https://developer.freee.co.jp/reference/app-review-process" target="_blank" rel="noopener">https://developer.freee.co.jp/reference/app-review-process</a></div>
+
+<h3>軸7 ── 今後の変更</h3>
+<ul>
+<li>freee：<code>&prompt=select_company</code> を外す方式は将来廃止予定。時期非公表</li>
+<li>MF：2026-03-26 API公開・2026-09-24 APIキー認証対応。廃止予定の告知は現時点で見当たらない</li>
+</ul>
+
+<h3>この違いをコンサルタント用途にどう当てるか</h3>
+<table>
+<tr><th style="width:200px">用途</th><th>推奨</th></tr>
+<tr><td>入るまで最短で試したい</td><td>MF（ブロンズ0円・APIキー発行に審査なし）</td></tr>
+<tr><td>顧問先が freee 使用</td><td>今の運転台の実装のまま（棚原さんパターンで動くことを本日確認）</td></tr>
+<tr><td>顧問先が5社を超える</td><td>freee は道が分岐。MF は複数事業者APIキーで継続可</td></tr>
+</table>
+
+<div class="box warn"><p><b>内部の追加事実</b>：Mits様のマネーフォワードは (株)エスコートコンサルティンググループ側の権限が空で会計を叩くと403。エスコート側のデータは現在の運転台に入らない。これは Mits様側の権限設定の問題で、複数事業者APIキーの仕様の問題ではない。</p></div>
+
+<!-- ============================ -->
+<h2>論点3 ── 会計事務所が製品名で使うケースと OEM開発の共通・違い</h2>
+
+<h3>言い切り</h3>
+<p>事務所の名前で出す形（ホワイトラベル／OEM）は、<b>2026-09-26 に Mits様が「現段階ナシ」</b>と決められた。当面の相手は経営コンサルタント（の事務所）で、進め方は「顧問先1社ごとに製品版のまま入れてもらい、事務所がその画面を毎月一緒に見る」形。</p>
+
+<h3>2つの形</h3>
+<table>
+<tr><th></th><th>製品版のまま入れる（現在の方針）</th><th>事務所の名前で出す（ホワイトラベル）</th></tr>
+<tr><td>相手</td><td>経営コンサルタント（の事務所）</td><td>同左</td></tr>
+<tr><td>中身</td><td>「AI-Mits＆経営アプリ」の名前・アイコンのまま</td><td>事務所の名前・アイコン・アドレスに差し替え</td></tr>
+<tr><td>段階</td><td>1段階目＝AI-Mits なし・経営アプリのみ</td><td>同左（1段階目は AI-Mits なし）</td></tr>
+<tr><td>顧問先の登録</td><td>顧問先が自分で登録。事務所は紹介コードを渡す</td><td>未決</td></tr>
+<tr><td>数字の置き場</td><td>顧問先のパソコンの中。事務所には移らない</td><td>未決</td></tr>
+<tr><td>実装</td><td>jissou_plan の段1〜4 で作りかけ・本日ゴール到達</td><td><b>現段階ナシ</b></td></tr>
+</table>
+
+<h3>Mits様が挙げられたニーズ5つ（2026-09-26 12:2x／15:0x）</h3>
+<ol>
+<li>顧客が自分の事務所から離れにくくなる</li>
+<li>値付けを自分で決め、毎月の請求に載せられる</li>
+<li>客に見えるものが全部「この事務所から出ている」に揃う</li>
+<li>同業者の中で、自分の事務所だけのサービスとして見せられる</li>
+<li><b>AI-Mits 利用者が増えること（第一義）</b></li>
+<li><b>西田経営メソッドが広まること（AI-Mits 利用者の増加と同等に第一義）</b></li>
+</ol>
+
+<blockquote>Mits様原文（2026-09-26 12:2x）「ウエが連動していて、OEMであろうとなかろうと、AI-Mits利用者が増えること　第一義」<br>
+Mits様原文（2026-09-30 17:1x）「OEM であろうとなかろうと、AI-Mits 利用者が増えることが第一義です。」「第一義はそれと同等に西田経営メソッドが広まること」</blockquote>
+
+<div class="src">出典：<span class="path">/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/決定台帳_6セッション共通.md</span> 2026-09-26 12:2x／15:0x／13:0x／12:4x</div>
+
+<h3>違いの詳細</h3>
+<p>BA-strategist が違い20項目を109行で突き合わせ済み ── <span class="path">/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_chigai_ichiran_20260926.html</span>（共通36／OEMのみ40／コンサルのみ33）</p>
+
+<div class="box warn"><p><b>内部の判定待ち</b>：ホワイトラベルは「現段階ナシ」。<b>将来復活の条件は未決</b>。3段階モデルの上位版が「ホワイトラベル」なので、後述の論点5で食い違いが残っている（Mits様のご判断が要る）。</p></div>
+
+<!-- ============================ -->
+<h2>論点4 ── 経営コンサルタントの方向性による選択肢</h2>
+
+<h3>言い切り</h3>
+<p>Mits様は<b>「使う流れ3段」×「顧問先の数字の置き場所3つ」</b>で切り分ける必要があると述べられた（2026-09-26 14:4x）。</p>
+
+<h3>軸1：使う流れの3段</h3>
+<ol>
+<li>コンサルタントが自分の事業に製品版を使う</li>
+<li>既存の顧問契約の付加価値として、試しに顧問先2社に使う（AI-Mits なし・経営アプリの画面を読み解きながらコンサル）</li>
+<li>好評で5〜10社に増える</li>
+</ol>
+
+<h3>軸2：顧問先の数字の置き場所</h3>
+<ul>
+<li>コンサルタント自身のパソコンの中だけに入れる</li>
+<li>顧問先のパソコンにアプリを渡す</li>
+<li>良いと思ったので紹介として渡すだけ（顧問先が自分で製品版を使う）</li>
+</ul>
+
+<h3>Mits様ご自身の事務所（西田光弘事務所）の流れ（2026-09-26 14:5x）</h3>
+<blockquote>コンサルでは AI を使わない → 顧問先に経営アプリを入れてもらう → 顧問先が使う → 事務所は顧問先が正しく数字を入れられるかを見る</blockquote>
+
+<div class="box warn"><p><b>Mits様が保留された問い</b>：「どこかの段階で、事務所が管理者権限で、顧問先の数字を自分のパソコンのアプリに取り込んで見たいと思うか」── 参謀がお尋ねしないと埋まらない。</p></div>
+
+<h3>本日 2026-09-30 の実装がどこまで進んだか</h3>
+<p>上の軸2の「顧問先のパソコンにアプリを渡す＋事務所が管理者権限で自分のパソコンで顧問先データを切り替えて見る」ハイブリッド形が、実装 段1〜4 で動くようになった（棚原さん freee／西田事務所 MF の切り替え・実測）。</p>
+
+<!-- ============================ -->
+<h2>論点5 ── 上中下位のサービス設計（3段階）</h2>
+
+<h3>言い切り</h3>
+<p>GoHighLevel の代理店3段階をモデリングすると Mits様が決められた（2026-09-26 14:3x）。<b>ただし上位版（ホワイトラベル）は、同日 12:4x の「現段階ナシ」決定と食い違う</b>。参謀が Mits様にお尋ねする1件。</p>
+
+<h3>3段階（Mits様原文のまま）</h3>
+<table>
+<tr><th>段</th><th>顧問先の数</th><th>事務所の名前で出すか</th><th>Mits様のお言葉</th></tr>
+<tr><td>下位版</td><td><b>3つまで</b></td><td>ならない</td><td>「下位版　3クライアント」</td></tr>
+<tr><td>中位版</td><td><b>無制限</b></td><td>ならない</td><td>「中位　無制限　しかしホワイトラベル（OEM）ではない」</td></tr>
+<tr><td>上位版</td><td>無制限</td><td><b>ホワイトラベル</b></td><td>「上位版　ホワイトラベル」</td></tr>
+</table>
+
+<h3>モデリング元（GoHighLevel の代理店3段）</h3>
+<ul>
+<li>Starter 月97ドル ── 顧客アカウント3つまで</li>
+<li>Unlimited 月297ドル ── 無制限</li>
+<li>Pro / SaaS 月497ドル ── スマホのホワイトラベルアプリ追加</li>
+</ul>
+<div class="src">出典：<span class="path">/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/ghl_dairiten_business_20260926.md</span></div>
+
+<h3>値付け</h3>
+<p><b>未決。</b>Mits様が値段について仰った記録は無い。</p>
+
+<h3>内部の判定待ち</h3>
+<div class="box warn">
+<ul>
+<li><b>下位版3社・中位版無制限の数を、中継のどこで持つか</b>：jissou_plan §7 で「段4」と暫定判断されているが、Mits様の決定ではない</li>
+<li><b>上位版（ホワイトラベル）を作るか</b>：2026-09-26 12:4x「現段階ナシ」と 14:3x「上位版＝ホワイトラベル」が食い違う。参謀が Mits様にお尋ねする話</li>
+<li>各段で使える機能（かかりつけ・DEEP・NORMAL・FAST・The Library）の中身は未決</li>
+<li>premium（月3,300円・個人向け）との対応関係は未決</li>
+<li>顧問先本人の AI-Mits 登録（第一義）とどう数えるか（判断エ・未決）</li>
+</ul>
+</div>
+
+<!-- ============================ -->
+<h2>論点6 ── 本日現在の決定／変えられる</h2>
+
+<h3>本日 2026-09-30 現在の決定（Mits様が仰ったこと）</h3>
+<table>
+<tr><th style="width:190px">項目</th><th>決まったこと</th><th>出どころ</th></tr>
+<tr><td>OEM相手</td><td>会計事務所ではなく<b>経営コンサルタント（の事務所）</b>。会計事務所は業界を調べるための例</td><td>2026-09-26 13:0x</td></tr>
+<tr><td>2段階</td><td>1段階目＝<b>AI-Mits なし・経営アプリのみ</b>／2段階目は未定義</td><td>2026-09-26 13:0x</td></tr>
+<tr><td>3段階モデル</td><td>GoHighLevel 代理店3段をモデリング（下位3社／中位無制限／上位ホワイトラベル）</td><td>2026-09-26 14:3x</td></tr>
+<tr><td>第一義</td><td><b>OEM であろうとなかろうと、AI-Mits 利用者が増えること</b>／<b>それと同等に西田経営メソッドが広まること</b>（2つを同等に第一義）</td><td>2026-09-26 12:2x／2026-09-30 17:1x</td></tr>
+<tr><td>事務所名入り出力</td><td><b>現段階ナシ</b>（GitHub のコード公開も現段階ナシ）</td><td>2026-09-26 12:4x</td></tr>
+<tr><td>実装ゴール</td><td>3216.fun 管理者が、西田事務所（MF）と U-WAN（freee）を切り替えて見られる ── <b>本日達成</b></td><td>本日 2026-09-30 参謀実測</td></tr>
+<tr><td>商品名</td><td>「AI-Mits＆経営アプリ」（外に出る名前）</td><td>2026-09-06</td></tr>
+<tr><td>プラン</td><td>free（NORMAL/DEEP は90日）／premium 3,300円/月</td><td>2026-09-06</td></tr>
+</table>
+
+<h3>事務所の要望で変えられる（フレクシビリティあり）</h3>
+<ul>
+<li>3段階の値付け（現在すべて未決）</li>
+<li>3段階で使える機能の切り分け（DEEP・NORMAL・FAST・かかりつけ・The Library）</li>
+<li>顧問先の登録に Mits様側のメールを送るかどうか（判断ウ）</li>
+<li>事務所経由の登録を AI-Mits 登録数にどう数えるか（判断エ）</li>
+<li>利用規約 ── 開発初期に決めたものでも最重要方針が変われば変える（2026-09-26 12:3x Mits様「オにしろ、開発初期に決めたことでも、今、及び今以降の最重要方針が変われば規約が変わる」）</li>
+<li>ホワイトラベル（上位版）の復活の時期と条件（現段階ナシだが3段階モデルには入っている）</li>
+<li>2段階目の中身（AI-Mits ありの段の入れ方）</li>
+</ul>
+
+
+<h3>参謀にお尋ねしないと埋まらないところ（BA-strategist が並べる・参謀が埋めない）</h3>
+<ol>
+<li>論点5 の食い違い ── 上位版（ホワイトラベル）を作るか。2026-09-26 12:4x「現段階ナシ」と 14:3x「上位版＝ホワイトラベル」の関係</li>
+<li>論点5 の値付け ── 3段各段の月額（GoHighLevel の 97／297／497 ドルをそのまま円で写すのか）</li>
+<li>論点4 の方向性ごとの推奨 ── 3流れ×3置き場所の9通りのうち、Mits様がお勧めになる組み合わせ</li>
+<li>論点3 の左列の登録数え方 ── 紹介コード経由で登録した顧問先を、AI-Mits 登録数（第一義）にどう数えるか（判断エ）</li>
+<li>論点1 の他社比較 ── QuickBooks・freee・MF との比較を資料に入れるかどうか。Mits様が仰った記録は無い</li>
+<li>論点4 の保留 ── 事務所が管理者権限で、顧問先の数字を自分のパソコンに取り込んで見たいと思うかの判断（Mits様が保留された問い）</li>
+<li>論点2 ── Mits様が freee アドバイザー／MF 公認メンバーに申請されるか</li>
+</ol>
+
+<h2>参照</h2>
+<ul>
+<li><span class="path">/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/sozai_naze_desktop_app_UTAGE_aUXR4mAVXBZK.md</span></li>
+<li><span class="path">/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/shirabe_mf_freee_kyotsu_chigai_20260930.md</span></li>
+<li><span class="path">/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/presen_soan_4ronten_20260930.md</span></li>
+<li><span class="path">/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissou_plan_kanrisha_ban_20260930.html</span></li>
+<li><span class="path">/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/決定台帳_6セッション共通.md</span></li>
+<li><span class="path">/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/project_untendai_daihoshin.md</span></li>
+</ul>
+
+
+<h2>出典一覧（一次資料22本すべて）</h2>
+<h3>freee 側（13本）</h3>
+<div class="src"><a href="https://developer.freee.co.jp/reference/select-company" target="_blank" rel="noopener">https://developer.freee.co.jp/reference/select-company</a></div>
+<div class="src"><a href="https://developer.freee.co.jp/reference/application-types" target="_blank" rel="noopener">https://developer.freee.co.jp/reference/application-types</a></div>
+<div class="src"><a href="https://developer.freee.co.jp/reference/deploy-app" target="_blank" rel="noopener">https://developer.freee.co.jp/reference/deploy-app</a></div>
+<div class="src"><a href="https://developer.freee.co.jp/reference/app-review-process" target="_blank" rel="noopener">https://developer.freee.co.jp/reference/app-review-process</a></div>
+<div class="src"><a href="https://developer.freee.co.jp/news/3356" target="_blank" rel="noopener">https://developer.freee.co.jp/news/3356</a></div>
+<div class="src"><a href="https://adv.freee.co.jp/terms" target="_blank" rel="noopener">https://adv.freee.co.jp/terms</a></div>
+<div class="src"><a href="https://adv.freee.co.jp/advisor" target="_blank" rel="noopener">https://adv.freee.co.jp/advisor</a></div>
+<div class="src"><a href="https://app.secure.freee.co.jp/terms-developers.html" target="_blank" rel="noopener">https://app.secure.freee.co.jp/terms-developers.html</a></div>
+<h3>マネーフォワード 側（9本）</h3>
+<div class="src"><a href="https://biz.moneyforward.com/mfc-partner/about-member/" target="_blank" rel="noopener">https://biz.moneyforward.com/mfc-partner/about-member/</a></div>
+<div class="src"><a href="https://biz.moneyforward.com/mfc-partner/fee-terms-of-membership/" target="_blank" rel="noopener">https://biz.moneyforward.com/mfc-partner/fee-terms-of-membership/</a></div>
+<div class="src"><a href="https://biz.moneyforward.com/support/partner/faq/f0002.html" target="_blank" rel="noopener">https://biz.moneyforward.com/support/partner/faq/f0002.html</a></div>
+<div class="src"><a href="https://biz.moneyforward.com/support/plan/faq/f035.html" target="_blank" rel="noopener">https://biz.moneyforward.com/support/plan/faq/f035.html</a></div>
+<div class="src"><a href="https://biz.moneyforward.com/support/account/news/new-feature/20260326.html" target="_blank" rel="noopener">https://biz.moneyforward.com/support/account/news/new-feature/20260326.html</a></div>
+<div class="src"><a href="https://biz.moneyforward.com/support/account/news/new-feature/202609242.html" target="_blank" rel="noopener">https://biz.moneyforward.com/support/account/news/new-feature/202609242.html</a></div>
+<div class="src"><a href="https://biz.moneyforward.com/support/news/20260501-2.html" target="_blank" rel="noopener">https://biz.moneyforward.com/support/news/20260501-2.html</a></div>
+<div class="src"><a href="https://biz.moneyforward.com/support/expense/guide/admin-or/or32.html" target="_blank" rel="noopener">https://biz.moneyforward.com/support/expense/guide/admin-or/or32.html</a></div>
+<div class="src"><a href="https://biz.moneyforward.com/support/invoice/news/important/20231001.html" target="_blank" rel="noopener">https://biz.moneyforward.com/support/invoice/news/important/20231001.html</a></div>
+<div class="src"><a href="https://biz.moneyforward.com/agreement/api/" target="_blank" rel="noopener">https://biz.moneyforward.com/agreement/api/</a></div>
+<div class="src"><a href="https://developers.biz.moneyforward.com/docs/common/api-keys/multi-tenant-api-key/" target="_blank" rel="noopener">https://developers.biz.moneyforward.com/docs/common/api-keys/multi-tenant-api-key/</a></div>
+<div class="src"><a href="https://developers.biz.moneyforward.com/docs/common/api-keys/app-portal-overview/" target="_blank" rel="noopener">https://developers.biz.moneyforward.com/docs/common/api-keys/app-portal-overview/</a></div>
+<h3>Mits様公開素材</h3>
+<div class="src"><a href="https://change.7years.life/page/aUXR4mAVXBZK" target="_blank" rel="noopener">https://change.7years.life/page/aUXR4mAVXBZK</a></div>
+
+</div>
+</body>
+</html>
