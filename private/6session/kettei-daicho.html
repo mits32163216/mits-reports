@@ -86,7 +86,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-29 19:36 ／ 写した時刻 2026-09-30 06:36</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-30 12:42 ／ 写した時刻 2026-09-30 12:42</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -1899,6 +1900,33 @@ untendai-client  版=1.73.43  組立=2026-09-26 03:39:44  Bundle=com.mits.untend
   <li>マネーフォワード：OAuth 2.0 は1事業者しか返さない（2026-09-26 に Mits様のアカウントで実測・事業者2件あるのに返りは1件）。複数を見るには 2026-09-24 に MF が公開した「複数事業者APIキー」（APIキー認証）に切り替える作りが要る。今の <code>mf.rs</code> 全3369行に APIキー認証の印は0件</li>
   <li>弥生：連携の可否・API の有無は未調査</li>
   <li>宛先：司令塔／運転台改善／伽藍とバザールの実現（経営アプリの普及・仲間募集）</li>
+</ul>
+<ul>
+<li>2026-09-30 12:2x ／ 運転台改善 ── <strong>管理者版のゴールと、確かめる先（Mits様の決定）。</strong>Mits様原文「3216.fun@gmail.com　で開発版に入った管理者としての私が／西田光弘個人事業主　MFからのデータ／棚原さんのUWAN　freeeからのデータ／これを切り替えてみられるようになる／これがゴール」。参謀が開発版だと 2026-09-26 のご決定と2か所ぶつかることをお伝えし、Mits様が「<strong>freee版で確かめる形に変えて、プラン直して</strong>」と直された。</li>
+  <li>ゴール：<strong>3216.fun@gmail.com で freee版（<code>untendai-client</code>）に入った管理者の画面で、西田光弘個人事業主（マネーフォワード）と 棚原さんの U-WAN（freee）を切り替えて見られる</strong></li>
+  <li>開発版を使わない理由2つ：①2026-09-26 の表で開発版は「架空のデモデータ（実データを入れない）」と決まっている。説明会の写真に実データが写る ②開発版の帳簿に freee の行が入ると見本の帳簿が作れなくなり、世に出す道が塞がる（<code>make_sample_db.sh:15</code> が開発版の帳簿を写し、<code>:21</code> の見張りで止まる。同じ見張りは <code>release.sh:260</code>・<code>build-signed.sh:70</code>）</li>
+  <li>freee版で両方つなげることは実測で確認：お渡し用で隠す印 <code>client-hide</code> が付いているのは1か所だけ（<code>index.html:8771</code> の「テスト用の見本を入れる」ボタン）で、マネーフォワードの設定の箱（<code>index.html:11029</code> <code>#set-card-mf</code>）には付いていない</li>
+  <li><strong>開発版は架空のデモデータだけのまま置く。実データも freee の行も入れない</strong></li>
+  <li>実装プランの正本：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissou_plan_kanrisha_ban_20260930.html</code></li>
+  <li>宛先：司令塔／運転台改善</li>
+  <li><strong>次のステップ（段5・同日 Mits様）</strong>：Mits様原文「私がフリー版で確認した後、これを事業しようとして使いたいと言う私のユーザにプレゼンするので、その段階ではフリー版でできた状態を開発版に移植して開発板をデモデータとしてフリーのデータMFのデータも切り替えられるようにする。これが次のステップ」</li>
+  <li>移すのは仕組みだけ。<strong>数字は架空のデモデータ</strong>（2026-09-26 の「開発版は架空のデモデータ」はそのまま生きる）</li>
+  <li>🛑 デモデータの印に <code>source=&#x27;freee&#x27;</code> を使わない。<code>lib_freee_guard.sh:45</code> がその文字だけを見て組み立てを止める。今の印は <code>demo_20260926</code>（<code>make-demo-dev.sh:40</code>）。「freee から来た体裁」も <code>demo_freee_…</code> のような別の文字にする</li>
+</ul>
+<ul>
+<li>2026-09-30 12:4x ／ 運転台改善 ／ <strong>管理者版の実装に「発注GO」が出た。段1（帳簿を顧客ごとに切り替える）を BS-engineer-kanrisha-dan1-db-kirikae に発注した。</strong></li>
+  <li>宛先：運転台改善／司令塔</li>
+  <li>Mits様のお言葉は「発注GO」の1語。実装プランは <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissou_plan_kanrisha_ban_20260930.html</code></li>
+  <li>段は順番に依存する（段1で <code>AppState</code> の型が変わる）ので、段2〜段4は同時に出さない。段1の検収が通ってから1段ずつ出す</li>
+  <li>段1の検収の線は7本（<code>import_accounting</code> の差 0行／<code>import_payment</code> の差 0行／自分の事務所の「今月の売上」が手を付ける前と同じ値／足した顧客は 0行・0円／戻すと同じ値／<code>state.db_path</code> を直に読む行が 0行／<code>cargo build</code> のエラーが 0件 と5本そろい ✅）</li>
+  <li>確かめる先は freee版（<code>untendai-client</code>）。開発版は触らせない（2026-09-26 の「開発版は架空のデモデータのみ」と <code>lib_freee_guard.sh:45</code> の見張りに衝突するため）</li>
+</ul>
+<ul>
+<li>2026-09-30 12:4x ／ 司令塔（昼の定時報告の回）── <strong>止める線の点検の最後「通しの試し登録」をやった。機能の故障は無い</strong>（ページ → 押す → メアドの窓 → 中継 /register → UTAGE の読者 → 00日のメール → 認証メールの送信 → 認証リンク「登録できました」）</li>
+  <li>試験用の別名 <code>3216.fun+tenken20260930@gmail.com</code>（読者 XJJC0TmXOwvL・2026-09-30 12:35:07）。00日 12:35:08・認証メール 12:37:03（一斉配信 XDRC1VT7G9Rq）</li>
+  <li>認証メールは試験用の受信箱（3216.fun@gmail.com の Gmail・迷惑メールとゴミ箱を含む）に入らなかった。09-21・09-25 の試しの分も見当たらない。本物の登録者は 09-23・09-24 に認証まで済んでいるので故障とは言えない。<strong>試験用の受信箱では認証メールの受け取りを確かめられない</strong>（リンクは UTAGE の本文から取って開いた）</li>
+  <li><strong>数え方への影響</strong>：XU7Gfd7XoiCQ の読者が1件増えた（XJJC0TmXOwvL・meta.total 35→36）。試験用の別名なので jogai_settei.json の正規表現で外れ、登録の数は動かない。この読者は、削除を押す操作が予約タスクの自動の許可で止められたので残っている。ステップメールが数日 3216.fun@gmail.com に出る</li>
+  <li>宛先：AI-Mits-チューニング／メール配信・計測・自動化／運転台マーケ</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
