@@ -77,7 +77,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-30 07:23 ／ 写した時刻 2026-09-30 12:42</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-01 07:22 ／ 写した時刻 2026-10-01 12:38</p>
 <h2 id="報告-運転台改善">報告 ── 運転台改善</h2>
 <p>この持ち場の窓（7:12 の毎朝点検・6時間ごとの機能要望の窓・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_運転台改善.md</p>
@@ -291,6 +292,27 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>次に自分がやる：会話の窓で 1（freee.rs:208 の prompt=select_company を外す向き・事業所を選ぶ画面・MF の複数事業者APIキー・弥生の調べ）→ 2（写真2枚／控えを git に入れる →公開ページ2枚を作業場に写す）</li>
 <li>ほかの持ち場に頼む：なし</li>
 <li>数字：テスト 通った 243・落ちた 0（飛ばした 11）／版 1.73.53 で5か所一致（タグ v1.73.53 のあと1本 commit・09-27 から同じ）／未提出 6件</li>
+</ul>
+<h3 id="2026-10-01-07-2x-毎朝点検の窓-untendai-asa-tenken">2026-10-01 07:2x（毎朝点検の窓 untendai-asa-tenken）</h3>
+<ul>
+<li>読んだ指示書の節：2026-10-01（1〜3）</li>
+<li>やった：</li>
+</ul>
+<p>  1. 09-30 の会話の窓の動き（出どころ：保存 /Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-09-30_2002_untendai-seihinban-watashi-dandori.md・決定の記録 09-30 12:2x／12:4x／13:1x／17:1x／19:0x・定時報告 asa_tenko.md の 10-01 の行）</p>
+<ul>
+  <li>管理者版：12:4x に「発注GO」、13:1x に「段4の終わりまで完走」。ゴールは freee版に管理者として入った Mits様が、西田光弘個人事業主（マネーフォワード）と棚原さんの U-WAN（freee）を切り替えて見られること。10-01 03:13 に会話の窓が、左下の切り替え欄で両方の実数字を見られ、主な数字は会計ソフトと差0円と報告（定時報告の行による。この窓では画面を開いていない）</li>
+  <li>直し2件：freee.rs／mf.rs の読み取りを <code>ORDER BY imported_at DESC, id DESC</code> に（U-WAN 売上高 12,334,712 → 12,367,712）。マネーフォワードの合言葉3種を顧客ごとの置き場へ（lib.rs の kokyaku_keys に3つ追加）</li>
+  <li>開発版のデモ3社（見本A事務所／見本B株式会社（freee）／見本C事務所（マネーフォワード））を架空の数字で入れた。source=&#x27;freee&#x27; 0行</li>
+  <li>資料3本の直しと公開用URL（事務所様お渡し用だけ渡す・残り2本は private）。第一義は2つ同等（決定 17:1x）</li>
+  <li>決定 19:0x：コンサルタント事務所に渡すのは製品版。渡す段取り（7つ）はこの持ち場。Zoom ヒアリングの要望の記録と着手順は _OEM提供考察 に受け渡し済み</li>
+  <li>今朝の実測：main は v1.74.0（commit 58f42c1「管理者版：顧問先ごとに帳簿を分けて切り替える／設定に管理者スイッチ」）＋1本（673e884）。/Applications/untendai.app も 1.74.0。09-30 20:02 の保存では「段1〜段5 は main で未 commit」だったので、段取り1（commit）はそのあと進んでいる</li>
+</ul>
+<p>  3. 段取り 1〜3・5（「発注GO」待ち）・4 世に出す・6 受け口・7 お渡し（Mits様の判定待ち）と、左バーのはみ出しの見本3枚は動かしていない</p>
+<ul>
+<li>できなかった：2 ペルソナの写真2枚と控えを git に入れる（この窓の手順書 /Users/nishidamitsuhiro/.claude/scheduled-tasks/untendai-asa-tenken/SKILL.md で「画面を触らない」「git は読むだけ」と決まっている。持ち越し9日目）</li>
+<li>次に自分がやる：会話の窓で 2（写真2枚／控えを git に入れる →公開ページ2枚を作業場に写す）</li>
+<li>ほかの持ち場に頼む：なし</li>
+<li>数字：テスト 通った 246・落ちた 0（飛ばした 11）／版 1.74.0 で5か所一致（タグ v1.74.0 のあと1本 commit 673e884）／未提出 9件</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
