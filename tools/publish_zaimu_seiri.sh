@@ -60,7 +60,7 @@ AKIYA_COUNT=0
 PAYPAY_COUNT=0
 for f in "${FILES[@]}"; do
   a=$(grep -o "Akiya様" "$DST/$f" 2>/dev/null | wc -l | tr -d ' ')
-  p=$(grep -o "PayPay 5914310" "$DST/$f" 2>/dev/null | wc -l | tr -d ' ')
+  p=$(grep -o "5914310" "$DST/$f" 2>/dev/null | wc -l | tr -d ' ')
   AKIYA_COUNT=$((AKIYA_COUNT + a))
   PAYPAY_COUNT=$((PAYPAY_COUNT + p))
 done
@@ -71,8 +71,10 @@ for f in "${FILES[@]}"; do
   LC_ALL=C sed -i '' -e 's|Akiya様|家族カード|g' "$DST/$f"
   # 家族の名前（2026-09-19 追加・明細に出た振込先）
   sed -i '' -e 's|ニシダ イクコ|家族|g' -e 's|ニシダ セイジ|家族|g' -e 's|ﾆｼﾀﾞ|家族|g' "$DST/$f"
-  # PayPay 5914310（7桁）→ PayPay 14310（末尾5桁）
-  LC_ALL=C sed -i '' -e 's|PayPay 5914310|PayPay 14310|g' "$DST/$f"
+  # 口座番号 5914310（7桁）→ 14310（末尾5桁）。前後に何が付いていても消す
+  # （2026-10-01：以前は「PayPay 5914310」の形でしか消していないため、表記が「PayPay 銀行 5914310」に
+  #   変わったあと 6箇所が公開ページに出たままになっていた。数字そのものを消す形に直した）
+  LC_ALL=C sed -i '' -e 's|5914310|14310|g' "$DST/$f"
 done
 
 # 6. noindex を全 HTML に入れる（既に入っていればスキップ）
