@@ -1,17 +1,18 @@
+// 2026-10-01 9月の未記載 11件を追加（m-s01〜m-s11・合計 175,384円・monthly 21,923円／USD→円は一覧の決まり 148）
 // 2026-09-20 v8.1 軽い変更のみ適用（BS-keiri-ikisaki）：
 // - m-f71 TIER5 LLC / m-f72 VAUGHN LABS を removed（サブスク整理 k2-68 へ移動・Mits様 2026-09-20）
 // - m-f73 RENEWAL MEMBERSHIP FEE 追加カード年会費 を removed（サブスク整理 k3-10 へ移動・Mits様 2026-09-20）
 // - 家族カード（41014）のコンビニ・スーパー系 17行の中分類を「家族カード（41014）コンビニ・スーパー」に変更
 // - 期間: 2026-01〜2026-08（8ヶ月）・USD→JPYレート: 148
-// - Σtotal (v8.1) = ¥6,116,627  before = ¥6,152,461  Δ = ¥-35,834
-// - items: 371（2026-09-20 実測・totalSum 6,116,627）
+// - Σtotal = ¥6,292,011（v8.1 の 6,116,627 ＋ 9月の11件 175,384）  before = ¥6,152,461  Δ = ¥-35,834
+// - items: 382（2026-10-01 実測・totalSum 6,292,011／うち 9月の11件 175,384）
 //
 var ICHIRANGAI_MEISAI = {
   "period": "2026-01\u301c2026-08",
   "months": 8,
   "rate_usd": 148,
   "target_monthly": 478023,
-  "items_sum_monthly": 784655,
+  "items_sum_monthly": 806579,
   "expected_after_adjust": 784655,
   "diff_actual_vs_expected": 0,
   "caps": {"基本支出":0,"現金生活費":116914,"カード生活費":16961,"浪費":30688,"投資":48126,"旅行":51989},
@@ -387,7 +388,18 @@ var ICHIRANGAI_MEISAI = {
     {"id": "m-t22", "category": "カード生活費", "row": "", "merchant": "SEIBU TAXI", "card": "Amex US 44000", "user": "Mits様", "count": 1, "total": 934, "monthly": 117, "first": "2026-07-30", "last": "2026-07-30", "note": "抜けの追加（Mits様 2026-09-20 JUNKUDO 指摘）／CSV(20260909)集計 1件@148", "status": null, "status_date": null, "sub": "交通"},
     {"id": "m-t23", "category": "浪費", "row": "", "merchant": "SAKABA BESHARU AIR", "card": "Amex US 44000", "user": "Mits様", "count": 1, "total": 1825, "monthly": 228, "first": "2026-03-14", "last": "2026-03-14", "note": "抜けの追加（Mits様 2026-09-20 JUNKUDO 指摘）／CSV(20260909)集計 1件@148", "status": null, "status_date": null, "sub": "飲み"},
     {"id": "m-t24", "category": "カード生活費", "row": "", "merchant": "DMM.COM (単発)", "card": "Amex US 44000", "user": "Mits様", "count": 1, "total": 9260, "monthly": 1158, "first": "2026-06-05", "last": "2026-06-05", "note": "抜けの追加（Mits様 2026-09-20 JUNKUDO 指摘）／CSV(20260909)集計 1件@148", "status": null, "status_date": null, "sub": "その他"},
-    {"id": "m-t25", "category": "投資", "row": "o-08", "merchant": "APPLE.COM/JP (単発)", "card": "Amex US 44000", "user": "Mits様", "count": 1, "total": 12063, "monthly": 1508, "first": "2026-08-28", "last": "2026-08-28", "note": "投資へ（Mits様 2026-09-20）／抜けの追加（Mits様 2026-09-20 JUNKUDO 指摘）／CSV(20260909)集計 1件@148", "status": null, "status_date": null, "sub": ""}
+    {"id": "m-t25", "category": "投資", "row": "o-08", "merchant": "APPLE.COM/JP (単発)", "card": "Amex US 44000", "user": "Mits様", "count": 1, "total": 12063, "monthly": 1508, "first": "2026-08-28", "last": "2026-08-28", "note": "投資へ（Mits様 2026-09-20）／抜けの追加（Mits様 2026-09-20 JUNKUDO 指摘）／CSV(20260909)集計 1件@148", "status": null, "status_date": null, "sub": ""},
+    {"id": "m-s01", "category": "旅行", "row": "", "merchant": "SKYMARK AIRLINES -OH* JP", "card": "Amex US 44000", "user": "Mits様", "count": 2, "total": 46034, "monthly": 5754, "first": "2026-09-24", "last": "2026-09-27", "note": "2026年9月の分（一覧の集計期間 2026-01〜08 の外）／原典 amex_us_44000_2026-09_full.csv／USD $311.04（196.78+114.26）@148／素案：国内線の航空券なので既存の『旅行/交通』行と同じ扱いにした。参謀の検算待ち", "status": null, "status_date": null, "sub": "交通"},
+    {"id": "m-s02", "category": "投資", "row": "", "merchant": "ZOOM.COM 888-799-966 SAN JOSE CA", "card": "Amex US 44000", "user": "Mits様", "count": 1, "total": 24404, "monthly": 3051, "first": "2026-09-26", "last": "2026-09-26", "note": "2026年9月の分（一覧の集計期間 2026-01〜08 の外）／原典 amex_us_44000_2026-09_full.csv／USD $164.89@148／素案：仕事の会議に使う道具なので『投資』に置いた。参謀の検算待ち", "status": null, "status_date": null, "sub": ""},
+    {"id": "m-s03", "category": "投資", "row": "", "merchant": "CASTLEMAN CONSULTING LUBBOCK TX", "card": "Amex US 44000", "user": "Mits様", "count": 1, "total": 14356, "monthly": 1795, "first": "2026-09-20", "last": "2026-09-20", "note": "2026年9月の分（一覧の集計期間 2026-01〜08 の外）／原典 amex_us_44000_2026-09_full.csv／USD $97.00@148／素案：相手が何の役務かを原典から確定できないため『投資』で置いた。参謀の検算待ち", "status": null, "status_date": null, "sub": ""},
+    {"id": "m-s04", "category": "旅行", "row": "", "merchant": "AplPay SMILE HOTEL M OKINAWA JP（宮古島）", "card": "Amex US 44000", "user": "Mits様", "count": 1, "total": 9337, "monthly": 1167, "first": "2026-09-27", "last": "2026-09-27", "note": "2026年9月の分（一覧の集計期間 2026-01〜08 の外）／原典 amex_us_44000_2026-09_full.csv／USD $63.09@148／素案：宿泊なので既存の『旅行/ホテル』行と同じ扱いにした。参謀の検算待ち", "status": null, "status_date": null, "sub": "ホテル"},
+    {"id": "m-s05", "category": "旅行", "row": "", "merchant": "AplPay SYABUAN BEKKA OKINAWA JP（宮古島）", "card": "Amex US 44000", "user": "Mits様", "count": 1, "total": 3971, "monthly": 496, "first": "2026-09-27", "last": "2026-09-27", "note": "2026年9月の分（一覧の集計期間 2026-01〜08 の外）／原典 amex_us_44000_2026-09_full.csv／USD $26.83@148／素案：同じ 09/27 の宮古島滞在中の食事なので『旅行/食事』に置いた。参謀の検算待ち", "status": null, "status_date": null, "sub": "食事"},
+    {"id": "m-s06", "category": "カード生活費", "row": "", "merchant": "AplPay SUSHIRO OSAKA JP", "card": "Amex US 44000", "user": "Mits様", "count": 1, "total": 4113, "monthly": 514, "first": "2026-09-08", "last": "2026-09-08", "note": "2026年9月の分（一覧の集計期間 2026-01〜08 の外）／原典 amex_us_44000_2026-09_full.csv／USD $27.79@148／素案：日常の外食なので『カード生活費/食事』に置いた。参謀の検算待ち", "status": null, "status_date": null, "sub": "食事"},
+    {"id": "m-s07", "category": "カード生活費", "row": "", "merchant": "AplPay ANMANOAJIANDK OKINAWA JP（那覇）", "card": "Amex US 44000", "user": "Mits様", "count": 1, "total": 4002, "monthly": 500, "first": "2026-09-03", "last": "2026-09-03", "note": "2026年9月の分（一覧の集計期間 2026-01〜08 の外）／原典 amex_us_44000_2026-09_full.csv／USD $27.04@148／素案：那覇は居所なので旅行ではなく『カード生活費/食事』に置いた。参謀の検算待ち", "status": null, "status_date": null, "sub": "食事"},
+    {"id": "m-s08", "category": "カード生活費", "row": "", "merchant": "AplPay PETITMIITWO OKINAWA JP（那覇）", "card": "Amex US 44000", "user": "Mits様", "count": 1, "total": 1052, "monthly": 132, "first": "2026-09-08", "last": "2026-09-08", "note": "2026年9月の分（一覧の集計期間 2026-01〜08 の外）／原典 amex_us_44000_2026-09_full.csv／USD $7.11@148／素案：那覇は居所なので旅行ではなく『カード生活費/食事』に置いた。参謀の検算待ち", "status": null, "status_date": null, "sub": "食事"},
+    {"id": "m-s09", "category": "基本支出", "row": "", "merchant": "AplPay MISONOSUKE NE KANAGAWA JP", "card": "Amex US 81007", "user": "家族カード", "count": 1, "total": 1419, "monthly": 177, "first": "2026-09-25", "last": "2026-09-25", "note": "2026年9月の分（一覧の集計期間 2026-01〜08 の外）／原典 amex_us_81007_2026-09_posted.csv（口座番号は -81015）／USD $9.59@148／素案：既存の『基本支出/Amex US 81007』27行と同じ扱いにした。参謀の検算待ち", "status": null, "status_date": null, "sub": "Amex US 81007"},
+    {"id": "m-s10", "category": "基本支出", "row": "", "merchant": "AplPay MISTER DONUT KANAGAWA JP", "card": "Amex US 81007", "user": "家族カード", "count": 1, "total": 696, "monthly": 87, "first": "2026-09-09", "last": "2026-09-09", "note": "2026年9月の分（一覧の集計期間 2026-01〜08 の外）／原典 amex_us_81007_2026-09_posted.csv（口座番号は -81015）／USD $4.70@148／素案：既存の『基本支出/Amex US 81007』27行と同じ扱いにした。参謀の検算待ち", "status": null, "status_date": null, "sub": "Amex US 81007"},
+    {"id": "m-s11", "category": "投資", "row": "", "merchant": "LPTC情報配信ペ-ジ 東京都 港区", "card": "Amex JP 42008", "user": "Mits様", "count": 1, "total": 66000, "monthly": 8250, "first": "2026-09-11", "last": "2026-09-11", "note": "2026年9月の分（一覧の集計期間 2026-01〜08 の外）／原典 amex_jp_42008_2026-09-01-15_full.csv（円建てなのでレート換算なし・66,000円）／素案：情報配信の役務なので『投資』に置いた。参謀の検算待ち", "status": null, "status_date": null, "sub": ""}
   ],
   "removed": [
     {"id": "m-t03", "category": "投資", "row": "", "merchant": "MUUMUUDOMAIN", "card": "Amex US 44000", "user": "Mits様", "count": 4, "total": 27623, "monthly": 3453, "first": "2026-03-31", "last": "2026-07-03", "note": "抜けの追加（Mits様 2026-09-20 JUNKUDO 指摘）／CSV(20260909)集計 4件@148／ドメイン更新", "status": null, "status_date": null, "sub": "ドメイン", "removed": "サブスク整理 k2-36 ムームードメイン と二重（Mits様 2026-09-20 参謀照合）"},
