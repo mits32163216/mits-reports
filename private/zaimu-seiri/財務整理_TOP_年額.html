@@ -268,7 +268,7 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   <h1>財務整理 年額 <span style="font-size:12px;color:#c62828;font-weight:bold;">（<span class="zs-kikan">1〜8月</span>の実績の月平均 × 12 ＝ 年額に換算。借入だけは残っている元金の総額）</span></h1>
   <!-- 1段目：Before − 借入 = 出発点（全部固定・グレー） -->
   <div class="eq-row eq-row-1">
-    <div class="metric eq-before frozen"><div class="label">Before 総額</div><div class="value"><span id="r1-before">-</span><span class="yen">円</span><div class="src">出発点 <span id="r1-before-start">-</span> ＋ 借入の返済 <span class="zs-loan-before">153,465</span></div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
+    <div class="metric eq-before frozen"><div class="label">Before 総額</div><div class="value"><span id="r1-before">-</span><span class="yen">円</span><div class="src">2026-09-20（8月締め）に測った値で固定。ここからどう減ったかを見るための数字なので、あとで一覧に行を足しても動かさない</div><span class="lock-note">2026-09-19 判定ページから計算</span></div></div>
     <div class="eq-op">−</div>
     <div class="metric eq-loan frozen"><div class="label">借入の返済</div><div class="value"><span id="r1-borrow" class="zs-loan-before">153,465</span><span class="yen">円</span><div class="src"><span class="zs-kikan">1〜8月</span>の実額の月平均：<span class="zs-loan-note">各月の実額：1月 195,584 ／ 2月 120,820 ／ 3月 137,706 ／ 4月 146,489 ／ 5月 163,602 ／ 6月 148,927 ／ 7月 136,851 ／ 8月 177,743（5月から ペイディ 17,908 を含む）</span></div><span class="lock-note">2026-09-19 Mits様確認</span></div></div>
     <div class="eq-op">＝</div>
@@ -389,12 +389,12 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
 </div>
 
 <!-- TOP: legend以下は無し -->
-<script src="zaimu_seiri_data.js?v=1790840311"></script>
-<script src="zaimu_seiri_state.js?v=1790840311"></script>
-<script src="zaimu_seiri_sync.js?v=1790840311"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1790840311"></script>
-<script src="zaimu_seiri_kijun.js?v=1790840311"></script>
-<script src="zaimu_seiri_render.js?v=1790840311"></script>
+<script src="zaimu_seiri_data.js?v=1790840441"></script>
+<script src="zaimu_seiri_state.js?v=1790840441"></script>
+<script src="zaimu_seiri_sync.js?v=1790840441"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1790840441"></script>
+<script src="zaimu_seiri_kijun.js?v=1790840441"></script>
+<script src="zaimu_seiri_render.js?v=1790840441"></script>
 <script>
 // 3段目：サブスク外の判定ページ（zaimu_seiri_ichirangai_meisai.js）から計算する（2026-09-19 Mits様指示・一覧外の経費ページは廃止）
 (function(){
@@ -413,7 +413,7 @@ td.annual-amt { font-size: 11px; color: var(--gold); white-space: nowrap; text-a
   // 1段目：出発点＝一覧 A ＋ 一覧外 B（判定ページ）／ Before＝出発点＋借入の返済（集計期間の実額の月平均・zaimu_seiri_kijun.js）
   const BORROW = K.LOAN_BEFORE;
   put("r1-start", A + total); put("r1-start-b", total);
-  put("r1-borrow", BORROW); put("r1-before", A + total + BORROW); put("r1-before-start", A + total);
+  put("r1-borrow", BORROW); put("r1-before", K.BEFORE_FIXED); put("r1-before-start", A + total);   // Before は固定（Mits様 2026-10-01）
   // 7段目：継続以外に使える額 ＋ 継続 ＝ ゴール（出発点総額 ÷ 2）
   const START = A + total, GOAL7 = Math.round(START / 2), KEEP_ALL = A_KEEP + keep;
   put("r7-start", GOAL7); put("r7-start-b", START);

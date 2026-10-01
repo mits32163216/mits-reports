@@ -5,6 +5,7 @@
 
 var ZS_KIJUN = (function(){
   const A_ADJ       = 38553;   // 一覧の行に無い足し分：年払いを1〜8月の実額に直した差（1〜8月の実額÷8 − 月割り）＝ Notion 3,804 ＋ Genspark 9,944 ＋ Bonvoy 年会費 6,138 ＋ Delta 年会費 3,224 ＋ Hilton 年会費 2,734 ＋ Chase Sapphire 年会費 4,185 ＋ DOCPRO 4,214 ＋ GRAMMARLY 993 ＋ JALカード年会費 871（20,900÷8 − 1,742）＋ CATCH THE WEB 1,108（26,600÷8 − 2,217）＋ Windy 154（3,699÷8 − 308・2026-09-20 追加）＋ Delta 追加カード年会費 1,184（28,434÷8 − 2,370・2026-09-20 追加）（2026-09-19 8月締め。1〜7月は 47,018）
+  const BEFORE_FIXED = 1286782; // 1段目 Before 総額（2026-09-20 8月締めで測った値）。Mits様 2026-10-01「1段目 Before 総額だけは before なので動かさない・そこからどう改善したかを見たいから」→ 一覧に行を足しても動かさない
   const LOAN_BEFORE = 153465;  // 借入の返済（1〜8月の実額の月平均＝1,227,722÷8・ペイディ込み・2026-09-19 8月締め。1〜7月は 142,286）
   const LOAN_NOTE   = "各月の実額：1月 195,584 ／ 2月 120,820 ／ 3月 137,706 ／ 4月 146,489 ／ 5月 163,602 ／ 6月 148,927 ／ 7月 136,851 ／ 8月 177,743（5月から ペイディ 17,908 を含む）";
   const LOAN_LATEST = 77598;   // 2026-09-19 ⑤ ペイディ（MacBook Pro 24回・17,908）を追加。前 59690   // 今の月々の返済（④-1・④-2・④-3 完済後。① 楽天キャッシングリボの繰り上げ返済は 2026-09-19 取り消し）
@@ -63,7 +64,7 @@ var ZS_KIJUN = (function(){
   const A_BASE  = rowSum + A_ADJ;
   const a       = A_BASE;                      // 2段目 一覧 A
   const start   = a + b;                       // 1段目 出発点（借入の返済を除く）
-  const before  = start + LOAN_BEFORE;         // 1段目 Before
+  const before  = BEFORE_FIXED;                // 1段目 Before（固定・下の start は今の値で動く）
   const keepAll = A_KEEP + bKeep;              // 4段目 継続の合計
   const aRemain = a - A_KEEP;
   const bRemain = b - bKeep;
@@ -75,7 +76,7 @@ var ZS_KIJUN = (function(){
 
   const months = (M && M.months) || 7;
   const KIKAN = "1〜" + months + "月";   // 集計期間の表記（ページの「1〜N月」はここから入れる）
-  return { isLivePlanKey, KIKAN, LOAN_NOTE, A_BASE, A_ADJ, A_KEEP, rowSum, planSum, plans, byCat, aDone, aHandled, months, LOAN_BEFORE, LOAN_LATEST, LOAN_PRINCIPAL,
+  return { isLivePlanKey, BEFORE_FIXED, KIKAN, LOAN_NOTE, A_BASE, A_ADJ, A_KEEP, rowSum, planSum, plans, byCat, aDone, aHandled, months, LOAN_BEFORE, LOAN_LATEST, LOAN_PRINCIPAL,
            addA, toA, a, b, bKeep, bCut, bOnce, keepItems,
            start, before, keepAll, aRemain, bRemain, r4, target1, goal, free, target2 };
 })();
