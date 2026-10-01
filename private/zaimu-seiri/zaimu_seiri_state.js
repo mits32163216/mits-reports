@@ -82,8 +82,8 @@ var SAVED_STATE = {
       "status_date": "2026-09-18"
     },
     "k2-19": {
-      "status": "done",
-      "status_date": "2026-09-18"
+      "status": "handled",
+      "status_date": "2026-10-01"
     },
     "k2-27": {
       "status": "keep",
