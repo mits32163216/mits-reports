@@ -78,7 +78,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-01 07:22 ／ 写した時刻 2026-10-01 12:38</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-02 07:23 ／ 写した時刻 2026-10-02 12:38</p>
 <h2 id="報告-運転台改善">報告 ── 運転台改善</h2>
 <p>この持ち場の窓（7:12 の毎朝点検・6時間ごとの機能要望の窓・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_運転台改善.md</p>
@@ -313,6 +314,32 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>次に自分がやる：会話の窓で 2（写真2枚／控えを git に入れる →公開ページ2枚を作業場に写す）</li>
 <li>ほかの持ち場に頼む：なし</li>
 <li>数字：テスト 通った 246・落ちた 0（飛ばした 11）／版 1.74.0 で5か所一致（タグ v1.74.0 のあと1本 commit 673e884）／未提出 9件</li>
+</ul>
+<h3 id="2026-10-02-07-2x-毎朝点検の窓-untendai-asa-tenken">2026-10-02 07:2x（毎朝点検の窓 untendai-asa-tenken）</h3>
+<ul>
+<li>読んだ指示書の節：2026-10-02（1〜3）</li>
+<li>やった：</li>
+</ul>
+<p>  1. 「経過 10ヶ月」の件（決定の記録 2026-10-01 18:2x の宛先）をコードで確かめた。<strong>月経費と余力の割り算に効く</strong></p>
+<ul>
+  <li>マネーフォワード：mf.rs:944 <code>period_from_term_settings</code> が、今日が期の中なら終わりの月を<strong>今日の月</strong>にする（L964-965）。mf.rs:1825 <code>months_inclusive</code> は開始月〜終了月を両端こみで数える。mf.rs:2007-2016 で 月経費 = 経費合計 ÷ その月数、余力 = 現預金 ÷ 月経費</li>
+  <li>freee：freee.rs:734 で同じく今日の日付から期を切り、freee.rs:1288 <code>months = em - sm + 1</code>。commands.rs:1010 で同じ period_months に入る</li>
+  <li>つまり 1日に限らず、月の途中ではいつも「今月をまるまる1ヶ月」と数える。1日がいちばん大きくずれる</li>
+  <li>10-01 の締め後の数字で当てると：経費合計 9,239,460 ÷ 10 = 月経費 923,946（画面）／÷ 9 = 1,026,606。現預金 995,087 で余力 1.08ヶ月（画面）／0.97ヶ月</li>
+  <li>見本・コードの直しはしていない（実データのある月で切るか、締めた月で切るかは決まっていないため）</li>
+</ul>
+<p>  2. 10-01 18:0x〜18:3x の会話の窓の動き（出どころ：git log・指示書 2026-10-02 の2・決定の記録 10-01 18:2x。この時間の保存ファイルは session-log に無い）</p>
+<ul>
+  <li>204d608（10-01 18:14）「製品版でも freee との連携画面を出す v1.74.1」、a293759（同 18:14）「記録：v1.74.1 の commit を CHANGELOG に埋めた」。今朝の実測で5か所とも 1.74.1、/Applications/untendai.app も 1.74.1</li>
+  <li>月次決算のあとの突き合わせのヘルプ（help_kessan_go_untendai_tsukiawase.md）を、サーカス解約準備＋会計マネフォ の持ち場が9月の締め後の数字で通し、西田事務所の5項目すべて差0円（決定の記録 10-01 18:2x）</li>
+  <li>製品版に U-WAN を足して「鍵を保存」の手前で止めた（指示書の記載による。この窓では画面を開いていない）</li>
+</ul>
+<p>  3. 段取り（1〜3・5 の「発注GO」・4・6・7）と U-WAN の鍵の入力は動かしていない</p>
+<ul>
+<li>できなかった：3 のペルソナの写真2枚と控えを git に入れる（この窓の手順書 /Users/nishidamitsuhiro/.claude/scheduled-tasks/untendai-asa-tenken/SKILL.md で「画面を触らない」「git は読むだけ」と決まっている。持ち越し10日目）</li>
+<li>次に自分がやる：会話の窓で 3（写真2枚／控えを git に入れる →公開ページ2枚を作業場に写す）</li>
+<li>ほかの持ち場に頼む：なし</li>
+<li>数字：テスト 通った 246・落ちた 0（飛ばした 11）／版 1.74.1 で5か所一致（タグ v1.74.1 のあと1本 commit a293759）／未提出 9件</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
