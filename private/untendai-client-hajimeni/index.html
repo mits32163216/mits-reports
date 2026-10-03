@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="color-scheme" content="light">
+<title>AI-Mits＆経営アプリ（freee開発版）の入れ方と、顧問先を切り替えて使う方法 ── Mac</title>
+<style>
+:root{--bg:#ffffff;--card:#fcfcff;--card2:#f7f8fc;--line:#e3e6f0;--line2:#ccd2e4;--tx:#1a1d24;--sub:#505461;--dim:#525764;--info:#11159f;--purple:#0a0d6b;}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#ffffff;color:var(--tx)}
+body{font-family:-apple-system,"Hiragino Sans","Yu Gothic UI",sans-serif;font-size:17px;line-height:1.85;padding:40px 24px 100px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:920px;margin:0 auto}
+h1{font-size:26px;font-weight:900;line-height:1.5;margin:0 0 18px;color:var(--purple)}
+h2{font-size:21px;font-weight:900;line-height:1.4;margin:36px 0 14px;color:var(--info);padding:8px 0 10px;border-bottom:2px solid var(--info)}
+h3{font-size:18px;font-weight:800;margin:24px 0 10px;color:var(--purple)}
+h4{font-size:16px;font-weight:800;margin:18px 0 8px}
+p{margin:12px 0}
+ul,ol{margin:14px 0 18px 32px}
+li{margin:14px 0;line-height:1.85}
+hr{border:0;border-top:1px solid var(--line);margin:28px 0}
+strong{color:#000;font-weight:800}
+code{background:var(--card2);border:1px solid var(--line);border-radius:4px;padding:2px 7px;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:14.5px;color:#333;word-break:break-all}
+pre{background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:14px 18px;margin:14px 0;overflow-x:auto}
+pre code{background:transparent;border:0;padding:0;font-size:14.5px;word-break:normal}
+img{display:block;max-width:100%;height:auto;border:1px solid var(--line);border-radius:8px;margin:10px 0 6px;background:#fff}
+@media(max-width:640px){body{font-size:16px;padding:28px 16px 80px}h1{font-size:22px}h2{font-size:19px}pre{font-size:13px}ul,ol{margin-left:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>AI-Mits＆経営アプリ（freee開発版）の入れ方と、顧問先を切り替えて使う方法 ── Mac</h1>
+<p>コンサルタント事務所の皆さまへ</p>
+<p>この版は、コンサルタントとして顧問先ごとに帳簿を分けて見ていただくための版です。freee とマネーフォワードのどちらにもつなげます。自動では更新されません。新しい版はこのフォルダに同じ形でお渡しします。</p>
+<p>対応：Apple シリコンの Mac（M1 以降）<br>版：1.74.2</p>
+<p>入れた数字はすべて、ご自身のパソコンの中だけに置かれます。</p>
+<hr>
+<h2>1. 入れる</h2>
+<ol>
+<li>配布されたファイルをダブルクリックして展開します</li>
+<li>出てきた <code>untendai-client</code> を「アプリケーション」フォルダへ移します</li>
+</ol>
+<h2>2. 初めて開く</h2>
+<p>「アプリケーション」フォルダの <code>untendai-client</code> をダブルクリックすると、<strong>初回だけ</strong>確認の窓が出ます。上の黒い太字で「"untendai-client.app" is an app downloaded from the Internet. Are you sure you want to open it?」と出て、その下に薄い灰色で「Chrome downloaded this file today at 9:19 PM. Apple checked it for malicious software and none was detected.」と出ます（Safari で zip を落としたときは、頭の Chrome が Safari に、時刻は落としたときの時刻になります）。下の2つのボタンのうち、<strong>右のボタン</strong>（写真では Open）を押してください。「はじめる前に」の画面が開きます。</p>
+<p>写真：<br><img src="img/00a_kakunin_chrome_v1.74.1.png" alt="">（Chrome で zip を落としたとき）／<br><img src="img/00b_kakunin_safari_v1.74.1.png" alt="">（Safari で zip を落としたとき）</p>
+<p>左のボタンは Cancel（開かずに閉じる）です。2回目以降は確認の窓は出ません。</p>
+<h2>3. 最初の画面（はじめる前に＋3つだけ答える）</h2>
+<ol>
+<li>「はじめる前に」の画面が出ます。見出しの下に「5つだけ確かめてください。1つ目が、このアプリがWeb版と違うところです。」と書かれた5項目（データはパソコンの中だけ／相談時だけ外部AIを通る／個人情報は相談文に書かない／公開はご本人許可時のみ／AI回答は参考）を読み、右下の <strong>「確認しました。はじめる」</strong> を押します<br>写真：<br><img src="img/00_hajimeru_mae_ni_v1.74.1.png" alt="">・<br><img src="img/00b_botan_v1.74.1.png" alt="">（押すボタンの拡大）</li>
+</ol>
+<p>同じ画面に <strong>「サンプルデータを入れてはじめる」</strong> という紺色のボタンもあります。こちらを押すと見本の会社の20ヶ月分の帳簿が入ります。ご自身の数字で始める場合は押さずに、<strong>「確認しました。はじめる」</strong> を押してください。</p>
+<ol>
+<li>「はじめまして／3つだけ、先に教えてください」の画面が出ます。<strong>「はじめる」</strong> を押します<br>写真：<br><img src="img/01_hajimemashite_v1.74.1.png" alt=""></li>
+<li>「1つめ／何人でやっていますか」に人数（初期値 1）を入れて <strong>「次へ」</strong> を押します<br>写真：<br><img src="img/02_nannin_v1.74.1.png" alt=""></li>
+<li>「2つめ／＠をいくらにしたいですか」に目標の＠（1人当たり粗利・初期値 2000 万円）を入れて <strong>「次へ」</strong> を押します（下の 1,000万／2,000万／3,000万 のボタンを押してもかまいません）<br>写真：<br><img src="img/03_atmark_v1.74.1.png" alt=""></li>
+<li>「3つめ／いつまでに」で <strong>1年後／3年後／5年後</strong> のどれかを押し、<strong>「これではじめる」</strong> を押します<br>写真：<br><img src="img/04_itsumadeni_v1.74.1.png" alt=""></li>
+</ol>
+<p>「あとで入れる」を押して飛ばしても、あとから何度でも直せます。</p>
+<h2>4. 画面の左下からログインする</h2>
+<ol>
+<li>「お金・分析 — 現在位置」の画面が開きます。左のバーの一番下にある <strong>「未ログイン」</strong> を押します<br>写真：<br><img src="img/05_genzaichi_miroguin_v1.74.1.png" alt=""></li>
+<li>上に開く一覧の一番下の <strong>「ログイン」</strong> を押します<br>写真：<br><img src="img/06_popup_login_v1.74.2.png" alt=""></li>
+<li>「設定 — アカウント」の画面に変わります。「メールアドレス」「パスワード」に、AI-Mits に登録したメールアドレスとパスワードを入れて <strong>「ログイン」</strong> を押します<br>写真：<br><img src="img/07_settei_account_v1.74.1.png" alt=""></li>
+</ol>
+<h2>5. 管理者として使う（顧問先を切り替える）</h2>
+<p>同じ「設定 — アカウント」の画面の一番上に <strong>「管理者として使う（顧問先を切り替える）」</strong> の欄があります（写真：<br><img src="img/07_settei_account_v1.74.1.png" alt="">）。</p>
+<ol>
+<li>欄の右のスイッチを押して入れます。左のバーの下に「自分の事務所」と書かれた切り替え欄が出ます<br>写真：<br><img src="img/08_kanrisha_on_kirikae_ran_v1.74.1.png" alt=""></li>
+<li>切り替え欄を押すと「見る顧客」の一覧が開きます。一番下の <strong>「＋ 顧客を足す」</strong> を押します<br>写真：<br><img src="img/09_kirikae_ran_hiraku_v1.74.1.png" alt=""></li>
+<li>「顧客を足す」の窓の「表示名」に顧問先の名前を入れて <strong>「足す」</strong> を押します<br>写真：<br><img src="img/10_kokyaku_wo_tasu_v1.74.1.png" alt="">（写真の「見本 顧問先A」は説明用の名前です）</li>
+<li>足した顧問先に切り替わり、その顧問先用の「3つだけ、先に教えてください」が出ます（3 の2と同じ画面です）。答えるか「あとで入れる」を押します</li>
+<li>左下の切り替え欄に顧問先の名前が出ます<br>写真：<br><img src="img/11_komonsaki_ni_kirikawatta_v1.74.1.png" alt=""></li>
+</ol>
+<p>顧問先ごとに帳簿が分かれます。切り替え欄で選んでいる顧問先の数字だけが画面に出ます。スイッチを切ると切り替え欄が消え、自分の事務所の帳簿に戻ります。</p>
+<h2>6. 会計ソフトとつなぐ（顧問先ごと）</h2>
+<p>切り替え欄で、つなぎたい顧問先を選んでから進めます。</p>
+<ol>
+<li>左のバーの <strong>「自社データにする」</strong> を押します。下に開く一覧に「マネーフォワードとの連携」「freee との連携」が出ます<br>写真：<br><img src="img/12_jisha_data_submenu_v1.74.1.png" alt=""></li>
+</ol>
+<h3>freee の場合</h3>
+<ol>
+<li><strong>「freee との連携」</strong> を押します<br>写真：<br><img src="img/13_freee_renkei_v1.74.1.png" alt=""></li>
+<li>freee の「アプリ管理」で連携用のアプリを作り、出てきた2つの鍵を <strong>「鍵①（Client ID）」「鍵②（Client Secret）」</strong> に貼って <strong>「鍵を保存」</strong> を押します。アプリを作るときの「コールバックURL」には、画面に出ている次の1行を貼ります</li>
+<pre><code>
+http://localhost:27852/callback
+</code></pre>
+<li><strong>「freee と連携」</strong> を押します。ブラウザに freee の画面が出るので、ログインして許可します</li>
+<li><strong>「事業所を選ぶ」</strong> を押します。「事業所を1つ選んで「この事業所にする」を押してください：」と一覧が出るので、その顧問先の事業所を選び、<strong>「この事業所にする」</strong> を押します</li>
+<li><strong>「今すぐ取得」</strong> を押します</li>
+</ol>
+<h3>マネーフォワードの場合</h3>
+<ol>
+<li><strong>「マネーフォワードとの連携」</strong> を押します<br>写真：<br><img src="img/14_mf_renkei_v1.74.1.png" alt=""></li>
+<li>マネーフォワードの「アプリポータル」で連携用の鍵を作り、<strong>「鍵①（利用者ID）」「鍵②（利用者の合言葉）」</strong> に貼って <strong>「鍵を保存」</strong> を押します。登録時の折り返し先には、画面に出ている次の1行を貼ります</li>
+<pre><code>
+http://localhost:27851/callback
+</code></pre>
+</ol>
+<p>鍵の作り方は、画面の <strong>「→ やり方はこちら（使い方ページの「マネーフォワードの鍵の作り方」）」</strong> を押すと開く使い方ページの、「マネーフォワードとの連携」の「2つの鍵を受け取るところ」に書いてあります。同じページに「freee との連携　準備中です。押せません」とありますが、この版では freee もつなげます（手順は上の「freee の場合」のとおりです）。</p>
+<ol>
+<li><strong>「マネーフォワードと連携」</strong> を押します。画面に「ブラウザが開きます。マネーフォワードで許可を押してください（最大5分待機）…」と出て、ブラウザにマネーフォワードの画面が出ます。ログインして許可を押します</li>
+<li>アプリに戻り、<strong>「今すぐ取得」</strong> を押します</li>
+</ol>
+<p>税理士・会計事務所としてマネーフォワードの「複数事業者APIキー」をお持ちの場合は、同じ画面の下の <strong>「複数事業者APIキーで顧問先を切り替える（税理士・会計事務所向け）」</strong> の欄を使います。</p>
+<ol>
+<li>「複数事業者APIキー」にキーを入れて <strong>「APIキーを保存」</strong> を押します</li>
+<li><strong>「事業者を選ぶ」</strong> を押します。「事業者を1つ選んで「この事業者にする」を押してください：」と一覧が出るので、顧問先の事業者を選び、<strong>「この事業者にする」</strong> を押します</li>
+<li><strong>「今すぐ取得」</strong> を押します</li>
+</ol>
+<p>鍵（Client Secret・合言葉・APIキー）は他の人に見せないでください。</p>
+<h2>7. 気づいたことがあったら</h2>
+<p>画面の写真と一緒に、西田までお知らせください。バグや「こうなっていると使いやすい」というご要望を集めています。</p>
+</div>
+</body>
+</html>
