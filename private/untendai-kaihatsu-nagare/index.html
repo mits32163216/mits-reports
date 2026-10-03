@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>運転台 開発の流れと現状</title>
+<style>
+  :root{
+    --bg:#f7f6f2; --card:#ffffff; --tx:#1f2430; --sub:#5b6170; --line:#dcd8cc;
+    --navy:#14206b; --gold:#8a6a1f; --green:#2f7d4f; --red:#b0342c; --gray:#9aa0ab;
+    --blue-bg:#eef1fb; --gold-bg:#faf4e4; --green-bg:#eaf5ee; --red-bg:#fbecea;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--tx);
+    font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+    font-size:15px;line-height:1.8}
+  main{max-width:1040px;margin:0 auto;padding:28px 16px 80px}
+  h1{font-size:24px;margin:0 0 4px;color:var(--navy)}
+  .lead{color:var(--sub);margin:0 0 24px;font-size:13px}
+  h2{font-size:19px;color:var(--navy);border-left:5px solid var(--gold);padding-left:10px;margin:40px 0 12px}
+  h3{font-size:16px;margin:22px 0 8px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:12px 0}
+  table{width:100%;border-collapse:collapse;font-size:14px;background:var(--card)}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:#efede6;font-weight:700}
+  code{font-family:"SF Mono",Menlo,monospace;font-size:12.5px;background:#f0eee7;padding:1px 5px;border-radius:4px}
+  pre{background:#f0eee7;border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto;font-size:12.5px;line-height:1.6}
+  .tag{display:inline-block;font-size:12px;padding:1px 8px;border-radius:10px;border:1px solid var(--line);margin-right:4px}
+  .t-ok{background:var(--green-bg);color:var(--green);border-color:#bfe0cb}
+  .t-me{background:var(--blue-bg);color:var(--navy);border-color:#c9d1f1}
+  .t-out{background:var(--red-bg);color:var(--red);border-color:#efc4bf}
+  .t-old{background:#f0f0f0;color:#666}
+  .note{font-size:13px;color:var(--sub)}
+  .quote{border-left:3px solid var(--gold);background:var(--gold-bg);padding:8px 12px;margin:8px 0;font-size:14px}
+  svg{max-width:100%;height:auto;display:block}
+  .scroll{overflow-x:auto}
+  ol li,ul li{margin:4px 0}
+</style>
+</head>
+<body>
+<main>
+
+<h1>運転台 ── 開発の流れ・手順・いまの姿</h1>
+<p class="lead">2026-10-03 時点の実測で整理。自然にできあがってきた形を、決まりと実物の両方から書き起こしたもの。<br>
+（運転台＝社内名。お客様向けの名前は「AI-Mits＆経営アプリ」）</p>
+
+<!-- ============================================================ -->
+<h2>1. ひと目で：直しがお客様に届くまで</h2>
+
+<div class="card scroll">
+<svg viewBox="0 0 1000 470" xmlns="http://www.w3.org/2000/svg" font-family="Hiragino Sans, sans-serif">
+  <defs>
+    <marker id="ar" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5b6170"/>
+    </marker>
+    <marker id="arR" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b0342c"/>
+    </marker>
+  </defs>
+
+  <!-- 直し -->
+  <rect x="20" y="190" width="140" height="70" rx="10" fill="#faf4e4" stroke="#8a6a1f"/>
+  <text x="90" y="220" text-anchor="middle" font-size="15" font-weight="700" fill="#1f2430">直し</text>
+  <text x="90" y="242" text-anchor="middle" font-size="12" fill="#5b6170">モック→目視→実装</text>
+
+  <!-- main -->
+  <rect x="210" y="175" width="160" height="100" rx="10" fill="#eef1fb" stroke="#14206b" stroke-width="2"/>
+  <text x="290" y="210" text-anchor="middle" font-size="16" font-weight="700" fill="#14206b">main</text>
+  <text x="290" y="232" text-anchor="middle" font-size="12" fill="#5b6170">~/untendai-seiri</text>
+  <text x="290" y="252" text-anchor="middle" font-size="12" fill="#5b6170">コードはここ1本</text>
+  <line x1="160" y1="225" x2="208" y2="225" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
+
+  <!-- 4 apps -->
+  <rect x="440" y="30" width="230" height="70" rx="10" fill="#ffffff" stroke="#14206b"/>
+  <text x="555" y="58" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2430">製品版（Mits様の Mac）</text>
+  <text x="555" y="80" text-anchor="middle" font-size="12" fill="#5b6170">release.sh --自分だけ</text>
+
+  <rect x="440" y="120" width="230" height="70" rx="10" fill="#ffffff" stroke="#14206b"/>
+  <text x="555" y="148" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2430">freee版（協力者に手渡し）</text>
+  <text x="555" y="170" text-anchor="middle" font-size="12" fill="#5b6170">build-client.sh → zip</text>
+
+  <rect x="440" y="210" width="230" height="70" rx="10" fill="#ffffff" stroke="#14206b"/>
+  <text x="555" y="238" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2430">開発版（見せるデモ）</text>
+  <text x="555" y="260" text-anchor="middle" font-size="12" fill="#5b6170">build-dev.sh・架空データだけ</text>
+
+  <rect x="440" y="300" width="230" height="70" rx="10" fill="#f4f4f4" stroke="#9aa0ab" stroke-dasharray="5 4"/>
+  <text x="555" y="328" text-anchor="middle" font-size="14" font-weight="700" fill="#5b6170">マーケ版</text>
+  <text x="555" y="350" text-anchor="middle" font-size="12" fill="#5b6170">marketing の枝・09-26 で止まり</text>
+
+  <line x1="370" y1="205" x2="438" y2="70" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
+  <line x1="370" y1="215" x2="438" y2="155" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
+  <line x1="370" y1="240" x2="438" y2="245" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
+  <line x1="370" y1="255" x2="438" y2="330" stroke="#9aa0ab" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+  <text x="380" y="352" font-size="11" fill="#5b6170">手で merge</text>
+
+  <!-- Mits 検収 -->
+  <rect x="720" y="30" width="120" height="70" rx="35" fill="#eaf5ee" stroke="#2f7d4f"/>
+  <text x="780" y="60" text-anchor="middle" font-size="14" font-weight="700" fill="#2f7d4f">Mits様が</text>
+  <text x="780" y="80" text-anchor="middle" font-size="14" font-weight="700" fill="#2f7d4f">触って検収</text>
+  <line x1="670" y1="65" x2="718" y2="65" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
+
+  <!-- 出す -->
+  <rect x="870" y="30" width="110" height="70" rx="10" fill="#fbecea" stroke="#b0342c" stroke-width="2"/>
+  <text x="925" y="58" text-anchor="middle" font-size="14" font-weight="700" fill="#b0342c">「出す」</text>
+  <text x="925" y="80" text-anchor="middle" font-size="12" fill="#b0342c">の合図</text>
+  <line x1="840" y1="65" x2="868" y2="65" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
+
+  <!-- 世に出す -->
+  <rect x="760" y="170" width="220" height="110" rx="10" fill="#fbecea" stroke="#b0342c"/>
+  <text x="870" y="198" text-anchor="middle" font-size="15" font-weight="700" fill="#b0342c">世に出す</text>
+  <text x="870" y="222" text-anchor="middle" font-size="12" fill="#1f2430">release.sh（--自分だけ 無し）</text>
+  <text x="870" y="242" text-anchor="middle" font-size="12" fill="#1f2430">GitHub の Release を作る</text>
+  <text x="870" y="262" text-anchor="middle" font-size="12" fill="#1f2430">latest.json を新しい版に</text>
+  <line x1="925" y1="100" x2="900" y2="168" stroke="#b0342c" stroke-width="2" marker-end="url(#arR)"/>
+
+  <!-- お客様 -->
+  <rect x="760" y="330" width="220" height="90" rx="10" fill="#ffffff" stroke="#b0342c"/>
+  <text x="870" y="360" text-anchor="middle" font-size="15" font-weight="700" fill="#1f2430">お客様全員の製品版</text>
+  <text x="870" y="384" text-anchor="middle" font-size="12" fill="#5b6170">「新しい版があります」が出る</text>
+  <text x="870" y="404" text-anchor="middle" font-size="12" fill="#5b6170">ダウンロードのページも新版に</text>
+  <line x1="870" y1="280" x2="870" y2="328" stroke="#b0342c" stroke-width="2" marker-end="url(#arR)"/>
+
+  <!-- 例外 -->
+  <text x="20" y="420" font-size="12" fill="#b0342c">例外：お客様の手元で数字が間違っている／取り込みが止まっている → 溜めずにその場で世に出す</text>
+  <text x="20" y="445" font-size="12" fill="#5b6170">赤い線より左は、お客様に何も届かない（Mits様の Mac の中と、手渡しの相手だけ）</text>
+  <line x1="740" y1="20" x2="740" y2="20" stroke="#b0342c"/>
+  <line x1="745" y1="150" x2="745" y2="440" stroke="#b0342c" stroke-width="1.5" stroke-dasharray="6 4"/>
+</svg>
+</div>
+
+<div class="card">
+<b>流れを一言で：</b>直しはいつも main に入れる → main から4本を組む → Mits様の製品版に「自分だけ」で入れて溜める → Mits様が触って OK、「出す」と言われたときだけ世に出す。<br>
+<b>freee版を製品版に「組み込む」作業は、もう無い。</b>freee の枝は 2026-09-25 に main へ入り、それ以後 freee版は main から別の名前で組んでいる。製品版と freee版は同じコード。
+</div>
+
+<!-- ============================================================ -->
+<h2>2. アプリは4本（2026-10-03 実測）</h2>
+
+<div class="scroll">
+<table>
+<tr><th>アプリ</th><th>入っている場所・識別子</th><th>組むもと</th><th>組む道具</th><th>いまの版（組んだ時刻）</th><th>誰の手元にあるか</th></tr>
+<tr><td><b>製品版</b></td><td><code>/Applications/untendai.app</code><br><code>com.mits.untendai</code></td><td>main</td><td><code>release.sh --自分だけ</code><br>（中で <code>build-signed.sh</code>）</td><td>1.74.1（10-01 18:15）</td><td><span class="tag t-me">Mits様だけ 1.74.1</span><br><span class="tag t-out">お客様は 1.73.28</span></td></tr>
+<tr><td><b>freee版</b><br>（クライアント版）</td><td><code>/Applications/untendai-client.app</code><br><code>com.mits.untendai.client</code></td><td>main（09-25 から）</td><td><code>build-client.sh</code> → zip</td><td>1.74.1（10-03 09:42）</td><td><span class="tag t-old">協力者Aさん 1.73.24</span><br><span class="tag t-me">協力者Bさん 1.74.1 置いただけ・未共有</span></td></tr>
+<tr><td><b>開発版</b></td><td><code>/Applications/untendai-dev.app</code><br><code>com.mits.untendai.dev</code></td><td>main</td><td><code>build-dev.sh</code></td><td>1.73.53 の表示（中身は 09-30 20:27 の main・見本A／B／C）</td><td><span class="tag t-me">Mits様の Mac だけ</span></td></tr>
+<tr><td><b>マーケ版</b></td><td><code>/Applications/untendai-mkt.app</code><br><code>com.mits.untendai.mkt</code></td><td>marketing の枝<br><code>~/untendai-marketing</code></td><td><code>build-mkt.sh</code></td><td>1.73.43（09-26 07:38）</td><td><span class="tag t-me">Mits様の Mac だけ</span></td></tr>
+</table>
+</div>
+<p class="note">4本ともデータの置き場所は別（<code>~/Library/Application Support/&lt;識別子&gt;/</code>）。同じ Mac で同時に開いても数字は混ざらない。<br>
+ここに無い枝の作業場：<code>~/untendai-freee</code>（先端 8b3e4b6・2026-09-25。main に入り済み）。</p>
+
+<!-- ============================================================ -->
+<h2>3. 枝の移り変わり（自然にこうなった）</h2>
+
+<div class="card scroll">
+<svg viewBox="0 0 1000 250" xmlns="http://www.w3.org/2000/svg" font-family="Hiragino Sans, sans-serif">
+  <!-- main line -->
+  <line x1="40" y1="120" x2="960" y2="120" stroke="#14206b" stroke-width="4"/>
+  <text x="40" y="108" font-size="13" font-weight="700" fill="#14206b">main</text>
+  <!-- freee branch -->
+  <path d="M120,120 C160,60 200,60 240,60 L460,60 C500,60 520,100 540,120" fill="none" stroke="#2f7d4f" stroke-width="3"/>
+  <text x="250" y="50" font-size="13" font-weight="700" fill="#2f7d4f">freee の枝（~/untendai-freee）</text>
+  <circle cx="540" cy="120" r="7" fill="#2f7d4f"/>
+  <text x="470" y="148" font-size="12" fill="#2f7d4f">09-25 main に入る</text>
+  <!-- marketing -->
+  <path d="M600,120 C630,185 660,185 690,185 L760,185" fill="none" stroke="#9aa0ab" stroke-width="3" stroke-dasharray="6 4"/>
+  <text x="640" y="210" font-size="12" fill="#5b6170">marketing の枝：09-26 で止まり</text>
+  <!-- version dots -->
+  <g font-size="11" fill="#1f2430">
+    <circle cx="330" cy="60" r="6" fill="#fff" stroke="#2f7d4f" stroke-width="2"/><text x="300" y="85">1.73.24</text><text x="345" y="85" fill="#5b6170">freee版・協力者Aさんへ</text>
+    <circle cx="430" cy="120" r="6" fill="#b0342c"/><text x="410" y="98">1.73.28</text><text x="395" y="85" fill="#b0342c">いま世に出ている</text>
+    <circle cx="640" cy="120" r="6" fill="#fff" stroke="#14206b" stroke-width="2"/><text x="622" y="148">1.73.53</text>
+    <circle cx="790" cy="120" r="6" fill="#14206b"/><text x="772" y="148">1.74.0</text><text x="745" y="165" fill="#5b6170">管理者版</text>
+    <circle cx="900" cy="120" r="6" fill="#14206b"/><text x="882" y="148">1.74.1</text><text x="845" y="165" fill="#5b6170">製品版でも freee</text>
+  </g>
+  <text x="40" y="240" font-size="12" fill="#5b6170">1.73.28 → 1.74.1 の間に 50 の commit が溜まっている（世に出していない）</text>
+</svg>
+</div>
+
+<!-- ============================================================ -->
+<h2>4. 言葉を2つに分ける（2026-09-14 Mits様確定）</h2>
+
+<div class="quote">Mits様：「いつもAIがいう『世に出します』をどの内部基準をもつかだな。つまり、製品版だけど実質自分だけが見るにとどめて、まとめて『世に出す』」「OK、それをルールにしよう」</div>
+
+<table>
+<tr><th>言葉</th><th>何が起きるか</th><th>お客様に届くか</th><th>道具</th></tr>
+<tr><td><b>Mits様の製品版に入れる</b></td><td>版を上げて commit・タグ・push、Mac を組んで <code>/Applications/untendai.app</code> だけ入れ替え</td><td><span class="tag t-ok">届かない</span></td><td><code>bash tools/release.sh --自分だけ &lt;版&gt; "&lt;要約&gt;"</code></td></tr>
+<tr><td><b>世に出す</b></td><td>GitHub に Release を作り、latest.json を新しい版にする</td><td><span class="tag t-out">全員に届く</span></td><td><code>bash tools/release.sh &lt;版&gt; "&lt;要約&gt;"</code></td></tr>
+<tr><td><b>手渡し</b>（freee版）</td><td>zip を相手のフォルダに置き、Mits様が共有する</td><td>その相手だけ</td><td><code>bash tools/build-client.sh</code></td></tr>
+</table>
+
+<p><b>世に出すのは2つのときだけ。</b>①Mits様が製品版で触って「出す」と言われたとき ②お客様の手元で数字が間違っている・取り込みが止まっているとき（溜めずに出す）。</p>
+<p class="note">いまの製品版 1.74.1 を世に出すと、お客様全員の製品版にも「freee との連携」と管理者スイッチが出る。</p>
+
+<!-- ============================================================ -->
+<h2>5. 手順（いま実際に回している形）</h2>
+
+<h3>5-1. 直しを入れる</h3>
+<ol>
+<li>画面の直しは <b>モックを作る → Mits様が目視 → 実装</b> の順（2026-08-29）。モックは明るい画面で Chrome で開く</li>
+<li>main（<code>~/untendai-seiri</code>）に commit する。他の人がまだ commit していないファイルは入れない・戻さない</li>
+<li>含めたい直しを <code>git add</code> してから組む（2026-09-26・版が2つ出た事故から）</li>
+</ol>
+
+<h3>5-2. Mits様の製品版に入れる</h3>
+<pre>bash tools/release.sh --自分だけ 1.74.2 "直しの要約"
+bash tools/build-dev.sh          # 開発版も同じ main で組み直す（--自分だけ は開発版を入れ替えない）</pre>
+<ul>
+<li>入れたあと、<b>タグの中身と入っているアプリの中身を突き合わせる</b>（2026-09-26・1日で3回ずれた）</li>
+<li>動いている製品版が古いまま残ることがある。起動の時刻が組んだ時刻より前なら、閉じて開き直す（2026-10-01 に実際に起きた）</li>
+<li>確かめる：<code>curl -s https://untendai-update.3216-fun.workers.dev/latest.json</code> の version が変わっていない＝世に出ていない</li>
+</ul>
+
+<h3>5-3. freee版を手渡す（協力者・コンサルタント）</h3>
+<ol>
+<li><code>bash tools/build-client.sh</code> で main から組む。おまけの実行ファイル（<code>demo_seed_cred</code>）は外す</li>
+<li><b>実データの検査</b>（下の 6）を全部通す</li>
+<li>何も入っていない状態で開いて、案内の写真を1手ずつ撮る（この Mac の freee版のデータは先に退避し、撮り終えたら戻す）</li>
+<li>写真どおりに「はじめに読んでください」を書き、BS-jikki-kenshu の検収に通す</li>
+<li>相手のフォルダ（<code>すごいコンサル/&lt;お名前&gt;/</code>）に zip・案内・画像を置く</li>
+<li><b>共有と連絡は Mits様</b></li>
+</ol>
+
+<h3>5-4. 世に出す（Mits様の「出す」のあと）</h3>
+<pre>bash tools/release.sh &lt;溜めた最後の版&gt; "要約"</pre>
+<p class="note">手1〜4（版・push・Mac）は済み判定で飛ばし、手5 Windows・手6 Release・手7 latest.json から走る。</p>
+
+<!-- ============================================================ -->
+<h2>6. 実データを渡さないための確かめ（協力者Bさん向けで実施）</h2>
+
+<div class="card scroll">
+<svg viewBox="0 0 1000 150" xmlns="http://www.w3.org/2000/svg" font-family="Hiragino Sans, sans-serif">
+  <g font-size="12">
+    <rect x="10" y="30" width="150" height="80" rx="8" fill="#eef1fb" stroke="#14206b"/>
+    <text x="85" y="62" text-anchor="middle" font-weight="700">①中身の一覧</text><text x="85" y="84" text-anchor="middle" fill="#5b6170">ファイル5本だけ</text>
+    <rect x="175" y="30" width="150" height="80" rx="8" fill="#eef1fb" stroke="#14206b"/>
+    <text x="250" y="62" text-anchor="middle" font-weight="700">②名前・数字で探す</text><text x="250" y="84" text-anchor="middle" fill="#5b6170">会社名・番号・金額</text>
+    <rect x="340" y="30" width="150" height="80" rx="8" fill="#eef1fb" stroke="#14206b"/>
+    <text x="415" y="62" text-anchor="middle" font-weight="700">③帳簿の値で探す</text><text x="415" y="84" text-anchor="middle" fill="#5b6170">上位100ずつ</text>
+    <rect x="505" y="30" width="150" height="80" rx="8" fill="#eef1fb" stroke="#14206b"/>
+    <text x="580" y="62" text-anchor="middle" font-weight="700">④見本の帳簿</text><text x="580" y="84" text-anchor="middle" fill="#5b6170">架空の25名だけ</text>
+    <rect x="670" y="30" width="150" height="80" rx="8" fill="#eef1fb" stroke="#14206b"/>
+    <text x="745" y="62" text-anchor="middle" font-weight="700">⑤まっさら起動</text><text x="745" y="84" text-anchor="middle" fill="#5b6170">名前・金額 0件</text>
+    <rect x="835" y="30" width="150" height="80" rx="8" fill="#eaf5ee" stroke="#2f7d4f"/>
+    <text x="910" y="62" text-anchor="middle" font-weight="700" fill="#2f7d4f">⑥zip を開き直す</text><text x="910" y="84" text-anchor="middle" fill="#5b6170">②をもう1回</text>
+  </g>
+</svg>
+</div>
+
+<table>
+<tr><th>何を</th><th>結果（2026-10-03・1.74.1）</th></tr>
+<tr><td>zip の中身</td><td>Info.plist／本体／icon.icns／resources/sample.db／_CodeSignature の5本</td></tr>
+<tr><td>協力者Aさんの会社名・協力者Aさん・事業所番号・実際の金額</td><td>0件（zip を開いた中身で）</td></tr>
+<tr><td>同梱の見本の帳簿</td><td>104行・moneyforward だけ・顧客は架空の25名・メールは example.com</td></tr>
+<tr><td>まっさらな起動</td><td>最初の画面に名前・会社名・金額 0件（写真あり）</td></tr>
+<tr><td>残っているもの（お金の実データではない）</td><td>Mits様のメールアドレス（自己購入を外す決まった文字・<code>sanbo.rs:2316</code>・画面には出ない）／中継の署名の鍵1本（協力者Aさんの版と同じ作り）／AI-Mits の紹介文・会社概要</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>7. 製品版と freee版で、それぞれ何が見えるか（1.74.1）</h2>
+<table>
+<tr><th></th><th>製品版</th><th>freee版</th><th>開発版</th></tr>
+<tr><td>マネーフォワードとの連携</td><td>出る</td><td>出る</td><td>出る</td></tr>
+<tr><td>freee との連携</td><td>出る（1.74.1 から）</td><td>出る</td><td>出ない</td></tr>
+<tr><td>管理者スイッチ（顧問先を足して切り替える）</td><td>出る（設定 → アカウント）</td><td>出る（設定 → アカウント）</td><td>出る</td></tr>
+<tr><td>入っているデータ</td><td>Mits様の実データ</td><td>Mits様の Mac では Mits様の2社の実データ／手渡し先では空</td><td>架空の見本A・B・C だけ</td></tr>
+</table>
+<p class="note">出し分けは画面の印で行う：<code>freee-only</code>（client と production で出す）・<code>client-hide</code>（お渡し用で隠す）。印の無いものは4本すべてに出る。</p>
+
+<!-- ============================================================ -->
+<h2>8. 決算のあとの突き合わせ（2026-10-01 追加）</h2>
+<p>月次決算で口座ごとの残高が1円まで合ったら、運転台に取り込み直し、「現在位置」の5つ（売上高・売上総利益・経費合計・控除前所得金額・現預金）を元の会計ソフトの試算表と並べる。2026-10-01 は両社とも差0円。</p>
+<ul>
+<li>ヘルプ：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/help_kessan_go_untendai_tsukiawase.md</code></li>
+<li>毎月1日の予約タスク「前月の月次決算を締める」の手順に組み込み済み</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2>9. 実際に踏んだ落とし穴</h2>
+<table>
+<tr><th>いつ</th><th>何が起きたか</th><th>いまの決まり</th></tr>
+<tr><td>09-25</td><td>製品版の直しが freee版・マーケ版に届いていなかった</td><td>製品版に入れた画面の直しは、その回のうちに4本へ</td></tr>
+<tr><td>09-26</td><td>タグの中身と入っているアプリの中身が1日で3回ずれた</td><td>入れたら必ず突き合わせる</td></tr>
+<tr><td>09-26</td><td>お客様の画面に試験用のボタンが出た（出し分けの印が片方向だけ）</td><td><code>client-hide</code> を作り、両方向に</td></tr>
+<tr><td>09-30</td><td>版を上げるときのテストが、別の作業で縮めた見本の帳簿で落ちた</td><td>他の人の commit していないファイルは触らない・落ちたら止めて返す</td></tr>
+<tr><td>10-01</td><td>新しい版を入れたのに、古い製品版が動いたままで画面が変わらなかった</td><td>起動の時刻を見て、古ければ開き直す</td></tr>
+<tr><td>10-01</td><td>アプリの窓が画面の外（x=1800）に出ていてつかめなかった</td><td><code>window.json</code> を控えてから画面の中に書き換えて開き直す</td></tr>
+<tr><td>10-01</td><td>製品版と freee版が同じ戻り先（<code>localhost:27852</code>）を使う</td><td>freee につなぐときは、もう片方を閉じておく</td></tr>
+</table>
+
+<p class="note" style="margin-top:32px">正本の決まり：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/CLAUDE.md</code>（「アプリは4本ある」「世に出す の内部基準」ほか）。この HTML は 2026-10-03 の実測を写した一覧で、決まりの正本ではない。</p>
+
+</main>
+</body>
+</html>
