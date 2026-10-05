@@ -137,6 +137,11 @@
   td.hinichi.slash{
     font-size:13pt; letter-spacing:0.4em;
   }
+  td.hinichi.sunday .nth,
+  td.hinichi.sunday .ymd,
+  td.hinichi.sunday .dow{
+    color:#d03030;
+  }
 
   td.jikan{ font-size:13pt; color:var(--line); letter-spacing:0.4em; }
   td.jikan.filled{ font-size:12pt; color:var(--title); letter-spacing:0; font-weight:600; }
@@ -567,11 +572,13 @@
       trs[cls] = Array.from(tr.children).slice(1); // th を除く
     });
     const hinichi = trs['hinichi'] || [];
-    // 列ごとの日付（10/4 等）を取得
+    // 列ごとの日付（10/4 等）を取得・曜日が「日」なら sunday クラスを付与
     const days = hinichi.map(td => {
       const ymdEl = td.querySelector('.ymd');
       if (!ymdEl) return null;
       const m = ymdEl.textContent.replace(/[^0-9/]/g,'').match(/^\d+\/\d+/);
+      const dowEl = td.querySelector('.dow');
+      if (dowEl && /\(日\)/.test(dowEl.textContent)) td.classList.add('sunday');
       return m ? m[0] : null;
     });
 
