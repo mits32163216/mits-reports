@@ -216,21 +216,20 @@
   td.graph-cell .dot{
     position:absolute;
     width:2.5mm; height:2.5mm;
-    background:var(--title);
+    background:#000;
     border-radius:50%;
     transform:translate(-50%,-50%);
     z-index:4;
   }
   td.graph-cell .dot .label{
     position:absolute; left:2mm; top:-1mm;
-    font-size:7pt; color:var(--title); font-weight:600;
+    font-size:7pt; color:#000; font-weight:600;
     white-space:nowrap;
   }
   td.graph-cell .dot-mokuhyo{
     position:absolute;
     width:2mm; height:2mm;
-    background:#fff;
-    border:0.5pt solid var(--line);
+    background:#9a9a9a;
     border-radius:50%;
     transform:translate(-50%,-50%);
     z-index:3;
@@ -251,19 +250,32 @@
   .legend .lg-mok{
     display:inline-block;
     width:2mm; height:2mm;
-    border:0.5pt solid var(--line);
-    background:#fff;
+    background:#9a9a9a;
     border-radius:50%;
     vertical-align:middle;
-    margin-right:1mm;
+    margin-right:0.5mm;
+  }
+  .legend .lg-mok-line{
+    display:inline-block;
+    width:6mm; height:0;
+    border-top:0.4mm dotted #9a9a9a;
+    vertical-align:middle;
+    margin-right:1.5mm;
   }
   .legend .lg-jis{
     display:inline-block;
     width:2.5mm; height:2.5mm;
-    background:var(--title);
+    background:#000;
     border-radius:50%;
     vertical-align:middle;
-    margin:0 1mm 0 3mm;
+    margin:0 0.5mm 0 3mm;
+  }
+  .legend .lg-jis-line{
+    display:inline-block;
+    width:6mm; height:0;
+    border-top:0.5mm solid #000;
+    vertical-align:middle;
+    margin-right:1mm;
   }
 </style>
 </head>
@@ -609,24 +621,40 @@
       }
     });
 
-    // 目標の折れ線をSVGでページ内に重ねて描く（ページ内で閉じる）
+    // 折れ線をSVGでページ内に重ねて描く（ページ内で閉じる）
     const graphCells = trs['graph'] || [];
     const pageRect = page.getBoundingClientRect();
-    const pts = [];
+    // 列中央のxと該当kgからyを計算するヘルパ
+    const colXY = (col, kg) => {
+      const td = graphCells[col];
+      if (!td) return null;
+      const r = td.getBoundingClientRect();
+      return {
+        x: r.left + r.width/2 - pageRect.left,
+        y: r.top + kgToRatio(kg) * r.height - pageRect.top
+      };
+    };
+    // 目標の点列
+    const mokPts = [];
     days.forEach((day, col) => {
       let kg = null;
-      // 10/4 は目標なし→実測の62.2を起点にする
-      if (day === '10/4' && jissoku[day]) kg = jissoku[day].kg;
+      if (day === '10/4' && jissoku[day]) kg = jissoku[day].kg;  // 起点だけ実測の62.2
       else if (mokuhyo[day] != null) kg = mokuhyo[day];
       if (kg == null) return;
-      const td = graphCells[col];
-      if (!td) return;
-      const r = td.getBoundingClientRect();
-      const cx = r.left + r.width/2 - pageRect.left;
-      const cy = r.top + kgToRatio(kg) * r.height - pageRect.top;
-      pts.push({x:cx, y:cy});
+      const p = colXY(col, kg);
+      if (p) mokPts.push(p);
     });
-    if (pts.length >= 2) {
+    // 実測の点列
+    const jisPts = [];
+    days.forEach((day, col) => {
+      const jd = jissoku[day];
+      if (!jd || jd.kg == null) return;
+      const p = colXY(col, jd.kg);
+      if (p) jisPts.push(p);
+    });
+
+    const needSvg = (mokPts.length >= 2) || (jisPts.length >= 2);
+    if (needSvg) {
       const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
       svg.setAttribute('class','graph-overlay');
       svg.setAttribute('width', pageRect.width);
@@ -634,21 +662,32 @@
       svg.setAttribute('viewBox', `0 0 ${pageRect.width} ${pageRect.height}`);
       svg.style.width = pageRect.width + 'px';
       svg.style.height = pageRect.height + 'px';
-      const d = pts.map((p,i) => (i?'L':'M') + p.x + ',' + p.y).join(' ');
-      const path = document.createElementNS('http://www.w3.org/2000/svg','path');
-      path.setAttribute('d', d);
-      path.setAttribute('fill','none');
-      path.setAttribute('stroke','#8cc4d2');
-      path.setAttribute('stroke-width','0.5');
-      path.setAttribute('stroke-dasharray','2,1.5');
-      svg.appendChild(path);
+      const mkPath = (pts, stroke, width, dasharray) => {
+        if (pts.length < 2) return;
+        const d = pts.map((p,i) => (i?'L':'M') + p.x + ',' + p.y).join(' ');
+        const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+        path.setAttribute('d', d);
+        path.setAttribute('fill','none');
+        path.setAttribute('stroke',stroke);
+        path.setAttribute('stroke-width',width);
+        path.setAttribute('stroke-linecap','round');
+        path.setAttribute('stroke-linejoin','round');
+        if (dasharray) path.setAttribute('stroke-dasharray',dasharray);
+        svg.appendChild(path);
+      };
+      // 目標：グレーの点線
+      mkPath(mokPts, '#9a9a9a', 1.5, '2.5,1.8');
+      // 実測：黒の実線
+      mkPath(jisPts, '#000', 2.0);
       page.appendChild(svg);
     }
 
     // 凡例
     const legend = document.createElement('div');
     legend.className = 'legend';
-    legend.innerHTML = '<span class="lg-mok"></span>目標<span class="lg-jis"></span>乾燥体重（実測）';
+    legend.innerHTML =
+      '<span class="lg-mok"></span><span class="lg-mok-line"></span>目標（グレー・点線）' +
+      '<span class="lg-jis"></span><span class="lg-jis-line"></span>乾燥体重（実測・黒・実線）';
     page.appendChild(legend);
   });
 })();
