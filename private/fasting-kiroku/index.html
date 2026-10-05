@@ -857,10 +857,10 @@
         if (c > 50) msg.push('<span class="warn">糖質 ' + c.toFixed(0) + 'g（50g超）</span>');
         if (b.suitei) msg.push('消費は歩数からの推定（時計を外していた時間あり）');
       } else if (!mirai) {
-        msg.push(n === 0 ? '献立のチェックなし' : '消費のデータ待ち（翌朝の自動実行で入る）');
+        msg.push(kyou ? '今日は途中（チェックを押すと計算が入る）' : (n === 0 ? '献立のチェックなし' : '消費のデータ待ち（翌朝の自動実行で入る）'));
       }
       const fatUsed = fat != null ? fat : (mirai ? 0 : capA / 9);
-      if (!mirai) { Fa -= fatUsed / 1000; cumA += fatUsed; }
+      if (!mirai && !(kyou && fat == null)) { Fa -= fatUsed / 1000; cumA += fatUsed; }
       const nx = nextDay(d), tgt = K.mokuhyo[nx], act = (K.jissoku[nx] || {}).kg;
       let wtxt = (tgt != null ? tgt.toFixed(1) : '—') + ' / ' + (act != null ? act.toFixed(1) : '—');
       if (tgt != null && act != null) {
