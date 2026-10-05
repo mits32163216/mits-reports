@@ -850,12 +850,12 @@
         over = Math.max(0, deficit - capA);
         const amari = capA - deficit;
         if (kyou) msg.push('今日は途中（消費はこのあとも増える）');
-        if (over > 50) msg.push('<span class="warn">上限を ' + f0(over) + 'kcal 超え＝筋肉などから出る分。摂取を ' + f0(over) + 'kcal 増やす</span>');
+        if (over > 50 && !kyou) msg.push('<span class="warn">上限を ' + f0(over) + 'kcal 超え＝筋肉などから出る分。摂取を ' + f0(over) + 'kcal 増やす</span>');
         else if (amari > 50 && !kyou) msg.push('上限まで ' + f0(amari) + 'kcal 余り。歩数で約 ' + f0(amari / 42 * 1000) + '歩 足せば脂肪の減りが上限に届く');
         else if (!kyou) msg.push('<span class="good">上限どおり</span>');
         if (p < 90 && !kyou) msg.push('たんぱく質 ' + p.toFixed(0) + 'g（目安95g）');
         if (c > 50) msg.push('<span class="warn">糖質 ' + c.toFixed(0) + 'g（50g超）</span>');
-        if (b.suitei) msg.push('消費は歩数からの推定（時計を外していた時間あり）');
+        if (b.suitei && !kyou) msg.push('消費は歩数からの推定（時計を外していた時間あり）');
       } else if (!mirai) {
         msg.push(kyou ? '今日は途中（チェックを押すと計算が入る）' : (n === 0 ? '献立のチェックなし' : '消費のデータ待ち（翌朝の自動実行で入る）'));
       }
