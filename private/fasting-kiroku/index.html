@@ -65,18 +65,19 @@
     padding:0 1.5mm;
     white-space:nowrap;
   }
-  tr.hinichi    > *{ height:10mm; }
-  tr.mokuhyo    > *{ height:8mm; }
-  tr.taiju      > *{ height:12mm; }
-  tr.taishibo   > *{ height:9mm; }
-  tr.jikan      > *{ height:10mm; }
+  tr.hinichi    > *{ height:9mm; }
+  tr.mokuhyo    > *{ height:7mm; }
+  tr.taiju      > *{ height:10mm; }
+  tr.taishibo   > *{ height:8mm; }
+  tr.jikan      > *{ height:8mm; }
   tr.hosu       > *{ height:8mm; }
   tr.graph      > *{ height:var(--graph-h); }
-  tr.zutsu      > *{ height:10mm; }
-  tr.asa        > *{ height:10mm; }
-  tr.hiru       > *{ height:14mm; }
-  tr.yoru       > *{ height:10mm; }
-  tr.biko       > *{ height:25mm; }
+  tr.zutsu      > *{ height:8mm; }
+  tr.gozen      > *{ height:7mm; }
+  tr.hirusugi   > *{ height:19mm; }
+  tr.aruita     > *{ height:15mm; }
+  tr.yugata     > *{ height:15mm; }
+  tr.biko       > *{ height:12mm; }
 
   /* 食事見出し：2行 */
   th.meal-head{
@@ -103,6 +104,7 @@
     min-height:3.2mm;
   }
   td.meal2 .chk-xs{ font-size:5.5pt; }
+  td.meal .chk-note{ font-size:6pt; color:var(--line); }
   td.meal .chk.small, td.meal2 .chk.small{ font-size:5pt; white-space:nowrap; }
   td.meal .chk.m, td.meal2 .chk.m{ font-size:5.5pt; white-space:nowrap; }
   td.meal .chk::before, td.meal2 .chk::before, td.meal2 .chk-xs::before{
@@ -294,7 +296,7 @@
     <div class="title">ファスティングプログラム実践中の体調をチェックしましょう。</div>
     <div class="note">※1…あまり感じない　2…感じる　3…ものすごく感じる</div>
   </div>
-  <div class="explain"><span class="r">目標体重は、その日の朝の乾燥体重の目標。10/4 開始 62.2kg → 10/20 朝 56.8kg → 食事を戻して落ち着いたあと 59.0kg</span><span class="r">乾燥体重＝朝起きて排尿したあと、水を飲む前に、裸で量る体重</span></div>
+  <div class="explain"><span class="r">目標体重は、その日の朝の乾燥体重の目標。10/4 開始 62.2kg → 10/20 朝 58.4kg → 食事を戻して落ち着いたあと 60.6kg（脂肪量 10.8kg → 約9.5kg）</span><span class="r">乾燥体重＝朝起きて排尿したあと、水を飲む前に、裸で量る体重</span></div>
 
   <table>
     <colgroup>
@@ -341,7 +343,7 @@
       <td class="jikan">：</td><td class="jikan">：</td><td class="jikan">：</td>
     </tr>
     <tr class="hosu">
-      <th class="head">歩数（11,000歩）</th>
+      <th class="head">歩数（8,000歩）</th>
       <td class="blank"></td><td class="blank"></td><td class="blank"></td>
       <td class="blank"></td><td class="blank"></td><td class="blank"></td>
       <td class="blank"></td><td class="blank"></td><td class="blank"></td>
@@ -374,43 +376,56 @@
       <td class="scale"><div class="cells"><span>1</span><span>2</span><span>3</span></div></td>
     </tr>
 
-    <tr class="asa">
-      <th class="head meal-head"><span class="h1">朝 8:00</span><span class="h2">汁→卵</span></th>
-      <td class="meal"><span class="chk">カチュー湯</span><span class="chk">卵2個</span></td>
-      <td class="meal"><span class="chk">カチュー湯</span><span class="chk">卵2個</span></td>
-      <td class="meal"><span class="chk">カチュー湯</span><span class="chk">卵2個</span></td>
-      <td class="meal"><span class="chk">カチュー湯</span><span class="chk">卵2個</span></td>
-      <td class="meal"><span class="chk">カチュー湯</span><span class="chk">卵2個</span></td>
-      <td class="meal"><span class="chk">カチュー湯</span><span class="chk">卵2個</span></td>
-      <td class="meal"><span class="chk">カチュー湯</span><span class="chk">卵2個</span></td>
-      <td class="meal"><span class="chk">カチュー湯</span><span class="chk">卵2個</span></td>
-      <td class="meal"><span class="chk">カチュー湯</span><span class="chk">卵2個</span></td>
+    <tr class="gozen">
+      <th class="head meal-head"><span class="h1">午前</span><span class="h2">コーヒー</span></th>
+      <td class="meal empty"><span class="chk-note">前のプラン</span></td>
+      <td class="meal empty"><span class="chk-note">前のプラン</span></td>
+      <td class="meal"><span class="chk m">コーヒー＋MCT大1</span></td>
+      <td class="meal"><span class="chk m">コーヒー＋MCT大1</span></td>
+      <td class="meal"><span class="chk m">コーヒー＋MCT大1</span></td>
+      <td class="meal"><span class="chk m">コーヒー＋MCT大1</span></td>
+      <td class="meal"><span class="chk m">コーヒー＋MCT大1</span></td>
+      <td class="meal"><span class="chk m">コーヒー＋MCT大1</span></td>
+      <td class="meal"><span class="chk m">コーヒー＋MCT大1</span></td>
     </tr>
 
-    <tr class="hiru">
-      <th class="head meal-head"><span class="h1">昼 12:30</span><span class="h2">夕 16:00</span></th>
-      <td class="meal2"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span><span class="chk-xs">ジュース40ml＋水200ml</span></td>
-      <td class="meal2"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span><span class="chk-xs">ジュース40ml＋水200ml</span></td>
-      <td class="meal2"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span><span class="chk-xs">ジュース40ml＋水200ml</span></td>
-      <td class="meal2"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span><span class="chk-xs">ジュース40ml＋水200ml</span></td>
-      <td class="meal2"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span><span class="chk-xs">ジュース40ml＋水200ml</span></td>
-      <td class="meal2"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span><span class="chk-xs">ジュース40ml＋水200ml</span></td>
-      <td class="meal2"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span><span class="chk-xs">ジュース40ml＋水200ml</span></td>
-      <td class="meal2"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span><span class="chk-xs">ジュース40ml＋水200ml</span></td>
-      <td class="meal2"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span><span class="chk-xs">ジュース40ml＋水200ml</span></td>
+    <tr class="hirusugi">
+      <th class="head meal-head"><span class="h1">昼過ぎ 13:00</span><span class="h2">1食目</span></th>
+      <td class="meal empty"><span class="chk-note">前のプラン</span></td>
+      <td class="meal empty"><span class="chk-note">前のプラン</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵4個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵4個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵4個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵4個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵4個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵4個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵4個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
     </tr>
 
-    <tr class="yoru">
-      <th class="head meal-head"><span class="h1">夜 19:00</span><span class="h2">汁→納豆</span></th>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span></td>
+    <tr class="aruita">
+      <th class="head meal-head"><span class="h1">歩いたあと</span><span class="h2">16:30ごろ</span></th>
+      <td class="meal empty"><span class="chk-note">前のプラン</span></td>
+      <td class="meal empty"><span class="chk-note">前のプラン</span></td>
+      <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk m">筋トレ（週3）</span></td>
+      <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk m">筋トレ（週3）</span></td>
+      <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk m">筋トレ（週3）</span></td>
+      <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk m">筋トレ（週3）</span></td>
+      <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk m">筋トレ（週3）</span></td>
+      <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk m">筋トレ（週3）</span></td>
+      <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk m">筋トレ（週3）</span></td>
+    </tr>
+
+    <tr class="yugata">
+      <th class="head meal-head"><span class="h1">夕方 19:00</span><span class="h2">2食目</span></th>
+      <td class="meal empty"><span class="chk-note">前のプラン</span></td>
+      <td class="meal empty"><span class="chk-note">前のプラン</span></td>
+      <td class="meal"><span class="chk m">カチュー湯2杯＋ひじき</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk m">ベーコン50g</span></td>
+      <td class="meal"><span class="chk m">カチュー湯2杯＋ひじき</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk m">ベーコン50g</span></td>
+      <td class="meal"><span class="chk m">カチュー湯2杯＋ひじき</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk m">ベーコン50g</span></td>
+      <td class="meal"><span class="chk m">カチュー湯2杯＋ひじき</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk m">ベーコン50g</span></td>
+      <td class="meal"><span class="chk m">カチュー湯2杯＋ひじき</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk m">ベーコン50g</span></td>
+      <td class="meal"><span class="chk m">カチュー湯2杯＋ひじき</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk m">ベーコン50g</span></td>
+      <td class="meal"><span class="chk m">カチュー湯2杯＋ひじき</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk m">ベーコン50g</span></td>
     </tr>
 
     <tr class="biko">
@@ -428,7 +443,7 @@
     <div class="title">ファスティングプログラム実践中の体調をチェックしましょう。</div>
     <div class="note">※1…あまり感じない　2…感じる　3…ものすごく感じる</div>
   </div>
-  <div class="explain"><span class="r">目標体重は、その日の朝の乾燥体重の目標。10/4 開始 62.2kg → 10/20 朝 56.8kg → 食事を戻して落ち着いたあと 59.0kg</span><span class="r">乾燥体重＝朝起きて排尿したあと、水を飲む前に、裸で量る体重</span></div>
+  <div class="explain"><span class="r">目標体重は、その日の朝の乾燥体重の目標。10/4 開始 62.2kg → 10/20 朝 58.4kg → 食事を戻して落ち着いたあと 60.6kg（脂肪量 10.8kg → 約9.5kg）</span><span class="r">乾燥体重＝朝起きて排尿したあと、水を飲む前に、裸で量る体重</span></div>
 
   <table>
     <colgroup>
@@ -475,7 +490,7 @@
       <td class="jikan">：</td><td class="jikan">：</td><td class="jikan">：</td>
     </tr>
     <tr class="hosu">
-      <th class="head">歩数（11,000歩）</th>
+      <th class="head">歩数（8,000歩）</th>
       <td class="blank"></td><td class="blank"></td><td class="blank"></td>
       <td class="blank"></td><td class="blank"></td><td class="blank"></td>
       <td class="blank"></td><td class="blank"></td><td class="blank"></td>
@@ -508,41 +523,54 @@
       <td class="scale"><div class="cells"><span>1</span><span>2</span><span>3</span></div></td>
     </tr>
 
-    <tr class="asa">
-      <th class="head meal-head"><span class="h1">朝 8:00</span><span class="h2">汁→卵</span></th>
-      <td class="meal"><span class="chk">カチュー湯</span><span class="chk">卵2個</span></td>
-      <td class="meal"><span class="chk">カチュー湯</span><span class="chk">卵2個</span></td>
-      <td class="meal"><span class="chk">カチュー湯</span><span class="chk">卵2個</span></td>
-      <td class="meal"><span class="chk">カチュー湯</span><span class="chk">卵2個</span></td>
-      <td class="meal"><span class="chk">カチュー湯</span><span class="chk">卵2個</span></td>
-      <td class="meal"><span class="chk">カチュー湯</span><span class="chk">卵2個</span></td>
-      <td class="meal"><span class="chk">カチュー湯</span><span class="chk">卵2個</span></td>
+    <tr class="gozen">
+      <th class="head meal-head"><span class="h1">午前</span><span class="h2">コーヒー</span></th>
+      <td class="meal"><span class="chk m">コーヒー＋MCT大1</span></td>
+      <td class="meal"><span class="chk m">コーヒー＋MCT大1</span></td>
+      <td class="meal"><span class="chk m">コーヒー＋MCT大1</span></td>
+      <td class="meal"><span class="chk m">コーヒー＋MCT大1</span></td>
+      <td class="meal"><span class="chk m">コーヒー＋MCT大1</span></td>
+      <td class="meal"><span class="chk m">コーヒー＋MCT大1</span></td>
+      <td class="meal"><span class="chk m">コーヒー＋MCT大1</span></td>
       <td class="meal empty"></td>
       <td class="meal empty"></td>
     </tr>
 
-    <tr class="hiru">
-      <th class="head meal-head"><span class="h1">昼 12:30</span><span class="h2">夕 16:00</span></th>
-      <td class="meal2"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span><span class="chk-xs">ジュース40ml＋水200ml</span></td>
-      <td class="meal2"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span><span class="chk-xs">ジュース40ml＋水200ml</span></td>
-      <td class="meal2"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span><span class="chk-xs">ジュース40ml＋水200ml</span></td>
-      <td class="meal2"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span><span class="chk-xs">ジュース40ml＋水200ml</span></td>
-      <td class="meal2"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span><span class="chk-xs">ジュース40ml＋水200ml</span></td>
-      <td class="meal2"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span><span class="chk-xs">ジュース40ml＋水200ml</span></td>
-      <td class="meal2"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span><span class="chk-xs">ジュース40ml＋水200ml</span></td>
-      <td class="meal2 empty"></td>
-      <td class="meal2 empty"></td>
+    <tr class="hirusugi">
+      <th class="head meal-head"><span class="h1">昼過ぎ 13:00</span><span class="h2">1食目</span></th>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵4個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵5個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵5個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵5個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵5個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵5個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵5個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
     </tr>
 
-    <tr class="yoru">
-      <th class="head meal-head"><span class="h1">夜 19:00</span><span class="h2">汁→納豆</span></th>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき2.5g</span><span class="chk">納豆1</span></td>
+    <tr class="aruita">
+      <th class="head meal-head"><span class="h1">歩いたあと</span><span class="h2">16:30ごろ</span></th>
+      <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk m">筋トレ（週3）</span></td>
+      <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk m">筋トレ（週3）</span></td>
+      <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk m">筋トレ（週3）</span></td>
+      <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk m">筋トレ（週3）</span></td>
+      <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk m">筋トレ（週3）</span></td>
+      <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk m">筋トレ（週3）</span></td>
+      <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk m">筋トレ（週3）</span></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+    </tr>
+
+    <tr class="yugata">
+      <th class="head meal-head"><span class="h1">夕方 19:00</span><span class="h2">2食目</span></th>
+      <td class="meal"><span class="chk m">カチュー湯2杯＋ひじき</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk m">ベーコン50g</span></td>
+      <td class="meal"><span class="chk m">カチュー湯2杯＋ひじき</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk m">ベーコン50g</span></td>
+      <td class="meal"><span class="chk m">カチュー湯2杯＋ひじき</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk m">ベーコン50g</span></td>
+      <td class="meal"><span class="chk m">カチュー湯2杯＋ひじき</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk m">ベーコン50g</span></td>
+      <td class="meal"><span class="chk m">カチュー湯2杯＋ひじき</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk m">ベーコン50g</span></td>
+      <td class="meal"><span class="chk m">カチュー湯2杯＋ひじき</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk m">ベーコン50g</span></td>
+      <td class="meal"><span class="chk m">カチュー湯2杯＋ひじき</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk m">ベーコン50g</span></td>
       <td class="meal empty"></td>
       <td class="meal empty"></td>
     </tr>
@@ -564,10 +592,10 @@
     "10/5": {kg: 61.0, jikan: "13:13", shibo: 16.7, hosu: 1168}
   };
   const mokuhyo = {
-    "10/5": 61.3, "10/6": 60.6, "10/7": 59.9, "10/8": 59.4, "10/9": 59.1,
-    "10/10": 58.9, "10/11": 58.7, "10/12": 58.5, "10/13": 58.3, "10/14": 58.1,
-    "10/15": 57.8, "10/16": 57.6, "10/17": 57.4, "10/18": 57.2, "10/19": 57.0,
-    "10/20": 56.8
+    "10/5": 61.5, "10/6": 60.9, "10/7": 60.2, "10/8": 59.6, "10/9": 59.5,
+    "10/10": 59.4, "10/11": 59.3, "10/12": 59.2, "10/13": 59.1, "10/14": 59.0,
+    "10/15": 58.9, "10/16": 58.8, "10/17": 58.7, "10/18": 58.6, "10/19": 58.5,
+    "10/20": 58.4
   };
   // ===== グラフ縦軸の範囲（上端63・下端55）。8帯＝目盛り1/8..7/8 が 62..56 =====
   const RANGE_TOP = 63.0;
