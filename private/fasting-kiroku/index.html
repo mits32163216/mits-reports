@@ -400,7 +400,7 @@
     <tr class="gozen">
       <th class="head meal-head"><span class="h1">午前</span><span class="h2">コーヒー</span></th>
       <td class="meal empty"><span class="chk-note">前のプラン</span></td>
-      <td class="meal empty"><span class="chk-note">前のプラン</span></td>
+      <td class="meal"><span class="chk m">コーヒー＋MCT大1</span></td>
       <td class="meal"><span class="chk m">コーヒー＋MCT大1</span></td>
       <td class="meal"><span class="chk m">コーヒー＋MCT大1</span></td>
       <td class="meal"><span class="chk m">コーヒー＋MCT大1</span></td>
@@ -413,7 +413,7 @@
     <tr class="hirusugi">
       <th class="head meal-head"><span class="h1">昼過ぎ 13:00</span><span class="h2">1食目</span></th>
       <td class="meal empty"><span class="chk-note">前のプラン</span></td>
-      <td class="meal empty"><span class="chk-note">前のプラン</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵4個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
       <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵4個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
       <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵4個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
       <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵4個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
@@ -426,7 +426,7 @@
     <tr class="aruita">
       <th class="head meal-head"><span class="h1">歩いたあと</span><span class="h2">16:30ごろ</span></th>
       <td class="meal empty"><span class="chk-note">前のプラン</span></td>
-      <td class="meal empty"><span class="chk-note">前のプラン</span></td>
+      <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk m">筋トレ（週3）</span></td>
       <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk m">筋トレ（週3）</span></td>
       <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk m">筋トレ（週3）</span></td>
       <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk m">筋トレ（週3）</span></td>
@@ -439,7 +439,7 @@
     <tr class="yugata">
       <th class="head meal-head"><span class="h1">夕方 19:00</span><span class="h2">2食目</span></th>
       <td class="meal empty"><span class="chk-note">前のプラン</span></td>
-      <td class="meal empty"><span class="chk-note">前のプラン</span></td>
+      <td class="meal"><span class="chk m">カチュー湯2杯＋ひじき</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk m">ベーコン50g</span></td>
       <td class="meal"><span class="chk m">カチュー湯2杯＋ひじき</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk m">ベーコン50g</span></td>
       <td class="meal"><span class="chk m">カチュー湯2杯＋ひじき</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk m">ベーコン50g</span></td>
       <td class="meal"><span class="chk m">カチュー湯2杯＋ひじき</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk m">ベーコン50g</span></td>
@@ -835,7 +835,7 @@
       const capP = CAP * Fp, capA = CAP * Fa;
       const planIn = PLAN_BURN - capP, planFat = capP / 9;
       Fp -= capP / 9000; cumP += planFat;
-      const mirai = num(d) > num(TODAY), kyou = d === TODAY, mae = (d === '10/4' || d === '10/5');
+      const mirai = num(d) > num(TODAY), kyou = d === TODAY, mae = (d === '10/4');
       let kcal = 0, p = 0, c = 0, n = 0;
       Object.keys(chk).forEach(k => {
         if (!k.startsWith(d + '|')) return;
