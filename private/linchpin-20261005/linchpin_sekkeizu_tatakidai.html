@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>設計図のたたき台</title>
+<style>
+:root{color-scheme:light only;--bg:#fbfaf6;--fg:#1d1d1b;--sub:#5a5a55;--line:#d9d6cc;--link:#1a4f8a;--chigai:#a3201b;--bar:#f3f1ea}
+*{box-sizing:border-box}
+html{scroll-padding-top:7.5rem}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;font-size:16px;line-height:1.85;overflow-x:hidden}
+main{max-width:960px;margin:0 auto;padding:0 16px 80px}
+a{color:var(--link)}
+h1{font-size:1.5rem;margin:1.2rem 0 .4rem}
+h2{font-size:1.35rem;margin:2.6rem 0 .8rem;padding-bottom:.3rem;border-bottom:2px solid var(--fg)}
+h3{font-size:1.12rem;margin:1.8rem 0 .5rem}
+h4{font-size:1.02rem;margin:1.2rem 0 .4rem}
+h5,h6{font-size:.98rem;margin:1rem 0 .3rem}
+p{margin:.5rem 0}
+.small{font-size:.85rem;color:var(--sub)}
+.bar{position:sticky;top:0;z-index:10;background:var(--bar);border-bottom:1px solid var(--line)}
+.bar-in{max-width:960px;margin:0 auto;padding:6px 16px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
+.bar .grp{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.bar .gl{font-size:.8rem;color:var(--sub);margin-right:2px}
+.fb,.clr{font:inherit;font-size:.8rem;line-height:1.3;padding:3px 8px;border:1px solid #9a968a;background:#fff;color:var(--fg);border-radius:4px;cursor:pointer}
+.fb .c{margin-left:4px;color:var(--sub);font-size:.72rem}
+.fb.on{border-color:var(--fg);background:var(--fg);color:#fff}
+.fb.on .c{color:#ddd}
+.cnt{font-size:.8rem;color:var(--sub)}
+.top{font-size:.8rem}
+.toc{margin:1rem 0;padding:.6rem .9rem;border:1px solid var(--line);background:#fff}
+.toc a{display:inline-block;margin:0 1rem .2rem 0}
+.toc-t{font-weight:bold}
+.toc-m{margin-top:.3rem;font-size:.9rem}
+.tw{overflow-x:auto;max-width:100%;margin:.5rem 0}
+table{border-collapse:collapse;font-size:.86rem;line-height:1.55;min-width:100%}
+th,td{border:1px solid var(--line);padding:4px 6px;vertical-align:top;text-align:left;overflow-wrap:anywhere}
+th{background:#f1efe8}
+td.n{text-align:right;white-space:nowrap}
+tr.sum td{font-weight:bold}
+tr.chigai td{color:var(--chigai)}
+.chigai-mk{color:var(--chigai);font-weight:bold;font-size:.82rem}
+.src{border-left:4px solid var(--fg);padding-left:.5rem}
+.wip{color:var(--sub)}
+.md .li{margin:.15rem 0;overflow-wrap:anywhere}
+.md .li .mk{display:inline-block;min-width:1.4em;color:var(--sub)}
+.md p{overflow-wrap:anywhere}
+code{font-family:"SF Mono",Menlo,monospace;font-size:.85em;background:#eeece4;padding:0 3px;border-radius:3px;overflow-wrap:anywhere}
+pre.code{white-space:pre-wrap;overflow-wrap:anywhere;background:#f1efe8;padding:.5rem;font-size:.82rem;line-height:1.5}
+.month>h3{font-size:1.25rem;border-bottom:1px solid var(--line)}
+.day>h4{color:var(--sub)}
+.item{background:#fff;border:1px solid var(--line);border-radius:6px;padding:.6rem .8rem;margin:.6rem 0}
+.item:target{outline:3px solid var(--link)}
+.meta{display:flex;flex-wrap:wrap;gap:2px 12px;font-size:.84rem;color:var(--sub);line-height:1.5}
+.meta .dt{font-weight:bold}
+.meta .sn{color:var(--fg)}
+.meta .sid{font-family:"SF Mono",Menlo,monospace}
+.meta .shu{font-weight:bold;color:var(--fg)}
+.note{font-size:.82rem;color:#7a4a00;font-weight:bold;line-height:1.5}
+.dan,.fld{font-size:.8rem;color:var(--sub);line-height:1.5}
+.raw{white-space:pre-wrap;overflow-wrap:anywhere;margin-top:.4rem}
+.tanto{margin:1.2rem 0;padding-top:.2rem}
+.hsrc{font-size:.85rem;color:var(--sub);margin:.3rem 0}
+.theme{background:#fff;border:1px solid var(--line);border-radius:6px;padding:.5rem .8rem;margin:.6rem 0}
+.chain{font-size:.82rem;color:var(--sub);border-bottom:1px dashed var(--line);padding-bottom:.3rem;margin-bottom:.3rem;overflow-wrap:anywhere}
+.nolink{color:var(--sub)}
+hr{border:0;border-top:1px solid var(--line);margin:1rem 0}
+[hidden]{display:none!important}
+
+.zu-wrap{margin:1rem 0 1.4rem}
+.zu-sub{font-weight:bold;margin:.8rem 0 .3rem}
+svg.zu{width:100%;height:auto;display:block;background:#fff;border:1px solid var(--line)}
+.zu-box{fill:none;stroke:#1d1d1b;stroke-width:1.6}
+.zu-dash{stroke-dasharray:6 4}
+.zu-ar{stroke:#1d1d1b;stroke-width:1.6}
+.zu-hdp{fill:#1d1d1b}
+.zu-h{font-size:16px;font-weight:bold;fill:#1d1d1b}
+.zu-t{font-size:15px;fill:#1d1d1b}
+.zu-p{font-size:15px;fill:#1a4f8a}
+.zu-m{font-size:15px;font-weight:bold;fill:#a3201b}
+.zu-mt{font-size:14px;fill:#a3201b}
+.zu-v{font-size:16px;font-weight:bold;fill:#1d1d1b}
+a.zu-a:hover .zu-box{stroke:#1a4f8a;stroke-width:2.4}
+a.zu-a:hover text{fill:#1a4f8a}
+
+@media (max-width:600px){body{font-size:15px}.bar-in{gap:3px 6px}.fb{font-size:.74rem;padding:2px 6px}html{scroll-padding-top:11rem}}
+.toc6{line-height:1.6;margin:.15rem 0}.toc6.l4{margin-left:1.2em;font-size:.92rem}.toc6.l5{margin-left:2.4em;font-size:.88rem}.toc6.l6{margin-left:3.6em;font-size:.86rem}.toc6 a{display:inline;margin:0}html{scroll-padding-top:1rem}</style>
+</head>
+<body>
+<main>
+<p class="small">「Linchpin に関わる Mits様の発話」（linchpin_nou_no_naka.html）の 6章 だけを出したもの。組み立て：build_report.py</p>
+<nav class="toc"><div class="toc-t">目次</div><div class="toc6 l4"><a href="#k1">提案書 ── Mits様の Linchpin はこう組む（第二版・考えた中身）</a></div><div class="toc6 l5"><a href="#k2">0. 読み方</a></div><div class="toc6 l5"><a href="#k3">1. 結論 ── この組み方を提案します</a></div><div class="toc6 l5"><a href="#k4">2. 本の9つの段に当てた一覧（本 p10 の図・sekkeizu_zu_v2.json と同じ中身）</a></div><div class="toc6 l5"><a href="#k5">3. 考えた筋道</a></div><div class="toc6 l6"><a href="#k6">3-1 入り口の集客 ── 人がどこから入り、どこで減るか</a></div><div class="toc6 l6"><a href="#k7">3-2 将来の CVR ── 広告が自分で払えるか（損益の線）</a></div><div class="toc6 l6"><a href="#k8">3-3 継続率 ── 何が支え、何が崩すか</a></div><div class="toc6 l6"><a href="#k9">3-4 Mits様のやりたいこと・やりたくないこと ── どの段が受け持つか</a></div><div class="toc6 l6"><a href="#k10">3-5 伽藍とバザールの実現 ── どの段が受け持つか</a></div><div class="toc6 l6"><a href="#k11">3-6 2年とその先（発言「AIビジネスはおそらくこの2年程度」）── 右上と右下</a></div><div class="toc6 l6"><a href="#k12">3-7 比べた組み方</a></div><div class="toc6 l5"><a href="#k13">4. ぶつかる所と扱い方</a></div><div class="toc6 l5"><a href="#k14">5. 決め手になるのにまだ決まっていない所</a></div><div class="toc6 l5"><a href="#k15">6. 根拠の追加（新しく引いた原文・一字も変えていません）</a></div><div class="toc6 l3"><a href="#kk1">設計図のたたき台（仮の提案）── Mits様の発言だけで Linchpin の9段を埋める</a></div><div class="toc6 l4"><a href="#kk2">全体 ── 9段にまたがる考え</a></div><div class="toc6 l4"><a href="#kk3">① 継続課金（会員・ソフト）</a></div><div class="toc6 l5"><a href="#kk4">①-1 AI-Mits＆経営アプリ PREMIUM（ソフトの継続課金）</a></div><div class="toc6 l5"><a href="#kk5">①-2 The Innovation AI経営サポート（竹：AI経営MAX／梅：AI経営PRO）</a></div><div class="toc6 l5"><a href="#kk6">①-3 計画表の上での継続の置き方（和佐型の数字の表）</a></div><div class="toc6 l5"><a href="#kk7">①-4 継続に残ってもらう理由</a></div><div class="toc6 l5"><a href="#kk8">① と本の注意（並べるだけ）</a></div><div class="toc6 l4"><a href="#kk9">② 無料の贈り物（MIFGE。継続課金の無料体験を含む）</a></div><div class="toc6 l4"><a href="#kk10">③⑥⑨ 人を集める（人柄・物語、広告、YouTube、メール）</a></div><div class="toc6 l5"><a href="#kk11">広告</a></div><div class="toc6 l5"><a href="#kk12">顧客像と発信の芯（人柄・物語）</a></div><div class="toc6 l5"><a href="#kk13">メール</a></div><div class="toc6 l4"><a href="#kk14">④ 継続課金を含むまとめ売り（オファー）</a></div><div class="toc6 l4"><a href="#kk15">⑤ 劇的な実演その1（チャレンジ・ウェビナー。お礼ページに②を置く）</a></div><div class="toc6 l4"><a href="#kk16">⑦ 高額商品</a></div><div class="toc6 l4"><a href="#kk17">⑧ 劇的な実演その2（ライブ・イベント）</a></div><div class="toc6 l4"><a href="#kk18">段と段のつながり（Mits様が語っている所だけ）</a></div><div class="toc6 l4"><a href="#kk19">決まっていない所（Mits様の発言なし）</a></div><div class="toc6 l4"><a href="#kk20">本の注意と Mits様の発言（並べるだけ）</a></div><div class="toc6 l4"><a href="#kk21">考えが変わった所（前と後。たたき台には後を採った）</a></div></nav>
+<section id="sho6"><h2>6. 設計図のたたき台</h2><div class="md"><h4 id="k1">提案書 ── Mits様の Linchpin はこう組む（第二版・考えた中身）</h4>
+<h5 id="k2">0. 読み方</h5>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>「発言」と書いた行は Mits様の原文です。末尾の〔根拠：…〕が出どころで、〔根拠：<a href="#kk4">①-1</a>〕は kari_teian.md の見出し、〔根拠：日時｜番号〕は末尾の 6. 根拠の追加 に原文を写した新しい引用、〔根拠：ファイル名〕は記録です。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>「考え」と書いた行は BA-strategist の考えです。発言と混ぜていません。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>「本」と書いた行は The Linchpin の本 p10〜34 の記述で、ページ番号を添えています。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>数字には出どころを付けています。（発言）（記録）（本 pNN）のどれにも無い数字は（仮置き：理由）と書き、出どころのある数字から計算した数字は（計算）と書いています。「置き数字」は Mits様が計画表のために置かれた数字で、発言として扱います。文中の「三つ」「一本」のような、この文書の中の項目の数は出どころを付けていません。</div>
+<hr>
+<h5 id="k3">1. 結論 ── この組み方を提案します</h5>
+<p>一本の線にします。</p>
+<p>⑥ Meta広告・今のメルマガ → ⑤ オプトインページと 60業種を6タイプに分けた動画 → そのお礼ページに ② AI-Mits＆経営アプリのダウンロード（90日無料）→ ④ フロント商品 29,800円（AIグループ講座4回の動画＋AI経営PRO 3ヶ月）→ お礼の直後に ⑦ BE-02 AIグループ講座 142,000円のワンタイムオファー → 通らなかった人は ⑨ ステップメール → ⑧ 毎月の無料体験セミナー → 無料個別相談 → ⑦ → ① 継続課金は1本の階段（LEVEL 1 AI-Mits＆経営アプリ PREMIUM 月3,300円／LEVEL 2 梅 AI経営PRO／LEVEL 3 竹 AI経営MAX。上の段は下の段を含む）。（価格はすべて発言〔根拠：<a href="#kk4">①-1</a>／<a href="#kk5">①-2</a>／<a href="#kk14">④</a>／<a href="#kk16">⑦</a>〕）</p>
+<p>この組み方を選ぶ理由は五つです。</p>
+<div class="li" style="margin-left:0.20em"><span class="mk">1.</span>広告代を自分で払う形になる（オプトイン率とフロント成約率が 3-2 の損益の線を超えることが条件）。④ の売上が ⑥ の広告を払い、集めた全員に ② でアプリを見せる（入るのは 3-2 の実測の幅で 4.5〜17.8%）。本が、① の継続課金が利益で ④ が広告代、と置いた型（本 p22）そのものになる。（考え）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">2.</span>「AIビジネスはおそらくこの2年程度。しかしAIつと経営アプリはその先も続いていく」が形になる。⑤④⑦⑧ と 梅・竹 は2年で入れ替える部品、① LEVEL 1（アプリ）は残る土台。土台を先に置くから、2年後に上を替えても線は切れない。（発言〔根拠：<a href="#kk2">全体</a>〕／考え）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">3.</span>継続率をソフトと自分の数字で支えられる。本「ソフトがいちばん留まる」（本 p34）。竹・梅を辞めた人が非会員に落ちず、自分の数字が入ったアプリに残る。（考え）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">4.</span>伽藍とバザールの受け持ちがはっきりする。広める側＝②（無料のアプリ）と③（紹介・パートナー・コンサル事務所）、売るのは判断の側＝①のかかりつけ・竹・⑦。（考え）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">5.</span>Mits様のやりたいことが全部どこかの段に入る。西田メソッドが広まる（②①）、可処分時間を増やす（①）、個別相談をたくさんやる（⑧）、抽象度の高いことを伝える（入低出高の出口＝⑦と竹）。（発言〔根拠：<a href="#kk2">全体</a>／<a href="#kk4">①-1</a>／<a href="#kk16">⑦</a>〕／考え）</div>
+<p>一文で言うと、Mits様の言われる2年〔根拠：<a href="#kk2">全体</a>〕の AI講座の線で広告代を払いながら人を集め、集めた全員に ② でアプリを見せ（入るのは 3-2 の実測の幅で 4.5〜17.8%）、入った人を free → PREMIUM に進め、その上に 梅・竹 を重ねる、です。（考え）</p>
+<!--ZU--><div class="zu-wrap" id="zu"><svg class="zu" viewBox="0 0 1200 1668" role="img" aria-label="Linchpin の図（本の p26 の図の形）" xmlns="http://www.w3.org/2000/svg"><defs><marker id="zu-hd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="zu-hdp"/></marker></defs><rect x="10" y="40" width="34" height="1598" class="zu-box"/><text x="32.0" y="839.0" class="zu-v" transform="rotate(-90 32.0 839.0)" text-anchor="middle">人を集める（③⑥⑨）</text><a href="#teian-6" class="zu-a"><g class="zu-dan" data-num="⑥"><rect x="56" y="40" width="180" height="764" class="zu-box"/><text x="66" y="66" class="zu-h">⑥ 人を集める（⑤ </text><text x="66" y="86" class="zu-h">へ送る）</text><text x="66" y="106" class="zu-t">・Meta 広告（対象</text><text x="66" y="126" class="zu-t">　は知財を提供している</text><text x="66" y="146" class="zu-t">　仕事の人・士業を除く</text><text x="66" y="166" class="zu-t">　。Mits様の置き数字</text><text x="66" y="186" class="zu-t">　：CTR 1.5%・CPM </text><text x="66" y="206" class="zu-t">　5,000〜7,000・オ</text><text x="66" y="226" class="zu-t">　プトイン20%）</text><text x="66" y="246" class="zu-t">・まず今のリスト約1</text><text x="66" y="266" class="zu-t">　800人にメールで送り</text><text x="66" y="286" class="zu-t">　、売りながら直す。そ</text><text x="66" y="306" class="zu-t">　のあと広告</text><text x="66" y="326" class="zu-t">・メルマガ 毎日21〜</text><text x="66" y="346" class="zu-t">　24時に1通</text><text x="66" y="366" class="zu-t">・note・スレッズは</text><text x="66" y="386" class="zu-t">　おまけ</text><text x="66" y="406" class="zu-t">・過去の広告ファネル</text><text x="66" y="426" class="zu-t">　 301_広告「お金が</text><text x="66" y="446" class="zu-t">　残る経営の仕組みとは</text><text x="66" y="466" class="zu-t">　」メイン の実測：pv</text><text x="66" y="486" class="zu-t">　 814・uu 504・登</text><text x="66" y="506" class="zu-t">　録 10（記録）</text><text x="66" y="526" class="zu-p">価格：登録1件 約2,</text><text x="66" y="546" class="zu-p">000円（Mits様の置</text><text x="66" y="566" class="zu-p">き数字からの計算）</text></g></a><line x1="44" y1="70" x2="54" y2="70" class="zu-ar" marker-end="url(#zu-hd)"/><line x1="236" y1="70" x2="264" y2="70" class="zu-ar" marker-end="url(#zu-hd)"/><line x1="44" y1="96" x2="54" y2="96" class="zu-ar" marker-end="url(#zu-hd)"/><line x1="236" y1="96" x2="264" y2="96" class="zu-ar" marker-end="url(#zu-hd)"/><line x1="44" y1="122" x2="54" y2="122" class="zu-ar" marker-end="url(#zu-hd)"/><line x1="236" y1="122" x2="264" y2="122" class="zu-ar" marker-end="url(#zu-hd)"/><a href="#teian-5" class="zu-a"><g class="zu-dan" data-num="⑤"><rect x="266" y="40" width="220" height="764" class="zu-box"/><text x="276" y="66" class="zu-h">⑤ 劇的な実演その1</text><text x="276" y="86" class="zu-t">・オプトインページ（約束</text><text x="276" y="106" class="zu-t">　：AI を道具として使う側</text><text x="276" y="126" class="zu-t">　から、AI で商品を出し続</text><text x="276" y="146" class="zu-t">　ける側に回る。）</text><text x="276" y="166" class="zu-t">・60業種を6タイプに分け</text><text x="276" y="186" class="zu-t">　たリスクと4Cの動画</text><text x="276" y="206" class="zu-t">・お礼ページに ② のダウ</text><text x="276" y="226" class="zu-t">　ンロード（考え・未定）</text><text x="276" y="246" class="zu-m">未定</text><text x="276" y="266" class="zu-mt">・お礼ページに ② を置く</text><text x="276" y="286" class="zu-mt">　か</text><text x="276" y="306" class="zu-p">価格：無料（登録）</text></g></a><a href="#teian-4" class="zu-a"><g class="zu-dan" data-num="④"><rect x="486" y="40" width="130" height="764" class="zu-box zu-dash"/><text x="496" y="66" class="zu-h">④ 継続課金</text><text x="496" y="86" class="zu-h">を含むまとめ</text><text x="496" y="106" class="zu-h">売り</text><text x="496" y="126" class="zu-t">・フロント商</text><text x="496" y="146" class="zu-t">　品：AIグルー</text><text x="496" y="166" class="zu-t">　プ講座4回の動</text><text x="496" y="186" class="zu-t">　画</text><text x="496" y="206" class="zu-t">・AI経営PRO </text><text x="496" y="226" class="zu-t">　3ヶ月込み（個</text><text x="496" y="246" class="zu-t">　別相談だけ無</text><text x="496" y="266" class="zu-t">　し）、4ヶ月目</text><text x="496" y="286" class="zu-t">　から5,000円</text><text x="496" y="306" class="zu-t">・証明2つ（道</text><text x="496" y="326" class="zu-t">　具が使えるこ</text><text x="496" y="346" class="zu-t">　と・経営で結</text><text x="496" y="366" class="zu-t">　果を出したこ</text><text x="496" y="386" class="zu-t">　と）と和佐型</text><text x="496" y="406" class="zu-t">　の返金保証</text><text x="496" y="426" class="zu-t">・この段の売</text><text x="496" y="446" class="zu-t">　上が ⑥ の広</text><text x="496" y="466" class="zu-t">　告代を払う（</text><text x="496" y="486" class="zu-t">　登録1件 2,00</text><text x="496" y="506" class="zu-t">　0円 のとき、</text><text x="496" y="526" class="zu-t">　④ だけなら登</text><text x="496" y="546" class="zu-t">　録100人のう</text><text x="496" y="566" class="zu-t">　ち約7人＝6.7</text><text x="496" y="586" class="zu-t">　%、⑦ のワン</text><text x="496" y="606" class="zu-t">　タイムオファ</text><text x="496" y="626" class="zu-t">　ーと定価ペー</text><text x="496" y="646" class="zu-t">　ジを足せば約5</text><text x="496" y="666" class="zu-t">　人＝4.9% が</text><text x="496" y="686" class="zu-t">　買えば広告代</text><text x="496" y="706" class="zu-t">　が戻る：計算</text><text x="496" y="726" class="zu-t">　）</text><text x="496" y="746" class="zu-p">価格：29,800</text><text x="496" y="766" class="zu-p">円（定価60,0</text><text x="496" y="786" class="zu-p">00円）</text></g></a><a href="#teian-9" class="zu-a"><g class="zu-dan" data-num="⑨"><rect x="646" y="40" width="160" height="764" class="zu-box"/><text x="656" y="66" class="zu-h">⑨ 人を集める（</text><text x="656" y="86" class="zu-h">⑧ へ送る）</text><text x="656" y="106" class="zu-t">・登録した人への</text><text x="656" y="126" class="zu-t">　ステップメール（</text><text x="656" y="146" class="zu-t">　翌日から21日目ま</text><text x="656" y="166" class="zu-t">　で）で ⑧ の募集</text><text x="656" y="186" class="zu-t">　（考え・未定）</text><text x="656" y="206" class="zu-t">・毎日のメルマガ</text><text x="656" y="226" class="zu-t">　の追伸（AIグルー</text><text x="656" y="246" class="zu-t">　プ講座のリンクと</text><text x="656" y="266" class="zu-t">　受講者の声）</text><text x="656" y="286" class="zu-t">・④ を買ってワン</text><text x="656" y="306" class="zu-t">　タイムオファーを</text><text x="656" y="326" class="zu-t">　通らなかった人へ</text><text x="656" y="346" class="zu-t">　の案内（考え・未</text><text x="656" y="366" class="zu-t">　定）</text><text x="656" y="386" class="zu-m">未定</text><text x="656" y="406" class="zu-mt">・⑧ が未定のため</text><text x="656" y="426" class="zu-mt">　未定</text></g></a><line x1="806" y1="70" x2="834" y2="70" class="zu-ar" marker-end="url(#zu-hd)"/><line x1="806" y1="96" x2="834" y2="96" class="zu-ar" marker-end="url(#zu-hd)"/><line x1="806" y1="122" x2="834" y2="122" class="zu-ar" marker-end="url(#zu-hd)"/><a href="#teian-8" class="zu-a"><g class="zu-dan" data-num="⑧"><rect x="836" y="40" width="210" height="764" class="zu-box"/><text x="846" y="66" class="zu-h">⑧ 劇的な実演その2</text><text x="846" y="86" class="zu-t">・毎月の無料体験セミナー</text><text x="846" y="106" class="zu-t">　 → 無料個別相談（Zoom</text><text x="846" y="126" class="zu-t">　）→ ⑦（考え・未定。部</text><text x="846" y="146" class="zu-t">　品は今も毎月回っている形</text><text x="846" y="166" class="zu-t">　）</text><text x="846" y="186" class="zu-t">・合宿は置かない（Mits</text><text x="846" y="206" class="zu-t">　様が2度却下）</text><text x="846" y="226" class="zu-m">未定</text><text x="846" y="246" class="zu-mt">・この段に無料体験セミナ</text><text x="846" y="266" class="zu-mt">　ー＋無料個別相談を当てる</text><text x="846" y="286" class="zu-mt">　か（Mits様の発言なし）</text><text x="846" y="306" class="zu-p">価格：無料</text></g></a><a href="#teian-7" class="zu-a"><g class="zu-dan" data-num="⑦"><rect x="1046" y="40" width="144" height="764" class="zu-box zu-dash"/><text x="1056" y="66" class="zu-h">⑦ 高額商品</text><text x="1056" y="86" class="zu-t">・BE-02 AIグ</text><text x="1056" y="106" class="zu-t">　ループ講座（3ヶ</text><text x="1056" y="126" class="zu-t">　月）。フロント</text><text x="1056" y="146" class="zu-t">　のお礼の直後に3</text><text x="1056" y="166" class="zu-t">　0分だけのワンタ</text><text x="1056" y="186" class="zu-t">　イムオファー（5</text><text x="1056" y="206" class="zu-t">　8,000円）</text><text x="1056" y="226" class="zu-t">・ワンタイムオ</text><text x="1056" y="246" class="zu-t">　ファーを通らな</text><text x="1056" y="266" class="zu-t">　かった人があと</text><text x="1056" y="286" class="zu-t">　で戻る定価ペー</text><text x="1056" y="306" class="zu-t">　ジ（88,000円</text><text x="1056" y="326" class="zu-t">　）</text><text x="1056" y="346" class="zu-t">・⑧ の無料個別</text><text x="1056" y="366" class="zu-t">　相談からも入る</text><text x="1056" y="386" class="zu-p">価格：142,000</text><text x="1056" y="406" class="zu-p">円（ワンタイム</text><text x="1056" y="426" class="zu-p">オファー 58,0</text><text x="1056" y="446" class="zu-p">00円・定価ペー</text><text x="1056" y="466" class="zu-p">ジ 88,000円）</text></g></a><a href="#teian-3" class="zu-a"><g class="zu-dan" data-num="③"><rect x="56" y="854" width="180" height="784" class="zu-box"/><text x="66" y="880" class="zu-h">③ 人を集める（② </text><text x="66" y="900" class="zu-h">へ送る）</text><text x="66" y="920" class="zu-t">・今のメルマガ（毎日</text><text x="66" y="940" class="zu-t">　21〜24時に1通）か</text><text x="66" y="960" class="zu-t">　らダウンロードページ</text><text x="66" y="980" class="zu-t">　へ</text><text x="66" y="1000" class="zu-t">・紹介・パートナー制</text><text x="66" y="1020" class="zu-t">　度（紹介コード・報酬</text><text x="66" y="1040" class="zu-t">　のたたき台1,000円</text><text x="66" y="1060" class="zu-t">　）</text><text x="66" y="1080" class="zu-t">・コンサル事務所 →</text><text x="66" y="1100" class="zu-t">　 顧問先（事務所が紹</text><text x="66" y="1120" class="zu-t">　介コードを発行して顧</text><text x="66" y="1140" class="zu-t">　問先に知らせ、顧問先</text><text x="66" y="1160" class="zu-t">　が事務所を招く）</text><text x="66" y="1180" class="zu-t">・初期の開発と普及の</text><text x="66" y="1200" class="zu-t">　仲間（使い込む人・広</text><text x="66" y="1220" class="zu-t">　める人）</text><text x="66" y="1240" class="zu-t">・入れる人：「経営」</text><text x="66" y="1260" class="zu-t">　に惹かれているがどこ</text><text x="66" y="1280" class="zu-t">　から手を付けるか分か</text><text x="66" y="1300" class="zu-t">　らない人。入れない人</text><text x="66" y="1320" class="zu-t">　：先生と呼ばれる人</text></g></a><line x1="44" y1="884" x2="54" y2="884" class="zu-ar" marker-end="url(#zu-hd)"/><line x1="236" y1="884" x2="298" y2="884" class="zu-ar" marker-end="url(#zu-hd)"/><line x1="44" y1="910" x2="54" y2="910" class="zu-ar" marker-end="url(#zu-hd)"/><line x1="236" y1="910" x2="298" y2="910" class="zu-ar" marker-end="url(#zu-hd)"/><line x1="44" y1="936" x2="54" y2="936" class="zu-ar" marker-end="url(#zu-hd)"/><line x1="236" y1="936" x2="298" y2="936" class="zu-ar" marker-end="url(#zu-hd)"/><a href="#teian-2" class="zu-a"><g class="zu-dan" data-num="②"><rect x="300" y="854" width="186" height="784" class="zu-box"/><text x="310" y="880" class="zu-h">② 無料の贈り物（M</text><text x="310" y="900" class="zu-h">IFGE）</text><text x="310" y="920" class="zu-t">・⑤ のお礼ページに</text><text x="310" y="940" class="zu-t">　置く AI-Mits＆経営</text><text x="310" y="960" class="zu-t">　アプリのダウンロード</text><text x="310" y="980" class="zu-t">　（90日無料・サンプル</text><text x="310" y="1000" class="zu-t">　データ・メールアドレ</text><text x="310" y="1020" class="zu-t">　スは取り直さない）（</text><text x="310" y="1040" class="zu-t">　考え・未定）</text><text x="310" y="1060" class="zu-t">・今のダウンロードペ</text><text x="310" y="1080" class="zu-t">　ージ（メルマガ・紹介</text><text x="310" y="1100" class="zu-t">　・事務所から来る人の</text><text x="310" y="1120" class="zu-t">　入口）</text><text x="310" y="1140" class="zu-t">・AI-Mits のお試し</text><text x="310" y="1160" class="zu-t">　版（ウェブ）：30秒で</text><text x="310" y="1180" class="zu-t">　メールアドレス／5分</text><text x="310" y="1200" class="zu-t">　でメールアドレスとダ</text><text x="310" y="1220" class="zu-t">　ウンロード／10分でダ</text><text x="310" y="1240" class="zu-t">　ウンロードページ／2</text><text x="310" y="1260" class="zu-t">　回目は登録を求めない</text><text x="310" y="1280" class="zu-t">・AIエージェントレポ</text><text x="310" y="1300" class="zu-t">　ート（PDF）</text><text x="310" y="1320" class="zu-t">・反転グルコンの切り</text><text x="310" y="1340" class="zu-t">　出し動画3〜4本</text><text x="310" y="1360" class="zu-t">・F0-01_The Innov</text><text x="310" y="1380" class="zu-t">　ation 経営メソッド </text><text x="310" y="1400" class="zu-t">　入門の付与</text><text x="310" y="1420" class="zu-t">・スマホで開いた人の</text><text x="310" y="1440" class="zu-t">　道：AI-Mitsのみ版、</text><text x="310" y="1460" class="zu-t">　できるまでは「パソコ</text><text x="310" y="1480" class="zu-t">　ンに送る」（考え）</text><text x="310" y="1500" class="zu-m">未定</text><text x="310" y="1520" class="zu-mt">・⑤ のお礼ページに </text><text x="310" y="1540" class="zu-mt">　② を置くか</text><text x="310" y="1560" class="zu-p">価格：無料</text></g></a><rect x="340" y="1584" width="106" height="40" class="zu-box zu-dash"/><text x="393.0" y="1612" class="zu-h" text-anchor="middle">$</text><line x1="393.0" y1="804" x2="393.0" y2="852" class="zu-ar" marker-end="url(#zu-hd)"/><rect x="540.0" y="874" width="216.66666666666666" height="30" class="zu-box"/><text x="552.0" y="895" class="zu-t">② から入る</text><rect x="756.6666666666666" y="874" width="216.66666666666666" height="30" class="zu-box"/><text x="768.6666666666666" y="895" class="zu-t">④ から入る</text><rect x="973.3333333333333" y="874" width="216.66666666666666" height="30" class="zu-box"/><text x="985.3333333333333" y="895" class="zu-t">⑦ から入る</text><a href="#teian-1" class="zu-a"><g class="zu-dan" data-num="①"><rect x="540" y="904" width="650" height="424" class="zu-box"/><text x="550" y="930" class="zu-h">① 継続課金</text><text x="550" y="950" class="zu-t">・LEVEL 1：AI-Mits＆経営アプリ PREMIUM（free は契約なしでモデル3つ／かかり</text><text x="550" y="970" class="zu-t">　つけを入れると契約で90日無料／91日目は FAST だけ・NORMAL 以上で契約の画面）</text><text x="550" y="990" class="zu-t">・LEVEL 2：The Innovation AI経営サポート 梅（AI経営PRO）</text><text x="550" y="1010" class="zu-t">・LEVEL 3：The Innovation AI経営サポート 竹（AI経営MAX）</text><text x="550" y="1030" class="zu-t">・上の段は下の段を含む（考え・未定）</text><text x="550" y="1050" class="zu-m">未定</text><text x="550" y="1070" class="zu-mt">・梅・竹の価格に PREMIUM を含めるか（2本の継続課金のつなぎ方）</text><text x="550" y="1090" class="zu-mt">・PREMIUM の年払い・価格の段</text><text x="550" y="1110" class="zu-mt">・梅の確定価格</text><text x="550" y="1130" class="zu-mt">・梅の価格と計画表の置き数字（5,000円 と 2,980円・19,800円）のどちらで組むか</text><text x="550" y="1150" class="zu-mt">・どの部品を LEVEL 1・2・3 のどれに置くか（Mits様の発言なし・本の矢印に沿って</text><text x="550" y="1170" class="zu-mt">　置いた）</text><text x="550" y="1190" class="zu-mt">・継続率の数字（Mits様は「どんな数字が一般的か」と問われたまま）</text><text x="550" y="1210" class="zu-p">価格：PREMIUM 税込3,300円／月。梅 暫定5,000円（年払い60,000円税込）。竹 税</text><text x="550" y="1230" class="zu-p">別16,000円＋税（年払い176,000円税込）。計画表の置き数字はフロント後の継続2,98</text><text x="550" y="1250" class="zu-p">0円・バック後の継続19,800円</text></g></a><rect x="570" y="1276" width="590" height="38" class="zu-box zu-dash"/><text x="865.0" y="1301" class="zu-h" text-anchor="middle">$…　$…　$…　$…　$…</text><line x1="486" y1="889.0" x2="538" y2="889.0" class="zu-ar" marker-end="url(#zu-hd)"/><line x1="564.0" y1="804" x2="865.0" y2="872" class="zu-ar" marker-end="url(#zu-hd)"/><line x1="1089.2" y1="804" x2="1103.3333333333335" y2="872" class="zu-ar" marker-end="url(#zu-hd)"/></svg><p class="small">本の p10 の Linchpin の図の形を写しています（写真：linchpin_book_20261005/p01_t1.250.jpg。同じ図は p26 の p17_t63.250.jpg にも）。枠を押すと、提案書のその段の行へ飛びます。点線の枠は本の図で点線のもの（④・⑦）です。本の図では ③⑥⑨ は矢印だけですが、ここでは中身を書くために矢印の元に枠を置いています。</p><div class="md"><div class="zu-sub">段のつながり</div><div class="li"><span class="mk">・</span>⑥ → ⑤：Meta 広告と今のメルマガ → オプトインページに登録（Mits様の置き数字：オプトイン20%・登録1件 約2,000円：計算。過去の広告ファネルの実測は uu 504 → 登録 10 ＝ 2.0%：計算）<span class="small">（③⑥⑨・広告／teiansho_v2 3-2）</span></div><div class="li"><span class="mk">・</span>⑤ → ②：登録のお礼ページで AI-Mits＆経営アプリのダウンロード（90日無料・メールアドレスは取り直さない）（考え・未定）。率の目安はダウンロードページの実測 登録 ÷ 開いた人 合計 4.5%・配信直後3日 17.8%（記録）<span class="small">（決まっていない所／teiansho_v2 3-1）</span></div><div class="li"><span class="mk">・</span>⑤ → ④：60業種6タイプの動画を見た人 → フロント商品 29,800円（登録 → 購入の率は未計測。仮置き10%・損益の線は ④ だけで 6.7%・⑦ 込みで 4.9%：計算）<span class="small">（④／teiansho_v2 3-2）</span></div><div class="li"><span class="mk">・</span>③ → ②：今のメルマガ・紹介コード・コンサル事務所 → 顧問先 → ダウンロードページ → アプリ<span class="small">（段と段のつながり／teiansho_v2 3-5）</span></div><div class="li"><span class="mk">・</span>② → ①：ダウンロード → free（モデル3つ）→ かかりつけを入れると90日無料の契約 → PREMIUM（LEVEL 1）<span class="small">（段と段のつながり／①-1）</span></div><div class="li"><span class="mk">・</span>① → ①：free の91日目以降は FAST だけ。NORMAL 以上を使うと契約の画面（PREMIUM へ）。計器盤・取り込んだ数字・相談の記録は残る<span class="small">（段と段のつながり／①-1／project_untendai_daihoshin.md）</span></div><div class="li"><span class="mk">・</span>④ → ⑦：フロント（29,800円）→ お礼の直後に30分のワンタイムオファー（58,000円）→ BE-02。通らなかった人は ⑨ へ<span class="small">（段と段のつながり／⑦）</span></div><div class="li"><span class="mk">・</span>④ → ①：フロント購入者 → AI経営PRO 3ヶ月込み → 4ヶ月目から 梅（LEVEL 2）。計画表の置き数字は2,980円<span class="small">（段と段のつながり／①-3／④）</span></div><div class="li"><span class="mk">・</span>⑨ → ⑧：ステップメールとメルマガの追伸 → 毎月の無料体験セミナー（考え・未定）<span class="small">（③⑥⑨・メール／teiansho_v2 3-7）</span></div><div class="li"><span class="mk">・</span>⑧ → ⑦：無料体験セミナー → 無料個別相談（8割）→ BE-02（100%）（実測は Mits様の発言）<span class="small">（⑤／段と段のつながり）</span></div><div class="li"><span class="mk">・</span>⑦ → ①：BE-02 を終えた人 → 竹（LEVEL 3）。グルコンが終わったらサブスクへ、失いたくなければ継続。計画表の置き数字は19,800円<span class="small">（段と段のつながり／①-3／①-4）</span></div><div class="li"><span class="mk">・</span>① → ⑦：梅 → 竹 → AIグループ講座（AI経営サポートから高額商品へ）<span class="small">（段と段のつながり）</span></div><div class="li"><span class="mk">・</span>① → ①：階段を下りる：竹を辞めた人は梅へ、梅を辞めた人は PREMIUM へ、PREMIUM を辞めた人は free へ。辞める先が非会員ではなく自分の数字が入ったアプリ（考え・未定）<span class="small">（teiansho_v2 3-3・3-7）</span></div><div class="li"><span class="mk">・</span>① → ③：会員・顧問先・仲間が人を連れてくる（紹介コード・事務所 → 顧問先）。2年のあと ⑥ の広告の払い手が無くなっても残る入口（考え）<span class="small">（teiansho_v2 3-5）</span></div></div></div><!--/ZU-->
+<hr>
+<h5 id="k4">2. 本の9つの段に当てた一覧（本 p10 の図・sekkeizu_zu_v2.json と同じ中身）</h5>
+<div class="tw"><table><thead><tr><th>段</th><th>本の名前</th><th>置く部品（価格）</th><th>誰が来て → 次にどこへ</th><th>出どころ</th></tr></thead><tbody><tr id="teian-1"><td>①</td><td>継続課金（LEVEL 1・2・3）</td><td>LEVEL 1 AI-Mits＆経営アプリ PREMIUM 税込月3,300円（free は契約なしでモデル3つ・かかりつけを入れると契約・90日無料）／LEVEL 2 梅 AI経営PRO 暫定5,000円／LEVEL 3 竹 AI経営MAX 税別16,000円＋税（年払い 竹176,000円・梅60,000円 税込）。計画表の置き数字はフロント後2,980円・バック後19,800円</td><td>② でダウンロードした人 → free → 91日目に NORMAL 以上で契約の画面 → PREMIUM。④ を買った人 → 梅（3ヶ月込み → 4ヶ月目から）。⑦ を終えた人 → 竹。梅 → 竹 → AIグループ講座 の道もある。コンサル事務所 → 顧問先（紹介コード）</td><td>価格・流れは発言〔根拠：<a href="#kk4">①-1</a>／<a href="#kk5">①-2</a>／<a href="#kk6">①-3</a>／<a href="#kk7">①-4</a>／<a href="#kk18">段と段のつながり</a>〕。LEVEL への割り当てと、上は下を含むことは考え（未定）</td></tr><tr id="teian-2"><td>②</td><td>無料の贈り物（MIFGE）</td><td>AI-Mits＆経営アプリのダウンロード（90日無料・サンプルデータ）。⑤ のお礼ページに置く。ほかに今のダウンロードページ（メルマガ・紹介・事務所からの入口）、F0-01 の付与、AIエージェントレポート PDF、反転グルコンの切り出し3〜4本</td><td>⑤ に登録した人（メールアドレスは取れているので2回目は求めない）と ③ から来た人 → ① の free</td><td>部品は発言〔根拠：<a href="#kk9">②</a>〕。お礼ページに置くのは考え（未定）</td></tr><tr id="teian-3"><td>③</td><td>人を集める（② へ送る）</td><td>今のメルマガ（毎日21〜24時に1通・ダウンロードページへ）、紹介・パートナー制度（紹介コード・報酬たたき台1,000円）、コンサル事務所 → 顧問先、AI-Mitsのみ版（スマホ）</td><td>今のリスト・紹介された人・顧問先 → ②</td><td>発言〔根拠：<a href="#kk13">③⑥⑨・メール</a>／<a href="#kk4">①-1</a>／2026-09-08 18:13｜b14da621／2026-09-26 15:21｜04b03185〕</td></tr><tr id="teian-4"><td>④</td><td>継続課金を含むまとめ売り</td><td>フロント商品 29,800円＝AIグループ講座4回の動画＋AI経営PRO 3ヶ月（個別相談だけ無し）。4ヶ月目から5,000円</td><td>⑤ の動画を見た人 → 買う → お礼の直後に ⑦ のワンタイムオファー（30分）→ 買わなかった人は ⑨ へ。買った人は ① LEVEL 2</td><td>発言〔根拠：<a href="#kk14">④</a>／2026-09-06 19:53｜6ec2c3f8〕</td></tr><tr id="teian-5"><td>⑤</td><td>劇的な実演その1</td><td>オプトインページ＋60業種を6タイプに分けたリスクと4Cの動画（約束は「AI を道具として使う側から、AI で商品を出し続ける側に回る。」）</td><td>⑥ から来た人 → 登録 → お礼ページで ② → 動画 → ④</td><td>発言〔根拠：<a href="#kk15">⑤</a>〕・記録〔根拠：2026-09-20_1551_funnel-yakusoku-marketing-koukai.md〕</td></tr><tr id="teian-6"><td>⑥</td><td>人を集める（⑤ へ送る）</td><td>Meta広告（対象は知財を提供している仕事の人・士業を除く）。まず今のリスト約1800人にメールで送って売りながら直し、そのあと広告。note・スレッズはおまけ</td><td>広告を見た人・メルマガ読者 → ⑤</td><td>発言〔根拠：<a href="#kk11">③⑥⑨・広告</a>〕</td></tr><tr id="teian-7"><td>⑦</td><td>高額商品</td><td>BE-02 AIグループ講座 3ヶ月 142,000円（ワンタイムオファーは 58,000円・あとで戻ったときは 88,000円）</td><td>④ の直後のワンタイムオファー、⑧ の個別相談 → 買う → ① LEVEL 3（竹）</td><td>発言〔根拠：<a href="#kk16">⑦</a>／<a href="#kk18">段と段のつながり</a>〕・記録〔根拠：2026-09-20_1551_funnel-yakusoku-marketing-koukai.md〕</td></tr><tr id="teian-8"><td>⑧</td><td>劇的な実演その2</td><td>毎月の無料体験セミナー → 無料個別相談（Zoom）。今も毎月回っている形をこの段に当てる</td><td>⑨ から来た人・④ を買ってワンタイムオファーを通らなかった人 → 個別相談 → ⑦</td><td>部品は発言〔根拠：<a href="#kk15">⑤</a>／<a href="#kk16">⑦</a>〕。この段に当てるのは考え（未定）</td></tr><tr id="teian-9"><td>⑨</td><td>人を集める（⑧ へ送る）</td><td>ステップメール（登録の翌日から21日目まで）と毎日のメルマガの追伸（AIグループ講座のリンク）で ⑧ の募集を続ける</td><td>④ を買った人・⑤ に登録しただけの人 → ⑧</td><td>部品は発言〔根拠：<a href="#kk13">③⑥⑨・メール</a>／<a href="#kk9">②</a>〕。この段に当てるのは考え（未定）</td></tr></tbody></table></div>
+<hr>
+<h5 id="k5">3. 考えた筋道</h5>
+<h6 id="k6">3-1 入り口の集客 ── 人がどこから入り、どこで減るか</h6>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「基本は広告でアクセスを買う」「Noteは当てにしないで回す　無料媒体はおまけくらいで考える」〔根拠：<a href="#kk11">③⑥⑨・広告</a>〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「まずこのファネルを作って今の1800人ぐらいの宴に登録されているリストで送信をして販売と改善をしていて、その後はもちろん広告に回す。」「広告を回しながらリストを取り、untendaiを使ってもらってAI-Mitsを広めていきたいと言う。」〔根拠：<a href="#kk11">③⑥⑨・広告</a>〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「目的はAI 3つの利用とアプリのダウンロードと言う。このゴールこのゴールに向かって最適化をしていく」〔根拠：2026-08-29 12:22｜bf893021〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「絶対的ゴールは「AI-Mits登録の増加」そしてその経過を状態の変化を計測しながら改善していくこと」「まず一つ目はAI-Mits登録を合計100人になるまで毎日自律的にできることをする。」〔根拠：<a href="#kk9">②</a>〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「何回も言っているけど、過去のやり方は活用するけど目的は測定すること　「まずは登録経路機能から」　だって測定できるならいい」〔根拠：2026-09-11 13:35｜30b1ed3d〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：入れる人は「経営、なんだか惹かれて、でもどこから手を付ければいいかわからないなどの人」、入れない人は「先生と呼ばれる人は扱いづらいので入れない」〔根拠：<a href="#kk12">③⑥⑨・顧客像と発信の芯</a>〕。広告の相手は「コンサルタント　知財を提供している仕事の人に除く士業、META広告」〔根拠：<a href="#kk11">③⑥⑨・広告</a>〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>記録：今のリストは、メインメルマガ 2,310人（うち 2,297人が 2025-10 加入で増えていない）・配信可 1,797人・LINE 友だち 60人（記録）〔根拠：2026-09-17_2209_shireito-100nin-plan-meta-test.md〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>記録：ダウンロードページは 2026-09-11〜09-21 の10日で、開いた 140人 → 押した 14人 → メールアドレスを送った 12人 → 新しい登録 10人 → 認証済み 7人。登録÷開いた人は 09-12〜09-14 が 17.8%、09-15〜09-21 が 1.1%、合計 4.5%（記録）〔根拠：2026-09-17_2209_shireito-100nin-plan-meta-test.md〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>記録：スマホで見た 24人 → 押した 0人（アプリはパソコン用）。ウェブのお試し版は30日で話した 32人 → 登録の画面を開いた 4人 → 送った 1人 → 認証 0人（記録）〔根拠：2026-09-17_2209_shireito-100nin-plan-meta-test.md〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>記録：AI-Mits 登録は通算 34件、09-25〜10-05 昼は 0件（記録）〔根拠：2026-10-05_1546_fhl2026-linchpin-continuity.md〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>記録：過去の Meta広告は通算 68,458円で成果 11件（フォーム 9件・1件 3,390円／ウェブ 2件・1件 18,976円）。その飛び先はお金が残る経営の古いファネルで、12月の入会は 0人（記録。元の記録に [未確認] の印つき）〔根拠：2026-09-17_2209_shireito-100nin-plan-meta-test.md〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>記録：広告用にコピーしたファネルの導線は 広告 → オプトイン → ウェビナー → 個別相談 → 2ヶ月コンサル で、AI 3つもアプリのダウンロードも一度も出てこない（記録）〔根拠：2026-10-04_1700_utage-iriguchi-shuyaku-tollgate.md〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え：今のリストからのアプリ登録は、公開の波（09-07 のメルマガ）が引いたあと 1.1% まで落ち、直近10日は 0件。リストは増えていない。つまり ② に人を送る力は、今の手持ちではもう出尽くしています。新しい人を入れるには ⑥ の広告が要る、というのは Mits様の発言どおりで、記録もそれを裏づけています。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え：広告の飛び先をアプリの登録に直接するか、⑤ のオプトインにするかで、線の成り立ちが変わります。直接なら 1登録 約2,000円（下の 3-2 の計算）に対して戻る売上は PREMIUM の月3,300円だけで、1年で戻りません（3-7 で計算）。⑤ 経由なら同じ2,000円で、④ の売上とアプリ登録の両方が取れます。だから広告は ⑥ に置き、② は ⑤ のお礼ページに置きます。これは、本がお礼ページの SLO を無料体験のボタンに替えた形（本 p15・p17）と同じです。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え：③ は広告で買う入口ではなく、人が人を連れてくる入口にします。今のメルマガのダウンロードページ、紹介・パートナー制度、コンサル事務所 → 顧問先、スマホの人向けの AI-Mitsのみ版。これらは一件あたりの広告代がかからず、2年〔根拠：<a href="#kk2">全体</a>〕のあとも残る入口です（3-5 伽藍とバザール）。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え：減る所と埋め方を、記録のある所だけ挙げます。一つ目、スマホで開いた人が 0 で止まる → ② にスマホの道（AI-Mitsのみ版〔根拠：<a href="#kk4">①-1</a>〕、またはパソコンに送る道）を置く。二つ目、ダウンロードページの登録÷開いた人が 1.1% → Mits様の「根本方針がだめだ、人は来ている、見ているでも登録しない、はLPとしての登録の魅力がダメだ」（記録）のとおり、② の売り（何が手に入るか・なぜ要るか・証拠）を直す〔根拠：2026-09-17_2209_shireito-100nin-plan-meta-test.md〕。三つ目、認証リンクの期限切れで登録をやり直す人（記録）→ ⑤ 経由なら登録はオプトインで済んでいるので、② は認証を挟まずダウンロードに直行できる〔根拠：2026-09-17_2209_shireito-100nin-plan-meta-test.md〕。四つ目、登録数が送信回数で、52% が自分たちのテストだった（記録）→ 測る前に登録経路を付ける〔根拠：2026-10-04_1700_utage-iriguchi-shuyaku-tollgate.md〕。</div>
+<h6 id="k7">3-2 将来の CVR ── 広告が自分で払えるか（損益の線）</h6>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言（置き数字）：「ctr 1.5%, @300, cpm, 5000-7000」「オプトイン・メルマガ登録　20%　で」〔根拠：<a href="#kk11">③⑥⑨・広告</a>〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言（和佐の数字）：「39,800円　ROAS　500%　CVR20%　一日15万円」〔根拠：<a href="#kk11">③⑥⑨・広告</a>〕、「和佐は回して洗練させた数字のはず」〔根拠：2026-09-20 16:00｜6ec2c3f8〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「登録 1件の広告費　となるまでのプロセスを上から全部見える化して、ひとつひとつがすべて改善対象になるように」〔根拠：2026-09-20 15:49｜6ec2c3f8〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言（定価ページの考え方）：「メルマガやLINE登録者へのステップの案内でのページ帰還率を決めて、登録分母にかけたものがアクセス数　それに定価の購入率を掛ける」〔根拠：2026-09-20 17:15｜6ec2c3f8〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言（実測の売り方）：「無料体験に来た後は、個別相談8割個別相談を受けた人は100%」〔根拠：<a href="#kk15">⑤</a>〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>記録：和佐はフロント 39,800円（定価 98,000円）・1リスト 2,000円以下・広告経由のフロント成約率 20%超・ROAS 最低500%・現行700%（記録）〔根拠：2026-09-20_1551_funnel-yakusoku-marketing-koukai.md〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>記録：我が社の価格は フロント 29,800円（定価 60,000円）・ワンタイムオファー 58,000円・定価ページ 88,000円・4ヶ月目から月5,000円。試算ページの「我が社」の列は 登録→購入 20%・継続 50% を置き数字にして ROAS 561.4% が出ているが、これは置いた数字の計算であって実測ではない（記録）〔根拠：2026-09-20_1551_funnel-yakusoku-marketing-koukai.md〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>記録（過去の商品の売上・分子の側）：funnel_stats_get の全ファネル合計は 3,905,380円・150件。取れていないのは BE-02（2,738,000円・22件）／BE-01（495,000円・7件）／1人フェス（393,000円・33件）／F1-01 Cowork（222,800円・77件）など。差の 3,740,380円・131件が「誰が払ったか判別できない」（記録）〔根拠：2026-08-29_1442_v22-repackage-closeout.md〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>記録（同じ売上を取り込み側から数えたもの）：import_payment 76件 / 3,760,980円。うち日次集計 61件 / 3,685,980円。日次集計61件の内訳は BE-02 19日 2,738,000円／BE-01 7日 495,000円／F1-01 Claude Cowork 20日 222,800円／1人フェス 7日 183,500円／F1-07 4日 19,920円／その他4本 4日 26,760円。BE-02 の購入者は読者一覧から特定可能（平日クラス 20名／日曜クラス 20名・両方登録14名・固有24名）。BE-01 は固有7名（記録）〔根拠：2026-08-31_0727_uriage-genten-151ken.md〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>記録（オプトインの流入・分母の側）：funnel_stats_get の実測で、301_広告「お金が残る経営の仕組みとは」メイン の 1.オプトイン は pv 814・uu 504・登録 10／〈リサーチ〉興味教えてファネル は pv 96・uu 54・登録 3／新スタイルコンサルティング の お試しコンサル申込 は pv 74・uu 45・登録 1。301広告メインは同じページに生きているフォームと死んだフォームが同居していて、登録10件がどちらの経由かは funnel_stats の数字では分かれない（記録）〔根拠：2026-08-21_1118_sdl-utage-zeisei.md〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>記録（運転台のステップ別・9/7〜9/8）：1_入口_案内と同意（お試し版） PV 90・UU 29・登録 0／2_運転台のダウンロード PV 145・UU 67・登録 0／3_運転台の使い方 PV 38・UU 14・登録 0／4_運転台の有料契約 PV 15・UU 1・登録 1／5_利用規約 PV 2・UU 1・登録 0（記録）〔根拠：2026-09-08_1637_untendai-eda-wake-c-an.md〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>記録（率にならない理由。二つの記録を並べる）：8/29 の記録は、UTAGE の MCP 166本に payment_* / order_* / sale_* / purchase_* / contract_* の一覧・詳細が1本も無く、funnel_stats_get はステップ単位の集計で誰が払ったかを返さず、event_applicant_get.paid_amount はイベント経由のみ、と書いている（記録）〔根拠：2026-08-29_1442_v22-repackage-closeout.md〕。同じ 2026-08-29 について CLAUDE.md は、「UTAGE に購入者・決済のツールが無い」と断定したのは誤りで、event_applicant_get に paid_amount / paid_at が入っていた、と書いている（記録）〔根拠：/Users/nishidamitsuhiro/My Drive/claude-nishida/CLAUDE.md〕。分母の側は、funnel_stats_get の登録数が送信回数で、7/1〜8/25 の登録86行のうち自分たちのテスト送信 45行（52%）（記録）〔根拠：2026-10-04_1700_utage-iriguchi-shuyaku-tollgate.md〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え（この実測で分かること）：登録 → フロント購入の率が無いのは、測っていないからではなく、分子（購入の件数：BE-02 22件・固有24名／BE-01 7件・固有7名／F1-01 Cowork 77件）と分母（登録：301広告メイン 10・興味教えて 3・お試しコンサル 1）が別々に測られていて、同じ人で結べていないからです（記録：上の5行）。イベント経由の購入者は event_applicant_get で取れ、ページの決済経由は 8/29 の記録では道具が無いとされている、という所で止まっています。しかもフロント商品 29,800円 はまだ一度も売っていないので、仮に結べても出るのは過去の商品の率です。だから上の 10% は仮置きのままで、実測は Mits様の順番どおり 1800人への送信で初めて出ます。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え（フロント成約率より先にある関門）：Mits様の置き数字はオプトイン 20% ですが、過去の広告ファネル（301広告メイン）の実測は uu 504 → 登録 10 ＝ 2.0%（計算）です。古いページで、約束も相手も今とは別なので、新しいオプトインページの率ではありません。ただ、登録1件の広告代はオプトイン率に反比例します。20% なら登録1件 1,667〜2,333円、2.0% なら 16,667〜23,333円（計算：1クリック 333〜467円 ÷ 率）で、後者ならフロント成約率が 56〜78%（計算：16,667〜23,333÷29,800）でも戻りません。つまり広告が自分で払えるかは、フロント成約率の前にオプトイン率で決まります。過去の Meta広告の実測（フォーム 1件 3,390円・ウェブ 1件 18,976円）〔根拠：2026-09-17_2209_shireito-100nin-plan-meta-test.md〕も、登録1件 2,000円 の置き数字より上にあります。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え（運転台の数字が示すこと）：9/7〜9/8 の UTAGE 側の登録 0 は、登録が無かったという意味です。この2日は壁を外す前で、壁を外して以降の初めての登録は 2026-09-08 16:25:35（記録）〔根拠：2026-09-08_1637_untendai-eda-wake-c-an.md〕。ダウンロードページは UTAGE の funnel_stats_daily が開いた人（UU）を数え、登録は UTAGE の読者として残るので、登録 ÷ 開いた人 が取れています。09-12〜09-14：UU 45 → 8 ＝ 17.8%／09-15〜09-21：UU 176 → 2 ＝ 1.1%／合計 UU 221（PV 272）→ 10 ＝ 4.5%（記録）〔根拠：2026-09-17_2209_shireito-100nin-plan-meta-test.md〕。ダウンロードの出来事（DLLOG）と UTAGE の読者も、UTAGE の読者の created_at に替えて 10件が 0〜1秒差で合った、と同じ人で結べています（記録）〔根拠：2026-09-17_2209_shireito-100nin-plan-meta-test.md〕。つまり ② → ① の手前（開いた人 → 登録 → ダウンロード）は測れていて、測れていないのは、どの配信・どの経路から来た人かの区別です。9/7 の配信に入っていた URL は入口とダウンロード直行の2本で、今の数字では2つを分けられず、分けるには配信ごとに ?from= や UTM を付ける必要がある（記録）〔根拠：2026-09-08_1637_untendai-eda-wake-c-an.md〕。Mits様の「何回も言っているけど、過去のやり方は活用するけど目的は測定すること　「まずは登録経路機能から」　だって測定できるならいい」〔根拠：2026-09-11 13:35｜30b1ed3d〕は、この経路の区別の話です。② を ⑤ のお礼ページに置く形でも同じで、お礼ページの UU と ② を押した数は取れ、⑤ の登録と ② のダウンロードを配信・広告ごとに結ぶには、登録経路の印が要ります。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え（⑤ → ② の率に使える実測）：ダウンロードページの 登録 ÷ 開いた人 は合計 4.5%、配信の直後3日（09-12〜09-14）は 17.8%、その後（09-15〜09-21）は 1.1%（記録）〔根拠：2026-09-17_2209_shireito-100nin-plan-meta-test.md〕。② を ⑤ のお礼ページに置いたときの、お礼ページを開いた人 → ② を押す率の実測はまだ無いので、この 4.5〜17.8% を幅として使います（仮置き：同じアプリの同じボタンで、お礼ページを開く人は登録の直後＝配信直後の読者に近いから、下は合計、上は直後3日）。お礼ページではメールアドレスの入力と認証が要らないので、ダウンロードページの 押した ÷ 開いた ＝ 14 ÷ 140 ＝ 10%（計算：上の記録）がこの幅の中にあります。登録100人あたり ② に入るのは 4.5〜17.8人、PREMIUM になるのは ELSA の 4%（発言〔根拠：2026-09-06 16:43｜30b1ed3d〕）で 0.18〜0.71人 ＝ 594〜2,350円／月（計算）。3-3 の計算は登録100人が全員 ② に入る前提なので、こちらが実測に近い下限です。広告代を継続課金で戻す道が無いことが、ここでもう一度出ます。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>本：ClickFunnels は1年で 2,500人超が 997ドルで買い、約250万ドル。無料体験のあと 7,500人超が月97ドルで残り、月約75万ドル・年約900万ドル。997ドルの売上は全額を広告に戻した（本 p21）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>計算（置き数字から）：1クリックの値段＝CPM÷（10×CTR%）＝5,000÷15＝333円 〜 7,000÷15＝467円。Mits様の「@300」はこの幅の下側より少し安い。登録1件＝クリック5件分（オプトイン20%）＝1,667〜2,333円。和佐の 1リスト2,000円以下（記録）と同じ水準なので、以下は 登録1件 2,000円 で置く（計算）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>仮置き：登録 → フロント購入 10%（仮置き：和佐の 20% の半分。理由は、こちらは冷たい客にまだ1度も回していない前売りで、温かい読者向けのダウンロードページでさえ登録が 4.5% だったから）。ワンタイムオファー 15%・定価ページ 3%（仮置き：試算ページの和佐の列の値を写した）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>計算（登録100人あたり・広告代 200,000円）：フロント 10% → 10人 × 29,800円 ＝ 298,000円、ワンタイムオファー 1.5人 × 58,000円 ＝ 87,000円、定価ページ 0.3人 × 88,000円 ＝ 26,400円。合計 411,400円 → ROAS 206%。フロント 20% なら 596,000円＋174,000円＋52,800円 ＝ 822,800円 → ROAS 411%</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>計算（損益の線）：フロントだけで広告代が戻る成約率は 200,000÷29,800 ＝ 6.7%。ワンタイムオファーと定価ページを足すと 200,000÷41,140 ＝ 4.9%。つまり ④ だけなら登録100人のうち約7人（6.7%）、⑦ のワンタイムオファーと定価ページを足せば約5人（4.9%）が買えば広告代は戻り、⑦ を足した計算で 10人なら2倍、20人なら4倍</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え：この線で、将来の CVR の意味がはっきりします。決めるのは二つ、広告 → オプトインの率（置き数字 20%）と、登録 → フロント購入の率です。登録1件 2,000円 のとき、フロント購入が 4.9%（⑦ を足した損益の線・計算）を切れば広告は ④⑦ では戻らず、① の継続課金で戻すしかない。① だけでは一年で戻らない（計算：3-7）。だから Mits様が決められた順番、「まずこのファネルを作って今の1800人ぐらいの宴に登録されているリストで送信をして販売と改善をしていて、その後はもちろん広告に回す。」〔根拠：<a href="#kk11">③⑥⑨・広告</a>〕は、この率を実測で取る手順そのものです。1800人への送信で出る率が 4.9%（⑦ 込み）・6.7%（④ だけ）の線のどちら側かで、広告に回せるかが決まります。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え：CVR を上げる余地は、Mits様の発言の中にすでに三つあります。一つ目、約束を一つにした（「AI を道具として使う側から、AI で商品を出し続ける側に回る。」）〔根拠：2026-09-20_1551_funnel-yakusoku-marketing-koukai.md〕。二つ目、証明を二つ載せる（道具が使えることはフロントLPに、経営で結果を出したことは2ヶ月コンサルのLPから）〔根拠：<a href="#kk14">④</a>〕。三つ目、返金保証を和佐型で置く〔根拠：<a href="#kk14">④</a>〕。これに ② をお礼ページに置くと、登録した人が動画を見る前にアプリで自分の数字を見ることになり、⑤ のリスクと4C の問いが自分ごとになります。これは、本がウェビナーの前に無料体験を作らせた理由（本 p17）と同じです。</div>
+<h6 id="k8">3-3 継続率 ── 何が支え、何が崩すか</h6>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「コンティニュイティ　に使う継続率はどんな数字が一般的か」〔根拠：2026-09-20 20:09｜6ec2c3f8〕。継続率の数字は Mits様の発言にはありません（問われただけ）。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言（計画表の欄）：「継続（AI経営PRO）	継続率（フロント購入者の何%が継続）」〔根拠：<a href="#kk6">①-3</a>〕「継続	継続率（バック購入者の何%が継続）」〔根拠：<a href="#kk18">段と段のつながり</a>〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「私が目指しているのは、「どうせ、誰もが思考的なことはAIに聞く、もちろん経営戦略も、販売戦略も、なんでも」」「「しかし、AImitsがなんだか違う、とても違う、ひと味違う」「だから使い続ける」を目指している」〔根拠：2026-06-12 15:26｜b7f9d86d〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「これを取り入れて、コンサルボットに帰ってくる率を勝敗にしてみたい」〔根拠：2026-06-12 15:26｜b7f9d86d〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「2ヶ月グルコン終わったあとサブスクにするつもり、その時に非会員に落ちる」「それを失いたくなければ継続」〔根拠：<a href="#kk7">①-4</a>〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「freeの91日目は？目的からするとfastだけになる」「で、そのあとnormal〜使うと契約画面が出る」〔根拠：<a href="#kk4">①-1</a>〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「参加　は梅はいつでも解約可能　竹は前提1年参加してくださいね、が前提　途中でヤメルのも原理的に可能だが。」〔根拠：<a href="#kk5">①-2</a>〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「英語の発音のアプリのエルサというのがあるが、これは経営者が有料使用者は全体の4%だと言っていた。」「ほとんどの人は無料で使っている。それでも無料でできることがたくさんある。」〔根拠：2026-09-06 16:43｜30b1ed3d〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>記録：91日目に止まるのは NORMAL・DEEP・かかりつけだけで、計器盤・取り込んだ数字・相談の記録はそのまま残る。premium を解約した人も同じ姿になる（記録）〔根拠：project_untendai_daihoshin.md〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>記録：AI-Mits がデータの点検をやる（気づく・問う・当たりを付ける・整備する）のが「経営アプリを使う最重要意義」（記録）〔根拠：project_untendai_daihoshin.md〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>本：ソフトがいちばん留まる（本 p34）。商売の目標は1つ、継続課金に入れて留めること（本 p32）。生涯会員は売らない（本 p32）。まとめ売りは 3・6・12ヶ月分（本 p23）。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え（PREMIUM を支えるもの）：三つです。一つ目、自分の数字がアプリの中にあること。二つ目、かかりつけが毎朝の習慣になっていること。三つ目、数字の点検を AI-Mits がやってくれること。この三つは全部、自分の数字が入っていて初めて効くので、90日〔根拠：<a href="#kk4">①-1</a>〕のうちに本物の数字（マネーフォワード・freee・CSV）が入るかどうかが継続率を決めます。見本の数字のまま90日が過ぎた人は、91日目に何も失わないので、そのまま free に留まります。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え（PREMIUM を崩すもの）：91日目に計器盤も取り込んだ数字も相談の記録も残る形（記録〔根拠：project_untendai_daihoshin.md〕）の裏返しで、91日目〔根拠：<a href="#kk4">①-1</a>〕に失うのは かかりつけ と NORMAL・DEEP だけです。「それを失いたくなければ継続」〔根拠：<a href="#kk7">①-4</a>〕の力は、グルコンの場を失うときより弱い。だから PREMIUM の有料率は ELSA の 4%（発言〔根拠：2026-09-06 16:43｜30b1ed3d〕）の側で見ておくのが安全で、ここを上げる手は、90日で自分の数字を入れさせること以外にありません。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え（梅・竹を支えるもの、崩すもの）：竹は参加権（反転グルコン・竹グルコン・個別）と「竹は前提1年参加してくださいね、が前提」〔根拠：<a href="#kk5">①-2</a>〕で留まる。梅は「自分でやるか、みんなとやるか」〔根拠：<a href="#kk5">①-2</a>〕の自分でやる側なので、毎週1本出す型（目的の宣言文〔根拠：<a href="#kk5">①-2</a>〕）が回らない人から抜けます。どちらも AI講座の線にあるので、2年の成長期が終わると中身の入れ替えが要ります。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え（階段にする理由）：竹を辞めた人が梅に、梅を辞めた人が PREMIUM に、PREMIUM を辞めた人が free に落ちる形にすると、辞める先が非会員ではなく、自分の数字が入ったアプリになります。Mits様の「それを失いたくなければ継続」を、場ではなく自分の数字で効かせる形です。本の「ソフトがいちばん留まる」を、いちばん下の段に置くことで使います。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>仮置き（計画用の率）：PREMIUM の有料率 4%（仮置き：ELSA の例・Mits様の発言）。梅の4ヶ月目継続 30%（仮置き：本の数字からは率が出ず、Mits様も問われたまま。無料で3ヶ月使ったあとに初めて払う点を保守的に見た）。竹への継続 50%（仮置き：BE-02 の卒業生が対象で、1年参加が前提だから高めに見た）。減り方（2ヶ月目以降の解約）は見ていない。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>計算（登録100人あたりの継続課金）：PREMIUM 4人 × 3,300円 ＝ 13,200円／月。梅はフロント購入者 10〜20人の 30% ＝ 3〜6人 × 5,000円 ＝ 15,000〜30,000円／月。竹は BE-02 購入者 1.8〜3.6人の 50% ＝ 0.9〜1.8人 × 17,600円（16,000円＋税）＝ 15,840〜31,680円／月。合計 44,040〜74,880円／月。1年続けば 528,480〜898,560円で、④⑦ の売上（411,400〜822,800円）と同じ水準になる。ただしこの行は登録100人が全員 ② に入る前提で、⑤ → ② にダウンロードページの実測 4.5〜17.8% を当てると PREMIUM は 0.18〜0.71人・594〜2,350円／月（計算：3-2）。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え：本の ClickFunnels は継続課金が売り切りの 3.6倍（本 p21）でしたが、我が社の置き数字では同じ水準止まり、⑤ → ② の実測を入れればさらに下です。差は PREMIUM の 4% と 月3,300円 の低さにあります。つまり ① LEVEL 1 は「率」ではなく「人数」で効く段で、Mits様が望まれる「爆発的に広まる」（3-5）と同じ方向です。率の商売は 梅・竹（少数・高額）、数の商売は PREMIUM（多数・低額）。段ごとに勝ち方が違います。</div>
+<h6 id="k9">3-4 Mits様のやりたいこと・やりたくないこと ── どの段が受け持つか</h6>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「第一義はそれと同等に西田経営メソッドが広まること」「→　中核は 計器盤を通した西田メソッドの普及。」〔根拠：<a href="#kk2">全体</a>〕 → ② と ① LEVEL 1 が受け持つ（考え）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「私がアプデに、携われるような＝可処分時間を増やす＝労働集約型ビジネスをこのアプリ収入に変えていくことで可能」〔根拠：<a href="#kk4">①-1</a>〕 → ① LEVEL 1 が受け持つ（考え）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「契約では約束しないが、私の裏ニーズとしては、個別相談をたくさんやりたい＝コンテンツ、ネタの宝庫、切り出してマーケティング、セールス、コンテンツメイク、AI操作など、貯まるスピードアップ」〔根拠：<a href="#kk16">⑦</a>〕 → ⑧ の無料個別相談が受け持つ（考え）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「私が一番やりたいのは、その抽象度の高いところを伝えて、人生を充実するようにしていったらどうですかと提案したい。」「こういうことはものすごくビジネスとして成り立ちがたい。でもやりたい。」「入低出高が私の基本戦略なので、まずは2年をかけて、戦略的に私に共感する人を集めることが最大化する。」〔根拠：2026-05-24 20:45｜ae0edb63／<a href="#kk2">全体</a>〕 → 入口（⑤④）は現世利益、出口（⑦・竹）で本質へ。入口に抽象論を置かない（考え）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「AI技術、やり方を売り物にするのではなくAIエージェントをAI社員として育てそして、経営に活かして、コンテンツ開発や販売をしていく方が主眼なので」〔根拠：<a href="#kk2">全体</a>〕 → ⑤ の約束と ④ のメインコンセプト（「効率化なんて1％」〔根拠：<a href="#kk14">④</a>〕）が受け持つ（考え）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「そして広告を回しながら各部分の最適化をし続けるビジネスにする。」〔根拠：<a href="#kk2">全体</a>〕 → ⑥→⑤→④ の線と 登録経路の測定（考え）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言（やりたくないこと・却下）：「永久無料　いらない」〔根拠：<a href="#kk20">本の注意と Mits様の発言</a>〕／合宿は「要らないって　この案件忘れろ」〔根拠：<a href="#kk17">⑧</a>〕／「SKOOLは実体として稼働していないので　すべてから削除して」「銀行振込は使わない」〔根拠：<a href="#kk2">全体</a>〕／「先生と呼ばれる人は扱いづらいので入れない」〔根拠：<a href="#kk12">③⑥⑨・顧客像と発信の芯</a>〕／スマホ版は「質問　このデスクトップアプリ　スマホ版もできるよね？」〔根拠：2026-08-29 20:29｜0b7e98d1〕に「いらないな」〔根拠：2026-08-29 20:31｜0b7e98d1〕のあと、「運転台のAI-Mits部分のかかりつけにならないバージョンでデスクトップアプリとスマホアプリを作りたい」〔根拠：<a href="#kk4">①-1</a>〕に変わっている（後を採る）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言（やらないと決めた仕組み）：「レポート生成やらない　AB振り分け。もう目的が変わったのでやらない」〔根拠：2026-09-08 17:24｜30b1ed3d〕 → ② の部品から外す（考え）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え：却下されたものと本の型がぶつかるのは ⑧ だけです（本の ⑧ はライブか仮想のイベント（本 p27）、Mits様は合宿を二度却下）。ただし Mits様の個別相談の裏ニーズは ⑧ の役（高額商品を売る場）と同じ向きなので、合宿ではなく、今も毎月回っている無料体験セミナー＋無料個別相談を ⑧ に当てれば、却下と型の両方を立てられます（4. のぶつかる所 1）。</div>
+<h6 id="k10">3-5 伽藍とバザールの実現 ── どの段が受け持つか</h6>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「私は私のメソッドが爆発的に広まることを望んでいる　知財も放棄してもいいくらいのきもち　linuxを使ってredhatなどが商用したことによってそれはそれでビジネスにした、それとおなじでいい」〔根拠：2026-08-28 12:03｜bf893021〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「すべての西田語がこうなってくれることを望む、が私のビジネスの根幹」〔根拠：<a href="#kk2">全体</a>〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「このアプリにそんなに情熱を持てる人間がたくさん居るとは思えないので」〔根拠：2026-08-28 12:33｜bf893021〕、「OK　共同開発では無いが、初期の開発と普及の仲間を募りたい」〔根拠：<a href="#kk4">①-1</a>〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「がらんとバザールの考えに基づいたマーケティング、普及、販促についてディスカッションしていきたい」〔根拠：2026-09-14 10:02｜ebe00152〕、「まとめ方は任せる、伽藍とバザールの実現」〔根拠：2026-09-14 13:58｜ebe00152〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「譲れないことではなく、伽藍とバザールの実現として　と修正」〔根拠：2026-09-30 17:23｜b4dde64c〕、「コード全部は無償・公開（Red Hat 型）　は削除」〔根拠：2026-09-30 17:25｜b4dde64c〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「このコンサルタント事務所にこのアプリケーションを渡すと言う事は、このアプリケーションをすべてAIに解読させれば同じものが作れると言う事もしくは質問を変えると何割位同じものが作れるのかもしくはどういうコア技術コア知識が真似されてしまうのか」〔根拠：2026-10-04 16:37｜d288cb85〕、「用語を言い換えをせずに、出所の明示　という「紳士協定」か」〔根拠：2026-10-04 17:34｜d288cb85〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「事務所が運転台のパートナー制度を使って紹介コードを発行して顧問先に知らせ、DLもしくはweb版で登録　→　事務所を招待　が時流にあっている」〔根拠：2026-09-26 15:21｜04b03185〕、「報酬はまずたたき台として1000円と言うふうに入れで動く形にした」〔根拠：2026-09-08 18:13｜b14da621〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>記録：循環は、運転台が広まる → ＠・余裕度・赤道日が広まる → 相談したくなる人が増える → 会員収入 → 労働集約を減らせる → Mits様の可処分時間が増える → 知見の更新が速くなる、の順。貢献者は当てにしない設計。仲間は使い込む人と広める人の二役（記録）〔根拠：project_untendai_daihoshin.md〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え（バザールの意味）：Mits様のバザールは、みんなで作る、ではなく、みんなで広める、です。コードを書く人は当てにしない、共同開発ではない、中心はいちばん判断する人、と全部発言にあります。だから Linchpin の上では、バザールは ③（人が人を連れてくる入口：紹介・パートナー・コンサル事務所・仲間）と ②（無料のアプリに西田語が載って配られる）と ① の free（BMI 化が起きる場）が受け持ちます。伽藍（作り込んで売る側）は ① のかかりつけ・竹・⑦ で、Mits様の判断そのものを売る段です。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え（2026-09-30 の削除とのつながり）：「コード全部は無償・公開（Red Hat 型）　は削除」〔根拠：2026-09-30 17:25｜b4dde64c〕となって資料から消えても、この Linchpin は壊れません。② に要るのはアプリが無料で使えることであって、コードが公開されていることではないからです。残っている問いは コンサル事務所に製品版を渡す道（OEM）での写しの扱いで、Mits様は「用語を言い換えをせずに、出所の明示　という「紳士協定」か」〔根拠：2026-10-04 17:34｜d288cb85〕と問われたまま決めておられません（5. の未定）。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え（2年のあと）：⑥ の広告は ④ の売上で払う形ですが、④ は2年〔根拠：<a href="#kk2">全体</a>〕で入れ替える AI講座です。2年後に ⑥ の払い手が無くなったとき、入口を支えるのは ③ のバザール（紹介・事務所・仲間）です。だから ③ は2年の間に数を作っておく段で、広告が効いているうちは要らない段ではありません。ここが 伽藍とバザール と Linchpin が噛み合う所です。</div>
+<h6 id="k11">3-6 2年とその先（発言「AIビジネスはおそらくこの2年程度」）── 右上と右下</h6>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「AIビジネスはおそらくこの2年程度。しかしAIつと経営アプリはその先も続いていくContinueティーサービスと考えている。」「2年程度の　成長期の4C回収コンテンツ」〔根拠：<a href="#kk2">全体</a>〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「成長期　1勝9敗、高速回転を2年やり4Cを手にする」〔根拠：2026-08-22 14:10｜30d194bb〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言：「2026年の1月から作り始めた様々な単品商品単品講座単品のファネル。それからAI講座AI 3つ等はすべてこのファネルを構築するための部品作りのプロセスだったと自分では常に意識しながら作ってきた。」〔根拠：<a href="#kk2">全体</a>〕</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え：右上（2年〔根拠：<a href="#kk2">全体</a>〕で入れ替える部品）＝ ⑤ の動画と約束、④ のフロント、⑦ の BE-02、⑧ の無料体験セミナー、梅・竹の中身。右下（残る土台）＝ ② のアプリ、① LEVEL 1、③ の入口、⑥ の広告の回し方と登録経路。4C の回収先は、お金 → ⑥ の広告代、作ったもの → 次の成長期の ⑤④⑦、顧客名簿 → ② の登録者と ① の会員、生み出す力 → 次の独自性（経営アプリの次の計器）です。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え：土台側はテーマを持たない言葉にしておきます。② は「AI-Mits＆経営アプリ」、① は「経営」、③ は「人」。AI の言葉を持つのは右上だけにします。YouTube の軸「経営を、凡人の手に」〔根拠：<a href="#kk12">③⑥⑨・顧客像と発信の芯</a>〕が土台側の言葉で、「AI を道具として使う側から、AI で商品を出し続ける側に回る。」が右上の言葉です。</div>
+<h6 id="k12">3-7 比べた組み方</h6>
+<p>継続課金の組み方は三つを比べました。</p>
+<div class="tw"><table><thead><tr><th>比べる所</th><th>三つの継続課金を一本の階段にする（PREMIUM が下・梅・竹が上・上は下を含む）</th><th>ソフトの継続課金と講座サポートの継続課金を別々に二本並べる</th><th>梅・竹を月額にせず ④⑦ の中のまとめ売りにして、継続課金は PREMIUM 一本にする</th></tr></thead><tbody><tr><td>「シンプルに1本の線」〔根拠：<a href="#kk2">全体</a>〕との合い</td><td>合う</td><td>線が2本になる</td><td>合う</td></tr><tr><td>本の型（① は一つ・LEVEL 1〜3）との合い</td><td>合う（本 p26）。ソフトをいちばん下の段に置くのは本の記述ではなく、本の「ソフトがいちばん留まる」（本 p34）から出した考え</td><td>① が二つになる。本は一つの継続課金でも、いくつかを混ぜてもよいとする（本 p33）</td><td>合うが、LEVEL 2・3 が空になる</td></tr><tr><td>2年〔根拠：<a href="#kk2">全体</a>〕とその先</td><td>上だけ入れ替える</td><td>講座側を丸ごと止める</td><td>まとめ売りの中身だけ替える</td></tr><tr><td>辞めた人の行き先</td><td>一段下（最後は free のアプリ）</td><td>非会員（講座側）</td><td>free のアプリ</td></tr><tr><td>決めごと</td><td>梅・竹の価格に PREMIUM を含めるか（未定）</td><td>無し</td><td>「売りたいコンティニュイティーは、AIつの継続課金または経営アプリの継続課金、そしてAI講座での商品開発するためのサポートサービス月額課金この2つ」〔根拠：2026-10-05 15:39｜d345821e〕と合わない</td></tr><tr><td>測りやすさ</td><td>継続率が段ごとに一本ずつ出る</td><td>二本の継続率を別に追う</td><td>一本</td></tr></tbody></table></div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え：一本の階段を選びます。別々に二本並べる形は、Mits様の売りたい継続課金が二つであること〔根拠：2026-10-05 15:39｜d345821e〕とも「シンプルに1本の線」〔根拠：<a href="#kk2">全体</a>〕とも両立しそうに見えますが、辞める先が非会員になり、2年後に講座側を止めたとき継続課金の半分が消えます。まとめ売り一本の形は、Mits様が月額として設計された梅・竹を無くすので、発言とぶつかります。階段なら、2年後に上の2段を次の成長期の中身に替えるだけで、下の段と線は残ります。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え：② の置き場所は三つ（⑤ のお礼ページ／今のダウンロードページだけ／両方）のうち、両方です。お礼ページは広告で来た新しい人のため、今のダウンロードページは ③（メルマガ・紹介・事務所）のためで、どちらかを消す理由がありません。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>考え：⑧⑨ は、空のままにする形と、無料体験セミナーを当てる形を比べ、当てる方を選びます。空のままだと ⑦ はワンタイムオファーの30分〔根拠：<a href="#kk16">⑦</a>〕だけで売ることになり、通らなかった人の道がありません。当てれば、Mits様の裏ニーズ（個別相談）と実測（8割 → 100%）の両方が線に入ります。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>計算（広告の行き先の比べ）：登録100人＝200,000円を ② に直接入れると、戻る売上は PREMIUM 4人 × 3,300円 × 12ヶ月 ＝ 158,400円／年で、1年では戻らない。しかも登録1件 2,000円 はオプトイン 20% の置き数字で、ダウンロードページの実測 登録 ÷ 開いた人 4.5%（記録）〔根拠：2026-09-17_2209_shireito-100nin-plan-meta-test.md〕なら登録1件は 7,400〜10,378円（計算：333〜467円 ÷ 4.5%）で、さらに戻らない。⑤ 経由なら同じ200,000円で ④⑦ の 411,400〜822,800円 に加えて、100人のうち 4.5〜17.8人（3-2 の実測の幅）がアプリに入る。だから広告は ⑥ に置く。</div>
+<hr>
+<h5 id="k13">4. ぶつかる所と扱い方</h5>
+<div class="li" style="margin-left:0.20em"><span class="mk">1.</span>本の ⑧ はライブか仮想のイベント（本 p27）で、Mits様は合宿を却下〔根拠：<a href="#kk17">⑧</a>〕。扱い：イベントを合宿と読まず、今も毎月回っている無料体験セミナー＋無料個別相談（Zoom）を ⑧ に当てる。Mits様の「無料体験セミナー　→　無料個別相談　→　BEのAI2ヶ月グルコンの整理をしている」〔根拠：<a href="#kk15">⑤</a>〕と「個別相談をたくさんやりたい」〔根拠：<a href="#kk16">⑦</a>〕に沿う。決めるのは Mits様（5. の未定）。（考え）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">2.</span>本はお礼ページに無料体験のボタンを置く（本 p15・p17）が、Mits様は ⑤ のお礼ページに ② を置くかを未定にしておられる〔根拠：<a href="#kk19">決まっていない所</a>〕。扱い：置く形で線を組む。登録はオプトインで済んでいるので、お礼ページの ② はメールアドレスを求めない（「2回目はメアド登録はいらないな。」〔根拠：<a href="#kk9">②</a>〕と同じ向き）。（考え）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">3.</span>本は売上を全額広告へ戻す（本 p15・p21）が、Mits様の発言には全額の話が無い。あるのは「ロアスが500%と言うのが出るような広告運用ができる前提で作っていく。」〔根拠：<a href="#kk20">本の注意と Mits様の発言</a>〕と「広告を回しながら各部分の最適化をし続ける」〔根拠：<a href="#kk2">全体</a>〕。扱い：全額ではなく、3-2 の損益の線（登録100人で5人が買えば広告代が戻る）を置き、それを上回る分をどう使うかは Mits様の判断。（考え）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">4.</span>本「ソフトがいちばん留まる」（本 p34）と記録の ELSA 4%・AI-Mits 登録 34件。扱い：PREMIUM を率ではなく人数の段と見る（3-3）。2年の間は ④ が広告代を払い、③ のバザールで数を作る。（考え）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">5.</span>本「価値の迷路にしない」（本 p25）と、41本のファネル（記録）〔根拠：2026-10-04_1700_utage-iriguchi-shuyaku-tollgate.md〕・3つの継続課金・The Library の重なり。梅・竹には「ノウハウが全部読めます（The Library・公開レポート・101項目を、どの順に読むかつき）」〔根拠：2026-08-22 15:49｜30d194bb〕があり、PREMIUM の表にも The Library の教材がある（記録）〔根拠：project_untendai_daihoshin.md〕。扱い：Mits様の、単品商品・単品講座・単品のファネルはすべて部品作りだったという発言〔根拠：<a href="#kk2">全体</a>〕のとおり、部品を段に収めて、残りはトールゲート式の整理でアーカイブ候補へ〔根拠：<a href="#kk2">全体</a>〕。The Library の重なりは、階段にすれば、下の段のものは上の段でも使える、で解け、並べる形だと二重売りになる。（考え）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">6.</span>伽藍とバザール（知財も放棄してもいいくらい〔根拠：2026-08-28 12:03｜bf893021〕）と、2026-09-30 の「コード全部は無償・公開（Red Hat 型）　は削除」〔根拠：2026-09-30 17:25｜b4dde64c〕・2026-10-04 の「何割位同じものが作れるのか」〔根拠：2026-10-04 16:37｜d288cb85〕。扱い：② に要るのはアプリが無料で使えることで、コードの公開ではない。線は壊れない。写しの扱い（紳士協定か）は OEM の道の話として 5. に置く。（考え）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">7.</span>Mits様の「可処分時間を増やす」〔根拠：<a href="#kk4">①-1</a>〕と、⑦⑧・竹の労働（個別相談・反転グルコン・竹グルコン 3週間に1回・個別 月1回）〔根拠：<a href="#kk5">①-2</a>〕。扱い：労働の段は右上（2年）に集め、枠で量を決める。残る土台（① LEVEL 1）は労働を要らない作りなので、2年の間に売上の重心を ①へ寄せる。個別相談は Mits様の裏ニーズなので削らない。（考え）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">8.</span>梅の価格の食い違い。「3ヶ月pro使えて、4ヶ月目5000円」〔根拠：<a href="#kk14">④</a>〕（2026-09-06）と、計画表の「フロントは　月額の中身を「教材を配り続ける」2980」〔根拠：<a href="#kk6">①-3</a>〕（2026-09-20）。後者は「この計画段階のモデルで適切と思う数字を入れて見て」〔根拠：2026-09-20 20:24｜6ec2c3f8〕と計画表のための数字なので、商品の価格は 5,000円（暫定）のまま、計画表の置き数字は 2,980円・19,800円 として両方を残す。確定は 5. の未定。（考え）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">9.</span>広告の相手「コンサルタント　知財を提供している仕事の人に除く士業、META広告」〔根拠：<a href="#kk11">③⑥⑨・広告</a>〕と、コンサル事務所・会計事務所の道（「会計事務所が製品名で使うケースとOEM開発の共通、違い」〔根拠：2026-09-30 15:57｜b4dde64c〕）。扱い：ぶつからない。⑥ の広告は1人型起業家を集める入口、事務所は ③ の人が人を連れてくる入口で、事務所は客ではなく配り手。（考え）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">10.</span>スマホ。アプリはパソコン用で、スマホで開いた人は 0 で止まる（記録）。「いらないな」〔根拠：2026-08-29 20:31｜0b7e98d1〕のあと AI-Mitsのみ版をスマホにも〔根拠：<a href="#kk4">①-1</a>〕に変わっている。扱い：後の発言を採り、② のスマホの道は AI-Mitsのみ版。できるまでは ② にパソコンに送る道を置く。（考え）</div>
+<hr>
+<h5 id="k14">5. 決め手になるのにまだ決まっていない所</h5>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>登録 → フロント購入の率（実測が無い。過去の商品では購入の件数と登録の数が別々に測られているが、同じ人で結べていない。3-2 の記録）。4.9%（⑦ 込み）・6.7%（④ だけ）の線のどちら側かで、広告を ⑥ に回せるかが決まる。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>広告 → オプトインの率（置き数字 20%。過去の 301広告メインの実測は uu 504 → 登録 10 ＝ 2.0%（計算）。② のダウンロードページの実測は 登録 ÷ 開いた人 4.5%（記録）〔根拠：2026-09-17_2209_shireito-100nin-plan-meta-test.md〕。新しいオプトインページの実測は無い）。登録1件の広告代が10倍動くので、フロント成約率より先に損益の線を決める。Mits様の順番「まずこのファネルを作って今の1800人ぐらいの宴に登録されているリストで送信をして販売と改善をしていて、その後はもちろん広告に回す。」〔根拠：<a href="#kk11">③⑥⑨・広告</a>〕がその実測。（計算の線は 3-2）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>梅・竹の価格に PREMIUM（月3,300円）を含めるか。含めれば階段になり、含めなければ並ぶ形になる。梅の確定価格（5,000円は暫定）〔根拠：<a href="#kk19">決まっていない所</a>〕もここに含む。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>⑤ のお礼ページに ② を置くか〔根拠：<a href="#kk19">決まっていない所</a>〕。置けば広告1件で ④ とアプリ登録の両方が取れる。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>⑧ に無料体験セミナー＋無料個別相談を当てるか（Mits様の発言なし）。当てなければ ⑦ はワンタイムオファーの30分だけで売る。⑨ はそれに従う。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>継続率の数字（PREMIUM・梅・竹）。Mits様は「どんな数字が一般的か」〔根拠：2026-09-20 20:09｜6ec2c3f8〕と問われたままで、3-3 の 4%・30%・50% は仮置き。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>梅の価格と計画表の置き数字（5,000円 と 2,980円・19,800円）のどちらで組むか（4. の 8）。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>どの部品を LEVEL 1・2・3 のどれに置くか（Mits様の発言なし）。この提案書は本の矢印（② → LEVEL 1、④ → LEVEL 2、⑦ → LEVEL 3）に沿って置いた。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>コンサル事務所に製品版を渡す道での写しの扱い（「出所の明示　という「紳士協定」か」〔根拠：2026-10-04 17:34｜d288cb85〕は問いのまま）。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>PREMIUM の年払い・価格の段〔根拠：<a href="#kk19">決まっていない所</a>〕。本は年払いなどのまとめ売りを勧め、生涯会員は禁じている（本 p32）。</div>
+<hr>
+<h5 id="k15">6. 根拠の追加（新しく引いた原文・一字も変えていません）</h5>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-05-24 20:45｜ae0edb63〕「私が一番やりたいのは、その抽象度の高いところを伝えて、人生を充実するようにしていったらどうですかと提案したい。」「こういうことはものすごくビジネスとして成り立ちがたい。でもやりたい。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-06-12 15:26｜b7f9d86d〕「これを取り入れて、コンサルボットに帰ってくる率を勝敗にしてみたい」「私が目指しているのは、「どうせ、誰もが思考的なことはAIに聞く、もちろん経営戦略も、販売戦略も、なんでも」」「「しかし、AImitsがなんだか違う、とても違う、ひと味違う」「だから使い続ける」を目指している」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-08-22 14:10｜30d194bb〕「成長期　1勝9敗、高速回転を2年やり4Cを手にする」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-08-22 15:49｜30d194bb〕「ノウハウが全部読めます（The Library・公開レポート・101項目を、どの順に読むかつき）」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-08-28 12:03｜bf893021〕「私は私のメソッドが爆発的に広まることを望んでいる　知財も放棄してもいいくらいのきもち　linuxを使ってredhatなどが商用したことによってそれはそれでビジネスにした、それとおなじでいい」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-08-28 12:33｜bf893021〕「このアプリにそんなに情熱を持てる人間がたくさん居るとは思えないので」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-08-29 12:22｜bf893021〕「目的はAI 3つの利用とアプリのダウンロードと言う。このゴールこのゴールに向かって最適化をしていく」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-08-29 20:31｜0b7e98d1〕「いらないな」（その直前の問いは「質問　このデスクトップアプリ　スマホ版もできるよね？」〔根拠：2026-08-29 20:29｜0b7e98d1〕）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-09-06 16:43｜30b1ed3d〕「英語の発音のアプリのエルサというのがあるが、これは経営者が有料使用者は全体の4%だと言っていた。」「ほとんどの人は無料で使っている。それでも無料でできることがたくさんある。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-09-06 19:53｜6ec2c3f8〕「proの個別相談だけナシでちょうどいい」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-09-08 17:24｜30b1ed3d〕「レポート生成やらない　AB振り分け。もう目的が変わったのでやらない」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-09-08 18:13｜b14da621〕「報酬はまずたたき台として1000円と言うふうに入れで動く形にした」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-09-11 13:35｜30b1ed3d〕「何回も言っているけど、過去のやり方は活用するけど目的は測定すること　「まずは登録経路機能から」　だって測定できるならいい」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-09-14 10:02｜ebe00152〕「がらんとバザールの考えに基づいたマーケティング、普及、販促についてディスカッションしていきたい」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-09-14 13:58｜ebe00152〕「まとめ方は任せる、伽藍とバザールの実現」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-09-20 15:49｜6ec2c3f8〕「登録 1件の広告費　となるまでのプロセスを上から全部見える化して、ひとつひとつがすべて改善対象になるように」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-09-20 16:00｜6ec2c3f8〕「和佐は回して洗練させた数字のはず」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-09-20 17:15｜6ec2c3f8〕「メルマガやLINE登録者へのステップの案内でのページ帰還率を決めて、登録分母にかけたものがアクセス数　それに定価の購入率を掛ける」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-09-20 20:09｜6ec2c3f8〕「コンティニュイティ　に使う継続率はどんな数字が一般的か」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-09-20 20:24｜6ec2c3f8〕「この計画段階のモデルで適切と思う数字を入れて見て」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-09-26 15:21｜04b03185〕「事務所が運転台のパートナー制度を使って紹介コードを発行して顧問先に知らせ、DLもしくはweb版で登録　→　事務所を招待　が時流にあっている」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-09-30 15:57｜b4dde64c〕「会計事務所が製品名で使うケースとOEM開発の共通、違い」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-09-30 17:23｜b4dde64c〕「譲れないことではなく、伽藍とバザールの実現として　と修正」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-09-30 17:25｜b4dde64c〕「コード全部は無償・公開（Red Hat 型）　は削除」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-10-04 16:37｜d288cb85〕「このコンサルタント事務所にこのアプリケーションを渡すと言う事は、このアプリケーションをすべてAIに解読させれば同じものが作れると言う事もしくは質問を変えると何割位同じものが作れるのかもしくはどういうコア技術コア知識が真似されてしまうのか」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-10-04 17:34｜d288cb85〕「用語を言い換えをせずに、出所の明示　という「紳士協定」か」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>発言〔根拠：2026-10-05 15:39｜d345821e〕「売りたいコンティニュイティーは、AIつの継続課金または経営アプリの継続課金、そしてAI講座での商品開発するためのサポートサービス月額課金この2つ、このルートをどのように計画するのか、今はまだ決まっていない。」</div><h3 id="kk1">設計図のたたき台（仮の提案）── Mits様の発言だけで Linchpin の9段を埋める</h3>
+<h4 id="kk2">全体 ── 9段にまたがる考え</h4>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>1月からの単品は、この Linchpin を組むための部品</strong>：単品商品・単品講座・単品ファネル・AI講座・AI-Mits は部品作りであり、最後は1本の線にする。</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-10-05 15:43｜d345821e　「2026年の1月から作り始めた様々な単品商品単品講座単品のファネル。それからAI講座AI 3つ等はすべてこのファネルを構築するための部品作りのプロセスだったと自分では常に意識しながら作ってきた。」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-10-05 15:43｜d345821e　「それらをAIで全て操作網羅して、どんな材料があるかを最終的にはシンプルに1本の線、リンチピンにしたい。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>広告を回しながら各部分を直し続ける</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-10-05 15:43｜d345821e　「そして広告を回しながら各部分の最適化をし続けるビジネスにする。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>期間の見立て：AIビジネスは2年程度、AI-Mits と経営アプリはその先も続く継続サービス</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-10-05 15:43｜d345821e　「AIビジネスはおそらくこの2年程度。しかしAIつと経営アプリはその先も続いていくContinueティーサービスと考えている。」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-10-05 15:45｜d345821e　「2年程度の　成長期の4C回収コンテンツ」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>型の手本：基本はラッセル・ブランソン。★AIグループ講座オプトインの動画のセッションでは、和佐がほぼメイン、補足でみかみ型</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-10-05 15:29｜d345821e　「基本はラッセル。ブランソンのクリックパネルを通したパネル、マーケティングの継続的な情報収集に基づいている。」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-05 16:22｜06ca2c4b　「和佐をほぼ、メインで、補足でみかみ型」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>何のための仕組みか（第一義）：AI-Mits 利用者が増えることと同等に、西田経営メソッドが広まること。中核は計器盤を通した西田メソッドの普及</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-30 17:11｜b4dde64c　「第一義はそれと同等に西田経営メソッドが広まること」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-30 17:26｜b4dde64c　「→　中核は 計器盤を通した西田メソッドの普及。」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-28 12:08｜bf893021　「すべての西田語がこうなってくれることを望む、が私のビジネスの根幹」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>お客さんの流れは一本道</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-05-24 18:47｜b054619f　「「知って、試して、買って、使って、好きになる」というステップがある。だから、基本的には一本道」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>入口は1か所に集める（トールゲート式）</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-29 12:34｜1c2c93d0　「まず1つは入り口を集約する。これを考え方としては私はトールゲート式と呼んでいる。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>入りは分かりやすく、出口で本質へ（入低出高）</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-05-24 20:45｜ae0edb63　「入低出高が私の基本戦略なので、まずは2年をかけて、戦略的に私に共感する人を集めることが最大化する。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>売り物にしないもの：AI技術・やり方</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-16 17:56｜6da0be3d　「AI技術、やり方を売り物にするのではなくAIエージェントをAI社員として育てそして、経営に活かして、コンテンツ開発や販売をしていく方が主眼なので」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>使わない道具：SKOOL・ClickFunnels・銀行振込</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 21:05｜6ec2c3f8　「SKOOLは実体として稼働していないので　すべてから削除して」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-07 07:27｜30b1ed3d　「ClickFunnels　契約解除しているし、未来使わない」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 21:05｜6ec2c3f8　「銀行振込は使わない」</div>
+<hr>
+<h4 id="kk3">① 継続課金（会員・ソフト）</h4>
+<p>Mits様が売りたい継続課金は2本です。どの順でどうつなぐか（ルート）は、Mits様ご自身が「まだ決まっていない」と言われています。</p>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>根拠：2026-10-05 15:39｜d345821e　「売りたいコンティニュイティーは、AIつの継続課金または経営アプリの継続課金、そしてAI講座での商品開発するためのサポートサービス月額課金この2つ、このルートをどのように計画するのか、今はまだ決まっていない。」</div>
+<h5 id="kk4">①-1 AI-Mits＆経営アプリ PREMIUM（ソフトの継続課金）</h5>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>名前：製品の名前は AI-Mits＆経営アプリ、有料は PREMIUM。開発中の呼び名は運転台</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-08 19:27｜30b1ed3d　「AI-Mits＆経営アプリPREMIUM　にrename」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-08 16:35｜30b1ed3d　「製品版の名前はAI-Mits＆経営アプリ　だけど　開発ネームは運転台と言った方が分かり易いので以後、開発名　運転台　untendai で通す」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>売り場：UTAGE の AI-Mits ファネルにサブスク商品を置く</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-05 22:03｜30b1ed3d　「UTAGE 側に運転台のサブスク商品を置く　AI-Mitsファネルがいい」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>価格：税込 3,300円／月</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-05 22:20｜30b1ed3d　「税込 3,300円（表示価格が 3,300円）」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>free と premium の分け方：契約なしでモデル3つ（かかりつけ無し）が free。かかりつけを入れると契約で、かかりつけは90日無料</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 19:47｜30b1ed3d　「契約無しでモデル3つ使える　かかりつけ使えない　が　free」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 19:47｜30b1ed3d　「かかりつけスイッチ入れると契約　かかりつけ機能が90日無料　pre」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>91日目から：free は FAST だけ。NORMAL 以上を使うと契約の画面が出る。premium を解約した人も同じ扱い</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 20:04｜30b1ed3d　「freeの91日目は？目的からするとfastだけになる」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 20:05｜30b1ed3d　「で、そのあとnormal〜使うと契約画面が出る」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 20:05｜30b1ed3d　「pre→91日　解約=freeの91日経った人との同じアクション」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>月の途中で解約したとき：次の決済日の前日まで使え、決済が止まった日に free へ戻る</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 20:39｜30b1ed3d　「90日後も解約せずに毎月決済した人が月途中で解約したら、次の決済日の前日まで使える　決済が止まった日でfreeに戻る」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>メールアドレスと顧客登録はアプリに必要（有料課金のアプリだから）</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-28 04:08｜bf893021　「有料課金をするアプリケーションなので、最初無料であってもどこかからで切り替えるし、機能制限や課金のクラス分けに必要なので、もちろんメールアドレス登録と顧客登録は必要。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>アプリの考え方：計器は事実を出し、判断は人がする。分からないことは会員サイトで学ぶ</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-31 09:02｜0b7e98d1　「車も飛行機も　計器は事実を表示　判断をするのは人間」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-31 09:05｜0b7e98d1　「事実を見て、判断できる力を付ける、そこにサジェストは入れる　わからないことは　学ぶ　会員サイト　これが基本コンセプト」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>数字は預からない。見ることはできる</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-25 20:01｜086e041d　「顧客の経営数字を預からないが、見ることができる　税務ソフトを税理士が見て、アドヴァイスするのと同じ」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>パソコンのアプリ（デスクトップ版）で作る</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-25 20:17｜086e041d　「OK、では、お金系から作るとして、デスクトップ版を作る方向で確定。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>AI-Mits だけの版（デスクトップとスマホ）を作り、経営アプリと同じアカウントで行き来できるようにする</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-18 14:00｜f4e25fef　「運転台のAI-Mits部分のかかりつけにならないバージョンでデスクトップアプリとスマホアプリを作りたい」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-18 15:58｜f4e25fef　「今後AI-Mitsのみ版をダウンロードした人がuntendaiをダウンロードして同じアカウントで使うことを前提とする。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>コンサル事務所向け：下位版3クライアント、中位は無制限、上位はホワイトラベル。事務所がパートナー制度の紹介コードを出し、顧問先が登録して事務所を招く</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-26 14:51｜04b03185　「下位版　3クライアント　中位　無制限　しかしホワイトラベル（OEM）ではない　上位版　ホワイトラベル」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-26 15:34｜04b03185　「1. 事務所が、運転台のパートナー制度で紹介コードを出し、顧問先に知らせる」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-30 19:25｜b4dde64c　「製品版で進めて、コンサル事務所に渡す段取りを出して」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>公開の広げ方は三段階（優良顧客だけ → メルマガ・公開ページ → 不特定多数）。最初の優良顧客は20人</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-28 15:45｜bf893021　「①一定の完成　優良顧客にのみ渡す　危険性皆無、稀な段階　もちろん理論上はAIが言うとおり」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-28 15:45｜bf893021　「②メルマガや公開ページで優良顧客以外も触れる　ただし、広告や不特定多数はそうていしづらい」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-28 15:45｜bf893021　「③不特定多数が登録する可能性を大きく考慮する」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-28 14:03｜bf893021　「優良顧客20人」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>初期の開発と普及の仲間を募るオファーを出す</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-14 10:12｜ebe00152　「OK　共同開発では無いが、初期の開発と普及の仲間を募りたい、それを呼びかけるオファー＝協力して貰う同期、将来の展望、ビジョンについて整理」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>この継続課金が担う役目：労働集約型の仕事をアプリ収入に置き換え、Mits様の手が空く</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-28 12:33｜bf893021　「私がアプデに、携われるような＝可処分時間を増やす＝労働集約型ビジネスをこのアプリ収入に変えていくことで可能」</div>
+<h5 id="kk5">①-2 The Innovation AI経営サポート（竹：AI経営MAX／梅：AI経営PRO）</h5>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>名前</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-22 16:12｜30d194bb　「The Innovation　AI経営サポート」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-22 16:15｜30d194bb　「竹　AI経営MAX」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-22 16:15｜30d194bb　「梅　AI経営PRO」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>目的の宣言文</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-22 16:08｜30d194bb　「このサポートの目的は1つです。「自社×AI」の小さな商品を毎週1本、60点で出し続け、9敗1勝で回して、お金・作ったもの・顧客名簿・生み出す力の4つを、あなたの会社に貯めること。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>梅と竹の違い：梅は自分でやる、竹はみんなとやる</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-22 16:08｜30d194bb　「やることは梅も竹も同じです。違うのは、自分でやるか、みんなとやるか、それだけです。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>誰が入るか：竹は AIグループ講座の卒業生のメイン。梅は白地の人のお試し（卒業生も可）。BE-02 を受けていない人は当面、竹に入れない</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-16 17:50｜6da0be3d　「竹はAIグループ講座の卒業生用のメインサービスで用語や概念をすでに分かっている前提」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-16 17:50｜6da0be3d　「梅は、廉価版なので卒業生も入っていいが、基本は白地の人がお試しで入る役割にする」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-22 14:35｜30d194bb　「BE-02 を受けていなくても竹に入れますか　当面入れない」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>参加目安：梅は「100時間」突破前、竹は「100時間」から次の1000時間へ行く人</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-22 16:10｜30d194bb　「梅、まだ「１００時間」突破前」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-22 16:10｜30d194bb　「竹　「100時間」から次の1000時間の4時間×5日×50週＝1000時間をやるフェースに行く人」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>価格：竹は税別16,000円＋税。梅は暫定5,000円。年払いは竹176,000円・梅60,000円（いずれも税込）。最低価格は5,000円</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-22 14:40｜30d194bb　「15,000円／月（暫定）　→　税別16,000円（算出根拠既出）＋税10%」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-21 18:09｜61734944　「竹梅ともに、暫定で15000、5000円/月　内容が決まって調整する」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-22 14:45｜30d194bb　「その前提で、竹　年払い　192,000→　176,000円（税込み　つまり10ヶ月分＋税）」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-22 14:45｜30d194bb　「梅　年払い　66,000→　60,000円税込み」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-15 12:49｜6da0be3d　「松竹梅システムにするが、それでも最低価格は5,000円」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>解約：梅はいつでも、竹は1年参加が前提</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-22 14:45｜30d194bb　「参加　は梅はいつでも解約可能　竹は前提1年参加してくださいね、が前提　途中でヤメルのも原理的に可能だが。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>中身：反転グルコンへの参加権は竹のみ。BE-02 全4回録画は梅も見られる。反転グルコンの切り出しは梅ですべて</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-22 14:31｜30d194bb　「反転グルコンへの参加権　竹あり、梅ナシ」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-22 14:32｜30d194bb　「BE-02 全4回録画　梅　見られる」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-22 15:59｜30d194bb　「反転グルコン切り出し　free　3-4本　梅　すべて」</div>
+<h5 id="kk6">①-3 計画表の上での継続の置き方（和佐型の数字の表）</h5>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>フロントの後とバックの後に、それぞれ継続を置く。フロント側の月額は「教材を配り続ける」2,980円、バック側は「場を運営する（ライブ・掲示板）」19,800円</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-20 20:06｜6ec2c3f8　「継続（AI経営PRO）	継続率（フロント購入者の何%が継続）」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-20 20:24｜6ec2c3f8　「フロントは　月額の中身を「教材を配り続ける」2980」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-20 20:24｜6ec2c3f8　「バックは　「場を運営する（ライブ・掲示板）」 19800」</div>
+<h5 id="kk7">①-4 継続に残ってもらう理由</h5>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>グルコンが終わったらサブスクへ。抜けると非会員に落ちる。それを失いたくなければ継続</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-07-14 18:30｜08f2ef4c　「2ヶ月グルコン終わったあとサブスクにするつもり、その時に非会員に落ちる」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-07-14 18:35｜08f2ef4c　「それを失いたくなければ継続」</div>
+<h5 id="kk8">① と本の注意（並べるだけ）</h5>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>本：生涯会員は売らない。</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>Mits様（参照モデルとして記録だけ。確定ではない）：2026-09-06 16:43｜30b1ed3d　「例えば年払いとかアプリによっては生涯ライフタイムバージョンずっと使い続けられるような支払いの仕方もある。そういうのも参照モデルとして入れておいてみたい。」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>Mits様：2026-09-06 16:43｜30b1ed3d　「追加でビジネスモデルとしてこれは確定ではなくて、参照モデルの1つとして今後も思いついたら入れてくと言う程度に記録して、」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>Mits様：2026-08-22 14:53｜30d194bb　「松＝一生涯サービス　ではない、年間契約の個別コンサルティング」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>本：ソフトがいちばん留まる。</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>Mits様：2026-10-05 15:43｜d345821e　「しかしAIつと経営アプリはその先も続いていくContinueティーサービスと考えている。」</div>
+<hr>
+<h4 id="kk9">② 無料の贈り物（MIFGE。継続課金の無料体験を含む）</h4>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>AI-Mits のお試し版（ウェブで試せるもの）：目的はアプリをダウンロードしてもらうこと</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 18:30｜30b1ed3d　「web版はアプリ版をDLして貰うために西田知見を体験して貰う、としたんだ」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-28 04:18｜bf893021　「V2を少し再パッケージして　お試し版として使って貰う、そちらになんらかの制限とアプリに遊動する」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-28 17:36｜bf893021　「→　体験してもらって　もっといいモデルを体験できますよ　→　DLを促す」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>お試し版の壁は低く。取るのはメールアドレスだけ</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-08 17:11｜30b1ed3d　「目的はダウンロードしてもらって、経営アプリを使ってもらうことなので限りなく壁を低くするメアドだけが取りたい。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>声かけは30秒・5分・10分。30秒でメアド登録、5分でメアド登録とダウンロードの2つ、10分でダウンロードページ。2回目はメアド登録を求めない</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-12 21:42｜a7a0d0b1　「2回目はメアド登録はいらないな。」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-12 21:40｜a7a0d0b1　「方針変える30秒目、AI-Mits登録の登録をメアドだけさせる、しないとけいぞくできない」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-12 21:40｜a7a0d0b1　「5分でメアド登録とダウンロードボタンの2つを出す　もう少し話すも消す」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-12 21:49｜a7a0d0b1　「トータル10分でダウンロードページ自体をポップアップで出す。」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-14 17:11｜75cbc115　「30秒・5分・10分 です。　これが正しい　最新」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>ダウンロードのボタン：Amazon のオレンジ。メインは「今すぐAI-Mits＆経営アプリをダウンロードする」</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-12 21:52｜a7a0d0b1　「ボタンをamazonのサイトが使っているオレンジ色にする」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-12 21:52｜a7a0d0b1　「メインコピーは今すぐAI-Mits＆経営アプリをダウンロードする」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>入力欄の文言：ベストアドレス。使い方をメールで届ける</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-08 18:42｜30b1ed3d　「あなたのベストアドレスを入れてください。アプリの使い方をステップバイstepでメールでお届けします。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>この段の目標：AI-Mits 登録の増加。まず合計100人</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-13 21:49｜d70a2813　「絶対的ゴールは「AI-Mits登録の増加」そしてその経過を状態の変化を計測しながら改善していくこと」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-17 20:45｜9e7b2310　「まず一つ目はAI-Mits登録を合計100人になるまで毎日自律的にできることをする。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>経営アプリそのものの無料体験：かかりつけ（premium の中身）を90日無料。期間は1日1時間×3ヶ月で100時間の考え</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 19:47｜30b1ed3d　「かかりつけスイッチ入れると契約　かかりつけ機能が90日無料　pre」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 18:50｜30b1ed3d　「AIグループ講座のコンセプトと同じで100時間で経営に親しむ　一日1時間程度触ってみましょう×3ヶ月」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>ダウンロードした直後はからっぽ。サンプルデータを入れるボタンを付ける</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-05 10:53｜e020a67a　「それならば、アプリDL画面で　サンプルデータをインストールする　、というのを作ろう　DL時はなにも入っていない状態とする」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>二刀流の話をプレゼントし、同時に運転台も配る（AIで作れる証拠として）</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-05 16:02｜06ca2c4b　「和佐が動画のPDFプレゼントしたように、私も二刀流を話し、プレゼント」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-05 16:02｜06ca2c4b　「あと、同時に運転台も配布、して、これがAIで作れる、という証左と、あなたも作ってみませんかと言うような構造にもしたい」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>反転グルコンの切り出し動画を free で3〜4本</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-22 15:59｜30d194bb　「反転グルコン切り出し　free　3-4本　梅　すべて」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>UTAGE にアカウントを開いた人には、無料・有料を問わず「F0-01_The Innovation 経営メソッド 入門」を付与。無料動画も UTAGE に置く</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-07-14 18:40｜08f2ef4c　「無料/有料　問わずUTAGEにアカウントを解説したら「F0-01_The Innovation 経営メソッド 入門」無条件付与としている」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-07-14 17:47｜08f2ef4c　「一回何らかの無料登録をしてくれればUTAGEにログインするんだから、その動画もUTAGEに置いておけば良いのではないか」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>資料の無料配布：AIエージェントレポート（PDF）。まずメルマガで導線を作り、登録率が良くなったら広告</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-06-05 18:03｜dc3a9994　「名称　AIエージェントレポートで保存している」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-06-05 20:03｜dc3a9994　「しかしサンクスメールに入れるのは会員サイトではなくて、シンプルなPDFのリンクだけ」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-06-05 10:44｜dc3a9994　「まずメルマガで導線を作って、ある程度登録する流れを作って、コンバージョンレートが良くなったら広告」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>② の位置づけ：AI-Mits を無料もしくは激安で配ることが、起点であり、トールゲート</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-05-10 16:59｜85bedf98　「その起点であり、ハブであり、トールゲートになるのが、AIの3つの無料もしくは激安配布で多くの業界業種の一人型の人に使ってもらうこと。」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-05-24 20:27｜b054619f　「これは最も重要な戦略的位置づけで、一つは集客エンジン。コンサルボットとしての評判を高め、紹介で、しかも無料で使えるということで、メールアド獲得のエンジンにする。」</div>
+<hr>
+<h4 id="kk10">③⑥⑨ 人を集める（人柄・物語、広告、YouTube、メール）</h4>
+<h5 id="kk11">広告</h5>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>基本は広告でアクセスを買う。note などはおまけ</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-20 15:46｜6ec2c3f8　「基本は広告でアクセスを買う」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-20 15:55｜6ec2c3f8　「Noteは当てにしないで回す　無料媒体はおまけくらいで考える」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>広告の置き数字</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-20 15:55｜6ec2c3f8　「ctr 1.5%, @300, cpm, 5000-7000」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-20 15:55｜6ec2c3f8　「オプトイン・メルマガ登録　20%　で」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-05 14:52｜06ca2c4b　「39,800円　ROAS　500%　CVR20%　一日15万円」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>Meta 広告の出稿を自動化し、直し続ける。API で自分の広告アカウントを動かす</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-10-04 16:47｜6e5f79bd　「広告出稿を自動化〜最適化サイクルを作り始める」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-10-04 18:11｜6e5f79bd　「API で自分の広告アカウントを動かせるように進めて」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>広告の対象：知財を提供している仕事の人（士業を除く）</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-17 21:36｜9e7b2310　「コンサルタント　知財を提供している仕事の人に除く士業、META広告」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>今のリスト（約1800人）に先に送って売りながら直し、その後に広告。note・スレッズも書く。広告を回しながらリストを取り、アプリを使ってもらい AI-Mits を広める</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-05 16:10｜06ca2c4b　「まずこのファネルを作って今の1800人ぐらいの宴に登録されているリストで送信をして販売と改善をしていて、その後はもちろん広告に回す。」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-05 16:10｜06ca2c4b　「広告を回しながらリストを取り、untendaiを使ってもらってAI-Mitsを広めていきたいと言う。」</div>
+<h5 id="kk12">顧客像と発信の芯（人柄・物語）</h5>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>入れる人：「経営」に惹かれているが、どこから手を付けるか分からない人。入れない人：経営という文字に反応しない人、起業ど素人、士業、先生と呼ばれる人</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-17 21:58｜685bba1c　「経営、なんだか惹かれて、でもどこから手を付ければいいかわからないなどの人」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-17 21:58｜685bba1c　「経営という文字に無反応、拒否感、無関心、意味を理解できない人は顧客外、そういう人を教育しない」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-17 21:58｜685bba1c　「なので、起業ド素人では無いし、士業でもない」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-17 21:58｜685bba1c　「先生と呼ばれる人は扱いづらいので入れない」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>YouTube の軸：「経営を、凡人の手に」</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-17 21:52｜685bba1c　「経営を、凡人の手に　nomad×経営戦略コンサルティング×ひとり起業」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>主張の形：「経営をしよう」。「ウソ」を挙げて反論の機会にする</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-07 18:47｜685bba1c　「「経営をする」「経営をしよう」「自分の会社の経営に参加しよう」のようになるはシンプルで主張しやすい。」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-07 18:50｜685bba1c　「ウソ1「がんばれば報われる」・・・と思っていますよね？」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>見出しの例</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-21 18:03｜61734944　「出遅れたと思っているあなたへ。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>使わない言葉：脳・腹・手、二刀流、九敗一勝（分かりにくい）。「AI社員25体」はもう陳腐</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-10 15:56｜6ec2c3f8　「脳腹手みたいな「は？？？」な言葉、二刀流もわかるようでわからないから使わない、使わずにどう言えばいいか考えて置き変えて」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-10 17:11｜6ec2c3f8　「九敗一勝　これも二刀流と同じで　？？　なので置き変え」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-10 19:44｜6ec2c3f8　「こんなのはもうすでに陳腐化している」</div>
+<h5 id="kk13">メール</h5>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>メルマガは売るために送る</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-05-22 20:15｜cd85e256　「無料登録であろうと購入であろうと、売るためにメルマガを送っているというのが私の一番基本的なスタンスです。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>毎日21〜24時に1通。追伸に AIグループ講座のリンクを受講者の声とともに入れる</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-13 21:47｜b14da621　「毎日21時から24時の間に必ず1通配信するように設定して」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-13 21:47｜b14da621　「追伸は必ず、AIグループ講座のリンクを受講者の声を使って　リンクを入れる」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>登録した人へのステップメール：次の日から毎日1通、21日目まで。その先は様子を見て作る</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-08 20:03｜30b1ed3d　「登録次の日から毎日1通ずつ21日目まで21通作って」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>お客さんは数か月、いろいろな媒体を回遊して「大丈夫か」を試してからリストに入る</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-03-21 09:31｜8754171d　「お客さんは、その間に色々な媒体・メディアを「回遊」しながら「こいつ（この場合「西田」）大丈夫かテスト」を数ヶ月経てから、リストインします。」</div>
+<hr>
+<h4 id="kk14">④ 継続課金を含むまとめ売り（オファー）</h4>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>中心のページ：rnos0kpayUmI から組み立てる。入口も追加オファーもこれに影響される</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 19:33｜6ec2c3f8　「入り口も、オファーに影響され、追加オファーもこれに影響されるのでこれが中心」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>中身の主：AIグループ講座でやった4回の動画を納品する。それに足す教材・サポート・ベネフィット・未来を整理する</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 19:33｜6ec2c3f8　「既に決まっているようにAIグループ講座でやった。4階の動画を納品すると言うのはメインで、それ+どんな他に追加の教材が手に入るのか、どんなサポートが手に入るのか、どんなベネフィットやどんな未来が手に入るのか、そこを整理していくレタに反映させるのはその後で良い。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>フロント価格は29,800円（前日の「30,000円で確定」を、翌日に約半額の29,800円と言い直している。考えが変わった所 #15）</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 20:46｜6ec2c3f8　「フロント約半額　29,800円」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>継続課金を含める：3ヶ月 PRO（AI経営PRO）を込みにし、4ヶ月目から5,000円。定価6万円を値引いて売る（売値は上の29,800円）</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 19:55｜6ec2c3f8　「3ヶ月pro使えて、4ヶ月目5000円、なので3ヶ月15000円が定価に載って6万　→　3万」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>レターのメインコンセプト：AIの効率化や設定は大工道具の使い方にすぎない。成長期に一勝九敗でいいからサービスを出し続けることを実現する。#4回目の話がこのファネルのメインコンセプト</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 20:09｜6ec2c3f8　「レターのメインコンセプトは効率化なんて1％で、AIエージェントの設定は、ノコギリトンカチ大工道具の使い方に過ぎない」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 20:09｜6ec2c3f8　「1人型の企業家が二刀流のセミナーで言う成長期に一勝九敗でいいから、どんどんサービスを出していくと言うことを実装実現すると言うことが最も大事なことでそれがメインコンセプト」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 20:55｜6ec2c3f8　「特に　#4回目で言っていることがこのファネルのメインコンセプトになる」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>入口は危機感・乗り遅れ感から入るが、オファーは飛躍のため。証明は西田が経営を教えて結果を出してきたこと</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 20:10｜6ec2c3f8　「入り口はAIの置き換えに対する危機感とか乗り遅れ感とかそういう痛みからだけど、オファーとして転換するのは生き残りするためではなくて、このチャンスをつかんで事業を大きく飛躍するため」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 20:10｜6ec2c3f8　「なので、使う証明は西だから、ずっと1人型の企業家に経営とか経営戦略を教えたり、コンサルティングで結果を出してきたというのを掲載する」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>レターは天国型（和佐を踏襲）</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-10 17:57｜6ec2c3f8　「和佐は天国型　それも踏襲する」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>実績の出し方：@2000万稼いだ人の共通点は西田経営メソッドを使っていたこと。コンサルの実績と絡めて組み直す</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-10 17:58｜6ec2c3f8　「＠2000万稼いだ人の特徴は創って作って売るってサポートして、改善、商賣の基本サイクルが速い人」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-10 17:59｜6ec2c3f8　「その人達の共通点は　西田経営メソッドを使っていた」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-10 17:59｜6ec2c3f8　「コンサルの実績と絡めて全体を再構築」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>返金保証は和佐型。条件は第1回の宿題を専用コミュニティに出すことと指定の動画を見ること。コミュニティの名前は「専用コミュニティ」と書く</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 20:49｜6ec2c3f8　「返金保証は1回和佐型ので置いてみて」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 20:51｜6ec2c3f8　「返金条件は、口座の第一回を見て、宿題になってるものをDiscordに提出することと昭和ブラックって言う動画を見ること」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 21:05｜6ec2c3f8　「discordはdiscordと書かないで　専用コミュニティとして」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>Claude Max の契約はバックのグルコン参加者だけ必須。フロントは推奨まで</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 20:50｜6ec2c3f8　「Claude Maxの契約はバックエンドのグルコに参加する人のみ必須にする。フロントエンドの購入の場合は特に記載不要。」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 20:50｜6ec2c3f8　「もしくはMax契約したほうがいいよと言う推奨ぐらいに留めておく。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>早期特典の仕組みは変えず、日程と前提だけ変える</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-25 19:15｜ff1a0ca5　「前提条件と実際の日程だけ変更、仕組みは変えない」</div>
+<hr>
+<h4 id="kk15">⑤ 劇的な実演その1（チャレンジ・ウェビナー。お礼ページに②を置く）</h4>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>動画の中身：60業種を6タイプに分けたリスクと、どうすればいいかの4C。「動画で見ませんか？」</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-10 17:12｜6ec2c3f8　「60業種を分けた 6タイプ　のリスクとどうすればいいのか？の4Cとは？を動画で見ませんか？にする」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-11 17:47｜6ec2c3f8　「その差がどこで開くのかを、60業種を 6タイプに分けて話します。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>無料体験セミナー → 無料個別相談 → AIグループ講座。毎月繰り返して翌月開始の回を募集する</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-06-18 20:41｜909d3638　「無料体験セミナー　→　無料個別相談　→　BEのAI2ヶ月グルコンの整理をしている」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-06-17 18:12｜909d3638　「それを当分毎月繰り返し、「翌月開始グルコン募集」を無料体験で募集する」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-05-31 23:17｜d851d6cd　「7月生8月生9月生10月生と言うふうに募集を続けていくスタイルにする。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>セミナーで感じてもらうこと：「そんなことができるんだ！」</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-06-16 21:58｜909d3638　「○「そんなことができるんだ！」」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>実際の成績（その時点の売り方）：無料体験の後、個別相談8割、個別相談を受けた人は100%</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-07-14 10:42｜fdd65a55　「無料体験に来た後は、個別相談8割個別相談を受けた人は100%」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-06-20 21:44｜909d3638　「100%　2ヶ月AIグルコンに申し込んでいる」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>5,000円のセミナーを受けた人は、開始月の前の約1か月を無料で参加できる（フリーレントのように）</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-05-31 23:22｜d851d6cd　「今後も有料で5000円のセミナーなどを受けてくれた人は、その該当の開始月より前の約1ヵ月を不動産のフリーレントのように無料参加してもらう」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>アプリの説明会：開発版を「見せるデモ版」にしてデモデータを入れておく</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-26 07:26｜b4dde64c　「写真だけじゃ無くて、開発版で、説明会などでの説明で見せられるようにデモデータを入れておいて」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-26 07:26｜b4dde64c　「ペルソナだけではなく以後　開発版は＝「見せるデモ版」の役割としても作ること」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>お礼ページに ② を置くか：Mits様の発言なし</strong></div>
+<hr>
+<h4 id="kk16">⑦ 高額商品</h4>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>BE-02 AIグループ講座：3ヶ月142,000円。期限ナシ。目安は100時間。反転学習スタイル</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 20:46｜6ec2c3f8　「最初からグルコンは142,000」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-19 17:58｜e6425235　「と、当初、期限を切ったが、今日時点の決定として、期限設定を全員ナシに変更して」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-21 16:52｜61734944　「「2ヶ月が終わったあと」ではなく、100時間、そのあと、がテーマ課題」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-10 19:26｜e6425235　「今回からより、講義色から「反転学習スタイル」」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>フロントの直後に OTO（30分だけのカウントダウン）でグルコンを出す。OTO の金額は、フロントを3万円と置いて計算した Mits様の暫定の数字（フロントの売値は ④ の 29,800円。整合性が悪ければ直すと Mits様が言われている）</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 20:46｜6ec2c3f8　「だから、ワンタイムは30分間だけのカウントダウンにしてさらに88,000円から30,000円引いて58,000円　すると、合計88,000円で142,000円の3ヶ月分のグルコンが買えると1階これで後で整合性が悪かったらまた修正する。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>個別相談をたくさんやりたい（契約では約束しない裏の願い）</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-22 14:59｜30d194bb　「契約では約束しないが、私の裏ニーズとしては、個別相談をたくさんやりたい＝コンテンツ、ネタの宝庫、切り出してマーケティング、セールス、コンテンツメイク、AI操作など、貯まるスピードアップ」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>売上の多くを作るのは一部の人</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-04-03 16:50｜3cab3924　「5%が売上の50%を作る、」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>年間契約の個別コンサル（松）：いまのたたき台からは外れている（考えが変わった所を参照）</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-22 15:25｜30d194bb　「あたらしいものから　松を外す」</div>
+<hr>
+<h4 id="kk17">⑧ 劇的な実演その2（ライブ・イベント）</h4>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>いま採れる部品：Mits様の発言なし</strong></div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>関連する発言（採らない理由を添えて並べるだけ）</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>対面（四半期）は松のみの項目だったが、松を外した。</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>根拠：2026-08-22 14:49｜30d194bb　「対面（四半期・参謀案）　項目はあり　松のみ」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>根拠：2026-08-22 15:25｜30d194bb　「あたらしいものから　松を外す」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>リアル合宿・経営合宿モードは、Mits様が却下された。</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>根拠：2026-06-25 11:34｜8ece4c2d　「md読んだ、全然だめ、オモシロくない、もういちどプラン」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>根拠：2026-08-27 14:53｜bf893021　「要らないって　この案件忘れろ」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>①-3 のバック側の月額に「ライブ」が入っている。</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>根拠：2026-09-20 20:24｜6ec2c3f8　「バックは　「場を運営する（ライブ・掲示板）」 19800」</div>
+<hr>
+<h4 id="kk18">段と段のつながり（Mits様が語っている所だけ）</h4>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>広告 → リスト → アプリを使ってもらう → AI-Mits を広める</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-05 16:10｜06ca2c4b　「広告を回しながらリストを取り、untendaiを使ってもらってAI-Mitsを広めていきたいと言う。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>AI-Mits お試し版（②）→ メアド → アプリのダウンロード（①-1 の free）</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-08 17:11｜30b1ed3d　「目的はダウンロードしてもらって、経営アプリを使ってもらうことなので限りなく壁を低くするメアドだけが取りたい。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>free の91日目 → NORMAL 以上を使うと契約の画面（①-1 premium）</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 20:05｜30b1ed3d　「で、そのあとnormal〜使うと契約画面が出る」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>フロント（④ 29,800円）→ お礼の直後に OTO → グルコン（⑦）</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-06 20:46｜6ec2c3f8　「バックエンドでグルコンを買う　→　3ヶ月　最初からグルコンは142,000」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>フロント購入者 → 継続（2,980円）／バック購入者 → 継続（19,800円）</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-20 20:06｜6ec2c3f8　「継続（AI経営PRO）	継続率（フロント購入者の何%が継続）」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-20 20:06｜6ec2c3f8　「継続	継続率（バック購入者の何%が継続）」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>無料体験セミナー（⑤）→ 無料個別相談 → グルコン（⑦）</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-06-18 20:41｜909d3638　「無料体験セミナー　→　無料個別相談　→　BEのAI2ヶ月グルコンの整理をしている」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>梅 → 竹 → AIグループ講座（①-2 から ⑦ へ）</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-08-16 17:51｜6da0be3d　「なんらかの、白地集客→梅→梅で育ったら竹に行ってもいいし、AIグループ講座への導線もあり」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>グルコン（⑦）の後 → サブスク（①）</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-07-14 18:30｜08f2ef4c　「2ヶ月グルコン終わったあとサブスクにするつもり、その時に非会員に落ちる」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>コンサル事務所 → 顧問先（紹介コード）→ 顧問先が事務所を招く</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-09-26 15:34｜04b03185　「1. 事務所が、運転台のパートナー制度で紹介コードを出し、顧問先に知らせる」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>2本の継続課金（①-1 と ①-2）をどの順でつなぐか：Mits様の発言なし（「今はまだ決まっていない」）</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>根拠：2026-10-05 15:39｜d345821e　「このルートをどのように計画するのか、今はまだ決まっていない。」</div>
+<hr>
+<h4 id="kk19">決まっていない所（Mits様の発言なし）</h4>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>2本の継続課金（AI-Mits＆経営アプリ PREMIUM と AI経営サポート）のつなぎ方・順番</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>⑤ のお礼ページに ② を置くか</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>⑧ 劇的な実演その2 に当てる部品</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>AI-Mits＆経営アプリ PREMIUM の年払い・価格の段（3,300円の月額のほか）</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span>梅（AI経営PRO）の確定価格（5,000円は暫定）</div>
+<hr>
+<h4 id="kk20">本の注意と Mits様の発言（並べるだけ）</h4>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>本：生涯会員は売らない</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>Mits様：2026-09-06 16:43｜30b1ed3d　「例えば年払いとかアプリによっては生涯ライフタイムバージョンずっと使い続けられるような支払いの仕方もある。そういうのも参照モデルとして入れておいてみたい。」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>Mits様：2026-08-22 14:53｜30d194bb　「松＝一生涯サービス　ではない、年間契約の個別コンサルティング」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>Mits様：2026-07-28 16:06｜f8bc57a4　「永久無料　いらない」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>本：ソフトがいちばん留まる</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>Mits様：2026-10-05 15:43｜d345821e　「しかしAIつと経営アプリはその先も続いていくContinueティーサービスと考えている。」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>本：商品を増やして価値の迷路にしない</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>Mits様：2026-10-05 15:43｜d345821e　「どんな材料があるかを最終的にはシンプルに1本の線、リンチピンにしたい。」</div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>Mits様：2026-05-24 18:47｜b054619f　「だから、基本的には一本道」</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">・</span><strong>本：ウェビナーの売上を広告に回す</strong></div>
+<div class="li" style="margin-left:1.30em"><span class="mk">・</span>Mits様（広告費の考え）：2026-09-05 16:10｜06ca2c4b　「メルマガだと広告費用がないけれども、ロアスが500%と言うのが出るような広告運用ができる前提で作っていく。」</div>
+<hr>
+<h4 id="kk21">考えが変わった所（前と後。たたき台には後を採った）</h4>
+<div class="li" style="margin-left:0.20em"><span class="mk">1.</span><strong>何のための仕組みか（第一義）</strong></div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>前：2026-09-26 12:25｜04b03185　「AI-Mits利用者が増えること　第一義」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>後：2026-09-30 17:11｜b4dde64c　「第一義はそれと同等に西田経営メソッドが広まること」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>後：2026-09-30 17:26｜b4dde64c　「→　中核は 計器盤を通した西田メソッドの普及。」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>採った理由：後の発言が、前の言い方に「同等に」を足して書き直しているため。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">2.</span><strong>月額の場（コミュニティ）を何で持つか</strong></div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>前：2026-04-19 18:54｜d9b38961　「Skool = コミュニティ・実践・交流・サブスク（月額）」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>中：2026-07-14 17:46｜08f2ef4c　「だったらDiscordをスクールの用途で使ってエブリワンにしたらいいんではないのかと言うのが、今の現時点」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>後：2026-09-06 21:05｜6ec2c3f8　「SKOOLは実体として稼働していないので　すべてから削除して」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>採った理由：後の発言で SKOOL をすべてから削除すると決めているため。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">3.</span><strong>AI-Mits を継続課金にする考え</strong></div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>前：2026-03-14 10:53｜01ab3dfd　「セルフサービス型にする場合は、コンサルティングのフロントエンドサービスにして月額課金にしていて」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>中：2026-05-10 15:58｜85bedf98　「私の場合は、AIミスを無料もしくはものすごく安価に提供していって、事業として回収するのはコミュニティイノベーションの方だけれども」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>中：2026-05-31 23:13｜d851d6cd　「そしてそれを月額10,000円とかの会費にする。」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>後：2026-09-05 22:20｜30b1ed3d　「税込 3,300円（表示価格が 3,300円）」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>採った理由：後の発言で、経営アプリと合わせた PREMIUM として価格を決めているため。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">4.</span><strong>経営アプリのお試し期間</strong></div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>前：2026-09-06 18:50｜30b1ed3d　「経営のことをなれないアプリでだんだん慣れる、お試し14日は短すぎる」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>後：2026-09-06 18:50｜30b1ed3d　「でお試し期間を90日3ヶ月にする」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>採った理由：同じ発言の中で14日を短すぎるとして90日に改めているため。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">5.</span><strong>お試し版で登録を求める時機</strong></div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>前：2026-05-02 14:39｜1b59445a　「最初の段階ではメールアドレスがいらないという点。」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>前：2026-08-28 04:10｜bf893021　「未登録でも最初は相談できる形にする。それが利用者を増やす」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>中：2026-09-12 21:40｜a7a0d0b1　「方針変える30秒目、AI-Mits登録の登録をメアドだけさせる、しないとけいぞくできない」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>後：2026-09-12 21:42｜a7a0d0b1　「2回目はメアド登録はいらないな。」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>後：2026-09-12 21:42｜a7a0d0b1　「30秒で登録しないとできないのだから」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>採った理由：最も新しい 21:42 の発言を採る。30秒で1回登録させ、2回目は登録を求めない。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">6.</span><strong>お試し版の声かけの時間</strong></div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>前：2026-09-12 20:59｜a7a0d0b1　「1回目は何も登録無しで、15分の壁、25分の壁」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>中：2026-09-12 21:32｜a7a0d0b1　「15分25分ポップアップの仕組みを30秒と5分にしよう」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>後：2026-09-14 17:11｜75cbc115　「30秒・5分・10分 です。　これが正しい　最新」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>採った理由：後の発言が「これが正しい　最新」と言っているため。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">7.</span><strong>継続（AI経営PRO）を計画表に置くか</strong></div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>前：2026-09-20 17:37｜6ec2c3f8　「■ 継続（AI経営PRO）　はどこでも売っていないのでナシ」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>後：2026-09-20 20:06｜6ec2c3f8　「継続（AI経営PRO）	継続率（フロント購入者の何%が継続）」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>後：2026-09-20 20:24｜6ec2c3f8　「フロントは　月額の中身を「教材を配り続ける」2980」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>採った理由：同じ日の後の発言で、フロントとバックの下に継続を置くと書き足しているため。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">8.</span><strong>竹・梅の価格</strong></div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>前：2026-08-21 18:09｜61734944　「竹梅ともに、暫定で15000、5000円/月　内容が決まって調整する」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>後：2026-08-22 14:40｜30d194bb　「15,000円／月（暫定）　→　税別16,000円（算出根拠既出）＋税10%」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>採った理由：後の発言で竹の価格を改め、年払いも決めているため（梅の月額は暫定のまま）。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">9.</span><strong>松（年間契約の個別コンサル）を置くか</strong></div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>前：2026-08-22 14:10｜30d194bb　「松　西田とやるか（2ヶ月がお試し的位置づけ→年間契約）」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>後：2026-08-22 15:25｜30d194bb　「あたらしいものから　松を外す」</div>
+<div class="li" style="margin-left:1.85em"><span class="mk">・</span>採った理由：後の発言で外すと決めているため。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">10.</span><strong>合宿（ライブ・イベント）</strong></div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>前：2026-06-25 10:24｜8ece4c2d　「新規企画　AIを使った経営計画、立て方、リアル合宿をプランニングする」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>後：2026-06-25 11:34｜8ece4c2d　「md読んだ、全然だめ、オモシロくない、もういちどプラン」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>前：2026-08-27 10:16｜4ada3697　「経営合宿モードというのを作りたい」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>後：2026-08-27 14:53｜bf893021　「要らないって　この案件忘れろ」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>採った理由：どちらも後の発言で取り下げているため。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">11.</span><strong>広告を使うか</strong></div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>前：2026-03-24 17:24｜d63d5fa9　「そしてその後はYouTube集客とかメタ広告とかやってそれをスケールしていく。」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>中：2026-05-25 18:18｜b054619f　「広告やらない」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>中：2026-06-05 10:44｜dc3a9994　「まずメルマガで導線を作って、ある程度登録する流れを作って、コンバージョンレートが良くなったら広告」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>後：2026-09-20 15:46｜6ec2c3f8　「基本は広告でアクセスを買う」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>後：2026-10-05 15:43｜d345821e　「そして広告を回しながら各部分の最適化をし続けるビジネスにする。」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>採った理由：最も新しい発言が広告を回す前提だから。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">12.</span><strong>永久無料の枠</strong></div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>前：2026-07-26 15:47｜f8bc57a4　「永久無料　5人は　OK」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>後：2026-07-28 16:06｜f8bc57a4　「永久無料　いらない」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>採った理由：後の発言で取り下げているため。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">13.</span><strong>グループ講座の期間と価格</strong></div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>前：2026-05-29 20:03｜43d2c350　「その　価格は　半額の　10万円＋税です。」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>前：2026-05-29 20:03｜43d2c350　「こちらは120,000円+税です。」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>中：2026-08-19 17:58｜e6425235　「と、当初、期限を切ったが、今日時点の決定として、期限設定を全員ナシに変更して」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>中：2026-08-21 16:52｜61734944　「2ヶ月　は講座設計段階でこだわった点だが、実際はほぼ、皆3ヶ月でかつ100時間が目安なので、」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>後：2026-09-06 20:46｜6ec2c3f8　「最初からグルコンは142,000」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>採った理由：最も新しい発言の価格だから。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">14.</span><strong>グループ講座の募集人数</strong></div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>前：2026-05-29 18:41｜43d2c350　「募集　先着20名　募集　先着10名」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>後：2026-05-29 20:46｜43d2c350　「先着10名　　削除」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>採った理由：後の発言で人数の記述を削除しているため。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">15.</span><strong>フロント商品の価格</strong></div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>前：2026-05-30 19:04｜bab993a7　「セット（AIエージェント＋Claude Code）：¥4,980」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>中：2026-09-05 17:56｜06ca2c4b　「06はグルコンでいく　フロントは30,000円で確定」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>後：2026-09-06 20:46｜6ec2c3f8　「フロント約半額　29,800円」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>採った理由：翌日の発言で 29,800円 と言い直しているため。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">16.</span><strong>「AI社員25体」の言い方</strong></div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>前：2026-09-10 17:11｜6ec2c3f8　「 800時間 触って、非エンジニアのまま AI社員 25体で自社を回している僕　は一体誰なのか？」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>後：2026-09-10 19:44｜6ec2c3f8　「こんなのはもうすでに陳腐化している」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>採った理由：後の発言で使わない側に回しているため。</div>
+<div class="li" style="margin-left:0.20em"><span class="mk">17.</span><strong>2ヶ月コンサルの位置</strong></div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>前：2026-05-24 20:16｜b054619f　「2ヶ月コンサルは　コンサル本契約（形式上は6ヶ月ゴンサル。）で長いお付き合いをする前のお試しコンサルの位置。」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>中：2026-08-21 18:08｜61734944　「これは2ヶ月コンサルwithAI　なので2ヶ月11万円」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>後：2026-08-22 15:25｜30d194bb　「あたらしいものから　松を外す」</div>
+<div class="li" style="margin-left:2.40em"><span class="mk">・</span>採った理由：2ヶ月コンサルを入口に置いていた松を、後の発言で外しているため。</div></div></section>
+</main>
+</body>
+</html>
