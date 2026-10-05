@@ -307,6 +307,10 @@
   #tw-table .warn{ color:#c03030; font-weight:700; }
   #tw-table .good{ color:#1d7a3a; font-weight:700; }
   @media print{ .tsukiawase{ page-break-before:always; } }
+
+  td.meal .egg-line{ display:flex; align-items:center; font-size:7pt; color:var(--title); margin-bottom:0.3mm; min-height:3.2mm; line-height:1; }
+  td.meal .egg-line .chk.egg{ display:inline-flex; margin:0 0 0 0.7mm; min-height:0; }
+  td.meal .egg-line .chk.egg::before{ margin-right:0; }
 </style>
 </head>
 <body>
@@ -413,14 +417,14 @@
     <tr class="hirusugi">
       <th class="head meal-head"><span class="h1">昼過ぎ 13:00</span><span class="h2">1食目</span></th>
       <td class="meal empty"><span class="chk-note">前のプラン</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵4個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵4個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵4個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵4個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵4個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵4個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵4個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵4個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span><span class="chk egg" data-label="卵4"></span></span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span><span class="chk egg" data-label="卵4"></span></span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span><span class="chk egg" data-label="卵4"></span></span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span><span class="chk egg" data-label="卵4"></span></span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span><span class="chk egg" data-label="卵4"></span></span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span><span class="chk egg" data-label="卵4"></span></span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span><span class="chk egg" data-label="卵4"></span></span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span><span class="chk egg" data-label="卵4"></span></span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
     </tr>
 
     <tr class="aruita">
@@ -559,13 +563,13 @@
 
     <tr class="hirusugi">
       <th class="head meal-head"><span class="h1">昼過ぎ 13:00</span><span class="h2">1食目</span></th>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵4個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵5個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵5個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵5個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵5個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵5個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="chk">卵5個</span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span><span class="chk egg" data-label="卵4"></span></span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span><span class="chk egg" data-label="卵4"></span><span class="chk egg" data-label="卵5"></span></span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span><span class="chk egg" data-label="卵4"></span><span class="chk egg" data-label="卵5"></span></span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span><span class="chk egg" data-label="卵4"></span><span class="chk egg" data-label="卵5"></span></span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span><span class="chk egg" data-label="卵4"></span><span class="chk egg" data-label="卵5"></span></span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span><span class="chk egg" data-label="卵4"></span><span class="chk egg" data-label="卵5"></span></span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯＋ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span><span class="chk egg" data-label="卵4"></span><span class="chk egg" data-label="卵5"></span></span><span class="chk">納豆1</span><span class="chk">もずく100g</span><span class="chk">MCT小1</span></td>
       <td class="meal empty"></td>
       <td class="meal empty"></td>
     </tr>
@@ -784,7 +788,7 @@
   const K = window.KIROKU; if (!K) return;
   // 1回分の [kcal, たんぱく質g, 糖質g]（八訂・ラベル）
   const EIYOU = {
-    'コーヒー＋MCT大1':[126,0,0], 'カチュー湯＋ひじき':[37,7.9,0.2], '卵4個':[284,24.4,0.8], '卵5個':[355,30.5,1.0],
+    'コーヒー＋MCT大1':[126,0,0], 'カチュー湯＋ひじき':[37,7.9,0.2], '卵1':[71,6.1,0.2], '卵2':[71,6.1,0.2], '卵3':[71,6.1,0.2], '卵4':[71,6.1,0.2], '卵5':[71,6.1,0.2],
     '納豆1':[86,7.4,2.4], 'もずく100g':[7,0.3,0], 'MCT小1':[42,0,0], 'プロテイン2杯':[178,21,7.6],
     'グルタミン5g':[20,5,0], 'マナ酵素20ml':[44,0,10.8], 'カチュー湯2杯＋ひじき':[71,15.6,0.4], 'ベーコン50g':[200,6.5,0.2]
   };
@@ -794,6 +798,12 @@
   let chk = {};
   try { chk = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { chk = {}; }
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(chk)); } catch (e) {} };
+  // 前の形（卵4個・卵5個を1マス）で付けたチェックを、1個ずつのマスに移す
+  Object.keys(chk).forEach(k => {
+    const m = k.match(/^(.*\|)卵([45])個$/); if (!m) return;
+    for (let i = 1; i <= Number(m[2]); i++) chk[m[1] + '卵' + i] = 1;
+    delete chk[k]; save();
+  });
 
   document.querySelectorAll('.page table').forEach(table => {
     const hin = table.querySelector('tr.hinichi'); if (!hin) return;
@@ -805,7 +815,7 @@
       Array.from(tr.children).slice(1).forEach((td, col) => {
         const d = days[col]; if (!d) return;
         td.querySelectorAll('.chk').forEach(sp => {
-          const k = d + '|' + r + '|' + sp.textContent.trim();
+          const k = d + '|' + r + '|' + (sp.dataset.label || sp.textContent.trim());
           if (chk[k]) sp.classList.add('on');
           sp.addEventListener('click', () => {
             if (chk[k]) delete chk[k]; else chk[k] = 1;
