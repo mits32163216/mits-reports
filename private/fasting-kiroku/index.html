@@ -66,6 +66,7 @@
     white-space:nowrap;
   }
   tr.hinichi    > *{ height:9mm; }
+  tr.shibou     > *{ height:6.5mm; }
   tr.mokuhyo    > *{ height:7mm; }
   tr.taiju      > *{ height:10mm; }
   tr.taishibo   > *{ height:8mm; }
@@ -77,7 +78,7 @@
   tr.hirusugi   > *{ height:19mm; }
   tr.aruita     > *{ height:15mm; }
   tr.yugata     > *{ height:15mm; }
-  tr.biko       > *{ height:12mm; }
+  tr.biko       > *{ height:11mm; }
 
   /* 食事見出し：2行 */
   th.meal-head{
@@ -311,6 +312,9 @@
   td.meal .egg-line{ display:flex; align-items:center; font-size:7pt; color:var(--title); margin-bottom:0.3mm; min-height:3.2mm; line-height:1; }
   td.meal .egg-line .chk.egg{ display:inline-flex; margin:0 0 0 0.7mm; min-height:0; }
   td.meal .egg-line .chk.egg::before{ margin-right:0; }
+
+  tr.shibou th .saiyu{ display:block; font-size:6.5pt; color:#c03030; font-weight:700; line-height:1; margin-top:0.3mm; }
+  td.goal.shibou{ color:#c03030; font-weight:700; }
 </style>
 </head>
 <body>
@@ -318,10 +322,10 @@
 <!-- ======== 1枚目：1〜9日目（10/4〜10/12） ======== -->
 <div class="page">
   <div class="top">
-    <div class="title">ファスティングプログラム実践中の体調をチェックしましょう。</div>
-    <div class="note">※1…あまり感じない　2…感じる　3…ものすごく感じる</div>
+    <div class="title">最優先の目標：脂肪量 10.8kg → 9.54kg（10/20 朝）　サブの目標：体重</div>
+    <div class="note">頭痛：1…あまり感じない　2…感じる　3…ものすごく感じる</div>
   </div>
-  <div class="explain"><span class="r">目標体重は、その日の朝の乾燥体重の目標。10/4 開始 62.2kg → 10/20 朝 58.4kg → 食事を戻して落ち着いたあと 60.6kg（脂肪量 10.8kg → 約9.5kg）</span><span class="r">乾燥体重＝朝起きて排尿したあと、水を飲む前に、裸で量る体重</span></div>
+  <div class="explain"><span class="r">目標脂肪量＝毎日、脂肪から出せる上限（脂肪1kgあたり69.3kcal）ちょうど燃やしたときの、その日の朝の脂肪量。目標体重＝その日の朝の乾燥体重の目標（10/20 朝 58.4kg → 落ち着いたあと 60.6kg）</span><span class="r">乾燥体重＝朝起きて排尿したあと、水を飲む前に、裸で量る体重</span></div>
 
   <table>
     <colgroup>
@@ -341,6 +345,12 @@
       <td class="hinichi"><div class="nth">7日目</div><div class="ymd">10/10<span class="dow">(土)</span></div></td>
       <td class="hinichi"><div class="nth">8日目</div><div class="ymd">10/11<span class="dow">(日)</span></div></td>
       <td class="hinichi"><div class="nth">9日目</div><div class="ymd">10/12<span class="dow">(月)</span></div></td>
+    </tr>
+    <tr class="shibou">
+      <th class="head">目標脂肪量(kg)<span class="saiyu">最優先</span></th>
+      <td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td>
+      <td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td>
+      <td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td>
     </tr>
     <tr class="mokuhyo">
       <th class="head">目標体重(kg)</th>
@@ -465,10 +475,10 @@
 <!-- ======== 2枚目：10〜16日目（10/13〜10/19）＋ 終了の朝 10/20、最後1列は空 ======== -->
 <div class="page">
   <div class="top">
-    <div class="title">ファスティングプログラム実践中の体調をチェックしましょう。</div>
-    <div class="note">※1…あまり感じない　2…感じる　3…ものすごく感じる</div>
+    <div class="title">最優先の目標：脂肪量 10.8kg → 9.54kg（10/20 朝）　サブの目標：体重</div>
+    <div class="note">頭痛：1…あまり感じない　2…感じる　3…ものすごく感じる</div>
   </div>
-  <div class="explain"><span class="r">目標体重は、その日の朝の乾燥体重の目標。10/4 開始 62.2kg → 10/20 朝 58.4kg → 食事を戻して落ち着いたあと 60.6kg（脂肪量 10.8kg → 約9.5kg）</span><span class="r">乾燥体重＝朝起きて排尿したあと、水を飲む前に、裸で量る体重</span></div>
+  <div class="explain"><span class="r">目標脂肪量＝毎日、脂肪から出せる上限（脂肪1kgあたり69.3kcal）ちょうど燃やしたときの、その日の朝の脂肪量。目標体重＝その日の朝の乾燥体重の目標（10/20 朝 58.4kg → 落ち着いたあと 60.6kg）</span><span class="r">乾燥体重＝朝起きて排尿したあと、水を飲む前に、裸で量る体重</span></div>
 
   <table>
     <colgroup>
@@ -488,6 +498,12 @@
       <td class="hinichi"><div class="nth">16日目</div><div class="ymd">10/19<span class="dow">(月)</span></div></td>
       <td class="hinichi"><div class="nth">終了の朝</div><div class="ymd">10/20<span class="dow">(火)</span></div></td>
       <td class="hinichi slash">／</td>
+    </tr>
+    <tr class="shibou">
+      <th class="head">目標脂肪量(kg)<span class="saiyu">最優先</span></th>
+      <td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td>
+      <td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td>
+      <td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td>
     </tr>
     <tr class="mokuhyo">
       <th class="head">目標体重(kg)</th>
@@ -792,6 +808,16 @@
     '納豆1':[86,7.4,2.4], 'もずく100g':[7,0.3,0], 'MCT小1':[42,0,0], 'プロテイン2杯':[178,21,7.6],
     'グルタミン5g':[20,5,0], 'マナ酵素20ml':[44,0,10.8], 'カチュー湯2杯＋ひじき':[71,15.6,0.4], 'ベーコン50g':[200,6.5,0.2]
   };
+  // 目標脂肪量（最優先）：毎朝の脂肪量。10/4 の 10.8kg から、毎日 上限（脂肪kg×69.3kcal）ちょうど燃やした値
+  const MOKUHYO_SHIBOU = {"10/4": 10.80, "10/5": 10.72, "10/6": 10.63, "10/7": 10.55, "10/8": 10.47, "10/9": 10.39, "10/10": 10.31, "10/11": 10.23, "10/12": 10.15, "10/13": 10.07, "10/14": 10.00, "10/15": 9.92, "10/16": 9.84, "10/17": 9.77, "10/18": 9.69, "10/19": 9.62, "10/20": 9.54};
+  document.querySelectorAll('.page table').forEach(table => {
+    const hin = table.querySelector('tr.hinichi'), row = table.querySelector('tr.shibou'); if (!hin || !row) return;
+    const tds = Array.from(row.children).slice(1);
+    Array.from(hin.children).slice(1).forEach((td, col) => {
+      const y = td.querySelector('.ymd'); const m = y && y.textContent.match(/\d+\/\d+/);
+      if (m && MOKUHYO_SHIBOU[m[0]] != null && tds[col]) tds[col].textContent = MOKUHYO_SHIBOU[m[0]].toFixed(2);
+    });
+  });
   const ROWS = ['gozen','hirusugi','aruita','yugata'];
   const KEY = 'fasting_kiroku_chk_v1';
   const PLAN_BURN = 1920, CAP = 69.3, FAT0 = 10.8;
