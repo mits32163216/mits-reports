@@ -1,18 +1,17 @@
 <!doctype html>
 <html lang="ja"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>サイドバー再編の提案</title>
-<style>
-:root{--ink:#1c1c1c;--sub:#555;--line:#b9b9b9;--thin:#dcdcdc;--name:#17407a;--warn:#8a3b00;}
+<title>サイドバー再編の提案（Linchpin だけ）</title><style>
+:root{--ink:#1c1c1c;--sub:#555;--line:#b9b9b9;--thin:#dcdcdc;--name:#17407a;}
 *{box-sizing:border-box}
 html,body{background:#ffffff;color:var(--ink);margin:0;padding:0;font-family:-apple-system,"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;font-size:15px;line-height:1.7}
 body{padding:28px 16px 80px}
 main{max-width:1180px;margin:0 auto}
-h1{font-size:24px;margin:0 0 6px;letter-spacing:.02em}
+h1{font-size:24px;margin:0 0 6px}
 h2{font-size:19px;margin:44px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--ink)}
 h3{font-size:16px;margin:26px 0 8px;padding-left:10px;border-left:3px solid var(--line)}
 p{margin:8px 0}
 .meta{color:var(--sub);font-size:13px;margin:0 0 14px}
-blockquote{margin:12px 0;padding:8px 14px;border-left:3px solid var(--ink);color:var(--ink)}
+blockquote{margin:12px 0;padding:8px 14px;border-left:3px solid var(--ink)}
 table{border-collapse:collapse;width:100%;margin:10px 0 18px;font-size:14px}
 th,td{border-bottom:1px solid var(--thin);padding:6px 8px;text-align:left;vertical-align:top}
 th{border-bottom:2px solid var(--line);font-weight:700;white-space:nowrap}
@@ -20,506 +19,210 @@ td.num,th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-n
 td.nw{white-space:nowrap}
 .gname{color:var(--name);font-weight:700}
 .purpose{color:var(--sub)}
-.zone{font-size:12px;color:var(--sub);border:1px solid var(--line);border-radius:3px;padding:0 5px;margin-left:6px;white-space:nowrap}
 .box{border:1px solid var(--line);padding:12px 16px;margin:14px 0}
-.box ul{margin:4px 0}
 .kv td:first-child{white-space:nowrap;color:var(--sub)}
 tr.ghead td{border-bottom:1px solid var(--line);border-top:2px solid var(--line);padding-top:14px;font-weight:700;color:var(--name);font-size:15px}
 .small{font-size:13px;color:var(--sub)}
-ol.groups{counter-reset:g;padding-left:0;list-style:none}
-ol.groups li{padding:8px 0;border-bottom:1px solid var(--thin);display:grid;grid-template-columns:34px 1fr 150px;gap:8px;align-items:baseline}
-ol.groups li .n{font-variant-numeric:tabular-nums;color:var(--sub)}
-ol.groups li .c{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--sub)}
-.filter{margin:8px 0 12px}
-.filter input{font-size:14px;padding:6px 10px;width:100%;max-width:420px;border:1px solid var(--line);background:#fff;color:var(--ink)}
 .toc{columns:2;column-gap:24px;font-size:14px}
-.toc a{color:var(--name);text-decoration:none}
 a{color:var(--name)}
-code{font-family:Menlo,Consolas,monospace;font-size:13px;background:none;border:1px solid var(--thin);padding:0 4px}
-.warn{color:var(--warn)}
-@media (max-width:700px){ol.groups li{grid-template-columns:30px 1fr}ol.groups li .c{text-align:left;grid-column:2}.toc{columns:1}body{padding:16px 16px 60px}}
+code{font-family:Menlo,Consolas,monospace;font-size:13px;border:1px solid var(--thin);padding:0 4px}
+ol.order{padding-left:0;list-style:none;counter-reset:o}
+ol.order li{padding:5px 0;border-bottom:1px solid var(--thin);display:grid;grid-template-columns:30px 1fr 220px;gap:8px}
+ol.order li .c{text-align:right;color:var(--sub);font-variant-numeric:tabular-nums;white-space:nowrap}
+.strike{text-decoration:line-through;color:var(--sub)}
+@media (max-width:700px){ol.order li{grid-template-columns:28px 1fr}ol.order li .c{grid-column:2;text-align:left}.toc{columns:1}body{padding:16px 16px 60px}}
 </style></head><body><main>
-<h1>サイドバー再編の提案 ── 左の一覧を一目で「何の・何をする場所か」が分かる形に</h1>
-<p class="meta">2026-10-05｜作成：BA-strategist（Fable 5.1・effort max）｜提案だけ。サイドバーの移動・改名・グループの作成と削除・アーカイブは1回もしていない</p>
-<blockquote>Mits様の言葉（2026-10-05）：「私が左のメニューバーを一見して、なにのどんな目的のグループかわかるように再編することはできるか、提案して」</blockquote>
+<h1>サイドバー再編の提案（第2版）── Linchpin に関係するグループとセッションだけを組み直す</h1>
+<p class="meta">2026-10-05｜作成：BA-strategist（Fable 5.1・effort max）｜提案だけ。サイドバーの移動・改名・グループの作成と削除・アーカイブは1回もしていない。第1版（全体の再編）は作業用のフォルダに控えを取って置き換えた</p>
+<blockquote>Mits様の言葉（2026-10-05）：「違うなリンチピンに関係するのだけを再編成してほしい。それ以外は変えなくて良い。また今グループとして上位に来ていなくてもリンチピンに関係するので移動させた。良いものは移動する予定で考え直してみて。」</blockquote>
 <div class="box"><b>検収の値</b>
 <table class="kv">
-<tr><td>セッション一覧ファイルのセッション数</td><td><b>300</b>（アーカイブ済みを除く。2026-10-05 21:26 日本時間の一覧）</td></tr>
-<tr><td>3. の表に載ったセッション数</td><td><b>300</b>（一致）</td></tr>
-<tr><td>行き先の決まっていないセッション</td><td><b>0</b></td></tr>
-<tr><td>新しいグループの数</td><td><b>18</b>（いまは 14 ＋ グループなし 210本）</td></tr>
-<tr><td>新しいグループ名に、比喩・自分で作った呼び名・記号の呼び名</td><td><b>0件</b>（機械で照合した語：窓・箱・紙・柱・帯・口・倉庫・真ん中・束・形A/B・案1/2。当たったのは「入口」の1語だけで、これは Mits様のセッション名「UTAGE 入口の集約（トールゲート式）」の言葉）</td></tr>
-<tr><td>サイドバーを動かした操作</td><td><b>0回</b>（読んだのは渡された一覧ファイルと、このフォルダの grouping.md・grouping2.md・manifest.md、対応表 <code>~/Library/Application Support/Claude/claude-code-sessions/*/*/*.json</code> のみ）</td></tr>
+<tr><td>Linchpin に関係すると選んだセッション</td><td><b>62本</b>（全300本のうち）。うち<b>移すもの 37本</b>、いまのグループの名前が変わるだけでそのまま残るもの 25本</td></tr>
+<tr><td>Linchpin のグループごとのセッション数</td><td>広告・YouTube 6／メルマガ 5／ファネル・オプトイン 5／運転台 11／AI-Mits 8／LP・セールスレター 6／AIグルコン（BE-02） 15／無料体験セミナー 4／会員設計（松竹梅） 2　＝ 62</td></tr>
+<tr><td>変えないグループ・セッションのうち、名前・並び・中身を変えたもの</td><td><b>0件</b>（RUNNING・■新司令塔・頭整理・タスク整理系・動画撮影・【TW】・歌うま・環境設定・グループなし の名前と並びはそのまま。これらから出ていくのは Linchpin に選んだセッションだけで、残るセッションには触れない）</td></tr>
+<tr><td>新しいグループ名の比喩・自分で作った呼び名・記号の呼び名</td><td><b>0件</b>（①〜⑨ は Linchpin の本の段の番号で、teiansho_v2.md と同じ使い方）</td></tr>
+<tr><td>選んだ理由の書かれていない移動</td><td><b>0件</b>（2. の表の全行に理由がある。理由の無い行があれば作る script が止まる作りにした）</td></tr>
+<tr><td>サイドバーを動かした操作</td><td><b>0回</b>（読んだのは渡された一覧ファイル・grouping.md・grouping2.md・teiansho_v2.md と、サイドバーのグループ一覧を1回。書く操作は無し）</td></tr>
 <tr><td>使ったモデル・effort</td><td>Fable 5.1（claude-fable-5-1）・max</td></tr>
 </table></div>
-<div class="toc"><a href="#s1">1. 結論 ── 新しいグループ（上から順）</a><br><a href="#s2">2. いまのグループ → 新しいグループの対応表</a><br><a href="#s3">3. 全300セッションの行き先</a><br><a href="#s4">4. 分け方の軸を比べた所と、選んだ理由</a><br><a href="#s5">5. 決めかねた所</a></div>
+<div class="toc"><a href="#s1">1. 結論 ── Linchpin のグループ（上から順）</a><br><a href="#s2">2. 移すセッションの表（選んだ理由つき）</a><br><a href="#s3">3. 変えないグループの一覧</a><br><a href="#s4">4. 決めかねた所</a></div>
 
-<h2 id="s1">1. 結論 ── 新しいグループ（上から順）</h2>
-<p>軸は<b>事業の「もの」の名前</b>（運転台・AI-Mits・メルマガ・BE-02・司令塔…）。それに<b>私事を分ける</b>・<b>予約タスクの回を分ける</b>の2つを足した。名前は「名前｜目的」の形で、<b>「｜」の前だけで何か分かる</b>ようにしてある（サイドバーの幅で後半が切れても困らない）。</p>
-<table><tr><th class="num">順</th><th>グループ名｜目的</th><th class="num">入る数</th><th class="num">うち 09-21 以降に動いた数</th><th class="nw">最後に動いた日</th><th>いまどこにあるか（本数）</th></tr>
-<tr><td class="num">1</td><td><span class="gname">司令塔と戦略</span>｜<span class="purpose">部署への発注・事業モデル・やること整理</span><span class="zone">仕事</span></td><td class="num">14</td><td class="num">2</td><td class="nw">2026-09-26</td><td class="small">（グループなし） 9・頭整理・タスク整理系 4・■新司令塔 1</td></tr>
-<tr><td class="num">2</td><td><span class="gname">運転台</span>｜<span class="purpose">経営アプリの開発・改善・広める</span><span class="zone">仕事</span></td><td class="num">11</td><td class="num">7</td><td class="nw">2026-10-04</td><td class="small">■新司令塔 3・司令塔補助 3・4セッション＋1 3・（グループなし） 2</td></tr>
-<tr><td class="num">3</td><td><span class="gname">AI-Mits</span>｜<span class="purpose">RAG で答える AI の中身と Dify</span><span class="zone">仕事</span></td><td class="num">8</td><td class="num">1</td><td class="nw">2026-09-25</td><td class="small">AI-Mits 6・■新司令塔 1・4セッション＋1 1</td></tr>
-<tr><td class="num">4</td><td><span class="gname">ファネルと集客</span>｜<span class="purpose">オプトイン・入口の集約・Meta広告・YouTube</span><span class="zone">仕事</span></td><td class="num">13</td><td class="num">2</td><td class="nw">2026-10-04</td><td class="small">（グループなし） 6・ファネルマーケティング 5・4セッション＋1 1・AIグループ講座関連 1</td></tr>
-<tr><td class="num">5</td><td><span class="gname">メルマガ</span>｜<span class="purpose">毎日の配信と計測</span><span class="zone">仕事</span></td><td class="num">5</td><td class="num">1</td><td class="nw">2026-09-30</td><td class="small">■新司令塔 1・4セッション＋1 1・メルマガ自動化オール 1・頭整理・タスク整理系 1・（グループなし） 1</td></tr>
-<tr><td class="num">6</td><td><span class="gname">AIグルコン（BE-02）</span>｜<span class="purpose">レジメ・動画・Discord・配信・会員設計</span><span class="zone">仕事</span></td><td class="num">19</td><td class="num">2</td><td class="nw">2026-09-29</td><td class="small">AIグループ講座関連 12・（グループなし） 5・ファネルマーケティング 1・環境設定 1</td></tr>
-<tr><td class="num">7</td><td><span class="gname">無料体験セミナーと LP</span>｜<span class="purpose">セミナー・セールスレター・デザイン</span><span class="zone">仕事</span></td><td class="num">11</td><td class="num">0</td><td class="nw">2026-08-14</td><td class="small">（グループなし） 4・LP/デザイン 4・AIグループ講座関連 3</td></tr>
-<tr><td class="num">8</td><td><span class="gname">毎日動画（SKOOL）</span>｜<span class="purpose">シナリオ・撮影・アップ</span><span class="zone">仕事</span></td><td class="num">4</td><td class="num">0</td><td class="nw">2026-06-11</td><td class="small">動画撮影 4</td></tr>
-<tr><td class="num">9</td><td><span class="gname">すごいコンサル</span>｜<span class="purpose">Zoom録画の整理・予約・請求書</span><span class="zone">仕事</span></td><td class="num">9</td><td class="num">4</td><td class="nw">2026-09-30</td><td class="small">（グループなし） 5・頭整理・タスク整理系 2・AI-Mits 1・AIグループ講座関連 1</td></tr>
-<tr><td class="num">10</td><td><span class="gname">タイムウェーバー</span>｜<span class="purpose">クライアントの分析</span><span class="zone">仕事</span></td><td class="num">4</td><td class="num">1</td><td class="nw">2026-09-21</td><td class="small">【TW】 4</td></tr>
-<tr><td class="num">11</td><td><span class="gname">経理と会社の事務</span>｜<span class="purpose">月次決算・マネフォ・解約・法人登記・名刺</span><span class="zone">仕事</span></td><td class="num">6</td><td class="num">2</td><td class="nw">2026-10-04</td><td class="small">（グループなし） 5・RUNNING 1</td></tr>
-<tr><td class="num">12</td><td><span class="gname">Claude Code の環境</span>｜<span class="purpose">Mac/Win・使用量・SSH・取り込み</span><span class="zone">道具</span></td><td class="num">19</td><td class="num">1</td><td class="nw">2026-09-25</td><td class="small">（グループなし） 12・環境設定 3・AI-Mits 2・RUNNING 1・AIグループ講座関連 1</td></tr>
-<tr><td class="num">13</td><td><span class="gname">メモリー・hook・エージェント</span>｜<span class="purpose">CLAUDE.md と決まりの整理</span><span class="zone">道具</span></td><td class="num">14</td><td class="num">0</td><td class="nw">2026-08-29</td><td class="small">（グループなし） 8・頭整理・タスク整理系 4・AIグループ講座関連 1・環境設定 1</td></tr>
-<tr><td class="num">14</td><td><span class="gname">片付け</span>｜<span class="purpose">MyDrive・GitHub・Obsidian・Claude履歴</span><span class="zone">道具</span></td><td class="num">9</td><td class="num">0</td><td class="nw">2026-08-03</td><td class="small">（グループなし） 4・頭整理・タスク整理系 4・AI-Mits 1</td></tr>
-<tr><td class="num">15</td><td><span class="gname">私事</span>｜<span class="purpose">健康・買い物・旅・子供・単発の要約や文章</span><span class="zone">私事</span></td><td class="num">18</td><td class="num">3</td><td class="nw">2026-10-05</td><td class="small">（グループなし） 16・RUNNING 2</td></tr>
-<tr><td class="num">16</td><td><span class="gname">沖縄の店の企画</span>｜<span class="purpose">せんべろ・弁当</span><span class="zone">私事</span></td><td class="num">2</td><td class="num">1</td><td class="nw">2026-10-05</td><td class="small">RUNNING 1・（グループなし） 1</td></tr>
-<tr><td class="num">17</td><td><span class="gname">歌うま</span>｜<span class="purpose">ボイトレ・カラオケ音源分析</span><span class="zone">私事</span></td><td class="num">2</td><td class="num">0</td><td class="nw">2026-08-17</td><td class="small">歌うま 2</td></tr>
-<tr><td class="num">18</td><td><span class="gname">予約タスクの記録</span>｜<span class="purpose">定時報告・毎朝点検・月次決算・Obsidian</span><span class="zone">記録</span></td><td class="num">132</td><td class="num">79</td><td class="nw">2026-10-05</td><td class="small">（グループなし） 132</td></tr>
-<tr><td></td><td><b>合計</b></td><td class="num"><b>300</b></td><td class="num"><b>106</b></td><td></td><td></td></tr></table>
-<h3>並び順の考え</h3>
-<p>上から、<b>最初に開く所（司令塔と戦略）</b> → <b>2年のあとも続くもの（運転台・AI-Mits）</b> → <b>2年で入れ替える部品</b>（人を集める：ファネルと集客・メルマガ／売る：AIグルコン・無料体験セミナーと LP・毎日動画） → <b>ほかのサービス</b>（すごいコンサル・タイムウェーバー） → <b>経理</b> → <b>道具</b>（環境・決まり・片付け） → <b>私事</b> → <b>記録</b>（予約タスク）。「2年のあとも続くもの」と「2年の部品」の分け方は、Mits様の発言「AIビジネスはおそらくこの2年程度。しかしAIつと経営アプリはその先も続いていく」「単品商品単品講座単品のファネル…はすべてこのファネルを構築するための部品作りのプロセスだった」（teiansho_v2.md 3-6）に合わせた。終わった線（無料体験セミナーと LP は 08-14、毎日動画は 06-11 で止まっている）も同じ並びの中で下に置き、グループは消さない。</p>
-<h3>いま動いているセッションと、終わった・古いセッションの扱い</h3>
+<h2 id="s1">1. 結論 ── Linchpin のグループ（上から順）</h2>
+<p>Linchpin の線（teiansho_v2.md 1.）は「⑥ Meta広告・今のメルマガ → ⑤ オプトインページ → ② AI-Mits＆経営アプリのダウンロード → ④ フロント商品 → ⑦ BE-02 → ⑨ ステップメール → ⑧ 無料体験セミナー → 無料個別相談 → ⑦ → ① 継続課金」。グループはこの線を上から読める順に並べ、名前は「Mits様の言葉｜段の番号 何をする所か」の形にした。</p>
+<table><tr><th class="num">順</th><th>グループ名｜段 何をする所か</th><th class="num">入る数</th><th class="num">うち移す数</th><th>作り方</th></tr>
+<tr><td class="num">1</td><td><span class="gname">広告・YouTube</span>｜⑥③ <span class="purpose">Meta広告・YouTube・競合の広告で人を集める</span></td><td class="num">6</td><td class="num">6</td><td>新しく作る</td></tr>
+<tr><td class="num">2</td><td><span class="gname">メルマガ</span>｜③⑥⑨ <span class="purpose">毎日のメルマガの原稿・配信・計測</span></td><td class="num">5</td><td class="num">4</td><td>いまの「メルマガ自動化オール」の名前を直す</td></tr>
+<tr><td class="num">3</td><td><span class="gname">ファネル・オプトイン</span>｜⑤② <span class="purpose">入口の集約・オプトイン・無料の贈り物・登録の計測</span></td><td class="num">5</td><td class="num">3</td><td>いまの「ファネルマーケティング」の名前を直す</td></tr>
+<tr><td class="num">4</td><td><span class="gname">運転台</span>｜②① <span class="purpose">アプリの開発と改善（③ 広める・コンサル事務所）</span></td><td class="num">11</td><td class="num">8</td><td>いまの「司令塔補助」の名前を直す</td></tr>
+<tr><td class="num">5</td><td><span class="gname">AI-Mits</span>｜②① <span class="purpose">RAG で答える AI の中身・Dify・チューニング</span></td><td class="num">8</td><td class="num">2</td><td>いまの「AI-Mits」の名前を直す</td></tr>
+<tr><td class="num">6</td><td><span class="gname">LP・セールスレター</span>｜④⑦ <span class="purpose">フロント商品・BE-02・講座の LP と文章</span></td><td class="num">6</td><td class="num">3</td><td>いまの「LP/デザイン」の名前を直す</td></tr>
+<tr><td class="num">7</td><td><span class="gname">AIグルコン（BE-02）</span>｜⑦ <span class="purpose">高額商品の中身（レジメ・動画・Discord）と講座生への配信</span></td><td class="num">15</td><td class="num">5</td><td>いまの「AIグループ講座関連」の名前を直す</td></tr>
+<tr><td class="num">8</td><td><span class="gname">無料体験セミナー</span>｜⑧ <span class="purpose">毎月の無料体験セミナー → 無料個別相談</span></td><td class="num">4</td><td class="num">4</td><td>新しく作る</td></tr>
+<tr><td class="num">9</td><td><span class="gname">会員設計（松竹梅）</span>｜① <span class="purpose">継続課金の梅・竹の設計（100時間を超えた人へ）</span></td><td class="num">2</td><td class="num">2</td><td>新しく作る</td></tr>
+<tr><td></td><td><b>合計</b></td><td class="num"><b>62</b></td><td class="num"><b>37</b></td><td></td></tr></table>
+<h3>組み直したあとのサイドバーの並び（上から）</h3>
+<p class="small">RUNNING は Mits様が最上段に置いているものでLinchpin ではないので、そのまま最上段に残す。その下に Linchpin の9つ。残りはいまの並びのまま。</p>
+<ol class="order">
+<li><span class="small">1</span><span>RUNNING<span class="small">　変えない</span></span><span class="c">5本（変わらず）</span></li>
+<li><span class="small">2</span><span><span class="gname">広告・YouTube</span>｜⑥③ Meta広告・YouTube・競合の広告で人を集める<span class="small">　新しく作る</span></span><span class="c">6本</span></li>
+<li><span class="small">3</span><span><span class="gname">メルマガ</span>｜③⑥⑨ 毎日のメルマガの原稿・配信・計測<span class="small">　「メルマガ自動化オール」の名前を直す</span></span><span class="c">5本</span></li>
+<li><span class="small">4</span><span><span class="gname">ファネル・オプトイン</span>｜⑤② 入口の集約・オプトイン・無料の贈り物・登録の計測<span class="small">　「ファネルマーケティング」の名前を直す</span></span><span class="c">5本</span></li>
+<li><span class="small">5</span><span><span class="gname">運転台</span>｜②① アプリの開発と改善（③ 広める・コンサル事務所）<span class="small">　「司令塔補助」の名前を直す</span></span><span class="c">11本</span></li>
+<li><span class="small">6</span><span><span class="gname">AI-Mits</span>｜②① RAG で答える AI の中身・Dify・チューニング<span class="small">　「AI-Mits」の名前を直す</span></span><span class="c">8本</span></li>
+<li><span class="small">7</span><span><span class="gname">LP・セールスレター</span>｜④⑦ フロント商品・BE-02・講座の LP と文章<span class="small">　「LP/デザイン」の名前を直す</span></span><span class="c">6本</span></li>
+<li><span class="small">8</span><span><span class="gname">AIグルコン（BE-02）</span>｜⑦ 高額商品の中身（レジメ・動画・Discord）と講座生への配信<span class="small">　「AIグループ講座関連」の名前を直す</span></span><span class="c">15本</span></li>
+<li><span class="small">9</span><span><span class="gname">無料体験セミナー</span>｜⑧ 毎月の無料体験セミナー → 無料個別相談<span class="small">　新しく作る</span></span><span class="c">4本</span></li>
+<li><span class="small">10</span><span><span class="gname">会員設計（松竹梅）</span>｜① 継続課金の梅・竹の設計（100時間を超えた人へ）<span class="small">　新しく作る</span></span><span class="c">2本</span></li>
+<li><span class="small">11</span><span>■新司令塔<span class="small">　変えない（運転台3・AI-Mits1・メルマガ1 が Linchpin へ出る）</span></span><span class="c">1本</span></li>
+<li><span class="small">12</span><span>頭整理・タスク整理系<span class="small">　変えない（メルマガ1本が出る）</span></span><span class="c">14本</span></li>
+<li><span class="small">13</span><span>動画撮影<span class="small">　変えない</span></span><span class="c">4本</span></li>
+<li><span class="small">14</span><span><span class="strike">4セッション＋1</span><span class="small">　中身が全部 Linchpin へ移り、空になる</span></span><span class="c">0本</span></li>
+<li><span class="small">15</span><span>【TW】<span class="small">　変えない</span></span><span class="c">4本</span></li>
+<li><span class="small">16</span><span>歌うま<span class="small">　変えない</span></span><span class="c">2本</span></li>
+<li><span class="small">17</span><span>環境設定<span class="small">　変えない（講座の資料1本が出る）</span></span><span class="c">4本</span></li>
+<li><span class="small">18</span><span>（グループなし）<span class="small">　変えない（Linchpin に選んだ14本が出る）</span></span><span class="c">196本</span></li>
+</ol>
+<h3>何を Linchpin に関係すると見たか（選ぶ決まり）</h3>
 <ul>
-<li><b>「動いている」はグループの軸にしない。</b>RUNNING は解く。一覧はどのグループの中でも最後に動いた順に並ぶので、上に来るものが動いているもの。状態の名前を付けると、止まった時に名前が嘘になる（いまの RUNNING 5本のうち、2026-10-05 に動いたのは3本）。</li>
-<li><b>終わった線のセッションは、そのグループに残す。</b>名前で中身が分かるので、グループを閉じておけば一目の邪魔にならない。アーカイブはこの目的（一目で分かる）に要らないので提案しない。</li>
-<li><b>予約タスクの回（132本・全体の44%）は1つのグループに集めて最下段に置く。</b>線引きは「Mits様の発話が1件も無い回」。発話がある回（【毎月1日】前月の月次決算を締める 10-01、【毎月16日】当月前半の月次決算 09-18）は担当の線（経理）に置いた。毎日5本増える（定時報告3・お試し版と Dify の数え1・運転台の毎朝点検1。月曜に仲間募集の材料あつめ1、週に Obsidian weekly cleanup 1）ので、いまのままだと「グループなし」に溜まり続ける。</li>
+<li><b>9段のどれかを作る・売る・集める・測る仕事</b>（grouping.md の「直接」）。運転台・AI-Mits（②①）、ファネル・オプトイン・入口の集約・登録の計測（⑤②）、メルマガ（③⑥⑨）、広告・YouTube（⑥③）、LP・セールスレター（④⑦）、無料体験セミナー（⑧）、BE-02 の配信（⑦⑨）、会員設計（①）。</li>
+<li><b>9段に置いた商品の中身そのもの</b>（grouping.md では「間接」）。BE-02 のレジメ・動画・Discord・資料（⑦ の中身）、メインメルマガの原稿（③ の中身）。</li>
+<li><b>入れないもの</b>：道具・決まり・片付け・経理・私事、Mits様が Linchpin から外したもの（SKOOL の毎日動画・合宿）、単品講座の中身、すごいコンサルの録画と予約、司令塔そのもの。理由は 4. と 2. の末尾の表にある。</li>
+<li>予約タスクの回は今回の範囲の外（触れていない）。</li>
 </ul>
-<h3>名前の付け方の決まり（この提案で守ったこと）</h3>
-<ul>
-<li>Mits様が使っている言葉だけで付ける（運転台・AI-Mits・メルマガ・AIグルコン・BE-02・司令塔・すごいコンサル・タイムウェーバー・歌うま・片付け・メモリー・hook・エージェント・予約タスク）。</li>
-<li>状態（RUNNING）・数（4セッション＋1）・比べ方（■新司令塔・司令塔補助）・略字（【TW】）・広く取る語（〜系・〜関連・〜オール）を使わない。</li>
-<li>「｜」の前だけで立つ名前にする。後ろは目的の助け。</li>
-</ul>
+<h3>空になるグループ</h3>
+<p><b>4セッション＋1</b>（6本）だけが、中身が全部 Linchpin のグループへ移って空になる（運転台3・AI-Mits1・ファネル1・メルマガ1）。空になったあとは名前だけが残る。名前を消すかどうかは 4. に置いた。司令塔補助・ファネルマーケティング・メルマガ自動化オール・AI-Mits・AIグループ講座関連・LP/デザイン の6つは、空にはならず「名前を直して」Linchpin のグループになる（中身の Linchpin でない分は 4. に書いた）。</p>
 
-<h2 id="s2">2. いまのグループ → 新しいグループの対応表</h2>
-<p class="small">本数は一覧ファイル（アーカイブ済みを除く300本）で数えた。サイドバーの list_groups の件数（■新司令塔 8・頭整理・タスク整理系 18・AI-Mits 14 など）はアーカイブ済みを含むので、ここより大きい。</p>
-<table><tr><th>いまのグループ</th><th class="num">本数</th><th>→ 新しいグループ（本数）</th><th>何が起きているか</th></tr>
-<tr><td class="nw">RUNNING</td><td class="num">5</td><td><span class="gname">経理と会社の事務</span> 1／<span class="gname">Claude Code の環境</span> 1／<span class="gname">私事</span> 2／<span class="gname">沖縄の店の企画</span> 1</td><td class="small">「動いている」という状態の名前。中身は4種類。目的ごとに4つへ分かれる</td></tr>
-<tr><td class="nw">■新司令塔</td><td class="num">6</td><td><span class="gname">司令塔と戦略</span> 1／<span class="gname">運転台</span> 3／<span class="gname">AI-Mits</span> 1／<span class="gname">メルマガ</span> 1</td><td class="small">司令塔が今動かしている線を集めた形。中身は運転台3・司令塔1・AI-Mits1・メルマガ1。それぞれの線へ戻す</td></tr>
-<tr><td class="nw">司令塔補助</td><td class="num">3</td><td><span class="gname">運転台</span> 3</td><td class="small">3本とも運転台（ダッシュボード・OEM）。運転台へ</td></tr>
-<tr><td class="nw">ファネルマーケティング</td><td class="num">6</td><td><span class="gname">ファネルと集客</span> 5／<span class="gname">AIグルコン（BE-02）</span> 1</td><td class="small">5本はそのまま。BE02AIグルコン講座レター共通版は BE-02 の配信と LP の仕事なので AIグルコンへ</td></tr>
-<tr><td class="nw">頭整理・タスク整理系</td><td class="num">15</td><td><span class="gname">司令塔と戦略</span> 4／<span class="gname">メルマガ</span> 1／<span class="gname">すごいコンサル</span> 2／<span class="gname">メモリー・hook・エージェント</span> 4／<span class="gname">片付け</span> 4</td><td class="small">5種類が混ざる。戦略・やること整理4／メモリー4／片付け4／Zoom録画2／メルマガ1 に分かれる</td></tr>
-<tr><td class="nw">動画撮影</td><td class="num">4</td><td><span class="gname">毎日動画（SKOOL）</span> 4</td><td class="small">4本とも毎日動画（SKOOL）。名前を直すだけ</td></tr>
-<tr><td class="nw">4セッション＋1</td><td class="num">6</td><td><span class="gname">運転台</span> 3／<span class="gname">AI-Mits</span> 1／<span class="gname">ファネルと集客</span> 1／<span class="gname">メルマガ</span> 1</td><td class="small">作った時の数の名前。中身は運転台3・AI-Mits1・ファネル1・メルマガ1。それぞれの線へ</td></tr>
-<tr><td class="nw">メルマガ自動化オール</td><td class="num">1</td><td><span class="gname">メルマガ</span> 1</td><td class="small">1本。メルマガ5本をここに集める（残り4本は■新司令塔・4セッション＋1・頭整理・グループなしに散っていた）</td></tr>
-<tr><td class="nw">AI-Mits</td><td class="num">10</td><td><span class="gname">AI-Mits</span> 6／<span class="gname">すごいコンサル</span> 1／<span class="gname">Claude Code の環境</span> 2／<span class="gname">片付け</span> 1</td><td class="small">6本はそのまま。残り4本は道具2（UUID lookup・CLI の取り込み）・片付け1（フォルダ移動）・すごいコンサル1（Zoom 動画の確認）</td></tr>
-<tr><td class="nw">AIグループ講座関連</td><td class="num">19</td><td><span class="gname">ファネルと集客</span> 1／<span class="gname">AIグルコン（BE-02）</span> 12／<span class="gname">無料体験セミナーと LP</span> 3／<span class="gname">すごいコンサル</span> 1／<span class="gname">Claude Code の環境</span> 1／<span class="gname">メモリー・hook・エージェント</span> 1</td><td class="small">12本は AIグルコン。残りは無料体験セミナーと LP 3・ファネル1（使用量コスパ・タイパ）・すごいコンサル1（Zoom 復旧）・メモリー1（Devils-advocate）・環境1（CODEX）</td></tr>
-<tr><td class="nw">LP/デザイン</td><td class="num">4</td><td><span class="gname">無料体験セミナーと LP</span> 4</td><td class="small">4本とも LP。無料体験セミナーの4本と合わせて1つに</td></tr>
-<tr><td class="nw">【TW】</td><td class="num">4</td><td><span class="gname">タイムウェーバー</span> 4</td><td class="small">4本ともタイムウェーバー。略字を言葉に</td></tr>
-<tr><td class="nw">歌うま</td><td class="num">2</td><td><span class="gname">歌うま</span> 2</td><td class="small">2本ともそのまま。目的を添える</td></tr>
-<tr><td class="nw">環境設定</td><td class="num">5</td><td><span class="gname">AIグルコン（BE-02）</span> 1／<span class="gname">Claude Code の環境</span> 3／<span class="gname">メモリー・hook・エージェント</span> 1</td><td class="small">3本は環境。AI results visibility report は講座の公開資料、（お客様の名前のため省略）式CLAUDE.md実装は決まりの整理</td></tr>
-<tr><td class="nw">（グループなし）</td><td class="num">210</td><td><span class="gname">司令塔と戦略</span> 9／<span class="gname">運転台</span> 2／<span class="gname">ファネルと集客</span> 6／<span class="gname">メルマガ</span> 1／<span class="gname">AIグルコン（BE-02）</span> 5／<span class="gname">無料体験セミナーと LP</span> 4／<span class="gname">すごいコンサル</span> 5／<span class="gname">経理と会社の事務</span> 5／<span class="gname">Claude Code の環境</span> 12／<span class="gname">メモリー・hook・エージェント</span> 8／<span class="gname">片付け</span> 4／<span class="gname">私事</span> 16／<span class="gname">沖縄の店の企画</span> 1／<span class="gname">予約タスクの記録</span> 132</td><td class="small">210本（全体の7割）。132本は予約タスクの回。残り78本は14のグループに分かれる</td></tr>
-<tr><td><b>合計</b></td><td class="num"><b>300</b></td><td></td><td></td></tr></table>
-<h3>いまのグループ14のうち、残す・直す・解く</h3><table><tr><th>扱い</th><th>いまのグループ</th><th>新しい名前</th></tr>
-<tr><td class="nw">名前そのまま残す（目的を添える）</td><td>AI-Mits</td><td>AI-Mits｜RAG で答える AI の中身と Dify</td></tr>
-<tr><td class="nw">名前そのまま残す（目的を添える）</td><td>歌うま</td><td>歌うま｜ボイトレ・カラオケ音源分析</td></tr>
-<tr><td class="nw">名前を直して残す</td><td>【TW】</td><td>タイムウェーバー｜クライアントの分析</td></tr>
-<tr><td class="nw">名前を直して残す</td><td>動画撮影</td><td>毎日動画（SKOOL）｜シナリオ・撮影・アップ</td></tr>
-<tr><td class="nw">名前を直して残す</td><td>環境設定</td><td>Claude Code の環境｜Mac/Win・使用量・SSH・取り込み</td></tr>
-<tr><td class="nw">名前を直して残す</td><td>ファネルマーケティング</td><td>ファネルと集客｜オプトイン・入口の集約・Meta広告・YouTube</td></tr>
-<tr><td class="nw">名前を直して残す</td><td>LP/デザイン</td><td>無料体験セミナーと LP｜セミナー・セールスレター・デザイン</td></tr>
-<tr><td class="nw">名前を直して残す</td><td>メルマガ自動化オール</td><td>メルマガ｜毎日の配信と計測</td></tr>
-<tr><td class="nw">名前を直して残す</td><td>AIグループ講座関連</td><td>AIグルコン（BE-02）｜レジメ・動画・Discord・配信・会員設計</td></tr>
-<tr><td class="nw">解く（中身を各線へ戻す）</td><td>RUNNING／■新司令塔／司令塔補助／4セッション＋1／頭整理・タスク整理系</td><td>—</td></tr>
-<tr><td class="nw">新しく作る</td><td>—</td><td>司令塔と戦略／運転台／すごいコンサル／経理と会社の事務／メモリー・hook・エージェント／片付け／私事／沖縄の店の企画／予約タスクの記録</td></tr>
+<h2 id="s2">2. 移すセッションの表（選んだ理由つき）</h2>
+<p class="small">62本。並びは Linchpin のグループの順、その中は最後に動いた順。「扱い」の「そのまま」は、いまのグループの名前が変わるだけで中身の移動が無いもの（25本）。日時は日本時間。</p>
+<table><tr><th class="num">#</th><th>セッション名</th><th class="nw">最後に動いた</th><th class="nw">いまのグループ → 新しいグループ</th><th class="nw">扱い</th><th>選んだ理由（段）</th></tr>
+<tr class="ghead"><td colspan="6">広告・YouTube｜⑥③ Meta広告・YouTube・競合の広告で人を集める　（6本）</td></tr>
+<tr><td class="num">1</td><td>Meta広告の自動化・最適化サイクル</td><td class="nw">2026-10-04 22:16</td><td class="nw">ファネルマーケティング → <span class="gname">広告・YouTube</span></td><td class="nw">移す</td><td class="small">Meta 広告の出し方の洗い出しと自動化（⑥）</td></tr>
+<tr><td class="num">2</td><td>YouTube チャンネルコンセプト構想</td><td class="nw">2026-09-18 00:46</td><td class="nw">ファネルマーケティング → <span class="gname">広告・YouTube</span></td><td class="nw">移す</td><td class="small">YouTube 発信のコンセプト（③ 人を集める）</td></tr>
+<tr><td class="num">3</td><td>マーケリサーチ</td><td class="nw">2026-07-24 17:22</td><td class="nw">（グループなし） → <span class="gname">広告・YouTube</span></td><td class="nw">移す</td><td class="small">AIグルコンを広げるための競合リサーチ（⑥③ 集客の材料）</td></tr>
+<tr><td class="num">4</td><td>３層スキルでのマーケ案</td><td class="nw">2026-07-23 17:47</td><td class="nw">（グループなし） → <span class="gname">広告・YouTube</span></td><td class="nw">移す</td><td class="small">AIグルコンに8月から30人集めるプラン・個別相談19名のファネル（③⑤ 集客）</td></tr>
+<tr><td class="num">5</td><td>広告ライブラリーリサーチ　CLAUDEで</td><td class="nw">2026-07-06 16:00</td><td class="nw">ファネルマーケティング → <span class="gname">広告・YouTube</span></td><td class="nw">移す</td><td class="small">競合の広告・LP を集める（⑥ Meta広告の材料）</td></tr>
+<tr><td class="num">6</td><td>100日マーケティング</td><td class="nw">2026-06-25 16:23</td><td class="nw">（グループなし） → <span class="gname">広告・YouTube</span></td><td class="nw">移す</td><td class="small">100日間のマーケティングの大プラン（③⑥⑨ 人を集める計画）</td></tr>
+<tr class="ghead"><td colspan="6">メルマガ｜③⑥⑨ 毎日のメルマガの原稿・配信・計測　（5本）</td></tr>
+<tr><td class="num">7</td><td>メール配信・計測・自動化</td><td class="nw">2026-09-30 23:29</td><td class="nw">■新司令塔 → <span class="gname">メルマガ</span></td><td class="nw">移す</td><td class="small">メルマガの配信・計測・自動化の続き（③⑥⑨）</td></tr>
+<tr><td class="num">8</td><td>メール配信と計測と自動化</td><td class="nw">2026-09-14 16:33</td><td class="nw">4セッション＋1 → <span class="gname">メルマガ</span></td><td class="nw">移す</td><td class="small">メルマガの3スタンド配信と計測（③⑥⑨）</td></tr>
+<tr><td class="num">9</td><td>3AI-錬磨</td><td class="nw">2026-09-03 17:41</td><td class="nw">メルマガ自動化オール → <span class="gname">メルマガ</span></td><td class="nw">そのまま</td><td class="small">メインメルマガの原稿を複数の AI で磨く（③⑥⑨ メルマガの中身）</td></tr>
+<tr><td class="num">10</td><td>パンとサーカス メルマガ執筆</td><td class="nw">2026-08-04 15:41</td><td class="nw">頭整理・タスク整理系 → <span class="gname">メルマガ</span></td><td class="nw">移す</td><td class="small">メインメルマガの執筆（③⑥⑨）</td></tr>
+<tr><td class="num">11</td><td>メルマガ自動化</td><td class="nw">2026-06-07 14:25</td><td class="nw">（グループなし） → <span class="gname">メルマガ</span></td><td class="nw">移す</td><td class="small">mainmail-loop でメインメルマガを作る（③⑥⑨ メルマガ）</td></tr>
+<tr class="ghead"><td colspan="6">ファネル・オプトイン｜⑤② 入口の集約・オプトイン・無料の贈り物・登録の計測　（5本）</td></tr>
+<tr><td class="num">12</td><td>UTAGE 入口の集約（トールゲート式）</td><td class="nw">2026-10-04 17:16</td><td class="nw">ファネルマーケティング → <span class="gname">ファネル・オプトイン</span></td><td class="nw">そのまま</td><td class="small">UTAGE の入口の集約・登録経路の整理（②③ 登録の計測）</td></tr>
+<tr><td class="num">13</td><td>wasa_ファネルメイク</td><td class="nw">2026-09-20 20:30</td><td class="nw">ファネルマーケティング → <span class="gname">ファネル・オプトイン</span></td><td class="nw">そのまま</td><td class="small">フロント・ワンタイムオファー・継続の組み立て（①②④ この Linchpin の設計そのもの）</td></tr>
+<tr><td class="num">14</td><td>_4セッション</td><td class="nw">2026-09-14 17:30</td><td class="nw">4セッション＋1 → <span class="gname">ファネル・オプトイン</span></td><td class="nw">移す</td><td class="small">4つのセッションのデータを統合して分析する設計（③〜⑨ の計測）</td></tr>
+<tr><td class="num">15</td><td>AIサポートマニュアルwithメニュー表</td><td class="nw">2026-07-17 16:27</td><td class="nw">（グループなし） → <span class="gname">ファネル・オプトイン</span></td><td class="nw">移す</td><td class="small">士業向けマニュアル PDF・DL ページ・ステップ・登録フォーム（② 無料の贈り物）</td></tr>
+<tr><td class="num">16</td><td>使用量コスパ・タイパ</td><td class="nw">2026-06-07 18:24</td><td class="nw">AIグループ講座関連 → <span class="gname">ファネル・オプトイン</span></td><td class="nw">移す</td><td class="small">後半が「AIエージェントレポート」のメアド登録・LP・PDF（② 無料の贈り物の1つ）</td></tr>
+<tr class="ghead"><td colspan="6">運転台｜②① アプリの開発と改善（③ 広める・コンサル事務所）　（11本）</td></tr>
+<tr><td class="num">17</td><td>運転台改善</td><td class="nw">2026-10-04 21:59</td><td class="nw">■新司令塔 → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台の改善・freee と月次の突き合わせ・遠藤さんへの案内（②）</td></tr>
+<tr><td class="num">18</td><td>_OEM提供考察</td><td class="nw">2026-10-04 17:32</td><td class="nw">司令塔補助 → <span class="gname">運転台</span></td><td class="nw">そのまま</td><td class="small">コンサル事務所に運転台を渡す道。「AI-Mits利用者が増えること 第一義」（③）</td></tr>
+<tr><td class="num">19</td><td>_OEM提供考察-2</td><td class="nw">2026-09-26 12:12</td><td class="nw">司令塔補助 → <span class="gname">運転台</span></td><td class="nw">そのまま</td><td class="small">コンサル事務所に運転台を渡す道（③ コンサル事務所 → 顧問先）</td></tr>
+<tr><td class="num">20</td><td>運転台マーケ</td><td class="nw">2026-09-26 07:48</td><td class="nw">■新司令塔 → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台の数字を定時に取りに行く設定（② の計測）</td></tr>
+<tr><td class="num">21</td><td>ダッシュボードの新規構築</td><td class="nw">2026-09-25 20:42</td><td class="nw">司令塔補助 → <span class="gname">運転台</span></td><td class="nw">そのまま</td><td class="small">運転台の計器盤の新規構築（②）</td></tr>
+<tr><td class="num">22</td><td>「戦略の決定」が押しても画面が変わらない件を直す</td><td class="nw">2026-09-25 19:05</td><td class="nw">（グループなし） → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台の不具合の修正（②）</td></tr>
+<tr><td class="num">23</td><td>伽藍とバザールの実現</td><td class="nw">2026-09-25 18:33</td><td class="nw">■新司令塔 → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台を広める考え方（③ 紹介・仲間）</td></tr>
+<tr><td class="num">24</td><td>untendai-seiri</td><td class="nw">2026-09-14 16:43</td><td class="nw">4セッション＋1 → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台の開発そのもの（②）</td></tr>
+<tr><td class="num">25</td><td>untendai-marketing</td><td class="nw">2026-09-14 16:34</td><td class="nw">4セッション＋1 → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台のマーケティングの画面（メールの計測を載せる）（② のアプリの計測）</td></tr>
+<tr><td class="num">26</td><td>経営管理アプリ拡散</td><td class="nw">2026-09-14 16:33</td><td class="nw">4セッション＋1 → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台を広める仲間募集（③ 紹介・仲間）</td></tr>
+<tr><td class="num">27</td><td>デスクトップアプリ開発の学習プログラム</td><td class="nw">2026-08-29 15:58</td><td class="nw">（グループなし） → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台を作るための Claude Code の学び方と運転台の .claude の直し（② のアプリを作る仕事）</td></tr>
+<tr class="ghead"><td colspan="6">AI-Mits｜②① RAG で答える AI の中身・Dify・チューニング　（8本）</td></tr>
+<tr><td class="num">28</td><td>AI-Mits-チューニング</td><td class="nw">2026-09-25 18:47</td><td class="nw">■新司令塔 → <span class="gname">AI-Mits</span></td><td class="nw">移す</td><td class="small">運転台の中の AI-Mits の返答を直す（②①）</td></tr>
+<tr><td class="num">29</td><td>AI-Mits_ABテスト_2026012</td><td class="nw">2026-09-14 17:41</td><td class="nw">4セッション＋1 → <span class="gname">AI-Mits</span></td><td class="nw">移す</td><td class="small">AI-Mits の返答の AB テストと Dify のログ（② の中身）</td></tr>
+<tr><td class="num">30</td><td>AI実装先生RAG</td><td class="nw">2026-08-28 02:18</td><td class="nw">AI-Mits → <span class="gname">AI-Mits</span></td><td class="nw">そのまま</td><td class="small">AI実装先生RAG（② AI 3つ）</td></tr>
+<tr><td class="num">31</td><td>AI先生RAG</td><td class="nw">2026-08-27 17:22</td><td class="nw">AI-Mits → <span class="gname">AI-Mits</span></td><td class="nw">そのまま</td><td class="small">運転台に載せる前の AI先生RAG（② AI 3つ）</td></tr>
+<tr><td class="num">32</td><td>AI-Mits for AI</td><td class="nw">2026-07-17 17:20</td><td class="nw">AI-Mits → <span class="gname">AI-Mits</span></td><td class="nw">そのまま</td><td class="small">AI-Mits v3 と同じ仕組みで AI の操作を聞けるボット（② AI 3つの1つ）</td></tr>
+<tr><td class="num">33</td><td>CORPUS2SKILLとアップデート_5/2</td><td class="nw">2026-06-21 18:02</td><td class="nw">AI-Mits → <span class="gname">AI-Mits</span></td><td class="nw">そのまま</td><td class="small">AI-Mits を入口にしてメアド登録まで行く設計と中身の更新（②）</td></tr>
+<tr><td class="num">34</td><td>AI-MITS フロント実装</td><td class="nw">2026-06-21 15:21</td><td class="nw">AI-Mits → <span class="gname">AI-Mits</span></td><td class="nw">そのまま</td><td class="small">AI-MITS の画面（マーケティング・インターフェース）の実装（②）</td></tr>
+<tr><td class="num">35</td><td>AI-MITS フロント実装2</td><td class="nw">2026-06-05 11:41</td><td class="nw">AI-Mits → <span class="gname">AI-Mits</span></td><td class="nw">そのまま</td><td class="small">AI-MITS の画面の実装（② 無料の贈り物の AI 3つ）</td></tr>
+<tr class="ghead"><td colspan="6">LP・セールスレター｜④⑦ フロント商品・BE-02・講座の LP と文章　（6本）</td></tr>
+<tr><td class="num">36</td><td>Utage LP 文章修正</td><td class="nw">2026-08-14 14:08</td><td class="nw">（グループなし） → <span class="gname">LP・セールスレター</span></td><td class="nw">移す</td><td class="small">UTAGE の LP の文章修正（⑦）</td></tr>
+<tr><td class="num">37</td><td>ver1のLP　2SyY</td><td class="nw">2026-07-23 17:49</td><td class="nw">LP/デザイン → <span class="gname">LP・セールスレター</span></td><td class="nw">そのまま</td><td class="small">AIグルコン LP ver1 の作り直し（⑦）</td></tr>
+<tr><td class="num">38</td><td>0531_デザイン整理</td><td class="nw">2026-06-14 20:47</td><td class="nw">LP/デザイン → <span class="gname">LP・セールスレター</span></td><td class="nw">そのまま</td><td class="small">LP のデザインの完成形を決める（④⑦ の LP のデザイン）</td></tr>
+<tr><td class="num">39</td><td>20260529_LP丁寧ファイナル修正</td><td class="nw">2026-06-06 18:26</td><td class="nw">LP/デザイン → <span class="gname">LP・セールスレター</span></td><td class="nw">そのまま</td><td class="small">グルコンの販売ページの修正（⑦）</td></tr>
+<tr><td class="num">40</td><td>0515_レターテンプレからのステップ整理まで</td><td class="nw">2026-06-01 23:39</td><td class="nw">（グループなし） → <span class="gname">LP・セールスレター</span></td><td class="nw">移す</td><td class="small">2ヶ月グループコンサルの LP・決済・サンクスの流れ（⑦ の LP と ⑨ のステップ）</td></tr>
+<tr><td class="num">41</td><td>20260528_AIエージェントグルコンレター</td><td class="nw">2026-06-01 21:26</td><td class="nw">（グループなし） → <span class="gname">LP・セールスレター</span></td><td class="nw">移す</td><td class="small">BE-02 AIグルコンのセールスレター（⑦ 高額商品の LP）</td></tr>
+<tr class="ghead"><td colspan="6">AIグルコン（BE-02）｜⑦ 高額商品の中身（レジメ・動画・Discord）と講座生への配信　（15本）</td></tr>
+<tr><td class="num">42</td><td>BE02AIグルコン講座レター共通版</td><td class="nw">2026-09-29 19:53</td><td class="nw">ファネルマーケティング → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">移す</td><td class="small">配信の復旧・日程（7〜8月）と BE-02 の LP の修正（9月）（⑦）</td></tr>
+<tr><td class="num">43</td><td>BE-02 Scheduler 引き継ぎ確認</td><td class="nw">2026-09-21 21:36</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">グルコンの日程のカレンダーと日程メール（⑦ の配信）</td></tr>
+<tr><td class="num">44</td><td>グルコン動画編集はここ</td><td class="nw">2026-09-04 13:27</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">グルコンの動画の編集（⑦ の中身）</td></tr>
+<tr><td class="num">45</td><td>BE02_メール配信系専用</td><td class="nw">2026-09-02 14:02</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">BE-02 の講座生へのステップ・リマインダ（⑦ の配信）</td></tr>
+<tr><td class="num">46</td><td>AI results visibility report</td><td class="nw">2026-08-23 09:10</td><td class="nw">環境設定 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">移す</td><td class="small">講座で使っている公開資料 PDF の追記（⑦ の中身）</td></tr>
+<tr><td class="num">47</td><td>AI時代のエンジニア必須スキル</td><td class="nw">2026-08-21 15:49</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">用語と概念の解説資料。Mits様が AIグループ講座関連に置いていたもの（⑦ の中身）</td></tr>
+<tr><td class="num">48</td><td>utage メール置き換え文字列の調査</td><td class="nw">2026-08-15 12:33</td><td class="nw">（グループなし） → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">移す</td><td class="small">配信メールの置き換え文字の点検（⑦ の配信の時期・2026-08-14）</td></tr>
+<tr><td class="num">49</td><td>Discord 設定</td><td class="nw">2026-08-11 14:53</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">講座生の Discord の設定（⑦ の運営）</td></tr>
+<tr><td class="num">50</td><td>UTAGE is_blocked=true 原因不明バグ 引き継ぎ書（（お客様の名前のため省略） 2例発生）</td><td class="nw">2026-07-26 16:52</td><td class="nw">（グループなし） → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">移す</td><td class="small">BE-02 の講座生へのステップ配信の不具合（⑦ の配信）</td></tr>
+<tr><td class="num">51</td><td>YAML入門：中学生向け解説</td><td class="nw">2026-07-24 17:32</td><td class="nw">（グループなし） → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">移す</td><td class="small">講座の説明資料（grouping.md が F に置いたもの。確度は低い）（⑦ の中身）</td></tr>
+<tr><td class="num">52</td><td>バックアップシステムfor グループ講座</td><td class="nw">2026-07-13 20:43</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">AIグループ講座用の資料・スライド（⑦ の中身）</td></tr>
+<tr><td class="num">53</td><td>AIグループ講座資産の整理</td><td class="nw">2026-07-12 09:50</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">AIグルコンのために作った成果物の整理（⑦ の中身）</td></tr>
+<tr><td class="num">54</td><td>AI Glucon standardization materials</td><td class="nw">2026-07-12 09:47</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">AIグルコンの資料の標準化（⑦ の中身）</td></tr>
+<tr><td class="num">55</td><td>AI Glucon content inventory</td><td class="nw">2026-07-09 19:45</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">AIグルコン・無料体験・資料・メール・動画の整理（⑦ の中身の棚卸し）</td></tr>
+<tr><td class="num">56</td><td>東大の10倍頭がいい新入社員、激サボりです</td><td class="nw">2026-07-04 16:51</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">AIグループ講座の会員サイトに載せる動画の撮影（⑦ の中身）</td></tr>
+<tr class="ghead"><td colspan="6">無料体験セミナー｜⑧ 毎月の無料体験セミナー → 無料個別相談　（4本）</td></tr>
+<tr><td class="num">57</td><td>LP用Design.mdと二刀流セミナー実装</td><td class="nw">2026-08-09 00:56</td><td class="nw">（グループなし） → <span class="gname">無料体験セミナー</span></td><td class="nw">移す</td><td class="small">二刀流セミナーの申込（Zoom・5,000円・バックエンドは AI の事業）の実装（⑧）</td></tr>
+<tr><td class="num">58</td><td>★無料体験セミナー</td><td class="nw">2026-07-17 16:54</td><td class="nw">AIグループ講座関連 → <span class="gname">無料体験セミナー</span></td><td class="nw">移す</td><td class="small">無料体験セミナー B-02 の中身（⑧）</td></tr>
+<tr><td class="num">59</td><td>★Seminar LP video A production</td><td class="nw">2026-06-21 16:13</td><td class="nw">AIグループ講座関連 → <span class="gname">無料体験セミナー</span></td><td class="nw">移す</td><td class="small">セミナー LP 用の動画 A（⑧ の案内）</td></tr>
+<tr><td class="num">60</td><td>無料体験セミナー構築専用</td><td class="nw">2026-06-06 18:26</td><td class="nw">AIグループ講座関連 → <span class="gname">無料体験セミナー</span></td><td class="nw">移す</td><td class="small">無料体験セミナーの専用セッション（⑧）</td></tr>
+<tr class="ghead"><td colspan="6">会員設計（松竹梅）｜① 継続課金の梅・竹の設計（100時間を超えた人へ）　（2本）</td></tr>
+<tr><td class="num">61</td><td>AI会員リサーチと設計　追記　LP改訂</td><td class="nw">2026-09-08 20:21</td><td class="nw">AIグループ講座関連 → <span class="gname">会員設計（松竹梅）</span></td><td class="nw">移す</td><td class="small">AIグループ講座に付随する会員設計（松竹梅）と LP への受講生の声（① の設計）</td></tr>
+<tr><td class="num">62</td><td>AI講座シラバス</td><td class="nw">2026-09-04 18:03</td><td class="nw">AIグループ講座関連 → <span class="gname">会員設計（松竹梅）</span></td><td class="nw">移す</td><td class="small">「100時間」を超えた人へのサービス体系（① 梅・竹の設計）</td></tr>
 </table>
-<h2 id="s3">3. 全300セッションの行き先</h2>
-<p class="small">並びは新しいグループの順、その中は最後に動いた順（新しいものが上）。日時は日本時間。「置いた理由」の記号（A〜AS）は grouping.md・grouping2.md の中身のグループ。一覧ファイルに名前の無い1本（local_131630fa…）は jsonl の中身（女性ペルソナ診断アプリ）で置いた。この提案を作っているセッション「FHL 2026 Notes」は一覧ファイルに入っていない（自分自身は一覧に出ない）。入れるなら ファネルと集客。</p>
-<div class="filter"><input id="q" type="search" placeholder="セッション名・グループ名で絞る（文字を入れると行が絞られます）"> <span class="small" id="qn"></span></div>
-<table id="all"><tr><th class="num">#</th><th>セッション名</th><th class="nw">最後に動いた</th><th class="nw">いまのグループ</th><th class="nw">新しいグループ</th><th>置いた理由</th></tr>
-<tr class="ghead" data-g="司令塔と戦略"><td colspan="6">司令塔と戦略｜部署への発注・事業モデル・やること整理　（14本）</td></tr>
-<tr data-g="司令塔と戦略"><td class="num">1</td><td>司令塔</td><td class="nw">2026-09-26 07:27</td><td class="nw">■新司令塔</td><td class="nw gname">司令塔と戦略</td><td class="small">中身のグループ R（司令塔（部署・定時報告））</td></tr>
-<tr data-g="司令塔と戦略"><td class="num">2</td><td>ニュースレター配送代行サービスの価値</td><td class="nw">2026-09-22 14:35</td><td class="nw">（グループなし）</td><td class="nw gname">司令塔と戦略</td><td class="small">中身のグループ W（事業モデル・ペルソナ・新規企画）</td></tr>
-<tr data-g="司令塔と戦略"><td class="num">3</td><td>３層リサーチnotebookLM</td><td class="nw">2026-08-15 12:25</td><td class="nw">（グループなし）</td><td class="nw gname">司令塔と戦略</td><td class="small">中身のグループ M（3層リサーチ・リサーチのやり方）</td></tr>
-<tr data-g="司令塔と戦略"><td class="num">4</td><td>3層リサーチ＋YAML</td><td class="nw">2026-07-24 17:32</td><td class="nw">（グループなし）</td><td class="nw gname">司令塔と戦略</td><td class="small">中身のグループ M（3層リサーチ・リサーチのやり方）</td></tr>
-<tr data-g="司令塔と戦略"><td class="num">5</td><td>頭にあること大整理→最強仕事術化</td><td class="nw">2026-07-14 00:10</td><td class="nw">頭整理・タスク整理系</td><td class="nw gname">司令塔と戦略</td><td class="small">中身のグループ V（やること拾って整理（忘れ仕事・やり残し・滞り））</td></tr>
-<tr data-g="司令塔と戦略"><td class="num">6</td><td>一人さんリサーチ</td><td class="nw">2026-07-04 16:38</td><td class="nw">（グループなし）</td><td class="nw gname">司令塔と戦略</td><td class="small">中身のグループ M（3層リサーチ・リサーチのやり方）</td></tr>
-<tr data-g="司令塔と戦略"><td class="num">7</td><td>x10_persona</td><td class="nw">2026-06-30 20:05</td><td class="nw">（グループなし）</td><td class="nw gname">司令塔と戦略</td><td class="small">中身のグループ W（事業モデル・ペルソナ・新規企画）</td></tr>
-<tr data-g="司令塔と戦略"><td class="num">8</td><td>Page content analysis and design application</td><td class="nw">2026-06-30 18:40</td><td class="nw">（グループなし）</td><td class="nw gname">司令塔と戦略</td><td class="small">中身のグループ W（事業モデル・ペルソナ・新規企画）</td></tr>
-<tr data-g="司令塔と戦略"><td class="num">9</td><td>AI経営計画</td><td class="nw">2026-06-25 11:45</td><td class="nw">（グループなし）</td><td class="nw gname">司令塔と戦略</td><td class="small">中身のグループ W（事業モデル・ペルソナ・新規企画）</td></tr>
-<tr data-g="司令塔と戦略"><td class="num">10</td><td>アプリ作りアイデア</td><td class="nw">2026-06-22 10:23</td><td class="nw">（グループなし）</td><td class="nw gname">司令塔と戦略</td><td class="small">中身のグループ W（事業モデル・ペルソナ・新規企画）</td></tr>
-<tr data-g="司令塔と戦略"><td class="num">11</td><td>Salesforce 型サービス構築_4/27</td><td class="nw">2026-06-21 17:59</td><td class="nw">（グループなし）</td><td class="nw gname">司令塔と戦略</td><td class="small">中身のグループ W（事業モデル・ペルソナ・新規企画）</td></tr>
-<tr data-g="司令塔と戦略"><td class="num">12</td><td>やり残し専門</td><td class="nw">2026-06-08 18:05</td><td class="nw">頭整理・タスク整理系</td><td class="nw gname">司令塔と戦略</td><td class="small">中身のグループ V（やること拾って整理（忘れ仕事・やり残し・滞り））</td></tr>
-<tr data-g="司令塔と戦略"><td class="num">13</td><td>戦略100タスク・アプリ</td><td class="nw">2026-06-01 23:09</td><td class="nw">頭整理・タスク整理系</td><td class="nw gname">司令塔と戦略</td><td class="small">中身のグループ V（やること拾って整理（忘れ仕事・やり残し・滞り））</td></tr>
-<tr data-g="司令塔と戦略"><td class="num">14</td><td>やること拾って整理</td><td class="nw">2026-06-01 23:00</td><td class="nw">頭整理・タスク整理系</td><td class="nw gname">司令塔と戦略</td><td class="small">中身のグループ V（やること拾って整理（忘れ仕事・やり残し・滞り））</td></tr>
-<tr class="ghead" data-g="運転台"><td colspan="6">運転台｜経営アプリの開発・改善・広める　（11本）</td></tr>
-<tr data-g="運転台"><td class="num">15</td><td>運転台改善</td><td class="nw">2026-10-04 21:59</td><td class="nw">■新司令塔</td><td class="nw gname">運転台</td><td class="small">中身のグループ B（運転台（ソロ起業家向け経営管理アプリ））</td></tr>
-<tr data-g="運転台"><td class="num">16</td><td>_OEM提供考察</td><td class="nw">2026-10-04 17:32</td><td class="nw">司令塔補助</td><td class="nw gname">運転台</td><td class="small">中身のグループ B（運転台（ソロ起業家向け経営管理アプリ））</td></tr>
-<tr data-g="運転台"><td class="num">17</td><td>_OEM提供考察-2</td><td class="nw">2026-09-26 12:12</td><td class="nw">司令塔補助</td><td class="nw gname">運転台</td><td class="small">中身のグループ B（運転台（ソロ起業家向け経営管理アプリ））</td></tr>
-<tr data-g="運転台"><td class="num">18</td><td>運転台マーケ</td><td class="nw">2026-09-26 07:48</td><td class="nw">■新司令塔</td><td class="nw gname">運転台</td><td class="small">中身のグループ B（運転台（ソロ起業家向け経営管理アプリ））</td></tr>
-<tr data-g="運転台"><td class="num">19</td><td>ダッシュボードの新規構築</td><td class="nw">2026-09-25 20:42</td><td class="nw">司令塔補助</td><td class="nw gname">運転台</td><td class="small">中身のグループ B（運転台（ソロ起業家向け経営管理アプリ））</td></tr>
-<tr data-g="運転台"><td class="num">20</td><td>「戦略の決定」が押しても画面が変わらない件を直す</td><td class="nw">2026-09-25 19:05</td><td class="nw">（グループなし）</td><td class="nw gname">運転台</td><td class="small">中身のグループ B（運転台（ソロ起業家向け経営管理アプリ））</td></tr>
-<tr data-g="運転台"><td class="num">21</td><td>伽藍とバザールの実現</td><td class="nw">2026-09-25 18:33</td><td class="nw">■新司令塔</td><td class="nw gname">運転台</td><td class="small">運転台を広める考え方。同上</td></tr>
-<tr data-g="運転台"><td class="num">22</td><td>untendai-seiri</td><td class="nw">2026-09-14 16:43</td><td class="nw">4セッション＋1</td><td class="nw gname">運転台</td><td class="small">中身のグループ B（運転台（ソロ起業家向け経営管理アプリ））</td></tr>
-<tr data-g="運転台"><td class="num">23</td><td>untendai-marketing</td><td class="nw">2026-09-14 16:34</td><td class="nw">4セッション＋1</td><td class="nw gname">運転台</td><td class="small">中身のグループ B（運転台（ソロ起業家向け経営管理アプリ））</td></tr>
-<tr data-g="運転台"><td class="num">24</td><td>経営管理アプリ拡散</td><td class="nw">2026-09-14 16:33</td><td class="nw">4セッション＋1</td><td class="nw gname">運転台</td><td class="small">運転台を広める仲間募集。Mits様の呼び方「運転台マーケ」に合わせて運転台に置いた（ファネルではない）</td></tr>
-<tr data-g="運転台"><td class="num">25</td><td>デスクトップアプリ開発の学習プログラム</td><td class="nw">2026-08-29 15:58</td><td class="nw">（グループなし）</td><td class="nw gname">運転台</td><td class="small">中身のグループ B（運転台（ソロ起業家向け経営管理アプリ））</td></tr>
-<tr class="ghead" data-g="AI-Mits"><td colspan="6">AI-Mits｜RAG で答える AI の中身と Dify　（8本）</td></tr>
-<tr data-g="AI-Mits"><td class="num">26</td><td>AI-Mits-チューニング</td><td class="nw">2026-09-25 18:47</td><td class="nw">■新司令塔</td><td class="nw gname">AI-Mits</td><td class="small">運転台の中の AI-Mits の返答を直す仕事。AI-Mits の側に置いた</td></tr>
-<tr data-g="AI-Mits"><td class="num">27</td><td>AI-Mits_ABテスト_2026012</td><td class="nw">2026-09-14 17:41</td><td class="nw">4セッション＋1</td><td class="nw gname">AI-Mits</td><td class="small">中身のグループ A（AI-MITS（AI先生RAG など RAG で答えるAI））</td></tr>
-<tr data-g="AI-Mits"><td class="num">28</td><td>AI実装先生RAG</td><td class="nw">2026-08-28 02:18</td><td class="nw">AI-Mits</td><td class="nw gname">AI-Mits</td><td class="small">中身のグループ A（AI-MITS（AI先生RAG など RAG で答えるAI））</td></tr>
-<tr data-g="AI-Mits"><td class="num">29</td><td>AI先生RAG</td><td class="nw">2026-08-27 17:22</td><td class="nw">AI-Mits</td><td class="nw gname">AI-Mits</td><td class="small">中身のグループ A（AI-MITS（AI先生RAG など RAG で答えるAI））</td></tr>
-<tr data-g="AI-Mits"><td class="num">30</td><td>AI-Mits for AI</td><td class="nw">2026-07-17 17:20</td><td class="nw">AI-Mits</td><td class="nw gname">AI-Mits</td><td class="small">中身のグループ A（AI-MITS（AI先生RAG など RAG で答えるAI））</td></tr>
-<tr data-g="AI-Mits"><td class="num">31</td><td>CORPUS2SKILLとアップデート_5/2</td><td class="nw">2026-06-21 18:02</td><td class="nw">AI-Mits</td><td class="nw gname">AI-Mits</td><td class="small">中身のグループ A（AI-MITS（AI先生RAG など RAG で答えるAI））</td></tr>
-<tr data-g="AI-Mits"><td class="num">32</td><td>AI-MITS フロント実装</td><td class="nw">2026-06-21 15:21</td><td class="nw">AI-Mits</td><td class="nw gname">AI-Mits</td><td class="small">中身のグループ A（AI-MITS（AI先生RAG など RAG で答えるAI））</td></tr>
-<tr data-g="AI-Mits"><td class="num">33</td><td>AI-MITS フロント実装2</td><td class="nw">2026-06-05 11:41</td><td class="nw">AI-Mits</td><td class="nw gname">AI-Mits</td><td class="small">中身のグループ A（AI-MITS（AI先生RAG など RAG で答えるAI））</td></tr>
-<tr class="ghead" data-g="ファネルと集客"><td colspan="6">ファネルと集客｜オプトイン・入口の集約・Meta広告・YouTube　（13本）</td></tr>
-<tr data-g="ファネルと集客"><td class="num">34</td><td>Meta広告の自動化・最適化サイクル</td><td class="nw">2026-10-04 22:16</td><td class="nw">ファネルマーケティング</td><td class="nw gname">ファネルと集客</td><td class="small">中身のグループ L（人を集める（YouTube・Meta広告・広告ライブラリー・競合リサーチ））</td></tr>
-<tr data-g="ファネルと集客"><td class="num">35</td><td>UTAGE 入口の集約（トールゲート式）</td><td class="nw">2026-10-04 17:16</td><td class="nw">ファネルマーケティング</td><td class="nw gname">ファネルと集客</td><td class="small">中身のグループ C（ファネルマーケティング（オプトイン・無料の贈り物・入口の集約・計測））</td></tr>
-<tr data-g="ファネルと集客"><td class="num">36</td><td>wasa_ファネルメイク</td><td class="nw">2026-09-20 20:30</td><td class="nw">ファネルマーケティング</td><td class="nw gname">ファネルと集客</td><td class="small">中身のグループ C（ファネルマーケティング（オプトイン・無料の贈り物・入口の集約・計測））</td></tr>
-<tr data-g="ファネルと集客"><td class="num">37</td><td>YouTube チャンネルコンセプト構想</td><td class="nw">2026-09-18 00:46</td><td class="nw">ファネルマーケティング</td><td class="nw gname">ファネルと集客</td><td class="small">中身のグループ L（人を集める（YouTube・Meta広告・広告ライブラリー・競合リサーチ））</td></tr>
-<tr data-g="ファネルと集客"><td class="num">38</td><td>_4セッション</td><td class="nw">2026-09-14 17:30</td><td class="nw">4セッション＋1</td><td class="nw gname">ファネルと集客</td><td class="small">中身のグループ C（ファネルマーケティング（オプトイン・無料の贈り物・入口の集約・計測））</td></tr>
-<tr data-g="ファネルと集客"><td class="num">39</td><td>UTAGE移設発注書</td><td class="nw">2026-09-09 19:43</td><td class="nw">（グループなし）</td><td class="nw gname">ファネルと集客</td><td class="small">dmikz の UTAGE 143本の移設。UTAGE の入口の集約と同じ UTAGE の整理</td></tr>
-<tr data-g="ファネルと集客"><td class="num">40</td><td>マーケティングメッセージ作成スキル</td><td class="nw">2026-09-01 13:06</td><td class="nw">（グループなし）</td><td class="nw gname">ファネルと集客</td><td class="small">中身のグループ C（ファネルマーケティング（オプトイン・無料の贈り物・入口の集約・計測））</td></tr>
-<tr data-g="ファネルと集客"><td class="num">41</td><td>マーケリサーチ</td><td class="nw">2026-07-24 17:22</td><td class="nw">（グループなし）</td><td class="nw gname">ファネルと集客</td><td class="small">中身のグループ L（人を集める（YouTube・Meta広告・広告ライブラリー・競合リサーチ））</td></tr>
-<tr data-g="ファネルと集客"><td class="num">42</td><td>３層スキルでのマーケ案</td><td class="nw">2026-07-23 17:47</td><td class="nw">（グループなし）</td><td class="nw gname">ファネルと集客</td><td class="small">中身のグループ C（ファネルマーケティング（オプトイン・無料の贈り物・入口の集約・計測））</td></tr>
-<tr data-g="ファネルと集客"><td class="num">43</td><td>AIサポートマニュアルwithメニュー表</td><td class="nw">2026-07-17 16:27</td><td class="nw">（グループなし）</td><td class="nw gname">ファネルと集客</td><td class="small">中身のグループ C（ファネルマーケティング（オプトイン・無料の贈り物・入口の集約・計測））</td></tr>
-<tr data-g="ファネルと集客"><td class="num">44</td><td>広告ライブラリーリサーチ　CLAUDEで</td><td class="nw">2026-07-06 16:00</td><td class="nw">ファネルマーケティング</td><td class="nw gname">ファネルと集客</td><td class="small">中身のグループ L（人を集める（YouTube・Meta広告・広告ライブラリー・競合リサーチ））</td></tr>
-<tr data-g="ファネルと集客"><td class="num">45</td><td>100日マーケティング</td><td class="nw">2026-06-25 16:23</td><td class="nw">（グループなし）</td><td class="nw gname">ファネルと集客</td><td class="small">中身のグループ C（ファネルマーケティング（オプトイン・無料の贈り物・入口の集約・計測））</td></tr>
-<tr data-g="ファネルと集客"><td class="num">46</td><td>使用量コスパ・タイパ</td><td class="nw">2026-06-07 18:24</td><td class="nw">AIグループ講座関連</td><td class="nw gname">ファネルと集客</td><td class="small">前半は使用量の話・後半はメアド登録とLP。発話の多い後半で置いた</td></tr>
-<tr class="ghead" data-g="メルマガ"><td colspan="6">メルマガ｜毎日の配信と計測　（5本）</td></tr>
-<tr data-g="メルマガ"><td class="num">47</td><td>メール配信・計測・自動化</td><td class="nw">2026-09-30 23:29</td><td class="nw">■新司令塔</td><td class="nw gname">メルマガ</td><td class="small">中身のグループ J（メルマガ）</td></tr>
-<tr data-g="メルマガ"><td class="num">48</td><td>メール配信と計測と自動化</td><td class="nw">2026-09-14 16:33</td><td class="nw">4セッション＋1</td><td class="nw gname">メルマガ</td><td class="small">中身のグループ J（メルマガ）</td></tr>
-<tr data-g="メルマガ"><td class="num">49</td><td>3AI-錬磨</td><td class="nw">2026-09-03 17:41</td><td class="nw">メルマガ自動化オール</td><td class="nw gname">メルマガ</td><td class="small">中身のグループ J（メルマガ）</td></tr>
-<tr data-g="メルマガ"><td class="num">50</td><td>パンとサーカス メルマガ執筆</td><td class="nw">2026-08-04 15:41</td><td class="nw">頭整理・タスク整理系</td><td class="nw gname">メルマガ</td><td class="small">中身のグループ J（メルマガ）</td></tr>
-<tr data-g="メルマガ"><td class="num">51</td><td>メルマガ自動化</td><td class="nw">2026-06-07 14:25</td><td class="nw">（グループなし）</td><td class="nw gname">メルマガ</td><td class="small">中身のグループ J（メルマガ）</td></tr>
-<tr class="ghead" data-g="AIグルコン（BE-02）"><td colspan="6">AIグルコン（BE-02）｜レジメ・動画・Discord・配信・会員設計　（19本）</td></tr>
-<tr data-g="AIグルコン（BE-02）"><td class="num">52</td><td>BE02AIグルコン講座レター共通版</td><td class="nw">2026-09-29 19:53</td><td class="nw">ファネルマーケティング</td><td class="nw gname">AIグルコン（BE-02）</td><td class="small">中身のグループ G（AIグルコンのステップ・リマインダ配信）</td></tr>
-<tr data-g="AIグルコン（BE-02）"><td class="num">53</td><td>BE-02 Scheduler 引き継ぎ確認</td><td class="nw">2026-09-21 21:36</td><td class="nw">AIグループ講座関連</td><td class="nw gname">AIグルコン（BE-02）</td><td class="small">中身のグループ G（AIグルコンのステップ・リマインダ配信）</td></tr>
-<tr data-g="AIグルコン（BE-02）"><td class="num">54</td><td>AI会員リサーチと設計　追記　LP改訂</td><td class="nw">2026-09-08 20:21</td><td class="nw">AIグループ講座関連</td><td class="nw gname">AIグルコン（BE-02）</td><td class="small">中身のグループ I（会員設計（「100時間」を超えた人へのサービス・松竹梅））</td></tr>
-<tr data-g="AIグルコン（BE-02）"><td class="num">55</td><td>AI講座シラバス</td><td class="nw">2026-09-04 18:03</td><td class="nw">AIグループ講座関連</td><td class="nw gname">AIグルコン（BE-02）</td><td class="small">中身のグループ I（会員設計（「100時間」を超えた人へのサービス・松竹梅））</td></tr>
-<tr data-g="AIグルコン（BE-02）"><td class="num">56</td><td>グルコン動画編集はここ</td><td class="nw">2026-09-04 13:27</td><td class="nw">AIグループ講座関連</td><td class="nw gname">AIグルコン（BE-02）</td><td class="small">中身のグループ F（AIグルコン（BE-02）のレジメ・資料・動画・Discord）</td></tr>
-<tr data-g="AIグルコン（BE-02）"><td class="num">57</td><td>BE02_メール配信系専用</td><td class="nw">2026-09-02 14:02</td><td class="nw">AIグループ講座関連</td><td class="nw gname">AIグルコン（BE-02）</td><td class="small">中身のグループ G（AIグルコンのステップ・リマインダ配信）</td></tr>
-<tr data-g="AIグルコン（BE-02）"><td class="num">58</td><td>AI results visibility report</td><td class="nw">2026-08-23 09:10</td><td class="nw">環境設定</td><td class="nw gname">AIグルコン（BE-02）</td><td class="small">講座で使っている公開資料（PDF）の追記。環境設定ではない</td></tr>
-<tr data-g="AIグルコン（BE-02）"><td class="num">59</td><td>AI時代のエンジニア必須スキル</td><td class="nw">2026-08-21 15:49</td><td class="nw">AIグループ講座関連</td><td class="nw gname">AIグルコン（BE-02）</td><td class="small">中身のグループ F（AIグルコン（BE-02）のレジメ・資料・動画・Discord）</td></tr>
-<tr data-g="AIグルコン（BE-02）"><td class="num">60</td><td>utage メール置き換え文字列の調査</td><td class="nw">2026-08-15 12:33</td><td class="nw">（グループなし）</td><td class="nw gname">AIグルコン（BE-02）</td><td class="small">中身のグループ G（AIグルコンのステップ・リマインダ配信）</td></tr>
-<tr data-g="AIグルコン（BE-02）"><td class="num">61</td><td>Discord 設定</td><td class="nw">2026-08-11 14:53</td><td class="nw">AIグループ講座関連</td><td class="nw gname">AIグルコン（BE-02）</td><td class="small">中身のグループ F（AIグルコン（BE-02）のレジメ・資料・動画・Discord）</td></tr>
-<tr data-g="AIグルコン（BE-02）"><td class="num">62</td><td>読んできて</td><td class="nw">2026-08-09 12:40</td><td class="nw">（グループなし）</td><td class="nw gname">AIグルコン（BE-02）</td><td class="small">元の jsonl は UTAGE のシナリオの読者数の確認（2026-08-09）。BE-02 の配信を直していた時期なので、ここに置いた</td></tr>
-<tr data-g="AIグルコン（BE-02）"><td class="num">63</td><td>UTAGE is_blocked=true 原因不明バグ 引き継ぎ書（（お客様の名前のため省略） 2例発生）</td><td class="nw">2026-07-26 16:52</td><td class="nw">（グループなし）</td><td class="nw gname">AIグルコン（BE-02）</td><td class="small">中身のグループ G（AIグルコンのステップ・リマインダ配信）</td></tr>
-<tr data-g="AIグルコン（BE-02）"><td class="num">64</td><td>YAML入門：中学生向け解説</td><td class="nw">2026-07-24 17:32</td><td class="nw">（グループなし）</td><td class="nw gname">AIグルコン（BE-02）</td><td class="small">中身のグループ F（AIグルコン（BE-02）のレジメ・資料・動画・Discord）</td></tr>
-<tr data-g="AIグルコン（BE-02）"><td class="num">65</td><td>バックアップシステムfor グループ講座</td><td class="nw">2026-07-13 20:43</td><td class="nw">AIグループ講座関連</td><td class="nw gname">AIグルコン（BE-02）</td><td class="small">中身のグループ F（AIグルコン（BE-02）のレジメ・資料・動画・Discord）</td></tr>
-<tr data-g="AIグルコン（BE-02）"><td class="num">66</td><td>AIグループ講座資産の整理</td><td class="nw">2026-07-12 09:50</td><td class="nw">AIグループ講座関連</td><td class="nw gname">AIグルコン（BE-02）</td><td class="small">中身のグループ F（AIグルコン（BE-02）のレジメ・資料・動画・Discord）</td></tr>
-<tr data-g="AIグルコン（BE-02）"><td class="num">67</td><td>AI Glucon standardization materials</td><td class="nw">2026-07-12 09:47</td><td class="nw">AIグループ講座関連</td><td class="nw gname">AIグルコン（BE-02）</td><td class="small">中身のグループ F（AIグルコン（BE-02）のレジメ・資料・動画・Discord）</td></tr>
-<tr data-g="AIグルコン（BE-02）"><td class="num">68</td><td>AI Glucon content inventory</td><td class="nw">2026-07-09 19:45</td><td class="nw">AIグループ講座関連</td><td class="nw gname">AIグルコン（BE-02）</td><td class="small">中身のグループ F（AIグルコン（BE-02）のレジメ・資料・動画・Discord）</td></tr>
-<tr data-g="AIグルコン（BE-02）"><td class="num">69</td><td>東大の10倍頭がいい新入社員、激サボりです</td><td class="nw">2026-07-04 16:51</td><td class="nw">AIグループ講座関連</td><td class="nw gname">AIグルコン（BE-02）</td><td class="small">中身のグループ F（AIグルコン（BE-02）のレジメ・資料・動画・Discord）</td></tr>
-<tr data-g="AIグルコン（BE-02）"><td class="num">70</td><td>個別_スキルレッスン</td><td class="nw">2026-06-24 11:07</td><td class="nw">（グループなし）</td><td class="nw gname">AIグルコン（BE-02）</td><td class="small">中身のグループ H（単品講座のレッスン・スライド（F1-07・F1-08））</td></tr>
-<tr class="ghead" data-g="無料体験セミナーと LP"><td colspan="6">無料体験セミナーと LP｜セミナー・セールスレター・デザイン　（11本）</td></tr>
-<tr data-g="無料体験セミナーと LP"><td class="num">71</td><td>Utage LP 文章修正</td><td class="nw">2026-08-14 14:08</td><td class="nw">（グループなし）</td><td class="nw gname">無料体験セミナーと LP</td><td class="small">中身のグループ E（LP・セールスレター）</td></tr>
-<tr data-g="無料体験セミナーと LP"><td class="num">72</td><td>LP用Design.mdと二刀流セミナー実装</td><td class="nw">2026-08-09 00:56</td><td class="nw">（グループなし）</td><td class="nw gname">無料体験セミナーと LP</td><td class="small">中身のグループ D（無料体験セミナー・セミナーLP）</td></tr>
-<tr data-g="無料体験セミナーと LP"><td class="num">73</td><td>ver1のLP　2SyY</td><td class="nw">2026-07-23 17:49</td><td class="nw">LP/デザイン</td><td class="nw gname">無料体験セミナーと LP</td><td class="small">中身のグループ E（LP・セールスレター）</td></tr>
-<tr data-g="無料体験セミナーと LP"><td class="num">74</td><td>★無料体験セミナー</td><td class="nw">2026-07-17 16:54</td><td class="nw">AIグループ講座関連</td><td class="nw gname">無料体験セミナーと LP</td><td class="small">中身のグループ D（無料体験セミナー・セミナーLP）</td></tr>
-<tr data-g="無料体験セミナーと LP"><td class="num">75</td><td>★Seminar LP video A production</td><td class="nw">2026-06-21 16:13</td><td class="nw">AIグループ講座関連</td><td class="nw gname">無料体験セミナーと LP</td><td class="small">中身のグループ D（無料体験セミナー・セミナーLP）</td></tr>
-<tr data-g="無料体験セミナーと LP"><td class="num">76</td><td>0531_デザイン整理</td><td class="nw">2026-06-14 20:47</td><td class="nw">LP/デザイン</td><td class="nw gname">無料体験セミナーと LP</td><td class="small">中身のグループ E（LP・セールスレター）</td></tr>
-<tr data-g="無料体験セミナーと LP"><td class="num">77</td><td>20260529_LP丁寧ファイナル修正</td><td class="nw">2026-06-06 18:26</td><td class="nw">LP/デザイン</td><td class="nw gname">無料体験セミナーと LP</td><td class="small">中身のグループ E（LP・セールスレター）</td></tr>
-<tr data-g="無料体験セミナーと LP"><td class="num">78</td><td>無料体験セミナー構築専用</td><td class="nw">2026-06-06 18:26</td><td class="nw">AIグループ講座関連</td><td class="nw gname">無料体験セミナーと LP</td><td class="small">中身のグループ D（無料体験セミナー・セミナーLP）</td></tr>
-<tr data-g="無料体験セミナーと LP"><td class="num">79</td><td>労働集約型サービスLP</td><td class="nw">2026-06-06 18:26</td><td class="nw">LP/デザイン</td><td class="nw gname">無料体験セミナーと LP</td><td class="small">中身は LP のテンプレートと、保存（code-saver）のセッションID取り違えの2つ。名前どおり LP に置いた</td></tr>
-<tr data-g="無料体験セミナーと LP"><td class="num">80</td><td>0515_レターテンプレからのステップ整理まで</td><td class="nw">2026-06-01 23:39</td><td class="nw">（グループなし）</td><td class="nw gname">無料体験セミナーと LP</td><td class="small">中身のグループ E（LP・セールスレター）</td></tr>
-<tr data-g="無料体験セミナーと LP"><td class="num">81</td><td>20260528_AIエージェントグルコンレター</td><td class="nw">2026-06-01 21:26</td><td class="nw">（グループなし）</td><td class="nw gname">無料体験セミナーと LP</td><td class="small">中身のグループ E（LP・セールスレター）</td></tr>
-<tr class="ghead" data-g="毎日動画（SKOOL）"><td colspan="6">毎日動画（SKOOL）｜シナリオ・撮影・アップ　（4本）</td></tr>
-<tr data-g="毎日動画（SKOOL）"><td class="num">82</td><td>★毎日動画シナリオ3</td><td class="nw">2026-06-11 19:02</td><td class="nw">動画撮影</td><td class="nw gname">毎日動画（SKOOL）</td><td class="small">中身のグループ K（毎日動画（SKOOLアップ））</td></tr>
-<tr data-g="毎日動画（SKOOL）"><td class="num">83</td><td>毎日動画シナリオ2</td><td class="nw">2026-06-09 20:50</td><td class="nw">動画撮影</td><td class="nw gname">毎日動画（SKOOL）</td><td class="small">中身のグループ K（毎日動画（SKOOLアップ））</td></tr>
-<tr data-g="毎日動画（SKOOL）"><td class="num">84</td><td>SKOOLアップ	撮り終えレレポ</td><td class="nw">2026-06-06 22:02</td><td class="nw">動画撮影</td><td class="nw gname">毎日動画（SKOOL）</td><td class="small">中身のグループ K（毎日動画（SKOOLアップ））</td></tr>
-<tr data-g="毎日動画（SKOOL）"><td class="num">85</td><td>毎日動画シナリオ</td><td class="nw">2026-06-06 18:23</td><td class="nw">動画撮影</td><td class="nw gname">毎日動画（SKOOL）</td><td class="small">中身のグループ K（毎日動画（SKOOLアップ））</td></tr>
-<tr class="ghead" data-g="すごいコンサル"><td colspan="6">すごいコンサル｜Zoom録画の整理・予約・請求書　（9本）</td></tr>
-<tr data-g="すごいコンサル"><td class="num">86</td><td>（お客様の名前のため省略）請求書作成</td><td class="nw">2026-09-30 16:24</td><td class="nw">（グループなし）</td><td class="nw gname">すごいコンサル</td><td class="small">中身のグループ O（すごいコンサルのクライアント（スゴイ専用の予約・（お客様の名前のため省略）の新サービス・（お客様の名前のため省略）の請求書））</td></tr>
-<tr data-g="すごいコンサル"><td class="num">87</td><td>Zoom YouTube概要把握</td><td class="nw">2026-09-22 19:55</td><td class="nw">AI-Mits</td><td class="nw gname">すごいコンサル</td><td class="small">すごいコンサルに格納されている Zoom 動画の確認。AI-Mits ではない</td></tr>
-<tr data-g="すごいコンサル"><td class="num">88</td><td>ZOOM動画のnotion保存先整理</td><td class="nw">2026-09-22 16:39</td><td class="nw">頭整理・タスク整理系</td><td class="nw gname">すごいコンサル</td><td class="small">中身のグループ N（Zoom録画・すごいコンサルの動画の整理）</td></tr>
-<tr data-g="すごいコンサル"><td class="num">89</td><td>新サービスのディスカッション</td><td class="nw">2026-09-21 14:10</td><td class="nw">（グループなし）</td><td class="nw gname">すごいコンサル</td><td class="small">中身のグループ O（すごいコンサルのクライアント（スゴイ専用の予約・（お客様の名前のため省略）の新サービス・（お客様の名前のため省略）の請求書））</td></tr>
-<tr data-g="すごいコンサル"><td class="num">90</td><td>8/11 録画の映像確認</td><td class="nw">2026-08-30 21:56</td><td class="nw">（グループなし）</td><td class="nw gname">すごいコンサル</td><td class="small">中身のグループ N（Zoom録画・すごいコンサルの動画の整理）</td></tr>
-<tr data-g="すごいコンサル"><td class="num">91</td><td>Zoom録画のYouTube自動アップ 事故調査と復旧</td><td class="nw">2026-08-27 13:21</td><td class="nw">AIグループ講座関連</td><td class="nw gname">すごいコンサル</td><td class="small">中身のグループ N（Zoom録画・すごいコンサルの動画の整理）</td></tr>
-<tr data-g="すごいコンサル"><td class="num">92</td><td>すごいコンサル予約・移行</td><td class="nw">2026-07-24 17:32</td><td class="nw">（グループなし）</td><td class="nw gname">すごいコンサル</td><td class="small">中身のグループ O（すごいコンサルのクライアント（スゴイ専用の予約・（お客様の名前のため省略）の新サービス・（お客様の名前のため省略）の請求書））</td></tr>
-<tr data-g="すごいコンサル"><td class="num">93</td><td>ビデオALLを整理</td><td class="nw">2026-07-04 18:41</td><td class="nw">頭整理・タスク整理系</td><td class="nw gname">すごいコンサル</td><td class="small">中身のグループ N（Zoom録画・すごいコンサルの動画の整理）</td></tr>
-<tr data-g="すごいコンサル"><td class="num">94</td><td>Chatwork response patterns</td><td class="nw">2026-06-24 11:25</td><td class="nw">（グループなし）</td><td class="nw gname">すごいコンサル</td><td class="small">「チャットワークの回答パターン化」。チャットワークはクライアントとのやりとりの道具なので、コンサルの仕事に置いた</td></tr>
-<tr class="ghead" data-g="タイムウェーバー"><td colspan="6">タイムウェーバー｜クライアントの分析　（4本）</td></tr>
-<tr data-g="タイムウェーバー"><td class="num">95</td><td>【TW】Tanaka Masahiro timeweaver analysis</td><td class="nw">2026-09-21 16:34</td><td class="nw">【TW】</td><td class="nw gname">タイムウェーバー</td><td class="small">中身のグループ P（タイムウェーバー）</td></tr>
-<tr data-g="タイムウェーバー"><td class="num">96</td><td>【TW】Kenta Endou タイムウェーバー分析</td><td class="nw">2026-08-31 20:01</td><td class="nw">【TW】</td><td class="nw gname">タイムウェーバー</td><td class="small">中身のグループ P（タイムウェーバー）</td></tr>
-<tr data-g="タイムウェーバー"><td class="num">97</td><td>【TW】LEVELwave 分析</td><td class="nw">2026-07-31 12:22</td><td class="nw">【TW】</td><td class="nw gname">タイムウェーバー</td><td class="small">中身のグループ P（タイムウェーバー）</td></tr>
-<tr data-g="タイムウェーバー"><td class="num">98</td><td>【TW】（お客様の名前のため省略） analysis</td><td class="nw">2026-06-30 14:54</td><td class="nw">【TW】</td><td class="nw gname">タイムウェーバー</td><td class="small">中身のグループ P（タイムウェーバー）</td></tr>
-<tr class="ghead" data-g="経理と会社の事務"><td colspan="6">経理と会社の事務｜月次決算・マネフォ・解約・法人登記・名刺　（6本）</td></tr>
-<tr data-g="経理と会社の事務"><td class="num">99</td><td>サーカス解約準備＋会計マネフォ</td><td class="nw">2026-10-04 18:57</td><td class="nw">RUNNING</td><td class="nw gname">経理と会社の事務</td><td class="small">中身のグループ Q（経理（サーカス解約・マネフォ・月次決算・財務整理））</td></tr>
-<tr data-g="経理と会社の事務"><td class="num">100</td><td>【毎月1日】前月の月次決算を締める</td><td class="nw">2026-10-01 19:13</td><td class="nw">（グループなし）</td><td class="nw gname">経理と会社の事務</td><td class="small">中身のグループ Q（経理（サーカス解約・マネフォ・月次決算・財務整理））</td></tr>
-<tr data-g="経理と会社の事務"><td class="num">101</td><td>【毎月16日】当月前半（1〜15日）の月次決算を進める</td><td class="nw">2026-09-18 11:23</td><td class="nw">（グループなし）</td><td class="nw gname">経理と会社の事務</td><td class="small">予約タスクの回だが Mits様の発話（「進めて」）がある回なので、経理に置いた</td></tr>
-<tr data-g="経理と会社の事務"><td class="num">102</td><td>法人登記取り下げ事例の収集と分類</td><td class="nw">2026-09-12 15:29</td><td class="nw">（グループなし）</td><td class="nw gname">経理と会社の事務</td><td class="small">中身のグループ AB（法人登記）</td></tr>
-<tr data-g="経理と会社の事務"><td class="num">103</td><td>TIER5（Vaughn Labs）の解約をやり切る</td><td class="nw">2026-08-18 12:18</td><td class="nw">（グループなし）</td><td class="nw gname">経理と会社の事務</td><td class="small">中身のグループ Q（経理（サーカス解約・マネフォ・月次決算・財務整理））</td></tr>
-<tr data-g="経理と会社の事務"><td class="num">104</td><td>web名刺作り</td><td class="nw">2026-06-21 17:22</td><td class="nw">（グループなし）</td><td class="nw gname">経理と会社の事務</td><td class="small">中身のグループ Z（web名刺）</td></tr>
-<tr class="ghead" data-g="Claude Code の環境"><td colspan="6">Claude Code の環境｜Mac/Win・使用量・SSH・取り込み　（19本）</td></tr>
-<tr data-g="Claude Code の環境"><td class="num">105</td><td>クラウド開発への移行検討</td><td class="nw">2026-09-25 20:03</td><td class="nw">RUNNING</td><td class="nw gname">Claude Code の環境</td><td class="small">開発をクラウドに移す検討。RUNNING は状態の名前</td></tr>
-<tr data-g="Claude Code の環境"><td class="num">106</td><td>自動コンパクション設定 65%発火</td><td class="nw">2026-09-03 15:10</td><td class="nw">環境設定</td><td class="nw gname">Claude Code の環境</td><td class="small">中身のグループ T（Claude Code・道具・Mac/Win の環境と使用量）</td></tr>
-<tr data-g="Claude Code の環境"><td class="num">107</td><td>Claude CodeからNotebookLMへのシナリオ連携</td><td class="nw">2026-09-01 20:23</td><td class="nw">（グループなし）</td><td class="nw gname">Claude Code の環境</td><td class="small">中身のグループ T（Claude Code・道具・Mac/Win の環境と使用量）</td></tr>
-<tr data-g="Claude Code の環境"><td class="num">108</td><td>AI-MITS Difyv2/v3</td><td class="nw">2026-08-26 18:02</td><td class="nw">AI-Mits</td><td class="nw gname">Claude Code の環境</td><td class="small">CLI のセッション記録の取り込み。名前は AI-MITS だが中身は道具の話</td></tr>
-<tr data-g="Claude Code の環境"><td class="num">109</td><td>Dify advisor UI implementation</td><td class="nw">2026-08-26 11:16</td><td class="nw">（グループなし）</td><td class="nw gname">Claude Code の環境</td><td class="small">名前は Dify だが中身は Mac の蓋を閉じたときの動き</td></tr>
-<tr data-g="Claude Code の環境"><td class="num">110</td><td>SSH接続でWindows実行</td><td class="nw">2026-08-26 09:42</td><td class="nw">環境設定</td><td class="nw gname">Claude Code の環境</td><td class="small">中身のグループ T（Claude Code・道具・Mac/Win の環境と使用量）</td></tr>
-<tr data-g="Claude Code の環境"><td class="num">111</td><td>動いている？</td><td class="nw">2026-08-25 18:41</td><td class="nw">環境設定</td><td class="nw gname">Claude Code の環境</td><td class="small">中身のグループ T（Claude Code・道具・Mac/Win の環境と使用量）</td></tr>
-<tr data-g="Claude Code の環境"><td class="num">112</td><td>2ヶ月コンサル LP v1 新デザイン v7</td><td class="nw">2026-08-13 17:26</td><td class="nw">（グループなし）</td><td class="nw gname">Claude Code の環境</td><td class="small">名前は LP だが中身は過去のセッション探し</td></tr>
-<tr data-g="Claude Code の環境"><td class="num">113</td><td>Windows遠隔画面修復</td><td class="nw">2026-08-06 13:03</td><td class="nw">（グループなし）</td><td class="nw gname">Claude Code の環境</td><td class="small">中身のグループ T（Claude Code・道具・Mac/Win の環境と使用量）</td></tr>
-<tr data-g="Claude Code の環境"><td class="num">114</td><td>CLI インポート時のセッション重複</td><td class="nw">2026-08-04 06:55</td><td class="nw">（グループなし）</td><td class="nw gname">Claude Code の環境</td><td class="small">中身のグループ T（Claude Code・道具・Mac/Win の環境と使用量）</td></tr>
-<tr data-g="Claude Code の環境"><td class="num">115</td><td>/login login</td><td class="nw">2026-08-04 06:27</td><td class="nw">（グループなし）</td><td class="nw gname">Claude Code の環境</td><td class="small">中身のグループ T（Claude Code・道具・Mac/Win の環境と使用量）</td></tr>
-<tr data-g="Claude Code の環境"><td class="num">116</td><td>codex/antigravity 比較</td><td class="nw">2026-07-26 18:18</td><td class="nw">（グループなし）</td><td class="nw gname">Claude Code の環境</td><td class="small">中身のグループ T（Claude Code・道具・Mac/Win の環境と使用量）</td></tr>
-<tr data-g="Claude Code の環境"><td class="num">117</td><td>利用量CODE vs Cowork 計算</td><td class="nw">2026-07-09 15:58</td><td class="nw">（グループなし）</td><td class="nw gname">Claude Code の環境</td><td class="small">中身のグループ T（Claude Code・道具・Mac/Win の環境と使用量）</td></tr>
-<tr data-g="Claude Code の環境"><td class="num">118</td><td>Desktop visibility inconsistency</td><td class="nw">2026-07-03 15:01</td><td class="nw">（グループなし）</td><td class="nw gname">Claude Code の環境</td><td class="small">中身のグループ T（Claude Code・道具・Mac/Win の環境と使用量）</td></tr>
-<tr data-g="Claude Code の環境"><td class="num">119</td><td>Handoff win/mac sync experiment</td><td class="nw">2026-07-03 14:43</td><td class="nw">（グループなし）</td><td class="nw gname">Claude Code の環境</td><td class="small">中身のグループ T（Claude Code・道具・Mac/Win の環境と使用量）</td></tr>
-<tr data-g="Claude Code の環境"><td class="num">120</td><td>Windows pane shortcut</td><td class="nw">2026-07-03 13:56</td><td class="nw">（グループなし）</td><td class="nw gname">Claude Code の環境</td><td class="small">中身のグループ T（Claude Code・道具・Mac/Win の環境と使用量）</td></tr>
-<tr data-g="Claude Code の環境"><td class="num">121</td><td>UUID lookup</td><td class="nw">2026-06-21 16:41</td><td class="nw">AI-Mits</td><td class="nw gname">Claude Code の環境</td><td class="small">Claude Code のセッションUUID を開く話。AI-Mits ではない</td></tr>
-<tr data-g="Claude Code の環境"><td class="num">122</td><td>CODEX in VS Code</td><td class="nw">2026-06-07 10:45</td><td class="nw">AIグループ講座関連</td><td class="nw gname">Claude Code の環境</td><td class="small">VS Code で CODEX を使う話。AIグループ講座ではない</td></tr>
-<tr data-g="Claude Code の環境"><td class="num">123</td><td>YouTube トランスクリプト取得スキル更新</td><td class="nw">2026-06-01 22:58</td><td class="nw">（グループなし）</td><td class="nw gname">Claude Code の環境</td><td class="small">中身のグループ T（Claude Code・道具・Mac/Win の環境と使用量）</td></tr>
-<tr class="ghead" data-g="メモリー・hook・エージェント"><td colspan="6">メモリー・hook・エージェント｜CLAUDE.md と決まりの整理　（14本）</td></tr>
-<tr data-g="メモリー・hook・エージェント"><td class="num">124</td><td>Devils-advocate agents セッション</td><td class="nw">2026-08-29 19:00</td><td class="nw">AIグループ講座関連</td><td class="nw gname">メモリー・hook・エージェント</td><td class="small">agent の整備。AIグループ講座ではない</td></tr>
-<tr data-g="メモリー・hook・エージェント"><td class="num">125</td><td>（お客様の名前のため省略）式CLAUDE.md実装</td><td class="nw">2026-08-14 10:50</td><td class="nw">環境設定</td><td class="nw gname">メモリー・hook・エージェント</td><td class="small">中身のグループ S（memory・hook・agent・CLAUDE.md の整理）</td></tr>
-<tr data-g="メモリー・hook・エージェント"><td class="num">126</td><td>CLAUDE.md 整理と重要事項抽出</td><td class="nw">2026-08-13 12:24</td><td class="nw">（グループなし）</td><td class="nw gname">メモリー・hook・エージェント</td><td class="small">中身のグループ S（memory・hook・agent・CLAUDE.md の整理）</td></tr>
-<tr data-g="メモリー・hook・エージェント"><td class="num">127</td><td>Devils-advocate とagents整備</td><td class="nw">2026-08-08 16:25</td><td class="nw">頭整理・タスク整理系</td><td class="nw gname">メモリー・hook・エージェント</td><td class="small">中身のグループ S（memory・hook・agent・CLAUDE.md の整理）</td></tr>
-<tr data-g="メモリー・hook・エージェント"><td class="num">128</td><td>サーカスヤメル＋メモリー複雑化を整理プロセス</td><td class="nw">2026-08-05 14:32</td><td class="nw">（グループなし）</td><td class="nw gname">メモリー・hook・エージェント</td><td class="small">中身のグループ S（memory・hook・agent・CLAUDE.md の整理）</td></tr>
-<tr data-g="メモリー・hook・エージェント"><td class="num">129</td><td>エージェント/スキル整理統合</td><td class="nw">2026-08-05 14:05</td><td class="nw">頭整理・タスク整理系</td><td class="nw gname">メモリー・hook・エージェント</td><td class="small">中身のグループ S（memory・hook・agent・CLAUDE.md の整理）</td></tr>
-<tr data-g="メモリー・hook・エージェント"><td class="num">130</td><td>hook 241行の見直し</td><td class="nw">2026-08-04 18:06</td><td class="nw">頭整理・タスク整理系</td><td class="nw gname">メモリー・hook・エージェント</td><td class="small">中身のグループ S（memory・hook・agent・CLAUDE.md の整理）</td></tr>
-<tr data-g="メモリー・hook・エージェント"><td class="num">131</td><td>サーカスヤメル＋2層もでる整理プロセス</td><td class="nw">2026-08-01 12:53</td><td class="nw">（グループなし）</td><td class="nw gname">メモリー・hook・エージェント</td><td class="small">中身のグループ S（memory・hook・agent・CLAUDE.md の整理）</td></tr>
-<tr data-g="メモリー・hook・エージェント"><td class="num">132</td><td>エージェント並列運用について</td><td class="nw">2026-07-06 17:51</td><td class="nw">（グループなし）</td><td class="nw gname">メモリー・hook・エージェント</td><td class="small">中身のグループ S（memory・hook・agent・CLAUDE.md の整理）</td></tr>
-<tr data-g="メモリー・hook・エージェント"><td class="num">133</td><td>メモリー　大整理</td><td class="nw">2026-07-04 18:12</td><td class="nw">頭整理・タスク整理系</td><td class="nw gname">メモリー・hook・エージェント</td><td class="small">中身のグループ S（memory・hook・agent・CLAUDE.md の整理）</td></tr>
-<tr data-g="メモリー・hook・エージェント"><td class="num">134</td><td>参謀の「直近応答ルーチン」構造改修（本論ドリフト防止）</td><td class="nw">2026-06-15 17:59</td><td class="nw">（グループなし）</td><td class="nw gname">メモリー・hook・エージェント</td><td class="small">中身のグループ S（memory・hook・agent・CLAUDE.md の整理）</td></tr>
-<tr data-g="メモリー・hook・エージェント"><td class="num">135</td><td>hook check-cant-do-claims に日本語断定パターン追加</td><td class="nw">2026-06-15 17:26</td><td class="nw">（グループなし）</td><td class="nw gname">メモリー・hook・エージェント</td><td class="small">中身のグループ S（memory・hook・agent・CLAUDE.md の整理）</td></tr>
-<tr data-g="メモリー・hook・エージェント"><td class="num">136</td><td>Memory organization</td><td class="nw">2026-06-15 14:20</td><td class="nw">（グループなし）</td><td class="nw gname">メモリー・hook・エージェント</td><td class="small">中身のグループ S（memory・hook・agent・CLAUDE.md の整理）</td></tr>
-<tr data-g="メモリー・hook・エージェント"><td class="num">137</td><td>MEMORY.md 軽量化</td><td class="nw">2026-06-12 16:15</td><td class="nw">（グループなし）</td><td class="nw gname">メモリー・hook・エージェント</td><td class="small">中身のグループ S（memory・hook・agent・CLAUDE.md の整理）</td></tr>
-<tr class="ghead" data-g="片付け"><td colspan="6">片付け｜MyDrive・GitHub・Obsidian・Claude履歴　（9本）</td></tr>
-<tr data-g="片付け"><td class="num">138</td><td>Kokuindaicho coding brief</td><td class="nw">2026-08-03 19:43</td><td class="nw">（グループなし）</td><td class="nw gname">片付け</td><td class="small">中身のグループ X（記録の整理（Obsidian蒸留・Claude履歴・まぐまぐ等の採取））</td></tr>
-<tr data-g="片付け"><td class="num">139</td><td>整理0417,0721</td><td class="nw">2026-07-22 13:41</td><td class="nw">頭整理・タスク整理系</td><td class="nw gname">片付け</td><td class="small">中身のグループ U（片付け（MyDrive・デスクトップ・GitHub））</td></tr>
-<tr data-g="片付け"><td class="num">140</td><td>GitHub リポジトリ大掃除（push停止＋未取込9本）</td><td class="nw">2026-07-22 00:59</td><td class="nw">頭整理・タスク整理系</td><td class="nw gname">片付け</td><td class="small">中身のグループ U（片付け（MyDrive・デスクトップ・GitHub））</td></tr>
-<tr data-g="片付け"><td class="num">141</td><td>Mits株式会社 → Mitsプライベート に移動＋全参照更新</td><td class="nw">2026-07-11 15:31</td><td class="nw">AI-Mits</td><td class="nw gname">片付け</td><td class="small">フォルダの移動と参照の更新。AI-Mits ではない</td></tr>
-<tr data-g="片付け"><td class="num">142</td><td>Claude 履歴保存正本→サマリ作業</td><td class="nw">2026-07-04 18:44</td><td class="nw">（グループなし）</td><td class="nw gname">片付け</td><td class="small">中身のグループ X（記録の整理（Obsidian蒸留・Claude履歴・まぐまぐ等の採取））</td></tr>
-<tr data-g="片付け"><td class="num">143</td><td>Obsidian 大型蒸留notion</td><td class="nw">2026-06-21 17:57</td><td class="nw">（グループなし）</td><td class="nw gname">片付け</td><td class="small">中身のグループ X（記録の整理（Obsidian蒸留・Claude履歴・まぐまぐ等の採取））</td></tr>
-<tr data-g="片付け"><td class="num">144</td><td>notion録音整理</td><td class="nw">2026-06-12 18:15</td><td class="nw">頭整理・タスク整理系</td><td class="nw gname">片付け</td><td class="small">中身が読めず（発話は「どこいった」1件）。名前の「録音整理」で記録の片付けに置いた</td></tr>
-<tr data-g="片付け"><td class="num">145</td><td>20260528-3_フォルダ大整理iwithgithub</td><td class="nw">2026-06-08 16:33</td><td class="nw">頭整理・タスク整理系</td><td class="nw gname">片付け</td><td class="small">中身のグループ U（片付け（MyDrive・デスクトップ・GitHub））</td></tr>
-<tr data-g="片付け"><td class="num">146</td><td>20260528-2_フォルダ大整理iwithgithub</td><td class="nw">2026-06-08 15:14</td><td class="nw">（グループなし）</td><td class="nw gname">片付け</td><td class="small">中身のグループ U（片付け（MyDrive・デスクトップ・GitHub））</td></tr>
-<tr class="ghead" data-g="私事"><td colspan="6">私事｜健康・買い物・旅・子供・単発の要約や文章　（18本）</td></tr>
-<tr data-g="私事"><td class="num">147</td><td>沖縄用ファスティングジュース探索</td><td class="nw">2026-10-05 21:24</td><td class="nw">RUNNING</td><td class="nw gname">私事</td><td class="small">中身のグループ AD（健康（サプリ・ファスティング・HIIT・ヨーグルト））</td></tr>
-<tr data-g="私事"><td class="num">148</td><td>大喜利初心者向けレッスン方法</td><td class="nw">2026-10-05 13:51</td><td class="nw">RUNNING</td><td class="nw gname">私事</td><td class="small">中身のグループ AH（その他の私事（女性ペルソナ判定機・大喜利））</td></tr>
-<tr data-g="私事"><td class="num">149</td><td>お金が増える生き方</td><td class="nw">2026-10-03 14:14</td><td class="nw">（グループなし）</td><td class="nw gname">私事</td><td class="small">中身のグループ AJ（文章・コピー（単発））</td></tr>
-<tr data-g="私事"><td class="num">150</td><td>沖縄語双方向辞書</td><td class="nw">2026-09-16 21:41</td><td class="nw">（グループなし）</td><td class="nw gname">私事</td><td class="small">中身のグループ AG（沖縄・旅（ノマド・カーシェア・滞在日数・沖縄語辞書））</td></tr>
-<tr data-g="私事"><td class="num">151</td><td>買い替え検討</td><td class="nw">2026-09-16 13:25</td><td class="nw">（グループなし）</td><td class="nw gname">私事</td><td class="small">中身のグループ AF（買い物・物件探し）</td></tr>
-<tr data-g="私事"><td class="num">152</td><td>進学高校の選択基準</td><td class="nw">2026-09-13 23:18</td><td class="nw">（グループなし）</td><td class="nw gname">私事</td><td class="small">中身のグループ AE（子供の勉強（英語40日・進学高校））</td></tr>
-<tr data-g="私事"><td class="num">153</td><td>旅程の滞在日数計算</td><td class="nw">2026-09-11 11:18</td><td class="nw">（グループなし）</td><td class="nw gname">私事</td><td class="small">中身のグループ AG（沖縄・旅（ノマド・カーシェア・滞在日数・沖縄語辞書））</td></tr>
-<tr data-g="私事"><td class="num">154</td><td>企業でのAIセキュリティ戦略</td><td class="nw">2026-09-04 13:09</td><td class="nw">（グループなし）</td><td class="nw gname">私事</td><td class="small">中身のグループ AI（AIの話題の要約（単発））</td></tr>
-<tr data-g="私事"><td class="num">155</td><td>物件をathomeで検索</td><td class="nw">2026-08-31 14:15</td><td class="nw">（グループなし）</td><td class="nw gname">私事</td><td class="small">中身のグループ AF（買い物・物件探し）</td></tr>
-<tr data-g="私事"><td class="num">156</td><td>HIIT トレーニングアプリ探索</td><td class="nw">2026-08-25 15:45</td><td class="nw">（グループなし）</td><td class="nw gname">私事</td><td class="small">中身のグループ AD（健康（サプリ・ファスティング・HIIT・ヨーグルト））</td></tr>
-<tr data-g="私事"><td class="num">157</td><td>Times Car Share 空き探し</td><td class="nw">2026-08-22 12:20</td><td class="nw">（グループなし）</td><td class="nw gname">私事</td><td class="small">中身のグループ AG（沖縄・旅（ノマド・カーシェア・滞在日数・沖縄語辞書））</td></tr>
-<tr data-g="私事"><td class="num">158</td><td>（名前なし）</td><td class="nw">2026-08-13 17:29</td><td class="nw">（グループなし）</td><td class="nw gname">私事</td><td class="small">中身のグループ AH（その他の私事（女性ペルソナ判定機・大喜利））。jsonl の中身は女性ペルソナ診断アプリ（2026-07-21〜08-13）</td></tr>
-<tr data-g="私事"><td class="num">159</td><td>十牛図の解説要約</td><td class="nw">2026-08-13 10:57</td><td class="nw">（グループなし）</td><td class="nw gname">私事</td><td class="small">中身のグループ AJ（文章・コピー（単発））</td></tr>
-<tr data-g="私事"><td class="num">160</td><td>子供英語学習40日</td><td class="nw">2026-08-04 06:40</td><td class="nw">（グループなし）</td><td class="nw gname">私事</td><td class="small">中身のグループ AE（子供の勉強（英語40日・進学高校））</td></tr>
-<tr data-g="私事"><td class="num">161</td><td>ビフィズス菌ヨーグルトの検索</td><td class="nw">2026-07-22 13:31</td><td class="nw">（グループなし）</td><td class="nw gname">私事</td><td class="small">中身のグループ AD（健康（サプリ・ファスティング・HIIT・ヨーグルト））</td></tr>
-<tr data-g="私事"><td class="num">162</td><td>Amazon generator search</td><td class="nw">2026-06-26 11:21</td><td class="nw">（グループなし）</td><td class="nw gname">私事</td><td class="small">中身のグループ AF（買い物・物件探し）</td></tr>
-<tr data-g="私事"><td class="num">163</td><td>★サプリアプリ作り</td><td class="nw">2026-06-23 18:42</td><td class="nw">（グループなし）</td><td class="nw gname">私事</td><td class="small">中身のグループ AD（健康（サプリ・ファスティング・HIIT・ヨーグルト））</td></tr>
-<tr data-g="私事"><td class="num">164</td><td>Amazon search integration</td><td class="nw">2026-06-23 14:52</td><td class="nw">（グループなし）</td><td class="nw gname">私事</td><td class="small">中身のグループ AF（買い物・物件探し）</td></tr>
-<tr class="ghead" data-g="沖縄の店の企画"><td colspan="6">沖縄の店の企画｜せんべろ・弁当　（2本）</td></tr>
-<tr data-g="沖縄の店の企画"><td class="num">165</td><td>ちょーでー弁当</td><td class="nw">2026-10-05 19:11</td><td class="nw">RUNNING</td><td class="nw gname">沖縄の店の企画</td><td class="small">中身のグループ AA（沖縄の飲食店の事業計画（せんべろ・弁当））</td></tr>
-<tr data-g="沖縄の店の企画"><td class="num">166</td><td>ピザ案件</td><td class="nw">2026-07-05 16:13</td><td class="nw">（グループなし）</td><td class="nw gname">沖縄の店の企画</td><td class="small">中身のグループ AA（沖縄の飲食店の事業計画（せんべろ・弁当））</td></tr>
-<tr class="ghead" data-g="歌うま"><td colspan="6">歌うま｜ボイトレ・カラオケ音源分析　（2本）</td></tr>
-<tr data-g="歌うま"><td class="num">167</td><td>カラオケ音源分析</td><td class="nw">2026-08-17 09:36</td><td class="nw">歌うま</td><td class="nw gname">歌うま</td><td class="small">中身のグループ AC（歌うま（ボイトレ・カラオケ））</td></tr>
-<tr data-g="歌うま"><td class="num">168</td><td>ボイトレリサーチ</td><td class="nw">2026-07-12 08:17</td><td class="nw">歌うま</td><td class="nw gname">歌うま</td><td class="small">中身のグループ AC（歌うま（ボイトレ・カラオケ））</td></tr>
-<tr class="ghead" data-g="予約タスクの記録"><td colspan="6">予約タスクの記録｜定時報告・毎朝点検・月次決算・Obsidian　（132本）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">169</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-10-05 18:35</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">170</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-10-05 12:40</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">171</td><td>【毎日7:30】お試し版と Dify の数え（AI-Mits-チューニング）</td><td class="nw">2026-10-05 07:38</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（AI-Mits の数え）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">172</td><td>【毎朝7:10】運転台の毎朝点検</td><td class="nw">2026-10-05 07:23</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の毎朝点検）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">173</td><td>【毎週月曜6:50】仲間募集の材料あつめ</td><td class="nw">2026-10-05 07:05</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の仲間募集）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">174</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-10-05 06:37</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">175</td><td>Obsidian weekly cleanup</td><td class="nw">2026-10-05 05:08</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（Obsidian の週次の片付け）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">176</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-10-04 18:35</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">177</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-10-04 12:37</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">178</td><td>【毎日7:30】お試し版と Dify の数え（AI-Mits-チューニング）</td><td class="nw">2026-10-04 07:38</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（AI-Mits の数え）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">179</td><td>【毎朝7:10】運転台の毎朝点検</td><td class="nw">2026-10-04 07:24</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の毎朝点検）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">180</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-10-04 06:42</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">181</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-10-03 18:35</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">182</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-10-03 12:37</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">183</td><td>【毎日7:30】お試し版と Dify の数え（AI-Mits-チューニング）</td><td class="nw">2026-10-03 07:39</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（AI-Mits の数え）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">184</td><td>【毎朝7:10】運転台の毎朝点検</td><td class="nw">2026-10-03 07:24</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の毎朝点検）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">185</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-10-03 06:36</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">186</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-10-02 18:35</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">187</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-10-02 12:39</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">188</td><td>【毎日7:30】お試し版と Dify の数え（AI-Mits-チューニング）</td><td class="nw">2026-10-02 07:36</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（AI-Mits の数え）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">189</td><td>【毎朝7:10】運転台の毎朝点検</td><td class="nw">2026-10-02 07:23</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の毎朝点検）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">190</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-10-02 06:38</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">191</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-10-01 18:34</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">192</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-10-01 12:38</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">193</td><td>【毎日7:30】お試し版と Dify の数え（AI-Mits-チューニング）</td><td class="nw">2026-10-01 07:39</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（AI-Mits の数え）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">194</td><td>【毎朝7:10】運転台の毎朝点検</td><td class="nw">2026-10-01 07:23</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の毎朝点検）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">195</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-10-01 06:37</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">196</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-30 18:35</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">197</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-30 12:43</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">198</td><td>【毎日7:30】お試し版と Dify の数え（AI-Mits-チューニング）</td><td class="nw">2026-09-30 07:38</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（AI-Mits の数え）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">199</td><td>【毎朝7:10】運転台の毎朝点検</td><td class="nw">2026-09-30 07:23</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の毎朝点検）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">200</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-30 06:37</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">201</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-29 18:38</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">202</td><td>【毎日7:30】お試し版と Dify の数え（AI-Mits-チューニング）</td><td class="nw">2026-09-29 07:39</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（AI-Mits の数え）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">203</td><td>【毎朝7:10】運転台の毎朝点検</td><td class="nw">2026-09-29 07:24</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の毎朝点検）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">204</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-29 06:38</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">205</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-28 18:38</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">206</td><td>【毎日7:30】お試し版と Dify の数え（AI-Mits-チューニング）</td><td class="nw">2026-09-28 07:42</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（AI-Mits の数え）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">207</td><td>【毎朝7:10】運転台の毎朝点検</td><td class="nw">2026-09-28 07:24</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の毎朝点検）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">208</td><td>【毎週月曜6:50】仲間募集の材料あつめ</td><td class="nw">2026-09-28 07:06</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の仲間募集）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">209</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-28 06:44</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">210</td><td>Obsidian weekly cleanup</td><td class="nw">2026-09-28 05:09</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（Obsidian の週次の片付け）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">211</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-27 19:00</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">212</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-27 08:29</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">213</td><td>【毎朝7:10】運転台の毎朝点検</td><td class="nw">2026-09-27 08:25</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の毎朝点検）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">214</td><td>【毎日7:30】お試し版と Dify の数え（AI-Mits-チューニング）</td><td class="nw">2026-09-27 08:25</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（AI-Mits の数え）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">215</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-26 18:36</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">216</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-26 12:43</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">217</td><td>【毎朝7:10】運転台の毎朝点検</td><td class="nw">2026-09-26 08:06</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の毎朝点検）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">218</td><td>【毎日7:30】お試し版と Dify の数え（AI-Mits-チューニング）</td><td class="nw">2026-09-26 07:42</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（AI-Mits の数え）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">219</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-26 06:38</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">220</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-25 18:39</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">221</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-25 12:38</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">222</td><td>【毎日7:30】お試し版と Dify の数え（AI-Mits-チューニング）</td><td class="nw">2026-09-25 07:44</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（AI-Mits の数え）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">223</td><td>【毎朝7:10】運転台の毎朝点検</td><td class="nw">2026-09-25 07:28</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の毎朝点検）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">224</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-25 06:38</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">225</td><td>【1回だけ 9/25 0:05】止めた配信と測定を戻す</td><td class="nw">2026-09-25 00:05</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（メルマガの配信と測定）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">226</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-24 18:33</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">227</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-24 12:33</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">228</td><td>【毎日7:30】お試し版と Dify の数え（AI-Mits-チューニング）</td><td class="nw">2026-09-24 07:37</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（AI-Mits の数え）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">229</td><td>【毎朝7:10】運転台の毎朝点検</td><td class="nw">2026-09-24 07:21</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の毎朝点検）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">230</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-24 06:33</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">231</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-23 18:33</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">232</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-23 12:33</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">233</td><td>【毎日7:30】お試し版と Dify の数え（AI-Mits-チューニング）</td><td class="nw">2026-09-23 07:36</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（AI-Mits の数え）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">234</td><td>【毎朝7:10】運転台の毎朝点検</td><td class="nw">2026-09-23 07:35</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の毎朝点検）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">235</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-23 06:45</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">236</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-22 18:36</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">237</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-22 12:39</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">238</td><td>【毎日7:30】お試し版と Dify の数え（AI-Mits-チューニング）</td><td class="nw">2026-09-22 07:40</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（AI-Mits の数え）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">239</td><td>【毎朝7:10】運転台の毎朝点検</td><td class="nw">2026-09-22 07:34</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の毎朝点検）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">240</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-22 06:38</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">241</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-21 18:39</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">242</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-21 12:49</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">243</td><td>【毎朝7:10】運転台の毎朝点検</td><td class="nw">2026-09-21 10:26</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の毎朝点検）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">244</td><td>【毎日7:30】お試し版と Dify の数え（AI-Mits-チューニング）</td><td class="nw">2026-09-21 08:16</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（AI-Mits の数え）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">245</td><td>【毎週月曜6:50】仲間募集の材料あつめ</td><td class="nw">2026-09-21 06:56</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の仲間募集）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">246</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-21 06:46</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">247</td><td>Obsidian weekly cleanup</td><td class="nw">2026-09-21 05:14</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（Obsidian の週次の片付け）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">248</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-20 18:45</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">249</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-20 12:44</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">250</td><td>【毎日7:30】お試し版と Dify の数え（AI-Mits-チューニング）</td><td class="nw">2026-09-20 07:34</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（AI-Mits の数え）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">251</td><td>【毎朝7:10】運転台の毎朝点検</td><td class="nw">2026-09-20 07:13</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の毎朝点検）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">252</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-20 06:38</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">253</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-19 18:38</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">254</td><td>【毎朝7:10】運転台の毎朝点検</td><td class="nw">2026-09-19 14:53</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の毎朝点検）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">255</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-19 12:38</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">256</td><td>【毎日7:30】お試し版と Dify の数え（AI-Mits-チューニング）</td><td class="nw">2026-09-19 07:33</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（AI-Mits の数え）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">257</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-19 06:39</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">258</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-18 18:39</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">259</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-18 12:34</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">260</td><td>【毎日7:30】お試し版と Dify の数え（AI-Mits-チューニング）</td><td class="nw">2026-09-18 11:27</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（AI-Mits の数え）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">261</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-18 11:17</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">262</td><td>【毎日7:30】お試し版と Dify の数え（AI-Mits-チューニング）</td><td class="nw">2026-09-18 07:55</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（AI-Mits の数え）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">263</td><td>【毎朝7:10】運転台の毎朝点検</td><td class="nw">2026-09-18 07:16</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の毎朝点検）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">264</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-18 06:40</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">265</td><td>【毎月1日】前月の月次決算を締める</td><td class="nw">2026-09-17 21:32</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（経理の月次決算）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">266</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-17 18:37</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">267</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-17 12:36</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">268</td><td>【毎日7:30】お試し版と Dify の数え（AI-Mits-チューニング）</td><td class="nw">2026-09-17 07:32</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（AI-Mits の数え）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">269</td><td>【毎朝7:10】運転台の毎朝点検</td><td class="nw">2026-09-17 07:13</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の毎朝点検）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">270</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-17 06:37</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">271</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-16 18:38</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">272</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-16 17:13</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">273</td><td>【1日3回 6:30／12:30／18:30】6セッションの定時報告</td><td class="nw">2026-09-16 16:14</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の定時報告）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">274</td><td>【1日3回 6:30／12:30／18:30】6セッションの点呼</td><td class="nw">2026-09-16 14:46</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の点呼）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">275</td><td>【毎朝6:30】6セッションの点呼</td><td class="nw">2026-09-16 14:12</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の点呼）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">276</td><td>【毎朝8:30】6セッションの点呼</td><td class="nw">2026-09-16 12:36</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の点呼）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">277</td><td>【毎日7:30】お試し版と Dify の数え（AI-Mits-チューニング）</td><td class="nw">2026-09-16 12:31</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（AI-Mits の数え）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">278</td><td>【毎週月曜6:50】仲間募集の材料あつめ</td><td class="nw">2026-09-16 12:30</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の仲間募集）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">279</td><td>【毎朝7:10】運転台の毎朝点検</td><td class="nw">2026-09-16 12:26</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（運転台の毎朝点検）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">280</td><td>【毎朝8:30】6セッションの点呼</td><td class="nw">2026-09-16 12:08</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（司令塔の点呼）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">281</td><td>Obsidian weekly cleanup</td><td class="nw">2026-09-14 05:06</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（Obsidian の週次の片付け）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">282</td><td>Obsidian weekly cleanup</td><td class="nw">2026-09-07 05:07</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（Obsidian の週次の片付け）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">283</td><td>Obsidian weekly cleanup</td><td class="nw">2026-08-31 05:01</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（Obsidian の週次の片付け）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">284</td><td>Anthropic shishutsu kanshi</td><td class="nw">2026-08-28 10:11</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（Anthropic の支出の見張り）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">285</td><td>Anthropic shishutsu kanshi</td><td class="nw">2026-08-28 09:11</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（Anthropic の支出の見張り）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">286</td><td>Anthropic shishutsu kanshi</td><td class="nw">2026-08-28 08:11</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（Anthropic の支出の見張り）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">287</td><td>Anthropic shishutsu kanshi</td><td class="nw">2026-08-28 07:11</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（Anthropic の支出の見張り）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">288</td><td>Obsidian weekly cleanup</td><td class="nw">2026-08-24 05:01</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（Obsidian の週次の片付け）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">289</td><td>Obsidian weekly cleanup</td><td class="nw">2026-08-17 05:02</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（Obsidian の週次の片付け）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">290</td><td>Obsidian weekly cleanup</td><td class="nw">2026-08-10 05:01</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（Obsidian の週次の片付け）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">291</td><td>Obsidian weekly cleanup</td><td class="nw">2026-08-03 05:02</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（Obsidian の週次の片付け）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">292</td><td>Obsidian weekly cleanup</td><td class="nw">2026-07-27 05:01</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（Obsidian の週次の片付け）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">293</td><td>Obsidian weekly cleanup</td><td class="nw">2026-07-20 05:07</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（Obsidian の週次の片付け）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">294</td><td>Obsidian weekly cleanup</td><td class="nw">2026-07-13 18:31</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（Obsidian の週次の片付け）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">295</td><td>Obsidian weekly cleanup</td><td class="nw">2026-07-06 14:37</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（Obsidian の週次の片付け）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">296</td><td>Obsidian weekly cleanup</td><td class="nw">2026-06-29 05:01</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（Obsidian の週次の片付け）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">297</td><td>Obsidian weekly cleanup</td><td class="nw">2026-06-22 05:02</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（Obsidian の週次の片付け）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">298</td><td>Obsidian weekly cleanup</td><td class="nw">2026-06-15 05:02</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（Obsidian の週次の片付け）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">299</td><td>Obsidian weekly cleanup</td><td class="nw">2026-06-09 20:46</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（Obsidian の週次の片付け）</td></tr>
-<tr data-g="予約タスクの記録"><td class="num">300</td><td>Obsidian weekly cleanup</td><td class="nw">2026-06-01 13:24</td><td class="nw">（グループなし）</td><td class="nw gname">予約タスクの記録</td><td class="small">Mits様の発話が無い予約タスクの回（Obsidian の週次の片付け）</td></tr>
+<p><b>表の行数：62本</b>（移す 37本＋そのまま 25本）。理由の無い行：0本。</p>
+<h3>Linchpin に近いが選ばなかったセッション（いまの場所に残る）</h3>
+<table><tr><th>セッション名</th><th class="nw">最後に動いた</th><th class="nw">いまのグループ</th><th>選ばなかった理由</th></tr>
+<tr><td>司令塔</td><td class="nw">2026-09-26 07:27</td><td class="nw">■新司令塔</td><td class="small">部署に仕事を振る場所。Linchpin の数字（登録数・配信の計測）も扱うが、9段の部品ではない</td></tr>
+<tr><td>ニュースレター配送代行サービスの価値</td><td class="nw">2026-09-22 14:35</td><td class="nw">（グループなし）</td><td class="small">ニュースレター配送代行サービスの価値（誰のサービスかは発話に無い）。9段に無い</td></tr>
+<tr><td>新サービスのディスカッション</td><td class="nw">2026-09-21 14:10</td><td class="nw">（グループなし）</td><td class="small">（お客様の名前のため省略）（クライアント）の新サービス。Mits様の9段ではない</td></tr>
+<tr><td>UTAGE移設発注書</td><td class="nw">2026-09-09 19:43</td><td class="nw">（グループなし）</td><td class="small">dmikz の UTAGE 143本の移設。別のアカウントの片付けで、9段の部品ではない</td></tr>
+<tr><td>マーケティングメッセージ作成スキル</td><td class="nw">2026-09-01 13:06</td><td class="nw">（グループなし）</td><td class="small">マーケティングの言葉を作るスキル（道具）。9段のどれかを作る・売る・集める仕事ではない</td></tr>
+<tr><td>読んできて</td><td class="nw">2026-08-09 12:40</td><td class="nw">（グループなし）</td><td class="small">UTAGE のシナリオの読者数の確認が1件だけ。何のための確認かが発話に無い</td></tr>
+<tr><td>すごいコンサル予約・移行</td><td class="nw">2026-07-24 17:32</td><td class="nw">（グループなし）</td><td class="small">すごいコンサル（有料コンサル）の予約の統合。⑧ の無料個別相談の予約ではない</td></tr>
+<tr><td>AI経営計画</td><td class="nw">2026-06-25 11:45</td><td class="nw">（グループなし）</td><td class="small">AI経営計画のリアル合宿の企画（⑧ の候補だったが、Mits様が合宿を却下「要らないって この案件忘れろ」）</td></tr>
+<tr><td>個別_スキルレッスン</td><td class="nw">2026-06-24 11:07</td><td class="nw">（グループなし）</td><td class="small">単品講座（F1-07 AIエージェント講座）の新レッスン。9段に単品講座は無い（Mits様の発言では単品講座は「部品作りのプロセスだった」）</td></tr>
+<tr><td>★毎日動画シナリオ3</td><td class="nw">2026-06-11 19:02</td><td class="nw">動画撮影</td><td class="small">同上（SKOOL）</td></tr>
+<tr><td>毎日動画シナリオ2</td><td class="nw">2026-06-09 20:50</td><td class="nw">動画撮影</td><td class="small">同上（SKOOL）</td></tr>
+<tr><td>SKOOLアップ	撮り終えレレポ</td><td class="nw">2026-06-06 22:02</td><td class="nw">動画撮影</td><td class="small">同上（SKOOL）</td></tr>
+<tr><td>労働集約型サービスLP</td><td class="nw">2026-06-06 18:26</td><td class="nw">LP/デザイン</td><td class="small">どの商品の LP かが発話に無く、中身の半分は保存（code-saver）の不具合。LP/デザインの中にそのまま残る</td></tr>
+<tr><td>毎日動画シナリオ</td><td class="nw">2026-06-06 18:23</td><td class="nw">動画撮影</td><td class="small">SKOOL 向けの毎日動画。Mits様が「SKOOLは実体として稼働していないので すべてから削除して」と Linchpin から外した</td></tr>
+<tr><td>戦略100タスク・アプリ</td><td class="nw">2026-06-01 23:09</td><td class="nw">頭整理・タスク整理系</td><td class="small">やることの一覧（無料セミナー LP の仕事も載っている）。仕事の管理であって部品ではない</td></tr>
 </table>
-<p><b>表の行数：300本</b>／一覧ファイル：300本／行き先未定：0本</p>
-<h2 id="s4">4. 分け方の軸を比べた所と、選んだ理由</h2>
-<h3>4-1. いまの名前のうち一目で分からないもの ── なぜ分からないか</h3>
-<table><tr><th class="nw">いまの名前</th><th>なぜ一目で分からないか</th><th class="nw">中に混ざる仕事</th></tr>
-<tr><td class="nw">RUNNING</td><td>英語で、しかも「動いている」という<b>状態</b>の名前。何の仕事かを言っていない。動きが止まっても名前は残り、嘘になる。</td><td class="small">4種類（経理1・私事2・沖縄の店1・環境1）</td></tr>
-<tr><td class="nw">4セッション＋1</td><td>作った時のセッションの<b>数</b>。数は中身を言わない。本数が変われば名前が合わなくなる。</td><td class="small">4種類（運転台3・AI-Mits1・ファネル1・メルマガ1）</td></tr>
-<tr><td class="nw">■新司令塔</td><td>「新」は古いものとの<b>比べ方</b>で、時間が経てば新しくなくなる。■は意味を持たない。中身は司令塔そのものより運転台が多い。</td><td class="small">4種類（運転台3・司令塔1・AI-Mits1・メルマガ1）</td></tr>
-<tr><td class="nw">司令塔補助</td><td>「補助」は司令塔との<b>関係</b>を言っていて、仕事の中身を言っていない。3本とも運転台（ダッシュボード・OEM）。</td><td class="small">1種類（運転台3）</td></tr>
-<tr><td class="nw">頭整理・タスク整理系</td><td>「〜系」で<b>広く取りすぎ</b>、何でも入る名前になった。</td><td class="small">5種類（戦略・やること4／メモリー4／片付け4／Zoom録画2／メルマガ1）</td></tr>
-<tr><td class="nw">AIグループ講座関連</td><td>「〜関連」で<b>広く取りすぎ</b>。講座の周りの仕事が全部入った。</td><td class="small">6種類（講座12／セミナーLP3／ファネル1／Zoom1／メモリー1／環境1）</td></tr>
-<tr><td class="nw">【TW】</td><td><b>略字</b>。「タイムウェーバー」と書けば一目で分かる。</td><td class="small">1種類（タイムウェーバー4）</td></tr>
-<tr><td class="nw">歌うま</td><td>目的（歌がうまくなる）は分かるが、<b>何をする場所か</b>（ボイトレの調べもの・カラオケ音源の分析）が無い。</td><td class="small">1種類（歌うま2）</td></tr>
-<tr><td class="nw">環境設定</td><td>名前は分かる。中身に講座の公開資料と CLAUDE.md の整理が混ざる。</td><td class="small">3種類（環境3／講座1／決まり1）</td></tr>
-<tr><td class="nw">メルマガ自動化オール</td><td>名前は分かる。ただしメルマガのセッション5本のうち、ここに入っているのは1本だけ。</td><td class="small">1種類（メルマガ1。残り4本は他の4か所に散る）</td></tr>
-<tr><td class="nw">AI-Mits</td><td>名前は分かる。中身に道具・片付け・Zoom 動画の確認が混ざる。</td><td class="small">4種類（AI-Mits6／環境2／片付け1／コンサル1）</td></tr>
-<tr><td class="nw">ファネルマーケティング／動画撮影／LP/デザイン</td><td>名前は分かる。中身もほぼ揃っている。</td><td class="small">ファネル5+講座1／動画4／LP4</td></tr>
-<tr><td class="nw">（グループなし）</td><td>300本の<b>7割（210本）</b>がどのグループにも入っていない。うち132本は予約タスクの回で、毎日5本ずつここに増える。</td><td class="small">14種類</td></tr>
-</table>
-<h3>4-2. 軸を比べた表</h3>
-<table><tr><th>軸</th><th>Mits様の言葉でそのまま名前が付くか</th><th>1本の行き先が1つに決まるか</th><th>新しいセッションを作る時に迷わないか</th><th>時間が経っても名前が嘘にならないか</th><th>一目で「何の・何をする場所か」が分かるか</th></tr>
-<tr><td><b>事業の「もの」ごと</b>（運転台・AI-Mits・メルマガ・BE-02・司令塔…）</td><td>○ セッション名そのものがその言葉（運転台改善・AI-Mits-チューニング・メルマガ自動化）</td><td>○ 2つの仕事が混ざる本は300本中 数本で、発話の多い方に置けば決まる</td><td>○ 作る時の題がそのまま行き先</td><td>○ 変わらない</td><td>○</td></tr>
-<tr><td>仕事の種類ごと（作る・売る・集める・整える・調べる）</td><td>× Mits様は「売る仕事」とは言わず「レター」「ファネル」「配信」と言う</td><td>× 1本の中で作って売る（LP を作って配信する）が普通</td><td>× 毎回どの種類かを考える</td><td>○</td><td>△ 「何をする」は分かるが「何の」が無い</td></tr>
-<tr><td>Linchpin の段ごと（①〜⑨）</td><td>△ ①〜⑨は本の番号。Mits様の言葉は段の中身（オプトイン・フロント商品）</td><td>× 道具・経理・私事など段に置けない本が半分。1本が3段にまたがる（wasa_ファネルメイクは①②④）</td><td>×</td><td>○</td><td>× 番号は見ただけでは分からない</td></tr>
-<tr><td>状態ごと（動いている／終わった）＝いまの RUNNING</td><td>× 「動いている」は目的を言わない</td><td>× 止まった時に行き先が変わる</td><td>×</td><td>× 止まると嘘になる</td><td>×</td></tr>
-<tr><td>時期ごと（月）</td><td>○ 迷わない</td><td>○</td><td>○</td><td>○</td><td>× 月では何の仕事か分からない</td></tr>
-</table>
-<p><b>選んだ軸：事業の「もの」ごと。</b>5つの比べ方で全部○なのはこれだけ。いまのサイドバーで中身が揃っているグループ（ファネルマーケティング・動画撮影・LP/デザイン・【TW】・歌うま・AI-Mits）は全部この付け方で、崩れているグループ（RUNNING・■新司令塔・司令塔補助・4セッション＋1・頭整理・タスク整理系）は状態・数・比べ方・広く取る語の付け方。つまり Mits様ご自身がうまく付けた名前の付け方を全体に広げた形。</p>
-<p>これに2つ足した。<b>私事を分ける</b>（健康・買い物・旅・子供・沖縄の店・歌うま。仕事の並びに混ざると、仕事の線の数が見えなくなる）。<b>予約タスクの回を分ける</b>（下の 4-3）。</p>
-<h3>4-3. 予約タスクの回を、担当の線に入れず1つに集めた理由</h3>
-<ul>
-<li>132本（300本の44%）が予約タスクの回で、全部「グループなし」。中身は時計が走らせた記録で、Mits様が開いて仕事をする場所ではない。</li>
-<li>担当の線に入れると仕事のセッションが見えなくなる。司令塔の線に定時報告・点呼 62本を入れると、仕事のセッション（司令塔 1本）は62本より下に並ぶ（一覧は最後に動いた順）。運転台も 24本（毎朝点検20・仲間募集4）、AI-Mits も 21本（お試し版と Dify の数え）が仕事のセッションより上に並ぶ。</li>
-<li>毎日5本増える（2026-09-26〜10-04 の実測：1日 4〜6本、10-05 は7本）。1つのグループに集めれば、増えても他の線は変わらない。</li>
-<li>線引きは「Mits様の発話が1件も無い回」。manifest.md の zero_files.txt（発話0件の jsonl 299本）と照合して、132本のうち123本が一致。残り9本は 10-05 18:35 の定時報告1本（抜き出しの後に走った回。jsonl の先頭が &lt;scheduled-task&gt;）と、jsonl が ~/.claude/projects に無い Obsidian weekly cleanup 8本（2026-06-01〜07-20）。9本とも名前が予約タスクの名前。</li>
-</ul>
-<h3>4-4. 並び順の理由</h3>
-<p>上に置いたのは Mits様が最初に開く所（司令塔）と、2年のあとも続くもの（運転台・AI-Mits）。次に2年で入れ替える部品を「人を集める → 売る」の順（ファネルと集客 → メルマガ → AIグルコン → 無料体験セミナーと LP → 毎日動画）。ほかのサービス・経理・道具は売り物ではないので下。私事はその下。予約タスクの記録は開いて仕事をする場所ではないので最下段。</p>
-<h3>4-5. グループの数を 14 → 18 にした理由</h3>
-<p>いまの14のうち、9つは残す（名前を直す。AI-Mits・歌うま・【TW】・動画撮影・環境設定・ファネルマーケティング・LP/デザイン・メルマガ自動化オール・AIグループ講座関連）、5つは解く（RUNNING・■新司令塔・司令塔補助・4セッション＋1・頭整理・タスク整理系）。新しく9つ作る（司令塔と戦略・運転台・すごいコンサル・経理と会社の事務・メモリー・hook・エージェント・片付け・私事・沖縄の店の企画・予約タスクの記録。中身は、いま「グループなし」の210本と、解いた5つの中にあった仕事の線）。9 ＋ 9 ＝ 18。18 のうち私事の並びは3つ・記録は1つなので、仕事の線は14。これ以上まとめると「〜系」「〜関連」に戻る。</p>
-
-<h2 id="s5">5. 決めかねた所（置き場は決めてある。確度が低い理由を書く）</h2>
+<h2 id="s3">3. 変えないグループの一覧（名前・並び・中身はいまのまま）</h2>
+<p class="small">「いま」は 2026-10-05 22時台にサイドバーのグループ一覧を読み直したもの（読むだけ）。14グループの本数は 21:26 の一覧と同じで、並びだけ ファネルマーケティング が3番目から2番目に上がっている（Mits様の移動）。表の並びはその順。</p>
+<table><tr><th>いまのグループ</th><th class="num">いまの本数</th><th class="num">Linchpin へ出る本数</th><th class="num">残る本数</th><th>扱い</th></tr>
+<tr><td class="nw">RUNNING</td><td class="num">5</td><td class="num">0</td><td class="num">5</td><td class="small">変えない（出入り無し）</td></tr>
+<tr><td class="nw">■新司令塔</td><td class="num">6</td><td class="num">5</td><td class="num">1</td><td class="small">変えない。出るのは Linchpin に選んだ 5本だけで、残る 1本には触れない</td></tr>
+<tr><td class="nw">ファネルマーケティング</td><td class="num">6</td><td class="num">4</td><td class="num">2</td><td class="small">名前を「ファネル・オプトイン｜⑤② 入口の集約・オプトイン・無料の贈り物・登録の計測」に直して Linchpin のグループにする。Linchpin のセッション 2本はそのまま残る</td></tr>
+<tr><td class="nw">司令塔補助</td><td class="num">3</td><td class="num">0</td><td class="num">3</td><td class="small">名前を「運転台｜②① アプリの開発と改善（③ 広める・コンサル事務所）」に直して Linchpin のグループにする。Linchpin のセッション 3本はそのまま残る</td></tr>
+<tr><td class="nw">頭整理・タスク整理系</td><td class="num">15</td><td class="num">1</td><td class="num">14</td><td class="small">変えない。出るのは Linchpin に選んだ 1本だけで、残る 14本には触れない</td></tr>
+<tr><td class="nw">動画撮影</td><td class="num">4</td><td class="num">0</td><td class="num">4</td><td class="small">変えない（出入り無し）</td></tr>
+<tr><td class="nw">4セッション＋1</td><td class="num">6</td><td class="num">6</td><td class="num">0</td><td class="small">中身が全部出て空になる（名前だけ残る）</td></tr>
+<tr><td class="nw">メルマガ自動化オール</td><td class="num">1</td><td class="num">0</td><td class="num">1</td><td class="small">名前を「メルマガ｜③⑥⑨ 毎日のメルマガの原稿・配信・計測」に直して Linchpin のグループにする。Linchpin のセッション 1本はそのまま残る</td></tr>
+<tr><td class="nw">AI-Mits</td><td class="num">10</td><td class="num">0</td><td class="num">10</td><td class="small">名前を「AI-Mits｜②① RAG で答える AI の中身・Dify・チューニング」に直して Linchpin のグループにする。Linchpin のセッション 6本はそのまま残る。Linchpin でないセッション 4本もそのまま中に残る（4. に書いた）</td></tr>
+<tr><td class="nw">AIグループ講座関連</td><td class="num">19</td><td class="num">6</td><td class="num">13</td><td class="small">名前を「AIグルコン（BE-02）｜⑦ 高額商品の中身（レジメ・動画・Discord）と講座生への配信」に直して Linchpin のグループにする。Linchpin のセッション 10本はそのまま残る。Linchpin でないセッション 3本もそのまま中に残る（4. に書いた）</td></tr>
+<tr><td class="nw">LP/デザイン</td><td class="num">4</td><td class="num">0</td><td class="num">4</td><td class="small">名前を「LP・セールスレター｜④⑦ フロント商品・BE-02・講座の LP と文章」に直して Linchpin のグループにする。Linchpin のセッション 3本はそのまま残る。Linchpin でないセッション 1本もそのまま中に残る（4. に書いた）</td></tr>
+<tr><td class="nw">【TW】</td><td class="num">4</td><td class="num">0</td><td class="num">4</td><td class="small">変えない（出入り無し）</td></tr>
+<tr><td class="nw">歌うま</td><td class="num">2</td><td class="num">0</td><td class="num">2</td><td class="small">変えない（出入り無し）</td></tr>
+<tr><td class="nw">環境設定</td><td class="num">5</td><td class="num">1</td><td class="num">4</td><td class="small">変えない。出るのは Linchpin に選んだ 1本だけで、残る 4本には触れない</td></tr>
+<tr><td class="nw">（グループなし）</td><td class="num">210</td><td class="num">14</td><td class="num">196</td><td class="small">変えない。出るのは Linchpin に選んだ 14本だけで、残る 196本には触れない。残る本数には予約タスクの回を含む（今回の範囲の外）</td></tr>
+<tr><td><b>合計</b></td><td class="num"><b>300</b></td><td class="num"><b>37</b></td><td class="num"><b>263</b></td><td></td></tr></table>
+<p class="small">検算：いまの本数 300 ＝ Linchpin へ移る 37 ＋ 残る 263。残る 263 ＝ 変えないグループに残る分 ＋ 名前を直すグループに残る分（Linchpin のそのまま 25本 ＋ Linchpin でない 8本）。</p>
+<h2 id="s4">4. 決めかねた所（置き場は決めてある。確度が低い理由を書く）</h2>
 <table><tr><th class="nw">所</th><th>置いた所と、確度が低い理由</th></tr>
-<tr><td class="nw">タイムウェーバー 4本</td><td>仕事の並び（すごいコンサルの次）に置いた。（お客様の名前のため省略）・遠藤さん・（お客様の名前のため省略）のクライアントの分析だから。有料の仕事かどうかは発話から確かめていない。私事ならば歌うまの隣になる。</td></tr>
-<tr><td class="nw">沖縄の店の企画 2本（ピザ案件・ちょーでー弁当）</td><td>独立のグループにして私事の並びに置いた。Mits株式会社の線ではない事業の計画で、ちょーでー弁当は 2026-10-05 も動いている（発話132件）。私事に入れる形もあったが、名前に「弁当」を出した方が一目で分かる。</td></tr>
-<tr><td class="nw">中身の薄い3本（notion録音整理・Chatwork response patterns・読んできて）</td><td>発話が1〜3件で中身が読めず、名前と日付で置いた（片付け／すごいコンサル／AIグルコン）。</td></tr>
-<tr><td class="nw">2つの仕事が混ざる2本（使用量コスパ・タイパ／労働集約型サービスLP）</td><td>発話の多い方・名前の方に置いた（ファネルと集客／無料体験セミナーと LP）。</td></tr>
-<tr><td class="nw">運転台を広める2本（経営管理アプリ拡散・伽藍とバザールの実現）</td><td>「人を集める」仕事なのでファネルと集客にも置けるが、Mits様の呼び方「運転台マーケ」に合わせて運転台に置いた。</td></tr>
-<tr><td class="nw">予約タスクの記録 132本を、残すか消すか</td><td>この提案は分け先までで、残す回と消す回の線は決めていない。</td></tr>
-<tr><td class="nw">グループ名の長さ</td><td>「｜」の後ろがサイドバーの幅で切れる可能性がある。前だけで立つ名前にしたが、実機の幅は見ていない（ブラウザ・画面を使わない指示のため）。</td></tr>
-<tr><td class="nw">対象の外</td><td>アーカイブ済み298本は対象に入れていない。この提案を作っているセッション「FHL 2026 Notes」は一覧ファイルに無い。</td></tr>
+<tr><td class="nw">名前を直すグループの中に残る、Linchpin でないセッション</td><td>AI-Mits に 4本（Zoom YouTube概要把握・AI-MITS Difyv2/v3・Mits株式会社 → Mitsプライベート に移動＋全参照更新・UUID lookup）、AIグループ講座関連に 3本（Devils-advocate agents セッション・Zoom録画のYouTube自動アップ 事故調査と復旧・CODEX in VS Code）、LP/デザインに 1本（労働集約型サービスLP）。「それ以外は変えなくて良い」に従って動かしていない。Linchpin の名前の下に Linchpin でないものが残る形になる。</td></tr>
+<tr><td class="nw">空になる「4セッション＋1」の名前</td><td>空のまま名前だけ残す。消すのはグループの削除という別の操作なので、この提案には入れていない。</td></tr>
+<tr><td class="nw">RUNNING の位置</td><td>Mits様が最上段に置いているので、Linchpin の9つより上に残した。Linchpin を最上段にする並びもあるが、RUNNING は変えない側に入れた。</td></tr>
+<tr><td class="nw">運転台を広める3本（経営管理アプリ拡散・伽藍とバザールの実現・_OEM提供考察）</td><td>③ 人を集める の仕事だが、Mits様の呼び方（運転台マーケ・運転台の仲間募集）に合わせて 運転台（②①） に置き、名前の後ろに「③ 広める」と書いた。広告・YouTube（⑥③）に置く形もあった。</td></tr>
+<tr><td class="nw">使用量コスパ・タイパ</td><td>前半は Claude の使用量の話、後半が「AIエージェントレポート」のメアド登録・LP・PDF。後半で ファネル・オプトイン（②）に置いた。</td></tr>
+<tr><td class="nw">YAML入門：中学生向け解説／AI時代のエンジニア必須スキル</td><td>講座の資料かどうかは発話から確かめ切れない。grouping.md が F（BE-02 の資料）に置いたこと・Mits様が AIグループ講座関連に置いていたことで AIグルコン（BE-02）に入れた。</td></tr>
+<tr><td class="nw">0531_デザイン整理</td><td>どの商品の LP かは発話に無い（「デザイン的な完成形はこれ」）。LP のデザインの仕事として LP・セールスレター（④⑦）に置いた。</td></tr>
+<tr><td class="nw">メルマガを「③⑥⑨」と3つの段にまたいで書いたこと</td><td>今のメルマガは ③（ダウンロードページへ）、⑥（1800人への送信）、⑨（追伸で ⑧ へ）の3つの役を持つ（teiansho_v2.md 2.）。1つに絞らず3つ書いた。</td></tr>
+<tr><td class="nw">グループ名の長さ</td><td>「｜」の後ろがサイドバーの幅で切れる可能性がある。前の言葉と段の番号だけで分かるようにしたが、実機の幅は見ていない。</td></tr>
+<tr><td class="nw">対象の外</td><td>アーカイブ済み298本は対象に入れていない。この提案を作っているセッション「FHL 2026 Notes」は一覧ファイルに無い（入れるなら ファネル・オプトイン）。</td></tr>
 </table>
 <h2>材料</h2>
 <ul class="small">
 <li>セッション一覧（300本・2026-10-05 21:26）：/Users/nishidamitsuhiro/.claude/projects/-Users-nishidamitsuhiro-My-Drive-claude-nishida/d345821e-d231-48ae-b195-4b365706991c/tool-results/mcp-ccd_session_mgmt-list_sessions-1791203164114.txt</li>
-<li>中身によるグループ分け：同じフォルダの grouping.md・grouping2.md（BA-researcher・2026-10-05）</li>
-<li>デスクトップのセッションと jsonl の対応：manifest.md 6-2 と ~/Library/Application Support/Claude/claude-code-sessions/*/*/*.json の cliSessionId・priorCliSessionIds（662件）</li>
-<li>事業の全体像：同じフォルダの teiansho_v2.md</li>
-<li>作業用のファイル（結び付けの途中結果・この HTML を作る script）：/private/tmp/claude-501/-Users-nishidamitsuhiro-My-Drive-claude-nishida/d345821e-d231-48ae-b195-4b365706991c/scratchpad/BA-strategist-max-sidebar/</li>
+<li>Linchpin の提案書：同じフォルダの teiansho_v2.md／中身によるグループ分け：grouping.md・grouping2.md</li>
+<li>第1版（全体の再編・2026-10-05 21:46）の控え：/private/tmp/claude-501/-Users-nishidamitsuhiro-My-Drive-claude-nishida/d345821e-d231-48ae-b195-4b365706991c/scratchpad/BA-strategist-max-sidebar/sidebar_saihen_teian_v1_zentai_20261005.html</li>
 </ul>
-<script>
-(function(){
- var q=document.getElementById('q'),t=document.getElementById('all'),n=document.getElementById('qn');
- if(!q||!t)return;
- var trs=Array.prototype.slice.call(t.querySelectorAll('tr')).slice(1);
- function run(){
-  var v=q.value.trim().toLowerCase(),shown=0,heads={};
-  trs.forEach(function(tr){
-   if(tr.classList.contains('ghead')){tr.style.display=v?'none':'';return;}
-   var ok=!v||tr.textContent.toLowerCase().indexOf(v)>=0;
-   tr.style.display=ok?'':'none'; if(ok){shown++;}
-  });
-  n.textContent=v?('該当 '+shown+' 本'):'';
- }
- q.addEventListener('input',run);
-})();
-</script>
 </main></body></html>
