@@ -27,6 +27,7 @@
     page-break-after: always;
   }
   .page:last-child{ page-break-after: auto; }
+  @media screen{ .page{ margin:0 auto; } }
 
   .top{
     display:flex; align-items:center; justify-content:space-between;
@@ -252,7 +253,7 @@
   }
   .legend{
     position:absolute;
-    bottom:2mm; left:12mm;
+    bottom:0.3mm; left:12mm;
     font-size:7.5pt; color:var(--title);
     z-index:5;
     background:#fff; padding:0.5mm 2mm;
