@@ -286,6 +286,27 @@
     vertical-align:middle;
     margin-right:1mm;
   }
+
+  /* 押せるチェック */
+  td.meal .chk{ cursor:pointer; user-select:none; -webkit-user-select:none; }
+  td.meal .chk.on::before{ background:var(--title); box-shadow:inset 0 0 0 0.55mm #fff; }
+  td.meal .chk.on{ color:var(--line); }
+
+  /* 毎日の付き合わせ */
+  .tsukiawase{ width:297mm; max-width:100%; margin:6mm auto 10mm; box-sizing:border-box; padding:0 4mm; color:var(--title); font-family:inherit; }
+  .tsukiawase h2{ font-size:13pt; margin:0 0 1.5mm; }
+  .tsukiawase .tw-note{ font-size:8pt; color:#555; line-height:1.5; margin-bottom:2mm; }
+  .tsukiawase .tw-wrap{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  #tw-table{ border-collapse:collapse; font-size:8pt; min-width:250mm; width:100%; }
+  #tw-table th, #tw-table td{ border:0.5pt solid var(--line); padding:1mm 1.2mm; text-align:right; white-space:nowrap; }
+  #tw-table th{ background:#eef7fa; text-align:center; font-weight:700; }
+  #tw-table td.d{ text-align:center; font-weight:700; }
+  #tw-table td.msg{ text-align:left; white-space:normal; min-width:60mm; }
+  #tw-table tr.mirai td{ color:#9a9a9a; }
+  #tw-table tr.kyou td{ background:#fffbe6; }
+  #tw-table .warn{ color:#c03030; font-weight:700; }
+  #tw-table .good{ color:#1d7a3a; font-weight:700; }
+  @media print{ .tsukiawase{ page-break-before:always; } }
 </style>
 </head>
 <body>
@@ -584,12 +605,18 @@
   </table>
 </div>
 
+<div class="tsukiawase" id="tsukiawase">
+  <h2>毎日の付き合わせ（計画と実績）</h2>
+  <div class="tw-note">献立のチェックを押すと、その日の摂取が計算されます（チェックはこのブラウザに保存）。消費は Apple Watch の基礎代謝＋活動（毎朝 9:05〜15:05 の自動実行で入る）。脂肪の減り＝不足のうち上限（脂肪1kgあたり1日69.3kcal）までの分。上限を超えた不足は筋肉などから出る分として赤で出します。</div>
+  <div class="tw-wrap"><table id="tw-table"></table></div>
+</div>
+
 <script>
 (function(){
   // ===== 実測・目標の一元データ（ここに1行足すだけで乾燥体重欄・チェック時間欄・グラフが揃う） =====
   const jissoku = {
-    "10/4": {kg: 62.2, jikan: "", shibo: 17.4, hosu: 12613},
-    "10/5": {kg: 61.0, jikan: "13:13", shibo: 16.7, hosu: 1168}
+    "10/4": {kg: 62.2, jikan: "", shibo: 17.4, hosu: 12613, kiso: 1495, katsudo: 656},
+    "10/5": {kg: 61.0, jikan: "13:13", shibo: 16.7, hosu: 1168, kiso: 840, katsudo: 79}
   };
   const mokuhyo = {
     "10/5": 61.5, "10/6": 60.9, "10/7": 60.2, "10/8": 59.6, "10/9": 59.5,
@@ -597,6 +624,7 @@
     "10/15": 58.9, "10/16": 58.8, "10/17": 58.7, "10/18": 58.6, "10/19": 58.5,
     "10/20": 58.4
   };
+  window.KIROKU = {jissoku, mokuhyo};
   // ===== グラフ縦軸の範囲（上端63・下端55）。8帯＝目盛り1/8..7/8 が 62..56 =====
   const RANGE_TOP = 63.0;
   const RANGE_BOT = 55.0;
@@ -749,6 +777,115 @@
       '<span class="lg-jis"></span><span class="lg-jis-line"></span>乾燥体重（実測・黒・実線）';
     page.appendChild(legend);
   });
+})();
+</script>
+<script>
+(function(){
+  const K = window.KIROKU; if (!K) return;
+  // 1回分の [kcal, たんぱく質g, 糖質g]（八訂・ラベル）
+  const EIYOU = {
+    'コーヒー＋MCT大1':[126,0,0], 'カチュー湯＋ひじき':[37,7.9,0.2], '卵4個':[284,24.4,0.8], '卵5個':[355,30.5,1.0],
+    '納豆1':[86,7.4,2.4], 'もずく100g':[7,0.3,0], 'MCT小1':[42,0,0], 'プロテイン2杯':[178,21,7.6],
+    'グルタミン5g':[20,5,0], 'マナ酵素20ml':[44,0,10.8], 'カチュー湯2杯＋ひじき':[71,15.6,0.4], 'ベーコン50g':[200,6.5,0.2]
+  };
+  const ROWS = ['gozen','hirusugi','aruita','yugata'];
+  const KEY = 'fasting_kiroku_chk_v1';
+  const PLAN_BURN = 1920, CAP = 69.3, FAT0 = 10.8;
+  let chk = {};
+  try { chk = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { chk = {}; }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(chk)); } catch (e) {} };
+
+  document.querySelectorAll('.page table').forEach(table => {
+    const hin = table.querySelector('tr.hinichi'); if (!hin) return;
+    const days = Array.from(hin.children).slice(1).map(td => {
+      const y = td.querySelector('.ymd'); const m = y && y.textContent.match(/\d+\/\d+/); return m ? m[0] : null;
+    });
+    ROWS.forEach(r => {
+      const tr = table.querySelector('tr.' + r); if (!tr) return;
+      Array.from(tr.children).slice(1).forEach((td, col) => {
+        const d = days[col]; if (!d) return;
+        td.querySelectorAll('.chk').forEach(sp => {
+          const k = d + '|' + r + '|' + sp.textContent.trim();
+          if (chk[k]) sp.classList.add('on');
+          sp.addEventListener('click', () => {
+            if (chk[k]) delete chk[k]; else chk[k] = 1;
+            sp.classList.toggle('on', !!chk[k]); save(); render();
+          });
+        });
+      });
+    });
+  });
+
+  const DAYS = []; for (let i = 4; i <= 19; i++) DAYS.push('10/' + i);
+  const nextDay = d => '10/' + (Number(d.split('/')[1]) + 1);
+  const now = new Date(); const TODAY = (now.getMonth() + 1) + '/' + now.getDate();
+  const num = d => Number(d.split('/')[0]) * 100 + Number(d.split('/')[1]);
+  const f0 = v => Math.round(v).toLocaleString('ja-JP');
+  const burnOf = j => {
+    if (!j) return null;
+    if (j.kiso != null && j.kiso >= 1300 && j.katsudo != null) return { v: j.kiso + j.katsudo, suitei: false };
+    if (j.hosu != null) return { v: 1500 + 83 + Math.round(42 * j.hosu / 1000), suitei: true };
+    return null;
+  };
+
+  function render() {
+    let Fp = FAT0, Fa = FAT0, cumP = 0, cumA = 0;
+    const out = [];
+    for (const d of DAYS) {
+      const capP = CAP * Fp, capA = CAP * Fa;
+      const planIn = PLAN_BURN - capP, planFat = capP / 9;
+      Fp -= capP / 9000; cumP += planFat;
+      const mirai = num(d) > num(TODAY), kyou = d === TODAY, mae = (d === '10/4' || d === '10/5');
+      let kcal = 0, p = 0, c = 0, n = 0;
+      Object.keys(chk).forEach(k => {
+        if (!k.startsWith(d + '|')) return;
+        const e = EIYOU[k.split('|')[2]]; if (e) { kcal += e[0]; p += e[1]; c += e[2]; n++; }
+      });
+      const b = burnOf(K.jissoku[d]);
+      let fat = null, deficit = null, over = 0, msg = [];
+      if (mae) { fat = capA / 9; msg.push('前のプラン（摂取の記録なし・上限いっぱい燃えたと置く）'); }
+      else if (!mirai && n > 0 && b) {
+        deficit = b.v - kcal;
+        fat = Math.min(Math.max(deficit, 0), capA) / 9;
+        over = Math.max(0, deficit - capA);
+        const amari = capA - deficit;
+        if (kyou) msg.push('今日は途中（消費はこのあとも増える）');
+        if (over > 50) msg.push('<span class="warn">上限を ' + f0(over) + 'kcal 超え＝筋肉などから出る分。摂取を ' + f0(over) + 'kcal 増やす</span>');
+        else if (amari > 50 && !kyou) msg.push('上限まで ' + f0(amari) + 'kcal 余り。歩数で約 ' + f0(amari / 42 * 1000) + '歩 足せば脂肪の減りが上限に届く');
+        else if (!kyou) msg.push('<span class="good">上限どおり</span>');
+        if (p < 90 && !kyou) msg.push('たんぱく質 ' + p.toFixed(0) + 'g（目安95g）');
+        if (c > 50) msg.push('<span class="warn">糖質 ' + c.toFixed(0) + 'g（50g超）</span>');
+        if (b.suitei) msg.push('消費は歩数からの推定（時計を外していた時間あり）');
+      } else if (!mirai) {
+        msg.push(n === 0 ? '献立のチェックなし' : '消費のデータ待ち（翌朝の自動実行で入る）');
+      }
+      const fatUsed = fat != null ? fat : (mirai ? 0 : capA / 9);
+      if (!mirai) { Fa -= fatUsed / 1000; cumA += fatUsed; }
+      const nx = nextDay(d), tgt = K.mokuhyo[nx], act = (K.jissoku[nx] || {}).kg;
+      let wtxt = (tgt != null ? tgt.toFixed(1) : '—') + ' / ' + (act != null ? act.toFixed(1) : '—');
+      if (tgt != null && act != null) {
+        const df = act - tgt;
+        wtxt += ' <span class="' + (df <= 0 ? 'good' : 'warn') + '">(' + (df > 0 ? '+' : '') + df.toFixed(1) + ')</span>';
+      }
+      out.push('<tr class="' + (mirai ? 'mirai' : kyou ? 'kyou' : '') + '">' +
+        '<td class="d">' + d + '</td>' +
+        '<td>' + f0(planIn) + ' / ' + (n ? f0(kcal) : '—') + '</td>' +
+        '<td>' + (n ? p.toFixed(0) : '—') + '</td>' +
+        '<td>' + (n ? c.toFixed(0) : '—') + '</td>' +
+        '<td>' + (b ? f0(b.v) + (b.suitei ? '*' : '') : '—') + '</td>' +
+        '<td>' + (deficit != null ? f0(deficit) : '—') + '</td>' +
+        '<td>' + f0(capA) + '</td>' +
+        '<td>' + (over > 0 ? '<span class="warn">' + f0(over) + '</span>' : (deficit != null ? '0' : '—')) + '</td>' +
+        '<td>' + f0(planFat) + ' / ' + (fat != null ? f0(fat) : '—') + '</td>' +
+        '<td>' + (cumP / 1000).toFixed(2) + ' / ' + (mirai ? '—' : (cumA / 1000).toFixed(2)) + '</td>' +
+        '<td>' + wtxt + '</td>' +
+        '<td class="msg">' + msg.join('<br>') + '</td></tr>');
+    }
+    document.getElementById('tw-table').innerHTML =
+      '<tr><th>日付</th><th>摂取 kcal<br>計画 / 実績</th><th>たんぱく質<br>g</th><th>糖質<br>g</th><th>消費<br>kcal</th><th>不足<br>kcal</th><th>上限<br>kcal</th><th>上限超え<br>kcal</th><th>脂肪の減り g<br>計画 / 実績</th><th>脂肪の減り累計 kg<br>計画 / 実績</th><th>翌朝の乾燥体重 kg<br>目標 / 実測（差）</th><th>ひとこと</th></tr>' +
+      out.join('');
+  }
+  render();
 })();
 </script>
 </body>
