@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ja"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>サイドバー再編の提案（Linchpin だけ）</title><style>
+<title>サイドバー再編の提案（Linchpin だけ・第7版）</title><style>
 :root{--ink:#1c1c1c;--sub:#555;--line:#b9b9b9;--thin:#dcdcdc;--name:#17407a;}
 *{box-sizing:border-box}
 html,body{background:#ffffff;color:var(--ink);margin:0;padding:0;font-family:-apple-system,"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;font-size:15px;line-height:1.7}
@@ -27,74 +27,139 @@ tr.ghead td{border-bottom:1px solid var(--line);border-top:2px solid var(--line)
 a{color:var(--name)}
 code{font-family:Menlo,Consolas,monospace;font-size:13px;border:1px solid var(--thin);padding:0 4px}
 ol.order{padding-left:0;list-style:none;counter-reset:o}
-ol.order li{padding:5px 0;border-bottom:1px solid var(--thin);display:grid;grid-template-columns:30px 1fr 220px;gap:8px}
+ol.order li{padding:5px 0;border-bottom:1px solid var(--thin);display:grid;grid-template-columns:30px 1fr 240px;gap:8px}
 ol.order li .c{text-align:right;color:var(--sub);font-variant-numeric:tabular-nums;white-space:nowrap}
 .strike{text-decoration:line-through;color:var(--sub)}
 @media (max-width:700px){ol.order li{grid-template-columns:28px 1fr}ol.order li .c{grid-column:2;text-align:left}.toc{columns:1}body{padding:16px 16px 60px}}
 </style></head><body><main>
-<h1>サイドバー再編の提案（第2版）── Linchpin に関係するグループとセッションだけを組み直す</h1>
-<p class="meta">2026-10-05｜作成：BA-strategist（Fable 5.1・effort max）｜提案だけ。サイドバーの移動・改名・グループの作成と削除・アーカイブは1回もしていない。第1版（全体の再編）は作業用のフォルダに控えを取って置き換えた</p>
+<h1>サイドバー再編の提案（第7版）── Linchpin に関係するグループとセッションだけを組み直す</h1>
+<p class="meta">2026-10-05｜作成：BA-strategist（Fable 5.1・effort max）｜提案だけ。サイドバーの移動・改名・グループの作成と削除・アーカイブは1回もしていない。第5版（検収の線は通過・残り2行指摘）は scratchpad/BA-strategist-max-sidebar/sidebar_saihen_teian_v5_20261005.html に控えを取って置き換えた</p>
 <blockquote>Mits様の言葉（2026-10-05）：「違うなリンチピンに関係するのだけを再編成してほしい。それ以外は変えなくて良い。また今グループとして上位に来ていなくてもリンチピンに関係するので移動させた。良いものは移動する予定で考え直してみて。」</blockquote>
+<div class="box"><b>第5版からの直し（2点）</b>
+<ol class="small">
+<li>#73「Create seminar, landing page, and backend」（9c9977c4・2026-05-13）と #74「Build seminar LP and backend system」（07e7b252・2026-05-12）を Linchpin ⑧ から外した。BS-jikki-kenshu がセッションの中身を読んで確かめた結果：#74 の中身は「F2-01 nomad経営戦略セミナー」の設計（有料・α¥2,980／β¥9,800／γ¥29,800、バックエンドは個別コンサル or 構築支援 ¥148,000〜¥498,000）。#73 は #74 の続きで、下書きの中身（消費者の暴力・ダイヤモンドマトリックス・4C）は、外した #67（F1-08 AI時代の二刀流セミナー・有料）と同じ有料セミナー。⑧ は「毎月の無料体験セミナー → 無料個別相談」で、無料の線と有料の線は同じ時期に別々に走っていた。#72「無料体験セミナー」（d8011e96・Mits様の発話「無料紹介セミナーに書き換えて」）は ⑧ に残す。選ぶ決まり（単品講座・F1-08 は入れない）にも揃う</li>
+<li>数の変化：Linchpin 76→74本、移す 45→43本、無料体験セミナー 6→4本（移す 6→4）、グループなし 残る 242→244本。合計 363 は変わらない。内訳の文・並びの表・3. の表・1. の表の本数も全部合わせた</li>
+</ol></div>
+<div class="box" style="display:none"><b>第4版からの直し（6点）</b>
+<ol class="small">
+<li>#43「2ヶ月コンサル LP v1 新デザイン v7」（セッションID 3e595d37）を Linchpin から外した。中身は過去のセッションを探す回で、LP を作る発話は0件（Mits様の発話3件はすべて「扱ったセッションを探して／新規ウインドウで開いて」の操作指示）。grouping.md も「無関係・中身は過去のセッション探し」としている。選ぶ決まりの「道具」に当たる</li>
+<li>#35「AI-MITS Difyv2/v3」（セッションID 4e7b09fd・2026-08-26）を Linchpin から外した。grouping.md では無関係。第4版で引いた grouping2.md の「直接②」は、同じ名前の別のセッション（276bcfd5・2026-05・サイドバーに無い）の判定だった。<b>同じ名前のセッションが他にもあるときは、セッションIDで照合する</b></li>
+<li>本数の数え方を 1 つに揃えた。<b>すべて「list_sessions の未アーカイブ（include_archived:false）をグループごとに数えたもの」＋「このセッション FHL 2026 Notes の1本（ファネルマーケティング）」で数える。合計は 362＋1＝363</b>。list_groups の本数（アーカイブ込み・返らないものを含む）は使わない。グループなしは 264。list_groups に数えられているのに list_sessions に出ない2本（AI-Mits 1・頭整理 1）は、4. に「サイドバーの数には入っているが、一覧の取得に出てこない2本」とだけ書き、数には入れない</li>
+<li>3. の表の「組み直したあと」列に、新しく作る3つのグループ（広告・YouTube／無料体験セミナー／会員設計）の行を足した。列の合計が 363 と一致する</li>
+<li>3. の表の下の検算を、正しい式1本に書き直した</li>
+<li>内訳の文を 30本（表の30行）に合わせた。落ちていた「LP用Design.mdと二刀流セミナー実装」を数に入れた</li>
+</ol></div>
 <div class="box"><b>検収の値</b>
 <table class="kv">
-<tr><td>Linchpin に関係すると選んだセッション</td><td><b>62本</b>（全300本のうち）。うち<b>移すもの 37本</b>、いまのグループの名前が変わるだけでそのまま残るもの 25本</td></tr>
-<tr><td>Linchpin のグループごとのセッション数</td><td>広告・YouTube 6／メルマガ 5／ファネル・オプトイン 5／運転台 11／AI-Mits 8／LP・セールスレター 6／AIグルコン（BE-02） 15／無料体験セミナー 4／会員設計（松竹梅） 2　＝ 62</td></tr>
-<tr><td>変えないグループ・セッションのうち、名前・並び・中身を変えたもの</td><td><b>0件</b>（RUNNING・■新司令塔・頭整理・タスク整理系・動画撮影・【TW】・歌うま・環境設定・グループなし の名前と並びはそのまま。これらから出ていくのは Linchpin に選んだセッションだけで、残るセッションには触れない）</td></tr>
-<tr><td>新しいグループ名の比喩・自分で作った呼び名・記号の呼び名</td><td><b>0件</b>（①〜⑨ は Linchpin の本の段の番号で、teiansho_v2.md と同じ使い方）</td></tr>
-<tr><td>選んだ理由の書かれていない移動</td><td><b>0件</b>（2. の表の全行に理由がある。理由の無い行があれば作る script が止まる作りにした）</td></tr>
-<tr><td>サイドバーを動かした操作</td><td><b>0回</b>（読んだのは渡された一覧ファイル・grouping.md・grouping2.md・teiansho_v2.md と、サイドバーのグループ一覧を1回。書く操作は無し）</td></tr>
+<tr><td>母数の数え方</td><td>list_sessions（include_archived:false）をグループごとに数えた合計 362本 ＋ このセッション FHL 2026 Notes 1本（ファネルマーケティング）＝ <b>363本</b>。list_groups は使わない</td></tr>
+<tr><td>Linchpin に関係すると選んだセッション</td><td><b>74本</b>。うち<b>移すもの 43本</b>、いまのグループの名前が変わるだけでそのまま残るもの 31本</td></tr>
+<tr><td>Linchpin のグループごとのセッション数（組み直したあと・名前を直すグループに残る Linchpin でない9本を含む）</td><td>広告・YouTube 6／メルマガ 6／ファネル・オプトイン 6／運転台 11／AI-Mits 16／LP・セールスレター 12／AIグルコン（BE-02） 20／無料体験セミナー 4／会員設計（松竹梅） 2　＝ <b>83</b></td></tr>
+<tr><td>並びの表の本数の合計 と 母数の一致</td><td><b>一致（合計 363）</b></td></tr>
+<tr><td>3. の表の「組み直したあと」列 と 母数の一致</td><td><b>一致（合計 363）</b></td></tr>
+<tr><td>名前を直すグループの「組み直したあとの本数」が「残る本数＋移す本数」と一致</td><td><b>全グループで一致</b>。ファネル・オプトイン 3＋3＝6／運転台 3＋8＝11／AI-Mits 13＋3＝16／LP・セールスレター 6＋6＝12／AIグルコン（BE-02） 14＋6＝20／メルマガ 1＋5＝6</td></tr>
+<tr><td>#73（Create seminar, landing page, and backend・9c9977c4）と #74（Build seminar LP and backend system・07e7b252）が Linchpin の表に居ないこと</td><td><b>0本</b>（両方とも 2. 末尾の「選ばなかった」の表に移した）</td></tr>
+<tr><td>単品講座（F1-xx）・有料セミナー（F2-01 nomad経営戦略セミナー 等）が Linchpin の表に居ないこと</td><td><b>0本</b></td></tr>
+<tr><td>内訳の文の合計 と 表の行数の一致</td><td><b>一致（32 ＝ 32）</b></td></tr>
+<tr><td>9グループの本数の合計 と 2. の表の行数の一致</td><td><b>一致（74＝6＋6＋6＋11＋12＋10＋17＋4＋2、2. の表の行数も 74）</b></td></tr>
+<tr><td>グループなしの本数</td><td><b>264本</b>（list_sessions include_archived:false）</td></tr>
+<tr><td>新しいグループ名の比喩・自作呼び名</td><td><b>0件</b></td></tr>
+<tr><td>選んだ理由の書かれていない移動</td><td><b>0件</b>（2. の表の全行に理由がある）</td></tr>
+<tr><td>サイドバーを動かした操作</td><td><b>0回</b>（list_sessions ／ list_groups ／ ファイル読みだけ）</td></tr>
 <tr><td>使ったモデル・effort</td><td>Fable 5.1（claude-fable-5-1）・max</td></tr>
 </table></div>
+
+<h3>検収で挙がった 32本の内訳</h3>
+<p class="small">内訳：IN AI-Mits そのまま 3本／IN LP/デザイン そのまま 1本／IN ファネル そのまま 1本（FHL 2026 Notes）／IN AIグループ講座関連 そのまま 1本（英語学習時間に習って目安）／IN 新規移す（グループなしから）7本／OUT LP/デザインの中 1本（Claude Code 入門　デザイン改修）／OUT グループなし 17本（第6版で足した Create seminar／Build seminar LP の2本を含む）／OUT AI-Mits 1本（AI-MITS Difyv2/v3）＝ <b>32本</b>。</p>
+<table><tr><th>セッション名</th><th class="nw">最後に動いた</th><th class="nw">いまのグループ</th><th class="nw">扱い</th><th>理由</th></tr>
+<tr><td>コンサル回答ナレッジ_改修_100超え</td><td class="nw">2026-05-08 23:40</td><td class="nw">AI-Mits</td><td class="nw">IN そのまま</td><td class="small">AI-Mits（コンサル回答のナレッジDB）の改修。② の中身</td></tr>
+<tr><td>AI-Mits用　トランスクリプト取り込み</td><td class="nw">2026-04-13 20:48</td><td class="nw">AI-Mits</td><td class="nw">IN そのまま</td><td class="small">AI-Mits のデータ取り込み。② の中身</td></tr>
+<tr><td>AI-MITS改修作戦</td><td class="nw">2026-04-13 20:18</td><td class="nw">AI-Mits</td><td class="nw">IN そのまま</td><td class="small">AI-Mits の改修。② の中身</td></tr>
+<tr><td>LP creation from brief</td><td class="nw">2026-05-27 18:16</td><td class="nw">LP/デザイン</td><td class="nw">IN そのまま</td><td class="small">LP の新規作成（brief から）。④⑦ の LP</td></tr>
+<tr><td>FHL 2026 Notes（このセッション）</td><td class="nw">2026-10-05</td><td class="nw">ファネルマーケティング</td><td class="nw">IN そのまま</td><td class="small">このサイドバー再編（Linchpin のファネル設計）の作業そのもの。grouping.md の「直接」。⑤② 入口の集約</td></tr>
+<tr><td>Dify advisor UI implementation</td><td class="nw">2026-08-26 11:16</td><td class="nw">（グループなし）</td><td class="nw">IN 移す → AI-Mits</td><td class="small">Dify の advisor UI の実装。② AI-Mits の中身</td></tr>
+<tr><td>8/11 録画の映像確認</td><td class="nw">2026-08-30 21:56</td><td class="nw">（グループなし）</td><td class="nw">IN 移す → AIグルコン（BE-02）</td><td class="small">BE-02 の8/11クラスの録画の映像確認。⑦ の中身</td></tr>
+<tr><td>無料体験セミナー</td><td class="nw">2026-05-22 21:48</td><td class="nw">（グループなし）</td><td class="nw">IN 移す → 無料体験セミナー</td><td class="small">⑧ そのもの</td></tr>
+<tr><td>Create seminar, landing page, and backend</td><td class="nw">2026-05-13 16:09</td><td class="nw">（グループなし）</td><td class="nw">OUT（第6版で IN→OUT）</td><td class="small">セッションID 9c9977c4。#74 の続きで、下書きの中身（消費者の暴力・ダイヤモンドマトリックス・4C）が外した #67（F1-08 AI時代の二刀流セミナー・有料）と同じ有料セミナー。⑧（無料体験セミナー）ではない</td></tr>
+<tr><td>Build seminar LP and backend system</td><td class="nw">2026-05-12 13:31</td><td class="nw">（グループなし）</td><td class="nw">OUT（第6版で IN→OUT）</td><td class="small">セッションID 07e7b252。中身は「F2-01 nomad経営戦略セミナー」の設計（有料・α¥2,980／β¥9,800／γ¥29,800、バックエンドは個別コンサル or 構築支援 ¥148,000〜¥498,000）。⑧（無料体験セミナー）ではない</td></tr>
+<tr><td>Complete lp_v5.html verification and testing</td><td class="nw">2026-05-17 19:19</td><td class="nw">（グループなし）</td><td class="nw">IN 移す → LP・セールスレター</td><td class="small">AIグルコン LP ver5 の検証と修正。⑦ の LP</td></tr>
+<tr><td>Update letter with latest building skills</td><td class="nw">2026-05-18 00:48</td><td class="nw">（グループなし）</td><td class="nw">IN 移す → LP・セールスレター</td><td class="small">AIグループ講座 Building Skills を反映したレター改訂。⑦ のレター</td></tr>
+<tr><td>サインナップレター構成_4/22</td><td class="nw">2026-04-24 19:16</td><td class="nw">（グループなし）</td><td class="nw">IN 移す → LP・セールスレター</td><td class="small">サインアップ（オプトイン → フロント）レターの構成。④⑦</td></tr>
+<tr><td>パラレル仕事</td><td class="nw">2026-05-24</td><td class="nw">（グループなし）</td><td class="nw">IN 移す → メルマガ</td><td class="small">無料体験セミナーLPへ誘うメルマガ。③⑥⑨</td></tr>
+<tr><td>2ヶ月コンサル LP v1 新デザイン v7</td><td class="nw">2026-08-13 17:26</td><td class="nw">（グループなし）</td><td class="nw">OUT</td><td class="small">セッションID 3e595d37。中身は過去のセッション探し（Mits様の発話3件はすべて「扱ったセッションを探して／新規ウインドウで開いて」）。LP を作る発話は0件。grouping.md も「無関係・中身は過去のセッション探し」。道具（9段の部品ではない）</td></tr>
+<tr><td>LP用Design.mdと二刀流セミナー実装</td><td class="nw">2026-08-09 00:56</td><td class="nw">（グループなし）</td><td class="nw">OUT</td><td class="small">F1-08 AI時代の二刀流セミナー（単品講座・参加費5,000円・コース k0ewB7oZSFlv）の申込・LP・バックエンドの実装。Mits様の発話（1bb1f87d・2026-05-17 17:46）と LP の「参加費 5,000円」。⑧（毎月の無料体験セミナー）ではない。単品講座は9段に無い</td></tr>
+<tr><td>Fix event form date selection radio buttons</td><td class="nw">2026-05-18</td><td class="nw">（グループなし）</td><td class="nw">OUT</td><td class="small">F1-08 AI時代の二刀流セミナーの申込フォームの続き。単品講座</td></tr>
+<tr><td>バックアップ最新最適化</td><td class="nw">2026-05-22</td><td class="nw">（グループなし）</td><td class="nw">OUT</td><td class="small">前半は F1-08 二刀流セミナーLP の修正、後半は git の自動バックアップ。どちらも9段の部品ではない</td></tr>
+<tr><td>Claude Code 入門　デザイン改修</td><td class="nw">2026-05-28 08:54</td><td class="nw">LP/デザイン</td><td class="nw">OUT（LP/デザイン に残る）</td><td class="small">F1-02 Claude Code入門（単品講座）のデザイン改修。9段に単品講座は無い</td></tr>
+<tr><td>（お客様の名前のため省略）式無料セミナー</td><td class="nw">2026-05-20 17:25</td><td class="nw">（グループなし）</td><td class="nw">OUT</td><td class="small">お客様（（お客様の名前のため省略））向けのセミナー作りの支援。Mits様の9段の部品ではない</td></tr>
+<tr><td>LP修正</td><td class="nw">2026-05-20 12:47</td><td class="nw">（グループなし）</td><td class="nw">OUT</td><td class="small">どの LP の修正かが名前に無い。確定できないものは移さない</td></tr>
+<tr><td>Organize sales letter output directories</td><td class="nw">2026-05-16 19:03</td><td class="nw">（グループなし）</td><td class="nw">OUT</td><td class="small">セールスレターのフォルダの片付け。9段の部品ではない</td></tr>
+<tr><td>Claude Cowork講座レター改修_4/23</td><td class="nw">2026-04-23 22:01</td><td class="nw">（グループなし）</td><td class="nw">OUT</td><td class="small">F1-01 Claude Cowork（単品講座）のレター改修。単品講座は9段に無い</td></tr>
+<tr><td>Claude Cowork講座フォローシナリオ</td><td class="nw">2026-04-22 15:51</td><td class="nw">（グループなし）</td><td class="nw">OUT</td><td class="small">同上（F1-01 の受講後フォロー）</td></tr>
+<tr><td>UTAGE読者リストDL・マージ・LINE登録URL抽出</td><td class="nw">2026-04-10 18:16</td><td class="nw">（グループなし）</td><td class="nw">OUT</td><td class="small">UTAGE 読者リストの道具作業。9段の部品ではない</td></tr>
+<tr><td>UTAGEチェック項目</td><td class="nw">2026-05-30 00:27</td><td class="nw">（グループなし）</td><td class="nw">OUT</td><td class="small">UTAGE の日常運用のチェック項目。9段の部品ではない</td></tr>
+<tr><td>Dify 　ログnotion整理</td><td class="nw">2026-05-16 15:15</td><td class="nw">（グループなし）</td><td class="nw">OUT</td><td class="small">Dify のログを Notion に整理する片付け作業。9段の部品ではない</td></tr>
+<tr><td>会員サイトの再構成 (fork2)</td><td class="nw">2026-04-23 19:12</td><td class="nw">（グループなし）</td><td class="nw">OUT</td><td class="small">UTAGE 会員サイト（The Library）全体の棚の再構成。9段の特定の部品に紐付かない</td></tr>
+<tr><td>会員サイトの再構成 (fork)</td><td class="nw">2026-04-20 10:40</td><td class="nw">（グループなし）</td><td class="nw">OUT</td><td class="small">同上（fork）</td></tr>
+<tr><td>会員サイトの再構成_4/22</td><td class="nw">2026-04-20 01:49</td><td class="nw">（グループなし）</td><td class="nw">OUT</td><td class="small">同上（元）</td></tr>
+<tr><td>AI-MITS Difyv2/v3</td><td class="nw">2026-08-26 18:02</td><td class="nw">AI-Mits</td><td class="nw">OUT（第5版で IN そのまま→Linchpin でない）</td><td class="small">セッションID 4e7b09fd。中身は CLI のセッション記録の照合（道具）。grouping2.md が「直接②」と置いていたのは同じ名前の別セッション（276bcfd5・2026-05・サイドバーに無い）だった。AI-Mits の中にそのまま残す（Linchpin でない）</td></tr>
+<tr><td>英語学習時間に習って目安</td><td class="nw">2026-05-28 15:47</td><td class="nw">AIグループ講座関連</td><td class="nw">IN そのまま（第5版で Linchpin でない→Linchpin そのまま）</td><td class="small">2ヶ月講座のレターの素材。grouping.md が直接⑦ に置いているので Linchpin そのまま。AIグルコン（BE-02） の中にそのまま残る</td></tr>
+</table>
+
 <div class="toc"><a href="#s1">1. 結論 ── Linchpin のグループ（上から順）</a><br><a href="#s2">2. 移すセッションの表（選んだ理由つき）</a><br><a href="#s3">3. 変えないグループの一覧</a><br><a href="#s4">4. 決めかねた所</a></div>
 
 <h2 id="s1">1. 結論 ── Linchpin のグループ（上から順）</h2>
 <p>Linchpin の線（teiansho_v2.md 1.）は「⑥ Meta広告・今のメルマガ → ⑤ オプトインページ → ② AI-Mits＆経営アプリのダウンロード → ④ フロント商品 → ⑦ BE-02 → ⑨ ステップメール → ⑧ 無料体験セミナー → 無料個別相談 → ⑦ → ① 継続課金」。グループはこの線を上から読める順に並べ、名前は「Mits様の言葉｜段の番号 何をする所か」の形にした。</p>
-<table><tr><th class="num">順</th><th>グループ名｜段 何をする所か</th><th class="num">入る数</th><th class="num">うち移す数</th><th>作り方</th></tr>
-<tr><td class="num">1</td><td><span class="gname">広告・YouTube</span>｜⑥③ <span class="purpose">Meta広告・YouTube・競合の広告で人を集める</span></td><td class="num">6</td><td class="num">6</td><td>新しく作る</td></tr>
-<tr><td class="num">2</td><td><span class="gname">メルマガ</span>｜③⑥⑨ <span class="purpose">毎日のメルマガの原稿・配信・計測</span></td><td class="num">5</td><td class="num">4</td><td>いまの「メルマガ自動化オール」の名前を直す</td></tr>
-<tr><td class="num">3</td><td><span class="gname">ファネル・オプトイン</span>｜⑤② <span class="purpose">入口の集約・オプトイン・無料の贈り物・登録の計測</span></td><td class="num">5</td><td class="num">3</td><td>いまの「ファネルマーケティング」の名前を直す</td></tr>
-<tr><td class="num">4</td><td><span class="gname">運転台</span>｜②① <span class="purpose">アプリの開発と改善（③ 広める・コンサル事務所）</span></td><td class="num">11</td><td class="num">8</td><td>いまの「司令塔補助」の名前を直す</td></tr>
-<tr><td class="num">5</td><td><span class="gname">AI-Mits</span>｜②① <span class="purpose">RAG で答える AI の中身・Dify・チューニング</span></td><td class="num">8</td><td class="num">2</td><td>いまの「AI-Mits」の名前を直す</td></tr>
-<tr><td class="num">6</td><td><span class="gname">LP・セールスレター</span>｜④⑦ <span class="purpose">フロント商品・BE-02・講座の LP と文章</span></td><td class="num">6</td><td class="num">3</td><td>いまの「LP/デザイン」の名前を直す</td></tr>
-<tr><td class="num">7</td><td><span class="gname">AIグルコン（BE-02）</span>｜⑦ <span class="purpose">高額商品の中身（レジメ・動画・Discord）と講座生への配信</span></td><td class="num">15</td><td class="num">5</td><td>いまの「AIグループ講座関連」の名前を直す</td></tr>
-<tr><td class="num">8</td><td><span class="gname">無料体験セミナー</span>｜⑧ <span class="purpose">毎月の無料体験セミナー → 無料個別相談</span></td><td class="num">4</td><td class="num">4</td><td>新しく作る</td></tr>
-<tr><td class="num">9</td><td><span class="gname">会員設計（松竹梅）</span>｜① <span class="purpose">継続課金の梅・竹の設計（100時間を超えた人へ）</span></td><td class="num">2</td><td class="num">2</td><td>新しく作る</td></tr>
-<tr><td></td><td><b>合計</b></td><td class="num"><b>62</b></td><td class="num"><b>37</b></td><td></td></tr></table>
-<h3>組み直したあとのサイドバーの並び（上から）</h3>
-<p class="small">RUNNING は Mits様が最上段に置いているものでLinchpin ではないので、そのまま最上段に残す。その下に Linchpin の9つ。残りはいまの並びのまま。</p>
+<table><tr><th class="num">順</th><th>グループ名｜段 何をする所か</th><th class="num">組み直したあとの本数</th><th class="num">うち Linchpin</th><th class="num">うち移す数</th><th>作り方</th></tr>
+<tr><td class="num">1</td><td><span class="gname">広告・YouTube</span>｜⑥③ <span class="purpose">Meta広告・YouTube・競合の広告で人を集める</span></td><td class="num">6</td><td class="num">6</td><td class="num">6</td><td>新しく作る</td></tr>
+<tr><td class="num">2</td><td><span class="gname">メルマガ</span>｜③⑥⑨ <span class="purpose">毎日のメルマガの原稿・配信・計測</span></td><td class="num">6</td><td class="num">6</td><td class="num">5</td><td>いまの「メルマガ自動化オール」の名前を直す</td></tr>
+<tr><td class="num">3</td><td><span class="gname">ファネル・オプトイン</span>｜⑤② <span class="purpose">入口の集約・オプトイン・無料の贈り物・登録の計測</span></td><td class="num">6</td><td class="num">6</td><td class="num">3</td><td>いまの「ファネルマーケティング」の名前を直す</td></tr>
+<tr><td class="num">4</td><td><span class="gname">運転台</span>｜②① <span class="purpose">アプリの開発と改善（③ 広める・コンサル事務所）</span></td><td class="num">11</td><td class="num">11</td><td class="num">8</td><td>いまの「司令塔補助」の名前を直す</td></tr>
+<tr><td class="num">5</td><td><span class="gname">AI-Mits</span>｜②① <span class="purpose">RAG で答える AI の中身・Dify・チューニング</span></td><td class="num">16</td><td class="num">12</td><td class="num">3</td><td>いまの「AI-Mits」の名前を直す</td></tr>
+<tr><td class="num">6</td><td><span class="gname">LP・セールスレター</span>｜④⑦ <span class="purpose">フロント商品・BE-02・講座の LP と文章</span></td><td class="num">12</td><td class="num">10</td><td class="num">6</td><td>いまの「LP/デザイン」の名前を直す</td></tr>
+<tr><td class="num">7</td><td><span class="gname">AIグルコン（BE-02）</span>｜⑦ <span class="purpose">高額商品の中身（レジメ・動画・Discord）と講座生への配信</span></td><td class="num">20</td><td class="num">17</td><td class="num">6</td><td>いまの「AIグループ講座関連」の名前を直す</td></tr>
+<tr><td class="num">8</td><td><span class="gname">無料体験セミナー</span>｜⑧ <span class="purpose">毎月の無料体験セミナー → 無料個別相談</span></td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td>新しく作る</td></tr>
+<tr><td class="num">9</td><td><span class="gname">会員設計（松竹梅）</span>｜① <span class="purpose">継続課金の梅・竹の設計（100時間を超えた人へ）</span></td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td>新しく作る</td></tr>
+<tr><td></td><td><b>合計</b></td><td class="num"><b>83</b></td><td class="num"><b>74</b></td><td class="num"><b>43</b></td><td></td></tr></table>
+
+<h3>組み直したあとのサイドバーの並び（上から・合計 363）</h3>
+<p class="small">RUNNING は Mits様が最上段に置いているもので Linchpin ではないので、そのまま最上段に残す。その下に Linchpin の9つ。残りはいまの並びのまま。本数は list_sessions（include_archived:false）＋ FHL 2026 Notes 1本（ファネル）の基準。</p>
 <ol class="order">
 <li><span class="small">1</span><span>RUNNING<span class="small">　変えない</span></span><span class="c">5本（変わらず）</span></li>
 <li><span class="small">2</span><span><span class="gname">広告・YouTube</span>｜⑥③ Meta広告・YouTube・競合の広告で人を集める<span class="small">　新しく作る</span></span><span class="c">6本</span></li>
-<li><span class="small">3</span><span><span class="gname">メルマガ</span>｜③⑥⑨ 毎日のメルマガの原稿・配信・計測<span class="small">　「メルマガ自動化オール」の名前を直す</span></span><span class="c">5本</span></li>
-<li><span class="small">4</span><span><span class="gname">ファネル・オプトイン</span>｜⑤② 入口の集約・オプトイン・無料の贈り物・登録の計測<span class="small">　「ファネルマーケティング」の名前を直す</span></span><span class="c">5本</span></li>
+<li><span class="small">3</span><span><span class="gname">メルマガ</span>｜③⑥⑨ 毎日のメルマガの原稿・配信・計測<span class="small">　「メルマガ自動化オール」の名前を直す</span></span><span class="c">6本</span></li>
+<li><span class="small">4</span><span><span class="gname">ファネル・オプトイン</span>｜⑤② 入口の集約・オプトイン・無料の贈り物・登録の計測<span class="small">　「ファネルマーケティング」の名前を直す</span></span><span class="c">6本</span></li>
 <li><span class="small">5</span><span><span class="gname">運転台</span>｜②① アプリの開発と改善（③ 広める・コンサル事務所）<span class="small">　「司令塔補助」の名前を直す</span></span><span class="c">11本</span></li>
-<li><span class="small">6</span><span><span class="gname">AI-Mits</span>｜②① RAG で答える AI の中身・Dify・チューニング<span class="small">　「AI-Mits」の名前を直す</span></span><span class="c">8本</span></li>
-<li><span class="small">7</span><span><span class="gname">LP・セールスレター</span>｜④⑦ フロント商品・BE-02・講座の LP と文章<span class="small">　「LP/デザイン」の名前を直す</span></span><span class="c">6本</span></li>
-<li><span class="small">8</span><span><span class="gname">AIグルコン（BE-02）</span>｜⑦ 高額商品の中身（レジメ・動画・Discord）と講座生への配信<span class="small">　「AIグループ講座関連」の名前を直す</span></span><span class="c">15本</span></li>
+<li><span class="small">6</span><span><span class="gname">AI-Mits</span>｜②① RAG で答える AI の中身・Dify・チューニング<span class="small">　「AI-Mits」の名前を直す</span></span><span class="c">16本</span></li>
+<li><span class="small">7</span><span><span class="gname">LP・セールスレター</span>｜④⑦ フロント商品・BE-02・講座の LP と文章<span class="small">　「LP/デザイン」の名前を直す</span></span><span class="c">12本</span></li>
+<li><span class="small">8</span><span><span class="gname">AIグルコン（BE-02）</span>｜⑦ 高額商品の中身（レジメ・動画・Discord）と講座生への配信<span class="small">　「AIグループ講座関連」の名前を直す</span></span><span class="c">20本</span></li>
 <li><span class="small">9</span><span><span class="gname">無料体験セミナー</span>｜⑧ 毎月の無料体験セミナー → 無料個別相談<span class="small">　新しく作る</span></span><span class="c">4本</span></li>
 <li><span class="small">10</span><span><span class="gname">会員設計（松竹梅）</span>｜① 継続課金の梅・竹の設計（100時間を超えた人へ）<span class="small">　新しく作る</span></span><span class="c">2本</span></li>
-<li><span class="small">11</span><span>■新司令塔<span class="small">　変えない（運転台3・AI-Mits1・メルマガ1 が Linchpin へ出る）</span></span><span class="c">1本</span></li>
-<li><span class="small">12</span><span>頭整理・タスク整理系<span class="small">　変えない（メルマガ1本が出る）</span></span><span class="c">14本</span></li>
+<li><span class="small">11</span><span>■新司令塔<span class="small">　変えない（Linchpin へ 5本出る）</span></span><span class="c">1本</span></li>
+<li><span class="small">12</span><span>頭整理・タスク整理系<span class="small">　変えない（メルマガ 1本が出る）</span></span><span class="c">16本</span></li>
 <li><span class="small">13</span><span>動画撮影<span class="small">　変えない</span></span><span class="c">4本</span></li>
 <li><span class="small">14</span><span><span class="strike">4セッション＋1</span><span class="small">　中身が全部 Linchpin へ移り、空になる</span></span><span class="c">0本</span></li>
 <li><span class="small">15</span><span>【TW】<span class="small">　変えない</span></span><span class="c">4本</span></li>
 <li><span class="small">16</span><span>歌うま<span class="small">　変えない</span></span><span class="c">2本</span></li>
 <li><span class="small">17</span><span>環境設定<span class="small">　変えない（講座の資料1本が出る）</span></span><span class="c">4本</span></li>
-<li><span class="small">18</span><span>（グループなし）<span class="small">　変えない（Linchpin に選んだ14本が出る）</span></span><span class="c">196本</span></li>
+<li><span class="small">18</span><span>（グループなし）<span class="small">　変えない（Linchpin に選んだ 20本が出る）</span></span><span class="c">244本</span></li>
 </ol>
+<p class="small">合計：5＋6＋6＋6＋11＋16＋12＋20＋4＋2＋1＋16＋4＋0＋4＋2＋4＋244 ＝ <b>363</b>（母数と一致）。</p>
+
 <h3>何を Linchpin に関係すると見たか（選ぶ決まり）</h3>
 <ul>
 <li><b>9段のどれかを作る・売る・集める・測る仕事</b>（grouping.md の「直接」）。運転台・AI-Mits（②①）、ファネル・オプトイン・入口の集約・登録の計測（⑤②）、メルマガ（③⑥⑨）、広告・YouTube（⑥③）、LP・セールスレター（④⑦）、無料体験セミナー（⑧）、BE-02 の配信（⑦⑨）、会員設計（①）。</li>
 <li><b>9段に置いた商品の中身そのもの</b>（grouping.md では「間接」）。BE-02 のレジメ・動画・Discord・資料（⑦ の中身）、メインメルマガの原稿（③ の中身）。</li>
-<li><b>入れないもの</b>：道具・決まり・片付け・経理・私事、Mits様が Linchpin から外したもの（SKOOL の毎日動画・合宿）、単品講座の中身、すごいコンサルの録画と予約、司令塔そのもの。理由は 4. と 2. の末尾の表にある。</li>
-<li>予約タスクの回は今回の範囲の外（触れていない）。</li>
+<li><b>入れないもの</b>：道具（過去セッション探し・ログ整理・バックアップ・読者リスト操作）・決まり・片付け・経理・私事、Mits様が Linchpin から外したもの（SKOOL の毎日動画・合宿）、<b>単品講座</b>（F1-01 Cowork・F1-02 Code入門・F1-07 エージェント・F1-08 二刀流セミナー 等）、お客様個別案件、すごいコンサルの録画と予約、司令塔そのもの。</li>
+<li>予約タスクの回（「【毎日7:30】」等）は今回の範囲の外。</li>
 </ul>
+
 <h3>空になるグループ</h3>
-<p><b>4セッション＋1</b>（6本）だけが、中身が全部 Linchpin のグループへ移って空になる（運転台3・AI-Mits1・ファネル1・メルマガ1）。空になったあとは名前だけが残る。名前を消すかどうかは 4. に置いた。司令塔補助・ファネルマーケティング・メルマガ自動化オール・AI-Mits・AIグループ講座関連・LP/デザイン の6つは、空にはならず「名前を直して」Linchpin のグループになる（中身の Linchpin でない分は 4. に書いた）。</p>
+<p><b>4セッション＋1</b>（6本）だけが、中身が全部 Linchpin のグループへ移って空になる（運転台3・AI-Mits1・ファネル1・メルマガ1）。空になったあとは名前だけが残る。名前を消すかどうかは 4. に置いた。司令塔補助・ファネルマーケティング・メルマガ自動化オール・AI-Mits・AIグループ講座関連・LP/デザイン の6つは、空にはならず「名前を直して」Linchpin のグループになる。</p>
 
 <h2 id="s2">2. 移すセッションの表（選んだ理由つき）</h2>
-<p class="small">62本。並びは Linchpin のグループの順、その中は最後に動いた順。「扱い」の「そのまま」は、いまのグループの名前が変わるだけで中身の移動が無いもの（25本）。日時は日本時間。</p>
+<p class="small">76本（Linchpin 選抜）。並びは Linchpin のグループの順、その中は最後に動いた順。「扱い」の「そのまま」は、いまのグループの名前が変わるだけで中身の移動が無いもの（31本）。日時は日本時間。</p>
 <table><tr><th class="num">#</th><th>セッション名</th><th class="nw">最後に動いた</th><th class="nw">いまのグループ → 新しいグループ</th><th class="nw">扱い</th><th>選んだ理由（段）</th></tr>
+
 <tr class="ghead"><td colspan="6">広告・YouTube｜⑥③ Meta広告・YouTube・競合の広告で人を集める　（6本）</td></tr>
 <tr><td class="num">1</td><td>Meta広告の自動化・最適化サイクル</td><td class="nw">2026-10-04 22:16</td><td class="nw">ファネルマーケティング → <span class="gname">広告・YouTube</span></td><td class="nw">移す</td><td class="small">Meta 広告の出し方の洗い出しと自動化（⑥）</td></tr>
 <tr><td class="num">2</td><td>YouTube チャンネルコンセプト構想</td><td class="nw">2026-09-18 00:46</td><td class="nw">ファネルマーケティング → <span class="gname">広告・YouTube</span></td><td class="nw">移す</td><td class="small">YouTube 発信のコンセプト（③ 人を集める）</td></tr>
@@ -102,127 +167,188 @@ ol.order li .c{text-align:right;color:var(--sub);font-variant-numeric:tabular-nu
 <tr><td class="num">4</td><td>３層スキルでのマーケ案</td><td class="nw">2026-07-23 17:47</td><td class="nw">（グループなし） → <span class="gname">広告・YouTube</span></td><td class="nw">移す</td><td class="small">AIグルコンに8月から30人集めるプラン・個別相談19名のファネル（③⑤ 集客）</td></tr>
 <tr><td class="num">5</td><td>広告ライブラリーリサーチ　CLAUDEで</td><td class="nw">2026-07-06 16:00</td><td class="nw">ファネルマーケティング → <span class="gname">広告・YouTube</span></td><td class="nw">移す</td><td class="small">競合の広告・LP を集める（⑥ Meta広告の材料）</td></tr>
 <tr><td class="num">6</td><td>100日マーケティング</td><td class="nw">2026-06-25 16:23</td><td class="nw">（グループなし） → <span class="gname">広告・YouTube</span></td><td class="nw">移す</td><td class="small">100日間のマーケティングの大プラン（③⑥⑨ 人を集める計画）</td></tr>
-<tr class="ghead"><td colspan="6">メルマガ｜③⑥⑨ 毎日のメルマガの原稿・配信・計測　（5本）</td></tr>
+
+<tr class="ghead"><td colspan="6">メルマガ｜③⑥⑨ 毎日のメルマガの原稿・配信・計測　（6本）</td></tr>
 <tr><td class="num">7</td><td>メール配信・計測・自動化</td><td class="nw">2026-09-30 23:29</td><td class="nw">■新司令塔 → <span class="gname">メルマガ</span></td><td class="nw">移す</td><td class="small">メルマガの配信・計測・自動化の続き（③⑥⑨）</td></tr>
-<tr><td class="num">8</td><td>メール配信と計測と自動化</td><td class="nw">2026-09-14 16:33</td><td class="nw">4セッション＋1 → <span class="gname">メルマガ</span></td><td class="nw">移す</td><td class="small">メルマガの3スタンド配信と計測（③⑥⑨）</td></tr>
+<tr><td class="num">8</td><td>メール配信と計測と自動化</td><td class="nw">2026-09-14 17:33</td><td class="nw">4セッション＋1 → <span class="gname">メルマガ</span></td><td class="nw">移す</td><td class="small">メルマガの3スタンド配信と計測（③⑥⑨）</td></tr>
 <tr><td class="num">9</td><td>3AI-錬磨</td><td class="nw">2026-09-03 17:41</td><td class="nw">メルマガ自動化オール → <span class="gname">メルマガ</span></td><td class="nw">そのまま</td><td class="small">メインメルマガの原稿を複数の AI で磨く（③⑥⑨ メルマガの中身）</td></tr>
-<tr><td class="num">10</td><td>パンとサーカス メルマガ執筆</td><td class="nw">2026-08-04 15:41</td><td class="nw">頭整理・タスク整理系 → <span class="gname">メルマガ</span></td><td class="nw">移す</td><td class="small">メインメルマガの執筆（③⑥⑨）</td></tr>
-<tr><td class="num">11</td><td>メルマガ自動化</td><td class="nw">2026-06-07 14:25</td><td class="nw">（グループなし） → <span class="gname">メルマガ</span></td><td class="nw">移す</td><td class="small">mainmail-loop でメインメルマガを作る（③⑥⑨ メルマガ）</td></tr>
-<tr class="ghead"><td colspan="6">ファネル・オプトイン｜⑤② 入口の集約・オプトイン・無料の贈り物・登録の計測　（5本）</td></tr>
-<tr><td class="num">12</td><td>UTAGE 入口の集約（トールゲート式）</td><td class="nw">2026-10-04 17:16</td><td class="nw">ファネルマーケティング → <span class="gname">ファネル・オプトイン</span></td><td class="nw">そのまま</td><td class="small">UTAGE の入口の集約・登録経路の整理（②③ 登録の計測）</td></tr>
-<tr><td class="num">13</td><td>wasa_ファネルメイク</td><td class="nw">2026-09-20 20:30</td><td class="nw">ファネルマーケティング → <span class="gname">ファネル・オプトイン</span></td><td class="nw">そのまま</td><td class="small">フロント・ワンタイムオファー・継続の組み立て（①②④ この Linchpin の設計そのもの）</td></tr>
-<tr><td class="num">14</td><td>_4セッション</td><td class="nw">2026-09-14 17:30</td><td class="nw">4セッション＋1 → <span class="gname">ファネル・オプトイン</span></td><td class="nw">移す</td><td class="small">4つのセッションのデータを統合して分析する設計（③〜⑨ の計測）</td></tr>
-<tr><td class="num">15</td><td>AIサポートマニュアルwithメニュー表</td><td class="nw">2026-07-17 16:27</td><td class="nw">（グループなし） → <span class="gname">ファネル・オプトイン</span></td><td class="nw">移す</td><td class="small">士業向けマニュアル PDF・DL ページ・ステップ・登録フォーム（② 無料の贈り物）</td></tr>
-<tr><td class="num">16</td><td>使用量コスパ・タイパ</td><td class="nw">2026-06-07 18:24</td><td class="nw">AIグループ講座関連 → <span class="gname">ファネル・オプトイン</span></td><td class="nw">移す</td><td class="small">後半が「AIエージェントレポート」のメアド登録・LP・PDF（② 無料の贈り物の1つ）</td></tr>
+<tr><td class="num">10</td><td>パンとサーカス メルマガ執筆</td><td class="nw">2026-08-04 15:41</td><td class="nw">頭整理・タスク整理系 → <span class="gname">メルマガ</span></td><td class="nw">移す</td><td class="small">メインメルマガの執筆(③⑥⑨)</td></tr>
+<tr><td class="num">11</td><td>パラレル仕事</td><td class="nw">2026-05-24</td><td class="nw">（グループなし） → <span class="gname">メルマガ</span></td><td class="nw">移す</td><td class="small">無料体験セミナーLPへ誘うメルマガ（③⑥⑨・⑨ 追伸で ⑧ へ誘う）</td></tr>
+<tr><td class="num">12</td><td>メルマガ自動化</td><td class="nw">2026-06-07 14:25</td><td class="nw">（グループなし） → <span class="gname">メルマガ</span></td><td class="nw">移す</td><td class="small">mainmail-loop でメインメルマガを作る（③⑥⑨ メルマガ）</td></tr>
+
+<tr class="ghead"><td colspan="6">ファネル・オプトイン｜⑤② 入口の集約・オプトイン・無料の贈り物・登録の計測　（6本）</td></tr>
+<tr><td class="num">13</td><td>FHL 2026 Notes（このセッション）</td><td class="nw">2026-10-05</td><td class="nw">ファネルマーケティング → <span class="gname">ファネル・オプトイン</span></td><td class="nw">そのまま</td><td class="small">このサイドバー再編（Linchpin のファネル設計）そのもの。grouping.md では「直接」（⑤② 入口の集約）</td></tr>
+<tr><td class="num">14</td><td>UTAGE 入口の集約（トールゲート式）</td><td class="nw">2026-10-04 17:16</td><td class="nw">ファネルマーケティング → <span class="gname">ファネル・オプトイン</span></td><td class="nw">そのまま</td><td class="small">UTAGE の入口の集約・登録経路の整理（②③ 登録の計測）</td></tr>
+<tr><td class="num">15</td><td>wasa_ファネルメイク</td><td class="nw">2026-09-20 20:30</td><td class="nw">ファネルマーケティング → <span class="gname">ファネル・オプトイン</span></td><td class="nw">そのまま</td><td class="small">フロント・ワンタイムオファー・継続の組み立て（①②④ この Linchpin の設計そのもの）</td></tr>
+<tr><td class="num">16</td><td>_4セッション</td><td class="nw">2026-09-14 17:30</td><td class="nw">4セッション＋1 → <span class="gname">ファネル・オプトイン</span></td><td class="nw">移す</td><td class="small">4つのセッションのデータを統合して分析する設計（③〜⑨ の計測）</td></tr>
+<tr><td class="num">17</td><td>AIサポートマニュアルwithメニュー表</td><td class="nw">2026-07-17 16:27</td><td class="nw">（グループなし） → <span class="gname">ファネル・オプトイン</span></td><td class="nw">移す</td><td class="small">士業向けマニュアル PDF・DL ページ・ステップ・登録フォーム（② 無料の贈り物）</td></tr>
+<tr><td class="num">18</td><td>使用量コスパ・タイパ</td><td class="nw">2026-06-07 18:24</td><td class="nw">AIグループ講座関連 → <span class="gname">ファネル・オプトイン</span></td><td class="nw">移す</td><td class="small">後半が「AIエージェントレポート」のメアド登録・LP・PDF（② 無料の贈り物の1つ）</td></tr>
+
 <tr class="ghead"><td colspan="6">運転台｜②① アプリの開発と改善（③ 広める・コンサル事務所）　（11本）</td></tr>
-<tr><td class="num">17</td><td>運転台改善</td><td class="nw">2026-10-04 21:59</td><td class="nw">■新司令塔 → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台の改善・freee と月次の突き合わせ・遠藤さんへの案内（②）</td></tr>
-<tr><td class="num">18</td><td>_OEM提供考察</td><td class="nw">2026-10-04 17:32</td><td class="nw">司令塔補助 → <span class="gname">運転台</span></td><td class="nw">そのまま</td><td class="small">コンサル事務所に運転台を渡す道。「AI-Mits利用者が増えること 第一義」（③）</td></tr>
-<tr><td class="num">19</td><td>_OEM提供考察-2</td><td class="nw">2026-09-26 12:12</td><td class="nw">司令塔補助 → <span class="gname">運転台</span></td><td class="nw">そのまま</td><td class="small">コンサル事務所に運転台を渡す道（③ コンサル事務所 → 顧問先）</td></tr>
-<tr><td class="num">20</td><td>運転台マーケ</td><td class="nw">2026-09-26 07:48</td><td class="nw">■新司令塔 → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台の数字を定時に取りに行く設定（② の計測）</td></tr>
-<tr><td class="num">21</td><td>ダッシュボードの新規構築</td><td class="nw">2026-09-25 20:42</td><td class="nw">司令塔補助 → <span class="gname">運転台</span></td><td class="nw">そのまま</td><td class="small">運転台の計器盤の新規構築（②）</td></tr>
-<tr><td class="num">22</td><td>「戦略の決定」が押しても画面が変わらない件を直す</td><td class="nw">2026-09-25 19:05</td><td class="nw">（グループなし） → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台の不具合の修正（②）</td></tr>
-<tr><td class="num">23</td><td>伽藍とバザールの実現</td><td class="nw">2026-09-25 18:33</td><td class="nw">■新司令塔 → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台を広める考え方（③ 紹介・仲間）</td></tr>
-<tr><td class="num">24</td><td>untendai-seiri</td><td class="nw">2026-09-14 16:43</td><td class="nw">4セッション＋1 → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台の開発そのもの（②）</td></tr>
-<tr><td class="num">25</td><td>untendai-marketing</td><td class="nw">2026-09-14 16:34</td><td class="nw">4セッション＋1 → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台のマーケティングの画面（メールの計測を載せる）（② のアプリの計測）</td></tr>
-<tr><td class="num">26</td><td>経営管理アプリ拡散</td><td class="nw">2026-09-14 16:33</td><td class="nw">4セッション＋1 → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台を広める仲間募集（③ 紹介・仲間）</td></tr>
-<tr><td class="num">27</td><td>デスクトップアプリ開発の学習プログラム</td><td class="nw">2026-08-29 15:58</td><td class="nw">（グループなし） → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台を作るための Claude Code の学び方と運転台の .claude の直し（② のアプリを作る仕事）</td></tr>
-<tr class="ghead"><td colspan="6">AI-Mits｜②① RAG で答える AI の中身・Dify・チューニング　（8本）</td></tr>
-<tr><td class="num">28</td><td>AI-Mits-チューニング</td><td class="nw">2026-09-25 18:47</td><td class="nw">■新司令塔 → <span class="gname">AI-Mits</span></td><td class="nw">移す</td><td class="small">運転台の中の AI-Mits の返答を直す（②①）</td></tr>
-<tr><td class="num">29</td><td>AI-Mits_ABテスト_2026012</td><td class="nw">2026-09-14 17:41</td><td class="nw">4セッション＋1 → <span class="gname">AI-Mits</span></td><td class="nw">移す</td><td class="small">AI-Mits の返答の AB テストと Dify のログ（② の中身）</td></tr>
-<tr><td class="num">30</td><td>AI実装先生RAG</td><td class="nw">2026-08-28 02:18</td><td class="nw">AI-Mits → <span class="gname">AI-Mits</span></td><td class="nw">そのまま</td><td class="small">AI実装先生RAG（② AI 3つ）</td></tr>
-<tr><td class="num">31</td><td>AI先生RAG</td><td class="nw">2026-08-27 17:22</td><td class="nw">AI-Mits → <span class="gname">AI-Mits</span></td><td class="nw">そのまま</td><td class="small">運転台に載せる前の AI先生RAG（② AI 3つ）</td></tr>
-<tr><td class="num">32</td><td>AI-Mits for AI</td><td class="nw">2026-07-17 17:20</td><td class="nw">AI-Mits → <span class="gname">AI-Mits</span></td><td class="nw">そのまま</td><td class="small">AI-Mits v3 と同じ仕組みで AI の操作を聞けるボット（② AI 3つの1つ）</td></tr>
-<tr><td class="num">33</td><td>CORPUS2SKILLとアップデート_5/2</td><td class="nw">2026-06-21 18:02</td><td class="nw">AI-Mits → <span class="gname">AI-Mits</span></td><td class="nw">そのまま</td><td class="small">AI-Mits を入口にしてメアド登録まで行く設計と中身の更新（②）</td></tr>
-<tr><td class="num">34</td><td>AI-MITS フロント実装</td><td class="nw">2026-06-21 15:21</td><td class="nw">AI-Mits → <span class="gname">AI-Mits</span></td><td class="nw">そのまま</td><td class="small">AI-MITS の画面（マーケティング・インターフェース）の実装（②）</td></tr>
-<tr><td class="num">35</td><td>AI-MITS フロント実装2</td><td class="nw">2026-06-05 11:41</td><td class="nw">AI-Mits → <span class="gname">AI-Mits</span></td><td class="nw">そのまま</td><td class="small">AI-MITS の画面の実装（② 無料の贈り物の AI 3つ）</td></tr>
-<tr class="ghead"><td colspan="6">LP・セールスレター｜④⑦ フロント商品・BE-02・講座の LP と文章　（6本）</td></tr>
-<tr><td class="num">36</td><td>Utage LP 文章修正</td><td class="nw">2026-08-14 14:08</td><td class="nw">（グループなし） → <span class="gname">LP・セールスレター</span></td><td class="nw">移す</td><td class="small">UTAGE の LP の文章修正（⑦）</td></tr>
-<tr><td class="num">37</td><td>ver1のLP　2SyY</td><td class="nw">2026-07-23 17:49</td><td class="nw">LP/デザイン → <span class="gname">LP・セールスレター</span></td><td class="nw">そのまま</td><td class="small">AIグルコン LP ver1 の作り直し（⑦）</td></tr>
-<tr><td class="num">38</td><td>0531_デザイン整理</td><td class="nw">2026-06-14 20:47</td><td class="nw">LP/デザイン → <span class="gname">LP・セールスレター</span></td><td class="nw">そのまま</td><td class="small">LP のデザインの完成形を決める（④⑦ の LP のデザイン）</td></tr>
-<tr><td class="num">39</td><td>20260529_LP丁寧ファイナル修正</td><td class="nw">2026-06-06 18:26</td><td class="nw">LP/デザイン → <span class="gname">LP・セールスレター</span></td><td class="nw">そのまま</td><td class="small">グルコンの販売ページの修正（⑦）</td></tr>
-<tr><td class="num">40</td><td>0515_レターテンプレからのステップ整理まで</td><td class="nw">2026-06-01 23:39</td><td class="nw">（グループなし） → <span class="gname">LP・セールスレター</span></td><td class="nw">移す</td><td class="small">2ヶ月グループコンサルの LP・決済・サンクスの流れ（⑦ の LP と ⑨ のステップ）</td></tr>
-<tr><td class="num">41</td><td>20260528_AIエージェントグルコンレター</td><td class="nw">2026-06-01 21:26</td><td class="nw">（グループなし） → <span class="gname">LP・セールスレター</span></td><td class="nw">移す</td><td class="small">BE-02 AIグルコンのセールスレター（⑦ 高額商品の LP）</td></tr>
-<tr class="ghead"><td colspan="6">AIグルコン（BE-02）｜⑦ 高額商品の中身（レジメ・動画・Discord）と講座生への配信　（15本）</td></tr>
-<tr><td class="num">42</td><td>BE02AIグルコン講座レター共通版</td><td class="nw">2026-09-29 19:53</td><td class="nw">ファネルマーケティング → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">移す</td><td class="small">配信の復旧・日程（7〜8月）と BE-02 の LP の修正（9月）（⑦）</td></tr>
-<tr><td class="num">43</td><td>BE-02 Scheduler 引き継ぎ確認</td><td class="nw">2026-09-21 21:36</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">グルコンの日程のカレンダーと日程メール（⑦ の配信）</td></tr>
-<tr><td class="num">44</td><td>グルコン動画編集はここ</td><td class="nw">2026-09-04 13:27</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">グルコンの動画の編集（⑦ の中身）</td></tr>
-<tr><td class="num">45</td><td>BE02_メール配信系専用</td><td class="nw">2026-09-02 14:02</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">BE-02 の講座生へのステップ・リマインダ（⑦ の配信）</td></tr>
-<tr><td class="num">46</td><td>AI results visibility report</td><td class="nw">2026-08-23 09:10</td><td class="nw">環境設定 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">移す</td><td class="small">講座で使っている公開資料 PDF の追記（⑦ の中身）</td></tr>
-<tr><td class="num">47</td><td>AI時代のエンジニア必須スキル</td><td class="nw">2026-08-21 15:49</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">用語と概念の解説資料。Mits様が AIグループ講座関連に置いていたもの（⑦ の中身）</td></tr>
-<tr><td class="num">48</td><td>utage メール置き換え文字列の調査</td><td class="nw">2026-08-15 12:33</td><td class="nw">（グループなし） → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">移す</td><td class="small">配信メールの置き換え文字の点検（⑦ の配信の時期・2026-08-14）</td></tr>
-<tr><td class="num">49</td><td>Discord 設定</td><td class="nw">2026-08-11 14:53</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">講座生の Discord の設定（⑦ の運営）</td></tr>
-<tr><td class="num">50</td><td>UTAGE is_blocked=true 原因不明バグ 引き継ぎ書（（お客様の名前のため省略） 2例発生）</td><td class="nw">2026-07-26 16:52</td><td class="nw">（グループなし） → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">移す</td><td class="small">BE-02 の講座生へのステップ配信の不具合（⑦ の配信）</td></tr>
-<tr><td class="num">51</td><td>YAML入門：中学生向け解説</td><td class="nw">2026-07-24 17:32</td><td class="nw">（グループなし） → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">移す</td><td class="small">講座の説明資料（grouping.md が F に置いたもの。確度は低い）（⑦ の中身）</td></tr>
-<tr><td class="num">52</td><td>バックアップシステムfor グループ講座</td><td class="nw">2026-07-13 20:43</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">AIグループ講座用の資料・スライド（⑦ の中身）</td></tr>
-<tr><td class="num">53</td><td>AIグループ講座資産の整理</td><td class="nw">2026-07-12 09:50</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">AIグルコンのために作った成果物の整理（⑦ の中身）</td></tr>
-<tr><td class="num">54</td><td>AI Glucon standardization materials</td><td class="nw">2026-07-12 09:47</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">AIグルコンの資料の標準化（⑦ の中身）</td></tr>
-<tr><td class="num">55</td><td>AI Glucon content inventory</td><td class="nw">2026-07-09 19:45</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">AIグルコン・無料体験・資料・メール・動画の整理（⑦ の中身の棚卸し）</td></tr>
-<tr><td class="num">56</td><td>東大の10倍頭がいい新入社員、激サボりです</td><td class="nw">2026-07-04 16:51</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">AIグループ講座の会員サイトに載せる動画の撮影（⑦ の中身）</td></tr>
+<tr><td class="num">19</td><td>運転台改善</td><td class="nw">2026-10-04 21:59</td><td class="nw">■新司令塔 → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台の改善・freee と月次の突き合わせ・遠藤さんへの案内（②）</td></tr>
+<tr><td class="num">20</td><td>_OEM提供考察</td><td class="nw">2026-10-04 17:32</td><td class="nw">司令塔補助 → <span class="gname">運転台</span></td><td class="nw">そのまま</td><td class="small">コンサル事務所に運転台を渡す道（③）</td></tr>
+<tr><td class="num">21</td><td>_OEM提供考察-2</td><td class="nw">2026-09-26 12:12</td><td class="nw">司令塔補助 → <span class="gname">運転台</span></td><td class="nw">そのまま</td><td class="small">コンサル事務所に運転台を渡す道（③ コンサル事務所 → 顧問先）</td></tr>
+<tr><td class="num">22</td><td>運転台マーケ</td><td class="nw">2026-09-26 07:48</td><td class="nw">■新司令塔 → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台の数字を定時に取りに行く設定（② の計測）</td></tr>
+<tr><td class="num">23</td><td>ダッシュボードの新規構築</td><td class="nw">2026-09-25 20:42</td><td class="nw">司令塔補助 → <span class="gname">運転台</span></td><td class="nw">そのまま</td><td class="small">運転台の計器盤の新規構築（②）</td></tr>
+<tr><td class="num">24</td><td>「戦略の決定」が押しても画面が変わらない件を直す</td><td class="nw">2026-09-25 19:05</td><td class="nw">（グループなし） → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台の不具合の修正（②）</td></tr>
+<tr><td class="num">25</td><td>伽藍とバザールの実現</td><td class="nw">2026-09-25 18:33</td><td class="nw">■新司令塔 → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台を広める考え方（③ 紹介・仲間）</td></tr>
+<tr><td class="num">26</td><td>untendai-seiri</td><td class="nw">2026-09-14 16:43</td><td class="nw">4セッション＋1 → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台の開発そのもの（②）</td></tr>
+<tr><td class="num">27</td><td>untendai-marketing</td><td class="nw">2026-09-14 16:34</td><td class="nw">4セッション＋1 → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台のマーケティングの画面（② のアプリの計測）</td></tr>
+<tr><td class="num">28</td><td>経営管理アプリ拡散</td><td class="nw">2026-09-14 16:33</td><td class="nw">4セッション＋1 → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台を広める仲間募集（③ 紹介・仲間）</td></tr>
+<tr><td class="num">29</td><td>デスクトップアプリ開発の学習プログラム</td><td class="nw">2026-08-29 15:58</td><td class="nw">（グループなし） → <span class="gname">運転台</span></td><td class="nw">移す</td><td class="small">運転台を作るための Claude Code の学び方と運転台の .claude の直し（② のアプリを作る仕事）</td></tr>
+
+<tr class="ghead"><td colspan="6">AI-Mits｜②① RAG で答える AI の中身・Dify・チューニング　（12本・Linchpin そのまま 9・移す 3）</td></tr>
+<tr><td class="num">30</td><td>AI-Mits-チューニング</td><td class="nw">2026-09-25 18:47</td><td class="nw">■新司令塔 → <span class="gname">AI-Mits</span></td><td class="nw">移す</td><td class="small">運転台の中の AI-Mits の返答を直す（②①）</td></tr>
+<tr><td class="num">31</td><td>AI-Mits_ABテスト_2026012</td><td class="nw">2026-09-14 17:41</td><td class="nw">4セッション＋1 → <span class="gname">AI-Mits</span></td><td class="nw">移す</td><td class="small">AI-Mits の返答の AB テストと Dify のログ（② の中身）</td></tr>
+<tr><td class="num">32</td><td>Dify advisor UI implementation</td><td class="nw">2026-08-26 11:16</td><td class="nw">（グループなし） → <span class="gname">AI-Mits</span></td><td class="nw">移す</td><td class="small">Dify の advisor UI の実装（② AI-Mits の中身）</td></tr>
+<tr><td class="num">33</td><td>AI実装先生RAG</td><td class="nw">2026-08-28 02:18</td><td class="nw">AI-Mits → <span class="gname">AI-Mits</span></td><td class="nw">そのまま</td><td class="small">AI実装先生RAG（② AI 3つ）</td></tr>
+<tr><td class="num">34</td><td>AI先生RAG</td><td class="nw">2026-08-27 17:22</td><td class="nw">AI-Mits → <span class="gname">AI-Mits</span></td><td class="nw">そのまま</td><td class="small">運転台に載せる前の AI先生RAG（② AI 3つ）</td></tr>
+<tr><td class="num">35</td><td>AI-Mits for AI</td><td class="nw">2026-07-17 17:20</td><td class="nw">AI-Mits → <span class="gname">AI-Mits</span></td><td class="nw">そのまま</td><td class="small">AI-Mits v3 と同じ仕組みで AI の操作を聞けるボット（② AI 3つの1つ）</td></tr>
+<tr><td class="num">36</td><td>CORPUS2SKILLとアップデート_5/2</td><td class="nw">2026-06-21 18:02</td><td class="nw">AI-Mits → <span class="gname">AI-Mits</span></td><td class="nw">そのまま</td><td class="small">AI-Mits を入口にしてメアド登録まで行く設計と中身の更新（②）</td></tr>
+<tr><td class="num">37</td><td>AI-MITS フロント実装</td><td class="nw">2026-06-21 15:21</td><td class="nw">AI-Mits → <span class="gname">AI-Mits</span></td><td class="nw">そのまま</td><td class="small">AI-MITS の画面（マーケティング・インターフェース）の実装（②）</td></tr>
+<tr><td class="num">38</td><td>AI-MITS フロント実装2</td><td class="nw">2026-06-05 11:41</td><td class="nw">AI-Mits → <span class="gname">AI-Mits</span></td><td class="nw">そのまま</td><td class="small">AI-MITS の画面の実装（② 無料の贈り物の AI 3つ）</td></tr>
+<tr><td class="num">39</td><td>コンサル回答ナレッジ_改修_100超え</td><td class="nw">2026-05-08 23:40</td><td class="nw">AI-Mits → <span class="gname">AI-Mits</span></td><td class="nw">そのまま</td><td class="small">コンサル回答ナレッジDBの改修（② AI-Mits の中身）</td></tr>
+<tr><td class="num">40</td><td>AI-Mits用　トランスクリプト取り込み</td><td class="nw">2026-04-13 20:48</td><td class="nw">AI-Mits → <span class="gname">AI-Mits</span></td><td class="nw">そのまま</td><td class="small">AI-Mits のデータ取り込み（② の中身）</td></tr>
+<tr><td class="num">41</td><td>AI-MITS改修作戦</td><td class="nw">2026-04-13 20:18</td><td class="nw">AI-Mits → <span class="gname">AI-Mits</span></td><td class="nw">そのまま</td><td class="small">AI-Mits の改修（② の中身）</td></tr>
+
+<tr class="ghead"><td colspan="6">LP・セールスレター｜④⑦ フロント商品・BE-02・講座の LP と文章　（10本）</td></tr>
+<tr><td class="num">42</td><td>Utage LP 文章修正</td><td class="nw">2026-08-14 14:08</td><td class="nw">（グループなし） → <span class="gname">LP・セールスレター</span></td><td class="nw">移す</td><td class="small">UTAGE の LP の文章修正（⑦）</td></tr>
+<tr><td class="num">43</td><td>ver1のLP　2SyY</td><td class="nw">2026-07-23 17:49</td><td class="nw">LP/デザイン → <span class="gname">LP・セールスレター</span></td><td class="nw">そのまま</td><td class="small">AIグルコン LP ver1 の作り直し（⑦）</td></tr>
+<tr><td class="num">44</td><td>0531_デザイン整理</td><td class="nw">2026-06-14 20:47</td><td class="nw">LP/デザイン → <span class="gname">LP・セールスレター</span></td><td class="nw">そのまま</td><td class="small">LP のデザインの完成形を決める（④⑦ の LP のデザイン）</td></tr>
+<tr><td class="num">45</td><td>20260529_LP丁寧ファイナル修正</td><td class="nw">2026-06-06 18:26</td><td class="nw">LP/デザイン → <span class="gname">LP・セールスレター</span></td><td class="nw">そのまま</td><td class="small">グルコンの販売ページの修正（⑦）</td></tr>
+<tr><td class="num">46</td><td>0515_レターテンプレからのステップ整理まで</td><td class="nw">2026-06-01 23:39</td><td class="nw">（グループなし） → <span class="gname">LP・セールスレター</span></td><td class="nw">移す</td><td class="small">2ヶ月グループコンサルの LP・決済・サンクスの流れ（⑦ の LP と ⑨ のステップ）</td></tr>
+<tr><td class="num">47</td><td>20260528_AIエージェントグルコンレター</td><td class="nw">2026-06-01 21:26</td><td class="nw">（グループなし） → <span class="gname">LP・セールスレター</span></td><td class="nw">移す</td><td class="small">BE-02 AIグルコンのセールスレター（⑦ 高額商品の LP）</td></tr>
+<tr><td class="num">48</td><td>LP creation from brief</td><td class="nw">2026-05-27 18:16</td><td class="nw">LP/デザイン → <span class="gname">LP・セールスレター</span></td><td class="nw">そのまま</td><td class="small">LP の新規作成（brief から）（④⑦ の LP）</td></tr>
+<tr><td class="num">49</td><td>Update letter with latest building skills</td><td class="nw">2026-05-18 00:48</td><td class="nw">（グループなし） → <span class="gname">LP・セールスレター</span></td><td class="nw">移す</td><td class="small">AIグループ講座 Building Skills を反映したレター改訂（⑦ のレター）</td></tr>
+<tr><td class="num">50</td><td>Complete lp_v5.html verification and testing</td><td class="nw">2026-05-17 19:19</td><td class="nw">（グループなし） → <span class="gname">LP・セールスレター</span></td><td class="nw">移す</td><td class="small">AIグルコン LP ver5 の検証と修正（⑦ の LP）</td></tr>
+<tr><td class="num">51</td><td>サインナップレター構成_4/22</td><td class="nw">2026-04-24 19:16</td><td class="nw">（グループなし） → <span class="gname">LP・セールスレター</span></td><td class="nw">移す</td><td class="small">サインアップ（オプトイン → フロント）レターの構成（④⑦）</td></tr>
+
+<tr class="ghead"><td colspan="6">AIグルコン（BE-02）｜⑦ 高額商品の中身（レジメ・動画・Discord）と講座生への配信　（17本・Linchpin そのまま 11・移す 6）</td></tr>
+<tr><td class="num">52</td><td>BE02AIグルコン講座レター共通版</td><td class="nw">2026-09-29 19:53</td><td class="nw">ファネルマーケティング → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">移す</td><td class="small">配信の復旧・日程（7〜8月）と BE-02 の LP の修正（9月）（⑦）</td></tr>
+<tr><td class="num">53</td><td>BE-02 Scheduler 引き継ぎ確認</td><td class="nw">2026-09-21 21:36</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">グルコンの日程のカレンダーと日程メール（⑦ の配信）</td></tr>
+<tr><td class="num">54</td><td>グルコン動画編集はここ</td><td class="nw">2026-09-04 13:27</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">グルコンの動画の編集（⑦ の中身）</td></tr>
+<tr><td class="num">55</td><td>BE02_メール配信系専用</td><td class="nw">2026-09-02 14:02</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">BE-02 の講座生へのステップ・リマインダ（⑦ の配信）</td></tr>
+<tr><td class="num">56</td><td>8/11 録画の映像確認</td><td class="nw">2026-08-30 21:56</td><td class="nw">（グループなし） → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">移す</td><td class="small">BE-02 の8/11クラスの録画の映像確認（⑦ の中身）</td></tr>
+<tr><td class="num">57</td><td>AI results visibility report</td><td class="nw">2026-08-23 09:10</td><td class="nw">環境設定 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">移す</td><td class="small">講座で使っている公開資料 PDF の追記（⑦ の中身）</td></tr>
+<tr><td class="num">58</td><td>AI時代のエンジニア必須スキル</td><td class="nw">2026-08-21 15:49</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">用語と概念の解説資料（⑦ の中身）</td></tr>
+<tr><td class="num">59</td><td>utage メール置き換え文字列の調査</td><td class="nw">2026-08-15 12:33</td><td class="nw">（グループなし） → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">移す</td><td class="small">配信メールの置き換え文字の点検（⑦ の配信の時期・2026-08-14）</td></tr>
+<tr><td class="num">60</td><td>Discord 設定</td><td class="nw">2026-08-11 14:53</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">講座生の Discord の設定（⑦ の運営）</td></tr>
+<tr><td class="num">61</td><td>UTAGE is_blocked=true 原因不明バグ 引き継ぎ書（（お客様の名前のため省略） 2例発生）</td><td class="nw">2026-07-26 16:52</td><td class="nw">（グループなし） → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">移す</td><td class="small">BE-02 の講座生へのステップ配信の不具合（⑦ の配信）</td></tr>
+<tr><td class="num">62</td><td>YAML入門：中学生向け解説</td><td class="nw">2026-07-24 17:32</td><td class="nw">（グループなし） → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">移す</td><td class="small">講座の説明資料（grouping.md が F に置いたもの）（⑦ の中身）</td></tr>
+<tr><td class="num">63</td><td>バックアップシステムfor グループ講座</td><td class="nw">2026-07-13 20:43</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">AIグループ講座用の資料・スライド（⑦ の中身）</td></tr>
+<tr><td class="num">64</td><td>AIグループ講座資産の整理</td><td class="nw">2026-07-12 09:50</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">AIグルコンのために作った成果物の整理（⑦ の中身）</td></tr>
+<tr><td class="num">65</td><td>AI Glucon standardization materials</td><td class="nw">2026-07-12 09:47</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">AIグルコンの資料の標準化（⑦ の中身）</td></tr>
+<tr><td class="num">66</td><td>AI Glucon content inventory</td><td class="nw">2026-07-09 19:45</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">AIグルコン・無料体験・資料・メール・動画の整理（⑦ の中身の棚卸し）</td></tr>
+<tr><td class="num">67</td><td>東大の10倍頭がいい新入社員、激サボりです</td><td class="nw">2026-07-04 16:51</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">AIグループ講座の会員サイトに載せる動画の撮影（⑦ の中身）</td></tr>
+<tr><td class="num">68</td><td>英語学習時間に習って目安</td><td class="nw">2026-05-28 15:47</td><td class="nw">AIグループ講座関連 → <span class="gname">AIグルコン（BE-02）</span></td><td class="nw">そのまま</td><td class="small">2ヶ月講座のレターの素材（grouping.md が直接⑦ に置いている）</td></tr>
+
 <tr class="ghead"><td colspan="6">無料体験セミナー｜⑧ 毎月の無料体験セミナー → 無料個別相談　（4本）</td></tr>
-<tr><td class="num">57</td><td>LP用Design.mdと二刀流セミナー実装</td><td class="nw">2026-08-09 00:56</td><td class="nw">（グループなし） → <span class="gname">無料体験セミナー</span></td><td class="nw">移す</td><td class="small">二刀流セミナーの申込（Zoom・5,000円・バックエンドは AI の事業）の実装（⑧）</td></tr>
-<tr><td class="num">58</td><td>★無料体験セミナー</td><td class="nw">2026-07-17 16:54</td><td class="nw">AIグループ講座関連 → <span class="gname">無料体験セミナー</span></td><td class="nw">移す</td><td class="small">無料体験セミナー B-02 の中身（⑧）</td></tr>
-<tr><td class="num">59</td><td>★Seminar LP video A production</td><td class="nw">2026-06-21 16:13</td><td class="nw">AIグループ講座関連 → <span class="gname">無料体験セミナー</span></td><td class="nw">移す</td><td class="small">セミナー LP 用の動画 A（⑧ の案内）</td></tr>
-<tr><td class="num">60</td><td>無料体験セミナー構築専用</td><td class="nw">2026-06-06 18:26</td><td class="nw">AIグループ講座関連 → <span class="gname">無料体験セミナー</span></td><td class="nw">移す</td><td class="small">無料体験セミナーの専用セッション（⑧）</td></tr>
+<tr><td class="num">69</td><td>★無料体験セミナー</td><td class="nw">2026-07-17 16:54</td><td class="nw">AIグループ講座関連 → <span class="gname">無料体験セミナー</span></td><td class="nw">移す</td><td class="small">無料体験セミナー B-02 の中身（⑧）</td></tr>
+<tr><td class="num">70</td><td>★Seminar LP video A production</td><td class="nw">2026-06-21 16:13</td><td class="nw">AIグループ講座関連 → <span class="gname">無料体験セミナー</span></td><td class="nw">移す</td><td class="small">セミナー LP 用の動画 A（⑧ の案内）</td></tr>
+<tr><td class="num">71</td><td>無料体験セミナー構築専用</td><td class="nw">2026-06-06 18:26</td><td class="nw">AIグループ講座関連 → <span class="gname">無料体験セミナー</span></td><td class="nw">移す</td><td class="small">無料体験セミナーの専用セッション（⑧）</td></tr>
+<tr><td class="num">72</td><td>無料体験セミナー</td><td class="nw">2026-05-22 21:48</td><td class="nw">（グループなし） → <span class="gname">無料体験セミナー</span></td><td class="nw">移す</td><td class="small">⑧ そのもの</td></tr>
+
 <tr class="ghead"><td colspan="6">会員設計（松竹梅）｜① 継続課金の梅・竹の設計（100時間を超えた人へ）　（2本）</td></tr>
-<tr><td class="num">61</td><td>AI会員リサーチと設計　追記　LP改訂</td><td class="nw">2026-09-08 20:21</td><td class="nw">AIグループ講座関連 → <span class="gname">会員設計（松竹梅）</span></td><td class="nw">移す</td><td class="small">AIグループ講座に付随する会員設計（松竹梅）と LP への受講生の声（① の設計）</td></tr>
-<tr><td class="num">62</td><td>AI講座シラバス</td><td class="nw">2026-09-04 18:03</td><td class="nw">AIグループ講座関連 → <span class="gname">会員設計（松竹梅）</span></td><td class="nw">移す</td><td class="small">「100時間」を超えた人へのサービス体系（① 梅・竹の設計）</td></tr>
+<tr><td class="num">73</td><td>AI会員リサーチと設計　追記　LP改訂</td><td class="nw">2026-09-08 20:21</td><td class="nw">AIグループ講座関連 → <span class="gname">会員設計（松竹梅）</span></td><td class="nw">移す</td><td class="small">AIグループ講座に付随する会員設計（松竹梅）と LP への受講生の声（① の設計）</td></tr>
+<tr><td class="num">74</td><td>AI講座シラバス</td><td class="nw">2026-09-04 18:03</td><td class="nw">AIグループ講座関連 → <span class="gname">会員設計（松竹梅）</span></td><td class="nw">移す</td><td class="small">「100時間」を超えた人へのサービス体系（① 梅・竹の設計）</td></tr>
 </table>
-<p><b>表の行数：62本</b>（移す 37本＋そのまま 25本）。理由の無い行：0本。</p>
+<p><b>表の行数：74本</b>（移す 43本＋そのまま 31本）。理由の無い行：0本。単品講座：0本。#73（Create seminar, landing page, and backend）・#74（Build seminar LP and backend system）：0本（下の「選ばなかった」の表に置いた）。</p>
+
 <h3>Linchpin に近いが選ばなかったセッション（いまの場所に残る）</h3>
 <table><tr><th>セッション名</th><th class="nw">最後に動いた</th><th class="nw">いまのグループ</th><th>選ばなかった理由</th></tr>
 <tr><td>司令塔</td><td class="nw">2026-09-26 07:27</td><td class="nw">■新司令塔</td><td class="small">部署に仕事を振る場所。Linchpin の数字（登録数・配信の計測）も扱うが、9段の部品ではない</td></tr>
 <tr><td>ニュースレター配送代行サービスの価値</td><td class="nw">2026-09-22 14:35</td><td class="nw">（グループなし）</td><td class="small">ニュースレター配送代行サービスの価値（誰のサービスかは発話に無い）。9段に無い</td></tr>
-<tr><td>新サービスのディスカッション</td><td class="nw">2026-09-21 14:10</td><td class="nw">（グループなし）</td><td class="small">（お客様の名前のため省略）（クライアント）の新サービス。Mits様の9段ではない</td></tr>
+<tr><td>Zoom YouTube概要把握</td><td class="nw">2026-09-22 19:55</td><td class="nw">AI-Mits</td><td class="small">Zoom と YouTube の概要把握。AI-Mits 本体の中身ではないが、AI-Mits グループに Mits様が置いているのでそのまま中に残す（Linchpin でない）</td></tr>
+<tr><td>新サービスのディスカッション</td><td class="nw">2026-09-21 14:10</td><td class="nw">（グループなし）</td><td class="small">（お客様の名前のため省略）（お客様）の新サービス。Mits様の9段ではない</td></tr>
 <tr><td>UTAGE移設発注書</td><td class="nw">2026-09-09 19:43</td><td class="nw">（グループなし）</td><td class="small">dmikz の UTAGE 143本の移設。別のアカウントの片付けで、9段の部品ではない</td></tr>
 <tr><td>マーケティングメッセージ作成スキル</td><td class="nw">2026-09-01 13:06</td><td class="nw">（グループなし）</td><td class="small">マーケティングの言葉を作るスキル（道具）。9段のどれかを作る・売る・集める仕事ではない</td></tr>
+<tr><td>Devils-advocate agents セッション</td><td class="nw">2026-08-29 19:00</td><td class="nw">AIグループ講座関連</td><td class="small">AI エージェントの検収役の整備（道具）。9段の部品ではない。AIグループ講座関連 の中にそのまま残る</td></tr>
+<tr><td>Zoom録画のYouTube自動アップ 事故調査と復旧</td><td class="nw">2026-08-27 13:21</td><td class="nw">AIグループ講座関連</td><td class="small">Zoom → YouTube の自動連携の修復（道具）。9段の部品ではない</td></tr>
+<tr><td>AI-MITS Difyv2/v3</td><td class="nw">2026-08-26 18:02</td><td class="nw">AI-Mits</td><td class="small">セッションID 4e7b09fd。Mits様の発話は1件（「CLIにセッション記録がある、というからインポートした、それはどこにあるAI-MITS Difyv2/v3」）で、中身は CLI のセッション記録の照合（道具）。grouping.md では無関係。grouping2.md の「直接②」は同じ名前の別セッション（276bcfd5・2026-05・サイドバーに無い）の判定。AI-Mits グループに Mits様が置いているのでそのまま中に残す</td></tr>
+<tr><td>2ヶ月コンサル LP v1 新デザイン v7</td><td class="nw">2026-08-13 17:26</td><td class="nw">（グループなし）</td><td class="small">セッションID 3e595d37。中身は過去のセッションを探す回で、LP を作る発話は0件（Mits様の発話3件は「扱ったセッションを探して／新規ウインドウで開いて」）。grouping.md も「無関係・中身は過去のセッション探し」。道具（9段の部品ではない）</td></tr>
+<tr><td>LP用Design.mdと二刀流セミナー実装</td><td class="nw">2026-08-09 00:56</td><td class="nw">（グループなし）</td><td class="small">F1-08 AI時代の二刀流セミナー（単品講座・参加費5,000円・コース k0ewB7oZSFlv）の実装。Mits様の発話（1bb1f87d・2026-05-17 17:46）と LP の「参加費 5,000円」から ⑧ ではない。単品講座</td></tr>
 <tr><td>読んできて</td><td class="nw">2026-08-09 12:40</td><td class="nw">（グループなし）</td><td class="small">UTAGE のシナリオの読者数の確認が1件だけ。何のための確認かが発話に無い</td></tr>
 <tr><td>すごいコンサル予約・移行</td><td class="nw">2026-07-24 17:32</td><td class="nw">（グループなし）</td><td class="small">すごいコンサル（有料コンサル）の予約の統合。⑧ の無料個別相談の予約ではない</td></tr>
+<tr><td>Mits株式会社 → Mitsプライベート に移動＋全参照更新</td><td class="nw">2026-07-11 15:31</td><td class="nw">AI-Mits</td><td class="small">AI-Mits を Mits様の個人側に動かした大掃除（片付け）。9段の部品ではない</td></tr>
 <tr><td>AI経営計画</td><td class="nw">2026-06-25 11:45</td><td class="nw">（グループなし）</td><td class="small">AI経営計画のリアル合宿の企画（⑧ の候補だったが、Mits様が合宿を却下「要らないって この案件忘れろ」）</td></tr>
-<tr><td>個別_スキルレッスン</td><td class="nw">2026-06-24 11:07</td><td class="nw">（グループなし）</td><td class="small">単品講座（F1-07 AIエージェント講座）の新レッスン。9段に単品講座は無い（Mits様の発言では単品講座は「部品作りのプロセスだった」）</td></tr>
-<tr><td>★毎日動画シナリオ3</td><td class="nw">2026-06-11 19:02</td><td class="nw">動画撮影</td><td class="small">同上（SKOOL）</td></tr>
-<tr><td>毎日動画シナリオ2</td><td class="nw">2026-06-09 20:50</td><td class="nw">動画撮影</td><td class="small">同上（SKOOL）</td></tr>
-<tr><td>SKOOLアップ	撮り終えレレポ</td><td class="nw">2026-06-06 22:02</td><td class="nw">動画撮影</td><td class="small">同上（SKOOL）</td></tr>
+<tr><td>個別_スキルレッスン</td><td class="nw">2026-06-24 11:07</td><td class="nw">（グループなし）</td><td class="small">単品講座（F1-07 AIエージェント講座）の新レッスン。9段に単品講座は無い</td></tr>
+<tr><td>UUID lookup</td><td class="nw">2026-06-21 16:41</td><td class="nw">AI-Mits</td><td class="small">AI-Mits の資料の片付け（UUID の照合）。9段の部品ではない</td></tr>
+<tr><td>★毎日動画シナリオ3</td><td class="nw">2026-06-11 19:02</td><td class="nw">動画撮影</td><td class="small">SKOOL の毎日動画。Mits様が Linchpin から外した</td></tr>
+<tr><td>毎日動画シナリオ2</td><td class="nw">2026-06-09 20:50</td><td class="nw">動画撮影</td><td class="small">同上</td></tr>
+<tr><td>CODEX in VS Code</td><td class="nw">2026-06-07 10:45</td><td class="nw">AIグループ講座関連</td><td class="small">CODEX の試用（道具）。9段の部品ではない</td></tr>
 <tr><td>労働集約型サービスLP</td><td class="nw">2026-06-06 18:26</td><td class="nw">LP/デザイン</td><td class="small">どの商品の LP かが発話に無く、中身の半分は保存（code-saver）の不具合。LP/デザインの中にそのまま残る</td></tr>
-<tr><td>毎日動画シナリオ</td><td class="nw">2026-06-06 18:23</td><td class="nw">動画撮影</td><td class="small">SKOOL 向けの毎日動画。Mits様が「SKOOLは実体として稼働していないので すべてから削除して」と Linchpin から外した</td></tr>
+<tr><td>SKOOLアップ	撮り終えレレポ</td><td class="nw">2026-06-06 22:02</td><td class="nw">動画撮影</td><td class="small">SKOOL 向け。Mits様が Linchpin から外した</td></tr>
+<tr><td>毎日動画シナリオ</td><td class="nw">2026-06-06 18:23</td><td class="nw">動画撮影</td><td class="small">SKOOL 向け。Mits様が「SKOOLは実体として稼働していないので すべてから削除して」と Linchpin から外した</td></tr>
 <tr><td>戦略100タスク・アプリ</td><td class="nw">2026-06-01 23:09</td><td class="nw">頭整理・タスク整理系</td><td class="small">やることの一覧（無料セミナー LP の仕事も載っている）。仕事の管理であって部品ではない</td></tr>
+<tr><td>Claude Code 入門　デザイン改修</td><td class="nw">2026-05-28 08:54</td><td class="nw">LP/デザイン</td><td class="small">F1-02 Claude Code入門（単品講座）のデザイン改修。単品講座は9段に無い</td></tr>
+<tr><td>UTAGEチェック項目</td><td class="nw">2026-05-30 00:27</td><td class="nw">（グループなし）</td><td class="small">UTAGE の日常運用のチェック項目。9段の部品ではない</td></tr>
+<tr><td>バックアップ最新最適化</td><td class="nw">2026-05-22</td><td class="nw">（グループなし）</td><td class="small">前半は F1-08 二刀流セミナーLP の修正（単品講座）、後半は git の自動バックアップ（道具）</td></tr>
+<tr><td>Create seminar, landing page, and backend</td><td class="nw">2026-05-13 16:09</td><td class="nw">（グループなし）</td><td class="small">セッションID 9c9977c4。#74 の続き。下書きの中身（消費者の暴力・ダイヤモンドマトリックス・4C）は外した #67（F1-08 AI時代の二刀流セミナー・有料）と同じ有料セミナー。⑧ 無料体験セミナーではない</td></tr>
+<tr><td>Build seminar LP and backend system</td><td class="nw">2026-05-12 13:31</td><td class="nw">（グループなし）</td><td class="small">セッションID 07e7b252。中身は「F2-01 nomad経営戦略セミナー」の設計（有料・α¥2,980／β¥9,800／γ¥29,800、バックエンドは個別コンサル or 構築支援 ¥148,000〜¥498,000）。⑧ 無料体験セミナーではない</td></tr>
+<tr><td>（お客様の名前のため省略）式無料セミナー</td><td class="nw">2026-05-20 17:25</td><td class="nw">（グループなし）</td><td class="small">お客様（（お客様の名前のため省略））向けのセミナー作りの支援。Mits様の9段の部品ではない</td></tr>
+<tr><td>LP修正</td><td class="nw">2026-05-20 12:47</td><td class="nw">（グループなし）</td><td class="small">どの LP の修正かが名前に無い。確定できないものは移さない</td></tr>
+<tr><td>Fix event form date selection radio buttons</td><td class="nw">2026-05-18</td><td class="nw">（グループなし）</td><td class="small">F1-08 AI時代の二刀流セミナーの申込フォームの続き。単品講座</td></tr>
+<tr><td>Organize sales letter output directories</td><td class="nw">2026-05-16 19:03</td><td class="nw">（グループなし）</td><td class="small">セールスレターのフォルダの片付け。9段の部品ではない</td></tr>
+<tr><td>Dify 　ログnotion整理</td><td class="nw">2026-05-16 15:15</td><td class="nw">（グループなし）</td><td class="small">Dify のログを Notion に整理する片付け作業。9段の部品ではない</td></tr>
+<tr><td>Claude Cowork講座レター改修_4/23</td><td class="nw">2026-04-23 22:01</td><td class="nw">（グループなし）</td><td class="small">F1-01 Claude Cowork（単品講座）のレター改修。単品講座は9段に無い</td></tr>
+<tr><td>会員サイトの再構成 (fork2)</td><td class="nw">2026-04-23 19:12</td><td class="nw">（グループなし）</td><td class="small">UTAGE 会員サイト（The Library）全体の棚の再構成。9段の特定の部品に紐付かない</td></tr>
+<tr><td>Claude Cowork講座フォローシナリオ</td><td class="nw">2026-04-22 15:51</td><td class="nw">（グループなし）</td><td class="small">同上（F1-01 の受講後フォロー）</td></tr>
+<tr><td>会員サイトの再構成 (fork)</td><td class="nw">2026-04-20 10:40</td><td class="nw">（グループなし）</td><td class="small">同上（fork）</td></tr>
+<tr><td>会員サイトの再構成_4/22</td><td class="nw">2026-04-20 01:49</td><td class="nw">（グループなし）</td><td class="small">同上（元）</td></tr>
+<tr><td>UTAGE読者リストDL・マージ・LINE登録URL抽出</td><td class="nw">2026-04-10 18:16</td><td class="nw">（グループなし）</td><td class="small">UTAGE 読者リストの道具作業。9段の部品ではない</td></tr>
 </table>
-<h2 id="s3">3. 変えないグループの一覧（名前・並び・中身はいまのまま）</h2>
-<p class="small">「いま」は 2026-10-05 22時台にサイドバーのグループ一覧を読み直したもの（読むだけ）。14グループの本数は 21:26 の一覧と同じで、並びだけ ファネルマーケティング が3番目から2番目に上がっている（Mits様の移動）。表の並びはその順。</p>
-<table><tr><th>いまのグループ</th><th class="num">いまの本数</th><th class="num">Linchpin へ出る本数</th><th class="num">残る本数</th><th>扱い</th></tr>
-<tr><td class="nw">RUNNING</td><td class="num">5</td><td class="num">0</td><td class="num">5</td><td class="small">変えない（出入り無し）</td></tr>
-<tr><td class="nw">■新司令塔</td><td class="num">6</td><td class="num">5</td><td class="num">1</td><td class="small">変えない。出るのは Linchpin に選んだ 5本だけで、残る 1本には触れない</td></tr>
-<tr><td class="nw">ファネルマーケティング</td><td class="num">6</td><td class="num">4</td><td class="num">2</td><td class="small">名前を「ファネル・オプトイン｜⑤② 入口の集約・オプトイン・無料の贈り物・登録の計測」に直して Linchpin のグループにする。Linchpin のセッション 2本はそのまま残る</td></tr>
-<tr><td class="nw">司令塔補助</td><td class="num">3</td><td class="num">0</td><td class="num">3</td><td class="small">名前を「運転台｜②① アプリの開発と改善（③ 広める・コンサル事務所）」に直して Linchpin のグループにする。Linchpin のセッション 3本はそのまま残る</td></tr>
-<tr><td class="nw">頭整理・タスク整理系</td><td class="num">15</td><td class="num">1</td><td class="num">14</td><td class="small">変えない。出るのは Linchpin に選んだ 1本だけで、残る 14本には触れない</td></tr>
-<tr><td class="nw">動画撮影</td><td class="num">4</td><td class="num">0</td><td class="num">4</td><td class="small">変えない（出入り無し）</td></tr>
-<tr><td class="nw">4セッション＋1</td><td class="num">6</td><td class="num">6</td><td class="num">0</td><td class="small">中身が全部出て空になる（名前だけ残る）</td></tr>
-<tr><td class="nw">メルマガ自動化オール</td><td class="num">1</td><td class="num">0</td><td class="num">1</td><td class="small">名前を「メルマガ｜③⑥⑨ 毎日のメルマガの原稿・配信・計測」に直して Linchpin のグループにする。Linchpin のセッション 1本はそのまま残る</td></tr>
-<tr><td class="nw">AI-Mits</td><td class="num">10</td><td class="num">0</td><td class="num">10</td><td class="small">名前を「AI-Mits｜②① RAG で答える AI の中身・Dify・チューニング」に直して Linchpin のグループにする。Linchpin のセッション 6本はそのまま残る。Linchpin でないセッション 4本もそのまま中に残る（4. に書いた）</td></tr>
-<tr><td class="nw">AIグループ講座関連</td><td class="num">19</td><td class="num">6</td><td class="num">13</td><td class="small">名前を「AIグルコン（BE-02）｜⑦ 高額商品の中身（レジメ・動画・Discord）と講座生への配信」に直して Linchpin のグループにする。Linchpin のセッション 10本はそのまま残る。Linchpin でないセッション 3本もそのまま中に残る（4. に書いた）</td></tr>
-<tr><td class="nw">LP/デザイン</td><td class="num">4</td><td class="num">0</td><td class="num">4</td><td class="small">名前を「LP・セールスレター｜④⑦ フロント商品・BE-02・講座の LP と文章」に直して Linchpin のグループにする。Linchpin のセッション 3本はそのまま残る。Linchpin でないセッション 1本もそのまま中に残る（4. に書いた）</td></tr>
-<tr><td class="nw">【TW】</td><td class="num">4</td><td class="num">0</td><td class="num">4</td><td class="small">変えない（出入り無し）</td></tr>
-<tr><td class="nw">歌うま</td><td class="num">2</td><td class="num">0</td><td class="num">2</td><td class="small">変えない（出入り無し）</td></tr>
-<tr><td class="nw">環境設定</td><td class="num">5</td><td class="num">1</td><td class="num">4</td><td class="small">変えない。出るのは Linchpin に選んだ 1本だけで、残る 4本には触れない</td></tr>
-<tr><td class="nw">（グループなし）</td><td class="num">210</td><td class="num">14</td><td class="num">196</td><td class="small">変えない。出るのは Linchpin に選んだ 14本だけで、残る 196本には触れない。残る本数には予約タスクの回を含む（今回の範囲の外）</td></tr>
-<tr><td><b>合計</b></td><td class="num"><b>300</b></td><td class="num"><b>37</b></td><td class="num"><b>263</b></td><td></td></tr></table>
-<p class="small">検算：いまの本数 300 ＝ Linchpin へ移る 37 ＋ 残る 263。残る 263 ＝ 変えないグループに残る分 ＋ 名前を直すグループに残る分（Linchpin のそのまま 25本 ＋ Linchpin でない 8本）。</p>
+
+<h2 id="s3">3. 変えないグループの一覧（名前・並び・中身はいまのまま）＋ 新しく作るグループ</h2>
+<p class="small">「いまの本数」は list_sessions（include_archived:false）＋このセッションを数えた基準。ファネルマーケティングは list_sessions の返り値 6 ＋ FHL 2026 Notes 1 ＝ 7。グループなしは 264。list_groups の本数は使わない。表の並びは今のサイドバーの並び＋新しく作る3グループを末尾。「組み直したあと」＝「残る本数」＋「移す本数」を全グループで検算した（一致）。</p>
+<table><tr><th>いまのグループ</th><th class="num">いまの本数</th><th class="num">Linchpin へ出る本数</th><th class="num">残る本数</th><th class="num">組み直したあと</th><th>扱い</th></tr>
+<tr><td class="nw">RUNNING</td><td class="num">5</td><td class="num">0</td><td class="num">5</td><td class="num">5</td><td class="small">変えない（出入り無し）</td></tr>
+<tr><td class="nw">■新司令塔</td><td class="num">6</td><td class="num">5</td><td class="num">1</td><td class="num">1</td><td class="small">変えない。出るのは Linchpin に選んだ 5本、残る 1本（司令塔）</td></tr>
+<tr><td class="nw">ファネルマーケティング</td><td class="num">7</td><td class="num">4</td><td class="num">3</td><td class="num">6</td><td class="small">名前を「ファネル・オプトイン｜⑤② 入口の集約・オプトイン・無料の贈り物・登録の計測」に直して Linchpin のグループにする。残る 3本（UTAGE 入口・wasa_ファネルメイク・FHL 2026 Notes）はすべて Linchpin そのまま。移す 3本（_4セッション・AIサポートマニュアル・使用量コスパ・タイパ）が加わって計 6本</td></tr>
+<tr><td class="nw">司令塔補助</td><td class="num">3</td><td class="num">0</td><td class="num">3</td><td class="num">11</td><td class="small">名前を「運転台｜②① アプリの開発と改善（③ 広める・コンサル事務所）」に直して Linchpin のグループにする。残る 3本（_OEM提供考察・_OEM提供考察-2・ダッシュボードの新規構築）はすべて Linchpin そのまま。移す 8本が加わって計 11本</td></tr>
+<tr><td class="nw">頭整理・タスク整理系</td><td class="num">17</td><td class="num">1</td><td class="num">16</td><td class="num">16</td><td class="small">変えない。出るのは Linchpin に選んだ 1本（パンとサーカス）、残る 16本には触れない</td></tr>
+<tr><td class="nw">動画撮影</td><td class="num">4</td><td class="num">0</td><td class="num">4</td><td class="num">4</td><td class="small">変えない（出入り無し）</td></tr>
+<tr><td class="nw">4セッション＋1</td><td class="num">6</td><td class="num">6</td><td class="num">0</td><td class="num">0</td><td class="small">中身が全部出て空になる（名前だけ残る）</td></tr>
+<tr><td class="nw">メルマガ自動化オール</td><td class="num">1</td><td class="num">0</td><td class="num">1</td><td class="num">6</td><td class="small">名前を「メルマガ｜③⑥⑨ 毎日のメルマガの原稿・配信・計測」に直して Linchpin のグループにする。残る 1本（3AI-錬磨）は Linchpin そのまま。移す 5本が加わって計 6本</td></tr>
+<tr><td class="nw">AI-Mits</td><td class="num">13</td><td class="num">0</td><td class="num">13</td><td class="num">16</td><td class="small">名前を「AI-Mits｜②① RAG で答える AI の中身・Dify・チューニング」に直して Linchpin のグループにする。残る 13本の内訳：Linchpin そのまま 9本（AI実装先生RAG・AI先生RAG・AI-Mits for AI・CORPUS2SKILL・AI-MITS フロント実装・AI-MITS フロント実装2・コンサル回答ナレッジ_改修・AI-Mits用トランスクリプト取り込み・AI-MITS改修作戦）＋ Linchpin でない 4本（Zoom YouTube概要把握・AI-MITS Difyv2/v3・Mits株式会社→Mitsプライベート・UUID lookup）。移す 3本が加わって計 16本</td></tr>
+<tr><td class="nw">AIグループ講座関連</td><td class="num">20</td><td class="num">6</td><td class="num">14</td><td class="num">20</td><td class="small">名前を「AIグルコン（BE-02）｜⑦ 高額商品の中身（レジメ・動画・Discord）と講座生への配信」に直して Linchpin のグループにする。残る 14本：Linchpin そのまま 11本＋ Linchpin でない 3本（Devils-advocate agents セッション・Zoom録画のYouTube自動アップ・CODEX in VS Code）。移す 6本が加わって計 20本</td></tr>
+<tr><td class="nw">LP/デザイン</td><td class="num">6</td><td class="num">0</td><td class="num">6</td><td class="num">12</td><td class="small">名前を「LP・セールスレター｜④⑦ フロント商品・BE-02・講座の LP と文章」に直して Linchpin のグループにする。残る 6本：Linchpin そのまま 4本（ver1のLP・0531_デザイン整理・20260529_LP・LP creation from brief）＋ Linchpin でない 2本（労働集約型サービスLP・Claude Code 入門 デザイン改修）。移す 6本が加わって計 12本</td></tr>
+<tr><td class="nw">【TW】</td><td class="num">4</td><td class="num">0</td><td class="num">4</td><td class="num">4</td><td class="small">変えない（出入り無し）</td></tr>
+<tr><td class="nw">歌うま</td><td class="num">2</td><td class="num">0</td><td class="num">2</td><td class="num">2</td><td class="small">変えない（出入り無し）</td></tr>
+<tr><td class="nw">環境設定</td><td class="num">5</td><td class="num">1</td><td class="num">4</td><td class="num">4</td><td class="small">変えない。出るのは Linchpin に選んだ 1本（AI results visibility report）、残る 4本には触れない</td></tr>
+<tr><td class="nw">（グループなし）</td><td class="num">264</td><td class="num">20</td><td class="num">244</td><td class="num">244</td><td class="small">変えない。出るのは Linchpin に選んだ 20本、残る 244本には触れない。予約タスクの回（「【毎日7:30】」等）を含む（今回の範囲の外）</td></tr>
+<tr><td class="nw"><b>広告・YouTube</b>（新しく作る）</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">6</td><td class="small">新規作成。6本の移動を受ける（ファネル から 3本・グループなし から 3本）</td></tr>
+<tr><td class="nw"><b>無料体験セミナー</b>（新しく作る）</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">4</td><td class="small">新規作成。4本の移動を受ける（AIグループ講座関連 から 3本・グループなし から 1本）</td></tr>
+<tr><td class="nw"><b>会員設計（松竹梅）</b>（新しく作る）</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">2</td><td class="small">新規作成。2本の移動を受ける（AIグループ講座関連 から 2本）</td></tr>
+<tr><td><b>合計</b></td><td class="num"><b>363</b></td><td class="num"><b>43</b></td><td class="num"><b>320</b></td><td class="num"><b>363</b></td><td></td></tr></table>
+<p class="small">検算：母数 363 ＝ Linchpin へ移る 43 ＋ 残る 320。「組み直したあと」の合計 363 ＝ 母数 363。</p>
+
 <h2 id="s4">4. 決めかねた所（置き場は決めてある。確度が低い理由を書く）</h2>
 <table><tr><th class="nw">所</th><th>置いた所と、確度が低い理由</th></tr>
-<tr><td class="nw">名前を直すグループの中に残る、Linchpin でないセッション</td><td>AI-Mits に 4本（Zoom YouTube概要把握・AI-MITS Difyv2/v3・Mits株式会社 → Mitsプライベート に移動＋全参照更新・UUID lookup）、AIグループ講座関連に 3本（Devils-advocate agents セッション・Zoom録画のYouTube自動アップ 事故調査と復旧・CODEX in VS Code）、LP/デザインに 1本（労働集約型サービスLP）。「それ以外は変えなくて良い」に従って動かしていない。Linchpin の名前の下に Linchpin でないものが残る形になる。</td></tr>
-<tr><td class="nw">空になる「4セッション＋1」の名前</td><td>空のまま名前だけ残す。消すのはグループの削除という別の操作なので、この提案には入れていない。</td></tr>
-<tr><td class="nw">RUNNING の位置</td><td>Mits様が最上段に置いているので、Linchpin の9つより上に残した。Linchpin を最上段にする並びもあるが、RUNNING は変えない側に入れた。</td></tr>
-<tr><td class="nw">運転台を広める3本（経営管理アプリ拡散・伽藍とバザールの実現・_OEM提供考察）</td><td>③ 人を集める の仕事だが、Mits様の呼び方（運転台マーケ・運転台の仲間募集）に合わせて 運転台（②①） に置き、名前の後ろに「③ 広める」と書いた。広告・YouTube（⑥③）に置く形もあった。</td></tr>
-<tr><td class="nw">使用量コスパ・タイパ</td><td>前半は Claude の使用量の話、後半が「AIエージェントレポート」のメアド登録・LP・PDF。後半で ファネル・オプトイン（②）に置いた。</td></tr>
-<tr><td class="nw">YAML入門：中学生向け解説／AI時代のエンジニア必須スキル</td><td>講座の資料かどうかは発話から確かめ切れない。grouping.md が F（BE-02 の資料）に置いたこと・Mits様が AIグループ講座関連に置いていたことで AIグルコン（BE-02）に入れた。</td></tr>
-<tr><td class="nw">0531_デザイン整理</td><td>どの商品の LP かは発話に無い（「デザイン的な完成形はこれ」）。LP のデザインの仕事として LP・セールスレター（④⑦）に置いた。</td></tr>
-<tr><td class="nw">メルマガを「③⑥⑨」と3つの段にまたいで書いたこと</td><td>今のメルマガは ③（ダウンロードページへ）、⑥（1800人への送信）、⑨（追伸で ⑧ へ）の3つの役を持つ（teiansho_v2.md 2.）。1つに絞らず3つ書いた。</td></tr>
-<tr><td class="nw">グループ名の長さ</td><td>「｜」の後ろがサイドバーの幅で切れる可能性がある。前の言葉と段の番号だけで分かるようにしたが、実機の幅は見ていない。</td></tr>
-<tr><td class="nw">対象の外</td><td>アーカイブ済み298本は対象に入れていない。この提案を作っているセッション「FHL 2026 Notes」は一覧ファイルに無い（入れるなら ファネル・オプトイン）。</td></tr>
+<tr><td class="nw">サイドバーの数には入っているが、一覧の取得に出てこない 2本</td><td>list_groups（アーカイブ込みのサイドバー表示本数）は AI-Mits を 14、頭整理 を 18 と返すが、include_archived:false の list_sessions はそれぞれ 13本・17本しか返さない。差の 2本（AI-Mits 1・頭整理 1）はこの提案の数には入れない。理由は推測で書かない。「サイドバーの数には入っているが、一覧の取得に出てこない」とだけ記録する</td></tr>
+<tr><td class="nw">■新司令塔 のアーカイブ済み 2本</td><td>include_archived:true で返る「運転台 freee版」2026-09-25・「司令塔_旧（2026-09-12〜09-14・アーカイブ済み・宛先にしない）」2026-09-14。アーカイブ済みなので母数（未アーカイブ基準）には入れない。中身は Linchpin に近いが、Mits様が宛先にしないと明示されているので触っていない</td></tr>
+<tr><td class="nw">名前を直すグループの中に残る、Linchpin でない 9本</td><td>AI-Mits に 4本（Zoom YouTube概要把握・AI-MITS Difyv2/v3・Mits株式会社→Mitsプライベート・UUID lookup）、AIグループ講座関連に 3本（Devils-advocate agents セッション・Zoom録画のYouTube自動アップ・CODEX in VS Code）、LP/デザインに 2本（労働集約型サービスLP・Claude Code 入門 デザイン改修）。「それ以外は変えなくて良い」に従って動かしていない</td></tr>
+<tr><td class="nw">空になる「4セッション＋1」の名前</td><td>空のまま名前だけ残す。消すのはグループの削除という別の操作なので、この提案には入れていない</td></tr>
+<tr><td class="nw">RUNNING の位置</td><td>Mits様が最上段に置いているので、Linchpin の9つより上に残した</td></tr>
+<tr><td class="nw">運転台を広める3本（経営管理アプリ拡散・伽藍とバザールの実現・_OEM提供考察）</td><td>③ 人を集める の仕事だが、Mits様の呼び方（運転台マーケ・運転台の仲間募集）に合わせて 運転台（②①） に置き、名前の後ろに「③ 広める」と書いた</td></tr>
+<tr><td class="nw">使用量コスパ・タイパ</td><td>前半は Claude の使用量の話、後半が「AIエージェントレポート」のメアド登録・LP・PDF。後半で ファネル・オプトイン（②）に置いた</td></tr>
+<tr><td class="nw">YAML入門：中学生向け解説／AI時代のエンジニア必須スキル／英語学習時間に習って目安</td><td>講座の資料かどうかは発話から確かめ切れない。grouping.md が F（BE-02 の資料）または直接⑦（2ヶ月講座のレターの素材）に置いていること・Mits様が AIグループ講座関連 に置いていたことで AIグルコン（BE-02）に Linchpin そのまま で入れた</td></tr>
+<tr><td class="nw">AI-MITS Difyv2/v3（4e7b09fd）</td><td>第4版では grouping2.md の「直接②」を根拠に Linchpin そのまま に入れたが、grouping2.md が判定していたのは同じ名前の別のセッション（276bcfd5・2026-05・サイドバーに無い）だった。<b>同じ名前のセッションが他にもあるときは、セッションIDで照合する</b>。本セッション（4e7b09fd）の中身は CLI のセッション記録の照合（道具）で、grouping.md では無関係。Linchpin でない として AI-Mits の中にそのまま残す</td></tr>
+<tr><td class="nw">2ヶ月コンサル LP v1 新デザイン v7（3e595d37）</td><td>名前は LP だが、中身は過去のセッションを探す回。Mits様の発話3件はすべて操作指示（「扱ったセッションを探して」「新規ウインドウで開いて」）で、LP を作る発話は0件。<b>セッションの中身は名前では分からない</b>。grouping.md も「無関係・中身は過去のセッション探し」としている</td></tr>
+<tr><td class="nw">0531_デザイン整理</td><td>どの商品の LP かは発話に無い（「デザイン的な完成形はこれ」）。LP のデザインの仕事として LP・セールスレター（④⑦）に置いた</td></tr>
+<tr><td class="nw">サインナップレター構成_4/22</td><td>サインアップレターは「オプトイン → フロント」の一枚通しのレターで、④⑦（LP・セールスレター）に置いた。⑤ のオプトインに置く形もあった</td></tr>
+<tr><td class="nw">Dify advisor UI implementation</td><td>Dify の UI の実装は AI-Mits の表側で、② AI-Mits の中身として置いた。運転台（②① アプリ本体）に置く形もあったが、Mits様の呼び方（AI-Mits／Dify）に合わせた</td></tr>
+<tr><td class="nw">メルマガを「③⑥⑨」と3つの段にまたいで書いたこと</td><td>今のメルマガは ③（ダウンロードページへ）、⑥（1800人への送信）、⑨（追伸で ⑧ へ）の3つの役を持つ（teiansho_v2.md 2.）。1つに絞らず3つ書いた</td></tr>
+<tr><td class="nw">グループ名の長さ</td><td>「｜」の後ろがサイドバーの幅で切れる可能性がある。前の言葉と段の番号だけで分かるようにしたが、実機の幅は見ていない</td></tr>
+<tr><td class="nw">対象の外</td><td>アーカイブ済みの回は対象に入れていない。予約タスクの回（「【毎日7:30】」等・grouping2.md によると 44%）は今回の範囲の外</td></tr>
 </table>
+
 <h2>材料</h2>
 <ul class="small">
-<li>セッション一覧（300本・2026-10-05 21:26）：/Users/nishidamitsuhiro/.claude/projects/-Users-nishidamitsuhiro-My-Drive-claude-nishida/d345821e-d231-48ae-b195-4b365706991c/tool-results/mcp-ccd_session_mgmt-list_sessions-1791203164114.txt</li>
+<li>セッションの全件（list_sessions include_archived:false 362本・2026-10-05）：/Users/nishidamitsuhiro/.claude/projects/-Users-nishidamitsuhiro-My-Drive-claude-nishida/d345821e-d231-48ae-b195-4b365706991c/tool-results/mcp-ccd_session_mgmt-list_sessions-1791205351182.txt</li>
 <li>Linchpin の提案書：同じフォルダの teiansho_v2.md／中身によるグループ分け：grouping.md・grouping2.md</li>
-<li>第1版（全体の再編・2026-10-05 21:46）の控え：/private/tmp/claude-501/-Users-nishidamitsuhiro-My-Drive-claude-nishida/d345821e-d231-48ae-b195-4b365706991c/scratchpad/BA-strategist-max-sidebar/sidebar_saihen_teian_v1_zentai_20261005.html</li>
+<li>第4版（不合格）の控え：/private/tmp/claude-501/-Users-nishidamitsuhiro-My-Drive-claude-nishida/d345821e-d231-48ae-b195-4b365706991c/scratchpad/BA-strategist-max-sidebar/sidebar_saihen_teian_v4_20261005.html</li>
+<li>第3版の控え：同じ scratchpad の sidebar_saihen_teian_v3_20261005.html</li>
+<li>第2版の控え：同じ scratchpad の sidebar_saihen_teian_v2_300hon_20261005.html</li>
+<li>第1版の控え：同じ scratchpad の sidebar_saihen_teian_v1_zentai_20261005.html</li>
 </ul>
 </main></body></html>
