@@ -55,7 +55,7 @@
   td.hosu-v .bar i.ok{ background:var(--green); }
 
   /* カロリー収支・脂肪の燃焼・たんぱく質 */
-  tr.zutsu > th, tr.nensho > th, tr.tanpaku > th{ background:var(--amber-bg); color:var(--amber); }
+  tr.zutsu > th, tr.nensho > th, tr.tanpaku > th, tr.toshitsu > th{ background:var(--amber-bg); color:var(--amber); }
   td.shushi, td.nensho{ vertical-align:top; text-align:left; font-size:var(--f3); line-height:1.5; padding:5px 8px; }
   td.shushi .r, td.nensho .r{ display:flex; justify-content:space-between; }
   td.shushi .r b, td.nensho .r b{ font-weight:700; }
@@ -84,7 +84,7 @@
 
   /* 区切り：からだ／カロリー収支／献立／備考 */
   tr.zutsu > *, tr.gozen > *, tr.biko > *{ border-top:2px solid var(--title); }
-  tr.nensho > *, tr.tanpaku > *{ border-top:1px solid #e2c58f; }
+  tr.nensho > *, tr.tanpaku > *, tr.toshitsu > *{ border-top:1px solid #e2c58f; }
 
   /* 今日の列 */
   td.kyou-col{ background:var(--kyou); }
@@ -274,6 +274,26 @@
       <td class="nensho tanpaku"></td>
       <td class="nensho tanpaku"></td>
     </tr>
+    <tr class="toshitsu">
+      <th class="head">糖質<span>上限／実施</span></th>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+    </tr>
     <tr class="gozen">
       <th class="head meal-head"><span class="h1">午前</span><span class="h2">コーヒー</span></th>
       <td class="meal empty"><span class="chk-note">前のプラン</span></td>
@@ -384,7 +404,7 @@
   const jissoku = {
     "10/4": {kg: 62.2, jikan: "", shibo: 17.4, hosu: 12613, kiso: 1495, katsudo: 656},
     "10/5": {kg: 61.0, jikan: "13:13", shibo: 16.7, hosu: 12052, kiso: 1462, katsudo: 506},
-    "10/6": {kg: 60.6, jikan: "", shibo: 16.4, hosu: 724, kiso: 718, katsudo: 58}
+    "10/6": {kg: 60.6, jikan: "", shibo: 16.4, hosu: 921, kiso: 802, katsudo: 77}
   };
   const mokuhyo = {
     "10/5": 61.5, "10/6": 60.9, "10/7": 60.2, "10/8": 59.6, "10/9": 59.5,
@@ -559,7 +579,7 @@
       }
       const wkg = (K.jissoku[d] || {}).kg != null ? K.jissoku[d].kg : K.mokuhyo[d];
       const needP = wkg != null ? Math.round(1.6 * wkg) : null;
-      S[d] = { planIn, kcal, n, b, deficit, capA, over, fat, planFat, mirai, kyou, mae, p, needP };
+      S[d] = { planIn, kcal, n, b, deficit, capA, over, fat, planFat, mirai, kyou, mae, p, needP, c };
       const fatUsed = fat != null ? fat : (mirai ? 0 : capA / 9);
       if (!mirai && !(kyou && fat == null)) { Fa -= fatUsed / 1000; cumA += fatUsed; }
       const nx = nextDay(d), tgt = K.mokuhyo[nx], act = (K.jissoku[nx] || {}).kg;
@@ -632,6 +652,17 @@
             q += '<div class="r"><span>実施</span><b class="' + cls + '">' + Math.round(x.p) + 'g' + (x.kyou ? ' 途中' : '') + '</b></div>';
           }
           pc.innerHTML = q;
+        }
+        const cc = (Array.from((table.querySelector('tr.toshitsu') || {children: []}).children).slice(1))[col];
+        if (cc) {
+          let s = line('上限', '50g');
+          if (x.mirai) s = '<div class="mirai">' + s + line('実施', '—') + '</div>';
+          else if (x.mae || !x.n) s += line('実施', '—');
+          else {
+            const cls = x.c <= 50 ? 'good' : 'warn';
+            s += '<div class="r"><span>実施</span><b class="' + cls + '">' + Math.round(x.c) + 'g' + (x.kyou ? ' 途中' : '') + '</b></div>';
+          }
+          cc.innerHTML = s;
         }
       });
     });
