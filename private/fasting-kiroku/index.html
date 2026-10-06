@@ -12,7 +12,6 @@
     --line-thin:#c6e2ea;
     --head-bg:#e4f3f6;
     --title:#1b4a5c;
-    --graph-h: 30mm;  /* 5帯（1帯=6mm・63〜58kg） */
     --goal:#a9d3dd;
   }
   html,body{ margin:0; padding:0; background:#fff; color:var(--ink);
@@ -66,27 +65,40 @@
     padding:0 1.5mm;
     white-space:nowrap;
   }
-  tr.hinichi    > *{ height:10mm; }
-  tr.shibou     > *{ height:8mm; }
+  tr.hinichi    > *{ height:12mm; }
+  tr.shibou     > *{ height:10mm; }
   tr.mokuhyo    > *{ height:8mm; }
-  tr.taiju      > *{ height:12mm; }
-  tr.taishibo   > *{ height:9mm; }
-  tr.jikan      > *{ height:9mm; }
-  tr.hosu       > *{ height:9mm; }
-  tr.graph      > *{ height:var(--graph-h); }
-  tr.zutsu      > *{ height:26mm; }
-  td.shushi{ padding:0.6mm 1.2mm; vertical-align:top; font-size:7pt; line-height:1.35; color:var(--ink); }
+  tr.taiju      > *{ height:13mm; }
+  tr.taishibo   > *{ height:8mm; }
+  tr.jikan      > *{ height:8mm; }
+  tr.hosu       > *{ height:11mm; }
+  tr.zutsu      > *{ height:30mm; }
+  td.shushi{ padding:1.2mm 1.8mm; vertical-align:middle; font-size:9pt; line-height:1.5; color:var(--ink); }
   td.shushi .r{ display:flex; justify-content:space-between; }
   td.shushi .r b{ font-weight:700; }
-  td.shushi .big{ font-size:9.5pt; font-weight:700; margin-top:0.4mm; }
+  td.shushi .big{ font-size:15pt; font-weight:700; margin:0.8mm 0 0.6mm; text-align:center; }
   td.shushi .mirai{ color:#9a9a9a; }
   td.shushi .warn{ color:#c03030; }
   td.shushi .good{ color:#1d7a3a; }
-  tr.gozen      > *{ height:7mm; }
-  tr.hirusugi   > *{ height:21mm; }
+  tr.gozen      > *{ height:8mm; }
+  tr.hirusugi   > *{ height:25mm; }
   tr.aruita     > *{ height:16mm; }
-  tr.yugata     > *{ height:16mm; }
-  tr.biko       > *{ height:10mm; }
+  tr.yugata     > *{ height:19mm; }
+  tr.biko       > *{ height:17mm; }
+
+  /* 区切り：からだ／カロリー収支／献立 */
+  tr.zutsu > *, tr.gozen > *, tr.biko > *{ border-top:2pt solid var(--title); }
+  tr.zutsu > th{ background:#fdf1dc; color:#7a4a0a; }
+  tr.gozen > th, tr.hirusugi > th, tr.aruita > th, tr.yugata > th{ background:#e8f4e6; }
+  tr.gozen th .h1, tr.hirusugi th .h1, tr.aruita th .h1, tr.yugata th .h1,
+  tr.gozen th .h2, tr.hirusugi th .h2, tr.aruita th .h2, tr.yugata th .h2{ color:#2d5a2a; }
+  td.taiju-start .v{ display:block; font-size:14pt; line-height:1.05; }
+  td.taiju-start .sa{ display:block; font-size:7.5pt; font-weight:700; margin-top:0.5mm; }
+  td.taiju-start .sa.good{ color:#1d7a3a; } td.taiju-start .sa.warn{ color:#c03030; }
+  td.hosu-v .v{ display:block; line-height:1.1; }
+  td.hosu-v .bar{ display:block; height:1.6mm; margin:1mm 2.5mm 0; background:var(--line-thin); border-radius:0.8mm; overflow:hidden; }
+  td.hosu-v .bar i{ display:block; height:100%; background:#e0a23a; }
+  td.hosu-v .bar i.ok{ background:#1d7a3a; }
 
   /* 食事見出し：2行 */
   th.meal-head{
@@ -107,15 +119,15 @@
   td.meal.empty, td.meal2.empty{ background:#fff; }
   td.meal .chk, td.meal2 .chk, td.meal2 .chk-xs{
     display:flex; align-items:center;
-    font-size:7pt; color:var(--title);
-    margin-bottom:0.3mm;
+    font-size:7.5pt; color:var(--title);
+    margin-bottom:0.6mm;
     line-height:1;
-    min-height:3.2mm;
+    min-height:3.4mm;
   }
   td.meal2 .chk-xs{ font-size:5.5pt; }
   td.meal .chk-note{ font-size:6pt; color:var(--line); }
   td.meal .chk.small, td.meal2 .chk.small{ font-size:5pt; white-space:nowrap; }
-  td.meal .chk.m, td.meal2 .chk.m{ font-size:5.5pt; white-space:nowrap; }
+  td.meal .chk.m, td.meal2 .chk.m{ font-size:5.9pt; white-space:nowrap; }
   td.meal .chk::before, td.meal2 .chk::before, td.meal2 .chk-xs::before{
     content:""; display:inline-block;
     width:3mm; height:3mm;
@@ -167,48 +179,6 @@
     letter-spacing:0;
   }
 
-  th.graph-head{
-    background:var(--head-bg);
-    padding:0;
-    position:relative;
-  }
-  th.graph-head .label{
-    position:absolute; left:0; top:0; bottom:0; width:7mm;
-    display:flex; align-items:center; justify-content:center;
-    writing-mode:vertical-rl; text-orientation:upright;
-    letter-spacing:0.4em; font-size:10.5pt; color:var(--title); font-weight:700;
-  }
-  th.graph-head .kgs{
-    position:absolute; left:7mm; right:0; top:0; bottom:0;
-    background:#fff;
-  }
-  th.graph-head .kgs .kg{
-    position:absolute; right:1.5mm; transform:translateY(-50%);
-    font-size:8pt; color:var(--line); font-weight:400; letter-spacing:0;
-  }
-  th.graph-head .kgs .kg.k1{ top:calc(var(--graph-h) * 1/5); }
-  th.graph-head .kgs .kg.k2{ top:calc(var(--graph-h) * 2/5); }
-  th.graph-head .kgs .kg.k3{ top:calc(var(--graph-h) * 3/5); }
-  th.graph-head .kgs .kg.k4{ top:calc(var(--graph-h) * 4/5); }
-  
-  
-  
-
-  td.graph-cell{
-    position:relative;
-    background:
-      linear-gradient(var(--line),var(--line)) 0 calc(var(--graph-h) * 1/5) / 100% 0.6pt no-repeat,
-      linear-gradient(var(--line),var(--line)) 0 calc(var(--graph-h) * 2/5) / 100% 0.6pt no-repeat,
-      linear-gradient(var(--line),var(--line)) 0 calc(var(--graph-h) * 3/5) / 100% 0.6pt no-repeat,
-      linear-gradient(var(--line),var(--line)) 0 calc(var(--graph-h) * 4/5) / 100% 0.6pt no-repeat,
-      repeating-linear-gradient(
-        to bottom,
-        transparent 0,
-        transparent calc(var(--graph-h) / 25 - 0.3pt),
-        var(--line-thin) calc(var(--graph-h) / 25 - 0.3pt),
-        var(--line-thin) calc(var(--graph-h) / 25)
-      );
-  }
 
   td.scale{ padding:0; }
   td.scale .cells{
@@ -223,75 +193,8 @@
   }
   td.scale .cells span:last-child{ border-right:0; }
 
-  td.biko-cell{ background:#fff; font-size:7.5pt; line-height:1.25; text-align:center; vertical-align:middle; }
+  td.biko-cell{ background:#fff; font-size:8pt; line-height:1.25; text-align:center; vertical-align:middle; }
 
-  /* グラフのドット（JS で描画） */
-  .page{ position:relative; }
-  td.graph-cell{ position:relative; }
-  td.graph-cell .dot{
-    position:absolute;
-    width:2.5mm; height:2.5mm;
-    background:#000;
-    border-radius:50%;
-    transform:translate(-50%,-50%);
-    z-index:4;
-  }
-  td.graph-cell .dot .label{
-    position:absolute; left:2mm; top:-1mm;
-    font-size:7pt; color:#000; font-weight:600;
-    white-space:nowrap;
-  }
-  td.graph-cell .dot-mokuhyo{
-    position:absolute;
-    width:2mm; height:2mm;
-    background:#9a9a9a;
-    border-radius:50%;
-    transform:translate(-50%,-50%);
-    z-index:3;
-  }
-  svg.graph-overlay{
-    position:absolute;
-    pointer-events:none;
-    z-index:2;
-    left:0; top:0;
-  }
-  .legend{
-    position:absolute;
-    bottom:0.3mm; left:12mm;
-    font-size:7.5pt; color:var(--title);
-    z-index:5;
-    background:#fff; padding:0.5mm 2mm;
-  }
-  .legend .lg-mok{
-    display:inline-block;
-    width:2mm; height:2mm;
-    background:#9a9a9a;
-    border-radius:50%;
-    vertical-align:middle;
-    margin-right:0.5mm;
-  }
-  .legend .lg-mok-line{
-    display:inline-block;
-    width:6mm; height:0;
-    border-top:0.4mm dotted #9a9a9a;
-    vertical-align:middle;
-    margin-right:1.5mm;
-  }
-  .legend .lg-jis{
-    display:inline-block;
-    width:2.5mm; height:2.5mm;
-    background:#000;
-    border-radius:50%;
-    vertical-align:middle;
-    margin:0 0.5mm 0 3mm;
-  }
-  .legend .lg-jis-line{
-    display:inline-block;
-    width:6mm; height:0;
-    border-top:0.5mm solid #000;
-    vertical-align:middle;
-    margin-right:1mm;
-  }
 
   /* 押せるチェック */
   td.meal .chk{ cursor:pointer; user-select:none; -webkit-user-select:none; }
@@ -314,7 +217,7 @@
   #tw-table .good{ color:#1d7a3a; font-weight:700; }
   @media print{ .tsukiawase{ page-break-before:always; } }
 
-  td.meal .egg-line{ display:flex; align-items:center; font-size:7pt; color:var(--title); margin-bottom:0.3mm; min-height:3.2mm; line-height:1; }
+  td.meal .egg-line{ display:flex; align-items:center; font-size:7.5pt; color:var(--title); margin-bottom:0.6mm; min-height:3.4mm; line-height:1; }
   td.meal .egg-line .chk.egg{ display:inline-flex; margin:0 0 0 0.7mm; min-height:0; }
   td.meal .egg-line .chk.egg::before{ margin-right:0; }
 
@@ -378,24 +281,12 @@
       <td class="jikan">：</td><td class="jikan">：</td><td class="jikan">：</td>
     </tr>
     <tr class="hosu">
-      <th class="head">歩数（8,000歩）</th>
+      <th class="head">歩　数<br><span style="font-size:7.5pt;font-weight:500">目標 8,000歩</span></th>
       <td class="blank"></td><td class="blank"></td><td class="blank"></td>
       <td class="blank"></td><td class="blank"></td><td class="blank"></td>
       <td class="blank"></td><td class="blank"></td><td class="blank"></td>
     </tr>
 
-    <tr class="graph">
-      <th class="head graph-head">
-        <div class="label">体重グラフ</div>
-        <div class="kgs">
-          <div class="kg k1">62 kg</div><div class="kg k2">61 kg</div><div class="kg k3">60 kg</div>
-          <div class="kg k4">59 kg</div>
-        </div>
-      </th>
-      <td class="graph-cell"></td><td class="graph-cell"></td><td class="graph-cell"></td>
-      <td class="graph-cell"></td><td class="graph-cell"></td><td class="graph-cell"></td>
-      <td class="graph-cell"></td><td class="graph-cell"></td><td class="graph-cell"></td>
-    </tr>
 
     <tr class="zutsu">
       <th class="head">カロリー<br>収支</th>
@@ -525,24 +416,12 @@
       <td class="jikan">：</td><td class="jikan">：</td><td class="jikan">：</td>
     </tr>
     <tr class="hosu">
-      <th class="head">歩数（8,000歩）</th>
+      <th class="head">歩　数<br><span style="font-size:7.5pt;font-weight:500">目標 8,000歩</span></th>
       <td class="blank"></td><td class="blank"></td><td class="blank"></td>
       <td class="blank"></td><td class="blank"></td><td class="blank"></td>
       <td class="blank"></td><td class="blank"></td><td class="blank"></td>
     </tr>
 
-    <tr class="graph">
-      <th class="head graph-head">
-        <div class="label">体重グラフ</div>
-        <div class="kgs">
-          <div class="kg k1">62 kg</div><div class="kg k2">61 kg</div><div class="kg k3">60 kg</div>
-          <div class="kg k4">59 kg</div>
-        </div>
-      </th>
-      <td class="graph-cell"></td><td class="graph-cell"></td><td class="graph-cell"></td>
-      <td class="graph-cell"></td><td class="graph-cell"></td><td class="graph-cell"></td>
-      <td class="graph-cell"></td><td class="graph-cell"></td><td class="graph-cell"></td>
-    </tr>
 
     <tr class="zutsu">
       <th class="head">カロリー<br>収支</th>
@@ -620,13 +499,13 @@
 
 <div class="tsukiawase" id="tsukiawase">
   <h2>毎日の付き合わせ（計画と実績）</h2>
-  <div class="tw-note">献立のチェックを押すと、その日の摂取が計算されます（チェックはこのブラウザに保存）。消費は Apple Watch の基礎代謝＋活動（毎朝 9:05〜15:05 の自動実行で入る）。脂肪の減り＝不足のうち上限（脂肪1kgあたり1日69.3kcal）までの分。上限を超えた不足は筋肉などから出る分として赤で出します。</div>
+  <div class="tw-note">献立のチェックを押すと、その日の摂取が計算されます（チェックはこのブラウザに保存）。消費は Apple Watch の基礎代謝＋活動（7〜23時の毎時5分の自動実行で入る）。脂肪の減り＝不足のうち上限（脂肪1kgあたり1日69.3kcal）までの分。上限を超えた不足は筋肉などから出る分として赤で出します。</div>
   <div class="tw-wrap"><table id="tw-table"></table></div>
 </div>
 
 <script>
 (function(){
-  // ===== 実測・目標の一元データ（ここに1行足すだけで乾燥体重欄・チェック時間欄・グラフが揃う） =====
+  // ===== 実測・目標の一元データ（ここに1行足すだけで乾燥体重欄・チェック時間欄・歩数欄が揃う） =====
   const jissoku = {
     "10/4": {kg: 62.2, jikan: "", shibo: 17.4, hosu: 12613, kiso: 1495, katsudo: 656},
     "10/5": {kg: 61.0, jikan: "13:13", shibo: 16.7, hosu: 12052, kiso: 1462, katsudo: 506},
@@ -639,13 +518,6 @@
     "10/20": 58.4
   };
   window.KIROKU = {jissoku, mokuhyo};
-  // ===== グラフ縦軸の範囲（上端63・下端55）。8帯＝目盛り1/8..7/8 が 62..56 =====
-  const RANGE_TOP = 63.0;
-  const RANGE_BOT = 58.0;
-  const kgToRatio = kg => {
-    const c = Math.max(RANGE_BOT, Math.min(RANGE_TOP, kg));
-    return (RANGE_TOP - c) / (RANGE_TOP - RANGE_BOT);
-  };
 
   document.querySelectorAll('.page').forEach(page => {
     const table = page.querySelector('table');
@@ -669,127 +541,41 @@
     // 各列：乾燥体重・チェック時間・目標体重・グラフドットを描画
     days.forEach((day, col) => {
       if (!day) return;
-      const graphTd = (trs['graph'] || [])[col];
       const taijuTd = (trs['taiju'] || [])[col];
       const jikanTd = (trs['jikan'] || [])[col];
       const goalTd  = (trs['mokuhyo'] || [])[col];
       const shiboTd = (trs['taishibo'] || [])[col];
       const hosuTd  = (trs['hosu'] || [])[col];
 
-      // 目標体重の値を欄とグラフに
+      // 目標体重の値
       const mk = mokuhyo[day];
-      if (mk != null) {
-        if (goalTd) { goalTd.textContent = mk.toFixed(1); }
-        if (graphTd) {
-          const d = document.createElement('div');
-          d.className = 'dot-mokuhyo';
-          d.style.top = (kgToRatio(mk) * 100) + '%';
-          d.style.left = '50%';
-          graphTd.appendChild(d);
-        }
-      }
+      if (mk != null && goalTd) goalTd.textContent = mk.toFixed(1);
 
-      // 実測の値を欄とグラフに
+      // 実測の値
       const jd = jissoku[day];
       if (jd) {
         if (taijuTd && jd.kg != null) {
           taijuTd.className = 'taiju-start';
-          taijuTd.textContent = jd.kg.toFixed(1);
+          let s = '<span class="v">' + jd.kg.toFixed(1) + '</span>';
+          if (mk != null) { const df = jd.kg - mk; s += '<span class="sa ' + (df <= 0 ? 'good' : 'warn') + '">目標比 ' + (df > 0 ? '+' : df < 0 ? '−' : '±') + Math.abs(df).toFixed(1) + '</span>'; }
+          taijuTd.innerHTML = s;
         }
         if (shiboTd && jd.shibo != null) {
           shiboTd.className = 'atai';
           shiboTd.textContent = jd.shibo.toFixed(1);
         }
         if (hosuTd && jd.hosu != null) {
-          hosuTd.className = 'atai';
-          hosuTd.textContent = jd.hosu.toLocaleString('ja-JP');
+          hosuTd.className = 'atai hosu-v';
+          const pct = Math.min(100, jd.hosu / 80);
+          hosuTd.innerHTML = '<span class="v">' + jd.hosu.toLocaleString('ja-JP') + '</span><span class="bar"><i class="' + (jd.hosu >= 8000 ? 'ok' : '') + '" style="width:' + pct + '%"></i></span>';
         }
         if (jikanTd && jd.jikan) {
           jikanTd.className = 'jikan filled';
           jikanTd.textContent = jd.jikan;
         }
-        if (graphTd && jd.kg != null) {
-          const dot = document.createElement('div');
-          dot.className = 'dot';
-          dot.style.top = (kgToRatio(jd.kg) * 100) + '%';
-          dot.style.left = '50%';
-          const lbl = document.createElement('span');
-          lbl.className = 'label';
-          lbl.textContent = jd.kg.toFixed(1);
-          dot.appendChild(lbl);
-          graphTd.appendChild(dot);
-        }
       }
     });
 
-    // 折れ線をSVGでページ内に重ねて描く（ページ内で閉じる）
-    const graphCells = trs['graph'] || [];
-    const pageRect = page.getBoundingClientRect();
-    // 列中央のxと該当kgからyを計算するヘルパ
-    const colXY = (col, kg) => {
-      const td = graphCells[col];
-      if (!td) return null;
-      const r = td.getBoundingClientRect();
-      return {
-        x: r.left + r.width/2 - pageRect.left,
-        y: r.top + kgToRatio(kg) * r.height - pageRect.top
-      };
-    };
-    // 目標の点列
-    const mokPts = [];
-    days.forEach((day, col) => {
-      let kg = null;
-      if (day === '10/4' && jissoku[day]) kg = jissoku[day].kg;  // 起点だけ実測の62.2
-      else if (mokuhyo[day] != null) kg = mokuhyo[day];
-      if (kg == null) return;
-      const p = colXY(col, kg);
-      if (p) mokPts.push(p);
-    });
-    // 実測の点列
-    const jisPts = [];
-    days.forEach((day, col) => {
-      const jd = jissoku[day];
-      if (!jd || jd.kg == null) return;
-      const p = colXY(col, jd.kg);
-      if (p) jisPts.push(p);
-    });
-
-    const needSvg = (mokPts.length >= 2) || (jisPts.length >= 2);
-    if (needSvg) {
-      const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
-      svg.setAttribute('class','graph-overlay');
-      svg.setAttribute('width', pageRect.width);
-      svg.setAttribute('height', pageRect.height);
-      svg.setAttribute('viewBox', `0 0 ${pageRect.width} ${pageRect.height}`);
-      svg.style.width = pageRect.width + 'px';
-      svg.style.height = pageRect.height + 'px';
-      const mkPath = (pts, stroke, width, dasharray) => {
-        if (pts.length < 2) return;
-        const d = pts.map((p,i) => (i?'L':'M') + p.x + ',' + p.y).join(' ');
-        const path = document.createElementNS('http://www.w3.org/2000/svg','path');
-        path.setAttribute('d', d);
-        path.setAttribute('fill','none');
-        path.setAttribute('stroke',stroke);
-        path.setAttribute('stroke-width',width);
-        path.setAttribute('stroke-linecap','round');
-        path.setAttribute('stroke-linejoin','round');
-        if (dasharray) path.setAttribute('stroke-dasharray',dasharray);
-        svg.appendChild(path);
-      };
-      // 目標：グレーの点線
-      mkPath(mokPts, '#9a9a9a', 1.5, '2.5,1.8');
-      // 実測：黒の実線
-      mkPath(jisPts, '#000', 2.0);
-      page.appendChild(svg);
-    }
-
-    // 凡例
-    const legend = document.createElement('div');
-    legend.className = 'legend';
-    legend.innerHTML =
-      '<span class="lg-mok"></span><span class="lg-mok-line"></span>目標（グレー・点線）' +
-      '<span class="lg-jis"></span><span class="lg-jis-line"></span>乾燥体重（実測・黒・実線）';
-    page.appendChild(legend);
   });
 })();
 </script>
@@ -889,7 +675,7 @@
         if (c > 50) msg.push('<span class="warn">糖質 ' + c.toFixed(0) + 'g（50g超）</span>');
         if (b.suitei && !kyou) msg.push('消費は歩数からの推定（時計を外していた時間あり）');
       } else if (!mirai) {
-        msg.push(kyou ? '今日は途中（チェックを押すと計算が入る）' : (n === 0 ? '献立のチェックなし' : '消費のデータ待ち（翌朝の自動実行で入る）'));
+        msg.push(kyou ? '今日は途中（チェックを押すと計算が入る）' : (n === 0 ? '献立のチェックなし' : '消費のデータ待ち（毎時5分の自動実行で入る）'));
       }
       S[d] = { planIn, kcal, n, b, deficit, capA, over, fat, planFat, mirai, kyou, mae };
       const fatUsed = fat != null ? fat : (mirai ? 0 : capA / 9);
@@ -931,7 +717,7 @@
           h = '<div class="mirai">' + line('摂取 計画', f0(x.planIn)) + line('消費 計画', f0(PLAN_BURN)) +
               '<div class="big">' + sg(PLAN_BURN - x.planIn) + '</div>' + line('脂肪', '−' + f0(x.planFat) + 'g') + '</div>';
         } else if (x.mae) {
-          h = line('摂取', '—') + line('消費', x.b ? f0(x.b.v) : '—') + '<div class="big">上限 −' + f0(x.capA) + '</div>' + line('脂肪', '−' + f0(x.capA / 9) + 'g');
+          h = line('摂取', '—') + line('消費', x.b ? f0(x.b.v) : '—') + '<div class="big">−' + f0(x.capA) + '<span style="font-size:7pt;font-weight:400"> 上限</span></div>' + line('脂肪', '−' + f0(x.capA / 9) + 'g');
         } else {
           h = line('摂取', x.n ? f0(x.kcal) : '—') + line('消費', x.b ? f0(x.b.v) + (x.b.suitei ? '*' : '') : '—');
           if (x.deficit != null) {
