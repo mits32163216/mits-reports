@@ -62,7 +62,6 @@
   td.shushi .r + .r, td.nensho .r + .r{ border-top:1px dotted var(--line); }
   td.shushi .big{ font-size:var(--f5); font-weight:700; line-height:1.3; text-align:center; padding:2px 0;
     border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin:1px 0; }
-  td.shushi .big span{ font-size:var(--f2) !important; }
   td.shushi .big + .r{ border-top:0; }
   .mirai{ color:#a0a0a0; }
 
@@ -627,12 +626,12 @@
           h = '<div class="mirai">' + line('摂取', f0(x.planIn)) + line('消費', f0(PLAN_BURN)) +
               '<div class="big">' + sg(PLAN_BURN - x.planIn) + '</div>' + '</div>';
         } else if (x.mae) {
-          h = line('摂取', '—') + line('消費', x.b ? f0(x.b.v) : '—') + '<div class="big">−' + f0(x.capA) + '<span style="font-size:7pt;font-weight:400"> 上限</span></div>' ;
+          h = line('摂取', '—') + line('消費', x.b ? f0(x.b.v) : '—') + '<div class="big">−' + f0(x.capA) + ' 上限</div>' ;
         } else {
           h = line('摂取', x.n ? f0(x.kcal) : '—') + line('消費', x.b ? f0(x.b.v) + (x.b.suitei ? '*' : '') : '—');
           if (x.deficit != null) {
             const cls = x.kyou ? '' : (x.over > 50 ? 'warn' : 'good');
-            h += '<div class="big ' + cls + '">' + sg(x.deficit) + (x.kyou ? '<span style="font-size:6.5pt;font-weight:400"> 途中</span>' : '') + '</div>';
+            h += '<div class="big ' + cls + '">' + sg(x.deficit) + (x.kyou ? ' 途中' : '') + '</div>';
             h += line('上限', '−' + f0(x.capA));
           } else {
             h += '<div class="big">—</div>' + line('上限', '−' + f0(x.capA));
