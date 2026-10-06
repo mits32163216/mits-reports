@@ -72,30 +72,35 @@
   tr.taishibo   > *{ height:8mm; }
   tr.jikan      > *{ height:8mm; }
   tr.hosu       > *{ height:11mm; }
-  tr.zutsu      > *{ height:22mm; }
-  tr.nensho     > *{ height:13mm; }
-  tr.nensho > th{ background:#fdf1dc; color:#7a4a0a; }
-  td.nensho{ padding:0.8mm 1.8mm; font-size:9pt; line-height:1.55; color:var(--ink); }
+  tr.zutsu      > *{ height:23mm; }
+  tr.nensho     > *{ height:10mm; }
+  tr.tanpaku    > *{ height:10mm; }
+  tr.nensho > th, tr.tanpaku > th{ background:#fdf1dc; color:#7a4a0a; }
+  td.nensho{ padding:0.6mm 1.8mm; vertical-align:top; font-size:8.5pt; line-height:1.4; color:var(--ink); }
+  td.nensho .r + .r{ border-top:0.4pt dotted var(--line); }
   td.nensho .r{ display:flex; justify-content:space-between; }
   td.nensho .r b{ font-weight:700; }
   td.nensho .mirai{ color:#9a9a9a; }
   td.nensho .warn{ color:#c03030; }  td.nensho .good{ color:#1d7a3a; }
-  td.shushi{ padding:1.2mm 1.8mm; vertical-align:middle; font-size:9pt; line-height:1.5; color:var(--ink); }
+  td.shushi{ padding:0.6mm 1.8mm; vertical-align:top; font-size:8.5pt; line-height:1.4; color:var(--ink); }
+  td.shushi .r + .r{ border-top:0.4pt dotted var(--line); }
+  td.shushi .r + .big{ border-top:0.6pt solid var(--line); }
+  td.shushi .big + .r{ border-top:0.6pt solid var(--line); }
   td.shushi .r{ display:flex; justify-content:space-between; }
   td.shushi .r b{ font-weight:700; }
-  td.shushi .big{ font-size:15pt; font-weight:700; margin:0.8mm 0 0.6mm; text-align:center; }
+  td.shushi .big{ font-size:14pt; font-weight:700; line-height:1.25; padding:0.3mm 0; text-align:center; }
   td.shushi .mirai{ color:#9a9a9a; }
   td.shushi .warn{ color:#c03030; }
   td.shushi .good{ color:#1d7a3a; }
-  tr.gozen      > *{ height:8mm; }
-  tr.hirusugi   > *{ height:25mm; }
-  tr.aruita     > *{ height:15mm; }
-  tr.yugata     > *{ height:17mm; }
-  tr.biko       > *{ height:12mm; }
+  tr.gozen      > *{ height:7mm; }
+  tr.hirusugi   > *{ height:22mm; }
+  tr.aruita     > *{ height:13mm; }
+  tr.yugata     > *{ height:14mm; }
+  tr.biko       > *{ height:16mm; }
 
   /* 区切り：からだ／カロリー収支／献立 */
   tr.zutsu > *, tr.gozen > *, tr.biko > *{ border-top:2pt solid var(--title); }
-  tr.nensho > *{ border-top:0.6pt dashed #c9a46a; }
+  tr.nensho > *, tr.tanpaku > *{ border-top:0.6pt solid #e2c58f; }
   tr.zutsu > th{ background:#fdf1dc; color:#7a4a0a; }
   tr.gozen > th, tr.hirusugi > th, tr.aruita > th, tr.yugata > th{ background:#e8f4e6; }
   tr.gozen th .h1, tr.hirusugi th .h1, tr.aruita th .h1, tr.yugata th .h1,
@@ -231,6 +236,35 @@
 
   tr.shibou th .saiyu{ display:block; font-size:6.5pt; color:#c03030; font-weight:700; line-height:1; margin-top:0.3mm; }
   td.goal.shibou{ color:#c03030; font-weight:700; }
+
+  /* ===== 文字の大きさ（5段に揃える） =====
+     f1 6.5pt 献立の品／f2 7.5pt 補足・小見出し／f3 9pt 見出し・欄の中の行／f4 12pt 値／f5 14pt 主役（乾燥体重・収支） */
+  :root{ --f1:6.5pt; --f2:7.5pt; --f3:9pt; --f4:12pt; --f5:14pt; }
+  body{ font-feature-settings:"palt" 0; font-variant-numeric:tabular-nums; }
+  th.head{ font-size:var(--f3); font-weight:700; line-height:1.25; }
+  th.head span, th.meal-head .h2, tr.shibou th .saiyu{ font-size:var(--f2) !important; font-weight:500 !important; }
+  tr.shibou th .saiyu{ font-weight:700 !important; }
+  th.meal-head .h1{ font-size:var(--f3); }
+  td.hinichi .nth{ font-size:var(--f2); }
+  td.hinichi .ymd{ font-size:var(--f4); }
+  td.hinichi .dow{ font-size:var(--f2); }
+  td.hinichi.slash{ font-size:var(--f4); }
+  td.goal, td.atai, td.jikan, td.jikan.filled, td.taiju-start, td.hosu-v .v{ font-size:var(--f4); letter-spacing:0; }
+  td.goal{ font-weight:500; }  td.goal.shibou, td.atai, td.jikan.filled{ font-weight:700; }
+  td.taiju-start .v{ font-size:var(--f5); font-weight:700; }
+  td.taiju-start .sa{ font-size:var(--f2); }
+  td.shushi, td.nensho{ font-size:var(--f3); line-height:1.35; }
+  td.shushi .big{ font-size:var(--f5); }
+  td.shushi .big span{ font-size:var(--f2) !important; }
+  td.biko-cell{ font-size:var(--f2); line-height:1.3; }
+  td.meal, td.meal2{ padding:0.5mm 0.8mm; }
+  td.meal .chk, td.meal2 .chk, td.meal .chk.m, td.meal2 .chk.m, td.meal .chk.small, td.meal .egg-line{
+    font-size:var(--f1); min-height:3mm; margin-bottom:0.5mm; white-space:nowrap; }
+  td.meal .chk::before{ width:2.7mm; height:2.7mm; margin-right:0.7mm; }
+  td.meal .chk-note{ font-size:var(--f2); }
+  td.meal{ font-feature-settings:"palt" 1; }
+  th.meal-head .h1{ font-size:var(--f3) !important; font-weight:700 !important; }
+  .tsukiawase .tw-note{ font-size:var(--f2); }  #tw-table{ font-size:var(--f2); }
 </style>
 </head>
 <body>
@@ -320,6 +354,19 @@
       <td class="nensho"></td>
       <td class="nensho"></td>
       <td class="nensho"></td>
+    </tr>
+
+    <tr class="tanpaku">
+      <th class="head">たんぱく質<br><span style="font-size:7.5pt;font-weight:500">必要／実施</span></th>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
     </tr>
 
     <tr class="gozen">
@@ -470,6 +517,19 @@
       <td class="nensho"></td>
     </tr>
 
+    <tr class="tanpaku">
+      <th class="head">たんぱく質<br><span style="font-size:7.5pt;font-weight:500">必要／実施</span></th>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+    </tr>
+
     <tr class="gozen">
       <th class="head meal-head"><span class="h1">午前</span><span class="h2">コーヒー</span></th>
       <td class="meal"><span class="chk m">コーヒー＋MCT大1</span></td>
@@ -533,7 +593,7 @@
 
 <div class="tsukiawase" id="tsukiawase">
   <h2>毎日の付き合わせ（計画と実績）</h2>
-  <div class="tw-note">献立のチェックを押すと、その日の摂取が計算されます（チェックはこのブラウザに保存）。消費は Apple Watch の基礎代謝＋活動（7〜23時の毎時5分の自動実行で入る）。脂肪の減り＝不足のうち上限（脂肪1kgあたり1日69.3kcal）までの分。上限を超えた不足は筋肉などから出る分として赤で出します。</div>
+  <div class="tw-note">献立のチェックを押すと、その日の摂取が計算されます（チェックはこのブラウザに保存）。消費は Apple Watch の基礎代謝＋活動（7〜23時の毎時5分の自動実行で入る）。脂肪の減り＝不足のうち上限（脂肪1kgあたり1日69.3kcal）までの分。上限を超えた不足は筋肉などから出る分として赤で出します。たんぱく質の必要量は、筋肉を落とさないための目安として体重1kgあたり1.6g（その朝の乾燥体重・まだ測っていない日は目標体重）。</div>
   <div class="tw-wrap"><table id="tw-table"></table></div>
 </div>
 
@@ -705,13 +765,16 @@
         if (over > 50 && !kyou) msg.push('<span class="warn">上限を ' + f0(over) + 'kcal 超え＝筋肉などから出る分。摂取を ' + f0(over) + 'kcal 増やす</span>');
         else if (amari > 50 && !kyou) msg.push('上限まで ' + f0(amari) + 'kcal 余り。歩数で約 ' + f0(amari / 42 * 1000) + '歩 足せば脂肪の減りが上限に届く');
         else if (!kyou) msg.push('<span class="good">上限どおり</span>');
-        if (p < 90 && !kyou) msg.push('たんぱく質 ' + p.toFixed(0) + 'g（目安95g）');
+        { const wk = (K.jissoku[d] || {}).kg != null ? K.jissoku[d].kg : K.mokuhyo[d]; const nd = wk != null ? Math.round(1.6 * wk) : 95;
+          if (p < nd && !kyou) msg.push('たんぱく質 ' + p.toFixed(0) + 'g（必要 ' + nd + 'g）'); }
         if (c > 50) msg.push('<span class="warn">糖質 ' + c.toFixed(0) + 'g（50g超）</span>');
         if (b.suitei && !kyou) msg.push('消費は歩数からの推定（時計を外していた時間あり）');
       } else if (!mirai) {
         msg.push(kyou ? '今日は途中（チェックを押すと計算が入る）' : (n === 0 ? '献立のチェックなし' : '消費のデータ待ち（毎時5分の自動実行で入る）'));
       }
-      S[d] = { planIn, kcal, n, b, deficit, capA, over, fat, planFat, mirai, kyou, mae };
+      const wkg = (K.jissoku[d] || {}).kg != null ? K.jissoku[d].kg : K.mokuhyo[d];
+      const needP = wkg != null ? Math.round(1.6 * wkg) : null;
+      S[d] = { planIn, kcal, n, b, deficit, capA, over, fat, planFat, mirai, kyou, mae, p, needP };
       const fatUsed = fat != null ? fat : (mirai ? 0 : capA / 9);
       if (!mirai && !(kyou && fat == null)) { Fa -= fatUsed / 1000; cumA += fatUsed; }
       const nx = nextDay(d), tgt = K.mokuhyo[nx], act = (K.jissoku[nx] || {}).kg;
@@ -748,7 +811,7 @@
         const line = (a, b2) => '<div class="r"><span>' + a + '</span><b>' + b2 + '</b></div>';
         let h = '';
         if (x.mirai) {
-          h = '<div class="mirai">' + line('摂取 計画', f0(x.planIn)) + line('消費 計画', f0(PLAN_BURN)) +
+          h = '<div class="mirai">' + line('摂取', f0(x.planIn)) + line('消費', f0(PLAN_BURN)) +
               '<div class="big">' + sg(PLAN_BURN - x.planIn) + '</div>' + '</div>';
         } else if (x.mae) {
           h = line('摂取', '—') + line('消費', x.b ? f0(x.b.v) : '—') + '<div class="big">−' + f0(x.capA) + '<span style="font-size:7pt;font-weight:400"> 上限</span></div>' ;
@@ -773,6 +836,17 @@
             g += '<div class="r"><span>実施</span><b class="' + cls + '">−' + f0(x.fat) + 'g' + (x.kyou ? ' 途中' : '') + '</b></div>';
           } else g += line('実施', '—');
           nc.innerHTML = g;
+        }
+        const pc = (Array.from((table.querySelector('tr.tanpaku') || {children: []}).children).slice(1))[col];
+        if (pc) {
+          let q = line('必要', x.needP != null ? x.needP + 'g' : '—');
+          if (x.mirai) q = '<div class="mirai">' + q + line('実施', '—') + '</div>';
+          else if (x.mae || !x.n) q += line('実施', '—');
+          else {
+            const cls = x.kyou ? '' : (x.p >= x.needP ? 'good' : 'warn');
+            q += '<div class="r"><span>実施</span><b class="' + cls + '">' + Math.round(x.p) + 'g' + (x.kyou ? ' 途中' : '') + '</b></div>';
+          }
+          pc.innerHTML = q;
         }
       });
     });
