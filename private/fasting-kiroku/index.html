@@ -106,7 +106,8 @@
   :root{ --fs:13px; }
   @media (max-width:640px){ :root{ --fs:12.5px; } }
   .page *, .tsukiawase *{ font-size:var(--fs) !important; font-weight:400 !important; }
-  td.shushi .big{ border:0; padding:0; margin:0; text-align:left; line-height:1.5; }
+  td.shushi .big{ border:0; padding:0; margin:0; text-align:right; line-height:1.5; }
+  td.shushi .big::before{ content:"収支"; float:left; }
   td.shushi .big + .r{ border-top:1px dotted var(--line); }
   td.shushi .r + .big{ border-top:1px dotted var(--line); }
 </style>
