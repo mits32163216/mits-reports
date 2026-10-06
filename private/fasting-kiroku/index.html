@@ -12,7 +12,7 @@
     --line-thin:#c6e2ea;
     --head-bg:#e4f3f6;
     --title:#1b4a5c;
-    --graph-h: 48mm;  /* 8帯（1帯=6mm） */
+    --graph-h: 30mm;  /* 5帯（1帯=6mm・63〜58kg） */
     --goal:#a9d3dd;
   }
   html,body{ margin:0; padding:0; background:#fff; color:var(--ink);
@@ -74,7 +74,14 @@
   tr.jikan      > *{ height:9mm; }
   tr.hosu       > *{ height:9mm; }
   tr.graph      > *{ height:var(--graph-h); }
-  tr.zutsu      > *{ height:9mm; }
+  tr.zutsu      > *{ height:27mm; }
+  td.shushi{ padding:0.6mm 1.2mm; vertical-align:top; font-size:7pt; line-height:1.35; color:var(--ink); }
+  td.shushi .r{ display:flex; justify-content:space-between; }
+  td.shushi .r b{ font-weight:700; }
+  td.shushi .big{ font-size:9.5pt; font-weight:700; margin-top:0.4mm; }
+  td.shushi .mirai{ color:#9a9a9a; }
+  td.shushi .warn{ color:#c03030; }
+  td.shushi .good{ color:#1d7a3a; }
   tr.gozen      > *{ height:7mm; }
   tr.hirusugi   > *{ height:21mm; }
   tr.aruita     > *{ height:16mm; }
@@ -179,30 +186,27 @@
     position:absolute; right:1.5mm; transform:translateY(-50%);
     font-size:8pt; color:var(--line); font-weight:400; letter-spacing:0;
   }
-  th.graph-head .kgs .kg.k1{ top:calc(var(--graph-h) * 1/8); }
-  th.graph-head .kgs .kg.k2{ top:calc(var(--graph-h) * 2/8); }
-  th.graph-head .kgs .kg.k3{ top:calc(var(--graph-h) * 3/8); }
-  th.graph-head .kgs .kg.k4{ top:calc(var(--graph-h) * 4/8); }
-  th.graph-head .kgs .kg.k5{ top:calc(var(--graph-h) * 5/8); }
-  th.graph-head .kgs .kg.k6{ top:calc(var(--graph-h) * 6/8); }
-  th.graph-head .kgs .kg.k7{ top:calc(var(--graph-h) * 7/8); }
+  th.graph-head .kgs .kg.k1{ top:calc(var(--graph-h) * 1/5); }
+  th.graph-head .kgs .kg.k2{ top:calc(var(--graph-h) * 2/5); }
+  th.graph-head .kgs .kg.k3{ top:calc(var(--graph-h) * 3/5); }
+  th.graph-head .kgs .kg.k4{ top:calc(var(--graph-h) * 4/5); }
+  
+  
+  
 
   td.graph-cell{
     position:relative;
     background:
-      linear-gradient(var(--line),var(--line)) 0 calc(var(--graph-h) * 1/8) / 100% 0.6pt no-repeat,
-      linear-gradient(var(--line),var(--line)) 0 calc(var(--graph-h) * 2/8) / 100% 0.6pt no-repeat,
-      linear-gradient(var(--line),var(--line)) 0 calc(var(--graph-h) * 3/8) / 100% 0.6pt no-repeat,
-      linear-gradient(var(--line),var(--line)) 0 calc(var(--graph-h) * 4/8) / 100% 0.6pt no-repeat,
-      linear-gradient(var(--line),var(--line)) 0 calc(var(--graph-h) * 5/8) / 100% 0.6pt no-repeat,
-      linear-gradient(var(--line),var(--line)) 0 calc(var(--graph-h) * 6/8) / 100% 0.6pt no-repeat,
-      linear-gradient(var(--line),var(--line)) 0 calc(var(--graph-h) * 7/8) / 100% 0.6pt no-repeat,
+      linear-gradient(var(--line),var(--line)) 0 calc(var(--graph-h) * 1/5) / 100% 0.6pt no-repeat,
+      linear-gradient(var(--line),var(--line)) 0 calc(var(--graph-h) * 2/5) / 100% 0.6pt no-repeat,
+      linear-gradient(var(--line),var(--line)) 0 calc(var(--graph-h) * 3/5) / 100% 0.6pt no-repeat,
+      linear-gradient(var(--line),var(--line)) 0 calc(var(--graph-h) * 4/5) / 100% 0.6pt no-repeat,
       repeating-linear-gradient(
         to bottom,
         transparent 0,
-        transparent calc(var(--graph-h) / 40 - 0.3pt),
-        var(--line-thin) calc(var(--graph-h) / 40 - 0.3pt),
-        var(--line-thin) calc(var(--graph-h) / 40)
+        transparent calc(var(--graph-h) / 25 - 0.3pt),
+        var(--line-thin) calc(var(--graph-h) / 25 - 0.3pt),
+        var(--line-thin) calc(var(--graph-h) / 25)
       );
   }
 
@@ -385,8 +389,7 @@
         <div class="label">体重グラフ</div>
         <div class="kgs">
           <div class="kg k1">62 kg</div><div class="kg k2">61 kg</div><div class="kg k3">60 kg</div>
-          <div class="kg k4">59 kg</div><div class="kg k5">58 kg</div><div class="kg k6">57 kg</div>
-          <div class="kg k7">56 kg</div>
+          <div class="kg k4">59 kg</div>
         </div>
       </th>
       <td class="graph-cell"></td><td class="graph-cell"></td><td class="graph-cell"></td>
@@ -395,16 +398,16 @@
     </tr>
 
     <tr class="zutsu">
-      <th class="head">頭　痛</th>
-      <td class="scale"><div class="cells"><span>1</span><span>2</span><span>3</span></div></td>
-      <td class="scale"><div class="cells"><span>1</span><span>2</span><span>3</span></div></td>
-      <td class="scale"><div class="cells"><span>1</span><span>2</span><span>3</span></div></td>
-      <td class="scale"><div class="cells"><span>1</span><span>2</span><span>3</span></div></td>
-      <td class="scale"><div class="cells"><span>1</span><span>2</span><span>3</span></div></td>
-      <td class="scale"><div class="cells"><span>1</span><span>2</span><span>3</span></div></td>
-      <td class="scale"><div class="cells"><span>1</span><span>2</span><span>3</span></div></td>
-      <td class="scale"><div class="cells"><span>1</span><span>2</span><span>3</span></div></td>
-      <td class="scale"><div class="cells"><span>1</span><span>2</span><span>3</span></div></td>
+      <th class="head">カロリー<br>収支</th>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
     </tr>
 
     <tr class="gozen">
@@ -533,8 +536,7 @@
         <div class="label">体重グラフ</div>
         <div class="kgs">
           <div class="kg k1">62 kg</div><div class="kg k2">61 kg</div><div class="kg k3">60 kg</div>
-          <div class="kg k4">59 kg</div><div class="kg k5">58 kg</div><div class="kg k6">57 kg</div>
-          <div class="kg k7">56 kg</div>
+          <div class="kg k4">59 kg</div>
         </div>
       </th>
       <td class="graph-cell"></td><td class="graph-cell"></td><td class="graph-cell"></td>
@@ -543,16 +545,16 @@
     </tr>
 
     <tr class="zutsu">
-      <th class="head">頭　痛</th>
-      <td class="scale"><div class="cells"><span>1</span><span>2</span><span>3</span></div></td>
-      <td class="scale"><div class="cells"><span>1</span><span>2</span><span>3</span></div></td>
-      <td class="scale"><div class="cells"><span>1</span><span>2</span><span>3</span></div></td>
-      <td class="scale"><div class="cells"><span>1</span><span>2</span><span>3</span></div></td>
-      <td class="scale"><div class="cells"><span>1</span><span>2</span><span>3</span></div></td>
-      <td class="scale"><div class="cells"><span>1</span><span>2</span><span>3</span></div></td>
-      <td class="scale"><div class="cells"><span>1</span><span>2</span><span>3</span></div></td>
-      <td class="scale"><div class="cells"><span>1</span><span>2</span><span>3</span></div></td>
-      <td class="scale"><div class="cells"><span>1</span><span>2</span><span>3</span></div></td>
+      <th class="head">カロリー<br>収支</th>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
     </tr>
 
     <tr class="gozen">
@@ -639,7 +641,7 @@
   window.KIROKU = {jissoku, mokuhyo};
   // ===== グラフ縦軸の範囲（上端63・下端55）。8帯＝目盛り1/8..7/8 が 62..56 =====
   const RANGE_TOP = 63.0;
-  const RANGE_BOT = 55.0;
+  const RANGE_BOT = 58.0;
   const kgToRatio = kg => {
     const c = Math.max(RANGE_BOT, Math.min(RANGE_TOP, kg));
     return (RANGE_TOP - c) / (RANGE_TOP - RANGE_BOT);
@@ -860,7 +862,7 @@
 
   function render() {
     let Fp = FAT0, Fa = FAT0, cumP = 0, cumA = 0;
-    const out = [];
+    const out = [], S = {};
     for (const d of DAYS) {
       const capP = CAP * Fp, capA = CAP * Fa;
       const planIn = PLAN_BURN - capP, planFat = capP / 9;
@@ -889,6 +891,7 @@
       } else if (!mirai) {
         msg.push(kyou ? '今日は途中（チェックを押すと計算が入る）' : (n === 0 ? '献立のチェックなし' : '消費のデータ待ち（翌朝の自動実行で入る）'));
       }
+      S[d] = { planIn, kcal, n, b, deficit, capA, over, fat, planFat, mirai, kyou, mae };
       const fatUsed = fat != null ? fat : (mirai ? 0 : capA / 9);
       if (!mirai && !(kyou && fat == null)) { Fa -= fatUsed / 1000; cumA += fatUsed; }
       const nx = nextDay(d), tgt = K.mokuhyo[nx], act = (K.jissoku[nx] || {}).kg;
@@ -914,6 +917,34 @@
     document.getElementById('tw-table').innerHTML =
       '<tr><th>日付</th><th>摂取 kcal<br>計画 / 実績</th><th>たんぱく質<br>g</th><th>糖質<br>g</th><th>消費<br>kcal</th><th>不足<br>kcal</th><th>上限<br>kcal</th><th>上限超え<br>kcal</th><th>脂肪の減り g<br>計画 / 実績</th><th>脂肪の減り累計 kg<br>計画 / 実績</th><th>翌朝の乾燥体重 kg<br>目標 / 実測（差）</th><th>ひとこと</th></tr>' +
       out.join('');
+    const sg = v => (v > 0 ? '−' : '+') + f0(Math.abs(v));
+    document.querySelectorAll('.page table').forEach(table => {
+      const hin = table.querySelector('tr.hinichi'), tr = table.querySelector('tr.zutsu'); if (!hin || !tr) return;
+      const tds = Array.from(tr.children).slice(1);
+      Array.from(hin.children).slice(1).forEach((td, col) => {
+        const y = td.querySelector('.ymd'); const m = y && y.textContent.match(/\d+\/\d+/); const cell = tds[col];
+        if (!cell) return; cell.innerHTML = '';
+        const x = m && S[m[0]]; if (!x) return;
+        const line = (a, b2) => '<div class="r"><span>' + a + '</span><b>' + b2 + '</b></div>';
+        let h = '';
+        if (x.mirai) {
+          h = '<div class="mirai">' + line('摂取 計画', f0(x.planIn)) + line('消費 計画', f0(PLAN_BURN)) +
+              '<div class="big">' + sg(PLAN_BURN - x.planIn) + '</div>' + line('脂肪', '−' + f0(x.planFat) + 'g') + '</div>';
+        } else if (x.mae) {
+          h = line('摂取', '—') + line('消費', x.b ? f0(x.b.v) : '—') + '<div class="big">上限 −' + f0(x.capA) + '</div>' + line('脂肪', '−' + f0(x.capA / 9) + 'g');
+        } else {
+          h = line('摂取', x.n ? f0(x.kcal) : '—') + line('消費', x.b ? f0(x.b.v) + (x.b.suitei ? '*' : '') : '—');
+          if (x.deficit != null) {
+            const cls = x.kyou ? '' : (x.over > 50 ? 'warn' : 'good');
+            h += '<div class="big ' + cls + '">' + sg(x.deficit) + (x.kyou ? '<span style="font-size:6.5pt;font-weight:400"> 途中</span>' : '') + '</div>';
+            h += line('上限', '−' + f0(x.capA)) + line('脂肪', x.fat != null ? '−' + f0(x.fat) + 'g' : '—');
+          } else {
+            h += '<div class="big">—</div>' + line('上限', '−' + f0(x.capA));
+          }
+        }
+        cell.innerHTML = h;
+      });
+    });
   }
   render();
 })();
