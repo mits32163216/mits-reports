@@ -102,6 +102,14 @@
   #tw-table td.msg{ text-align:left; white-space:normal; min-width:240px; }
   #tw-table tr.mirai td{ color:#a0a0a0; }
   #tw-table tr.kyou td{ background:var(--kyou); }
+
+  /* 文字は1つの大きさ・普通の太さに揃える（強調・大きくするは使わない） */
+  :root{ --fs:13px; }
+  @media (max-width:640px){ :root{ --fs:12.5px; } }
+  .page *, .tsukiawase *{ font-size:var(--fs) !important; font-weight:400 !important; }
+  td.shushi .big{ border:0; padding:0; margin:0; text-align:left; line-height:1.5; }
+  td.shushi .big + .r{ border-top:1px dotted var(--line); }
+  td.shushi .r + .big{ border-top:1px dotted var(--line); }
 </style>
 </head>
 <body>
