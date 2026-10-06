@@ -412,7 +412,7 @@
   const jissoku = {
     "10/4": {kg: 62.2, jikan: "", shibo: 17.4, hosu: 12613, kiso: 1495, katsudo: 656},
     "10/5": {kg: 61.0, jikan: "13:13", shibo: 16.7, hosu: 12052, kiso: 1462, katsudo: 506},
-    "10/6": {kg: 60.6, jikan: "", shibo: 16.4, hosu: 921, kiso: 802, katsudo: 77}
+    "10/6": {kg: 60.6, jikan: "", shibo: 16.4, hosu: 989, kiso: 838, katsudo: 84}
   };
   const mokuhyo = {
     "10/5": 61.5, "10/6": 60.9, "10/7": 60.2, "10/8": 59.6, "10/9": 59.5,
@@ -531,10 +531,12 @@
         const d = days[col]; if (!d) return;
         td.querySelectorAll('.chk').forEach(sp => {
           const k = d + '|' + r + '|' + (sp.dataset.label || sp.textContent.trim());
+          sp.dataset.k = k;
           if (chk[k]) sp.classList.add('on');
           sp.addEventListener('click', () => {
             if (chk[k]) delete chk[k]; else chk[k] = 1;
             sp.classList.toggle('on', !!chk[k]); save(); render();
+            queue(k, !!chk[k]); flush();
           });
         });
       });
@@ -676,6 +678,44 @@
     });
   }
   render();
+
+  // ===== チェックを端末どうしで共有する（Cloudflare Worker fasting-sync・uchinaaguchi-sync と同じ形） =====
+  // 合言葉は画面の JS に入っていて秘密にはできない（uchinaaguchi-sync と同じ扱い）。
+  const SYNC_URL = 'https://fasting-sync.3216-fun.workers.dev/state';
+  const SYNC_KEY = '3088b9baacde8ab14ce29378a88574b4', SYNC_FAMILY = 'mitsuhiro';
+  const PKEY = 'fasting_kiroku_pending_v1', SKEY = 'fasting_kiroku_synced_v1';
+  const rd = (k, d) => { try { return JSON.parse(localStorage.getItem(k) || 'null') || d; } catch (e) { return d; } };
+  const wr = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+  // まだ送れていない変更（押した・外した）を貯めておく
+  function queue(k, on) { const p = rd(PKEY, {}); p[k] = on ? 1 : 0; wr(PKEY, p); }
+  async function flush() {
+    const p = rd(PKEY, {}); const ks = Object.keys(p); if (!ks.length) return true;
+    const state = {}, remove = [];
+    ks.forEach(k => { if (p[k]) state['chk:' + k] = '1'; else remove.push('chk:' + k); });
+    try {
+      const r = await fetch(SYNC_URL + '?key=' + SYNC_KEY + '&f=' + SYNC_FAMILY, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ state, remove }) });
+      const j = await r.json(); if (!j.ok) return false;
+      const now = rd(PKEY, {}); ks.forEach(k => { if (now[k] === p[k]) delete now[k]; }); wr(PKEY, now);
+      return true;
+    } catch (e) { return false; }
+  }
+  async function pull() {
+    // 初めてこの端末で開いたときは、この端末にあるチェックを全部送ってから読む
+    if (!localStorage.getItem(SKEY)) Object.keys(chk).forEach(k => queue(k, true));
+    if (!(await flush())) return;
+    try {
+      const j = await (await fetch(SYNC_URL + '?key=' + SYNC_KEY + '&f=' + SYNC_FAMILY, { cache: 'no-store' })).json();
+      if (!j.ok) return;
+      const next = {}; Object.keys(j.state || {}).forEach(k => { if (k.indexOf('chk:') === 0) next[k.slice(4)] = 1; });
+      const p = rd(PKEY, {}); Object.keys(p).forEach(k => { if (p[k]) next[k] = 1; else delete next[k]; });
+      Object.keys(chk).forEach(k => delete chk[k]); Object.assign(chk, next); save();
+      try { localStorage.setItem(SKEY, String(Date.now())); } catch (e) {}
+      document.querySelectorAll('td.meal .chk').forEach(sp => { if (sp.dataset.k) sp.classList.toggle('on', !!chk[sp.dataset.k]); });
+      render();
+    } catch (e) {}
+  }
+  pull();
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') pull(); });
 })();
 </script>
 <script>
