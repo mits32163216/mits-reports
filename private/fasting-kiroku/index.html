@@ -72,7 +72,14 @@
   tr.taishibo   > *{ height:8mm; }
   tr.jikan      > *{ height:8mm; }
   tr.hosu       > *{ height:11mm; }
-  tr.zutsu      > *{ height:30mm; }
+  tr.zutsu      > *{ height:22mm; }
+  tr.nensho     > *{ height:13mm; }
+  tr.nensho > th{ background:#fdf1dc; color:#7a4a0a; }
+  td.nensho{ padding:0.8mm 1.8mm; font-size:9pt; line-height:1.55; color:var(--ink); }
+  td.nensho .r{ display:flex; justify-content:space-between; }
+  td.nensho .r b{ font-weight:700; }
+  td.nensho .mirai{ color:#9a9a9a; }
+  td.nensho .warn{ color:#c03030; }  td.nensho .good{ color:#1d7a3a; }
   td.shushi{ padding:1.2mm 1.8mm; vertical-align:middle; font-size:9pt; line-height:1.5; color:var(--ink); }
   td.shushi .r{ display:flex; justify-content:space-between; }
   td.shushi .r b{ font-weight:700; }
@@ -82,12 +89,13 @@
   td.shushi .good{ color:#1d7a3a; }
   tr.gozen      > *{ height:8mm; }
   tr.hirusugi   > *{ height:25mm; }
-  tr.aruita     > *{ height:16mm; }
-  tr.yugata     > *{ height:19mm; }
-  tr.biko       > *{ height:17mm; }
+  tr.aruita     > *{ height:15mm; }
+  tr.yugata     > *{ height:17mm; }
+  tr.biko       > *{ height:12mm; }
 
   /* 区切り：からだ／カロリー収支／献立 */
   tr.zutsu > *, tr.gozen > *, tr.biko > *{ border-top:2pt solid var(--title); }
+  tr.nensho > *{ border-top:0.6pt dashed #c9a46a; }
   tr.zutsu > th{ background:#fdf1dc; color:#7a4a0a; }
   tr.gozen > th, tr.hirusugi > th, tr.aruita > th, tr.yugata > th{ background:#e8f4e6; }
   tr.gozen th .h1, tr.hirusugi th .h1, tr.aruita th .h1, tr.yugata th .h1,
@@ -301,6 +309,19 @@
       <td class="shushi"></td>
     </tr>
 
+    <tr class="nensho">
+      <th class="head">脂肪の燃焼<br><span style="font-size:7.5pt;font-weight:500">必要／実施</span></th>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+    </tr>
+
     <tr class="gozen">
       <th class="head meal-head"><span class="h1">午前</span><span class="h2">コーヒー</span></th>
       <td class="meal empty"><span class="chk-note">前のプラン</span></td>
@@ -434,6 +455,19 @@
       <td class="shushi"></td>
       <td class="shushi"></td>
       <td class="shushi"></td>
+    </tr>
+
+    <tr class="nensho">
+      <th class="head">脂肪の燃焼<br><span style="font-size:7.5pt;font-weight:500">必要／実施</span></th>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
     </tr>
 
     <tr class="gozen">
@@ -715,20 +749,31 @@
         let h = '';
         if (x.mirai) {
           h = '<div class="mirai">' + line('摂取 計画', f0(x.planIn)) + line('消費 計画', f0(PLAN_BURN)) +
-              '<div class="big">' + sg(PLAN_BURN - x.planIn) + '</div>' + line('脂肪', '−' + f0(x.planFat) + 'g') + '</div>';
+              '<div class="big">' + sg(PLAN_BURN - x.planIn) + '</div>' + '</div>';
         } else if (x.mae) {
-          h = line('摂取', '—') + line('消費', x.b ? f0(x.b.v) : '—') + '<div class="big">−' + f0(x.capA) + '<span style="font-size:7pt;font-weight:400"> 上限</span></div>' + line('脂肪', '−' + f0(x.capA / 9) + 'g');
+          h = line('摂取', '—') + line('消費', x.b ? f0(x.b.v) : '—') + '<div class="big">−' + f0(x.capA) + '<span style="font-size:7pt;font-weight:400"> 上限</span></div>' ;
         } else {
           h = line('摂取', x.n ? f0(x.kcal) : '—') + line('消費', x.b ? f0(x.b.v) + (x.b.suitei ? '*' : '') : '—');
           if (x.deficit != null) {
             const cls = x.kyou ? '' : (x.over > 50 ? 'warn' : 'good');
             h += '<div class="big ' + cls + '">' + sg(x.deficit) + (x.kyou ? '<span style="font-size:6.5pt;font-weight:400"> 途中</span>' : '') + '</div>';
-            h += line('上限', '−' + f0(x.capA)) + line('脂肪', x.fat != null ? '−' + f0(x.fat) + 'g' : '—');
+            h += line('上限', '−' + f0(x.capA));
           } else {
             h += '<div class="big">—</div>' + line('上限', '−' + f0(x.capA));
           }
         }
         cell.innerHTML = h;
+        const nc = (Array.from((table.querySelector('tr.nensho') || {children: []}).children).slice(1))[col];
+        if (nc) {
+          let g = line('必要', '−' + f0(x.planFat) + 'g');
+          if (x.mirai) g = '<div class="mirai">' + g + line('実施', '—') + '</div>';
+          else if (x.mae) g += line('実施', '−' + f0(x.capA / 9) + 'g*');
+          else if (x.fat != null) {
+            const cls = x.kyou ? '' : (x.fat >= x.planFat - 3 ? 'good' : 'warn');
+            g += '<div class="r"><span>実施</span><b class="' + cls + '">−' + f0(x.fat) + 'g' + (x.kyou ? ' 途中' : '') + '</b></div>';
+          } else g += line('実施', '—');
+          nc.innerHTML = g;
+        }
       });
     });
   }
