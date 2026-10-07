@@ -609,7 +609,7 @@
       }
       const wkg = (K.jissoku[d] || {}).kg != null ? K.jissoku[d].kg : K.mokuhyo[d];
       const needP = wkg != null ? Math.round(1.6 * wkg) : null;
-      S[d] = { planIn, planDef, planOver, kcal, n, b, deficit, capA, over, fat, planFat, mirai, kyou, mae, p, needP, c };
+      S[d] = { planIn, planDef, planOver, capP, kcal, n, b, deficit, capA, over, fat, planFat, mirai, kyou, mae, p, needP, c };
       const fatUsed = fat != null ? fat : (mirai ? 0 : capA / 9);
       if (!mirai && !(kyou && fat == null)) { Fa -= fatUsed / 1000; cumA += fatUsed; }
       const nx = nextDay(d), tgt = K.mokuhyo[nx], act = (K.jissoku[nx] || {}).kg;
@@ -647,17 +647,17 @@
         let h = '';
         if (x.mirai) {
           h = '<div class="mirai">' + line('摂取', f0(x.planIn)) + line('消費', f0(PLAN_BURN)) +
-              '<div class="big">' + sg(PLAN_BURN - x.planIn) + '</div>' + '</div>';
+              '<div class="big">' + sg(PLAN_BURN - x.planIn) + '</div>' + line('上限', '−' + f0(x.capP)) + line('過剰消費', f0(x.planOver)) + '</div>';
         } else if (x.mae) {
-          h = line('摂取', '—') + line('消費', x.b ? f0(x.b.v) : '—') + '<div class="big">−' + f0(x.capA) + ' 上限</div>' ;
+          h = line('摂取', '—') + line('消費', x.b ? f0(x.b.v) : '—') + '<div class="big">−' + f0(x.capA) + ' 上限</div>' + line('過剰消費', '—');
         } else {
           h = line('摂取', x.n ? f0(x.kcal) : '—') + line('消費', x.b ? f0(x.b.v) + (x.b.suitei ? '*' : '') : '—');
           if (x.deficit != null) {
             const cls = x.kyou ? '' : (x.over > 50 ? 'warn' : 'good');
             h += '<div class="big ' + cls + '">' + sg(x.deficit) + (x.kyou ? ' 途中' : '') + '</div>';
-            h += line('上限', '−' + f0(x.capA));
+            h += line('上限', '−' + f0(x.capA)) + line('過剰消費', f0(x.over) + (x.kyou ? ' 途中' : ''));
           } else {
-            h += '<div class="big">—</div>' + line('上限', '−' + f0(x.capA));
+            h += '<div class="big">—</div>' + line('上限', '−' + f0(x.capA)) + line('過剰消費', '—');
           }
         }
         cell.innerHTML = h;
