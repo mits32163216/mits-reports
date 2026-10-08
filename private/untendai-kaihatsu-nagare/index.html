@@ -140,8 +140,8 @@
 <div class="scroll">
 <table>
 <tr><th>アプリ</th><th>入っている場所・識別子</th><th>組むもと</th><th>組む道具</th><th>いまの版（組んだ時刻）</th><th>誰の手元にあるか</th></tr>
-<tr><td><b>製品版</b></td><td><code>/Applications/untendai.app</code><br><code>com.mits.untendai</code></td><td>main</td><td><code>release.sh --自分だけ</code><br>（中で <code>build-signed.sh</code>）</td><td>1.74.1（10-01 18:15）</td><td><span class="tag t-me">Mits様だけ 1.74.1</span><br><span class="tag t-out">お客様は 1.73.28</span></td></tr>
-<tr><td><b>freee版</b><br>（クライアント版）</td><td><code>/Applications/untendai-client.app</code><br><code>com.mits.untendai.client</code></td><td>main（09-25 から）</td><td><code>build-client.sh</code> → zip</td><td>1.74.1（10-03 09:42）</td><td><span class="tag t-old">協力者Aさん 1.73.24</span><br><span class="tag t-me">協力者Bさん 1.74.1 置いただけ・未共有</span></td></tr>
+<tr><td><b>製品版</b></td><td><code>/Applications/untendai.app</code><br><code>com.mits.untendai</code></td><td>main</td><td><code>release.sh --自分だけ</code><br>（中で <code>build-signed.sh</code>）</td><td>1.74.4（10-04 21:35・2026-10-08 実測）</td><td><span class="tag t-me">Mits様だけ 1.74.4</span><br><span class="tag t-out">お客様は 1.73.28</span></td></tr>
+<tr><td><b>freee版</b><br>（クライアント版）</td><td><code>/Applications/untendai-client.app</code><br><code>com.mits.untendai.client</code></td><td>main（09-25 から）</td><td><code>build-client.sh</code> → zip</td><td>1.74.4（10-04 21:50・2026-10-08 実測）</td><td><span class="tag t-old">協力者Aさん 1.73.24</span><br><span class="tag t-me">協力者Bさん 1.74.4（Drive の untendai-client_1.74.4_mac_arm64.zip・2026-10-04 差し替え・未共有）</span></td></tr>
 <tr><td><b>開発版</b></td><td><code>/Applications/untendai-dev.app</code><br><code>com.mits.untendai.dev</code></td><td>main</td><td><code>build-dev.sh</code></td><td>1.73.53 の表示（中身は 09-30 20:27 の main・見本A／B／C）</td><td><span class="tag t-me">Mits様の Mac だけ</span></td></tr>
 <tr><td><b>マーケ版</b></td><td><code>/Applications/untendai-mkt.app</code><br><code>com.mits.untendai.mkt</code></td><td>marketing の枝<br><code>~/untendai-marketing</code></td><td><code>build-mkt.sh</code></td><td>1.74.4（10-04 21:36・2026-10-08 実測）</td><td><span class="tag t-me">Mits様の Mac だけ</span></td></tr>
 </table>
@@ -214,7 +214,7 @@
     <text x="895" y="210" fill="#5b6170">（10/04 21:33）</text>
   </g>
 
-  <text x="40" y="295" font-size="12" fill="#5b6170">v1.73.28 → v1.74.4 の間に 50 の commit が溜まっている（世に出していない・tag 済み commit 数で数えた）</text>
+  <text x="40" y="295" font-size="12" fill="#5b6170">v1.73.28 → v1.74.4 の間に 103 の commit が溜まっている（世に出していない・2026-10-08 実測・/usr/bin/git rev-list --count v1.73.28..v1.74.4）</text>
   <text x="40" y="313" font-size="12" fill="#5b6170">全枝8本（うち動いた3本を描いた・他5本は止まっている or 退避：demobuild・freee-win・oem-shoukai-code・taiki-honntai・wip-freee-20260925）／2026-10-08 実測</text>
 </svg>
 </div>
@@ -233,7 +233,7 @@
 </table>
 
 <p><b>世に出すのは2つのときだけ。</b>①Mits様が製品版で触って「出す」と言われたとき ②お客様の手元で数字が間違っている・取り込みが止まっているとき（溜めずに出す）。</p>
-<p class="note">いまの製品版 1.74.1 を世に出すと、お客様全員の製品版にも「freee との連携」と管理者スイッチが出る。</p>
+<p class="note">いまの製品版 1.74.4 を世に出すと、お客様全員の製品版にも「freee との連携」と管理者スイッチが出る。</p>
 
 <!-- ============================================================ -->
 <h2>5. 手順（いま実際に回している形）</h2>
@@ -291,7 +291,7 @@ bash tools/build-dev.sh          # 開発版も同じ main で組み直す（--�
 </div>
 
 <table>
-<tr><th>何を</th><th>結果（2026-10-03・1.74.1）</th></tr>
+<tr><th>何を</th><th>結果（2026-10-03・1.74.1 の時点の記録。今は 1.74.4）</th></tr>
 <tr><td>zip の中身</td><td>Info.plist／本体／icon.icns／resources/sample.db／_CodeSignature の5本</td></tr>
 <tr><td>協力者Aさんの会社名・協力者Aさん・事業所番号・実際の金額</td><td>0件（zip を開いた中身で）</td></tr>
 <tr><td>同梱の見本の帳簿</td><td>104行・moneyforward だけ・顧客は架空の25名・メールは example.com</td></tr>
@@ -300,11 +300,11 @@ bash tools/build-dev.sh          # 開発版も同じ main で組み直す（--�
 </table>
 
 <!-- ============================================================ -->
-<h2>7. 製品版と freee版で、それぞれ何が見えるか（1.74.1）</h2>
+<h2>7. 製品版と freee版で、それぞれ何が見えるか（2026-10-03・1.74.1 の時点の記録。今は 1.74.4）</h2>
 <table>
 <tr><th></th><th>製品版</th><th>freee版</th><th>開発版</th></tr>
 <tr><td>マネーフォワードとの連携</td><td>出る</td><td>出る</td><td>出る</td></tr>
-<tr><td>freee との連携</td><td>出る（1.74.1 から）</td><td>出る</td><td>出ない</td></tr>
+<tr><td>freee との連携</td><td>出る（1.74.1 から・2026-10-03 時点の記録）</td><td>出る</td><td>出ない</td></tr>
 <tr><td>管理者スイッチ（顧問先を足して切り替える）</td><td>出る（設定 → アカウント）</td><td>出る（設定 → アカウント）</td><td>出る</td></tr>
 <tr><td>入っているデータ</td><td>Mits様の実データ</td><td>Mits様の Mac では Mits様の2社の実データ／手渡し先では空</td><td>架空の見本A・B・C だけ</td></tr>
 </table>
