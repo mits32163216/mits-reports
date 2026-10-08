@@ -124,7 +124,7 @@ tr.sum-row td.sum-total .sum-count{display:block;font-size:.72em;font-weight:400
 <tr><td class="item">記録のある部品</td><td class="price-cell" colspan="3">4 件（F0-01 ／ F0-04 ／ 経営の運転台(月額) ／ 梅 月額・年払）</td></tr>
 <tr><td class="item">記録なしの部品</td><td class="price-cell" colspan="3">16 件</td></tr>
 <tr><td class="item">合計</td><td class="price-cell" colspan="3">20 件（※ 月額と一括は足さない。梅の 5 行は「反転グルコンの切り出し 11 本と逆引き表」行の料金で代表させ、同じ料金を 5 回足していない）</td></tr>
-<tr><td class="sec" colspan="4">暫定価格の合計（Mits 入力・そのブラウザに残る）</td></tr><tr class="sum-row"><td class="item">合計</td><td class="price-ref" style="color:#999;">—</td><td class="sum-total"><span id="single-sum">0 円</span><span class="sum-count" id="single-count">入力済み 0 行／全 17 行</span></td><td class="sum-total"><span id="monthly-sum">0 円</span><span class="sum-count" id="monthly-count">入力済み 0 行／全 17 行</span></td></tr>
+<tr><td class="sec" colspan="4">暫定価格の合計（Mits 入力・そのブラウザに残る）</td></tr><tr class="sum-row"><td class="item">合計</td><td class="price-ref" style="color:#999;">—</td><td class="sum-total"><span id="single-sum">0 円</span><span class="sum-count" id="single-count">入力済み 0 行／全 17 行</span></td><td class="sum-total"><span id="monthly-sum">0 円</span><span class="sum-count" id="monthly-count">入力済み 0 行／全 17 行</span></td></tr><tr class="sum-row"><td class="item">価値の合計</td><td class="price-ref" style="color:#999;">—</td><td class="sum-total" colspan="2"><span id="value-sum">0 円</span><span class="sum-count">＝ 単発の合計 ＋ 月額の合計 × 10（10ヶ月分）</span></td></tr><tr class="sum-row"><td class="item">目標の価値</td><td class="price-ref" style="color:#999;">—</td><td class="sum-total" colspan="2"><span id="value-goal">970,000 円</span><span class="sum-count">＝ 9,700 円／月 × 10ヶ月 × 10倍（LEVEL 1 の暫定・支払いの10倍）</span></td></tr><tr class="sum-row"><td class="item">目標までの差</td><td class="price-ref" style="color:#999;">—</td><td class="sum-total" colspan="2"><span id="value-gap">—</span><span class="sum-count" id="value-pct">—</span></td></tr>
 </tbody>
 </table>
 </div>
@@ -208,6 +208,23 @@ tr.sum-row td.sum-total .sum-count{display:block;font-size:.72em;font-weight:400
    if (mEl) mEl.textContent = fmtYen(sumMonthly);
    if (sCnt) sCnt.textContent = '入力済み ' + cntSingle + ' 行／全 ' + total + ' 行';
    if (mCnt) mCnt.textContent = '入力済み ' + cntMonthly + ' 行／全 ' + total + ' 行';
+   // Value calc: single + monthly*10. Target 970,000 (9,700/月 x 10ヶ月 x 10倍).
+   var VALUE_GOAL = 970000;
+   var valueSum = sumSingle + sumMonthly * 10;
+   var vEl = document.getElementById('value-sum');
+   var gEl = document.getElementById('value-gap');
+   var pEl = document.getElementById('value-pct');
+   if (vEl) vEl.textContent = fmtYen(valueSum);
+   if (gEl) {
+    var diff = VALUE_GOAL - valueSum;
+    if (diff > 0) gEl.textContent = 'あと ' + fmtYen(diff);
+    else if (diff < 0) gEl.textContent = fmtYen(-diff) + ' 超え';
+    else gEl.textContent = 'ちょうど目標';
+   }
+   if (pEl) {
+    var pct = VALUE_GOAL > 0 ? Math.round(valueSum * 100 / VALUE_GOAL) : 0;
+    pEl.textContent = pct + '%';
+   }
   }
   inputs.forEach(function(inp){
    var k = STORE_PREFIX + inp.dataset.row + '/' + inp.dataset.col;
