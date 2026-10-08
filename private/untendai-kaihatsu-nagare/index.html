@@ -154,29 +154,71 @@
 <h2>3. 枝の移り変わり（自然にこうなった）</h2>
 
 <div class="card scroll">
-<svg viewBox="0 0 1000 250" xmlns="http://www.w3.org/2000/svg" font-family="Hiragino Sans, sans-serif">
+<svg viewBox="0 0 1000 330" xmlns="http://www.w3.org/2000/svg" font-family="Hiragino Sans, sans-serif">
   <!-- main line -->
-  <line x1="40" y1="120" x2="960" y2="120" stroke="#14206b" stroke-width="4"/>
-  <text x="40" y="108" font-size="13" font-weight="700" fill="#14206b">main</text>
-  <!-- freee branch -->
-  <path d="M120,120 C160,60 200,60 240,60 L460,60 C500,60 520,100 540,120" fill="none" stroke="#2f7d4f" stroke-width="3"/>
-  <text x="250" y="50" font-size="13" font-weight="700" fill="#2f7d4f">freee の枝（~/untendai-freee）</text>
-  <circle cx="540" cy="120" r="7" fill="#2f7d4f"/>
-  <text x="470" y="148" font-size="12" fill="#2f7d4f">09-25 main に入る</text>
-  <!-- marketing -->
-  <path d="M600,120 C630,185 660,185 690,185 L760,185" fill="none" stroke="#2f7d4f" stroke-width="3"/>
-  <text x="640" y="210" font-size="12" fill="#2f7d4f">marketing の枝：10-04 に main 取り込み（Merge d026472）</text>
-  <!-- version dots -->
+  <line x1="40" y1="150" x2="960" y2="150" stroke="#14206b" stroke-width="4"/>
+  <text x="40" y="138" font-size="13" font-weight="700" fill="#14206b">main</text>
+
+  <!-- freee branch (上に伸びて v1.73.39 で main に戻る) -->
+  <path d="M120,150 C160,70 200,70 240,70 L460,70 C500,70 520,110 540,150" fill="none" stroke="#2f7d4f" stroke-width="3"/>
+  <text x="250" y="60" font-size="13" font-weight="700" fill="#2f7d4f">freee の枝（~/untendai-freee）</text>
+  <text x="470" y="90" font-size="12" fill="#2f7d4f">09-25 main に統合（v1.73.39・5eb0ec9）</text>
+
+  <!-- marketing branch (下に伸びて 10-04 に取り込み) -->
+  <path d="M700,150 C740,215 780,215 820,215 L910,215 C935,215 940,180 935,170" fill="none" stroke="#2f7d4f" stroke-width="3"/>
+  <text x="740" y="245" font-size="12" fill="#2f7d4f">marketing の枝（~/untendai-marketing）</text>
+  <text x="740" y="265" font-size="12" fill="#2f7d4f">10-04 に main 取り込み（Merge d026472）</text>
+
+  <!-- version dots on main -->
   <g font-size="11" fill="#1f2430">
-    <circle cx="330" cy="60" r="6" fill="#fff" stroke="#2f7d4f" stroke-width="2"/><text x="300" y="85">1.73.24</text><text x="345" y="85" fill="#5b6170">freee版・協力者Aさんへ</text>
-    <circle cx="430" cy="120" r="6" fill="#b0342c"/><text x="410" y="98">1.73.28</text><text x="395" y="85" fill="#b0342c">いま世に出ている</text>
-    <circle cx="640" cy="120" r="6" fill="#fff" stroke="#14206b" stroke-width="2"/><text x="622" y="148">1.73.53</text>
-    <circle cx="790" cy="120" r="6" fill="#14206b"/><text x="772" y="148">1.74.0</text><text x="745" y="165" fill="#5b6170">管理者版</text>
-    <circle cx="900" cy="120" r="6" fill="#14206b"/><text x="882" y="148">1.74.1</text><text x="845" y="165" fill="#5b6170">製品版でも freee</text>
+    <!-- v1.73.24: freee 枝上 協力者Aさん 向け開発版 -->
+    <circle cx="330" cy="70" r="6" fill="#fff" stroke="#2f7d4f" stroke-width="2"/>
+    <text x="305" y="43">1.73.24</text>
+    <text x="340" y="43" fill="#5b6170">freee版・協力者Aさんへ（09-21）</text>
+
+    <!-- v1.73.28: いま世に出ている（赤丸） -->
+    <circle cx="430" cy="150" r="7" fill="#b0342c"/>
+    <text x="410" y="178" font-weight="700" fill="#b0342c">1.73.28</text>
+    <text x="395" y="195" fill="#b0342c">いま世に出ている（09-25）</text>
+
+    <!-- v1.73.39: freee → main 統合 -->
+    <circle cx="540" cy="150" r="6" fill="#fff" stroke="#14206b" stroke-width="2"/>
+    <text x="520" y="135">1.73.39</text>
+
+    <!-- v1.73.53 -->
+    <circle cx="610" cy="150" r="6" fill="#fff" stroke="#14206b" stroke-width="2"/>
+    <text x="590" y="135">1.73.53</text>
+
+    <!-- v1.74.0 -->
+    <circle cx="690" cy="150" r="6" fill="#14206b"/>
+    <text x="670" y="135">1.74.0</text>
+    <text x="645" y="120" fill="#5b6170">管理者版（9/30）</text>
+
+    <!-- v1.74.1 -->
+    <circle cx="760" cy="150" r="6" fill="#14206b"/>
+    <text x="740" y="178">1.74.1</text>
+    <text x="720" y="195" fill="#5b6170">製品版でも freee（10/01）</text>
+
+    <!-- v1.74.2 -->
+    <circle cx="820" cy="150" r="6" fill="#14206b"/>
+    <text x="800" y="135">1.74.2</text>
+
+    <!-- v1.74.3 -->
+    <circle cx="880" cy="150" r="6" fill="#14206b"/>
+    <text x="860" y="135">1.74.3</text>
+
+    <!-- v1.74.4: main の今の版（最新・navy 太線） -->
+    <circle cx="935" cy="150" r="8" fill="#14206b" stroke="#8a6a1f" stroke-width="2"/>
+    <text x="905" y="178" font-weight="700" fill="#14206b">1.74.4</text>
+    <text x="895" y="195" fill="#5b6170">main の今の版</text>
+    <text x="895" y="210" fill="#5b6170">（10/04 21:33）</text>
   </g>
-  <text x="40" y="240" font-size="12" fill="#5b6170">1.73.28 → 1.74.1 の間に 50 の commit が溜まっている（世に出していない）</text>
+
+  <text x="40" y="295" font-size="12" fill="#5b6170">v1.73.28 → v1.74.4 の間に 50 の commit が溜まっている（世に出していない・tag 済み commit 数で数えた）</text>
+  <text x="40" y="313" font-size="12" fill="#5b6170">全枝8本（うち動いた3本を描いた・他5本は止まっている or 退避：demobuild・freee-win・oem-shoukai-code・taiki-honntai・wip-freee-20260925）／2026-10-08 実測</text>
 </svg>
 </div>
+
 
 <!-- ============================================================ -->
 <h2>4. 言葉を2つに分ける（2026-09-14 Mits様確定）</h2>
