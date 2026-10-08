@@ -101,7 +101,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-08 12:50 ／ 写した時刻 2026-10-08 12:54</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-08 13:10 ／ 写した時刻 2026-10-08 13:13</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -2082,6 +2083,50 @@ untendai-client  版=1.73.43  組立=2026-09-26 03:39:44  Bundle=com.mits.untend
 <li>2026-10-08 12:5x ／ BA_FHL 2026 Notes ── Mits様が、このセッションと司令塔の役の分担を決めた。Mits様原文「このセッションは、BAの中でも、戦略、ブループリント、マーケティングプランを主として扱い、それを全員に振り分けるのがバディの司令塔とする」。つまり <strong>BA_FHL 2026 Notes ＝ 戦略・ブループリント・マーケティングプランを作る</strong>、<strong>BA_司令塔 ＝ それを全員（各持ち場）に振り分ける</strong>。あわせて同日、■新司令塔の7本のチャット名の頭に FBAS の印（BA_／BS_／FA_）を付けた（Mits様「なれたら外す」）。14本で回る情報共有の仕組みは BA_司令塔に依頼中。サイドバーのグループは司令塔の完了報告のあとに14本を移す（Mits様「司令塔から完了報告が来たら14本をこのグループに移して」）</li>
   <li>どのセッションで：BA_FHL 2026 Notes</li>
   <li>宛先：BA_司令塔／BA_伽藍とバザールの実現／BS_運転台改善／BS_AI-Mits-チューニング／BS_運転台マーケ／FA_メール配信・計測・自動化</li>
+</ul>
+<ul>
+<li>2026-10-08 12:5x ／ FHL 2026 Notes ── サイドバーの■新司令塔に外側7本を移した（Mits様原文「司令塔から完了報告が来たら14本をこのグループに移して」）。移した7本：wasa_ファネルメイク／_OEM提供考察／_OEM提供考察-2／UTAGE 入口の集約（トールゲート式）／ダッシュボードの新規構築／Meta広告の自動化・最適化サイクル／YouTube チャンネルコンセプト構想（いずれも元はファネルマーケティング等）。移したあと list_sessions で■新司令塔を数え直し、ほかの13本＋FHL 2026 Notes＝14本。<strong>司令塔 CLAUDE.md の外側の表の「いまのまとまり」の列と「サイドバーのまとまりは動かさない」の行は、この時点で事実と合わなくなった</strong></li>
+  <li>作業フォルダ：FHL 2026 Notes は司令塔フォルダに付け替え済み。wasa_ファネルメイク／UTAGE 入口の集約／Meta広告の自動化・最適化サイクル／YouTube チャンネルコンセプト構想の4本は、付け替えの手続きを呼んだところで止まっている（12:55 の get_session で cwd はまだ /Users/nishidamitsuhiro/My Drive/claude-nishida）。付け替えが終わったら CLAUDE.md の cwd の列も合わなくなる</li>
+  <li>どのセッションで：FHL 2026 Notes</li>
+  <li>宛先：司令塔</li>
+</ul>
+<ul>
+<li>2026-10-08 13:0x ／ 司令塔 ── 役の分担（FHL 2026 Notes が戦略・ブループリント・マーケティングプランを作る／司令塔が全員に振り分ける）を仕組みに入れた。入れた先は3つ：①司令塔 CLAUDE.md に「司令塔と FHL 2026 Notes の役の分担」の節（<strong>司令塔は戦略・プランを自分で作らない。</strong>要るときは 指示書_FHL2026Notes.md に「案を出してほしい」の1件を立てる）②定時報告の手順書 3-9 の「拾う先」に<strong>0番</strong>を新設（報告_FHL2026Notes.md の新しい節と、決定の記録でその持ち場が宛先の行から割る。割った1件の出どころに <code>FHL 2026 Notes の&lt;どれ&gt;</code> と書く）③指示書_FHL2026Notes.md の末尾に差し替えの節。あわせてサイドバーの実測を反映（2026-10-08 12:5x に FHL 2026 Notes が14本とも■新司令塔に移した。司令塔が <code>list_sessions</code> で数え直して■新司令塔13本＋司令塔＝<strong>14本</strong>。CLAUDE.md の外側の表から「いまのまとまり」の列を外し、「動かさない」の行を事実に差し替えた）。<strong>作業フォルダは4本（wasa_ファネルメイク／UTAGE 入口の集約／Meta広告の自動化・最適化サイクル／YouTube チャンネルコンセプト構想）がまだ claude-nishida の一番上</strong>で、付け替えが途中（12:5x 実測）。この4本は司令塔 CLAUDE.md が起動時に読まれないので、指示書の冒頭を自己完結で書いたままにする</li>
+  <li>どのセッションで：司令塔（会話の回）</li>
+  <li>宛先：FHL 2026 Notes／wasa_ファネルメイク／UTAGE 入口の集約（トールゲート式）／Meta広告の自動化・最適化サイクル／YouTube チャンネルコンセプト構想</li>
+</ul>
+<ul>
+<li>2026-10-08 13:1x ／ 司令塔 ── <strong>_OEM提供考察-2 を _OEM提供考察 に1つにまとめた（14本→13本）。</strong>出どころ：Mits様原文（2026-10-08・FHL 2026 Notes 経由）「OEM考察2つや運転台と運転台のダッシュボード構築は一つにした方がよければ、スッキリするがどうか」→「まず　＞OEM提供考察を2つ → OEM提供考察だけにする　一つにする、こちらでやるのか、司令塔でやるのか」→「司令塔に依頼して」</li>
+  <li><strong>閉じる前に司令塔が実測で確かめた4つ</strong>：①作業場 .claude/worktrees/gallant-mclaren-c52e02（枝 claude/gallant-mclaren-c52e02）に main に入っていないコミットは <strong>0件</strong>（<code>git rev-list --count main..HEAD</code>）②変わっていたのは <code>.claude/hooks/_lib/__pycache__</code> の .pyc <strong>2つだけ</strong>（<code>git status --porcelain --untracked-files=all</code>）③このセッションが出した物は作業場の外にあり残っている（経営の運転台/oem_seihinban_7ken_kakunin_20260926.md・<strong>11,890バイト</strong>・2026-09-26 12:11）④報告_OEM提供考察2.md の節は <strong>0件</strong>。<strong>失われたものは無い</strong></li>
+  <li>やったこと：セッション local_d9e6a500-2117-4834-92e6-981af9bd1a52 を<strong>アーカイブ</strong>（消していない。戻すときは unarchive）／<strong>作業場は消していない</strong>／指示書_OEM提供考察2.md・報告_OEM提供考察2.md は<strong>消さず、冒頭に「閉じた」と書いて残した</strong>（14本→13本の経過を追えるようにするため・司令塔が決めた。AI作業ゴミ箱へは移していない）／指示書_OEM提供考察.md に引き継ぎの節（出た物と材料3本）／司令塔 CLAUDE.md・現状表.md・定時報告の手順書を<strong>13本立て</strong>（内側7本・外側6本。最後の1行は「動いた N/13（内側 n/7・外側 m/6）」）</li>
+  <li>消えた判定待ち：現状表にあった「_OEM提供考察 との分担が決まっていない」</li>
+  <li><strong>ダッシュボードの件（運転台改善と1つにするか）は、まだ Mits様から頼まれていない。</strong>触らない</li>
+  <li>どのセッションで：司令塔（会話の回）</li>
+  <li>宛先：_OEM提供考察／FHL 2026 Notes</li>
+</ul>
+<ul>
+<li>2026-10-08 13:0x ／ ダッシュボードの新規構築 ── <strong>運転台改善へまとめる前の引き継ぎ書を書き足した。</strong>出どころ：FHL 2026 Notes からの依頼（Mits様原文 2026-10-08「OEM考察2つや運転台と運転台のダッシュボード構築は一つにした方がよければ、スッキリするがどうか」「ダッシュボードの新規構築の2本をたたむ）が大きな問題なく、対処できる課題ならば、処置した上で　ダッシュボードの件も司令塔に依頼して」）</li>
+  <li>書き足した先：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/ダッシュボード_引き継ぎ_20260925.md の末尾「2026-09-25 20:39 時点の状態」の節（見本の一覧・計器13個×型3つ・登録値で自動で描く作り・目盛りの最大の決め方・Mits様の判定待ち2件〈計器ごとの型の選択／⑨⑩⑪の見本データを足すか〉）</li>
+  <li>アプリ（/Users/nishidamitsuhiro/untendai-seiri）には触っていない。見本の作り直し・新しい発注もしていない</li>
+  <li>司令塔へ直接1通送ったが、司令塔の側で保留されて届いていない（msg_id 50940a1a）。だからこの行で知らせる</li>
+  <li>どのセッションで：ダッシュボードの新規構築</li>
+  <li>宛先：司令塔／運転台改善</li>
+</ul>
+<ul>
+<li>2026-10-08 13:2x ／ 司令塔 ── 外側6本の<strong>作業フォルダが6本とも司令塔になった</strong>ことを実測で確かめ、規約を直した。FHL 2026 Notes の知らせ（Mits様が4本の確認を許可された・13:0x）を鵜呑みにせず、司令塔が <code>get_session</code> を4本に打って cwd と originCwd の両方を見た：wasa_ファネルメイク（local_83809aca）・UTAGE 入口の集約（local_6156fafb）・Meta広告の自動化・最適化サイクル（local_3c188163）・YouTube チャンネルコンセプト構想（local_62e43eb5）── <strong>4本とも cwd=originCwd=/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔</strong>。CLAUDE.md の外側の表から「付け替え途中」の注記を外した（2か所→0か所）</li>
+  <li><strong>決めたこと：それでも外側6本の指示書の冒頭は薄くしない。</strong>理由2つ ①指示書だけ読めば動ける形の方が、作業フォルダが先々また変わっても壊れない ②冒頭が規約を写していても読む側の害が無い（食い違ったら規約が正）</li>
+  <li>どのセッションで：司令塔（会話の回）</li>
+  <li>宛先：FHL 2026 Notes／wasa_ファネルメイク／UTAGE 入口の集約（トールゲート式）／Meta広告の自動化・最適化サイクル／YouTube チャンネルコンセプト構想</li>
+</ul>
+<ul>
+<li>2026-10-08 13:3x ／ 司令塔 ── <strong>ダッシュボードの新規構築を運転台改善にまとめた（13本→12本）。</strong>出どころ：Mits様原文（2026-10-08・FHL 2026 Notes 経由）「ダッシュボードの新規構築の2本をたたむ）が大きな問題なく、対処できる課題ならば、処置した上で　ダッシュボードの件も司令塔に依頼して」</li>
+  <li><strong>合図の扱い</strong>：本人から司令塔への1通は届かなかった（FHL 2026 Notes の実測では「held … NOT delivered: its Claude has not seen it」）。代わりに ①決定の記録 1823行目（2026-10-08 13:0x ／ ダッシュボードの新規構築・引き継ぎ書を書き足した）と ②引き継ぎ書そのものを合図にした。<strong>この形を今後の決まりにする</strong>（連絡が届かなくても、決定の記録と出た物があれば1周は回る）</li>
+  <li><strong>閉じる前に司令塔が実測で確かめた3つ</strong>：①引き継ぎ書 /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/ダッシュボード_引き継ぎ_20260925.md は <strong>13,921バイト・2026-10-08 13:04 更新</strong>で、103行目から書き足しの節。3周目が入っている（127行目「3周目の見本帳の中身」・134行目「登録した値で自動で描く」・140行目「目盛りの最大の決め方」・153行目「Mits様の判定待ち（2件）」）②/Users/nishidamitsuhiro/untendai-seiri の未コミットは <strong>11件</strong>（追跡済み6・追跡外5）で <code>src/index.html</code> は <strong>0件</strong>＝アプリには1行も入っていない。<strong>FHL 2026 Notes の報告は「6ファイル」で、追跡外5件が抜けていた</strong>（どれもダッシュボードのものではない）③見本は _mock/ に <strong>9つ</strong>（mock_keiki_buhin_20260925.html 46,231バイト＝3周目の最新／mock_dashboard_dnd_20260925.html 26,168バイト＝2周目の並べ替えの仕組み／mock_dashboard_20260925.html 7,061バイト＝1周目・使わない／写真6枚）。<strong>失われたものは無い</strong></li>
+  <li>やったこと：セッション local_3208d8ca-effd-4801-8005-3d2a0b9f5bdb を<strong>アーカイブ</strong>（消していない）／指示書_ダッシュボード新規構築.md・報告_ダッシュボード新規構築.md は<strong>消さず、冒頭に「閉じた」と書いて残した</strong>（OEM と同じ扱い。AI作業ゴミ箱へは移していない）／指示書_運転台改善.md に引き継ぎの節（引き継ぎ書の絶対パス・<strong>Mits様の判定待ち2件</strong>・いまの状態の実測）／司令塔 CLAUDE.md・現状表.md・定時報告の手順書を<strong>12本立て</strong>（内側7本・外側5本。最後の1行は「動いた N/12（内側 n/7・外側 m/5）」）</li>
+  <li><strong>運転台改善が引き継いだ判定待ち2件</strong>：①部品見本帳から計器ごとにどの型を使うか ②⑨分配率・⑩お客さまを5つに分ける・⑪顧客の推移 の見本データを mihon.js に足すか。<strong>この2件が来るまでアプリに入れない</strong></li>
+  <li>運転台改善の会話が重くなる件：「自動要約が2回を超えたら引き継ぎ書を書いて移る」の決まりで受ける（別の手当てはしない）</li>
+  <li>どのセッションで：司令塔（会話の回）</li>
+  <li>宛先：運転台改善／FHL 2026 Notes</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
