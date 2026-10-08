@@ -84,14 +84,14 @@
   <text x="555" y="238" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2430">開発版（見せるデモ）</text>
   <text x="555" y="260" text-anchor="middle" font-size="12" fill="#5b6170">build-dev.sh・架空データだけ</text>
 
-  <rect x="440" y="300" width="230" height="70" rx="10" fill="#f4f4f4" stroke="#9aa0ab" stroke-dasharray="5 4"/>
-  <text x="555" y="328" text-anchor="middle" font-size="14" font-weight="700" fill="#5b6170">マーケ版</text>
-  <text x="555" y="350" text-anchor="middle" font-size="12" fill="#5b6170">marketing の枝・09-26 で止まり</text>
+  <rect x="440" y="300" width="230" height="70" rx="10" fill="#ffffff" stroke="#14206b"/>
+  <text x="555" y="328" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2430">マーケ版</text>
+  <text x="555" y="350" text-anchor="middle" font-size="12" fill="#5b6170">marketing の枝・10-04 に main 取り込み</text>
 
   <line x1="370" y1="205" x2="438" y2="70" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
   <line x1="370" y1="215" x2="438" y2="155" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
   <line x1="370" y1="240" x2="438" y2="245" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
-  <line x1="370" y1="255" x2="438" y2="330" stroke="#9aa0ab" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+  <line x1="370" y1="255" x2="438" y2="330" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
   <text x="380" y="352" font-size="11" fill="#5b6170">手で merge</text>
 
   <!-- Mits 検収 -->
@@ -143,11 +143,12 @@
 <tr><td><b>製品版</b></td><td><code>/Applications/untendai.app</code><br><code>com.mits.untendai</code></td><td>main</td><td><code>release.sh --自分だけ</code><br>（中で <code>build-signed.sh</code>）</td><td>1.74.1（10-01 18:15）</td><td><span class="tag t-me">Mits様だけ 1.74.1</span><br><span class="tag t-out">お客様は 1.73.28</span></td></tr>
 <tr><td><b>freee版</b><br>（クライアント版）</td><td><code>/Applications/untendai-client.app</code><br><code>com.mits.untendai.client</code></td><td>main（09-25 から）</td><td><code>build-client.sh</code> → zip</td><td>1.74.1（10-03 09:42）</td><td><span class="tag t-old">協力者Aさん 1.73.24</span><br><span class="tag t-me">協力者Bさん 1.74.1 置いただけ・未共有</span></td></tr>
 <tr><td><b>開発版</b></td><td><code>/Applications/untendai-dev.app</code><br><code>com.mits.untendai.dev</code></td><td>main</td><td><code>build-dev.sh</code></td><td>1.73.53 の表示（中身は 09-30 20:27 の main・見本A／B／C）</td><td><span class="tag t-me">Mits様の Mac だけ</span></td></tr>
-<tr><td><b>マーケ版</b></td><td><code>/Applications/untendai-mkt.app</code><br><code>com.mits.untendai.mkt</code></td><td>marketing の枝<br><code>~/untendai-marketing</code></td><td><code>build-mkt.sh</code></td><td>1.73.43（09-26 07:38）</td><td><span class="tag t-me">Mits様の Mac だけ</span></td></tr>
+<tr><td><b>マーケ版</b></td><td><code>/Applications/untendai-mkt.app</code><br><code>com.mits.untendai.mkt</code></td><td>marketing の枝<br><code>~/untendai-marketing</code></td><td><code>build-mkt.sh</code></td><td>1.74.4（10-04 21:36・2026-10-08 実測）</td><td><span class="tag t-me">Mits様の Mac だけ</span></td></tr>
 </table>
 </div>
 <p class="note">4本ともデータの置き場所は別（<code>~/Library/Application Support/&lt;識別子&gt;/</code>）。同じ Mac で同時に開いても数字は混ざらない。<br>
-ここに無い枝の作業場：<code>~/untendai-freee</code>（先端 8b3e4b6・2026-09-25。main に入り済み）。</p>
+ここに無い枝の作業場：<code>~/untendai-freee</code>（先端 8b3e4b6・2026-09-25。main に入り済み）。<br>
+<b>2026-10-08 Mits様決定（司令塔が手続き中）</b>：会話のセッション「運転台マーケ」を「運転台改善」に統合する。コードの枝（marketing）を main に戻す決定ではない（枝はこのまま残る）。</p>
 
 <!-- ============================================================ -->
 <h2>3. 枝の移り変わり（自然にこうなった）</h2>
@@ -163,8 +164,8 @@
   <circle cx="540" cy="120" r="7" fill="#2f7d4f"/>
   <text x="470" y="148" font-size="12" fill="#2f7d4f">09-25 main に入る</text>
   <!-- marketing -->
-  <path d="M600,120 C630,185 660,185 690,185 L760,185" fill="none" stroke="#9aa0ab" stroke-width="3" stroke-dasharray="6 4"/>
-  <text x="640" y="210" font-size="12" fill="#5b6170">marketing の枝：09-26 で止まり</text>
+  <path d="M600,120 C630,185 660,185 690,185 L760,185" fill="none" stroke="#2f7d4f" stroke-width="3"/>
+  <text x="640" y="210" font-size="12" fill="#2f7d4f">marketing の枝：10-04 に main 取り込み（Merge d026472）</text>
   <!-- version dots -->
   <g font-size="11" fill="#1f2430">
     <circle cx="330" cy="60" r="6" fill="#fff" stroke="#2f7d4f" stroke-width="2"/><text x="300" y="85">1.73.24</text><text x="345" y="85" fill="#5b6170">freee版・協力者Aさんへ</text>
