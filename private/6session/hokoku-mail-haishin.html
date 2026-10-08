@@ -79,7 +79,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-08 12:26 ／ 写した時刻 2026-10-08 12:36</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-08 14:58 ／ 写した時刻 2026-10-08 16:00</p>
 <h2 id="報告-メール配信・計測・自動化">報告 ── メール配信・計測・自動化</h2>
 <p>この持ち場の窓（9:06 の朝の測定・19:39 のメルマガ・23:13 の見張り・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_メール配信・計測・自動化.md</p>
@@ -367,6 +368,115 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>申込ページ v8pQL82x2Am1 の締切は 10/1（木）朝7時に直してあった（本文2か所・残り時間の計算と表示の2か所）</li>
 <li>10/1 以降、この窓で出した号は無い</li>
 </ul>
+<h3 id="2026-10-08-13-4x-soushin-machi-json-の運転台マーケ宛て12件">2026-10-08 13:4x ── soushin_machi.json の運転台マーケ宛て12件を全部閉じた（送り直さない）</h3>
+<p>司令塔の決定の記録 2026-10-08 の節で、この持ち場あてに名指しされた1件（FHL 2026 Notes の当てで出た抜け）。</p>
+<p>自分で開いて数えた。<strong>全20件・うち delivered_at が空 12件</strong>（2026-09-15 09:14 〜 2026-09-20 21:05）。宛名の書き方は2通り（運転台マーケ 8件／untendai-marketing 4件）で、last_error は12件とも <code>No agent named &#x27;untendai-marketing&#x27; / &#x27;運転台マーケ&#x27; is reachable.</code>。FHL 2026 Notes の「12件」は合っていた。</p>
+<p><strong>12件とも閉じた印にした。運転台改善への送り直しはしない。</strong>理由は3つ。</p>
+<p>1. <strong>送る必要が無くなっている</strong> ── 決定の記録 2026-09-21 06:4x ／ 司令塔「測定の引き渡しは SendMessage をやめ、台帳 keisoku_suii.csv の直読みに一本化する。soushin_machi.json は記録として残すが、未送の件数を報告の数字に載せない」。12件とも中身は測定の数字の引き渡し（朝の回＝12h・36h／夜の回＝24h・48h）で、この決定がそのまま当たる</p>
+<p>2. <strong>中身の本体は渡っている</strong> ── 数字は台帳に入っている。2026-09-15 24行／09-16 19行／09-17 21行／09-18 16行／09-19 16行／09-20 16行（台帳は全123行）</p>
+<p>3. <strong>抜けの情報も後から扱われている</strong> ── 12件のうち8件に「spro が入れず抜け」「まぐまぐ 9/14 便は配送無し」が書かれているが、決定の記録 2026-09-21 09:2x と 11:3x〜16:0x の経路の点検で全部扱い済み。送り直しても新しい情報は渡らない</p>
+<p>書き方：各件に <code>closed_at</code>（2026-10-08）・<code>closed_by</code>（メール配信・計測・自動化）・<code>closed_reason</code>（上の3つの根拠を1文で）を足した。<strong><code>delivered_at</code> は空のまま</strong>（届いていないのは事実なので変えない）。<strong>1件も消していない</strong>。</p>
+<ul>
+<li>控え：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261008_soushin_machi_tojiru_mae.json</li>
+<li>検算：全20件・closed_at あり 12件・delivered_at あり 8件・どちらも無い件 0件</li>
+<li>決定の記録に宛先つきで1節足した（宛先：司令塔／運転台改善）</li>
+</ul>
+<h3 id="2026-10-08-14-2x-指示書-2026-10-08-の1-3を全部済ませた-あわせて">2026-10-08 14:2x ── 指示書 2026-10-08 の1〜3を全部済ませた。あわせて、期限が過ぎた案内が今も出続けているのを見つけた</h3>
+<h4 id="1番-持ち越し9日目-9-29号・10-1号-10-7号-3スタンドとも号なし-台帳に足す行は無">1番（持ち越し9日目）9/29号・10/1号〜10/7号 ── <strong>3スタンドとも号なし</strong>。台帳に足す行は無い</h4>
+<p>実測2経路。</p>
+<p><strong>UTAGE の一斉配信の一覧</strong>（account vNItAbojIgEK／scenario bjDd8NXsSPMa「〈メルマガ〉メインメルマガ」・新しい順30件・総数139）── いちばん新しいのが a2zZxBpISLzx「今日、9月末日」（2026-09-30 22:59:39 作成）。その前が SdG6NVG57Of3（9/28）。<strong>9/29 も 10/1〜10/7 も1本も無い</strong>。</p>
+<p><strong>Gmail で受信側から</strong>（送信元3つを <code>{from:nishida@dmikz.com from:mailmag@mag2tegami.com from:dai@spro01.com} after:2026/09/29 in:anywhere</code> で引いた19件）──</p>
+<ul>
+<li>まぐまぐ本配信（mailmag@mag2tegami.com）は 9/30 14:50 の「今日、9月末日」1件のみ</li>
+<li>spro 本配信（dai@spro01.com → dai@3216.fun）も 9/30 15:59 の「今日、9月末日」が最後</li>
+<li>10/1 以降に出ていたのは<strong>メルマガの号ではない便6通</strong> ── ①試し登録の読者 3216.fun+tenken20260930@gmail.com あてのステップメール3通（10/1「分からない言葉のまま、聞いていい。」10/2「見本の数字を、自分の数字に変える。」10/3「FAST と NORMAL と DEEP の違い。」）②AIグループ講座の受講者あて3通（10/1「2ヶ月、お疲れさまでした。」10/3「AIグルコン日程とZOOMURL」10/6「残り40日、使い切ってください。」）</li>
+</ul>
+<p>→ <strong>出した記録 dashita_kiroku.csv は 09-30 の3行が最後のままで正しい。</strong>10月の行は足さない（出た号が無いので足す行が無い）。</p>
+<p><strong>✅ 裏取り済み（2026-10-08 14:3x に devils-advocate に出し、14:5x に返った）。断定は崩れなかった。ただし言い方に訂正1点と、参謀が気付いていなかった穴4つが出た。</strong></p>
+<p><strong>裏取りが叩いた範囲（数で）</strong>：UTAGE は <code>message_account_list</code> 全件（<strong>1アカウント</strong> <code>vNItAbojIgEK</code> のみ＝他アカウントという穴は無い）→ <code>message_scenario_list</code> 全件（<strong>48シナリオ</strong>）→ 各シナリオを <code>per_page=100</code> で全ページ（<strong>763件</strong>・エラー0件）。各シナリオの <code>meta.total</code> の合計 763 と集めた行数 763 が一致（食い違ったシナリオなし）。内訳は <code>step 278 / broadcast 327 / reminder 158</code>・<code>reserved 387 / draft 80 / completed 296</code>。Gmail は<strong>7クエリ</strong>（送信元ごとに別々＋本文の固定文字2本＋完了通知2本）。管理画面は<strong>まぐまぐ1スタンドを実機で開いた</strong>（spro は画面がロックされていて入れず）。</p>
+<p><strong>まぐまぐの管理画面の実測</strong>（magazineId 109259 の配送履歴の画面原文・上から）：<code>2026/09/30 今日、9月末日</code> → <code>2026/09/28 宮古島の海、半端ないです</code> → <code>2026/09/27 生き死にがかかっている？</code> → <code>2026/09/22 …</code>。<strong>09/29 も10月も1行も無い。</strong>配送予約確認の画面は <code>配送予約がありません。</code>。1行目のリンクは <code>IssueHistoryDetail.do?issueId=165306010</code> で台帳と一致。</p>
+<p><strong>spro</strong>（画面に入れなかったので Gmail 3経路）：ALCHEMY MAIL の完了通知は <strong>5138（09-30・件名「今日、9月末日」・配信数 3934）が最後の1本</strong>。<code>from:dai@spro01.com after:2026/09/30</code> の全4件に 5139 は出ず、<code>&quot;予約配信&quot; OR &quot;ALCHEMY&quot; after:2026/09/30</code> も1件（5138 だけ）。spro の ID は 5131〜5138 が連番で飛びがなく（5137=09-28 → 5138=09-30）、<strong>09-29 の号も存在しない</strong>。</p>
+<p><strong>訂正（言い方）</strong>：「<strong>3スタンドとも号なし</strong>」は正しいが、「<strong>UTAGE から10月に1通も出ていない</strong>」と書くと嘘になる。10月に UTAGE から出た便はある ── <code>eVw7xtnV4H9Y</code>「AIグルコン日程とZOOMURL」（broadcast / completed / <strong>send_date 2026-10-04 06:00</strong>・シナリオ <code>A4UClMsbK9bg</code> BE-02 平日クラス）と、読者ごとのタイマーで飛んだ step 5本。どれも号ではないので <code>dashita_kiroku.csv</code> の対象外。<strong>号の有無を書くときはシナリオ名を添える。</strong></p>
+<p>同じシナリオの reserved も数えた：<code>send_date &gt;= 2026-09-29</code> の行は <strong>11件</strong>で全部 <code>A4UClMsbK9bg</code> の「AIグルコン日程とZOOMURL」（completed 1本＝10-04 ＋ reserved 10本＝10-10, 10-13, 10-14, 10-24, 10-30, 11-02, 11-05, 11-15, 11-21, 11-24）。<strong>メルマガシナリオ <code>bjDd8NXsSPMa</code> に reserved は1件も無い</strong>（139件すべて broadcast / completed / mail）。</p>
+<p><strong>参謀の引き方の穴3つ → 手順書に固定した</strong>（<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/skills/merumaga-3stand-haishin/SKILL.md</code> に「🔎 「その日に号が出たか」を確かめる引き方」を新設・717行）。</p>
+<p>1. <strong>まぐまぐの送信元は2つある。</strong>本配信 <code>mailmag@mag2tegami.com</code> と<strong>テスト配信 <code>mailmag@mag2.com</code></strong>（件名の先頭に <code>[TEST]</code>）。参謀のクエリには後者が入っておらず、2件（09-30 14:15:49 → nishida@spro01.com ／ 09-28 09:52:53 → 3216.fun@gmail.com）が見えていなかった。<strong>送信元を並べる設計そのものが漏れる。</strong>本文の先頭の固定文字で引く方が確実 ── <code>&quot;西田光弘公式&quot;</code>（まぐまぐ便）／<code>&quot;メインメルマガ&quot;</code>（UTAGE・spro 便）</p>
+<p>2. <strong><code>created_at</code> だけで切ると、前の月に作って当月に出る行を落とす。</strong>実例が上の <code>eVw7xtnV4H9Y</code>（send_date 10-04 だが created_at は9月以前）。<code>created_at</code> と <code>send_date</code> の<strong>両方</strong>で引く</p>
+<p>3. <strong>OR で束ねた1本のクエリの件数を「全部」と読むな。</strong>参謀は <code>{from:A from:B from:C}</code> の1本で 19件を得て全件と読んだが、送信元ごとに分けると 16+2+7=25件、本文の固定文字では 21件。<strong>束ねた件数は分けた合計と一致しない</strong></p>
+<p>手順書に書いた引き方は、その場で自分で叩いて確かめた（<code>&quot;西田光弘公式&quot; after:2026/09/28 in:anywhere</code> → <strong>21件</strong>・手順書に書いた数と一致。この21件の中で10月に出ていたのは +tenken あてのステップ4通だけで、まぐまぐ・spro の本配信は 09-30 が最後）。</p>
+<h4 id="見つけたこと-裏取りが出した穴4つめ・この持ち場の計測に効く-9-30-の-UTAGE-号が-M">見つけたこと（裏取りが出した穴4つめ・この持ち場の計測に効く）── 9/30 の UTAGE 号が Mits様の客視点アドレスに6通届いていた</h4>
+<p><code>subject:&quot;今日、9月末日&quot; to:3216.fun@gmail.com in:anywhere</code> で引いた結果 <strong>6通</strong>（UTC）：13:59:57 / 14:02:01 / 14:03:38 / 14:04:51 / 14:06:58 / 14:24:33 ＝ JST 22:59:57 / 23:02:01 / 23:03:38 / 23:04:51 / 23:06:58 / 23:24:33。</p>
+<p>UTAGE 側の message は <code>a2zZxBpISLzx</code> の<strong>1本だけ</strong>で、その統計は <code>send_datetime 2026-09-30 23:08:19</code>・<code>send_count 1789</code>・<code>open_count 297</code>（16.6%）・<code>click_count 15</code>（0.84%）・解除0。<strong>本配信の送信開始は 23:08:19 なので、それより前の5通（22:59:57〜23:06:58）は入稿中に打ったテスト送信</strong>、最後の 23:24:33 が本配信の着弾。前の会話で台帳に書いた受信時刻 23:07 は、この本配信の着弾（23:24）とずれているので、台帳の <code>dashita_koku</code> は本配信の着弾で見直す余地がある。</p>
+<p>計測への効き方：</p>
+<ul>
+<li><code>3216.fun@gmail.com</code> は jogai_settei.json の <code>emails_exact</code> に入っている（実測済み）。<strong>台帳の「開封（除外後）」「クリック（除外後）」の列では外れる</strong></li>
+<li><strong>生の数（UTAGE の <code>message_stats_get</code> が返す open_count 297）には入りうる。</strong>除外は台帳側で効かせているので、生の数には参謀の操作が混ざる</li>
+<li><strong>テスト送信の5通が UTAGE の統計に入るかは未確認。</strong><code>send_count 1789</code> は読者数に近く、テスト5通を足した数には見えないが、この返りだけでは言い切れない</li>
+</ul>
+<h4 id="2番-持ち越し8日目-試し登録の読者-XJJC0TmXOwvL-数えから外れる">2番（持ち越し8日目）試し登録の読者 XJJC0TmXOwvL ── <strong>数えから外れる</strong></h4>
+<p>読者の宛名は <code>3216.fun+tenken20260930@gmail.com</code>（決定の記録 2026-09-30 12:4x ／ 司令塔）。jogai_settei.json の9本の正規表現に1本ずつ当てた結果：</p>
+<ul>
+<li><code>^3216\.fun\+.*@gmail\.com$</code> → <strong>当たる</strong></li>
+<li>残り8本（<code>^bs-.*@gmail\.com$</code> / <code>^dup-test-.*@gmail\.com$</code> / <code>^phase3verify\..*@gmail\.com$</code> / <code>.*\+dup1@</code> / <code>.*\+dupcheck@</code> / <code>.*\+cookietest@</code> / <code>.*\+guitest@</code> / <code>.*\+browsertest@</code>）→ 当たらない</li>
+<li>emails_exact の3本（ac_nishida@spro01.com / 3216.fun@gmail.com / dai@3216.fun）には入っていない</li>
+</ul>
+<p>1本当たれば外れるので、この読者は計測の数えに入らない。<strong>除外の設定は書き換えていない</strong>（指示書の線どおり）。</p>
+<h4 id="3番-持ち越し13日目-二重は1対1で組にする-この持ち場の数え方には当たらない">3番（持ち越し13日目）「二重は1対1で組にする」── <strong>この持ち場の数え方には当たらない</strong></h4>
+<p>決定の記録 2026-09-25 18:5x ／ 運転台改善（決定台帳 1245行目）。宛先にこの持ち場が入っているので読んだ。</p>
+<p>落とす対象は「同じお客様・同じ金額のかたまりの中の UTAGE の行を、Stripe の決済がある本数ぶんだけ落とす」── <strong>売上・決済の行の二重</strong>。節の本文に出る語を数えた：金額 2回／Stripe 2回／決済 1回。対して<strong>この持ち場の数えの語は0回</strong>（開封 0／クリック 0／解除 0／送信 0／まぐまぐ 0／spro 0）。</p>
+<p>メールの数え（送信・開封・クリック・解除）には「金額」という列が無いので、<code>PARTITION BY 客, 金額</code> の組み方がそのまま当たる所が無い。<strong>この持ち場では何も変えない。</strong>読んで片づけた扱いにする。</p>
+<h4 id="見つけたこと-期限が68日過ぎた案内が-今も登録者に出続けている">見つけたこと ── 期限が68日過ぎた案内が、今も登録者に出続けている</h4>
+<p>1番を調べる途中で、10/6 に 3216.fun@gmail.com に届いた「残り40日、使い切ってください。」の本文が、日付として成り立っていなかった。</p>
+<p><strong>出どころ</strong>（実機で特定）：シナリオ 2JPgrcZIciae「F0-01_経営イノベーション_サインナップ」のステップメール2本。どちらも status は <strong>reserved</strong>（生きている）。</p>
+<table>
+<tr><th>ID</th><th>題</th><th>出る時</th><th>累計</th><th>開封</th></tr>
+<tr><td>6HtQJbgRyclK</td><td>F0-01-14_残り40日、使い切ってください。</td><td>登録から <strong>60日目</strong> 08:00</td><td><strong>36通</strong></td><td>24人（66.67%）</td></tr>
+<tr><td>uGdoinUJ1iVq</td><td>F0-01-15_あと15日で、一度閉じます。</td><td>登録から <strong>85日目</strong> 08:00</td><td><strong>33通</strong></td><td>25人（75.76%）</td></tr>
+</table>
+<p><strong>本文に全体の日付が固定で書き込まれている</strong>（UTAGE の原稿をそのまま読んだ）。</p>
+<ul>
+<li>60日目の便：「起点は 2026年4月21日。100日目は <strong>2026年7月30日</strong> です。」「<strong>今日時点で、残り40日。</strong>」「■ この60日で、起きたこと。」「<strong>残り40日のうちに</strong>、一声かけてあげてください」</li>
+<li>85日目の便：「<strong>残り15日です。</strong>」「2026年7月30日で、The Innovation の第一期の枠を、一度閉じます。」「<strong>5月からは</strong>、入ってくれた第一期の仲間と、深くやっていきます。」</li>
+</ul>
+<p><strong>噛み合わない作り</strong>：本文の日付は全体の開始日（2026-04-21）起算の固定、出す時刻は<strong>その人の登録からの経過日数</strong>。登録が 4/21 に近い人には合うが、遅く登録した人には成り立たない。10/6 に届いた分は、7/30 が <strong>68日前</strong>。閉じた枠へ「残り40日のうちに一声かけて」と誘っている。85日目の便は「7/30 に閉じる」と言いながら「5月からは深くやる」と前後も合っていない。</p>
+<p><strong>直していない。</strong>お客様に届く本番なので Mits様の合図を待つ。この持ち場でやったのは、出どころの特定と実測まで。</p>
+<ul>
+<li>届いた実物：Gmail thread 1a1137419b9c3529（2026-10-06 23:02 UTC ＝ JST 10/07 08:02・宛先 3216.fun@gmail.com）</li>
+<li>決定の記録に宛先つきで1節足した（宛先：司令塔／FHL 2026 Notes）</li>
+</ul>
+<h3 id="2026-10-08-15-2x-司令塔の実測で未確認が1つ消え-自分の根拠の立て方の誤りが1つ">2026-10-08 15:2x ── 司令塔の実測で未確認が1つ消え、自分の根拠の立て方の誤りが1つ出た。台帳の時刻は合図を待たずに自分で直した</h3>
+<h4 id="1-テスト送信は-UTAGE-の統計に乗らない-司令塔が2経路で実測">1. テスト送信は UTAGE の統計に乗らない（司令塔が2経路で実測）</h4>
+<p>直前の節で「テスト送信の5通が UTAGE の統計に入るかは未確認」と書いた。司令塔が測って<strong>入らない</strong>と確定した。読者 <code>3216.fun@gmail.com</code>（reader_id <code>1JWtYFFc9lft</code>）で：</p>
+<ul>
+<li><code>message_reader_sent_list</code> ── 「今日、9月末日」の配信記録は <strong>1件だけ</strong>（<code>2026-09-30 23:24:34.413</code>）。Gmail には6通届いているのに1件</li>
+<li><code>message_reader_open_list</code> ── この読者の開封記録は全781件。そのうち <code>a2zZxBpISLzx</code> は <strong>1件だけ</strong>（<code>2026-10-04 15:05:00</code>）</li>
+</ul>
+<p>→ <strong>生の <code>open_count</code> にも参謀のテスト送信は混ざっていない。</strong>直前の節で「生の数には入りうる」と書いたのは、本配信の1通については正しいが、テスト送信5通については誤り。</p>
+<h4 id="2-自分の根拠の立て方が誤っていた-send-count-を読者数と読んだ">2. 🔴 自分の根拠の立て方が誤っていた ── <code>send_count</code> を読者数と読んだ</h4>
+<p>直前の節で「<code>send_count 1789</code> は読者数に近く、テスト5通を足した数には見えない」と書いた。<strong><code>send_count</code> は読者数ではない。</strong>このシナリオの読者は <code>message_reader_list</code> の <code>meta.total</code> で <strong>2310人</strong>（<code>send_count 1789</code> との差 521 は解除・エラー・条件）。</p>
+<p><strong>数が近いことは根拠にならない。</strong>結論は同じだが、立て方が違っていた。手順書に「<code>send_count</code> を読者数と読むな」を書いた。</p>
+<h4 id="3-台帳の時刻-自分で決めて直した-Mits様の合図は取っていない">3. 台帳の時刻 ── 自分で決めて直した（Mits様の合図は取っていない）</h4>
+<p><strong>決まりが2つあって矛盾していた。</strong></p>
+<ul>
+<li>①2026-09-16 制定：<code>dashita_koku</code> は<strong>関所を通したときに記入した時刻</strong>。本配信が飛んだ時刻ではない</li>
+<li>②参謀が2026-09-28 に書いた：<code>dashita_koku</code> ＝ <strong>3216.fun@gmail.com に届いた本配信の受信時刻</strong></li>
+</ul>
+<p><strong>列の意味は 09-27 の magmag の行で確定していた</strong> ── <code>dashita_te</code> が <code>予約配信手続き（21:00）</code> で <code>dashita_koku</code> が <code>19:56</code>。<strong>手続きの時刻であって配信の時刻ではない。</strong>①が正本で、②は参謀が書いた矛盾。</p>
+<p><strong>決めたこと</strong>：<code>dashita_koku</code> は<strong>手続きを押した時刻</strong>。押した時刻が分からない日は <code>message_stats_get</code> の <code>send_datetime</code>（配信開始）を入れ、<code>dashita_te</code> に <code>／配信開始の時刻</code> と書き添える。<strong>着弾はこの列に入れない</strong>（段階10の証拠は報告に書く）。</p>
+<p><strong>直した2行</strong>（②に従って着弾で入れていた行）：</p>
+<table>
+<tr><th>行</th><th>直す前（着弾）</th><th>直した後（配信開始・API の <code>send_datetime</code>）</th></tr>
+<tr><td>2026-09-27 utage cVrAqjkXptFF</td><td>19:49</td><td><strong>19:33</strong>（<code>2026-09-27 19:33:27</code>）</td></tr>
+<tr><td>2026-09-28 utage SdG6NVG57Of3</td><td>18:49</td><td><strong>18:33</strong>（<code>2026-09-28 18:33:53</code>）</td></tr>
+</table>
+<p><strong>2026-09-30 utage の <code>23:07</code> は直していない。</strong>押した時刻で、配信開始 <code>23:08:19</code> の1分前。即時配信では押した時刻と配信開始がほぼ重なるので整合する。司令塔からは「23:24 に直せ」と来たが、<strong>23:24 は着弾</strong>で、同じ日の magmag <code>23:13</code>・spro <code>23:21</code> も着弾ではなく押した時刻（着弾は まぐまぐ 23:50・spro 翌 00:59）。utage だけ着弾にすると列の中で意味が混ざるので、揃える方を採った。</p>
+<ul>
+<li>台帳：13行ある utage の行がこれで1つの意味に揃った（9/13〜9/22 の予約タスクが書いた10行も押した時刻で整合。例：9/17 は台帳 19:56 に対し <code>created_at 19:49:24</code>・<code>send_date 21:05</code> の予約）</li>
+<li>控え：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261008_dashita_kiroku_utage_jikoku_soroeru_mae.csv</li>
+<li>手順書に決め方と直した経緯を残した（717→745行・控え2本も AI作業ゴミ箱）</li>
+</ul>
+<h3 id="2026-10-08-15-3x-司令塔が-23-07-23-24-を取り消した-台帳はこのまま">2026-10-08 15:3x ── 司令塔が「23:07 → 23:24」を取り消した。台帳はこのまま</h3>
+<p>司令塔が決定の記録に取消を1節足した（<code>## 2026-10-08 14:5x ／ 司令塔</code>）。誤りは司令塔の側で、参謀が前の便に書いた「23:07 は着弾 23:24 とずれている」を<strong>列の意味を自分で確かめずにそのまま使って「直せ」と書いた</strong>とのこと。</p>
+<p>生きているのは「持ち場の台帳は自分で決めて直してよい」の部分だけ。<strong>09-27 と 09-28 の2行の直し（19:49→19:33／18:49→18:33）と、列の意味の確定（手続きを押した時刻。分からない日は配信開始を入れて <code>dashita_te</code> に書き添える。着弾はこの列に入れない）はそのまま正本。</strong>台帳の 2026-09-30 utage <code>23:07</code> は直さない。追加の直しは無い。</p>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
 </body>

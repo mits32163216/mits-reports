@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+<title>報告 FHL 2026 Notes ／ 11セッション社内レポート</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:20px 20px 80px; max-width:1000px; margin:0 auto; line-height:1.7; }
+h1,h2,h3,h4,h5,h6 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; color:var(--fg); }
+h1 { font-size:26px; margin:12px 0 18px; padding-bottom:10px; border-bottom:1px solid var(--line); }
+h2 { font-size:20px; margin:32px 0 12px; padding-left:10px; border-left:4px solid var(--gold); }
+h3 { font-size:16px; margin:24px 0 10px; }
+p { margin:10px 0; }
+a { color:var(--gold); text-decoration:none; }
+a:hover { text-decoration:underline; }
+code { font-family:var(--mono); background:var(--sub-bg); padding:2px 5px; border-radius:3px; font-size:0.9em; }
+pre { font-family:var(--mono); background:var(--sub-bg); padding:14px 16px; border-radius:8px; overflow-x:auto; border:1px solid var(--line); font-size:0.85em; line-height:1.5; }
+pre code { background:transparent; padding:0; }
+blockquote { border-left:3px solid var(--gold); padding:6px 14px; margin:14px 0; color:var(--muted); background:var(--sub-bg); border-radius:0 6px 6px 0; }
+ul,ol { padding-left:22px; }
+li { margin:4px 0; }
+table { border-collapse:collapse; width:100%; margin:14px 0; font-size:0.9em; }
+th,td { border:1px solid var(--line); padding:6px 10px; text-align:left; vertical-align:top; }
+th { background:var(--sub-bg); font-family:var(--mincho); font-weight:600; }
+hr { border:0; border-top:1px dashed var(--line); margin:24px 0; }
+img { max-width:100%; height:auto; }
+
+.nav-back { display:inline-block; margin:0 0 12px; font-family:var(--mono); font-size:12px; color:var(--muted); }
+.nav-back a { color:var(--muted); }
+.nav-back a:hover { color:var(--gold); }
+
+.meta-head { background:var(--sub-bg); border:1px dashed var(--line); border-radius:6px; padding:8px 12px; margin:8px 0 18px; font-family:var(--mono); font-size:11px; color:var(--muted); line-height:1.7; }
+.meta-head b { color:var(--fg); font-weight:600; margin-right:4px; }
+
+.embed-html { border-top:1px dashed var(--line); padding-top:16px; margin-top:8px; }
+.embed-html iframe { width:100%; border:0; min-height:80vh; background:var(--card-bg); border-radius:8px; }
+
+footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+</style>
+</head>
+<body>
+<div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-08 12:28 ／ 写した時刻 2026-10-08 16:00</p>
+<h2 id="報告-FHL-2026-Notes">報告 ── FHL 2026 Notes</h2>
+<p>この持ち場のセッションが、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
+<p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_FHL2026Notes.md</p>
+<p>設計：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/部署の1周_20260918.md</p>
+<p>型（1回ぶん・見出しは書いた日時とセッションの名前）：</p>
+<pre><code>
+## YYYY-MM-DD HH:MM（FHL 2026 Notes）
+- 読んだ指示書の節：YYYY-MM-DD
+- やった：&lt;番号&gt; &lt;1行&gt;（出た物：絶対パス）
+- できなかった：&lt;番号&gt; &lt;理由を1行&gt;（合図待ち／実機で確かめられず／材料が無い、のどれか）
+- 次に自分がやる：&lt;1行&gt;
+- ほかの持ち場に頼む：&lt;持ち場&gt;：&lt;1行&gt;（急ぎなら決定の記録にも宛先付きで）
+- 数字：&lt;この持ち場が見ている数字があれば1行&gt;
+</code></pre>
+<hr>
+<h3 id="2026-10-08-12-28-FHL-2026-Notes">2026-10-08 12:28（FHL 2026 Notes）</h3>
+<ul>
+<li>読んだ指示書の節：2026-10-08</li>
+<li>やった：1 指示書と報告の型を読んだ。書き先は 報告_FHL2026Notes.md の末尾、型はこのファイルの冒頭。手元の材料：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/_wip/linchpin_nou_no_naka_20261005/linchpin_sekkeizu_tatakidai_v2.html（設計図のたたき台 第2版・2026-10-07 の仮決めの図つき）／/Users/nishidamitsuhiro/.claude/plans/hashed-kindling-hippo.md（壁打ちの台・登録ページのコピー案を含む）／/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/_wip/fhl2026_brief_wayaku_20261008/FHL 2026 — Executive Intelligence Brief — Top 10 Presentations（全文和訳）.pdf ／ /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/_wip/fhl2026_notes_wayaku_20261008/FHL 2026 Notes Final Draft（全文和訳）.pdf ／ /Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-10-05_1546_fhl2026-linchpin-continuity.md</li>
+<li>やった：2 決定の記録で宛先に FHL 2026 Notes がある行は 2026-10-08 ／ 司令塔 の1件（7本目に入れた件）。読んで片づけた</li>
+<li>やった：3 決定の記録の末尾に、材料の共有を3件足した（LEVEL 1 の仮決め→運転台改善／AI-Mits-チューニング、登録ページのコピー原文→伽藍とバザールの実現／メール配信・計測・自動化、FHL 和訳 PDF→伽藍とバザールの実現）。運転台マーケあての材料は無かったので足していない</li>
+<li>できなかった：なし</li>
+<li>次に自分がやる：指示書の次の節を待つ。LEVEL 1 は仮決めのまま、Mits様の壁打ちの続きがあればそこで動く</li>
+<li>ほかの持ち場に頼む：なし（上の3件は知っておくだけ）</li>
+<li>数字：なし</li>
+</ul>
+
+<footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
+</body>
+</html>

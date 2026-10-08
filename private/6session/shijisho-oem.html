@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+<title>指示書 OEM提供考察 ／ 11セッション社内レポート</title>
+<style>
+:root {
+  --navy:#0F1B2E; --ivory:#F5EFE1; --gold:#D4A85B; --sage:#7A9B7E; --rose:#C77B70;
+  --mincho:"Hiragino Mincho ProN","游明朝",serif; --sans:"Hiragino Sans","游ゴシック",sans-serif; --mono:"SF Mono","Menlo",monospace;
+  --bg:var(--ivory); --fg:var(--navy); --line:rgba(15,27,46,0.12); --card-bg:#fff; --muted:rgba(15,27,46,0.58); --sub-bg:rgba(212,168,91,0.06);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { padding:20px 20px 80px; max-width:1000px; margin:0 auto; line-height:1.7; }
+h1,h2,h3,h4,h5,h6 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; color:var(--fg); }
+h1 { font-size:26px; margin:12px 0 18px; padding-bottom:10px; border-bottom:1px solid var(--line); }
+h2 { font-size:20px; margin:32px 0 12px; padding-left:10px; border-left:4px solid var(--gold); }
+h3 { font-size:16px; margin:24px 0 10px; }
+p { margin:10px 0; }
+a { color:var(--gold); text-decoration:none; }
+a:hover { text-decoration:underline; }
+code { font-family:var(--mono); background:var(--sub-bg); padding:2px 5px; border-radius:3px; font-size:0.9em; }
+pre { font-family:var(--mono); background:var(--sub-bg); padding:14px 16px; border-radius:8px; overflow-x:auto; border:1px solid var(--line); font-size:0.85em; line-height:1.5; }
+pre code { background:transparent; padding:0; }
+blockquote { border-left:3px solid var(--gold); padding:6px 14px; margin:14px 0; color:var(--muted); background:var(--sub-bg); border-radius:0 6px 6px 0; }
+ul,ol { padding-left:22px; }
+li { margin:4px 0; }
+table { border-collapse:collapse; width:100%; margin:14px 0; font-size:0.9em; }
+th,td { border:1px solid var(--line); padding:6px 10px; text-align:left; vertical-align:top; }
+th { background:var(--sub-bg); font-family:var(--mincho); font-weight:600; }
+hr { border:0; border-top:1px dashed var(--line); margin:24px 0; }
+img { max-width:100%; height:auto; }
+
+.nav-back { display:inline-block; margin:0 0 12px; font-family:var(--mono); font-size:12px; color:var(--muted); }
+.nav-back a { color:var(--muted); }
+.nav-back a:hover { color:var(--gold); }
+
+.meta-head { background:var(--sub-bg); border:1px dashed var(--line); border-radius:6px; padding:8px 12px; margin:8px 0 18px; font-family:var(--mono); font-size:11px; color:var(--muted); line-height:1.7; }
+.meta-head b { color:var(--fg); font-weight:600; margin-right:4px; }
+
+.embed-html { border-top:1px dashed var(--line); padding-top:16px; margin-top:8px; }
+.embed-html iframe { width:100%; border:0; min-height:80vh; background:var(--card-bg); border-radius:8px; }
+
+footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+</style>
+</head>
+<body>
+<div class="nav-back"><a href="index.html">← 目次に戻る</a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-08 15:55 ／ 写した時刻 2026-10-08 16:00</p>
+<h2 id="指示書-OEM提供考察">指示書 ── _OEM提供考察</h2>
+<p>司令塔（定時報告の回 6:34／12:34／18:34）が書く。末尾に足すだけ。<strong>いちばん下の節が今の指示。</strong>1番からやる。</p>
+<p>報告の書き先：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/報告_OEM提供考察.md（末尾に型どおり）</p>
+<p>設計：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/部署の1周_20260918.md</p>
+<p>この持ち場は 2026-10-08 に、部署の1周の<strong>外側7本</strong>として入った。出どころは Mits様原文（2026-10-08・BA_FHL 2026 Notes 経由で司令塔へ）「14本で回る情報共有の仕組みを司令塔に依頼して」。</p>
+<h3 id="この持ち場のこと-2026-10-08-実測">この持ち場のこと（2026-10-08 実測）</h3>
+<ul>
+<li>画面のいまの名前：BA__OEM提供考察（頭の <code>BA_</code>／<code>BS_</code>／<code>FA_</code> は<strong>一時の印</strong>。Mits様「なれたら外す」。<strong>名前の正本は印なしの「_OEM提供考察」</strong>）</li>
+<li>セッションID：local_b5ee950a-56de-459f-9ba1-1d741e98a52f</li>
+<li>作業フォルダ：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔</li>
+<li>いまのサイドバーのまとまり：■新司令塔（2026-10-08 12:5x に移した。元のまとまりは Mits様が消した）</li>
+<li>決まった時計：<strong>無い。</strong>Mits様が開いたときだけ動く。だから<strong>会話が開いたら、まずこの指示書のいちばん下の節を読む</strong></li>
+</ul>
+<h3 id="この持ち場が見るもの">この持ち場が見るもの</h3>
+<p>会計事務所のOEM（事務所の1台でまとめて見る形／事務所の名前で配る形）のケース潰し。材料は 2026-09-25 の調査3本と引き継ぎ書。<strong>Mits様は「やる」と決めていない。</strong>熟慮だけ</p>
+<h3 id="許される範囲-全持ち場共通">許される範囲（全持ち場共通）</h3>
+<ul>
+<li>合図なしでやる：調べる・数える・案を作る・下書き・モック・自分の作業場（コード・設定ファイル・docs）の直し・登録経路（URL）を作る</li>
+<li>Mits様の合図が要る：お客様に届くものの本番（UTAGE の設定変更・配信・公開・広告）、お金が動く、外に出る。直す内容と手順を報告に書いて「実施」を待つ。お客様向けの投稿は下書きを先に Mits様へ</li>
+<li>Mits様が保留したもの（価格・LEVEL 1 をやるかどうか・松竹梅の値・紹介の報酬額・OEM をやるかどうか）は触らない</li>
+<li>調べろと言われたら調べた結果だけを出して止まる。順番付け・発注書・段取りは、Mits様が「やる」と決めてから</li>
+</ul>
+<h3 id="毎回やること-この持ち場の1周">毎回やること（この持ち場の1周）</h3>
+<p>1. 決定の記録 /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/決定台帳_6セッション共通.md を開き、<strong>宛先に「_OEM提供考察」がある行だけ</strong>を読んで片づける</p>
+<p>2. この指示書のいちばん下の節を1番からやる</p>
+<p>3. 終わったら /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/報告_OEM提供考察.md の末尾に型どおり書く</p>
+<p>4. 決めたこと（計測・除外・数え方・価格・段の作り）は、決定の記録の末尾に<strong>宛先の行を付けて</strong>足す（途中の行は書き換えない。直しは「取消＋新しい行」）</p>
+<h3 id="2026-10-08-初回・司令塔が会話の回で書いた">2026-10-08（初回・司令塔が会話の回で書いた）</h3>
+<p>1. この指示書と /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/報告_OEM提供考察.md を開き、書き先と型を確かめる</p>
+<p>2. <strong>自分の役を1行で報告に書く。</strong>司令塔はこの持ち場の役の中身を決めていない（上の「この持ち場が見るもの」に書いていない所は空のまま出してある）。いま手元にある材料の絶対パスも添える</p>
+<p>3. 決定の記録で、宛先に「_OEM提供考察」がある行を読む（初回は司令塔が書いた1件：2026-10-08 ／ 司令塔 ── 14本で回る形）</p>
+<ul>
+  <li>許される：読む・書く・決定の記録に足すまで。本番の変更・発注はしない</li>
+</ul>
+<h3 id="2026-10-08-13-1x-OEM提供考察-2-を引き継いだ・司令塔が会話の回で書いた">2026-10-08 13:1x（_OEM提供考察-2 を引き継いだ・司令塔が会話の回で書いた）</h3>
+<p>出どころ：Mits様原文（2026-10-08・FHL 2026 Notes 経由で司令塔へ）「OEM考察2つや運転台と運転台のダッシュボード構築は一つにした方がよければ、スッキリするがどうか」→「一つにする、こちらでやるのか、司令塔でやるのか」→「司令塔に依頼して」。</p>
+<p><strong>OEM は、これからこの持ち場1本で見る。</strong>_OEM提供考察-2（別の作業場）は閉じてアーカイブした。現状表にあった「_OEM提供考察 との分担が決まっていない」は消えた。</p>
+<p>引き継ぐ物（司令塔が 2026-10-08 13:1x に実測して確かめた）</p>
+<ul>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_seihinban_7ken_kakunin_20260926.md（11,890バイト・2026-09-26 12:11。製品版の7件の確認。運転台改善が直すときに読む）</li>
+<li>作業場 /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/.claude/worktrees/gallant-mclaren-c52e02 は<strong>消していない</strong>（main に入っていないコミットは0件・変わっていたのは .pyc 2つだけ）</li>
+</ul>
+<p>1. 上の引き継ぎを読む。<strong>OEM をやるかどうかは Mits様の「やる」待ち</strong>なので、熟慮・調べる・ケースを潰すところまでで止める（発注書も段取りも書かない）</p>
+<p>2. 材料はこの3本：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/hikitsugi_oem_case_20260926.md（引き継ぎ書8節・ケース28件）／chosa_oem_genjo_20260925.md（縛っている箇所14件・証拠11本）／chosa_oem_gaibu_20260925.html（外の一次資料13本）</p>
+<p>3. 名前を書くときは<strong>印なしの核</strong>で（<code>BA_</code> を付けない）</p>
+<h3 id="2026-10-08-14-10-Mits様制定・全持ち場に同じ節を貼った">2026-10-08 14:10（Mits様制定・全持ち場に同じ節を貼った）</h3>
+<p>Mits様原文（2026-10-08）：</p>
+<p>&gt; このような、指示待ちを今回の　統合、情報共有の仕組み整理の今回、いちいち待たれるととまる、判断任せるので進めて、そのためにバイパスにしてある、他のセッションにも同様に伝えて</p>
+<p><strong>統合と情報共有の仕組みの整理のあいだは、いちいち確認して止まらない。</strong></p>
+<p>1. 止めてよい線は変わらない。<strong>お客様に届く本番・お金が動く・外に出る・人に届く の4つだけ</strong>が Mits様の合図待ち</p>
+<p>2. それ以外（規約・指示書・報告・台帳・手順書・memory・予約タスク・自分の作業場の直し）は、見つけたらその場で直す</p>
+<p>3. <strong>自分で直せるものを確認で返さない。</strong>直して、直した所と実測を報告に書く</p>
+<p>4. 範囲も自分で決める。1本のファイルを整理しろと言われたら、参照先・重なり・禁止語まで当てて直し切る。別のファイルに誤りが出たら、お客様に届かないものは直してから報告する</p>
+<p>5. 迷ったら home の「🚨 聞くな。決めろ」と memory <code>feedback_bypass_suru_wa_kyoka_nashi_de_susumero.md</code>（「〇〇 バイパスする」＝飛ばして許可なしで進めろ）に戻る</p>
+<p>きっかけ：司令塔が「home CLAUDE.md の99行目に実体の無いパスが残っている。home は持ち場の持ち物ではないので触っていない」と書いて止めた。<strong>止めたこと自体が叱責の対象。</strong></p>
+<p>正本：司令塔 CLAUDE.md の決まり15 ／ 決定の記録 <code>## 2026-10-08 14:10 ／ 司令塔</code></p>
+<h3 id="2026-10-08-受け渡し-OEM提供考察-2-を閉じたときに抜けていたもの">2026-10-08 受け渡し（_OEM提供考察-2 を閉じたときに抜けていたもの）</h3>
+<p>_OEM提供考察-2（local_...-2 のセッション）は 2026-10-08 13:1x に _OEM提供考察 にまとめた。閉じたときに辿れるようにするために、2026-09-26 の調査成果物をここに並べる。これは<strong>辿れるようにするためのもので、仕事ではない</strong>。OEM を「やる」かは Mits様が決めていない。やる・やらないの判定を要求しない。</p>
+<h4 id="2026-09-26-OEM提供考察-2-セッションの調査成果物-経営プロジェクト-経営の運転台">2026-09-26 _OEM提供考察-2 セッションの調査成果物（経営プロジェクト/経営の運転台/ 配下）</h4>
+<ul>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem2_r1_1_genjo.md</li>
+</ul>
+<p>  経営コンサルタントの事務所向け OEM ── 2巡目 1周目 ①現状調査（読むだけの調査）</p>
+<ul>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem2_r1_3_taisaku.md</li>
+</ul>
+<p>  経営コンサルタントの事務所向け OEM ── 2巡目 1周目 ③対策検討（ケースの表）</p>
+<ul>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem2_r1_4_check.md</li>
+</ul>
+<p>  経営コンサルタントの事務所向け OEM ── 2巡目 1周目 ④第3者の確かめ</p>
+<ul>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem2_r2_1_genjo.md</li>
+</ul>
+<p>  経営コンサルタントの事務所向け OEM ── 2巡目 2周目 ①現状調査(読むだけの調査)</p>
+<ul>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem2_r2_3_taisaku.md</li>
+</ul>
+<p>  経営コンサルタントの事務所向け OEM ── 2巡目 2周目 ③対策検討</p>
+<ul>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem2_r2_4_check.md</li>
+</ul>
+<p>  経営コンサルタントの事務所向け OEM ── 2巡目 2周目 ④第3者の確かめ</p>
+<ul>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem2_r3_1_genjo.md</li>
+</ul>
+<p>  経営コンサルタントの事務所向け OEM ── 2巡目 3周目 ①現状調査(読むだけの調査)</p>
+<ul>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem2_r3_3_taisaku.md</li>
+</ul>
+<p>  経営コンサルタントの事務所向け OEM ── 2巡目の最終の表(3周目・③対策検討)</p>
+<ul>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/untendai_web_procon_20260926.md</li>
+</ul>
+<p>  経営アプリだけをブラウザで使うウェブのサービスにしたら ── 良い点と悪い点</p>
+<ul>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/web_ban_check_20260926.md</li>
+</ul>
+<p>  ウェブ版の2本から参謀が Mits様に出した断定8つの裏取り</p>
+<ul>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/web_ban_gijutsu_20260926.md</li>
+</ul>
+<p>  経営の運転台をウェブ版にするとしたら ── 技術の面の詰め</p>
+<ul>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/web_ban_jigyou_20260926.md</li>
+</ul>
+<p>  経営アプリだけのウェブ版を作るとしたら ── 事業・決まり・運用の面</p>
+<p>注：3周目の ③taisaku は最終の表としてまとめられており、<code>oem2_r3_4_check.md</code>（3周目の第3者の確かめ）は作られなかった。</p>
+<h4 id="2026-09-26-OEM提供考察-2-セッションの-session-log">2026-09-26 _OEM提供考察-2 セッションの session-log</h4>
+<ul>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-09-26_1210_oem-case-tsubushi.md</li>
+</ul>
+<p>  OEM ケース潰しの session-log（_OEM提供考察-2 セッション）</p>
+<h4 id="この節の扱い">この節の扱い</h4>
+<ul>
+<li>OEM を「やる」と決まっていないので、<strong>この節の中身を元に段取り・発注書・やる順番を書かない</strong></li>
+<li>Mits様が「OEM をやる」と仰った時に、ここに並べたパスを開いて熟慮を再開する</li>
+<li>新しい調査・新しいケース潰しをするときは、この節の下に追記する</li>
+</ul>
+<p>出どころ：司令塔からの指示（2026-10-08 3周目・持ち場を閉じたときの後片付けの抜け補完）</p>
+<h3 id="2026-10-08-受け渡し-この持ち場の-session-log-に残っていた仕事と判定待ち">2026-10-08 受け渡し（この持ち場の session-log に残っていた仕事と判定待ち）</h3>
+<p>いちばん新しい session-log：/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-09-26_1210_oem-case-tsubushi.md</p>
+<p>出どころ：司令塔からの指示(2026-10-08 3周目・外側5本の session-log 受け渡し漏れの補完)</p>
+<p>注：この session-log は _OEM提供考察-2 セッションのものだが、同日 13:1x に _OEM提供考察 にまとめたので、受け渡しの先はこの持ち場。先に足した「2026-10-08 受け渡し(_OEM提供考察-2 を閉じたときに抜けていたもの)」の節は調査成果物の一覧。本節は next_actions/open_questions。</p>
+<p>次にやる（session-log の next_actions から・原文のまま2件）：</p>
+<ul>
+<li>FA-writer の完了を待ち、HTML を検収（grep で数える＋Chrome で開いて写真）</li>
+<li>検収後、Mits様に /finder 行と要点を出す（やると決まっていないので段取り・発注書は出さない）</li>
+</ul>
+<p>判定待ち（session-log の open_questions から・原文のまま3件）：</p>
+<ul>
+<li>[AI可・走行中] FA-writer-oem-matome が /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_case_tsubushi_20260926.html を作成中。返ったら検収の線（倉庫0回・表109行・判断10件・先頭3行一致・dark 0回・様抜け0回）を参謀が自分で数え、Chrome で開いて明るい画面を写真で確かめてから Mits様に出す</li>
+<li>[判定待ち・Mits様] 方針案の判断10件（判断ア〜ケ・許可コ）。やるかどうか自体が未決。発注書は書かない</li>
+<li>[判定待ち・Mits様] 別セッション『製品版から外へ出る数字と合言葉を点検する』（task_3b85b287）は Mits様が起動済み。そちらで走行中</li>
+</ul>
+<p>扱い：</p>
+<ul>
+<li>oem_case_tsubushi_20260926.html が既に出来上がって Mits様の手元にあるかを、まず実測で確かめる(find -mtime で更新時刻を見る。既に存在していて検収も済んでいればここは閉じる)</li>
+<li>方針案の判断10件は Mits様の合図待ち。発注書・段取り・やる順番は、Mits様が「やる」と仰ってから</li>
+<li>お客様に届く本番・お金が動く・外に出るものは Mits様の合図まで動かない</li>
+</ul>
+<p>関連の材料（session-log の artifacts から・絶対パス・1巡目1〜3周）：</p>
+<ul>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_r1_1_genjo.md</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_r1_2_shijo_kokunai.md</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_r1_2_shijo_kaigai.md</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_r1_3_taisaku.md</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_r1_4_check.md</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_r2_1_genjo.md</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_r2_2_shijo_kokunai.md</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_r2_2_shijo_kaigai.md</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_r2_3_taisaku.md</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_r2_4_check.md</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_r3_1_genjo.md</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_r3_2_shijo_kokunai.md</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_r3_2_shijo_kaigai.md</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_r3_3_taisaku.md</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_r3_4_check.md</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_hoshin_an_20260926.md</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_hoshin_an_20260926_v1.md</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_hoshin_check_20260926.md</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_case_tsubushi_20260926.html</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/oem_chigai_ichiran_20260926.html</li>
+</ul>
+<p>注：1巡目(oem_r1_*)と2巡目(oem2_r*)は別の調査。1巡目は 2026-09-25〜26 の16本＋方針案2本＋方針チェック1本＋まとめHTML 2本。2巡目は 2026-09-26 の 8本＋ウェブ版4本(上の節に並べてある)。</p>
+
+<footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
+</body>
+</html>

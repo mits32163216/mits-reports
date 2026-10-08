@@ -102,7 +102,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-08 13:10 ／ 写した時刻 2026-10-08 13:13</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-08 15:38 ／ 写した時刻 2026-10-08 16:00</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -2127,6 +2128,347 @@ untendai-client  版=1.73.43  組立=2026-09-26 03:39:44  Bundle=com.mits.untend
   <li>運転台改善の会話が重くなる件：「自動要約が2回を超えたら引き継ぎ書を書いて移る」の決まりで受ける（別の手当てはしない）</li>
   <li>どのセッションで：司令塔（会話の回）</li>
   <li>宛先：運転台改善／FHL 2026 Notes</li>
+</ul>
+<ul>
+<li>2026-10-08 13:13 ／ 司令塔 ── <strong>[時刻の訂正] 直前の2節に書いた「13:3x」は誤り。実際は「13:1x」。</strong><code>date</code> で測ったら 13:13 だった（ダッシュボードをたたんだのも OEM をまとめたのも 13:1x 台の出来事）。決定の記録は途中の行を書き換えない決まりなので、この行で取り消して正す。<strong>取り消す値：13:3x／正しい値：13:1x</strong>（2026-10-08 13:3x ／ 司令塔 の節＝ダッシュボードの新規構築を運転台改善にまとめた件、および同節内の「閉じる前に司令塔が実測で確かめた3つ」の時刻）。指示書・報告・CLAUDE.md・現状表・定時報告の手順書の方は、数分前に自分が書いた誤記なのでその場で直した（末尾追記の決まりがあるのは決定の記録だけ）</li>
+  <li>出どころ：司令塔が12本立ての定時報告を走らせたあと <code>date &#x27;+%Y-%m-%d %H:%M&#x27;</code> を打ったら 2026-10-08 13:13 だった。走らせた回の節の見出しも「13:11 に司令塔が手で走らせた分」で、13:3x は未来の時刻だった</li>
+  <li><strong>直し方の決まり（今後）</strong>：節に時刻を書く前に <code>date</code> を打つ。推測で「13:3x」のような幅を書かない</li>
+  <li>どのセッションで：司令塔（会話の回）</li>
+  <li>宛先：なし（司令塔の内部の訂正）</li>
+</ul>
+<ul>
+<li>2026-10-08 13:2x ／ 司令塔 ── <strong>[後片付け・devils-advocate の指摘で見つけた] 閉じた持ち場が「生きている行」として台帳に残っていた。</strong>司令塔は _OEM提供考察-2 を閉じたあと「3本（CLAUDE.md・現状表・定時報告の手順書）に持ち場として扱う行は0件」と報告したが、<strong>自分で選んだ3本の範囲でしか見ていなかった</strong>（home CLAUDE.md 裏取り原則6「無い／できない と言う前に、範囲を宣言して、その範囲を全部叩く」に違反）。devils-advocate が司令塔フォルダの .md <strong>44本</strong>を全件当てて見つけた</li>
+  <li><strong>範囲と実数</strong>：司令塔フォルダの .md 44本で <code>_OEM提供考察-2</code> が <strong>27行</strong>、<code>ダッシュボードの新規構築</code> が <strong>34行</strong>（司令塔が直後に数え直した値。devils-advocate の 24行は OEM をまとめた直後の値で、そのあと司令塔が記録を足したぶん増えている）</li>
+  <li><strong>生きている行として残っていた3か所</strong>（直した）：①yobidashi.md 209・211行目 ── 申し送りの「済んだか」の欄が空で<strong>呼び出しが生きたまま</strong>だった → 「閉じた（…にまとめてアーカイブ。この呼び出しは取り下げ）」を書いた ②部署の1周_20260918.md 114・115行目 ── <strong>外側7本の正本の列挙</strong>に閉じた2つが並んでいた → 外側5本に直し、まとめた経過を1段落足した ③renrakusaki.md 35行目 ── 時刻の誤記 13:3x が残っていた（前の訂正の対象から漏れた）→ 13:1x に直した</li>
+  <li><strong>遡らないもの</strong>：asa_tenko.md（定時報告・6行＋6行）と決定の記録のそれ以前の行は、末尾に足すだけの決まり（決まり2）なので直さない。CLAUDE.md・現状表・手順書に残る語は「まとめた経過を書いた文」で、持ち場として扱う行ではない</li>
+  <li><strong>決まり（今後）</strong>：持ち場を閉じたら、司令塔フォルダの .md を<strong>全件</strong> <code>grep</code> して、①表の行 ②一覧の列挙 ③申し送りの未済の行 の3種類が残っていないかを見る。3本だけ見て「0件」と言わない</li>
+  <li>どのセッションで：司令塔（会話の回）</li>
+  <li>宛先：なし（司令塔の内部の後片付け）</li>
+</ul>
+<ul>
+<li>2026-10-08 13:4x ／ FHL 2026 Notes ── Mits様が、FHL 2026 Notes と wasa_ファネルメイクは統合せず別のままにすると決めた。Mits様原文「このセションとwasaセッションは共通する部分があるが、統合がいいかこのままがいいか」→（FHL 2026 Notes が「このままの別建て」と答えた）→「このままでいい」。重なり（登録ページの言葉・フロント商品の値段と位置づけ・3DAYS の約束）は、FHL 2026 Notes で決まったことを宛先 wasa_ファネルメイク で決定の記録に書いて渡す。統合を考え直すのは、Mits様が Linchpin を「やる」と決め、wasa のファネルを Linchpin の入口の段として組み直すと決まったとき</li>
+  <li>どのセッションで：FHL 2026 Notes</li>
+  <li>宛先：司令塔／wasa_ファネルメイク</li>
+</ul>
+<ul>
+<li>2026-10-08 13:2x ／ 司令塔 ── <strong>運転台マーケを運転台改善にまとめた（12本→11本・内側が7本→6本）。</strong>出どころ：Mits様原文（2026-10-08・FHL 2026 Notes 経由）「運転台マーケと運転台改善セッションは、少し前の運転台freeeのセッションと運転台改善の関係と同じ鋳型　今後、結局吸収統合されるなら同じセッションでもいいか　それとも重くなるので別がいいか」→「経営の運転台/kaihatsu_no_nagare_genjou_20261003.htmlを確認して齟齬がなければ　運転台マーケも運転台改善に統合するよう司令塔に依頼して」</li>
+  <li>🛑 <strong>統合したのはセッションだけ。</strong>marketing の枝を main に戻すのは実装で「発注GO」待ち。司令塔が実測した差は <strong>54コミット・15ファイル・3,574行追加</strong>（<code>git diff main...marketing --shortstat</code>）。指示書_運転台改善.md に「枝を main に戻す」とは書いていない</li>
+  <li><strong>閉じる前に司令塔が実測で確かめた3つ</strong>：①マーケ版の実物は <strong>1.74.4</strong>（/Applications/untendai-mkt.app の Info.plist・2026-10-04 21:36 組み）。開発の流れの資料 kaihatsu_no_nagare_genjou_20261003.html には 1.73.43 が1回出るが 1.74.1 が10回・1.74.2 が1回も出ており記述が混在。<strong>資料が古いだけで統合の妨げではない</strong>（資料の直しは運転台改善の指示書の2番に入れた）②時計2本（keiki-kensan・untendai-mkt-haishin-torikomi）はフォルダと SKILL.md は残るが、<strong><code>list_scheduled_tasks</code> の8本に出ない＝予約の登録が消えている</strong>（2026-09-25 に Mits様が目的を達して削除された分）。<strong>時計を戻す話にはしない</strong>③作業場 /Users/nishidamitsuhiro/untendai-marketing（枝 marketing）は<strong>消していない</strong></li>
+  <li><strong>配信経路・計測の決定の送り先を 運転台マーケ → 運転台改善 に付け替えた</strong>（付け替えないと決定の行き先が無くなる）。直した先2つ：①司令塔 CLAUDE.md の決まり1 ②/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/feedback_haishin_keiro_no_kettei_wa_untendai_marketing_ni_p2p.md（末尾に「送り先が付け替わった」の節。<strong>2026-09-08 Mits様の決定そのものは生きている。</strong>変わったのは実装する持ち場の名前だけ）</li>
+  <li>やったこと：セッション local_054ca6d7-8007-42c8-ad3f-b4d74d9d9c8c を<strong>アーカイブ</strong>（消していない）／指示書_運転台マーケ.md・報告_運転台マーケ.md に「閉じた」の印を付けて残した／指示書_運転台改善.md に統合の節（持ち物・食い違い2件・枝を戻さないこと）／CLAUDE.md・現状表.md・部署の1周・定時報告の手順書を<strong>11本立て</strong>（内側6本・外側5本。最後の1行は「動いた N/11（内側 n/6・外側 m/5）」・申し送りは内側5つ）</li>
+  <li><strong>後片付け（devils-advocate の指摘で決めた手順を今回から最初に適用）</strong>：申し送り yobidashi.md の生きていた呼び出し2行に「閉じた」を書き、連絡先 renrakusaki.md の運転台マーケの行にも「閉じた」を書いた。部署の1周の内側の列挙も6本に直した</li>
+  <li>引き継いだ持ち物：作業場 /Users/nishidamitsuhiro/untendai-marketing（追加の作業フォルダに足す）／マーケ版の組み立て build-mkt.sh／docs の決まったことの台帳。4本のアプリ（製品版・freee版・開発版・マーケ版）はそのまま</li>
+  <li>どのセッションで：司令塔（会話の回）</li>
+  <li>宛先：運転台改善／メール配信・計測・自動化／FHL 2026 Notes</li>
+</ul>
+<h3 id="2026-10-08-13-4x-司令塔-統合の抜け漏れを直し-後片付けで見る範囲を規約にした">2026-10-08 13:4x ／ 司令塔 ── 統合の抜け漏れを直し、<strong>後片付けで見る範囲を規約にした</strong></h3>
+<ul>
+<li>どのセッションで：司令塔（会話の回）</li>
+<li>宛先：FHL 2026 Notes／運転台改善／メール配信・計測・自動化／AI-Mits-チューニング／伽藍とバザールの実現／wasa_ファネルメイク／_OEM提供考察／UTAGE 入口の集約（トールゲート式）／Meta広告の自動化・最適化サイクル／YouTube チャンネルコンセプト構想</li>
+<li>出どころ：Mits様原文（2026-10-08・FHL 2026 Notes 経由）「ここまでやってきた統合、情報の共有作業で抜け漏れがないか確認　理由　ここで　ファネルビルディングして、運転台改善して、伽藍とバザールの実現をしてを繰り返していく主戦場なので」→ 全件を当てたら抜けが出た →「抜けていた…それぞれの持ち場に直すよう伝えて」</li>
+<li><strong>同じ誤りを2回した。</strong>1回目は「3本だけ見て0件」。2回目は範囲を司令塔フォルダの .md 44本に広げたが、<strong>共有 memory・定時報告の手順書の別の行・CSV が外れていた</strong>。だから範囲を数で書いて規約にした</li>
+<li><strong>新しい決まり（司令塔 CLAUDE.md に「🧹 持ち場を閉じたときの後片付け ── 見る範囲」の節を新設）</strong>：閉じたら6か所を全部当てる ①司令塔フォルダの <code>*.md</code> 全部（44本）②同フォルダの <code>*.csv</code>・<code>*.html</code>・<code>*.py</code> ③定時報告の手順書を<strong>全行</strong>（対象の節だけ直して終わりにしない。<strong>本数の数字も名前と一緒に直す</strong>）④共有 memory 全部（元の Mits様の決定は消さず末尾に「付け替わった」の節）⑤予約タスク27本の SKILL.md ⑥ほかの持ち場の規約・作業場は<strong>司令塔は直さず</strong>決定の記録で伝える</li>
+<li>直した4件（司令塔の持ち物・いずれも実測で確かめてから）</li>
+</ul>
+<p>  1. 定時報告の手順書 /Users/nishidamitsuhiro/.claude/scheduled-tasks/asa-tenko-6session/SKILL.md の3か所 ── 181行目の内側の並びに運転台マーケが入ったまま＋本数が「14本」（→ 11本・運転台マーケを外し、<strong>閉じた3本は書く対象から外す</strong>と明記）／175行目「表は<strong>14行</strong>」（→ 11行）／103行目の読み先「運転台マーケ → untendai-marketing/docs/keiki_maiasa_kensan.md」（→ 削除・見る持ち場は4つ→3つ）。<strong>今夜 18:30 の回の前に直した</strong></p>
+<p>  2. 共有 memory feedback_untendai_seiri_wa_shireito_kimattara_2session_ni_okuru.md ── 末尾に「送り先が付け替わった（untendai-marketing → 運転台改善）」の節。<strong>元の決定の記述は消していない</strong></p>
+<p>  3. 共有 memory reference_6session_yougo_ichiran.md ── 13行目の「6つのセッション（…運転台マーケ…）」の並びを直し、末尾に「持ち場の数と並びが変わった（内側6本・外側5本＝11本）」の節</p>
+<p>  4. 社内レポート_載せるもの一覧.csv の4行 ── 3行（マーケ経路の決まったこと台帳・指示書_運転台マーケ.md・報告_運転台マーケ.md）は<strong>閉じた印を付けて載せ続ける</strong>（経過が追えるように）。1行（keiki_maiasa_kensan.md＝計器の検算 7:50）は<strong>載せるのをやめた</strong>。時計 keiki-kensan の登録が消えていて最後の行が 2026-09-25 のまま更新されないため</p>
+<ul>
+<li><strong>司令塔が直さなかったもの（決まり7・持ち場あてに伝える）</strong>：運転台改善 ── 経営の運転台/CLAUDE.md 2559行目「untendai-marketing は 運転台マーケ の持ち場」／/Users/nishidamitsuhiro/untendai-marketing/CLAUDE.md に今の持ち主が書かれていない。メール配信・計測・自動化 ── soushin_machi.json の運転台マーケ宛て12件（delivered_at が空）</li>
+<li>サイドバーの「ファネルマーケティング」と「司令塔補助」は Mits様が消された。<strong>司令塔 CLAUDE.md の外側の表からは 12:5x に「いまのまとまり」の列を外してあるので、直す所は無い</strong></li>
+<li>FHL 2026 Notes の ID は local_eeb1e860-584b-486e-b622-5bb12216f322 でそのまま正しい（会話の記録のファイル名 d345821e… とアプリの ID は別物。司令塔 CLAUDE.md は直さない）</li>
+</ul>
+<h3 id="2026-10-08-13-4x-メール配信・計測・自動化-soushin-machi-json">2026-10-08 13:4x ／ メール配信・計測・自動化 ── soushin_machi.json の運転台マーケ宛て12件は全部「閉じた印」にした（送り直さない）</h3>
+<ul>
+<li>どのセッションで：メール配信・計測・自動化</li>
+<li>宛先：司令塔／運転台改善</li>
+<li>出どころ：2026-10-08 ／ FHL 2026 Notes の節で「司令塔が直さなかったもの（決まり7・持ち場あてに伝える）」として名指しされた1件</li>
+<li>対象のファイル：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/soushin_machi.json</li>
+<li>実測（自分で開いて数えた・FHL 2026 Notes の「12件」は合っていた）：全20件・うち delivered_at が空 12件（2026-09-15 09:14 〜 2026-09-20 21:05）・宛名の書き方は4通り（運転台マーケ 8件／untendai-marketing 4件）・last_error は12件とも「No agent named &#x27;untendai-marketing&#x27; / &#x27;運転台マーケ&#x27; is reachable.」</li>
+<li>決めたこと：<strong>12件とも「閉じた印」。運転台改善への送り直しはしない。</strong>各件に closed_at（2026-10-08）・closed_by（メール配信・計測・自動化）・closed_reason を足した。<strong>delivered_at は空のまま</strong>（届いていないのは事実なので変えない）。<strong>1件も消していない</strong></li>
+<li>根拠1（送る必要が無くなっている）：決定の記録 2026-09-21 06:4x ／ 司令塔「測定の引き渡しは SendMessage をやめ、台帳 keisoku_suii.csv の直読みに一本化する。soushin_machi.json は記録として残すが、未送の件数を報告の数字に載せない」。12件とも中身は<strong>測定の数字の引き渡し</strong>（朝の回＝12h・36h／夜の回＝24h・48h）で、この決定がそのまま当たる</li>
+<li>根拠2（中身の本体は渡っている）：数字は台帳 keisoku_suii.csv に入っている。対象6日ぶんの行数 ── 2026-09-15 24行／09-16 19行／09-17 21行／09-18 16行／09-19 16行／09-20 16行（台帳は全123行）</li>
+<li>根拠3（抜けの情報も後から扱われている）：12件のうち8件に「spro が入れず抜け」「まぐまぐ 9/14 便は配送無し」が書かれているが、これは決定の記録 2026-09-21 09:2x（spro に9日ぶりに入れた・4便は出ていないと確定）と 2026-09-21 11:3x〜16:0x（経路の点検）で全部扱い済み。送り直しても新しい情報は渡らない</li>
+<li>控え：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261008_soushin_machi_tojiru_mae.json</li>
+<li>検算：全20件・closed_at あり 12件・delivered_at あり 8件・どちらも無い件 0件</li>
+</ul>
+<h3 id="2026-10-08-13-54-司令塔-司令塔-CLAUDE-md-の本数と決まりの並びを直し">2026-10-08 13:54 ／ 司令塔 ── 司令塔 CLAUDE.md の本数と決まりの並びを直した（FHL 2026 Notes の点検を受けて）</h3>
+<ul>
+<li>宛先：FHL 2026 Notes／運転台改善／メール配信・計測・自動化／AI-Mits-チューニング／伽藍とバザールの実現</li>
+<li>出どころ：Mits様原文（2026-10-08・FHL 2026 Notes 経由）「参照元・先の正しさ　確認　そのあと、CLAUDE.mdの中身整理　claude-nishida　のものと　司令塔のもの　両方」「関連するすべてのCLAUDE.mdの冗長性　MECE確認」。点検は FHL 2026 Notes が devils-advocate と BS-knowledge-sync で当て、直す所を司令塔に渡した（決まり7：司令塔の持ち物は司令塔が直す）</li>
+<li>直した7か所（司令塔が自分で実測し直してから直した）</li>
+</ul>
+<p>  1. 1行目の見出し「14本共通」→「11本共通・2026-10-08 に 7本→14本→11本」</p>
+<p>  2. まとめた本数の行「_OEM提供考察-2 と ダッシュボードの新規構築 をアーカイブして12本」→ <strong>運転台マーケ（13:2x）が抜けていた</strong>ので3本に直し「11本（内側6本＋外側5本）」</p>
+<p>  3. 「サイドバーのまとまりは14本とも■新司令塔」→「11本とも」（12:5x に移したのは当時の14本・そのあと3本をアーカイブ）</p>
+<p>  4. 「作業フォルダは 13:0x に6本とも司令塔になった」→「外側5本とも」</p>
+<p>  5. 指示書「11本＋閉じた4本」→「11本＋閉じた3本＝実物14本」／報告「10本＋閉じた4本」→「10本＋閉じた3本＝実物13本」。実測：<code>ls 指示書_*.md</code> 14本・<code>ls 報告_*.md</code> 13本・閉じた印「🛑 この持ち場は」があるのは 指示書3本と報告3本（OEM提供考察2／ダッシュボード新規構築／運転台マーケ）</p>
+<p>  6. 決まり8 の「関係のある5つのセッション」→「関係のあるほかの持ち場」。<strong>Mits様原文の引用はそのまま残し</strong>、「原文の『5つ』は当時の本数。今は内側6本・外側5本」を添えた</p>
+<p>  7. 決まり10 の中「報告5本を読み → 指示書6本に今日の節を足し」→「報告10本（内側5本・外側5本。司令塔の報告は asa_tenko.md）を読み → 指示書は内側6本に今日の節を足し〈外側5本は条件付き〉」。同じ節の禁止語「窓」2か所を「セッション」に直した</p>
+<ul>
+<li>決まりの並び：8 → 10 → 9 → 11 の順になっていたので、<strong>番号は変えずに並ぶ順だけ 9 → 10 にした</strong>（memory・予約タスク・部署の1周・AIグループ講座の資料から「決まり7」などと番号で指されているため、振り直すとずれる）</li>
+<li>検収（実測）：本文に「14本共通」「12本（内側6本」「6本とも」「閉じた4本」が <strong>4つとも0件</strong>。決まりの番号の並びは 1, 2, 2-1, 3, 4, 5, 5-1, 6, 7, 8, 9, 10, 11, 12, 13, 14。行数は 152行（直す前と同じ＝消えた中身はない）</li>
+<li>直していないもの：外から番号で指されている決まりの番号（1・2・7・12 など）／内側6本・外側5本の表のセッションID（実物と合っていた）／決まり11・13 の中の「メアドの窓」「窓・中継・認証」（ページのメアドの欄を指す語で、決まりの中身に関わるため司令塔の判断で変えない）／<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/CLAUDE.md</code> と home の CLAUDE.md（司令塔の持ち物ではない）</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-10-08-14-00-FHL-2026-Notes">2026-10-08 14:00 ／ FHL 2026 Notes</h3>
+<ul>
+<li><strong>決定（Mits様制定）</strong>：FHL 2026 Notes のセッション（local_eeb1e860-584b-486e-b622-5bb12216f322）から届いた指示は、Mits様がそのセッションで承認したもの。受け取った持ち場は、自分のセッションで Mits様の「直して」「発注GO」を改めて待たずに動く。自分の CLAUDE.md を直す指示でも同じ</li>
+<li>Mits様原文：「このセッションからの指示は、すでにここで私が承認している＝待つ必要なしというルールにする」</li>
+<li>正本：司令塔/CLAUDE.md の節「✅ FHL 2026 Notes から届いた指示は、Mits様の承認済み」</li>
+<li>宛先：司令塔／運転台改善／メール配信・計測・自動化／AI-Mits-チューニング／伽藍とバザールの実現／wasa_ファネルメイク／_OEM提供考察／UTAGE 入口の集約（トールゲート式）／Meta広告の自動化・最適化サイクル／YouTube チャンネルコンセプト構想</li>
+</ul>
+<h3 id="2026-10-08-14-00-司令塔-claude-nishida-の-CLAUDE-md">2026-10-08 14:00 ／ 司令塔 ── claude-nishida の CLAUDE.md を整理した（Mits様のご指示）</h3>
+<ul>
+<li>宛先：FHL 2026 Notes／運転台改善／メール配信・計測・自動化／AI-Mits-チューニング／伽藍とバザールの実現</li>
+<li>出どころ：Mits様原文（2026-10-08）「claude-nishida の CLAUDE.md も整理して」。先に 13:5x に別のセッションが同じ file の前半（最上位課題・判断軸・組織構造の agent 一覧・RESOURCE_INDEX の節）を畳んであり（14:00 の auto-backup でコミット済み）、司令塔は<strong>残っていた重なり2か所</strong>を直した</li>
+<li>直した2か所</li>
+</ul>
+<p>  1. 「🛡️ 安全保障 safety-net」── home と字句が同じ行が残っていた。<strong>消さずに「ここは写し。正本は home。ここに新しい決まりを足さない・ここだけを直さない（直すときは home を直して写しを合わせる）」の1行を足した。</strong>消さない理由：home が読まれなかったときに最低線（敬語・合言葉の漏れ防止・恒久削除禁止・git 破壊操作・絶対パス）が残るための二重防壁なので、消すと防壁が無くなる</p>
+<p>  2. 「復帰済 重要禁止事項 3件」── home に同じ3件の列挙があったのでポインタに畳み、本 file にしか無い1行（逆委任禁止の中身は memory ではなく home の「📖「聞くな。決めろ」の詳細」にある）だけ残した</p>
+<ul>
+<li>検収（実測）</li>
+  <li>参照パス 22件とも実在（NG 0件。<code>&lt;番号_象限&gt;</code> などの型は数に入れない）</li>
+  <li>home と字句が同じ行（12文字以上）は <strong>4行だけ</strong>。うち3行は上の①の写し（意図したもの・写しと明示済み）、1行は RESOURCE_INDEX.md のパスそのもの（決まりではなくパスなので重なりに数えない）</li>
+  <li>禁止語（窓・紙・束・柱・帯・止め具・倉庫・真ん中・押し上げ）<strong>0件</strong></li>
+  <li>第2層の agent 一覧は実ファイルと一致：<code>.claude/agents/*.md</code> は28本（INDEX.md を除いて27本）＝ sanbo-v2 1本＋FA 1本＋FS 2本＋BA 15本（うち討議専用9本）＋BS 8本</li>
+<li><strong>測って出た誤り（司令塔は直していない・home は claude-nishida の持ち物ではない）</strong>：home <code>/Users/nishidamitsuhiro/.claude/CLAUDE.md</code> が「必読 memory」と「復帰済 重要禁止事項 3件」の2か所で <code>feedback_no_reverse_delegation.md</code> を挙げているが、<strong>実ファイルは無い</strong>（2026-08-21 に memory 6本を AI作業ゴミ箱へ移したときに消えた）。中身は home の「📖「聞くな。決めろ」の詳細」に畳まれている。Mits様の合図があれば home の2行を直す</li>
+<li>控え：<code>scratchpad/claude-nishida_CLAUDE.md.bak</code>（直す前の153行）</li>
+<li>数え方への影響：なし</li>
+</ul>
+<ul>
+<li>2026-10-08 14:0x ／ 運転台改善 ── 運転台マーケを運転台改善にまとめたあとに古いまま残っていた規約2か所を、Mits様の「直して」（このセッション）で直した。① 経営の運転台/CLAUDE.md 2559行目の「untendai-marketing は 運転台マーケ の持ち場」に、2026-10-08 から持ち主は運転台改善・marketing の枝を main に戻すのは「発注GO」が要る、を足した（元の文は「2026-09-30 時点の書き方」として残した）② /Users/nishidamitsuhiro/untendai-marketing/CLAUDE.md に節「この作業場の持ち主（2026-10-08）」を足した。枝・版・組み立てには触っていない。前後の文は 報告_運転台改善.md の末尾</li>
+  <li>どのセッションで：運転台改善</li>
+  <li>宛先：司令塔</li>
+  <li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-10-08-14-10-司令塔-統合・情報共有の整理のあいだは-いちいち確認して止まら">2026-10-08 14:10 ／ 司令塔 ── 統合・情報共有の整理のあいだは、いちいち確認して止まらない（Mits様制定）</h3>
+<ul>
+<li>宛先：運転台改善／メール配信・計測・自動化／AI-Mits-チューニング／伽藍とバザールの実現／FHL 2026 Notes／wasa_ファネルメイク／_OEM提供考察／UTAGE 入口の集約／Meta広告の自動化／YouTube チャンネル構想（<strong>全持ち場</strong>）</li>
+<li>Mits様原文（2026-10-08）：</li>
+</ul>
+<p>  &gt; このような、指示待ちを今回の　統合、情報共有の仕組み整理の今回、いちいち待たれるととまる、判断任せるので進めて、そのためにバイパスにしてある、他のセッションにも同様に伝えて</p>
+<ul>
+<li>きっかけ：司令塔が「home CLAUDE.md の99行目に実体の無いパスが残っている。home は claude-nishida の持ち物ではないので触っていない」と書いて止めた。Mits様が画面に「home の99行目も直して」と打ちかけたところで、この指示が出た</li>
+<li>決まり（司令塔 CLAUDE.md の決まり15 に入れた）</li>
+  <li><strong>止めてよい線は変わらない。</strong>お客様に届く本番・お金が動く・外に出る・人に届く の4つだけが Mits様の合図待ち。それ以外（規約・指示書・報告・台帳・手順書・memory・予約タスク・自分の作業場の直し）は、見つけたらその場で直す</li>
+  <li><strong>自分で直せるものを確認で返さない。</strong>直して、直した所と実測を報告に書く</li>
+  <li>範囲も自分で決める。1本の file を整理しろと言われたら、参照先・重なり・禁止語まで当てて直し切る。別の file に誤りが出たら、お客様に届かないものは直してから報告する</li>
+  <li>迷ったら home の「🚨 聞くな。決めろ」と memory <code>feedback_bypass_suru_wa_kyoka_nashi_de_susumero.md</code> に戻る</li>
+<li>その場でやったこと：home <code>/Users/nishidamitsuhiro/.claude/CLAUDE.md</code> の99行目を直した。実体の無い <code>feedback_no_reverse_delegation.md</code> のパスを消し、「本 file の『📖「聞くな。決めろ」の詳細』が正本。2026-08-21 に AI作業ゴミ箱へ移したのでパスを読みに行かない」に差し替えた</li>
+  <li>検収：控えと今で<strong>244行＝244行・違う行は99行の1行だけ</strong>。home の参照パス17件は、この1件を直して全件実在</li>
+  <li>控え：<code>scratchpad/home_CLAUDE.md.bak</code></li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-10-08-14-2x-司令塔-直接の連絡は5本に届かなかった-指示書の方で届いている">2026-10-08 14:2x ／ 司令塔 ── 直接の連絡は5本に届かなかった（指示書の方で届いている）</h3>
+<ul>
+<li>宛先：全持ち場（読むだけ）</li>
+<li>14:10〜14:1x に決まり15を9本へ直接送った結果の実測：<strong>届いたか不明のまま期限切れが5本</strong>（道具の文は5本とも <code>not approved before expiry … Not delivered to that session&#x27;s Claude, and nothing is waiting there</code>）</li>
+  <li>伽藍とバザールの実現（msg_id 7e39a591）／wasa_ファネルメイク（e1737c2d）／UTAGE 入口の集約（792fb163）／Meta広告の自動化（436d57a8）／YouTube チャンネル構想（7924dc06）</li>
+  <li>残る4本（運転台改善 32b3a62c／メール配信・計測・自動化 46adde4b／AI-Mits-チューニング 6713a432／FHL 2026 Notes 4ad97d88）は、保留の通知も期限切れの通知も来ていない</li>
+<li>送り直さない（道具の文「許可の設定が違う間は再送しても保留になるだけ」）</li>
+<li><strong>司令塔からは相手の許可の設定を測れない。</strong><code>get_session</code> の permissionMode は「自分と、自分が立てたセッション」しか返さない（2026-10-08 実測：自分は <code>bypassPermissions</code> と出る／wasa_ファネルメイクは permissionMode の行が無い）。だから「相手の設定が違うから届かない」と断定できず、分かるのは「届いていない」ことだけ</li>
+<li><strong>だから決まり2-1 のとおり、横に直接送るのではなく決定の記録と指示書で回す。</strong>今回の決まり15 は 指示書11本すべての末尾に同じ節を貼ってあるので、各持ち場が開けば必ず読む</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-10-08-14-2x-メール配信・計測・自動化-期限が68日過ぎた案内が-今も登録者">2026-10-08 14:2x ／ メール配信・計測・自動化 ── 期限が68日過ぎた案内が、今も登録者に出続けている（F0-01 のステップメール2本）</h3>
+<ul>
+<li>どのセッションで：メール配信・計測・自動化</li>
+<li>宛先：司令塔／FHL 2026 Notes</li>
+<li>出どころ：指示書 2026-10-08 の1（9/29・10/1〜10/7 の号が出たかを調べる）を実測する途中で見つけた</li>
+<li>実物：2026-10-06 23:02 UTC（JST 10/07 08:02）に 3216.fun@gmail.com へ届いた「残り40日、使い切ってください。」（Gmail thread 1a1137419b9c3529）</li>
+<li>出どころの特定（UTAGE の実機）：シナリオ 2JPgrcZIciae「F0-01_経営イノベーション_サインナップ」のステップメール2本。<strong>どちらも status は reserved（生きている）</strong></li>
+  <li>6HtQJbgRyclK「F0-01-14_残り40日、使い切ってください。」── 登録から <strong>60日目</strong> 08:00・累計 <strong>36通</strong>・開封 24人（66.67%）・クリック0</li>
+  <li>uGdoinUJ1iVq「F0-01-15_あと15日で、一度閉じます。」── 登録から <strong>85日目</strong> 08:00・累計 <strong>33通</strong>・開封 25人（75.76%）・クリック0</li>
+<li>噛み合わない作り：<strong>本文の日付は全体の開始日（2026-04-21）起算の固定</strong>なのに、<strong>出す時刻はその人の登録からの経過日数</strong>。登録が 4/21 に近い人には合うが、遅く登録した人には成り立たない</li>
+  <li>60日目の便の本文（原稿をそのまま読んだ）：「起点は 2026年4月21日。100日目は 2026年7月30日です」「今日時点で、残り40日」「この60日で、起きたこと」「残り40日のうちに、一声かけてあげてください」── 10/6 に届いた人にとって 7/30 は <strong>68日前</strong>。閉じた枠へ誘っている</li>
+  <li>85日目の便の本文：「残り15日です」「2026年7月30日で、第一期の枠を一度閉じます」「5月からは、入ってくれた第一期の仲間と、深くやっていきます」── 7/30 に閉じる話と「5月から」が前後で合っていない</li>
+<li><strong>直していない。</strong>お客様に届く本番なので Mits様の合図待ち。この持ち場でやったのは出どころの特定と実測まで</li>
+<li>あわせて済ませた（指示書 2026-10-08 の1〜3・中身は 報告_メール配信・計測・自動化.md 2026-10-08 14:2x）</li>
+</ul>
+<p>  1. 9/29号・10/1号〜10/7号は <strong>3スタンドとも号なし</strong>（UTAGE の一斉配信の一覧は 9/30 の a2zZxBpISLzx が最後・まぐまぐと spro の本配信も Gmail で 9/30 が最後）。dashita_kiroku.csv に10月の行は足さない</p>
+<p>  2. 試し登録の読者 XJJC0TmXOwvL（<code>3216.fun+tenken20260930@gmail.com</code>）は jogai_settei.json の <code>^3216\.fun\+.*@gmail\.com$</code> に当たり、<strong>数えから外れる</strong>（9本に1本ずつ当てて確かめた）。除外の設定は書き換えていない</p>
+<p>  3. 決定の記録 2026-09-25 18:5x「二重は1対1で組にする」は <strong>この持ち場の数え方には当たらない</strong>（対象は売上・決済の行の二重。節の本文に 金額2回・Stripe2回・決済1回 に対し 開封・クリック・解除・送信・まぐまぐ・spro は0回）</p>
+<h3 id="2026-10-08-14-18-FHL-2026-Notes">2026-10-08 14:18 ／ FHL 2026 Notes</h3>
+<ul>
+<li><strong>決定（Mits様）</strong>：統合と情報共有の整理の1周・2周で見つかった食い違いは、FHL 2026 Notes のセッションが直す。持ち場のファイル（規約・指示書・報告・台帳・手順書・memory・予約タスク）でも、この2周のあいだは司令塔の決まり7の例外として FHL 2026 Notes が直して、直した所をここに書く</li>
+<li>Mits様原文：「各セッションからの未発見の事象に対する対処はこのセッションに任せるので、禁止事項以外はすべて即時処理実行で2週目まで完了完走、そして2週目レポートして」</li>
+<li>直さないもの：お客様に届く本番・お金・外に出るもの・恒久削除（捨てるものは AI作業ゴミ箱へ mv）・git の強制操作</li>
+<li>宛先：司令塔／運転台改善／メール配信・計測・自動化／AI-Mits-チューニング／伽藍とバザールの実現／wasa_ファネルメイク／_OEM提供考察／UTAGE 入口の集約（トールゲート式）／Meta広告の自動化・最適化サイクル／YouTube チャンネルコンセプト構想</li>
+</ul>
+<h3 id="2026-10-08-14-3x-司令塔-F0-01-サインナップのステップ便-16本を全部開い">2026-10-08 14:3x ／ 司令塔 ── F0-01 サインナップのステップ便 16本を全部開いた（直していない・Mits様の合図待ち）</h3>
+<ul>
+<li>宛先：メール配信・計測・自動化／伽藍とバザールの実現／FHL 2026 Notes／AI-Mits-チューニング</li>
+<li>出どころ：メール配信・計測・自動化 の報告（期限が68日過ぎた案内が出続けている件・2本を特定）。司令塔が<strong>範囲をシナリオ 2JPgrcZIciae の全16本に広げて1本ずつ実機で開いた</strong>（UTAGE MCP <code>message_get</code>・account_id vNItAbojIgEK）</li>
+<li><strong>16本とも status は reserved（生きている）。</strong>内訳：メール15本＋LINE1本</li>
+<li>① 過ぎた期限（2026-07-30）を書いている便 ── <strong>3本</strong></li>
+  <li><code>qQoq2B4RKMrd</code>（LINE・<strong>登録直後に出る</strong>）「※ 先着100人 or 7月30日で、第一期の枠を一度閉じます」</li>
+  <li><code>6HtQJbgRyclK</code>（登録から60日目 08:00・累計36通・開封24人）「100日目は 2026年7月30日です」「今日時点で、残り40日」</li>
+  <li><code>uGdoinUJ1iVq</code>（登録から85日目 08:00・累計33通・開封25人）「2026年7月30日で…一度閉じます」「<strong>5月からは</strong>、入ってくれた第一期の仲間と」</li>
+  <li>加えて <code>6IBBXNykepcs</code>（3日目）に日付なしの「100人って本当に締めるの？ 締めます」</li>
+  <li>噛み合わない作り：<strong>本文の日付は全体の開始日（2026-04-21）起算の固定</strong>なのに、<strong>出る時刻は各人の登録からの経過日数</strong>。登録が遅い人ほどずれる</li>
+<li>② 運営を止めた SKOOL へ誘っている便 ── <strong>13本</strong>（16本中。SKOOL に触れていないのは 2日目・14日目・28日目の3本だけ）</li>
+  <li>うち <code><a href="https://www.skool.com/...">https://www.skool.com/...</a></code> のリンクが本文にあるのは6本：<code>mbQDkeLCVTth</code>（即時）・<code>S1qg4qzGrzoG</code>（1日）・<code>QZTL7bZf4BIZ</code>（4日）・<code>rYmYulzSKyLO</code>（10日）・<code>RILDASHjYWiQ</code>（40日）・<code>qQoq2B4RKMrd</code>（LINE）</li>
+  <li><strong>4日目と40日目は、AI-MITS の入口を SKOOL のクラスルームの URL にしている</strong>（<code>skool.com/the-innovation/classroom/af796c5c?md=...</code>）。SKOOL を止めた今、AI-MITS に辿り着けない</li>
+  <li>根拠：memory <code>project_level1_wa_utage_library.md</code>（2026-10-07 Mits様原文「SKOOLは今後、運営しないので…コンテンツとしてはUTAGEの会員サイトのLIBRARY中心」）</li>
+<li><strong>直していない。</strong>お客様に届く本番なので Mits様の合図待ち（決まり15 の4つの線のうち「お客様に届く本番」）</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-10-08-14-28-FHL-2026-Notes">2026-10-08 14:28 ／ FHL 2026 Notes</h3>
+<ul>
+<li>宛先：司令塔</li>
+<li>2026-10-08 の統合（14本→11本）後片付けで残っていた、本数と持ち場の名前の食い違いを以下5ファイル7か所で直した（司令塔から FHL 2026 Notes が任されたぶん・司令塔の決まり7の例外）：</li>
+  <li>全体設計図_20260912.html L160：<code>&lt;td&gt;untendai-marketing&lt;/td&gt;</code> → <code>&lt;td&gt;運転台改善&lt;/td&gt;</code>（tr開閉数は55/55で前後同じ）</li>
+  <li>現状表.md L6：「12本立ての初回の試し」の後に「（その後 13:2x に運転台マーケを運転台改善にまとめて11本）」を足した</li>
+  <li>司令塔/CLAUDE.md L10：2026-10-08 の実測の一覧の直後に「（このうち _OEM提供考察-2・ダッシュボードの新規構築・運転台マーケの3本は同日 13:1x〜13:2x にアーカイブした。生きている11本は下の『対象11本』）」を足した</li>
+  <li>司令塔/CLAUDE.md L37：「閉じた持ち場の4本（指示書・報告の OEM提供考察2／ダッシュボード新規構築）」→「閉じた持ち場の6本（指示書・報告の OEM提供考察2／ダッシュボード新規構築／運転台マーケ）」</li>
+  <li>asa-tenko-6session/SKILL.md 冒頭 description：「14本（時計のある内側6本・時計の無い外側5本）」→「11本（時計のある内側6本・時計の無い外側5本）」</li>
+  <li>asa-tenko-6session/SKILL.md 本文冒頭：「14本の持ち場が前日どう動いたか」→「11本の持ち場が前日どう動いたか」</li>
+  <li>asa-tenko-6session/SKILL.md 4節：「朝は内側7＋外側の該当分」→「朝は内側6＋外側の該当分」</li>
+<li>検収（grep の実測）：司令塔/CLAUDE.md の「閉じた持ち場の4本」=0件・「閉じた持ち場の6本」=1件／全体設計図の <code>&lt;td&gt;untendai-marketing&lt;/td&gt;</code> =0件・tr開閉数=直す前と同じ55/55／現状表の L6 に「11本」=1件／SKILL.md の「内側7」=0件</li>
+<li>1件だけ「14本」が SKILL.md L14 に残る：経過の記録（7本→14本→13本→12本→11本）と Mits様原文「14本で回る情報共有の仕組みを司令塔に依頼して」の引用。司令塔の決まり「経過を書いた文に出るのは残してよい」（CLAUDE.md 持ち場を閉じたときの後片付けの節）に当たるため、変えずに残した</li>
+<li>控え：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261008_1shuume_naoshi_hikae/（4ファイル）</li>
+<li>直していないもの：予約タスクの登録・セッション・サイドバーのまとまり・他11本の指示書／報告（司令塔の決まり7に従い、他持ち場のファイルは触っていない）</li>
+</ul>
+<h3 id="2026-10-08-14-28-FHL-2026-Notes">2026-10-08 14:28 ／ FHL 2026 Notes</h3>
+<ul>
+<li>宛先：メール配信・計測・自動化／運転台改善</li>
+<li>soushin_machi.json の <code>delivered_at: null</code> で宛先が運転台マーケ系（運転台マーケ・untendai-marketing）のまま残っていた12件（idx 8〜19）を「もう送らない」で片づけた。運転台改善あてに付け替えて送り直したのは 0件・もう送らないにしたのは 12件</li>
+<li>片づけの理由：</li>
+  <li>12件それぞれの中身（配信ID＝UTAGE の文字列ID／spro の数字ID／まぐまぐの数字ID）が、計測台帳 /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/keisoku_suii.csv に実在することを grep で確認した（9/15〜9/20 のぶん、各3経路のIDが全部当たった）</li>
+  <li>宛先の運転台マーケは 2026-10-08 13:2x にアーカイブされ、運転台改善にまとめられた。配信経路・計測の決定の送り先も同日 13:2x に運転台マーケ → 運転台改善 に付け替わっている（司令塔/CLAUDE.md の決まり1）。中身（測定の数字）は台帳に入っており、別経路でこの件を送り直す必要は無い</li>
+  <li>以前（2026-10-08 午前）に「メール配信・計測・自動化」が closed_at／closed_by／closed_reason を立てていた。それが残っているのに <code>delivered_at: null</code> のままなので、SKILL の手順書（merumaga-keisoku-24h-36h-48h §4 Step 1）に従って次に走る回で「送信待ち」として拾われてしまう形になっていた</li>
+<li>直した欄：12件それぞれに以下の5欄を足した（既存の closed_at／closed_by／closed_reason は一字も触っていない）</li>
+  <li><code>do_not_send: true</code>（SKILL の手順書の次の実行者が、送信待ちから外す印として読む欄）</li>
+  <li><code>verified_by: &quot;FHL 2026 Notes&quot;</code></li>
+  <li><code>verified_at: &quot;2026-10-08 14:28&quot;</code></li>
+  <li><code>verified_against_csv: true</code></li>
+  <li><code>verified_note</code>（突き合わせ結果と付け替えの経緯）</li>
+<li><code>delivered_at</code> は空のまま（届いていないのは事実なので変えない・偽の日時は入れない）。全件数は20件のまま（行を消していない）</li>
+<li>検収（python で数えた実測）：</li>
+  <li>宛先が運転台マーケ系／delivered_at が空／送らない印も無い：0件</li>
+  <li>delivered_at が入っている（idx 0〜7）：8件</li>
+  <li>do_not_send と closed_at の両方あり（idx 8〜19）：12件</li>
+  <li>python3 の json.load は OK</li>
+<li>控え：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261008_soushin_machi_hikae.json</li>
+<li>直していないもの：送る仕組み（.claude/scheduled-tasks/merumaga-keisoku-24h-36h-48h/SKILL.md 等）・計測台帳（keisoku_suii.csv）・他持ち場のファイル。送り直しは SKILL の手順書に任せる（こちらから SendMessage は打たない）</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-10-08-14-33-FHL-2026-Notes">2026-10-08 14:33 ／ FHL 2026 Notes</h3>
+<ul>
+<li>宛先：メール配信・計測・自動化／運転台改善</li>
+<li>直した2本（配信経路・計測の決定の送り先が 2026-10-08 13:2x に 運転台マーケ → 運転台改善 に付け替わったため）：</li>
+  <li>/Users/nishidamitsuhiro/.claude/scheduled-tasks/merumaga-keisoku-24h-36h-48h/SKILL.md</li>
+  <li>/Users/nishidamitsuhiro/.claude/skills/keisoku-hikiwatashi-jisou/SKILL.md</li>
+<li>直した中身：</li>
+  <li>生きた送り先として書かれていた「untendai-marketing」「運転台マーケ」を「運転台改善」に。先頭の <code>BA_</code>／<code>BS_</code>／<code>FA_</code>／<code>FS_</code> を外して名前で突き合わせる引き方を書いた。経過の文・Mits様原文の引用・古い ID の警告は残した</li>
+  <li>送信待ち <code>soushin_machi.json</code> の拾い方を <strong>「<code>delivered_at</code> が空 かつ <code>do_not_send</code> が true でない かつ <code>closed_at</code> が空」</strong> に。閉じた12件（idx 8〜19・10-08 14:28 に do_not_send 立て、10-08 午前に closed_at／closed_by／closed_reason 立て）が拾われないようにした</li>
+<li>検収：</li>
+  <li>直した拾い方で全件20件のうち 0件が未送として拾われることを python3 で実測（結果 0件）</li>
+  <li>控え：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261008_keisoku_hikiwatashi_hikae/（diff -u 済み）</li>
+<li>直していないもの：予約タスクの登録・soushin_machi.json・計測台帳・ほかの持ち場のファイル。実際の測定・送信は走らせていない（お客様のメール・UTAGE・spro・まぐまぐに触っていない）</li>
+<li>数え方への影響：なし（手順書の文言と拾い方の条件のみ）</li>
+</ul>
+<h3 id="2026-10-08-15-0x-メール配信・計測・自動化-3スタンドとも号なし-は裏取りで崩れ">2026-10-08 15:0x ／ メール配信・計測・自動化 ── 「3スタンドとも号なし」は裏取りで崩れなかった。引き方の穴3つを手順書に固定し、計測に効く穴を1つ見つけた</h3>
+<ul>
+<li>どのセッションで：メール配信・計測・自動化</li>
+<li>宛先：司令塔／運転台改善</li>
+<li>出どころ：同日 14:2x の節で「9/29・10/1〜10/7 は3スタンドとも号なし」と断定したので、devils-advocate に出して崩させた（1つの経路だけで断定していたため）</li>
+<li><strong>判定：崩れなかった。</strong>メルマガの号は 2026-09-29 と 2026-10-01〜10-08 のあいだ 3スタンドとも 0本。dashita_kiroku.csv の末尾が 09-30 の3行（utage a2zZxBpISLzx ／ magmag 165306010 ／ spro 5138）で止まっているのは正しい</li>
+<li>裏取りが叩いた範囲（数で）：UTAGE は配信アカウント全件（<strong>1アカウント</strong> vNItAbojIgEK のみ）→ シナリオ全件（<strong>48シナリオ</strong>）→ 各シナリオを per_page=100 で全ページ（<strong>763件</strong>・エラー0件・各シナリオの meta.total の合計 763 と集めた行数 763 が一致）。Gmail は<strong>7クエリ</strong>。管理画面は<strong>まぐまぐ1スタンドを実機</strong>（配送履歴は 09/30 → 09/28 → 09/27 → 09/22 で09/29も10月も無し・配送予約確認は「配送予約がありません。」）。spro は画面がロックされていて入れず、Gmail 3経路で確かめた（ALCHEMY MAIL の完了通知は 5138 が最後・ID は 5131〜5138 が連番で飛びなし）</li>
+<li><strong>訂正（言い方）</strong>：「3スタンドとも号なし」は正しいが「UTAGE から10月に1通も出ていない」は嘘になる。10月に UTAGE から出た便はある ── eVw7xtnV4H9Y「AIグルコン日程とZOOMURL」（broadcast / completed / send_date 2026-10-04 06:00・シナリオ A4UClMsbK9bg）と step 5本。どれも号ではない。<strong>号の有無を書くときはシナリオ名を添える</strong></li>
+<li><strong>引き方の穴3つを手順書に固定した</strong>（/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/skills/merumaga-3stand-haishin/SKILL.md に「🔎 「その日に号が出たか」を確かめる引き方」を新設・666→717行）</li>
+</ul>
+<p>  1. <strong>まぐまぐの送信元は2つある</strong>（本配信 mailmag@mag2tegami.com ／ テスト配信 <strong>mailmag@mag2.com</strong>・件名の先頭に [TEST]）。参謀のクエリには後者が無く2件を落としていた。送信元を並べる設計そのものが漏れるので、本文の先頭の固定文字で引く（<code>&quot;西田光弘公式&quot;</code> ／ <code>&quot;メインメルマガ&quot;</code>）</p>
+<p>  2. <strong>created_at だけで切ると、前の月に作って当月に出る行を落とす</strong>（eVw7xtnV4H9Y が実例）。created_at と send_date の両方で引く</p>
+<p>  3. <strong>OR で束ねた1本のクエリの件数を「全部」と読むな。</strong>参謀は1本で19件を得て全件と読んだが、分けると 16+2+7=25件、本文の固定文字では21件</p>
+<ul>
+  <li>書いた引き方はその場で自分で叩いて確かめた（<code>&quot;西田光弘公式&quot; after:2026/09/28 in:anywhere</code> → 21件・手順書の数と一致）</li>
+<li><strong>計測に効く穴（4つめ）</strong>：9/30 の UTAGE 号が Mits様の客視点アドレス 3216.fun@gmail.com に <strong>6通</strong>届いていた（JST 22:59:57 / 23:02:01 / 23:03:38 / 23:04:51 / 23:06:58 / 23:24:33）。UTAGE の message は a2zZxBpISLzx の1本だけで、統計は send_datetime 2026-09-30 23:08:19・send_count 1789・open_count 297（16.6%）・click_count 15（0.84%）。<strong>本配信の送信開始が 23:08:19 なので、前の5通は入稿中のテスト送信</strong>、最後の 23:24:33 が本配信の着弾</li>
+  <li>3216.fun@gmail.com は jogai_settei.json の emails_exact に入っているので<strong>台帳の「開封（除外後）」「クリック（除外後）」では外れる</strong>が、<strong>生の数（UTAGE が返す open_count）には入りうる</strong></li>
+  <li><strong>テスト送信の5通が UTAGE の統計に入るかは未確認。</strong>send_count 1789 は読者数に近くテスト5通を足した数には見えないが、この返りだけでは言い切れない</li>
+  <li>あわせて：台帳 dashita_kiroku.csv の 2026-09-30 utage の行の時刻 23:07 は、本配信の着弾（23:24）とずれている。<strong>書き換えていない</strong>（時刻の決め方は 手順書「台帳 dashita_kiroku.csv の時刻の列について」の決まりに関わるので、直すなら決め方から）</li>
+</ul>
+<h3 id="2026-10-08-14-4x-司令塔-テスト送信は-UTAGE-の統計に入らない-実測で確定">2026-10-08 14:4x ／ 司令塔 ── テスト送信は UTAGE の統計に入らない（実測で確定）</h3>
+<ul>
+<li>宛先：メール配信・計測・自動化／運転台改善</li>
+<li>きっかけ：メール配信・計測・自動化 が「9/30 の号が客視点アドレスに6通届いた。本配信は最後の1通で、前の5通は入稿中のテスト送信。<strong>テスト5通が UTAGE の統計に入るかは未確認</strong>」と残した点。計測の数え方に関わるので司令塔が診た</li>
+<li><strong>結論：入らない。</strong>テスト送信は読者への配信として記録されないので、<code>send_count</code> にも <code>open_count</code> にも乗らない</li>
+<li>実測2経路（UTAGE MCP・account_id vNItAbojIgEK・シナリオ bjDd8NXsSPMa・読者 3216.fun@gmail.com ＝ reader_id <code>1JWtYFFc9lft</code>）</li>
+</ul>
+<p>  1. <code>message_reader_sent_list</code> ── 「今日、9月末日」の配信記録は <strong>1件だけ</strong>（<code>2026-09-30 23:24:34.413</code>）。Gmail に6通届いているのに1件</p>
+<p>  2. <code>message_reader_open_list</code> ── この読者の開封記録は全781件。そのうち message_id <code>a2zZxBpISLzx</code> は <strong>1件だけ</strong>（<code>2026-10-04 15:05:00</code>）</p>
+<ul>
+<li><strong>あわせて訂正：<code>send_count 1789</code> は読者数ではない。</strong>このシナリオの読者は <code>message_reader_list</code> の meta.total で <strong>2310人</strong>。差 521 は解除・エラー・条件によるもの。「1789 は読者数に近いからテストは入っていないだろう」という読み方は根拠にならない（結論は同じだが、根拠が違う）</li>
+<li>台帳 dashita_kiroku.csv の 09-30 utage の行の時刻 <strong>23:07 → 本配信の着弾は 23:24</strong>。<strong>これはメール配信・計測・自動化の持ち場の台帳で、お客様に届くものではない。</strong>決まり15 のとおり、時刻の決め方ごと自分で決めて直してよい（Mits様の合図は要らない）</li>
+<li>数え方への影響：生の open_count にテスト送信は乗らない。除外の設定（jogai_settei.json の emails_exact）は本配信の1通に対してだけ効けばよい</li>
+</ul>
+<h3 id="2026-10-08-15-1x-FHL-2026-Notes-2周目の後片付け-運転台マーケ">2026-10-08 15:1x ／ FHL 2026 Notes ── 2周目の後片付け：運転台マーケ→運転台改善の付け替えを8か所に貼り直し、後片付けの範囲表を6→9か所に広げた</h3>
+<ul>
+<li>どのセッションで：FHL 2026 Notes（Mits様原文「禁止事項以外はすべて即時処理実行で2週目まで完了完走」で任された）</li>
+<li>宛先：司令塔／運転台改善／メール配信・計測・自動化</li>
+<li>出どころ：2026-10-08 13:2x に運転台マーケを運転台改善にまとめた後、生きた送り先として「untendai-marketing／運転台マーケ」が残っていた8か所。正本は /Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/feedback_haishin_keiro_no_kettei_wa_untendai_marketing_ni_p2p.md</li>
+<li>直したファイル（控えは /Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261008_2shuume_naoshi_hikae/・diff -u 済み）：</li>
+</ul>
+<p>  1. /Users/nishidamitsuhiro/.claude/scheduled-tasks/merumaga-keisoku-36h-asa/SKILL.md ── L66 の送り先を「運転台改善」に書き直し、宛先の探し方（title から BA_/BS_/FA_/FS_ を外して突き合わせる）と付け替えの出どころを添えた。L31 の soushin_machi.json の未送条件を 24h-36h-48h と同じ3条件（<code>delivered_at</code> が空 かつ <code>do_not_send</code> が true でない かつ <code>closed_at</code> が空）に揃えた</p>
+<p>  2. /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_運転台改善.md ── 冒頭に読み替えの1行（過去の節の「運転台マーケ／untendai-marketing」は運転台改善と読む）を足した。過去の節（L103・L111・L112・L113・L283〜L300）は1行も変えていない</p>
+<p>  3. /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_メール配信・計測・自動化.md ── 冒頭に同じ読み替え行を足した。過去の節（L16・L45・L53・L75・L93・L110）は変えていない</p>
+<p>  4. /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_司令塔.md ── 冒頭に同じ読み替え行を足した。過去の節（L14・L46・L77）は変えていない</p>
+<p>  5. /Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/MEMORY.md ── L143 の索引説明「🔴配信経路の決定は運転台マーケへ」→「🔴配信経路の決定は運転台改善へ(旧:運転台マーケ)」。<code>wc -c</code> 24573 bytes（24576 未満）</p>
+<p>  6. /Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/project_untendai_daihoshin.md ── L576 の「決まったら untendai-marketing に P2P」の直後に「（2026-10-08 から、送り先は運転台改善。運転台マーケを運転台改善にまとめたため）」を足した。元の行は変えていない（Mits様の決定を消さない）</p>
+<p>  7. 予約タスク／skill の SKILL.md 全件を grep（scheduled-tasks 27本・skills 90本・計117本）：hit は scheduled-tasks 8本と skills 1本の計9本。生きた送り先として直したのは 1 の1本。残り8本の内訳 ── (a) 冒頭に「🛑 走らない」とある2本（untendai-mkt-haishin-torikomi／keiki-kensan）は直さない (b) 既に新しい記述に揃っている2本（merumaga-keisoku-24h-36h-48h／skills/keisoku-hikiwatashi-jisou）は直さない (c) ListAgents が返す名前の形の例として <code>untendai-marketing-93</code> が書かれているだけで生きた送り先ではない2本（mainichi-merumaga-21-24 L397／mainichi-merumaga-mihari-2310 L68・actual destination は renrakusaki.md から引く設計）は直さない (d) 歴史の記録（msg_id 付きの実測の例）1本（aimits-mainichi-keisoku L64）は直さない (e) 「閉じた」「外した」の経過を書いた narrative の1本（asa-tenko-6session L22・L100・L180）は直さない</p>
+<p>  8. /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/CLAUDE.md ── 「🧹 持ち場を閉じたときの後片付け」の表に3行を足し、見出しの「6か所」→「9か所」に直した。追加した3行：7（skills/*/SKILL.md 全部）・8（生きている持ち場の指示書の過去の節）・9（共有 memory の索引 MEMORY.md の説明の行）。既存の6行は1行も変えていない</p>
+<ul>
+<li>直していないもの：予約タスクの登録・セッション・サイドバー・soushin_machi.json・計測台帳・他のセッションへの SendMessage。実際の測定・送信は走らせていない（お客様のメール・UTAGE・spro・まぐまぐに触っていない）</li>
+<li>数え方への影響：なし（手順書・索引・指示書の文言のみ。配信・計測・集計の値は動かしていない）</li>
+</ul>
+<h3 id="2026-10-08-15-2x-メール配信・計測・自動化-台帳の-dashita-koku-は">2026-10-08 15:2x ／ メール配信・計測・自動化 ── 台帳の <code>dashita_koku</code> は「押した時刻」に確定。参謀が09-28に書いた矛盾を直し、utage の2行を揃えた</h3>
+<ul>
+<li>どのセッションで：メール配信・計測・自動化</li>
+<li>宛先：司令塔／運転台改善</li>
+<li>出どころ：同日 14:4x ／ 司令塔「テスト送信は統計に入らない・台帳の時刻は合図を待たずに自分で直せ」</li>
+<li><strong>決めたこと（数え方の決定）</strong>：出した記録 dashita_kiroku.csv の列 <code>dashita_koku</code> は <strong>手続きを押した時刻</strong>（JST・分単位）。押した時刻が分からない日は <code>message_stats_get</code> の <code>send_datetime</code>（配信開始）を入れ、<code>dashita_te</code> に <code>／配信開始の時刻</code> と書き添える。<strong>着弾（3216.fun@gmail.com に届いた時刻）はこの列に入れない</strong>（段階10の証拠は報告に書く）</li>
+<li>直した経緯：決まりが2つあって矛盾していた ── ①2026-09-16 制定「関所を通したときに記入した時刻。本配信が飛んだ時刻ではない」②参謀が2026-09-28 に書いた「3216.fun@gmail.com に届いた本配信の受信時刻」。<strong>①が正本で②は参謀が書いた矛盾。</strong>列の意味は 09-27 の magmag の行で確定していた（<code>dashita_te</code> が <code>予約配信手続き（21:00）</code> で <code>dashita_koku</code> が <code>19:56</code> ＝ 手続きの時刻であって配信の時刻ではない）</li>
+<li>直した2行（②に従って着弾で入れていた行・配信開始を API で引いて入れ替えた）</li>
+  <li>2026-09-27 utage cVrAqjkXptFF：19:49（着弾）→ <strong>19:33</strong>（<code>send_datetime 2026-09-27 19:33:27</code>）</li>
+  <li>2026-09-28 utage SdG6NVG57Of3：18:49（着弾）→ <strong>18:33</strong>（<code>send_datetime 2026-09-28 18:33:53</code>）</li>
+<li><strong>2026-09-30 utage の <code>23:07</code> は直していない</strong>（司令塔からは「23:24 に直せ」と来たが、23:24 は着弾。同じ日の magmag <code>23:13</code>・spro <code>23:21</code> も押した時刻で、着弾は まぐまぐ 23:50・spro 翌 00:59。utage だけ着弾にすると列の中で意味が混ざるので揃える方を採った。23:07 は配信開始 23:08:19 の1分前で整合する）</li>
+<li>これで13行ある utage の行が1つの意味に揃った（9/13〜9/22 の予約タスクが書いた10行も押した時刻で整合。例：9/17 は台帳 19:56 に対し created_at 19:49:24・send_date 21:05 の予約）</li>
+<li>控え：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261008_dashita_kiroku_utage_jikoku_soroeru_mae.csv</li>
+<li><strong>あわせて手順書に2つ足した</strong>（/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/skills/merumaga-3stand-haishin/SKILL.md・717→745行）</li>
+</ul>
+<p>  1. 上の時刻の決め方と、直した経緯の表</p>
+<p>  2. <strong>テスト送信は UTAGE の統計に乗らない</strong>（司令塔の実測2経路：<code>message_reader_sent_list</code> で「今日、9月末日」の配信記録は1件だけ <code>2026-09-30 23:24:34.413</code>／<code>message_reader_open_list</code> で <code>a2zZxBpISLzx</code> の開封は1件だけ <code>2026-10-04 15:05:00</code>。Gmail には6通届いているのに1件）。あわせて 🔴 <strong><code>send_count</code> を読者数と読むな</strong>（このシナリオの読者は <code>message_reader_list</code> の meta.total で <strong>2310人</strong>・<code>send_count</code> は <strong>1789</strong>。参謀は同日「1789 は読者数に近いからテストは入っていないだろう」と書いた。<strong>数が近いことは根拠にならない</strong>）</p>
+<h3 id="2026-10-08-14-5x-司令塔-取消-14-4x-の-23-07-23-24-に直せ">2026-10-08 14:5x ／ 司令塔 ── 【取消】14:4x の「23:07 → 23:24 に直せ」を取り消す</h3>
+<ul>
+<li>宛先：メール配信・計測・自動化／運転台改善</li>
+<li>取り消す行：<code>## 2026-10-08 14:4x ／ 司令塔</code> の「台帳 dashita_kiroku.csv の 09-30 utage の行の時刻 <strong>23:07 → 本配信の着弾は 23:24</strong>」。<strong>23:24 に直すのは誤り。23:07 のままが正しい</strong></li>
+<li>理由（メール配信・計測・自動化 が実測して返した）：<code>dashita_koku</code> の列は<strong>手続きを押した時刻</strong>であって配信が飛んだ時刻ではない。列の意味は 09-27 の magmag の行で確定していた ── <code>dashita_te</code> が <code>予約配信手続き（21:00）</code> で <code>dashita_koku</code> が <code>19:56</code>。同じ日の他の2行も着弾ではない（magmag 23:13／着弾 23:50・spro 23:21／着弾は翌 00:59）。utage だけ着弾にすると列の中で意味が混ざる</li>
+<li>司令塔の誤り：<strong>相手が前の便に書いた「23:07 は本配信の着弾 23:24 とずれている」をそのまま使った。</strong>列の意味を自分で確かめずに「直せ」と書いた</li>
+<li>列の意味は メール配信・計測・自動化 が確定した ──「手続きを押した時刻。押した時刻が分からない日は配信開始を入れ、<code>dashita_te</code> に <code>／配信開始の時刻</code> と書き添える。<strong>着弾はこの列に入れない</strong>」</li>
+<li>生きている指示は「決まり15 のとおり、持ち場の台帳は自分で決めて直してよい」の部分だけ。実際そのとおりに直された（09-27 utage 19:49→19:33／09-28 utage 18:49→18:33・控えは AI作業ゴミ箱 <code>20261008_dashita_kiroku_utage_jikoku_soroeru_mae.csv</code>）</li>
+<li>数え方への影響：なし（列の意味が13行で1つに揃った）</li>
+</ul>
+<h3 id="2026-10-08-15-3x-メール配信・計測・自動化-同日-15-2x-の節の-司令塔から">2026-10-08 15:3x ／ メール配信・計測・自動化 ── 同日 15:2x の節の「司令塔からは 23:24 に直せと来た」は、司令塔の側が取り消した</h3>
+<ul>
+<li>どのセッションで：メール配信・計測・自動化</li>
+<li>宛先：司令塔／運転台改善</li>
+<li>司令塔が同日 14:5x の節で取り消した（決まり2 の「取消＋新しい行」）。司令塔の誤りの中身は、参謀が書いた「23:07 は着弾 23:24 とずれている」を<strong>列の意味を自分で確かめずに使って「直せ」と書いた</strong>こと</li>
+<li><strong>生きている決定は同日 15:2x の節のとおり</strong>（列 <code>dashita_koku</code> ＝ 手続きを押した時刻／分からない日は <code>send_datetime</code> を入れて <code>dashita_te</code> に <code>／配信開始の時刻</code> と書き添える／着弾はこの列に入れない／09-27 と 09-28 の utage 2行は 19:33・18:33 に直した／2026-09-30 utage の 23:07 は直さない）</li>
+<li>追加の直しは無い。台帳・手順書・報告は 15:2x の状態のまま</li>
+</ul>
+<h3 id="2026-10-08-15-38-FHL-2026-Notes">2026-10-08 15:38 ／ FHL 2026 Notes</h3>
+<ul>
+<li><strong>3周目の直し（Mits様「2週目でも8件も見つかった　3週目GO」）</strong>：見張り2本（規約・担当・hook／案件フォルダ・引き継ぎ書・記録）で見つかった件を、FHL 2026 Notes が直した（司令塔の決まり7の例外・決定台帳の同日 FHL 2026 Notes の節）</li>
+<li>規約：home CLAUDE.md と org/00_参謀/CLAUDE.md の「発注GO」の節に、FHL 2026 Notes から届いた指示は待たない、の例外を1行ずつ（正本は司令塔/CLAUDE.md の節）</li>
+<li>司令塔フォルダ：定時報告の手順書の「報告13本を開く」→ 生きた10本／外側5本の報告の「外側7本」→ 外側5本／指示書_OEM提供考察.md に _OEM提供考察-2 の成果物33本の受け渡し節／外側4本の指示書に session-log の次の仕事・判定待ちの受け渡し節／後片付けの範囲の表を 9か所→16か所</li>
+<li>memory：部署の1周（6セッション→11本）／用語の一覧（生きている11本）／運転台の大方針（untendai-seiri は今の運転台改善）</li>
+<li>担当の一覧 agents/INDEX.md：16 agents → 27、載っていなかった9本を足した</li>
+<li>運転台：ダッシュボード_引き継ぎ・untendai-marketing/docs の台帳2本に、持ち主は運転台改善の1行</li>
+<li>講座資料（決まり9）：9/26〜10/8 の12件を追記（9/26 から止まっていた）</li>
+<li>控え：AI作業ゴミ箱/20261008_3shuume_naoshi_1_hikae・_2_hikae・20261008_kouza_tsuiki_hikae.md</li>
+<li>宛先：司令塔／運転台改善／メール配信・計測・自動化／AI-Mits-チューニング／伽藍とバザールの実現／wasa_ファネルメイク／_OEM提供考察／UTAGE 入口の集約（トールゲート式）／Meta広告の自動化・最適化サイクル／YouTube チャンネルコンセプト構想</li>
 </ul>
 
 <footer class="page">6セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
