@@ -83,6 +83,7 @@ tr.sum-row td.sum-total .sum-count{display:block;font-size:.72em;font-weight:400
 
 <h1>LEVEL 3 コーチングで（本 <i>The Linchpin</i> p63 の形・2026-10-08）</h1>
 <p class="lead">このページは <b>LEVEL 3 コーチングで</b>。上の3つのボタンで LEVEL 1 ／ 2 ／ 3 の各ページに移れる。</p>
+<p class="lead-price" style="margin:4px 0 14px;padding:10px 14px;background:#fff;border-left:4px solid var(--gold);font-weight:700;color:var(--navy);"><b>LEVEL 3（西田と 1 対 1）</b>：99,700円／月　または　一括 997,000円（仮）<br><small style="font-weight:normal;color:#555;font-size:.82em;">※仮：LEVEL 1 9,700円（$97）・LEVEL 2 29,700円（$297）と同じく、The Linchpin p63 の Level 3 With Coaching $997/月 に合わせ、一括は月額の 10 倍。Mits様が決められたら差し替え</small></p>
 <div class="decl">
 <p>上のかたまりは「プランと料金」。p63 の原文の見出しを日本語で置き、本の $ の値と円相当（［空］）、我が社の暫定の値段を並べた。LEVEL 1 以外の我が社の値段は［空］。</p>
 <p>下のかたまりは「得られるもの」。1 行に 1 つ、受け取る側の言葉で「〜ます」で書いた。右の列は「これまでの値段」（記録と UTAGE の実物から取ったものだけ）。</p>
@@ -124,7 +125,7 @@ tr.sum-row td.sum-total .sum-count{display:block;font-size:.72em;font-weight:400
 <tr><td class="item">記録のある部品</td><td class="price-cell" colspan="3">4 件（BE-01 ／ BE-03 ／ すごいコンサル ／ 個別相談）</td></tr>
 <tr><td class="item">記録なしの部品</td><td class="price-cell" colspan="3">0 件</td></tr>
 <tr><td class="item">合計</td><td class="price-cell" colspan="3">4 件</td></tr>
-<tr><td class="sec" colspan="4">暫定価格の合計（Mits 入力・そのブラウザに残る）</td></tr><tr class="sum-row"><td class="item">合計</td><td class="price-ref" style="color:#999;">—</td><td class="sum-total"><span id="single-sum">0 円</span><span class="sum-count" id="single-count">入力済み 0 行／全 4 行</span></td><td class="sum-total"><span id="monthly-sum">0 円</span><span class="sum-count" id="monthly-count">入力済み 0 行／全 4 行</span></td></tr>
+<tr><td class="sec" colspan="4">暫定価格の合計（Mits 入力・そのブラウザに残る）</td></tr><tr class="sum-row"><td class="item">合計</td><td class="price-ref" style="color:#999;">—</td><td class="sum-total"><span id="single-sum">0 円</span><span class="sum-count" id="single-count">入力済み 0 行／全 4 行</span></td><td class="sum-total"><span id="monthly-sum">0 円</span><span class="sum-count" id="monthly-count">入力済み 0 行／全 4 行</span></td></tr><tr class="sum-row"><td class="item">単発の合計 ＋ 月額の合計 × 12</td><td class="price-ref" style="color:#999;">—</td><td class="sum-total" colspan="2"><span id="x12-sum">0 円</span><span class="sum-count">＝ 単発の合計 ＋ 月額の合計 × 12</span></td></tr><tr class="sum-row"><td class="item">LEVEL 3 の値段（月額）× 12</td><td class="price-ref" style="color:#999;">—</td><td class="sum-total" colspan="2"><span>1,196,400 円</span><span class="sum-count">＝ 99,700円／月 × 12（仮）</span></td></tr><tr class="sum-row"><td class="item">LEVEL 3 の値段（一括）</td><td class="price-ref" style="color:#999;">—</td><td class="sum-total" colspan="2"><span>997,000 円</span><span class="sum-count">＝ Mits様 2026-10-08 の指示（仮）</span></td></tr>
 </tbody>
 </table>
 </div>
@@ -187,6 +188,9 @@ tr.sum-row td.sum-total .sum-count{display:block;font-size:.72em;font-weight:400
    if (mEl) mEl.textContent = fmtYen(sumMonthly);
    if (sCnt) sCnt.textContent = '入力済み ' + cntSingle + ' 行／全 ' + total + ' 行';
    if (mCnt) mCnt.textContent = '入力済み ' + cntMonthly + ' 行／全 ' + total + ' 行';
+   var x12 = sumSingle + sumMonthly * 12;
+   var x12El = document.getElementById('x12-sum');
+   if (x12El) x12El.textContent = fmtYen(x12);
   }
   inputs.forEach(function(inp){
    var k = STORE_PREFIX + inp.dataset.row + '/' + inp.dataset.col;
