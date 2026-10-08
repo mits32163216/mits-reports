@@ -75,7 +75,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-08 12:36 ／ 写した時刻 2026-10-08 12:36</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-08 12:54 ／ 写した時刻 2026-10-08 12:54</p>
 <h2 id="宛先表-6セッション・直接送るための一覧">宛先表（6セッション・直接送るための一覧）</h2>
 <p><strong>毎朝の定時報告（asa-tenko-6session・6:30）が、この表のIDを実測で書き換える。</strong></p>
 <p>セッションは立て直すとIDが変わる。ここが古いまま送ると相手に届かない。</p>
@@ -90,7 +91,7 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <p>名前は <code>ListAgents</code> が返す一覧の値。IDではない。</p>
 <p>🛑 予約タスクの回から <code>mcp__ccd_session_mgmt__send_message</code> を呼ぶと、権限の層で断られる</p>
 <p>（逐語 <code>This tool is unavailable in unattended sessions (scheduled-task runs and remote-dispatched trees).</code>）。</p>
-<p><strong>下の表の中身は 実測 2026-10-08 12:3x（list_sessions で7つとも一致を確かめ、FHL 2026 Notes の行を足した）。それより前の記録：実測 2026-09-25 06:4x・毎朝の定時報告 asa-tenko-6session が書き換える。</strong>（この回は <code>list_sessions</code> で引いた。IDは「■新司令塔」の2つ〔運転台改善・メール配信・計測・自動化〕が一覧に出て表の値と一致。ほかの4つは直近40件に出なかった〔最後の動きが古いため〕ので前の値のまま。<code>ListAgents</code> はこの窓の道具に無い。名前あて SendMessage「メール配信・計測・自動化」は 09-25 06:5x に <code>No agent named … is reachable</code> で届かなかった）</p>
+<p><strong>下の表の中身は 実測 2026-10-08 12:5x（list_sessions で内側7つの一致を確かめ、外側7本の行を足した。名前は画面の頭の BA_／BS_／FA_ を外した核で書く）。その前：実測 2026-10-08 12:3x（FHL 2026 Notes の行を足した）。それより前の記録：実測 2026-09-25 06:4x・毎朝の定時報告 asa-tenko-6session が書き換える。</strong>（この回は <code>list_sessions</code> で引いた。IDは「■新司令塔」の2つ〔運転台改善・メール配信・計測・自動化〕が一覧に出て表の値と一致。ほかの4つは直近40件に出なかった〔最後の動きが古いため〕ので前の値のまま。<code>ListAgents</code> はこの窓の道具に無い。名前あて SendMessage「メール配信・計測・自動化」は 09-25 06:5x に <code>No agent named … is reachable</code> で届かなかった）</p>
 <table>
 <tr><th>持ち場</th><th>いまのセッションID（チャットの窓から使う）</th><th>予約タスクの窓から送るときの名前</th><th>この持ち場に直接送る事がら</th></tr>
 <tr><td>司令塔</td><td>local_9fa118c7-d668-4215-a7b6-6ee2ceaca29c</td><td>司令塔（2026-09-18 11:3x に「司令塔 (fork)」から改名。(fork) は宛名にしない）</td><td>全体の設計・検収・報連相のまとめ。ほかの持ち場にまたがる決定</td></tr>
@@ -100,6 +101,13 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <tr><td>AI-Mits-チューニング</td><td>local_ea95e77b-85c6-4f40-adcd-4b1d371e0a1f</td><td>AI-Mits-チューニング</td><td>お試し版の画面、Dify の頭、登録の数</td></tr>
 <tr><td>伽藍とバザールの実現</td><td>local_915bd86f-cef7-48bf-833e-8cce83962a7b</td><td>伽藍とバザールの実現</td><td>普及・販促・仲間募集</td></tr>
 <tr><td>FHL 2026 Notes</td><td>local_eeb1e860-584b-486e-b622-5bb12216f322</td><td>FHL 2026 Notes（2026-10-08 に届いた連絡の name の値。ListAgents では未確認）</td><td>継続課金の組み立て（The Linchpin を下敷きにした段の設計）・FHL 2026 の資料からの売り方の知見</td></tr>
+<tr><td>wasa_ファネルメイク</td><td>local_83809aca-b38a-499e-bd35-b3a6f644f532</td><td>読み取れず（外側7本・ListAgents がこの回の道具に無い）</td><td>読み取れず（外側7本・役の中身はその持ち場が初回の指示の2番で書く）</td></tr>
+<tr><td>_OEM提供考察</td><td>local_b5ee950a-56de-459f-9ba1-1d741e98a52f</td><td>読み取れず（外側7本・ListAgents がこの回の道具に無い）</td><td>読み取れず（外側7本・役の中身はその持ち場が初回の指示の2番で書く）</td></tr>
+<tr><td>_OEM提供考察-2</td><td>local_d9e6a500-2117-4834-92e6-981af9bd1a52</td><td>読み取れず（外側7本・ListAgents がこの回の道具に無い）</td><td>読み取れず（外側7本・役の中身はその持ち場が初回の指示の2番で書く）</td></tr>
+<tr><td>UTAGE 入口の集約（トールゲート式）</td><td>local_6156fafb-3b93-4019-a2b1-32eed96cd1c1</td><td>読み取れず（外側7本・ListAgents がこの回の道具に無い）</td><td>読み取れず（外側7本・役の中身はその持ち場が初回の指示の2番で書く）</td></tr>
+<tr><td>ダッシュボードの新規構築</td><td>local_3208d8ca-effd-4801-8005-3d2a0b9f5bdb</td><td>読み取れず（外側7本・ListAgents がこの回の道具に無い）</td><td>読み取れず（外側7本・役の中身はその持ち場が初回の指示の2番で書く）</td></tr>
+<tr><td>Meta広告の自動化・最適化サイクル</td><td>local_3c188163-2c1b-4a7c-90da-686280f96b53</td><td>読み取れず（外側7本・ListAgents がこの回の道具に無い）</td><td>読み取れず（外側7本・役の中身はその持ち場が初回の指示の2番で書く）</td></tr>
+<tr><td>YouTube チャンネルコンセプト構想</td><td>local_62e43eb5-a3e1-4b1e-acfe-9ebcb7fd7ff6</td><td>読み取れず（外側7本・ListAgents がこの回の道具に無い）</td><td>読み取れず（外側7本・役の中身はその持ち場が初回の指示の2番で書く）</td></tr>
 </table>
 <h3 id="使い方-各持ち場の朝の時計に入れる1行">使い方（各持ち場の朝の時計に入れる1行）</h3>
 <p>昨日、決定の記録に自分が足した行のうち、上の表の「直接送る事がら」に当たるものがあれば、</p>
