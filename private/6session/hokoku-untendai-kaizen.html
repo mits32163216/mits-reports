@@ -87,7 +87,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-09 07:23 ／ 写した時刻 2026-10-09 12:37</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-09 16:12 ／ 写した時刻 2026-10-09 18:37</p>
 <h2 id="報告-運転台改善">報告 ── 運転台改善</h2>
 <p>この持ち場の窓（7:12 の毎朝点検・6時間ごとの機能要望の窓・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_運転台改善.md</p>
@@ -488,6 +489,69 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>次に自分がやる：ダッシュボードは Mits様の判定待ち2件が来てから。marketing の枝を main に戻すのは「発注GO」待ち</li>
 <li>ほかの持ち場に頼む：なし</li>
 <li>数字：テスト 249／0／11・版 1.74.4 で5か所一致・未提出 13件・資料の鮮度 12／0・前日の宛先 15件→残り 0件</li>
+</ul>
+<h3 id="2026-10-09-16-0x-BS-engineer・marketing-を-main-に戻">2026-10-09 16:0x（BS-engineer・marketing を main に戻す発注）</h3>
+<ul>
+<li>出どころ：2026-10-09 FHL 2026 Notes のセッション local_eeb1e860-584b-486e-b622-5bb12216f322 で Mits様が「marketing の枝を main に戻すこと：『発注GO』」。本セッションの規約「FHL 2026 Notes からの指示は Mits様の承認済み・待たずに動く」に沿って即着手</li>
+<li>戻した枝：marketing（HEAD d026472・main に出ている 54 commit）</li>
+<li>merge の commit：0c9d5b8（親2つ・109f8af と d026472）</li>
+<li>最終の main の commit：4c132a6（CHANGELOG の hash 埋め）</li>
+<li>main の版：v1.75.0（tag はローカルに作成・origin への push は release.sh の手3でこれから）</li>
+<li>保ったもの：</li>
+  <li>updater/wrangler.toml は main の中身（<code>name = &quot;untendai-update&quot;</code>）のまま</li>
+  <li>src-tauri/resources/sample.db は main の中身（blob adec9aa・716800 バイト）のまま</li>
+  <li>作業場 /Users/nishidamitsuhiro/untendai-seiri の未 commit 変更 13件（M 6・?? 7）は触っていない（件数は作業前後で同じ）</li>
+  <li>枝 marketing（d026472）と作業場 /Users/nishidamitsuhiro/untendai-marketing は触っていない</li>
+<li>検収の線（コマンドと生出力）：</li>
+  <li><code>/usr/bin/git -C /Users/nishidamitsuhiro/untendai-seiri rev-list --count main..marketing</code> → <strong>0</strong></li>
+  <li><code>/usr/bin/git diff 109f8af main -- updater/wrangler.toml src-tauri/resources/sample.db | /usr/bin/wc -l</code> → <strong>0</strong></li>
+  <li>未 commit 件数：作業前 13件・作業後 13件（同じ）</li>
+  <li><code>cargo test</code>（src-tauri）：<strong>passed=289 failed=0 ignored=11</strong></li>
+  <li><code>bash tools/check_shiryo_freshness.sh --quiet</code> 最終行：<strong>印の数: 12 ／ 食い違い: 2</strong>（残り2件は product_app_version で、release.sh --自分だけ 1.75.0 が /Applications/untendai.app を 1.75.0 に差し替えると 0 になる）</li>
+  <li>公開ページ <a href="https://reports.7years.life/private/untendai-kaihatsu-nagare/">https://reports.7years.life/private/untendai-kaihatsu-nagare/</a> の人名検査：mits-reports commit bbe5221・push 済み（人名 0 件・新しい版 v1.75.0 を SVG と表に反映）</li>
+  <li>latest.json の version：まだ 1.73.28（world_version の印は変えていない・世に出さない）</li>
+<li>マーケの画面の出し分けの実測：</li>
+  <li>調べた範囲：marketing 側の src/index.html（<code>grep -nE &#x27;data-screen=|haishin|marketing|MARKETING|DEV_ONLY|is_dev|cfg_debug&#x27;</code> でサイドバーと <code>.screen</code> の中・全行）／src-tauri/src/lib.rs（commands 登録まわり・feature flag と cfg の有無）／src-tauri/src/commands.rs の haishin 系 export／src-tauri/src/haishin.rs（1693 行）</li>
+  <li>結果：<strong>出し分けの仕組みは無い</strong>。サイドバーの <code>&lt;div class=&quot;sitem&quot; data-goto=&quot;marketing&quot;&gt;</code>（index.html 3566 行）・画面本体の <code>&lt;div class=&quot;screen two-cols&quot; data-screen=&quot;marketing&quot;&gt;</code>（7252 行）は無条件に書かれており、<code>#[cfg(feature = &quot;...&quot;)]</code>・環境変数・ランタイム判定での表示切替は存在しない。haishin コマンド群（haishin_import_csv_bytes / haishin_list / haishin_bunseki / haishin_retsu）も lib.rs 636〜639 で無条件に <code>generate_handler!</code> に入っている。merge 後、main から組んだ製品版（1.75.0）は左メニューに「マーケティング」が出て、haishin_list 等が呼べる状態になる</li>
+  <li>参謀への引き渡し：出し分けを自分で新しく作ってはいない（指示に「仕組みが無かったときも、自分で新しい出し分けを作らずに、その事実を書く」とあるため）。見せたくない場合は Mits様の判断で別途仕組みを足す</li>
+<li>開発の流れのページの直した行：</li>
+  <li>元：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/kaihatsu_no_nagare_genjou_20261003.html</li>
+  <li>48 行目 jissoku:main_version：v1.74.4 → v1.75.0</li>
+  <li>51 行目 jissoku:commit_count_28_to_744 → commit_count_28_to_750：103 → 159・コマンドの比較範囲も v1.73.28..v1.75.0</li>
+  <li>52 行目 jissoku:product_app_version：1.74.4 → 1.75.0</li>
+  <li>45 行目 最終実測日：2026-10-08 → 2026-10-09</li>
+  <li>95 行目 1節 SVG マーケ版の説明：「10-04 に main 取り込み」→「10-09 に main に取り込み済み・枝は残す」</li>
+  <li>150 行目 2節 表 製品版の行：1.74.4（10-04 21:35）→ 1.75.0（10-09・marketing を main に取り込み）</li>
+  <li>153 行目 2節 表 マーケ版の行：1.74.4 の後ろに「10-09 に marketing の中身は main に入ったので、以後は main から組んだ 1.75.0 の製品版と中身が同じになる」を足した</li>
+  <li>157〜158 行目 2節 脚注：10-09 Mits様決定の1行を足した（marketing を main に取り込み・枝は残す・wrangler.toml と sample.db は main のまま・世に出さない）</li>
+  <li>173〜176 行目 3節 SVG marketing 枝の線と注釈：「10-04 に main 取り込み（Merge d026472）」→「10-09 main に取り込み（Merge 0c9d5b8・v1.75.0）」</li>
+  <li>217〜229 行目 3節 SVG 版の点：v1.74.4 を中継の点として足し、最新の navy 太線を v1.75.0 に移した。注釈も 103 → 159・2026-10-08 → 2026-10-09</li>
+  <li>公開：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/mits-reports/private/untendai-kaihatsu-nagare/index.html（元と同じ行を直した・mits-reports の commit bbe5221・push 済み・公開ページは <a href="https://reports.7years.life/private/untendai-kaihatsu-nagare/">https://reports.7years.life/private/untendai-kaihatsu-nagare/</a>）</li>
+<li>片付け：一時の作業場 /Users/nishidamitsuhiro/untendai-seiri-merge-20261009 は /Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261009_untendai_seiri_merge_marketing_tempworktree に mv（rm は使っていない）。<code>git worktree prune</code> と <code>git branch -d merge-marketing-20261009</code> も済み（ブランチは merged なので -d で安全に消えた）</li>
+<li>Mits様の Mac 入れ替え：release.sh --自分だけ 1.75.0 を背景で走らせ中（手3 の push origin v1.75.0 ・手4 の build-signed.sh と /Applications/untendai.app の差し替え）。完了したらこの節の末尾にもう1行足す</li>
+<li>次に自分がやる：release.sh の完了を待ち、/Applications/untendai.app が 1.75.0 になったことを PlistBuddy で確かめ、kaihatsu の HTML の product_app_version の食い違いが 0 になることを check_shiryo_freshness.sh で確かめる。開発版 /Applications/untendai-dev.app も 1.75.0 に揃えるのは --自分だけ では自動でやらない（build-dev.sh を別に叩く・Mits様の指示が無ければ飛ばす）</li>
+<li>ほかの持ち場に頼む：なし</li>
+<li>数字：commits-only-in-marketing 0・wrangler/sample.db diff 0 行・未 commit 13件（前後同じ）・cargo test 289/0/11・資料の鮮度 12／食い違い 2（release.sh 完走で 0 になる見込み）・mits-reports 人名 0 件・latest.json 1.73.28 のまま</li>
+</ul>
+<h3 id="2026-10-09-16-3x-BS-engineer・release-sh-自分だけ-1-7">2026-10-09 16:3x（BS-engineer・release.sh --自分だけ 1.75.0 完走）</h3>
+<ul>
+<li>release.sh の exit code：<strong>0</strong></li>
+<li>公証：Accepted（id b9e5b661-6d1b-4224-b5d7-0c1b8299f20e）・staple 済み・Gatekeeper 判定 accepted（source=Notarized Developer ID・origin=Developer ID Application: Mitsuhiro Nishida (3J869F77SZ)）</li>
+<li>入れ替え：/Applications/untendai.app CFBundleShortVersionString = <strong>1.75.0</strong>（main のタグ v1.75.0 と同じ値）</li>
+<li>origin への push：origin/main = 4c132a6（HEAD と一致）／origin のタグ v1.75.0 = a76eef7（タグ a76eef7 → commit 0c9d5b8 を指す）</li>
+<li>latest.json：<strong>1.73.28 のまま</strong>（世に出していない）</li>
+<li>資料の鮮度：<strong>印 12／食い違い 0</strong>（product_app_version の2件が解消）</li>
+<li>既に起動していた untendai のプロセス 2本は release.sh が検出・提示（Mits様が開き直せば新しい版になる）</li>
+<li>開発版 /Applications/untendai-dev.app は手付かず（--自分だけ では build-dev.sh が走らない仕様）。1.75.0 に揃える指示が別途あれば <code>bash tools/build-dev.sh</code> を叩く</li>
+<li>全検収：</li>
+  <li><code>/usr/bin/git -C /Users/nishidamitsuhiro/untendai-seiri rev-list --count main..marketing</code> → <strong>0</strong></li>
+  <li><code>/usr/bin/git diff 109f8af main -- updater/wrangler.toml src-tauri/resources/sample.db | /usr/bin/wc -l</code> → <strong>0</strong></li>
+  <li>未 commit 件数：作業前後ともに <strong>13件</strong></li>
+  <li><code>cargo test</code>：<strong>289 passed / 0 failed / 11 ignored</strong></li>
+  <li><code>tools/check_shiryo_freshness.sh --quiet</code> 最終行：<strong>印の数: 12 ／ 食い違い: 0</strong></li>
+  <li>公開ページ <a href="https://reports.7years.life/private/untendai-kaihatsu-nagare/">https://reports.7years.life/private/untendai-kaihatsu-nagare/</a> の実測：v1.75.0 の文字 <strong>10 件</strong>・新しい日付 10-09／merge hash 0c9d5b8 の記載 <strong>9 件</strong>・人名 <strong>0 件</strong></li>
+  <li>/Applications/untendai.app の CFBundleShortVersionString：<strong>1.75.0</strong>（タグと一致）</li>
+  <li>latest.json の version：<strong>1.73.28</strong>（変わっていない）</li>
 </ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
