@@ -14,217 +14,603 @@
 }
 @media (prefers-color-scheme:dark){ :root{ --bg:var(--navy); --fg:var(--ivory); --line:rgba(245,239,225,0.14); --card-bg:#17223a; --muted:rgba(245,239,225,0.62); --sub-bg:rgba(212,168,91,0.09); } }
 * { box-sizing:border-box; }
-html,body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-family:var(--sans); }
-body { padding:24px 20px 100px; max-width:1000px; margin:0 auto; }
+html,body { margin:0; padding:0; height:100%; background:var(--bg); color:var(--fg); font-family:var(--sans); }
+body { display:flex; height:100vh; height:100dvh; overflow:hidden; }
 h1,h2,h3 { font-family:var(--mincho); font-weight:600; letter-spacing:0.02em; }
 a { color:var(--gold); text-decoration:none; }
+button { font:inherit; color:inherit; }
 
-.hero { text-align:center; padding:24px 0 8px; }
-.hero h1 { font-size:28px; margin:0 0 6px; }
-.hero .tag { font-family:var(--mono); font-size:12px; color:var(--muted); }
+/* ── 左の欄 ── */
+.side { width:300px; flex:none; display:flex; flex-direction:column; background:var(--card-bg); border-right:1px solid var(--line); min-height:0; }
+.brand { padding:16px 16px 12px; border-bottom:1px dashed var(--line); }
+.brand h1 { font-size:16px; margin:0 0 4px; }
+.brand .tag { font-family:var(--mono); font-size:10px; color:var(--muted); line-height:1.6; }
+.nav { flex:1; min-height:0; overflow-y:auto; overflow-x:hidden; padding:8px 8px 16px; }
 
-.genre { margin:34px 0 10px; display:flex; align-items:center; gap:12px; }
-.genre h2 { font-size:17px; margin:0; white-space:nowrap; }
-.genre::after { content:""; flex:1; border-top:1px dashed var(--line); }
+.group { margin:2px 0 6px; border-radius:8px; }
+.group.drop-on { background:var(--sub-bg); outline:1px dashed var(--gold); }
+.ghead { display:flex; align-items:center; gap:4px; padding:5px 4px 5px 6px; border-radius:6px; cursor:pointer; user-select:none; -webkit-user-select:none; }
+.ghead:hover { background:var(--sub-bg); }
+.ghead .chev { width:14px; flex:none; font-size:9px; color:var(--muted); transition:transform 0.12s; display:inline-block; text-align:center; }
+.group:not(.closed) .ghead .chev { transform:rotate(90deg); }
+.ghead .gname { flex:1; min-width:0; font-size:12px; font-weight:600; color:var(--muted); letter-spacing:0.04em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.ghead .gname input { width:100%; font:inherit; font-size:12px; color:var(--fg); background:var(--bg); border:1px solid var(--gold); border-radius:4px; padding:2px 4px; }
+.ghead .gmore { flex:none; width:24px; height:22px; border:0; background:none; border-radius:4px; color:var(--muted); cursor:pointer; opacity:0; font-size:14px; line-height:1; }
+.ghead:hover .gmore, .ghead .gmore:focus, .ghead .gmore[aria-expanded="true"] { opacity:1; }
+.ghead .gmore:hover { background:var(--line); }
+@media (hover:none){ .ghead .gmore { opacity:1; } }
+.group.closed .items { display:none; }
+.items { padding:1px 0 2px; }
+.empty-drop { margin:2px 6px 4px 24px; padding:8px; font-size:11px; color:var(--muted); border:1px dashed var(--line); border-radius:6px; text-align:center; }
 
-.grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
-@media (max-width:760px){ .grid { grid-template-columns:1fr; } }
+.item { position:relative; }
+.item .node { display:flex; align-items:flex-start; gap:8px; padding:6px 8px 6px 24px; border-radius:6px; color:var(--fg); font-size:13px; line-height:1.45; cursor:pointer; }
+.item .node:hover { background:var(--sub-bg); }
+.item .node.active { background:var(--sub-bg); box-shadow:inset 3px 0 0 var(--gold); }
+.item .node .emoji { flex:none; font-size:14px; line-height:1.45; }
+.item .node .name { min-width:0; overflow-wrap:anywhere; }
+.item .desc { display:none; }
+.item.dragging { opacity:0.4; }
+.drop-line { height:2px; margin:0 6px 0 24px; background:var(--gold); border-radius:2px; pointer-events:none; }
+.group.drop-before { box-shadow:0 -2px 0 var(--gold); }
+.group.drop-after { box-shadow:0 2px 0 var(--gold); }
 
-.node { display:flex; flex-direction:column; gap:8px; text-decoration:none; color:var(--fg);
-  background:var(--card-bg); border:1px solid var(--line); border-radius:14px; padding:18px 16px; transition:all 0.16s; height:100%; }
-.node:hover { transform:translateY(-4px); border-color:var(--gold); box-shadow:0 10px 28px rgba(15,27,46,0.12); text-decoration:none; }
-.node .emoji { font-size:30px; }
-.node .name { font-family:var(--mincho); font-size:18px; font-weight:600; }
-.node .desc { font-size:12px; color:var(--muted); line-height:1.6; }
-.node .pages { margin-top:auto; font-family:var(--mono); font-size:11px; color:var(--gold); }
+.sub { display:none; margin:0 0 4px 46px; padding:2px 0 2px 8px; border-left:1px dashed var(--line); }
+.item.open .sub { display:block; }
+.sub .slabel { display:block; font-family:var(--mono); font-size:10px; color:var(--muted); padding:2px 6px; }
+.sub a { display:block; padding:4px 6px; border-radius:5px; font-size:12px; line-height:1.4; color:var(--fg); overflow-wrap:anywhere; }
+.sub a:hover { background:var(--sub-bg); }
+.sub a.active { color:var(--gold); background:var(--sub-bg); }
+.sub a[target="_blank"]::after { content:" ↗"; color:var(--muted); }
 
-.sub { margin:-4px 0 0; padding:8px 14px 10px; font-size:12px; line-height:1.9;
-  background:var(--sub-bg); border:1px dashed var(--line); border-radius:0 0 12px 12px; }
-.sub b { font-family:var(--mono); font-size:10px; color:var(--muted); font-weight:400; margin-right:6px; }
-.sub a { white-space:nowrap; }
-.sub a + a::before { content:"／ "; color:var(--muted); }
+.addgroup { display:block; width:100%; margin:8px 0 0; padding:7px 8px; text-align:left; font-size:12px; color:var(--muted); background:none; border:1px dashed var(--line); border-radius:6px; cursor:pointer; }
+.addgroup:hover { color:var(--gold); border-color:var(--gold); }
 
-.wrap { display:flex; flex-direction:column; }
+.side footer { padding:10px 14px 14px; border-top:1px dashed var(--line); font-family:var(--mono); font-size:10px; color:var(--muted); line-height:1.7; }
 
-footer { margin-top:48px; padding-top:20px; border-top:1px dashed var(--line);
-  font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; line-height:1.9; }
+/* 見出しの「⋯」から出る小さな一覧 */
+.menu { position:fixed; z-index:50; min-width:150px; padding:4px; background:var(--card-bg); border:1px solid var(--line); border-radius:8px; box-shadow:0 10px 28px rgba(15,27,46,0.18); }
+.menu[hidden] { display:none; }
+.menu button { display:block; width:100%; padding:7px 10px; text-align:left; font-size:12.5px; background:none; border:0; border-radius:5px; cursor:pointer; }
+.menu button:hover:not(:disabled) { background:var(--sub-bg); }
+.menu button:disabled { color:var(--muted); opacity:0.5; cursor:default; }
+
+/* ── 右側 ── */
+.main { flex:1; min-width:0; display:flex; flex-direction:column; min-height:0; }
+.bar { flex:none; display:flex; align-items:center; gap:12px; padding:10px 16px; border-bottom:1px solid var(--line); background:var(--bg); min-height:56px; }
+.menubtn { display:none; flex:none; padding:6px 10px; font-size:13px; background:var(--card-bg); border:1px solid var(--line); border-radius:6px; cursor:pointer; }
+.bar .t { flex:1; min-width:0; }
+.bar .tname { font-family:var(--mincho); font-size:16px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.bar .tdesc { font-size:12px; color:var(--muted); line-height:1.55; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.bar .newtab { flex:none; font-size:12px; padding:6px 10px; border:1px solid var(--gold); border-radius:6px; white-space:nowrap; }
+.bar .newtab:hover { background:var(--sub-bg); }
+.view { flex:1; min-height:0; position:relative; }
+.view iframe { position:absolute; inset:0; width:100%; height:100%; border:0; background:var(--bg); }
+.welcome { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:24px; gap:8px; }
+.welcome h1 { font-size:26px; margin:0; }
+.welcome .tag { font-family:var(--mono); font-size:12px; color:var(--muted); }
+.welcome p { font-size:13px; color:var(--muted); margin:14px 0 0; }
+[hidden] { display:none !important; }
+
+.scrim { display:none; }
+
+@media (max-width:760px){
+  .side { position:fixed; z-index:40; top:0; bottom:0; left:0; width:min(86vw,320px); transform:translateX(-100%); transition:transform 0.18s; box-shadow:none; }
+  body.side-open .side { transform:none; box-shadow:0 0 40px rgba(15,27,46,0.3); }
+  body.side-open .scrim { display:block; position:fixed; inset:0; z-index:30; background:rgba(15,27,46,0.35); }
+  .menubtn { display:inline-block; }
+  .bar { padding:8px 10px; gap:8px; }
+  .bar .tname { font-size:14px; }
+  .bar .tdesc { font-size:11px; -webkit-line-clamp:1; }
+  .bar .newtab { padding:5px 8px; font-size:11px; }
+  .welcome h1 { font-size:20px; }
+}
 </style>
 </head>
 <body>
 
-<div class="hero">
-  <h1>🔒 プライベート・ダッシュボード</h1>
-  <div class="tag">Mitsのプライベートコンテンツの入口 ─ ここからすべてに飛べる ／ 更新 2026-09-20</div>
-</div>
+<aside class="side" id="side" aria-label="メニュー">
+  <div class="brand">
+    <h1>🔒 プライベート・ダッシュボード</h1>
+    <div class="tag">Mitsのプライベートコンテンツの入口 ─ ここからすべてに飛べる ／ 更新 2026-10-09</div>
+  </div>
 
-<div class="genre"><h2>🎓 学習</h2></div>
-<div class="grid">
-  <div class="wrap">
-    <a class="node" href="https://reports.7years.life/private/eng40/">
-      <span class="emoji">📘</span>
-      <span class="name">英語40日プログラム（中1・夏）</span>
+  <nav class="nav" id="nav">
+
+<section class="group" data-gid="g-gakushu">
+  <div class="ghead"><span class="chev">▶</span><span class="gname">🎓 学習</span></div>
+  <div class="items">
+    <div class="item" data-id="eng40">
+      <a class="node" href="https://reports.7years.life/private/eng40/"><span class="emoji">📘</span><span class="name">英語40日プログラム（中1・夏）</span></a>
       <span class="desc">40日デイリーチェック・教材ルート（マーフィー選抜51＋ALL IN ONE）・測定記録。</span>
-      <span class="pages">4ページ ─ 開く →</span>
-    </a>
-    <div class="sub"><b>主要ページ</b>
-      <a href="https://reports.7years.life/private/eng40/program.html">40日チェック</a><a href="https://reports.7years.life/private/eng40/route.html">教材ルート</a><a href="https://reports.7years.life/private/eng40/test.html">測る</a>
+      <div class="sub"><span class="slabel">主要ページ</span>
+        <a href="https://reports.7years.life/private/eng40/program.html">40日チェック</a><a href="https://reports.7years.life/private/eng40/route.html">教材ルート</a><a href="https://reports.7years.life/private/eng40/test.html">測る</a>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-<div class="genre"><h2>🎤 カラオケ</h2></div>
-<div class="grid">
-  <div class="wrap">
-    <a class="node" href="https://reports.7years.life/private/karaoke-ai/">
-      <span class="emoji">🎤</span>
-      <span class="name">カラオケ練習AI</span>
+<section class="group" data-gid="g-karaoke">
+  <div class="ghead"><span class="chev">▶</span><span class="gname">🎤 カラオケ</span></div>
+  <div class="items">
+    <div class="item" data-id="karaoke-ai">
+      <a class="node" href="https://reports.7years.life/private/karaoke-ai/"><span class="emoji">🎤</span><span class="name">カラオケ練習AI</span></a>
       <span class="desc">9軸実測・原曲基準の声質偏差値・「測って→学んで→また測る」練習ループ。</span>
-      <span class="pages">8ページ ─ 開く →</span>
-    </a>
-    <div class="sub"><b>主要ページ</b>
-      <a href="https://reports.7years.life/private/karaoke-ai/dashboard.html">ダッシュボード</a><a href="https://reports.7years.life/private/karaoke-ai/myp_voice_quality.html">声質スコアカード</a><a href="https://reports.7years.life/private/karaoke-ai/curriculum_20260710.html">カリキュラム</a><a href="https://reports.7years.life/private/karaoke-ai/myp_videos.html">動画マップ</a>
+      <div class="sub"><span class="slabel">主要ページ</span>
+        <a href="https://reports.7years.life/private/karaoke-ai/dashboard.html">ダッシュボード</a><a href="https://reports.7years.life/private/karaoke-ai/myp_voice_quality.html">声質スコアカード</a><a href="https://reports.7years.life/private/karaoke-ai/curriculum_20260710.html">カリキュラム</a><a href="https://reports.7years.life/private/karaoke-ai/myp_videos.html">動画マップ</a>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-<div class="genre"><h2>🏝 うちなーぐち</h2></div>
-<div class="grid">
-  <div class="wrap">
-    <a class="node" href="https://reports.7years.life/private/uchinaaguchi/">
-      <span class="emoji">🐟</span>
-      <span class="name">うちなーぐち辞書</span>
+<section class="group" data-gid="g-uchinaa">
+  <div class="ghead"><span class="chev">▶</span><span class="gname">🏝 うちなーぐち</span></div>
+  <div class="items">
+    <div class="item" data-id="uchinaaguchi">
+      <a class="node" href="https://reports.7years.life/private/uchinaaguchi/"><span class="emoji">🐟</span><span class="name">うちなーぐち辞書</span></a>
       <span class="desc">うちなーぐちからも共通語からも、同じ1つの欄で引ける自分用辞書。1万4千語・活用表つき。ホーム画面に置けます。</span>
-      <span class="pages">1ページ ─ 開く →</span>
-    </a>
-    <div class="sub"><b>出典</b>
-      <a href="https://mmsrv.ninjal.ac.jp/okinawago/">沖縄語辞典 データ集（国立国語研究所・CC BY 4.0）</a><a href="https://reports.7years.life/private/uchinaaguchi/">西岡敏・仲原穣『沖縄語の入門』の活用体系</a>
+      <div class="sub"><span class="slabel">出典</span>
+        <a href="https://mmsrv.ninjal.ac.jp/okinawago/" target="_blank" rel="noopener">沖縄語辞典 データ集（国立国語研究所・CC BY 4.0）</a><a href="https://reports.7years.life/private/uchinaaguchi/">西岡敏・仲原穣『沖縄語の入門』の活用体系</a>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-<div class="genre"><h2>💪 健康</h2></div>
-<div class="grid">
-  <div class="wrap">
-    <a class="node" href="https://reports.7years.life/private/kenko-dashboard/">
-      <span class="emoji">🩺</span>
-      <span class="name">健康ダッシュボード</span>
+<section class="group" data-gid="g-kenko">
+  <div class="ghead"><span class="chev">▶</span><span class="gname">💪 健康</span></div>
+  <div class="items">
+    <div class="item" data-id="kenko-dashboard">
+      <a class="node" href="https://reports.7years.life/private/kenko-dashboard/"><span class="emoji">🩺</span><span class="name">健康ダッシュボード</span></a>
       <span class="desc">HRV・血液検査・Apple Health・Welltory を統合した機能性医学ダッシュボード。パスワードなし（2026-10-09 外した・中身は 2026-07-21 の版）。</span>
-      <span class="pages">1ページ ─ 開く →</span>
-    </a>
-  </div>
-  <div class="wrap">
-    <a class="node" href="https://mits32163216.github.io/supplement-tracker/">
-      <span class="emoji">💊</span>
-      <span class="name">サプリ摂取トラッカー</span>
+    </div>
+    <div class="item" data-id="supplement-tracker">
+      <a class="node" href="https://mits32163216.github.io/supplement-tracker/"><span class="emoji">💊</span><span class="name">サプリ摂取トラッカー</span></a>
       <span class="desc">記録専用PWA。今日チェック・達成率リング・履歴ヒートマップ・連続達成。記録は端末内のみ保存。</span>
-      <span class="pages">PWA ─ 開く →</span>
-    </a>
-  </div>
-  <div class="wrap">
-    <a class="node" href="https://reports.7years.life/private/fasting-kiroku/">
-      <span class="emoji">🥤</span>
-      <span class="name">ファスティング記録表（沖縄・2026-10-04〜10-19）</span>
+    </div>
+    <div class="item" data-id="fasting-kiroku">
+      <a class="node" href="https://reports.7years.life/private/fasting-kiroku/"><span class="emoji">🥤</span><span class="name">ファスティング記録表（沖縄・2026-10-04〜10-19）</span></a>
       <span class="desc">毎日の体重・体脂肪・歩数・カロリー収支・目標体重と目標脂肪量。献立のマスを押すと摂取に数え、iPhone と Mac でチェックが揃う。RENPHO の量った値は毎朝自動で入る。</span>
-      <span class="pages">1ページ ─ 開く →</span>
-    </a>
+    </div>
   </div>
-</div>
+</section>
 
-<div class="genre"><h2>⚖️ 法人登記</h2></div>
-<div class="grid">
-  <div class="wrap">
-    <a class="node" href="https://reports.7years.life/private/houjin-touki/">
-      <span class="emoji">⚖️</span>
-      <span class="name">法人登記 却下の実務</span>
+<section class="group" data-gid="g-houjin">
+  <div class="ghead"><span class="chev">▶</span><span class="gname">⚖️ 法人登記</span></div>
+  <div class="items">
+    <div class="item" data-id="houjin-touki">
+      <a class="node" href="https://reports.7years.life/private/houjin-touki/"><span class="emoji">⚖️</span><span class="name">法人登記 却下の実務</span></a>
       <span class="desc">商業登記24条の15号を軸にした却下事例9分類42件と、Phase 0〜10 の時系列チェックリスト（不可逆5箇所付き）。</span>
-      <span class="pages">3ページ ─ 開く →</span>
-    </a>
-    <div class="sub"><b>主要ページ</b>
-      <a href="https://reports.7years.life/private/houjin-touki/">却下事例集</a><a href="https://reports.7years.life/private/houjin-touki/checklist.html">却下回避チェックリスト</a><a href="https://reports.7years.life/private/houjin-touki/hantei.html">書類判定表</a>
+      <div class="sub"><span class="slabel">主要ページ</span>
+        <a href="https://reports.7years.life/private/houjin-touki/">却下事例集</a><a href="https://reports.7years.life/private/houjin-touki/checklist.html">却下回避チェックリスト</a><a href="https://reports.7years.life/private/houjin-touki/hantei.html">書類判定表</a>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-<div class="genre"><h2>📚 6セッション社内レポート</h2></div>
-<div class="grid">
-  <div class="wrap">
-    <a class="node" href="https://reports.7years.life/private/6session/">
-      <span class="emoji">📚</span>
-      <span class="name">6セッション社内レポート（27本）</span>
+<section class="group" data-gid="g-6session">
+  <div class="ghead"><span class="chev">▶</span><span class="gname">📚 6セッション社内レポート</span></div>
+  <div class="items">
+    <div class="item" data-id="6session">
+      <a class="node" href="https://reports.7years.life/private/6session/"><span class="emoji">📚</span><span class="name">6セッション社内レポート（27本）</span></a>
       <span class="desc">6つの持ち場（司令塔・AI-Mits・メール配信・運転台改善・運転台マーケ・伽藍とバザール）が作った資料を、束6つ・27本に畳んで1つの目次から開けるようにしたもの。朝の点呼表・全体設計図・Mits様の決定44件・配信の抜けの分析ほか。</span>
-      <span class="pages">27ページ ─ 開く →</span>
-    </a>
-    <div class="sub"><b>入口</b>
-      <a href="https://reports.7years.life/private/6session/asa-tenko.html">朝の点呼表</a><a href="https://reports.7years.life/private/6session/zentai-sekkeizu.html">全体設計図</a><a href="https://reports.7years.life/private/6session/mits-kettei-44.html">Mits様の決定44件</a><a href="https://reports.7years.life/private/6session/haishin-nuke.html">配信の抜けの分析</a>
+      <div class="sub"><span class="slabel">入口</span>
+        <a href="https://reports.7years.life/private/6session/asa-tenko.html">朝の点呼表</a><a href="https://reports.7years.life/private/6session/zentai-sekkeizu.html">全体設計図</a><a href="https://reports.7years.life/private/6session/mits-kettei-44.html">Mits様の決定44件</a><a href="https://reports.7years.life/private/6session/haishin-nuke.html">配信の抜けの分析</a>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-<div class="genre"><h2>💴 財務整理</h2></div>
-<div class="grid">
-  <div class="wrap">
-    <a class="node" href="https://reports.7years.life/private/zaimu-seiri/%E8%B2%A1%E5%8B%99%E6%95%B4%E7%90%86_TOP.html">
-      <span class="emoji">💴</span>
-      <span class="name">財務整理（月額を半分にする）</span>
+<section class="group" data-gid="g-zaimu">
+  <div class="ghead"><span class="chev">▶</span><span class="gname">💴 財務整理</span></div>
+  <div class="items">
+    <div class="item" data-id="zaimu-seiri">
+      <a class="node" href="https://reports.7years.life/private/zaimu-seiri/%E8%B2%A1%E5%8B%99%E6%95%B4%E7%90%86_TOP.html"><span class="emoji">💴</span><span class="name">財務整理（月額を半分にする）</span></a>
       <span class="desc">毎月出ていくお金を、サブスク整理・サブスク外の判定・借入の返済に分けて、出発点から半分までの進み具合を見る。</span>
-      <span class="pages">7ページ ─ 開く →</span>
-    </a>
-    <div class="sub"><b>主要ページ</b>
-      <a href="https://reports.7years.life/private/zaimu-seiri/%E8%B2%A1%E5%8B%99%E6%95%B4%E7%90%86_TOP.html">TOP</a><a href="https://reports.7years.life/private/zaimu-seiri/%E8%B2%A1%E5%8B%99%E6%95%B4%E7%90%86_TOP_%E5%B9%B4%E9%A1%8D.html">TOP 年額</a><a href="https://reports.7years.life/private/zaimu-seiri/%E8%B2%A1%E5%8B%99%E6%95%B4%E7%90%86_2026%E5%B9%B4.html">2026年・2027年予測</a><a href="https://reports.7years.life/private/zaimu-seiri/%E8%B2%A1%E5%8B%99%E6%95%B4%E7%90%86_%E9%80%B2%E6%8D%97%E8%A1%A8.html">サブスク整理</a><a href="https://reports.7years.life/private/zaimu-seiri/%E4%B8%80%E8%A6%A7%E5%A4%96_%E4%B8%8A%E9%99%90%E3%81%A8%E5%88%A4%E5%AE%9A.html">サブスク外の判定</a><a href="https://reports.7years.life/private/zaimu-seiri/%E7%B6%99%E7%B6%9A%E7%B5%8C%E8%B2%BB.html">継続経費</a><a href="https://reports.7years.life/private/zaimu-seiri/%E5%80%9F%E5%85%A5%E3%81%AE%E8%BF%94%E6%B8%88.html">借入の返済</a>
+      <div class="sub"><span class="slabel">主要ページ</span>
+        <a href="https://reports.7years.life/private/zaimu-seiri/%E8%B2%A1%E5%8B%99%E6%95%B4%E7%90%86_TOP.html">TOP</a><a href="https://reports.7years.life/private/zaimu-seiri/%E8%B2%A1%E5%8B%99%E6%95%B4%E7%90%86_TOP_%E5%B9%B4%E9%A1%8D.html">TOP 年額</a><a href="https://reports.7years.life/private/zaimu-seiri/%E8%B2%A1%E5%8B%99%E6%95%B4%E7%90%86_2026%E5%B9%B4.html">2026年・2027年予測</a><a href="https://reports.7years.life/private/zaimu-seiri/%E8%B2%A1%E5%8B%99%E6%95%B4%E7%90%86_%E9%80%B2%E6%8D%97%E8%A1%A8.html">サブスク整理</a><a href="https://reports.7years.life/private/zaimu-seiri/%E4%B8%80%E8%A6%A7%E5%A4%96_%E4%B8%8A%E9%99%90%E3%81%A8%E5%88%A4%E5%AE%9A.html">サブスク外の判定</a><a href="https://reports.7years.life/private/zaimu-seiri/%E7%B6%99%E7%B6%9A%E7%B5%8C%E8%B2%BB.html">継続経費</a><a href="https://reports.7years.life/private/zaimu-seiri/%E5%80%9F%E5%85%A5%E3%81%AE%E8%BF%94%E6%B8%88.html">借入の返済</a>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-<div class="genre"><h2>📣 マーケティング</h2></div>
-<div class="grid">
-  <div class="wrap">
-    <a class="node" href="https://reports.7years.life/private/marketing/">
-      <span class="emoji">📣</span>
-      <span class="name">出し続ける AI経営 3DAYS</span>
+<section class="group" data-gid="g-marketing">
+  <div class="ghead"><span class="chev">▶</span><span class="gname">📣 マーケティング</span></div>
+  <div class="items">
+    <div class="item" data-id="marketing">
+      <a class="node" href="https://reports.7years.life/private/marketing/"><span class="emoji">📣</span><span class="name">出し続ける AI経営 3DAYS</span></a>
       <span class="desc">和佐式ファネルの我が社版。お客様が通る順（入口・動画・売り場）と、設計（コンセプト・全体像・用語・パーツ配置）と、下敷き（和佐の解剖・トラッカー）。</span>
-      <span class="pages">11ページ ─ 開く →</span>
-    </a>
-    <div class="sub"><b>主要ページ</b>
-      <a href="https://reports.7years.life/private/marketing/01_%E3%82%AA%E3%83%97%E3%83%88%E3%82%A4%E3%83%B3%E3%83%9A%E3%83%BC%E3%82%B8.html">入口</a><a href="https://reports.7years.life/private/marketing/04_%E3%83%95%E3%83%AD%E3%83%B3%E3%83%88%E5%95%86%E5%93%81LP.html">売り場</a><a href="https://reports.7years.life/private/marketing/%E3%82%B3%E3%83%B3%E3%82%BB%E3%83%97%E3%83%88.html">コンセプト</a><a href="https://reports.7years.life/private/marketing/%E5%85%A8%E4%BD%93%E5%83%8F%E3%81%AE%E8%A8%AD%E8%A8%88%E5%9B%B3.html">全体像の設計図</a><a href="https://reports.7years.life/private/marketing/%E7%94%A8%E8%AA%9E%E3%81%A8%E6%AE%B5%E3%81%AE%E4%B8%80%E8%A6%A7.html">用語と段の一覧</a><a href="https://reports.7years.life/private/marketing/%E9%81%B7%E7%A7%BB%E7%8E%87%E3%81%A8%E5%A3%B2%E4%B8%8A%E3%81%AE%E8%A9%A6%E7%AE%97.html">遷移率と売上の試算</a>
+      <div class="sub"><span class="slabel">主要ページ</span>
+        <a href="https://reports.7years.life/private/marketing/01_%E3%82%AA%E3%83%97%E3%83%88%E3%82%A4%E3%83%B3%E3%83%9A%E3%83%BC%E3%82%B8.html">入口</a><a href="https://reports.7years.life/private/marketing/04_%E3%83%95%E3%83%AD%E3%83%B3%E3%83%88%E5%95%86%E5%93%81LP.html">売り場</a><a href="https://reports.7years.life/private/marketing/%E3%82%B3%E3%83%B3%E3%82%BB%E3%83%97%E3%83%88.html">コンセプト</a><a href="https://reports.7years.life/private/marketing/%E5%85%A8%E4%BD%93%E5%83%8F%E3%81%AE%E8%A8%AD%E8%A8%88%E5%9B%B3.html">全体像の設計図</a><a href="https://reports.7years.life/private/marketing/%E7%94%A8%E8%AA%9E%E3%81%A8%E6%AE%B5%E3%81%AE%E4%B8%80%E8%A6%A7.html">用語と段の一覧</a><a href="https://reports.7years.life/private/marketing/%E9%81%B7%E7%A7%BB%E7%8E%87%E3%81%A8%E5%A3%B2%E4%B8%8A%E3%81%AE%E8%A9%A6%E7%AE%97.html">遷移率と売上の試算</a>
+      </div>
     </div>
-  </div>
-  <div class="wrap">
-    <a class="node" href="https://reports.7years.life/private/linchpin-20261005/linchpin_sekkeizu_tatakidai_v2.html">
-      <span class="emoji">🧩</span>
-      <span class="name">Linchpin 設計図のたたき台（第2版）</span>
+    <div class="item" data-id="linchpin-20261005">
+      <a class="node" href="https://reports.7years.life/private/linchpin-20261005/linchpin_sekkeizu_tatakidai_v2.html"><span class="emoji">🧩</span><span class="name">Linchpin 設計図のたたき台（第2版）</span></a>
       <span class="desc">⑥ Meta広告 → ⑤ オプトインページ → ② 無料アプリ → ④ フロント商品 → ⑦ ワンタイムオファー → ① 継続課金の階段を一本の線でつないだ Linchpin の組み方。段ごとの中身・価格・未定の所を書いた、たたき台の提案書。</span>
-      <span class="pages">1ページ ─ 開く →</span>
-    </a>
-  </div>
-  <div class="wrap">
-    <a class="node" href="https://reports.7years.life/private/level-hyou-20261008/">
-      <span class="emoji">📊</span>
-      <span class="name">LEVEL 1・2・3 整理表（The Linchpin p63 の形・2026-10-08）</span>
+    </div>
+    <div class="item" data-id="level-hyou-20261008">
+      <a class="node" href="https://reports.7years.life/private/level-hyou-20261008/"><span class="emoji">📊</span><span class="name">LEVEL 1・2・3 整理表（The Linchpin p63 の形・2026-10-08）</span></a>
       <span class="desc">LEVEL 1 自分で（20）／LEVEL 2 グループで（8）／LEVEL 3 コーチングで（4）。中身ごとに、これまでの値段・会員サイトの写真・UTAGE と会員サイトへのリンク。単発価格と月額を打ち込むと合計がその場で出る（そのブラウザに残る）。</span>
-      <span class="pages">3ページ ─ 開く →</span>
-    </a>
-    <div class="sub"><b>各ページ</b>
-      <a href="https://reports.7years.life/private/level-hyou-20261008/">LEVEL 1 自分で</a><a href="https://reports.7years.life/private/level-hyou-20261008/level2.html">LEVEL 2 グループで</a><a href="https://reports.7years.life/private/level-hyou-20261008/level3.html">LEVEL 3 コーチングで</a>
+      <div class="sub"><span class="slabel">各ページ</span>
+        <a href="https://reports.7years.life/private/level-hyou-20261008/">LEVEL 1 自分で</a><a href="https://reports.7years.life/private/level-hyou-20261008/level2.html">LEVEL 2 グループで</a><a href="https://reports.7years.life/private/level-hyou-20261008/level3.html">LEVEL 3 コーチングで</a>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-<div class="genre"><h2>🚗 経営の運転台</h2></div>
-<div class="grid">
-  <div class="wrap">
-    <a class="node" href="https://reports.7years.life/private/untendai-kaihatsu-nagare/">
-      <span class="emoji">🚗</span>
-      <span class="name">運転台 開発の流れと現状</span>
+<section class="group" data-gid="g-untendai">
+  <div class="ghead"><span class="chev">▶</span><span class="gname">🚗 経営の運転台</span></div>
+  <div class="items">
+    <div class="item" data-id="untendai-kaihatsu-nagare">
+      <a class="node" href="https://reports.7years.life/private/untendai-kaihatsu-nagare/"><span class="emoji">🚗</span><span class="name">運転台 開発の流れと現状</span></a>
       <span class="desc">直しがお客様に届くまでの流れ・アプリ4本（製品版・開発版・マーケ版・freee版）・枝の移り変わり・手順・実データを渡さないための確かめ・製品版と freee版で見えるもの・決算のあとの突き合わせ・実際に踏んだ落とし穴（2026-10-03）。</span>
-      <span class="pages">1ページ ─ 開く →</span>
-    </a>
+    </div>
   </div>
+</section>
+
+  </nav>
+
+  <footer>
+    プライベート・ダッシュボード ／ 非公開エリア（noindex, nofollow）<br>
+    このページと配下のコンテンツは検索エンジンに載せていません。URLを知っている人だけが見られます。
+  </footer>
+</aside>
+<div class="scrim" id="scrim"></div>
+
+<main class="main">
+  <div class="bar">
+    <button class="menubtn" id="menubtn" type="button" aria-controls="side" aria-expanded="false">☰ メニュー</button>
+    <div class="t">
+      <div class="tname" id="tname">🔒 プライベート・ダッシュボード</div>
+      <div class="tdesc" id="tdesc">左の欄から項目を選ぶと、ここにそのページが出ます。</div>
+    </div>
+    <a class="newtab" id="newtab" target="_blank" rel="noopener" hidden>新しいタブで開く ↗</a>
+  </div>
+  <div class="view">
+    <div class="welcome" id="welcome">
+      <h1>🔒 プライベート・ダッシュボード</h1>
+      <div class="tag">Mitsのプライベートコンテンツの入口 ─ ここからすべてに飛べる ／ 更新 2026-10-09</div>
+      <p>左の欄のグループから項目を選んでください。<br>見出しの「⋯」でグループの名前を変える・並びを変える。項目はドラッグで別のグループへ移せます。</p>
+    </div>
+    <iframe id="frame" title="選んだページ" hidden></iframe>
+  </div>
+</main>
+
+<div class="menu" id="gmenu" hidden role="menu">
+  <button type="button" data-act="rename" role="menuitem">名前を変える</button>
+  <button type="button" data-act="up" role="menuitem">上へ移す</button>
+  <button type="button" data-act="down" role="menuitem">下へ移す</button>
 </div>
 
-<footer>
-  プライベート・ダッシュボード ／ 非公開エリア（noindex, nofollow）<br>
-  このページと配下のコンテンツは検索エンジンに載せていません。URLを知っている人だけが見られます。
-</footer>
+<script>
+(function(){
+  var KEY = 'private-dashboard-groups-v1';
+  var nav = document.getElementById('nav');
+  var frame = document.getElementById('frame');
+  var welcome = document.getElementById('welcome');
+  var tname = document.getElementById('tname');
+  var tdesc = document.getElementById('tdesc');
+  var newtab = document.getElementById('newtab');
+  var gmenu = document.getElementById('gmenu');
+  var menubtn = document.getElementById('menubtn');
+
+  // ── HTML に書いてある最初の並びを読む（項目の中身はここが正本） ──
+  var itemEls = {};          // 項目id → 要素
+  var defaults = [];         // [{id,name,items:[id]}]
+  Array.prototype.forEach.call(nav.querySelectorAll('section.group'), function(sec){
+    var g = { id: sec.getAttribute('data-gid'), name: sec.querySelector('.gname').textContent, items: [] };
+    Array.prototype.forEach.call(sec.querySelectorAll('.item'), function(it){
+      var id = it.getAttribute('data-id');
+      itemEls[id] = it;
+      it.setAttribute('draggable', 'true');
+      Array.prototype.forEach.call(it.querySelectorAll('a'), function(a){ a.setAttribute('draggable', 'false'); });
+      g.items.push(id);
+    });
+    defaults.push(g);
+    sec.parentNode.removeChild(sec);
+  });
+
+  function cloneDefaults(){
+    return defaults.map(function(g){ return { id:g.id, name:g.name, items:g.items.slice() }; });
+  }
+
+  // ── localStorage（グループの名前・並び・どの項目がどこにあるか だけ） ──
+  function load(){
+    var raw = null;
+    try { raw = window.localStorage.getItem(KEY); } catch(e) { return null; }
+    if (!raw) return null;
+    try {
+      var data = JSON.parse(raw);
+      if (!data || !Array.isArray(data.groups)) return null;
+      return data.groups;
+    } catch(e) { return null; }
+  }
+  function save(){
+    try {
+      window.localStorage.setItem(KEY, JSON.stringify({ v:1, groups: model.map(function(g){ return { id:g.id, name:g.name, items:g.items.slice() }; }) }));
+    } catch(e) {}
+  }
+
+  function buildModel(){
+    var saved = load();
+    if (!saved) return cloneDefaults();
+    try {
+      var placed = {};
+      var groups = [];
+      saved.forEach(function(sg){
+        if (!sg || typeof sg.id !== 'string' || !sg.id) return;
+        if (groups.some(function(x){ return x.id === sg.id; })) return;
+        var items = [];
+        (Array.isArray(sg.items) ? sg.items : []).forEach(function(id){
+          if (itemEls.hasOwnProperty(id) && !placed[id]) { placed[id] = true; items.push(id); }
+        });
+        groups.push({ id: sg.id, name: (typeof sg.name === 'string' && sg.name.trim()) ? sg.name : 'グループ', items: items });
+      });
+      // HTML に後から足したグループ・項目は、元のグループに出す
+      defaults.forEach(function(dg){
+        var g = null;
+        for (var i = 0; i < groups.length; i++) if (groups[i].id === dg.id) { g = groups[i]; break; }
+        dg.items.forEach(function(id){
+          if (placed[id]) return;
+          if (!g) { g = { id: dg.id, name: dg.name, items: [] }; groups.push(g); }
+          g.items.push(id); placed[id] = true;
+        });
+        if (!g && !groups.some(function(x){ return x.id === dg.id; })) groups.push({ id: dg.id, name: dg.name, items: [] });
+      });
+      return groups.length ? groups : cloneDefaults();
+    } catch(e) { return cloneDefaults(); }
+  }
+
+  var model = buildModel();
+  var closed = {};           // 畳んでいるグループ（保存しない）
+  var addBtn = document.createElement('button');
+  addBtn.type = 'button'; addBtn.className = 'addgroup'; addBtn.textContent = '＋ グループを作る';
+
+  function findGroup(id){ for (var i = 0; i < model.length; i++) if (model[i].id === id) return model[i]; return null; }
+  function groupOfItem(itemId){ for (var i = 0; i < model.length; i++) if (model[i].items.indexOf(itemId) >= 0) return model[i]; return null; }
+
+  // ── 描く ──
+  function render(){
+    while (nav.firstChild) nav.removeChild(nav.firstChild);
+    model.forEach(function(g){
+      var sec = document.createElement('section');
+      sec.className = 'group' + (closed[g.id] ? ' closed' : '');
+      sec.setAttribute('data-gid', g.id);
+      var head = document.createElement('div');
+      head.className = 'ghead'; head.setAttribute('draggable', 'true');
+      head.setAttribute('role', 'button'); head.setAttribute('tabindex', '0');
+      head.setAttribute('aria-expanded', closed[g.id] ? 'false' : 'true');
+      var chev = document.createElement('span'); chev.className = 'chev'; chev.textContent = '▶';
+      var nm = document.createElement('span'); nm.className = 'gname'; nm.textContent = g.name;
+      var more = document.createElement('button'); more.type = 'button'; more.className = 'gmore';
+      more.textContent = '⋯'; more.setAttribute('aria-label', 'グループの操作'); more.setAttribute('aria-haspopup', 'true');
+      head.appendChild(chev); head.appendChild(nm); head.appendChild(more);
+      var box = document.createElement('div'); box.className = 'items';
+      g.items.forEach(function(id){ box.appendChild(itemEls[id]); });
+      if (!g.items.length) {
+        var e = document.createElement('div'); e.className = 'empty-drop'; e.textContent = 'ここへ項目をドラッグ';
+        box.appendChild(e);
+      }
+      sec.appendChild(head); sec.appendChild(box);
+      nav.appendChild(sec);
+    });
+    nav.appendChild(addBtn);
+  }
+
+  // ── 選ぶ・右側に出す ──
+  var current = null;
+  function show(itemId, url, subLink){
+    var it = itemEls[itemId]; if (!it) return;
+    Object.keys(itemEls).forEach(function(id){
+      var el = itemEls[id];
+      el.classList.toggle('open', id === itemId);
+      el.querySelector('.node').classList.toggle('active', id === itemId && !subLink);
+      Array.prototype.forEach.call(el.querySelectorAll('.sub a'), function(a){ a.classList.toggle('active', a === subLink); });
+    });
+    var g = groupOfItem(itemId);
+    if (g && closed[g.id]) { closed[g.id] = false; var s = nav.querySelector('section[data-gid="' + cssEsc(g.id) + '"]'); if (s) { s.classList.remove('closed'); s.querySelector('.ghead').setAttribute('aria-expanded','true'); } }
+    var name = it.querySelector('.node .name').textContent;
+    var emoji = it.querySelector('.node .emoji').textContent;
+    tname.textContent = emoji + ' ' + name + (subLink ? ' ─ ' + subLink.textContent : '');
+    tdesc.textContent = it.querySelector('.desc').textContent;
+    newtab.href = url; newtab.hidden = false;
+    welcome.hidden = true; frame.hidden = false;
+    frame.src = url;
+    current = itemId;
+    closeSide();
+  }
+  function cssEsc(s){ return (window.CSS && CSS.escape) ? CSS.escape(s) : s.replace(/"/g, '\\"'); }
+
+  nav.addEventListener('click', function(ev){
+    var t = ev.target;
+    // 見出しの「⋯」
+    var more = t.closest('.gmore');
+    if (more) { ev.stopPropagation(); openMenu(more); return; }
+    if (t.closest('.gname input')) return;
+    // 見出し：畳む・開く
+    var head = t.closest('.ghead');
+    if (head) { toggleGroup(head.parentNode.getAttribute('data-gid')); return; }
+    var a = t.closest('a');
+    if (!a) return;
+    if (ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey || ev.button !== 0) return; // 新しいタブは素通し
+    if (a.getAttribute('target') === '_blank') return;  // 埋め込めないページはそのまま新しいタブ
+    var item = a.closest('.item'); if (!item) return;
+    ev.preventDefault();
+    show(item.getAttribute('data-id'), a.href, a.classList.contains('node') ? null : a);
+  });
+  nav.addEventListener('keydown', function(ev){
+    var head = ev.target.closest && ev.target.closest('.ghead');
+    if (head && ev.target === head && (ev.key === 'Enter' || ev.key === ' ')) { ev.preventDefault(); toggleGroup(head.parentNode.getAttribute('data-gid')); }
+  });
+  nav.addEventListener('dblclick', function(ev){
+    var nm = ev.target.closest('.gname');
+    if (nm && !nm.querySelector('input')) startRename(nm.closest('section').getAttribute('data-gid'));
+  });
+  function toggleGroup(gid){
+    closed[gid] = !closed[gid];
+    var s = nav.querySelector('section[data-gid="' + cssEsc(gid) + '"]');
+    if (s) { s.classList.toggle('closed', !!closed[gid]); s.querySelector('.ghead').setAttribute('aria-expanded', closed[gid] ? 'false' : 'true'); }
+  }
+
+  // ── グループを作る・名前を変える・並びを変える ──
+  addBtn.addEventListener('click', function(){
+    var id = 'u' + Date.now().toString(36);
+    model.push({ id:id, name:'新しいグループ', items:[] });
+    save(); render(); startRename(id);
+  });
+  function startRename(gid){
+    var g = findGroup(gid); if (!g) return;
+    var s = nav.querySelector('section[data-gid="' + cssEsc(gid) + '"]'); if (!s) return;
+    var nm = s.querySelector('.gname');
+    var input = document.createElement('input');
+    input.type = 'text'; input.value = g.name; input.setAttribute('aria-label', 'グループの名前');
+    nm.textContent = ''; nm.appendChild(input);
+    s.querySelector('.ghead').setAttribute('draggable', 'false');
+    input.focus(); input.select();
+    var done = false;
+    function finish(ok){
+      if (done) return; done = true;
+      var v = input.value.trim();
+      if (ok && v) { g.name = v; save(); }
+      render();
+    }
+    input.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); finish(true); }
+      else if (e.key === 'Escape') { e.preventDefault(); finish(false); }
+    });
+    input.addEventListener('blur', function(){ finish(true); });
+    input.addEventListener('click', function(e){ e.stopPropagation(); });
+  }
+  var menuFor = null, menuBtnEl = null;
+  function openMenu(btn){
+    var gid = btn.closest('section').getAttribute('data-gid');
+    if (menuFor === gid && !gmenu.hidden) { closeMenu(); return; }
+    closeMenu();
+    menuFor = gid; menuBtnEl = btn; btn.setAttribute('aria-expanded', 'true');
+    var i = model.indexOf(findGroup(gid));
+    gmenu.querySelector('[data-act="up"]').disabled = i <= 0;
+    gmenu.querySelector('[data-act="down"]').disabled = i >= model.length - 1;
+    gmenu.hidden = false;
+    var r = btn.getBoundingClientRect();
+    var w = gmenu.offsetWidth, h = gmenu.offsetHeight;
+    var left = Math.min(r.right - w, window.innerWidth - w - 8); if (left < 8) left = 8;
+    var top = r.bottom + 4; if (top + h > window.innerHeight - 8) top = Math.max(8, r.top - h - 4);
+    gmenu.style.left = left + 'px'; gmenu.style.top = top + 'px';
+  }
+  function closeMenu(){
+    gmenu.hidden = true;
+    if (menuBtnEl) menuBtnEl.setAttribute('aria-expanded', 'false');
+    menuFor = null; menuBtnEl = null;
+  }
+  gmenu.addEventListener('click', function(ev){
+    var b = ev.target.closest('button'); if (!b || b.disabled) return;
+    var gid = menuFor; closeMenu();
+    var act = b.getAttribute('data-act');
+    if (act === 'rename') { startRename(gid); return; }
+    var i = model.indexOf(findGroup(gid)); if (i < 0) return;
+    var j = act === 'up' ? i - 1 : i + 1;
+    if (j < 0 || j >= model.length) return;
+    var g = model.splice(i, 1)[0]; model.splice(j, 0, g);
+    save(); render();
+  });
+  document.addEventListener('click', function(ev){ if (!gmenu.hidden && !ev.target.closest('#gmenu') && !ev.target.closest('.gmore')) closeMenu(); });
+  document.addEventListener('keydown', function(ev){ if (ev.key === 'Escape') { closeMenu(); closeSide(); } });
+  window.addEventListener('resize', closeMenu);
+  nav.addEventListener('scroll', closeMenu);
+
+  // ── ドラッグ（項目を別のグループへ／グループの並びを変える） ──
+  var drag = null;      // {type:'item'|'group', id}
+  var line = document.createElement('div'); line.className = 'drop-line';
+  function clearMarks(){
+    if (line.parentNode) line.parentNode.removeChild(line);
+    Array.prototype.forEach.call(nav.querySelectorAll('.drop-on,.drop-before,.drop-after'), function(s){ s.classList.remove('drop-on','drop-before','drop-after'); });
+  }
+  nav.addEventListener('dragstart', function(ev){
+    var head = ev.target.closest && ev.target.closest('.ghead');
+    var item = ev.target.closest && ev.target.closest('.item');
+    if (head) {
+      drag = { type:'group', id: head.parentNode.getAttribute('data-gid') };
+    } else if (item) {
+      drag = { type:'item', id: item.getAttribute('data-id') };
+      item.classList.add('dragging');
+    } else { return; }
+    closeMenu();
+    try { ev.dataTransfer.effectAllowed = 'move'; ev.dataTransfer.setData('text/plain', drag.type + ':' + drag.id); } catch(e) {}
+  });
+  function itemDropIndex(sec, y){
+    var rows = Array.prototype.filter.call(sec.querySelectorAll('.items > .item'), function(r){ return r.getAttribute('data-id') !== drag.id; });
+    for (var k = 0; k < rows.length; k++) {
+      var r = rows[k].querySelector('.node').getBoundingClientRect();
+      if (y < r.top + r.height / 2) return { index:k, before: rows[k] };
+    }
+    return { index: rows.length, before: null };
+  }
+  nav.addEventListener('dragover', function(ev){
+    if (!drag) return;
+    var sec = ev.target.closest && ev.target.closest('section.group');
+    if (!sec) return;
+    ev.preventDefault();
+    try { ev.dataTransfer.dropEffect = 'move'; } catch(e) {}
+    clearMarks();
+    if (drag.type === 'item') {
+      var box = sec.querySelector('.items');
+      if (sec.classList.contains('closed') || !box.querySelector('.item')) { sec.classList.add('drop-on'); return; }
+      var pos = itemDropIndex(sec, ev.clientY);
+      if (pos.before) box.insertBefore(line, pos.before); else box.appendChild(line);
+    } else {
+      if (sec.getAttribute('data-gid') === drag.id) return;
+      var r = sec.getBoundingClientRect();
+      sec.classList.add(ev.clientY < r.top + r.height / 2 ? 'drop-before' : 'drop-after');
+    }
+  });
+  nav.addEventListener('dragleave', function(ev){
+    if (!nav.contains(ev.relatedTarget)) clearMarks();
+  });
+  nav.addEventListener('drop', function(ev){
+    if (!drag) return;
+    var sec = ev.target.closest && ev.target.closest('section.group');
+    ev.preventDefault();
+    var d = drag;
+    clearMarks();
+    if (!sec) { endDrag(); return; }
+    var target = findGroup(sec.getAttribute('data-gid'));
+    if (d.type === 'item') {
+      var idx = (sec.classList.contains('closed')) ? target.items.length : itemDropIndex(sec, ev.clientY).index;
+      var from = groupOfItem(d.id);
+      if (from) from.items.splice(from.items.indexOf(d.id), 1);
+      var list = target.items.filter(function(x){ return x !== d.id; });
+      if (idx > list.length) idx = list.length;
+      list.splice(idx, 0, d.id);
+      target.items = list;
+      if (closed[target.id]) closed[target.id] = false;
+    } else {
+      if (target.id !== d.id) {
+        var r = sec.getBoundingClientRect();
+        var after = ev.clientY >= r.top + r.height / 2;
+        var moving = findGroup(d.id);
+        model.splice(model.indexOf(moving), 1);
+        var ti = model.indexOf(target) + (after ? 1 : 0);
+        model.splice(ti, 0, moving);
+      }
+    }
+    endDrag();
+    save(); render();
+    if (current) { var it = itemEls[current]; it.classList.add('open'); }
+  });
+  function endDrag(){
+    drag = null; clearMarks();
+    Array.prototype.forEach.call(nav.querySelectorAll('.item.dragging'), function(i){ i.classList.remove('dragging'); });
+  }
+  nav.addEventListener('dragend', endDrag);
+
+  // ── 幅760px以下：左の欄の出し入れ ──
+  function openSide(){ document.body.classList.add('side-open'); menubtn.setAttribute('aria-expanded', 'true'); }
+  function closeSide(){ document.body.classList.remove('side-open'); menubtn.setAttribute('aria-expanded', 'false'); }
+  menubtn.addEventListener('click', function(){ document.body.classList.contains('side-open') ? closeSide() : openSide(); });
+  document.getElementById('scrim').addEventListener('click', closeSide);
+
+  render();
+})();
+</script>
 
 </body>
 </html>
