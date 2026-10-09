@@ -43,8 +43,15 @@
 
 <h1>運転台 ── 開発の流れ・手順・いまの姿</h1>
 <p class="lead">2026-10-03 時点の実測で整理。自然にできあがってきた形を、決まりと実物の両方から書き起こしたもの。<br>
-（運転台＝社内名。お客様向けの名前は「AI-Mits＆経営アプリ」）</p>
+（運転台＝社内名。お客様向けの名前は「AI-Mits＆経営アプリ」）<br>最終実測日：2026-10-09（印を埋めた値は tools/check_shiryo_freshness.sh で毎朝突き合わせる）</p>
 
+<!-- 鮮度点検の印（画面には出ない・tools/check_shiryo_freshness.sh が読む） -->
+<!-- jissoku: main_version | v1.75.0 | /usr/bin/git -C /Users/nishidamitsuhiro/untendai-seiri describe --tags --abbrev=0 -->
+<!-- jissoku: branch_count | 8 | /usr/bin/git -C /Users/nishidamitsuhiro/untendai-seiri branch | /usr/bin/wc -l | /usr/bin/tr -d ' ' -->
+<!-- jissoku: world_version | 1.73.28 | /usr/bin/curl -sfS https://untendai-update.3216-fun.workers.dev/latest.json | python3 -c 'import json,sys;print(json.load(sys.stdin)["version"])' -->
+<!-- jissoku: commit_count_28_to_750 | 159 | /usr/bin/git -C /Users/nishidamitsuhiro/untendai-seiri rev-list --count v1.73.28..v1.75.0 -->
+<!-- jissoku: product_app_version | 1.75.0 | /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" /Applications/untendai.app/Contents/Info.plist 2>/dev/null -->
+<!-- jissoku: client_app_version | 1.74.4 | /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" /Applications/untendai-client.app/Contents/Info.plist 2>/dev/null -->
 <!-- ============================================================ -->
 <h2>1. ひと目で：直しがお客様に届くまで</h2>
 
@@ -86,7 +93,7 @@
 
   <rect x="440" y="300" width="230" height="70" rx="10" fill="#ffffff" stroke="#14206b"/>
   <text x="555" y="328" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2430">マーケ版</text>
-  <text x="555" y="350" text-anchor="middle" font-size="12" fill="#5b6170">marketing の枝・10-04 に main 取り込み</text>
+  <text x="555" y="350" text-anchor="middle" font-size="12" fill="#5b6170">marketing の枝（10-09 に main に取り込み済み・枝は残す）</text>
 
   <line x1="370" y1="205" x2="438" y2="70" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
   <line x1="370" y1="215" x2="438" y2="155" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
@@ -140,15 +147,16 @@
 <div class="scroll">
 <table>
 <tr><th>アプリ</th><th>入っている場所・識別子</th><th>組むもと</th><th>組む道具</th><th>いまの版（組んだ時刻）</th><th>誰の手元にあるか</th></tr>
-<tr><td><b>製品版</b></td><td><code>/Applications/untendai.app</code><br><code>com.mits.untendai</code></td><td>main</td><td><code>release.sh --自分だけ</code><br>（中で <code>build-signed.sh</code>）</td><td>1.74.4（10-04 21:35・2026-10-08 実測）</td><td><span class="tag t-me">Mits様だけ 1.74.4</span><br><span class="tag t-out">お客様は 1.73.28</span></td></tr>
+<tr><td><b>製品版</b></td><td><code>/Applications/untendai.app</code><br><code>com.mits.untendai</code></td><td>main</td><td><code>release.sh --自分だけ</code><br>（中で <code>build-signed.sh</code>）</td><td>1.75.0（10-09・marketing を main に取り込み・2026-10-09 実測）</td><td><span class="tag t-me">Mits様だけ 1.75.0</span><br><span class="tag t-out">お客様は 1.73.28</span></td></tr>
 <tr><td><b>freee版</b><br>（クライアント版）</td><td><code>/Applications/untendai-client.app</code><br><code>com.mits.untendai.client</code></td><td>main（09-25 から）</td><td><code>build-client.sh</code> → zip</td><td>1.74.4（10-04 21:50・2026-10-08 実測）</td><td><span class="tag t-old">協力者Aさん 1.73.24</span><br><span class="tag t-me">協力者Bさん 1.74.4（Drive の untendai-client_1.74.4_mac_arm64.zip・2026-10-04 差し替え・未共有）</span></td></tr>
 <tr><td><b>開発版</b></td><td><code>/Applications/untendai-dev.app</code><br><code>com.mits.untendai.dev</code></td><td>main</td><td><code>build-dev.sh</code></td><td>1.73.53 の表示（中身は 09-30 20:27 の main・見本A／B／C）</td><td><span class="tag t-me">Mits様の Mac だけ</span></td></tr>
-<tr><td><b>マーケ版</b></td><td><code>/Applications/untendai-mkt.app</code><br><code>com.mits.untendai.mkt</code></td><td>marketing の枝<br><code>~/untendai-marketing</code></td><td><code>build-mkt.sh</code></td><td>1.74.4（10-04 21:36・2026-10-08 実測）</td><td><span class="tag t-me">Mits様の Mac だけ</span></td></tr>
+<tr><td><b>マーケ版</b></td><td><code>/Applications/untendai-mkt.app</code><br><code>com.mits.untendai.mkt</code></td><td>marketing の枝<br><code>~/untendai-marketing</code></td><td><code>build-mkt.sh</code></td><td>1.74.4（10-04 21:36・2026-10-08 実測。10-09 に marketing の中身は main に入ったので、以後は main から組んだ 1.75.0 の製品版と中身が同じになる）</td><td><span class="tag t-me">Mits様の Mac だけ</span></td></tr>
 </table>
 </div>
 <p class="note">4本ともデータの置き場所は別（<code>~/Library/Application Support/&lt;識別子&gt;/</code>）。同じ Mac で同時に開いても数字は混ざらない。<br>
 ここに無い枝の作業場：<code>~/untendai-freee</code>（先端 8b3e4b6・2026-09-25。main に入り済み）。<br>
-<b>2026-10-08 Mits様決定（司令塔が手続き中）</b>：会話のセッション「運転台マーケ」を「運転台改善」に統合する。コードの枝（marketing）を main に戻す決定ではない（枝はこのまま残る）。</p>
+<b>2026-10-08 Mits様決定（司令塔が手続き中）</b>：会話のセッション「運転台マーケ」を「運転台改善」に統合する。<br>
+<b>2026-10-09 Mits様決定（FHL 2026 Notes の『発注GO』）</b>：コードの枝 marketing の 54 commit を main に取り込んだ（merge 0c9d5b8・v1.75.0）。枝そのものと作業場 <code>~/untendai-marketing</code> は残す。<code>updater/wrangler.toml</code>（本番 Worker 名）と <code>src-tauri/resources/sample.db</code>（見本の帳簿）は main の中身を保つ。世に出さない（<code>--自分だけ</code> で Mits様の製品版にだけ入れる）。</p>
 
 <!-- ============================================================ -->
 <h2>3. 枝の移り変わり（自然にこうなった）</h2>
@@ -164,10 +172,10 @@
   <text x="250" y="60" font-size="13" font-weight="700" fill="#2f7d4f">freee の枝（~/untendai-freee）</text>
   <text x="470" y="90" font-size="12" fill="#2f7d4f">09-25 main に統合（v1.73.39・5eb0ec9）</text>
 
-  <!-- marketing branch (下に伸びて 10-04 に取り込み) -->
-  <path d="M700,150 C740,215 780,215 820,215 L910,215 C935,215 940,180 935,170" fill="none" stroke="#2f7d4f" stroke-width="3"/>
-  <text x="740" y="245" font-size="12" fill="#2f7d4f">marketing の枝（~/untendai-marketing）</text>
-  <text x="740" y="265" font-size="12" fill="#2f7d4f">10-04 に main 取り込み（Merge d026472）</text>
+  <!-- marketing branch (下に伸びて 10-09 に main に戻る) -->
+  <path d="M700,150 C740,215 780,215 820,215 L910,215 C935,215 940,180 935,160" fill="none" stroke="#2f7d4f" stroke-width="3"/>
+  <text x="740" y="245" font-size="12" fill="#2f7d4f">marketing の枝（~/untendai-marketing・枝は残す）</text>
+  <text x="740" y="265" font-size="12" fill="#2f7d4f">10-09 main に取り込み（Merge 0c9d5b8・v1.75.0）</text>
 
   <!-- version dots on main -->
   <g font-size="11" fill="#1f2430">
@@ -207,15 +215,19 @@
     <circle cx="880" cy="150" r="6" fill="#14206b"/>
     <text x="860" y="135">1.74.3</text>
 
-    <!-- v1.74.4: main の今の版（最新・navy 太線） -->
+    <!-- v1.74.4 -->
+    <circle cx="900" cy="150" r="6" fill="#14206b"/>
+    <text x="880" y="135">1.74.4</text>
+
+    <!-- v1.75.0: main の今の版（最新・navy 太線）── marketing を取り込んだ merge commit -->
     <circle cx="935" cy="150" r="8" fill="#14206b" stroke="#8a6a1f" stroke-width="2"/>
-    <text x="905" y="178" font-weight="700" fill="#14206b">1.74.4</text>
+    <text x="905" y="178" font-weight="700" fill="#14206b">1.75.0</text>
     <text x="895" y="195" fill="#5b6170">main の今の版</text>
-    <text x="895" y="210" fill="#5b6170">（10/04 21:33）</text>
+    <text x="895" y="210" fill="#5b6170">（10/09・marketing 取り込み）</text>
   </g>
 
-  <text x="40" y="295" font-size="12" fill="#5b6170">v1.73.28 → v1.74.4 の間に 103 の commit が溜まっている（世に出していない・2026-10-08 実測・/usr/bin/git rev-list --count v1.73.28..v1.74.4）</text>
-  <text x="40" y="313" font-size="12" fill="#5b6170">全枝8本（うち動いた3本を描いた・他5本は止まっている or 退避：demobuild・freee-win・oem-shoukai-code・taiki-honntai・wip-freee-20260925）／2026-10-08 実測</text>
+  <text x="40" y="295" font-size="12" fill="#5b6170">v1.73.28 → v1.75.0 の間に 159 の commit が溜まっている（世に出していない・2026-10-09 実測・/usr/bin/git rev-list --count v1.73.28..v1.75.0）</text>
+  <text x="40" y="313" font-size="12" fill="#5b6170">全枝8本（うち動いた3本を描いた・他5本は止まっている or 退避：demobuild・freee-win・oem-shoukai-code・taiki-honntai・wip-freee-20260925）／2026-10-09 実測</text>
 </svg>
 </div>
 
