@@ -592,7 +592,7 @@ body {
 </footer>
 
 <script id="embedded-data" type="application/json">{
-  "generated_at": "2026-10-09T11:27:58",
+  "generated_at": "2026-10-09T11:33:59",
   "apple_health": {
     "source_files": [
       "apple_health_full_daily.csv"
@@ -835452,54 +835452,105 @@ function defaultCausalityLabel() {
 /* ---------- 期間フィルタ ----------
    period === 'all' なら、そのメトリクスの「最初の非null〜最後の非null」に絞る。
    それ以外は、データの最終日（source 全体の dates の最後）からカレンダー月／年でさかのぼる。
-   配列の添字（＝記録のある日の個数）ではなく日付で切るので、
-   日の抜けがあっても同じ期間ボタンは同じ日付範囲を指す。
+   日付で切るので、日の抜けがあっても同じ期間ボタンは同じ日付範囲を指す。
+
+   さらに：日単位の source（dates が "YYYY-MM-DD"）では、期間ウィンドウの
+   全日付を day 単位で並べ、既存データが無い日は null で埋める。
+   これで横軸が期間いっぱいに出て、データの抜けが空白として見える。
+   サブ日単位の source（dates が "YYYY-MM-DDTHH:MM:SS" を含む・welltory_sessions 等）
+   では、サブ日の解像度を潰さないよう null 埋めはせず、期間窓に収まる実データだけ返す。
+
    PERIOD_OPTIONS.key は '1m','3m','6m','1y','3y','5y' を認識する。 */
 function sliceByPeriod(dates, values, ma7, ma30, period) {
   const opt = PERIOD_OPTIONS.find(o => o.key === period) || PERIOD_OPTIONS[0];
   if (!dates || dates.length === 0) return null;
-
-  let firstIdx, lastIdx;
 
   // 'all' または days 指定が無い場合は全期間扱い
   const match = opt.key && opt.key.match(/^(\d+)([my])$/);
 
   if (opt.key === 'all' || !match) {
     // 全期間：このメトリクス自身の「最初の非null〜最後の非null」
-    firstIdx = values.findIndex(v => v !== null && v !== undefined);
+    let firstIdx = values.findIndex(v => v !== null && v !== undefined);
     if (firstIdx < 0) return null;
-    lastIdx = values.length - 1;
+    let lastIdx = values.length - 1;
     while (lastIdx > firstIdx && (values[lastIdx] === null || values[lastIdx] === undefined)) lastIdx--;
-  } else {
-    // 期間指定：source 全体の最終日からカレンダー月／年でさかのぼる（日付で切る）
-    const n = parseInt(match[1], 10);
-    const unit = match[2]; // 'm' = 月, 'y' = 年
-    lastIdx = dates.length - 1;
-    const lastStr = String(dates[lastIdx]).slice(0, 10); // YYYY-MM-DD（welltory_sessions の "YYYY-MM-DDTHH:MM:SS" も頭10桁で揃う）
-    const anchor = new Date(lastStr + 'T00:00:00');
-    if (isNaN(anchor.getTime())) return null;
-    const start = new Date(anchor);
-    if (unit === 'm') {
-      start.setMonth(start.getMonth() - n);
-    } else {
-      start.setFullYear(start.getFullYear() - n);
-    }
-    const y = start.getFullYear();
-    const m = String(start.getMonth() + 1).padStart(2, '0');
-    const d = String(start.getDate()).padStart(2, '0');
-    const startStr = `${y}-${m}-${d}`;
-
-    firstIdx = dates.findIndex(ds => String(ds).slice(0, 10) >= startStr);
-    if (firstIdx < 0 || firstIdx > lastIdx) return null;
+    return {
+      dates: dates.slice(firstIdx, lastIdx + 1),
+      values: values.slice(firstIdx, lastIdx + 1),
+      ma7: ma7 ? ma7.slice(firstIdx, lastIdx + 1) : null,
+      ma30: ma30 ? ma30.slice(firstIdx, lastIdx + 1) : null,
+      firstDate: dates[firstIdx],
+      lastDate: dates[lastIdx],
+    };
   }
 
+  // 期間指定：source 全体の最終日からカレンダー月／年でさかのぼる
+  const n = parseInt(match[1], 10);
+  const unit = match[2]; // 'm' = 月, 'y' = 年
+  const lastSrcIdx = dates.length - 1;
+  const lastStr = String(dates[lastSrcIdx]).slice(0, 10); // YYYY-MM-DD
+  const anchor = new Date(lastStr + 'T00:00:00');
+  if (isNaN(anchor.getTime())) return null;
+  const start = new Date(anchor);
+  if (unit === 'm') {
+    start.setMonth(start.getMonth() - n);
+  } else {
+    start.setFullYear(start.getFullYear() - n);
+  }
+  const fmtYMD = (dt) => `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, '0')}-${String(dt.getDate()).padStart(2, '0')}`;
+  const startStr = fmtYMD(start);
+
+  // date のフォーマットを見て、日単位か サブ日単位 か判定
+  // サンプル dates の中に 'T' を含むものがあれば サブ日単位
+  const isSubDay = dates.some(ds => typeof ds === 'string' && ds.includes('T'));
+
+  if (isSubDay) {
+    // サブ日単位：期間窓に収まる実データだけ返す（null 埋めなし）
+    const firstIdx = dates.findIndex(ds => String(ds).slice(0, 10) >= startStr);
+    if (firstIdx < 0 || firstIdx > lastSrcIdx) return null;
+    return {
+      dates: dates.slice(firstIdx, lastSrcIdx + 1),
+      values: values.slice(firstIdx, lastSrcIdx + 1),
+      ma7: ma7 ? ma7.slice(firstIdx, lastSrcIdx + 1) : null,
+      ma30: ma30 ? ma30.slice(firstIdx, lastSrcIdx + 1) : null,
+      firstDate: dates[firstIdx],
+      lastDate: dates[lastSrcIdx],
+    };
+  }
+
+  // 日単位：窓内の全日付を列挙し、既存データが無い日は null で埋める
+  // 既存 dates を map にする（最初に出てきた index を使う）
+  const idxByDate = new Map();
+  for (let i = 0; i < dates.length; i++) {
+    const ds = String(dates[i]).slice(0, 10);
+    if (!idxByDate.has(ds)) idxByDate.set(ds, i);
+  }
+
+  const outDates = [];
+  const outValues = [];
+  const outMa7 = ma7 ? [] : null;
+  const outMa30 = ma30 ? [] : null;
+  const cur = new Date(start);
+  // 期間窓: [startStr, lastStr] 両端含む・1日ずつ進める
+  while (fmtYMD(cur) <= lastStr) {
+    const ds = fmtYMD(cur);
+    outDates.push(ds);
+    const srcIdx = idxByDate.get(ds);
+    outValues.push(srcIdx != null ? values[srcIdx] : null);
+    if (outMa7) outMa7.push(srcIdx != null ? ma7[srcIdx] : null);
+    if (outMa30) outMa30.push(srcIdx != null ? ma30[srcIdx] : null);
+    cur.setDate(cur.getDate() + 1);
+  }
+
+  if (outDates.length === 0) return null;
+
   return {
-    dates: dates.slice(firstIdx, lastIdx + 1),
-    values: values.slice(firstIdx, lastIdx + 1),
-    ma7: ma7 ? ma7.slice(firstIdx, lastIdx + 1) : null,
-    ma30: ma30 ? ma30.slice(firstIdx, lastIdx + 1) : null,
-    firstDate: dates[firstIdx],
-    lastDate: dates[lastIdx],
+    dates: outDates,
+    values: outValues,
+    ma7: outMa7,
+    ma30: outMa30,
+    firstDate: outDates[0],
+    lastDate: outDates[outDates.length - 1],
   };
 }
 
