@@ -662,7 +662,7 @@ body {
 </footer>
 
 <script id="embedded-data" type="application/json">{
-  "generated_at": "2026-10-09T12:31:11",
+  "generated_at": "2026-10-09T12:36:16",
   "apple_health": {
     "source_files": [
       "apple_health_full_daily.csv"
@@ -880899,6 +880899,10 @@ let currentPeriod = 'all';
 let showTrendline = false;
 let selectedCategories = new Set();
 let selectedTrendDirs = new Set();
+// 期間ボタンの窓の終わりを、ダッシュボード全体のいちばん新しい日にそろえる基準日。
+// 各メトリクスの最後の日ではなく、全データ源の最大値（＝今の日付に近い）を使う。
+// null のまま呼ばれたら、従来通りメトリクス自身の最後の日を使う（後方互換）。
+let GLOBAL_LAST_DATE = null;
 const CATEGORIES_ORDER = ['🏃 運動・活動', '❤️ 心拍・自律神経', '💤 睡眠', '☕ 摂取', '⚖️ 体組成', '🩸 検査時系列', '🌤️ 環境クロス', '💊 介入', '📊 他'];
 
 function categorize(metricName, interp) {
@@ -881099,11 +881103,12 @@ function sliceByPeriod(dates, values, ma7, ma30, period) {
     };
   }
 
-  // 期間指定：source 全体の最終日からカレンダー月／年でさかのぼる
+  // 期間指定：ダッシュボード全体のいちばん新しい日（GLOBAL_LAST_DATE）からカレンダー月／年でさかのぼる
+  // GLOBAL_LAST_DATE が未設定なら、従来通りメトリクス自身の最後の日を使う（後方互換）。
   const n = parseInt(match[1], 10);
   const unit = match[2]; // 'm' = 月, 'y' = 年
-  const lastSrcIdx = dates.length - 1;
-  const lastStr = String(dates[lastSrcIdx]).slice(0, 10); // YYYY-MM-DD
+  const metricLastStr = String(dates[dates.length - 1]).slice(0, 10);
+  const lastStr = GLOBAL_LAST_DATE || metricLastStr;
   const anchor = new Date(lastStr + 'T00:00:00');
   if (isNaN(anchor.getTime())) return null;
   const start = new Date(anchor);
@@ -881120,16 +881125,22 @@ function sliceByPeriod(dates, values, ma7, ma30, period) {
   const isSubDay = dates.some(ds => typeof ds === 'string' && ds.includes('T'));
 
   if (isSubDay) {
-    // サブ日単位：期間窓に収まる実データだけ返す（null 埋めなし）
+    // サブ日単位：窓の範囲 [startStr, lastStr] に収まる実データだけ返す（null 埋めなし）
     const firstIdx = dates.findIndex(ds => String(ds).slice(0, 10) >= startStr);
-    if (firstIdx < 0 || firstIdx > lastSrcIdx) return null;
+    if (firstIdx < 0) return null;
+    // 窓の後端（lastStr）までを切る。実データが窓の末尾より前で終わっているときはそのデータの最後まで。
+    let lastIdxInWindow = dates.length - 1;
+    while (lastIdxInWindow >= firstIdx && String(dates[lastIdxInWindow]).slice(0, 10) > lastStr) {
+      lastIdxInWindow--;
+    }
+    if (lastIdxInWindow < firstIdx) return null;
     return {
-      dates: dates.slice(firstIdx, lastSrcIdx + 1),
-      values: values.slice(firstIdx, lastSrcIdx + 1),
-      ma7: ma7 ? ma7.slice(firstIdx, lastSrcIdx + 1) : null,
-      ma30: ma30 ? ma30.slice(firstIdx, lastSrcIdx + 1) : null,
+      dates: dates.slice(firstIdx, lastIdxInWindow + 1),
+      values: values.slice(firstIdx, lastIdxInWindow + 1),
+      ma7: ma7 ? ma7.slice(firstIdx, lastIdxInWindow + 1) : null,
+      ma30: ma30 ? ma30.slice(firstIdx, lastIdxInWindow + 1) : null,
       firstDate: dates[firstIdx],
-      lastDate: dates[lastSrcIdx],
+      lastDate: dates[lastIdxInWindow],
     };
   }
 
@@ -881147,6 +881158,7 @@ function sliceByPeriod(dates, values, ma7, ma30, period) {
   const outMa30 = ma30 ? [] : null;
   const cur = new Date(start);
   // 期間窓: [startStr, lastStr] 両端含む・1日ずつ進める
+  // メトリクスのデータが lastStr より前で終わっていても、窓の末尾まで null で延ばす。
   while (fmtYMD(cur) <= lastStr) {
     const ds = fmtYMD(cur);
     outDates.push(ds);
@@ -881760,6 +881772,23 @@ async function main() {
     const { data, interp } = await loadAll();
     DATA = data;
     INTERP = interp;
+
+    // 期間ボタンの窓の終わりを、ダッシュボード全体のいちばん新しい日にそろえる。
+    // メトリクスごとに最後の日が違っても、窓の後端はいつも同じ日。
+    // 対象の source：apple_health / sleepcycle / welltory / welltory_sessions / coherence
+    // ・ワークアウトセッションは「日々の計器」ではないので anchor には含めない。
+    (() => {
+      const bucket = [];
+      const push = (arr) => { if (arr && arr.length) bucket.push(String(arr[arr.length - 1]).slice(0, 10)); };
+      push(data?.apple_health?.dates);
+      push(data?.sleepcycle?.dates);
+      push(data?.welltory?.dates);
+      push(data?.welltory_sessions?.dates);
+      push(data?.coherence?.dates);
+      if (bucket.length) {
+        GLOBAL_LAST_DATE = bucket.reduce((a, b) => (a > b ? a : b));
+      }
+    })();
 
     renderHeader(data);
     renderBaselineStrip(interp);
