@@ -28,6 +28,8 @@
   th, td{ border-right:1px solid var(--line); border-bottom:1px solid var(--line); padding:6px 8px; text-align:center; vertical-align:middle; background:#fff; width:var(--col); min-width:var(--col); box-sizing:border-box; }
   tr > :first-child{ border-left:1px solid var(--line); }
   tr.hinichi > *{ border-top:1px solid var(--line); }
+  /* 2026-10-09 Mits様「10/7と8の間の縦線を太い線にして」：10/7 の列（左の項目名の次から4列目）の右の線 */
+  table:not(#tw-table) tr > :nth-child(5){ border-right:2px solid var(--title); }
 
   /* 左の項目名は横に動かしても残す */
   th.head{ position:sticky; left:0; z-index:2; width:var(--head); min-width:var(--head);
