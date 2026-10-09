@@ -62,6 +62,7 @@ button { font:inherit; color:inherit; }
 .sub a:hover { background:var(--sub-bg); }
 .sub a.active { color:var(--gold); background:var(--sub-bg); }
 .sub a[target="_blank"]::after { content:" ↗"; color:var(--muted); }
+.item .node[target="_blank"] .name::after { content:" ↗"; color:var(--muted); }
 
 .addgroup { display:block; width:100%; margin:8px 0 0; padding:7px 8px; text-align:left; font-size:12px; color:var(--muted); background:none; border:1px dashed var(--line); border-radius:6px; cursor:pointer; }
 .addgroup:hover { color:var(--gold); border-color:var(--gold); }
@@ -137,7 +138,7 @@ button { font:inherit; color:inherit; }
       <a class="node" href="https://reports.7years.life/private/karaoke-ai/"><span class="emoji">🎤</span><span class="name">カラオケ練習AI</span></a>
       <span class="desc">9軸実測・原曲基準の声質偏差値・「測って→学んで→また測る」練習ループ。</span>
       <div class="sub"><span class="slabel">主要ページ</span>
-        <a href="https://reports.7years.life/private/karaoke-ai/dashboard.html">ダッシュボード</a><a href="https://reports.7years.life/private/karaoke-ai/myp_voice_quality.html">声質スコアカード</a><a href="https://reports.7years.life/private/karaoke-ai/curriculum_20260710.html">カリキュラム</a><a href="https://reports.7years.life/private/karaoke-ai/myp_videos.html">動画マップ</a>
+        <a href="https://reports.7years.life/private/karaoke-ai/measure.html">実測（ダッシュ）</a><a href="https://reports.7years.life/private/karaoke-ai/profile.html">課題（声質偏差値）</a><a href="https://reports.7years.life/private/karaoke-ai/success.html">検証（サクセスFile）</a><a href="https://reports.7years.life/private/karaoke-ai/plan.html">計画（ルーティン）</a>
       </div>
     </div>
   </div>
@@ -164,7 +165,7 @@ button { font:inherit; color:inherit; }
       <span class="desc">HRV・血液検査・Apple Health・Welltory を統合した機能性医学ダッシュボード。パスワードなし（2026-10-09 外した・中身は 2026-07-21 の版）。</span>
     </div>
     <div class="item" data-id="supplement-tracker">
-      <a class="node" href="https://mits32163216.github.io/supplement-tracker/"><span class="emoji">💊</span><span class="name">サプリ摂取トラッカー</span></a>
+      <a class="node" href="https://mits32163216.github.io/supplement-tracker/" target="_blank" rel="noopener"><span class="emoji">💊</span><span class="name">サプリ摂取トラッカー</span></a>
       <span class="desc">記録専用PWA。今日チェック・達成率リング・履歴ヒートマップ・連続達成。記録は端末内のみ保存。</span>
     </div>
     <div class="item" data-id="fasting-kiroku">
