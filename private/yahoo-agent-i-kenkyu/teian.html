@@ -143,7 +143,7 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0;}
         <div class="k-k">どの画面のどこに</div>
         <div class="k-v">運転台の各計器画面（売上・経費・残高・LP・配信 等）の下部、ならびに
           左バーの「お知らせ」画面。現在、お知らせの実装は「新しい版のお知らせ」1 本のみ
-          （<span class="src">src/index.html:3583, 3537, 282</span>）。条件で知らせる表示は2つだけある ── ①月次の画面の「今月の入金予定（サブスク）のアラート」（<span class="src">src/index.html:2540・6738</span>・回収する額に入金が足りないと画面の中に出る）②期限を過ぎた未報告の宿題を数えて赤い印で案内する（<span class="src">src-tauri/src/sanbo.rs:675〜680</span>）。どちらもお客様が条件・頻度を選んで登録する形ではなく、Mac の通知も使っていない（同じ所のコメント「tauri-plugin-notification は plugin 追加が必要」）。</div>
+          （<span class="src">src/index.html:3583, 3537, 282</span>）。条件で色・印を出すものは、少なくとも次がある（2026-10-10 devils-advocate が src/index.html と src-tauri/src 全17本を当てた実測）── ⓐ伴走点検の画面（<span class="src">data-screen="tenken"・bansou_tenken_snapshot</span>・9項目を3段階の色で並べる）ⓑ顧客の分類の線をお客様が4項目設定できる画面（<span class="src">settings_set_thresholds・src/index.html:5642〜5692</span>）ⓒ新しい版のお知らせ ⓓ目標設計の赤文字の警告 ⓔログインの期限切れ ⓕ見本の印、そして ①月次の画面の「今月の入金予定（サブスク）のアラート」（<span class="src">src/index.html:2540・6738</span>・回収する額に入金が足りないと画面の中に出る）②期限を過ぎた未報告の宿題を数えて赤い印で案内する（<span class="src">src-tauri/src/sanbo.rs:675〜680</span>）。どれも頻度（毎日・毎週・毎月）と知らせ先を選んで登録する形ではなく、Mac の通知も使っていない（同じ所のコメント「tauri-plugin-notification は plugin 追加が必要」）。</div>
         <div class="k-k">何を</div>
         <div class="k-v">各計器画面に「この数字の変化を見張る」ボタンを 1 つ置き、押すと 4 要素を書く小さな画面が開く。
           ① 条件（何がどれだけ動いたら＝「粗利が先月比で 5%以上動いたら」等）
@@ -384,7 +384,7 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0;}
     <code>src/index.html:6214</code> ── 「この道具は、状態の変化で経営を良くします。
     いまの数字が良いか悪いかではなく、どちらへ動いているかを見ます」の基本方針。<br>
     <code>src/index.html:282, 3537, 3540, 3583</code> ── 現在のお知らせは「新しい版のお知らせ」の 1 本だけ。
-    条件で知らせる表示は2つだけある ── ①月次の画面の「今月の入金予定（サブスク）のアラート」（<span class="src">src/index.html:2540・6738</span>・回収する額に入金が足りないと画面の中に出る）②期限を過ぎた未報告の宿題を数えて赤い印で案内する（<span class="src">src-tauri/src/sanbo.rs:675〜680</span>）。どちらもお客様が条件・頻度を選んで登録する形ではなく、Mac の通知も使っていない（同じ所のコメント「tauri-plugin-notification は plugin 追加が必要」）。
+    条件で色・印を出すものは、少なくとも次がある（2026-10-10 devils-advocate が src/index.html と src-tauri/src 全17本を当てた実測）── ⓐ伴走点検の画面（<span class="src">data-screen="tenken"・bansou_tenken_snapshot</span>・9項目を3段階の色で並べる）ⓑ顧客の分類の線をお客様が4項目設定できる画面（<span class="src">settings_set_thresholds・src/index.html:5642〜5692</span>）ⓒ新しい版のお知らせ ⓓ目標設計の赤文字の警告 ⓔログインの期限切れ ⓕ見本の印、そして ①月次の画面の「今月の入金予定（サブスク）のアラート」（<span class="src">src/index.html:2540・6738</span>・回収する額に入金が足りないと画面の中に出る）②期限を過ぎた未報告の宿題を数えて赤い印で案内する（<span class="src">src-tauri/src/sanbo.rs:675〜680</span>）。どれも頻度（毎日・毎週・毎月）と知らせ先を選んで登録する形ではなく、Mac の通知も使っていない（同じ所のコメント「tauri-plugin-notification は plugin 追加が必要」）。
   </div>
   <div class="butsukari">
     <strong>運転台の決まりとぶつかる所：</strong>無し。<br>
