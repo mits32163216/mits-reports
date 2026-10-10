@@ -61,7 +61,7 @@
   td.hosu-v .bar i.ok{ background:var(--green); }
 
   /* カロリー収支・脂肪の燃焼・たんぱく質 */
-  tr.zutsu > th, tr.nensho > th, tr.tanpaku > th, tr.toshitsu > th{ background:var(--amber-bg); color:var(--amber); }
+  tr.zutsu > th, tr.nensho > th, tr.tanpaku > th, tr.toshitsu > th, tr.mizu > th{ background:var(--amber-bg); color:var(--amber); }
   td.shushi, td.nensho{ vertical-align:top; text-align:left; font-size:var(--f3); line-height:1.5; padding:5px 8px; }
   td.shushi .r, td.nensho .r{ display:flex; justify-content:space-between; }
   td.shushi .r b, td.nensho .r b{ font-weight:700; }
@@ -89,7 +89,7 @@
 
   /* 区切り：からだ／カロリー収支／献立／備考 */
   tr.zutsu > *, tr.gozen > *, tr.biko > *{ border-top:2px solid var(--title); }
-  tr.nensho > *, tr.tanpaku > *, tr.toshitsu > *{ border-top:1px solid #e2c58f; }
+  tr.nensho > *, tr.tanpaku > *, tr.toshitsu > *, tr.mizu > *{ border-top:1px solid #e2c58f; }
 
   /* 今日の列 */
   td.kyou-col{ background:var(--kyou); }
@@ -308,6 +308,26 @@
       <td class="nensho toshitsu"></td>
       <td class="nensho toshitsu"></td>
     </tr>
+    <tr class="mizu">
+      <th class="head">摂取水分量<span>mL</span></th>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+    </tr>
     <tr class="gozen">
       <th class="head meal-head"><span class="h1">午前</span><span class="h2">コーヒー</span></th>
       <td class="meal empty"><span class="chk-note">前のプラン</span></td>
@@ -422,12 +442,12 @@
 (function(){
   // ===== 実測・目標の一元データ（ここに1行足すだけで乾燥体重欄・チェック時間欄・歩数欄が揃う） =====
   const jissoku = {
-    "10/4": {kg: 62.2, jikan: "9:27", shibo: 17.4, hosu: 12613, kiso: 1495, katsudo: 656},
-    "10/5": {kg: 61.0, jikan: "13:06", shibo: 16.7, hosu: 12052, kiso: 1462, katsudo: 506},
-    "10/6": {kg: 60.6, jikan: "11:40", shibo: 16.4, hosu: 10939, kiso: 1403, katsudo: 447},
-    "10/7": {kg: 60.9, jikan: "11:20", shibo: 16.6, hosu: 12254, kiso: 1473, katsudo: 517},
-    "10/8": {kg: 60.2, jikan: "11:16", shibo: 16.2, hosu: 7590, kiso: 1459, katsudo: 340},
-    "10/9": {kg: 59.8, jikan: "5:43", shibo: 16.0, hosu: 7512, kiso: 1444, katsudo: 321},
+    "10/4": {kg: 62.2, jikan: "9:27", shibo: 17.4, hosu: 12613, kiso: 1495, katsudo: 656, mizu: 2500},
+    "10/5": {kg: 61.0, jikan: "13:06", shibo: 16.7, hosu: 12052, kiso: 1462, katsudo: 506, mizu: 2250},
+    "10/6": {kg: 60.6, jikan: "11:40", shibo: 16.4, hosu: 10939, kiso: 1403, katsudo: 447, mizu: 1000},
+    "10/7": {kg: 60.9, jikan: "11:20", shibo: 16.6, hosu: 12254, kiso: 1473, katsudo: 517, mizu: 2250},
+    "10/8": {kg: 60.2, jikan: "11:16", shibo: 16.2, hosu: 7590, kiso: 1459, katsudo: 340, mizu: 2500},
+    "10/9": {kg: 59.8, jikan: "5:43", shibo: 16.0, hosu: 7512, kiso: 1444, katsudo: 321, mizu: 3500},
     "10/10": {kg: 59.8, jikan: "8:38", shibo: 16.0, hosu: 207, kiso: 556, katsudo: 21}
   };
   const mokuhyo = {
@@ -476,6 +496,7 @@
       const goalTd  = (trs['mokuhyo'] || [])[col];
       const shiboTd = (trs['taishibo'] || [])[col];
       const hosuTd  = (trs['hosu'] || [])[col];
+      const mizuTd  = (trs['mizu'] || [])[col];
 
       // 目標体重の値
       const mk = mokuhyo[day];
@@ -493,6 +514,11 @@
         if (shiboTd && jd.shibo != null) {
           shiboTd.className = 'atai';
           shiboTd.textContent = jd.shibo.toFixed(1);
+        }
+        // 2026-10-10 Mits様「糖質のしたに摂取水分量を入れて」：iPhone のヘルスの水分（HiWater で記録）の1日の合計 mL
+        if (mizuTd && jd.mizu != null) {
+          mizuTd.className = 'atai';
+          mizuTd.textContent = jd.mizu.toLocaleString('ja-JP');
         }
         if (hosuTd && jd.hosu != null) {
           hosuTd.className = 'atai hosu-v';

@@ -1,5 +1,5 @@
 {
- "koushin": "2026-10-10 10:22",
+ "koushin": "2026-10-10 10:27",
  "jissoku": {
   "10/4": {
    "kg": 62.2,
@@ -7,7 +7,8 @@
    "shibo": 17.4,
    "hosu": 12613,
    "kiso": 1495,
-   "katsudo": 656
+   "katsudo": 656,
+   "mizu": 2500
   },
   "10/5": {
    "kg": 61.0,
@@ -15,7 +16,8 @@
    "shibo": 16.7,
    "hosu": 12052,
    "kiso": 1462,
-   "katsudo": 506
+   "katsudo": 506,
+   "mizu": 2250
   },
   "10/6": {
    "kg": 60.6,
@@ -23,7 +25,8 @@
    "shibo": 16.4,
    "hosu": 10939,
    "kiso": 1403,
-   "katsudo": 447
+   "katsudo": 447,
+   "mizu": 1000
   },
   "10/7": {
    "kg": 60.9,
@@ -31,7 +34,8 @@
    "shibo": 16.6,
    "hosu": 12254,
    "kiso": 1473,
-   "katsudo": 517
+   "katsudo": 517,
+   "mizu": 2250
   },
   "10/8": {
    "kg": 60.2,
@@ -39,7 +43,8 @@
    "shibo": 16.2,
    "hosu": 7590,
    "kiso": 1459,
-   "katsudo": 340
+   "katsudo": 340,
+   "mizu": 2500
   },
   "10/9": {
    "kg": 59.8,
@@ -47,15 +52,16 @@
    "shibo": 16,
    "hosu": 7512,
    "kiso": 1444,
-   "katsudo": 321
+   "katsudo": 321,
+   "mizu": 3500
   },
   "10/10": {
    "kg": 59.8,
+   "jikan": "8:38",
    "shibo": 16,
    "hosu": 207,
    "kiso": 556,
-   "katsudo": 21,
-   "jikan": "8:38"
+   "katsudo": 21
   }
  },
  "mokuhyo": {
