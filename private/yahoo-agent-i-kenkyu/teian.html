@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Yahoo! Agent i から運転台・AI-Mits に採り入れる案（2026-10-10）</title>
+<style>
+:root{
+  --bg:#ffffff;
+  --card:#fcfcff;
+  --card2:#f7f8fc;
+  --tx:#212529;
+  --sub:#505461;
+  --line:#e3e6f0;
+  --line2:#ccd2e4;
+  --info:#11159f;
+  --purple:#0a0d6b;
+  --amber:#7a5e1f;
+  --good:#1f6b45;
+  --bad:#a63f3f;
+  --code:#f5f2e8;
+}
+:root:not([data-theme="light"]) {
+  @media (prefers-color-scheme: dark){
+    /* ダーク化しない。運転台のモックは必ず明るい地のまま。 */
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;padding:0;background:var(--bg);color:var(--tx);
+  font-family:-apple-system,"Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+  line-height:1.75;font-size:15px;}
+header{padding:40px 24px 20px;max-width:1180px;margin:0 auto;}
+header h1{margin:0 0 8px;font-size:26px;line-height:1.4;color:var(--purple);}
+header .meta{color:var(--sub);font-size:13px;}
+main{max-width:1180px;margin:0 auto;padding:0 24px 80px;}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:24px 26px;margin:20px 0;}
+h2{margin:0 0 14px;font-size:20px;color:var(--purple);border-bottom:2px solid var(--line2);
+  padding-bottom:6px;}
+h3{margin:22px 0 8px;font-size:16px;color:var(--info);}
+h4{margin:14px 0 6px;font-size:14px;color:var(--sub);}
+p{margin:6px 0 10px}
+ul,ol{margin:4px 0 10px;padding-left:22px}
+li{margin:3px 0}
+table{border-collapse:collapse;width:100%;margin:10px 0 16px;font-size:14px;}
+th,td{border:1px solid var(--line);padding:8px 10px;vertical-align:top;text-align:left;}
+th{background:var(--card2);font-weight:700;}
+.kessron-list{list-style:none;padding:0;margin:0;}
+.kessron-list > li{border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:10px 0;background:var(--card2);}
+.kessron-list .num{display:inline-block;background:var(--info);color:#fff;border-radius:50%;
+  width:24px;height:24px;text-align:center;font-weight:700;font-size:13px;line-height:24px;
+  margin-right:8px;vertical-align:middle;}
+.k-row{display:grid;grid-template-columns:110px 1fr;gap:6px 14px;margin-top:8px;}
+.k-row .k-k{color:var(--sub);font-size:13px;}
+.k-row .k-v{font-size:14px;}
+.konkyo{background:var(--card2);border-left:3px solid var(--info);padding:10px 14px;margin:8px 0;font-size:14px;}
+.konkyo code{background:var(--code);padding:1px 5px;border-radius:3px;font-size:12.5px;}
+.butsukari{background:#fff8e1;border-left:3px solid var(--amber);padding:10px 14px;margin:8px 0;font-size:13.5px;}
+.butsukari strong{color:var(--amber);}
+.toranai{background:var(--card2);padding:10px 14px;border-radius:6px;margin:6px 0;font-size:14px;}
+.toranai strong{color:var(--bad);}
+figure{margin:12px 0;padding:0;}
+figure svg{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:8px;background:#ffffff;}
+figcaption{font-size:12.5px;color:var(--sub);margin-top:6px;}
+.src{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--info);word-break:break-all;}
+.ss{color:var(--purple);font-weight:700;}
+.mitate{color:var(--amber);font-weight:700;}
+hr{border:0;border-top:1px solid var(--line);margin:16px 0;}
+.summary{background:#f3f0ff;border:1px solid #d9d2ff;border-radius:8px;padding:14px 18px;margin:8px 0 18px;}
+.summary strong{color:var(--purple);}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Yahoo! Agent i から運転台・AI-Mits に採り入れる案</h1>
+  <div class="meta">作成 2026-10-10 ／ BA-strategist ／ 発注元：運転台改善の参謀
+    ／ 研究の出どころ：<span class="src">sansho_yahoo_agent_i_20261010/kenkyu.html</span>
+    （BA-researcher が Agent i 44 画面を観察して作成した研究ノート）</div>
+</header>
+
+<main>
+
+<section>
+  <h2>結論（採る 5 件・採らない 7 件）</h2>
+  <div class="summary">
+    <strong>採り入れる軸は 2 つ。</strong>
+    ① 絶対的ゴール「AI-Mits 登録の増加」に直結する部分（色の序列・無料で中身を見せきる・登録導線の位置）。
+    ② 運転台の 3 つの中コンセプト「事実を見る → 判断力をつける → 学ぶ」の下流にある部分
+    （変化のお知らせ・AI 誤りの断り・提供元の明示）。
+    <br><br>
+    <strong>採らない軸も 2 つ。</strong>
+    ① 運転台の思想「お客様が判断する／色は文字だけ／比喩を発明しない」とぶつかるもの（画面型の変更・日常語への改名）。
+    ② 配布・運営の決まり（別持ち場・無償配布方針）とぶつかるもの（LINE プッシュ・PR 広告）。
+  </div>
+
+  <h3>採る 5 件</h3>
+  <ol class="kessron-list">
+
+    <li>
+      <span class="num">1</span><b>AI-Mits 画面の「ログイン」ボタンを、その画面の中で唯一の濃色にする</b>
+      <div class="k-row">
+        <div class="k-k">どの画面のどこに</div>
+        <div class="k-v">運転台 AI-Mits 相談画面の、入力欄の下に出るログインの区画
+          （<span class="src">src/index.html:6251〜6263</span> の <code>.sb-login</code>）。
+          その中の <code>#sb-login-go</code>（「ログイン」ボタン・<span class="src">6258</span>）だけを濃色にする。</div>
+        <div class="k-k">何を</div>
+        <div class="k-v"><code>#sb-login-go</code> の背景を <code>var(--purple)</code> または <code>var(--info)</code>
+          にして、文字色を白にする。相談入力欄の送信ボタン・頭脳選びのボタン・やることを決めて終えるボタンは
+          これまでどおり白地＋細枠にして、画面の中でログインだけ色が立つ状態にする。</div>
+        <div class="k-k">なぜ</div>
+        <div class="k-v">絶対的ゴールは AI-Mits 登録の増加（司令塔規約の冒頭）。
+          登録は「相談を書き始めた瞬間」に発生する（<span class="src">6246〜6248</span> の 2026-09-05 Mits様の決定で
+          既に相談入力途中にログイン導線が出る作りになっている）。しかし色の序列が無く、登録ボタンが
+          他のボタンと同じ格に埋もれている。Agent i は 23 画面すべてで、画面の中で唯一の濃色が
+          入力欄右端の「ログイン」ボタン（紫グラデ）になっている。</div>
+      </div>
+    </li>
+
+    <li>
+      <span class="num">2</span><b>AI-Mits お試しページで、登録前に実際の相談例の全文を見せきる</b>
+      <div class="k-row">
+        <div class="k-k">どの画面のどこに</div>
+        <div class="k-v">AI-Mits お試しページ（UTAGE funnel <code>UgSfW8MCzHqv</code>・
+          <span class="src">_wip/v2_otameshi_20260828/page.html</span>）の、入力欄より上の部分。</div>
+        <div class="k-k">何を</div>
+        <div class="k-v">お客様がよく聞かれる相談 3 問について、Mits様の AI-Mits が返した実際の回答の
+          全文を、ログイン無しで読める形で並べる。相談例を見終わったあとの位置に入力欄を置く。
+          入力欄に文字を書いた瞬間に、画面内でログインの区画が開く（運転台と同じ型）。</div>
+        <div class="k-k">なぜ</div>
+        <div class="k-v">司令塔 2026-09-21 の実測で、落ちている段は「開いた 109 →
+          押した 3 →メアドを送った 3」（<span class="src">知見_メールから来た人が登録しない_20260921.html</span>）。
+          司令塔 CLAUDE.md 決まり 13「来ている・見ているのに登録しないのは、ページの『登録の魅力』が
+          弱いと読む」。Agent i は 23 画面すべて、入力しない限りログインが要らず、画面の中身は
+          完全に見せきっている。試用の時間制限（14 日）とは別の、「中身を見せる」側のてこ入れ。</div>
+      </div>
+    </li>
+
+    <li>
+      <span class="num">3</span><b>運転台の「変化のお知らせ」を 4 要素（条件／タイミング／通知経路／まとめ場所）で組み直す</b>
+      <div class="k-row">
+        <div class="k-k">どの画面のどこに</div>
+        <div class="k-v">運転台の各計器画面（売上・経費・残高・LP・配信 等）の下部、ならびに
+          左バーの「お知らせ」画面。現在、お知らせの実装は「新しい版のお知らせ」1 本のみ
+          （<span class="src">src/index.html:3583, 3537, 282</span>）。条件で知らせる表示は2つだけある ── ①月次の画面の「今月の入金予定（サブスク）のアラート」（<span class="src">src/index.html:2540・6738</span>・回収する額に入金が足りないと画面の中に出る）②期限を過ぎた未報告の宿題を数えて赤い印で案内する（<span class="src">src-tauri/src/sanbo.rs:675〜680</span>）。どちらもお客様が条件・頻度を選んで登録する形ではなく、Mac の通知も使っていない（同じ所のコメント「tauri-plugin-notification は plugin 追加が必要」）。</div>
+        <div class="k-k">何を</div>
+        <div class="k-v">各計器画面に「この数字の変化を見張る」ボタンを 1 つ置き、押すと 4 要素を書く小さな画面が開く。
+          ① 条件（何がどれだけ動いたら＝「粗利が先月比で 5%以上動いたら」等）
+          ② タイミング（毎日・毎週・毎月のどれで見るか）
+          ③ 通知経路（運転台の中の「お知らせ」画面・macOS の通知のどちらか）
+          ④ まとめ場所（左バーの「お知らせ」画面に全件が溜まる）。</div>
+        <div class="k-k">なぜ</div>
+        <div class="k-v">運転台の基本コンセプト（<span class="src">src/index.html:6214</span>）
+          「この道具は、状態の変化で経営を良くします。いまの数字が良いか悪いかではなく、
+          どちらへ動いているかを見ます」。見張りを人が毎回開いて確かめるのではなく、
+          AI 側が条件に合ったときだけ知らせる形にすることで、計器を「見に来る理由」が内側にできる。
+          Agent i のタスク機能はこの 4 要素を型で持っている。</div>
+      </div>
+    </li>
+
+    <li>
+      <span class="num">4</span><b>AI-Mits 相談画面のフッタに「AI-Mits は AI。回答を誤ることがあります（注意点）」を常掲する</b>
+      <div class="k-row">
+        <div class="k-k">どの画面のどこに</div>
+        <div class="k-v">運転台 AI-Mits 相談画面の最下部。各計器画面の、AI-Mits サジェスト部分の下。</div>
+        <div class="k-k">何を</div>
+        <div class="k-v">1 行の薄い文言。「(注意点)」は青色リンクで、押すと利用規約の
+          <span class="src">src/index.html:17306, 17431</span> の該当節
+          （AI 基盤・Dify・Anthropic・外部クラウド言及部分）が開く。</div>
+        <div class="k-k">なぜ</div>
+        <div class="k-v">運転台 CLAUDE.md の基本コンセプト「サジェストは入れる」。しかしサジェストを
+          入れた瞬間に、相手にそれを「正解」と誤認される余地が出る。Agent i は 23 画面全てで、
+          領域が占い・ペット・エンタメであっても、フッタの 1 行で AI であることを断っている。
+          利用規約への明記（17306・17431）は既に行われているため、画面側は 1 行とリンクを足すだけ。</div>
+      </div>
+    </li>
+
+    <li>
+      <span class="num">5</span><b>AI の提供元（Dify + Anthropic）を、相談画面から 1 クリックで読める位置に出す</b>
+      <div class="k-row">
+        <div class="k-k">どの画面のどこに</div>
+        <div class="k-v">採る 4 の「(注意点)」リンクの飛び先。利用規約の中にすでに該当文はある
+          （<span class="src">src/index.html:17306, 17431</span>）が、相談画面から 1 クリックで
+          読める位置に、提供元だけを抜き出した短い節を立てる。</div>
+        <div class="k-k">何を</div>
+        <div class="k-v">「AI-Mits の回答は、Dify（LLM 基盤）と Anthropic（モデル提供元）を使って
+          生成しています」の一文。送られる情報の範囲（相談本文は中継を経由して外部に出る・
+          学び先など手元のデータは出さない）を 2〜3 行で添える。音声は送らない等、
+          入力の種類ごとの扱いが違う場合はそこも明示（Agent i の作法に合わせる）。</div>
+        <div class="k-k">なぜ</div>
+        <div class="k-v">Agent i は Google（Vertex AI）と OpenAI の両方を使っていることをガイドライン本体に
+          明記している（提供元依存を隠さない）。運転台は FAST（Dify app 14d6df13）／AI-Mits（1a8d8b9c）／
+          DEEP（43d47f25）の 3 エンジンを使っているが、どのエンジンが何に相当するかは今は相談画面に出ていない。
+          事故が起きたときの説明責任と、お客様の信頼のどちらにも効く。</div>
+      </div>
+    </li>
+
+  </ol>
+</section>
+
+<section>
+  <h2>図（Agent i の作法と、運転台・AI-Mits の当て先の対応）</h2>
+  <figure>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1140 540" aria-labelledby="fig-title">
+      <title id="fig-title">Agent i の作法と、運転台・AI-Mits の当て先の対応</title>
+      <!-- 左の列：Agent i -->
+      <rect x="20" y="40" width="340" height="470" fill="#f7f8fc" stroke="#ccd2e4" rx="8"/>
+      <text x="190" y="68" text-anchor="middle" font-size="15" font-weight="700" fill="#0a0d6b">Agent i（Yahoo! 2026-10-10 実測）</text>
+
+      <rect x="40" y="90" width="300" height="60" fill="#ffffff" stroke="#e3e6f0" rx="6"/>
+      <text x="52" y="112" font-size="13" font-weight="700" fill="#11159f">色の序列</text>
+      <text x="52" y="132" font-size="12" fill="#212529">入力欄右端のログインボタンだけ</text>
+      <text x="52" y="146" font-size="12" fill="#212529">濃色（紫グラデ）。他は白＋細枠。</text>
+
+      <rect x="40" y="160" width="300" height="60" fill="#ffffff" stroke="#e3e6f0" rx="6"/>
+      <text x="52" y="182" font-size="13" font-weight="700" fill="#11159f">無料とログインの線</text>
+      <text x="52" y="202" font-size="12" fill="#212529">見るだけは全画面でログイン不要。</text>
+      <text x="52" y="216" font-size="12" fill="#212529">入力した瞬間に初めてログイン。</text>
+
+      <rect x="40" y="230" width="300" height="60" fill="#ffffff" stroke="#e3e6f0" rx="6"/>
+      <text x="52" y="252" font-size="13" font-weight="700" fill="#11159f">タスク 4 要素</text>
+      <text x="52" y="272" font-size="12" fill="#212529">条件／タイミング／通知経路／</text>
+      <text x="52" y="286" font-size="12" fill="#212529">まとめ場所。</text>
+
+      <rect x="40" y="300" width="300" height="60" fill="#ffffff" stroke="#e3e6f0" rx="6"/>
+      <text x="52" y="322" font-size="13" font-weight="700" fill="#11159f">AI 誤りの断り（3段構え）</text>
+      <text x="52" y="342" font-size="12" fill="#212529">全画面フッタ常掲＋領域別警告＋</text>
+      <text x="52" y="356" font-size="12" fill="#212529">ガイドライン本体の 3 段構え。</text>
+
+      <rect x="40" y="370" width="300" height="60" fill="#ffffff" stroke="#e3e6f0" rx="6"/>
+      <text x="52" y="392" font-size="13" font-weight="700" fill="#11159f">提供元の明示</text>
+      <text x="52" y="412" font-size="12" fill="#212529">Vertex AI と OpenAI の両方を</text>
+      <text x="52" y="426" font-size="12" fill="#212529">ガイドライン本体に書く。</text>
+
+      <!-- 矢印 -->
+      <defs>
+        <marker id="ar" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#5a3dff"/>
+        </marker>
+      </defs>
+      <line x1="340" y1="120" x2="440" y2="120" stroke="#5a3dff" stroke-width="2" marker-end="url(#ar)"/>
+      <line x1="340" y1="190" x2="440" y2="190" stroke="#5a3dff" stroke-width="2" marker-end="url(#ar)"/>
+      <line x1="340" y1="260" x2="440" y2="260" stroke="#5a3dff" stroke-width="2" marker-end="url(#ar)"/>
+      <line x1="340" y1="330" x2="440" y2="330" stroke="#5a3dff" stroke-width="2" marker-end="url(#ar)"/>
+      <line x1="340" y1="400" x2="440" y2="400" stroke="#5a3dff" stroke-width="2" marker-end="url(#ar)"/>
+
+      <!-- 中央の列：採る 5 件 -->
+      <rect x="440" y="40" width="380" height="470" fill="#f3f0ff" stroke="#d9d2ff" rx="8"/>
+      <text x="630" y="68" text-anchor="middle" font-size="15" font-weight="700" fill="#0a0d6b">採る 5 件</text>
+
+      <rect x="460" y="90" width="340" height="60" fill="#ffffff" stroke="#e3e6f0" rx="6"/>
+      <text x="472" y="112" font-size="13" font-weight="700" fill="#0a0d6b">① ログインボタンを唯一の濃色に</text>
+      <text x="472" y="132" font-size="11.5" fill="#212529">AI-Mits 相談画面 #sb-login-go を</text>
+      <text x="472" y="146" font-size="11.5" fill="#212529">var(--purple) で塗る。</text>
+
+      <rect x="460" y="160" width="340" height="60" fill="#ffffff" stroke="#e3e6f0" rx="6"/>
+      <text x="472" y="182" font-size="13" font-weight="700" fill="#0a0d6b">② 相談例 3 問を登録前に見せきる</text>
+      <text x="472" y="202" font-size="11.5" fill="#212529">お試しページ UgSfW8MCzHqv の</text>
+      <text x="472" y="216" font-size="11.5" fill="#212529">入力欄より上に全文で並べる。</text>
+
+      <rect x="460" y="230" width="340" height="60" fill="#ffffff" stroke="#e3e6f0" rx="6"/>
+      <text x="472" y="252" font-size="13" font-weight="700" fill="#0a0d6b">③ 変化のお知らせを 4 要素化</text>
+      <text x="472" y="272" font-size="11.5" fill="#212529">各計器に「見張る」ボタンを置き、</text>
+      <text x="472" y="286" font-size="11.5" fill="#212529">左バー「お知らせ」に溜める。</text>
+
+      <rect x="460" y="300" width="340" height="60" fill="#ffffff" stroke="#e3e6f0" rx="6"/>
+      <text x="472" y="322" font-size="13" font-weight="700" fill="#0a0d6b">④ 相談画面に 1 行の AI 誤り断り</text>
+      <text x="472" y="342" font-size="11.5" fill="#212529">「(注意点)」リンクを利用規約の</text>
+      <text x="472" y="356" font-size="11.5" fill="#212529">AI 基盤節に飛ばす。</text>
+
+      <rect x="460" y="370" width="340" height="60" fill="#ffffff" stroke="#e3e6f0" rx="6"/>
+      <text x="472" y="392" font-size="13" font-weight="700" fill="#0a0d6b">⑤ Dify + Anthropic を 1 クリックで</text>
+      <text x="472" y="412" font-size="11.5" fill="#212529">規約の該当節に、提供元だけ抜いた</text>
+      <text x="472" y="426" font-size="11.5" fill="#212529">短い節を立てる。</text>
+
+      <!-- 右の列：目的 -->
+      <rect x="840" y="40" width="280" height="470" fill="#fff8e1" stroke="#e9dcae" rx="8"/>
+      <text x="980" y="68" text-anchor="middle" font-size="15" font-weight="700" fill="#7a5e1f">効き先</text>
+
+      <rect x="860" y="100" width="240" height="140" fill="#ffffff" stroke="#e3e6f0" rx="6"/>
+      <text x="980" y="124" text-anchor="middle" font-size="13" font-weight="700" fill="#1f6b45">AI-Mits 登録の増加</text>
+      <text x="980" y="146" text-anchor="middle" font-size="11" fill="#212529">（絶対的ゴール）</text>
+      <text x="872" y="172" font-size="11.5" fill="#212529">採る ① 色の序列で押しやすく</text>
+      <text x="872" y="190" font-size="11.5" fill="#212529">採る ② 中身を見せきってから登録</text>
+      <text x="872" y="208" font-size="11.5" fill="#212529">司令塔規約 決まり 13 と直結</text>
+
+      <rect x="860" y="250" width="240" height="110" fill="#ffffff" stroke="#e3e6f0" rx="6"/>
+      <text x="980" y="274" text-anchor="middle" font-size="13" font-weight="700" fill="#1f6b45">使い続ける理由</text>
+      <text x="872" y="300" font-size="11.5" fill="#212529">採る ③ 変化のお知らせが</text>
+      <text x="872" y="318" font-size="11.5" fill="#212529">手元に溜まる構造</text>
+      <text x="872" y="340" font-size="11.5" fill="#212529">運転台 index.html:6214 と直結</text>
+
+      <rect x="860" y="370" width="240" height="130" fill="#ffffff" stroke="#e3e6f0" rx="6"/>
+      <text x="980" y="394" text-anchor="middle" font-size="13" font-weight="700" fill="#1f6b45">信頼と説明責任</text>
+      <text x="872" y="420" font-size="11.5" fill="#212529">採る ④ AI 誤りの断り</text>
+      <text x="872" y="438" font-size="11.5" fill="#212529">採る ⑤ 提供元の明示</text>
+      <text x="872" y="462" font-size="11.5" fill="#212529">運転台 index.html:17306, 17431</text>
+      <text x="872" y="480" font-size="11.5" fill="#212529">の実装を画面側へつなぐ</text>
+
+      <!-- 矢印 中央→右 -->
+      <line x1="820" y1="120" x2="860" y2="140" stroke="#7a5e1f" stroke-width="1.5" marker-end="url(#ar)"/>
+      <line x1="820" y1="190" x2="860" y2="170" stroke="#7a5e1f" stroke-width="1.5" marker-end="url(#ar)"/>
+      <line x1="820" y1="260" x2="860" y2="300" stroke="#7a5e1f" stroke-width="1.5" marker-end="url(#ar)"/>
+      <line x1="820" y1="330" x2="860" y2="315" stroke="#7a5e1f" stroke-width="1.5" marker-end="url(#ar)"/>
+      <line x1="820" y1="400" x2="860" y2="420" stroke="#7a5e1f" stroke-width="1.5" marker-end="url(#ar)"/>
+      <line x1="820" y1="470" x2="860" y2="440" stroke="#7a5e1f" stroke-width="1.5" marker-end="url(#ar)"/>
+    </svg>
+    <figcaption>左：Agent i の 5 つの作法。中央：運転台・AI-Mits での当て先。右：どのゴールにどう効くか。</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>根拠（採る 5 件・1 件 1 節）</h2>
+
+  <h3>① ログインボタンを唯一の濃色にする</h3>
+  <div class="konkyo">
+    Agent i のスクショ。<br>
+    <span class="ss">スクショ 03</span>（<code>03_agent_i_toppage_desktop.png</code>）── 画面上部の見出し・タスク告知・
+    タスクタイル 3 枚・エージェント横一列・推薦カード 8 枚、全部が白地＋細枠＋黒文字。
+    画面の中で唯一の濃色は、中央の入力欄右端の「ログイン」ボタン（紫グラデ）。<br>
+    <span class="ss">スクショ 27</span>（<code>27_agent_kuruma_erabi_wizard_desktop.png</code>）── プリセット質問を押した瞬間に
+    中央にログインの吹き出しが開く。吹き出し内のログインボタンも同じ紫グラデで、他の要素は白＋細枠。
+  </div>
+  <div class="konkyo">
+    運転台側の当て先。<br>
+    <code>src/index.html:6251〜6263</code>（<code>.sb-login</code> の区画）── 2026-09-05 Mits様
+    「壁打ちを始めようとしたらアカウント登録があったほうが良い」を受けて実装された、
+    相談入力途中にログイン導線を出す仕組み。<br>
+    <code>src/index.html:6258</code>（<code>&lt;button id="sb-login-go"&gt;ログイン&lt;/button&gt;</code>）── 色の指定無し。
+    周りのボタン（送る・やることを決めて終える・頭脳選び）と同じ格で並ぶ。
+  </div>
+  <div class="butsukari">
+    <strong>運転台の決まりとぶつかる所：</strong>運転台 CLAUDE.md「色は文字だけ・塗らない・囲まない」
+    （本文「よくある経営ダッシュボード／運転台」の表の近辺）。<br>
+    ただし同 CLAUDE.md には、既に例外が 1 つある ── 「左バーの『AI-Mits』だけは、畳まない・目立たせる」
+    （<code>src/index.html:1005〜1019</code>）。実装では <code>--info</code> の青・箱で囲む・太字の 3 つが同時に効いている。
+    <br><br>
+    採る ① は、この同じ例外原則の延長
+    （絶対的ゴールに直結する要素は色で目立たせてよい）。
+  </div>
+
+  <hr>
+
+  <h3>② お試しページで、登録前に実際の相談例の全文を見せきる</h3>
+  <div class="konkyo">
+    Agent i のスクショ。<br>
+    <span class="ss">スクショ 03〜06</span>（Agent i トップページ・エージェント一覧 23 本）── ログイン無しで全画面が
+    最後まで読める。<br>
+    <span class="ss">スクショ 07〜26</span>（各エージェント個別画面 20 枚）── どれもログイン無しで中身まで見られる。
+    チップ型なら全チップが見え、ダッシュボード型なら実データが載った状態で見える。<br>
+    <span class="ss">スクショ 27</span>（クルマ選び）── プリセット質問を押した時に初めて、画面中央に
+    ログインの吹き出しが開く。それまでは入力欄も見えているが押していない状態。
+  </div>
+  <div class="konkyo">
+    運転台・AI-Mits 側の実測と資料。<br>
+    <code>知見_メールから来た人が登録しない_20260921.html</code>（司令塔）── 2026-09-15〜09-21 の
+    実測で、落ちている段は「開いた 109 →押した 3 →メアドを送った 3」。
+    「開いた→押した」の段で 97% が落ちている。<br>
+    司令塔 CLAUDE.md 決まり 13 ── 「来ている・見ているのに登録しないのは、ページの『登録の魅力』が
+    弱いと読む」（2026-09-22 Mits様確定）。<br>
+    AI-Mits お試しページ <code>_wip/v2_otameshi_20260828/page.html</code> ── 2026-09-06 時点で
+    14 日の試用はあるが、「中身の全文を見せる」部分は無い。
+  </div>
+
+  <hr>
+
+  <h3>③ 変化のお知らせを 4 要素で組み直す</h3>
+  <div class="konkyo">
+    Agent i のスクショ。<br>
+    <span class="ss">スクショ 31</span>（<code>31_task_towa_tooltip_desktop.png</code>）── 「タスクを登録すると、
+    Agent i があなたの代わりに確認し、条件に合ったタイミングでお知らせします」のツールチップ文言。<br>
+    <span class="ss">スクショ 33</span>（<code>33_task_kinou_lp_desktop.png</code>）── タスク機能 LP ヒーロー。
+    「知りたい情報をお知らせ・通知する タスク機能」。<br>
+    <span class="ss">スクショ 34</span>（<code>34_task_benefit_desktop.png</code>）── BENEFIT の 4 項目に、
+    採る案の 4 要素がそのまま書かれている ── 「気になるテーマを登録するだけ」（① 条件）／
+    「指定したタイミングで実行（毎日、毎週、毎月）」（② タイミング）／
+    「アプリで通知」（③ 通知経路）／「マイページでまとめて確認」（④ まとめ場所）。<br>
+    <span class="ss">スクショ 35</span>（<code>35_task_shurui_keyword_desktop.png</code>）── タスク条件の
+    具体例「実行タイミング 毎週月曜日／プッシュ通知 ON」。
+  </div>
+  <div class="konkyo">
+    運転台側の実装状況。<br>
+    <code>src/index.html:6214</code> ── 「この道具は、状態の変化で経営を良くします。
+    いまの数字が良いか悪いかではなく、どちらへ動いているかを見ます」の基本方針。<br>
+    <code>src/index.html:282, 3537, 3540, 3583</code> ── 現在のお知らせは「新しい版のお知らせ」の 1 本だけ。
+    条件で知らせる表示は2つだけある ── ①月次の画面の「今月の入金予定（サブスク）のアラート」（<span class="src">src/index.html:2540・6738</span>・回収する額に入金が足りないと画面の中に出る）②期限を過ぎた未報告の宿題を数えて赤い印で案内する（<span class="src">src-tauri/src/sanbo.rs:675〜680</span>）。どちらもお客様が条件・頻度を選んで登録する形ではなく、Mac の通知も使っていない（同じ所のコメント「tauri-plugin-notification は plugin 追加が必要」）。
+  </div>
+  <div class="butsukari">
+    <strong>運転台の決まりとぶつかる所：</strong>無し。<br>
+    採る ③ は「事実の変化を見せる」側であり、良し悪しを言う側ではないので、
+    運転台 CLAUDE.md の計器思想（判定を代わりにしない）と対立しない。<br>
+    通知経路は 2 つに絞る ── (a) 運転台アプリ内の「お知らせ」画面、(b) macOS の通知。
+    LINE プッシュは別持ち場（配信経路の決定は運転台改善に P2P・
+    <code>feedback_haishin_keiro_no_kettei_wa_untendai_marketing_ni_p2p.md</code>）なので
+    含めない。
+  </div>
+
+  <hr>
+
+  <h3>④ 相談画面のフッタに AI 誤りの断りを常掲する</h3>
+  <div class="konkyo">
+    Agent i のスクショ。<br>
+    <span class="ss">スクショ 03, 04, 05, 06</span>（トップ・一覧 上中下）── 画面最下部に
+    「Agent iはAIです。回答を誤る場合があります(注意点)」が常に出ている。<br>
+    <span class="ss">スクショ 11</span>（<code>11_agent_tenki_coord_desktop.png</code>）── ウィジェット型の天気コーデ
+    だけは「回答は不正確な場合があります。AI利用の注意点」と言葉を変えてある
+    （服装提案は「誤り」ではなく「不正確」）。領域の性格でフッタ文言を変える作法。<br>
+    <span class="ss">スクショ 25</span>（<code>25_agent_necchusho_safety_desktop.png</code>）── 熱中症エージェントは
+    画面のチップより上に、医療情報を入れない宣言＋受診相談先案内の警告ブロックが置かれている。
+    フッタとは別に、画面内の警告ブロックが領域ごとに追加される 2 段構え。
+  </div>
+  <div class="konkyo">
+    運転台側の既存実装。<br>
+    <code>src/index.html:17306</code> ── 利用規約「(1) 利用者がAI-Mitsに相談を送信したとき ── 相談の本文が、
+    当方の中継サーバを経て外部のAI基盤（Dify、Anthropic等）で処理されます」。<br>
+    <code>src/index.html:17431</code> ── 「AI-Mitsの応答の生成にあたり、外部のAI基盤・クラウドサービス
+    （Dify、Anthropic等）を利用します。相談の本文はこれらを経由して処理されます」。<br>
+    文章としては既にあるが、相談画面のフッタからは直接飛べない。
+  </div>
+
+  <hr>
+
+  <h3>⑤ Dify + Anthropic を 1 クリックで</h3>
+  <div class="konkyo">
+    Agent i のスクショ。<br>
+    <span class="ss">スクショ 28</span>（<code>28_guideline_seisei_ai_desktop.png</code>）── 生成AIガイドライン本体。
+    「本機能は、LINEヤフー株式会社が、Google LLC（米国カリフォルニア州）、Google Asia Pacific Pte. Ltd.
+    （シンガポール）、Google Switzerland GmbH（スイス）、グーグル・クラウド・ジャパン合同会社の
+    Vertex AI、または OpenAI OpCo, LLC、OpenAI, LLC（米国カリフォルニア州）の生成AI を利用して提供しております」
+    の文言。提供元を社名・法人格・所在地まで明記している。<br>
+    同スクショの続き ── 「お客様が入力した音声データについては、Google および OpenAI への送信の対象外」。
+    入力の種類ごとに扱いが違うことまで書かれている。
+  </div>
+  <div class="konkyo">
+    運転台・AI-Mits 側の構成。<br>
+    <code>_wip/aimits_full_design_20260615.md</code> の第 1 節「中央エンジン構成」── FAST（Dify app
+    <code>14d6df13</code>）／AI-Mits（Dify app <code>1a8d8b9c</code>・Corpus2Skill）／
+    DEEP（Dify app <code>43d47f25</code>・西田メソッド）の 3 エンジン。<br>
+    <code>src/index.html:14571</code>「ここまでの話を引き継げないのは Dify の作りのため（アプリが違うと会話番号が通らない）」
+    ── 既に実装側は 3 エンジン前提になっているが、お客様の目に入る画面には「Dify」「Anthropic」の名前は
+    規約の中にしか出ていない。
+  </div>
+</section>
+
+<section>
+  <h2>採らない 7 件（それぞれ理由を 1 行で）</h2>
+
+  <div class="toranai"><strong>採らない 1：</strong>エージェント名を 4〜7 文字の日常語名詞に揃える
+    （画像生成・おでかけ・しごと相談 の作法）
+    ── 運転台の方向性「BMI 化（@・余裕度・赤道日・CPF・KAZEOKE が普通名詞として広まる）」は
+    固有語の普及が根幹（<span class="src">project_untendai_daihoshin.md</span>）。日常語に戻すと BMI 化の道が
+    断たれるため採らない。</div>
+
+  <div class="toranai"><strong>採らない 2：</strong>画面の型を領域ごとに変える（チップ型 14 本・写真タイル型 2 本・
+    ダッシュボード型 3 本・ウィジェット型 1 本の使い分け）
+    ── 運転台は計器盤＝ダッシュボード型が本質（運転台 CLAUDE.md「車も飛行機も計器は事実を表示・判断は人間」）。
+    領域ごとに型が変わると、計器が助言器に寄るため採らない。</div>
+
+  <div class="toranai"><strong>採らない 3：</strong>23 本のエージェントを 1 画面に横一列で並べる
+    ── 運転台は左バーで畳む構造（<span class="src">src/index.html:1037</span> 戦略・業務の並び）。
+    横一列は、見た人が考える前に全選択肢を押し付ける形で、運転台 CLAUDE.md「見た人が考える」側に合わないため採らない。</div>
+
+  <div class="toranai"><strong>採らない 4：</strong>トップページ 1 枚で全部を見せる（タスク告知・タスク 3 枚・
+    入力欄・エージェント横一列・推薦カード 8 枚）── 運転台は左バーで画面を切り替えて深さを保つ構造。
+    1 枚に詰めると個別計器の深度が落ちるため採らない。</div>
+
+  <div class="toranai"><strong>採らない 5：</strong>通知経路に別アプリ（LINE プッシュ・Yahoo! JAPAN アプリ）を使う
+    ── 考え：LINE や別アプリへのプッシュは、運転台アプリの外へ知らせを出すことになる。
+    まずは運転台の中で完結する形に絞るため採らない。採る ③ の通知経路は、運転台アプリ内＋macOS 通知の 2 つに絞る。</div>
+
+  <div class="toranai"><strong>採らない 6：</strong>即日融資ランキング型の PR 広告・広告ポリシー常掲
+    ── 運転台の方向性は「無償配布・BMI 化・コンサルで商売」（Red Hat 型・<span class="src">project_untendai_daihoshin.md</span>）。
+    広告収入モデルは経営方針に無いため採らない。</div>
+
+  <div class="toranai"><strong>採らない 7：</strong>URL 設計 3 分割（<code>/chat/t/</code> 素のチャット 19 本・
+    <code>/chat/a/</code> ウィジェット 1 本・<code>/chat/s/n?q=…</code> プリセット質問ショートカット 3 本）
+    ── 運転台は Tauri デスクトップアプリで、ブラウザ URL の階層概念と直接マッチしない。
+    お試しページ（web）と本体アプリで既に 2 分割されているため、採らない。</div>
+</section>
+
+<section>
+  <h2>Mits様の発言と、BA-strategist の考えの区別</h2>
+  <table>
+    <tr><th>種別</th><th>内容</th><th>出どころ</th></tr>
+    <tr>
+      <td>Mits様の発言</td>
+      <td>Agent i のスクショを送って導線として参考にしたい。Yahoo! は孫さん系列で AI のトップランナー、意味がある</td>
+      <td>2026-10-10 17:4x FHL 2026 Notes</td>
+    </tr>
+    <tr>
+      <td>Mits様の発言</td>
+      <td>絶対的ゴールは AI-Mits 登録の増加。経過を状態の変化で計測しながら改善</td>
+      <td>2026-09-14 司令塔規約 冒頭</td>
+    </tr>
+    <tr>
+      <td>Mits様の発言</td>
+      <td>来ている・見ているのに登録しないのは、ページの「登録の魅力」が弱いと読む</td>
+      <td>2026-09-22 司令塔 CLAUDE.md 決まり 13</td>
+    </tr>
+    <tr>
+      <td>Mits様の発言</td>
+      <td>左バーの一番上の AI-Mits は畳まずに目立たせる（箱・青文字・太字）</td>
+      <td>2026-09-25 index.html:1005〜1019</td>
+    </tr>
+    <tr>
+      <td>Mits様の発言</td>
+      <td>この道具は、状態の変化で経営を良くします</td>
+      <td>index.html:6214</td>
+    </tr>
+    <tr>
+      <td>Mits様の発言</td>
+      <td>壁打ちを始めようとしたらアカウント登録があったほうが良い</td>
+      <td>2026-09-05 index.html:6246〜6248</td>
+    </tr>
+    <tr>
+      <td>BA-strategist の考え</td>
+      <td>採る ① は、左バー AI-Mits の例外原則（絶対ゴール直結要素は色で目立たせてよい）の延長として
+        整合する。採用判断は Mits様に委ねる</td>
+      <td>本提案</td>
+    </tr>
+    <tr>
+      <td>BA-strategist の考え</td>
+      <td>採る ② の「相談例 3 問を全文で見せる」の 3 問の中身は、Mits様が選んで決める部分
+        （何を見せるかは経営判断）</td>
+      <td>本提案</td>
+    </tr>
+    <tr>
+      <td><span class="mitate">見立て</span></td>
+      <td>採る ③ の変化のお知らせ 4 要素化で、お客様が運転台に戻ってくる理由が内側に生まれる。
+        ただし効果の実測は行っていない（Agent i のタスク機能自体の利用者数も公開値を取れていない）</td>
+      <td>本提案</td>
+    </tr>
+    <tr>
+      <td><span class="mitate">見立て</span></td>
+      <td>採る ④⑤ の AI 誤りの断りと提供元明示は、登録前の信頼獲得にも効くが、効き目の大きさは
+        採る ①② より小さいと思われる</td>
+      <td>本提案</td>
+    </tr>
+  </table>
+</section>
+
+<section>
+  <h2>最後に（線引き）</h2>
+  <ul>
+    <li>本提案は<strong>採る・採らないの考えまで</strong>。発注書・段取り・やる順番は書いていない
+      （Mits様が「やる」と決めてから）。</li>
+    <li>採る ①〜⑤ の中で、お客様に届く本番・お金が動く・外に出る・人に届くに該当するものは全て
+      Mits様の合図まで案・下書き・モックで止める。</li>
+    <li>運転台のコードには触っていない（index.html の行番号は参照のみ）。</li>
+    <li>比喩での言い換えを避けた（home CLAUDE.md「物に触れる比喩で言い換えない」に沿っている）。
+      型の呼び名の記号（形・型の後にアルファベット）も使っていない。</li>
+    <li>Chrome は使わず、ファイルを読むだけで作った。</li>
+  </ul>
+</section>
+
+</main>
+</body>
+</html>
