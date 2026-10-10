@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Yahoo! Agent i 研究ノート（2026-10-10）</title>
+<style>
+  :root{
+    --bg:#fdfcf8;
+    --ink:#1a1a1a;
+    --sub:#5a5a5a;
+    --accent:#5a3dff;
+    --accent2:#ff5fa3;
+    --card:#ffffff;
+    --border:#e3dfd3;
+    --note:#fff8e1;
+    --mite:#f3f0ff;
+    --code:#f5f2e8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,"Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+    line-height:1.75;font-size:15px;}
+  header{padding:40px 24px 20px;max-width:1080px;margin:0 auto;}
+  header h1{margin:0 0 8px;font-size:28px;line-height:1.4;
+    background:linear-gradient(90deg,var(--accent),var(--accent2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;}
+  header .meta{color:var(--sub);font-size:14px;}
+  main{max-width:1080px;margin:0 auto;padding:0 24px 80px;}
+  section{background:var(--card);border:1px solid var(--border);border-radius:14px;
+    padding:28px 28px 24px;margin:24px 0;box-shadow:0 2px 6px rgba(0,0,0,0.03);}
+  h2{margin:0 0 12px;font-size:22px;border-bottom:3px solid var(--accent);
+    padding-bottom:6px;display:inline-block;}
+  h3{margin:28px 0 8px;font-size:17px;color:var(--accent);}
+  h4{margin:16px 0 6px;font-size:15px;color:var(--sub);}
+  p{margin:8px 0 12px}
+  ul,ol{margin:6px 0 14px;padding-left:22px}
+  li{margin:4px 0}
+  figure{margin:12px 0 20px;padding:14px;background:var(--code);
+    border:1px solid var(--border);border-radius:10px;}
+  figure img{max-width:100%;height:auto;border-radius:6px;display:block;
+    border:1px solid var(--border);}
+  figcaption{margin-top:8px;font-size:13px;color:var(--sub);line-height:1.6}
+  .url{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:#3a5bff;
+    word-break:break-all}
+  .caption-text{color:var(--ink);font-size:13px;margin-top:4px;
+    padding-top:6px;border-top:1px dashed var(--border)}
+  .caption-text b{color:#000}
+  .mite{background:var(--mite);border-left:3px solid var(--accent);
+    padding:10px 14px;border-radius:6px;margin:12px 0;font-size:14px}
+  .mite::before{content:"[見立て] ";color:var(--accent);font-weight:bold}
+  .fact{background:var(--note);border-left:3px solid #e8b000;
+    padding:10px 14px;border-radius:6px;margin:12px 0;font-size:14px}
+  .fact::before{content:"[実測] ";color:#a07000;font-weight:bold}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+  th,td{border:1px solid var(--border);padding:8px;text-align:left;vertical-align:top}
+  th{background:#f0ece0;font-weight:600}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+  nav.toc{background:#f8f5ea;padding:14px 20px;border-radius:10px;
+    border:1px solid var(--border);margin:12px 0 24px}
+  nav.toc ol{margin:4px 0;padding-left:22px;font-size:14px}
+  code{background:var(--code);padding:1px 6px;border-radius:4px;font-size:13px}
+  .tag{display:inline-block;background:var(--mite);color:var(--accent);
+    padding:2px 8px;border-radius:10px;font-size:12px;margin-right:4px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Yahoo! Agent i 研究ノート</h1>
+  <div class="meta">撮影 2026-10-10 17:50〜18:05 JST / 撮影 BA-researcher（Claude in Chrome 経由）/ 対象 search.yahoo.co.jp/chat（Agent i）/ 比較対象 経営の運転台（Mac アプリ）・AI-Mits</div>
+</header>
+<main>
+
+<section>
+  <h2>この研究の出どころ</h2>
+  <p>2026-10-10、Mits様が FHL 2026 Notes のセッションで、iPhone で撮られたスクショ（<code>sansho_yahoo_agent_i_20261010.png</code>）を送られ、「<b>Yahoo! が開発している。Yahoo! は孫さんの関係している会社。孫さんは圧倒的に AI について研究している。トップランナーで、かなり意味があると思う。</b>経営の運転台と AI-Mits の導線の参考として、Claude in Chrome でいろんな画面を巡回してスクショを撮って研究してほしい」と仰った。</p>
+  <p>この研究は、Agent i を模倣するためのものではない。<b>孫さん系列の会社が「AI を一般生活者に差し出すときの作法」を今どう設計しているか</b>を、画面に写っている文字どおりに取り、経営の運転台／AI-Mits を同じ目で見直すための素材にする。</p>
+  <nav class="toc">
+    <b>目次</b>
+    <ol>
+      <li>Agent i の全体像（画面数・導線・URL 設計）</li>
+      <li>観点1：初めての人が最初に見るものと、押すように作ってあるもの</li>
+      <li>観点2：無料とログインで何が違うか</li>
+      <li>観点3：エージェント（用途別の入口）の並べ方・名付け方</li>
+      <li>観点4：定期的に知らせる「タスク」の見せ方</li>
+      <li>観点5：AI の誤りの断り方（＆ 医療・金融での線引き）</li>
+      <li>経営の運転台・AI-Mits との違い</li>
+    </ol>
+  </nav>
+</section>
+
+<section>
+  <h2>1. Agent i の全体像（画面数・導線・URL 設計）</h2>
+
+  <h3>1-1 入り口は Yahoo! 検索トップの右上にある小さなアイコン</h3>
+  <p>PC で <span class="url">https://search.yahoo.co.jp/</span> を開くと、検索窓の右脇に Agent i の丸いカラーアイコンが置かれている。初めてのときは「NEW Agent i ×」というバッジ付きツールチップが出る。</p>
+  <figure>
+    <img src="01_yahoo_search_top_desktop.png" alt="Yahoo!検索トップ・Agent i バッジ付き">
+    <figcaption>
+      <div class="url">https://search.yahoo.co.jp/</div>
+      <div>撮影 2026-10-10 17:50</div>
+      <div class="caption-text">写っている文字：ヘルプ／アクティビティ／ログイン、ウェブ・AIモード・画像・動画・知恵袋・地図・リアルタイム・一覧、検索窓、<b>NEW Agent i</b>（丸ロゴの横のツールチップ）、ウェブ検索の急上昇ワード。</div>
+    </figcaption>
+  </figure>
+
+  <h3>1-2 Agent i トップページ ── 1枚で全部を見せる</h3>
+  <p>アイコンを押すと <span class="url">https://search.yahoo.co.jp/chat</span> に移る。この1枚に<b>「見出し／タスク告知／タスク3枚／入力欄＋ログイン／エージェント横一列／大型推薦カード（4〜8枚）」</b>を全部詰めている。別ページを探しに行かせない。</p>
+  <figure>
+    <img src="03_agent_i_toppage_desktop.png" alt="Agent i トップページ（初回）">
+    <figcaption>
+      <div class="url">https://search.yahoo.co.jp/chat?frtype=staichat&fr=sfp_search_staichat_pc</div>
+      <div>撮影 2026-10-10 17:51</div>
+      <div class="caption-text">写っている文字：<b>疑問や悩みをAIが解決します</b>／タスク機能が登場しました 〉条件とタイミングを登録するとAgent iがあなたの代わりに確認します。／こんなタスクが登録できます（<b>タスクとは ⓘ</b>）／情報収集「気になる有名人の最新情報をお知らせ 登録」／おでかけ「指定エリアのイベントを月曜にお知らせ 登録」／お買い物「狙っている商品が値下がりしたらお知らせ 登録」／<b>知りたい事を教えてください ログイン</b>／エージェント：画像生成・おでかけ・しごと相談・占い・人間関係・天気コーデ・もっと見る／推薦カード 8枚（ファイナンス・おでかけ・学び・ファッション・なんでも相談・話題・天気・エンタメ）／フッタ：<b>Agent iはAIです。回答を誤る場合があります(注意点)</b></div>
+    </figcaption>
+  </figure>
+
+  <h3>1-3 2回目以降は「最近使った」を上に出す</h3>
+  <p>一度でもエージェントを開くと、トップページの左下に「<b>最近使った</b>」が追加され、よく使うエージェントの選び直しが1タップで済むようになる。</p>
+  <figure>
+    <img src="30_agent_i_toppage_saikin_tsukatta_desktop.png" alt="最近使った">
+    <figcaption>
+      <div>撮影 2026-10-10 17:55（私が占い・クルマ選びを閲覧した後の表示）</div>
+      <div class="caption-text">写っている文字：最近使った（クルマ選び・占い）／エージェント（画像生成・おでかけ・しごと相談・人間関係・天気コーデ・もっと見る）／推薦カードが入れ替わっている（上野動物園にゴリラはいる？／秋の求人で狙い目の職種／秋に観たい映画の注目作／プロ野球CSの注目対決／留守番中の室温管理のポイント／今日の私を全力でほめちぎって！／最新コンビニグルメ一覧／明日の天気）</div>
+    </figcaption>
+  </figure>
+
+  <h3>1-4 URL 設計 ── 3種類ある</h3>
+  <p>エージェント一覧（<span class="url">/chat/tools</span>）から見ると、エージェントは URL の形で<b>3種類</b>に分かれている。</p>
+  <table>
+    <tr><th>型</th><th>URL パターン</th><th>性格</th><th>例</th></tr>
+    <tr><td><code>/chat/t/&lt;slug&gt;</code></td><td>23本中 19本</td><td>素のチャット画面＋その領域の例題チップ</td><td>fortune（占い）／job（しごと相談）／image_generator（画像生成）／counselor（人間関係）／pets（ペット）など</td></tr>
+    <tr><td><code>/chat/a/&lt;slug&gt;</code></td><td>23本中 1本</td><td>常時出力のウィジェット型（入力欄が主役ではない）</td><td>weather_outfit（天気コーデ）</td></tr>
+    <tr><td><code>/chat/s/n?q=…&amp;a=…</code></td><td>23本中 3本</td><td>プリセットされた質問を自動送信した後の、チャット進行途中の状態</td><td>a=autos（クルマ選び）／a=weather（天気）／a=cardloan（カードローン）</td></tr>
+  </table>
+  <figure>
+    <img src="04_agent_ichiran_ue_desktop.png" alt="エージェント一覧 上部">
+    <figcaption>
+      <div class="url">https://search.yahoo.co.jp/chat/tools</div>
+      <div>撮影 2026-10-10 17:53</div>
+      <div class="caption-text">写っている文字：<b>エージェント一覧</b>／お買い物（お買い物・クルマ選び）／おでかけ（おでかけ）／便利ツール（画像生成）／悩み相談（しごと相談・人間関係）／ニュース・情報（天気コーデ・天気・話題・熱中症）／エンタメ・趣味（占い・エンタメ）</div>
+    </figcaption>
+  </figure>
+  <figure>
+    <img src="05_agent_ichiran_naka_desktop.png" alt="エージェント一覧 中部">
+    <figcaption>
+      <div>撮影 2026-10-10 17:53</div>
+      <div class="caption-text">写っている文字：エンタメ・趣味（占い・エンタメ・趣味・習い事・ズバトクナビ）／美容・健康（美容・健康）／マネー・学び（学び・ファイナンス・NEW 英語ニュース・カードローン）／くらし（ペット・ファッション）</div>
+    </figcaption>
+  </figure>
+  <figure>
+    <img src="06_agent_ichiran_shita_desktop.png" alt="エージェント一覧 下部">
+    <figcaption>
+      <div>撮影 2026-10-10 17:53</div>
+      <div class="caption-text">写っている文字：くらし（ペット・ファッション・くらし）／スポーツ・アウトドア（スポーツ）／フッタ：ガイドライン - ご意見・ご要望 - ヘルプ</div>
+    </figcaption>
+  </figure>
+
+  <div class="fact">エージェントは全23本（お買い物2・おでかけ1・便利ツール1・悩み相談2・ニュース情報4・エンタメ趣味4・美容健康1・マネー学び4・くらし3・スポーツ1）。カテゴリは10個。<b>そのうち3本は実体がなく、プリセットされた質問を自動送信するだけのショートカット</b>（クルマ選び・天気・カードローン）。<b>画面の見た目は一本道（同じ Agent i のレイアウト）だが、裏の実装は3種類に分けている</b>のがポイント。</div>
+</section>
+
+<section>
+  <h2>観点1：初めての人が最初に見るものと、押すように作ってあるもの</h2>
+
+  <h3>最初の視線の順番</h3>
+  <ol>
+    <li><b>見出し</b>「疑問や悩みをAIが解決します」（左にロゴ・ロボット顔）</li>
+    <li><b>タスク機能が登場しました</b>（横長バナー・右端に閉じる×）</li>
+    <li><b>こんなタスクが登録できます</b>（3枚の「登録」ボタン付きタイル）</li>
+    <li><b>知りたい事を教えてください</b>（入力欄・右端は <b>ログイン</b> ボタン＝紫色のグラデーション、画面全体でここだけが派手な色）</li>
+    <li><b>エージェント</b>（丸アイコンの横一列、7個目に「もっと見る」）</li>
+    <li>推薦カード 8枚（カテゴリ名＋具体の疑問文＋3D 絵文字キャラ）</li>
+  </ol>
+
+  <h3>押すように作ってあるもの</h3>
+  <p>画面の中で<b>唯一「色が強く塗ってある場所」</b>は、入力欄の右端にある「ログイン」ボタン（紫色のグラデーション）。それ以外は白地＋細枠＋黒文字で統一されている。初めて来た人は、入力しようとして自然に「ログイン」が目に入る。「タスク登録」ボタンも紫枠だが中は白抜きで、色の強さに序列をつけている。</p>
+
+  <h3>「推薦カード」は時間とともに入れ替わる</h3>
+  <p>初回とちょっと使った後で推薦カードの中身が変わる（1-2 と 1-3 の違い）。<b>Mits様が撮られた iPhone のスクショにあった「宿探し／ヤフコメまとめ／推し活／レシピ」も、カテゴリの中には無く、トップページの推薦枠に出てくる種類</b>（下記 2 で後述）。</p>
+
+  <h3>すべての画面に出る共通フレーム</h3>
+  <ul>
+    <li>左サイドバー：Agent i ロゴ／<b>新規チャット</b>（紫グラデ）／ログインするとできること 2 行／<b>Yahoo! JAPAN IDでログイン</b>／ガイドラインとヘルプ／© LY Corporation</li>
+    <li>中央：各画面の中身</li>
+    <li>右上：（エージェント画面では）<b>&lt; 戻る</b></li>
+    <li>最下部：<b>Agent iはAIです。回答を誤る場合があります(注意点)</b> ── 1 ピクセルも例外なし</li>
+  </ul>
+  <div class="mite">「新規チャット」ボタンだけが、全画面で左サイドバーの一番上に紫色で居続ける。これは「どのエージェントの中にいても、ここを押せばゼロから始められる」という<b>退避路の視線誘導</b>になっている。経営の運転台／AI-Mits の各画面にも「ホーム（ゼロからやり直す場所）」を1個決めて、必ず左上か左サイドバーに紫色で置くと迷子が減りそう。</div>
+</section>
+
+<section>
+  <h2>観点2：無料とログインで何が違うか</h2>
+
+  <h3>非ログインでも、ほぼ全部の画面は見られる</h3>
+  <p>私は<b>Yahoo! JAPAN ID でログインしていない状態で、23本のエージェントのトップ・ガイドライン・ヘルプ・タスクの説明ページまで全部開けた</b>。見るだけなら、ログインの壁はほとんどない。</p>
+
+  <h3>ログインが必要になる場所（画面に書いてある文言どおり）</h3>
+  <ul>
+    <li><b>チャットの内容を保存し、いつでも確認することができます</b>（左サイドバーの説明）</li>
+    <li><b>Agent iの回答を自分好みにカスタマイズできます</b>（左サイドバーの説明）</li>
+    <li>入力欄に文字を打とうとすると、入力欄右端のボタンが「送信」ではなく「ログイン」のまま出続ける（下の 2-1 でピンポイントの吹き出しが出る）</li>
+    <li>タスクの「登録」ボタンを押すと、タスクを保存するためにログインが要る（登録・通知の宛先がいる）</li>
+  </ul>
+
+  <h3>2-1 プリセット質問を開くと「ログインするとAIに質問する事が出来ます」</h3>
+  <figure>
+    <img src="27_agent_kuruma_erabi_wizard_desktop.png" alt="クルマ選び：プリセット質問の着地点＋ログイン吹き出し">
+    <figcaption>
+      <div class="url">https://search.yahoo.co.jp/chat/s/n?q=新しいクルマを探しています&amp;a=autos</div>
+      <div>撮影 2026-10-10 17:58</div>
+      <div class="caption-text">写っている文字：ユーザー吹き出し<b>「新しいクルマを探しています」</b>／🚗 これからのクルマ探し、いっしょに進めましょう／このエージェントでは、候補を見つけるところから、比べて納得するところまでまとめてサポートできます。／【選ぶ】予算や使い方に合うおすすめ車種を提案／【比べる】気になる車の「燃費」や「詳細スペック」を並べて比較／【知る】360°ビューで内装を確認したり、グレードや購入者の「年代・年収層」もチェック／まずは画面下のかんたんな質問に、気軽に答えるところから始めてみてください。／<b>Q 予算はどのくらいを考えていますか？</b>（スライダー 100万円〜700万円〜）／<b>Q どのようなシーンで使われることが多いですか？</b>（通勤・買い物メイン／家族・大人数の移動／アウトドア・レジャー／長距離・趣味ドライブ）／<b>吹き出し：ログインする事で自由に文章を作成してAIに質問する事が出来ます ×</b>（＝入力欄のログインボタンから出ている小さなコーチマーク）</div>
+    </figcaption>
+  </figure>
+
+  <div class="fact">非ログインでも「<b>答えのサンプルを一通り見せる</b>」ところまで来る。クルマ選びのように予算スライダーと選択肢タイルを<b>見るだけ・触るだけ</b>は非ログインで出来る。<b>自由入力して AI に自分の質問を投げようとした瞬間</b>に、「ログインすると質問できます」の吹き出しが入力欄のログインボタンから噴き出す。<b>無料で中身を見せきってから、入力の瞬間に初めてログインを求める</b>。</div>
+
+  <div class="mite">これは<b>経営の運転台のお客様体験に真っ直ぐ使える</b>導線だと思う。今の運転台／AI-Mits は「使う前にまず登録してください」の圧が強い（Mits様の決定で、1st stage は AI-Mits 登録に絞っている）。<b>登録を増やすために</b>、Agent i の「見るだけ・触るだけは無料で全部できる／自分で入力した瞬間に初めて登録を求める」順番にすると、見た人のうち登録まで進む割合が上がる可能性がある。<b>Mits様の判断を要すること：運転台のどの画面で「見る→触る→入力」の線を引くか</b>（これは経営判断なので、ここでは案を出さない）。</div>
+</section>
+
+<section>
+  <h2>観点3：エージェント（用途別の入口）の並べ方・名付け方</h2>
+
+  <h3>並び方</h3>
+  <p>一覧ページ（<span class="url">/chat/tools</span>）では<b>生活シーンの大分類（10カテゴリ）× 2 列グリッド</b>で並ぶ。各エージェントは「アイコン＋太字の名前（4〜7文字）＋細字の一言説明（12〜18文字）」のパターンで統一されている。</p>
+  <ul>
+    <li>名前は<b>日常語の短い名詞</b>：お買い物／クルマ選び／おでかけ／画像生成／しごと相談／人間関係／天気コーデ／天気／話題／熱中症／占い／エンタメ／趣味・習い事／ズバトクナビ／美容・健康／学び／ファイナンス／英語ニュース／カードローン／ペット／ファッション／くらし／スポーツ</li>
+    <li>説明は<b>「〜をお手伝いします」「〜をご案内します」「〜をサポートします」</b>の 3 パターンに統一されている（画面に書いてある文言そのまま）</li>
+    <li><b>新しいものには「NEW」の紫バッジ</b>が付く（宿探し・ヤフコメまとめ・英語ニュース・推し活 など）</li>
+  </ul>
+
+  <h3>モバイルの推薦枠と、PC のカテゴリ一覧は別物</h3>
+  <p>Mits様が iPhone で撮られたスクショには「宿探し／ヤフコメ…／画像生成／推し活／レシピ」が並んでいた。しかし PC のエージェント一覧（23本）には<b>宿探し／ヤフコメまとめ／推し活／レシピは出てこない</b>。モバイルで見た目の最初に出る5つは「NEW・推薦」の枠に出ている別物で、一覧ページの正規の23本とは重なっていない。</p>
+
+  <figure>
+    <img src="36_agent_i_toppage_mobile.png" alt="モバイル トップ（Mits様の iPhone スクショと同じ構成）">
+    <figcaption>
+      <div class="url">https://search.yahoo.co.jp/chat?frtype=staichat&fr=sfp_search_staichat_sp</div>
+      <div>撮影 2026-10-10 18:00</div>
+      <div class="caption-text">写っている文字：<b>Agent i</b>（中央）／疑問や悩みをAIが解決します／<b>タスク機能が登場しました 〉</b>条件とタイミングを登録するとAgent iがあなたの代わりに確認します。／こんなタスクが登録できます（タスクとは ⓘ）／情報収集「気になる有名人の最新情報をお知らせ タスクを登録」／おでかけ「指定エリアのイベントを月曜にお知らせ タスクを登録」／エージェント：<b>宿探し NEW／ヤフコメま… NEW／画像生成／推し活／レシピ</b>／大型推薦カード：<b>推し活 新機能 推しの今日の予定は？推しの情報を見逃さない</b>（キャラ絵）／知りたい事を教えてください ログイン／Agent iはAIです。回答を誤る場合があります(注意点)</div>
+    </figcaption>
+  </figure>
+
+  <figure>
+    <img src="38_agent_ichiran_mobile.png" alt="モバイル エージェント一覧">
+    <figcaption>
+      <div class="url">https://search.yahoo.co.jp/chat/tools?frtype=staichat&fr=sfp_search_staichat_sp</div>
+      <div>撮影 2026-10-10 18:01</div>
+      <div class="caption-text">写っている文字：<b>エージェント一覧</b>／お買い物（お買い物・クルマ選び）／おでかけ（<b>NEW 宿探し</b>／おでかけ）／便利ツール（画像生成）／悩み相談（しごと相談・人間関係）</div>
+    </figcaption>
+  </figure>
+
+  <h3>個々のエージェント画面の「型」── 中身の形が領域で違う</h3>
+  <p>23 本の画面を全部見た結果、「同じテンプレ」ではなく、<b>領域の性格に合わせて4つの型を使い分けている</b>と見える。</p>
+
+  <table>
+    <tr><th>型</th><th>特徴</th><th>当てはまる画面</th></tr>
+    <tr><td><b>チップ型</b></td><td>icon ＋ 題 ＋ 一文の説明 ＋ 絵文字つきの話題チップ 6〜8個 ＋ 例題チップ 3個 ＋ 入力欄</td><td>占い・人間関係・話題・エンタメ・趣味・習い事・美容・健康・学び・英語ニュース・ペット・ファッション・くらし・スポーツ・ズバトクナビ（14本）</td></tr>
+    <tr><td><b>写真タイル型</b></td><td>icon ＋ 題 ＋ 一文 ＋ 大きな写真タイル 4枚（タイル自体が話題を代弁） ＋ 例題チップ 3個 ＋ 入力欄</td><td>しごと相談（4タイル：仕事の悩み相談・自己分析・経歴書作成・キャリア相談）／画像生成（4タイル：水彩画イラスト・特撮映画・マンガ・ピクセルアート）</td></tr>
+    <tr><td><b>ダッシュボード型</b></td><td>見出し ＋ 現時刻の生データ（グラフ・写真・一覧） ＋ 入力欄</td><td>ファイナンス（日経平均リアルタイム＋マーケット影響マップ）／お買い物（カルーセル＋画像から探す＋相談しながら探す）／おでかけ（イベント／スポット／質問／できること のセクション積み）</td></tr>
+    <tr><td><b>ウィジェット型（入力欄なし）</b></td><td>画面を占める AI 生成コンテンツ ＋ 時間切り替え ＋ スタイル設定（入力欄がない）</td><td>天気コーデ（<code>/chat/a/weather_outfit</code>）</td></tr>
+  </table>
+
+  <figure>
+    <img src="08_agent_shigoto_sodan_desktop.png" alt="しごと相談（写真タイル型）">
+    <figcaption>
+      <div class="url">https://search.yahoo.co.jp/chat/t/job</div>
+      <div>撮影 2026-10-10 17:52</div>
+      <div class="caption-text">写っている文字：<b>しごと相談</b>／<b>職場の悩みからキャリア相談まで。あなたの『はたらく』をAIが一緒に考えます。</b>／写真タイル 4 枚：仕事の悩み相談／自己分析／経歴書作成／キャリア相談／例題：苦手な人と一緒に仕事をするコツは？／本当に自分に合った仕事ってある？／今転職すべき？もう少し待つべき？</div>
+    </figcaption>
+  </figure>
+
+  <figure>
+    <img src="13_agent_finance_desktop.png" alt="ファイナンス（ダッシュボード型）">
+    <figcaption>
+      <div class="url">https://search.yahoo.co.jp/chat/t/finance</div>
+      <div>撮影 2026-10-10 17:55</div>
+      <div class="caption-text">写っている文字：<b>ファイナンス</b>／<b>あなたの投資をサポートします</b>／2026/10/9(金) 15:45 日経平均 69,030.92 前日比 -11.19（1日 1週 グラフ）／日経平均株価について／<b>マーケット影響マップ　市場を動かす要因は？</b>（2026/10/9(金) 10:34更新 国内マーケットはテーマ集中の選別モード）／マクロ「なぜ動いているか」（原油高がコスト不安を再燃／米金利高止まり観測が重し／全面リスクオフではなく選別相場）→ ストーリー「何が動いているか」（銀行株の代表銘柄はそろって下落／電機は軟調、一方で製造装置関連の代表銘柄は上昇／情報通信の代表銘柄は大幅高／素材寄りの代表銘柄はそろって下落）→ 業界・業種「どこが動いているか」（フィナンシャルグループ／情報・通信業／電気機器／製品製造用機械メーカー／金属製建築資材メーカー）／入力欄：投資の疑問を聞かせてください</div>
+    </figcaption>
+  </figure>
+
+  <figure>
+    <img src="11_agent_tenki_coord_desktop.png" alt="天気コーデ（ウィジェット型）">
+    <figcaption>
+      <div class="url">https://search.yahoo.co.jp/chat/a/weather_outfit</div>
+      <div>撮影 2026-10-10 17:53</div>
+      <div class="caption-text">写っている文字：<b>スタイル設定</b>（右上の黒いボタン）／大判の AI 生成写真（女性が秋の街角を薄手の青シャツで歩いている）／<b>晴れた夕方は薄手のシャツを開けて軽やかに過ごせそうです</b>／10/10(土) - 夕方／🌙／🌡 気温 22℃／🧭 東北東 3 m/s／東京都千代田区／再生バー（今日・朝・日中・夕方・夜）／日付タブ（今日 10/10(土)／明日 10/11(日)／明後日 10/12(月)）／<b>回答は不正確な場合があります。AI利用の注意点</b></div>
+    </figcaption>
+  </figure>
+
+  <figure>
+    <img src="07_agent_uranai_desktop.png" alt="占い（チップ型）">
+    <figcaption>
+      <div class="url">https://search.yahoo.co.jp/chat/t/fortune</div>
+      <div>撮影 2026-10-10 17:52</div>
+      <div class="caption-text">写っている文字：<b>占い</b>／今日の運勢から気になるテーマなど、AIで気軽に占いを楽しめます。／チップ：⭐12星座・💬心理テスト・🌙夢占い・🃏タロット占い・❤恋愛運・💰金運・💼仕事運／例題：天中殺って何？／今年の運勢は？／次の開運日はいつ？</div>
+    </figcaption>
+  </figure>
+
+  <div class="mite">
+    <b>Mits様の決定「1st stage は AI-Mits 登録に絞る」との接点</b>：この4つの型は「お客様が何を欲しがっているか」で場所分けができる。<br>
+    経営の運転台／AI-Mits の各領域（売上・経費・残高・LP・配信・会員）に当てはめるなら、<b>A（相談）・B（具体例を写真で見せる）・C（ダッシュボード＝実データ出し放し）・D（ウィジェット＝今の状況を一枚で見せる）</b>のどれを使うかを領域ごとに決めるのが有効そう。例えば「売上の今の状況」は D 型、「経費の分類相談」は A 型、「LP の実例を見せる」は B 型、「経営の見通し」は C 型、など。<br>
+    これは Mits様の経営判断（運転台の中でどの領域が優先か・どれを型 D のウィジェットで出すか）を要することなので、ここでは<b>型の整理だけ</b>に留める。
+  </div>
+</section>
+
+<section>
+  <h2>観点4：定期的に知らせる「タスク」の見せ方</h2>
+
+  <h3>4-1 トップページでの位置づけ</h3>
+  <p>タスクは「<b>Agent i があなたの代わりに確認し、お知らせする</b>」仕組み。トップページ上部に横長バナー（タスク機能が登場しました）＋タスクタイル3枚＋ⓘ ツールチップ（タスクとは）で、3段構えで説明している。</p>
+
+  <figure>
+    <img src="31_task_towa_tooltip_desktop.png" alt="タスクとは ⓘ ツールチップ">
+    <figcaption>
+      <div>撮影 2026-10-10 17:55</div>
+      <div class="caption-text">写っている文字（ツールチップ内）：<b>タスクを登録すると、Agent i があなたの代わりに確認し、条件に合ったタイミングでお知らせします。詳細はこちらをご覧ください。</b></div>
+    </figcaption>
+  </figure>
+
+  <h3>4-2 専用の説明ページ（LP）に飛ばす</h3>
+  <p>横長バナーを押すと、<span class="url">agenti-guide.landpress.line.me/bas_20260910/</span> という Agent i 公式ブログの LP に飛ぶ。LINE が運営するブログプラットフォーム（landpress.line.me）を使っているのが特徴。</p>
+
+  <figure>
+    <img src="33_task_kinou_lp_desktop.png" alt="タスク機能の LP">
+    <figcaption>
+      <div class="url">https://agenti-guide.landpress.line.me/bas_20260910/</div>
+      <div>撮影 2026-10-10 17:56</div>
+      <div class="caption-text">写っている文字：Agent i 公式ブログ／お知らせ・ご利用ガイド・Agent i・関連リンク／ヒーロー：<b>知りたい情報をお知らせ・通知する タスク機能</b>（吹き出しで「🔍 推しグループの新着ニュース」「💰 商品の値下がり情報」「📅 今週開催されるイベント情報」）／電話モックアップ：LINEヤフーの最新の話題を教えて → LINEヤフーに関する最近の動きをまとめました → あなたにおすすめのタスク：LINEヤフーの最新の話題（タスク条件を見る トグル）／<b>知りたい情報を登録するだけ あとは Agent i におまかせ</b>／「Agent i を使ってみる」ボタン</div>
+    </figcaption>
+  </figure>
+
+  <figure>
+    <img src="34_task_benefit_desktop.png" alt="タスクのBENEFIT 4つ">
+    <figcaption>
+      <div>撮影 2026-10-10 17:57</div>
+      <div class="caption-text">写っている文字：<b>BENEFIT　タスクで欲しい情報を逃さない</b>／条件とタイミングを登録するだけ。Agent i が探して、見つけて、届けます。／💬 気になるテーマを登録するだけ（イベント情報、商品の値下がり、推しグループの最新の話題など、気になるテーマを登録できます）／🕐 指定したタイミングで実行（毎日、毎週、毎月などタスクの実行タイミングを指定できます）／🔊 アプリで通知（プッシュ通知を受け取っている場合は、「Yahoo! JAPAN」アプリや「LINE」アプリでも通知を受け取れます）／💡 マイページでまとめて確認（登録しているタスクの情報はマイページからいつでもまとめて確認できます）</div>
+    </figcaption>
+  </figure>
+
+  <figure>
+    <img src="35_task_shurui_keyword_desktop.png" alt="タスクで登録できる情報">
+    <figcaption>
+      <div>撮影 2026-10-10 17:57</div>
+      <div class="caption-text">写っている文字：<b>さまざまな情報を登録できます</b>／最新トピック、商品の値下がり、イベントなどさまざまな情報をタスクとして登録できます。／🔍 キーワード／<b>キーワードに関連した最新トピック</b>（気になるアーティストやサービス、業界の最新トピックを継続的に受け取れます）／右：チャット例「LINEヤフーの最新の話題を教えて → LINEヤフーに関する最近の動きをまとめました」→ あなたにおすすめのタスク「LINEヤフーの最新の話題」／タスク条件を見る：<b>実行タイミング 毎週月曜日／プッシュ通知 ON</b>／条件を設定する</div>
+    </figcaption>
+  </figure>
+
+  <div class="fact">
+    タスクの要素は4つに整理されている：<b>① 条件（キーワード・エリア・商品など）／② タイミング（毎日・毎週・毎月）／③ 通知経路（Yahoo! JAPAN アプリ・LINE アプリのプッシュ）／④ まとめ場所（マイページ）</b>。<br>
+    経営の運転台の計測・お知らせの機能設計に、ほぼそのまま当てはめられる型。
+  </div>
+
+  <div class="mite">
+    経営の運転台 と AI-Mits では、今は Mits様が「何を見るか」を Mits様自身で決める作りになっている（私が実機を触って確かめた範囲での見立て。詳しくは Mits様の運転台の設計書を見るのが正）。Agent i の「タスク」は、お客様が条件とタイミングを<b>1回登録すると、以後 AI が勝手に見張ってアプリの通知で届けてくれる</b>という形式。<br>
+    AI-Mits の「お知らせ」や、経営の運転台の「変化があったら教える」機能に、Agent i のタスク4要素（条件／タイミング／通知経路／まとめ場所）を転写すると、「使い続ける理由」を内側に持たせやすい。<br>
+    ただし、お客様に届く本番の設計は Mits様の経営判断。ここでは型の提示まで。
+  </div>
+</section>
+
+<section>
+  <h2>観点5：AI の誤りの断り方（＆ 医療・金融での線引き）</h2>
+
+  <h3>5-1 全画面に出る標準フッタ</h3>
+  <p>Agent i のあらゆる画面（トップ・一覧・エージェント個別・タスク LP・ヘルプ）の<b>最下部</b>に、1 ピクセルも省略せず同じ文言が出る：</p>
+  <blockquote style="background:var(--code);padding:12px 16px;border-radius:8px;margin:8px 0;font-size:14px"><b>Agent iはAIです。回答を誤る場合があります(注意点)</b></blockquote>
+  <p>「(注意点)」が青いリンクで、押すと生成AIのガイドライン（<span class="url">/chat/guidelines/generativeaiguideline</span>）に飛ぶ。<b>警告のレイヤー構造：フッタに常に薄く・押したら詳しく</b>。</p>
+
+  <h3>5-2 天気コーデだけはフッタ文言が違う</h3>
+  <p>ウィジェット型（天気コーデ）だけは、<b>「回答は不正確な場合があります。AI利用の注意点」</b>と、言い回しが少し違う。他は「Agent i は AI です。回答を誤る場合があります」と自己紹介している。<b>服装提案は毎回「正解」が存在しない領域なので、「誤り」ではなく「不正確」と言葉を変えている</b>のが見える（画面に書かれているとおり）。</p>
+
+  <h3>5-3 ガイドライン本体 ── プロバイダ名まで明記</h3>
+  <figure>
+    <img src="28_guideline_seisei_ai_desktop.png" alt="生成AIガイドライン">
+    <figcaption>
+      <div class="url">https://search.yahoo.co.jp/chat/guidelines/generativeaiguideline</div>
+      <div>撮影 2026-10-10 17:55</div>
+      <div class="caption-text">写っている文字：<b>生成AIを用いた回答・画像生成機能の利用に関するガイドライン</b>／本機能について：<b>AIを用いた回答・画像生成機能は、LINEヤフー株式会社が、Google LLC（米国カリフォルニア州）、Google Asia Pacific Pte. Ltd.（シンガポール）、Google Switzerland GmbH（スイス）、グーグル・クラウド・ジャパン合同会社の Vertex AI、または OpenAI OpCo, LLC、OpenAI, LLC（米国カリフォルニア州）の生成AI を利用して提供しております。</b>／本機能は、予告なく変更、停止または中止する可能性があります。／13歳未満のお客様は本機能のご利用をお控えください。また、お客様が未成年者（ただし、13歳以上に限ります）である場合は、親権者等の法定代理人の同意を得た上で本機能をご利用ください。／本機能により提供される内容について、当社は、その信頼性、正確性、最新性、完全性、有効性、特定目的への適合性、有用性（有益性）、継続性について保証せず、これらに起因してお客様が何らかの損害を被ったとしても、当該損害につき責任を負わないものとします。／<b>お客様が入力した情報は、当社から Google または OpenAI に送信されますが、当社への機能提供のためにのみ利用されます。お客様が入力した音声データについては、Google および OpenAI への送信の対象外となります。</b>／機密情報、プライバシーに関する情報、他人に知られたくない情報などは、入力しないでください／他人の著作物を入力する場合には、著作権法で認められた範囲内で他人の著作権を侵害することがないようにご利用ください。</div>
+    </figcaption>
+  </figure>
+
+  <div class="fact">
+    注目：<b>生成 AI は Google（Vertex AI）と OpenAI の両方を使っていると明記している</b>。音声データだけは「Google／OpenAI への送信の対象外」と、入力の種類ごとに扱いが違うことまで書いている。<b>プロバイダ依存を隠さずに書く</b>姿勢は、お客様側の信頼にも、法務リスクの軽減にも効く設計。
+  </div>
+
+  <h3>5-4 医療領域だけは、画面の中に警告ブロックを置く</h3>
+  <p>熱中症エージェントは、画面の<b>チップより上</b>に目立つ色の警告ブロックがある。他のエージェントには無い。</p>
+
+  <figure>
+    <img src="25_agent_necchusho_safety_desktop.png" alt="熱中症エージェント：安全警告ブロック">
+    <figcaption>
+      <div class="url">https://search.yahoo.co.jp/chat/t/heatstroke</div>
+      <div>撮影 2026-10-10 17:58</div>
+      <div class="caption-text">写っている文字（警告ブロック）：<b>・ご自身や第三者の個人情報、病名・症状・持病・服薬状況などの医療情報は入力しないでください。／・この Agent は熱中症予防の一般情報を案内するもので、診断・治療・受診判断は行いません。／・体調不良や熱中症が疑われる場合は、医療機関や救急相談窓口等にご相談ください。</b>／（下部に）チップ：外出する／運動する／屋外作業／子ども／高齢者</div>
+    </figcaption>
+  </figure>
+
+  <h3>5-5 金融領域は PR 明示 ＋ 広告ポリシー</h3>
+  <figure>
+    <img src="44_agent_cardloan_ranking_desktop.png" alt="カードローン：即日融資ランキング">
+    <figcaption>
+      <div class="url">https://search.yahoo.co.jp/chat/s/n?q=できるだけ早く借りられるカードローンを教えて&amp;a=cardloan</div>
+      <div>撮影 2026-10-10 18:04</div>
+      <div class="caption-text">写っている文字：<b>できるだけ早く借りられるカードローンを、借入までにかかる時間の速さという切り口で見比べられます。</b>／<b>即日融資ランキング</b>（① プロミス 金利 2.50%〜18.00% 上限 800万円 無利息 30日 借入最短 3分／② レイク 4.50%〜18.00% 上限 500万円 無利息 365日 借入最短 8分／③ アイフル <b>PR 公式サイトを見る</b>／④ SMBCモビット／⑤ アコム）／<b>広告ポリシー ▼</b>（右下）</div>
+    </figcaption>
+  </figure>
+
+  <div class="fact">
+    金融のお金が動く領域では、<b>結果の中に「PR」バッジを置いて広告であることを明示</b>し、右下に <b>「広告ポリシー」</b> を常に出している。熱中症は<b>医療行為に踏み込まない宣言</b>をチップより上に置く。<b>領域ごとに警告のレイヤーを変えている</b>（全画面フッタ → 領域特有の警告ブロック → 広告 PR マーク → ガイドライン本体）。
+  </div>
+</section>
+
+<section>
+  <h2>経営の運転台・AI-Mits との違い</h2>
+  <p>比較の前提：経営の運転台のソース（<code>/Users/nishidamitsuhiro/untendai-seiri/src/index.html</code>）および公開ページ（<span class="url">https://reports.7years.life/private/untendai-kaihatsu-nagare/</span>）は司令塔・運転台改善が持ち場。私（BA-researcher）はソースの詳細を調べていない。<b>以下は Agent i 側の実機の観察から見える「違いの型」</b>にとどめる。実際の運転台／AI-Mits がどう当てはまるかの判断は Mits様の経営判断。</p>
+
+  <table>
+    <tr><th>観点</th><th>Agent i（画面に写っている事実）</th><th>違いの型（運転台／AI-Mits と比べての論点）</th></tr>
+    <tr><td>最初に見るもの</td><td>見出し → タスク告知 → 入力欄＋ログインボタン（唯一の濃色）→ エージェント横一列 → 推薦カード 8枚</td><td>「ログイン（＝AI-Mits 登録）」を<b>画面の中で唯一濃色</b>で置いているか？他の要素は白地＋細枠にして色の序列を作れているか？</td></tr>
+    <tr><td>無料とログインの線</td><td>見るだけ・触るだけ（スライダー・タイル）は非ログイン OK。<b>自分で文章を入力した瞬間</b>にログインの吹き出し</td><td>登録前のお客様に「中身を見せる」設計になっているか？「使う前にまず登録」の圧の方が強くないか？</td></tr>
+    <tr><td>入口の見た目</td><td>23 本のエージェント × 10 カテゴリ。<b>名前は 4〜7 文字の日常語の名詞</b>、説明は「〜をお手伝いします／〜をご案内します／〜をサポートします」の3型に統一</td><td>運転台の各機能の名前が、お客様の日常語になっているか？「売上」「残高」「変化」など、お客様が「それを見たい」と口に出す語か？</td></tr>
+    <tr><td>個々の画面の型</td><td>チップ型（14本）／写真タイル型（2本）／ダッシュボード型（3本）／ウィジェット型（1本）── 領域の性格で使い分け</td><td>運転台の各領域（売上・経費・残高・LP・配信）が、A〜D のどの型で見せると一番伝わるか。全部同じ型になっていないか？</td></tr>
+    <tr><td>定期の知らせ</td><td>タスク = ①条件 ②タイミング ③通知経路 ④まとめ場所 の4要素。<b>別アプリ（Yahoo! JAPAN／LINE）のプッシュ</b>に乗る</td><td>運転台／AI-Mits の「お知らせ」が、この4要素を全部満たしているか？通知経路は<b>別アプリ（LINE 等）経由</b>になっているか、それとも運転台に戻らないと見られないか？</td></tr>
+    <tr><td>AI の誤りの断り方</td><td>全画面フッタ（Agent i は AI。誤りあり）＋ 領域特有の警告（医療・金融）＋ 生成AIガイドライン本体（Google／OpenAI 名入り）</td><td>AI-Mits の各画面に「AI である・誤りがある」の断りが入っているか？領域ごとに警告の強さを変えられているか？</td></tr>
+    <tr><td>マネタイズの作法</td><td>カードローンは<b>PR バッジ ＋ 広告ポリシー</b>で広告だと明示。他領域はまだアフィ色が無い</td><td>運転台のマネタイズに広告を入れるとき、同じ「PR 明示＋ポリシー常掲」の作法を使うか</td></tr>
+  </table>
+
+  <div class="mite">
+    もっとも効きそうな転写は <b>「無料とログインの線」と「入力欄＝唯一の濃色＝ログインボタン」の2点</b>。<br>
+    AI-Mits の登録数が落ちている（これは私の見立てではなく、2026-09-14 の Mits様の決定事項「絶対的ゴールは AI-Mits 登録の増加」および現状表に書かれている事実）という文脈で、Agent i が「<b>中身を見せきってから、入力の瞬間に初めて登録を求める</b>」設計をしている点は、<b>登録に至る割合そのものを押し上げ得る</b>型。<br>
+    ただし、どの画面にどう当てはめるかは <b>Mits様の経営判断</b>。ここでは Agent i の作法を取ったところまでで止める。
+  </div>
+</section>
+
+<section>
+  <h2>全スクショのギャラリー（本文で引用しきれなかった分も含む・44枚）</h2>
+  <p>本文で引用した 20 枚に加えて、残り 24 枚（チップ型の各エージェント画面・ヘルプトップ・モバイルの個別ページなど）をここに並べる。</p>
+  <div class="grid">
+    <figure><img src="02_tooltip_tojiro_desktop.png" alt="Agent i バッジのツールチップ閉じ直後"><figcaption>02 ツールチップを閉じた直後の検索トップ</figcaption></figure>
+    <figure><img src="09_agent_gazou_seisei_desktop.png" alt="画像生成（PC）"><figcaption>09 画像生成 PC — 写真タイル型（水彩画・特撮・マンガ・ピクセルアート）</figcaption></figure>
+    <figure><img src="10_agent_odekake_desktop.png" alt="おでかけ（PC）"><figcaption>10 おでかけ PC — ダッシュボード型：イベントを探す/おでかけスポットを探す/質問してみる/できること</figcaption></figure>
+    <figure><img src="12_agent_ningen_kankei_desktop.png" alt="人間関係（PC）"><figcaption>12 人間関係 PC — チップ型（家族・友人・恋人・パートナー・ネットのつながり・職場・その他）</figcaption></figure>
+    <figure><img src="14_agent_okaimono_desktop.png" alt="お買い物（PC）"><figcaption>14 お買い物 PC — ダッシュボード型：カルーセル・画像から探す（新機能）・相談しながら探す</figcaption></figure>
+    <figure><img src="15_agent_wadai_desktop.png" alt="話題（PC）"><figcaption>15 話題 PC — チップ型（最近の話題・エンタメ・スポーツ・トレンド・SNS・ニュース深掘り）</figcaption></figure>
+    <figure><img src="16_agent_entame_desktop.png" alt="エンタメ（PC）"><figcaption>16 エンタメ PC — チップ型（映画・ドラマ・アニメ・音楽・漫画・舞台・ラジオ）</figcaption></figure>
+    <figure><img src="17_agent_shumi_desktop.png" alt="趣味・習い事（PC）"><figcaption>17 趣味・習い事 PC — チップ型（趣味を見つける・久しぶりに始める・ステップアップ・スポーツ・運動・クリエイティブ・インドア・アウトドア・子どもの習い事）</figcaption></figure>
+    <figure><img src="18_agent_biyo_kenko_desktop.png" alt="美容・健康（PC）"><figcaption>18 美容・健康 PC — チップ型（肌悩み・スキンケア・睡眠・ダイエット・ボディメイク・メイク・運動・フィットネス・疲労回復・ストレス・メンタルケア・健康習慣・体調管理）</figcaption></figure>
+    <figure><img src="19_agent_manabi_desktop.png" alt="学び（PC）"><figcaption>19 学び PC — チップ型（語学・資格・受験・練習問題・学習計画・勉強方法）</figcaption></figure>
+    <figure><img src="20_agent_eigo_news_desktop.png" alt="英語ニュース（PC）"><figcaption>20 英語ニュース PC — チップ型（ニュース・会議・商談・海外出張・雑談・自分の意見・面接・おまかせ）</figcaption></figure>
+    <figure><img src="21_agent_pet_desktop.png" alt="ペット（PC）"><figcaption>21 ペット PC — チップ型（初めてのペットガイド・しつけ・犬・猫・小動物・鳥・爬虫類エキゾチック・食事）</figcaption></figure>
+    <figure><img src="22_agent_fashion_desktop.png" alt="ファッション（PC）"><figcaption>22 ファッション PC — チップ型（トレンド・定番・天気・パーソナルカラー・コーディネート・着痩せ・着回し）</figcaption></figure>
+    <figure><img src="23_agent_kurashi_desktop.png" alt="くらし（PC）"><figcaption>23 くらし PC — チップ型（緊急トラブル・水漏れ・お掃除・家事の時短・節約術・住まいの修理・メンテ・カビや害虫予防）</figcaption></figure>
+    <figure><img src="24_agent_sports_desktop.png" alt="スポーツ（PC）"><figcaption>24 スポーツ PC — チップ型（試合結果・予定・ニュース・話題・視聴・ルール・解説・プロ野球・MLB・サッカー）</figcaption></figure>
+    <figure><img src="26_agent_zubatoku_desktop.png" alt="ズバトクナビ（PC）"><figcaption>26 ズバトクナビ PC — チップ型（くじ・ポイ活・アンケート・クイズ・Yahoo!ショッピング・PayPayポイント）</figcaption></figure>
+    <figure><img src="29_help_top_desktop.png" alt="Agent i ヘルプトップ"><figcaption>29 Agent i ヘルプのトップページ（よくある質問 5 件・関連リンク・ヘルプの種類から探す）</figcaption></figure>
+    <figure><img src="32_banner_tojita_desktop.png" alt="バナー閉じた後のトップ"><figcaption>32 「タスク機能が登場しました」バナーを閉じた後のトップページ（タスクタイルが上に詰まる）</figcaption></figure>
+    <figure><img src="37_agent_i_toppage_scroll_mobile.png" alt="モバイル トップ スクロール"><figcaption>37 モバイル トップをスクロールした様子（推し活／ヤフコメまとめ／お買い物／レシピ／美容・健康 の推薦カードが縦に積まれる）</figcaption></figure>
+    <figure><img src="39_agent_gazou_seisei_mobile.png" alt="画像生成（モバイル）"><figcaption>39 画像生成 モバイル — 2×2 の写真タイル、入力欄は「作りたい画像の説明…」</figcaption></figure>
+    <figure><img src="40_agent_ningen_kankei_mobile.png" alt="人間関係（モバイル）"><figcaption>40 人間関係 モバイル — チップが大きく縦に積まれる</figcaption></figure>
+    <figure><img src="41_agent_tenki_coord_mobile.png" alt="天気コーデ（モバイル）"><figcaption>41 天気コーデ モバイル — ウィジェット型がスマホ画面を全部使う（AI 生成写真＋天気＋時間スライダー＋日付タブ）</figcaption></figure>
+    <figure><img src="42_agent_necchusho_safety_mobile.png" alt="熱中症（モバイル）"><figcaption>42 熱中症 モバイル — 警告ブロックが画面の約1/3を占めてから、ようやくチップが出る</figcaption></figure>
+    <figure><img src="43_agent_tenki_map_desktop.png" alt="天気（PC）"><figcaption>43 天気 PC — プリセット質問「天気予報を教えて」からの日本地図＋地域絞り込みボタン群（右上に Yahoo!天気 への連携バッジ）</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <h2>撮れたスクショ 全44枚（番号順）</h2>
+  <ol>
+    <li>01_yahoo_search_top_desktop.png — Yahoo!検索トップ・Agent i バッジ</li>
+    <li>02_tooltip_tojiro_desktop.png — Agent i バッジのツールチップを閉じた直後</li>
+    <li>03_agent_i_toppage_desktop.png — Agent i トップページ（初回）</li>
+    <li>04〜06 agent_ichiran_ue／naka／shita_desktop.png — エージェント一覧 上中下</li>
+    <li>07〜26 各エージェント個別画面（占い・しごと相談・画像生成・おでかけ・天気コーデ・人間関係・ファイナンス・お買い物・話題・エンタメ・趣味・習い事・美容・健康・学び・英語ニュース・ペット・ファッション・くらし・スポーツ・熱中症・ズバトクナビ）</li>
+    <li>27 クルマ選び（プリセット質問 ＋ ログイン吹き出し）</li>
+    <li>28 生成AIガイドライン</li>
+    <li>29 ヘルプトップ（Agent iヘルプ）</li>
+    <li>30 トップページ（最近使った表示）</li>
+    <li>31 タスクとは ⓘ ツールチップ</li>
+    <li>32 バナーを閉じた後のトップ</li>
+    <li>33〜35 タスク機能 LP（ヒーロー・BENEFIT・さまざまな情報）</li>
+    <li>36〜42 モバイル：トップ・トップスクロール・一覧・画像生成・人間関係・天気コーデ・熱中症</li>
+    <li>43 天気（プリセット質問・日本地図）</li>
+    <li>44 カードローン（即日融資ランキング・PR 明示）</li>
+  </ol>
+  <p><b>内訳</b>：PC デスクトップ 37枚／モバイル 7枚。<b>エージェント一覧の 23 本</b>はすべて 1 枚以上撮影済み（番号 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 43, 44）。</p>
+</section>
+
+<section>
+  <h2>この研究で<b>やっていないこと</b>（線引き）</h2>
+  <ul>
+    <li>送信・投稿・タスク登録・設定変更 ── 0 回（お客様に届く／お金が動く／外に出る動作は一切していない）</li>
+    <li>ログイン ── していない（非ログインで見られる範囲で全画面を撮った）</li>
+    <li>推し活エージェントは、モバイルの推薦カードから入れるが、PC の一覧 23 本には出ないため個別画面を撮っていない（モバイルトップ 36 番に写り込んでいる）</li>
+    <li>宿探しエージェント（NEW）は、モバイル一覧ページ 38 番に出てきているが、個別画面は撮っていない（PC では一覧 23 本に出ないため、優先度を下げた）</li>
+    <li>発注書・段取り・やる順番 ── 書いていない（Mits様が「やる」と決めてから）</li>
+  </ul>
+</section>
+
+<footer style="text-align:center;color:var(--sub);font-size:12px;padding:20px 0">
+  BA-researcher / 2026-10-10 作成 / 発注元：運転台改善 の参謀
+</footer>
+
+</main>
+</body>
+</html>
