@@ -59,7 +59,7 @@
   /* アップロード */
   .uploads{ display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:10px; }
   .upcard{ border:1px solid var(--line); border-radius:6px; padding:8px; background:#fff; }
-  .upcard h4{ font-size:12px; margin:0 0 5px; color:var(--title); font-weight:700; }
+  .upcard h4{ font-size:12px; margin:0 0 5px; color:var(--title); font-weight:400; }
   .upcard input[type=file]{ font-size:12px; }
   .upcard .preview{ margin-top:6px; }
   .upcard .preview img{ max-width:100%; max-height:160px; display:block; border:1px solid var(--line); border-radius:3px; }
@@ -86,47 +86,49 @@
   table.plan-table td.phase-end{ border-right:2px solid var(--title) !important; }
 
   th.head{ position:sticky; left:0; z-index:2; width:var(--head); min-width:var(--head);
-    background:var(--head-bg); color:var(--title); font-size:12px; font-weight:400; line-height:1.3; text-align:center; white-space:normal; }
-  th.head span{ display:block; font-size:11px; }
-  td.hinichi .nth{ display:block; font-size:11px; color:var(--title); }
-  td.hinichi .ymd{ display:block; font-size:14px; color:var(--title); line-height:1.2; }
-  td.hinichi .dow{ font-size:11px; margin-left:2px; }
+    background:var(--head-bg); color:var(--title); line-height:1.3; text-align:center; white-space:normal; }
+  th.head span{ display:block; }
+  td.hinichi .nth{ display:block; color:var(--title); }
+  td.hinichi .ymd{ display:block; color:var(--title); line-height:1.2; }
+  td.hinichi .dow{ margin-left:2px; }
   td.hinichi.sunday .nth, td.hinichi.sunday .ymd, td.hinichi.sunday .dow{ color:var(--red); }
 
-  td.goal{ font-size:14px; color:var(--goal); }
+  td.goal{ color:var(--goal); }
   td.goal.shibou{ color:var(--red); }
 
   tr.zutsu > th, tr.nensho > th, tr.tanpaku > th, tr.toshitsu > th, tr.mizu > th{ background:var(--amber-bg); color:var(--amber); }
-  td.shushi, td.nensho{ vertical-align:top; text-align:left; font-size:12px; line-height:1.5; padding:5px 8px; }
+  td.shushi, td.nensho{ vertical-align:top; text-align:left; line-height:1.5; padding:5px 8px; }
   td.shushi .r, td.nensho .r{ display:flex; justify-content:space-between; }
   td.shushi .r + .r, td.nensho .r + .r{ border-top:1px dotted var(--line); }
   td.shushi .big{ text-align:right; line-height:1.5; }
   td.shushi .big::before{ content:"収支"; float:left; }
 
   tr.gozen > th, tr.hirusugi > th, tr.aruita > th, tr.yugata > th{ background:var(--meal-bg); }
-  th.meal-head .h1{ display:block; font-size:12px; color:var(--meal); }
-  th.meal-head .h2{ display:block; font-size:11px; color:var(--meal); }
+  th.meal-head .h1{ display:block; color:var(--meal); }
+  th.meal-head .h2{ display:block; color:var(--meal); }
   td.meal{ text-align:left; vertical-align:top; padding:5px 6px; }
-  td.meal .chk{ display:flex; align-items:center; font-size:11px; color:var(--title); line-height:1.3; min-height:22px; }
+  td.meal .chk{ display:flex; align-items:center; color:var(--title); line-height:1.3; min-height:22px; }
   td.meal .chk::before{ content:""; display:inline-block; width:14px; height:14px; border:1.5px solid var(--title); border-radius:3px; margin-right:5px; flex-shrink:0; box-sizing:border-box; }
   td.meal .chk.on::before{ background:var(--title); box-shadow:inset 0 0 0 2px #fff; }
-  td.meal .chk-note{ font-size:11px; color:var(--goal); }
+  td.meal .chk-note{ color:var(--goal); }
 
-  td.biko-cell{ font-size:11px; line-height:1.45; text-align:left; }
+  td.biko-cell{ line-height:1.45; text-align:left; }
 
   tr.off-row{ display:none !important; }
 
   /* 日別の上書き入力 */
   .overrides{ margin-top:10px; }
-  .overrides h3{ font-size:13px; margin:0 0 6px; color:var(--title); font-weight:700; }
+  .overrides h3{ font-size:13px; margin:0 0 6px; color:var(--title); font-weight:400; }
   .overrides .ov-list{ display:flex; flex-wrap:wrap; gap:6px; max-height:160px; overflow-y:auto; padding:4px; background:#fafbfc; border:1px solid var(--line); border-radius:4px; }
   .overrides .ov-item{ display:flex; align-items:center; gap:4px; font-size:11px; }
   .overrides .ov-item input{ width:70px; padding:2px 4px; border:1px solid var(--line); border-radius:3px; font-size:11px; }
 
   .note{ font-size:11px; color:#666; margin:8px 0 0; line-height:1.5; }
 
-  /* 文字の大きさを揃える */
-  .plan-table *, .wrap h1, .wrap p, .wrap h2, .wrap h3, .wrap label, .wrap .chk, .wrap input, .wrap button, .wrap select{ font-weight:400; }
+  /* 文字は1つの大きさ・普通の太さに揃える（強調・大きくするは使わない）― 記録表の正本と同じ形 */
+  .plan-table *, .plan-table{ font-size:var(--fs) !important; font-weight:400 !important; }
+  .wrap *{ font-weight:400 !important; }
+  td.shushi .big{ border:0; padding:0; margin:0; text-align:right; line-height:1.5; }
 </style>
 </head>
 <body>
@@ -228,26 +230,38 @@
   // ======== 期間別の献立の型（記録表の品目をそのまま。1食目/2食目/3食目に分けて置ける） ========
   // phase: 'futsu' (普通食) / 'genshoku' (減食=固形物なし) / 'kaifuku' (回復食)
   // 「食事回数」入力で、使う食事ブロックを選ぶ（1=1食目のみ・2=1食目+2食目・3=全部）
+  // サプリの品目（記録表の書き方・時刻のまま）：朝・午後・寝る前は期を通して共通、昼と夕は期ごとに違う
+  var SUPP = {
+    asa: 'サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5',
+    hiru_genshoku: 'サプリ昼：Solaray2・オメガ3 3・D3・STAGE7',
+    hiru_kaifuku:  'サプリ昼：消化酵素2・Solaray2・オメガ3 3・D3・STAGE7',
+    hiru_futsu:    'サプリ昼：消化酵素2・Solaray2・オメガ3 3・D3・STAGE7・ビタミンC500mg',
+    gogo: 'サプリ午後：クエン酸2',
+    yu_genshoku: 'サプリ夕：Solaray1',
+    yu_kaifuku:  'サプリ夕：消化酵素2・Solaray1',
+    yu_futsu:    'サプリ夕：消化酵素2・Solaray1・ビタミンC500mg',
+    neruMae: 'サプリ寝る前：マグネシウム2粒'
+  };
   var MENUS = {
     futsu: {
-      gozen: ['コーヒー＋MCT大1'],
-      meal1: ['カチュー湯＋ひじき','卵1','卵2','卵3','納豆1','もずく50g','MCT小1'],
-      aruita: ['グルタミン5g','マナ酵素20ml','塩水500ml（天然塩ひとつまみ）'],
-      meal2: ['カチュー湯2杯＋ひじき','納豆1','もずく50g','てびち汁 汁だけ1袋分（220g）'],
+      gozen: ['コーヒー＋MCT大1', SUPP.asa],
+      meal1: ['カチュー湯＋ひじき','卵1','卵2','卵3','納豆1','もずく50g','MCT小1', SUPP.hiru_futsu],
+      aruita: ['グルタミン5g','マナ酵素20ml','塩水500ml（天然塩ひとつまみ）', SUPP.gogo],
+      meal2: ['カチュー湯2杯＋ひじき','納豆1','もずく50g','てびち汁 汁だけ1袋分（220g）', SUPP.yu_futsu, SUPP.neruMae],
       meal3: ['プロテイン2杯']
     },
     genshoku: {
-      gozen: ['コーヒー＋MCT大1'],
-      meal1: ['マナ酵素90ml・水540ml','MCT小1','てびち汁 汁だけ1袋分（220g）'],
-      aruita: ['グルタミン5g','塩水500ml（天然塩ひとつまみ）'],
-      meal2: ['てびち汁 汁だけ1袋分（220g）'],
+      gozen: ['コーヒー＋MCT大1', SUPP.asa],
+      meal1: ['マナ酵素90ml・水540ml','MCT小1','てびち汁 汁だけ1袋分（220g）', SUPP.hiru_genshoku],
+      aruita: ['グルタミン5g','塩水500ml（天然塩ひとつまみ）', SUPP.gogo],
+      meal2: ['てびち汁 汁だけ1袋分（220g）', SUPP.yu_genshoku, SUPP.neruMae],
       meal3: []
     },
     kaifuku: {
-      gozen: ['コーヒー＋MCT大1'],
-      meal1: ['カチュー湯＋ひじき','卵1','卵2','卵3','納豆1','もずく50g'],
-      aruita: ['グルタミン5g','マナ酵素20ml','塩水500ml（天然塩ひとつまみ）'],
-      meal2: ['カチュー湯2杯＋ひじき','納豆1','もずく50g','てびち汁 汁だけ1袋分（220g）','テビチ内容物（1袋分）'],
+      gozen: ['コーヒー＋MCT大1', SUPP.asa],
+      meal1: ['カチュー湯＋ひじき','卵1','卵2','卵3','納豆1','もずく50g', SUPP.hiru_kaifuku],
+      aruita: ['グルタミン5g','マナ酵素20ml','塩水500ml（天然塩ひとつまみ）', SUPP.gogo],
+      meal2: ['カチュー湯2杯＋ひじき','納豆1','もずく50g','てびち汁 汁だけ1袋分（220g）','テビチ内容物（1袋分）', SUPP.yu_kaifuku, SUPP.neruMae],
       meal3: []
     }
   };
