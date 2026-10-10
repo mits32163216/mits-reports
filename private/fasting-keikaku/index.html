@@ -129,6 +129,18 @@
   .plan-table *, .plan-table{ font-size:var(--fs) !important; font-weight:400 !important; }
   .wrap *{ font-weight:400 !important; }
   td.shushi .big{ border:0; padding:0; margin:0; text-align:right; line-height:1.5; }
+
+  /* RENPHO 自動入力の印・結果メッセージ */
+  .src-badge{ display:inline-block; margin-left:4px; padding:1px 5px; border-radius:3px; font-size:10px; vertical-align:middle; }
+  .src-renpho_csv, .src-renpho_ocr{ background:#eef7fa; color:var(--title); }
+  .src-formula{ background:#edf6ec; color:var(--meal); }
+  .src-manual{ background:#fdf3e1; color:var(--amber); }
+  .renpho-status{ margin-top:6px; padding:6px 8px; background:#fafbfc; border:1px dashed var(--line); border-radius:4px; font-size:11px; color:var(--title); line-height:1.5; }
+  .renpho-status.ok{ background:#edf6ec; border-style:solid; border-color:#c8dfc5; }
+  .renpho-status.warn{ background:#fdf3e1; border-style:solid; border-color:#e8c88a; }
+  .renpho-status .ln{ display:block; }
+  .renpho-status .ln + .ln{ margin-top:2px; }
+  .btn-reset-auto{ margin-top:6px; padding:4px 10px; font-size:11px; border:1px solid var(--title); background:#fff; color:var(--title); border-radius:4px; cursor:pointer; }
 </style>
 </head>
 <body>
@@ -174,12 +186,14 @@
           <div class="preview" id="meal_photo_prev"></div>
         </div>
         <div class="upcard">
-          <h4>体重計のデータ（画像・CSV・テキストのいずれか）</h4>
-          <input id="scale_data" type="file" accept="image/*,text/csv,text/plain,.csv,.txt">
+          <h4>体重計のデータ（RENPHO の CSV、または画面の写真 複数枚）</h4>
+          <input id="scale_data" type="file" accept="image/*,text/csv,text/plain,.csv,.txt" multiple>
           <div class="preview" id="scale_data_prev"></div>
+          <div class="renpho-status" id="renpho_status" hidden></div>
+          <button type="button" id="btn_reset_auto" class="btn-reset-auto" hidden>自動の値に戻す</button>
         </div>
       </div>
-      <p class="hint">写真の中身は読み取りません（画面に表示するだけ）。計算に使う体重・脂肪量は上の欄に手で入れてください。</p>
+      <p class="hint">RENPHO の CSV を入れると、いちばん新しい測定行から 体重・体脂肪量・開始日・基礎代謝 を自動で入れます（CSV に WHR の値があれば読みますが、ウェスト・ヒップは別入力）。画面の写真（複数枚可）を入れると、Weight／Body Fat Mass／BMR／WHR の数字を画面から読み取って入れます（写真はこのブラウザの中だけで処理）。自動で入った欄は「RENPHO から」の印が付き、手で書き換えると「手で入力」に変わります。</p>
     </div>
 
     <div class="overrides">
@@ -322,31 +336,326 @@
     s.prio = prio.map(function(p){ return {k:p.k, on:p.on}; });
     s.ov_burn = ov_burn_vals; s.ov_deficit = ov_deficit_vals;
     s.meal_photo_name = meal_photo_name; s.scale_data_name = scale_data_name;
+    s.sources = typeof sources !== 'undefined' ? sources : {};
+    s.autoValues = typeof autoValues !== 'undefined' ? autoValues : {};
+    s.origSources = typeof origSources !== 'undefined' ? origSources : {};
     return s;
   }
   function persistSoft(){ var s = collectInput(); for (var k in state) delete state[k]; for (var k2 in s) state[k2] = s[k2]; saveInput(state); }
 
   function escapeHtml(x){ return String(x||'').replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 
-  // 写真と体重計のデータ
+  // 写真（直近の食事写真）だけは既存の1枚アップロード
   var meal_photo_name = state.meal_photo_name || '', scale_data_name = state.scale_data_name || '';
-  function bindUpload(inputId, prevId, isImageOnly){
-    $(inputId).addEventListener('change', function(e){
-      var f = e.target.files && e.target.files[0]; if (!f) return;
-      var prev = $(prevId); prev.innerHTML = '';
-      if (f.type.indexOf('image/') === 0) {
-        var r = new FileReader(); r.onload = function(){ var img = new Image(); img.src = r.result; img.alt = f.name; prev.appendChild(img); }; r.readAsDataURL(f);
-      } else if (f.type.indexOf('text/') === 0 || /\.(csv|txt)$/i.test(f.name)) {
-        var r2 = new FileReader(); r2.onload = function(){ var pre = document.createElement('pre'); pre.textContent = (r2.result || '').slice(0, 2000); prev.appendChild(pre); }; r2.readAsText(f);
-      } else {
-        prev.innerHTML = '<span class="chk-note">' + escapeHtml(f.name) + '（' + escapeHtml(f.type || '形式不明') + '）</span>';
-      }
-      if (inputId === 'meal_photo') meal_photo_name = f.name; else scale_data_name = f.name;
-      persistSoft();
+  $('meal_photo').addEventListener('change', function(e){
+    var f = e.target.files && e.target.files[0]; if (!f) return;
+    var prev = $('meal_photo_prev'); prev.innerHTML = '';
+    var r = new FileReader(); r.onload = function(){ var img = new Image(); img.src = r.result; img.alt = f.name; prev.appendChild(img); }; r.readAsDataURL(f);
+    meal_photo_name = f.name; persistSoft();
+  });
+  if (state.meal_photo_name) $('meal_photo_prev').innerHTML = '<span class="chk-note">前回：' + escapeHtml(state.meal_photo_name) + '</span>';
+  if (state.scale_data_name) $('scale_data_prev').innerHTML = '<span class="chk-note">前回：' + escapeHtml(state.scale_data_name) + '</span>';
+
+  // ======== 自動入力の管理（RENPHO 読み取り・式から入れる） ========
+  // sources[id] = 'renpho_csv' | 'renpho_ocr' | 'formula' | 'manual'
+  var sources = state.sources || {};
+  var autoValues = state.autoValues || {}; // 自動で入れた最後の値（「自動の値に戻す」用）
+  var SOURCE_LABEL = { renpho_csv: 'RENPHO から（CSV）', renpho_ocr: 'RENPHO から（写真）', formula: '式から', manual: '手で入力' };
+
+  function renderBadge(id){
+    // label の span.n の中に、既存の .src-badge を1個置く
+    var inp = $(id); if (!inp) return;
+    var label = inp.closest('label.f'); if (!label) return;
+    var n = label.querySelector('.n'); if (!n) return;
+    var old = n.querySelector('.src-badge'); if (old) old.remove();
+    var s = sources[id]; if (!s) return;
+    var b = document.createElement('span');
+    b.className = 'src-badge src-' + s;
+    b.textContent = SOURCE_LABEL[s] || s;
+    n.appendChild(b);
+  }
+  function renderAllBadges(){ ['tgt_fat','start_wt','start_fat','start_date','burn_default','waist','hip'].forEach(renderBadge); }
+
+  function setAuto(id, source, val){
+    // 手入力が既にある欄は上書きしない（source が renpho_* / formula のとき）
+    if (sources[id] === 'manual' && (source === 'renpho_csv' || source === 'renpho_ocr' || source === 'formula')) return false;
+    var el = $(id); if (!el) return false;
+    sources[id] = source;
+    if (val != null) {
+      autoValues[id] = val;
+      // input の type に合わせて値を整える
+      el.value = val;
+    }
+    renderBadge(id);
+    persistSoft();
+    return true;
+  }
+  // input の手入力を感知して source を 'manual' に切り替え
+  ['tgt_fat','start_wt','start_fat','start_date','burn_default','waist','hip'].forEach(function(id){
+    var el = $(id); if (!el) return;
+    el.addEventListener('input', function(){
+      // プログラムからの値変更は autoValues[id] と一致するはず。手入力はそれ以外
+      if (autoValues[id] != null && String(el.value) === String(autoValues[id])) return;
+      if (el.value === '' && !sources[id]) return;
+      sources[id] = 'manual';
+      renderBadge(id);
+    });
+  });
+
+  // ======== RENPHO 読み取り（CSV と 写真） ========
+  var renphoStatus = $('renpho_status');
+  function showStatus(lines, cls){
+    renphoStatus.hidden = false;
+    renphoStatus.className = 'renpho-status' + (cls ? ' ' + cls : '');
+    renphoStatus.innerHTML = lines.map(function(s){ return '<span class="ln">' + escapeHtml(s) + '</span>'; }).join('');
+  }
+
+  // CSV: いちばん新しい行を取る
+  function parseRenphoCsv(text){
+    var lines = text.split(/\r?\n/).filter(function(l){ return l.trim().length; });
+    if (lines.length < 2) return null;
+    var header = lines[0].split(',').map(function(s){ return s.trim(); });
+    function colIdx(name){ for (var i = 0; i < header.length; i++) if (header[i].toLowerCase().indexOf(name.toLowerCase()) === 0) return i; return -1; }
+    var iDate = colIdx('Date'), iTime = colIdx('Time'), iW = colIdx('Weight('), iBFM = colIdx('Body Fat Mass'), iBMR = colIdx('BMR'), iWHR = colIdx('WHR');
+    if (iDate < 0 || iW < 0) return null;
+    var rows = []; for (var k = 1; k < lines.length; k++){
+      var c = lines[k].split(','); if (c.length < header.length) continue;
+      var ds = (c[iDate] || '').trim().replace(/\./g, '-'); // 2026.10.05 → 2026-10-05
+      var ts = (c[iTime] || '').trim();
+      var dt = new Date(ds + 'T' + (ts || '00:00:00'));
+      if (isNaN(dt.getTime())) continue;
+      rows.push({ dt: dt, iso: ds, Weight: c[iW], BFM: iBFM >= 0 ? c[iBFM] : null, BMR: iBMR >= 0 ? c[iBMR] : null, WHR: iWHR >= 0 ? c[iWHR] : null });
+    }
+    if (!rows.length) return null;
+    rows.sort(function(a, b){ return b.dt - a.dt; });
+    var r = rows[0];
+    function num(s){ var f = parseFloat(s); return isNaN(f) ? null : f; }
+    return { date: r.iso, weight: num(r.Weight), fat_mass: num(r.BFM), bmr: num(r.BMR), whr: r.WHR && r.WHR !== '--' ? num(r.WHR) : null };
+  }
+
+  // 画像 OCR: Tesseract.js を遅延読み込み
+  var tess = { worker: null, loaded: false, loading: null };
+  function loadTesseract(){
+    if (tess.loaded) return Promise.resolve();
+    if (tess.loading) return tess.loading;
+    tess.loading = new Promise(function(resolve, reject){
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
+      s.onload = function(){ tess.loaded = true; resolve(); };
+      s.onerror = function(){ reject(new Error('Tesseract.js の読み込みに失敗しました（ネット接続を確認）')); };
+      document.head.appendChild(s);
+    });
+    return tess.loading;
+  }
+
+  // 画像を 3倍拡大して OCR 精度を上げる（二値化はしない：細い小数点が消えやすいため）
+  function preprocessImage(file){
+    return new Promise(function(resolve, reject){
+      var img = new Image();
+      img.onload = function(){
+        var scale = 3;
+        var cv = document.createElement('canvas');
+        cv.width = img.naturalWidth * scale;
+        cv.height = img.naturalHeight * scale;
+        var ctx = cv.getContext('2d');
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        ctx.drawImage(img, 0, 0, cv.width, cv.height);
+        cv.toBlob(function(b){ resolve(b || file); }, 'image/png');
+      };
+      img.onerror = reject;
+      img.src = URL.createObjectURL(file);
     });
   }
-  bindUpload('meal_photo', 'meal_photo_prev', true);
-  bindUpload('scale_data', 'scale_data_prev', false);
+  function ocrImage(file, onProgress){
+    return loadTesseract().then(function(){ return preprocessImage(file); }).then(function(blob){
+      return window.Tesseract.recognize(blob, 'eng', {
+        logger: function(m){ if (onProgress && m && typeof m.progress === 'number') onProgress(m.status || '', m.progress); }
+      });
+    }).then(function(res){ return (res && res.data && res.data.text) || ''; });
+  }
+
+  // OCR の結果テキストから、RENPHO の値を拾う
+  function extractFromOcrText(text){
+    var out = { weight: null, fat_mass: null, bmr: null, whr: null, matched: [], outOfRange: [] };
+    // 値域の決まり（RENPHO の体組成計で起こり得る範囲）。範囲外は OCR の誤読として捨てる。
+    // 体重と体脂肪量は OCR で小数点が落ちると桁ズレが起きるので「小数点つきの値だけ」採用。
+    // 範囲は大人向けの RENPHO 計測で現実的な幅。
+    var SPECS = [
+      { k: 'weight', label: '体重', min: 30, max: 200, re: /\bWeight\b[^A-Za-z]{0,20}?(\d{2,3}\.\d{1,2})/i, allowDotInsert: false },
+      { k: 'fat_mass', label: '体脂肪量', min: 3, max: 80, re: /\bBody\s*Fat\s*Mass\b[^A-Za-z]{0,20}?(\d{1,3}\.\d{1,2})/i, allowDotInsert: false },
+      { k: 'bmr', label: '基礎代謝', min: 500, max: 3500, re: /\bBMR\b[^A-Za-z]{0,20}?(\d{3,4})/i, allowDotInsert: false },
+      { k: 'whr', label: 'WHR', min: 0.5, max: 1.5, re: /\bWHR\b[^A-Za-z]{0,20}?(\d\.\d{1,3})/i, allowDotInsert: false }
+    ];
+    SPECS.forEach(function(s){
+      var m = text.match(s.re);
+      if (!m) return;
+      var raw = m[1];
+      var candidates = [parseFloat(raw)];
+      // 小数点が OCR で落ちた形を試す（例：「5410」→「54.10」・「185」→「11.85」ではなく「18.5」）
+      if (s.allowDotInsert && /^\d+$/.test(raw) && raw.length >= 3) {
+        // 小数点を後ろから2桁目に入れる
+        var alt = raw.slice(0, raw.length + s.insertAt) + '.' + raw.slice(raw.length + s.insertAt);
+        candidates.push(parseFloat(alt));
+      }
+      // 範囲内の最初の候補を採用
+      var chosen = null;
+      for (var i = 0; i < candidates.length; i++) {
+        var v = candidates[i];
+        if (!isNaN(v) && v >= s.min && v <= s.max) { chosen = v; break; }
+      }
+      if (chosen != null) { out[s.k] = chosen; out.matched.push(s.k); }
+      else { out.outOfRange.push(s.label + '（読み取り値 ' + raw + ' は範囲外）'); }
+    });
+    return out;
+  }
+
+  function dateFromImageFile(file){
+    // 画像から日付を取るのは難しいので、ファイルの最終更新日を使う（開始日に当てる）
+    if (!file.lastModified) return null;
+    var d = new Date(file.lastModified);
+    var y = d.getFullYear(), m = d.getMonth() + 1, dd = d.getDate();
+    return y + '-' + (m < 10 ? '0' : '') + m + '-' + (dd < 10 ? '0' : '') + dd;
+  }
+
+  // RENPHO の値を自動入力欄に流し込む
+  function applyRenphoValues(v, source){
+    var put = []; var skip = [];
+    if (v.weight != null && setAuto('start_wt', source, v.weight.toFixed(2))) put.push('体重 ' + v.weight.toFixed(2));
+    else if (v.weight != null) skip.push('体重（手入力あり）');
+    if (v.fat_mass != null && setAuto('start_fat', source, v.fat_mass.toFixed(2))) put.push('体脂肪量 ' + v.fat_mass.toFixed(2));
+    else if (v.fat_mass != null) skip.push('体脂肪量（手入力あり）');
+    if (v.bmr != null && setAuto('burn_default', source, Math.round(v.bmr))) put.push('基礎代謝 ' + Math.round(v.bmr));
+    else if (v.bmr != null) skip.push('基礎代謝（手入力あり）');
+    if (v.date && setAuto('start_date', source, v.date)) { put.push('開始日 ' + v.date); refreshOverrideBoxes(); }
+    else if (v.date) skip.push('開始日（手入力あり）');
+    // WHR は数値のみ分かるが、ウェスト・ヒップの個別値は無いので入れない
+    applyFormulaValues();
+    $('btn_reset_auto').hidden = Object.keys(autoValues).length === 0;
+    return { put: put, skip: skip };
+  }
+
+  // 式から出せる値を入れる（記録表と同じ式）
+  function applyFormulaValues(){
+    // 目標脂肪量：start_fat × (1 - 69.3/9000)^total_days （毎日 cap ちょうど燃やす）
+    var sf = parseFloat($('start_fat').value), td = parseInt($('total_days').value, 10);
+    if (!isNaN(sf) && sf > 0 && !isNaN(td) && td > 0) {
+      var tgt = sf * Math.pow(1 - 69.3 / 9000, td);
+      // 既に手入力があれば触らない
+      setAuto('tgt_fat', 'formula', tgt.toFixed(2));
+    }
+    // ウェストヒップ比率：waist / hip（waist/hip 自体は RENPHO からは取れないので式では出さない）
+  }
+  // 全日数が変わったら目標脂肪量を式から入れ直す
+  ['start_fat','total_days'].forEach(function(id){
+    $(id).addEventListener('input', function(){
+      // 手入力の変化なので、autoValues と一致しなければ sources[id]='manual'
+      setTimeout(applyFormulaValues, 50);
+    });
+  });
+
+  // ファイル処理（CSV・画像 複数枚）
+  $('scale_data').addEventListener('change', function(e){
+    var files = Array.from(e.target.files || []); if (!files.length) return;
+    var prev = $('scale_data_prev'); prev.innerHTML = '';
+    scale_data_name = files.map(function(f){ return f.name; }).join('・');
+    persistSoft();
+    showStatus(['読み取り中…（' + files.length + '件）'], '');
+
+    // プレビュー
+    files.forEach(function(f){
+      if (f.type.indexOf('image/') === 0) {
+        var r = new FileReader(); r.onload = function(){
+          var img = new Image(); img.src = r.result; img.alt = f.name; img.style.marginBottom = '4px'; prev.appendChild(img);
+        }; r.readAsDataURL(f);
+      } else {
+        var r2 = new FileReader(); r2.onload = function(){
+          var pre = document.createElement('pre'); pre.textContent = (r2.result || '').slice(0, 2000); prev.appendChild(pre);
+        }; r2.readAsText(f);
+      }
+    });
+
+    // 並列実行は負荷が高いので、CSV→画像の順で逐次
+    (async function(){
+      var allPut = [], allSkip = [], ocrFailed = [], outOfRanges = [], missing = ['weight','fat_mass','bmr','whr'];
+      var acc = { weight: null, fat_mass: null, bmr: null, whr: null, date: null, matched: {} };
+      var usedSource = null, imageDates = [];
+      for (var i = 0; i < files.length; i++) {
+        var f = files[i];
+        try {
+          if (/\.csv$/i.test(f.name) || f.type.indexOf('csv') >= 0 || f.type === 'text/plain') {
+            var txt = await f.text();
+            var cv = parseRenphoCsv(txt);
+            if (cv) {
+              ['weight','fat_mass','bmr','whr'].forEach(function(k){ if (cv[k] != null && acc[k] == null){ acc[k] = cv[k]; acc.matched[k] = true; } });
+              if (cv.date && !acc.date) acc.date = cv.date;
+              usedSource = 'renpho_csv';
+            } else {
+              ocrFailed.push(f.name + '（CSV の形が RENPHO と違う）');
+            }
+          } else if (f.type.indexOf('image/') === 0) {
+            showStatus(['読み取り中…（' + (i+1) + '/' + files.length + '：' + f.name + '）'], '');
+            var text = await ocrImage(f, function(status, prog){
+              showStatus(['読み取り中…（' + (i+1) + '/' + files.length + '：' + f.name + '） ' + status + ' ' + Math.round((prog||0)*100) + '%'], '');
+            });
+            var ex = extractFromOcrText(text);
+            ['weight','fat_mass','bmr','whr'].forEach(function(k){ if (ex[k] != null && acc[k] == null){ acc[k] = ex[k]; acc.matched[k] = true; } });
+            if (ex.outOfRange && ex.outOfRange.length) outOfRanges = outOfRanges.concat(ex.outOfRange.map(function(x){ return f.name + '：' + x; }));
+            var fd = dateFromImageFile(f);
+            if (fd) imageDates.push(fd);
+            if (ex.matched.length === 0 && (!ex.outOfRange || !ex.outOfRange.length)) ocrFailed.push(f.name + '（RENPHO の項目名が見つからない）');
+            if (!usedSource) usedSource = 'renpho_ocr';
+          } else {
+            ocrFailed.push(f.name + '（画像でも CSV でもない）');
+          }
+        } catch (err) {
+          ocrFailed.push(f.name + '（' + (err && err.message ? err.message : '読み取り失敗') + '）');
+        }
+      }
+      // 画像しか無く CSV が無いときは、画像ファイルの最終更新日を開始日に使う
+      if (!acc.date && imageDates.length) { imageDates.sort(); acc.date = imageDates[imageDates.length-1]; }
+      var ret = applyRenphoValues(acc, usedSource || 'renpho_ocr');
+      allPut = ret.put; allSkip = ret.skip;
+      // 読めなかった項目
+      var missed = missing.filter(function(k){ return !acc.matched[k]; });
+      var MLBL = { weight:'体重', fat_mass:'体脂肪量', bmr:'基礎代謝', whr:'WHR' };
+      var missedLabels = missed.map(function(k){ return MLBL[k] || k; });
+      var lines = [];
+      if (allPut.length) lines.push('入りました：' + allPut.join('・'));
+      if (allSkip.length) lines.push('そのまま：' + allSkip.join('・'));
+      if (missedLabels.length) lines.push('読めなかった項目：' + missedLabels.join('・'));
+      if (outOfRanges.length) lines.push('範囲外で捨てた値：' + outOfRanges.join(' / '));
+      if (ocrFailed.length) lines.push('ファイルの問題：' + ocrFailed.join(' / '));
+      if (!lines.length) lines.push('読み取り結果なし');
+      showStatus(lines, allPut.length ? 'ok' : (ocrFailed.length ? 'warn' : ''));
+    })();
+  });
+
+  // 「自動の値に戻す」
+  $('btn_reset_auto').addEventListener('click', function(){
+    var restored = [];
+    Object.keys(autoValues).forEach(function(id){
+      var el = $(id); if (!el) return;
+      el.value = autoValues[id];
+      // source は自動入力時のものに戻す（元の source を sources に保存している必要がある）
+      if (origSources[id]) sources[id] = origSources[id];
+      renderBadge(id);
+      restored.push(id);
+    });
+    persistSoft();
+    showStatus(['自動の値に戻しました（' + restored.length + '件）'], 'ok');
+  });
+  // 自動入力時の source をコピーして保存（手入力に変わっても元を覚えておく）
+  var origSources = state.origSources || {};
+  var _origSetAuto = setAuto;
+  setAuto = function(id, source, val){
+    var ok = _origSetAuto(id, source, val);
+    if (ok && (source === 'renpho_csv' || source === 'renpho_ocr' || source === 'formula')) origSources[id] = source;
+    return ok;
+  };
+
+  // 復元時に badge とフォーム値を戻す
+  renderAllBadges();
 
   // 日別上書き
   var ov_burn_vals = state.ov_burn || {};
