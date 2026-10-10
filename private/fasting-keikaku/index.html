@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>ファスティング計画 ― 別の人のためのプラン作成</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<style>
+  :root{
+    --ink:#2f5f72; --line:#b9dbe4; --line-thin:#dcecf1; --head-bg:#eef7fa; --title:#1b4a5c;
+    --goal:#8fbfcc; --red:#c03030; --green:#1d7a3a; --amber-bg:#fdf3e1; --amber:#7a4a0a; --meal-bg:#edf6ec; --meal:#2d5a2a;
+    --kyou:#fff8dc;
+    --fs:13px; --col:122px; --head:100px;
+    color-scheme: light;
+  }
+  @media (max-width:640px){
+    :root{ --fs:12.5px; --col:112px; --head:82px; }
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#2f5f72; --line:#b9dbe4; --line-thin:#dcecf1; --head-bg:#eef7fa; --title:#1b4a5c;
+      --goal:#8fbfcc; --red:#c03030; --green:#1d7a3a; --amber-bg:#fdf3e1; --amber:#7a4a0a; --meal-bg:#edf6ec; --meal:#2d5a2a;
+      --kyou:#fff8dc;
+    }
+  }
+  html,body{ margin:0; padding:0; background:#fff !important; color:var(--ink);
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","Noto Sans JP","Meiryo",sans-serif;
+    font-variant-numeric:tabular-nums; -webkit-text-size-adjust:100%; font-size:var(--fs); }
+  body *, body { color:var(--ink); }
+
+  .wrap{ padding:12px 12px 60px; max-width:1200px; margin:0 auto; }
+  h1{ font-size:16px; margin:0 0 4px; color:var(--title); font-weight:700; }
+  .lead{ color:var(--title); margin:0 0 14px; line-height:1.6; }
+
+  /* 入力 */
+  .form{ background:#fafbfc; border:1px solid var(--line); border-radius:8px; padding:12px; margin-bottom:14px; }
+  .form h2{ font-size:14px; margin:0 0 8px; color:var(--title); font-weight:700; }
+  .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:8px; }
+  label.f{ display:block; font-size:12px; color:var(--title); }
+  label.f .n{ display:block; margin-bottom:2px; }
+  label.f .n .req{ color:var(--red); margin-left:2px; }
+  label.f input, label.f select{ width:100%; box-sizing:border-box; padding:5px 6px; border:1px solid var(--line); border-radius:4px; background:#fff; color:var(--ink); font-size:13px; }
+  label.f input:invalid{ border-color:var(--red); }
+  .missing{ color:var(--red); margin:6px 0; font-size:12px; min-height:16px; }
+  .hint{ color:#666; font-size:11px; margin-top:3px; }
+
+  /* 優先順位・オンオフ */
+  .prio{ margin-top:8px; }
+  .prio h3{ font-size:13px; margin:6px 0 4px; color:var(--title); font-weight:700; }
+  .prio-note{ font-size:11px; color:#666; margin:0 0 4px; }
+  .prio-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:4px; }
+  .prio-item{ display:flex; align-items:center; gap:6px; padding:5px 8px; border:1px solid var(--line); border-radius:4px; background:#fff; }
+  .prio-item .up, .prio-item .dn{ padding:2px 7px; border:1px solid var(--line); background:#eef7fa; border-radius:3px; cursor:pointer; font-size:11px; }
+  .prio-item .onoff{ margin-left:auto; display:inline-flex; align-items:center; gap:4px; cursor:pointer; font-size:12px; }
+  .prio-item .onoff input{ width:14px; height:14px; }
+  .prio-item .lbl{ flex:1; font-size:12px; }
+  .prio-item .ord{ color:#666; font-size:11px; min-width:14px; text-align:right; }
+
+  /* アップロード */
+  .uploads{ display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:10px; }
+  .upcard{ border:1px solid var(--line); border-radius:6px; padding:8px; background:#fff; }
+  .upcard h4{ font-size:12px; margin:0 0 5px; color:var(--title); font-weight:700; }
+  .upcard input[type=file]{ font-size:12px; }
+  .upcard .preview{ margin-top:6px; }
+  .upcard .preview img{ max-width:100%; max-height:160px; display:block; border:1px solid var(--line); border-radius:3px; }
+  .upcard .preview pre{ max-height:120px; overflow:auto; font-size:11px; background:#f6f8fa; padding:5px; border-radius:3px; margin:0; white-space:pre-wrap; word-break:break-word; }
+
+  .btns{ margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; }
+  .btns button{ padding:7px 14px; font-size:13px; border-radius:5px; border:1px solid var(--title); background:var(--title); color:#fff; cursor:pointer; }
+  .btns button.sub{ background:#fff; color:var(--title); }
+  .btns button:disabled{ opacity:0.5; cursor:not-allowed; }
+
+  /* 計画の表（記録表と同じ見た目） */
+  .plan{ margin-top:14px; }
+  .plan .status{ margin:0 0 6px; font-size:12px; color:var(--title); }
+  .plan .pending{ color:#666; padding:14px; background:#f6f8fa; border-radius:5px; }
+  .scroll{ overflow-x:auto; -webkit-overflow-scrolling:touch; overscroll-behavior-x:contain; }
+
+  table.plan-table{ border-collapse:separate; border-spacing:0; table-layout:fixed; width:max-content; }
+  table.plan-table th, table.plan-table td{ border-right:1px solid var(--line); border-bottom:1px solid var(--line); padding:6px 8px; text-align:center; vertical-align:middle; background:#fff; width:var(--col); min-width:var(--col); box-sizing:border-box; }
+  table.plan-table tr > :first-child{ border-left:1px solid var(--line); }
+  table.plan-table tr.hinichi > *{ border-top:1px solid var(--line); }
+  table.plan-table tr.zutsu > *, table.plan-table tr.gozen > *, table.plan-table tr.biko > *{ border-top:2px solid var(--title); }
+  table.plan-table tr.nensho > *, table.plan-table tr.tanpaku > *, table.plan-table tr.toshitsu > *, table.plan-table tr.mizu > *{ border-top:1px solid #e2c58f; }
+  /* 太線（期の区切り） */
+  table.plan-table td.phase-end{ border-right:2px solid var(--title) !important; }
+
+  th.head{ position:sticky; left:0; z-index:2; width:var(--head); min-width:var(--head);
+    background:var(--head-bg); color:var(--title); font-size:12px; font-weight:400; line-height:1.3; text-align:center; white-space:normal; }
+  th.head span{ display:block; font-size:11px; }
+  td.hinichi .nth{ display:block; font-size:11px; color:var(--title); }
+  td.hinichi .ymd{ display:block; font-size:14px; color:var(--title); line-height:1.2; }
+  td.hinichi .dow{ font-size:11px; margin-left:2px; }
+  td.hinichi.sunday .nth, td.hinichi.sunday .ymd, td.hinichi.sunday .dow{ color:var(--red); }
+
+  td.goal{ font-size:14px; color:var(--goal); }
+  td.goal.shibou{ color:var(--red); }
+
+  tr.zutsu > th, tr.nensho > th, tr.tanpaku > th, tr.toshitsu > th, tr.mizu > th{ background:var(--amber-bg); color:var(--amber); }
+  td.shushi, td.nensho{ vertical-align:top; text-align:left; font-size:12px; line-height:1.5; padding:5px 8px; }
+  td.shushi .r, td.nensho .r{ display:flex; justify-content:space-between; }
+  td.shushi .r + .r, td.nensho .r + .r{ border-top:1px dotted var(--line); }
+  td.shushi .big{ text-align:right; line-height:1.5; }
+  td.shushi .big::before{ content:"収支"; float:left; }
+
+  tr.gozen > th, tr.hirusugi > th, tr.aruita > th, tr.yugata > th{ background:var(--meal-bg); }
+  th.meal-head .h1{ display:block; font-size:12px; color:var(--meal); }
+  th.meal-head .h2{ display:block; font-size:11px; color:var(--meal); }
+  td.meal{ text-align:left; vertical-align:top; padding:5px 6px; }
+  td.meal .chk{ display:flex; align-items:center; font-size:11px; color:var(--title); line-height:1.3; min-height:22px; }
+  td.meal .chk::before{ content:""; display:inline-block; width:14px; height:14px; border:1.5px solid var(--title); border-radius:3px; margin-right:5px; flex-shrink:0; box-sizing:border-box; }
+  td.meal .chk.on::before{ background:var(--title); box-shadow:inset 0 0 0 2px #fff; }
+  td.meal .chk-note{ font-size:11px; color:var(--goal); }
+
+  td.biko-cell{ font-size:11px; line-height:1.45; text-align:left; }
+
+  tr.off-row{ display:none !important; }
+
+  /* 日別の上書き入力 */
+  .overrides{ margin-top:10px; }
+  .overrides h3{ font-size:13px; margin:0 0 6px; color:var(--title); font-weight:700; }
+  .overrides .ov-list{ display:flex; flex-wrap:wrap; gap:6px; max-height:160px; overflow-y:auto; padding:4px; background:#fafbfc; border:1px solid var(--line); border-radius:4px; }
+  .overrides .ov-item{ display:flex; align-items:center; gap:4px; font-size:11px; }
+  .overrides .ov-item input{ width:70px; padding:2px 4px; border:1px solid var(--line); border-radius:3px; font-size:11px; }
+
+  .note{ font-size:11px; color:#666; margin:8px 0 0; line-height:1.5; }
+
+  /* 文字の大きさを揃える */
+  .plan-table *, .wrap h1, .wrap p, .wrap h2, .wrap h3, .wrap label, .wrap .chk, .wrap input, .wrap button, .wrap select{ font-weight:400; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>ファスティング計画 ― 別の人のためのプラン作成</h1>
+  <p class="lead">必須入力を埋めると、同じ組み立て方で日別の計画を出します。計算と写真はこのブラウザの中だけで扱います（送信しません）。</p>
+
+  <div class="form" id="form">
+    <h2>必須入力</h2>
+    <div class="grid">
+      <label class="f"><span class="n">目標脂肪量 <span class="req">*</span>（kg）</span><input id="tgt_fat" type="number" step="0.01" min="0" max="200"></label>
+      <label class="f"><span class="n">体重（開始の朝）<span class="req">*</span>（kg）</span><input id="start_wt" type="number" step="0.1" min="30" max="300"></label>
+      <label class="f"><span class="n">体脂肪量（開始の朝）<span class="req">*</span>（kg）</span><input id="start_fat" type="number" step="0.01" min="0" max="200"></label>
+      <label class="f"><span class="n">開始日 <span class="req">*</span></span><input id="start_date" type="date"></label>
+      <label class="f"><span class="n">全日数 <span class="req">*</span>（日）</span><input id="total_days" type="number" step="1" min="1" max="60"></label>
+      <label class="f"><span class="n">減食日数 <span class="req">*</span>（固形物なし）</span><input id="genshoku_days" type="number" step="1" min="0" max="30"></label>
+      <label class="f"><span class="n">減食開始日 <span class="req">*</span></span><input id="genshoku_start" type="date"></label>
+      <label class="f"><span class="n">回復日数 <span class="req">*</span></span><input id="kaifuku_days" type="number" step="1" min="0" max="30"></label>
+      <label class="f"><span class="n">1日の食事回数 <span class="req">*</span></span><select id="meals_per_day"><option value="">—</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></label>
+      <label class="f"><span class="n">1日の消費（基本・kcal）<span class="req">*</span></span><input id="burn_default" type="number" step="1" min="800" max="5000"><span class="hint">基礎代謝＋活動の合計。歩数から入れる場合は 1500+83+42×歩数/1000</span></label>
+    </div>
+
+    <div class="prio">
+      <h3>目標の優先順位・オンオフ</h3>
+      <p class="prio-note">上下で並べ替え（上が最優先）。オフにした行は表から消えます。優先順位による献立の変え方は未決（並べ替えは記録として残します）。</p>
+      <ul class="prio-list" id="prio_list"></ul>
+    </div>
+
+    <div class="prio">
+      <h3>ウェストヒップ比率（オンの場合）</h3>
+      <div class="grid">
+        <label class="f"><span class="n">ウェスト（cm）</span><input id="waist" type="number" step="0.1" min="30" max="200"></label>
+        <label class="f"><span class="n">ヒップ（cm）</span><input id="hip" type="number" step="0.1" min="30" max="200"></label>
+      </div>
+    </div>
+
+    <div class="prio">
+      <h3>直近の食事写真・体重計のデータ <span class="req" style="color:var(--red)">*</span></h3>
+      <div class="uploads">
+        <div class="upcard">
+          <h4>直近の食事写真</h4>
+          <input id="meal_photo" type="file" accept="image/*">
+          <div class="preview" id="meal_photo_prev"></div>
+        </div>
+        <div class="upcard">
+          <h4>体重計のデータ（画像・CSV・テキストのいずれか）</h4>
+          <input id="scale_data" type="file" accept="image/*,text/csv,text/plain,.csv,.txt">
+          <div class="preview" id="scale_data_prev"></div>
+        </div>
+      </div>
+      <p class="hint">写真の中身は読み取りません（画面に表示するだけ）。計算に使う体重・脂肪量は上の欄に手で入れてください。</p>
+    </div>
+
+    <div class="overrides">
+      <h3>日別の上書き（必要な日だけ）</h3>
+      <p class="prio-note">全日数と開始日を入れると日ごとの欄が出ます。消費kcal・実績の不足kcalを日ごとに書き換えられます。</p>
+      <div style="margin-bottom:6px;"><strong style="font-weight:400;">日別の消費 kcal 上書き</strong></div>
+      <div class="ov-list" id="ov_burn"></div>
+      <div style="margin:8px 0 6px;"><strong style="font-weight:400;">日別の実績の不足 kcal 上書き</strong></div>
+      <div class="ov-list" id="ov_deficit"></div>
+    </div>
+
+    <p class="missing" id="missing"></p>
+    <div class="btns">
+      <button type="button" id="btn_build">計画を組み立てる</button>
+      <button type="button" id="btn_clear" class="sub">入力を消す</button>
+    </div>
+  </div>
+
+  <div class="plan" id="plan">
+    <div class="pending">必須入力が揃うと計画が出ます。</div>
+  </div>
+
+  <p class="note">計算の決まり（記録表と同じ）：1日の不足＝消費−摂取。脂肪から出せるのは 脂肪kg×69.3kcal まで（9,000kcal/kg・脂肪組織は8割が脂肪）。超えた分は除脂肪から 1,800kcal/kg。体重の減り＝脂肪分÷9,000÷0.8＋超えた分÷1,800。たんぱく質の必要量は 体重×1.6g。糖質の上限は50g。</p>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // ======== 栄養値辞書 (1回分 [kcal, たんぱく質g, 糖質g]) — 記録表のソースから写した ========
+  var EIYOU = {
+    'コーヒー＋MCT大1':[126,0,0],
+    'てびち汁 汁だけ1袋分（220g）':[45,10.0,0.0],
+    'テビチ内容物（1袋分）':[143,14.4,0.0],
+    '塩水500ml（天然塩ひとつまみ）':[0,0,0],
+    'カチュー湯＋ひじき':[37,7.9,0.2],
+    'カチュー湯':[33,7.7,0.1],
+    '卵1':[71,6.1,0.2], '卵2':[71,6.1,0.2], '卵3':[71,6.1,0.2],
+    '納豆1':[86,7.4,2.4], 'もずく50g':[3.5,0.15,0], 'MCT小1':[42,0,0],
+    'プロテイン2杯':[178,21,7.6], 'グルタミン5g':[20,5,0],
+    'マナ酵素20ml':[44,0,10.8], 'マナ酵素60ml':[132,0,32.4],
+    'カチュー湯2杯＋ひじき':[71,15.6,0.4],
+    'ベーコンエッグ・卵2':[344,27.2,4.3],
+    '柿1/2個':[57,0.4,12.9], 'リンゴ1個':[135,0.3,36.0],
+    'マナ酵素90ml・水540ml':[198,0,48.6]
+  };
+
+  // ======== 期間別の献立の型（記録表の品目をそのまま。1食目/2食目/3食目に分けて置ける） ========
+  // phase: 'futsu' (普通食) / 'genshoku' (減食=固形物なし) / 'kaifuku' (回復食)
+  // 「食事回数」入力で、使う食事ブロックを選ぶ（1=1食目のみ・2=1食目+2食目・3=全部）
+  var MENUS = {
+    futsu: {
+      gozen: ['コーヒー＋MCT大1'],
+      meal1: ['カチュー湯＋ひじき','卵1','卵2','卵3','納豆1','もずく50g','MCT小1'],
+      aruita: ['グルタミン5g','マナ酵素20ml','塩水500ml（天然塩ひとつまみ）'],
+      meal2: ['カチュー湯2杯＋ひじき','納豆1','もずく50g','てびち汁 汁だけ1袋分（220g）'],
+      meal3: ['プロテイン2杯']
+    },
+    genshoku: {
+      gozen: ['コーヒー＋MCT大1'],
+      meal1: ['マナ酵素90ml・水540ml','MCT小1','てびち汁 汁だけ1袋分（220g）'],
+      aruita: ['グルタミン5g','塩水500ml（天然塩ひとつまみ）'],
+      meal2: ['てびち汁 汁だけ1袋分（220g）'],
+      meal3: []
+    },
+    kaifuku: {
+      gozen: ['コーヒー＋MCT大1'],
+      meal1: ['カチュー湯＋ひじき','卵1','卵2','卵3','納豆1','もずく50g'],
+      aruita: ['グルタミン5g','マナ酵素20ml','塩水500ml（天然塩ひとつまみ）'],
+      meal2: ['カチュー湯2杯＋ひじき','納豆1','もずく50g','てびち汁 汁だけ1袋分（220g）','テビチ内容物（1袋分）'],
+      meal3: []
+    }
+  };
+
+  var PHASE_LABEL = {futsu:'普通食（カロリー制限・糖質制限）', genshoku:'固形物なし', kaifuku:'回復食'};
+  var PHASE_BIKO = {
+    futsu: '普通食（カロリー制限・糖質制限）／水2L以上',
+    genshoku: '固形物なし／マナ酵素90mlを水540mlで割り（1:6）、ペットボトルで12〜21時に空腹のとき飲む／水2L以上',
+    kaifuku: '回復食／水2L以上'
+  };
+
+  // ======== 優先順位（オン/オフと並び順） ========
+  var PRIO_INIT = [
+    {k:'shibou',  label:'脂肪減少', on:true},
+    {k:'taiju',   label:'体重減少', on:true},
+    {k:'ketosis', label:'ケトシス（糖質上限50g）', on:true},
+    {k:'wh',      label:'ウェストヒップ比率', on:false}
+  ];
+
+  // ======== DOM・保存 ========
+  var LS = 'fasting_keikaku_input_v1';
+  function $(id){ return document.getElementById(id); }
+  function tryLS(fn){ try{ return fn(); }catch(e){ return null; } }
+  function saveInput(st){ tryLS(function(){ localStorage.setItem(LS, JSON.stringify(st)); }); }
+  function loadInput(){ return tryLS(function(){ var s = localStorage.getItem(LS); return s ? JSON.parse(s) : null; }) || {}; }
+
+  // 優先順位 UI
+  var state = loadInput();
+  var prio = (state.prio && state.prio.length === PRIO_INIT.length) ? state.prio : PRIO_INIT.map(function(p){ return {k:p.k, on:p.on}; });
+  function labelOf(k){ for (var i=0;i<PRIO_INIT.length;i++) if (PRIO_INIT[i].k===k) return PRIO_INIT[i].label; return k; }
+  function renderPrio(){
+    var ul = $('prio_list'); ul.innerHTML = '';
+    prio.forEach(function(p, i){
+      var li = document.createElement('li'); li.className = 'prio-item';
+      li.innerHTML = '<span class="ord">' + (i+1) + '</span>' +
+        '<button type="button" class="up">↑</button>' +
+        '<button type="button" class="dn">↓</button>' +
+        '<span class="lbl">' + labelOf(p.k) + '</span>' +
+        '<label class="onoff"><input type="checkbox"' + (p.on ? ' checked' : '') + '> on</label>';
+      li.querySelector('.up').onclick = function(){ if (i>0){ var t=prio[i-1]; prio[i-1]=prio[i]; prio[i]=t; renderPrio(); persistSoft(); } };
+      li.querySelector('.dn').onclick = function(){ if (i<prio.length-1){ var t=prio[i+1]; prio[i+1]=prio[i]; prio[i]=t; renderPrio(); persistSoft(); } };
+      li.querySelector('input[type=checkbox]').onchange = function(e){ prio[i].on = !!e.target.checked; persistSoft(); applyPrioToPlan(); };
+      ul.appendChild(li);
+    });
+  }
+
+  // 入力復元
+  function restore(){
+    ['tgt_fat','start_wt','start_fat','start_date','total_days','genshoku_days','genshoku_start','kaifuku_days','meals_per_day','burn_default','waist','hip'].forEach(function(id){
+      if (state[id] != null && state[id] !== '') $(id).value = state[id];
+    });
+    if (state.meal_photo_name) { $('meal_photo_prev').innerHTML = '<span class="chk-note">前回：' + escapeHtml(state.meal_photo_name) + '</span>'; }
+    if (state.scale_data_name) { $('scale_data_prev').innerHTML = '<span class="chk-note">前回：' + escapeHtml(state.scale_data_name) + '</span>'; }
+  }
+  function collectInput(){
+    var s = {};
+    ['tgt_fat','start_wt','start_fat','start_date','total_days','genshoku_days','genshoku_start','kaifuku_days','meals_per_day','burn_default','waist','hip'].forEach(function(id){ s[id] = $(id).value; });
+    s.prio = prio.map(function(p){ return {k:p.k, on:p.on}; });
+    s.ov_burn = ov_burn_vals; s.ov_deficit = ov_deficit_vals;
+    s.meal_photo_name = meal_photo_name; s.scale_data_name = scale_data_name;
+    return s;
+  }
+  function persistSoft(){ var s = collectInput(); for (var k in state) delete state[k]; for (var k2 in s) state[k2] = s[k2]; saveInput(state); }
+
+  function escapeHtml(x){ return String(x||'').replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+  // 写真と体重計のデータ
+  var meal_photo_name = state.meal_photo_name || '', scale_data_name = state.scale_data_name || '';
+  function bindUpload(inputId, prevId, isImageOnly){
+    $(inputId).addEventListener('change', function(e){
+      var f = e.target.files && e.target.files[0]; if (!f) return;
+      var prev = $(prevId); prev.innerHTML = '';
+      if (f.type.indexOf('image/') === 0) {
+        var r = new FileReader(); r.onload = function(){ var img = new Image(); img.src = r.result; img.alt = f.name; prev.appendChild(img); }; r.readAsDataURL(f);
+      } else if (f.type.indexOf('text/') === 0 || /\.(csv|txt)$/i.test(f.name)) {
+        var r2 = new FileReader(); r2.onload = function(){ var pre = document.createElement('pre'); pre.textContent = (r2.result || '').slice(0, 2000); prev.appendChild(pre); }; r2.readAsText(f);
+      } else {
+        prev.innerHTML = '<span class="chk-note">' + escapeHtml(f.name) + '（' + escapeHtml(f.type || '形式不明') + '）</span>';
+      }
+      if (inputId === 'meal_photo') meal_photo_name = f.name; else scale_data_name = f.name;
+      persistSoft();
+    });
+  }
+  bindUpload('meal_photo', 'meal_photo_prev', true);
+  bindUpload('scale_data', 'scale_data_prev', false);
+
+  // 日別上書き
+  var ov_burn_vals = state.ov_burn || {};
+  var ov_deficit_vals = state.ov_deficit || {};
+  function renderOverrides(days){
+    var ovb = $('ov_burn'), ovd = $('ov_deficit');
+    ovb.innerHTML = ''; ovd.innerHTML = '';
+    days.forEach(function(d){
+      var mb = document.createElement('span'); mb.className = 'ov-item';
+      mb.innerHTML = '<span>' + d.label + '</span><input type="number" step="1" placeholder="—" data-d="' + d.key + '">';
+      var inp = mb.querySelector('input'); if (ov_burn_vals[d.key] != null && ov_burn_vals[d.key] !== '') inp.value = ov_burn_vals[d.key];
+      inp.addEventListener('input', function(e){ ov_burn_vals[d.key] = e.target.value; persistSoft(); });
+      ovb.appendChild(mb);
+
+      var md = document.createElement('span'); md.className = 'ov-item';
+      md.innerHTML = '<span>' + d.label + '</span><input type="number" step="1" placeholder="—" data-d="' + d.key + '">';
+      var inp2 = md.querySelector('input'); if (ov_deficit_vals[d.key] != null && ov_deficit_vals[d.key] !== '') inp2.value = ov_deficit_vals[d.key];
+      inp2.addEventListener('input', function(e){ ov_deficit_vals[d.key] = e.target.value; persistSoft(); });
+      ovd.appendChild(md);
+    });
+  }
+
+  // 開始日/全日数の変化で日別欄を更新
+  function refreshOverrideBoxes(){
+    var sd = $('start_date').value, td = parseInt($('total_days').value, 10);
+    if (!sd || !td || td < 1) { $('ov_burn').innerHTML = ''; $('ov_deficit').innerHTML = ''; return; }
+    var days = buildDays(sd, td); renderOverrides(days);
+  }
+  function buildDays(startDateStr, total){
+    // 開始日から total 日分の配列（最後の「終了の朝」は total+1 日目の朝）
+    var out = []; var base = new Date(startDateStr + 'T00:00:00');
+    for (var i = 0; i < total; i++) {
+      var d = new Date(base.getTime()); d.setDate(base.getDate() + i);
+      out.push({ key: ymd(d), label: (d.getMonth()+1) + '/' + d.getDate(), date: d, nth: i+1 });
+    }
+    return out;
+  }
+  function ymd(d){ return (d.getMonth()+1) + '/' + d.getDate(); }
+  function iso(d){ var y=d.getFullYear(), m=d.getMonth()+1, dd=d.getDate(); return y + '-' + (m<10?'0':'') + m + '-' + (dd<10?'0':'') + dd; }
+
+  ['start_date','total_days'].forEach(function(id){ $(id).addEventListener('input', function(){ refreshOverrideBoxes(); persistSoft(); }); });
+  ['tgt_fat','start_wt','start_fat','genshoku_days','genshoku_start','kaifuku_days','meals_per_day','burn_default','waist','hip'].forEach(function(id){ $(id).addEventListener('input', persistSoft); });
+
+  // ======== 必須入力のチェック ========
+  function checkMissing(){
+    var miss = [];
+    [['tgt_fat','目標脂肪量'],['start_wt','体重'],['start_fat','体脂肪量'],['start_date','開始日'],['total_days','全日数'],['genshoku_days','減食日数'],['genshoku_start','減食開始日'],['kaifuku_days','回復日数'],['meals_per_day','1日の食事回数'],['burn_default','1日の消費']].forEach(function(p){
+      var v = $(p[0]).value;
+      if (v === '' || v == null) miss.push(p[1]);
+    });
+    // ウェストヒップ比率がオンのときは、ウェストとヒップが要る
+    var wh = prio.find(function(p){ return p.k === 'wh'; });
+    if (wh && wh.on) {
+      if (!$('waist').value) miss.push('ウェスト');
+      if (!$('hip').value) miss.push('ヒップ');
+    }
+    if (!meal_photo_name && !$('meal_photo').files.length) miss.push('直近の食事写真');
+    if (!scale_data_name && !$('scale_data').files.length) miss.push('体重計のデータ');
+    return miss;
+  }
+
+  // ======== 期の割り当て ========
+  function assignPhases(days, inp){
+    // 既定: 全部 futsu。genshoku_start から genshoku_days 分を genshoku、その直後 kaifuku_days 分を kaifuku
+    var phase = days.map(function(){ return 'futsu'; });
+    var gs = new Date(inp.genshoku_start + 'T00:00:00');
+    var gIdx = -1;
+    for (var i = 0; i < days.length; i++) {
+      if (iso(days[i].date) === inp.genshoku_start) { gIdx = i; break; }
+    }
+    if (gIdx < 0) {
+      // 開始日より前なら最初、終了より後ならそのまま
+      if (gs < days[0].date) gIdx = 0;
+      else gIdx = days.length;
+    }
+    for (var j = 0; j < inp.genshoku_days && (gIdx + j) < days.length; j++) phase[gIdx + j] = 'genshoku';
+    var kStart = gIdx + inp.genshoku_days;
+    for (var k = 0; k < inp.kaifuku_days && (kStart + k) < days.length; k++) phase[kStart + k] = 'kaifuku';
+    return phase;
+  }
+
+  // ======== 計画摂取kcalの計算（献立のマス合計） ========
+  function mealItems(phase, meals){
+    var m = MENUS[phase];
+    var out = { gozen:[], meal1:[], aruita:[], meal2:[], meal3:[] };
+    out.gozen = m.gozen.slice();
+    out.aruita = m.aruita.slice();
+    if (meals >= 1) out.meal1 = m.meal1.slice();
+    if (meals >= 2) out.meal2 = m.meal2.slice();
+    if (meals >= 3) out.meal3 = m.meal3.slice();
+    return out;
+  }
+  function sumItems(items){
+    var kcal = 0, p = 0, c = 0;
+    ['gozen','meal1','aruita','meal2','meal3'].forEach(function(block){
+      items[block].forEach(function(name){
+        var e = EIYOU[name]; if (e){ kcal += e[0]; p += e[1]; c += e[2]; }
+      });
+    });
+    return { kcal: kcal, p: p, c: c };
+  }
+
+  // ======== 計画の生成 ========
+  var LAST_PLAN = null;
+  function buildPlan(){
+    var miss = checkMissing();
+    $('missing').textContent = '';
+    if (miss.length) {
+      $('missing').textContent = '空の欄：' + miss.join('、');
+      $('plan').innerHTML = '<div class="pending">必須入力が揃うと計画が出ます。</div>';
+      LAST_PLAN = null;
+      return;
+    }
+    var inp = {
+      tgt_fat: parseFloat($('tgt_fat').value),
+      start_wt: parseFloat($('start_wt').value),
+      start_fat: parseFloat($('start_fat').value),
+      start_date: $('start_date').value,
+      total_days: parseInt($('total_days').value, 10),
+      genshoku_days: parseInt($('genshoku_days').value, 10),
+      genshoku_start: $('genshoku_start').value,
+      kaifuku_days: parseInt($('kaifuku_days').value, 10),
+      meals: parseInt($('meals_per_day').value, 10),
+      burn_default: parseFloat($('burn_default').value)
+    };
+    var days = buildDays(inp.start_date, inp.total_days);
+    var phases = assignPhases(days, inp);
+
+    // 1日ごとに計算
+    var wt = inp.start_wt, fat = inp.start_fat;
+    var rows = [];
+    for (var i = 0; i < days.length; i++) {
+      var d = days[i], ph = phases[i];
+      var items = mealItems(ph, inp.meals);
+      var planned = sumItems(items);
+      // 消費
+      var burnOv = ov_burn_vals[d.key]; var burn = (burnOv != null && burnOv !== '') ? parseFloat(burnOv) : inp.burn_default;
+      // 不足（override 優先）
+      var defOv = ov_deficit_vals[d.key]; var intake, deficit;
+      if (defOv != null && defOv !== '') {
+        deficit = parseFloat(defOv); intake = burn - deficit;
+      } else {
+        intake = planned.kcal; deficit = burn - intake;
+      }
+      var cap = fat * 69.3;
+      var fatCal = Math.min(Math.max(deficit, 0), cap);
+      var over = Math.max(0, deficit - cap);
+      var dWt = fatCal / 9000 / 0.8 + over / 1800;
+      var dFat = fatCal / 9000;
+      var nextWt = wt - dWt;
+      var nextFat = fat - dFat;
+      var needP = Math.round(1.6 * wt);
+      rows.push({
+        key: d.key, label: d.label, nth: d.nth, date: d.date, phase: ph,
+        items: items, planned: planned,
+        burn: burn, intake: intake, deficit: deficit,
+        cap: cap, fatCal: fatCal, over: over,
+        wt: wt, fat: fat, nextWt: nextWt, nextFat: nextFat,
+        needP: needP
+      });
+      wt = nextWt; fat = nextFat;
+    }
+    // 終了の朝（+1日）
+    var lastDate = new Date(days[days.length-1].date.getTime()); lastDate.setDate(lastDate.getDate() + 1);
+    var endMorning = { key: ymd(lastDate), label: ymd(lastDate), date: lastDate, nth: days.length + 1, wt: wt, fat: fat, phase: 'end' };
+
+    LAST_PLAN = { rows: rows, endMorning: endMorning, inp: inp };
+    renderPlan(LAST_PLAN);
+    applyPrioToPlan();
+    persistSoft();
+  }
+
+  // ======== 表の描画 ========
+  function f0(v){ return Math.round(v).toLocaleString('ja-JP'); }
+  function sg(v){ return (v > 0 ? '−' : '+') + f0(Math.abs(v)); }
+
+  function renderPlan(plan){
+    var rows = plan.rows, endM = plan.endMorning, inp = plan.inp;
+    var all = rows.concat([endM]);
+
+    var html = [];
+    html.push('<div class="status">期間：' + rows[0].label + '（' + daynameJP(rows[0].date) + '）〜 終了の朝 ' + endM.label + '（' + daynameJP(endM.date) + '）／' + rows.length + '日分</div>');
+    html.push('<div class="scroll"><table class="plan-table">');
+
+    // 日付行
+    html.push('<tr class="hinichi"><th class="head">日　付</th>');
+    all.forEach(function(r, idx){
+      var cls = 'hinichi' + (r.date.getDay() === 0 ? ' sunday' : '');
+      var cellEnd = phaseEndClass(all, idx);
+      var nth = (idx < rows.length ? r.nth + '日目' : '終了の朝');
+      html.push('<td class="' + cls + cellEnd + '"><div class="nth">' + nth + '</div><div class="ymd">' + r.label + '<span class="dow">(' + daynameShort(r.date) + ')</span></div></td>');
+    });
+    html.push('</tr>');
+
+    // 目標脂肪量（最優先）
+    html.push('<tr class="shibou row-shibou"><th class="head">目標脂肪量<span>kg</span></th>');
+    all.forEach(function(r, idx){ html.push('<td class="goal shibou' + phaseEndClass(all, idx) + '">' + r.fat.toFixed(2) + '</td>'); });
+    html.push('</tr>');
+
+    // 目標体重
+    html.push('<tr class="mokuhyo row-taiju"><th class="head">目標体重<span>kg</span></th>');
+    all.forEach(function(r, idx){ html.push('<td class="goal' + phaseEndClass(all, idx) + '">' + r.wt.toFixed(1) + '</td>'); });
+    html.push('</tr>');
+
+    // ウェストヒップ比率
+    var w = parseFloat($('waist').value), h = parseFloat($('hip').value);
+    var whRatio = (w > 0 && h > 0) ? (w / h).toFixed(2) : '—';
+    html.push('<tr class="wh row-wh"><th class="head">ウェストヒップ比率</th>');
+    all.forEach(function(r, idx){ html.push('<td class="goal' + phaseEndClass(all, idx) + '">' + (idx === 0 ? whRatio : '') + '</td>'); });
+    html.push('</tr>');
+
+    // カロリー収支
+    html.push('<tr class="zutsu"><th class="head">カロリー<br>収支<span>kcal</span></th>');
+    rows.forEach(function(r, idx){
+      var cellEnd = phaseEndClass(all, idx);
+      var cls = r.over > 50 ? 'warn' : 'good';
+      html.push('<td class="shushi' + cellEnd + '"><div class="r"><span>摂取</span><b>' + f0(r.intake) + '</b></div>' +
+        '<div class="r"><span>消費</span><b>' + f0(r.burn) + '</b></div>' +
+        '<div class="big"><b>' + sg(r.deficit) + '</b></div>' +
+        '<div class="r"><span>上限</span><b>−' + f0(r.cap) + '</b></div>' +
+        '<div class="r"><span>過剰消費</span><b>' + f0(r.over) + '</b></div></td>');
+    });
+    html.push('<td class="shushi' + phaseEndClass(all, all.length-1) + '"></td></tr>');
+
+    // 脂肪の燃焼
+    html.push('<tr class="nensho row-shibou"><th class="head">脂肪の燃焼<span>g</span></th>');
+    rows.forEach(function(r, idx){
+      html.push('<td class="nensho' + phaseEndClass(all, idx) + '"><div class="r"><span>必要</span><b>−' + f0(r.cap/9) + 'g</b></div></td>');
+    });
+    html.push('<td class="nensho' + phaseEndClass(all, all.length-1) + '"></td></tr>');
+
+    // たんぱく質
+    html.push('<tr class="tanpaku"><th class="head">たんぱく質<span>必要／予定</span></th>');
+    rows.forEach(function(r, idx){
+      html.push('<td class="nensho tanpaku' + phaseEndClass(all, idx) + '"><div class="r"><span>必要</span><b>' + r.needP + 'g</b></div><div class="r"><span>予定</span><b>' + Math.round(r.planned.p) + 'g</b></div></td>');
+    });
+    html.push('<td class="nensho tanpaku' + phaseEndClass(all, all.length-1) + '"></td></tr>');
+
+    // 糖質（ケトシス）
+    html.push('<tr class="toshitsu row-ketosis"><th class="head">糖質<span>上限／予定</span></th>');
+    rows.forEach(function(r, idx){
+      var cls = r.planned.c <= 50 ? 'good' : 'warn';
+      html.push('<td class="nensho toshitsu' + phaseEndClass(all, idx) + '"><div class="r"><span>上限</span><b>50g</b></div><div class="r"><span>予定</span><b class="' + cls + '">' + Math.round(r.planned.c) + 'g</b></div></td>');
+    });
+    html.push('<td class="nensho toshitsu' + phaseEndClass(all, all.length-1) + '"></td></tr>');
+
+    // 献立 4ブロック
+    [['gozen','午前','コーヒー'], ['meal1','1食目',''], ['aruita','歩いたあと',''], ['meal2','2食目','']].forEach(function(block){
+      html.push('<tr class="' + block[0] + '"><th class="head meal-head"><span class="h1">' + block[1] + '</span><span class="h2">' + block[2] + '</span></th>');
+      rows.forEach(function(r, idx){
+        var items = r.items[block[0]] || [];
+        var inner = items.map(function(nm){ return '<span class="chk">' + escapeHtml(nm) + '</span>'; }).join('');
+        html.push('<td class="meal' + phaseEndClass(all, idx) + '">' + (inner || '<span class="chk-note">—</span>') + '</td>');
+      });
+      html.push('<td class="meal' + phaseEndClass(all, all.length-1) + '"></td></tr>');
+    });
+
+    // 備考
+    html.push('<tr class="biko"><th class="head">備　考</th>');
+    rows.forEach(function(r, idx){
+      html.push('<td class="biko-cell' + phaseEndClass(all, idx) + '">' + escapeHtml(PHASE_BIKO[r.phase] || '') + '</td>');
+    });
+    html.push('<td class="biko-cell' + phaseEndClass(all, all.length-1) + '"></td></tr>');
+
+    html.push('</table></div>');
+
+    $('plan').innerHTML = html.join('');
+
+    // チェックの切替
+    document.querySelectorAll('.plan-table .chk').forEach(function(el){
+      el.addEventListener('click', function(){ el.classList.toggle('on'); });
+    });
+  }
+  function phaseEndClass(all, idx){
+    // 期（phase）が次の列と変わる、または減食/回復の末尾なら太線
+    if (idx >= all.length - 1) return '';
+    var cur = all[idx].phase, nxt = all[idx+1].phase;
+    return cur !== nxt ? ' phase-end' : '';
+  }
+  function daynameJP(d){ return ['日','月','火','水','木','金','土'][d.getDay()] + '曜'; }
+  function daynameShort(d){ return ['日','月','火','水','木','金','土'][d.getDay()]; }
+
+  // ======== 優先順位のオンオフを表に反映 ========
+  function applyPrioToPlan(){
+    if (!LAST_PLAN) return;
+    var map = {}; prio.forEach(function(p){ map[p.k] = p.on; });
+    document.querySelectorAll('.plan-table tr.row-shibou').forEach(function(tr){ tr.classList.toggle('off-row', !map.shibou); });
+    document.querySelectorAll('.plan-table tr.row-taiju').forEach(function(tr){ tr.classList.toggle('off-row', !map.taiju); });
+    document.querySelectorAll('.plan-table tr.row-ketosis').forEach(function(tr){ tr.classList.toggle('off-row', !map.ketosis); });
+    document.querySelectorAll('.plan-table tr.row-wh').forEach(function(tr){ tr.classList.toggle('off-row', !map.wh); });
+  }
+
+  // ======== イベント ========
+  $('btn_build').addEventListener('click', buildPlan);
+  $('btn_clear').addEventListener('click', function(){
+    if (!confirm('入力を全部消しますか？')) return;
+    tryLS(function(){ localStorage.removeItem(LS); });
+    location.reload();
+  });
+
+  // 初期描画
+  renderPrio();
+  restore();
+  refreshOverrideBoxes();
+})();
+</script>
+</body>
+</html>
