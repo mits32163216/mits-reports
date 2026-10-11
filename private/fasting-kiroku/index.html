@@ -637,7 +637,8 @@
           const k = d + '|' + r + '|' + (sp.dataset.label || sp.textContent.trim());
           sp.dataset.k = k;
           const e0 = EIYOU[k.split('|')[2]];
-          if (e0) { const q = PLAN[d] = PLAN[d] || {kcal: 0, p: 0, c: 0}; q.kcal += e0[0]; q.p += e0[1]; q.c += e0[2]; }
+          // 「（実際）」の付いたチェックは実際に取った分の記録なので、計画には数えない（2026-10-11）
+          if (e0 && !/（実際）/.test(k)) { const q = PLAN[d] = PLAN[d] || {kcal: 0, p: 0, c: 0}; q.kcal += e0[0]; q.p += e0[1]; q.c += e0[2]; }
           if (chk[k]) sp.classList.add('on');
           sp.addEventListener('click', () => {
             if (chk[k]) delete chk[k]; else chk[k] = 1;
