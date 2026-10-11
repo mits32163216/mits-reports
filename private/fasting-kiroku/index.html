@@ -69,6 +69,18 @@
   td.shushi .big{ font-size:var(--f5); font-weight:700; line-height:1.3; text-align:center; padding:2px 0;
     border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin:1px 0; }
   td.shushi .big + .r{ border-top:0; }
+  /* 2026-10-11 Mits様「項目が毎日繰り返し表示しているけど、横スクロールで1列目が見えているから、そこに組み込んで貰った方がシンプル」：項目名は左の欄にだけ出し、毎日のマスは数字だけ */
+  th.head.hl{ vertical-align:top; padding:5px 6px; text-align:left; }
+  th.head.hl .hlw{ display:flex; gap:4px; align-items:flex-start; }
+  th.head.hl .ttl{ flex:1; font-size:var(--f2); line-height:1.3; }
+  th.head.hl .ttl span{ font-weight:500; }
+  th.head.hl .ls{ flex:0 0 auto; font-size:var(--f3); line-height:1.5; font-weight:500; text-align:right; }
+  th.head.hl .ls .r + .r{ border-top:1px dotted var(--line); }
+  th.head.hl .ls .big{ font-size:var(--f5); line-height:1.3; padding:2px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin:1px 0; }
+  th.head.hl .ls .big i{ font-size:var(--f3); font-style:normal; }
+  th.head.hl .ls .big + .r{ border-top:0; }
+  td.shushi .r > span, td.nensho .r > span{ display:none; }
+  td.shushi .r, td.nensho .r{ justify-content:flex-end; }
   .mirai{ color:#a0a0a0; }
 
   /* 献立 */
@@ -249,7 +261,7 @@
       <td class="blank"></td>
     </tr>
     <tr class="zutsu">
-      <th class="head">カロリー<br>収支<span>kcal</span></th>
+      <th class="head hl"><div class="hlw"><div class="ttl">カロリー<br>収支<span>kcal</span></div><div class="ls"><div class="r">消費</div><div class="r">摂取</div><div class="big"><i>不足</i></div><div class="r">上限</div><div class="r">要摂取</div></div></div></th>
       <td class="shushi"></td>
       <td class="shushi"></td>
       <td class="shushi"></td>
@@ -269,7 +281,7 @@
       <td class="shushi"></td>
     </tr>
     <tr class="nensho">
-      <th class="head">脂肪の燃焼<span>必要／実施</span></th>
+      <th class="head hl"><div class="hlw"><div class="ttl">脂肪の<br>燃焼</div><div class="ls"><div class="r">必要</div><div class="r">実施</div></div></div></th>
       <td class="nensho"></td>
       <td class="nensho"></td>
       <td class="nensho"></td>
@@ -289,7 +301,7 @@
       <td class="nensho"></td>
     </tr>
     <tr class="tanpaku">
-      <th class="head">たんぱく質<span>必要／実施</span></th>
+      <th class="head hl"><div class="hlw"><div class="ttl">たんぱく<br>質</div><div class="ls"><div class="r">必要</div><div class="r">実施</div></div></div></th>
       <td class="nensho tanpaku"></td>
       <td class="nensho tanpaku"></td>
       <td class="nensho tanpaku"></td>
@@ -309,7 +321,7 @@
       <td class="nensho tanpaku"></td>
     </tr>
     <tr class="toshitsu">
-      <th class="head">糖質<span>上限／実施</span></th>
+      <th class="head hl"><div class="hlw"><div class="ttl">糖質</div><div class="ls"><div class="r">上限</div><div class="r">実施</div></div></div></th>
       <td class="nensho toshitsu"></td>
       <td class="nensho toshitsu"></td>
       <td class="nensho toshitsu"></td>
@@ -747,7 +759,7 @@
           h = '<div class="mirai">' + line('消費', f0(x.planBurn)) + line('摂取', f0(x.planIn)) +
               '<div class="big">' + sg(x.planDef) + '</div>' + line('上限', '−' + f0(x.capP)) + line('要摂取', f0(x.planOver)) + '</div>';
         } else if (x.mae) {
-          h = line('消費', x.b ? f0(x.b.v) : '—') + line('摂取', '—') + '<div class="big">−' + f0(x.capA) + ' 上限</div>' + line('要摂取', '—');
+          h = line('消費', x.b ? f0(x.b.v) : '—') + line('摂取', '—') + '<div class="big">—</div>' + line('上限', '−' + f0(x.capA)) + line('要摂取', '—');
         } else {
           h = line('消費', x.b ? f0(x.b.v) + (x.b.suitei ? '*' : '') : '—') + line('摂取', x.n ? f0(x.kcal) : '—');
           if (x.deficit != null) {
