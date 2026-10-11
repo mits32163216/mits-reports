@@ -127,9 +127,14 @@
   td.shushi .big::before{ content:""; }
   td.shushi .big + .r{ border-top:1px dotted var(--line); }
   td.shushi .r + .big{ border-top:1px dotted var(--line); }
+  /* 上の切り替え（2026-10-12 Mits様「表にヘッダーメニューを付けて」）。太字・大きな文字は使わない */
+  .hmenu{ position:sticky; top:0; z-index:20; display:flex; flex-wrap:wrap; gap:6px; padding:6px 12px; background:var(--head-bg); border-bottom:1px solid var(--line); font-size:var(--f3); }
+  .hmenu a{ color:var(--title); text-decoration:none; padding:4px 10px; border:1px solid var(--line); border-radius:4px; background:#fff; }
+  .hmenu a[aria-current="page"]{ background:var(--title); color:#fff; border-color:var(--title); }
 </style>
 </head>
 <body>
+<nav class="hmenu"><a href="/private/fasting-kiroku/" aria-current="page">ファスティング記録表（10/4〜）</a><a href="/private/fasting-kiroku/genryo/">減量プラン（10/12〜）</a></nav>
 
 <div class="page">
   <div class="scroll" id="scroll">

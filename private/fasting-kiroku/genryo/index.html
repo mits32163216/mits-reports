@@ -1,0 +1,900 @@
+<!doctype html>
+<html lang="ja">
+<!-- 減量プラン：2026-10-12 Mits様「今日を基準としたファスティング→減量プランの別の表を作って。最初はコピーでいい」。ファスティング記録表_A4.html の写しから始めた -->
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<title>減量プラン</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  /* 画面で見るための作り（印刷はしない・2026-10-06） */
+  :root{
+    --ink:#2f5f72; --line:#b9dbe4; --line-thin:#dcecf1; --head-bg:#eef7fa; --title:#1b4a5c;
+    --goal:#8fbfcc; --red:#c03030; --green:#1d7a3a; --amber-bg:#fdf3e1; --amber:#7a4a0a; --meal-bg:#edf6ec; --meal:#2d5a2a;
+    --kyou:#fff8dc;
+    /* 文字の大きさ（5段） f1 献立の品／f2 補足／f3 見出し・欄の中の行／f4 値／f5 主役 */
+    --f1:12px; --f2:11px; --f3:13px; --f4:17px; --f5:21px;
+    --col:122px; --head:116px;
+  }
+  @media (max-width:640px){
+    :root{ --f1:11.5px; --f2:10.5px; --f3:12.5px; --f4:16px; --f5:19px; --col:112px; --head:100px; }
+  }
+  html,body{ margin:0; padding:0; background:#fff; color:var(--ink);
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","Noto Sans JP","Meiryo",sans-serif;
+    font-variant-numeric:tabular-nums; -webkit-text-size-adjust:100%; }
+  .page{ padding:12px 0 0; }
+  .scroll{ overflow-x:auto; -webkit-overflow-scrolling:touch; overscroll-behavior-x:contain; max-height:none; }
+
+  table{ border-collapse:separate; border-spacing:0; table-layout:fixed; width:max-content; margin:0 12px; }
+  th, td{ border-right:1px solid var(--line); border-bottom:1px solid var(--line); padding:6px 8px; text-align:center; vertical-align:middle; background:#fff; width:var(--col); min-width:var(--col); box-sizing:border-box; }
+  tr > :first-child{ border-left:1px solid var(--line); }
+  tr.hinichi > *{ border-top:1px solid var(--line); }
+  /* 2026-10-09 Mits様「10/7と8の間の縦線を太い線にして」：10/7 の列（左の項目名の次から4列目）の右の線 */
+  table:not(#tw-table) tr > :nth-child(5){ border-right:2px solid var(--title); }
+  /* 2026-10-09 Mits様「修正　1012/13の間にも太線　→　10/11-/14」：回復食は 10/11〜10/14。10/14 の列（左の項目名の次から11列目）の右の線 */
+  table:not(#tw-table) tr > :nth-child(12){ border-right:2px solid var(--title); }
+  /* 2026-10-09 Mits様「10/10と/11の間にも太線」：10/10 の列（左の項目名の次から7列目）の右の線 */
+  table:not(#tw-table) tr > :nth-child(8){ border-right:2px solid var(--title); }
+
+  /* 左の項目名は横に動かしても残す */
+  th.head{ position:sticky; left:0; z-index:2; width:var(--head); min-width:var(--head);
+    background:var(--head-bg); color:var(--title); font-size:var(--f3); font-weight:700; line-height:1.3; text-align:center; white-space:normal; }
+  th.head span{ display:block; font-size:var(--f2); font-weight:500; }
+  tr.shibou th .saiyu{ color:var(--red); font-weight:700; }
+
+  /* 日付 */
+  td.hinichi .nth{ display:block; font-size:var(--f2); color:var(--title); }
+  td.hinichi .ymd{ display:block; font-size:var(--f4); color:var(--title); font-weight:700; line-height:1.2; }
+  td.hinichi .dow{ font-size:var(--f2); font-weight:500; margin-left:2px; }
+  td.hinichi.sunday .nth, td.hinichi.sunday .ymd, td.hinichi.sunday .dow{ color:var(--red); }
+
+  /* 値 */
+  td.goal{ font-size:var(--f4); color:var(--goal); font-weight:500; }
+  td.goal.shibou{ color:var(--red); font-weight:700; }
+  td.atai, td.jikan.filled, td.taiju-start, td.hosu-v .v{ font-size:var(--f4); color:var(--title); font-weight:700; }
+  td.jikan{ font-size:var(--f4); color:var(--line); }
+  td.taiju-start .v{ display:block; font-size:var(--f5); line-height:1.15; }
+  td.taiju-start .sa{ display:block; font-size:var(--f2); margin-top:2px; }
+  .good{ color:var(--green) !important; } .warn{ color:var(--red) !important; }
+  td.hosu-v .v{ display:block; line-height:1.2; }
+  td.hosu-v .bar{ display:block; height:6px; margin:5px 4px 0; background:var(--line-thin); border-radius:3px; overflow:hidden; }
+  td.hosu-v .bar i{ display:block; height:100%; background:#e0a23a; }
+  td.hosu-v .bar i.ok{ background:var(--green); }
+
+  /* カロリー収支・脂肪の燃焼・たんぱく質 */
+  tr.zutsu > th, tr.nensho > th, tr.tanpaku > th, tr.toshitsu > th, tr.mizu > th{ background:var(--amber-bg); color:var(--amber); }
+  td.shushi, td.nensho{ vertical-align:top; text-align:left; font-size:var(--f3); line-height:1.5; padding:5px 8px; }
+  td.shushi .r, td.nensho .r{ display:flex; justify-content:space-between; }
+  td.shushi .r b, td.nensho .r b{ font-weight:700; }
+  td.shushi .r + .r, td.nensho .r + .r{ border-top:1px dotted var(--line); }
+  td.shushi .big{ font-size:var(--f5); font-weight:700; line-height:1.3; text-align:center; padding:2px 0;
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin:1px 0; }
+  td.shushi .big + .r{ border-top:0; }
+  /* 2026-10-11 Mits様「項目が毎日繰り返し表示しているけど、横スクロールで1列目が見えているから、そこに組み込んで貰った方がシンプル」：項目名は左の欄にだけ出し、毎日のマスは数字だけ */
+  th.head.hl{ vertical-align:top; padding:5px 4px; text-align:left; }
+  th.head.hl .hlw{ display:flex; gap:2px; align-items:flex-start; }
+  th.head.hl .ttl{ flex:1; font-size:var(--f2); line-height:1.3; word-break:keep-all; }
+  th.head.hl .ttl span{ font-weight:500; }
+  th.head.hl .ls{ flex:0 0 auto; font-size:var(--f3); line-height:1.5; font-weight:500; text-align:right; }
+  th.head.hl .ls .r + .r{ border-top:1px dotted var(--line); }
+  th.head.hl .ls .big{ border-top:1px dotted var(--line); }
+  th.head.hl .ls .big i{ font-style:normal; }
+  td.shushi .r > span, td.nensho .r > span{ display:none; }
+  td.shushi .r, td.nensho .r{ justify-content:flex-end; }
+  .mirai{ color:#a0a0a0; }
+
+  /* 献立 */
+  tr.gozen > th, tr.hirusugi > th, tr.aruita > th, tr.yugata > th, tr.sapuri > th{ background:var(--meal-bg); }
+  th.meal-head .h1{ display:block; font-size:var(--f3); font-weight:700; color:var(--meal); }
+  th.meal-head .h2{ display:block; font-size:var(--f2); font-weight:500; color:var(--meal); }
+  td.meal{ text-align:left; vertical-align:top; padding:5px 6px; font-feature-settings:"palt" 1; }
+  td.meal .chk, td.meal .egg-line{ display:flex; align-items:center; font-size:var(--f1); color:var(--title); line-height:1.2; min-height:24px; white-space:nowrap; }
+  td.meal .chk{ cursor:pointer; user-select:none; -webkit-user-select:none; -webkit-tap-highlight-color:transparent; }
+  td.meal .chk::before{ content:""; display:inline-block; width:16px; height:16px; border:1.5px solid var(--title); border-radius:3px; margin-right:5px; flex-shrink:0; box-sizing:border-box; }
+  td.meal .chk.on::before{ background:var(--title); box-shadow:inset 0 0 0 2.5px #fff; }
+  td.meal .chk.on{ color:#9ab; }
+  td.meal .egg-line .chk.egg{ display:inline-flex; margin-left:4px; min-height:24px; }
+  td.meal .egg-line .chk.egg::before{ margin-right:0; }
+  td.meal .chk-note{ font-size:var(--f2); color:var(--goal); }
+
+  td.biko-cell{ font-size:var(--f2); line-height:1.45; }
+
+  /* 区切り：からだ／カロリー収支／献立／備考 */
+  tr.zutsu > *, tr.gozen > *, tr.biko > *{ border-top:2px solid var(--title); }
+  tr.nensho > *, tr.tanpaku > *, tr.toshitsu > *, tr.mizu > *{ border-top:1px solid #e2c58f; }
+
+  /* 今日の列 */
+  td.kyou-col{ background:var(--kyou); }
+  tr.hinichi td.kyou-col{ box-shadow:inset 0 3px 0 #e0a23a; }
+
+  /* 毎日の付き合わせ */
+  .tsukiawase{ margin:20px 12px 28px; color:var(--title); }
+  .tsukiawase h2{ font-size:16px; margin:0 0 6px; }
+  .tsukiawase .tw-note{ font-size:var(--f2); color:#555; line-height:1.6; margin-bottom:8px; }
+  .tsukiawase .tw-wrap{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  #tw-table{ border-collapse:collapse; font-size:12px; width:max-content; min-width:100%; }
+  #tw-table th, #tw-table td{ border:1px solid var(--line); padding:5px 7px; text-align:right; white-space:nowrap; width:auto; min-width:0; position:static; }
+  #tw-table th{ background:var(--head-bg); text-align:center; font-weight:700; }
+  #tw-table td.d{ text-align:center; font-weight:700; }
+  #tw-table td.msg{ text-align:left; white-space:normal; min-width:240px; }
+  #tw-table tr.mirai td{ color:#a0a0a0; }
+  #tw-table tr.kyou td{ background:var(--kyou); }
+
+  /* 文字は1つの大きさ・普通の太さに揃える（強調・大きくするは使わない） */
+  :root{ --fs:13px; }
+  @media (max-width:640px){ :root{ --fs:12.5px; } }
+  .page *, .tsukiawase *{ font-size:var(--fs) !important; font-weight:400 !important; }
+  td.shushi .big{ border:0; padding:0; margin:0; text-align:right; line-height:1.5; }
+  td.shushi .big::before{ content:""; }
+  td.shushi .big + .r{ border-top:1px dotted var(--line); }
+  td.shushi .r + .big{ border-top:1px dotted var(--line); }
+  /* 上の切り替え（2026-10-12 Mits様「表にヘッダーメニューを付けて」）。太字・大きな文字は使わない */
+  .hmenu{ position:sticky; top:0; z-index:20; display:flex; flex-wrap:wrap; gap:6px; padding:6px 12px; background:var(--head-bg); border-bottom:1px solid var(--line); font-size:var(--f3); }
+  .hmenu a{ color:var(--title); text-decoration:none; padding:4px 10px; border:1px solid var(--line); border-radius:4px; background:#fff; }
+  .hmenu a[aria-current="page"]{ background:var(--title); color:#fff; border-color:var(--title); }
+</style>
+</head>
+<body>
+<nav class="hmenu"><a href="/private/fasting-kiroku/">ファスティング記録表（10/4〜）</a><a href="/private/fasting-kiroku/genryo/" aria-current="page">減量プラン（10/12〜）</a></nav>
+
+<div class="page">
+  <div class="scroll" id="scroll">
+  <table>
+    <tr class="hinichi">
+      <th class="head">日　付</th>
+      <td class="hinichi"><div class="nth">1日目</div><div class="ymd">10/4<span class="dow">(日)</span></div></td>
+      <td class="hinichi"><div class="nth">2日目</div><div class="ymd">10/5<span class="dow">(月)</span></div></td>
+      <td class="hinichi"><div class="nth">3日目</div><div class="ymd">10/6<span class="dow">(火)</span></div></td>
+      <td class="hinichi"><div class="nth">4日目</div><div class="ymd">10/7<span class="dow">(水)</span></div></td>
+      <td class="hinichi"><div class="nth">5日目</div><div class="ymd">10/8<span class="dow">(木)</span></div></td>
+      <td class="hinichi"><div class="nth">6日目</div><div class="ymd">10/9<span class="dow">(金)</span></div></td>
+      <td class="hinichi"><div class="nth">7日目</div><div class="ymd">10/10<span class="dow">(土)</span></div></td>
+      <td class="hinichi"><div class="nth">8日目</div><div class="ymd">10/11<span class="dow">(日)</span></div></td>
+      <td class="hinichi"><div class="nth">9日目</div><div class="ymd">10/12<span class="dow">(月)</span></div></td>
+      <td class="hinichi"><div class="nth">10日目</div><div class="ymd">10/13<span class="dow">(火)</span></div></td>
+      <td class="hinichi"><div class="nth">11日目</div><div class="ymd">10/14<span class="dow">(水)</span></div></td>
+      <td class="hinichi"><div class="nth">12日目</div><div class="ymd">10/15<span class="dow">(木)</span></div></td>
+      <td class="hinichi"><div class="nth">13日目</div><div class="ymd">10/16<span class="dow">(金)</span></div></td>
+      <td class="hinichi"><div class="nth">14日目</div><div class="ymd">10/17<span class="dow">(土)</span></div></td>
+      <td class="hinichi"><div class="nth">15日目</div><div class="ymd">10/18<span class="dow">(日)</span></div></td>
+      <td class="hinichi"><div class="nth">16日目</div><div class="ymd">10/19<span class="dow">(月)</span></div></td>
+      <td class="hinichi"><div class="nth">終了の朝</div><div class="ymd">10/20<span class="dow">(火)</span></div></td>
+    </tr>
+    <tr class="shibou">
+      <th class="head">目標脂肪量<span>kg</span><span class="saiyu">最優先</span></th>
+      <td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td>
+      <td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td>
+      <td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td>
+      <td class="goal shibou"></td>
+      <td class="goal shibou"></td>
+      <td class="goal shibou"></td>
+      <td class="goal shibou"></td>
+      <td class="goal shibou"></td>
+      <td class="goal shibou"></td>
+      <td class="goal shibou"></td>
+      <td class="goal shibou"></td>
+    </tr>
+    <tr class="jissoku-shibou">
+      <th class="head">実測脂肪量<span>kg</span><span>下は目標比</span></th>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+    </tr>
+    <tr class="mokuhyo">
+      <th class="head">目標体重<span>kg</span></th>
+      <td class="goal"></td>
+      <td class="goal"></td><td class="goal"></td><td class="goal"></td>
+      <td class="goal"></td><td class="goal"></td><td class="goal"></td>
+      <td class="goal"></td><td class="goal"></td>
+      <td class="goal"></td>
+      <td class="goal"></td>
+      <td class="goal"></td>
+      <td class="goal"></td>
+      <td class="goal"></td>
+      <td class="goal"></td>
+      <td class="goal"></td>
+      <td class="goal"></td>
+    </tr>
+    <tr class="taiju">
+      <th class="head">乾燥体重<span>kg</span><span>下は目標比</span></th>
+      <td class="blank"></td><td class="blank"></td><td class="blank"></td>
+      <td class="blank"></td><td class="blank"></td><td class="blank"></td>
+      <td class="blank"></td><td class="blank"></td><td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+    </tr>
+    <tr class="taishibo">
+      <th class="head">体脂肪率<span>%</span></th>
+      <td class="blank"></td><td class="blank"></td><td class="blank"></td>
+      <td class="blank"></td><td class="blank"></td><td class="blank"></td>
+      <td class="blank"></td><td class="blank"></td><td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+    </tr>
+    <tr class="jikan">
+      <th class="head">チェック<br>時間</th>
+      <td class="jikan">：</td><td class="jikan">：</td><td class="jikan">：</td>
+      <td class="jikan">：</td><td class="jikan">：</td><td class="jikan">：</td>
+      <td class="jikan">：</td><td class="jikan">：</td><td class="jikan">：</td>
+      <td class="jikan">：</td>
+      <td class="jikan">：</td>
+      <td class="jikan">：</td>
+      <td class="jikan">：</td>
+      <td class="jikan">：</td>
+      <td class="jikan">：</td>
+      <td class="jikan">：</td>
+      <td class="jikan">：</td>
+    </tr>
+    <tr class="hosu">
+      <th class="head">歩　数<span>目標<br>8,000歩</span></th>
+      <td class="blank"></td><td class="blank"></td><td class="blank"></td>
+      <td class="blank"></td><td class="blank"></td><td class="blank"></td>
+      <td class="blank"></td><td class="blank"></td><td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+    </tr>
+    <tr class="zutsu">
+      <th class="head hl"><div class="hlw"><div class="ttl">カロリー<br>収支<span>kcal</span></div><div class="ls"><div class="r">消費</div><div class="r">摂取</div><div class="big"><i>不足</i></div><div class="r">上限</div><div class="r">要摂取</div></div></div></th>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+      <td class="shushi"></td>
+    </tr>
+    <tr class="nensho">
+      <th class="head hl"><div class="hlw"><div class="ttl">脂肪の<br>燃焼</div><div class="ls"><div class="r">必要</div><div class="r">実施</div></div></div></th>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+      <td class="nensho"></td>
+    </tr>
+    <tr class="tanpaku">
+      <th class="head hl"><div class="hlw"><div class="ttl">たんぱく<br>質</div><div class="ls"><div class="r">必要</div><div class="r">実施</div></div></div></th>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+      <td class="nensho tanpaku"></td>
+    </tr>
+    <tr class="toshitsu">
+      <th class="head hl"><div class="hlw"><div class="ttl">糖質</div><div class="ls"><div class="r">上限</div><div class="r">実施</div></div></div></th>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+      <td class="nensho toshitsu"></td>
+    </tr>
+    <tr class="mizu">
+      <th class="head">摂取水分量<span>mL</span></th>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+    </tr>
+    <tr class="gozen">
+      <th class="head meal-head"><span class="h1">午前</span><span class="h2">コーヒー</span></th>
+      <td class="meal empty"><span class="chk-note">前のプラン</span></td>
+      <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
+      <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
+      <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
+      <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
+      <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
+      <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
+      <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
+      <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
+      <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
+      <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
+      <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
+      <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
+      <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
+      <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
+      <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
+      <td class="meal empty"></td>
+    </tr>
+    <tr class="hirusugi">
+      <th class="head meal-head"><span class="h1">昼過ぎ 13:00</span><span class="h2">1食目</span></th>
+      <td class="meal empty"><span class="chk-note">前のプラン</span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span><span class="chk egg" data-label="卵4"></span></span><span class="chk">納豆1</span><span class="chk">もずく50g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="chk m">ベーコンエッグ・卵2</span><span class="egg-line">卵<span class="chk egg" data-label="卵3"></span><span class="chk egg" data-label="卵4"></span></span><span class="chk">納豆1</span><span class="chk">もずく50g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="chk m">ベーコンエッグ・卵2</span><span class="egg-line">卵<span class="chk egg" data-label="卵3"></span><span class="chk egg" data-label="卵4"></span></span><span class="chk">納豆1</span><span class="chk">もずく50g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">マナ酵素90ml・水540ml</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">マナ酵素90ml・水540ml</span><span class="chk">MCT小1</span><span class="chk"><span class="t">てびち汁 汁だけ1袋分<br>（220g）</span></span></td>
+      <td class="meal"><span class="chk m">マナ酵素90ml・水540ml</span><span class="chk m">マナ酵素30ml（実際）</span><span class="chk">MCT小1</span><span class="chk"><span class="t">てびち汁 汁だけ1袋分<br>（220g）</span></span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk m">野菜炒め ベーコン入り（実際）</span><span class="chk m">ゆし豆腐味噌汁 卵入り（実際）</span><span class="chk">納豆1（実際）</span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">もずく50g</span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">もずく50g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">もずく50g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">もずく50g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">もずく50g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">もずく50g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">もずく50g</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">もずく50g</span><span class="chk">MCT小1</span></td>
+      <td class="meal empty"></td>
+    </tr>
+    <tr class="aruita">
+      <th class="head meal-head"><span class="h1">歩いたあと</span><span class="h2">16:30ごろ</span></th>
+      <td class="meal empty"><span class="chk-note">前のプラン</span></td>
+      <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span></td>
+      <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk m">柿1/2個</span></td>
+      <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span></td>
+      <td class="meal"><span class="chk m">グルタミン5g</span></td>
+      <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span><span class="chk-note">今日は散歩なし（最低限の歩数）。グルタミンと塩水は時刻を決めて飲む</span></td>
+      <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span></td>
+      <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span></td>
+      <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span></td>
+      <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span></td>
+      <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span></td>
+      <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span></td>
+      <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span></td>
+      <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span></td>
+      <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span></td>
+      <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span></td>
+      <td class="meal empty"></td>
+    </tr>
+    <tr class="yugata">
+      <th class="head meal-head"><span class="h1">夕方 19:00</span><span class="h2">2食目</span></th>
+      <td class="meal empty"><span class="chk-note">前のプラン</span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="chk">納豆1</span><span class="chk">もずく50g</span><span class="chk m">ベーコン100g</span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="chk">納豆1</span><span class="chk">もずく50g</span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="chk">納豆1</span><span class="chk">もずく50g</span><span class="chk m">リンゴ1個</span><span class="chk m">マナ酵素60ml</span></td>
+      <td class="meal"><span class="chk-note">ペットボトルの続き（21時まで）</span></td>
+      <td class="meal"><span class="chk-note">ペットボトルの続き（21時まで）</span><span class="chk"><span class="t">てびち汁 汁だけ1袋分<br>（220g）</span></span></td>
+      <td class="meal"><span class="chk-note">ペットボトルの続き（21時まで）</span><span class="chk"><span class="t">てびち汁 汁だけ1袋分<br>（220g）</span></span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span></span><span class="chk">納豆1</span><span class="chk">もずく50g</span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="chk">納豆1</span><span class="chk">もずく50g</span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="chk">納豆1</span><span class="chk">もずく50g</span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="chk">納豆1</span><span class="chk">もずく50g</span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="chk">納豆1</span><span class="chk">もずく50g</span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="chk">納豆1</span><span class="chk">もずく50g</span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="chk">納豆1</span><span class="chk">もずく50g</span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="chk">納豆1</span><span class="chk">もずく50g</span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="chk">納豆1</span><span class="chk">もずく50g</span></td>
+      <td class="meal empty"></td>
+    </tr>
+    <tr class="sapuri">
+      <th class="head meal-head"><span class="h1">サプリ</span></th>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：Solaray2・オメガ3 3・D3・STAGE7"><span class="t">昼：Solaray2・<br>オメガ3 3・D3・<br>STAGE7</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：Solaray1">夕：Solaray1</span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
+      <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：Solaray2・オメガ3 3・D3・STAGE7"><span class="t">昼：Solaray2・<br>オメガ3 3・D3・<br>STAGE7</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：Solaray1">夕：Solaray1</span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
+      <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：消化酵素2・Solaray2・オメガ3 3・D3・STAGE7"><span class="t">昼：消化酵素2・<br>Solaray2・<br>オメガ3 3・D3・<br>STAGE7</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：消化酵素2・Solaray1"><span class="t">夕：消化酵素2・<br>Solaray1</span></span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
+      <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：消化酵素2・Solaray2・オメガ3 3・D3・STAGE7"><span class="t">昼：消化酵素2・<br>Solaray2・<br>オメガ3 3・D3・<br>STAGE7</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：消化酵素2・Solaray1"><span class="t">夕：消化酵素2・<br>Solaray1</span></span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
+      <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：消化酵素2・Solaray2・オメガ3 3・D3・STAGE7"><span class="t">昼：消化酵素2・<br>Solaray2・<br>オメガ3 3・D3・<br>STAGE7</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：消化酵素2・Solaray1"><span class="t">夕：消化酵素2・<br>Solaray1</span></span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
+      <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：消化酵素2・Solaray2・オメガ3 3・D3・STAGE7・ビタミンC500mg"><span class="t">昼：消化酵素2・<br>Solaray2・<br>オメガ3 3・D3・<br>STAGE7・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：消化酵素2・Solaray1・ビタミンC500mg"><span class="t">夕：消化酵素2・<br>Solaray1・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
+      <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：消化酵素2・Solaray2・オメガ3 3・D3・STAGE7・ビタミンC500mg"><span class="t">昼：消化酵素2・<br>Solaray2・<br>オメガ3 3・D3・<br>STAGE7・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：消化酵素2・Solaray1・ビタミンC500mg"><span class="t">夕：消化酵素2・<br>Solaray1・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
+      <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：消化酵素2・Solaray2・オメガ3 3・D3・STAGE7・ビタミンC500mg"><span class="t">昼：消化酵素2・<br>Solaray2・<br>オメガ3 3・D3・<br>STAGE7・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：消化酵素2・Solaray1・ビタミンC500mg"><span class="t">夕：消化酵素2・<br>Solaray1・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
+      <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：消化酵素2・Solaray2・オメガ3 3・D3・STAGE7・ビタミンC500mg"><span class="t">昼：消化酵素2・<br>Solaray2・<br>オメガ3 3・D3・<br>STAGE7・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：消化酵素2・Solaray1・ビタミンC500mg"><span class="t">夕：消化酵素2・<br>Solaray1・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
+      <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：消化酵素2・Solaray2・オメガ3 3・D3・STAGE7・ビタミンC500mg"><span class="t">昼：消化酵素2・<br>Solaray2・<br>オメガ3 3・D3・<br>STAGE7・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：消化酵素2・Solaray1・ビタミンC500mg"><span class="t">夕：消化酵素2・<br>Solaray1・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
+      <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：消化酵素2・Solaray2・オメガ3 3・D3・STAGE7・ビタミンC500mg"><span class="t">昼：消化酵素2・<br>Solaray2・<br>オメガ3 3・D3・<br>STAGE7・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：消化酵素2・Solaray1・ビタミンC500mg"><span class="t">夕：消化酵素2・<br>Solaray1・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
+      <td class="meal"></td>
+    </tr>
+    <tr class="biko">
+      <th class="head">備　考</th>
+      <td class="biko-cell"></td>
+      <td class="biko-cell">ケトン（尿）<br>トレース〜＋<br>0.05〜0.15g/L</td>
+      <td class="biko-cell">ケトン（尿）<br>＋＋＋<br>0.8g/L（8mmol/L）</td>
+      <td class="biko-cell"></td>
+      <td class="biko-cell">固形物なし 1/3<br>マナ酵素90mlを水540mlで割り（1:6）、ペットボトルで12〜21時に空腹のとき飲む</td>
+      <td class="biko-cell">固形物なし 2/3<br>マナ酵素90mlを水540mlで割り（1:6）、ペットボトルで12〜21時に空腹のとき飲む<br>散歩なし（最低限の歩数）<br>テビチ内容物は冷蔵（回復で食べる）</td>
+      <td class="biko-cell">固形物なし 3/3<br>マナ酵素90mlを水540mlで割り（1:6）、ペットボトルで12〜21時に空腹のとき飲む<br>テビチ内容物は冷蔵（回復で食べる）<br>実際：てびち汁は取らず、マナ酵素は30mlで済んだ</td>
+      <td class="biko-cell">回復食 1/4<br>1食目は汁だけ</td>
+      <td class="biko-cell">回復食 2/4</td>
+      <td class="biko-cell">回復食 3/4</td>
+      <td class="biko-cell">回復食 4/4</td>
+      <td class="biko-cell">普通食（カロリー制限・糖質制限）</td>
+      <td class="biko-cell">普通食（カロリー制限・糖質制限）</td>
+      <td class="biko-cell">普通食（カロリー制限・糖質制限）</td>
+      <td class="biko-cell">普通食（カロリー制限・糖質制限）</td>
+      <td class="biko-cell">普通食（カロリー制限・糖質制限）</td>
+      <td class="biko-cell"></td>
+    </tr>
+  </table>
+  </div>
+</div>
+
+<div class="tsukiawase" id="tsukiawase">
+  <h2>毎日の付き合わせ（計画と実績）</h2>
+  <div class="tw-note">献立のチェックを押すと、その日の摂取が計算されます（チェックはこのブラウザに保存）。消費は Apple Watch の基礎代謝＋活動（7〜23時の毎時5分の自動実行で入る）。脂肪の減り＝不足のうち上限（脂肪1kgあたり1日69.3kcal）までの分。上限を超えた不足は筋肉などから出る分として赤で出します。たんぱく質の必要量は、筋肉を落とさないための目安として体重1kgあたり1.6g（その朝の乾燥体重・まだ測っていない日は目標体重）。</div>
+  <div class="tw-wrap"><table id="tw-table"></table></div>
+</div>
+
+<script>
+(function(){
+  // ===== 実測・目標の一元データ（ここに1行足すだけで乾燥体重欄・チェック時間欄・歩数欄が揃う） =====
+  const jissoku = {
+    "10/4": {kg: 62.2, jikan: "9:27", shibo: 17.4, hosu: 12613, kiso: 1495, katsudo: 656, mizu: 2500},
+    "10/5": {kg: 61.0, jikan: "13:06", shibo: 16.7, hosu: 12052, kiso: 1462, katsudo: 506, mizu: 2250},
+    "10/6": {kg: 60.6, jikan: "11:40", shibo: 16.4, hosu: 10939, kiso: 1403, katsudo: 447, mizu: 1000},
+    "10/7": {kg: 60.9, jikan: "11:20", shibo: 16.6, hosu: 12254, kiso: 1473, katsudo: 517, mizu: 2250},
+    "10/8": {kg: 60.2, jikan: "11:16", shibo: 16.2, hosu: 7590, kiso: 1459, katsudo: 340, mizu: 2500},
+    "10/9": {kg: 59.8, jikan: "5:43", shibo: 16.0, hosu: 7512, kiso: 1444, katsudo: 321, mizu: 3500},
+    "10/10": {kg: 59.8, jikan: "8:38", shibo: 16.0, hosu: 5012, kiso: 1455, katsudo: 343, mizu: 4000},
+    "10/11": {kg: 59.5, jikan: "10:02", shibo: 15.8, hosu: 8820, kiso: 1467, katsudo: 358, mizu: 1000},
+    "10/12": {kg: 59.7, jikan: "8:11", shibo: 15.9, hosu: 172, kiso: 420, katsudo: 12}
+  };
+  // 水分を Mits様が直接おっしゃった日はこちらを使う（ヘルスの記録より優先・自動入力はここを書き換えない）
+  // 2026-10-11 Mits様「昨日の水分は4L」（ヘルスの記録は 1,000mL）
+  const MIZU_TE = {"10/10": 4000};
+  const mokuhyo = {
+    // 2026-10-07 再計算：10/5〜10/6 は実際の摂取（948・1,049kcal）で、10/5 朝の 61.0kg から。
+    // 10/7 は 1,000kcal、10/8 以降のふだんの日はプロテインを外した 822kcal。固形物なし（10/8〜10/10）と復食（10/11〜10/13）は献立の合計。消費 1,920kcal。
+    // 1日の不足のうち 脂肪kg×69.3kcal までが脂肪（9,000kcal/kg・脂肪組織は8割が脂肪）、超えた分は除脂肪（1,800kcal/kg）。
+    // 2026-10-09 再計算：ボーンブロス（10/9〜10/10 は2杯・10/11〜10/17 は1杯・1杯40kcal）を足し、10/9 は散歩なし（消費 1,667kcal）で置いた。
+    // 2026-10-09 再計算2：10/14〜10/19 はベーコン100g（202kcal）を外した（Mits様、油が過剰なときのできものが出たため）。
+    // 2026-10-09 再計算3：卵は1日3個まで（Mits様「現実的に5個も食べない3個」）。10/14〜10/19 も献立の合計（772kcal・旅行の10/18〜19 は 732kcal）で数えた。
+    // 2026-10-09 再計算4：ボーンブロスをてびち汁 半袋（200g・94kcal・たんぱく質12.2g）に替えた（Mits様「てびち」）。脂肪の減りは同じで、たんぱく質が増えた分だけ除脂肪の減りが小さくなる。
+    // 2026-10-09 再計算5：てびち汁は汁だけ（1杯 110g・23kcal・たんぱく質5.0g）。具は食べない（Mits様）。
+    // 2026-10-09 再計算6：てびち汁は1杯で1袋の汁220g（45kcal・たんぱく質10g）。10/9〜10/10 は1日2袋・10/11〜10/17 は1日1袋。
+    // 2026-10-09 再計算7：テビチ内容物（1袋分・143kcal・たんぱく質14.4g）を 10/11〜10/13 の夕方に1つずつ足した（Mits様「回復で食べる」）。
+    // 2026-10-09 再計算8：旅行が無くなり（Mits様）、10/18〜10/19 も家の日の献立（777kcal）。目標体重は変わらない（脂肪の上限の内で、増えた 45kcal はたんぱく質）。
+    // 2026-10-11 再計算9：筋肉（除脂肪）が減らない前提に直した（Mits様「目標体重を筋肉が減らない前提で計算し直して」・10/5 の方針「優先は脂肪減少、最大値かつ筋肉減少、最小」）。
+    // 減るのは脂肪組織だけ：目標体重＝61.0 −（10/5 の目標脂肪量 − その日の目標脂肪量）÷ 0.8。目標脂肪量は上の目標脂肪量の行と同じ（毎日 脂肪kg×69.3kcal を燃やす）。水分・お腹の中身の増減は入れていない。
+    // 再計算8までの値（上限を超えた不足を除脂肪 1,800kcal/kg の減りとして入れていた・10/20 55.9）：10/6 60.7・10/10 59.5・10/15 57.7・10/20 55.9
+    "10/5": 61.0, "10/6": 60.9, "10/7": 60.8, "10/8": 60.7, "10/9": 60.6,
+    "10/10": 60.5, "10/11": 60.4, "10/12": 60.3, "10/13": 60.2, "10/14": 60.1,
+    "10/15": 60.0, "10/16": 59.9, "10/17": 59.8, "10/18": 59.7, "10/19": 59.6,
+    "10/20": 59.5
+  };
+  window.KIROKU = {jissoku, mokuhyo};
+
+  document.querySelectorAll('.page').forEach(page => {
+    const table = page.querySelector('table');
+    if (!table) return;
+    const trs = {};
+    table.querySelectorAll('tr').forEach(tr => {
+      const cls = (tr.className || '').trim();
+      trs[cls] = Array.from(tr.children).slice(1); // th を除く
+    });
+    const hinichi = trs['hinichi'] || [];
+    // 列ごとの日付（10/4 等）を取得・曜日が「日」なら sunday クラスを付与
+    const days = hinichi.map(td => {
+      const ymdEl = td.querySelector('.ymd');
+      if (!ymdEl) return null;
+      const m = ymdEl.textContent.replace(/[^0-9/]/g,'').match(/^\d+\/\d+/);
+      const dowEl = td.querySelector('.dow');
+      if (dowEl && /\(日\)/.test(dowEl.textContent)) td.classList.add('sunday');
+      return m ? m[0] : null;
+    });
+
+    // 各列：乾燥体重・チェック時間・目標体重・グラフドットを描画
+    days.forEach((day, col) => {
+      if (!day) return;
+      const taijuTd = (trs['taiju'] || [])[col];
+      const jikanTd = (trs['jikan'] || [])[col];
+      const goalTd  = (trs['mokuhyo'] || [])[col];
+      const shiboTd = (trs['taishibo'] || [])[col];
+      const hosuTd  = (trs['hosu'] || [])[col];
+      const mizuTd  = (trs['mizu'] || [])[col];
+
+      // 目標体重の値
+      const mk = mokuhyo[day];
+      if (mk != null && goalTd) goalTd.textContent = mk.toFixed(1);
+
+      // 実測の値
+      const jd = jissoku[day];
+      if (jd) {
+        if (taijuTd && jd.kg != null) {
+          taijuTd.className = 'taiju-start';
+          let s = '<span class="v">' + jd.kg.toFixed(1) + '</span>';
+          if (mk != null) { const df = jd.kg - mk; s += '<span class="sa ' + (df <= 0 ? 'good' : 'warn') + '">' + (df > 0 ? '+' : df < 0 ? '−' : '±') + Math.abs(df).toFixed(1) + '</span>'; }
+          taijuTd.innerHTML = s;
+        }
+        if (shiboTd && jd.shibo != null) {
+          shiboTd.className = 'atai';
+          shiboTd.textContent = jd.shibo.toFixed(1);
+        }
+        // 2026-10-10 Mits様「糖質のしたに摂取水分量を入れて」：iPhone のヘルスの水分（HiWater で記録）の1日の合計 mL
+        const mizu = MIZU_TE[day] != null ? MIZU_TE[day] : jd.mizu;
+        if (mizuTd && mizu != null) {
+          mizuTd.className = 'atai';
+          mizuTd.textContent = mizu.toLocaleString('ja-JP');
+        }
+        if (hosuTd && jd.hosu != null) {
+          hosuTd.className = 'atai hosu-v';
+          const pct = Math.min(100, jd.hosu / 80);
+          hosuTd.innerHTML = '<span class="v">' + jd.hosu.toLocaleString('ja-JP') + '</span><span class="bar"><i class="' + (jd.hosu >= 8000 ? 'ok' : '') + '" style="width:' + pct + '%"></i></span>';
+        }
+        if (jikanTd && jd.jikan) {
+          jikanTd.className = 'jikan filled';
+          jikanTd.textContent = jd.jikan;
+        }
+      }
+    });
+
+  });
+})();
+</script>
+<script>
+(function(){
+  const K = window.KIROKU; if (!K) return;
+  // 1回分の [kcal, たんぱく質g, 糖質g]（八訂・ラベル）
+  const EIYOU = {
+    'コーヒー＋MCT大1':[126,0,0], 'てびち汁 汁だけ1袋分（220g）':[45,10.0,0.0], 'テビチ内容物（1袋分）':[143,14.4,0.0], '塩水500ml（天然塩ひとつまみ）':[0,0,0], 'カチュー湯＋ひじき':[37,7.9,0.2], 'カチュー湯':[33,7.7,0.1], 'ひじき':[4,0.2,0.1], '卵1':[71,6.1,0.2], '卵2':[71,6.1,0.2], '卵3':[71,6.1,0.2], '卵4':[71,6.1,0.2], '卵5':[71,6.1,0.2],
+    '納豆1':[86,7.4,2.4], 'もずく50g':[3.5,0.15,0], 'MCT小1':[42,0,0], 'プロテイン2杯':[178,21,7.6],
+    'グルタミン5g':[20,5,0], 'マナ酵素20ml':[44,0,10.8], 'カチュー湯2杯＋ひじき':[71,15.6,0.4], 'ベーコン100g':[202,15,3.9], 'ベーコンエッグ・卵2':[344,27.2,4.3], '柿1/2個':[57,0.4,12.9], 'リンゴ1個':[135,0.3,36.0], 'マナ酵素60ml':[132,0,32.4], 'マナ酵素30ml（実際）':[66,0,16.2], '野菜炒め ベーコン入り（実際）':[280,9.4,9.2], 'ゆし豆腐味噌汁 卵入り（実際）':[176,15.0,4.6], '納豆1（実際）':[86,7.4,2.4], '優光泉40ml':[118,0,29.4], 'マナ酵素90ml・水540ml':[198,0,48.6]
+  };
+  // 目標脂肪量（最優先）：毎朝の脂肪量。10/4 の 10.8kg から、毎日 上限（脂肪kg×69.3kcal）ちょうど燃やした値
+  const MOKUHYO_SHIBOU = {"10/4": 10.80, "10/5": 10.72, "10/6": 10.63, "10/7": 10.55, "10/8": 10.47, "10/9": 10.39, "10/10": 10.31, "10/11": 10.23, "10/12": 10.15, "10/13": 10.07, "10/14": 10.00, "10/15": 9.92, "10/16": 9.84, "10/17": 9.77, "10/18": 9.69, "10/19": 9.62, "10/20": 9.54};
+  document.querySelectorAll('.page table').forEach(table => {
+    const hin = table.querySelector('tr.hinichi'), row = table.querySelector('tr.shibou'); if (!hin || !row) return;
+    const tds = Array.from(row.children).slice(1);
+    Array.from(hin.children).slice(1).forEach((td, col) => {
+      const y = td.querySelector('.ymd'); const m = y && y.textContent.match(/\d+\/\d+/);
+      if (m && MOKUHYO_SHIBOU[m[0]] != null && tds[col]) tds[col].textContent = MOKUHYO_SHIBOU[m[0]].toFixed(2);
+      // 2026-10-11 Mits様「目標脂肪量に対しての実態脂肪量の行がなかった　追加して、そっちが大事だった」：実測脂肪量＝その朝の体重×体脂肪率÷100、目標比は目標脂肪量との差
+      const jr = table.querySelector('tr.jissoku-shibou'); const jtd = jr && Array.from(jr.children).slice(1)[col];
+      const jd = m && K.jissoku[m[0]];
+      if (jtd && jd && jd.kg != null && jd.shibo != null) {
+        const v = jd.kg * jd.shibo / 100, mk = MOKUHYO_SHIBOU[m[0]];
+        jtd.className = 'taiju-start';
+        let h = '<span class="v">' + v.toFixed(2) + '</span>';
+        if (mk != null) { const df = v - mk; h += '<span class="sa ' + (df <= 0 ? 'good' : 'warn') + '">' + (df > 0 ? '+' : df < 0 ? '−' : '±') + Math.abs(df).toFixed(2) + '</span>'; }
+        jtd.innerHTML = h;
+      }
+    });
+  });
+  // 2026-10-11 Mits様「食事は食事項目　食事項目の下にサプリ項目を新設して」：サプリのチェックは sapuri の行に移した
+  // 2026-10-11 Mits様「炒め物して、ゆし豆腐味噌汁」（写真）：昼の実際。野菜炒め＝白菜200g・キャベツ80g・人参30g・しめじ50g・ベーコン40g・油6g の見立て（八訂）280kcal・P9.4・糖質9.2／ゆし豆腐味噌汁＝ゆし豆腐150g・卵1・味噌18g 176kcal・P15.0・糖質4.6／納豆1
+  // 2026-10-11 Mits様「水2L以上も不要」：備考から外した
+  // 2026-10-11 Mits様「天然塩ひとつまみも不要」：「塩水500ml」とだけ出す（記録の名前は data-label で変えない）
+  // 2026-10-11 Mits様「カチュー湯2杯　ひじきも分解して一つのチェック　カチュー湯2杯ではなく　カチュー湯」：「カチュー湯＋ひじき」「カチュー湯2杯＋ひじき」を「カチュー湯」「ひじき」の2つのチェックに分けた（ひじき＝カチュー湯＋ひじき 37kcal − カチュー湯 33kcal）
+  // 2026-10-11 Mits様「10/11からてびち、テビチすべて外して、毎回では無く、食べたときに言うことにする」：10/11〜10/19 のてびち汁・テビチ内容物のチェックを外した
+  // 2026-10-11 Mits様「コーヒーの項目に　コーヒーコーヒー　不要でしょ　+MCTでいい」：午前の行は「＋MCT大1」とだけ出す（記録の名前は data-label で変えない）
+  // 2026-10-11 Mits様「冗長な表示を極力しないで」：サプリの行の各チェックから「サプリ」を外して出す（記録の名前は data-label で変えない）。目標比の語は左の欄へ
+  const ROWS = ['gozen','hirusugi','aruita','yugata','sapuri'];
+  const KEY = 'fasting_kiroku_chk_v1';
+  const PLAN_BURN = 1920, CAP = 69.3, FAT0 = 10.8;
+  // 2026-10-09 Mits様「今日は意図的な散歩に行かない、最低限の徒歩数にする」：10/9 の計画の消費は 2,000歩で置く（1500＋83＋42×2.0＝1,667kcal）
+  // 2026-10-11 Mits様「10/11　散歩6000を入れてみて」：10/11 の計画の消費は 6,000歩で置く（1500＋83＋42×6.0＝1,835kcal）
+  const PLAN_BURN_HI = {'10/9': 1667, '10/11': 1835}, burnP = d => PLAN_BURN_HI[d] || PLAN_BURN;
+  // 2026-10-09 ボーンブロス（丸どりだし1袋・40kcal はラベルで確かめる。資料 p.37 はたんぱく質 9.5g/袋）を 10/14〜10/17 の夕方に1杯足す
+  // 2026-10-09 Mits様「ベーコンエッグは2,3日取っただけで油が過剰なときに出るできものがでたので回復以後採用しない」：10/14〜10/19 はベーコン100g（202kcal）を外し、卵2個は残す
+  // 2026-10-09 Mits様「卵、現実的に5個も食べない3個」：10/13〜10/19 の卵は1日3個（10/14〜10/19 は卵2個 142kcal を減らす）
+  // 2026-10-09 10/14〜10/19 も献立のマスの合計で数える（ベーコンを外し卵3個にしたので、822kcal の置き値をやめた）
+  // 2026-10-09 Mits様「てびち」：ボーンブロスを沖縄ホーメル てびち汁400g に替えた。1杯は半袋200g（1袋 188kcal・たんぱく質24.4g・炭水化物0.0g・食塩3.8g、メーカーのページ product_detail.php?id=32）。1杯1袋だと食塩が1日7.6g になるため半袋にした
+  // 2026-10-09 Mits様「汁だけだと220グラム…汁だけでのカロリーやエネルギーを測定して内容物は食べない」：1袋の汁220g の見立て＝45kcal・たんぱく質10g・糖質0g・食塩2.5g（袋の表示の合計から、具の豚足 骨を除いて約70g〔八訂 豚足ゆで 100g あたり たんぱく質20.1g・脂質16.8g〕と大根・人参・昆布を引いた）。1杯はその半分（110g）
+  // 2026-10-09 Mits様「おいしいので、1食で1袋飲んだ」：1杯は1袋の汁220g（45kcal・たんぱく質10g・食塩2.5g の見立て）
+  // 2026-10-09 Mits様「内容物は冷蔵して、回復で食べるのでテビチ内容物として記録しておいて」：テビチ内容物（1袋分）＝袋の表示 188kcal・たんぱく質24.4g から汁の分 45kcal・10g を引いた 143kcal・たんぱく質14.4g・糖質0g。10/11〜10/13 の夕方に1つずつ置いた
+  // 2026-10-11 Mits様「10/10 のチェックは4つで、てびち汁が　取っていない　マナ酵素も30mlで済んでしまった」：10/10 にマナ酵素30ml（実際）を足し、90ml のチェックは外す（20ml＝44kcal から比で 66kcal・糖質16.2g）
+  // 2026-10-09 Mits様「旅行が無くなり再計画する」：10/18〜10/19 は家で過ごす日として 10/17 と同じ献立（サプリ・塩水・てびち汁 汁だけ1袋分・ビタミンC・水2L以上）にした
+  const TSUIKA = {};
+  // 計画の摂取：ふだんの日は 10/5〜10/6 で確立した 1,000kcal（2026-10-07）から、10/8 以降はプロテイン2杯（178kcal）を外した 822kcal（プロテインが切れるため）。
+  // 固形物なし（10/8〜10/10）と復食（10/11〜10/13）は、献立のマスの合計。
+  const KAKURITSU = 1000, KONDATE_BI = ['10/8','10/9','10/10','10/11','10/12','10/13','10/14','10/15','10/16','10/17','10/18','10/19'];
+  const PLAN = {};
+  let chk = {};
+  try { chk = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { chk = {}; }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(chk)); } catch (e) {} };
+  // 前の形（卵4個・卵5個を1マス）で付けたチェックを、1個ずつのマスに移す
+  ['10/6'].forEach(d => {
+    const old = [d + '|hirusugi|卵1', d + '|hirusugi|卵2', d + '|yugata|ベーコン100g'].filter(k => chk[k]);
+    if (old.length) { chk[d + '|hirusugi|ベーコンエッグ・卵2'] = 1; old.forEach(k => delete chk[k]); save(); }
+  });
+  Object.keys(chk).forEach(k => {
+    if (/\|もずく100g$/.test(k)) { chk[k.replace('もずく100g', 'もずく50g')] = 1; delete chk[k]; save(); return; }
+  if (/\|ベーコン50g$/.test(k)) { chk[k.replace('ベーコン50g', 'ベーコン100g')] = 1; delete chk[k]; save(); return; }
+    const m = k.match(/^(.*\|)卵([45])個$/); if (!m) return;
+    for (let i = 1; i <= Number(m[2]); i++) chk[m[1] + '卵' + i] = 1;
+    delete chk[k]; save();
+  });
+
+  document.querySelectorAll('.page table').forEach(table => {
+    const hin = table.querySelector('tr.hinichi'); if (!hin) return;
+    const days = Array.from(hin.children).slice(1).map(td => {
+      const y = td.querySelector('.ymd'); const m = y && y.textContent.match(/\d+\/\d+/); return m ? m[0] : null;
+    });
+    ROWS.forEach(r => {
+      const tr = table.querySelector('tr.' + r); if (!tr) return;
+      Array.from(tr.children).slice(1).forEach((td, col) => {
+        const d = days[col]; if (!d) return;
+        td.querySelectorAll('.chk').forEach(sp => {
+          const k = d + '|' + r + '|' + (sp.dataset.label || sp.textContent.trim());
+          sp.dataset.k = k;
+          const e0 = EIYOU[k.split('|')[2]];
+          // 「（実際）」の付いたチェックは実際に取った分の記録なので、計画には数えない（2026-10-11）
+          if (e0 && !/（実際）/.test(k)) { const q = PLAN[d] = PLAN[d] || {kcal: 0, p: 0, c: 0}; q.kcal += e0[0]; q.p += e0[1]; q.c += e0[2]; }
+          if (chk[k]) sp.classList.add('on');
+          sp.addEventListener('click', () => {
+            if (chk[k]) delete chk[k]; else chk[k] = 1;
+            sp.classList.toggle('on', !!chk[k]); save(); render();
+            queue(k, !!chk[k]); flush();
+          });
+        });
+      });
+    });
+  });
+
+  const DAYS = []; for (let i = 4; i <= 19; i++) DAYS.push('10/' + i);
+  const nextDay = d => '10/' + (Number(d.split('/')[1]) + 1);
+  const now = new Date(); const TODAY = (now.getMonth() + 1) + '/' + now.getDate();
+  const num = d => Number(d.split('/')[0]) * 100 + Number(d.split('/')[1]);
+  const f0 = v => Math.round(v).toLocaleString('ja-JP');
+  const burnOf = j => {
+    if (!j) return null;
+    if (j.kiso != null && j.kiso >= 1300 && j.katsudo != null) return { v: j.kiso + j.katsudo, suitei: false };
+    if (j.hosu != null) return { v: 1500 + 83 + Math.round(42 * j.hosu / 1000), suitei: true };
+    return null;
+  };
+
+  function render() {
+    let Fp = FAT0, Fa = FAT0, cumP = 0, cumA = 0;
+    const out = [], S = {};
+    for (const d of DAYS) {
+      const capP = CAP * Fp, capA = CAP * Fa;
+      const planIn = KONDATE_BI.includes(d) && PLAN[d] ? PLAN[d].kcal : (d === '10/4' ? PLAN_BURN - capP : (num(d) >= 1008 ? KAKURITSU - 178 : KAKURITSU) + (TSUIKA[d] || 0));
+      const planDef = burnP(d) - planIn;
+      const planFat = Math.min(Math.max(planDef, 0), capP) / 9, planOver = Math.max(0, planDef - capP);
+      Fp -= planFat / 1000; cumP += planFat;
+      const mirai = num(d) > num(TODAY), kyou = d === TODAY, mae = (d === '10/4');
+      let kcal = 0, p = 0, c = 0, n = 0;
+      Object.keys(chk).forEach(k => {
+        if (!k.startsWith(d + '|')) return;
+        const e = EIYOU[k.split('|')[2]]; if (e) { kcal += e[0]; p += e[1]; c += e[2]; n++; }
+      });
+      const b = burnOf(K.jissoku[d]);
+      let fat = null, deficit = null, over = 0, msg = [];
+      if (mae) { fat = capA / 9; msg.push('前のプラン（摂取の記録なし・上限いっぱい燃えたと置く）'); }
+      else if (!mirai && n > 0 && b) {
+        deficit = b.v - kcal;
+        fat = Math.min(Math.max(deficit, 0), capA) / 9;
+        over = Math.max(0, deficit - capA);
+        const amari = capA - deficit;
+        if (kyou) msg.push('今日は途中（消費はこのあとも増える）');
+        const ex = over - planOver;
+        if (ex > 50 && !kyou) msg.push('<span class="warn">上限を ' + f0(over) + 'kcal 超え（計画 ' + f0(planOver) + '）＝筋肉などから出る分。摂取を ' + f0(ex) + 'kcal 増やす</span>');
+        else if (over > 50 && !kyou) msg.push('上限超え ' + f0(over) + 'kcal は計画（' + f0(planOver) + '）の範囲');
+        else if (amari > 50 && !kyou) msg.push('上限まで ' + f0(amari) + 'kcal 余り。歩数で約 ' + f0(amari / 42 * 1000) + '歩 足せば脂肪の減りが上限に届く');
+        else if (!kyou) msg.push('<span class="good">上限どおり</span>');
+        { const wk = (K.jissoku[d] || {}).kg != null ? K.jissoku[d].kg : K.mokuhyo[d]; const nd = wk != null ? Math.round(1.6 * wk) : 95;
+          if (p < nd && !kyou) msg.push('たんぱく質 ' + p.toFixed(0) + 'g（必要 ' + nd + 'g）'); }
+        if (c > 50) msg.push('<span class="warn">糖質 ' + c.toFixed(0) + 'g（50g超）</span>');
+        if (b.suitei && !kyou) msg.push('消費は歩数からの推定（時計を外していた時間あり）');
+      } else if (!mirai) {
+        msg.push(kyou ? '今日は途中（チェックを押すと計算が入る）' : (n === 0 ? '献立のチェックなし' : '消費のデータ待ち（毎時5分の自動実行で入る）'));
+      }
+      const wkg = (K.jissoku[d] || {}).kg != null ? K.jissoku[d].kg : K.mokuhyo[d];
+      const needP = wkg != null ? Math.round(1.6 * wkg) : null;
+      S[d] = { planIn, planDef, planBurn: burnP(d), planOver, capP, kcal, n, b, deficit, capA, over, fat, planFat, mirai, kyou, mae, p, needP, c };
+      const fatUsed = fat != null ? fat : (mirai ? 0 : capA / 9);
+      if (!mirai && !(kyou && fat == null)) { Fa -= fatUsed / 1000; cumA += fatUsed; }
+      const nx = nextDay(d), tgt = K.mokuhyo[nx], act = (K.jissoku[nx] || {}).kg;
+      let wtxt = (tgt != null ? tgt.toFixed(1) : '—') + ' / ' + (act != null ? act.toFixed(1) : '—');
+      if (tgt != null && act != null) {
+        const df = act - tgt;
+        wtxt += ' <span class="' + (df <= 0 ? 'good' : 'warn') + '">(' + (df > 0 ? '+' : '') + df.toFixed(1) + ')</span>';
+      }
+      out.push('<tr class="' + (mirai ? 'mirai' : kyou ? 'kyou' : '') + '">' +
+        '<td class="d">' + d + '</td>' +
+        '<td>' + (b ? f0(b.v) + (b.suitei ? '*' : '') : '—') + '</td>' +
+        '<td>' + f0(planIn) + ' / ' + (n ? f0(kcal) : '—') + '</td>' +
+        '<td>' + (n ? p.toFixed(0) : '—') + '</td>' +
+        '<td>' + (n ? c.toFixed(0) : '—') + '</td>' +
+        '<td>' + (deficit != null ? f0(deficit) : (mirai ? f0(planDef) : '—')) + '</td>' +
+        '<td>' + f0(capA) + '</td>' +
+        '<td>' + (over > 0 ? '<span class="warn">' + f0(over) + '</span>' : (deficit != null ? '0' : (mirai ? f0(planOver) : '—'))) + '</td>' +
+        '<td>' + f0(planFat) + ' / ' + (fat != null ? f0(fat) : '—') + '</td>' +
+        '<td>' + (cumP / 1000).toFixed(2) + ' / ' + (mirai ? '—' : (cumA / 1000).toFixed(2)) + '</td>' +
+        '<td>' + wtxt + '</td>' +
+        '<td class="msg">' + msg.join('<br>') + '</td></tr>');
+    }
+    document.getElementById('tw-table').innerHTML =
+      '<tr><th>日付</th><th>消費<br>kcal</th><th>摂取 kcal<br>計画 / 実績</th><th>たんぱく質<br>g</th><th>糖質<br>g</th><th>不足<br>kcal</th><th>上限<br>kcal</th><th>上限超え<br>kcal</th><th>脂肪の減り g<br>計画 / 実績</th><th>脂肪の減り累計 kg<br>計画 / 実績</th><th>翌朝の乾燥体重 kg<br>目標 / 実測（差）</th><th>ひとこと</th></tr>' +
+      out.join('');
+    // 2026-10-11 Mits様「412kcal　のところを　過剰消費　ではなく、要摂取　にして」：上限を超えた分の名前を「要摂取」に
+    // 2026-10-11 Mits様「表の並びを変えて」：消費→摂取→不足→上限→上限を超えた分の順（消費を摂取の前に）
+    const sg = v => (v > 0 ? '−' : '+') + f0(Math.abs(v));
+    document.querySelectorAll('.page table').forEach(table => {
+      const hin = table.querySelector('tr.hinichi'), tr = table.querySelector('tr.zutsu'); if (!hin || !tr) return;
+      const tds = Array.from(tr.children).slice(1);
+      Array.from(hin.children).slice(1).forEach((td, col) => {
+        const y = td.querySelector('.ymd'); const m = y && y.textContent.match(/\d+\/\d+/); const cell = tds[col];
+        if (!cell) return; cell.innerHTML = '';
+        const x = m && S[m[0]]; if (!x) return;
+        const line = (a, b2) => '<div class="r"><span>' + a + '</span><b>' + b2 + '</b></div>';
+        let h = '';
+        if (x.mirai) {
+          h = '<div class="mirai">' + line('消費', f0(x.planBurn)) + line('摂取', f0(x.planIn)) +
+              '<div class="big">' + sg(x.planDef) + '</div>' + line('上限', '−' + f0(x.capP)) + line('要摂取', f0(x.planOver)) + '</div>';
+        } else if (x.mae) {
+          h = line('消費', x.b ? f0(x.b.v) : '—') + line('摂取', '—') + '<div class="big">—</div>' + line('上限', '−' + f0(x.capA)) + line('要摂取', '—');
+        } else {
+          h = line('消費', x.b ? f0(x.b.v) + (x.b.suitei ? '*' : '') : '—') + line('摂取', x.n ? f0(x.kcal) : '—');
+          if (x.deficit != null) {
+            const cls = x.kyou ? '' : (x.over > 50 ? 'warn' : 'good');
+            h += '<div class="big ' + cls + '">' + sg(x.deficit) + (x.kyou ? ' 途中' : '') + '</div>';
+            h += line('上限', '−' + f0(x.capA)) + line('要摂取', f0(x.over) + (x.kyou ? ' 途中' : ''));
+          } else {
+            h += '<div class="big">—</div>' + line('上限', '−' + f0(x.capA)) + line('要摂取', '—');
+          }
+        }
+        cell.innerHTML = h;
+        const nc = (Array.from((table.querySelector('tr.nensho') || {children: []}).children).slice(1))[col];
+        if (nc) {
+          let g = line('必要', '−' + f0(x.planFat) + 'g');
+          if (x.mirai) g = '<div class="mirai">' + g + line('実施', '—') + '</div>';
+          else if (x.mae) g += line('実施', '−' + f0(x.capA / 9) + 'g*');
+          else if (x.fat != null) {
+            const cls = x.kyou ? '' : (x.fat >= x.planFat - 3 ? 'good' : 'warn');
+            g += '<div class="r"><span>実施</span><b class="' + cls + '">−' + f0(x.fat) + 'g' + (x.kyou ? ' 途中' : '') + '</b></div>';
+          } else g += line('実施', '—');
+          nc.innerHTML = g;
+        }
+        const pc = (Array.from((table.querySelector('tr.tanpaku') || {children: []}).children).slice(1))[col];
+        if (pc) {
+          let q = line('必要', x.needP != null ? x.needP + 'g' : '—');
+          if (x.mirai) q = '<div class="mirai">' + q + line('実施', '—') + '</div>';
+          else if (x.mae || !x.n) q += line('実施', '—');
+          else {
+            const cls = x.kyou ? '' : (x.p >= x.needP ? 'good' : 'warn');
+            q += '<div class="r"><span>実施</span><b class="' + cls + '">' + Math.round(x.p) + 'g' + (x.kyou ? ' 途中' : '') + '</b></div>';
+          }
+          pc.innerHTML = q;
+        }
+        const cc = (Array.from((table.querySelector('tr.toshitsu') || {children: []}).children).slice(1))[col];
+        if (cc) {
+          let s = line('上限', '50g');
+          if (x.mirai) s = '<div class="mirai">' + s + line('実施', '—') + '</div>';
+          else if (x.mae || !x.n) s += line('実施', '—');
+          else {
+            const cls = x.c <= 50 ? 'good' : 'warn';
+            s += '<div class="r"><span>実施</span><b class="' + cls + '">' + Math.round(x.c) + 'g' + (x.kyou ? ' 途中' : '') + '</b></div>';
+          }
+          cc.innerHTML = s;
+        }
+      });
+    });
+  }
+  render();
+
+  // ===== チェックを端末どうしで共有する（Cloudflare Worker fasting-sync・uchinaaguchi-sync と同じ形） =====
+  // 合言葉は画面の JS に入っていて秘密にはできない（uchinaaguchi-sync と同じ扱い）。
+  const SYNC_URL = 'https://fasting-sync.3216-fun.workers.dev/state';
+  const SYNC_KEY = '3088b9baacde8ab14ce29378a88574b4', SYNC_FAMILY = 'mitsuhiro';
+  const PKEY = 'fasting_kiroku_pending_v1', SKEY = 'fasting_kiroku_synced_v1';
+  const rd = (k, d) => { try { return JSON.parse(localStorage.getItem(k) || 'null') || d; } catch (e) { return d; } };
+  const wr = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+  // まだ送れていない変更（押した・外した）を貯めておく
+  function queue(k, on) { const p = rd(PKEY, {}); p[k] = on ? 1 : 0; wr(PKEY, p); }
+  async function flush() {
+    const p = rd(PKEY, {}); const ks = Object.keys(p); if (!ks.length) return true;
+    const state = {}, remove = [];
+    ks.forEach(k => { if (p[k]) state['chk:' + k] = '1'; else remove.push('chk:' + k); });
+    try {
+      const r = await fetch(SYNC_URL + '?key=' + SYNC_KEY + '&f=' + SYNC_FAMILY, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ state, remove }) });
+      const j = await r.json(); if (!j.ok) return false;
+      const now = rd(PKEY, {}); ks.forEach(k => { if (now[k] === p[k]) delete now[k]; }); wr(PKEY, now);
+      return true;
+    } catch (e) { return false; }
+  }
+  async function pull() {
+    // 初めてこの端末で開いたときは、この端末にあるチェックを全部送ってから読む
+    if (!localStorage.getItem(SKEY)) Object.keys(chk).forEach(k => queue(k, true));
+    if (!(await flush())) return;
+    try {
+      const j = await (await fetch(SYNC_URL + '?key=' + SYNC_KEY + '&f=' + SYNC_FAMILY, { cache: 'no-store' })).json();
+      if (!j.ok) return;
+      const next = {}; Object.keys(j.state || {}).forEach(k => { if (k.indexOf('chk:') === 0) next[k.slice(4)] = 1; });
+      const p = rd(PKEY, {}); Object.keys(p).forEach(k => { if (p[k]) next[k] = 1; else delete next[k]; });
+      Object.keys(chk).forEach(k => delete chk[k]); Object.assign(chk, next); save();
+      try { localStorage.setItem(SKEY, String(Date.now())); } catch (e) {}
+      document.querySelectorAll('td.meal .chk').forEach(sp => { if (sp.dataset.k) sp.classList.toggle('on', !!chk[sp.dataset.k]); });
+      render();
+    } catch (e) {}
+  }
+  pull();
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') pull(); });
+})();
+</script>
+<script>
+(function(){
+  // 今日の列に印を付け、開いたときに今日の列が見える位置へ動かす
+  const now = new Date(), T = (now.getMonth() + 1) + '/' + now.getDate();
+  const table = document.querySelector('.page table'); if (!table) return;
+  const hin = Array.from(table.querySelector('tr.hinichi').children).slice(1);
+  const col = hin.findIndex(td => { const m = (td.querySelector('.ymd') || {textContent: ''}).textContent.match(/\d+\/\d+/); return m && m[0] === T; });
+  if (col < 0) return;
+  table.querySelectorAll('tr').forEach(tr => { const c = tr.children[col + 1]; if (c) c.classList.add('kyou-col'); });
+  const sc = document.getElementById('scroll'), head = table.querySelector('th.head');
+  const target = hin[Math.max(0, col - 1)];
+  if (sc && target) sc.scrollLeft = target.offsetLeft - head.offsetWidth;
+})();
+</script>
+</body>
+</html>
