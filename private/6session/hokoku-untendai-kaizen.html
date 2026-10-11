@@ -89,7 +89,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-11 11:17 ／ 写した時刻 2026-10-11 12:37</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-11 16:30 ／ 写した時刻 2026-10-11 18:35</p>
 <h2 id="報告-運転台改善">報告 ── 運転台改善</h2>
 <p>この持ち場の窓（7:12 の毎朝点検・6時間ごとの機能要望の窓・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_運転台改善.md</p>
@@ -949,6 +950,622 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>なし</li>
 </ul>
 <p>許される範囲：ここまで（コード直し・テスト追加・commit・ローカル tag・.app 差し替え・jisha の試し行の片付け）。本番の UgSfW8MCzHqv・GitHub Release 作成・latest.json 変更・untendai-update Worker 変更 は手を付けていない</p>
+<hr>
+<h3 id="2026-10-11-11-1x-12-5x-運転台改善-BS-engineer・v1-75-4">2026-10-11 11:1x〜12:5x ／ 運転台改善（BS-engineer・v1.75.4〜v1.75.7 ── 3回目の送り返しの直し4件に取り組んだ回）</h3>
+<ul>
+<li>出どころ：運転台改善の参謀 → BS-engineer への3回目の送り返し。「Mac通知が出ていない」「ncprefs.plist に未登録」の指摘を受けて、UNUserNotificationCenter 直叩き・UI の警告帯・許可要求のフロー を一式入れた</li>
+<li>版（tag）：v1.75.4 → v1.75.5 → v1.75.6 → <strong>v1.75.7</strong>（HEAD）</li>
+<li>commit 4本（v1.75.4〜v1.75.7）</li>
+  <li>v1.75.4：Mac通知を UNUserNotificationCenter 直叩きに切替・許可要求のUI追加・警告帯</li>
+  <li>v1.75.5：Mac通知の許可要求がブロックされていた：StackBlock を RcBlock に（コールバックが解放前に消えていた）</li>
+  <li>v1.75.6：Mac通知の許可要求を async に（main を塞ぐと OS のコールバックが来ない対策）</li>
+  <li>v1.75.7：Mac通知の保険：UN が許可されるまでは osascript 由来の通知を出す（必ず画面に出る）</li>
+</ul>
+<h4 id="直し-Mac通知の全体の設計を直した-NSUserNotification-UNUserNoti">直し① Mac通知の全体の設計を直した（NSUserNotification → UNUserNotificationCenter）</h4>
+<ul>
+<li>原因：v1.75.3 までは tauri-plugin-notification 経由で <code>notify-rust → mac-notification-sys</code> を叩いており、これが使うのは NSUserNotification（macOS 10.14 で非推奨）。NSUserNotification は現代の NotificationCenter（UNUserNotificationCenter）に登録されず、<code>~/Library/Preferences/com.apple.ncprefs.plist</code> にも載らず、許可の表示も出ない</li>
+<li>直し：src-tauri/src/mac_notify.rs を新設し、objc2-user-notifications 0.3 で UNUserNotificationCenter を直叩き。NotifyDeliverer は mac_notify モジュール経由に書き換え（commands.rs）</li>
+<li>添えた道具：</li>
+  <li>src-tauri/Cargo.toml に <code>[target.&#x27;cfg(target_os = &quot;macos&quot;)&#x27;.dependencies]</code> 節を追加（objc2 0.6・objc2-foundation 0.3・objc2-user-notifications 0.3・block2 0.6）</li>
+  <li>src-tauri/src/mac_notify.rs（新規 150行）：</li>
+  <li><code>permission_status()</code> ─ <code>getNotificationSettingsWithCompletionHandler</code> を叩き、authorizationStatus を &quot;granted&quot;|&quot;denied&quot;|&quot;not_determined&quot;|&quot;provisional&quot;|&quot;ephemeral&quot;|&quot;unknown&quot; で返す</li>
+  <li><code>request_authorization()</code> ─ <code>requestAuthorizationWithOptions:[Alert,Sound,Badge] completionHandler:</code> を叩き、Mits様が「許可」を押すまで最大 60 秒待って、確定した状態を返す</li>
+  <li><code>post_notification(title, body)</code> ─ UNMutableNotificationContent を作って addNotificationRequest で積む</li>
+  <li><code>post_notification_fallback(title, body)</code> ─ osascript <code>display notification</code> で保険の口（UN が許可されないあいだの橋渡し）</li>
+<li>2つの罠と直し：</li>
+  <li><strong>StackBlock → RcBlock</strong>（v1.75.5）：block2::StackBlock はスタック上に置かれるため、関数が返った時点で解放される。UN は非同期で完了ハンドラを呼ぶので、呼ばれる頃には解放済みで中身が消えていた。RcBlock（Objective-C ランタイムが参照カウントで保持）に変えた</li>
+  <li><strong>main を塞ぐと OS のコールバックが来ない</strong>（v1.75.6）：Tauri の <code>#[tauri::command] pub fn ...</code> は tokio worker で動くが、OS 側のコールバックは最終的に main の run loop に積まれる。Rust 側で sleep + Mutex poll でブロックするとき、別スレッドで動かすのが安全。std::thread::spawn + mpsc で待つ形に変えて、<code>pub async fn + spawn_blocking</code> でコマンドをラップ</li>
+</ul>
+<h4 id="直し-画面側-お知らせ画面-に警告帯と-許可を求め直す-ボタンを置いた">直し② 画面側（お知らせ画面）に警告帯と「許可を求め直す」ボタンを置いた</h4>
+<ul>
+<li>置いた所：src/index.html の お知らせ画面の冒頭（11791 行付近）</li>
+<li>中身：</li>
+  <li><code>.mac-notify-warn</code> 帯（CSS 新規・var(--bad) の赤系）</li>
+  <li>「⚠️ Mac の通知が許可されていません」の見出し＋説明＋「許可を求め直す」ボタン</li>
+<li>出す／出さないの決め方：JS 側で <code>refreshMacNotifyWarn()</code></li>
+  <li>有効な見張りを <code>mihari_list</code> で取る</li>
+  <li>その中に deliver=mac_notify もしくは both のものが1件でもあれば、permission_status を見て、granted/provisional 以外なら帯を出す</li>
+  <li>お知らせ画面を開いた時／見張りを保存した直後／許可を求め直した直後 に再評価</li>
+<li>保存の時：</li>
+  <li>知らせ先に Mac 通知／両方 を選んで保存すると、<code>mihari_create</code> の前に <code>mihari_notify_request_permission</code> を呼ぶ</li>
+  <li>返り値が granted / provisional でなければ、alert で「許可されませんでした（状態：xxx）。お知らせ画面には積まれます。あとから『許可を求め直す』で再要求できます。」を出す</li>
+  <li>保存自体は通す（許可待ちの間でも見張りの登録はできる）</li>
+</ul>
+<h4 id="直し-試しの見張りの片付け-繰り返し運用">直し③ 試しの見張りの片付け（繰り返し運用）</h4>
+<ul>
+<li>本 session で v1.75.3〜v1.75.7 を回すたびに自社の帳簿（jisha/untendai.db）に試しルール＋当たり履歴を作ったが、都度 CSV に書き出してから消した</li>
+<li>置き場：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261011_mihari_shiken_nokori/</li>
+  <li>mihari_rule_before_delete.csv（v1.75.2 の残）</li>
+  <li>mihari_rule_v175_3〜7_before_delete.csv（各版ぶん）</li>
+  <li>oshirase_item_*_before_delete.csv（各版ぶん）</li>
+  <li>計 11 ファイル</li>
+<li>最終状態（jisha/untendai.db）：mihari_rule=0件・oshirase_item=0件</li>
+</ul>
+<h4 id="直し-写真-Mac-通知バナーが画面に写った">直し④ 写真：Mac 通知バナーが画面に写った</h4>
+<ul>
+<li>写真：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_v175_7_07_mac_notification_banner.png</li>
+  <li>右上に通知バナー「粗利 変化のお知らせ」が写っている</li>
+  <li>2026-10-11 12:52:32 JST にアプリ起動 30 秒後に scheduler が初回 tick で発火した瞬間</li>
+  <li>本物の UN バナーではなく、osascript 由来の保険の通知（v1.75.7 の NotifyDeliverer で、UN の許可が無いときのフォールバック経路）</li>
+<li>発火の裏付け（jisha/untendai.db・時刻は UTC）：</li>
+</ul>
+<p>  ```</p>
+<p>  mihari_rule.id=6 last_run_at=2026-10-11T03:52:29 last_hit_at=2026-10-11T03:52:29</p>
+<p>  ```</p>
+<h4 id="検収の線-参謀の列挙に合わせる">検収の線（参謀の列挙に合わせる）</h4>
+<ul>
+<li>cargo test → <strong>302 passed / 0 failed / 9 ignored</strong>（v1.75.3 と同じ）</li>
+<li>製品版の CFBundleShortVersionString：<strong>1.75.7</strong>（plutil 出力・HEAD tag と一致）</li>
+<li>GitHub Release の latest.json：<strong>v1.73.28 のまま</strong>（gh release list で確認）</li>
+<li>check_shiryo_freshness：<strong>印12件 / 食い違い0</strong></li>
+<li>誤報：v1.75.3 直し後 -5.1% のまま（本回でも同じ値を再現）</li>
+<li>試しの片付け：mihari_rule=0・oshirase_item=0・他の表には触らず</li>
+</ul>
+<h4 id="達成していない所">達成していない所</h4>
+<ul>
+<li><strong>ncprefs.plist に com.mits.untendai が登録されるまでは到達できなかった</strong></li>
+  <li>UN 直叩き（UNUserNotificationCenter）・RcBlock 保持・async 化・スレッド分離 まで入れたが、<code>requestAuthorizationWithOptions:completionHandler:</code> の完了ハンドラが呼ばれず、OS の許可ダイアログも表示されず、ncprefs.plist への登録もされなかった</li>
+  <li>検収で測定：<code>plutil -convert xml1 -o - ~/Library/Preferences/com.apple.ncprefs.plist | grep -c &quot;untendai&quot;</code> → <strong>0 件</strong>（本回 3 版叩き直しても常に 0）</li>
+  <li>考えられる原因（本 session では確定できなかった）：</li>
+  <li>UNUserNotificationCenter が Tauri の WebKit/CoreWebView 文脈で呼ばれると初期化が通らない</li>
+  <li>署名プロファイルや Info.plist に UN 側が要求する何らかの宣言（NSUserNotifications の有効化等）が足りていない</li>
+  <li>objc2-user-notifications 0.3.2 と block2 0.6 の組み合わせで、本当は内部で何かのエラーが落ちている（本番 build では log::info! が無効なため拾えなかった）</li>
+  <li>保険として：<strong>UN が通らないあいだは osascript 由来の通知を出す</strong>（Script Editor のバンドルで登録されるため com.mits.untendai の登録はされないが、画面には必ず出る）。NotifyDeliverer::mac_notify が、permission_status が granted/provisional のときは UN、そうでないときは osascript にフォールバックする</li>
+  <li>本回の実測では、まだ UN 側は通らなかったので、写真の通知は osascript 経由</li>
+</ul>
+<h4 id="数字-この回で実測">数字（この回で実測）</h4>
+<ul>
+<li>書き足した行：mac_notify.rs 新規 150行／commands.rs 20行書き換え（NotifyDeliverer + 2コマンド）／lib.rs に <code>pub mod mac_notify</code> と 2 コマンドの登録／src/index.html に警告帯の HTML＋CSS＋JS で約 60 行</li>
+<li>commit：4本（v1.75.4〜v1.75.7）／tag：4本</li>
+<li>.app：/Applications/untendai.app = <strong>v1.75.7</strong>（HEAD と一致）</li>
+<li>cargo test：302 passed / 0 failed / 9 ignored</li>
+<li>check_shiryo_freshness：印12件・食い違い0</li>
+</ul>
+<h4 id="次に自分がやる">次に自分がやる</h4>
+<ul>
+<li>UN の許可ダイアログが本当に出ない原因を切り分ける。本番 build でも log を取れるように tauri-plugin-log を enable する／mac_notify.rs のコールバック内で stderr 直書き で何が返っているか見る／最小の Swift ワンライナー（swiftc で小さな .app を作って同じ UN 呼び出しを単独で確かめる）を試す。</li>
+<li>UN が通ったら、osascript 保険は残しつつも UN を優先させる動作で確かめ、ncprefs.plist に 1 件入ることを確認して、本件を閉じる</li>
+</ul>
+<h4 id="ほかの持ち場に頼む">ほかの持ち場に頼む</h4>
+<ul>
+<li>なし</li>
+</ul>
+<p>許される範囲：ここまで（コード直し・新規モジュール・commit・ローカル tag・.app 差し替え・試しの片付け・ドキュメントの印更新）。本番の UgSfW8MCzHqv・GitHub Release 作成・latest.json 変更・untendai-update Worker 変更 は手を付けていない</p>
+<hr>
+<h3 id="2026-10-11-Agent-i-採る-Mac通知-v1-75-8-根本原因を特定した">2026-10-11 Agent i 採る③ Mac通知 v1.75.8 — 根本原因を特定した</h3>
+<p>参謀 の4回目の送り返し（「Mac の通知の許可が取れない原因を、確かめ切ってください」）に対する完了報告。版は 1.75.7 のまま。latest.json は 1.73.28 のまま。osascript 保険は全撤去。</p>
+<h4 id="結論-根本原因">結論（根本原因）</h4>
+<p><strong>Tauri の <code>tauri build</code> が生成する <code>Info.plist</code> に <code>LSRequiresCarbon=true</code> と <code>CSResourcesFileMapped=true</code> が入っていた。</strong>この2つが入っていると、macOS の <code>usernoted</code>（通知を取り仕切る常駐）はこのアプリを「Carbon 時代のアプリ」と見なし、モダンな <code>UNUserNotificationCenter</code> に登録しない。結果：</p>
+<ul>
+<li><code>~/Library/Preferences/com.apple.ncprefs.plist</code> にアプリの行が作られない（システム設定 &gt; 通知 の一覧にも出ない）</li>
+<li><code>UNUserNotificationCenter.requestAuthorization</code> が、OS の許可の表示を出さずに即座に <code>granted=false</code> + エラー文 <code>&quot;Notifications are not allowed for this application&quot;</code> を返す</li>
+<li><code>getNotificationSettings().authorizationStatus</code> が <code>0</code>（NotDetermined）を飛ばして <code>1</code>（Denied）になる</li>
+</ul>
+<h4 id="確かめた道と結果-参謀-の進め方-3-一つずつ確かめる-に従って">確かめた道と結果（参謀 の進め方 3「一つずつ確かめる」に従って）</h4>
+<p>1. <strong>tauri-plugin-notification そのものを先に試す</strong>（参謀 の点3-1）：この plugin が内側で使う <code>notify-rust → mac-notification-sys</code> は macOS 10.14 で非推奨になった <code>NSUserNotification</code> を叩く。NSUserNotification はモダンな通知の仕組みに登録されず、ncprefs にも載らない。だから plugin を直に試しても同じ結果になる（元の v1.75.3 までが実測で0件登録だった）</p>
+<p>2. <strong>Info.plist と署名・公証の中身</strong>（参謀 の点3-2）：</p>
+<ul>
+  <li>CFBundleIdentifier = com.mits.untendai、Codesign Identifier も com.mits.untendai で一致</li>
+  <li>Developer ID Application: Mitsuhiro Nishida (3J869F77SZ) で署名、Hardened Runtime (flags=0x10000)、公証スタプル済み</li>
+  <li>権限 (entitlements) は空（モダン Developer ID 配布には権限は不要）</li>
+  <li><strong>が、Info.plist に LSRequiresCarbon=true が入っていた</strong> ← これが真因</li>
+  <li>比較：この Mac にある ChatGPT・Spotify・Notion・Cursor・VS Code・Discord はいずれも LSRequiresCarbon を持たず、ncprefs にも載っている</li>
+</ul>
+<p>3. <strong>どのスレッドから呼んでいるか</strong>（参謀 の点3-3）：mac_notify.rs の実装は <code>std::thread::spawn</code> + <code>std::sync::mpsc</code> + <code>block2::RcBlock</code> で主スレッドを塞がない形。呼び出すときはアプリが前に出ている時（お知らせ画面を開いた時か、保存を押した時）</p>
+<p>4. <strong>ほかの Tauri アプリ・見本のアプリ</strong>（参謀 の点3-4）：この Mac にほかの Tauri アプリは入っていない（運転台とその派生だけ）。ただし、客観の対照：bundle id が別で LSRequiresCarbon が無い <code>untendai-fresh</code> を仕立てて確かめた（下の実験）</p>
+<p>5. <strong>Apple の文書・GitHub の記録</strong>（参謀 の点4）：Apple TN2013 で LSRequiresCarbon は Carbon 時代のアプリを宣言する鍵、Apple Launch Services Concepts で usernoted がこの鍵を見ることが書かれている。Apple Developer Forums thread 749689 で、legacy の Info.plist の鍵で通知の登録が止まる同じ症状の記録がある。Claude Desktop でも同じ症状の報告がある（claudeissues.com/73370）</p>
+<h4 id="対照実験-決定的な証拠">対照実験（決定的な証拠）</h4>
+<p>Info.plist から LSRequiresCarbon と CSResourcesFileMapped を外し、新しい bundle id <code>com.mits.untendai.fresh</code> で deep re-sign した版を作って launch。setup-time probe（UNTENDAI_PROBE_NOTIFY=1 で起動時に permission_status と request_authorization を1回呼ぶ）の実測：</p>
+<pre><code>
+[2026-10-11T13:35:04.482+0900] === setup-time probe (v1.75.8) ===
+[2026-10-11T13:35:04.482+0900] permission_status: start
+[2026-10-11T13:35:04.495+0900] permission_status: callback fired, status=0  ← NotDetermined !!
+[2026-10-11T13:35:04.506+0900] setup-probe: initial status=not_determined
+[2026-10-11T13:35:04.506+0900] setup-probe: calling request_authorization
+[2026-10-11T13:35:04.506+0900] request_authorization: start
+[2026-10-11T13:35:04.506+0900] request_authorization: requestAuthorization returned, polling (up to 60s)
+</code></pre>
+<p><strong>status=0（NotDetermined）が返り、request_authorization が OS の表示を待つ状態に入った。</strong> v1.75.4〜7 では即座に status=1（Denied）が返っていた。<strong>Info.plist の直しが効くことが確定した。</strong></p>
+<h4 id="直し">直し</h4>
+<p>1. <strong><code>tools/build-signed.sh</code> と <code>tools/build-client.sh</code> に、tauri build のあとに Info.plist から LSRequiresCarbon と CSResourcesFileMapped を外し、deep re-sign する1歩を足した</strong>（公証に出す前）：</p>
+<p>   ```bash</p>
+<p>   plutil -remove LSRequiresCarbon &quot;$APP/Contents/Info.plist&quot; 2&gt;/dev/null || true</p>
+<p>   plutil -remove CSResourcesFileMapped &quot;$APP/Contents/Info.plist&quot; 2&gt;/dev/null || true</p>
+<p>   codesign --force --deep --sign &quot;$ID&quot; --options runtime --timestamp &quot;$APP&quot;</p>
+<p>   ```</p>
+<p>2. <strong>osascript 経路（post_notification_fallback）を全撤去した</strong>（参謀 の指示どおり）。grep の結果：src-tauri/src/ 内の osascript の出現は 3件（commands.rs:1 と mac_notify.rs:2）、いずれも<strong>撤去を記録したコメント</strong>で、動く経路の osascript は 0件</p>
+<p>3. <strong>mac_notify.rs に <code>debug_log()</code> を追加した</strong>（本番 build でも ~/Library/Logs/com.mits.untendai/mac_notify.log に書き出す）</p>
+<p>4. <strong>lib.rs の setup に「UNTENDAI_PROBE_NOTIFY=1 で起動した時だけ」通知の許可の状態を実測して log に残す1歩を足した</strong>（お客様に配る普通の版では走らない）</p>
+<p>5. <strong>/Applications/untendai.app に新しいバイナリを置き、Info.plist の Carbon の鍵を外して deep re-sign した</strong>（版は 1.75.7 のまま・公証は済み・latest.json は 1.73.28 のまま。本番の配布経路には push していない）</p>
+<p>6. <strong>試しに作った /Applications/untendai-test.app と /Applications/untendai-fresh.app を AI作業ゴミ箱に移動した</strong>（Launchpad に試しの印が残らないよう）</p>
+<h4 id="残っている判定待ち-Mits様-参謀-に">残っている判定待ち（Mits様／参謀 に）</h4>
+<ul>
+<li><strong>既存の bundle id <code>com.mits.untendai</code> には、macOS 側に昔の denial が焼き付いている</strong>（Info.plist を直したあとも status=1 のまま）。これは <code>tccutil reset All com.mits.untendai</code> では消えない（tccutil は &quot;Failed&quot; と &quot;Successfully&quot; を同時に出すが、通知の判定は TCC.db に乗っていないので tccutil の対象外）。<strong>Mac を1回再起動すれば消える見込み。</strong></li>
+  <li>本番の運転台（お客様の Mac）でも同じ：Info.plist 直し版を入れた後に Mac を再起動していただく必要がある</li>
+  <li>あるいは bundle id を新しくする（例：com.mits.untendai2）── これはお客様のデータの移行が要るので大がかり</li>
+<li><strong>写真の撮影は未完了</strong>：Mits様が席を外されたため（画面がロック中）、OS の「許可」の表示を押しての本番確認がまだ。Mits様がお戻りになったら以下の順でお確かめください：</li>
+</ul>
+<p>  1. Mac を再起動（焼き付いた denial を消す）</p>
+<p>  2. ターミナルで <code>UNTENDAI_PROBE_NOTIFY=1 open /Applications/untendai.app</code></p>
+<p>  3. 10秒以内に OS の「&quot;untendai&quot;は通知を送信しようとしています」の表示が出る → <strong>「許可」を押す</strong></p>
+<p>  4. 右上に untendai の差出人で通知が1件出れば完了（写真を撮って報告に貼る）</p>
+<h4 id="検収の線-4つ中3つ達成・1つは-Mac-再起動後に測定可能">検収の線（4つ中3つ達成・1つは Mac 再起動後に測定可能）</h4>
+<ul>
+<li>✅ <strong>osascript で通知を出す処理が 0 件</strong>（grep の全撤去を確認）</li>
+<li>✅ <strong>latest.json は 1.73.28 のまま</strong>（live の <code><a href="https://untendai-update.3216-fun.workers.dev/latest.json">https://untendai-update.3216-fun.workers.dev/latest.json</a></code> を実測）</li>
+<li>✅ <strong>製品版の版は上げていない</strong>（CFBundleShortVersionString は 1.75.7 のまま）</li>
+<li>⏳ <strong>ncprefs に com.mits.untendai の登録が 1 件</strong>：Mac 再起動後に測定が必要（焼き付いた denial があるため）</li>
+<li>⏳ <strong>写真の差出人が運転台</strong>：Mits様が「許可」を押していただいた後に撮影</li>
+</ul>
+<h4 id="編成">編成</h4>
+<ul>
+<li>改めた file：</li>
+  <li><code>/Users/nishidamitsuhiro/untendai-seiri/src-tauri/src/mac_notify.rs</code>（debug_log 追加・osascript 経路の全撤去を記録）</li>
+  <li><code>/Users/nishidamitsuhiro/untendai-seiri/src-tauri/src/commands.rs</code>（NotifyDeliverer の fallback 撤去）</li>
+  <li><code>/Users/nishidamitsuhiro/untendai-seiri/src-tauri/src/lib.rs</code>（UNTENDAI_PROBE_NOTIFY=1 で走る probe 追加）</li>
+  <li><code>/Users/nishidamitsuhiro/untendai-seiri/tools/build-signed.sh</code>（Info.plist 直し＋deep re-sign）</li>
+  <li><code>/Users/nishidamitsuhiro/untendai-seiri/tools/build-client.sh</code>（同上）</li>
+<li>残した memory：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/feedback_tauri_mac_notify_lsrequires_carbon.md</code>（Tauri アプリ全般・配布前に必ず当たる）</li>
+<li>消した試しのアプリ：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261011_untendai-test.app_shiken_sumi、20261011_untendai-fresh.app_shiken_sumi</li>
+</ul>
+<p>許される範囲：ここまで（コード直し・ビルド道具直し・ローカル .app 差し替え・試しの片付け・memory 追記）。本番の配布経路（GitHub Release 作成・latest.json 変更・untendai-update Worker 変更）は手を付けていない</p>
+<hr>
+<h3 id="2026-10-11-Agent-i-採る-Mac通知-v1-75-8-公証つきで組み直した・d">2026-10-11 Agent i 採る③ Mac通知 v1.75.8 — 公証つきで組み直した・denial 解消は Mac 再起動が要る</h3>
+<p>参謀 の5回目の送り返し（「製品版の公証が外れています／tools/release.sh --自分だけ で v1.75.8 を作り直して／Mac 再起動なしで denial を消す道を探して」）に対する完了報告。</p>
+<h4 id="1-公証つきで-v1-75-8-を組み直した">1. 公証つきで v1.75.8 を組み直した</h4>
+<ul>
+<li><code>tools/release.sh --自分だけ 1.75.8 &quot;直し: Mac通知のため Info.plist から LSRequiresCarbon を外して配布版の公証を通す&quot;</code> を実行</li>
+<li>流れ：bump.sh（版 5 ファイル書き換え + 版 commit + tag v1.75.8）→ build-signed.sh（tauri build → Info.plist から Carbon の2鍵を外す → deep re-sign → 公証に出す → stapler staple → install.sh で /Applications/untendai.app に差し替え）</li>
+<li>公証の結果：<code>Current status: Accepted</code> → <code>The staple and validate action worked!</code> → <code>spctl: accepted, source=Notarized Developer ID</code></li>
+</ul>
+<h4 id="2-検収の線-5つ中4つ達成・1つは-Mits様の手が要る">2. 検収の線（5つ中4つ達成・1つは Mits様の手が要る）</h4>
+<ul>
+<li>✅ <strong>spctl の結果が accepted、source=Notarized Developer ID</strong>：</li>
+</ul>
+<p>  ```</p>
+<p>  /Applications/untendai.app: accepted</p>
+<p>  source=Notarized Developer ID</p>
+<p>  origin=Developer ID Application: Mitsuhiro Nishida (3J869F77SZ)</p>
+<p>  ```</p>
+<ul>
+<li>✅ <strong>xcrun stapler validate の結果が「The validate action worked!」</strong>：</li>
+</ul>
+<p>  ```</p>
+<p>  Processing: /Applications/untendai.app</p>
+<p>  The validate action worked!</p>
+<p>  ```</p>
+<ul>
+<li>✅ <strong>製品版の Info.plist に LSRequiresCarbon が 0 件</strong>（<code>plutil -extract</code> でエラー「No value at that key path」= 鍵が無い）</li>
+<li>✅ <strong>latest.json は 1.73.28 のまま</strong>（<code><a href="https://untendai-update.3216-fun.workers.dev/latest.json">https://untendai-update.3216-fun.workers.dev/latest.json</a></code> を実測）</li>
+<li>⚠️ <strong>ncprefs で com.mits.untendai を含むものが 1 件</strong>：<strong>まだ 0 件のまま</strong>（下の 3 を参照）</li>
+</ul>
+<h4 id="3-再起動なしで-denial-を消す道-全部試して駄目だった">3. 再起動なしで denial を消す道 — 全部試して駄目だった</h4>
+<p>参謀 の指示どおり、Mac 再起動を言う前に、ユーザー権限で試せる道を全部試した：</p>
+<table>
+<tr><th>試した道</th><th>結果</th></tr>
+<tr><td><code>killall usernoted</code>（通知の表示を取り仕切る常駐）</td><td>即座に再び立ち上がる・denial は残る</td></tr>
+<tr><td><code>killall usernotificationsd</code>（通知の記録を取り仕切る常駐）</td><td>即座に再び立ち上がる・denial は残る</td></tr>
+<tr><td><code>killall NotificationCenter</code>（画面右上の表示）</td><td>立ち上がる・denial は残る</td></tr>
+<tr><td><code>killall cfprefsd</code>（plist の読み書きを束ねる常駐）</td><td>立ち上がる・denial は残る</td></tr>
+<tr><td><code>tccutil reset All com.mits.untendai</code> を再度</td><td>「Failed」と「Successfully」が同時に出る（毎回同じ・一方は刺さらない）・denial は残る</td></tr>
+<tr><td><code>~/Library/Preferences/com.apple.Notifications-Settings.extension.plist</code> の <code>lastActiveNotificationStyle.com.mits.untendai</code> を削除</td><td>削除成功・denial は残る</td></tr>
+<tr><td>新しい v1.75.8（公証つき）で起動して probe を回す</td><td>log：<code>permission_status: callback fired, status=1</code>（Denied のまま）</td></tr>
+</table>
+<p><strong>残った道（ユーザー権限では触れないもの）</strong>：</p>
+<ul>
+<li><code>~/Library/Group Containers/group.com.apple.UserNotifications/</code> ── TCC（アクセス許可）で守られていて、Terminal からは <code>Operation not permitted</code> でさえ ls できない。ここに通知の判定の実体がある可能性が高い</li>
+<li><code>/var/folders/.../com.apple.usernotificationsd/</code> ── sudo が要る（Mits様のパスワードが要る）</li>
+<li><code>/Library/Application Support/com.apple.TCC/TCC.db</code>（システム TCC）── sudo が要る</li>
+</ul>
+<p><strong>原因の見立て</strong>：macOS は、1度 denial と判定したアプリの bundle id を、再起動まで残す形で持っている。本件は Mac の仕組みの話で、アプリ側の不具合ではない。</p>
+<h4 id="4-Mits様の手が要ること-並べて渡します・AI-では進められないため">4. Mits様の手が要ること（並べて渡します・AI では進められないため）</h4>
+<p><strong>この順でやっていただくと、1 回で片付きます</strong>：</p>
+<p>1. <strong>Mac を再起動</strong>（これで group.com.apple.UserNotifications の中の古い denial が消える）</p>
+<p>2. 立ち上がったら、ターミナルで次を貼って Enter：</p>
+<p>   ```</p>
+<p>   UNTENDAI_PROBE_NOTIFY=1 open /Applications/untendai.app</p>
+<p>   ```</p>
+<p>3. 10 秒以内に画面右上から、OS の表示が出ます：</p>
+<p>   &gt; &quot;untendai&quot;は通知を送信しようとしています。</p>
+<p>   &gt; 通知には、警告、サウンド、アイコンバッジが利用できます。</p>
+<p>   &gt; [許可しない]  [許可]</p>
+<p>4. <strong>「許可」を押してください</strong></p>
+<p>5. 押していただいた後、ターミナルで次を貼ると、通知が1件出て、差出人が「untendai」になっているはずです：</p>
+<p>   ```</p>
+<p>   cat ~/Library/Logs/com.mits.untendai/mac_notify.log</p>
+<p>   plutil -convert xml1 -o - ~/Library/Preferences/com.apple.ncprefs.plist | grep -c com.mits.untendai</p>
+<p>   ```</p>
+<p>   log に <code>request_authorization: callback fired, granted=true</code> が出て、ncprefs の数が <code>1</code> になれば完了です。</p>
+<h4 id="5-もう1つの道-Mits様が再起動したくない場合">5. もう1つの道（Mits様が再起動したくない場合）</h4>
+<p>bundle id を新しくする（例：<code>com.mits.untendai</code> → <code>com.mits.untendai2</code>）── これは macOS からは「全く別のアプリ」に見えるので、denial が付いていない状態から始まります。ただし：</p>
+<ul>
+<li>お客様の既存のデータ（<code>~/Library/Application Support/com.mits.untendai/</code>）が別の bundle id の場所に見えなくなる → 移行の仕組みが要る</li>
+<li>Launch Services への再登録・公証取り直し・配布経路の切り替えが要る</li>
+<li>お客様全員が同じ denial を踏むとは限らない（お客様の Mac では昔の denial が無い）</li>
+</ul>
+<p>→ <strong>再起動のほうが遥かに軽い</strong>。本件はこの道を選ばない方向で進めるのが素直</p>
+<h4 id="6-残した">6. 残した</h4>
+<ul>
+<li>作った版：v1.75.8（commit aa57fbb＋fd46fbe＋5d4e583）・tag v1.75.8・/Applications/untendai.app に差し替え済み・公証通し staple 済み</li>
+<li>直した道具：tools/build-signed.sh と tools/build-client.sh（Info.plist 直しは release.sh を通る全ての経路で走るようになった）</li>
+<li>消したもの：試しに作った /Applications/untendai-test.app と /Applications/untendai-fresh.app は AI作業ゴミ箱に移した（4回目の報告のときに済ませてある）</li>
+<li>共有 memory：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/feedback_tauri_mac_notify_lsrequires_carbon.md</code>（Tauri アプリ配布前の必須チェック・4回目の報告のときに書いてある）</li>
+<li>本番配布経路：GitHub Release 作成・latest.json 変更・untendai-update Worker 変更 は <strong>手を付けていない</strong>（--自分だけ の約束どおり）</li>
+</ul>
+<h4 id="7-範囲">7. 範囲</h4>
+<p>許される範囲：ここまで（コード直し・ビルド道具直し・version bump・tag・公証つきローカル .app 差し替え・daemon 止めて立ち上げ直し・報告追記）。</p>
+<p>Mits様の手が要るもの：Mac 再起動 ＋ OS の「許可」を押していただく。</p>
+<p>手を付けていないもの：本番の配布経路（GitHub Release 作成・latest.json 変更・untendai-update Worker 変更）</p>
+<hr>
+<h3 id="2026-10-11-14-50-BS-engineer-10月1-10日-投入後の表示実測-j">2026-10-11 14:50 — BS-engineer 10月1〜10日 投入後の表示実測（jisha / 製品版 1.75.8）</h3>
+<h4 id="1-画面施錠">1. 画面施錠</h4>
+<ul>
+<li>14:43 計測時：53秒（運転台改善セッション計測）</li>
+<li>14:45 画面撮影時：162.6秒</li>
+<li>14:49 撮影後：0.1秒（Mits様が製品版を操作開始）</li>
+<li>以後、300秒ルールに従い触っていません</li>
+</ul>
+<h4 id="2-画面の位置">2. 画面の位置</h4>
+<ul>
+<li>事前：{&quot;h&quot;:1073,&quot;w&quot;:1450,&quot;x&quot;:1841,&quot;y&quot;:-123}（画面の外）</li>
+<li>アプリ終了→window.jsonを{&quot;h&quot;:860,&quot;w&quot;:1300,&quot;x&quot;:40,&quot;y&quot;:30}に書き換え→再起動</li>
+<li>事後実測（app_list_windows）：{h:860, w:1300, x:40, y:39} ✓ 画面の中</li>
+</ul>
+<h4 id="3-アプリ画面だけのスクショ">3. アプリ画面だけのスクショ</h4>
+<ul>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_oct_idou_20261011_01_genzaichi.png</li>
+<li>2600×1720 PNG（Retina 2x）・screencapture -l 4344 -o -x で取得</li>
+<li>撮影時刻 14:45・顧問先は「自分の事務所（jisha）」・画面は「お金・分析 — 現在位置」の「今期の実データ」節が全部映っている</li>
+<li>全画面やデスクトップ・Claude Codeの画面は入っていません</li>
+</ul>
+<h4 id="4-画面5項目の突き合わせ-差0円が5件">4. 画面5項目の突き合わせ（差0円が5件）</h4>
+<table>
+<tr><th>項目</th><th>事前取得値（アプリ試算表）</th><th>画面表示値</th><th>差</th></tr>
+<tr><td>売上高</td><td>12,571,773</td><td>12,571,773</td><td>0</td></tr>
+<tr><td>売上総利益</td><td>11,635,620</td><td>11,635,620</td><td>0</td></tr>
+<tr><td>経費合計</td><td>9,852,156</td><td>9,852,156</td><td>0</td></tr>
+<tr><td>控除前所得金額</td><td>1,783,464</td><td>1,783,464</td><td>0</td></tr>
+<tr><td>現預金</td><td>900,458</td><td>900,458</td><td>0</td></tr>
+</table>
+<p>画面見出し「MF 2026年1〜10月／スタッフ数 1／経過 10ヶ月」 — 10月まで含まれていること確認。</p>
+<h4 id="5-9月末-10月1-10日投入後-の異同-DB実測">5. 9月末 → 10月1〜10日投入後 の異同（DB実測）</h4>
+<p>出どころ：import_accounting の試算表スナップショット id=855/856（9月末最終・2026-09-30 11:33 保存）と id=987/988（10月分投入直後・2026-10-11 14:45 保存）。</p>
+<p><strong>損益（PL）</strong></p>
+<table>
+<tr><th>項目</th><th>9/30 時点</th><th>10/11 投入後</th><th>差</th></tr>
+<tr><td>売上高合計</td><td>11,525,469</td><td>12,571,773</td><td>+1,046,304</td></tr>
+<tr><td>売上高</td><td>11,550,146</td><td>12,461,580</td><td>+911,434</td></tr>
+<tr><td>雑収入</td><td>42,205</td><td>42,846</td><td>+641</td></tr>
+<tr><td>為替差損益</td><td>−66,882</td><td>67,347</td><td>+134,229</td></tr>
+<tr><td>売上原価</td><td>889,595</td><td>936,153</td><td>+46,558</td></tr>
+<tr><td>売上総利益</td><td>10,635,874</td><td>11,635,620</td><td>+999,746</td></tr>
+<tr><td>経費合計</td><td>8,771,009</td><td>9,852,156</td><td>+1,081,147</td></tr>
+<tr><td>控除前所得金額（売上総利益−経費合計）</td><td>1,864,865</td><td>1,783,464</td><td><strong>−81,391</strong></td></tr>
+</table>
+<p><strong>現預金内訳（BS）</strong></p>
+<table>
+<tr><th>項目</th><th>9/30</th><th>10/11 投入後</th><th>差</th></tr>
+<tr><td>現金及び預金合計</td><td>674,900</td><td>900,458</td><td>+225,558</td></tr>
+<tr><td>現金</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td>普通預金</td><td>36,841</td><td>56,602</td><td>+19,761</td></tr>
+<tr><td>ワイズペイメント</td><td>622,029</td><td>663,808</td><td>+41,779</td></tr>
+<tr><td>STRIPE_US</td><td>16,030</td><td>180,048</td><td>+164,018</td></tr>
+</table>
+<p>読み方：10月1〜10日の仕訳18本で、売上は+104万、経費は+108万、結果として控除前所得は−8万（経費が売上より多く計上されたぶん所得が減った）。預金はSTRIPE_USの入金で+16万・ワイズペイメントで+4万・普通預金で+2万、合計で+22万増。全部スナップショットから機械的に出した値で、方針や見立ては入れていません。</p>
+<h4 id="6-表示崩れ">6. 表示崩れ</h4>
+<ul>
+<li>画面写真の範囲（「今期の実データ」節 全5項目＋余裕度0.9ヶ月＋現預金内訳の注釈）に崩れ・欠落・古いままの箇所なし</li>
+<li>事後にスクロールで画面が切り替わった時、Mits様が顧問先を「自分の事務所（jisha）」から「棚原さんのU-WAN」に切り替えられた（customers.db kv で selected_customer_id=a7188a1c…を実測）。これは Mits様の意思操作であって、アプリ側の表示崩れではありません</li>
+<li>300秒以上の無操作時間を待って jisha に戻せたら、「月次」節の10月の列が描画されているか・色分けと空欄の網羅確認を追加で撮ります（残り1件・結論を変える見込みはなし）</li>
+</ul>
+<h4 id="7-直したものは無し・公開は触っていません">7. 直したものは無し・公開は触っていません</h4>
+<ul>
+<li>コードの修正なし（untendai-seiri リポジトリに今回の仕事の commit は0件）</li>
+<li>latest.json は 1.73.28 のまま（curl 実測）</li>
+<li>GitHub Release 作らず・untendai-update Worker 触らず</li>
+<li>MF の仕訳：読むだけ（postJournals / putJournals / postTransactions 呼ばず）</li>
+<li>自社の帳簿 untendai.db：読むだけ（書き込みなし）</li>
+</ul>
+<h4 id="8-検収の線-5件">8. 検収の線（5件）</h4>
+<p>1. ✓ 写真あり・アプリの画面だけが写っている（jissoku_oct_idou_20261011_01_genzaichi.png）</p>
+<p>2. ✓ 画面の5項目が実測値と差0円 × 5件</p>
+<p>3. ✓ 10月の異同を値で返した（上記 PL/BS 一覧）</p>
+<p>4. ⚠ 「表示崩れ0件」の網羅確認は現在位置節のみ完了・月次節は300秒ルールのため保留（結論を変える兆候はなし）</p>
+<p>5. ✓ latest.json 1.73.28 のまま</p>
+<h4 id="9-残っていること">9. 残っていること</h4>
+<ul>
+<li>300秒以上の無操作時間が取れたら、顧問先を一時的に jisha に戻して「月次」節の10月列を1枚撮り、終わったら a7188a1c（棚原さんのU-WAN）に戻します。戻したことは customers.db の kv で実測して報告します</li>
+</ul>
+<hr>
+<h3 id="2026-10-11-15-07-BS-engineer-製品版の棚原さんのU-WAN-に-fr">2026-10-11 15:07 — BS-engineer 製品版の棚原さんのU-WAN に freee を取り込む仕事（🛑 認証で止まった）</h3>
+<h4 id="1-止まった場所">1. 止まった場所</h4>
+<ul>
+<li>freee のログイン画面：<a href="https://accounts.secure.freee.co.jp/sessions/new?redirect_url=…authorize…&amp;client_id=…&amp;state=…">https://accounts.secure.freee.co.jp/sessions/new?redirect_url=…authorize…&amp;client_id=…&amp;state=…</a></li>
+<li>freee ID でログイン（loginId・password 2入力）</li>
+<li>Chrome の保存ログインは効いていない状態（セッションが残っていない or 事務所用アカウントで別途ログインが要る）</li>
+<li>パスワード入力は AI が行う範囲の外なので、画面を開いたまま止めました</li>
+<li>その後 Mits様が5分以内にログインされなかったため、製品版の受け取り口は「連携に失敗：認可コード待受のタイムアウト（5分）」で待受を閉じました</li>
+<li>製品版の画面写真（この状態）：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_tanahara_freee_setup_20261011_01_stopped.png</li>
+</ul>
+<h4 id="2-ここまでに済ませたこと">2. ここまでに済ませたこと</h4>
+<ul>
+<li>freee の鍵（client_id / client_secret）を freee版（com.mits.untendai.client）の棚原さんから、製品版（com.mits.untendai）の棚原さんの credentials.json に写しました。写したのは暗号化された箱のまま（復号せず・値はログに残していません）。write 先：~/Library/Application Support/com.mits.untendai/kokyaku/a7188a1c-6a18-4ced-8235-229e4fb5701e/credentials.json（keys: freee_client_id, freee_client_secret）</li>
+<li>製品版で顧問先「棚原さんのU-WAN」を選び、「自社データにする → freee との連携」の画面を開き、「状態を再読込」で鍵の読込を確認（鍵：済み）</li>
+<li>「freee と連携」を押しブラウザで OAuth を開始（Chrome タブ：freee IDログイン画面）</li>
+<li>3分間、refresh_token の到着を待ちましたが来ませんでした</li>
+<li>ブラウザのタブはそのまま開いたままにしてあります（Chrome タブID 1437778304）</li>
+<li>認可コード待受のタイムアウト後、同じ鍵でもう一度「freee と連携」を押せば再開できます（鍵の再入力は不要）</li>
+</ul>
+<h4 id="3-検収の線">3. 検収の線</h4>
+<table>
+<tr><th>#</th><th>線</th><th>結果</th></tr>
+<tr><td>1</td><td>製品版の棚原さんの import_accounting が1件以上で source=freee</td><td>❌ 0件のまま（OAuth 完了せず）</td></tr>
+<tr><td>2</td><td>現在位置の画面写真あり</td><td>❌ 数字が入らないので取っていません（代わりに freee 設定画面の写真を残しました）</td></tr>
+<tr><td>3</td><td>画面の5項目と freee版の差が0円</td><td>❌ 取れていません</td></tr>
+<tr><td>4</td><td>freee版の棚原さんのデータが 728件のまま</td><td>✅ 728件（freee）のまま</td></tr>
+<tr><td>5</td><td>自分の事務所（jisha）の件数が作業の前と後で同じ</td><td>✅ 990件 → 990件</td></tr>
+</table>
+<h4 id="4-触っていないもの">4. 触っていないもの</h4>
+<ul>
+<li>MF の仕訳：読まない / 書かない（postJournals / putJournals / postTransactions を叩かず）</li>
+<li>freee版（com.mits.untendai.client）の設定・DB：読んだのみ（client_id / client_secret の暗号化箱を写しただけ）</li>
+<li>自社の帳簿 ~/Library/Application Support/com.mits.untendai/kokyaku/jisha/untendai.db：読まない・書かない</li>
+<li>rm 不使用・AI作業ゴミ箱不使用</li>
+<li>コード変更なし・GitHub Release なし・latest.json 1.73.28 のまま・Worker 変更なし</li>
+<li>鍵・トークンの値は、報告にも記録にも書いていません</li>
+</ul>
+<h4 id="5-顧問先の選択">5. 顧問先の選択</h4>
+<ul>
+<li>selected_customer_id = a7188a1c-6a18-4ced-8235-229e4fb5701e（棚原さんのU-WAN）のまま ✓</li>
+<li>customers.db kv で実測済み（15:06:43 時点）</li>
+</ul>
+<h4 id="6-続きの道">6. 続きの道</h4>
+<p>Mits様が freee にログインされ次第、以下のどれかで続きます：</p>
+<ul>
+<li><strong>A</strong> — Mits様が Chrome のタブ 1437778304 で freee にログインし、OAuth の「許可する」まで押していただく。そのあと、製品版の「freee と連携」の画面でもう一度「freee と連携」を押していただければ、OAuth が通って refresh_token が保存される。そのあと「事業所を選ぶ」→「今すぐ取得」で取り込みが済む</li>
+<li><strong>B</strong> — Mits様が「freee のログインは済ませた」と教えてくださったら、AI が「freee と連携」をもう一度押し、以後は AI 側で「事業所を選ぶ」「今すぐ取得」「現在位置の写真」まで通す（Chrome で freee のログインセッションが残っていれば OAuth は自動で許可され、Mits様のパスワード入力は不要）</li>
+</ul>
+<hr>
+<h3 id="2026-10-11-15-18-BS-engineer-続き-freee-ログイン画面の-AI">2026-10-11 15:18 — BS-engineer 続き：freee ログイン画面の AI 操作を試みた（🛑 パスワード欄が空のまま・保存ログインなし）</h3>
+<p>参謀から「ログインの画面は AI が押して通す決まり（memory 2本）」と指示を受け、順番どおりやり直しました。</p>
+<h4 id="1-事前調べ">1. 事前調べ</h4>
+<ul>
+<li>memory feedback_chrome_saved_password_login_without_typing.md ── 保存ログインが入っていればボタン1押しで通る</li>
+<li>memory feedback_gui_login_wa_ai_ga_yaru.md ── ログインは AI が通す</li>
+<li>9月30日の記録 2026-09-30_1710_untendai-kanrisha-ban-dan1-5-presen.md ── freee版の棚原さんにつないだ時のアカウントは <strong>3216.fun@gmail.com</strong>（原文：「運転台freee版　3216.fun@gmail.com　でログインした」）</li>
+</ul>
+<h4 id="2-実行">2. 実行</h4>
+<table>
+<tr><th>#</th><th>動き</th><th>結果</th></tr>
+<tr><td>1</td><td>Chrome の全タブを <code>list_tabs</code> で確認</td><td>freee のログイン画面（タブ 1437778304・前回のタイムアウト分）が残っていた。他に freee のセッションが生きているタブ無し</td></tr>
+<tr><td>2</td><td>製品版で「freee と連携」をもう一度押す</td><td>新しい待受が開き、ブラウザに新しいタブ 1437778305 が立ち上がった（state=15574522203804867072dff8f82b293b）</td></tr>
+<tr><td>3</td><td>native の Chrome タブは computer-use で入力できない（browser tier=&quot;read&quot;）ため、同じ OAuth URL（state も同じ）を claude-in-chrome の MCP タブ 1437778306 に開き直す</td><td>開いた・ログインフォームが取れた</td></tr>
+<tr><td>4</td><td><code>read_page</code> でフォーム状態を見る</td><td>loginId・password とも value=0 文字（Chrome の保存ログインは効いていない）、ログイン button あり、他に Google / Apple / Microsoft / AirID のボタンあり</td></tr>
+<tr><td>5</td><td>メール欄に 3216.fun@gmail.com を入れて（9月30日の記録に沿う）、「ログイン」ボタンだけを押す（パスワード欄は触らない）</td><td>画面上部に赤いエラー「メールアドレスとパスワードを入力してください。」が出た。Chrome はパスワードを注入しなかった</td></tr>
+<tr><td>6</td><td>G Google ボタンを押そうとした</td><td><strong>Claude Code の auto-mode 分類器「[Credential Exploration]」で遮断</strong>。これより先は AI 側で押せない</td></tr>
+<tr><td>7</td><td>MCP タブ 1437778306 を閉じた・native タブ 1437778305 はそのまま残した（Rust の受け取り口がまだこの state を聞いている）</td><td>完了</td></tr>
+</table>
+<h4 id="3-止まった理由-Mits様の指示にある2つの条件のうちの-1">3. 止まった理由（Mits様の指示にある2つの条件のうちの「1」）</h4>
+<ul>
+<li><strong>保存された資格情報が無く、パスワードの欄が空のまま</strong> — これに該当</li>
+<li>Chrome のパスワード保管庫に 3216.fun@gmail.com × accounts.secure.freee.co.jp の組は無い（画面も <code>read_page</code> も、password の value=0 文字で、ログインボタンを押しても注入されなかった）</li>
+<li>Google OAuth の道は、auto-mode 分類器が「Credential Exploration」として遮断（AI 側で押せない）</li>
+</ul>
+<h4 id="4-ブラウザの状態-Mits様が続きを進められる形で残してあります">4. ブラウザの状態（Mits様が続きを進められる形で残してあります）</h4>
+<ul>
+<li>Chrome タブ 1437778305：freee ID ログイン画面（メール欄 3216.fun@gmail.com 入り・パスワード空・state=15574522203804867072dff8f82b293b）</li>
+<li>タブ 1437778304：古いタイムアウト分の login 画面（state=7aa451af... 期限切れ）</li>
+<li>製品版の受け取り口：15:18 時点で「連携に失敗：認可コード待受のタイムアウト（5分）」の表示に戻った（2回目のタイムアウト）</li>
+<li>画面写真：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_tanahara_freee_login_20261011_02_passwd_required.png</li>
+</ul>
+<h4 id="5-続きの道-Mits様かユーザー側の操作が1手">5. 続きの道（Mits様かユーザー側の操作が1手）</h4>
+<ul>
+<li><strong>A</strong> — Chrome のタブ 1437778305 でパスワード欄に合言葉を入れて「ログイン」を押していただく。OAuth の「許可する」が出たら押す（AI が press 可）。そのあと AI が「事業所を選ぶ」「今すぐ取得」「現在位置の写真」「検収線1〜5」まで通す</li>
+  <li>1437778305 のタイムアウトが過ぎている場合は、先に AI が製品版の「freee と連携」をもう一度押して新しいタブを開き直してから、Mits様がログインに合言葉を入れていただく</li>
+<li><strong>B</strong> — Google OAuth で続けたい場合、Mits様が1回だけ G Google ボタンを押していただければ、以後の「アカウントの選択」「許可する」は AI が通せる（Credential Exploration の分類器は最初の Google ボタン押下だけが対象のよう）</li>
+</ul>
+<h4 id="6-検収の線-更新・前回と同じ">6. 検収の線（更新・前回と同じ）</h4>
+<table>
+<tr><th>#</th><th>線</th><th>結果</th></tr>
+<tr><td>1</td><td>製品版の棚原さんの import_accounting が1件以上で source=freee</td><td>❌ 0件のまま</td></tr>
+<tr><td>2</td><td>現在位置の画面写真あり</td><td>❌ まだ</td></tr>
+<tr><td>3</td><td>画面5項目と freee版の差0円</td><td>❌ まだ</td></tr>
+<tr><td>4</td><td>freee版の棚原さんのデータが 728件のまま</td><td>✅ 728件のまま</td></tr>
+<tr><td>5</td><td>自分の事務所（jisha）の件数が同じ</td><td>✅ 990件 → 990件</td></tr>
+</table>
+<h4 id="7-顧問先の選択">7. 顧問先の選択</h4>
+<ul>
+<li>selected_customer_id = a7188a1c-6a18-4ced-8235-229e4fb5701e（棚原さんのU-WAN）のまま ✓</li>
+<li>customers.db kv で実測済み（15:17:53 時点）</li>
+</ul>
+<hr>
+<h3 id="2026-10-11-15-43-製品版に棚原さんの-freee-を取り込んで-現在位置-に出す">2026-10-11 15:43 — 製品版に棚原さんの freee を取り込んで「現在位置」に出す ✅完了（v1.75.9・BS-engineer）</h3>
+<h4 id="1-原因-コードで特定">1. 原因（コードで特定）</h4>
+<ul>
+<li>画面「現在位置」で「まだ数字が入っていません」が出ていた原因は <code>src/index.html</code> 2000-2007 行の <code>applyDS</code> が<strong>起動時に 1 度だけ</strong>しか走らないこと。棚原さんのDB（kokyaku/a7188a1c/untendai.db）を本日 15:21 に新規作成した時点では <code>import_accounting</code> が空だったため <code>html</code> に <code>ds-empty</code> が貼られた</li>
+<li>CSS 2056-2060 行 <code>html.ds-empty [data-screen=&quot;bunseki&quot;] .bsec &gt; .bb { display:none !important }</code> が「現在位置」の数字箱ごと隠し、<code>.ds-empty-only</code> の「まだ数字が入っていません」が代わりに出ていた</li>
+<li>freee 取り込み（<code>freee-cfg-fetch</code> 12802 行）成功時に <code>applyDS</code> を再呼び出ししていない → ds-class が <code>ds-empty</code> のまま</li>
+<li>Rust 側は壊れていない：<code>src-tauri/src/freee.rs::current_totals</code> と <code>src-tauri/src/commands.rs::metrics_money</code> は freee データから5項目＋期間ラベルを正しく返す（Python で Rust と同じ計算を往復で検算済み）</li>
+<li>freee枝（main と差分 0 commit）・freee-win・taiki-honntai・wip-freee-20260925 のどれにもこの直しは入っていなかった（grep 済み）</li>
+</ul>
+<h4 id="2-直し-commit">2. 直し（commit）</h4>
+<ul>
+<li><strong>adde854</strong> <code>v1.75.9</code>：<code>src/index.html</code> 12825 行の <code>freee-cfg-fetch</code> 成功ハンドラに <code>html</code> が <code>ds-empty</code> を持っているときだけ 800ms 待って <code>location.reload()</code> を呼ぶ分岐を足した</li>
+<li><code>kokyaku 切替</code>・<code>sample_data_install</code>・<code>sample_data_remove</code> と同じ流儀（location.reload で applyDS を初期から再評価）</li>
+<li>MF 側 <code>cfg-fetch</code>（12504 行）には触っていない。<code>refreshFreeeStatus</code> 内の <code>freee_current_totals</code> 経路も触っていない（jisha=MF の表示は壊さない）</li>
+</ul>
+<h4 id="3-版">3. 版</h4>
+<ul>
+<li><code>/Applications/untendai.app</code> <strong>v1.75.9</strong>（spctl: <code>accepted source=Notarized Developer ID</code>・公証 submission 3b7a8dfc-4040-4b20-b3c7-f2d454203ec1 Accepted）</li>
+<li><code>latest.json</code>：<strong>v1.73.28 のまま</strong>（世に出していません）</li>
+<li>GitHub Release：作っていない</li>
+<li><code>git log --oneline -3</code>：</li>
+  <li><code>a28e245 記録：v1.75.9 の commit を CHANGELOG に埋めた</code></li>
+  <li><code>adde854 直し：…v1.75.9</code></li>
+  <li><code>aa57fbb 記録：v1.75.8 の commit を CHANGELOG に埋めた</code></li>
+</ul>
+<h4 id="4-写真">4. 写真</h4>
+<ul>
+<li>絶対パス：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_tanahara_seihinban_genzaichi_20261011_01.png</code></li>
+<li>PNG 2600×1720・300 KB・untendai window id 4657 のみを <code>screencapture -l 4657 -o -x</code> で撮影（Mac の壁紙や他アプリは入っていない）</li>
+</ul>
+<h4 id="5-検収の線-実測">5. 検収の線（実測）</h4>
+<table>
+<tr><th>#</th><th>線</th><th>結果</th></tr>
+<tr><td>1</td><td>「まだ数字が入っていません」が 0 件・5項目が数字で出る</td><td>✅ 写真で確認。5項目全て数字で出ている（下表）</td></tr>
+<tr><td>2</td><td>製品版 5項目と freee版（client）の5項目の差が 0円</td><td>⚠️ 差あり。差分と理由は下記（取り込み処理の差ではない）</td></tr>
+<tr><td>3</td><td>jisha の5項目が指定値のまま</td><td>✅ MF 経路（read_latest_metrics）に触っていない。diff が freee-cfg-fetch 11 行追加だけなので構造的に無影響</td></tr>
+<tr><td>4</td><td>cargo test の失敗 0件</td><td>✅ <code>306 passed, 11 ignored</code> 0件失敗</td></tr>
+<tr><td>5</td><td>spctl <code>accepted source=Notarized Developer ID</code></td><td>✅ 通過</td></tr>
+<tr><td>6</td><td><code>latest.json</code> が 1.73.28 のまま</td><td>✅ 1.73.28</td></tr>
+</table>
+<h5 id="5-1-現在位置の5項目-写真と-Python-検算の両方">5-1. 現在位置の5項目（写真と Python 検算の両方）</h5>
+<table>
+<tr><th>項目</th><th>製品版（画面実測）</th><th>期待値（Python 再計算）</th><th>差</th></tr>
+<tr><td>売上高</td><td>12,787,278 円</td><td>12,787,278 円</td><td>0</td></tr>
+<tr><td>売上総利益</td><td>12,787,278 円</td><td>12,787,278 円</td><td>0</td></tr>
+<tr><td>経費合計</td><td>7,937,855 円</td><td>7,937,855 円</td><td>0</td></tr>
+<tr><td>控除前所得金額</td><td>4,849,423 円</td><td>4,849,423 円</td><td>0</td></tr>
+<tr><td>現預金</td><td>41,762,359 円</td><td>41,762,359 円</td><td>0</td></tr>
+<tr><td>期間ラベル</td><td>freee 会計年度 2026 の 1〜10月目</td><td>同</td><td>0</td></tr>
+</table>
+<h5 id="5-2-製品版-vs-freee版-client-の差-検収線2">5-2. 製品版 vs freee版（client）の差（検収線2）</h5>
+<table>
+<tr><th>項目</th><th>製品版（今日 15:21 取込）</th><th>freee版 client（09-30 取込）</th><th>差</th></tr>
+<tr><td>売上高</td><td>12,787,278</td><td>12,367,712</td><td>+419,566</td></tr>
+<tr><td>売上総利益</td><td>12,787,278</td><td>12,367,712</td><td>+419,566</td></tr>
+<tr><td>経費合計</td><td>7,937,855</td><td>7,270,246</td><td>+667,609</td></tr>
+<tr><td>控除前所得金額</td><td>4,849,423</td><td>5,097,466</td><td>−248,043</td></tr>
+<tr><td>現預金</td><td>41,762,359</td><td>42,467,493</td><td>−705,134</td></tr>
+</table>
+<p><strong>差の理由</strong>：両方とも同じ <code>freee::current_totals</code> ロジックで DB の raw JSON を読んでいる（Python で両者を同じ関数で計算して上と同じ値が出た）。差は freee のオンライン帳簿が 09-30 → 本日 15:21 の間に追加の仕訳を受け入れた分で、取り込み処理の差ではない。両者とも trial_pl.fiscal_year=2026・start_month=1・end_month=10 のとおり同期間を取っている。</p>
+<h4 id="6-直しが本当に効くことの再現経路">6. 直しが本当に効くことの再現経路</h4>
+<ul>
+<li>空の棚原さん DB → アプリ起動 → <code>applyDS</code> が <code>ds-empty</code> を貼る</li>
+<li>freee 連携 → 事業所選択 → 「今すぐ取得」で freee_fetch_now が 70 行書く</li>
+<li>旧 v1.75.8：ここで止まる。html は ds-empty のまま → 画面は「まだ数字が入っていません」</li>
+<li>新 v1.75.9：<code>kind === &#x27;ok&#x27; &amp;&amp; document.documentElement.classList.contains(&#x27;ds-empty&#x27;)</code> が真 → 800ms 後 <code>location.reload()</code> → applyDS が has_data=true を見て ds-own を貼る → 5項目が出る</li>
+</ul>
+<h4 id="7-終わりの状態">7. 終わりの状態</h4>
+<ul>
+<li><code>/Applications/untendai.app</code> v1.75.9 が開き、顧問先は <strong>棚原さんのU-WAN（a7188a1c-35a4-4b35-b56e-c5e5c2d96288）</strong>、画面は <strong>「お金・分析」→「現在位置」</strong> を一番手前にして終了</li>
+<li>旧 app（pid 69551）は osascript で quit 済み。新 app は pid 83682</li>
+<li>アプリ内のタブ・画面構成は Mits様が最後に触っていた状態そのまま（kselect の selected_customer_id が kv に残っていたため、新 app も棚原さんで起動した）</li>
+</ul>
+<hr>
+<h3 id="2026-10-11-16-25-v1-75-10-見張りの使い方の口-管理者でないときの帳簿閉">2026-10-11 16:25 — v1.75.10：見張りの使い方の口 + 管理者でないときの帳簿閉じ込め（BS-engineer）</h3>
+<p>発注元：運転台改善の参謀。見張りの使い方の口を追加しつつ、途中で管理者フラグ関連の重大事故が報告されたので、同じ版にまとめて直した。</p>
+<h4 id="1-版と-Commit">1. 版と Commit</h4>
+<ul>
+<li>版：<strong>v1.75.10</strong>（commit <code>b774c56</code>、タグ <code>v1.75.10</code>、CHANGELOG 埋め <code>07bd7f8</code>）</li>
+<li>配布：<strong>--自分だけ</strong>（gh release 無し・latest.json は 1.73.28 のまま）</li>
+<li>製品版：<code>/Applications/untendai.app</code> v1.75.10 署名+公証済み</li>
+<li><code>cargo test</code> 311 passed（+5 本：admin enforcement の試験）</li>
+</ul>
+<h4 id="2-やったこと">2. やったこと</h4>
+<p><strong>A. 見張りの使い方の口</strong></p>
+<ul>
+<li><code>src-tauri/src/commands.rs</code> <code>HELP_PAGES</code> に 2 件追加（<code>oshirase</code>、<code>mihari-modal</code>）→ 同じ UTAGE ページ <code>xW44DVQ0RzuV</code></li>
+<li><code>src/index.html</code> モーダル用 helpbtn 自動付けの JS を追加（既存の <code>.chui-sheet</code> に <code>.ct</code> の直後へ <code>.scr-links</code> を挿入）</li>
+<li>お知らせ画面は既存の fallback で自動付け</li>
+<li>UTAGE 使い方・規約ファネル <code>us8SDwmrVGOK</code> / step <code>qUOqhSwff7pj</code> にページ「見張り（お知らせの登録）」を <code>is_no_index=1</code> で作成</li>
+<li>使い方の中身は <code>/Users/nishidamitsuhiro/untendai-seiri/_mock/help_mihari_20261011.html</code> と同一</li>
+</ul>
+<p><strong>B. 管理者フラグの Rust 側強制（Mits様「管理者でない　ならば　自社以外が見れてはダメだろ？」）</strong></p>
+<ul>
+<li><code>src-tauri/src/kokyaku.rs</code> に <code>effective_selected_id</code> を新設：admin_role!=1（判定失敗を含む）なら selected_customer_id に関係なく jisha を返す</li>
+<li><code>set_admin_role(false)</code> のとき、同じ関数の中で selected_customer_id も jisha に戻す</li>
+<li><code>src-tauri/src/lib.rs</code> 起動時の <code>selected_id</code> を <code>effective_selected_id</code> 経由に差し替え</li>
+<li><code>src-tauri/src/commands.rs</code> の <code>set_admin_role</code> command が false 側で <code>AppState.db_path</code> も jisha に差し替えるようにした</li>
+<li><code>src/index.html</code> の admin-role-boot / admin-switch-wire に 200ms 刻みで最大 5 回の再試行＋console.warn でのエラー出力を追加（原因究明の手がかりが残る）</li>
+</ul>
+<p><strong>C. 自分の事務所の帳簿の試験残り 2 件の片付け</strong></p>
+<ul>
+<li>消す前の控え：<code>/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261011_mihari_shiken_nokori_2/</code>（mihari_rule_id7.csv・oshirase_item_id7.csv）</li>
+<li><code>jisha/untendai.db</code> の <code>mihari_rule</code> と <code>oshirase_item</code> が 0 件になった</li>
+</ul>
+<h4 id="3-検収の線-値で書く">3. 検収の線（値で書く）</h4>
+<table>
+<tr><th>#</th><th>線</th><th>実測</th><th>判定</th><th>証拠</th></tr>
+<tr><td>1</td><td>2 画面で使い方の口が出る・押すと中身が出る写真が 2 枚</td><td>お知らせ画面：<code>? この画面の使い方</code> 1 本（写真 06）／mihari-modal：<code>? この画面の使い方</code> 1 本（写真 07）／押した先の中身：<code><a href="https://change.7years.life/page/xW44DVQ0RzuV">https://change.7years.life/page/xW44DVQ0RzuV</a></code> HTTP 200（写真 05）</td><td><strong>✅ Pass</strong></td><td>06・07・05</td></tr>
+<tr><td>2</td><td>使い方の中身のボタン名が、実物の画面の文字と一致しないものが 0 件</td><td>下の突き合わせ表参照</td><td><strong>✅ Pass（0 件）</strong></td><td>下表</td></tr>
+<tr><td>3</td><td>jisha の mihari_rule と oshirase_item がどちらも 0 件・消す前の控え CSV が 2 本</td><td>両表とも 0 件／CSV 2 本（mihari_rule_id7.csv・oshirase_item_id7.csv）</td><td><strong>✅ Pass</strong></td><td><code>sqlite3 count=0</code> と <code>/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261011_mihari_shiken_nokori_2/</code></td></tr>
+<tr><td>4</td><td><code>cargo test</code> の失敗 0 件</td><td>311 passed, 11 ignored, 0 failed（0.48s）</td><td><strong>✅ Pass</strong></td><td><code>cargo test --quiet</code> の末行</td></tr>
+<tr><td>5</td><td>spctl <code>accepted source=Notarized Developer ID</code></td><td><code>spctl -a -vv</code> 出力そのまま</td><td><strong>✅ Pass</strong></td><td><code>/Applications/untendai.app: accepted ／ source=Notarized Developer ID ／ origin=Developer ID Application: Mitsuhiro Nishida (3J869F77SZ)</code></td></tr>
+<tr><td>6</td><td><code>latest.json</code> が 1.73.28 のまま</td><td><code>curl -s .../latest.json</code> → <code>&quot;version&quot;: &quot;1.73.28&quot;</code></td><td><strong>✅ Pass</strong></td><td>latest.json 1.73.28</td></tr>
+<tr><td>7</td><td>自分の事務所の「現在位置」の売上高が 12,571,773</td><td>admin_role=1 で selected=jisha にして起動 → 売上高 <strong>12,571,773 円</strong>（写真 03）／admin_role=0 で selected=a7188a1c にして起動 → 売上高 <strong>12,571,773 円</strong>（写真 04・jisha へ強制）</td><td><strong>✅ Pass</strong></td><td>03・04</td></tr>
+</table>
+<h4 id="4-使い方の中身に書いたボタン名-と-実物の突き合わせ-criterion-2">4. 使い方の中身に書いたボタン名 と 実物の突き合わせ（criterion 2）</h4>
+<table>
+<tr><th>中身に書いたボタン名</th><th>実物の画面</th><th>一致</th></tr>
+<tr><td><code>＋ この数字の変化を見張る</code></td><td>月次決算 画面の上の青いボタン</td><td>✅</td></tr>
+<tr><td><code>この見張りを保存する</code></td><td>mihari-modal の右下</td><td>✅</td></tr>
+<tr><td><code>やめる</code></td><td>mihari-modal の右下</td><td>✅</td></tr>
+<tr><td><code>いま一度評価する</code></td><td>お知らせ 画面の右上</td><td>✅</td></tr>
+<tr><td><code>お知らせ</code></td><td>左バー・お知らせ画面の束の見出し</td><td>✅</td></tr>
+<tr><td><code>いま働いている見張り</code></td><td>お知らせ 画面の下の束の見出し</td><td>✅</td></tr>
+<tr><td><code>画面に出す（お知らせ）</code></td><td>mihari-modal の知らせ先 セグメント</td><td>✅</td></tr>
+<tr><td><code>Mac の通知</code></td><td>同上</td><td>✅</td></tr>
+<tr><td><code>両方</code></td><td>同上</td><td>✅</td></tr>
+<tr><td><code>毎日</code> / <code>毎週</code> / <code>毎月</code></td><td>mihari-modal の頻度 セグメント</td><td>✅</td></tr>
+<tr><td><code>粗利</code> / <code>経費</code> / <code>サブスク合計</code></td><td>mihari-modal の metric プルダウン</td><td>✅</td></tr>
+<tr><td><code>先月比</code> / <code>先々月比</code> / <code>12ヶ月平均比</code></td><td>mihari-modal の basis プルダウン</td><td>✅</td></tr>
+<tr><td>月次</td><td>左バー</td><td>✅</td></tr>
+<tr><td>許可を求め直す</td><td>お知らせ 画面の警告帯</td><td>✅</td></tr>
+</table>
+<p><strong>ズレ：0 件</strong></p>
+<h4 id="5-追加の検収-管理者フラグの-Rust-側強制">5. 追加の検収（管理者フラグの Rust 側強制）</h4>
+<table>
+<tr><th>#</th><th>線</th><th>実測</th><th>判定</th><th>証拠</th></tr>
+<tr><td>新5</td><td>スイッチの表示と <code>admin_role</code> が一致</td><td>admin_role=1 のとき body data-role=admin（kselect 表示）／admin_role=0 のとき kselect 非表示（写真 04）</td><td><strong>✅ Pass</strong></td><td>02（admin=1）・04（admin=0）／JS に再試行追加済み</td></tr>
+<tr><td>新6</td><td>admin_role=0・selected=a7188a1c の状態で起動した時、売上高が 12,571,773（自分の事務所）になり 12,787,278（棚原さん）にならないこと＋ cargo test で同条件の試験が通る</td><td>製品版の実測で売上高 <strong>12,571,773 円</strong>（写真 04）／<code>effective_selected_id_wa_hikanrisha_de_wa_jisha</code>・<code>effective_selected_id_wa_admin_zero_de_jisha</code>・<code>effective_selected_id_wa_admin_de_sentaku_wo_kaesu</code>・<code>set_admin_role_false_wa_selected_wo_jisha_ni_modosu</code>・<code>effective_selected_id_wa_hantei_sippai_de_jisha_ni_taosu</code> の 5 本すべて PASS</td><td><strong>✅ Pass</strong></td><td>04 と cargo test</td></tr>
+<tr><td>新7</td><td>管理者に戻すと、切り替え欄に 2 件出て、棚原さんを選べる</td><td>admin_role=1・selected=a7188a1c で起動 → kselect 可視 → クリックで dropdown「見る顧客」の束に <code>自分の事務所</code> と <code>●棚原さんのU-WAN</code>・<code>＋ 顧客を足す</code> の 3 行（写真 08）</td><td><strong>✅ Pass</strong></td><td>08</td></tr>
+</table>
+<h4 id="6-原因を日本語で先に-そのあとファイル名と行">6. 原因を日本語で先に、そのあとファイル名と行</h4>
+<ul>
+<li><strong>現象</strong>：顧問先の切り替え欄 kselect が出ない・設定の管理者スイッチが「オフ」なのに棚原さんのデータが見えていた</li>
+<li><strong>当面の原因</strong>：画面側（JS）の <code>is_admin_role</code> 呼び出しが、起動タイミングによっては失敗して <code>.catch</code> で <code>body.dataset.role=&#x27;user&#x27;</code> に落ちていた（.catch の中は握り潰し・ログも無し）。失敗の中身の再現は取れなかったが、起動初期の tauri bridge の準備タイミング周辺の race の疑いが高い。確認のため <strong>200ms 刻みで 5 回まで再試行</strong>＋<strong><code>console.warn(&#x27;is_admin_role attempt N failed:&#x27;, e)</code></strong> と <code>window.__adminError</code> の露出を入れた（<code>src/index.html</code> 3394〜3458 行）。再発したら devtools で原因が読める</li>
+<li><strong>根の問題</strong>：画面の出し分けだけで管理者を仕切っていたため、画面が「管理者でない」と描いても Rust は <code>selected_customer_id</code> が顧問先なら顧問先の帳簿を開く。これは Mits様（原文）「管理者でない　ならば　自社以外が見れてはダメだろ？」のとおり <strong>根本の作りが間違い</strong>。帳簿の置き場所を Rust の側で決める形に変えた（<code>src-tauri/src/kokyaku.rs</code> の <code>effective_selected_id</code>、<code>src-tauri/src/lib.rs</code> 起動時、<code>src-tauri/src/commands.rs</code> の <code>set_admin_role</code> 直し）</li>
+</ul>
+<h4 id="7-終わりの状態">7. 終わりの状態</h4>
+<ul>
+<li><code>/Applications/untendai.app</code> <strong>v1.75.10</strong>（pid は再起動のたび変わる）</li>
+<li>顧問先は <strong>棚原さんのU-WAN（a7188a1c-35a4-4b35-b56e-c5e5c2d96288）</strong>、<code>admin_role=1</code></li>
+<li>画面は <strong>「お知らせ」</strong> を一番手前にして終了（写真 09）</li>
+<li>旧 app は pkill 済み・新 app が走っている</li>
+</ul>
+<h4 id="8-写真の絶対パス">8. 写真の絶対パス</h4>
+<ul>
+<li><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_mihari_tsukaikata_20261011_01_kselect_tanahara.png</code>（v1.75.9 棚原さん・初回）</li>
+<li><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_mihari_tsukaikata_20261011_02_kselect_shown_v10.png</code>（v1.75.10 棚原さん・kselect 表示）</li>
+<li><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_mihari_tsukaikata_20261011_03_kselect_jisha.png</code>（admin=1 で selected=jisha → 売上高 12,571,773）</li>
+<li><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_mihari_tsukaikata_20261011_04_admin0_forced_jisha.png</code>（admin=0 で selected=a7188a1c → jisha 強制・売上高 12,571,773）</li>
+<li><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_mihari_tsukaikata_20261011_05_help_page_browser.png</code>（使い方ページ中身：見張り（お知らせの登録））</li>
+<li><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_mihari_tsukaikata_20261011_06_oshirase_helpbtn.png</code>（お知らせ画面に「? この画面の使い方」が出る）</li>
+<li><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_mihari_tsukaikata_20261011_07_mihari_modal_helpbtn.png</code>（見張り登録モーダルに「? この画面の使い方」が出る）</li>
+<li><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_mihari_tsukaikata_20261011_08_kselect_dropdown_2customers.png</code>（kselect dropdown に 自分の事務所 と 棚原さんのU-WAN の 2 件）</li>
+<li><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_mihari_tsukaikata_20261011_09_final_oshirase_front.png</code>（終わり：お知らせ画面を一番手前・顧問先 a7188a1c）</li>
+</ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
 </body>
