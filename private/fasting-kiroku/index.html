@@ -471,6 +471,9 @@
     "10/10": {kg: 59.8, jikan: "8:38", shibo: 16.0, hosu: 5012, kiso: 1455, katsudo: 343, mizu: 1000},
     "10/11": {kg: 59.5, jikan: "10:02", shibo: 15.8, hosu: 1196, kiso: 690, katsudo: 63}
   };
+  // 水分を Mits様が直接おっしゃった日はこちらを使う（ヘルスの記録より優先・自動入力はここを書き換えない）
+  // 2026-10-11 Mits様「昨日の水分は4L」（ヘルスの記録は 1,000mL）
+  const MIZU_TE = {"10/10": 4000};
   const mokuhyo = {
     // 2026-10-07 再計算：10/5〜10/6 は実際の摂取（948・1,049kcal）で、10/5 朝の 61.0kg から。
     // 10/7 は 1,000kcal、10/8 以降のふだんの日はプロテインを外した 822kcal。固形物なし（10/8〜10/10）と復食（10/11〜10/13）は献立の合計。消費 1,920kcal。
@@ -540,9 +543,10 @@
           shiboTd.textContent = jd.shibo.toFixed(1);
         }
         // 2026-10-10 Mits様「糖質のしたに摂取水分量を入れて」：iPhone のヘルスの水分（HiWater で記録）の1日の合計 mL
-        if (mizuTd && jd.mizu != null) {
+        const mizu = MIZU_TE[day] != null ? MIZU_TE[day] : jd.mizu;
+        if (mizuTd && mizu != null) {
           mizuTd.className = 'atai';
-          mizuTd.textContent = jd.mizu.toLocaleString('ja-JP');
+          mizuTd.textContent = mizu.toLocaleString('ja-JP');
         }
         if (hosuTd && jd.hosu != null) {
           hosuTd.className = 'atai hosu-v';
