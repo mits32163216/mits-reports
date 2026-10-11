@@ -731,6 +731,7 @@
     document.getElementById('tw-table').innerHTML =
       '<tr><th>日付</th><th>消費<br>kcal</th><th>摂取 kcal<br>計画 / 実績</th><th>たんぱく質<br>g</th><th>糖質<br>g</th><th>不足<br>kcal</th><th>上限<br>kcal</th><th>上限超え<br>kcal</th><th>脂肪の減り g<br>計画 / 実績</th><th>脂肪の減り累計 kg<br>計画 / 実績</th><th>翌朝の乾燥体重 kg<br>目標 / 実測（差）</th><th>ひとこと</th></tr>' +
       out.join('');
+    // 2026-10-11 Mits様「412kcal　のところを　過剰消費　ではなく、要摂取　にして」：上限を超えた分の名前を「要摂取」に
     // 2026-10-11 Mits様「表の並びを変えて」：消費→摂取→不足→上限→上限を超えた分の順（消費を摂取の前に）
     const sg = v => (v > 0 ? '−' : '+') + f0(Math.abs(v));
     document.querySelectorAll('.page table').forEach(table => {
@@ -744,17 +745,17 @@
         let h = '';
         if (x.mirai) {
           h = '<div class="mirai">' + line('消費', f0(x.planBurn)) + line('摂取', f0(x.planIn)) +
-              '<div class="big">' + sg(x.planDef) + '</div>' + line('上限', '−' + f0(x.capP)) + line('過剰消費', f0(x.planOver)) + '</div>';
+              '<div class="big">' + sg(x.planDef) + '</div>' + line('上限', '−' + f0(x.capP)) + line('要摂取', f0(x.planOver)) + '</div>';
         } else if (x.mae) {
-          h = line('消費', x.b ? f0(x.b.v) : '—') + line('摂取', '—') + '<div class="big">−' + f0(x.capA) + ' 上限</div>' + line('過剰消費', '—');
+          h = line('消費', x.b ? f0(x.b.v) : '—') + line('摂取', '—') + '<div class="big">−' + f0(x.capA) + ' 上限</div>' + line('要摂取', '—');
         } else {
           h = line('消費', x.b ? f0(x.b.v) + (x.b.suitei ? '*' : '') : '—') + line('摂取', x.n ? f0(x.kcal) : '—');
           if (x.deficit != null) {
             const cls = x.kyou ? '' : (x.over > 50 ? 'warn' : 'good');
             h += '<div class="big ' + cls + '">' + sg(x.deficit) + (x.kyou ? ' 途中' : '') + '</div>';
-            h += line('上限', '−' + f0(x.capA)) + line('過剰消費', f0(x.over) + (x.kyou ? ' 途中' : ''));
+            h += line('上限', '−' + f0(x.capA)) + line('要摂取', f0(x.over) + (x.kyou ? ' 途中' : ''));
           } else {
-            h += '<div class="big">—</div>' + line('上限', '−' + f0(x.capA)) + line('過剰消費', '—');
+            h += '<div class="big">—</div>' + line('上限', '−' + f0(x.capA)) + line('要摂取', '—');
           }
         }
         cell.innerHTML = h;
