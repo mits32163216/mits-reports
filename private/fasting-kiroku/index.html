@@ -157,6 +157,26 @@
       <td class="goal shibou"></td>
       <td class="goal shibou"></td>
     </tr>
+    <tr class="jissoku-shibou">
+      <th class="head">実測脂肪量<span>kg</span></th>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+    </tr>
     <tr class="mokuhyo">
       <th class="head">目標体重<span>kg</span></th>
       <td class="goal"></td>
@@ -553,6 +573,16 @@
     Array.from(hin.children).slice(1).forEach((td, col) => {
       const y = td.querySelector('.ymd'); const m = y && y.textContent.match(/\d+\/\d+/);
       if (m && MOKUHYO_SHIBOU[m[0]] != null && tds[col]) tds[col].textContent = MOKUHYO_SHIBOU[m[0]].toFixed(2);
+      // 2026-10-11 Mits様「目標脂肪量に対しての実態脂肪量の行がなかった　追加して、そっちが大事だった」：実測脂肪量＝その朝の体重×体脂肪率÷100、目標比は目標脂肪量との差
+      const jr = table.querySelector('tr.jissoku-shibou'); const jtd = jr && Array.from(jr.children).slice(1)[col];
+      const jd = m && K.jissoku[m[0]];
+      if (jtd && jd && jd.kg != null && jd.shibo != null) {
+        const v = jd.kg * jd.shibo / 100, mk = MOKUHYO_SHIBOU[m[0]];
+        jtd.className = 'taiju-start';
+        let h = '<span class="v">' + v.toFixed(2) + '</span>';
+        if (mk != null) { const df = v - mk; h += '<span class="sa ' + (df <= 0 ? 'good' : 'warn') + '">目標比 ' + (df > 0 ? '+' : df < 0 ? '−' : '±') + Math.abs(df).toFixed(2) + '</span>'; }
+        jtd.innerHTML = h;
+      }
     });
   });
   const ROWS = ['gozen','hirusugi','aruita','yugata'];
