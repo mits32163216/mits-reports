@@ -30,11 +30,8 @@
   tr > :first-child{ border-left:1px solid var(--line); }
   tr.hinichi > *{ border-top:1px solid var(--line); }
   /* 2026-10-09 Mits様「10/7と8の間の縦線を太い線にして」：10/7 の列（左の項目名の次から4列目）の右の線 */
-  table:not(#tw-table) tr > :nth-child(5){ border-right:2px solid var(--title); }
   /* 2026-10-09 Mits様「修正　1012/13の間にも太線　→　10/11-/14」：回復食は 10/11〜10/14。10/14 の列（左の項目名の次から11列目）の右の線 */
-  table:not(#tw-table) tr > :nth-child(12){ border-right:2px solid var(--title); }
   /* 2026-10-09 Mits様「10/10と/11の間にも太線」：10/10 の列（左の項目名の次から7列目）の右の線 */
-  table:not(#tw-table) tr > :nth-child(8){ border-right:2px solid var(--title); }
 
   /* 左の項目名は横に動かしても残す */
   th.head{ position:sticky; left:0; z-index:2; width:var(--head); min-width:var(--head);
@@ -132,6 +129,8 @@
   .hmenu{ position:sticky; top:0; z-index:20; display:flex; flex-wrap:wrap; gap:6px; padding:6px 12px; background:var(--head-bg); border-bottom:1px solid var(--line); font-size:var(--f3); }
   .hmenu a{ color:var(--title); text-decoration:none; padding:4px 10px; border:1px solid var(--line); border-radius:4px; background:#fff; }
   .hmenu a[aria-current="page"]{ background:var(--title); color:#fff; border-color:var(--title); }
+  /* 減量プラン：10/12 を1日目にする。ファスティング中の 10/4〜10/11 の列（2〜9列目）は計算に使うので残して隠す（2026-10-12 Mits様「ファスティング用と判断されるモノを…表から削除して」） */
+  table:not(#tw-table) tr > :nth-child(n+2):nth-child(-n+9){ display:none; }
 </style>
 </head>
 <body>
@@ -150,15 +149,15 @@
       <td class="hinichi"><div class="nth">6日目</div><div class="ymd">10/9<span class="dow">(金)</span></div></td>
       <td class="hinichi"><div class="nth">7日目</div><div class="ymd">10/10<span class="dow">(土)</span></div></td>
       <td class="hinichi"><div class="nth">8日目</div><div class="ymd">10/11<span class="dow">(日)</span></div></td>
-      <td class="hinichi"><div class="nth">9日目</div><div class="ymd">10/12<span class="dow">(月)</span></div></td>
-      <td class="hinichi"><div class="nth">10日目</div><div class="ymd">10/13<span class="dow">(火)</span></div></td>
-      <td class="hinichi"><div class="nth">11日目</div><div class="ymd">10/14<span class="dow">(水)</span></div></td>
-      <td class="hinichi"><div class="nth">12日目</div><div class="ymd">10/15<span class="dow">(木)</span></div></td>
-      <td class="hinichi"><div class="nth">13日目</div><div class="ymd">10/16<span class="dow">(金)</span></div></td>
-      <td class="hinichi"><div class="nth">14日目</div><div class="ymd">10/17<span class="dow">(土)</span></div></td>
-      <td class="hinichi"><div class="nth">15日目</div><div class="ymd">10/18<span class="dow">(日)</span></div></td>
-      <td class="hinichi"><div class="nth">16日目</div><div class="ymd">10/19<span class="dow">(月)</span></div></td>
-      <td class="hinichi"><div class="nth">終了の朝</div><div class="ymd">10/20<span class="dow">(火)</span></div></td>
+      <td class="hinichi"><div class="nth">1日目</div><div class="ymd">10/12<span class="dow">(月)</span></div></td>
+      <td class="hinichi"><div class="nth">2日目</div><div class="ymd">10/13<span class="dow">(火)</span></div></td>
+      <td class="hinichi"><div class="nth">3日目</div><div class="ymd">10/14<span class="dow">(水)</span></div></td>
+      <td class="hinichi"><div class="nth">4日目</div><div class="ymd">10/15<span class="dow">(木)</span></div></td>
+      <td class="hinichi"><div class="nth">5日目</div><div class="ymd">10/16<span class="dow">(金)</span></div></td>
+      <td class="hinichi"><div class="nth">6日目</div><div class="ymd">10/17<span class="dow">(土)</span></div></td>
+      <td class="hinichi"><div class="nth">7日目</div><div class="ymd">10/18<span class="dow">(日)</span></div></td>
+      <td class="hinichi"><div class="nth">8日目</div><div class="ymd">10/19<span class="dow">(月)</span></div></td>
+      <td class="hinichi"><div class="nth">9日目の朝</div><div class="ymd">10/20<span class="dow">(火)</span></div></td>
     </tr>
     <tr class="shibou">
       <th class="head">目標脂肪量<span>kg</span><span class="saiyu">最優先</span></th>
@@ -415,14 +414,14 @@
       <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span><span class="chk-note">今日は散歩なし（最低限の歩数）。グルタミンと塩水は時刻を決めて飲む</span></td>
       <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span></td>
       <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span></td>
-      <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span></td>
-      <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span></td>
-      <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span></td>
-      <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span></td>
-      <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span></td>
-      <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span></td>
-      <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span></td>
-      <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span></td>
+      <td class="meal"><span class="chk m">グルタミン5g</span></td>
+      <td class="meal"><span class="chk m">グルタミン5g</span></td>
+      <td class="meal"><span class="chk m">グルタミン5g</span></td>
+      <td class="meal"><span class="chk m">グルタミン5g</span></td>
+      <td class="meal"><span class="chk m">グルタミン5g</span></td>
+      <td class="meal"><span class="chk m">グルタミン5g</span></td>
+      <td class="meal"><span class="chk m">グルタミン5g</span></td>
+      <td class="meal"><span class="chk m">グルタミン5g</span></td>
       <td class="meal empty"></td>
     </tr>
     <tr class="yugata">
@@ -475,14 +474,14 @@
       <td class="biko-cell">固形物なし 2/3<br>マナ酵素90mlを水540mlで割り（1:6）、ペットボトルで12〜21時に空腹のとき飲む<br>散歩なし（最低限の歩数）<br>テビチ内容物は冷蔵（回復で食べる）</td>
       <td class="biko-cell">固形物なし 3/3<br>マナ酵素90mlを水540mlで割り（1:6）、ペットボトルで12〜21時に空腹のとき飲む<br>テビチ内容物は冷蔵（回復で食べる）<br>実際：てびち汁は取らず、マナ酵素は30mlで済んだ</td>
       <td class="biko-cell">回復食 1/4<br>1食目は汁だけ</td>
-      <td class="biko-cell">回復食 2/4</td>
-      <td class="biko-cell">回復食 3/4</td>
-      <td class="biko-cell">回復食 4/4</td>
-      <td class="biko-cell">普通食（カロリー制限・糖質制限）</td>
-      <td class="biko-cell">普通食（カロリー制限・糖質制限）</td>
-      <td class="biko-cell">普通食（カロリー制限・糖質制限）</td>
-      <td class="biko-cell">普通食（カロリー制限・糖質制限）</td>
-      <td class="biko-cell">普通食（カロリー制限・糖質制限）</td>
+      <td class="biko-cell"></td>
+      <td class="biko-cell"></td>
+      <td class="biko-cell"></td>
+      <td class="biko-cell"></td>
+      <td class="biko-cell"></td>
+      <td class="biko-cell"></td>
+      <td class="biko-cell"></td>
+      <td class="biko-cell"></td>
       <td class="biko-cell"></td>
     </tr>
   </table>
@@ -760,7 +759,7 @@
         const df = act - tgt;
         wtxt += ' <span class="' + (df <= 0 ? 'good' : 'warn') + '">(' + (df > 0 ? '+' : '') + df.toFixed(1) + ')</span>';
       }
-      out.push('<tr class="' + (mirai ? 'mirai' : kyou ? 'kyou' : '') + '">' +
+      if (num(d) >= 1012) out.push('<tr class="' + (mirai ? 'mirai' : kyou ? 'kyou' : '') + '">' +
         '<td class="d">' + d + '</td>' +
         '<td>' + (b ? f0(b.v) + (b.suitei ? '*' : '') : '—') + '</td>' +
         '<td>' + f0(planIn) + ' / ' + (n ? f0(kcal) : '—') + '</td>' +
