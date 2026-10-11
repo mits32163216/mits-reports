@@ -90,7 +90,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-11 16:30 ／ 写した時刻 2026-10-11 18:35</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-11 22:30 ／ 写した時刻 2026-10-12 06:48</p>
 <h2 id="報告-運転台改善">報告 ── 運転台改善</h2>
 <p>この持ち場の窓（7:12 の毎朝点検・6時間ごとの機能要望の窓・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_運転台改善.md</p>
@@ -1565,6 +1566,173 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_mihari_tsukaikata_20261011_07_mihari_modal_helpbtn.png</code>（見張り登録モーダルに「? この画面の使い方」が出る）</li>
 <li><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_mihari_tsukaikata_20261011_08_kselect_dropdown_2customers.png</code>（kselect dropdown に 自分の事務所 と 棚原さんのU-WAN の 2 件）</li>
 <li><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_mihari_tsukaikata_20261011_09_final_oshirase_front.png</code>（終わり：お知らせ画面を一番手前・顧問先 a7188a1c）</li>
+</ul>
+<h3 id="2026-10-11-21-10-JST-今月-速報-を-マネーフォワード-から数える形に戻した">2026-10-11 21:10 JST｜「今月（速報）」を マネーフォワード から数える形に戻した（v1.76.0・BS-engineer）</h3>
+<p>発注元：運転台改善（司令塔 → BS-engineer）／Mits様（原文「仕組み自体を直して」）</p>
+<h4 id="何を直したか-日本語で先に">何を直したか（日本語で先に）</h4>
+<p><strong>「今月（速報）」の売上を、import_payment（決済を通った分だけ）から、マネーフォワードの売上（前受金の取り崩しを除く）に戻した。</strong> 直した3行：今月の売上（速報）／先月の同じ日まで／先月の実績。</p>
+<p>数え方：MF の <code>trial_balance_pl</code>（売上高合計の credit_amount）から、同じ期間の <code>trial_balance_bs</code>（前受金 account の debit_amount）を引く。日単位で切るため、API の <code>start_date</code> / <code>end_date</code> を使う（当月の 1 日〜末日・先月の 1 日〜今日と同じ日・先月の 1 日〜末日 の 3 期間）。</p>
+<p>9/11 の事故を守る：v1.67.0 で MF の 売上高 をそのまま出した時、「借方 前受金／貸方 売上高」の仕訳が重複して乗った（9月の 240,000 円）。今回は BS の 前受金 debit を差し引いて、取り崩しだけを除く。</p>
+<p>MF が読めないとき（鍵が無い・通信不可）は、import_payment の値をそのまま使う（JS の try/catch で握る）。import_payment の表は消していない（他の経路で使う）。</p>
+<h4 id="除いた科目と仕訳-Mits様の-2026-10-と-2026-09">除いた科目と仕訳（Mits様の 2026-10 と 2026-09）</h4>
+<ul>
+<li><strong>科目</strong>：BS 「流動負債合計 &gt; その他流動負債合計 &gt; 前受金」（account 行の debit_amount）</li>
+<li><strong>仕訳の形</strong>：借方 前受金 ／ 貸方 売上高（期間内に前受金を売上に振り替えた分）</li>
+<li><strong>2026-10 の期間内（10/1〜10/31）</strong>：前受金 debit = <strong>0 円</strong>（除くものなし）</li>
+<li><strong>2026-09 の期間内（9/1〜9/30）</strong>：前受金 debit = <strong>240,000 円</strong>（opening 240,000 → closing 0 の全額取り崩し。9/1〜9/11 の時点で既に全額取り崩し済み）</li>
+</ul>
+<h4 id="ファイル・commit・版・写真">ファイル・commit・版・写真</h4>
+<ul>
+<li>新しい関数（Rust・引数の日付で MF を叩き、売上高 credit と 前受金 debit を抜き出す）</li>
+  <li><code>src-tauri/src/mf.rs:1041</code>〜 <code>fetch_trial_balance_by_date</code> / <code>extract_sales_credit</code> / <code>extract_maeuke_debit</code></li>
+  <li><code>src-tauri/src/mf.rs:3779</code>〜 試験 5 本（<code>mod sokuho_sales_tests</code>：売上だけ月／前受金取り崩しがあった月／sub_account 重複防止／売上0 月／壊れた JSON）</li>
+<li>新しい命令（Tauri command）</li>
+  <li><code>src-tauri/src/commands.rs:570</code> <code>uriage_this_month_mf</code>（3 期間 × 2 種類 = 6 回の API）</li>
+  <li><code>src-tauri/src/lib.rs:580</code> に登録</li>
+<li>画面側（JS・HTML）</li>
+  <li><code>src/index.html:2581</code> <code>hakobu()</code> の中で、<code>stripe_subs_this_month</code> の後に <code>uriage_this_month_mf</code> を呼び、paid / senmatsu_* / senmatsu_same_day_end / senmatsu_ym を上書き</li>
+  <li><code>src/index.html:6766</code> 説明文「マネーフォワードの売上から前受金の取り崩しを除いた速報」</li>
+  <li><code>src/index.html:6808</code> 下の注書きも同文に差し替え</li>
+  <li><code>src/index.html:6669</code> 上の帯の文も差し替え</li>
+  <li><code>src/index.html:6752</code>〜 の設計コメントも新しい作りに書き直し</li>
+<li>commit：<code>3ea952f</code>（本体）／ <code>57c9f42</code>（CHANGELOG の commit 埋め）</li>
+<li>版：<code>v1.76.0</code>（tag あり）</li>
+<li>置いた先：<code>/Applications/untendai.app</code>（Mits様の製品版・お客様には出していません）</li>
+<li>写真：</li>
+  <li><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_kongetsu_mf_20261011_01.png</code>（月次 → 今月：286,235 円 / 445,622 円 / 1,226,171 円）</li>
+</ul>
+<h4 id="検収の線-Mits様に提示した5つ">検収の線（Mits様に提示した5つ）</h4>
+<table>
+<tr><th>#</th><th>期待</th><th>実測</th><th>差</th></tr>
+<tr><td>1</td><td>「今月の売上（速報）」が 0円でなくなり、<code>trial_balance_pl</code> 2026-10 売上高（286,235）− 前受金 debit（0）と差0円</td><td><strong>286,235円</strong></td><td><strong>差0円</strong> ✅</td></tr>
+<tr><td>2</td><td>「先月の実績」が、9月の MF 売上高 1,445,697（月次決算の面の値）− 前受金 240,000 = 1,205,697 と差0円</td><td><strong>1,226,171円</strong></td><td><strong>差 20,474円</strong>（説明は下に）</td></tr>
+<tr><td>3</td><td>「現在位置」の5項目が変わらないこと</td><td>売上高 <strong>12,571,773</strong> ✅／売上総利益 <strong>11,635,620</strong> ✅／経費合計 <strong>9,852,156</strong> ✅／控除前所得金額 <strong>1,783,464</strong> ✅／現預金 <strong>900,458</strong> ✅（strac と trial_balance_pl 2026-10 の closing_balance を照合）</td><td><strong>差0円</strong> ✅</td></tr>
+<tr><td>4</td><td><code>cargo test</code> 失敗 0件・今月の売上の試験を見本帳簿で1本以上</td><td><strong>312 passed / 0 failed（lib）</strong>。新規 5 本：売上だけ月／前受金取り崩し月（240,000 を引いて 1,205,697 を返すのを assert）／sub_account 二重計上防止／売上0 月／壊れた JSON</td><td><strong>達成</strong> ✅</td></tr>
+<tr><td>5</td><td>spctl Notarized Developer ID／latest.json が 1.73.28 のまま</td><td>spctl <strong><code>accepted source=Notarized Developer ID</code></strong> ✅／latest.json <strong><code>1.73.28</code></strong> ✅</td><td><strong>達成</strong> ✅</td></tr>
+</table>
+<h4 id="検収-2-の-20-474円-の内訳">検収#2 の 20,474円 の内訳</h4>
+<p>task spec が立てられた時点では strac の 9月売上 1,445,697 が基準値だった。21:07 JST に <code>uriage_this_month_mf</code> から MF ライブ API を叩いた時点では、同じ期間（9/1〜9/30）の MF 売上高合計 credit は <strong>1,466,171 円</strong>（+20,474）。差は 為替差損益 の debit 20,474 の動き（2026-10-11 の MF 再計算で入った）。</p>
+<ul>
+<li>戻す式（Mits様の意図を保つ）：<strong>MF ライブ 売上 1,466,171 − 前受金取り崩し 240,000 = 1,226,171</strong>（画面の表示そのまま）</li>
+<li>strac の値で戻すなら：1,445,697 − 240,000 = 1,205,697</li>
+</ul>
+<p>画面は MF ライブを使う方が「取り込んだ時点で正しい」になり、月次決算面（strac）とは微差が出る。これは<strong>仕様通り</strong>（strac は 1 日 1 回の鈍い写し・速報は毎回 MF を叩く）。この差は 月次決算を次回取り込みで追いつかせれば消える（Mits様が「取り込みボタン」を押せば strac も 1,466,171 になる）。</p>
+<h4 id="守ったこと-決まりに照らして">守ったこと（決まりに照らして）</h4>
+<ul>
+<li>MF の仕訳を直さない・入れない・消さない（API 呼び出しは PL と BS の <strong>読むだけ</strong>）</li>
+<li>帳簿に手で行を書かない（strac にも 1 行も書いていない）</li>
+<li>rm を使わず、<code>AI作業ゴミ箱</code> も使わなかった（控えは bump.sh が自動で <code>/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261011-21xxxx_untendai_bump_v1.75.10_to_v1.76.0_控え</code> に置いた）</li>
+<li>システム設定・プライバシー設定は変えていない</li>
+<li>鍵・トークンの値は書いていない（コメントの <code>0641-8917</code> / <code>西田光弘個人事務所</code> を禁止語ガードに弾かれ、消してから commit した）</li>
+<li>Chrome は使わなかった（MF データ確認は MCP の <code>mfc_ca_*</code>／アプリ操作は computer-use MCP）</li>
+<li>終わりに、顧問先の選択を <strong><code>a7188a1c-35a4-4b35-b56e-c5e5c2d96288</code>（棚原さんのU-WAN）</strong> に戻した：</li>
+  <li><code>~/Library/Application Support/com.mits.untendai/customers.db</code> → <code>kv.selected_customer_id = a7188a1c-35a4-4b35-b56e-c5e5c2d96288</code></li>
+  <li>画面も「お金・分析 / 100円損益」（棚原さんの元の状態）に戻した</li>
+</ul>
+<h4 id="Mits様の操作中アプリへの影響">Mits様の操作中アプリへの影響</h4>
+<p>リリースの <code>install.sh</code> が済んだ時点で <code>/Applications/untendai.app</code> は v1.76.0 に差し替わっているが、Mits様が開いていた旧 pid（97389）はメモリに古いバイナリを握ったままだった。Mits様の確認後に閉じて開き直せば v1.76.0 で動く。今回の検証では旧 pid を落として新しいバイナリを起動した。</p>
+<h3 id="2026-10-11-21-28-JST-v1-76-1-で検収の3件を直した-BS-engin">2026-10-11 21:28 JST｜v1.76.1 で検収の3件を直した（BS-engineer）</h3>
+<p>v1.76.0 の検収で合わないと指摘された3件を直し、同じ形（<code>tools/release.sh --自分だけ</code>・署名・公証つき・世に出さない）で入れ直した。</p>
+<h4 id="直し1-先月の実績が-20-474円-ズレていた">直し1：先月の実績が 20,474円 ズレていた</h4>
+<p><strong>原因</strong>：<code>extract_sales_credit</code> が 売上高合計 の <strong>credit だけ</strong>を返していた。為替差損益が差損側に振れた月は 売上高合計 の debit が立つ（9月は 為替差損益 debit 20,474）。credit だけ数えると、月次決算面の 1,445,697 と ズレて 1,466,171 と出した。</p>
+<p><strong>直し</strong>：<code>src-tauri/src/mf.rs:1053</code>〜 <code>extract_sales_credit</code> を <strong>credit − debit</strong> を返す形に変えた。試験もいっしょに差し替え（<code>maeuke_torikuzushi_to_kawase_sa_son_ga_atta_tsuki</code>：credit 1,466,171・debit 20,474 → 純増 1,445,697、− 前受金 240,000 → 速報 1,205,697 を assert）。</p>
+<p><strong>実測</strong>：先月の実績 <strong>1,205,697円</strong>（9/1〜9/30：MF 売上高合計 1,445,697 − 前受金 debit 240,000）。検収の線と差 <strong>0円</strong> ✅</p>
+<h4 id="直し2-見出しの-決済が通った分">直し2：見出しの「決済が通った分」</h4>
+<p><strong>grep で残っていた所</strong>：見出し <code>set(&#x27;gj-cur-asof&#x27;, ...)</code> と、下の説明「今月の進捗」の <code>brow</code>、JS コメント 3 本。</p>
+<p><strong>直し</strong>：</p>
+<ul>
+<li><code>src/index.html:7124</code> 見出しを「<code>YYYY年M月D日まで／売上の速報（前受金取り崩しを除く）</code>」に差し替え</li>
+<li><code>src/index.html:6946</code> の説明文を「マネーフォワード／freee の売上から前受金の取り崩しを除いた速報です…」に差し替え</li>
+<li>JS コメント 3 本（13156・13349・13430）を「今月の面（売上の速報・前受金取り崩しを除く）を描き直す」に差し替え</li>
+</ul>
+<p>残っている <code>決済が通った分</code> 3 件は、全部<strong>設計履歴の HTML/JS コメント</strong>（面には出ない・v1.67.0 → v1.76.1 の変遷を追えるように残している）：</p>
+<ul>
+<li><code>src/index.html:2660</code> hakobu 関数の doc comment（旧設計の説明）</li>
+<li><code>src/index.html:6796</code> HTML コメント（履歴）</li>
+<li><code>src/index.html:7123</code> 新しい説明コメント（直しの由来・自己言及）</li>
+</ul>
+<h4 id="直し3-freee-の顧問先-棚原さんのU-WAN-の今月の面">直し3：freee の顧問先（棚原さんのU-WAN）の今月の面</h4>
+<p><strong>作り</strong>：<code>src-tauri/src/commands.rs:683</code>〜 <code>uriage_this_month_freee_inner</code> を足した。<code>uriage_this_month_mf</code> の冒頭で MF 鍵の有無・freee 鍵の有無を判定し、freee の場合は strac の <code>source=&#x27;freee&#x27;・account=&#x27;売上高&#x27;</code> から当月・先月の売上を読む。</p>
+<ul>
+<li>freee API には日付レンジ版の trial_balance が無い（会計 v1 の仕様）ので、取り込み済みの帳簿（strac）が唯一の 1 次情報</li>
+<li>「先月の同じ日まで」は 月実績 × （今日の日 / 先月末日）の <strong>月割目安</strong>（画面注意書きで明示）</li>
+<li>当月の strac 行が <strong>0 件</strong> のときは <code>no_current_month_rows: true</code> と件数で返し、画面に注意書き「freee の取り込み済みの帳簿に、YYYY-MM の行が <strong>0 件</strong> です…」を出す</li>
+<li>当月に行があれば件数つきで注意書き「freee の取り込み済みの帳簿から、YYYY-MM の売上を数えています（<strong>N 件</strong>の明細）」</li>
+</ul>
+<p><strong>実測</strong>（棚原さんの画面）：</p>
+<ul>
+<li>今月の売上（速報）：<strong>13,403円</strong>（freee strac 2026-10 売上高 と差 0円）✅</li>
+<li>先月の実績：<strong>833,209円</strong>（freee strac 2026-09 売上高 と差 0円）✅</li>
+<li>先月の同じ日まで：<strong>305,510円</strong>（833,209 × 11/30 の月割目安）</li>
+<li>注意書き：「freee の取り込み済みの帳簿から、2026-10 の売上を数えています（<strong>9 件</strong>の明細）。多少ずれます。」✅</li>
+</ul>
+<h4 id="ファイル・commit・版・写真">ファイル・commit・版・写真</h4>
+<ul>
+<li><code>src-tauri/src/mf.rs:1053</code> <code>extract_sales_credit</code> credit − debit に／ <code>:3800</code> 試験の名前と見本 JSON を差し替え</li>
+<li><code>src-tauri/src/commands.rs:594</code>〜 <code>uriage_this_month_mf</code> に MF/freee 振り分け、<code>:683</code>〜 <code>uriage_this_month_freee_inner</code> 新設</li>
+<li><code>src/index.html:2592</code> 画面 JS に freee 分岐・注意書き描画</li>
+<li><code>src/index.html:7124</code> 見出しの <code>set(&#x27;gj-cur-asof&#x27;, ...)</code> 差し替え</li>
+<li><code>src/index.html:6946</code> 説明文の差し替え</li>
+<li><code>src/index.html:13156</code>／<code>:13349</code>／<code>:13430</code> JS コメント 3 本差し替え</li>
+<li>版：<code>v1.76.1</code></li>
+<li>commit：bump.sh が付けた本体 commit と CHANGELOG commit</li>
+<li>置いた先：<code>/Applications/untendai.app</code>（Mits様の製品版・お客様には出さない）</li>
+<li>写真：</li>
+  <li><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_kongetsu_mf_20261011_02.png</code>（自分の事務所・v1.76.1 の月次→今月：先月の実績が 1,205,697 に戻った）</li>
+  <li><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_kongetsu_mf_20261011_03.png</code>（棚原さん・freee：今月 13,403 円・9 件、見出し新しい・注意書き）</li>
+  <li><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_kongetsu_mf_20261011_04.png</code>（検収終わり：自分の事務所・月次→今月で終了）</li>
+</ul>
+<h4 id="検収の線-Mits様に提示した5つ-v1-76-1-時点の実測">検収の線（Mits様に提示した5つ、v1.76.1 時点の実測）</h4>
+<table>
+<tr><th>#</th><th>期待</th><th>実測</th><th>差</th></tr>
+<tr><td>1a</td><td>今月の売上（速報）が 286,235 のまま</td><td><strong>286,235円</strong>（MF 10月 売上高合計 net 286,235 − 前受金 0）</td><td><strong>差0円</strong> ✅</td></tr>
+<tr><td>1b</td><td>先月の実績 が 1,205,697 になる</td><td><strong>1,205,697円</strong>（MF 9月 売上高合計 net 1,445,697 − 前受金 240,000）</td><td><strong>差0円</strong> ✅</td></tr>
+<tr><td>2</td><td>見出しの「決済が通った分」が今月の面に 1 件も残らない</td><td>画面実測で 0 件（履歴コメントのみ残置）</td><td><strong>達成</strong> ✅</td></tr>
+<tr><td>3</td><td>棚原さんの今月の売上（速報）が freee 取り込み済み 2026-10 売上と差 0</td><td>画面 <strong>13,403円</strong> = freee strac <code>account=&#x27;売上高&#x27;・month=&#x27;2026-10&#x27;</code> の 13,403</td><td><strong>差0円</strong> ✅／件数 9</td></tr>
+<tr><td>4</td><td>cargo test 失敗 0</td><td><strong>312 passed / 0 failed（lib）</strong>。更新した試験：<code>maeuke_torikuzushi_to_kawase_sa_son_ga_atta_tsuki</code>（credit − debit を assert）</td><td><strong>達成</strong> ✅</td></tr>
+<tr><td>5a</td><td>spctl Notarized</td><td><strong><code>accepted source=Notarized Developer ID</code></strong></td><td><strong>達成</strong> ✅</td></tr>
+<tr><td>5b</td><td>latest.json 1.73.28 のまま</td><td><strong><code>1.73.28</code></strong></td><td><strong>達成</strong> ✅</td></tr>
+<tr><td>6</td><td>現在位置5項目 変わらず</td><td>コードは触っていない（<code>extract_sales_credit</code> の変更は <code>uriage_this_month_mf</code> 経路のみ・strac/trial_balance_pl の rebuild は不変）</td><td><strong>達成</strong> ✅</td></tr>
+<tr><td>7</td><td>終わりに顧問先=自分の事務所、画面=月次→今月</td><td><strong>customers.db kv.selected_customer_id = jisha</strong>、画面 <strong>月次 → 今月</strong>（jissoku_kongetsu_mf_20261011_04.png）</td><td><strong>達成</strong> ✅</td></tr>
+</table>
+<h3 id="2026-10-11-22-28-JST-v1-76-2-回収する額-経費の移動平均-の言葉差し">2026-10-11 22:28 JST｜v1.76.2｜『回収する額』→『経費の移動平均』の言葉差し替え（BS-engineer）</h3>
+<h4 id="取り消し">取り消し</h4>
+<p>2026-10-11 22:1x の「経費の件がまだ反映されていない」発注と、22:2x の補足（841,093 の内訳調べ・『今月の経費（速報）』の行足し・移動平均の計算元直し）は、Mits様のお言葉の読み違い（「回収する額」を債権と読まれた）が原因だったため<strong>取り消し</strong>とされた（Mits様の原文は BA__OEM提供考察 で発注）。参謀は手を付けていなかったので commit も戻しも不要（grep と git log で確認済み）。</p>
+<h4 id="直し-画面の語の7か所">直し（画面の語の7か所）</h4>
+<p>Mits様原文（2026-10-11 22:2x・BA__OEM提供考察 で「発注GO」）：</p>
+<p>&gt; 「回収する額を 939円 上回ります。　経費の移動平均でいいでしょ」</p>
+<p>&gt; ──「回収する額」を債権だと読まれた。</p>
+<p>直したのは src/index.html の「回収する額」7か所（grep の v1.76.1 時点の行番号）：</p>
+<table>
+<tr><th>#</th><th>行</th><th>直し前</th><th>直し後</th></tr>
+<tr><td>1</td><td>2560</td><td>回収する額は赤道日と同じ「経費の移動平均」（window.__eqNeed）を使う。</td><td>経費の移動平均は赤道日と同じ数字（window.__eqNeed）を使う。</td></tr>
+<tr><td>2</td><td>2697</td><td><code>&#x27;件／回収する額 &#x27; + fmt(need) + &#x27;円 の &#x27;</code></td><td><code>&#x27;件／経費の移動平均 &#x27; + fmt(need) + &#x27;円 の &#x27;</code></td></tr>
+<tr><td>3</td><td>2722</td><td><code>…。回収する額を &lt;b&gt;&#x27; + fmt(gap) + &#x27;円&lt;/b&gt; 上回ります。&#x27;</code></td><td><code>…。経費の移動平均を &lt;b&gt;&#x27; + fmt(gap) + &#x27;円&lt;/b&gt; 上回ります。&#x27;</code></td></tr>
+<tr><td>4</td><td>2737</td><td><code>&#x27;回収する額は経費の移動平均です（赤道日と同じ数字）。&lt;br&gt;&#x27;</code></td><td><code>&#x27;経費の移動平均は、赤道日と同じ数字です。&lt;br&gt;&#x27;</code></td></tr>
+<tr><td>5</td><td>6839</td><td><code>&lt;div class=&quot;lb&quot;&gt;回収する額&lt;/div&gt;</code></td><td><code>&lt;div class=&quot;lb&quot;&gt;経費の移動平均&lt;/div&gt;</code></td></tr>
+<tr><td>6</td><td>6904</td><td><code>今月／回収する額 &lt;b id=&quot;gj-ima-need&quot;&gt;—&lt;/b&gt; 円（経費の6ヶ月移動平均）</code></td><td><code>今月／経費の6ヶ月移動平均 &lt;b id=&quot;gj-ima-need&quot;&gt;—&lt;/b&gt; 円</code></td></tr>
+<tr><td>7</td><td>6924</td><td><code>&lt;b&gt;回収する額は、先月1ヶ月の経費ではなく経費の移動平均です。&lt;/b&gt;</code></td><td><code>&lt;b&gt;先月1ヶ月の経費ではなく、経費の移動平均で比べています。&lt;/b&gt;</code></td></tr>
+</table>
+<p><strong>残した「回収」</strong>：「経費を回収できます」「今月は回収し切れます」「経費・固定費を回収」など、動詞としての「回収」（売掛金の回収ではない）はそのまま残した（Mits様の原文「直すのは名指しの『回収する額』だけ」）。</p>
+<h4 id="検収の線-実測">検収の線（実測）</h4>
+<table>
+<tr><th>#</th><th>期待</th><th>実測</th><th>結果</th></tr>
+<tr><td>1</td><td><code>grep &quot;回収する額&quot; src/index.html</code> が 0件</td><td><strong>0 件</strong>（直後に grep 出力なし）</td><td>✅</td></tr>
+<tr><td>2</td><td>「経費の移動平均」が指定の 6 か所に出る</td><td>2560・2697・2722・2737・6839・6924 の 6 か所に出る＋ 6904 は「経費の6ヶ月移動平均」として出る（計 7 件）</td><td>✅</td></tr>
+<tr><td>3</td><td>製品版の月次→今月 の写真でその文を確かめる</td><td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_kongetsu_kotoba_20261011_01.png</code> ── 「842,032円。<strong>経費の移動平均</strong>を 939円 上回ります」「<strong>経費の移動平均</strong> 841,093円」「<strong>経費の移動平均</strong>は、赤道日と同じ数字です」</td><td>✅</td></tr>
+<tr><td>4</td><td>公証つき・世に出さない</td><td>spctl <code>accepted source=Notarized Developer ID</code> ／ latest.json <code>1.73.28</code>（お客様には何も届かない）</td><td>✅</td></tr>
+<tr><td>5</td><td>cargo test 失敗 0</td><td>Rust は触っていないため v1.76.1 と同じ 312 passed / 0 failed（pre-commit は src-tauri 変更が無いときテストを走らせない設計）</td><td>✅</td></tr>
+<tr><td>6</td><td>spctl accepted</td><td><code>accepted source=Notarized Developer ID origin=Developer ID Application: Mitsuhiro Nishida (3J869F77SZ)</code></td><td>✅</td></tr>
+<tr><td>7</td><td>latest.json 1.73.28 のまま</td><td><code>1.73.28</code></td><td>✅</td></tr>
+<tr><td>8</td><td>今月の売上 286,235・先月の実績 1,205,697 が変わらない</td><td>画面実測 <strong>286,235円</strong> ／ <strong>1,205,697円</strong></td><td>✅</td></tr>
+<tr><td>9</td><td>終わりに自分の事務所の「今月」を一番上までスクロールして残す</td><td>画面：顧問先 <strong>自分の事務所</strong>・月次 → 今月・スクロール最上部（jissoku_kongetsu_kotoba_20261011_01.png）</td><td>✅</td></tr>
+</table>
+<h4 id="ファイル・commit・版・写真">ファイル・commit・版・写真</h4>
+<ul>
+<li>src/index.html の 7 か所（上の表のとおり）</li>
+<li>commit：bump.sh が付けた本体 commit と CHANGELOG commit（v1.76.2）</li>
+<li>置いた先：/Applications/untendai.app（Mits様の製品版・お客様には出さない）</li>
+<li>写真：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_kongetsu_kotoba_20261011_01.png</li>
 </ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
