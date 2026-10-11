@@ -13,10 +13,10 @@
     --kyou:#fff8dc;
     /* 文字の大きさ（5段） f1 献立の品／f2 補足／f3 見出し・欄の中の行／f4 値／f5 主役 */
     --f1:12px; --f2:11px; --f3:13px; --f4:17px; --f5:21px;
-    --col:122px; --head:100px;
+    --col:122px; --head:116px;
   }
   @media (max-width:640px){
-    :root{ --f1:11.5px; --f2:10.5px; --f3:12.5px; --f4:16px; --f5:19px; --col:112px; --head:82px; }
+    :root{ --f1:11.5px; --f2:10.5px; --f3:12.5px; --f4:16px; --f5:19px; --col:112px; --head:100px; }
   }
   html,body{ margin:0; padding:0; background:#fff; color:var(--ink);
     font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","Noto Sans JP","Meiryo",sans-serif;
@@ -70,15 +70,14 @@
     border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin:1px 0; }
   td.shushi .big + .r{ border-top:0; }
   /* 2026-10-11 Mits様「項目が毎日繰り返し表示しているけど、横スクロールで1列目が見えているから、そこに組み込んで貰った方がシンプル」：項目名は左の欄にだけ出し、毎日のマスは数字だけ */
-  th.head.hl{ vertical-align:top; padding:5px 6px; text-align:left; }
-  th.head.hl .hlw{ display:flex; gap:4px; align-items:flex-start; }
-  th.head.hl .ttl{ flex:1; font-size:var(--f2); line-height:1.3; }
+  th.head.hl{ vertical-align:top; padding:5px 4px; text-align:left; }
+  th.head.hl .hlw{ display:flex; gap:2px; align-items:flex-start; }
+  th.head.hl .ttl{ flex:1; font-size:var(--f2); line-height:1.3; word-break:keep-all; }
   th.head.hl .ttl span{ font-weight:500; }
   th.head.hl .ls{ flex:0 0 auto; font-size:var(--f3); line-height:1.5; font-weight:500; text-align:right; }
   th.head.hl .ls .r + .r{ border-top:1px dotted var(--line); }
-  th.head.hl .ls .big{ font-size:var(--f5); line-height:1.3; padding:2px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin:1px 0; }
-  th.head.hl .ls .big i{ font-size:var(--f3); font-style:normal; }
-  th.head.hl .ls .big + .r{ border-top:0; }
+  th.head.hl .ls .big{ border-top:1px dotted var(--line); }
+  th.head.hl .ls .big i{ font-style:normal; }
   td.shushi .r > span, td.nensho .r > span{ display:none; }
   td.shushi .r, td.nensho .r{ justify-content:flex-end; }
   .mirai{ color:#a0a0a0; }
@@ -125,7 +124,7 @@
   @media (max-width:640px){ :root{ --fs:12.5px; } }
   .page *, .tsukiawase *{ font-size:var(--fs) !important; font-weight:400 !important; }
   td.shushi .big{ border:0; padding:0; margin:0; text-align:right; line-height:1.5; }
-  td.shushi .big::before{ content:"収支"; float:left; }
+  td.shushi .big::before{ content:""; }
   td.shushi .big + .r{ border-top:1px dotted var(--line); }
   td.shushi .r + .big{ border-top:1px dotted var(--line); }
 </style>
