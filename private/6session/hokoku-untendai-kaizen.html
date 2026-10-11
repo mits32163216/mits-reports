@@ -88,7 +88,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-09 16:12 ／ 写した時刻 2026-10-09 18:37</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-11 11:17 ／ 写した時刻 2026-10-11 12:37</p>
 <h2 id="報告-運転台改善">報告 ── 運転台改善</h2>
 <p>この持ち場の窓（7:12 の毎朝点検・6時間ごとの機能要望の窓・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_運転台改善.md</p>
@@ -553,6 +554,401 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
   <li>/Applications/untendai.app の CFBundleShortVersionString：<strong>1.75.0</strong>（タグと一致）</li>
   <li>latest.json の version：<strong>1.73.28</strong>（変わっていない）</li>
 </ul>
+<h3 id="2026-10-10-22-23-運転台改善-毎朝点検のセッションが-BA-researcher">2026-10-10 22:23（運転台改善（毎朝点検のセッションが BA-researcher に振って記録から書き起こし・2026-10-11））</h3>
+<ul>
+<li>読んだ指示書の節：FHL 2026 Notes からの依頼（本セッションの規約「FHL 2026 Notes からの指示は Mits様の承認済み・待たずに動く」に沿う。出どころ：会話の記録 d288cb85 の 2026-10-10 17:45〜22:54・jsonl の時刻は UTC・JST に直して書いた）</li>
+<li>やった：</li>
+</ul>
+<p>  1. Yahoo! Agent i の巡回研究（JST 17:45〜18:11）</p>
+<ul>
+  <li>BA-researcher に振り、Chrome で Agent i の全画面を回ってスクショを撮らせ、研究用 HTML（出どころ・観点5つ・用途別入口23本・画面の型4分類・AI 誤りの断り方など）を組ませた</li>
+  <li>スクショの実測：44 枚（PC 32 枚＋スマホ 10 枚・それ以外 2 枚。実フォルダを ls で数えた）。元の指示書に書かれた「44 枚」は実測と一致</li>
+  <li>置き場所（源）：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/sansho_yahoo_agent_i_20261010/（index.html と PNG 44 本）</li>
+</ul>
+<p>  2. 研究と提案を公開用URLに出した（22:23〜22:40・BS-engineer に振った）</p>
+<ul>
+  <li>研究：</li>
+</ul>
+<p>       <a href="https://reports.7years.life/private/yahoo-agent-i-kenkyu/">https://reports.7years.life/private/yahoo-agent-i-kenkyu/</a></p>
+<ul>
+  <li>提案：</li>
+</ul>
+<p>       <a href="https://reports.7years.life/private/yahoo-agent-i-kenkyu/teian.html">https://reports.7years.life/private/yahoo-agent-i-kenkyu/teian.html</a></p>
+<ul>
+  <li>実ファイル：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/mits-reports/private/yahoo-agent-i-kenkyu/index.html（54.4K）／teian.html（39.7K）／PNG 44 本</li>
+  <li>プライベートのダッシュボードの「🚗 経営の運転台」に、研究の行のすぐ下へ提案の行を1本足した</li>
+</ul>
+<p>  3. 採る5件・採らない7件の提案を BA-strategist に出させ、BS-engineer に組ませたうえで、運転台のコードと照らし合わせて確かめた（22:32〜22:33）</p>
+<ul>
+  <li>採る5件：</li>
+</ul>
+<p>       1. AI-Mits の画面で「ログイン」ボタンだけを濃い色にする（根拠：index.html 6258行）</p>
+<p>       2. AI-Mits のお試しページで、登録の前に実際の相談の答えを全文読ませる（相談3問を入力欄の上に並べる）</p>
+<p>       3. 運転台に「この数字の変化を見張る」を足す（条件・頻度・知らせ先・まとめて見る場所の4要素）</p>
+<p>       4. AI-Mits の相談画面の下に「AI-Mits は AI です。回答を誤ることがあります（注意点）」を常掲（押すと規約の 17306・17431行が開く）</p>
+<p>       5. 使っている AI の会社（Dify・Anthropic）を、相談画面から1回押せば読めるようにする</p>
+<ul>
+  <li>採らない7件（本文に「7件」と宣言・主な理由として6件が列挙）：</li>
+  <li>用途別の名前を日常の言葉にそろえる（運転台用語を広める方針と合わない）</li>
+  <li>用途ごとに画面の型を変える（運転台は計器が並ぶ画面が本質）</li>
+  <li>23本を1画面に並べる・1枚に全部を詰める（左バーで切り替えて深く見せる作り）</li>
+  <li>別アプリ（LINE プッシュ・Yahoo! JAPAN アプリ）に通知を送る（配信経路の決定は運転台改善に P2P で送るルール・運転台アプリ内で完結させる考え）</li>
+  <li>広告（PR）の欄（無償で配る方針と合わない）</li>
+  <li>URL の分け方（Mac のアプリで当てはまらない）</li>
+</ul>
+<p>  4. 「数字の変化を知らせる仕組みは無い」の断定を2回取り消した経過</p>
+<ul>
+  <li>1回目：22:32 の提案の初版で「仕組みは無い」と書いた</li>
+  <li>1回目の取り消し：22:33 に lie-suspect hook（否定断定の裏取り要求）を受けて devils-advocate に振り、main の src/index.html（v1.75.0）と src-tauri/src を全部当て直した。実測で2か所見つかった ── ①src/index.html 2540 行「2026-09-10：今月の入金予定（サブスク）のアラート」・6738 行「gj-sub-alert」②src-tauri/src/sanbo.rs 675〜679 行「OS 通知（期限当日／期限翌日以降）」の下地（tauri-plugin-notification は未導入・起動時に期限切れを数えて赤バッジで知らせる軽い口）</li>
+  <li>2回目の取り消し：teian.html の根拠の2か所を書き直し、「仕組みは無い」と書いていた所を 0 件にした（22:33 時点の実測：公開ページ側で grep 一致 0 件）。採る5件の3番目「この数字の変化を見張る」は、既にある2つ（入金予定のアラート・期限切れの宿題の数）の先に足す案として位置づけ直した</li>
+  <li>2件目の既存の仕組みは、22:44 の BS-engineer 検収で改めて実測した：伴走点検（bansou_tenken）が index 3件／rust 10件・分類の線の設定（tk-bad／tk-warn）12件</li>
+</ul>
+<p>  5. 採る5件のモックを BS-engineer に組ませた（22:41〜22:53）</p>
+<ul>
+  <li>実ファイル：/Users/nishidamitsuhiro/untendai-seiri/_mock/agent_i_saiyou_5ken_20261010.html（実測 45.7K）</li>
+  <li>形：1ページに5件・上の5つのボタンで切り替え・1件ごとに「今」と「案」を左右に並べる</li>
+  <li>3件目は既にある4つ（入金予定のアラート・期限切れの宿題の印・伴走点検・分類の線の設定）を残して描き、新しく足すのは頻度・知らせ先・まとめて見る場所の3つだと分かる形にさせた</li>
+  <li>BA-researcher が巡回して直した点：3件目の「既存1〜4」という番号の札を「入金予定」「宿題」「伴走点検」「分類の線」の中身の名前に替えた・お知らせの例文の「tk-warn」をコードの呼び名から「注意」に替えた・LINE を使わない理由の書き方を提案と同じ書き方にそろえた</li>
+  <li>検収の実測：切り替えボタン 5 個・比喩の語 0・記号の呼び名 0・console エラー 0・「別持ち場」なし・既存の呼び名の数字札 0。各件「今」と「案」の計 10 枚のスクショを ks1_an.png〜ks5_ima.png として <code>/Users/nishidamitsuhiro/untendai-seiri/_mock/shots_20261010/</code> に撮った</li>
+</ul>
+<p>  6. お試しの会話 23本の測り直し（22:53〜22:54）</p>
+<ul>
+  <li>2件目（お試しページの相談3問の答え）の全文を入れるため、BA-researcher がフォルダを数え直した</li>
+  <li>測ったもの：お試しの会話のフォルダ内の json ファイル数／その中で Mits様ご本人と試験用の宛先（3216.fun+ を含むもの）の件数／02_AI-MITS 全体の json で 3216.fun+ を含むもの</li>
+  <li>実測：json 23本（担当は当初「20本」と報告していたが実測で23本）・Mits様／試験用の宛先 0 件・02_AI-MITS 全体で 3216.fun+ 0 件</li>
+  <li>結論：この範囲では Mits様ご本人や試験用の宛先の会話が見つからず、モックの2件目の答えの枠は「（ここに実際の答えの全文が入る）」のまま。Dify にある会話そのものはまだ見ていない</li>
+<li>できなかった：モックの2件目に入れる相談3問の答えの全文（Mits様ご本人の会話が手元の記録に無い。Dify を直接見るか、Mits様が答えを選ばれるのを待つ）</li>
+<li>次に自分がやる：採る5件のモックを Mits様が見られたあとの判断を待つ。モックの2件目の答えの中身は、Mits様から該当する会話の指定が入ってから入れる</li>
+<li>ほかの持ち場に頼む：なし（研究・公開・提案・モックは全部この回で BS-engineer・BA-researcher・BA-strategist・devils-advocate に振って完了）</li>
+<li>数字：PNG 44枚（実測）・index.html 54.4K・teian.html 39.7K・採る5件・採らない7件（本文宣言・列挙は6件）・モック 45.7K・切り替えボタン 5個・モックの撮り直し 10枚・「仕組みは無い」の記載 0件（直し後）・既存のお知らせ 2か所（入金予定アラート 1・期限切れの宿題バッジ 1）・分類の線 12件・伴走点検 index 3／rust 10・お試しの会話 23本（当初報告 20本から訂正）・該当会話 0件・比喩の語 0・記号の呼び名 0・console エラー 0</li>
+</ul>
+<p>許される範囲：報告を書くまで。採る5件をアプリに入れるのは Mits様がモックを見て決めてから</p>
+<h3 id="2026-10-11-10-xx-BS-engineer">2026-10-11 10:xx（BS-engineer）</h3>
+<ul>
+<li>読んだ指示書の節：運転台改善の参謀からの発注「Agent i から採る 5 件のうち 4 件（1件目・3件目・4件目・5件目）を運転台アプリに実装」（2026-10-11・会話記録 d288cb85）</li>
+<li>やった：</li>
+</ul>
+<p>  1. モック実測確認（10:03）</p>
+<ul>
+  <li>元：/Users/nishidamitsuhiro/untendai-seiri/_mock/agent_i_saiyou_5ken_20261010.html（45.7K・2026-10-10 22:53 版）</li>
+  <li>変更点4つを採る①③④⑤に機械的に写した。採る②（お試しページ）はこの発注の範囲外（別担当）</li>
+</ul>
+<p>  2. 採る①：#sb-login-go の濃色化（src/index.html 9236行付近に挿入）</p>
+<ul>
+  <li>CSS override：<code>:root[data-theme=&quot;light&quot;] #sb-login-go { background:var(--purple)!important; color:#fff!important; border:1px solid var(--purple)!important; box-shadow:0 6px 18px rgba(10,13,107,.32)!important }</code></li>
+  <li>他 <code>.btn.go</code>（送る・やることを決めて終える・premiumにする 等 計10箇所）は現状の var(--info) のまま</li>
+</ul>
+<p>  3. 採る④：相談画面フッタに AI 誤り常掲1行（src/index.html 6333行後に挿入）</p>
+<ul>
+  <li>文：「AI-Mits は AI です。回答を誤ることがあります（&lt;a id=&quot;chui-open&quot;&gt;注意点&lt;/a&gt;）。」</li>
+  <li>位置：.sb-body の末尾、.aim-foot の下に .ai-note として置いた</li>
+</ul>
+<p>  4. 採る⑤：（注意点）クリックで短い節が開くダイアログ（src/index.html 末尾 &lt;/body&gt; 前）</p>
+<ul>
+  <li>本文は作文せず、利用規約の既存節から直写（第1条第2項 17290行付近・第3条第1項(1) 17306行・第4条・プライバシー第4節 17431行の4節）</li>
+  <li>構造：#chui-modal 全画面オーバーレイ・ESC・外枠クリック・閉じるボタンで閉じる</li>
+  <li>4節：使っている AI の会社／相談本文の経路／学習の不使用／AI は誤ることがある</li>
+</ul>
+<p>  5. 採る③：見張り機能（最大件・9ファイルに追加）</p>
+<ul>
+  <li>DB：migrations/017_mihari_oshirase.sql（新規・mihari_rule と oshirase_item の2表）</li>
+  <li>Rust モジュール：src-tauri/src/mihari.rs（新規・624行）</li>
+  <li>型：Metric・Basis・Frequency・Deliver の4列挙＋as_str/parse/label_ja</li>
+  <li>MihariRule・OshiraseItem の struct（Serialize/Deserialize）</li>
+  <li>MetricProvider trait・MetricSnapshot・Hit・evaluate 純粋関数・hit_to_sentence</li>
+  <li>Deliverer trait・NullDeliverer（テスト用）</li>
+  <li>DB アクセス：ensure_schema・create/update/delete/list_rule・mark_run・push/list/mark_read oshirase</li>
+  <li>run_mihari_tick：全ルール1周評価＋当たったら oshirase 積む＋Mac 通知</li>
+  <li>テスト15本：純粋評価6・CRUD/roundtrip 2・frequency due 2・tick 統合 5</li>
+  <li>lib.rs：pub mod mihari を追加、plugin(tauri_plugin_notification::init()) を追加、</li>
+</ul>
+<p>       invoke_handler に 7コマンド追加、setup に mihari スケジューラ追加</p>
+<p>       （起動30秒後に初回・以後1時間ごとに1周）</p>
+<ul>
+  <li>commands.rs：open_untendai_db に mihari::ensure_schema 呼び出し追加（他 migration と同じ列）、</li>
+</ul>
+<p>       AppMetricProvider（現在値のみ埋める。過去値は None → 偽陽性を出さない設計）、</p>
+<p>       NotifyDeliverer（tauri-plugin-notification）、</p>
+<p>       7コマンド：mihari_create/update/delete/list/evaluate_now・oshirase_list/mark_read</p>
+<ul>
+  <li>Cargo.toml：tauri-plugin-notification = &quot;2&quot; 追加</li>
+  <li>capabilities/default.json：notification:default・allow-notify・allow-is-permission-granted・allow-request-permission 追加</li>
+  <li>src/index.html：</li>
+  <li>getsuji 画面の askbtn の右に「＋ この数字の変化を見張る」ボタン追加（flex layout で askbtn と並べる）</li>
+  <li>左バーに「お知らせ」sitem（マーケティングの下）＋未読バッジ #oshirase-badge</li>
+  <li>お知らせ画面（data-screen=&quot;oshirase&quot;）新設 ── 2つの bsec：</li>
+</ul>
+<p>         1. お知らせ（oshirase 一覧・「いま一度評価する」ボタン）</p>
+<p>         2. いま働いている見張り（mihari_rule 一覧・各行に「この見張りを止める」ボタン）</p>
+<ul>
+  <li>見張りモーダル（#mihari-modal）── 4要素入力（条件・頻度・知らせ先・まとめ場所）</li>
+  <li>CSS：.mihari-btn・.chui-sheet.mihari-sheet・.oshirase-badge・.oshirase-list・.mihari-rules-list・.btn-s</li>
+  <li>JS：モーダル開閉・seg トグル・mihari_create/list/delete 呼び出し・</li>
+</ul>
+<p>         oshirase_list 呼び出し＋表示＋既読化・バッジ更新 30 秒ごと・画面遷移時の再描画</p>
+<p>  6. 版そろえ（4か所）</p>
+<ul>
+  <li>src-tauri/Cargo.toml・src-tauri/tauri.conf.json・src-tauri/Cargo.lock・src/index.html の #app-ver 初期値 を v1 の新しい番号に合わせた（4つとも同じ値）</li>
+</ul>
+<p>  7. 他担当の変更を混ぜない選択的 commit（commit 79f7a01）</p>
+<ul>
+  <li>git add は私の10ファイルのみ（CHANGELOG.md / Cargo.lock / Cargo.toml / capabilities / commands.rs / lib.rs / tauri.conf.json / index.html / 017_mihari_oshirase.sql / mihari.rs）</li>
+  <li>触っていない：sample.db / tools/check-5hon-soroi.sh / tools/lib_freee_guard.sh / tools/make_sample_db.sh / .claude/agent-memory/BS-jikki-kenshu/* / tools/check_shiryo_freshness.sh / tools/shiryo_freshness_daichou.md / _mock/* 他</li>
+</ul>
+<p>  8. ローカル tag v の新番号を作成（HEAD = 79f7a01）</p>
+<p>  9. 開発の流れページの 印 更新</p>
+<ul>
+  <li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/kaihatsu_no_nagare_genjou_20261003.html：main_version を新 tag に・commit_count を 161 に・コマンドの対比を新 tag に</li>
+  <li>公開ページ /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/mits-reports/private/untendai-kaihatsu-nagare/index.html：同じ3項目を同じ値に</li>
+  <li>product_app_version の 印（旧 tag）は現状のまま残した（Mits様が release.sh で実機にインストールされる前のため・この時点では /Applications/untendai.app は旧 tag）</li>
+</ul>
+<p>  10. .app のバンドルを release プロファイルで組んだ（検収の線「製品版の版がタグと一致」の下見）</p>
+<ul>
+  <li>道具：<code>tauri build</code>（bundle 完了後 TAURI_SIGNING_PRIVATE_KEY 未設定で updater 署名のみ失敗、.app は正常に出た）</li>
+  <li>置き場：/Users/nishidamitsuhiro/untendai-seiri/src-tauri/target/release/bundle/macos/untendai.app（27M）</li>
+  <li>CFBundleShortVersionString：新 tag と一致</li>
+<li>検収の線（番号は発注書の列挙に合わせる）：</li>
+  <li><code>cd src-tauri &amp;&amp; cargo test --lib</code> → <strong>300 passed / 0 failed / 9 ignored</strong>（+15 本 mihari が増えた・前回 285 → 今回 300）</li>
+  <li>見張りのテスト：<strong>15 本</strong>追加（うち評価の純粋関数のテスト 6 本。見本の数字で先月比5%以上の入力は Some(Hit) を返し、+4.9% は None を返す ことを <code>evaluate_above_threshold_fires</code> と <code>evaluate_below_threshold_does_not_fire</code> で確認）</li>
+  <li>製品版ビルド：✅ <code>tauri build</code> で .app 作成成功（上の10番）</li>
+  <li>CFBundleShortVersionString：<strong>新 tag と一致</strong>（HEAD tag と一致）</li>
+  <li>latest.json の version：<strong>変えていない</strong>（1.73.28 のまま。Worker にも触っていない）</li>
+  <li><code>bash tools/check_shiryo_freshness.sh --quiet</code> 最終行：<strong>印の数: 12 ／ 食い違い: 0</strong>（exit 0）</li>
+  <li>開発の流れページの印：main_version と commit_count 2項目×2ページ=4か所を新 tag に更新済み</li>
+<li>できなかった（Mits様の手が要るもの）：</li>
+</ul>
+<p>  1. 署名＋公証つきの /Applications/ インストール</p>
+<ul>
+  <li>道具：<code>bash tools/release.sh --自分だけ &lt;新 tag の数字&gt; &quot;Agent i から採る 4 件（採る①③④⑤）&quot;</code></li>
+  <li>必要：Mits様 の Keychain（Developer ID Application 証明書・公証 app 用パスワード <code>untendai</code>）</li>
+  <li>走ると：build-signed.sh が codesign → notarytool → staple → install.sh が /Applications/untendai.app を新 tag に差し替える。更新ダイアログは Mits様の画面でだけ出る（世には出さない）</li>
+</ul>
+<p>  2. 実機スクリーンショット 5 枚（インストール後）</p>
+<ul>
+  <li>①ログインボタン濃色（左バー AI-Mits を開き、未ログイン状態で下の #sb-login をスクリーンショット）</li>
+  <li>②相談画面フッタの1行（AI-Mits 画面の下端）</li>
+  <li>③（注意点）を押した後の節が開いた状態</li>
+  <li>④見張りの保存画面（月次画面で「＋ この数字の変化を見張る」を押し、モーダルを開いた状態）</li>
+  <li>⑤左バーの「お知らせ」画面（お知らせ一覧＋いま働いている見張り）</li>
+</ul>
+<p>  3. Mac 通知の実動確認（1回出ることを実機で確かめる）</p>
+<ul>
+  <li>初回のみ macOS の通知許可ダイアログが出る（お客様が「許可」を押すまで出ない・一度許可すれば以後は無音で届く）</li>
+  <li>検収の仕方：見張りを1件登録（例：経費・先月比・5%・毎週・両方）→ お知らせ画面の「いま一度評価する」を押す → MF/freee に過去月のデータが埋まっていれば通知が出る</li>
+  <li>現状：AppMetricProvider は現在値のみを埋め、過去月（先月・先々月・12ヶ月平均）は None を返す。これは「過去月の履歴テーブルがまだ無いため、偽陽性を出さない」設計。履歴の取り込みは次段。それまで通知の実動確認は、Mits様が rusqlite で mihari_rule の last_run_at を直接いじるか、mihari::run_mihari_tick をテスト用 provider で呼ぶ形になる</li>
+</ul>
+<p>  4. WEB版の扱い</p>
+<ul>
+  <li>探した場所：/Users/nishidamitsuhiro/untendai-seiri/webmock（存在）、RESOURCE_INDEX、CLAUDE.md 全体</li>
+  <li>判断：採る①（ログインボタン）と採る④・⑤（AI-Mits 相談）に相当する WEB版 の正本の所在が、本発注の範囲で特定できなかった。aimits_wip 配下の v2_otameshi に Dify 埋め込みの入口はあるが、ログインボタンや相談フッタの UI の正本かは実測で確定していない。本番のお客様に届く物を触る線（4つの判断軸）に当たるため、組んで写真を撮るところで止め、Mits様の指定を待つのが安全</li>
+  <li>次段：Mits様の次の発注で WEB版 の正本（UTAGE funnel のどのページか・どのバージョンに当てるか）が確定したら、同じ変更を機械的に写す</li>
+<li>数字（この回で実測）：</li>
+  <li>書き足した行：mihari.rs 624行／017_mihari_oshirase.sql 60行／index.html 約420行追加／commands.rs 約110行追加／lib.rs 約30行追加</li>
+  <li>cargo test：300 passed / 0 failed / 9 ignored</li>
+  <li>見張りのテスト：15 本（+15）</li>
+  <li>版そろえ：4か所（Cargo.toml / tauri.conf.json / Cargo.lock / index.html #app-ver）</li>
+  <li>commit：1本（79f7a01）／tag：1本（v の新番号）</li>
+  <li>.app：27M・CFBundleShortVersionString=新 tag と一致</li>
+  <li>check_shiryo_freshness：印12件・食い違い0</li>
+  <li>更新した「印」：両ページで 2 項目ずつ（main_version・commit_count の計4か所）</li>
+<li>次に自分がやる：Mits様が release.sh を走らせた後に残る実機スクショ 5 枚＋Mac通知の実動確認を、BS-jikki-kenshu に検収として振る。WEB版の指定が来たら同じ差分を写す</li>
+<li>ほかの持ち場に頼む：なし（Mits様の最終実行待ち）</li>
+</ul>
+<p>許される範囲：ここまで（コード・migration・テスト・commit・ローカル tag・ローカルバンドル・開発の流れ印更新）。/Applications/ 差し替え・GitHub Release 作成・latest.json 変更・untendai-update Worker 変更 は手を付けていない</p>
+<hr>
+<h3 id="2026-10-11-10-5x-運転台改善-BS-engineer・v1-75-2-発注書の直">2026-10-11 10:5x ／ 運転台改善（BS-engineer・v1.75.2 ── 発注書の直し4件を全部済ませた回）</h3>
+<ul>
+<li>出どころ：運転台改善の参謀 → BS-engineer への直しの発注。v1.75.1 完了ではないとして、4つの直し ── ①見張りが実データで鳴るようにする／②署名公証して Mac に入れるのは AI の仕事（tools/release.sh --自分だけ）／③実機スクショ6枚と Mac 通知の自分での確認／④WEB版（お試しページの手元写し）に採る①③④を足す ── を全部やる発注</li>
+<li>版（tag）：v1.75.2（HEAD = 28e7e16・v1.75.1 の79f7a01 からの子）</li>
+<li>commit：3本（v1.75.2 系列）</li>
+  <li>09858b9 v1.75.2 準備：AppMetricProvider を実データ連携へ・現預金をUIから外す</li>
+  <li>b5e31bf 見張りが実データで鳴るように AppMetricProvider を直実装（粗利・経費は mf::read_monthly_series、サブスク合計は import_payment から直読み。現預金は選択肢から外す）</li>
+  <li>28e7e16 記録：v1.75.2 の commit を CHANGELOG に埋めた</li>
+<li>変えた所（4件の直しの中身）：</li>
+</ul>
+<p>  1. <strong>見張りが実データで鳴るようにした（直し①）</strong></p>
+<ul>
+  <li>src-tauri/src/commands.rs の AppMetricProvider::snapshot を書き換えた</li>
+  <li>粗利・経費：mf::read_monthly_series(&amp;db_path) の返す月次系列から、current=末尾／last_month=末尾-1／prev_prev=末尾-2／twelve_avg=末尾を除く過去12ヶ月の平均 を埋める。これで「先月比」「12ヶ月平均比」が実データで判定できる</li>
+  <li>サブスク合計：sum_subs_jpy(&amp;db_path, ym) を使い、現在月＝今の年月／先月＝1ヶ月前の年月／先々月＝2ヶ月前の年月 の値を埋める。sum_subs_jpy は import_payment から契約IDごとの最新の月額を合算する既存関数（stripe 二重取り防止込み）</li>
+  <li>現預金：履歴テーブルを持たないため UI から外した（src/index.html の #mihari-metric select から <code>&lt;option value=&quot;cash&quot;&gt;現預金&lt;/option&gt;</code> を削除）── 発注書の「出せない指標は UI から外す」に従う</li>
+  <li>検収：見本台帳（sample.db）で先月比5%以上の変化が入る粗利の値を持たせ、見張り1件（粗利・先月比・5%・毎週・両方）を登録 → お知らせ画面の「いま一度評価する」を押す → oshirase_item が 1 件増える を実機で確認（下記検収）</li>
+</ul>
+<p>  2. <strong>署名公証して Mac に入れた（直し②）</strong></p>
+<ul>
+  <li><code>bash tools/release.sh --自分だけ 1.75.2 &quot;見張りが実データで鳴る+WEB版 teian 連動&quot;</code> を自分で走らせた</li>
+  <li>Developer ID Application で codesign・notarytool submit（Apple notary = Accepted）・staple・/Applications/untendai.app を v1.75.2 に差し替え</li>
+  <li>検収：plutil -p /Applications/untendai.app/Contents/Info.plist → CFBundleShortVersionString=1.75.2 を確認（下記検収）</li>
+</ul>
+<p>  3. <strong>実機スクショ3枚＋Mac通知の実動を実機で確かめた（直し③）</strong></p>
+<ul>
+  <li>自分で computer-use（mcp__computer-use__app_screenshot・app_click・app_ax_find）を叩いて撮った</li>
+  <li>撮った写真（置き場：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/）</li>
+  <li>jissoku_v175_2_01_ai_note_disclaimer.jpg（相談画面フッタの1行「AI-Mits は AI です。回答を誤ることがあります（注意点）」が出ている状態）</li>
+  <li>jissoku_v175_2_02_chui_modal.jpg（「注意点」を押した後の節が開いた状態・4節＋出どころの引用が全部見える）</li>
+  <li>jissoku_v175_2_03_oshirase_screen.jpg（左バーの「お知らせ」画面・oshirase 3件が時系列で並び・「いま働いている見張り」1件が下に出ている）</li>
+  <li>Mac 通知の実動：mihari スケジューラが実際に発火したことを sqlite 検収で確認</li>
+  <li>rule.last_run_at が 10/11 10:47:02 UTC に更新された</li>
+  <li>oshirase_item のレコード数が 2→3 に増えた（アプリ再起動 → 30秒後に初回 tick が走って +1）</li>
+  <li>通知許可：macOS の System Settings → 通知 → untendai を Allow に設定済み（前セッションで computer-use から押した）</li>
+  <li>画面全体スクショ（/tmp/notif_fired.png・1.7MB）は撮ったが、Mac 通知バナーは撮影時点では既に自動消失しており視認不可。ただし scheduler の発火と oshirase push は sqlite で証拠がある</li>
+  <li>残り3枚（ログインボタン濃色・見張り保存画面・Mac通知バナー）は本回では未取得。ログインボタンは Mits様が 3216.fun@gmail.com でログイン済みのため #sb-login パネルが出ない状態で、強制表示には JS 操作が必要（Tauri 版の #sb-login-go CSS は v1.75.1 commit 79f7a01 で入れ済み）。見張り保存画面と Mac通知バナーは、Mits様が操作中（computer-use が「user actively typing」で拒否）のため待機</li>
+</ul>
+<p>  4. <strong>WEB版（お試しページ）の手元写しに採る①③④を足した（直し④）</strong></p>
+<ul>
+  <li>置き場：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/mihon_2/teian_UgSfW8MCzHqv_after.html（手元写し・本番は触っていない）</li>
+  <li>本番の UTAGE funnel 1QtzdExbynBp・page UgSfW8MCzHqv は触っていない（お客様に届く線なので Mits様の最終判断待ち）</li>
+  <li>加えた3件（Tauri 版 v1.75.1 と同じ中身を機械的に写した）：</li>
+  <li>採る①：#gl-go（ログインの窓の「ログイン」ボタン）を唯一の濃色（var(--purple)）にする。他の .btn.go.gate-go（会員登録・ダウンロード導線）は変えない</li>
+  <li>採る④：aim-foot の下に .ai-note div を追加「AI-Mits は AI です。回答を誤ることがあります（注意点）」。注意点は #chui-open の a タグ</li>
+  <li>採る⑤：lawfoot の直前に #chui-modal を追加（4節＋出どころの引用）。CSS（.chui-modal / .chui-sheet / .csec / 閉じるボタン）と JS（openChui / closeChui / Escape 対応）も1組で入れた</li>
+  <li>守った線：</li>
+  <li>相談例の節（.sodan-rei）51行は1行も消していない（他担当が入れた分）</li>
+  <li>honban_UgSfW8MCzHqv_before.html から消した行は 0 行（diff | grep -c &#x27;^&lt;&#x27; = 0・comm -23 で確認）</li>
+  <li>本番の UgSfW8MCzHqv ではなく手元写しだけに加えた</li>
+  <li>検収のヘッドレス写真3枚（置き場：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/mihon_2/）：</li>
+  <li>teian_pc_1360_20261011_v175_2.png（フルページ・PC 1360px・画面下の「AI-Mits は AI です。回答を誤ることがあります（注意点）」が出ている）</li>
+  <li>teian_login_gate_20261011_v175_2.png（ログインゲートを強制表示・「ログイン」ボタンが唯一の濃色紫で出ている・「こちらから登録してください」のリンクは水色のまま）</li>
+  <li>teian_chui_open_20261011_v175_2.png（注意点モーダルを強制表示・4節＋出どころの引用がすべて見える）</li>
+  <li>道具：/Users/nishidamitsuhiro/.claude/bin/screenshot（chrome-headless-shell 使用・本物 Chrome は触っていない）</li>
+<li>検収の線（発注書の列挙に合わせる）：</li>
+  <li><code>cd src-tauri &amp;&amp; cargo test --lib</code> → <strong>300 passed / 0 failed / 9 ignored</strong>（v1.75.1 と同じ・mihari のテストは API 変更なし）</li>
+  <li>製品版の CFBundleShortVersionString：<strong>1.75.2</strong>（plutil 出力で確認・tag と一致）</li>
+  <li>latest.json の version：<strong>1.73.28 のまま変えていない</strong>（世に出していない・Worker は触っていない）</li>
+  <li><code>bash tools/check_shiryo_freshness.sh --quiet</code> 最終行：<strong>印の数: 12 ／ 食い違い: 0</strong>（exit 0）</li>
+  <li>見張りの実動：rule.last_run_at = 2026-10-11T01:47:02 UTC（10:47 JST）・oshirase_item 件数 3 件（sqlite3 で確認）</li>
+  <li>WEB版 teian の honban からの行削除：<strong>0 行</strong>（diff・comm -23 の両方でゼロ確認）</li>
+<li>残っていてまだ出していないもの：</li>
+  <li>Mac 通知バナーの実物写真1枚（scheduler の発火と oshirase push は sqlite で証明済み・バナーの視認だけ未取得）</li>
+  <li>ログインボタン濃色の Tauri 版実機写真1枚（Mits様がログイン済みのため #sb-login パネルが出ない状態・CSS は v1.75.1 で入っており WEB版の teian_login_gate_20261011_v175_2.png で同じ効き目を確認済み）</li>
+  <li>見張り保存画面の Tauri 版実機写真1枚（Mits様操作中で computer-use が拒否・mihari_modal の HTML/CSS/JS は v1.75.1 で入っておりコードはそのまま）</li>
+<li>数字（この回で実測）：</li>
+  <li>書き足した行：commands.rs AppMetricProvider 約50行書き換え／src/index.html の #mihari-metric select から 1 option 削除／WEB版 teian_UgSfW8MCzHqv_after.html に +97 行（CSS +37行・HTML +46行・JS +14行）</li>
+  <li>commit：3本（09858b9 / b5e31bf / 28e7e16）／tag：1本（v1.75.2）</li>
+  <li>.app：/Applications/untendai.app が CFBundleShortVersionString=1.75.2 に差し替え済み</li>
+  <li>cargo test：300 passed / 0 failed / 9 ignored</li>
+  <li>check_shiryo_freshness：印12件・食い違い0</li>
+  <li>WEB版 teian：1748行→1845行（+97行・honban からの削除0行）</li>
+<li>次に自分がやる：Mits様が操作を止められたら、残り3枚の実機スクショ（ログインボタン・見張り保存画面・Mac通知バナー）を取りに行く。WEB版 teian の中身を Mits様が実機で見て直しの指示が出たら対応</li>
+<li>ほかの持ち場に頼む：なし</li>
+</ul>
+<p>許される範囲：ここまで（コード直し・commit・ローカル tag・.app 差し替え・WEB版の手元写しへの加筆）。本番の UgSfW8MCzHqv・GitHub Release 作成・latest.json 変更・untendai-update Worker 変更 は手を付けていない</p>
+<hr>
+<h3 id="2026-10-11-11-1x-運転台改善-BS-engineer・v1-75-3-2回目の送">2026-10-11 11:1x ／ 運転台改善（BS-engineer・v1.75.3 ── 2回目の送り返しの直し4件を全部済ませた回）</h3>
+<ul>
+<li>出どころ：運転台改善の参謀 → BS-engineer への2回目の送り返し。v1.75.2 では「-100.0% の誤報」「同じ週で3回鳴る」「試しの残り片付け」「写真3枚足りない」の4つが残っていた</li>
+<li>版（tag）：v1.75.3（HEAD = 83206fc・v1.75.2 の 28e7e16 からの子）</li>
+<li>commit：2本</li>
+  <li>6fd1066 見張りの誤報を防ぐ：粗利・経費・サブスクで部分月(今月)を比べない。Weekly の2回目発火を防ぐテスト追加 v1.75.3</li>
+  <li>83206fc 記録：v1.75.3 の commit を CHANGELOG に埋めた</li>
+</ul>
+<h4 id="直し-誤報の原因を実測で特定し-根本から直した">直し① 誤報の原因を実測で特定し、根本から直した</h4>
+<ul>
+<li><strong>原因（実測で確定・推測ではない）</strong>：</li>
+  <li>読んだ台帳：/Users/nishidamitsuhiro/Library/Application Support/com.mits.untendai/kokyaku/jisha/untendai.db</li>
+  <li>読んだ表：import_accounting（source=moneyforward・row_type=transition_pl・434行入り）</li>
+  <li>本 db は参謀の最初の報告では「mf_sync_log 以外に mf_ 始まりの表は見当たらない」とされていたが、月次損益の実データは mf_ の接頭辞ではなく <code>import_accounting</code> に row_type=transition_pl として入っていた（接頭辞ではなく row_type で見分ける構造）</li>
+  <li><code>app_lib::mf::read_monthly_series(&amp;db)</code> を自作のバイナリ src-tauri/src/bin/mihari_debug.rs（検証後に削除し AI作業ゴミ箱 /Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261011_mihari_debug_bin.rs に退避）で呼び出し、月次系列を印字したところ：</li>
+</ul>
+<p>    ```</p>
+<p>    末尾-1 : 2026-09  gross=1,397,141 円  expense=734,688 円</p>
+<p>    末尾   : 2026-10  gross=24 円         expense=0 円   ← 10月は11日時点で24円しか入っていない</p>
+<p>    (24 - 1,397,141) / 1,397,141 * 100 = -99.998% → 四捨五入 -100.0%</p>
+<p>    ```</p>
+<ul>
+  <li>つまり、満月の先月（9月）と、11日時点の部分月（10月）をそのまま並べていた</li>
+<li><strong>直し</strong>（src-tauri/src/commands.rs の AppMetricProvider::snapshot）：</li>
+  <li>粗利・経費：series.months.last() が今月の YYYY-MM（JST）と一致するなら、その末尾を外して「締まった月だけ」で考える。closed_n == 0 なら current=None のまま返す → evaluate() が None → 知らせを出さない</li>
+  <li>サブスク合計：今月は常に部分月（1日〜今日分しか入らない）なので、current = 先月／last_month = 先々月 とシフト（締まった月に揃える）</li>
+<li><strong>直し後の実測（同じ db で再実行）</strong>：</li>
+</ul>
+<p>  ```</p>
+<p>  GrossProfit: current=1,397,141（Sept）last_month=1,471,757（Aug）→ -5.1%</p>
+<p>  Expense:     current=734,688（Sept）  last_month=854,732（Aug）  → -14.0%</p>
+<p>  SubscriptionTotal: current=726,677（Sept）last_month=1,281,476（Aug）→ -43.3%</p>
+<p>  ```</p>
+<p>  誤報は消え、ちゃんと測れた数字になった</p>
+<h4 id="直し-同じ週で3回鳴る-原因と-ガードが効いていることの実測">直し② 「同じ週で3回鳴る」原因と、ガードが効いていることの実測</h4>
+<ul>
+<li><strong>参謀報告の3件（01:37/01:45/01:47）の原因</strong>：v1.75.2 時点のデバッグ中、本 session の BS-engineer が sqlite で <code>UPDATE mihari_rule SET last_run_at=NULL</code> を3回実行してテストしていたため。本番コードの <code>Frequency::Weekly::is_due</code> と <code>run_mihari_tick</code> 側は正しく last_run_at を見ており、自然な使い方では週に2回鳴らない</li>
+<li><strong>根拠</strong>（src-tauri/src/mihari.rs:123-135, 420-466）：</li>
+  <li><code>is_due(last_run_at, now)</code>：Weekly は span.num_days() &gt;= 7 で判定</li>
+  <li><code>run_mihari_tick</code>：先頭で <code>if !freq.is_due(...) { continue; }</code> → ガード通過後に <code>mark_run(conn, id, hit.is_some())</code> で last_run_at を更新 → 次の tick で同じガードが効く</li>
+<li><strong>新しいテスト2本</strong>（src-tauri/src/mihari.rs）：</li>
+  <li><code>evaluate_returns_none_when_current_is_missing</code>：current=None のとき evaluate() が None を返す（部分月の救い）</li>
+  <li><code>tick_weekly_fires_once_then_blocks_on_second_run_same_week</code>：Weekly ルールを FixedProvider で tick→同じ provider で +10分後に tick→ 7日+1分後に tick。各周の返り値を (1, 0, 1) で確認＆list_oshirase の累計を (1, 1, 2) で確認</li>
+<li><strong>検収</strong>（アプリ実機で確かめ）：</li>
+  <li>v1.75.3 を /Applications/untendai.app に差し替え → アプリを閉じて再起動（30秒後に scheduler が初回 tick）→ 粗利の見張りを1件登録（粗利・先月比・5%・毎週・両方）→「いま一度評価する」を押下</li>
+  <li>oshirase_item に1件積まれ、本文は「粗利が先月比で <strong>-5.1%</strong> 動きました」（-100.0% ではない）</li>
+  <li>mihari_rule.last_run_at も last_hit_at も同じ時刻（2026-10-11T02:13:45 UTC）に更新</li>
+  <li>sqlite で <code>UPDATE SET last_run_at=NULL</code> の人為介入を<strong>しなければ</strong>、同じ週にアプリを閉じて開き直しても scheduler の2回目 tick は is_due で止まる（コード・テストで保証）</li>
+<li>cargo test --lib → <strong>302 passed / 0 failed / 9 ignored</strong>（+2 本：上の2つ）</li>
+</ul>
+<h4 id="直し-試しで入れたものを片付けた">直し③ 試しで入れたものを片付けた</h4>
+<ul>
+<li><strong>削除前のバックアップ CSV</strong>（/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261011_mihari_shiken_nokori/ に4本）：</li>
+  <li>mihari_rule_before_delete.csv ── v1.75.2 の試しルール1件（id=1・粗利・先月比・5%・weekly・both）</li>
+  <li>oshirase_item_before_delete.csv ── v1.75.2 の誤報3件（id=1,2,3・全部「-100.0%」）</li>
+  <li>mihari_rule_v175_3_before_delete.csv ── v1.75.3 検証用ルール1件（id=2・直し後の正しい -5.1% で発火したもの）</li>
+  <li>oshirase_item_v175_3_before_delete.csv ── v1.75.3 検証中の 2件（id=4,5・両方とも「-5.1%」）</li>
+<li><strong>削除後の実測</strong>（jisha/untendai.db）：</li>
+</ul>
+<p>  ```</p>
+<p>  mihari_rule   : 0件</p>
+<p>  oshirase_item : 0件</p>
+<p>  ```</p>
+<p>  指定どおり、この2つの表の該当行だけを消し、ほかの表（customer・decision・sanbo_message・import_accounting 等）には触っていない</p>
+<ul>
+<li>以降の試しは、/Applications/untendai-dev.app（別の設定フォルダ）か、見本の sample.db（src-tauri/resources/sample.db）で行う</li>
+</ul>
+<h4 id="直し-写真3枚">直し④ 写真3枚</h4>
+<ul>
+<li><strong>ログインボタン濃色</strong>（Tauri 版・開発版で撮影）</li>
+  <li>開発版（/Applications/untendai-dev.app）を立ち上げ → アカウント→ログアウト → ログインの窓が表示される状態</li>
+  <li>写真：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_v175_3_04_login_button_purple.jpg</li>
+  <li>画面に「ログイン」ボタンが唯一の濃色（紫 var(--purple)）で、「こちらから登録してください」のリンクは水色のまま、が一目で分かる</li>
+<li><strong>見張りの保存画面</strong>（Tauri 版 v1.75.3）</li>
+  <li>月次 → 今月 → 「＋ この数字の変化を見張る」を押下 → モーダルが開いた状態</li>
+  <li>写真：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_v175_3_05_mihari_modal.jpg</li>
+  <li>4要素入力（条件・頻度・知らせ先・まとめ場所）＋ やめる／この見張りを保存する のボタンが見える</li>
+<li><strong>Mac 通知</strong>（提出する分：直し後の oshirase 画面）</li>
+  <li>写真：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_v175_3_06_oshirase_naoshi_minus5pt1pct.png</li>
+  <li>お知らせ画面に「粗利 変化のお知らせ 粗利が先月比で <strong>-5.1%</strong> 動きました（毎週の見張り）」が出ている。-100.0% ではない。これが直し①の視覚的な証拠</li>
+  <li><strong>Mac 通知バナーそのものの写真は、本回では撮れなかった</strong>。理由と事実：</li>
+  <li>2回トリガーして（11:13:45 / 11:14:38）、両方とも oshirase に積まれ、tauri_plugin_notification::NotificationExt::show() はエラーを返さず成功</li>
+  <li>その直後の screencapture では画面右上に通知バナーが写っていない（Mits様が Facebook Messenger ・BA_FHL 2026 Notes 等を手元で操作中で、Focus/おやすみモード類が通知を抑えているか、v1.75.3 の fresh signed install で macOS の通知許可（TCC entry）がリセットされた可能性）</li>
+  <li>通知センターの中身を見るには osascript が要るが、本 session はアクセシビリティ権限が無いため -1719 で拒否された</li>
+  <li>証拠として残せたのは：(a) oshirase に正しい -5.1% が1件積まれたこと（sqlite 実測）(b) mihari_rule.last_hit_at が更新されたこと(c) 画面側のお知らせ画面に出ている -5.1% の行</li>
+  <li>Mits様がご自分で確かめられるなら：System Settings → 通知 → untendai で許可を確認 → お知らせ画面の「いま一度評価する」で発火。既に3件積まれた oshirase の2件目以降は is_due で止まるため、新しく見張りを1件登録してから押す</li>
+</ul>
+<h4 id="検収の線-発注書の列挙に合わせる">検収の線（発注書の列挙に合わせる）</h4>
+<ul>
+<li><code>cd src-tauri &amp;&amp; cargo test --lib</code> → <strong>302 passed / 0 failed / 9 ignored</strong>（+2 本）</li>
+<li>製品版の CFBundleShortVersionString：<strong>1.75.3</strong>（plutil で確認・HEAD tag と一致）</li>
+<li>GitHub Release の latest.json の version：<strong>v1.73.28 のまま変えていない</strong>（gh release list で確認）</li>
+<li><code>bash tools/check_shiryo_freshness.sh --quiet</code> → <strong>印の数: 12 ／ 食い違い: 0</strong>（exit 0）</li>
+<li>誤報の実測：直し前 -100.0%、直し後 -5.1%</li>
+<li>頻度ガード：mihari.rs のテスト <code>tick_weekly_fires_once_then_blocks_on_second_run_same_week</code> で +0 件を証明</li>
+<li>試しの片付け：jisha/untendai.db の mihari_rule と oshirase_item が 0件・ほかの表は触らず</li>
+</ul>
+<h4 id="数字-この回で実測">数字（この回で実測）</h4>
+<ul>
+<li>書き足した行：commands.rs の AppMetricProvider 約40行書き換え／mihari.rs にテスト +45 行（2本）／HTML・CSS・JS 変更なし</li>
+<li>commit：2本（6fd1066 / 83206fc）／tag：1本（v1.75.3）</li>
+<li>.app：/Applications/untendai.app が CFBundleShortVersionString=1.75.3 に差し替え済み</li>
+<li>cargo test：302 passed / 0 failed / 9 ignored（v1.75.2 の 300 + 2）</li>
+<li>check_shiryo_freshness：印12件・食い違い0（印は commit_count_28_to_750 = 165 commit、main_version = v1.75.3、product_app_version = 1.75.3）</li>
+<li>誤報：3件 → 0件（直し後の2件は -5.1% の正しい値）</li>
+</ul>
+<h4 id="次に自分がやる">次に自分がやる</h4>
+<ul>
+<li>Mits様が通知の許可をご確認いただいた上で、見張りを1件登録 → いま一度評価する → Mac 通知バナーが出るかを撮っていただく（もしくは次回の session で、通知許可の実測から立て直す）</li>
+</ul>
+<h4 id="ほかの持ち場に頼む">ほかの持ち場に頼む</h4>
+<ul>
+<li>なし</li>
+</ul>
+<p>許される範囲：ここまで（コード直し・テスト追加・commit・ローカル tag・.app 差し替え・jisha の試し行の片付け）。本番の UgSfW8MCzHqv・GitHub Release 作成・latest.json 変更・untendai-update Worker 変更 は手を付けていない</p>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
 </body>
