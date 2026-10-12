@@ -56,6 +56,7 @@
   td.taiju-start .sa{ display:block; font-size:var(--f2); margin-top:2px; }
   .good{ color:var(--green) !important; } .warn{ color:var(--red) !important; }
   td.hosu-v .v{ display:block; line-height:1.2; }
+  td.hosu-v .sub{ display:block; font-size:var(--f2); color:var(--ink); }
   td.hosu-v .bar{ display:block; height:6px; margin:5px 4px 0; background:var(--line-thin); border-radius:3px; overflow:hidden; }
   td.hosu-v .bar i{ display:block; height:100%; background:#e0a23a; }
   td.hosu-v .bar i.ok{ background:var(--green); }
@@ -251,7 +252,21 @@
       <td class="jikan">：</td>
     </tr>
     <tr class="hosu">
-      <th class="head">歩　数<span>目標<br>8,000歩</span></th>
+      <th class="head">歩　く<span>歩数<br>目標 8,000歩</span></th>
+      <td class="blank"></td><td class="blank"></td><td class="blank"></td>
+      <td class="blank"></td><td class="blank"></td><td class="blank"></td>
+      <td class="blank"></td><td class="blank"></td><td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+    </tr>
+    <tr class="hashiru">
+      <th class="head">走　る<span>km<br>歩数</span></th>
       <td class="blank"></td><td class="blank"></td><td class="blank"></td>
       <td class="blank"></td><td class="blank"></td><td class="blank"></td>
       <td class="blank"></td><td class="blank"></td><td class="blank"></td>
@@ -498,15 +513,15 @@
 (function(){
   // ===== 実測・目標の一元データ（ここに1行足すだけで乾燥体重欄・チェック時間欄・歩数欄が揃う） =====
   const jissoku = {
-    "10/4": {kg: 62.2, jikan: "9:27", shibo: 17.4, hosu: 12613, kiso: 1495, katsudo: 656, mizu: 2500},
-    "10/5": {kg: 61.0, jikan: "13:06", shibo: 16.7, hosu: 12052, kiso: 1462, katsudo: 506, mizu: 2250},
-    "10/6": {kg: 60.6, jikan: "11:40", shibo: 16.4, hosu: 10939, kiso: 1403, katsudo: 447, mizu: 1000},
-    "10/7": {kg: 60.9, jikan: "11:20", shibo: 16.6, hosu: 12254, kiso: 1473, katsudo: 517, mizu: 2250},
-    "10/8": {kg: 60.2, jikan: "11:16", shibo: 16.2, hosu: 7590, kiso: 1459, katsudo: 340, mizu: 2500},
-    "10/9": {kg: 59.8, jikan: "5:43", shibo: 16.0, hosu: 7512, kiso: 1444, katsudo: 321, mizu: 3500},
-    "10/10": {kg: 59.8, jikan: "8:38", shibo: 16.0, hosu: 5012, kiso: 1455, katsudo: 343, mizu: 4000},
-    "10/11": {kg: 59.5, jikan: "10:02", shibo: 15.8, hosu: 8820, kiso: 1467, katsudo: 358, mizu: 1000},
-    "10/12": {kg: 59.7, jikan: "8:11", shibo: 15.9, hosu: 9048, kiso: 1125, katsudo: 467}
+    "10/4": {kg: 62.2, jikan: "9:27", shibo: 17.4, hosu: 12613, hashiru: 4595, hashiru_km: 4.33, kiso: 1495, katsudo: 656, mizu: 2500},
+    "10/5": {kg: 61.0, jikan: "13:06", shibo: 16.7, hosu: 12052, hashiru: 5713, hashiru_km: 4.8, kiso: 1462, katsudo: 506, mizu: 2250},
+    "10/6": {kg: 60.6, jikan: "11:40", shibo: 16.4, hosu: 10939, hashiru: 0, hashiru_km: 0.0, kiso: 1403, katsudo: 447, mizu: 1000},
+    "10/7": {kg: 60.9, jikan: "11:20", shibo: 16.6, hosu: 12254, hashiru: 6656, hashiru_km: 5.8, kiso: 1473, katsudo: 517, mizu: 2250},
+    "10/8": {kg: 60.2, jikan: "11:16", shibo: 16.2, hosu: 7590, hashiru: 0, hashiru_km: 0.0, kiso: 1459, katsudo: 340, mizu: 2500},
+    "10/9": {kg: 59.8, jikan: "5:43", shibo: 16.0, hosu: 7512, hashiru: 0, hashiru_km: 0.0, kiso: 1444, katsudo: 321, mizu: 3500},
+    "10/10": {kg: 59.8, jikan: "8:38", shibo: 16.0, hosu: 5012, hashiru: 0, hashiru_km: 0.0, kiso: 1455, katsudo: 343, mizu: 4000},
+    "10/11": {kg: 59.5, jikan: "10:02", shibo: 15.8, hosu: 8820, hashiru: 0, hashiru_km: 0.0, kiso: 1467, katsudo: 358, mizu: 1000},
+    "10/12": {kg: 59.7, jikan: "8:11", shibo: 15.9, hosu: 9048, hashiru: 5392, hashiru_km: 4.5, kiso: 1125, katsudo: 467}
   };
   // 水分を Mits様が直接おっしゃった日はこちらを使う（ヘルスの記録より優先・自動入力はここを書き換えない）
   // 2026-10-11 Mits様「昨日の水分は4L」（ヘルスの記録は 1,000mL）
@@ -585,10 +600,17 @@
           mizuTd.className = 'atai';
           mizuTd.textContent = mizu.toLocaleString('ja-JP');
         }
-        if (hosuTd && jd.hosu != null) {
+        // 2026-10-12 Mits様「歩く行と走る行は分けて入力するようにして」：歩く＝歩数 − 走る歩数。走る歩数と km は自動入力が書き出しから出す（fasting_kiroku_auto.py）
+        const aruku = jd.hosu != null ? jd.hosu - (jd.hashiru || 0) : null;
+        if (hosuTd && aruku != null) {
           hosuTd.className = 'atai hosu-v';
-          const pct = Math.min(100, jd.hosu / 80);
-          hosuTd.innerHTML = '<span class="v">' + jd.hosu.toLocaleString('ja-JP') + '</span><span class="bar"><i class="' + (jd.hosu >= 8000 ? 'ok' : '') + '" style="width:' + pct + '%"></i></span>';
+          const pct = Math.min(100, aruku / 80);
+          hosuTd.innerHTML = '<span class="v">' + aruku.toLocaleString('ja-JP') + '</span><span class="bar"><i class="' + (aruku >= 8000 ? 'ok' : '') + '" style="width:' + pct + '%"></i></span>';
+        }
+        const runTd = (trs['hashiru'] || [])[col];
+        if (runTd && jd.hosu != null) {
+          runTd.className = 'atai hosu-v';
+          runTd.innerHTML = jd.hashiru_km ? '<span class="v">' + jd.hashiru_km.toFixed(1) + 'km</span><span class="sub">' + (jd.hashiru || 0).toLocaleString('ja-JP') + '歩</span>' : '<span class="v">0</span>';
         }
         if (jikanTd && jd.jikan) {
           jikanTd.className = 'jikan filled';
@@ -640,10 +662,12 @@
   // 2026-10-11 Mits様「冗長な表示を極力しないで」：サプリの行の各チェックから「サプリ」を外して出す（記録の名前は data-label で変えない）。目標比の語は左の欄へ
   const ROWS = ['gozen','hirusugi','aruita','yugata','sapuri'];
   const KEY = 'fasting_kiroku_chk_v1';
-  const PLAN_BURN = 1920, CAP = 69.3, FAT0 = 10.8;
+  // 2026-10-12 計画の消費も同じ式で出し直した：8,000歩 歩く＝1,464＋146＋27.7×8＝1,832kcal（前は 1,920）
+  const PLAN_BURN = 1832, CAP = 69.3, FAT0 = 10.8;
   // 2026-10-09 Mits様「今日は意図的な散歩に行かない、最低限の徒歩数にする」：10/9 の計画の消費は 2,000歩で置く（1500＋83＋42×2.0＝1,667kcal）
   // 2026-10-11 Mits様「10/11　散歩6000を入れてみて」：10/11 の計画の消費は 6,000歩で置く（1500＋83＋42×6.0＝1,835kcal）
-  const PLAN_BURN_HI = {'10/9': 1667, '10/11': 1835}, burnP = d => PLAN_BURN_HI[d] || PLAN_BURN;
+  // 2026-10-12 同じ式で：10/9 は 2,000歩＝1,665kcal・10/11 は 6,000歩＝1,776kcal
+  const PLAN_BURN_HI = {'10/9': 1665, '10/11': 1776}, burnP = d => PLAN_BURN_HI[d] || PLAN_BURN;
   // 2026-10-09 ボーンブロス（丸どりだし1袋・40kcal はラベルで確かめる。資料 p.37 はたんぱく質 9.5g/袋）を 10/14〜10/17 の夕方に1杯足す
   // 2026-10-09 Mits様「ベーコンエッグは2,3日取っただけで油が過剰なときに出るできものがでたので回復以後採用しない」：10/14〜10/19 はベーコン100g（202kcal）を外し、卵2個は残す
   // 2026-10-09 Mits様「卵、現実的に5個も食べない3個」：10/13〜10/19 の卵は1日3個（10/14〜10/19 は卵2個 142kcal を減らす）
@@ -709,7 +733,8 @@
   const burnOf = j => {
     if (!j) return null;
     if (j.kiso != null && j.kiso >= 1300 && j.katsudo != null) return { v: j.kiso + j.katsudo, suitei: false };
-    if (j.hosu != null) return { v: 1500 + 83 + Math.round(42 * j.hosu / 1000), suitei: true };
+    // 2026-10-12 歩くと走るを分けた式（10/3〜10/11 の Apple Watch の実績から）：消費＝基礎代謝 1,464 ＋ 146 ＋ 27.7×歩く千歩 ＋ 44.8×走る km
+    if (j.hosu != null) return { v: Math.round(1464 + 146 + 27.7 * (j.hosu - (j.hashiru || 0)) / 1000 + 44.8 * (j.hashiru_km || 0)), suitei: true };
     return null;
   };
 
@@ -740,7 +765,7 @@
         const ex = over - planOver;
         if (ex > 50 && !kyou) msg.push('<span class="warn">上限を ' + f0(over) + 'kcal 超え（計画 ' + f0(planOver) + '）＝筋肉などから出る分。摂取を ' + f0(ex) + 'kcal 増やす</span>');
         else if (over > 50 && !kyou) msg.push('上限超え ' + f0(over) + 'kcal は計画（' + f0(planOver) + '）の範囲');
-        else if (amari > 50 && !kyou) msg.push('上限まで ' + f0(amari) + 'kcal 余り。歩数で約 ' + f0(amari / 42 * 1000) + '歩 足せば脂肪の減りが上限に届く');
+        else if (amari > 50 && !kyou) msg.push('上限まで ' + f0(amari) + 'kcal 余り。歩いて約 ' + f0(amari / 27.7 * 1000) + '歩 足せば脂肪の減りが上限に届く');
         else if (!kyou) msg.push('<span class="good">上限どおり</span>');
         { const wk = (K.jissoku[d] || {}).kg != null ? K.jissoku[d].kg : K.mokuhyo[d]; const nd = wk != null ? Math.round(1.6 * wk) : 95;
           if (p < nd && !kyou) msg.push('たんぱく質 ' + p.toFixed(0) + 'g（必要 ' + nd + 'g）'); }
