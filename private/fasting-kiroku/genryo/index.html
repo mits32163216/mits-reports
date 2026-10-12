@@ -807,12 +807,12 @@
   // 2026-10-11 Mits様「冗長な表示を極力しないで」：サプリの行の各チェックから「サプリ」を外して出す（記録の名前は data-label で変えない）。目標比の語は左の欄へ
   const ROWS = ['gozen','hirusugi','aruita','yugata','sapuri'];
   const KEY = 'fasting_kiroku_chk_v1';
-  // 2026-10-12 計画の消費も同じ式で出し直した：8,000歩 歩く＝1,464＋146＋27.7×8＝1,832kcal（前は 1,920）
-  const PLAN_BURN = 1832, CAP = 69.3, FAT0 = 10.8;
+  // 2026-10-12 計画の消費も同じ式で出し直した：8,000歩 歩く＝1,464＋262＋14.0×8＝1,838kcal（前は 1,832）
+  const PLAN_BURN = 1838, CAP = 69.3, FAT0 = 10.8;
   // 2026-10-09 Mits様「今日は意図的な散歩に行かない、最低限の徒歩数にする」：10/9 の計画の消費は 2,000歩で置く（1500＋83＋42×2.0＝1,667kcal）
   // 2026-10-11 Mits様「10/11　散歩6000を入れてみて」：10/11 の計画の消費は 6,000歩で置く（1500＋83＋42×6.0＝1,835kcal）
   // 2026-10-12 同じ式で：10/9 は 2,000歩＝1,665kcal・10/11 は 6,000歩＝1,776kcal
-  const PLAN_BURN_HI = {'10/9': 1665, '10/11': 1776}, burnP = d => PLAN_BURN_HI[d] || PLAN_BURN;
+  const PLAN_BURN_HI = {'10/9': 1754, '10/11': 1810}, burnP = d => PLAN_BURN_HI[d] || PLAN_BURN;
   // 2026-10-09 ボーンブロス（丸どりだし1袋・40kcal はラベルで確かめる。資料 p.37 はたんぱく質 9.5g/袋）を 10/14〜10/17 の夕方に1杯足す
   // 2026-10-09 Mits様「ベーコンエッグは2,3日取っただけで油が過剰なときに出るできものがでたので回復以後採用しない」：10/14〜10/19 はベーコン100g（202kcal）を外し、卵2個は残す
   // 2026-10-09 Mits様「卵、現実的に5個も食べない3個」：10/13〜10/19 の卵は1日3個（10/14〜10/19 は卵2個 142kcal を減らす）
@@ -880,8 +880,8 @@
   const burnOf = j => {
     if (!j) return null;
     if (j.kiso != null && j.kiso >= 1300 && j.katsudo != null) return { v: j.kiso + j.katsudo, suitei: false };
-    // 2026-10-12 歩くと走るを分けた式（10/3〜10/11 の Apple Watch の実績から）：消費＝基礎代謝 1,464 ＋ 146 ＋ 27.7×歩く千歩 ＋ 44.8×走る km
-    if (j.hosu != null) return { v: Math.round(1464 + 146 + 27.7 * (j.hosu - (j.hashiru || 0)) / 1000 + 44.8 * (j.hashiru_km || 0)), suitei: true };
+    // 2026-10-12 歩くと走るを分けた式（10/3〜10/11 の Apple Watch の実績・走るはフィットネスのワークアウト4回の実測 52.1kcal/km）：消費＝基礎代謝 1,464 ＋ 262 ＋ 14.0×歩く千歩 ＋ 52.1×走る km
+    if (j.hosu != null) return { v: Math.round(1464 + 262 + 14.0 * (j.hosu - (j.hashiru || 0)) / 1000 + 52.1 * (j.hashiru_km || 0)), suitei: true };
     return null;
   };
 
@@ -913,7 +913,7 @@
         const ex = over - planOver;
         if (ex > 50 && !kyou) msg.push('<span class="warn">上限を ' + f0(over) + 'kcal 超え（計画 ' + f0(planOver) + '）＝筋肉などから出る分。摂取を ' + f0(ex) + 'kcal 増やす</span>');
         else if (over > 50 && !kyou) msg.push('上限超え ' + f0(over) + 'kcal は計画（' + f0(planOver) + '）の範囲');
-        else if (amari > 50 && !kyou) msg.push('上限まで ' + f0(amari) + 'kcal 余り。歩いて約 ' + f0(amari / 27.7 * 1000) + '歩 足せば脂肪の減りが上限に届く');
+        else if (amari > 50 && !kyou) msg.push('上限まで ' + f0(amari) + 'kcal 余り。歩いて約 ' + f0(amari / 14.0 * 1000) + '歩 足せば脂肪の減りが上限に届く');
         else if (!kyou) msg.push('<span class="good">上限どおり</span>');
         { const wk = (K.jissoku[d] || {}).kg != null ? K.jissoku[d].kg : K.mokuhyo[d]; const nd = wk != null ? Math.round(1.6 * wk) : 95;
           if (p < nd && !kyou) msg.push('たんぱく質 ' + p.toFixed(0) + 'g（必要 ' + nd + 'g）'); }
