@@ -92,7 +92,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-12 07:25 ／ 写した時刻 2026-10-12 12:37</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-12 16:25 ／ 写した時刻 2026-10-12 18:37</p>
 <h2 id="報告-運転台改善">報告 ── 運転台改善</h2>
 <p>この持ち場の窓（7:12 の毎朝点検・6時間ごとの機能要望の窓・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_運転台改善.md</p>
@@ -1767,6 +1768,92 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>選んだ理由：遠藤さん版（クライアント開発版）を組み立てる手順はこの1本で、作業場の CLAUDE.md・docs に遠藤さん版の渡しの手順は無かった（<code>grep -rl 遠藤 docs tools CLAUDE.md .claude</code> が0件）</li>
 <li>確かめ：<code>bash -n tools/build-client.sh</code> 通過（説明の行を足しただけで、動きは変えていない）。commit はしていない（未提出に1件増えた）</li>
 <li>許される範囲：書き留めるまで。zip を Drive に上げる・遠藤さんに知らせるはしていない</li>
+</ul>
+<hr>
+<h3 id="2026-10-12-15-5x-棚原さん向け-untendai-client-v1-76-2">2026-10-12 15:5x — 棚原さん向け untendai-client v1.76.2 配布セット（BS-engineer）</h3>
+<h4 id="置いたもの-Drive-フォルダ-1L-9tSnOYP1q7uLw3QNX-P-6G6Zsav9">置いたもの（Drive フォルダ 1L-9tSnOYP1q7uLw3QNX-P-6G6Zsav92O）</h4>
+<ul>
+<li>/Users/nishidamitsuhiro/My Drive/00_TOP_仕事/01_Google/すごいコンサル/棚原さん (1)/untendai-client_1.76.2_mac_arm64.zip</li>
+  <li>sha256: ad55a6a448efae539fa27c074b8922bc468239211a2148760b20b3049cf59989</li>
+  <li>size: 10,119,227 bytes</li>
+  <li>版: 1.76.2</li>
+  <li>commit: 0161e06（main HEAD）</li>
+<li>/Users/nishidamitsuhiro/My Drive/00_TOP_仕事/01_Google/すごいコンサル/棚原さん (1)/はじめに読んでください.md</li>
+  <li>size: 8,910 bytes（v3）</li>
+  <li>7節構成（1. 入れる／2. 初めて開く／3. 最初の画面／4. ログイン／5. 管理者スイッチ／6. 会計ソフトとつなぐ／7. 自動更新なし／困ったとき）</li>
+</ul>
+<h4 id="検収線-1-8-の実測">検収線 1〜8 の実測</h4>
+<p>1. フォルダ内 ── untendai-client_1.76.2_mac_arm64.zip ・ はじめに読んでください.md ・ Icon（macOS 隠し属性）。画像フォルダ無し（text-only 案内のため）</p>
+<p>2. spctl -a -vv ── accepted ／ source=Notarized Developer ID ／ origin=Developer ID Application: Mitsuhiro Nishida (3J869F77SZ)</p>
+<p>   xcrun stapler validate ── The validate action worked!</p>
+<p>3. 見本DB で Mits様 実データ 2,206,003 と一致する amount: 0件（実測 sqlite3 strac WHERE amount=2206003）</p>
+<ul>
+  <li>2026-06 売上高合計：2,206,000（丸め後。実データ 2,206,003 とは不一致）</li>
+  <li>strac 全177件が千円の位で丸め済み（amount % 1000 != 0 == 0件）</li>
+  <li>商品コードは BE-01/BE-02/MI-03/MI-05/FE-01/FE-02 → 商品A/B/C/D/E/F に置換</li>
+  <li>顧客は架空名のみ（村雨貴弘・桐生拓也・神楽亮介…）</li>
+</ul>
+<p>4. 配置ファイル内「遠藤」== 0件（grep -r 実測）・「棚原」== 0件</p>
+<p>5. 管理者スイッチの機能動作確認写真：</p>
+<ul>
+  <li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_tanahara_haifu_20261012_01_fresh_install.png（v1.76.2 fresh install 状態の「はじめる前に」モーダル・freee開発版 title）</li>
+  <li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/jissoku_tanahara_haifu_20261012_02_kanrisha_mode_on.png（admin_role=1 設定済み・左バー下に「🟦 自分の事務所 ▲」切り替え欄が表示＝管理者モード有効の視覚的証拠）</li>
+  <li>制約：computer-use denied / osascript System Events denied のためアプリ内ナビで Settings→アカウント画面の toggle UI 自体を直接撮影できず。切り替え欄（admin_role=1 のときのみ出る）の表示で機能動作を証明</li>
+</ul>
+<p>6. latest.json ── 1.73.28（curl -s <a href="https://untendai-update.3216-fun.workers.dev/latest.json">https://untendai-update.3216-fun.workers.dev/latest.json</a>）── 変更なし</p>
+<p>7. 製品版 /Applications/untendai.app ── 1.76.2 のまま（build-client.sh を UNTENDAI_SKIP_INSTALL=1 で実行・入れ替えなし）</p>
+<ul>
+  <li>検収のため /Applications/untendai-client.app のみ v1.74.4 → v1.76.2 に入れ替え（旧版は $HOME/Desktop/AI作業ゴミ箱/20261012-1535_untendai-client.app_v1.74.4 に退避）</li>
+</ul>
+<p>8. BS-jikki-kenshu（agentId af416c140df22dae2＋aff2bbfeb69d10459）：</p>
+<ul>
+  <li>1回目：不合格4件（6節のボタン名誤り・鍵設定手順欠落・事業所選び手順欠落・連携完了後の案内）</li>
+  <li>2回目：10線中9線通過、線1のみ件数不足（文字自体は実物と合致）</li>
+  <li>v3 自己検収：10/10 全線通過（上の節で grep 件数実測）</li>
+  <li>v3 の変更差分：困ったとき節に「freee で『連携が済んでいません』と出た場合」の案内を1件追加（freee と連携 件数を1件→2件に）</li>
+</ul>
+<h4 id="後始末">後始末</h4>
+<ul>
+<li>sample.db と csv_mihon は手元で丸めビルドしたあと original に戻した（sha256 一致）</li>
+<li>untendai-client の作業データは $HOME/Desktop/AI作業ゴミ箱/20261012-15xx_untendai-client-*/ に退避済み</li>
+<li>/tmp 下の作業フォルダ（/tmp/tanahara_build_20261012 / /tmp/tanahara_verify_20261012 等）は OS 再起動で消える</li>
+</ul>
+<h4 id="Mits様判定待ち">Mits様判定待ち</h4>
+<ul>
+<li>Drive 共有は Mits様の手（AI の Drive 道具は permission 不足で share_file 不可）</li>
+<li>棚原さんへの連絡は Mits様の手</li>
+</ul>
+<h3 id="2026-10-12-16-0x-棚原さんの案内-直し-v4-BS-engineer">2026-10-12 16:0x — 棚原さんの案内 直し v4（BS-engineer）</h3>
+<h4 id="参謀のご指示-4件・ついでに1件">参謀のご指示（4件・ついでに1件）</h4>
+<p>1. 114行目「macOS の版が古い」の行を削除（公証済みのため推定の原因説明は不要）</p>
+<p>2. 93行目直後に、使い方ページの freee「準備中」の但し書きを追加</p>
+<p>3. 51行目「スイッチを入れる」の後に「入れると、画面が「お金・分析 — 現在位置」に切り替わります。」を追加</p>
+<p>4. 6節の頭に「「事業所を選ぶ」「事業者を選ぶ」「今すぐ取得」は、4節のログインを済ませてから押してください。ログインしていないと「ログインが必要です」と出ます。」を追加</p>
+<p>5. ついでに：「窓」→「確認画面」/「画面」（Mits様の言葉の決まり）</p>
+<h4 id="直した-file">直した file</h4>
+<p><code>/Users/nishidamitsuhiro/My Drive/00_TOP_仕事/01_Google/すごいコンサル/棚原さん (1)/はじめに読んでください.md</code></p>
+<h4 id="検収線の実測-grep-出力">検収線の実測（grep 出力）</h4>
+<table>
+<tr><th>線</th><th>期待</th><th>実測</th><th>判定</th></tr>
+<tr><td>A「macOS の版が古い」件数</td><td>0件</td><td>0件</td><td>✓</td></tr>
+<tr><td>B1「入れると、画面が「お金・分析 — 現在位置」に切り替わります」</td><td>1件</td><td>1件（51行目）</td><td>✓</td></tr>
+<tr><td>B2「「事業所を選ぶ」「事業者を選ぶ」「今すぐ取得」は、4節のログインを済ませてから」</td><td>1件</td><td>1件（65行目）</td><td>✓</td></tr>
+<tr><td>B3「このページは freee の連携を「準備中」と書いていますが、お渡しした版では freee の連携も押せます」</td><td>1件</td><td>1件（97行目）</td><td>✓</td></tr>
+<tr><td>C「窓」件数</td><td>0件</td><td>0件（確認画面・画面 に置換済み）</td><td>✓</td></tr>
+<tr><td>D「遠藤」件数</td><td>0件</td><td>0件</td><td>✓</td></tr>
+<tr><td>E zip sha256</td><td>ad55a6a4…9989 のまま</td><td>ad55a6a448efae539fa27c074b8922bc468239211a2148760b20b3049cf59989（一致）</td><td>✓</td></tr>
+</table>
+<h4 id="窓-画面-置換の内訳">窓 → 画面 置換の内訳</h4>
+<ul>
+<li>19行目「確認の窓が出ます」→「確認画面が出ます」</li>
+<li>21行目「確認の窓は出ません」→「確認画面は出ません」</li>
+<li>55行目「「顧客を足す」の窓の「表示名」」→「「顧客を足す」の画面の「表示名」」</li>
+</ul>
+<h4 id="Drive-フォルダ-最終状態">Drive フォルダ 最終状態</h4>
+<ul>
+<li>/Users/nishidamitsuhiro/My Drive/00_TOP_仕事/01_Google/すごいコンサル/棚原さん (1)/untendai-client_1.76.2_mac_arm64.zip（sha256 ad55a6a4…9989・不変）</li>
+<li>/Users/nishidamitsuhiro/My Drive/00_TOP_仕事/01_Google/すごいコンサル/棚原さん (1)/はじめに読んでください.md（v4）</li>
+<li>Icon（macOS 隠し属性）</li>
 </ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
