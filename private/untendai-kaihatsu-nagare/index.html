@@ -43,15 +43,15 @@
 
 <h1>運転台 ── 開発の流れ・手順・いまの姿</h1>
 <p class="lead">2026-10-03 時点の実測で整理。自然にできあがってきた形を、決まりと実物の両方から書き起こしたもの。<br>
-（運転台＝社内名。お客様向けの名前は「AI-Mits＆経営アプリ」）<br>最終実測日：2026-10-09（印を埋めた値は tools/check_shiryo_freshness.sh で毎朝突き合わせる）</p>
+（運転台＝社内名。お客様向けの名前は「AI-Mits＆経営アプリ」）<br>最終実測日：2026-10-12（印を埋めた値は tools/check_shiryo_freshness.sh で毎朝突き合わせる）</p>
 
 <!-- 鮮度点検の印（画面には出ない・tools/check_shiryo_freshness.sh が読む） -->
-<!-- jissoku: main_version | v1.75.0 | /usr/bin/git -C /Users/nishidamitsuhiro/untendai-seiri describe --tags --abbrev=0 -->
+<!-- jissoku: main_version | v1.76.3 | /usr/bin/git -C /Users/nishidamitsuhiro/untendai-seiri describe --tags --abbrev=0 -->
 <!-- jissoku: branch_count | 8 | /usr/bin/git -C /Users/nishidamitsuhiro/untendai-seiri branch | /usr/bin/wc -l | /usr/bin/tr -d ' ' -->
 <!-- jissoku: world_version | 1.73.28 | /usr/bin/curl -sfS https://untendai-update.3216-fun.workers.dev/latest.json | python3 -c 'import json,sys;print(json.load(sys.stdin)["version"])' -->
-<!-- jissoku: commit_count_28_to_750 | 159 | /usr/bin/git -C /Users/nishidamitsuhiro/untendai-seiri rev-list --count v1.73.28..v1.75.0 -->
-<!-- jissoku: product_app_version | 1.75.0 | /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" /Applications/untendai.app/Contents/Info.plist 2>/dev/null -->
-<!-- jissoku: client_app_version | 1.74.4 | /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" /Applications/untendai-client.app/Contents/Info.plist 2>/dev/null -->
+<!-- jissoku: commit_count_28_to_763 | 188 | /usr/bin/git -C /Users/nishidamitsuhiro/untendai-seiri rev-list --count v1.73.28..v1.76.3 -->
+<!-- jissoku: product_app_version | 1.76.3 | /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" /Applications/untendai.app/Contents/Info.plist 2>/dev/null -->
+<!-- jissoku: client_app_version | 1.76.2 | /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" /Applications/untendai-client.app/Contents/Info.plist 2>/dev/null -->
 <!-- ============================================================ -->
 <h2>1. ひと目で：直しがお客様に届くまで</h2>
 
@@ -84,7 +84,7 @@
   <text x="555" y="80" text-anchor="middle" font-size="12" fill="#5b6170">release.sh --自分だけ</text>
 
   <rect x="440" y="120" width="230" height="70" rx="10" fill="#ffffff" stroke="#14206b"/>
-  <text x="555" y="148" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2430">freee版（協力者に手渡し）</text>
+  <text x="555" y="148" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2430">freee版（Mits様が名指しされたとき）</text>
   <text x="555" y="170" text-anchor="middle" font-size="12" fill="#5b6170">build-client.sh → zip</text>
 
   <rect x="440" y="210" width="230" height="70" rx="10" fill="#ffffff" stroke="#14206b"/>
@@ -147,8 +147,8 @@
 <div class="scroll">
 <table>
 <tr><th>アプリ</th><th>入っている場所・識別子</th><th>組むもと</th><th>組む道具</th><th>いまの版（組んだ時刻）</th><th>誰の手元にあるか</th></tr>
-<tr><td><b>製品版</b></td><td><code>/Applications/untendai.app</code><br><code>com.mits.untendai</code></td><td>main</td><td><code>release.sh --自分だけ</code><br>（中で <code>build-signed.sh</code>）</td><td>1.75.0（10-09・marketing を main に取り込み・2026-10-09 実測）</td><td><span class="tag t-me">Mits様だけ 1.75.0</span><br><span class="tag t-out">お客様は 1.73.28</span></td></tr>
-<tr><td><b>freee版</b><br>（クライアント版）</td><td><code>/Applications/untendai-client.app</code><br><code>com.mits.untendai.client</code></td><td>main（09-25 から）</td><td><code>build-client.sh</code> → zip</td><td>1.74.4（10-04 21:50・2026-10-08 実測）</td><td><span class="tag t-old">協力者Aさん 1.73.24</span><br><span class="tag t-me">協力者Bさん 1.74.4（Drive の untendai-client_1.74.4_mac_arm64.zip・2026-10-04 差し替え・未共有）</span></td></tr>
+<tr><td><b>製品版</b></td><td><code>/Applications/untendai.app</code><br><code>com.mits.untendai</code></td><td>main</td><td><code>release.sh --自分だけ</code><br>（中で <code>build-signed.sh</code>）</td><td>1.76.3（10-12・見本の帳簿を架空に戻す・2026-10-12 実測）</td><td><span class="tag t-me">Mits様 1.76.3</span><br><span class="tag t-me">協力者（コンサルタント）1.76.3（Drive の untendai_1.76.3_mac_arm64.zip・2026-10-12 置いた・未共有）</span><br><span class="tag t-out">お客様は 1.73.28</span></td></tr>
+<tr><td><b>freee版</b><br>（クライアント版）</td><td><code>/Applications/untendai-client.app</code><br><code>com.mits.untendai.client</code></td><td>main（09-25 から）</td><td><code>build-client.sh</code> → zip</td><td>1.76.2（10-12 15:3x 実測）</td><td><span class="tag t-old">協力者Aさん 1.73.24</span><br><span class="tag t-old">協力者Bさん 1.74.4（Drive の untendai-client_1.74.4_mac_arm64.zip・2026-10-04 差し替え・未共有）</span><br><span class="tag t-out">2026-10-12 Mits様確定：協力者に渡すのは製品版。freee版は Mits様が名指しされたときだけ</span></td></tr>
 <tr><td><b>開発版</b></td><td><code>/Applications/untendai-dev.app</code><br><code>com.mits.untendai.dev</code></td><td>main</td><td><code>build-dev.sh</code></td><td>1.73.53 の表示（中身は 09-30 20:27 の main・見本A／B／C）</td><td><span class="tag t-me">Mits様の Mac だけ</span></td></tr>
 <tr><td><b>マーケ版</b></td><td><code>/Applications/untendai-mkt.app</code><br><code>com.mits.untendai.mkt</code></td><td>marketing の枝<br><code>~/untendai-marketing</code></td><td><code>build-mkt.sh</code></td><td>1.74.4（10-04 21:36・2026-10-08 実測。10-09 に marketing の中身は main に入ったので、以後は main から組んだ 1.75.0 の製品版と中身が同じになる）</td><td><span class="tag t-me">Mits様の Mac だけ</span></td></tr>
 </table>
@@ -266,15 +266,18 @@ bash tools/build-dev.sh          # 開発版も同じ main で組み直す（--�
 <li>確かめる：<code>curl -s https://untendai-update.3216-fun.workers.dev/latest.json</code> の version が変わっていない＝世に出ていない</li>
 </ul>
 
-<h3>5-3. freee版を手渡す（協力者・コンサルタント）</h3>
+<h3>5-3. 製品版を手渡す（協力者・コンサルタント）（2026-10-12 Mits様確定）</h3>
+<p class="quote">Mits様（2026-10-12）：「製品版はまだ世に出ていないけれども、私が実データを使い確かめるもの。自社データ等を入れなければサンプルデータが表示されるのが当然。開発協力の人に実際に使ってもらうのは世に出る前の製品版の段階が妥当だとすると、私が使うのと同じ状況であるのがふさわしい。だから、自社データをつなげる前はサンプルデータが表示される。それ以外のデータが表示されるわけがない。」</p>
 <ol>
-<li><code>bash tools/build-client.sh</code> で main から組む。おまけの実行ファイル（<code>demo_seed_cred</code>）は外す</li>
-<li><b>実データの検査</b>（下の 6）を全部通す</li>
-<li>何も入っていない状態で開いて、案内の写真を1手ずつ撮る（この Mac の freee版のデータは先に退避し、撮り終えたら戻す）</li>
-<li>写真どおりに「はじめに読んでください」を書き、BS-jikki-kenshu の検収に通す</li>
-<li>相手のフォルダ（<code>すごいコンサル/&lt;お名前&gt;/</code>）に zip・案内・画像を置く</li>
+<li><code>bash tools/make_sample_db.sh</code> で見本の帳簿（<code>src-tauri/resources/sample.db</code>）を架空の中身に差し替える（開発版 DB の中身を写す。実データの印が1つでもあれば見張り試験 <code>sample_db_no_mitsdata.rs</code> が <code>cargo test</code> で落とす）</li>
+<li><code>bash tools/release.sh --自分だけ &lt;版&gt; "&lt;要約&gt;"</code> で製品版を組み直し、<code>/Applications/untendai.app</code>（<code>com.mits.untendai</code>）を上げる。世には出さない</li>
+<li><b>実データの検査</b>（下の 6）を全部通す。<code>/Applications/untendai.app</code> を <code>ditto -c -k --keepParent --sequesterRsrc</code> で zip にする（おまけの実行ファイル <code>demo_seed_cred</code>・<code>haishin_torikomi</code> も入ったまま。製品版の中身そのもの）</li>
+<li>まっさら状態の画面は、Mits様の帳簿（<code>~/Library/Application Support/com.mits.untendai</code>）に触らずに確かめる手段で（<code>HOME</code> を <code>/tmp/&lt;ts&gt;</code> に変えて <code>open -n</code> は 2026-10-12 試行で GUI が立ち上がらなかった）。zip 内の <code>sample.db</code> を <code>sqlite3</code> で直接検査する代替で済ます（コードは「空の DB 状態なら <code>sample.db</code> の中身を <code>applyDS</code> で表示する」作りのため）</li>
+<li>案内「はじめに読んでください.md」を実物の画面の文字どおりに書き、BS-jikki-kenshu の検収に通す</li>
+<li>相手のフォルダ（<code>すごいコンサル/&lt;お名前&gt;/</code>）に zip・案内を置く</li>
 <li><b>共有と連絡は Mits様</b></li>
 </ol>
+<p class="note">「freee版（<code>com.mits.untendai.client</code>・<code>build-client.sh</code>）」を渡すのは、Mits様が名指しされたときだけ。</p>
 
 <h3>5-4. 世に出す（Mits様の「出す」のあと）</h3>
 <pre>bash tools/release.sh &lt;溜めた最後の版&gt; "要約"</pre>
@@ -318,7 +321,8 @@ bash tools/build-dev.sh          # 開発版も同じ main で組み直す（--�
 <tr><td>マネーフォワードとの連携</td><td>出る</td><td>出る</td><td>出る</td></tr>
 <tr><td>freee との連携</td><td>出る（1.74.1 から・2026-10-03 時点の記録）</td><td>出る</td><td>出ない</td></tr>
 <tr><td>管理者スイッチ（顧問先を足して切り替える）</td><td>出る（設定 → アカウント）</td><td>出る（設定 → アカウント）</td><td>出る</td></tr>
-<tr><td>入っているデータ</td><td>Mits様の実データ</td><td>Mits様の Mac では Mits様の2社の実データ／手渡し先では空</td><td>架空の見本A・B・C だけ</td></tr>
+<tr><td>入っているデータ</td><td>Mits様の Mac では Mits様の実データ／手渡し先では見本（架空）</td><td>Mits様の Mac では Mits様の2社の実データ／手渡し先では空</td><td>架空の見本A・B・C だけ</td></tr>
+<tr><td>協力者（コンサルタント）に渡すのはどれか（2026-10-12 Mits様確定）</td><td><b>これを渡す</b></td><td>Mits様が名指しされたときだけ</td><td>渡さない</td></tr>
 </table>
 <p class="note">出し分けは画面の印で行う：<code>freee-only</code>（client と production で出す）・<code>client-hide</code>（お渡し用で隠す）。印の無いものは4本すべてに出る。</p>
 
