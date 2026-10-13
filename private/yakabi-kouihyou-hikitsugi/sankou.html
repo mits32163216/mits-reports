@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>拉麵屋嘉比 候位表 ── 読み上げ・会話・履歴の追加（引き継ぎ書 2026-10-13）</title>
+<style>
+  :root { color-scheme: light; }
+  html, body { background: #fff; color: #222; }
+  body {
+    font-family: -apple-system, "Hiragino Sans", "Noto Sans TC", "Noto Sans JP", "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.75;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 24px 20px 80px;
+    font-size: 16px;
+  }
+  h1 { font-size: 24px; line-height: 1.4; margin: 0 0 8px; border-bottom: 2px solid #333; padding-bottom: 10px; }
+  h2 { font-size: 20px; margin: 36px 0 10px; padding: 10px 12px; background: #f3f3f3; border-left: 4px solid #666; }
+  h3 { font-size: 17px; margin: 24px 0 8px; }
+  p { margin: 10px 0; }
+  code, pre { font-family: Menlo, Consolas, monospace; }
+  pre {
+    background: #f5f7fa;
+    border: 1px solid #d9dde3;
+    padding: 12px 14px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.55;
+    white-space: pre;
+  }
+  code { background: #f5f7fa; padding: 1px 5px; border-radius: 3px; font-size: 13px; }
+  ul, ol { padding-left: 1.6em; }
+  li { margin: 4px 0; }
+  figure { margin: 14px 0 22px; }
+  figcaption { font-size: 13px; color: #555; margin-top: 6px; }
+  img { max-width: 100%; height: auto; border: 1px solid #ccc; display: block; }
+  .meta { font-size: 13px; color: #555; margin-bottom: 20px; }
+  .warn { background: #fff8e1; border-left: 4px solid #d4a017; padding: 10px 14px; margin: 12px 0; }
+  .note { background: #e9f3ff; border-left: 4px solid #3366cc; padding: 10px 14px; margin: 12px 0; }
+  .ok   { background: #e9f8ec; border-left: 4px solid #2e8b57; padding: 10px 14px; margin: 12px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 14px; }
+  th, td { border: 1px solid #ccc; padding: 6px 10px; vertical-align: top; text-align: left; }
+  th { background: #f3f3f3; }
+  .refs a { word-break: break-all; }
+  @media (max-width: 600px) {
+    body { padding: 16px 12px 60px; font-size: 15px; }
+    h1 { font-size: 20px; }
+    h2 { font-size: 18px; }
+    pre { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<h1>拉麵屋嘉比 候位表 ── 読み上げ・会話・履歴の追加（引き継ぎ書）</h1>
+<p class="meta">
+  宛先：屋嘉比さま / 作成：2026-10-13 / 対象：候位表 <code>https://claude.ai/artifact/MLNSmqhUqCzUxQ4xp7WDe4</code>（屋嘉比さまが Claude で編集される前提）
+</p>
+
+<p>
+目的は3つです。① 入口の iPad で入った新しい受付を、厨房スタッフが Bluetooth の骨伝導イヤホンから「読み上げ」で聞けるようにする。② 入口と厨房で声の会話ができるようにする。③ 受付の情報が自動で消えずデータベースに残るようにする。候位表（Web）の変更は屋嘉比さまの Claude にそのまま貼れる指示文を章 ② に用意しました。
+</p>
+
+<div class="note">
+<b>この文書の線引き</b><br>
+① と ③ は候位表（Web）の変更。② は iPad の設定と FaceTime の運用。候位表（Web）の中では電話機能は作れません（候位表は claude.ai のビューワ上で動く Web ページで、マイク機能を持ちません）。
+</div>
+
+<h2>① 今の候位表の仕組み（短く）</h2>
+
+<p>
+候位表は 1 枚の Web ページです。入口の iPad と厨房の iPad から同じ URL を開き、最初の画面で「入口平板（<code>role='entrance'</code>）」か「員工叫號機（<code>role='staff'</code>）」のどちらかを選びます（この選択は <code>localStorage</code> の <code>yakabiKouiRole</code> に保存されます）。両方の端末は裏側で同じデータベースを見ていて、片方が「候位」を登録すると、もう片方の画面にすぐ出ます（内部で <code>onSnapshot</code> という仕組みを使っています）。
+</p>
+
+<p>データベースにある表（コレクション）は 4 つです。</p>
+<table>
+  <tr><th>表の名前</th><th>何が入っているか</th></tr>
+  <tr><td><code>queue</code></td><td>その日の受付 1 組ごとに 1 行。<code>number, partySize, name, phone, kidsChair, status, date, createdAt, calledAt, seatedAt, cancelledAt</code> など。<code>status</code> は <code>waiting / called / seated / cancelled</code>。</td></tr>
+  <tr><td><code>reservations</code></td><td>電話予約。<code>arrived</code> が true になると「已到達（到着）」。</td></tr>
+  <tr><td><code>settings/config</code></td><td>平均待ち分数（1 人あたり）などの共有設定。</td></tr>
+  <tr><td><code>stats/{日付}_{時刻}</code></td><td>16:00 と 22:00 の自動片付けの直前に、その日の「組数・座った数・残った数・取消し数」をまとめて記録する集計表。</td></tr>
+</table>
+
+<p>
+音は <code>playChime</code> という関数が WebAudio（ブラウザ内蔵の音源）で短い 2 音を鳴らします。<b>今の作りでは、入口平板（<code>role === 'entrance'</code>）で、まだ鳴らしていない組が <code>called</code>（叫號中）になった時だけ鳴ります。</b>員工叫號機（<code>role === 'staff'</code>）には、新しい受付が入っても音も読み上げもありません。これが「厨房スタッフが入口の受付に気付かない」の根の原因です。
+</p>
+
+<p>
+<code>checkScheduledCleanup</code> という関数が 16:00 と 22:00 に走り、その日の集計を <code>stats/日付_16</code>（または <code>_22</code>）に 1 行書いてから、<code>queue</code> の各行を 1 件ずつ <code>delete</code> します。<b>姓名・電話・各時刻は残りません。</b>これが「履歴が残らない」の根の原因です。
+</p>
+
+<h2>② 候位表に足す変更（屋嘉比さまの Claude にそのまま貼ってください）</h2>
+
+<p>
+下の指示文を、屋嘉比さまが候位表を編集している Claude の会話にそのままお貼りください。関数名・表の名前・変数名はいま候位表に実在するもの（<code>playChime</code> / <code>checkScheduledCleanup</code> / <code>queue</code> / <code>stats</code> / <code>onSnapshot</code> / <code>role</code> / <code>todayEntries</code> / <code>calledIdsSeen</code>）だけで書いてあります。
+</p>
+
+<h3>指示文（コピーしてお貼りください）</h3>
+
+<pre>
+以下の 2 つの変更を候位表（Claude の Artifact）に加えてください。
+関数名・表の名前・変数名は現在のコードにあるものをそのまま使うこと。
+
+── 変更 1：員工叫號機（role === 'staff'）で、新しい受付と予約の「已到達」を
+中国語（台湾）で読み上げる。
+
+既存の render() の中、role === 'entrance' のブロックで
+calledIdsSeen を使って chime を鳴らしている箇所と同じ考え方で、
+staff 側に「新しく出てきた組」の検出を追加する。
+
+1) モジュールの先頭（var calledIdsSeen = {}; の近く）に、新しく足す：
+     var spokenWaitingIds = {};   // 既に読み上げた候位の id
+     var spokenArrivedIds = {};   // 既に読み上げた「已到達」予約の id
+
+2) 新しく足す関数 speakZhTW(text) を定義する：
+     function speakZhTW(text) {
+       if (!('speechSynthesis' in window)) return;
+       try {
+         var u = new SpeechSynthesisUtterance(text);
+         u.lang = 'zh-TW';
+         u.rate = 0.95;
+         window.speechSynthesis.speak(u);
+       } catch (e) {}
+     }
+
+3) render() の中、role === 'staff' のときだけ以下を実行する処理を追加する
+   （role === 'entrance' の chime ブロックのすぐ下あたり）：
+
+     if (role === 'staff') {
+       // 初回ロードでいま並んでいる組を全部読まないようにするための印
+       if (!spokenWaitingIds.__initialized) {
+         waiting.forEach(function (e) { spokenWaitingIds[e.id] = true; });
+         spokenWaitingIds.__initialized = true;
+       } else {
+         waiting.forEach(function (e) {
+           if (spokenWaitingIds[e.id]) return;
+           spokenWaitingIds[e.id] = true;
+           // 例: 「3號，2位，需要兒童座椅」
+           var text = e.number + '號，' + e.partySize + '位';
+           if (e.kidsChair) text += '，需要兒童座椅';
+           speakZhTW(text);
+           // 読み上げた時刻を書き戻す（後からの振り返り用）
+           if (db) {
+             db.doc('queue/' + e.id).update({ spokenAt: new Date().toISOString() })
+               .catch(function () {});
+           }
+         });
+       }
+     }
+
+4) 予約の reservations.onSnapshot のコールバックの中（arrived が true になったとき）
+   に、同じ考え方で以下を足す。reservations の購読が staff でも動くことを確認し、
+   staff のときだけ speakZhTW を呼ぶ：
+
+     if (role === 'staff') {
+       if (!spokenArrivedIds.__initialized) {
+         reservations.forEach(function (r) { if (r.arrived) spokenArrivedIds[r.id] = true; });
+         spokenArrivedIds.__initialized = true;
+       } else {
+         reservations.forEach(function (r) {
+           if (!r.arrived || spokenArrivedIds[r.id]) return;
+           spokenArrivedIds[r.id] = true;
+           var nm = r.name || '預約';
+           speakZhTW('預約的客人到了：' + nm);
+         });
+       }
+     }
+
+── 変更 2：checkScheduledCleanup で消す前に、各組の全項目を history 表に
+写してから消す。
+
+現在の checkScheduledCleanup は：
+  db.doc('stats/' + stats.date + '_' + slot).set(stats).then(removeAll)
+の順で、集計を書いてから各行を delete している。
+
+removeAll を次のように差し替える：
+  var removeAll = function () {
+    entries.forEach(function (e) {
+      // 1 組の全項目を history に写す
+      var copy = {};
+      for (var k in e) { if (Object.prototype.hasOwnProperty.call(e, k)) copy[k] = e[k]; }
+      copy.archivedAt = new Date().toISOString();
+      copy.archivedSlot = slot;      // '16' または '22'
+      copy.sourceId = e.id;
+      if (db) {
+        db.doc('history/' + e.id).set(copy)
+          .then(function () { db.doc('queue/' + e.id).delete().catch(function () {}); })
+          .catch(function () {
+            // 書き込みに失敗した時は、queue からは消さない（データ消失を避ける）
+          });
+      }
+    });
+  };
+
+これで、16:00 と 22:00 に queue の行は消えても history 表に全項目が残る。
+今まで通り stats にはその日の集計も残る。既存の UI は書き換えない。
+
+音声は iOS Safari で、ページ上で何か 1 回タップしてから鳴る（音の制約）。
+員工叫號機の画面を初めて開いたとき、スタッフは画面のどこかを 1 回タップしてから
+日常運用に入ってほしい。
+</pre>
+
+<div class="note">
+<b>この指示文の裏付け（確認済み）</b><br>
+iOS 27 の iPad Simulator の Safari で、<code>speechSynthesis.getVoices()</code> は zh-TW の声として <b>Meijia</b> を 1 件返しました。<code>speak()</code> の呼び出しで <code>onstart</code> / <code>onend</code> も発火しています。章 ⑥ のテスト写真をご覧ください。
+</div>
+
+<h2>③ 厨房の iPad の設定（写真つき）</h2>
+
+<p>
+員工叫號機を出す iPad を、画面が勝手に消えないように、他のアプリに移らないように設定します。この章は、設定アプリの「どこを開くか」を日本語と繁體中文で並べて書いてあります。
+</p>
+
+<h3>3-1. 自動ロック：なし（画面を点けっぱなしにする）</h3>
+
+<p>
+<b>設定場所の名前（iPad OS で言語を切り替えると文言が変わります）：</b>
+</p>
+<ul>
+  <li>日本語：設定 → 画面表示と明るさ → 自動ロック →「なし」</li>
+  <li>繁體中文：設定 → 顯示與亮度 → 自動鎖定 →「永不」</li>
+</ul>
+
+<div class="warn">
+<b>Simulator に無かった ── 実機でご確認ください</b><br>
+2026-10-13 に iOS 27 の iPad Simulator（iPad Air 11-inch, M4）で設定アプリの検索を試しました。日本語で「自動ロック」、繁體中文で「自動鎖定」、英語で「Auto-Lock」を打っても <b>どの言語でも検索結果はゼロ</b> でした（下の写真）。「画面表示と明るさ／顯示與亮度／Display &amp; Brightness」の項目自体がシミュレータの一覧に出ていません。これはシミュレータが実機のディスプレイを持たないからで、<b>屋嘉比さまの実機の iPad では、必ずこの項目があります</b>。実機で「画面表示と明るさ → 自動ロック →『なし』」を選んでください。
+</div>
+
+<figure>
+  <img src="yakabi_kouihyou_hikitsugi_20261013_img/04_ja_search_no_jidou_lock.png" alt="日本語の設定アプリ検索で『自動ロック』ゼロ件">
+  <figcaption>日本語の設定アプリで「自動ロック」を検索した結果（<code>04_ja_search_no_jidou_lock.png</code>）── Simulator では候補にすら出てこない。</figcaption>
+</figure>
+
+<figure>
+  <img src="yakabi_kouihyou_hikitsugi_20261013_img/07_zhTW_search_no_jidong.png" alt="繁體中文の設定アプリ検索で『自動鎖定』ゼロ件">
+  <figcaption>繁體中文の設定アプリで「自動鎖定」を検索した結果（<code>07_zhTW_search_no_jidong.png</code>）── 同じく候補なし。</figcaption>
+</figure>
+
+<h3>3-2. アクセスガイド（候位表の画面から離れないようにする）</h3>
+
+<p>
+アクセスガイドをオンにすると、1 つのアプリに画面を固定でき、ホームへのスワイプや他アプリへの移動を遮断できます（屋嘉比さまが決めた暗証番号を入れないと解除できない仕組み）。
+</p>
+
+<ul>
+  <li>日本語：設定 → アクセシビリティ → アクセスガイド → オン</li>
+  <li>繁體中文：設定 → 輔助使用 → 引導使用模式 → 開啟</li>
+</ul>
+
+<figure>
+  <img src="yakabi_kouihyou_hikitsugi_20261013_img/03_ja_accessibility.png" alt="日本語のアクセシビリティ画面">
+  <figcaption>日本語の「アクセシビリティ」画面（<code>03_ja_accessibility.png</code>）── 画面を一番下まで下げると「一般」のまとまりの中に「アクセスガイド」が出ます（Simulator ではその下の項目まで表示されませんでした）。</figcaption>
+</figure>
+
+<figure>
+  <img src="yakabi_kouihyou_hikitsugi_20261013_img/06_zhTW_accessibility.png" alt="繁體中文の輔助使用畫面">
+  <figcaption>繁體中文の「輔助使用」画面（<code>06_zhTW_accessibility.png</code>）── 一番下に「一般」があり、その下に「引導使用模式」が入ります。</figcaption>
+</figure>
+
+<div class="warn">
+<b>Simulator に無かった ── 実機でご確認ください</b><br>
+iOS 27 Simulator は「アクセスガイド／引導使用模式／Guided Access」の子項目を持っていません。実機の iPad では「アクセシビリティ」を下にスクロールすると「一般」のまとまりの中にあります。
+</div>
+
+<p>
+アクセスガイドを使うときは、候位表（Safari のページ）を開いた状態で、<b>サイドボタンを 3 回連続で押す</b>と開始／終了できます（これは Apple 標準の操作です）。
+</p>
+
+<h3>3-3. 自動で電話に出る（イヤホンでそのまま応答する）</h3>
+
+<ul>
+  <li>日本語：設定 → アクセシビリティ → タッチ → 通話オーディオルーティング →「自動で電話に出る」をオン</li>
+  <li>繁體中文：設定 → 輔助使用 → 觸控 → 通話語音路由 →「自動接聽來電」開啟</li>
+</ul>
+
+<div class="warn">
+<b>Simulator に無かった ── 実機でご確認ください</b><br>
+iOS 27 の iPad Simulator は電話／通話機能を持たないため、<b>「アクセシビリティ」の「身体機能と動作サポート（身體動作）」の中が空です</b>。実機にはそこに「タッチ／觸控」があり、その中に「通話オーディオルーティング／通話語音路由」があります。写真は章 3-2 と同じアクセシビリティ画面を見返してください。<br>
+また、章 ⑥ で後述するとおり、Apple の公式ガイドは「自動で電話に出る」の機能が FaceTime の着信に効くとは明記していません。本番運用の前に実機で FaceTime 通話を 1 本かけて、骨伝導イヤホンに届くかをご確認ください。
+</div>
+
+<figure>
+  <img src="yakabi_kouihyou_hikitsugi_20261013_img/02_ja_settings_general.png" alt="日本語の設定アプリ 一般タブ">
+  <figcaption>日本語の設定アプリ 一般タブ（<code>02_ja_settings_general.png</code>）── サイドバーに「アクセシビリティ」が見えています。</figcaption>
+</figure>
+
+<figure>
+  <img src="yakabi_kouihyou_hikitsugi_20261013_img/05_zhTW_settings_general.png" alt="繁體中文の設定アプリ 一般タブ">
+  <figcaption>繁體中文の設定アプリ 一般タブ（<code>05_zhTW_settings_general.png</code>）── サイドバーに「輔助使用」が見えています。</figcaption>
+</figure>
+
+<h2>④ イヤホン（Shokz OpenComm2）</h2>
+
+<p>
+厨房スタッフが使う骨伝導イヤホンは Shokz OpenComm2（ブームマイク付き）です。耳をふさがないので、厨房の音を聞きながら読み上げを聞けます。公式仕様の要点は 3 つです：
+</p>
+<ul>
+  <li><b>接続できる距離：最大 30 m</b>（iPad と厨房スタッフの間で遮蔽物がなければ）</li>
+  <li><b>連続通話：最大 16 時間</b>（1 日 1 回の充電でも足りる）</li>
+  <li><b>2 台の機器に同時接続</b>（マルチポイント）</li>
+</ul>
+
+<p>
+<b>厨房スタッフが複数名いる場合は、スタッフ 1 人につき 1 つの iPad と 1 つの OpenComm2 が必要です。</b>iPad 1 台から複数のイヤホンに同じ音を鳴らすこと（「オーディオを共有」）は、Apple の AirPods / Beats 同士では可能ですが、OpenComm2 を含む第三者イヤホンでは<b>できません</b>（出典は末尾 Apple サポート dev3786f35c8）。
+</p>
+
+<p>
+したがって運用は「員工叫號機の候位表を、厨房スタッフが使う iPad 1 台ごとに 1 画面ずつ開く」になります。
+</p>
+
+<h2>⑤ 入口との会話（FaceTime オーディオ）</h2>
+
+<p>
+候位表（Web ページ）の中では、入口と厨房の声の会話は作れません。候位表が置かれている claude.ai の Artifact は、Mits さまが参謀にご指示されたとおり、マイクを扱う仕組みを持っていません。
+</p>
+
+<p>そこで会話は Apple 標準の <b>FaceTime オーディオ</b>で行います：</p>
+
+<ol>
+  <li>入口と厨房の iPad を、それぞれ屋嘉比さまご本人の Apple アカウントでサインインしてください（連絡先に相手の Apple アカウントを登録）。</li>
+  <li>入口の iPad で：<br>
+    日本語：設定 → アクセシビリティ → タッチ → 通話オーディオルーティング →「自動で電話に出る」をオン（応答までの秒数は 0 秒〜短めに）。<br>
+    繁體中文：設定 → 輔助使用 → 觸控 → 通話語音路由 →「自動接聽來電」開啟。
+  </li>
+  <li>厨房のスタッフが、骨伝導イヤホンのマイクで FaceTime をかけます。入口の iPad は人が触らなくても自動で応答し、厨房の声は入口の iPad のスピーカーから出ます。入口のお客さまの声は入口の iPad のマイクが拾い、厨房のイヤホンに届きます。</li>
+</ol>
+
+<div class="warn">
+<b>Simulator に無かった ── 実機で必ず試してください</b><br>
+章 3-3 のとおり、iOS 27 Simulator には「タッチ／觸控」自体が無く、「自動で電話に出る」をオンにするところまで Simulator では確認できていません。Apple のサポートガイド <code>ipad11dbabaf</code> は「自動で電話に出る」が FaceTime の着信に効くとは明記しておらず、別ガイド <code>ipada16d1374</code> も「オーディオの出力先」の話題と並べて書かれています。本番運用の前に、必ず屋嘉比さまの実機で 1 本 FaceTime をかけて、ベルが数秒鳴ったあと勝手に繋がるかをご確認ください。
+</div>
+
+<h2>⑥ 店で確かめる項目（本番前の 4 項目 + 2 項目）</h2>
+
+<ol>
+  <li><b>「自動で電話に出る」が FaceTime 通話に効くか</b> ── 入口の iPad を触らずに置き、厨房の iPad から FaceTime をかけ、設定した秒数で勝手に繋がり、厨房のイヤホンで会話できるか。Apple のガイドは電話／通話一般の話であって、FaceTime に効くとは明記していません。</li>
+  <li><b>候位表の読み上げ（音）と、FaceTime の相手の声が、同時にイヤホンから出るか</b> ── 厨房スタッフが FaceTime 通話中に新しい受付が入った瞬間、読み上げが FaceTime 側に遮断されないか、または FaceTime がミュートされないか。</li>
+  <li><b>アクセスガイド中に FaceTime を受けられるか</b> ── アクセスガイドで候位表を固定している最中、FaceTime 着信画面が前に出るか／自動応答がそのまま効くか。</li>
+  <li><b>「オーディオを共有」が OpenComm2 でできないこと</b>の確認 ── Apple のサポート（dev3786f35c8）は AirPods と Beats の対応モデル同士に限ると書いていますが、現場でそのとおりかを 1 回だけ検証して、厨房スタッフが複数名の場合は「1 iPad 1 OpenComm2」運用で揃えてください。</li>
+  <li><b>員工叫號機の初回タップ</b> ── iOS Safari では、ページを開いた直後の自動呼び出しだけでは speechSynthesis がブロックされることが報告されています（WebKit バグ #223473）。章 ② の指示文のとおり、スタッフは員工叫號機の画面を一度だけ画面上のどこかをタップしてから運用に入ってください。章 ⑤ の Safari テストでは、ユーザが画面上の「Speak now」をタップした直後は、onstart / onend まで正常に発火しています。</li>
+  <li><b>履歴の見える場所</b> ── 変更 2 を入れた後、1 回目の 16:00 片付けが走った翌日、history 表に当日の全組の記録（氏名・電話・各時刻）が入っているか。Claude の会話で「<code>history</code> 表を見せて」とご指示ください。</li>
+</ol>
+
+<p>
+章 ⑤ の Safari テスト結果：
+</p>
+
+<figure>
+  <img src="yakabi_kouihyou_hikitsugi_20261013_img/00_safari_speech_test_zhTW_meijia.png" alt="iOS Safari の speechSynthesis で zh-TW の声 Meijia が 1 件出ている">
+  <figcaption>iPad Simulator の Safari で speechSynthesis.getVoices() を実行した結果。<br>
+  <code>total voices: 68</code>／<code>zh-* voices: 2</code>（Meijia [zh-TW] DEFAULT、Tingting [zh-CN] DEFAULT）／<code>zh-TW only: 1</code>。<br>
+  最初の呼び出しは 0 件（voices はブラウザが非同期で読み込むため）、1〜3 秒待つと 68 件揃うのが Safari の既定の動きです。候位表の指示文はこれを前提にしています。</figcaption>
+</figure>
+
+<figure>
+  <img src="yakabi_kouihyou_hikitsugi_20261013_img/01_safari_speech_speak_success_onstart_onend.png" alt="iOS Safari の speechSynthesis.speak() で onstart と onend が発火">
+  <figcaption>画面上の「Speak now」をタップしたあと、speak() の呼び出しで <code>speaking=true</code>／<code>onstart</code>／<code>onend</code> まで到達しました。<br>
+  Simulator の音は本機のスピーカーから出るので「音が確かに鳴ったか」の録音までは取っていません（API 経路の確認まで）。<b>本番の iPad と OpenComm2 で、章 ⑥ の 1 と 2 を必ず試してください。</b></figcaption>
+</figure>
+
+<h3>出典（Apple サポート・公式仕様・ブラウザ既知事項）</h3>
+<p class="refs">
+Apple サポート「iPad の画面を自動的にオフにするまでの時間を変更する」<br>
+<a href="https://support.apple.com/ja-jp/guide/ipad/ipad3287d76b/ipados">https://support.apple.com/ja-jp/guide/ipad/ipad3287d76b/ipados</a>
+</p>
+<p class="refs">
+Apple サポート「iPad で通話オーディオルーティングを変更する」<br>
+<a href="https://support.apple.com/ja-jp/guide/ipad/ipad11dbabaf/ipados">https://support.apple.com/ja-jp/guide/ipad/ipad11dbabaf/ipados</a>
+</p>
+<p class="refs">
+Apple サポート「iPad で電話に自動的に出る」<br>
+<a href="https://support.apple.com/ja-jp/guide/ipad/ipada16d1374/ipados">https://support.apple.com/ja-jp/guide/ipad/ipada16d1374/ipados</a>
+</p>
+<p class="refs">
+Apple サポート「AirPods または Beats で音声を共有する」（第三者製品は非対応）<br>
+<a href="https://support.apple.com/ja-jp/guide/airpods/dev3786f35c8/web">https://support.apple.com/ja-jp/guide/airpods/dev3786f35c8/web</a>
+</p>
+<p class="refs">
+WebKit Bug #223473（iOS Safari で speechSynthesis がユーザ操作無しに自動発火しない件）<br>
+<a href="https://bugs.webkit.org/show_bug.cgi?id=223473">https://bugs.webkit.org/show_bug.cgi?id=223473</a>
+</p>
+<p class="refs">
+Shokz OpenComm2 UC 公式仕様（最大 30 m／最大 16 時間／マルチポイント）<br>
+<a href="https://jp.shokz.com/products/opencomm2uc-2025upgrade">https://jp.shokz.com/products/opencomm2uc-2025upgrade</a>
+</p>
+
+</body>
+</html>

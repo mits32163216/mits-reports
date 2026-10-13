@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>候位表 引き継ぎ</title>
+<style>
+  :root { color-scheme: light; --ink:#1f2a33; --sub:#5a6772; --line:#dde3e8; --bg:#fbfaf6; --card:#ffffff; --accent:#0f6e64; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif; line-height:1.75; font-size:16px; }
+  main { max-width:760px; margin:0 auto; padding:32px 16px 64px; }
+  h1 { font-size:24px; margin:0 0 4px; }
+  .date { color:var(--sub); font-size:14px; margin-bottom:28px; }
+  h2 { font-size:19px; margin:36px 0 12px; padding-bottom:6px; border-bottom:2px solid var(--accent); }
+  section { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:4px 20px 12px; margin-bottom:8px; }
+  ul { padding-left:1.3em; } li { margin:6px 0; }
+  table { width:100%; border-collapse:collapse; font-size:15px; margin:8px 0 12px; }
+  th, td { border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top; }
+  th { background:#f1f4f2; width:34%; }
+  code { background:#f1f4f2; padding:1px 5px; border-radius:4px; font-size:14px; }
+  .src { font-size:13px; color:var(--sub); word-break:break-all; }
+</style>
+</head>
+<body>
+<main>
+<h1>候位表 引き継ぎ</h1>
+<div class="date">2026年10月13日 ／ 拉麵屋嘉比 屋嘉比さんへ</div>
+
+<h2>1. ご要望</h2>
+<section>
+<ul>
+  <li>入口の iPad で受け付けた内容を、厨房の iPad（管理画面）に届いた時点で読み上げ、厨房スタッフが Bluetooth の骨伝導イヤホンで聞けるようにしたい</li>
+  <li>できれば、そのとき入口のお客さんとスピーカー越しに話したい</li>
+  <li>受け付けた情報をデータベースに残したい</li>
+</ul>
+</section>
+
+<h2>2. 今の候位表の作り（公開ページの中身を読んで確かめたこと）</h2>
+<section>
+<p>対象のページ：<br>https://claude.ai/artifact/MLNSmqhUqCzUxQ4xp7WDe4</p>
+<ul>
+  <li>端末の役割は2つ。入口平板（<code>role = 'entrance'</code>）と員工叫號機（<code>role = 'staff'</code>）</li>
+  <li>データは公開ページに付いているデータベース（db）に入っている。表は <code>queue</code>（1組ごとの受付：番号・人数・姓名・電話・兒童座椅・状態・登録／叫號／入座／取消の時刻）、<code>reservations</code>（予約）、<code>settings</code>（1人あたりの待ち時間）、<code>stats</code>（1日のまとめ）</li>
+  <li>データの変化は <code>onSnapshot</code> ですぐ他の端末に届く。入口で登録すると、員工叫號機の画面にすぐ出る</li>
+  <li>音は入口平板で「叫號されたとき」だけ鳴る（<code>playChime</code>）。員工叫號機の側で、新しい受付に音を鳴らす処理と読み上げの処理は入っていない</li>
+  <li>16:00 と 22:00 に、その日の <code>queue</code> の記録を消している（<code>checkScheduledCleanup</code>）。消す前に <code>stats</code> へ組数・入座数・取消の内訳・人数のまとめを残す。1組ごとの姓名・電話・各時刻は残らない</li>
+  <li>ページのコードの中に「iOS は画面ロックやタブが裏に回ると音を止める」という説明書きがある</li>
+</ul>
+</section>
+
+<h2>3. 調べて分かったこと</h2>
+<section>
+<table>
+  <tr><th>読み上げ（ブラウザの読み上げ機能 speechSynthesis）</th><td>iOS では、画面に触れる操作の中で呼ばないと声が出ない（WebKit 公式）。<br>Mac 上の iPad の再現環境（iOS Simulator）の Safari で声の一覧を取ると、中国語（台湾）の声「Meijia」が1つあった（ページを開いた直後は0件、少し後に68件に増える）</td></tr>
+  <tr><th>画面を出したままにする</th><td>「設定」＞「画面表示と明るさ」＞「自動ロック」で間隔を選べる。<br>「アクセスガイド」で iPad を1つのアプリに固定でき、アクセスガイド中は画面の自動ロックが無効になる（Apple 公式）。<br>裏に回ったときに通信や読み上げが止まるかを書いた公式の資料は見つからなかった</td></tr>
+  <tr><th>iPad 1台につなげるイヤホン</th><td>2組へ同時に音を流す「オーディオを共有」は、AirPods・Beats 同士だけ（Apple 公式）。それ以外のイヤホンは1台を選んで出す</td></tr>
+  <tr><th>「通知の読み上げ」</th><td>AirPods・Beats だけが対象で、iPad がロックされて画面が暗いときだけ読む（Apple 公式）</td></tr>
+  <tr><th>骨伝導イヤホン（Shokz OpenComm2）</th><td>ブームマイク付きの通話向け。公式の仕様は、届く距離 30m・連続通話 最大16時間・2台の機器へ同時接続できる</td></tr>
+  <tr><th>入口と話す（FaceTime）</th><td>「設定」＞「アクセシビリティ」＞「タッチ」＞「通話オーディオルーティング」に「自動で電話に出る」がある（Apple 公式）。FaceTime の音声の出力先と並べて書かれているが、FaceTime の着信に効くとは明記されていない</td></tr>
+  <tr><th>入口と話す（ブラウザどうしの通話 WebRTC）</th><td>Safari で使える。マイクを使うには https が必要。エコーを消す処理は初期値でオン（WebKit 公式）。<br>こちら（西田側）のアカウントで見えた公開ページで使える機能の一覧には、マイクが入っていなかった</td></tr>
+  <tr><th>既製品</th><td>Buddycom（スマホ・タブレットを使うインカム）／poscube「音声調理ナビ」（キッチンの画面の調理指示を読み上げる）。受付の読み上げと入口との通話の両方を1つで持つ製品は見つからなかった</td></tr>
+</table>
+</section>
+
+<h2>4. まだ確かめられていないこと</h2>
+<section>
+<ul>
+  <li>候位表のページの中で、読み上げの声が出るか（再現環境で試したのは別の空のページ）</li>
+  <li>「自動で電話に出る」が FaceTime の着信に効くか（再現環境には「タッチ」の項目が出ず、試せなかった）</li>
+  <li>読み上げと FaceTime の音が、同時に同じイヤホンに出るか</li>
+  <li>アクセスガイド中に FaceTime の着信を受けられるか</li>
+  <li>屋嘉比さんのアカウントで、公開ページにマイクを使う機能があるか</li>
+</ul>
+</section>
+
+<h2>5. 参考：こちらで作った案</h2>
+<section>
+<p><a href="sankou.html">参考：こちらで作った案</a> に、西田側で作りかけた案を入れてあります。候位表に足す変更の指示文、iPad の設定の写真、Simulator での読み上げの試し、などです。</p>
+<p>実物での検収はしていません。写真は Mac 上の iPad の再現環境（iOS Simulator）で撮ったもので、店の iPad の画面とは違うところがあります。決めるときの材料としてお使いください。</p>
+</section>
+
+<h2>出典</h2>
+<section class="src">
+<p>Apple「通話オーディオルーティング」<br>https://support.apple.com/ja-jp/guide/ipad/ipad3287d76b/ipados</p>
+<p>Apple「自動ロック」<br>https://support.apple.com/ja-jp/guide/ipad/ipad11dbabaf/ipados</p>
+<p>Apple「アクセスガイド」<br>https://support.apple.com/ja-jp/guide/ipad/ipada16d1374/ipados</p>
+<p>Apple「オーディオを共有」<br>https://support.apple.com/ja-jp/guide/airpods/dev3786f35c8/web</p>
+<p>Apple「通知の読み上げ」<br>https://support.apple.com/ja-jp/102536</p>
+<p>WebKit Bug 223473（読み上げは操作の中で呼ぶ）<br>https://bugs.webkit.org/show_bug.cgi?id=223473</p>
+<p>WebKit「WebRTC」<br>https://webkit.org/blog/7763/a-closer-look-into-webrtc/</p>
+<p>WebKit Bug 257495（エコーを消す処理の初期値）<br>https://bugs.webkit.org/show_bug.cgi?id=257495</p>
+<p>Shokz OpenComm2<br>https://jp.shokz.com/products/opencomm2uc-2025upgrade</p>
+<p>Buddycom<br>https://www.buddycom.net/ja/index.html</p>
+<p>poscube<br>https://pos-cube.com/</p>
+</section>
+</main>
+</body>
+</html>
