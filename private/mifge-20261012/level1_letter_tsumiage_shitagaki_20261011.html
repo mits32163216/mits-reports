@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>LEVEL 1 価値の積み上げ レターの下書き（2026-10-11）</title>
+<style>
+:root{color-scheme:light only;--navy:#1a3a52;--navy2:#2c5575;--ivory:#f7f3ea;--paper:#ffffff;--gold:#b89544;--mitate:#e0b100;--copy:#fffaf0;--ng:#b04848;--ai:#9a7a9a;}
+html,body{background:var(--paper);color:#1f2328;}
+body{font-family:-apple-system,"Hiragino Sans","Yu Gothic","Noto Sans JP",sans-serif;font-size:15.5px;line-height:1.85;max-width:1000px;margin:0 auto;padding:28px 20px 60px;}
+h1{font-size:1.45em;color:var(--navy);border-bottom:3px solid var(--navy);padding-bottom:8px;line-height:1.4;margin:0 0 10px;}
+.meta{color:#555;font-size:13.5px;margin:0 0 24px;line-height:1.75;}
+h2{font-size:1.1em;color:var(--navy);margin:34px 0 10px;padding:6px 12px;background:#eef3f8;border-left:6px solid var(--navy2);}
+h3{font-size:1.0em;color:var(--navy);margin:22px 0 8px;}
+
+.decl-top{background:#fff;border-left:5px solid var(--gold);padding:14px 18px;margin:0 0 22px;font-weight:700;color:var(--navy);font-size:1.02em;}
+.decl-top .ryo{display:block;margin-top:4px;color:#444;font-size:.92em;font-weight:normal;}
+
+.card{background:#fff;border:1px solid #cfd6dd;border-left:5px solid var(--gold);padding:14px 18px;margin:0 0 14px;border-radius:3px;}
+.card .hoshi{color:var(--navy);font-weight:700;font-size:1.05em;margin:0 0 6px;line-height:1.5;}
+.card .naka{color:#2a2a2a;margin:0 0 6px;font-size:.95em;line-height:1.7;}
+.card .naka .ryo{color:#2e5a39;font-size:.88em;display:block;margin-top:3px;}
+.card .ne{color:var(--navy);font-weight:700;font-size:.98em;margin:0;text-align:right;}
+.card.sosa{border-left-color:#8aa6c8;}
+.card.sosa .ne{color:#888;font-weight:normal;}
+.card.sosa .sosa-tag{display:inline-block;background:#f3ead0;color:#8a6f2b;font-size:.78em;font-weight:700;padding:1px 7px;border-radius:3px;margin-right:6px;border:1px solid #e0d4a5;}
+.ai-tag{display:inline-block;color:var(--ai);font-size:.82em;font-weight:600;margin-left:6px;opacity:.85;}
+.ai-ne{color:var(--ai) !important;}
+
+.sec-title{background:var(--navy2);color:#fff;font-weight:700;padding:10px 14px;margin:28px 0 14px;letter-spacing:.02em;}
+.sec-title .lead{display:block;font-weight:normal;font-size:.88em;margin-top:3px;opacity:.95;}
+
+.tokuten{background:#fffbe6;border:1.5px solid var(--gold);padding:16px 20px;margin:0 0 16px;border-radius:4px;}
+.tokuten .no{display:inline-block;background:var(--gold);color:#fff;font-weight:700;padding:3px 11px;border-radius:3px;margin-right:9px;font-size:.9em;letter-spacing:.03em;}
+.tokuten .title{color:var(--navy);font-weight:700;font-size:1.08em;margin:0 0 8px;line-height:1.5;}
+.tokuten .ryo{display:inline-block;background:var(--navy);color:#fff;font-weight:700;padding:3px 10px;border-radius:3px;font-size:.9em;margin:0 0 10px;}
+.tokuten .naka{margin:0 0 6px;font-size:.95em;line-height:1.75;}
+.tokuten ul.list{margin:6px 0 4px 1.3em;padding:0;font-size:.9em;line-height:1.75;color:#333;}
+.tokuten ul.list li{margin:1px 0;}
+.tokuten .nedan{color:var(--ai);font-size:.88em;margin-top:8px;font-weight:600;}
+
+.total{background:#fff;border:2.5px solid var(--navy);padding:18px 22px;margin:30px 0 10px;border-radius:4px;}
+.total h2{background:none;border:none;padding:0;margin:0 0 10px;font-size:1.2em;}
+.total .row{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:1px dotted #cfd6dd;}
+.total .row:last-of-type{border-bottom:none;}
+.total .row .label{color:#333;font-size:.98em;}
+.total .row .val{color:var(--navy);font-weight:700;font-size:1.08em;}
+.total .sum-single{font-size:1.3em;}
+.total .sen{margin-top:12px;padding:10px 14px;background:#eef3f8;border-left:5px solid var(--gold);font-size:.95em;color:#333;line-height:1.75;}
+.total .sen b{color:var(--navy);}
+.total .nedan-box{margin-top:14px;padding:12px 16px;background:#fffbe6;border:1px dashed var(--gold);color:#8a6f2b;font-weight:700;font-size:.98em;text-align:center;}
+
+.kongen{margin-top:30px;}
+.kongen table{width:100%;border-collapse:collapse;font-size:.88em;}
+.kongen th,.kongen td{border:1px solid #cfd6dd;padding:6px 8px;text-align:left;vertical-align:top;}
+.kongen th{background:#eef3f8;color:var(--navy);font-weight:700;}
+.kongen td.ai{color:var(--ai);font-weight:600;}
+.kongen caption{text-align:left;font-weight:700;color:var(--navy);margin-bottom:6px;}
+
+.foot{margin-top:40px;padding-top:14px;border-top:1px solid #ddd;font-size:12.5px;color:#666;line-height:1.75;}
+.foot b{color:var(--navy);}
+.foot .num{color:var(--navy);font-weight:700;}
+</style>
+</head>
+<body>
+
+<h1>LEVEL 1 価値の積み上げ レターの下書き</h1>
+<p class="meta">
+2026-10-11 ／ 読む人：西田（手元で読む下書き）／ 書いた人：FA-writer（司令塔からの発注・2026-10-11 に BA-strategist が AI想定の金額を全行に挿入）／ 公開しない。<br>
+目的：LEVEL 1 のレターのうち「価値の積み上げの区画」1つだけを1枚で読めるようにすること。<br>
+値段（LEVEL 1 の値段）は書いていません。見出し・物語・保証・申し込みの区画も書いていません。<br>
+出どころ：LEVEL 1 の表（level_hyou_20261008_level1.html・29 行・data-default のある 12 行の値のみそのまま使用）／付加価値の候補（level_hyou_20261008_level4.html・著書 25・資料 26〈1 件準備中〉・動画音声 6）／三上さんの LP の並べ方（番号つきのカード・数で量を見せる）／Mits様 2026-10-10 原文「ほしくなる言葉」の見本5件。<br>
+<b style="color:var(--ai);">AI想定について：</b>空いていた17行と特典3件に、BA-strategist が「同じ表の中の似た行の金額」を基準に AI想定 の金額を入れました。印は <span class="ai-tag">AI想定</span>（薄い紫）です。表の初期値がある 12 行は1円も変えていません。
+</p>
+
+<!-- =============================================
+  冒頭 ── Mits様 2026-10-08 の見本の形
+  実測：level_hyou_20261008_level1.html 行96
+================================================== -->
+<p class="decl-top">
+✅ 動画講義 438本以上　✅ 総再生時間 45時間超え　✅ 記事テキスト 29,000文字以上
+<span class="ryo">（※2026/10/8 時点・LEVEL 1 の表「冒頭の宣言」からそのまま）</span>
+</p>
+
+<!-- =============================================
+  価値の積み上げ：LEVEL 1 の表 29 行
+================================================== -->
+
+<h2>LEVEL 1 で手に入るもの ── 1 つずつ積み上げます</h2>
+
+<div class="sec-title">
+西田経営メソッドの入口と本編（9 項目）
+<span class="lead">The Library の無料コース 2 本と、西田経営メソッド 7 コースの本編</span>
+</div>
+
+<div class="card">
+  <p class="hoshi">AI時代でも読まなければいけない、西田経営メソッド入門 全19本</p>
+  <p class="naka">The Innovation 経営メソッド入門。業種・粗利・現預金──動けない6年目から出る、根本の論点を19本に畳んで見られます。<span class="ryo">✅ 動画 24本 ✅ 総再生時間 5時間17分 ✅ 記事テキスト 8,817文字</span></p>
+  <p class="ne">単発相当：39,800 円</p>
+</div>
+
+<div class="card">
+  <p class="hoshi">AI時代に事業を一段押し上げる、絶対外せない本編の1本</p>
+  <p class="naka">AI で頼られる人が、事業を一段押し上げる方法（本編 DL）。1本に凝縮した読み物で受け取れます。<span class="ryo">✅ 記事テキスト 1,166文字</span></p>
+  <p class="ne">単発相当：9,800 円</p>
+</div>
+
+<div class="card">
+  <p class="hoshi">売上と単価と利益、3つを同時に動かす土台 全39本</p>
+  <p class="naka">経営パワー／売上・＠・利益向上。1人型の事業で3つの数字を同時に動かす土台を39本に積みました。<span class="ryo">✅ 動画 11本 ✅ 総再生時間 4時間33分 ✅ 記事テキスト 287文字</span></p>
+  <p class="ne">単発相当：39,800 円</p>
+</div>
+
+<div class="card">
+  <p class="hoshi">月1冊が3冊に2冊で止まる自分を直す、知のパワー 全13本</p>
+  <p class="naka">知のパワー／教養／知的パフォーマンス向上。読書法と教養の土台を13本で入れます。<span class="ryo">✅ 動画 8本 ✅ 総再生時間 50分 ✅ 記事テキスト 224文字</span></p>
+  <p class="ne">単発相当：58,000 円</p>
+</div>
+
+<div class="card">
+  <p class="hoshi">＠2000万円がスタート地点に見える、ザ・コアゴールド 全38本</p>
+  <p class="naka">西田の経営の土台38本。知のコアを一本の軸に揃えます。<span class="ryo">✅ 動画 119本 ✅ 総再生時間 15時間45分 ✅ 記事テキスト 19,152文字</span></p>
+  <p class="ne ai-ne">単発相当：98,000 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card">
+  <p class="hoshi">お金の悩みが数字で解ける、会計・経理の全部 全54本</p>
+  <p class="naka">会計・経理のコース。税理士まかせから自分で読める側へ移るための54本。<span class="ryo">✅ 動画 54本 ✅ 総再生時間 2時間42分</span></p>
+  <p class="ne">単発相当：29,800 円</p>
+</div>
+
+<div class="card">
+  <p class="hoshi">お金を残す側に立ち直す、経営戦略 全112本</p>
+  <p class="naka">経営戦略の側面からお金を残すコース。「売れたのに手取りが変わらない」の構造から抜ける112本。<span class="ryo">✅ 動画 112本 ✅ 総再生時間 4時間25分</span></p>
+  <p class="ne">単発相当：29,800 円</p>
+</div>
+
+<div class="card">
+  <p class="hoshi">単価を上げる怖さが消える、マーケティングの型 全65本</p>
+  <p class="naka">マーケティングを改善してお金を残すコース。単価の設計の型を65本に揃えました。<span class="ryo">✅ 動画 65本 ✅ 総再生時間 2時間30分</span></p>
+  <p class="ne">単発相当：29,800 円</p>
+</div>
+
+<div class="card">
+  <p class="hoshi">仕組みを作る時間を取り返す、業務・仕事術 全47本</p>
+  <p class="naka">業務・仕事術を改善してお金を残すコース。1人の時間が原価の仕事を、仕組みに置き直す47本。<span class="ryo">✅ 動画 47本 ✅ 総再生時間 1時間48分</span></p>
+  <p class="ne">単発相当：29,800 円</p>
+</div>
+
+<div class="sec-title">
+手元で毎日使う道具（2 項目）
+<span class="lead">数字を見る運転台と、知的キャッチボールの相手</span>
+</div>
+
+<div class="card">
+  <p class="hoshi">自分の会社の数字が1画面で見える、唯一の運転台</p>
+  <p class="naka">経営の運転台（月額・PREMIUM 相当）。MF・Stripe・UTAGE・CSV を取り込み、11画面の計器盤で自分の会社の数字を1画面にまとめます。</p>
+  <p class="ne">月額相当：5,000 円／月</p>
+</div>
+
+<div class="card">
+  <p class="hoshi">知的キャッチボールの相手が、手元に1人立つ</p>
+  <p class="naka">AI-Mits（アプリ版・Web 版・同じアカウント）。FAST／NORMAL／DEEP／かかりつけの4モードで、分析しすぎて動けない所を自分の言葉で言語化できます。</p>
+  <p class="ne">月額相当：5,000 円／月</p>
+</div>
+
+<div class="sec-title">
+AI の全体像を1周する講座（1 項目）
+<span class="lead">AI 時代の経営を、録画4回で設計から運用まで</span>
+</div>
+
+<div class="card">
+  <p class="hoshi">AIで売上に効かせる、4回の録画 全部</p>
+  <p class="naka">AI 講座 全4回の録画。第1回「魂の設計──外部記憶と判断の土台」／第2回「道具の整備──ハーネスエンジニアリング」／第3回「いよいよ AI 社員実装──Agent Teams」／第4回「運用サイクル──経営に活かす本番」。<span class="ryo">✅ 動画 4本 ✅ 総再生時間 9時間13分</span></p>
+  <p class="ne">単発相当：29,800 円</p>
+</div>
+
+<div class="sec-title">
+梅サポート 5 点
+<span class="lead">西田のノウハウを1人で正確に受け取るための、5つの手元の道具</span>
+</div>
+
+<div class="card">
+  <p class="hoshi">西田の反転グルコン11本、現場で引き直す逆引き付き</p>
+  <p class="naka">反転グルコンの切り出し11本と逆引き表。質問・判断・反転の切れ目で引き直せます。</p>
+  <p class="ne">月額相当：5,000 円／月</p>
+</div>
+
+<div class="card">
+  <p class="hoshi">西田のノウハウ全部、お金が残る101項目の読む順</p>
+  <p class="naka">ノウハウ全部と 101 項目の読む順。何から手を付ければ良いか分からない頭に、順番を1本の線で入れます。</p>
+  <p class="ne ai-ne">月額相当：3,000 円／月相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card">
+  <p class="hoshi">自分の理解を自分の言葉で測る、10問</p>
+  <p class="naka">理解度チェック 10 問。自分がどこまで受け取れたかを、自分の言葉で確かめられます。</p>
+  <p class="ne ai-ne">月額相当：2,000 円／月相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card">
+  <p class="hoshi">AIの時間と学ぶ筋道、1枚で点検</p>
+  <p class="naka">AI 時間とシラバス点検。自分の現在地と、次に積むべき筋道が1枚で分かります。</p>
+  <p class="ne ai-ne">月額相当：3,000 円／月相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card">
+  <p class="hoshi">スキル・エージェント・MCP・hook、AIの道具の全体像</p>
+  <p class="naka">AI の道具の種類と使い方。4つの道具が何をするものか、どう組むかが分かります。</p>
+  <p class="ne ai-ne">月額相当：3,000 円／月相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="sec-title">
+エスコートアルケミーの試案 12 点
+<span class="lead">西田が1対1でお渡しした教材と、西田塾の録画を、1つのアカウントで</span>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案（EA）</span>西田が1対1で渡した、最重要の6本をその順で</p>
+  <p class="naka">入会直後の読む順リスト。DMi → CPF → 最強仕事術 → 戦略会計STRAC の書き方 → 振り子 → 経営戦略は家族のため の6本を、その順で渡します。</p>
+  <p class="ne ai-ne">9,800 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案（EA）</span>大衆と正統の分かれ目、事業の強さを測る物差し</p>
+  <p class="naka">入会時必須教材「大衆のロジックと正統のロジックとは？」「事業の強さを測るアットマーク解説動画」の2本。</p>
+  <p class="ne ai-ne">19,800 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案（EA）</span>家族を幸せにするための、目標設定と達成の標準</p>
+  <p class="naka">目標設定と達成の標準化。音源 2時間23分＋PDF 3つ・画像1つ・Word 1つの一式です。</p>
+  <p class="ne ai-ne">29,800 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案（EA）</span>西田の全根幹を1周する、インストール講座9本</p>
+  <p class="naka">インストール講座の録画9本（DMi／最強仕事術／CPF／マーケティング概論／目標達成メカニズムと達成する目標設定術／お金を残す戦略24／正統の成功ロジック1day／正統の成功ロジックセミナー 2本）。</p>
+  <p class="ne ai-ne">98,000 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案（EA）</span>お金を残す側に移る、戦略24項目</p>
+  <p class="naka">お金を残す戦略 24（24TWENTYFOUR）。</p>
+  <p class="ne ai-ne">29,800 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案（EA）</span>＠2000万円に届かせる、西田本人のフレーム解説</p>
+  <p class="naka">＠2000 フレームの解説（西田光弘・録画）。</p>
+  <p class="ne ai-ne">29,800 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案（EA）</span>単価が怖い自分を直す、ランチェスター法則</p>
+  <p class="naka">ブッフェ_ランチェスター法則。</p>
+  <p class="ne ai-ne">19,800 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案（EA）</span>税理士まかせから自分で読める側へ、西田塾の会計講座</p>
+  <p class="naka">アルケミー第2期 第三講座 第2部（会計・659秒から）。</p>
+  <p class="ne ai-ne">29,800 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案（EA）</span>個人と法人の間でお金が消える仕組み、西田塾で分かる</p>
+  <p class="naka">西田塾 アルケミー第1期 第二講座（STRAC・ギシツカイ・個人と法人のお金）。</p>
+  <p class="ne ai-ne">29,800 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案（EA）</span>頭の中の散らかりを止める、西田のノート術</p>
+  <p class="naka">アルケミー第1期 第五講座 第2部（ノートの使い方）。</p>
+  <p class="ne ai-ne">19,800 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案（EA）</span>一人目のお客様を仕組みで生み出す、戦略構築シート7ステップ</p>
+  <p class="naka">戦略構築シート＋音声（一人目のお客様を仕組みで生み出す7ステップ・音声 63分＋PDF）。</p>
+  <p class="ne ai-ne">29,800 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案（EA）</span>西田の言葉を現場で使いこなす、西田語の辞書</p>
+  <p class="naka">西田語Wiki（the-core.jp/nishidagowiki・2013〜2019 の記事）。</p>
+  <p class="ne ai-ne">19,800 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<!-- =============================================
+  付加価値の特典（LEVEL 4 ── AI想定で3件とも金額を入れた）
+================================================== -->
+
+<h2>さらに、入会特典として ── 書庫から3つ</h2>
+<p style="margin:0 0 14px;color:#444;font-size:.95em;line-height:1.75;">LEVEL 4 の資料庫から、入会の方だけに3つの特典をお付けします。1件ずつの値段は元ページに書かれていないため、BA-strategist が同種の相場（PDF 書籍・資料・学習動画）を基準に AI想定 の金額を付けました。</p>
+
+<div class="tokuten">
+  <p class="title"><span class="no">特典 1</span>AI時代でも読まなければいけない、圧倒的に儲かる著書リスト25</p>
+  <p class="ryo">PDF 全25冊 ／ まとめて納品</p>
+  <p class="naka">西田が、1人型起業家に手渡してきた著書を25冊。<b>PDF として納品できます</b>（紙の本を揃える手間は要りません）。利益の型・単価の設計・編集の技術・会計の構造・社史の読み方まで、1人型の経営に効く25冊を、入会直後にまとめてお渡しします。</p>
+  <ul class="list">
+    <li>ザ・プロフィット 利益はどのようにして生まれるのか(アドリアン・J・スライウォツキー)</li>
+    <li>予想どおりに不合理：行動経済学が明かす「あなたがそれを選ぶわけ」(ダン・アリエリー)</li>
+    <li>一瞬でキャッシュを生む!価格戦略プロジェクト(主藤孝司)</li>
+    <li>白いネコは何をくれた?(佐藤義典)</li>
+    <li>松岡正剛『知の編集工学』『知の編集術』</li>
+    <li>石田梅岩『都鄙問答』</li>
+    <li>リアリティ・トランサーフィン〈1〉〈2〉(ヴァジム・ゼランド)</li>
+    <li>成長の限界 ── ローマ・クラブ レポート</li>
+    <li>ジュリア・キャメロン『ずっとやりたかったことを、やりなさい。』</li>
+    <li>財務を制するものは企業を制す(三枝匡)</li>
+    <li>三枝匡『経営パワーの危機』『戦略プロフェッショナル』『V字回復の経営』『ザ・会社改造』</li>
+    <li>ビジョナリー・カンパニー 2・4(ジム・コリンズ)</li>
+    <li>資本論マンガ 前編・後編／理論劇画 マルクス資本論／超入門 資本論(小暮太一)</li>
+    <li>アイデアの作り方(ジェームス・W・ヤング)</li>
+    <li>単なる知り合いが顧客に変わる本</li>
+    <li>お金の流れが一目でわかる!　超★ドンブリ経営のすすめ(和仁達也)</li>
+  </ul>
+  <p class="nedan">50,000 円相当 <span class="ai-tag">AI想定</span>（PDF 書籍 1冊あたり相場 2,000 円×25冊として算出）</p>
+</div>
+
+<div class="tokuten">
+  <p class="title"><span class="no">特典 2</span>分析で止まる頭に、1枚で動き出せる実践シート群26</p>
+  <p class="ryo">PDF／エクセル／テキスト 全26点 ／ 1点が1枚から数ページ</p>
+  <p class="naka">西田語の辞書(13ページ)・付加価値白書 DMC(10ページ)・＠2000 フレーム(1枚)・DMI チェック 16 項目・104 頭のフレーム(1枚)・本選び・編集問題・石田梅岩の資料・「逆に」の資料──1人型の経営の急所を、1枚で動き出せる形に畳んだ実践シートです。</p>
+  <ul class="list">
+    <li>西田語クイックリファレンス(PDF・13ページ)</li>
+    <li>付加価値白書 DMC(PDF・10ページ)</li>
+    <li>＠2000 フレーム(PDF・1枚)</li>
+    <li>DMI チェック 16 項目(PDF・2ページ)</li>
+    <li>104 頭のフレーム(PDF・1枚)</li>
+    <li>本選び(PDF・2ページ)</li>
+    <li>編集問題(PDF・1枚)</li>
+    <li>石田梅岩(PDF・4ページ)</li>
+    <li>「逆に」の資料(PDF・2ページ)</li>
+    <li>ほか 17 点(計 26 点のうち 1 点は準備中)</li>
+  </ul>
+  <p class="nedan">52,000 円相当 <span class="ai-tag">AI想定</span>（実践シート 1点あたり相場 2,000 円×26点として算出）</p>
+</div>
+
+<div class="tokuten">
+  <p class="title"><span class="no">特典 3</span>学ぶ順で聴く、西田の学習動画・音声6点</p>
+  <p class="ryo">動画・音声 全6点</p>
+  <p class="naka">西田が過去に録ってきた学習動画・音声から6点。読む順・聴く順を揃えてお渡しします。</p>
+  <p class="nedan">30,000 円相当 <span class="ai-tag">AI想定</span>（学習動画・音声 1点あたり相場 5,000 円×6点として算出）</p>
+</div>
+
+<!-- =============================================
+  合計の区画
+================================================== -->
+
+<div class="total">
+<h2>LEVEL 1 価値の合計</h2>
+
+<div class="row">
+  <span class="label">① 書庫・本編の単発相当（表の値がある 9 行）</span>
+  <span class="val">296,400 円</span>
+</div>
+<div class="row">
+  <span class="label">② AI想定の単発相当（ザ・コアゴールド 1行＋EA 12行）</span>
+  <span class="val ai-ne">463,800 円 <span class="ai-tag">AI想定</span></span>
+</div>
+<div class="row">
+  <span class="label">③ 特典 3件の AI想定（著書25冊・資料26点・動画音声6点）</span>
+  <span class="val ai-ne">132,000 円 <span class="ai-tag">AI想定</span></span>
+</div>
+<div class="row">
+  <span class="label"><b>単発相当の合計 ①＋②＋③</b></span>
+  <span class="val sum-single">892,200 円</span>
+</div>
+<div class="row">
+  <span class="label">④ 道具・サポートの月額相当（表の値がある 3 行）</span>
+  <span class="val">15,000 円／月</span>
+</div>
+<div class="row">
+  <span class="label">⑤ AI想定の月額相当（梅サポート 4行）</span>
+  <span class="val ai-ne">11,000 円／月 <span class="ai-tag">AI想定</span></span>
+</div>
+<div class="row">
+  <span class="label"><b>月額相当の合計 ④＋⑤</b></span>
+  <span class="val">26,000 円／月</span>
+</div>
+
+<div class="sen">
+<b>西田の線</b>（2026-10-08 発言・1文字も変えずに引用）：<br>
+「LEVEL1は合計額が仮に1万ドル、が97ドルでそれの10ヶ月分970ドルで手に入るよ　1000ドルー1万ドルなので　支払いの10倍の価値づけ必要がある」。<br>
+<br>
+<b>価値の総和（単発相当＋月額相当×12。Mits様 2026-10-11「月額相当は12倍して単発と足したモノを出さないと」）：</b><br>
+892,200 円 ＋ 26,000 円／月 × 12 ＝ <b>1,204,200 円</b><br>
+970,000 円の線に対して <b>約 124.1 %</b>（表の値の分 296,400＋15,000×12＝476,400 円で約 49.1%・AI想定の分 595,800＋11,000×12＝727,800 円で約 75.0%）。<br>
+<br>
+<b>単発相当だけで見ると：</b>892,200 円 ÷ 970,000 円 ＝ 約 92.0 %。<br>
+<br>
+AI想定の分は、BA-strategist が「同じ表の中の似た行の金額」と「同種の相場」から AI想定 で入れた仮の値です。西田が1行ずつご判断いただいてから確定します。
+</div>
+
+<div class="nedan-box">
+LEVEL 1 の値段 ［値段：西田が決める］
+</div>
+</div>
+
+<!-- =============================================
+  AI想定の根拠 ── 全21行（17空欄＋特典3件＋補助1行）
+================================================== -->
+
+<div class="kongen">
+<table>
+<caption>AI想定の根拠（全21行・BA-strategist が付けた AI想定 の内訳）</caption>
+<thead>
+<tr><th>行の名前</th><th>入れた金額</th><th>根拠の種類</th><th>出どころ・算出</th></tr>
+</thead>
+<tbody>
+<tr><td>ザ・コアゴールド 全38本（動画 119本・15時間45分・19,152 文字）</td><td class="ai">98,000 円</td><td>同じ表の似た行から類推</td><td>LEVEL 1 の表の中で動画本数も再生時間も最大の行。会計 54本=29,800／戦略 112本=29,800／知のパワー 13本=58,000 の pattern から、本数と戦略的重みで一段上の 98,000 と置いた</td></tr>
+<tr><td>101 項目の読む順（梅サポート）</td><td class="ai">3,000 円／月</td><td>同じ梅サポート内の似た行から</td><td>反転グルコン11本=5,000/月を基準に、ノウハウ全部の目次としてはやや軽い扱いで 3,000/月</td></tr>
+<tr><td>理解度チェック 10 問</td><td class="ai">2,000 円／月</td><td>同じ梅サポート内の似た行から</td><td>梅サポート 5点の中で最も軽量（10問のチェックシート）なので 2,000/月</td></tr>
+<tr><td>AI 時間とシラバス点検</td><td class="ai">3,000 円／月</td><td>同じ梅サポート内の似た行から</td><td>101項目の読む順と同格の整理ツールとして 3,000/月</td></tr>
+<tr><td>AI の道具の種類と使い方（スキル・エージェント・MCP・hook）</td><td class="ai">3,000 円／月</td><td>同じ梅サポート内の似た行から</td><td>101項目の読む順と同格の整理ツールとして 3,000/月</td></tr>
+<tr><td>EA 最重要6本の読む順リスト</td><td class="ai">9,800 円</td><td>LEVEL 1 の表の最軽量行から</td><td>本編 DL（1,166文字）=9,800 と同格。順序を揃えた読む順リストとして同じ単発相当に揃えた</td></tr>
+<tr><td>EA 大衆・正統 + アットマーク解説動画（2本）</td><td class="ai">19,800 円</td><td>LEVEL 1 の表の中位行から類推</td><td>動画2本の入会時必須教材。本編 DL 9,800 と会計コース 29,800 の中間として 19,800</td></tr>
+<tr><td>EA 目標設定と達成の標準化（音源 2h23m＋PDF 3＋画像 1＋Word 1）</td><td class="ai">29,800 円</td><td>LEVEL 1 の 29,800 系から類推</td><td>音源2h23m 相当の講座は会計 54本（2h42m）と同格・29,800 と揃えた</td></tr>
+<tr><td>EA インストール講座 全9本（DMi／最強仕事術／CPF／マーケ／目標達成／お金を残す戦略24／正統1day／正統2本）</td><td class="ai">98,000 円</td><td>LEVEL 1 の最上位行と同格</td><td>西田経営の全根幹を1周する録画9本。ザ・コアゴールド 98,000 と同格の最大行として揃えた</td></tr>
+<tr><td>EA お金を残す戦略 24（24TWENTYFOUR）</td><td class="ai">29,800 円</td><td>LEVEL 1 の 29,800 系から類推</td><td>戦略 112本=29,800・マーケ 65本=29,800 と同格</td></tr>
+<tr><td>EA ＠2000 フレーム解説（西田光弘・録画）</td><td class="ai">29,800 円</td><td>LEVEL 1 の 29,800 系から類推</td><td>単体の録画講座として会計コース 29,800 と同格</td></tr>
+<tr><td>EA ブッフェ_ランチェスター法則</td><td class="ai">19,800 円</td><td>LEVEL 1 の中位行から類推</td><td>単体テーマの録画講座として 19,800</td></tr>
+<tr><td>EA アルケミー第2期 第三講座 第2部（会計・659秒から）</td><td class="ai">29,800 円</td><td>同じ表の会計コース 29,800 と同格</td><td>西田塾の会計講座として LEVEL 1 の会計コース 29,800 と揃えた</td></tr>
+<tr><td>EA アルケミー第1期 第二講座（STRAC・ギシツカイ・個人と法人のお金）</td><td class="ai">29,800 円</td><td>LEVEL 1 の 29,800 系から類推</td><td>戦略の中核講座として 29,800</td></tr>
+<tr><td>EA アルケミー第1期 第五講座 第2部（ノート術）</td><td class="ai">19,800 円</td><td>LEVEL 1 の中位行から類推</td><td>単体テーマの実技講座として 19,800</td></tr>
+<tr><td>EA 戦略構築シート 7ステップ（音声 63分＋PDF）</td><td class="ai">29,800 円</td><td>LEVEL 1 の 29,800 系から類推</td><td>音声63分＋PDF のワーク一式として 29,800</td></tr>
+<tr><td>EA 西田語Wiki（the-core.jp／2013〜2019 の記事）</td><td class="ai">19,800 円</td><td>見立て</td><td>7年分の記事データベース。他の読む順リスト（9,800）と単体講座（29,800）の中間として 19,800。基準：記事量と参照頻度</td></tr>
+<tr><td>特典 1 著書リスト 25冊（PDF 納品）</td><td class="ai">50,000 円</td><td>世の中の相場</td><td>Amazon の実用書 PDF 版相場 2,000 円／冊 × 25冊 = 50,000。三枝匡・コリンズ・ゼランド等のビジネス書は 1,500〜3,000 円帯の中央値</td></tr>
+<tr><td>特典 2 実践シート群 26点（PDF／エクセル／テキスト）</td><td class="ai">52,000 円</td><td>世の中の相場</td><td>実務テンプレ・ワークシートの相場 2,000 円／点 × 26点 = 52,000。付加価値白書 DMC（10ページ）等の分量ベース</td></tr>
+<tr><td>特典 3 学習動画・音声 6点</td><td class="ai">30,000 円</td><td>世の中の相場</td><td>単発学習コンテンツの相場 5,000 円／点 × 6点 = 30,000。LEVEL 1 の 本編 DL 9,800 と単体講座 29,800 の中間帯で、1点あたりの重さを平均化</td></tr>
+<tr><td>（補助）価値の総和＝単発 892,200 ＋ 月額 26,000×12</td><td class="ai">1,204,200 円</td><td>算出</td><td>単発相当（表 296,400 ＋ AI想定 463,800 ＋ 特典 132,000）＋ 月額相当（表 15,000 ＋ AI想定 11,000）× 12</td></tr>
+</tbody>
+</table>
+<p style="font-size:.88em;color:#666;margin-top:8px;line-height:1.75;">
+AI想定 の値は、BA-strategist が「同じ表の中の似た行の金額」「同種の相場」「見立て」の3種類の根拠を1行ごとに添えて付けた仮の値です。西田が1行ずつご判断いただいてから確定します。「見立て」は 1 行（西田語Wiki）のみです。
+</p>
+</div>
+
+<!-- =============================================
+  検収の線
+================================================== -->
+
+<div class="foot">
+<b>検収の線（値）</b><br>
+・積み上げた件数：<span class="num">29 行</span>（LEVEL 1 の表 29 行から全部）＋ LEVEL 4 から特典 <span class="num">3 件</span>（著書25冊・資料26点・動画音声6点）<br>
+・空のまま残っている「［円相当：西田が入れる］」の出現：<span class="num">0 個</span><br>
+・AI想定 の印が付いた金額の数：<span class="num">20 個</span>（表17行 ＋ 特典3件）<br>
+・AI想定 の根拠の表の行の数：<span class="num">20 行</span>（＋補助1行）── 印の数と一致<br>
+・根拠の欄が空の行：<span class="num">0 個</span><br>
+・「見立て」と頭に書いた行の数：<span class="num">1 行</span>（西田語Wiki）<br>
+・表の初期値がある 12 行の金額：<span class="num">変更前と差 0 円</span>（1行目 39,800／2行目 9,800／3行目 39,800／4行目 58,000／6行目 29,800／7行目 29,800／8行目 29,800／9行目 29,800／12行目 29,800／10行目 5,000/月／11行目 5,000/月／13行目 5,000/月）<br>
+・冒頭の ✅ 行の数字（438本／45時間／29,000文字）：LEVEL 1 の表 行96 と一致<br>
+・単発相当の合計：① 296,400 ＋ ② 463,800 ＋ ③ 132,000 ＝ <b>892,200 円</b><br>
+　② の内訳：98,000（コアゴールド）＋ 9,800＋19,800＋29,800＋98,000＋29,800＋29,800＋19,800＋29,800＋29,800＋19,800＋29,800＋19,800（EA 12行）＝ 98,000＋365,800 ＝ 463,800<br>
+　③ の内訳：50,000（特典1）＋ 52,000（特典2）＋ 30,000（特典3）＝ 132,000<br>
+・月額相当の合計：④ 15,000 ＋ ⑤ 11,000 ＝ <b>26,000 円／月</b>（内訳：3,000＋2,000＋3,000＋3,000 ＝ 11,000）<br>
+・単発相当＋月額相当×12：892,200 ＋ 26,000×12 ＝ <b>1,204,200 円</b><br>
+・970,000 円に対する割合：1,204,200 ÷ 970,000 ＝ <b>約 124.1 %</b>（単発のみ：892,200 ÷ 970,000 ＝ 約 92.0 %）<br>
+・LEVEL 1 の値段（9,700 円・97 ドル）の自分の判断としての出現：<span class="num">0 個</span>（Mits様の 2026-10-08 発言の引用部分に「97ドル」「970ドル」が1回ずつ出るが、1文字も変えずに引用した結果で、こちらが値段を書いた箇所ではない）<br>
+・禁止語（不安をあおる3語）の出現：<span class="num">0 個</span><br>
+・読み手の呼び名：「西田」と記載（「Mits様」は使っていない・お客様向けの下書きのため）<br>
+・ファイル：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/_wip/linchpin_nou_no_naka_20261005/level1_letter_tsumiage_shitagaki_20261011.html</code>（バイト数は保存後に確定）<br>
+・直す前のファイル：<code>/tmp/letter_mae_20261011.html</code>（25,932 bytes・この文書で差分を取れる）
+</div>
+
+</body>
+</html>

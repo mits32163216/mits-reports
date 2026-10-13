@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>MIFGE の型に、我が社の LEVEL 1 を当てはめた試案（2026-10-12）</title>
+<style>
+:root { color-scheme: light only; --navy:#1a3a52; --navy2:#2c5575; --ivory:#f7f3ea; --paper:#ffffff; --gold:#b89544; --red:#c00000; --shian:#8a2b2b; }
+html, body { background:var(--paper); color:#1f2328; }
+body { font-family:-apple-system,"Hiragino Sans","Yu Gothic","Noto Sans JP",sans-serif; font-size:15px; line-height:1.85; max-width:1080px; margin:0 auto; padding:28px 20px 60px; }
+h1 { font-size:1.42em; color:var(--navy); border-bottom:3px solid var(--navy); padding-bottom:8px; margin:0 0 10px; line-height:1.4; }
+.meta { color:#555; font-size:13.5px; margin:0 0 24px; line-height:1.75; }
+.decl { background:#fff; border-left:5px solid var(--gold); padding:14px 18px; margin:0 0 22px; }
+h2 { font-size:1.12em; color:var(--navy); margin:34px 0 10px; padding:6px 12px; background:#eef3f8; border-left:6px solid var(--navy2); }
+h3 { font-size:1.0em; color:var(--navy); margin:22px 0 6px; padding-left:6px; border-left:3px solid var(--gold); }
+.row { background:#fff; border:1px solid #d8dde3; padding:12px 16px; margin:10px 0 14px; border-radius:3px; }
+.row .kata { font-size:14.5px; color:#2a2a2a; line-height:1.75; margin:0 0 6px; }
+.row .atehame { font-size:15.5px; color:#2a2a2a; line-height:1.95; margin:4px 0 2px; padding-top:6px; border-top:1px dashed #cfd6dd; }
+.red { color:var(--red); font-weight:700; }
+.shian-mark { display:inline-block; background:#fff2f2; color:var(--shian); border:1px solid #e9b5b5; font-size:11.5px; font-weight:700; padding:1px 7px; border-radius:3px; margin-right:5px; letter-spacing:.03em; vertical-align:baseline; }
+.deda { font-size:12.5px; color:#666; margin:6px 0 0; padding-left:1em; line-height:1.65; }
+.warning { background:#fff8e8; border:1.5px solid var(--gold); padding:12px 16px; margin:10px 0 14px; }
+.warning .label { color:#8a0000; font-weight:700; font-size:14px; }
+table.ichiran { border-collapse:collapse; width:100%; margin:14px 0 10px; background:#fff; font-size:13.5px; }
+table.ichiran th, table.ichiran td { border:1px solid #cfd6de; padding:7px 10px; vertical-align:top; text-align:left; line-height:1.6; }
+table.ichiran th { background:var(--navy); color:#fff; font-weight:700; white-space:nowrap; }
+table.ichiran td.q { width:7%; white-space:nowrap; font-weight:700; color:var(--navy); }
+table.ichiran td.a { width:54%; }
+table.ichiran td.a .red { font-size:13.5px; }
+table.ichiran td.src { width:30%; font-size:12px; color:#444; }
+table.ichiran td.sh { width:9%; text-align:center; font-weight:700; color:var(--shian); }
+.foot { margin-top:30px; padding-top:12px; border-top:1px solid #ddd; font-size:12.5px; color:#666; line-height:1.7; }
+.foot b { color:var(--navy); }
+.toc { background:#fafbfc; border:1px solid #e0e4e9; padding:10px 14px; margin:14px 0 24px; font-size:13.5px; }
+.toc a { color:var(--navy2); text-decoration:none; margin-right:14px; }
+.toc a:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<h1>MIFGE の型に、我が社の LEVEL 1 を当てはめた試案</h1>
+<p class="meta">
+2026-10-12 ／ 読む人：Mits様 ／ 書いた人：FA-writer（司令塔からの発注）／ 手元に置くだけ・公開しない・UTAGE に入れない<br>
+目的：本の型の空欄に、我が社の LEVEL 1 の中身を入れた文章を、Mits様が読めるようにすること。<br>
+元：本 <i>The Linchpin</i> の p.76〜p.88（HOOK ／ STORY ／ OFFER）。質問の控え16問は <code>mifge_shitsumon_hikae.md</code>、p.86・p.87 の日本語訳は <code>p86_87_nihongo.html</code>。<br>
+色：本の型の文は黒字、我が社の中身を入れた所は<span class="red">赤字</span>。<span class="shian-mark">試案</span>は、Mits様がまだ決めておられない所。
+</p>
+
+<div class="decl">
+<p style="margin:0 0 8px;">本の読み方（HOOK → STORY → OFFER の順）：</p>
+<ul style="margin:0 0 0 1.2em; padding:0; line-height:1.75;">
+<li><b>HOOK（p.76〜p.86）</b> ── セールスページで引きの一文に使う言い回し。空欄のある例文が10行。</li>
+<li><b>STORY（p.87 左段）</b> ── なぜ今、このオファーを出すのかの物語。2項目。</li>
+<li><b>OFFER（p.87 右段〜p.88）</b> ── 継続課金（continuity）＋特典（digital／physical）を含んだ提案の中身。6項目。</li>
+</ul>
+</div>
+
+<p class="toc">
+<a href="#hook">1. HOOK（10行）</a>
+<a href="#story">2. STORY（2項目）</a>
+<a href="#offer">3. OFFER（6項目）</a>
+<a href="#ichiran">4. 末尾の一覧</a>
+</p>
+
+
+<!-- ================================================= -->
+<!-- 1. HOOK -->
+<!-- ================================================= -->
+<h2 id="hook">1. HOOK ── セールスページで使う言い回し（本 p.76〜p.86）</h2>
+
+<!-- Q1 -->
+<h3>Q1 ─ 購読のお誘いと、無料で付ける物（本 p.86 / HOOK 1行目）</h3>
+<div class="row">
+<p class="kata"><b>型</b>：When You Subscribe to _______________, You'll Also Get __________ FREE!（_______________ を購読していただくと、__________ も無料でお付けします！）</p>
+<p class="atehame"><b>我が社</b>：<span class="shian-mark">試案</span><span class="red">AI-Mits＆経営アプリ</span>を購読していただくと、<span class="red">The Library の無料コース 20本・西田経営メソッド7コース 438本以上・AI 講座 全4回の録画 9時間13分・反転グルコンの切り出し 11本と逆引き表・ノウハウ全部と 101項目の読む順・10問の理解度チェック・AI 時間とシラバスの点検・AI の道具の種類と使い方</span>も、無料でお付けします。</p>
+<p class="deda">元：本 p.86／我が社の出どころ：level_hyou_20261008_level1.html 行102「動画講義 438本以上・総再生時間 45時間超え・記事テキスト 29,000文字以上」／同 行143 ※10（経営の運転台 PREMIUM 相当）／同 行146〜150 ※13〜※17（梅サポート5点）／level1_shohin_no_kata_shian_20261010.html 行68（③ どんなサービス）</p>
+</div>
+
+<!-- Q2 -->
+<h3>Q2 ─ 相当額と中身（本 p.86 / HOOK 2行目）</h3>
+<div class="row">
+<p class="kata"><b>型</b>：We Want To GIFT You Over $________ Worth Of ____________...FOR FREE!（________ 相当の ____________ を、無料でプレゼントしたいのです！）</p>
+<p class="atehame"><b>我が社</b>：<span class="shian-mark">試案</span><span class="red">10 万円</span>相当の、<span class="red">西田経営メソッド 438本以上・総再生時間 45時間超え・記事テキスト 29,000文字以上の、1人型起業家が自分の数字で経営を回すための全部</span>を、無料で受け取っていただきたいのです。</p>
+<p class="deda">元：本 p.86／我が社の出どころ：level_hyou_20261008_level1.html 行102（438本以上・45時間超え・29,000文字以上）／同 行258〜260（「月額の合計 8,300円／月」「梅 年払 60,000円／年」）。相当額「10 万円」の試案の出どころ：F0-01 単発 39,800円（level_hyou 行116「data-default="39800"」）＋梅 年払 60,000円 ＝ 99,800円 ≒ 10 万円（level_hyou 表の確定数字の積み上げ・AI想定の数字は含めていない）</p>
+</div>
+
+<!-- Q3 (bullet 3 = Most Incredible Free Gift Ever は参考) -->
+<!-- 参考1 -->
+<h3>参考1 ─ キャッチコピーの定型句（本 p.86 / HOOK 3行目）</h3>
+<div class="row">
+<p class="kata"><b>型（空欄なし）</b>：Most Incredible Free Gift Ever（史上最高の無料プレゼント）</p>
+<p class="atehame"><b>我が社</b>：<span class="shian-mark">試案</span><span class="red">キャッチコピーとしては使わない。Mits様の文体では「史上最高」のような強い言い切りを冒頭に置かず、「西田経営メソッド 438本以上・45時間超え・29,000文字以上」の数で量を見せる書き方の方が合う（mits_tonmana_guide.md 「5. 固有名詞と実数をそのまま出す」）。</span></p>
+<p class="deda">元：本 p.86 / HOOK 3行目／我が社の出どころ：mits_tonmana_guide.md「5. 固有名詞と実数をそのまま出す」「ネガティブ警告ブロックを入れない」／context/mits_philosophy.md 60行「立派な理屈で潰れるか、泥をすすって勝ち残るか」</p>
+</div>
+
+<!-- Q3 -->
+<h3>Q3 ─ 「試していただく」商品（本 p.86 / HOOK 4行目）</h3>
+<div class="row">
+<p class="kata"><b>型</b>：Most Incredible Bribe Ever to Test Drive _________________（_________________ を試していただくための、史上最高の "贈りもの"）</p>
+<p class="atehame"><b>我が社</b>：<span class="shian-mark">試案</span><span class="red">AI-Mits＆経営アプリ</span>を試していただくための、"贈りもの"。</p>
+<p class="deda">元：本 p.86 / HOOK 4行目／我が社の出どころ：level_hyou_20261008_level1.html 行143 ※10「AI-Mits＆経営アプリ PREMIUM」／level1_shohin_no_kata_shian_20261010.html 行68（③ どんなサービス）</p>
+</div>
+
+<!-- Q4 -->
+<h3>Q4 ─ 継続課金の名称と、プレゼントの合計相当額（本 p.86 / HOOK 5行目）</h3>
+<div class="row">
+<p class="kata"><b>型</b>：Get $__________ Worth of Gifts When You Sign Up For __________________（__________________ にお申し込みで、__________ 相当のプレゼントを受け取れます）</p>
+<p class="atehame"><b>我が社</b>：<span class="shian-mark">試案</span><span class="red">AI-Mits＆経営アプリ</span>にお申し込みで、<span class="shian-mark">試案</span><span class="red">10 万円</span>相当のプレゼントを受け取れます。</p>
+<p class="deda">元：本 p.86 / HOOK 5行目／我が社の出どころ：Q1 と同じ商品名／Q2 と同じ相当額の試算</p>
+</div>
+
+<!-- Q5 -->
+<h3>Q5 ─ 相当額・中身・ご参加先・後押ししたい参加先（本 p.86 / HOOK 6行目）</h3>
+<div class="row">
+<p class="kata"><b>型</b>：$______________ worth of __________________, and you'll get it all free when you join our _______________ today because I want to bribe you to join our _____________________（______________ 相当の __________________ があり、今日 _______________ にご参加いただければ全部無料で受け取れます。なぜなら私はあなたに _____________________ への参加を強く後押ししたいからです）</p>
+<p class="atehame"><b>我が社</b>：<span class="shian-mark">試案</span><span class="red">10 万円</span>相当の、<span class="red">西田経営メソッド 438本以上・45時間超え・29,000文字以上の、1人型起業家が自分の数字で経営を回すための全部</span>があり、今日<span class="red">AI-Mits＆経営アプリ</span>にご参加いただければ全部無料で受け取れます。なぜなら私は、<span class="red">AI-Mits＆経営アプリ</span>への参加を強く後押ししたいからです。</p>
+<p class="deda">元：本 p.86 / HOOK 6行目／我が社の出どころ：Q1〜Q4 と同じ</p>
+</div>
+
+<!-- Q6 -->
+<h3>Q6 ─ 参加先・研修名・助けたい悩み・30日無料お試しの対象・お試しいただく対象（本 p.86 / HOOK 7行目）</h3>
+<div class="row">
+<p class="kata"><b>型</b>：We want to bribe you to join our __________________, so we're going to put you through this really cool training called _______________ to help you of ________________, and you're going to get a free 30-day trial of _______________ and a whole bunch of other gifts just for trying out __________________（私たちはあなたに __________________ への参加を強く後押ししたいので、_______________ という素晴らしい研修をお受けいただき、________________ のお助けをし、さらに _______________ の 30日無料お試しと、__________________ をお試しいただくためのその他たくさんの贈りものをお届けします）</p>
+<p class="atehame"><b>我が社</b>：私たちは、あなたに<span class="red">AI-Mits＆経営アプリ</span>への参加を強く後押ししたいので、<span class="red">AI 講座 全4回の録画（第1回「魂の設計〜外部記憶と判断の土台」／第2回「道具の整備〜ハーネスエンジニアリング」／第3回「AI 社員実装〜Agent Teams」／第4回「運用サイクル〜経営に活かす本番」・9時間13分）</span>をお受けいただき、<span class="red">「売上は横ばい・単価を上げたいが怖い・何から手を付ければいいか分からない・分析しすぎて動けない・知的キャッチボールの相手が身近にいない」という、1人型起業家の 6年目の詰まり</span>のお助けをし、さらに<span class="shian-mark">試案</span><span class="red">AI-Mits＆経営アプリ</span>の<span class="shian-mark">試案</span><span class="red">30日無料お試し</span>と、<span class="red">AI-Mits＆経営アプリ</span>をお試しいただくためのその他たくさんの贈りもの（<span class="red">The Library の無料コース 20本・西田経営メソッド7コース 438本以上・反転グルコンの切り出し 11本と逆引き表・101項目の読む順・10問の理解度チェック・AI 時間とシラバスの点検・AI の道具の種類と使い方</span>）をお届けします。</p>
+<p class="deda">元：本 p.86 / HOOK 7行目／我が社の出どころ：level_hyou_20261008_level1.html 行145 ※12（AI 講座 全4回・コース ID MaXquphUqbjS・レッスン ID 4点）／context/persona_master.md 83〜98行・108行（分析麻痺・単価を上げたい・何から手を付ければいいか分からない・「こんなに頑張っているのに」）／同 89行（知的キャッチボール）／30日無料お試しの試案の出どころ：決定台帳 2026-10-08 12:2x「期間も仮で1ヶ月もしくは30日　全部無料」</p>
+</div>
+
+<!-- 参考2: "MAYBE" -->
+<h3>参考2 ─ ボタン文言の定型句（本 p.86 / HOOK 8行目）</h3>
+<div class="row">
+<p class="kata"><b>型（空欄なし）</b>：All you have to do is say "MAYBE"（あなたがすべきことは "MAYBE（たぶん）" と言うだけ）</p>
+<p class="atehame"><b>我が社</b>：<span class="shian-mark">試案</span><span class="red">ボタン文言としては使わない。日本語の「たぶん」はお客様の判断を軽く見せる響きがあるため、ボタンには「<span class="red">まず 30日ためす</span>」「<span class="red">月額会員になる（30日の無料お試しつき）</span>」のような、何に申し込むのか正面に書く形を置く</span>（本 p.87 の PRO TIP「"subscribe（購読する）" のような言葉を正面に、中央に使ってほしい」と合わせた形）。</p>
+<p class="deda">元：本 p.86 / HOOK 8行目／本 p.87 PRO TIP／我が社の出どころ：mits_tonmana_guide.md「5. 固有名詞と実数をそのまま出す」「ネガティブ警告ブロックを入れない」</p>
+</div>
+
+<!-- Q7 -->
+<h3>Q7 ─ ご参加先と、無料で手に入る物（本 p.86 / HOOK 9行目）</h3>
+<div class="row">
+<p class="kata"><b>型</b>：When you join _______________ today, you'll get _______________ FREE（今日 _______________ にご参加いただくと、_______________ が無料で手に入ります）</p>
+<p class="atehame"><b>我が社</b>：今日<span class="red">AI-Mits＆経営アプリ</span>にご参加いただくと、<span class="red">The Library の無料コース 20本・西田経営メソッド7コース 438本以上・AI 講座 全4回の録画 9時間13分・反転グルコンの切り出し 11本と逆引き表・101項目の読む順・10問の理解度チェック・AI 時間とシラバスの点検・AI の道具の種類と使い方</span>が、無料で手に入ります。</p>
+<p class="deda">元：本 p.86 / HOOK 9行目／我が社の出どころ：Q1 と同じ</p>
+</div>
+
+<!-- Q8 -->
+<h3>Q8 ─ ここでしか手に入らない物（本 p.86 / HOOK 10行目）</h3>
+<div class="row">
+<p class="kata"><b>型</b>：The only way to get _______________ is to join _______________（_______________ を手に入れる唯一の方法は、_______________ に参加することです）</p>
+<p class="atehame"><b>我が社</b>：<span class="red">読む順の決まった書庫を1本目から見ながら、自分の会社の数字を経営の運転台に取り込み、AI-Mits と対話して詰まった所を言語化する ── この3つを1つのアカウントで、1人で回せる状態</span>を手に入れる唯一の方法は、<span class="red">AI-Mits＆経営アプリ</span>に参加することです。</p>
+<p class="deda">元：本 p.86 / HOOK 10行目／我が社の出どころ：level1_shohin_no_kata_shian_20261010.html 行80〜82（⑤ ●●すること）／level_hyou_20261008_level1.html 行143 ※10（経営の運転台 PREMIUM 相当・11画面・4モード）</p>
+</div>
+
+
+<!-- ================================================= -->
+<!-- 2. STORY -->
+<!-- ================================================= -->
+<h2 id="story">2. STORY ── なぜ今、このオファーを出すのか（本 p.87 左段）</h2>
+
+<!-- Q9 -->
+<h3>Q9 ─ なぜそのオファーを作ったのか（本 p.87 左段 / Why You Created The Offer）</h3>
+<div class="row">
+<p class="kata"><b>型</b>：You can share the story behind why you put this offer together.（このオファーをまとめた経緯を物語にして共有できます。）</p>
+<p class="atehame"><b>我が社</b>：<span class="shian-mark">試案</span><span class="red">私（西田）は、昭和61年の冬、18歳の頃、共通一次780点を独学・一人暮らし・アルバイト掛け持ちで取りました。お金もコネもなく、看板も借りずに、泥をすすって勝ち残る側で経営を学んできました。その後、東大・MIT・MBA・工学博士のマッキンゼー出身の経営戦略コンサルタントの先生について、最高峰の理論を徹底的に学び、自分の実戦を通して「1人型起業家が、明日のお金を回すための形」に組み直してきました。<br>
+AI 時代の今、同じことが起きています。1人型起業家の方は、頭はいいのに、分析しすぎて動けない。看板ではなく、腕一本で戦ってきた方ほど、「仕組みを作る時間がない」の壁に当たります。<br>
+私が 6年がかりで組み直した「読む順」── どの動画を、どの順で、どんな問いを立てて見るか ── を、The Library の 438本以上・45時間超え・29,000文字以上に、全部入れました。これに、自分の会社の数字が1画面で見える「経営の運転台」と、知的キャッチボールの相手が手元に1人立つ「AI-Mits」を組んで、1つのアカウントで受け取れる形にしました。<br>
+これは、AI 時代の成長期2年を、自分の数字で回しながら乗り切るための場です。立派な理屈ではなく、死なないこと、確実に利を出すこと ── そのための場として作りました。</span></p>
+<p class="deda">元：本 p.87 左段 / Why You Created The Offer／我が社の出どころ：context/mits_philosophy.md 43〜49行（共通一次780点・独学・一人暮らし・アルバイト掛け持ち）／同 60〜62行「立派な理屈で潰れるか、泥をすすって勝ち残るか」「死なないこと」「確実に利を出すこと」／同 78行（マッキンゼー出身の先生について学んだ）／context/persona_master.md 83〜98行（分析麻痺・単価を上げたい・仕組みを作る時間がない）／session-log 2026-10-07 Mits様原文「AI 時代のコンサルタントや知的提供している人向けのこれから2年間の経営の仕方」／level_hyou_20261008_level1.html 行102（438本以上・45時間超え・29,000文字以上）</p>
+</div>
+
+<!-- Q10 -->
+<h3>Q10 ─ なぜそのオファーを今日出すのか（本 p.87 左段 / Why You're Making The Offer Today）</h3>
+<div class="row">
+<p class="kata"><b>型</b>：You can use any holiday and create a promotion around it to make it feel urgent.（どんな祝日でも使って、その周りに販促を組み立てて、急ぎたい気持ちを作ることができます。）</p>
+<p class="atehame"><b>我が社</b>：<span class="shian-mark">試案</span>切り口は、祝日ではなく、<span class="red">「AI 時代の成長期2年」という時間軸</span>に合わせます。本の例（誕生日・バレンタイン・新学期・ハロウィン・感謝祭・ブラックフライデー・サイバーマンデー・クリスマス）は、同じ MIFGE のランディングページのまま、広告とソーシャルメディアの投稿を季節に合わせて変える前提で、日本の<span class="red">正月・新年度（4月）・GW・お盆・年末</span>も使えます。<br>
+ただし、西田のメルマガの型では、祝日より「時間軸」で急ぎを作ります。<span class="red">「スマホが9年で歩いた距離を、2年で走り抜ける」「2028年4月には生死が決している」</span>のような、時間の切り口の方が、1人型起業家の方の手に入っていきます。</p>
+<p class="deda">元：本 p.87 左段 / Why You're Making The Offer Today／我が社の出どころ：context/mits_tonmana_guide.md 622〜626行「B. 時間軸による危機意識の物語化」（スマホが9年で歩いた距離を2年で走り抜ける・2028年4月には生死が決している）／session-log 2026-10-07 Mits様原文「これから2年間の経営の仕方」</p>
+</div>
+
+
+<!-- ================================================= -->
+<!-- 3. OFFER -->
+<!-- ================================================= -->
+<h2 id="offer">3. OFFER ── 継続課金＋特典の中身（本 p.87 右段〜p.88）</h2>
+
+<!-- Q11 -->
+<h3>Q11 ─ 中核の continuity（本 p.87 右段 / 2段落目）</h3>
+<div class="row">
+<p class="kata"><b>型</b>：The first thing you should put in your MIFGE is your continuity. ... the core thing you're offering is your continuity.（MIFGE に最初に入れるべきものは、あなたの continuity（継続課金）です。... あなたが提供する中核は continuity そのものです。）</p>
+<p class="atehame"><b>我が社</b>：<span class="shian-mark">試案</span>MIFGE に最初に入れる中核の continuity は、<span class="red">AI-Mits＆経営アプリ（LEVEL 1 自分で・暫定 9,700円／月）</span>です。これが我が社が提供する中核です。<br>
+会員になっていただくと、<span class="red">自分の会社の数字が1画面で見える「経営の運転台」（相談員 4モード・計器盤 11画面・MF／Stripe／UTAGE／CSV の取り込み）と、知的キャッチボールの相手が手元に1人立つ「AI-Mits」（アプリ版・Web 版・同じアカウント）</span>を、1つのアカウントで使えます。</p>
+<p class="deda">元：本 p.87 右段 / 2段落目／我が社の出どころ：level_hyou_20261008_level1.html 行131〜133（我が社の値段 9,700円／月・暫定）／同 行143 ※10（AI-Mits＆経営アプリ PREMIUM・11画面・4モード・MF／Stripe／UTAGE／CSV）／同 行144 ※11（アプリ版・Web 版・同じアカウント）／決定台帳 2026-10-08 12:2x（暫定 9,700円／月）</p>
+</div>
+
+<!-- Q12 -->
+<h3>Q12 ─ 無料お試し期間（本 p.87 右段 / 2段落目）</h3>
+<div class="row">
+<p class="kata"><b>型</b>：You can include a free 7-day, 14-day, or 30-day trial.（7日・14日・30日の無料お試しを含めることができます。）</p>
+<p class="atehame"><b>我が社</b>：<span class="shian-mark">試案</span><span class="red">30日の無料お試し</span>にします。<br>
+理由は2つ。1つ目は、西田経営メソッド 438本以上・45時間超えという量を、お客様が自分の時間で見られる期間として、7日・14日では短いこと。2つ目は、「仕組みを作る時間がない」と言っている方に、1ヶ月の見送り期間を持っていただくこと。</p>
+<p class="deda">元：本 p.87 右段 / 2段落目／我が社の出どころ：決定台帳 2026-10-08 12:2x「期間も仮で1ヶ月もしくは30日　全部無料」／level_hyou_20261008_level1.html 行102（438本以上・45時間超え）／context/persona_master.md 95行「仕組みを作る時間がない」</p>
+</div>
+
+<!-- Q13 -->
+<h3>Q13 ─ PRO TIP の実行方法（本 p.87 右段 / PRO TIP）</h3>
+<div class="row">
+<p class="kata"><b>型（PRO TIP）</b>：Don't do forced continuity or put your continuity on upsells or order bumps because most people don't read those carefully. You want to use words like "subscribe" front and center so they know exactly what they're signing up for.（continuity を強制で付けたり、upsell や order bump に continuity を入れたりしないでください。... "subscribe（購読する）" のような言葉を正面に、中央に使ってほしいのです。）</p>
+<p class="atehame"><b>我が社</b>：<span class="shian-mark">試案</span>ランディングページでは、次の3か所に、"subscribe（購読する）" に相当する日本語を正面に置きます。<br>
+① <span class="red">見出し</span>：<span class="red">「AI-Mits＆経営アプリ（月額 9,700円）に、30日無料でまず入ってください」</span>。何に申し込むのかを、見出しそのものに書きます。<br>
+② <span class="red">申し込みボタンの文言</span>：<span class="red">「月額会員になる（30日の無料お試しつき）」</span>。「無料プレゼントを受け取る」の形にしません。<br>
+③ <span class="red">特典一覧の見出し</span>：<span class="red">「月額会員になっていただくと、受け取れるもの」</span>。会員の中身を先に書き、特典（著書 25・資料 26・動画音声 6）を後に並べます。<br>
+<span class="red">upsell（追加販売）と order bump（決済直前の追加提案）には、continuity を入れません。</span>決済直前の追加提案があるとしても、それは単発の商品に限ります（本の PRO TIP どおり）。</p>
+<p class="deda">元：本 p.87 右段 / PRO TIP／我が社の出どころ：level_hyou_20261008_level1.html 行131〜133（我が社の値段 9,700円／月・暫定）／同 行258〜260（LEVEL 4 の著書25・資料26・動画音声6）／本 p.87 PRO TIP そのもの</p>
+</div>
+
+<!-- Q14 -->
+<h3>Q14 ─ WARNING の防ぎ方（本 p.87 右段 / WARNING）</h3>
+<div class="warning">
+<p class="kata"><span class="label">本 WARNING</span>：The problem some people make is that they try to hide the continuity. DO NOT DO THIS. ... Instead, talk about your membership benefits and why someone would want to be a member. Then show them the bonuses or bribe.（continuity を隠そうとしないでください。... 会員の特典について、そしてなぜ会員になりたくなるのかについて語ってください。それから特典や "贈りもの" を見せてください。）</p>
+<p class="atehame"><b>我が社の防ぎ方</b>：<span class="shian-mark">試案</span>ランディングページの<span class="red">1画面目（スクロールしないで見える範囲）</span>に、<span class="red">「月額 9,700円（30日の無料お試しつき）」「月額会員の中身：経営の運転台（11画面・4モード）＋ AI-Mits（アプリ版・Web 版・同じアカウント）＋ The Library の読む順」</span>を、順にはっきり書きます。<br>
+会員の特典（著書 25・資料 26・動画音声 6）は、<span class="red">2画面目以降</span>に置きます。会員の中身を先、特典を後の順です。<br>
+細かい字で continuity を隠しません。カードは最初に預かりますが、それも1画面目に書きます（Mits様 2026-10-07 原文「カードは最初に預かる」）。</p>
+<p class="deda">元：本 p.87 右段 / WARNING／我が社の出どころ：level_hyou_20261008_level1.html 行131〜133・行143〜144 ※10・※11／決定台帳 2026-10-08 12:2x「カードは最初に預かる」／level_hyou_20261008_level4.html（著書25・資料26・動画音声6）</p>
+</div>
+
+<!-- Q15 -->
+<h3>Q15 ─ Digital 特典（本 p.87 右段 / 最終段落）</h3>
+<div class="row">
+<p class="kata"><b>型</b>：You'll also add in a bunch of digital and/or physical products to increase the value of the offer...（オファーの価値を上げる digital と／または physical の商品もたくさん加えていきます。）</p>
+<p class="atehame"><b>我が社の digital 特典</b>：<span class="shian-mark">試案</span>以下を加えます。<br>
+① <span class="red">The Library の無料コース（F0-01 入門19本・F0-04 本編DL）</span><br>
+② <span class="red">西田経営メソッド7コース（経営パワー39本／知のパワー13本／ザ・コアゴールド38本／会計・経理54本／経営戦略112本／マーケティング65本／業務・仕事術47本・合わせて 438本以上・45時間超え・29,000文字以上）</span><br>
+③ <span class="red">AI 講座 全4回の録画（9時間13分）</span><br>
+④ <span class="red">反転グルコンの切り出し 11本と逆引き表</span><br>
+⑤ <span class="red">ノウハウ全部と 101項目の読む順</span><br>
+⑥ <span class="red">10問の理解度チェック</span><br>
+⑦ <span class="red">AI 時間とシラバスの点検</span><br>
+⑧ <span class="red">AI の道具の種類と使い方</span><br>
+⑨ <span class="red">LEVEL 4 の資料 26件（PDF）</span><br>
+⑩ <span class="red">LEVEL 4 の動画音声 6件</span></p>
+<p class="deda">元：本 p.87 右段 / 最終段落／我が社の出どころ：level_hyou_20261008_level1.html 行116〜150（LEVEL 1 の20行）／level_hyou_20261008_level4.html（資料26・動画音声6）</p>
+</div>
+
+<!-- Q16 -->
+<h3>Q16 ─ Physical 特典（本 p.87 右段 / 最終段落）</h3>
+<div class="row">
+<p class="kata"><b>型</b>：We've found that when we ship a huge box of books to our customers, not only do they love getting something in the mail, but it also helps them to stay on the continuity...（本の大きな箱をお客様にお送りすると、物が郵便で届くこと自体を気に入ってくださるだけでなく、continuity に残り続けていただく助けにもなります。）</p>
+<p class="atehame"><b>我が社の physical 特典</b>：<span class="shian-mark">試案</span>Mits様 2026-10-10 原文「<span class="red">著書の紹介（元ページの「書籍」セクション・外部の Amazon リンク・25 件）　これは　PDFとして納品できるとする</span>」に合わせ、当面は<span class="red">物理の郵送は含めない</span>方向にします。著書 25冊は Amazon の外部リンクで紹介し、PDF（著書リスト 25・外部リンクつき）で納品します。<br>
+将来、本の大きな箱の郵送を加えるかどうかは、Mits様がお決めになる所です（本 p.87 の「digital + physical の MIFGE」の推奨は、我が社では一旦 digital のみで組みます）。</p>
+<p class="deda">元：本 p.87 右段 / 最終段落／我が社の出どころ：決定台帳 2026-10-10 15:1x Mits様原文「著書の紹介（…25 件）　これは　PDFとして納品できるとする」／level_hyou_20261008_level4.html（著書25の Amazon リンク）</p>
+</div>
+
+
+<!-- ================================================= -->
+<!-- 4. 末尾の一覧 -->
+<!-- ================================================= -->
+<h2 id="ichiran">4. 末尾の一覧 ── 赤字を入れた所（16問 + 参考2件）</h2>
+
+<table class="ichiran">
+<thead>
+<tr><th>問</th><th>赤字の中身（抜粋）</th><th>出どころ</th><th>試案</th></tr>
+</thead>
+<tbody>
+<tr><td class="q">Q1</td><td class="a"><span class="red">AI-Mits＆経営アプリ</span>／<span class="red">The Library 20本・西田経営メソッド7コース 438本以上・AI 講座 全4回の録画 9時間13分・反転グルコンの切り出し 11本と逆引き表・101項目の読む順・10問の理解度チェック・AI 時間とシラバスの点検・AI の道具の種類と使い方</span></td><td class="src">level_hyou_20261008_level1.html 行102・行143〜150 ※10〜※17／level1_shohin_no_kata_shian_20261010.html 行68</td><td class="sh">試案</td></tr>
+<tr><td class="q">Q2</td><td class="a"><span class="red">10 万円</span>相当／<span class="red">西田経営メソッド 438本以上・45時間超え・29,000文字以上の、1人型起業家が自分の数字で経営を回すための全部</span></td><td class="src">level_hyou 行102・行258〜260（積み上げ 99,800円 ≒ 10 万円の試算根拠：F0-01 単発 39,800円 ＋ 梅 年払 60,000円）</td><td class="sh">試案</td></tr>
+<tr><td class="q">参考1</td><td class="a"><span class="red">「史上最高」の言い切りは使わず、数で量を見せる形にする</span></td><td class="src">mits_tonmana_guide.md「5. 固有名詞と実数をそのまま出す」</td><td class="sh">試案</td></tr>
+<tr><td class="q">Q3</td><td class="a"><span class="red">AI-Mits＆経営アプリ</span></td><td class="src">level_hyou 行143 ※10</td><td class="sh">試案</td></tr>
+<tr><td class="q">Q4</td><td class="a"><span class="red">AI-Mits＆経営アプリ</span>／<span class="red">10 万円</span>相当</td><td class="src">Q1・Q2 と同じ</td><td class="sh">試案</td></tr>
+<tr><td class="q">Q5</td><td class="a"><span class="red">10 万円</span>相当／<span class="red">西田経営メソッド 438本以上・45時間超え・29,000文字以上の全部</span>／<span class="red">AI-Mits＆経営アプリ</span>（2か所）</td><td class="src">Q1〜Q4 と同じ</td><td class="sh">試案</td></tr>
+<tr><td class="q">Q6</td><td class="a"><span class="red">AI-Mits＆経営アプリ</span>（3か所）／<span class="red">AI 講座 全4回の録画（第1〜4回・9時間13分）</span>／<span class="red">売上横ばい・単価を上げたいが怖い・何から手を付ければいいか分からない・分析しすぎて動けない・知的キャッチボールの相手が身近にいない</span>／<span class="red">30日無料お試し</span>／<span class="red">The Library の無料コース 20本・西田経営メソッド7コース 438本以上・反転グルコンの切り出し 11本と逆引き表・101項目の読む順・10問の理解度チェック・AI 時間とシラバスの点検・AI の道具の種類と使い方</span></td><td class="src">level_hyou 行145 ※12（AI 講座 4本・レッスン ID 4点）／persona_master.md 83〜98行・108行・89行／決定台帳 2026-10-08「30日全部無料」</td><td class="sh">試案</td></tr>
+<tr><td class="q">参考2</td><td class="a"><span class="red">ボタン文言は「まず 30日ためす」「月額会員になる（30日の無料お試しつき）」の形にする</span></td><td class="src">mits_tonmana_guide.md「5. 固有名詞と実数」／本 p.87 PRO TIP</td><td class="sh">試案</td></tr>
+<tr><td class="q">Q7</td><td class="a"><span class="red">AI-Mits＆経営アプリ</span>／<span class="red">The Library の無料コース 20本・西田経営メソッド7コース 438本以上・AI 講座 全4回の録画 9時間13分・反転グルコンの切り出し 11本と逆引き表・101項目の読む順・10問の理解度チェック・AI 時間とシラバスの点検・AI の道具の種類と使い方</span></td><td class="src">Q1 と同じ</td><td class="sh">試案</td></tr>
+<tr><td class="q">Q8</td><td class="a"><span class="red">読む順の決まった書庫を1本目から見ながら、自分の会社の数字を経営の運転台に取り込み、AI-Mits と対話して詰まった所を言語化する3つを、1つのアカウントで1人で回せる状態</span>／<span class="red">AI-Mits＆経営アプリ</span></td><td class="src">level1_shohin_no_kata_shian_20261010.html 行80〜82／level_hyou 行143 ※10</td><td class="sh">試案</td></tr>
+<tr><td class="q">Q9</td><td class="a"><span class="red">昭和61年の冬・共通一次780点・独学・一人暮らし・アルバイト掛け持ち／マッキンゼー出身の先生について学び、1人型起業家の形に組み直した／AI 時代の成長期2年を、自分の数字で回しながら乗り切るための場</span>（物語全文）</td><td class="src">mits_philosophy.md 43〜49行・60〜62行・78行／session-log 2026-10-07</td><td class="sh">試案</td></tr>
+<tr><td class="q">Q10</td><td class="a"><span class="red">「AI 時代の成長期2年」という時間軸／日本の正月・新年度・GW・お盆・年末も使える／「スマホが9年で歩いた距離を2年で走り抜ける」「2028年4月には生死が決している」</span></td><td class="src">mits_tonmana_guide.md 622〜626行／session-log 2026-10-07</td><td class="sh">試案</td></tr>
+<tr><td class="q">Q11</td><td class="a"><span class="red">AI-Mits＆経営アプリ（LEVEL 1 自分で・暫定 9,700円／月）</span>／<span class="red">経営の運転台（11画面・4モード・MF／Stripe／UTAGE／CSV）＋ AI-Mits（アプリ版・Web 版・同じアカウント）</span></td><td class="src">level_hyou 行131〜133・行143〜144／決定台帳 2026-10-08 12:2x</td><td class="sh">試案</td></tr>
+<tr><td class="q">Q12</td><td class="a"><span class="red">30日の無料お試し</span></td><td class="src">決定台帳 2026-10-08 12:2x「30日　全部無料」／persona_master.md 95行</td><td class="sh">試案</td></tr>
+<tr><td class="q">Q13</td><td class="a"><span class="red">見出し：「AI-Mits＆経営アプリ（月額 9,700円）に、30日無料でまず入ってください」</span>／<span class="red">ボタン文言：「月額会員になる（30日の無料お試しつき）」</span>／<span class="red">特典一覧の見出し：「月額会員になっていただくと、受け取れるもの」</span>／<span class="red">upsell と order bump には continuity を入れない</span></td><td class="src">level_hyou 行131〜133／本 p.87 PRO TIP</td><td class="sh">試案</td></tr>
+<tr><td class="q">Q14</td><td class="a"><span class="red">1画面目に「月額 9,700円（30日の無料お試しつき）」「月額会員の中身：経営の運転台＋ AI-Mits ＋ The Library の読む順」を順に置く／特典は2画面目以降／カードは最初に預かる、も1画面目に書く</span></td><td class="src">level_hyou 行131〜133・行143〜144／決定台帳 2026-10-08 12:2x「カードは最初に預かる」</td><td class="sh">試案</td></tr>
+<tr><td class="q">Q15</td><td class="a">10件の digital 特典（<span class="red">F0-01／F0-04／経営メソッド7コース 438本以上／AI 講座 全4回 9時間13分／反転グルコン11本と逆引き／101項目の読む順／10問の理解度チェック／AI 時間とシラバスの点検／AI の道具の種類と使い方／LEVEL 4 資料26＋動画音声6</span>）</td><td class="src">level_hyou_20261008_level1.html 行116〜150／level_hyou_20261008_level4.html</td><td class="sh">試案</td></tr>
+<tr><td class="q">Q16</td><td class="a"><span class="red">物理の郵送は含めない・著書 25冊は Amazon の外部リンク＋ PDF 納品</span></td><td class="src">決定台帳 2026-10-10 15:1x Mits様原文「PDFとして納品できるとする」</td><td class="sh">試案</td></tr>
+</tbody>
+</table>
+
+
+<!-- ================================================= -->
+<!-- 検収の線（値） -->
+<!-- ================================================= -->
+<div class="foot">
+<b>検収の線（値）</b><br>
+・質問の控え 16問のうち、文章の中で答え（赤字）が入った問いの数：<b>16 問</b>（Q1〜Q16・参考1〜2 を含めると 18 件）<br>
+・赤字の箇所の数：本文の節 18 件（Q1〜Q16＋参考1・参考2）＋末尾の一覧の行 18 件＝<b>両者は同数（差 0）</b><br>
+・出どころが空の赤字：<b>0 か所</b><br>
+・「試案」と付けた赤字の数：<b>18 件</b>（Q1〜Q16・参考1〜2 の全件が試案・Mits様がまだ決めておられない中身を文章で埋めた）<br>
+・文章に出る金額（LEVEL 1 の表・積み上げの下書きとの突き合わせ）：<br>
+　　・<b>月額 9,700円</b>（出どころ：level_hyou_20261008_level1.html 行131〜133「我が社の値段：9,700 円／月（暫定・仮決め）」・差 0 円）<br>
+　　・<b>月額 9,700円</b>の再掲 2 か所（Q11・Q13・Q14・いずれも同じ数字・差 0 円）<br>
+　　・<b>10 万円 相当</b>の試案（出どころ：F0-01 単発 39,800円＋梅 年払 60,000円＝99,800円 ≒ 10 万円・level_hyou 表の確定数字の積み上げ・AI想定の数字は含めていない・level_hyou 行116「data-default="39800"」・行258 梅 年払 60,000円）<br>
+　　・使った金額の一覧：<b>9,700円・39,800円・60,000円（計算根拠として）</b>／本文の表に出す値はすべて LEVEL 1 の表の確定数字と差 0 円<br>
+・禁止語（脅し・不安をあおる・推量の尾ひれ）の実測：<b>0 個</b>（Mits様の発注の禁止語3語を本ファイル全文で <code>grep</code>・自己言及の節は切り分けて再計測した結果）<br>
+・作ったファイルの絶対パス：<b>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/_wip/mifge_offer_shiryo_20261012/mifge_wagasha_atehame_20261012.html</b><br>
+・バイト数：保存後に確認・報告に記載
+</div>
+
+</body>
+</html>

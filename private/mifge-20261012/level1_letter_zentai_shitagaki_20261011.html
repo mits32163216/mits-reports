@@ -1,0 +1,820 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>LEVEL 1 レター全体 下書き（2026-10-11）</title>
+<style>
+:root{color-scheme:light only;--navy:#1a3a52;--navy2:#2c5575;--ivory:#f7f3ea;--paper:#ffffff;--gold:#b89544;--mitate:#e0b100;--sora:#8aa6c8;--ai:#9a7a9a;--kara:#b84848;--band:#1a3a52;}
+html,body{background:var(--paper);color:#1f2328;}
+body{font-family:-apple-system,"Hiragino Sans","Yu Gothic","Noto Sans JP",sans-serif;font-size:16px;line-height:1.9;max-width:900px;margin:0 auto;padding:28px 20px 60px;}
+
+h1{font-size:1.45em;color:var(--navy);border-bottom:3px solid var(--navy);padding-bottom:8px;line-height:1.4;margin:0 0 10px;}
+.meta{color:#555;font-size:13.5px;margin:0 0 24px;line-height:1.75;}
+
+.kuga{margin:36px 0 0;}
+.kuga-tag{display:inline-block;background:var(--navy);color:#fff;font-size:12.5px;font-weight:700;padding:3px 10px;border-radius:3px;letter-spacing:.04em;margin-bottom:8px;}
+.kuga-tag .no{background:#fff;color:var(--navy);padding:1px 7px;border-radius:2px;margin-right:7px;font-weight:800;}
+.kuga-honbun{background:#fff;border-left:5px solid var(--gold);padding:14px 20px 16px;margin:0;line-height:1.9;}
+.kuga-honbun h2{font-size:1.3em;color:var(--navy);margin:0 0 10px;line-height:1.5;}
+.kuga-honbun h3{font-size:1.08em;color:var(--navy);margin:16px 0 6px;}
+.kuga-honbun p{margin:6px 0;}
+.kuga-honbun ul{margin:6px 0 6px 1.2em;padding:0;}
+.kuga-honbun ul li{margin:3px 0;}
+
+.ue-obi{background:var(--band);color:#fff;padding:11px 18px;margin:0 0 18px;font-size:.95em;line-height:1.7;letter-spacing:.02em;}
+.ue-obi b{color:#f0e6c8;}
+
+.shoumei{display:block;margin-top:6px;font-size:.86em;color:#444;font-weight:normal;}
+
+.ohuo-sengen{background:#fffbe6;border:1.5px solid var(--gold);padding:14px 18px 16px;margin:10px 0;font-weight:700;color:var(--navy);line-height:1.9;}
+.ohuo-sengen .sub{display:block;color:#444;font-weight:normal;font-size:.9em;margin-top:4px;}
+
+.zu{background:#f3f6fa;border:1px solid #cfd6de;padding:14px 18px;margin:14px 0;border-radius:4px;}
+.zu .zu-title{font-weight:700;color:var(--navy);margin:0 0 8px;font-size:.98em;}
+.zu-honbun{line-height:1.75;font-size:.95em;color:#333;}
+
+.kara{display:inline-block;background:#f6e8e8;color:var(--kara);font-size:.86em;font-weight:700;padding:2px 8px;border-radius:3px;letter-spacing:.03em;}
+.kari{display:inline-block;background:#fff6d6;color:#8a6f2b;font-size:.86em;font-weight:700;padding:2px 8px;border-radius:3px;letter-spacing:.03em;border:1px solid #e3c96b;}
+
+.check{background:#fff;border:1.5px solid var(--gold);padding:14px 20px;margin:10px 0;}
+.check ul{list-style:none;margin:0;padding:0;}
+.check ul li{margin:7px 0;font-size:1.0em;color:var(--navy);}
+.check ul li::before{content:"□ ";font-weight:700;color:var(--gold);margin-right:4px;}
+.check .shime{margin-top:10px;color:#333;font-size:.95em;font-style:italic;}
+
+.kuro-obi{background:#111;color:#fff;padding:12px 18px;margin:14px 0;font-weight:700;letter-spacing:.03em;font-size:1.02em;line-height:1.6;}
+
+.hitsuyou-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0;}
+.hitsuyou-2 .box{background:#fff;border:1px solid #cfd6de;border-top:4px solid var(--navy2);padding:12px 16px;}
+.hitsuyou-2 .box .t{font-weight:700;color:var(--navy);margin:0 0 6px;font-size:1.02em;}
+.hitsuyou-2 .box .n{color:#333;font-size:.94em;line-height:1.75;}
+@media (max-width:720px){.hitsuyou-2{grid-template-columns:1fr;}}
+
+/* 8 の区画で使う積み上げカード（既存 tsumiage ファイルの CSS をほぼそのまま写す） */
+.sec-title{background:var(--navy2);color:#fff;font-weight:700;padding:10px 14px;margin:22px 0 12px;letter-spacing:.02em;font-size:.98em;}
+.sec-title .lead{display:block;font-weight:normal;font-size:.86em;margin-top:3px;opacity:.95;}
+.decl-top{background:#fff;border-left:5px solid var(--gold);padding:14px 18px;margin:0 0 18px;font-weight:700;color:var(--navy);font-size:1.0em;}
+.decl-top .ryo{display:block;margin-top:4px;color:#444;font-size:.9em;font-weight:normal;}
+.card{background:#fff;border:1px solid #cfd6dd;border-left:5px solid var(--gold);padding:12px 16px;margin:0 0 12px;border-radius:3px;}
+.card .hoshi{color:var(--navy);font-weight:700;font-size:1.0em;margin:0 0 5px;line-height:1.5;}
+.card .naka{color:#2a2a2a;margin:0 0 5px;font-size:.93em;line-height:1.7;}
+.card .naka .ryo{color:#2e5a39;font-size:.86em;display:block;margin-top:3px;}
+.card .ne{color:var(--navy);font-weight:700;font-size:.95em;margin:0;text-align:right;}
+.card.sosa{border-left-color:var(--sora);}
+.card.sosa .sosa-tag{display:inline-block;background:#f3ead0;color:#8a6f2b;font-size:.76em;font-weight:700;padding:1px 7px;border-radius:3px;margin-right:6px;border:1px solid #e0d4a5;}
+.ai-tag{display:inline-block;color:var(--ai);font-size:.8em;font-weight:600;margin-left:6px;opacity:.85;}
+.ai-ne{color:var(--ai) !important;}
+.tokuten{background:#fffbe6;border:1.5px solid var(--gold);padding:14px 18px;margin:0 0 14px;border-radius:4px;}
+.tokuten .no{display:inline-block;background:var(--gold);color:#fff;font-weight:700;padding:3px 11px;border-radius:3px;margin-right:9px;font-size:.88em;letter-spacing:.03em;}
+.tokuten .title{color:var(--navy);font-weight:700;font-size:1.04em;margin:0 0 7px;line-height:1.5;}
+.tokuten .ryo{display:inline-block;background:var(--navy);color:#fff;font-weight:700;padding:3px 10px;border-radius:3px;font-size:.88em;margin:0 0 8px;}
+.tokuten .naka{margin:0 0 5px;font-size:.93em;line-height:1.75;}
+.tokuten .nedan{color:var(--ai);font-size:.86em;margin-top:6px;font-weight:600;}
+
+.total{background:#fff;border:2.5px solid var(--navy);padding:16px 22px;margin:22px 0 10px;border-radius:4px;}
+.total h4{margin:0 0 10px;color:var(--navy);font-size:1.1em;}
+.total .row{display:flex;justify-content:space-between;align-items:baseline;padding:4px 0;border-bottom:1px dotted #cfd6dd;}
+.total .row:last-of-type{border-bottom:none;}
+.total .row .label{color:#333;font-size:.95em;}
+.total .row .val{color:var(--navy);font-weight:700;font-size:1.05em;}
+.total .sum-single{font-size:1.22em;}
+.total .sen{margin-top:12px;padding:10px 14px;background:#eef3f8;border-left:5px solid var(--gold);font-size:.93em;color:#333;line-height:1.75;}
+.total .sen b{color:var(--navy);}
+.total .nedan-box{margin-top:12px;padding:12px 16px;background:#fffbe6;border:1px dashed var(--gold);color:#8a6f2b;font-weight:700;font-size:.98em;text-align:center;}
+
+.utauanai{background:#fff;border-top:3px solid var(--navy);border-bottom:3px solid var(--navy);padding:14px 20px;margin:14px 0;line-height:1.9;}
+.utauanai .sen{color:var(--navy);font-weight:700;font-size:1.02em;}
+
+.naze{background:#fff;border-left:5px solid var(--navy2);padding:12px 18px;margin:12px 0;line-height:1.85;}
+
+.hikaku{background:#fff;border:1.5px solid var(--navy);padding:14px 20px;margin:14px 0;}
+.hikaku table{width:100%;border-collapse:collapse;font-size:.95em;}
+.hikaku th,.hikaku td{padding:6px 10px;text-align:left;}
+.hikaku .label{color:#333;}
+.hikaku .val{color:var(--navy);font-weight:700;text-align:right;}
+.hikaku .sou{border-top:2px solid var(--navy);color:var(--navy);font-size:1.1em;font-weight:800;}
+
+.puran{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:12px 0;}
+.puran .p{background:#fff;border:1px solid #cfd6de;border-top:4px solid var(--gold);padding:12px 14px;}
+.puran .p .t{font-weight:700;color:var(--navy);margin:0 0 5px;font-size:.98em;}
+.puran .p .ne{color:#8a6f2b;font-weight:700;}
+@media (max-width:720px){.puran{grid-template-columns:1fr;}}
+
+.qa{background:#fff;border:1px solid #cfd6de;padding:14px 18px;margin:12px 0;}
+.qa .q{color:var(--navy);font-weight:700;margin:10px 0 4px;}
+.qa .q::before{content:"Q. ";color:var(--gold);}
+.qa .a{margin:0 0 4px;color:#2a2a2a;line-height:1.75;}
+.qa .a::before{content:"A. ";color:var(--navy);font-weight:700;}
+.qa .q:first-child{margin-top:0;}
+
+.story{background:#f7f3ea;border-left:5px solid var(--navy);padding:14px 20px;margin:12px 0;line-height:1.85;}
+.story .t{color:var(--navy);font-weight:700;margin:0 0 6px;}
+
+.shanai-memo{margin:50px 0 0;padding:20px 22px;background:#f3f6fa;border:2px dashed #8aa6c8;border-radius:4px;}
+.shanai-memo h2{color:var(--navy);margin:0 0 12px;font-size:1.2em;border-bottom:2px solid var(--navy);padding-bottom:5px;}
+.shanai-memo h3{color:var(--navy);margin:18px 0 6px;font-size:1.0em;}
+.shanai-memo table{width:100%;border-collapse:collapse;font-size:.88em;margin:8px 0;}
+.shanai-memo table th,.shanai-memo table td{border:1px solid #cfd6de;padding:5px 8px;text-align:left;vertical-align:top;}
+.shanai-memo table th{background:#eef3f8;color:var(--navy);}
+.shanai-memo table td.ai{color:var(--ai);font-weight:600;}
+.shanai-memo .foot{margin-top:14px;padding-top:10px;border-top:1px solid #ccc;font-size:12.5px;color:#666;line-height:1.75;}
+.shanai-memo .foot b{color:var(--navy);}
+.shanai-memo .foot .num{color:var(--navy);font-weight:700;}
+</style>
+</head>
+<body>
+
+<h1>LEVEL 1 レター全体 下書き</h1>
+<p class="meta">
+2026-10-11 ／ 読む人：西田（手元で読む下書き）／ 書いた人：FA-writer（司令塔からの発注）／ 公開しない。<br>
+目的：LEVEL 1 のレターの全体（14区画＋社内メモ）を1枚で読めるようにすること。値段・保証・無料体験の期間・商品名などの経営判断の部分は空のまま置き、仮の印を付けました。<br>
+8 の区画（価値の積み上げ）は、同じフォルダの level1_letter_tsumiage_shitagaki_20261011.html の中身を文字も金額も変えずにそのまま写しました。合計 1,204,200 円（単発 892,200 円 ＋ 月額 26,000 円／月 × 12）です。<br>
+印の見方：<span class="kara">［空：…］</span>＝西田が決める所。<span class="kari">［仮：…］</span>＝仮に置いた所。<span class="ai-tag">AI想定</span>＝ BA-strategist が同じ表の似た行から当てた金額。
+</p>
+
+<!-- =========================
+  区画 0 ── 上の帯・商品名
+========================= -->
+
+<div class="kuga">
+<span class="kuga-tag"><span class="no">0</span>上の帯・商品名</span>
+<div class="kuga-honbun">
+  <div class="ue-obi">
+    AI時代のコンサルタント・知的提供をしている人へ──<b>これから2年間の「経営」の仕方</b>
+  </div>
+  <h2 style="text-align:center;color:var(--navy);margin:10px 0 4px;">
+    西田式経営メソッド　LEVEL 1<br>
+    <span class="shoumei"><span class="kara">［商品名：西田が決める］</span></span>
+  </h2>
+</div>
+</div>
+
+<!-- =========================
+  区画 1 ── 大見出し
+========================= -->
+
+<div class="kuga">
+<span class="kuga-tag"><span class="no">1</span>大見出し</span>
+<div class="kuga-honbun">
+  <h2>AI時代の成長期は2年。自分の数字で経営を回しながら乗り切れる、「経営の書庫」と「経営の道具」を1つのアカウントで。</h2>
+  <p style="color:#444;font-size:.95em;margin-top:8px;">
+    知的提供をしてきた方が、効率化の先にある「経営」を自分の数字で回せる状態になれます。経営の書庫（438本以上の動画講義・45時間超え・29,000文字以上の記事）と、経営の道具（経営アプリと AI-Mits）を、1つのアカウントでお使いいただけます。
+  </p>
+</div>
+</div>
+
+<!-- =========================
+  区画 2 ── オファー宣言＋図
+========================= -->
+
+<div class="kuga">
+<span class="kuga-tag"><span class="no">2</span>オファー宣言＋図</span>
+<div class="kuga-honbun">
+  <div class="ohuo-sengen">
+    まず <span class="kari">［仮：30日 無料］</span> で、経営アプリ・AI-Mits・経営の書庫を全部使ってみてください。
+    <span class="sub">無料体験の期間は仮に置いています。カードの登録だけ、入会のときにお願いします。</span>
+  </div>
+
+  <div class="zu">
+    <p class="zu-title">図：二刀流のS字カーブ（成長期は2年、倍かかっても4年）</p>
+    <p class="zu-honbun">
+      導入期の次に、成長期があります。成長期の期限は2年です。倍の時間がかかっても4年です。この期間に貯めるのが、4つのC──キャッシュ・コンテンツ・カスタマー・クリエイティビティ──です。成長期を過ぎると、右下の独自性が仕込めるかどうかで、その先の長さが決まります（出どころ：BE-02 第4回・2026-08-21 の記録・二刀流v2統合版 58ページ）。
+    </p>
+    <p class="zu-honbun" style="margin-top:8px;">
+      <span class="kara">［空：この区画に二刀流のS字カーブの図が入ります。動画の中の絵と同じ構図です］</span>
+    </p>
+  </div>
+</div>
+</div>
+
+<!-- =========================
+  区画 3 ── 問題提起
+========================= -->
+
+<div class="kuga">
+<span class="kuga-tag"><span class="no">3</span>問題提起</span>
+<div class="kuga-honbun">
+  <h3>AIで業務効率化を続けているだけだと、2年で行き詰まります</h3>
+  <p>
+    「AIが使えるようになれば、仕事が楽になる」──そう思って、AI を使い始めた方が多いのではないでしょうか。
+  </p>
+  <p>
+    AIで業務の効率化はできます。けれど、効率化を続けているだけだと、2年で行き詰まります。なぜなら、AI時代の成長期は2年しかなく、その2年に貯めるべきものは「効率化できた時間」ではないからです。
+  </p>
+  <p>
+    成長期の2年に貯めるべきものは、4つのCです。
+  </p>
+  <ul>
+    <li><b>キャッシュ</b>（現金）</li>
+    <li><b>コンテンツ</b>（AI化した自分が棚に並ぶための中身）</li>
+    <li><b>カスタマー</b>（哲学・香り・価値観・のり・体験を共有できる関係）</li>
+    <li><b>クリエイティビティ</b>（次の独自性）</li>
+  </ul>
+  <p>
+    成長期の2年を過ぎると、普及の速さは加速します。180日・105日・60日・36日と、新しい技術の広まり方は半分ずつ短くなります。2年を過ぎて4つのCが貯まっていなければ、棚に並ぶ場所が無くなります。
+  </p>
+  <p>
+    「<span class="kara">［空：ここに西田らしい一言。たとえば「過去最高の○○の使い方を提案したいのですが、その前に」のような回し。素材が無いので空にします］</span>」
+  </p>
+</div>
+</div>
+
+<!-- =========================
+  区画 4 ── 帯・転換
+========================= -->
+
+<div class="kuga">
+<span class="kuga-tag"><span class="no">4</span>帯・転換</span>
+<div class="kuga-honbun">
+  <p style="background:var(--ivory);border-left:5px solid var(--gold);padding:14px 20px;margin:0;font-size:1.08em;color:var(--navy);font-weight:700;line-height:1.7;">
+    効率化しか知らなかった人にとって「経営」は、ビルの建て方に等しい──
+    <span style="display:block;color:#444;font-size:.88em;font-weight:normal;margin-top:5px;">
+      ウサギ小屋しか建てたことがない人が、ビルを建てるには、設計から道具から、全部やり方が変わります。「経営」とはそういう仕事です。
+    </span>
+  </p>
+</div>
+</div>
+
+<!-- =========================
+  区画 5 ── チェック3つ
+========================= -->
+
+<div class="kuga">
+<span class="kuga-tag"><span class="no">5</span>チェック3つ</span>
+<div class="kuga-honbun">
+  <h3>いま、自分に3つの問いを向けてみてください</h3>
+  <div class="check">
+    <ul>
+      <li>4つのCは、いま貯まっているか？</li>
+      <li>それを自分の数字で見られているか？</li>
+      <li>2年後に残る独自性（右下）を仕込めているか？</li>
+    </ul>
+    <p class="shime">「しかし、教わってすぐにできるものではありませんよね？」</p>
+  </div>
+  <p style="color:#444;font-size:.94em;margin-top:8px;">
+    3つとも、1冊の本を読んで分かる話ではありません。やってみて、自分の数字で結果が見えて、やり直して、ようやく身につく仕事です。1人で頭の中だけで考えても、分析しすぎて動けなくなります。
+  </p>
+</div>
+</div>
+
+<!-- =========================
+  区画 6 ── 黒帯
+========================= -->
+
+<div class="kuga">
+<span class="kuga-tag"><span class="no">6</span>黒帯</span>
+<div class="kuga-honbun">
+  <div class="kuro-obi">
+    「経営」は、AI時代の設計図です。<br>
+    ここからお読みください。
+  </div>
+</div>
+</div>
+
+<!-- =========================
+  区画 7 ── 必要な2つ
+========================= -->
+
+<div class="kuga">
+<span class="kuga-tag"><span class="no">7</span>必要な2つ</span>
+<div class="kuga-honbun">
+  <p>
+    「経営」を① 知る ② 自分の数字で見る ③ 回し続ける ──この3つをするには、2つのものが要ります。
+  </p>
+  <div class="hitsuyou-2">
+    <div class="box">
+      <p class="t">1. 経営の書庫（知識と実践）</p>
+      <p class="n">
+        西田経営メソッドの入口と本編を、読む順の決まった形で手元に置けます。経営パワー・知のパワー・ザ・コアゴールド・会計・経理・経営戦略・マーケティング・業務仕事術の7コース＋入門・本編の 438本以上・45時間超え。
+      </p>
+    </div>
+    <div class="box">
+      <p class="t">2. 経営の道具（経営アプリと AI-Mits）</p>
+      <p class="n">
+        自分の会社の数字が1画面で見える経営アプリ（計器盤11画面・MF・Stripe・UTAGE の取り込み）と、知的キャッチボールの相手になる AI-Mits（FAST・NORMAL・DEEP・かかりつけの4モード）。
+      </p>
+    </div>
+  </div>
+  <p style="color:#444;font-size:.93em;margin-top:8px;font-style:italic;">
+    たった <span class="kara">［値段：西田が決める］</span> で、この両方が手に入ります。
+  </p>
+</div>
+</div>
+
+<!-- =========================
+  区画 8 ── 2列：中身と相場（＝価値の積み上げ）
+  ※ level1_letter_tsumiage_shitagaki_20261011.html から文字も金額も変えずに写し
+========================= -->
+
+<div class="kuga">
+<span class="kuga-tag"><span class="no">8</span>2列：中身と相場（＝価値の積み上げ）</span>
+<div class="kuga-honbun">
+
+<p class="decl-top">
+✅ 動画講義 438本以上　✅ 総再生時間 45時間超え　✅ 記事テキスト 29,000文字以上
+<span class="ryo">（※2026/10/8 時点・LEVEL 1 の表「冒頭の宣言」からそのまま）</span>
+</p>
+
+<h3>LEVEL 1 で手に入るもの ── 1 つずつ積み上げます</h3>
+
+<div class="sec-title">
+西田経営メソッドの入口と本編（9 項目）
+<span class="lead">The Library の無料コース 2 本と、西田経営メソッド 7 コースの本編</span>
+</div>
+
+<div class="card">
+  <p class="hoshi">AI時代でも読まなければいけない、西田経営メソッド入門 全19本</p>
+  <p class="naka">The Innovation 経営メソッド入門。業種・粗利・現預金──動けない6年目から出る、根本の論点を19本に畳んで見られます。<span class="ryo">✅ 動画 24本 ✅ 総再生時間 5時間17分 ✅ 記事テキスト 8,817文字</span></p>
+  <p class="ne">単発相当:39,800 円</p>
+</div>
+
+<div class="card">
+  <p class="hoshi">AI時代に事業を一段押し上げる、絶対外せない本編の1本</p>
+  <p class="naka">AI で頼られる人が、事業を一段押し上げる方法(本編 DL)。1本に凝縮した読み物で受け取れます。<span class="ryo">✅ 記事テキスト 1,166文字</span></p>
+  <p class="ne">単発相当:9,800 円</p>
+</div>
+
+<div class="card">
+  <p class="hoshi">売上と単価と利益、3つを同時に動かす土台 全39本</p>
+  <p class="naka">経営パワー／売上・＠・利益向上。1人型の事業で3つの数字を同時に動かす土台を39本に積みました。<span class="ryo">✅ 動画 11本 ✅ 総再生時間 4時間33分 ✅ 記事テキスト 287文字</span></p>
+  <p class="ne">単発相当:39,800 円</p>
+</div>
+
+<div class="card">
+  <p class="hoshi">月1冊が3冊に2冊で止まる自分を直す、知のパワー 全13本</p>
+  <p class="naka">知のパワー／教養／知的パフォーマンス向上。読書法と教養の土台を13本で入れます。<span class="ryo">✅ 動画 8本 ✅ 総再生時間 50分 ✅ 記事テキスト 224文字</span></p>
+  <p class="ne">単発相当:58,000 円</p>
+</div>
+
+<div class="card">
+  <p class="hoshi">＠2000万円がスタート地点に見える、ザ・コアゴールド 全38本</p>
+  <p class="naka">西田の経営の土台38本。知のコアを一本の軸に揃えます。<span class="ryo">✅ 動画 119本 ✅ 総再生時間 15時間45分 ✅ 記事テキスト 19,152文字</span></p>
+  <p class="ne ai-ne">単発相当:98,000 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card">
+  <p class="hoshi">お金の悩みが数字で解ける、会計・経理の全部 全54本</p>
+  <p class="naka">会計・経理のコース。税理士まかせから自分で読める側へ移るための54本。<span class="ryo">✅ 動画 54本 ✅ 総再生時間 2時間42分</span></p>
+  <p class="ne">単発相当:29,800 円</p>
+</div>
+
+<div class="card">
+  <p class="hoshi">お金を残す側に立ち直す、経営戦略 全112本</p>
+  <p class="naka">経営戦略の側面からお金を残すコース。「売れたのに手取りが変わらない」の構造から抜ける112本。<span class="ryo">✅ 動画 112本 ✅ 総再生時間 4時間25分</span></p>
+  <p class="ne">単発相当:29,800 円</p>
+</div>
+
+<div class="card">
+  <p class="hoshi">単価を上げる怖さが消える、マーケティングの型 全65本</p>
+  <p class="naka">マーケティングを改善してお金を残すコース。単価の設計の型を65本に揃えました。<span class="ryo">✅ 動画 65本 ✅ 総再生時間 2時間30分</span></p>
+  <p class="ne">単発相当:29,800 円</p>
+</div>
+
+<div class="card">
+  <p class="hoshi">仕組みを作る時間を取り返す、業務・仕事術 全47本</p>
+  <p class="naka">業務・仕事術を改善してお金を残すコース。1人の時間が原価の仕事を、仕組みに置き直す47本。<span class="ryo">✅ 動画 47本 ✅ 総再生時間 1時間48分</span></p>
+  <p class="ne">単発相当:29,800 円</p>
+</div>
+
+<div class="sec-title">
+手元で毎日使う道具（2 項目）
+<span class="lead">数字を見る運転台と、知的キャッチボールの相手</span>
+</div>
+
+<div class="card">
+  <p class="hoshi">自分の会社の数字が1画面で見える、唯一の運転台</p>
+  <p class="naka">経営の運転台（月額・PREMIUM 相当）。MF・Stripe・UTAGE・CSV を取り込み、11画面の計器盤で自分の会社の数字を1画面にまとめます。</p>
+  <p class="ne">月額相当:5,000 円／月</p>
+</div>
+
+<div class="card">
+  <p class="hoshi">知的キャッチボールの相手が、手元に1人立つ</p>
+  <p class="naka">AI-Mits（アプリ版・Web 版・同じアカウント）。FAST／NORMAL／DEEP／かかりつけの4モードで、分析しすぎて動けない所を自分の言葉で言語化できます。</p>
+  <p class="ne">月額相当:5,000 円／月</p>
+</div>
+
+<div class="sec-title">
+AI の全体像を1周する講座(1 項目)
+<span class="lead">AI 時代の経営を、録画4回で設計から運用まで</span>
+</div>
+
+<div class="card">
+  <p class="hoshi">AIで売上に効かせる、4回の録画 全部</p>
+  <p class="naka">AI 講座 全4回の録画。第1回「魂の設計──外部記憶と判断の土台」／第2回「道具の整備──ハーネスエンジニアリング」／第3回「いよいよ AI 社員実装──Agent Teams」／第4回「運用サイクル──経営に活かす本番」。<span class="ryo">✅ 動画 4本 ✅ 総再生時間 9時間13分</span></p>
+  <p class="ne">単発相当:29,800 円</p>
+</div>
+
+<div class="sec-title">
+梅サポート 5 点
+<span class="lead">西田のノウハウを1人で正確に受け取るための、5つの手元の道具</span>
+</div>
+
+<div class="card">
+  <p class="hoshi">西田の反転グルコン11本、現場で引き直す逆引き付き</p>
+  <p class="naka">反転グルコンの切り出し11本と逆引き表。質問・判断・反転の切れ目で引き直せます。</p>
+  <p class="ne">月額相当:5,000 円／月</p>
+</div>
+
+<div class="card">
+  <p class="hoshi">西田のノウハウ全部、お金が残る101項目の読む順</p>
+  <p class="naka">ノウハウ全部と 101 項目の読む順。何から手を付ければ良いか分からない頭に、順番を1本の線で入れます。</p>
+  <p class="ne ai-ne">月額相当:3,000 円／月相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card">
+  <p class="hoshi">自分の理解を自分の言葉で測る、10問</p>
+  <p class="naka">理解度チェック 10 問。自分がどこまで受け取れたかを、自分の言葉で確かめられます。</p>
+  <p class="ne ai-ne">月額相当:2,000 円／月相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card">
+  <p class="hoshi">AIの時間と学ぶ筋道、1枚で点検</p>
+  <p class="naka">AI 時間とシラバス点検。自分の現在地と、次に積むべき筋道が1枚で分かります。</p>
+  <p class="ne ai-ne">月額相当:3,000 円／月相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card">
+  <p class="hoshi">スキル・エージェント・MCP・hook、AIの道具の全体像</p>
+  <p class="naka">AI の道具の種類と使い方。4つの道具が何をするものか、どう組むかが分かります。</p>
+  <p class="ne ai-ne">月額相当:3,000 円／月相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="sec-title">
+エスコートアルケミーの試案 12 点
+<span class="lead">西田が1対1でお渡しした教材と、西田塾の録画を、1つのアカウントで</span>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案(EA)</span>西田が1対1で渡した、最重要の6本をその順で</p>
+  <p class="naka">入会直後の読む順リスト。DMi → CPF → 最強仕事術 → 戦略会計STRAC の書き方 → 振り子 → 経営戦略は家族のため の6本を、その順で渡します。</p>
+  <p class="ne ai-ne">9,800 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案(EA)</span>大衆と正統の分かれ目、事業の強さを測る物差し</p>
+  <p class="naka">入会時必須教材「大衆のロジックと正統のロジックとは？」「事業の強さを測るアットマーク解説動画」の2本。</p>
+  <p class="ne ai-ne">19,800 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案(EA)</span>家族を幸せにするための、目標設定と達成の標準</p>
+  <p class="naka">目標設定と達成の標準化。音源 2時間23分＋PDF 3つ・画像1つ・Word 1つの一式です。</p>
+  <p class="ne ai-ne">29,800 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案(EA)</span>西田の全根幹を1周する、インストール講座9本</p>
+  <p class="naka">インストール講座の録画9本（DMi／最強仕事術／CPF／マーケティング概論／目標達成メカニズムと達成する目標設定術／お金を残す戦略24／正統の成功ロジック1day／正統の成功ロジックセミナー 2本）。</p>
+  <p class="ne ai-ne">98,000 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案(EA)</span>お金を残す側に移る、戦略24項目</p>
+  <p class="naka">お金を残す戦略 24（24TWENTYFOUR）。</p>
+  <p class="ne ai-ne">29,800 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案(EA)</span>＠2000万円に届かせる、西田本人のフレーム解説</p>
+  <p class="naka">＠2000 フレームの解説（西田光弘・録画）。</p>
+  <p class="ne ai-ne">29,800 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案(EA)</span>単価が怖い自分を直す、ランチェスター法則</p>
+  <p class="naka">ブッフェ_ランチェスター法則。</p>
+  <p class="ne ai-ne">19,800 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案(EA)</span>税理士まかせから自分で読める側へ、西田塾の会計講座</p>
+  <p class="naka">アルケミー第2期 第三講座 第2部（会計・659秒から）。</p>
+  <p class="ne ai-ne">29,800 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案(EA)</span>個人と法人の間でお金が消える仕組み、西田塾で分かる</p>
+  <p class="naka">西田塾 アルケミー第1期 第二講座（STRAC・ギシツカイ・個人と法人のお金）。</p>
+  <p class="ne ai-ne">29,800 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案(EA)</span>頭の中の散らかりを止める、西田のノート術</p>
+  <p class="naka">アルケミー第1期 第五講座 第2部（ノートの使い方）。</p>
+  <p class="ne ai-ne">19,800 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案(EA)</span>一人目のお客様を仕組みで生み出す、戦略構築シート7ステップ</p>
+  <p class="naka">戦略構築シート＋音声（一人目のお客様を仕組みで生み出す7ステップ・音声 63分＋PDF）。</p>
+  <p class="ne ai-ne">29,800 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<div class="card sosa">
+  <p class="hoshi"><span class="sosa-tag">試案(EA)</span>西田の言葉を現場で使いこなす、西田語の辞書</p>
+  <p class="naka">西田語Wiki（the-core.jp/nishidagowiki・2013〜2019 の記事）。</p>
+  <p class="ne ai-ne">19,800 円相当 <span class="ai-tag">AI想定</span></p>
+</div>
+
+<h3 style="margin-top:22px;">さらに、入会特典として ── 書庫から3つ</h3>
+<p style="margin:0 0 12px;color:#444;font-size:.93em;line-height:1.75;">LEVEL 4 の資料庫から、入会の方だけに3つの特典をお付けします。1件ずつの値段は元ページに書かれていないため、BA-strategist が同種の相場（PDF 書籍・資料・学習動画）を基準に AI想定 の金額を付けました。</p>
+
+<div class="tokuten">
+  <p class="title"><span class="no">特典 1</span>AI時代でも読まなければいけない、圧倒的に儲かる著書リスト25</p>
+  <p class="ryo">PDF 全25冊 ／ まとめて納品</p>
+  <p class="naka">西田が、1人型起業家に手渡してきた著書を25冊。<b>PDF として納品できます</b>（紙の本を揃える手間は要りません）。利益の型・単価の設計・編集の技術・会計の構造・社史の読み方まで、1人型の経営に効く25冊を、入会直後にまとめてお渡しします。</p>
+  <p class="nedan">50,000 円相当 <span class="ai-tag">AI想定</span>（PDF 書籍 1冊あたり相場 2,000 円×25冊として算出）</p>
+</div>
+
+<div class="tokuten">
+  <p class="title"><span class="no">特典 2</span>分析で止まる頭に、1枚で動き出せる実践シート群26</p>
+  <p class="ryo">PDF／エクセル／テキスト 全26点 ／ 1点が1枚から数ページ</p>
+  <p class="naka">西田語の辞書(13ページ)・付加価値白書 DMC(10ページ)・＠2000 フレーム(1枚)・DMI チェック 16 項目・104 頭のフレーム(1枚)・本選び・編集問題・石田梅岩の資料・「逆に」の資料──1人型の経営の急所を、1枚で動き出せる形に畳んだ実践シートです。</p>
+  <p class="nedan">52,000 円相当 <span class="ai-tag">AI想定</span>（実践シート 1点あたり相場 2,000 円×26点として算出）</p>
+</div>
+
+<div class="tokuten">
+  <p class="title"><span class="no">特典 3</span>学ぶ順で聴く、西田の学習動画・音声6点</p>
+  <p class="ryo">動画・音声 全6点</p>
+  <p class="naka">西田が過去に録ってきた学習動画・音声から6点。読む順・聴く順を揃えてお渡しします。</p>
+  <p class="nedan">30,000 円相当 <span class="ai-tag">AI想定</span>（学習動画・音声 1点あたり相場 5,000 円×6点として算出）</p>
+</div>
+
+<div class="total">
+<h4>LEVEL 1 価値の合計</h4>
+<div class="row">
+  <span class="label">① 書庫・本編の単発相当（表の値がある 9 行）</span>
+  <span class="val">296,400 円</span>
+</div>
+<div class="row">
+  <span class="label">② AI想定の単発相当（ザ・コアゴールド 1行＋EA 12行）</span>
+  <span class="val ai-ne">463,800 円 <span class="ai-tag">AI想定</span></span>
+</div>
+<div class="row">
+  <span class="label">③ 特典 3件の AI想定（著書25冊・資料26点・動画音声6点）</span>
+  <span class="val ai-ne">132,000 円 <span class="ai-tag">AI想定</span></span>
+</div>
+<div class="row">
+  <span class="label"><b>単発相当の合計 ①＋②＋③</b></span>
+  <span class="val sum-single">892,200 円</span>
+</div>
+<div class="row">
+  <span class="label">④ 道具・サポートの月額相当（表の値がある 3 行）</span>
+  <span class="val">15,000 円／月</span>
+</div>
+<div class="row">
+  <span class="label">⑤ AI想定の月額相当（梅サポート 4行）</span>
+  <span class="val ai-ne">11,000 円／月 <span class="ai-tag">AI想定</span></span>
+</div>
+<div class="row">
+  <span class="label"><b>月額相当の合計 ④＋⑤</b></span>
+  <span class="val">26,000 円／月</span>
+</div>
+
+<div class="sen">
+<b>価値の総和（単発相当＋月額相当×12）：</b><br>
+892,200 円 ＋ 26,000 円／月 × 12 ＝ <b>1,204,200 円</b>
+</div>
+
+<div class="nedan-box">
+LEVEL 1 の値段 <span class="kara">［値段：西田が決める］</span>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- =========================
+  区画 9 ── 売らない宣言＋保証
+========================= -->
+
+<div class="kuga">
+<span class="kuga-tag"><span class="no">9</span>売らない宣言＋保証</span>
+<div class="kuga-honbun">
+  <div class="utauanai">
+    <p class="sen">高額のバックエンドは、今回は売りません。</p>
+    <p style="margin:6px 0 0;color:#333;font-size:.95em;">
+      LEVEL 1 のレターでは、LEVEL 2・LEVEL 3 の案内は行いません。LEVEL 1 を使ってみて、ご自身のタイミングでご検討ください。
+    </p>
+    <p style="margin:10px 0 0;color:var(--navy);font-weight:700;">
+      <span class="kara">［保証：西田が決める］</span>
+    </p>
+  </div>
+</div>
+</div>
+
+<!-- =========================
+  区画 10 ── なぜ無料体験か・なぜお金をいただくか
+========================= -->
+
+<div class="kuga">
+<span class="kuga-tag"><span class="no">10</span>なぜ無料体験か・なぜお金をいただくか</span>
+<div class="kuga-honbun">
+  <div class="naze">
+    <h3 style="margin-top:0;">なぜ、まずは無料で使っていただくのか</h3>
+    <p>
+      <span class="kara">［空：無料体験で何を確かめていただくかを、西田が1行で書く所。たとえば「自分の数字が1画面で見えるまでを、まずご自分の目で確かめてください」のような一文］</span>
+    </p>
+
+    <h3>なぜ、無料体験の後にお金をいただくのか</h3>
+    <p>
+      <span class="kara">［空：有料で続けることの理由を、西田が書く所。たとえば「無料と、身銭を切ることには、行動に大きな違いを生みだす」のような一文］</span>
+    </p>
+  </div>
+</div>
+</div>
+
+<!-- =========================
+  区画 11 ── 価格の対比
+========================= -->
+
+<div class="kuga">
+<span class="kuga-tag"><span class="no">11</span>価格の対比</span>
+<div class="kuga-honbun">
+  <div class="hikaku">
+    <table>
+      <tr><td class="label">単発でそろえた場合の合計（単発相当）</td><td class="val">892,200 円</td></tr>
+      <tr><td class="label">月額でそろえた場合（月額相当 ×12ヶ月）</td><td class="val">312,000 円／年</td></tr>
+      <tr class="sou"><td>価値の総和</td><td class="val sou">1,204,200 円</td></tr>
+    </table>
+    <p style="margin:10px 0 0;color:#333;font-size:.95em;line-height:1.75;">
+      その 1,204,200 円 相当が、LEVEL 1 では <span class="kara">［値段：西田が決める］</span> になります。
+    </p>
+  </div>
+</div>
+</div>
+
+<!-- =========================
+  区画 12 ── 申込み・プラン
+========================= -->
+
+<div class="kuga">
+<span class="kuga-tag"><span class="no">12</span>申込み・プラン</span>
+<div class="kuga-honbun">
+  <h3>お申込みの3つのプラン</h3>
+  <div class="puran">
+    <div class="p">
+      <p class="t">① 無料体験 → 月額</p>
+      <p style="color:#333;font-size:.9em;margin:4px 0;"><span class="kari">［仮：30日 無料］</span> のあと、</p>
+      <p class="ne"><span class="kara">［値段：西田が決める］</span> ／ 月</p>
+    </div>
+    <div class="p">
+      <p class="t">② 6ヶ月分 一括払い</p>
+      <p style="color:#333;font-size:.9em;margin:4px 0;">6ヶ月まとめてのお支払い</p>
+      <p class="ne"><span class="kara">［値段：西田が決める］</span></p>
+    </div>
+    <div class="p">
+      <p class="t">③ 12ヶ月分 一括払い</p>
+      <p style="color:#333;font-size:.9em;margin:4px 0;">12ヶ月まとめてのお支払い</p>
+      <p class="ne"><span class="kara">［値段：西田が決める］</span></p>
+    </div>
+  </div>
+  <p style="margin:12px 0 0;color:#444;font-size:.93em;line-height:1.75;">
+    どのプランでも、カードのご登録は入会のときにお願いします。<span class="kari">［仮：30日 無料］</span> の期間中は、カードからの引き落としは発生しません。
+  </p>
+</div>
+</div>
+
+<!-- =========================
+  区画 13 ── 想定される質問
+========================= -->
+
+<div class="kuga">
+<span class="kuga-tag"><span class="no">13</span>想定される質問・疑問</span>
+<div class="kuga-honbun">
+  <h3>よくいただくご質問</h3>
+  <div class="qa">
+    <p class="q">どの会計ソフトにつながりますか</p>
+    <p class="a">マネーフォワード と freee の両方につながります。経営の運転台は、どちらのソフトからも数字を取り込めます。 Stripe・UTAGE・CSV（自分で入れる取引）も取り込めます。</p>
+
+    <p class="q">AI 講座を受けていなくても使えますか</p>
+    <p class="a">はい、使えます。LEVEL 1 の中に、AI 講座 全4回の録画が入っています。第1回「魂の設計」・第2回「道具の整備」・第3回「AI 社員実装」・第4回「運用サイクル」の順にご覧いただけます。</p>
+
+    <p class="q">グルコンには出られますか</p>
+    <p class="a">反転グルコン（BE-02）そのものは LEVEL 2 のご案内になります。LEVEL 1 では、過去に行った反転グルコンの切り出し11本と逆引き表をご覧いただけます。</p>
+
+    <p class="q">個別相談はありますか</p>
+    <p class="a"><span class="kara">［空：LEVEL 1 に個別相談を含めるかどうかを西田が決める］</span></p>
+
+    <p class="q">2年が過ぎたら、どうなりますか</p>
+    <p class="a"><span class="kara">［空：成長期の2年を過ぎた後の、LEVEL 1 の使い方（右下の独自性に移る所）を西田が1行で書く所］</span></p>
+
+    <p class="q">解約はどうしますか</p>
+    <p class="a"><span class="kara">［空：解約の方法と、月の途中の解約の扱いを西田が決める所］</span></p>
+  </div>
+</div>
+</div>
+
+<!-- =========================
+  区画 14 ── 話の始まり(ストーリー)
+========================= -->
+
+<div class="kuga">
+<span class="kuga-tag"><span class="no">14</span>話の始まり（ストーリー）</span>
+<div class="kuga-honbun">
+  <div class="story">
+    <p class="t">二刀流の動画──60業種を6タイプに分けて見る、2年の経営</p>
+    <p>
+      西田が二刀流セミナーで話したのは、60業種を6タイプに分けた見方と、4つのC、そして成長期の戦略です。「本当数えてたのは 60まで数えてたんですけど。60業種とか業態、それ以上数えてない」「そんなにたくさんあるのを 6つのタイプに分類してみました」「タイプごとの、危機とか脅威とかみたいな、そこはやっぱり理解しておく必要がある」──これが二刀流の話の始まりです。
+    </p>
+    <p>
+      <span class="kara">［空：ここに、西田が動画として話す予定の、6タイプと4つのCと成長期の戦略の、話の始まりの本文が入ります。レターの読み手が「自分はどのタイプか」を見つけられる所まで書きます］</span>
+    </p>
+  </div>
+</div>
+</div>
+
+<!-- =========================
+  社内メモ
+========================= -->
+
+<div class="shanai-memo">
+<h2>社内メモ（西田が読む用。お客様向けには出しません）</h2>
+
+<h3>出どころ</h3>
+<ul style="margin:4px 0 10px 1.3em;font-size:.9em;line-height:1.75;color:#333;">
+  <li>骨組み（14区画のアウトライン）：参謀の2026-10-07T12:53:46Z のチャット。手本のページ UTAGE jiU0PFywalvD（ファネルビルディングマスター FBM10）の並びを借りた形。</li>
+  <li>8 の区画（価値の積み上げ）：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/_wip/linchpin_nou_no_naka_20261005/level1_letter_tsumiage_shitagaki_20261011.html（文字も金額も変えずに写し）</li>
+  <li>LEVEL 1 の表：同じフォルダ level_hyou_20261008_level1.html</li>
+  <li>売り方の提案：同じフォルダ ea_marketing_teian_20261009.html</li>
+  <li>商品の型試案：同じフォルダ level1_shohin_no_kata_shian_20261010.html</li>
+  <li>二刀流・4つのC・成長期2年・6タイプ：/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-08-21_1855_be02-syllabus-v2-support-nitoryu.md・2026-10-05_1546_fhl2026-linchpin-continuity.md・2026-09-05_1603_wasa-shiki-funnel-sekkei.md／二刀流v2 統合版 58ページ</li>
+  <li>会計ソフトのつなぎ先（MF・freee）：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/CLAUDE.md 382行（untendai-freee／untendai-freee-win の存在）</li>
+  <li>ペルソナ（田中誠・分析しすぎて動けない）：context/persona_master.md 83〜108行</li>
+  <li>Mits様 2026-10-07 原文「AI時代のコンサルタント・知的提供をしている人向け・これから2年間の経営の仕方・経営という言葉を積極的に使う・二刀流の中の6つの方と4Cと成長期の戦略について話す・動画にする予定・経営アプリをダウンロードして2週間でも1ヵ月でも使ってみて」</li>
+  <li>Mits様 2026-10-07 原文「期間も仮で1ヶ月もしくは30日　全部無料・カードは最初に預かる」</li>
+</ul>
+
+<h3>［空］の一覧（12件）</h3>
+<ol style="margin:4px 0 10px 1.5em;font-size:.9em;line-height:1.75;color:#333;">
+  <li>区画 0 商品名（［商品名：西田が決める］）</li>
+  <li>区画 2 二刀流のS字カーブの図（［空：この区画に二刀流のS字カーブの図が入ります］）</li>
+  <li>区画 3 西田らしい一言（［空：ここに西田らしい一言……］）</li>
+  <li>区画 7 必要な2つの値段（［値段：西田が決める］）</li>
+  <li>区画 8 LEVEL 1 の値段（［値段：西田が決める］）</li>
+  <li>区画 9 保証（［保証：西田が決める］）</li>
+  <li>区画 10 なぜ無料体験か（［空：無料体験で何を確かめていただくか……］）</li>
+  <li>区画 10 なぜお金をいただくか（［空：有料で続けることの理由……］）</li>
+  <li>区画 11 LEVEL 1 の値段（［値段：西田が決める］）</li>
+  <li>区画 12 月額・6ヶ月一括・12ヶ月一括の値段（［値段：西田が決める］×3）</li>
+  <li>区画 13 個別相談・2年が過ぎたら・解約（［空］×3）</li>
+  <li>区画 14 二刀流のストーリー本文（［空：ここに、西田が動画として話す予定の……］）</li>
+</ol>
+<p style="margin:4px 0 10px;color:#666;font-size:.88em;">※ 本文に出た ［空：…］ の種類の数で数えて 12件（同じ内容の「値段：西田が決める」の繰り返しは1件とまとめた）。「出現の数」で数えると「値段：西田が決める」が本文に 6回、「空：…」が本文に 7回、「保証：西田が決める」が本文に 1回、「商品名：西田が決める」が本文に 1回で 計 15回。</p>
+
+<h3>［仮：…］の一覧（1件）</h3>
+<ul style="margin:4px 0 10px 1.3em;font-size:.9em;line-height:1.75;color:#333;">
+  <li>仮：30日 無料（Mits様 2026-10-07 原文「期間も仮で1ヶ月もしくは30日　全部無料」から、30日を仮に置いた。本文に 3回 出てくる）</li>
+</ul>
+
+<h3>8 の区画の金額の確かめ</h3>
+<ul style="margin:4px 0 10px 1.3em;font-size:.9em;line-height:1.75;color:#333;">
+  <li>単発相当の合計 892,200 円 ＝ ①296,400 ＋ ②463,800 ＋ ③132,000</li>
+  <li>② 内訳：98,000（コアゴールド）＋ EA 12行の和 365,800 ＝ 463,800</li>
+  <li>③ 内訳：50,000（特典1）＋ 52,000（特典2）＋ 30,000（特典3）＝ 132,000</li>
+  <li>月額相当の合計 26,000 円／月 ＝ ④15,000 ＋ ⑤11,000（内訳 3,000＋2,000＋3,000＋3,000 ＝ 11,000）</li>
+  <li>価値の総和 ＝ 892,200 ＋ 26,000 × 12 ＝ 1,204,200 円</li>
+  <li>積み上げの下書き（level1_letter_tsumiage_shitagaki_20261011.html）の数字と差 0 円</li>
+</ul>
+
+<h3>970,000 円の線（Mits様 2026-10-08 原文・1文字も変えずに引用）</h3>
+<p style="margin:4px 0 10px;color:#333;font-size:.9em;line-height:1.75;background:#fff;padding:10px 14px;border-left:4px solid var(--navy2);">
+「LEVEL1は合計額が仮に1万ドル、が97ドルでそれの10ヶ月分970ドルで手に入るよ　1000ドルー1万ドルなので　支払いの10倍の価値づけ必要がある」
+</p>
+<ul style="margin:4px 0 10px 1.3em;font-size:.9em;line-height:1.75;color:#333;">
+  <li>970,000 円の線に対して 1,204,200 円 ÷ 970,000 円 ＝ 約 124.1%</li>
+  <li>単発相当だけで見ると 892,200 円 ÷ 970,000 円 ＝ 約 92.0%</li>
+  <li>表の値の分 476,400 円 で 約 49.1%・AI想定の分 727,800 円 で 約 75.0%</li>
+</ul>
+
+<h3>禁止語の確かめ（本文全体）</h3>
+<ul style="margin:4px 0 10px 1.3em;font-size:.9em;line-height:1.75;color:#333;">
+  <li>不安をあおる3語（頭文字で：こ…・て…・か…）の本文中の出現：すべて 0 個</li>
+  <li>※ 禁止語の実文字列は、grep で機械的に数えるときに自己言及で引っかかってしまうため、ここでは言わずに頭文字で代替。本下書きの区画 0〜14 の本文中には1個も使っていません。</li>
+</ul>
+
+<h3>検収の線（値）</h3>
+<ul style="margin:4px 0 10px 1.3em;font-size:.9em;line-height:1.75;color:#333;">
+  <li>区画 0〜14 の 15 区画が全部あること：<span class="num">15 区画</span>（区画の見出しの数で確認・ページ上の "kuga-tag" の数）</li>
+  <li>8 の区画の価値の総和：<span class="num">1,204,200 円</span>（1 個）</li>
+  <li>LEVEL 1 の値段の自己判断としての出現（Mits様原文の引用部分を除く）：<span class="num">0 個</span>（本文には書いていない。本ページで 9,700 や 97 ドルの数字が出るのは、970,000 円の線の引用部分 1 か所と、この検収節の文言のみ）</li>
+  <li>［空］の種類の数：12件／出現の数：15回</li>
+  <li>［仮：…］の種類の数：1件（仮：30日 無料）／出現の数：3回</li>
+  <li>社内メモの［空］の一覧の行の数：12行（区画 0・2・3・7・8・9・10・10・11・12・13・14 の12件）</li>
+  <li>社内メモの［仮：…］の一覧の行の数：1行</li>
+  <li>不安をあおる3語の本文中の出現：0 個（頭文字 こ・て・か の節で確かめた通り）</li>
+  <li>本文に出た Mits様の言葉・数字（成長期は2年・倍かかっても4年・4つのC＝キャッシュ・コンテンツ・カスタマー・クリエイティビティ・普及速度 180日→105日→60日→36日・60業種を6タイプ・経営アプリ・AI-Mits・4モード・計器盤11画面・MF・Stripe・UTAGE・438本以上・45時間超え・29,000文字以上・AI 講座 全4回・反転グルコン11本・101項目の読む順・理解度チェック 10 問）：すべて社内メモの「出どころ」の節に出どころがある</li>
+  <li>作ったファイルの絶対パス：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/_wip/linchpin_nou_no_naka_20261005/level1_letter_zentai_shitagaki_20261011.html</code></li>
+</ul>
+
+<div class="foot">
+<b>この下書きは公開しません。</b>UTAGE への登録・ Mits様名義での発信は、西田が決めてから別のセッションで行います。本下書きは「14区画を全部1枚で読む」ためのものです。
+</div>
+
+</div>
+
+</body>
+</html>
