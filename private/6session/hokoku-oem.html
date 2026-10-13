@@ -184,7 +184,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-08 15:30 ／ 写した時刻 2026-10-08 16:00</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-13 19:50 ／ 写した時刻 2026-10-14 06:45</p>
 <h2 id="報告-OEM提供考察">報告 ── _OEM提供考察</h2>
 <p>この持ち場のセッションが、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_OEM提供考察.md</p>
@@ -200,6 +201,22 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 - ほかの持ち場に頼む：&lt;持ち場&gt;：&lt;1行&gt;（急ぎなら決定の記録にも宛先付きで）
 - 数字：&lt;この持ち場が見ている数字があれば1行&gt;
 </code></pre>
+<h3 id="2026-10-13-19-4x-JST-FHL-2026-Notes-からの-遠藤さんの-1">2026-10-13 19:4x JST｜FHL 2026 Notes からの「遠藤さんの 1.76.3 は _OEM提供考察 の1本で仕上げる」を受け取った（途中の報告）</h3>
+<ul>
+<li>受け取った：FHL 2026 Notes からの指示（Mits様原文「OEM考察セッションがくみ上げたらしいからやりとりして、正しい選択をして」）。この持ち場で仕上げる</li>
+<li>返事を SendMessage で送ったが、権限の形が違うため保留ののち期限切れで届いていない（msg_id dce8aa04）。だからここに書く</li>
+<li>いまの状態：Mac の untendai_1.76.3_mac_arm64.zip は遠藤さんのフォルダに配置済み（棚原さんの zip と sha256 4119ded6… が一致）。Windows の untendai_1.76.3_x64-setup.exe は Win 機で 18:29 に組み上がり、フォルダに配置済み。Cargo.toml の直しは 05be2ab（この1本だけ commit・未 commit の7ファイルには触っていない）</li>
+<li>残り：Windows 機で入れて開く写真・はじめに読んでください.md の Windows の節・BS-jikki-kenshu の全行検収。担当 BS-engineer が走行中。終わったらこの下に書く</li>
+</ul>
+<h3 id="2026-10-13-20-xx-JST-遠藤さんの製品版-1-76-3-Mac・Windows">2026-10-13 20:xx JST｜遠藤さんの製品版 1.76.3（Mac・Windows）を置き終えた</h3>
+<ul>
+<li>遠藤さんのフォルダ untendai-client_配布（10grvaP6qjT_wQFkS17PneszOBkhuGco6）：untendai-client_1.74.4_mac_arm64.zip（残置）／untendai_1.76.3_mac_arm64.zip（sha256 4119ded6…・棚原さんの物と同一）／untendai_1.76.3_x64-setup.exe（sha256 5f76624e…）／はじめに読んでください.md（23.6K・前の版の案内は下に残置）／変更点.md（1.74.2→1.74.4→1.76.3）。ログインなしでフォルダを開くと3本とも見える（参謀が curl で確認）</li>
+<li>Windows 版の Drive リンク：<a href="https://drive.google.com/file/d/1mSEaPe1fykC1FZX78QJ13nBZRw-e_OHs/view">https://drive.google.com/file/d/1mSEaPe1fykC1FZX78QJ13nBZRw-e_OHs/view</a></li>
+<li>untendai-seiri の commit は 05be2ab（src-tauri/Cargo.toml 1本のみ）。v1.75.4（3a843f1）で Mac 専用の節が共通の依存13本を吸い、Windows の組み立てが v1.75.4〜v1.76.3 で通っていなかった。Win 機の最後の製品版 .exe は 1.73.28（9-25）だった。版は上げていない・世に出していない・未 commit の7ファイルには触っていない</li>
+<li>BS-jikki-kenshu：1回目の不合格3行を直して合格。ただし Windows の節の SmartScreen の青い画面・インストーラの画面・起動までの秒数の行は実機で再現できず確かめられていない（Win 機の untendai.exe に Zone.Identifier が無い）</li>
+<li>遠藤さんの画面には、更新の置き場（latest.json）が 1.73.28 のままのため「新しい版 v1.73.28 があります」の札が出る。案内に「押さない」と書いた</li>
+<li>遠藤さんへの連絡は Mits様の合図のあと</li>
+</ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
 </body>
