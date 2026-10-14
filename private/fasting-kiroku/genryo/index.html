@@ -14,10 +14,10 @@
     --kyou:#fff8dc;
     /* 文字の大きさ（5段） f1 献立の品／f2 補足／f3 見出し・欄の中の行／f4 値／f5 主役 */
     --f1:12px; --f2:11px; --f3:13px; --f4:17px; --f5:21px;
-    --col:122px; --head:116px;
+    --col:150px; --head:116px;
   }
   @media (max-width:640px){
-    :root{ --f1:11.5px; --f2:10.5px; --f3:12.5px; --f4:16px; --f5:19px; --col:112px; --head:100px; }
+    :root{ --f1:11.5px; --f2:10.5px; --f3:12.5px; --f4:16px; --f5:19px; --col:150px; --head:100px; }
   }
   html,body{ margin:0; padding:0; background:#fff; color:var(--ink);
     font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","Noto Sans JP","Meiryo",sans-serif;
@@ -132,6 +132,7 @@
   .hmenu a[aria-current="page"]{ background:var(--title); color:#fff; border-color:var(--title); }
   /* 減量プラン：10/12 を1日目にする。ファスティング中の 10/4〜10/11 の列（2〜9列目）は計算に使うので残して隠す（2026-10-12 Mits様「ファスティング用と判断されるモノを…表から削除して」） */
   table:not(#tw-table) tr > :nth-child(n+2):nth-child(-n+9){ display:none; }
+  /* 2026-10-14 Mits様「150にしてみて」：1日の列の幅は 150px（スマホも同じ） */
   /* 2026-10-14 Mits様「文字を入れて、幅が連動するのやめて」：品目の文字が長くても列の幅は変えず、マスの中で折り返す */
   table:not(#tw-table) td{ max-width:var(--col); overflow:hidden; }
   td.meal .chk{ white-space:normal; overflow-wrap:anywhere; }
