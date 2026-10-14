@@ -94,7 +94,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-13 07:26 ／ 写した時刻 2026-10-13 12:39</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-14 07:25 ／ 写した時刻 2026-10-14 12:37</p>
 <h2 id="報告-運転台改善">報告 ── 運転台改善</h2>
 <p>この持ち場の窓（7:12 の毎朝点検・6時間ごとの機能要望の窓・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_運転台改善.md</p>
@@ -1914,6 +1915,32 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>質問一覧の棚原さんへの送付（Mits様が「協力者としてお願いする」の形で、Mits様ご自身の手で送られる）</li>
 </ul>
 <hr>
+<h3 id="2026-10-14-07-2x-指示書-10-14-の1-3番-毎朝点検の回">2026-10-14 07:2x — 指示書 10-14 の1〜3番（毎朝点検の回）</h3>
+<h4 id="1-05be2ab-が-main-に入っていることの確認-指示書-1番">1. 05be2ab が main に入っていることの確認（指示書 1番）</h4>
+<p><code>git log --oneline -5</code>（07:2x 実測）の先頭が <code>05be2ab 直し：Mac 専用の節が共通の依存を吸っていた件（v1.75.4〜v1.76.3 で Windows の組み立てが通らなかった…）</code>。<code>git branch --contains 05be2ab</code> は <code>main</code>。日誌にも1行書いた。遠藤さんの Windows 版とフォルダには触っていない。</p>
+<h4 id="2-20ヶ月分-と-sample-db-12ヶ月-の食い違い-指示書-2番">2. 「20ヶ月分」と sample.db（12ヶ月）の食い違い（指示書 2番）</h4>
+<p><strong>正しいのは sample.db（12ヶ月）。文言の「20ヶ月」が古い。</strong></p>
+<table>
+<tr><th>見たもの</th><th>実測</th></tr>
+<tr><td>作業場の sample.db（未 commit の版）</td><td>strac 144 行・月 12（2025-10〜2026-09）</td></tr>
+<tr><td>HEAD（v1.76.3 の commit 43a67d9 の版）</td><td>同じ 144 行・月 12（2025-10〜2026-09）</td></tr>
+<tr><td>v1.76.3 より前の sample.db（43a67d9~1）</td><td>strac 177 行・月 21（2025-01〜2026-09）＝ Mits様の実データ由来の旧見本</td></tr>
+<tr><td>架空見本の元 tools/make-demo-dev.sh</td><td>139行目「直近12ヶ月の会計月次データ」</td></tr>
+</table>
+<p>「20ヶ月」は旧見本（実データ21ヶ月）のころに書いた文言で、v1.76.3 で見本を架空12ヶ月に替えたときに直し漏れた。残っている場所は4か所：</p>
+<p>1. src/index.html 3855行目 <code>（いまは見本の20ヶ月ぶんです）</code> → <code>12ヶ月</code> に（画面を描いたあと 4967行目の処理で別の文に置き換わるので、出るのは描く前の一瞬）</p>
+<p>2. src/index.html 3922行目 <code>&lt;div class=&quot;gn-sub&quot;&gt;20ヶ月の平均&lt;/div&gt;</code>（分析の画面・ギネスの「平均を最低に」の札）→ <strong>数字を焼かない形に直すのが本筋</strong>。平均は 4554行目で <code>g.length</code>（平均に入れた月の数）で割っているのに、札は「20」の決め打ち。お客様が自社の数字を入れても「20ヶ月の平均」と出る。直し方：札に id を付け、4561行目の <code>gn-avg</code> を書く直後で <code>g.length + &#x27;ヶ月の平均&#x27;</code> を入れる</p>
+<p>3. src/index.html 16517行目 <code>架空の会社の 20 ヶ月分で全部の箱を試せます</code> → <code>12 ヶ月分</code></p>
+<p>4. src/mihon.js 317行目 <code>cnt:&#x27;20ヶ月&#x27;</code> → <code>&#x27;12ヶ月&#x27;</code></p>
+<p>テスト（src-tauri/tests・src-tauri/src・tools）に「20ヶ月」を見ているものは0件。</p>
+<p><strong>手は入れていない。</strong>毎朝点検の回（予約タスク・無人）で src/index.html・src/mihon.js への書き込みが自動実行の許可の層で断られた（「Modify Shared Resources」）。上の4か所は、会話のセッションで直せる。版を上げて世に出す・配った zip を差し替えるのは Mits様の合図。</p>
+<h4 id="3-2026-10-13-の会話の仕事-指示書-3番・jsonl-d288cb85-の-10-0">3. 2026-10-13 の会話の仕事（指示書 3番・jsonl d288cb85 の 10:01〜19:29 から後追いで書いた）</h4>
+<ul>
+<li><strong>10:01〜10:02 棚原さんの画面が開発版 v1.76.2 だった件</strong>：Mits様が写真を出された。画面の版は「v1.76.2　組み立て 10/12 15:32」で、10/12 15:3x に誤って置いた開発版（中は untendai-client.app・15:34 組み立て）と一致。フォルダの今の中身は untendai_1.76.3_mac_arm64.zip（17:52 に置いた製品版・中は untendai.app 17:45 組み立て）と はじめに読んでください.md で、開発版の zip は 10/12 17:5x に外し済み。棚原さんは外す前にダウンロードしていた、という見立て</li>
+<li><strong>17:59 FHL 2026 Notes の1通で Windows 版の担当を出した件</strong>：FHL 2026 Notes から「遠藤さんの件　WIN版がない、追加して」（Mits様原文・承認済み）が届き、遠藤さんの Windows 版を製品版 1.76.3 で組むよう BS-engineer に出した（18:00）</li>
+<li><strong>18:03 止めた件</strong>：Mits様「OEM提供からメッセージ受け取っていないのか」に、_OEM提供考察 の記録（04b03185…jsonl）を読んで答えた。_OEM提供考察 はこのセッションあてに4回送っていた（send_message 3回 10/11〜10/13・最後は 10/13 16:31／17:51 に SendMessage で宛名「BS_運転台改善」）が、このセッションの記録に受信は0件。担当は組み立てる前に止めた</li>
+<li><strong>19:28〜19:29 FHL 2026 Notes の「ここで止めて」への返事</strong>：FHL 2026 Notes から「遠藤さんの Windows 版は _OEM提供考察 が仕上げる。組み立て直しもフォルダへの置き直しもしない」（Mits様原文「OEM考察セッションがくみ上げたらしいからやりとりして、正しい選択をして」）。返事の中身：担当は 18:03 に止めてあり遠藤さんのフォルダには何も書いていない／19:28 のフォルダの中身は untendai_1.76.3_x64-setup.exe・untendai_1.76.3_mac_arm64.zip・untendai-client_1.74.4_mac_arm64.zip・はじめに読んでください.md・変更点.md／作業場の未 commit の7ファイルは7本とも運転台改善の側の物で、sample.db は 1.76.3 と差0行</li>
+</ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
 </body>
