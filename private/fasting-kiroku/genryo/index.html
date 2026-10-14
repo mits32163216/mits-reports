@@ -137,7 +137,7 @@
   td.meal .chk, td.meal .egg-line{ white-space:normal; overflow-wrap:anywhere; }
   /* 2026-10-14 Mits様「縦にスクロールすると、日付が上に上がっていってしまうので、日付の部分で固定にして」：
      表を縦にも横にも動く1つの欄に入れ、日付の行を上に留める（上の切り替えの下に収まる高さ） */
-  .scroll{ overflow:auto; max-height:calc(100vh - 44px); max-height:calc(100dvh - 44px); }
+  .scroll{ overflow:auto; max-height:calc(100vh - var(--menu-h, 44px) - 12px); max-height:calc(100dvh - var(--menu-h, 44px) - 12px); }
   tr.hinichi > *{ position:sticky; top:0; z-index:3; }
   tr.hinichi > th.head{ z-index:4; }
   tr.hinichi > td{ background:#fff; }
@@ -148,7 +148,12 @@
 <nav class="hmenu"><a href="/private/fasting-kiroku/">ファスティング記録表（10/4〜）</a><a href="/private/fasting-kiroku/genryo/" aria-current="page">減量プラン（10/12〜）</a></nav>
 
 <div class="page">
-  <div class="scroll" id="scroll">
+  <script>
+  // 2026-10-14 日付の行を留めるため、表の欄の高さを「画面の高さ − 上の切り替えの高さ」にする（切り替えは画面の幅で1行にも2行にもなる）
+  (function(){ const set = () => { const m = document.querySelector('.hmenu'); document.documentElement.style.setProperty('--menu-h', (m ? m.offsetHeight : 0) + 'px'); };
+    window.addEventListener('resize', set); document.addEventListener('DOMContentLoaded', set); })();
+</script>
+<div class="scroll" id="scroll">
   <table>
     <tr class="hinichi">
       <th class="head">日　付</th>
