@@ -82,7 +82,7 @@
   .mirai{ color:#a0a0a0; }
 
   /* 献立 */
-  tr.gozen > th, tr.hirusugi > th, tr.aruita > th, tr.yugata > th, tr.sapuri > th{ background:var(--meal-bg); }
+  tr.gozen > th, tr.hirusugi > th, tr.hirusugi-tsudo > th, tr.aruita > th, tr.yugata > th, tr.yugata-tsudo > th, tr.sapuri > th{ background:var(--meal-bg); }
   th.meal-head .h1{ display:block; font-size:var(--f3); font-weight:700; color:var(--meal); }
   th.meal-head .h2{ display:block; font-size:var(--f2); font-weight:500; color:var(--meal); }
   td.meal{ text-align:left; vertical-align:top; padding:5px 6px; font-feature-settings:"palt" 1; }
@@ -527,11 +527,9 @@
       <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="chk m">ベーコンエッグ・卵2</span><span class="egg-line">卵<span class="chk egg" data-label="卵3"></span><span class="chk egg" data-label="卵4"></span></span><span class="chk">納豆1</span><span class="chk">もずく50g</span><span class="chk">MCT小1</span></td>
       <td class="meal"><span class="chk m">マナ酵素90ml・水540ml</span><span class="chk">MCT小1</span></td>
       <td class="meal"><span class="chk m">マナ酵素90ml・水540ml</span><span class="chk">MCT小1</span><span class="chk"><span class="t">てびち汁 汁だけ1袋分<br>（220g）</span></span></td>
-      <td class="meal"><span class="chk m">マナ酵素90ml・水540ml</span><span class="chk m">マナ酵素30ml（実際）</span><span class="chk">MCT小1</span><span class="chk"><span class="t">てびち汁 汁だけ1袋分<br>（220g）</span></span></td>
-      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk m">野菜炒め ベーコン入り（実際）</span><span class="chk m">ゆし豆腐味噌汁 卵入り（実際）</span><span class="chk">納豆1（実際）</span></td>
-      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk m">ナス味噌弁当 ご飯なし（実際）</span></td>
-      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span><span class="chk m">肉野菜炒め弁当 ご飯なし（実際）</span></td>
-      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span><span class="chk m">ハンバーグ2個・目玉焼き・豚の炒め物・島豆腐のプレート ご飯なし（実際）</span></td>
+      <td class="meal"><span class="chk m">マナ酵素90ml・水540ml</span><span class="chk">MCT小1</span><span class="chk"><span class="t">てびち汁 汁だけ1袋分<br>（220g）</span></span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span></td>
+      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span></td>
       <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
       <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
       <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
@@ -544,6 +542,35 @@
       <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
       <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
       <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
+      <td class="meal empty"></td>
+    </tr>
+    <tr class="hirusugi-tsudo">
+      <th class="head meal-head"><span class="h1">昼過ぎ</span><span class="h2">都度の入力</span></th>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal"><span class="chk m">マナ酵素30ml（実際）</span></td>
+      <td class="meal"><span class="chk m">野菜炒め ベーコン入り（実際）</span><span class="chk m">ゆし豆腐味噌汁 卵入り（実際）</span><span class="chk">納豆1（実際）</span></td>
+      <td class="meal"><span class="chk m">ナス味噌弁当 ご飯なし（実際）</span></td>
+      <td class="meal"><span class="chk m">肉野菜炒め弁当 ご飯なし（実際）</span></td>
+      <td class="meal"><span class="chk m">ハンバーグ2個・目玉焼き・豚の炒め物・島豆腐のプレート ご飯なし（実際）</span></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
       <td class="meal empty"></td>
     </tr>
     <tr class="aruita">
@@ -583,9 +610,6 @@
       <td class="meal"><span class="chk-note">ペットボトルの続き（21時まで）</span><span class="chk"><span class="t">てびち汁 汁だけ1袋分<br>（220g）</span></span></td>
       <td class="meal"><span class="chk-note">ペットボトルの続き（21時まで）</span><span class="chk"><span class="t">てびち汁 汁だけ1袋分<br>（220g）</span></span></td>
       <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span></span><span class="chk">納豆1</span><span class="chk">もずく50g</span></td>
-      <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span><span class="chk egg" data-label="泡盛4"></span><span class="chk egg" data-label="泡盛5"></span></span><span class="chk m">有機むき焼き栗1袋（実際）</span><span class="chk m">焼き餃子5個（実際）</span><span class="chk m">ベビースターラーメン小袋（実際）</span></td>
-      <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span><span class="chk egg" data-label="泡盛4"></span><span class="chk egg" data-label="泡盛5"></span></span><span class="chk m">バナナ1本 皮つき93g（実際）</span></td>
-      <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span><span class="chk egg" data-label="泡盛4"></span><span class="chk egg" data-label="泡盛5"></span></span><span class="chk m">有機むき焼き栗1袋（実際）</span></td>
       <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span><span class="chk egg" data-label="泡盛4"></span><span class="chk egg" data-label="泡盛5"></span></span></td>
       <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span><span class="chk egg" data-label="泡盛4"></span><span class="chk egg" data-label="泡盛5"></span></span></td>
       <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span><span class="chk egg" data-label="泡盛4"></span><span class="chk egg" data-label="泡盛5"></span></span></td>
@@ -598,6 +622,36 @@
       <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span><span class="chk egg" data-label="泡盛4"></span><span class="chk egg" data-label="泡盛5"></span></span></td>
       <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span><span class="chk egg" data-label="泡盛4"></span><span class="chk egg" data-label="泡盛5"></span></span></td>
       <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span><span class="chk egg" data-label="泡盛4"></span><span class="chk egg" data-label="泡盛5"></span></span></td>
+      <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span><span class="chk egg" data-label="泡盛4"></span><span class="chk egg" data-label="泡盛5"></span></span></td>
+      <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span><span class="chk egg" data-label="泡盛4"></span><span class="chk egg" data-label="泡盛5"></span></span></td>
+      <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span><span class="chk egg" data-label="泡盛4"></span><span class="chk egg" data-label="泡盛5"></span></span></td>
+      <td class="meal empty"></td>
+    </tr>
+    <tr class="yugata-tsudo">
+      <th class="head meal-head"><span class="h1">夕方</span><span class="h2">都度の入力</span></th>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal"><span class="chk m">有機むき焼き栗1袋（実際）</span><span class="chk m">焼き餃子5個（実際）</span><span class="chk m">ベビースターラーメン小袋（実際）</span></td>
+      <td class="meal"><span class="chk m">バナナ1本 皮つき93g（実際）</span></td>
+      <td class="meal"><span class="chk m">有機むき焼き栗1袋（実際）</span></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
       <td class="meal empty"></td>
     </tr>
     <tr class="sapuri">
@@ -827,7 +881,8 @@
   // 2026-10-11 Mits様「10/11からてびち、テビチすべて外して、毎回では無く、食べたときに言うことにする」：10/11〜10/19 のてびち汁・テビチ内容物のチェックを外した
   // 2026-10-11 Mits様「コーヒーの項目に　コーヒーコーヒー　不要でしょ　+MCTでいい」：午前の行は「＋MCT大1」とだけ出す（記録の名前は data-label で変えない）
   // 2026-10-11 Mits様「冗長な表示を極力しないで」：サプリの行の各チェックから「サプリ」を外して出す（記録の名前は data-label で変えない）。目標比の語は左の欄へ
-  const ROWS = ['gozen','hirusugi','aruita','yugata','sapuri'];
+  // 2026-10-14 Mits様「各食事の欄、昼夕方とチェックボックスの入っている固定等都度伝えて入力する欄を2つに分けて」：昼過ぎ・夕方の下に「都度の入力」の行を足し、（実際）の品をそこへ移した。鍵は元の行の名前のまま（付いているチェックを変えない）
+  const ROWS = ['gozen','hirusugi','hirusugi-tsudo','aruita','yugata','yugata-tsudo','sapuri'];
   const KEY = 'fasting_kiroku_chk_v1';
   // 2026-10-12 計画の消費も同じ式で出し直した：8,000歩 歩く＝1,464＋262＋14.0×8＝1,838kcal（前は 1,832）
   const PLAN_BURN = 1838, CAP = 69.3, FAT0 = 10.8;
@@ -876,7 +931,7 @@
       Array.from(tr.children).slice(1).forEach((td, col) => {
         const d = days[col]; if (!d) return;
         td.querySelectorAll('.chk').forEach(sp => {
-          const k = d + '|' + r + '|' + (sp.dataset.label || sp.textContent.trim());
+          const k = d + '|' + r.replace('-tsudo', '') + '|' + (sp.dataset.label || sp.textContent.trim());
           sp.dataset.k = k;
           const e0 = EIYOU[k.split('|')[2]];
           // 「（実際）」の付いたチェックは実際に取った分の記録なので、計画には数えない（2026-10-11）
