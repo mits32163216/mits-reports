@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<title>ファスティング記録表（Mei）</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  /* 画面で見るための作り（印刷はしない・2026-10-06） */
+  :root{
+    --ink:#2f5f72; --line:#b9dbe4; --line-thin:#dcecf1; --head-bg:#eef7fa; --title:#1b4a5c;
+    --goal:#8fbfcc; --red:#c03030; --green:#1d7a3a; --amber-bg:#fdf3e1; --amber:#7a4a0a; --meal-bg:#edf6ec; --meal:#2d5a2a;
+    --kyou:#fff8dc;
+    /* 文字の大きさ（5段） f1 献立の品／f2 補足／f3 見出し・欄の中の行／f4 値／f5 主役 */
+    --f1:12px; --f2:11px; --f3:13px; --f4:17px; --f5:21px;
+    --col:122px; --head:116px;
+  }
+  @media (max-width:640px){
+    :root{ --f1:11.5px; --f2:10.5px; --f3:12.5px; --f4:16px; --f5:19px; --col:112px; --head:100px; }
+  }
+  html,body{ margin:0; padding:0; background:#fff; color:var(--ink);
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","Noto Sans JP","Meiryo",sans-serif;
+    font-variant-numeric:tabular-nums; -webkit-text-size-adjust:100%; }
+  .page{ padding:12px 0 0; }
+  .scroll{ overflow-x:auto; -webkit-overflow-scrolling:touch; overscroll-behavior-x:contain; max-height:none; }
+
+  table{ border-collapse:separate; border-spacing:0; table-layout:fixed; width:max-content; margin:0 12px; }
+  th, td{ border-right:1px solid var(--line); border-bottom:1px solid var(--line); padding:6px 8px; text-align:center; vertical-align:middle; background:#fff; width:var(--col); min-width:var(--col); box-sizing:border-box; }
+  tr > :first-child{ border-left:1px solid var(--line); }
+  tr.hinichi > *{ border-top:1px solid var(--line); }
+  /* 区分の切れ目に太い線：10/18（普通食の終わり）・10/20（減食の終わり）・10/24（回復食の終わり）の列の右。左の項目名が1列目なので、日付の列は2列目から数える */
+  table tr > :nth-child(6), table tr > :nth-child(8), table tr > :nth-child(12){ border-right:2px solid var(--title); }
+
+  /* 左の項目名は横に動かしても残す */
+  th.head{ position:sticky; left:0; z-index:2; width:var(--head); min-width:var(--head);
+    background:var(--head-bg); color:var(--title); font-size:var(--f3); font-weight:700; line-height:1.3; text-align:center; white-space:normal; }
+  th.head span{ display:block; font-size:var(--f2); font-weight:500; }
+  tr.shibou th .saiyu{ color:var(--red); font-weight:700; }
+
+  /* 日付 */
+  td.hinichi .nth{ display:block; font-size:var(--f2); color:var(--title); }
+  td.hinichi .ymd{ display:block; font-size:var(--f4); color:var(--title); font-weight:700; line-height:1.2; }
+  td.hinichi .dow{ font-size:var(--f2); font-weight:500; margin-left:2px; }
+  td.hinichi.sunday .nth, td.hinichi.sunday .ymd, td.hinichi.sunday .dow{ color:var(--red); }
+
+  /* 値 */
+  td.goal{ font-size:var(--f4); color:var(--goal); font-weight:500; }
+  td.goal.shibou{ color:var(--red); font-weight:700; }
+  td.atai, td.jikan.filled, td.taiju-start, td.hosu-v .v{ font-size:var(--f4); color:var(--title); font-weight:700; }
+  td.jikan{ font-size:var(--f4); color:var(--line); }
+  td.taiju-start .v{ display:block; font-size:var(--f5); line-height:1.15; }
+  td.taiju-start .sa{ display:block; font-size:var(--f2); margin-top:2px; }
+  .good{ color:var(--green) !important; } .warn{ color:var(--red) !important; }
+  td.hosu-v .v{ display:block; line-height:1.2; }
+  td.hosu-v .sub{ display:block; font-size:var(--f2); color:var(--ink); }
+  td.hosu-v .bar{ display:block; height:6px; margin:5px 4px 0; background:var(--line-thin); border-radius:3px; overflow:hidden; }
+  td.hosu-v .bar i{ display:block; height:100%; background:#e0a23a; }
+  td.hosu-v .bar i.ok{ background:var(--green); }
+
+  /* カロリー収支・脂肪の燃焼・たんぱく質 */
+  tr.zutsu > th, tr.nensho > th, tr.tanpaku > th, tr.toshitsu > th, tr.mizu > th{ background:var(--amber-bg); color:var(--amber); }
+  td.shushi, td.nensho{ vertical-align:top; text-align:left; font-size:var(--f3); line-height:1.5; padding:5px 8px; }
+  td.shushi .r, td.nensho .r{ display:flex; justify-content:space-between; }
+  td.shushi .r b, td.nensho .r b{ font-weight:700; }
+  td.shushi .r + .r, td.nensho .r + .r{ border-top:1px dotted var(--line); }
+  td.shushi .big{ font-size:var(--f5); font-weight:700; line-height:1.3; text-align:center; padding:2px 0;
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin:1px 0; }
+  td.shushi .big + .r{ border-top:0; }
+  
+  th.head.hl{ vertical-align:top; padding:5px 4px; text-align:left; }
+  th.head.hl .hlw{ display:flex; gap:2px; align-items:flex-start; }
+  th.head.hl .ttl{ flex:1; font-size:var(--f2); line-height:1.3; word-break:keep-all; }
+  th.head.hl .ttl span{ font-weight:500; }
+  th.head.hl .ls{ flex:0 0 auto; font-size:var(--f3); line-height:1.5; font-weight:500; text-align:right; }
+  th.head.hl .ls .r + .r{ border-top:1px dotted var(--line); }
+  th.head.hl .ls .big{ border-top:1px dotted var(--line); }
+  th.head.hl .ls .big i{ font-style:normal; }
+  td.shushi .r > span, td.nensho .r > span{ display:none; }
+  td.shushi .r, td.nensho .r{ justify-content:flex-end; }
+  .mirai{ color:#a0a0a0; }
+
+  /* 献立 */
+  tr.gozen > th, tr.hirusugi > th, tr.aruita > th, tr.yugata > th, tr.sapuri > th{ background:var(--meal-bg); }
+  th.meal-head .h1{ display:block; font-size:var(--f3); font-weight:700; color:var(--meal); }
+  th.meal-head .h2{ display:block; font-size:var(--f2); font-weight:500; color:var(--meal); }
+  td.meal{ text-align:left; vertical-align:top; padding:5px 6px; font-feature-settings:"palt" 1; }
+  td.meal .chk, td.meal .egg-line{ display:flex; align-items:center; font-size:var(--f1); color:var(--title); line-height:1.2; min-height:24px; white-space:nowrap; }
+  td.meal .chk{ cursor:pointer; user-select:none; -webkit-user-select:none; -webkit-tap-highlight-color:transparent; }
+  td.meal .chk::before{ content:""; display:inline-block; width:16px; height:16px; border:1.5px solid var(--title); border-radius:3px; margin-right:5px; flex-shrink:0; box-sizing:border-box; }
+  td.meal .chk.on::before{ background:var(--title); box-shadow:inset 0 0 0 2.5px #fff; }
+  td.meal .chk.on{ color:#9ab; }
+  td.meal .egg-line .chk.egg{ display:inline-flex; margin-left:4px; min-height:24px; }
+  td.meal .egg-line .chk.egg::before{ margin-right:0; }
+  td.meal .chk-note{ font-size:var(--f2); color:var(--goal); }
+
+  td.biko-cell{ font-size:var(--f2); line-height:1.45; }
+
+  /* 区切り：からだ／カロリー収支／献立／備考 */
+  tr.zutsu > *, tr.gozen > *, tr.biko > *{ border-top:2px solid var(--title); }
+  tr.nensho > *, tr.tanpaku > *, tr.toshitsu > *, tr.mizu > *{ border-top:1px solid #e2c58f; }
+
+  /* 今日の列 */
+  td.kyou-col{ background:var(--kyou); }
+  tr.hinichi td.kyou-col{ box-shadow:inset 0 3px 0 #e0a23a; }
+
+  /* 毎日の付き合わせ */
+  .tsukiawase{ margin:20px 12px 28px; color:var(--title); }
+  .tsukiawase h2{ font-size:16px; margin:0 0 6px; }
+  .tsukiawase .tw-note{ font-size:var(--f2); color:#555; line-height:1.6; margin-bottom:8px; }
+  .tsukiawase .tw-wrap{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  #tw-table{ border-collapse:collapse; font-size:12px; width:max-content; min-width:100%; }
+  #tw-table th, #tw-table td{ border:1px solid var(--line); padding:5px 7px; text-align:right; white-space:nowrap; width:auto; min-width:0; position:static; }
+  #tw-table th{ background:var(--head-bg); text-align:center; font-weight:700; }
+  #tw-table td.d{ text-align:center; font-weight:700; }
+  #tw-table td.msg{ text-align:left; white-space:normal; min-width:240px; }
+  #tw-table tr.mirai td{ color:#a0a0a0; }
+  #tw-table tr.kyou td{ background:var(--kyou); }
+
+  /* 文字は1つの大きさ・普通の太さに揃える（強調・大きくするは使わない） */
+  :root{ --fs:13px; }
+  @media (max-width:640px){ :root{ --fs:12.5px; } }
+  .page *, .tsukiawase *{ font-size:var(--fs) !important; font-weight:400 !important; }
+  td.shushi .big{ border:0; padding:0; margin:0; text-align:right; line-height:1.5; }
+  td.shushi .big::before{ content:""; }
+  td.shushi .big + .r{ border-top:1px dotted var(--line); }
+  td.shushi .r + .big{ border-top:1px dotted var(--line); }
+  
+  .hmenu{ position:sticky; top:0; z-index:20; display:flex; flex-wrap:wrap; gap:6px; padding:6px 12px; background:var(--head-bg); border-bottom:1px solid var(--line); font-size:var(--f3); }
+  .hmenu a{ color:var(--title); text-decoration:none; padding:4px 10px; border:1px solid var(--line); border-radius:4px; background:#fff; }
+  .hmenu a[aria-current="page"]{ background:var(--title); color:#fff; border-color:var(--title); }
+</style>
+</head>
+<body>
+<nav class="hmenu"><a href="/private/fasting-kiroku-mei/" aria-current="page">ファスティング記録表（Mei・10/14〜10/29）</a></nav>
+<!--
+  Mei さん（女性・43歳）の記録表。2026-10-13 作成。
+  始めの値：RENPHO 2026-10-10 10:21:21 の測定　体重 54.10kg・体脂肪率 21.9%・体脂肪量 11.85kg・除脂肪量 42.25kg・基礎代謝 1284kcal
+  プラン：ファスティング計画（/private/fasting-keikaku/）で組んだ値。開始日 2026-10-14・全16日・減食 10/19〜10/20（2日・固形物なし）・回復食 10/21〜10/24（4日）・ほかは普通食。
+  　1日の消費はアプリが CSV から入れた基礎代謝 1,284kcal。1日の食事回数は 2。摂取はアプリの献立の合計（普通食 777・減食 476・回復食 878kcal）。
+  目標脂肪量：アプリの日別の値（毎日の不足のうち 脂肪kg×69.3kcal までが脂肪の減り・9,000kcal/kg）。
+  目標体重：始めの体重 54.10 −（始めの目標脂肪量 11.85 − その日の目標脂肪量）÷0.8（筋肉が減らない前提）。
+  食事・サプリ・実測の欄は空。
+-->
+
+<div class="page">
+  <div class="scroll" id="scroll">
+  <table>
+    <tr class="hinichi">
+      <th class="head">日　付</th>
+      <td class="hinichi"><div class="nth">1日目</div><div class="ymd">10/14<span class="dow">(水)</span></div></td>
+      <td class="hinichi"><div class="nth">2日目</div><div class="ymd">10/15<span class="dow">(木)</span></div></td>
+      <td class="hinichi"><div class="nth">3日目</div><div class="ymd">10/16<span class="dow">(金)</span></div></td>
+      <td class="hinichi"><div class="nth">4日目</div><div class="ymd">10/17<span class="dow">(土)</span></div></td>
+      <td class="hinichi sunday"><div class="nth">5日目</div><div class="ymd">10/18<span class="dow">(日)</span></div></td>
+      <td class="hinichi"><div class="nth">6日目</div><div class="ymd">10/19<span class="dow">(月)</span></div></td>
+      <td class="hinichi"><div class="nth">7日目</div><div class="ymd">10/20<span class="dow">(火)</span></div></td>
+      <td class="hinichi"><div class="nth">8日目</div><div class="ymd">10/21<span class="dow">(水)</span></div></td>
+      <td class="hinichi"><div class="nth">9日目</div><div class="ymd">10/22<span class="dow">(木)</span></div></td>
+      <td class="hinichi"><div class="nth">10日目</div><div class="ymd">10/23<span class="dow">(金)</span></div></td>
+      <td class="hinichi"><div class="nth">11日目</div><div class="ymd">10/24<span class="dow">(土)</span></div></td>
+      <td class="hinichi sunday"><div class="nth">12日目</div><div class="ymd">10/25<span class="dow">(日)</span></div></td>
+      <td class="hinichi"><div class="nth">13日目</div><div class="ymd">10/26<span class="dow">(月)</span></div></td>
+      <td class="hinichi"><div class="nth">14日目</div><div class="ymd">10/27<span class="dow">(火)</span></div></td>
+      <td class="hinichi"><div class="nth">15日目</div><div class="ymd">10/28<span class="dow">(水)</span></div></td>
+      <td class="hinichi"><div class="nth">16日目</div><div class="ymd">10/29<span class="dow">(木)</span></div></td>
+      <td class="hinichi"><div class="nth">終了の朝</div><div class="ymd">10/30<span class="dow">(金)</span></div></td>
+    </tr>
+    <tr class="shibou">
+      <th class="head">目標脂肪量<span>kg</span><span class="saiyu">最優先</span></th>
+      <td class="goal shibou">11.85</td>
+      <td class="goal shibou">11.79</td>
+      <td class="goal shibou">11.74</td>
+      <td class="goal shibou">11.68</td>
+      <td class="goal shibou">11.62</td>
+      <td class="goal shibou">11.57</td>
+      <td class="goal shibou">11.48</td>
+      <td class="goal shibou">11.39</td>
+      <td class="goal shibou">11.35</td>
+      <td class="goal shibou">11.30</td>
+      <td class="goal shibou">11.26</td>
+      <td class="goal shibou">11.21</td>
+      <td class="goal shibou">11.15</td>
+      <td class="goal shibou">11.10</td>
+      <td class="goal shibou">11.04</td>
+      <td class="goal shibou">10.99</td>
+      <td class="goal shibou">10.93</td>
+    </tr>
+    <tr class="jissoku-shibou">
+      <th class="head">実測脂肪量<span>kg</span><span>下は目標比</span></th>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+    </tr>
+    <tr class="mokuhyo">
+      <th class="head">目標体重<span>kg</span></th>
+      <td class="goal">54.1</td>
+      <td class="goal">54.0</td>
+      <td class="goal">54.0</td>
+      <td class="goal">53.9</td>
+      <td class="goal">53.8</td>
+      <td class="goal">53.8</td>
+      <td class="goal">53.6</td>
+      <td class="goal">53.5</td>
+      <td class="goal">53.5</td>
+      <td class="goal">53.4</td>
+      <td class="goal">53.4</td>
+      <td class="goal">53.3</td>
+      <td class="goal">53.2</td>
+      <td class="goal">53.2</td>
+      <td class="goal">53.1</td>
+      <td class="goal">53.0</td>
+      <td class="goal">53.0</td>
+    </tr>
+    <tr class="taiju">
+      <th class="head">乾燥体重<span>kg</span><span>下は目標比</span></th>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+    </tr>
+    <tr class="taishibo">
+      <th class="head">体脂肪率<span>%</span></th>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+    </tr>
+    <tr class="jikan">
+      <th class="head">チェック<br>時間</th>
+      <td class="jikan">：</td>
+      <td class="jikan">：</td>
+      <td class="jikan">：</td>
+      <td class="jikan">：</td>
+      <td class="jikan">：</td>
+      <td class="jikan">：</td>
+      <td class="jikan">：</td>
+      <td class="jikan">：</td>
+      <td class="jikan">：</td>
+      <td class="jikan">：</td>
+      <td class="jikan">：</td>
+      <td class="jikan">：</td>
+      <td class="jikan">：</td>
+      <td class="jikan">：</td>
+      <td class="jikan">：</td>
+      <td class="jikan">：</td>
+      <td class="jikan">：</td>
+    </tr>
+    <tr class="hosu">
+      <th class="head">歩　く<span>歩数</span></th>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+    </tr>
+    <tr class="hashiru">
+      <th class="head">走　る<span>km<br>歩数</span></th>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+      <td class="blank"></td>
+    </tr>
+    <tr class="zutsu">
+      <th class="head hl"><div class="hlw"><div class="ttl">カロリー<br>収支<span>kcal</span></div><div class="ls"><div class="r">消費</div><div class="r">摂取</div><div class="big"><i>不足</i></div><div class="r">上限</div><div class="r">要摂取</div></div></div></th>
+      <td class="shushi"><div class="mirai"><div class="r"><span>消費</span><b>1,284</b></div><div class="r"><span>摂取</span><b>777</b></div><div class="big">−507</div><div class="r"><span>上限</span><b>−821</b></div><div class="r"><span>要摂取</span><b>0</b></div></div></td>
+      <td class="shushi"><div class="mirai"><div class="r"><span>消費</span><b>1,284</b></div><div class="r"><span>摂取</span><b>777</b></div><div class="big">−507</div><div class="r"><span>上限</span><b>−817</b></div><div class="r"><span>要摂取</span><b>0</b></div></div></td>
+      <td class="shushi"><div class="mirai"><div class="r"><span>消費</span><b>1,284</b></div><div class="r"><span>摂取</span><b>777</b></div><div class="big">−507</div><div class="r"><span>上限</span><b>−813</b></div><div class="r"><span>要摂取</span><b>0</b></div></div></td>
+      <td class="shushi"><div class="mirai"><div class="r"><span>消費</span><b>1,284</b></div><div class="r"><span>摂取</span><b>777</b></div><div class="big">−507</div><div class="r"><span>上限</span><b>−809</b></div><div class="r"><span>要摂取</span><b>0</b></div></div></td>
+      <td class="shushi"><div class="mirai"><div class="r"><span>消費</span><b>1,284</b></div><div class="r"><span>摂取</span><b>777</b></div><div class="big">−507</div><div class="r"><span>上限</span><b>−806</b></div><div class="r"><span>要摂取</span><b>0</b></div></div></td>
+      <td class="shushi"><div class="mirai"><div class="r"><span>消費</span><b>1,284</b></div><div class="r"><span>摂取</span><b>476</b></div><div class="big">−808</div><div class="r"><span>上限</span><b>−802</b></div><div class="r"><span>要摂取</span><b>6</b></div></div></td>
+      <td class="shushi"><div class="mirai"><div class="r"><span>消費</span><b>1,284</b></div><div class="r"><span>摂取</span><b>476</b></div><div class="big">−808</div><div class="r"><span>上限</span><b>−796</b></div><div class="r"><span>要摂取</span><b>12</b></div></div></td>
+      <td class="shushi"><div class="mirai"><div class="r"><span>消費</span><b>1,284</b></div><div class="r"><span>摂取</span><b>878</b></div><div class="big">−406</div><div class="r"><span>上限</span><b>−789</b></div><div class="r"><span>要摂取</span><b>0</b></div></div></td>
+      <td class="shushi"><div class="mirai"><div class="r"><span>消費</span><b>1,284</b></div><div class="r"><span>摂取</span><b>878</b></div><div class="big">−406</div><div class="r"><span>上限</span><b>−786</b></div><div class="r"><span>要摂取</span><b>0</b></div></div></td>
+      <td class="shushi"><div class="mirai"><div class="r"><span>消費</span><b>1,284</b></div><div class="r"><span>摂取</span><b>878</b></div><div class="big">−406</div><div class="r"><span>上限</span><b>−783</b></div><div class="r"><span>要摂取</span><b>0</b></div></div></td>
+      <td class="shushi"><div class="mirai"><div class="r"><span>消費</span><b>1,284</b></div><div class="r"><span>摂取</span><b>878</b></div><div class="big">−406</div><div class="r"><span>上限</span><b>−780</b></div><div class="r"><span>要摂取</span><b>0</b></div></div></td>
+      <td class="shushi"><div class="mirai"><div class="r"><span>消費</span><b>1,284</b></div><div class="r"><span>摂取</span><b>777</b></div><div class="big">−507</div><div class="r"><span>上限</span><b>−777</b></div><div class="r"><span>要摂取</span><b>0</b></div></div></td>
+      <td class="shushi"><div class="mirai"><div class="r"><span>消費</span><b>1,284</b></div><div class="r"><span>摂取</span><b>777</b></div><div class="big">−507</div><div class="r"><span>上限</span><b>−773</b></div><div class="r"><span>要摂取</span><b>0</b></div></div></td>
+      <td class="shushi"><div class="mirai"><div class="r"><span>消費</span><b>1,284</b></div><div class="r"><span>摂取</span><b>777</b></div><div class="big">−507</div><div class="r"><span>上限</span><b>−769</b></div><div class="r"><span>要摂取</span><b>0</b></div></div></td>
+      <td class="shushi"><div class="mirai"><div class="r"><span>消費</span><b>1,284</b></div><div class="r"><span>摂取</span><b>777</b></div><div class="big">−507</div><div class="r"><span>上限</span><b>−765</b></div><div class="r"><span>要摂取</span><b>0</b></div></div></td>
+      <td class="shushi"><div class="mirai"><div class="r"><span>消費</span><b>1,284</b></div><div class="r"><span>摂取</span><b>777</b></div><div class="big">−507</div><div class="r"><span>上限</span><b>−761</b></div><div class="r"><span>要摂取</span><b>0</b></div></div></td>
+      <td class="shushi"></td>
+    </tr>
+    <tr class="nensho">
+      <th class="head hl"><div class="hlw"><div class="ttl">脂肪の<br>燃焼</div><div class="ls"><div class="r">必要</div><div class="r">実施</div></div></div></th>
+      <td class="nensho"><div class="mirai"><div class="r"><span>必要</span><b>−56g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho"><div class="mirai"><div class="r"><span>必要</span><b>−56g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho"><div class="mirai"><div class="r"><span>必要</span><b>−56g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho"><div class="mirai"><div class="r"><span>必要</span><b>−56g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho"><div class="mirai"><div class="r"><span>必要</span><b>−56g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho"><div class="mirai"><div class="r"><span>必要</span><b>−89g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho"><div class="mirai"><div class="r"><span>必要</span><b>−88g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho"><div class="mirai"><div class="r"><span>必要</span><b>−45g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho"><div class="mirai"><div class="r"><span>必要</span><b>−45g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho"><div class="mirai"><div class="r"><span>必要</span><b>−45g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho"><div class="mirai"><div class="r"><span>必要</span><b>−45g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho"><div class="mirai"><div class="r"><span>必要</span><b>−56g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho"><div class="mirai"><div class="r"><span>必要</span><b>−56g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho"><div class="mirai"><div class="r"><span>必要</span><b>−56g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho"><div class="mirai"><div class="r"><span>必要</span><b>−56g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho"><div class="mirai"><div class="r"><span>必要</span><b>−56g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho"></td>
+    </tr>
+    <tr class="tanpaku">
+      <th class="head hl"><div class="hlw"><div class="ttl">たんぱく<br>質</div><div class="ls"><div class="r">必要</div><div class="r">実施</div></div></div></th>
+      <td class="nensho tanpaku"><div class="mirai"><div class="r"><span>必要</span><b>87g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho tanpaku"><div class="mirai"><div class="r"><span>必要</span><b>86g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho tanpaku"><div class="mirai"><div class="r"><span>必要</span><b>86g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho tanpaku"><div class="mirai"><div class="r"><span>必要</span><b>86g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho tanpaku"><div class="mirai"><div class="r"><span>必要</span><b>86g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho tanpaku"><div class="mirai"><div class="r"><span>必要</span><b>86g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho tanpaku"><div class="mirai"><div class="r"><span>必要</span><b>86g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho tanpaku"><div class="mirai"><div class="r"><span>必要</span><b>86g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho tanpaku"><div class="mirai"><div class="r"><span>必要</span><b>86g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho tanpaku"><div class="mirai"><div class="r"><span>必要</span><b>85g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho tanpaku"><div class="mirai"><div class="r"><span>必要</span><b>85g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho tanpaku"><div class="mirai"><div class="r"><span>必要</span><b>85g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho tanpaku"><div class="mirai"><div class="r"><span>必要</span><b>85g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho tanpaku"><div class="mirai"><div class="r"><span>必要</span><b>85g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho tanpaku"><div class="mirai"><div class="r"><span>必要</span><b>85g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho tanpaku"><div class="mirai"><div class="r"><span>必要</span><b>85g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho tanpaku"></td>
+    </tr>
+    <tr class="toshitsu">
+      <th class="head hl"><div class="hlw"><div class="ttl">糖質</div><div class="ls"><div class="r">上限</div><div class="r">実施</div></div></div></th>
+      <td class="nensho toshitsu"><div class="mirai"><div class="r"><span>上限</span><b>50g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho toshitsu"><div class="mirai"><div class="r"><span>上限</span><b>50g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho toshitsu"><div class="mirai"><div class="r"><span>上限</span><b>50g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho toshitsu"><div class="mirai"><div class="r"><span>上限</span><b>50g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho toshitsu"><div class="mirai"><div class="r"><span>上限</span><b>50g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho toshitsu"><div class="mirai"><div class="r"><span>上限</span><b>50g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho toshitsu"><div class="mirai"><div class="r"><span>上限</span><b>50g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho toshitsu"><div class="mirai"><div class="r"><span>上限</span><b>50g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho toshitsu"><div class="mirai"><div class="r"><span>上限</span><b>50g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho toshitsu"><div class="mirai"><div class="r"><span>上限</span><b>50g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho toshitsu"><div class="mirai"><div class="r"><span>上限</span><b>50g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho toshitsu"><div class="mirai"><div class="r"><span>上限</span><b>50g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho toshitsu"><div class="mirai"><div class="r"><span>上限</span><b>50g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho toshitsu"><div class="mirai"><div class="r"><span>上限</span><b>50g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho toshitsu"><div class="mirai"><div class="r"><span>上限</span><b>50g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho toshitsu"><div class="mirai"><div class="r"><span>上限</span><b>50g</b></div><div class="r"><span>実施</span><b>—</b></div></div></td>
+      <td class="nensho toshitsu"></td>
+    </tr>
+    <tr class="mizu">
+      <th class="head">摂取水分量<span>mL</span></th>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+      <td class="mizu"></td>
+    </tr>
+    <tr class="gozen">
+      <th class="head meal-head"><span class="h1">午前</span></th>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+    </tr>
+    <tr class="hirusugi">
+      <th class="head meal-head"><span class="h1">昼過ぎ</span><span class="h2">1食目</span></th>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+    </tr>
+    <tr class="aruita">
+      <th class="head meal-head"><span class="h1">歩いたあと</span></th>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+    </tr>
+    <tr class="yugata">
+      <th class="head meal-head"><span class="h1">夕方</span><span class="h2">2食目</span></th>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+    </tr>
+    <tr class="sapuri">
+      <th class="head meal-head"><span class="h1">サプリ</span></th>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+      <td class="meal"></td>
+    </tr>
+    <tr class="biko">
+      <th class="head">備　考</th>
+      <td class="biko-cell">普通食（カロリー制限・糖質制限）</td>
+      <td class="biko-cell">普通食（カロリー制限・糖質制限）</td>
+      <td class="biko-cell">普通食（カロリー制限・糖質制限）</td>
+      <td class="biko-cell">普通食（カロリー制限・糖質制限）</td>
+      <td class="biko-cell">普通食（カロリー制限・糖質制限）</td>
+      <td class="biko-cell">減食（固形物なし） 1/2</td>
+      <td class="biko-cell">減食（固形物なし） 2/2</td>
+      <td class="biko-cell">回復食 1/4</td>
+      <td class="biko-cell">回復食 2/4</td>
+      <td class="biko-cell">回復食 3/4</td>
+      <td class="biko-cell">回復食 4/4</td>
+      <td class="biko-cell">普通食（カロリー制限・糖質制限）</td>
+      <td class="biko-cell">普通食（カロリー制限・糖質制限）</td>
+      <td class="biko-cell">普通食（カロリー制限・糖質制限）</td>
+      <td class="biko-cell">普通食（カロリー制限・糖質制限）</td>
+      <td class="biko-cell">普通食（カロリー制限・糖質制限）</td>
+      <td class="biko-cell"></td>
+    </tr>
+  </table>
+  </div>
+</div>
+
+<script>
+(function(){
+  // 今日の列に印を付け、開いたときに今日の列が見える位置へ動かす
+  const now = new Date(), T = (now.getMonth() + 1) + '/' + now.getDate();
+  const table = document.querySelector('.page table'); if (!table) return;
+  const hin = Array.from(table.querySelector('tr.hinichi').children).slice(1);
+  const col = hin.findIndex(td => { const m = (td.querySelector('.ymd') || {textContent: ''}).textContent.match(/\d+\/\d+/); return m && m[0] === T; });
+  if (col < 0) return;
+  table.querySelectorAll('tr').forEach(tr => { const c = tr.children[col + 1]; if (c) c.classList.add('kyou-col'); });
+  const sc = document.getElementById('scroll'), head = table.querySelector('th.head');
+  const target = hin[Math.max(0, col - 1)];
+  if (sc && target) sc.scrollLeft = target.offsetLeft - head.offsetWidth;
+})();
+</script>
+</body>
+</html>
