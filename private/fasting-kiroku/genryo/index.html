@@ -132,6 +132,16 @@
   .hmenu a[aria-current="page"]{ background:var(--title); color:#fff; border-color:var(--title); }
   /* 減量プラン：10/12 を1日目にする。ファスティング中の 10/4〜10/11 の列（2〜9列目）は計算に使うので残して隠す（2026-10-12 Mits様「ファスティング用と判断されるモノを…表から削除して」） */
   table:not(#tw-table) tr > :nth-child(n+2):nth-child(-n+9){ display:none; }
+  /* 2026-10-14 Mits様「文字を入れて、幅が連動するのやめて」：品目の文字が長くても列の幅は変えず、マスの中で折り返す */
+  table:not(#tw-table) td{ max-width:var(--col); overflow:hidden; }
+  td.meal .chk, td.meal .egg-line{ white-space:normal; overflow-wrap:anywhere; }
+  /* 2026-10-14 Mits様「縦にスクロールすると、日付が上に上がっていってしまうので、日付の部分で固定にして」：
+     表を縦にも横にも動く1つの欄に入れ、日付の行を上に留める（上の切り替えの下に収まる高さ） */
+  .scroll{ overflow:auto; max-height:calc(100vh - 44px); max-height:calc(100dvh - 44px); }
+  tr.hinichi > *{ position:sticky; top:0; z-index:3; }
+  tr.hinichi > th.head{ z-index:4; }
+  tr.hinichi > td{ background:#fff; }
+  tr.hinichi > td.kyou-col{ background:var(--kyou); }
 </style>
 </head>
 <body>
@@ -570,7 +580,7 @@
       <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span></span><span class="chk">納豆1</span><span class="chk">もずく50g</span></td>
       <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span><span class="chk egg" data-label="泡盛4"></span><span class="chk egg" data-label="泡盛5"></span></span><span class="chk m">有機むき焼き栗1袋（実際）</span><span class="chk m">焼き餃子5個（実際）</span><span class="chk m">ベビースターラーメン小袋（実際）</span></td>
       <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span><span class="chk egg" data-label="泡盛4"></span><span class="chk egg" data-label="泡盛5"></span></span><span class="chk m">バナナ1本 皮つき93g（実際）</span></td>
-      <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span><span class="chk egg" data-label="泡盛4"></span><span class="chk egg" data-label="泡盛5"></span></span></td>
+      <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span><span class="chk egg" data-label="泡盛4"></span><span class="chk egg" data-label="泡盛5"></span></span><span class="chk m">有機むき焼き栗1袋（実際）</span></td>
       <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span><span class="chk egg" data-label="泡盛4"></span><span class="chk egg" data-label="泡盛5"></span></span></td>
       <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span><span class="chk egg" data-label="泡盛4"></span><span class="chk egg" data-label="泡盛5"></span></span></td>
       <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span><span class="chk egg" data-label="泡盛4"></span><span class="chk egg" data-label="泡盛5"></span></span></td>
