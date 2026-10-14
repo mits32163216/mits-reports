@@ -134,7 +134,8 @@
   .hmenu a[aria-current="page"]{ background:var(--title); color:#fff; border-color:var(--title); }
   /* 2026-10-14 Mits様「文字を入れて、幅が連動するのやめて」：品目の文字が長くても列の幅は変えず、マスの中で折り返す */
   table:not(#tw-table) td{ max-width:var(--col); overflow:hidden; }
-  td.meal .chk, td.meal .egg-line{ white-space:normal; overflow-wrap:anywhere; }
+  td.meal .chk{ white-space:normal; overflow-wrap:anywhere; }
+  td.meal .egg-line{ flex-wrap:wrap; white-space:nowrap; }
   /* 2026-10-14 Mits様「縦にスクロールすると、日付が上に上がっていってしまうので、日付の部分で固定にして」：
      表を縦にも横にも動く1つの欄に入れ、日付の行を上に留める（上の切り替えの下に収まる高さ） */
   .scroll{ overflow:auto; max-height:calc(100vh - var(--menu-h, 44px) - 12px); max-height:calc(100dvh - var(--menu-h, 44px) - 12px); }
