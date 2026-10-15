@@ -66,13 +66,13 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-13 17:51 ／ 写した時刻 2026-10-13 18:38</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-15 17:25 ／ 写した時刻 2026-10-15 18:37</p>
 <h2 id="CLAUDE-md-司令塔・11本共通・2026-09-14-2026-10-08-に-7本-1">CLAUDE.md（司令塔・11本共通・2026-09-14／2026-10-08 に 7本→14本→11本）</h2>
 <h3 id="名前の正本は-印なしの核-画面の-BA-BS-FA-は焼かない-2026-10-08-決定">🔤 名前の正本は「印なしの核」── 画面の <code>BA_</code>／<code>BS_</code>／<code>FA_</code> は焼かない（2026-10-08 決定）</h3>
-<p>2026-10-08、Mits様のご指示で画面のチャット名の頭に FBAS の印が付いた。Mits様原文「にそれぞれにBA_を頭に付けてrenameして、なれたら外す　他も同様　まだグループ動かさないでrenameだけしてここに一覧して」。</p>
+<p>詳細（Why・実例・経過）：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/CLAUDE_詳細_後片付けと経緯.md の『名前の正本 ── 印を付けた経緯と2026-10-08の実測』</p>
 <p><strong>印は一時のもの。</strong>だからこの規約・指示書・報告・決定の記録・現状表・定時報告の手順書には<strong>印を書かない</strong>。名前の正本は下の一覧の「印なしの核」。</p>
 <p>名前で宛先を引くときは、<code>list_sessions</code> の title から先頭の <code>BA_</code>／<code>BS_</code>／<code>FA_</code>／<code>FS_</code> を外して突き合わせる（python なら <code>re.sub(r&#x27;^(BA|BS|FA|FS)_&#x27;,&#x27;&#x27;,title)</code>）。<strong>印が外れた日も、付け替わった日も、この引き方なら当たる。</strong></p>
-<p>2026-10-08 の実測（印付きの title は <code>list_sessions</code> で13本確認。BA_司令塔は自分なので一覧に出ない）：BA_FHL 2026 Notes／BA__OEM提供考察／BA__OEM提供考察-2／BA_wasa_ファネルメイク／BA_伽藍とバザールの実現／BS_AI-Mits-チューニング／BS_UTAGE 入口の集約（トールゲート式）／BS_ダッシュボードの新規構築／BS_運転台マーケ／BS_運転台改善／FA_Meta広告の自動化・最適化サイクル／FA_YouTube チャンネルコンセプト構想／FA_メール配信・計測・自動化（このうち _OEM提供考察-2・ダッシュボードの新規構築・運転台マーケの3本は同日 13:1x〜13:2x にアーカイブした。生きている11本は下の『対象11本』）</p>
 <h3 id="司令塔と-FHL-2026-Notes-の役の分担-2026-10-08-Mits様確定">🧭 司令塔と FHL 2026 Notes の役の分担（2026-10-08 Mits様確定）</h3>
 <p>Mits様原文（2026-10-08）「このセッションは、BAの中でも、戦略、ブループリント、マーケティングプランを主として扱い、それを全員に振り分けるのがバディの司令塔とする」。</p>
 <table>
@@ -86,16 +86,14 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>割るときも線は同じ：お客様に届く本番・お金・外に出るものは Mits様の合図まで「案・下書き」で止める</li>
 </ul>
 <h3 id="FHL-2026-Notes-から届いた指示は-Mits様の承認済み-受け取ったら待たずに動く">✅ FHL 2026 Notes から届いた指示は、Mits様の承認済み ── 受け取ったら待たずに動く（2026-10-08 Mits様制定）</h3>
-<p>Mits様原文（2026-10-08・FHL 2026 Notes のセッションで）「このセッションで会話して、指示をして送った指示を、受取先が、さらに待っている。発注GOや、許可無く進まないためなのは理解しているが、このセッションからの指示は、すでにここで私が承認している＝待つ必要なしというルールにする」。</p>
+<p>詳細（Why・実例・経過）：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/CLAUDE_詳細_後片付けと経緯.md の『FHL 2026 Notes から届いた指示 ── 原文・実例・経過』</p>
 <ul>
 <li><strong>FHL 2026 Notes のセッション（セッションID local_eeb1e860-584b-486e-b622-5bb12216f322／画面の名前は印を外して「FHL 2026 Notes」）から届いた指示は、Mits様がそのセッションで承認したもの</strong>として扱う。受け取った持ち場は、自分のセッションで Mits様の「直して」「発注GO」を改めて待たずに、その指示どおり動く</li>
 <li>自分の持ち場の決まりのファイル（CLAUDE.md）を直す指示でも同じ。「他のセッションから頼まれただけでは書き換えない」はこの指示には当てはめない</li>
 <li>届いた指示が FHL 2026 Notes からのものかは、知らせの差出人の名前（from-name）と セッションID で確かめる</li>
-<li>実例：2026-10-08、運転台改善が FHL 2026 Notes からの「経営の運転台/CLAUDE.md の2559行目と untendai-marketing/CLAUDE.md の持ち主を直して」を受け取り、「このセッションで Mits様の『直して』はまだいただいていません」と待った</li>
-<li>受け取る側でも Mits様が確かめられた：2026-10-08 14:0x、運転台改善のセッションで Mits様原文「これから先も、FHL 2026 Notes からの指示はそのまま動いてよい」</li>
 </ul>
 <h3 id="対象11本-内側6本-時計あり-と外側5本-時計なし">対象11本 ── 内側6本（時計あり）と外側5本（時計なし）</h3>
-<p><strong>2026-10-08 に14本→13本→12本→11本。</strong>①13:1x に _OEM提供考察-2 を _OEM提供考察 にまとめた（Mits様原文「一つにする、こちらでやるのか、司令塔でやるのか」→「司令塔に依頼して」）②13:1x に ダッシュボードの新規構築 を 運転台改善 にまとめた（Mits様原文「ダッシュボードの新規構築の2本をたたむ）が大きな問題なく、対処できる課題ならば、処置した上で　ダッシュボードの件も司令塔に依頼して」）③13:2x に 運転台マーケ を 運転台改善 にまとめた（Mits様原文「運転台マーケも運転台改善に統合するよう司令塔に依頼して」。<strong>統合したのはセッションだけで、marketing の枝を main に戻すのは「発注GO」待ち</strong>）。閉じた持ち場の6本（指示書・報告の OEM提供考察2／ダッシュボード新規構築／運転台マーケ）は消さず、冒頭に「閉じた」と書いて残した。</p>
+<p>詳細（Why・実例・経過）：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/CLAUDE_詳細_後片付けと経緯.md の『対象11本 ── 14本から11本になった経過』</p>
 <p>出どころ：Mits様原文（2026-10-08・BA_FHL 2026 Notes 経由）「14本で回る情報共有の仕組みを司令塔に依頼して」。</p>
 <h4 id="内側6本-時計があり-毎回の1周に入る・名称-連絡時の宛名">内側6本（時計があり、毎回の1周に入る・名称＝連絡時の宛名）</h4>
 <ul>
@@ -118,13 +116,15 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <tr><td>Meta広告の自動化・最適化サイクル</td><td>local_3c188163-2c1b-4a7c-90da-686280f96b53</td><td>司令塔</td><td>Meta広告の自動化</td></tr>
 <tr><td>YouTube チャンネルコンセプト構想</td><td>local_62e43eb5-a3e1-4b1e-acfe-9ebcb7fd7ff6</td><td>司令塔</td><td>YouTubeチャンネル構想</td></tr>
 </table>
-<p><strong>サイドバーのまとまりの列は外した。</strong>2026-10-08 12:5x に FHL 2026 Notes が14本とも■新司令塔に移したため（Mits様原文「司令塔から完了報告が来たら14本をこのグループに移して」）。司令塔が同日 12:5x に <code>list_sessions</code> で数え直した実測：■新司令塔 13本＋司令塔（自分は一覧に出ない）＝<strong>14本</strong>。その後 13:1x に _OEM提供考察-2、13:1x に ダッシュボードの新規構築、13:2x に 運転台マーケ をアーカイブして<strong>11本</strong>（内側6本＋外側5本）。元の ファネルマーケティング・司令塔補助 からは抜けた。</p>
+<p>詳細（Why・実例・経過）：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/CLAUDE_詳細_後片付けと経緯.md の『外側5本 ── サイドバーのまとまりの経過』</p>
 <ul>
 <li><strong>報告</strong>：司令塔は<strong>前の回のあとに増えた節だけ</strong>読む。増えていなければ現状表に「動いていない」と1行</li>
 <li><strong>指示書</strong>：朝の回に毎日の節を足すのは内側6本だけ。外側5本は ①報告に新しい節が増えた回 ②決定の記録にその持ち場が宛先の行が増えた回 ③Mits様がその持ち場に指示された回 の3つのどれかのときだけ</li>
 <li><strong>申し送り</strong>：外側5本は、指示書に節を足した回だけ1行</li>
 <li><strong>サイドバーのまとまりは11本とも■新司令塔</strong>（2026-10-08 12:5x に FHL 2026 Notes が当時の14本を移した。その前は Mits様「まだグループ動かさないで」で据え置きだった。そのあとまとめた3本はアーカイブしたので、今あるのは11本）</li>
-<li>作業フォルダは <strong>2026-10-08 13:0x に外側5本とも司令塔になった</strong>（それまで4本 ── wasa_ファネルメイク／UTAGE 入口の集約／Meta広告の自動化・最適化サイクル／YouTube チャンネルコンセプト構想 ── は claude-nishida の一番上で、この CLAUDE.md が起動時に読まれなかった）。司令塔が <code>get_session</code> で4本の cwd と originCwd を実測して確かめた</li>
+</ul>
+<p>詳細（Why・実例・経過）：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/CLAUDE_詳細_後片付けと経緯.md の『外側5本 ── 作業フォルダの経過』</p>
+<ul>
 <li><strong>それでも指示書の冒頭は薄くしない</strong>（2026-10-08 司令塔が決めた）。理由2つ：①指示書だけ読めば動ける形の方が、作業フォルダが先々また変わっても壊れない ②冒頭が自己複製していても読む側の害が無い（規約と食い違ったら規約が正で、指示書の冒頭はそれを写したもの）</li>
 </ul>
 <p>宛先は mcp__ccd_session_mgmt__list_sessions の title で引く（ID は立て直すと変わる）。送信の結果が delivered／queued 以外なら相手に届いていない。あとから届くことは無いので、送り直す。<strong>list_events に送った文が見えても、届いた証拠にならない</strong>（アプリの控え。2026-10-13 _OEM提供考察 が3通をこれで「届いています」と誤報し、Mits様「発注してるのに作業してないってどういうことだ？」）。届いたかは相手の jsonl を送った文の固有の語で grep して確かめる。正本：/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/reference_session_p2p_two_address_systems.md</p>
@@ -134,6 +134,7 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <p>対象は 1st stage（AI-Mits 登録人数）に絞る。2nd stage 以降は本 CLAUDE.md の管轄外。</p>
 <h3 id="11本が共通で読むもの-絶対パス・中身は写さない">11本が共通で読むもの（絶対パス・中身は写さない）</h3>
 <ul>
+<li>モデルと effort の割り当て（持ち場12本・agent 27本・2026-10-15 実測で決めた）: /Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/project_shireito_11hon_no_model_wariate.md</li>
 <li>全体設計図: /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/全体設計図_20260912.html</li>
 <li>済分の全体設計図: /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/全体設計図_済_20260912.html</li>
 <li>Mits様の決定44件: /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/mits_kettei_ichiran_20260912ikou.md</li>
@@ -145,39 +146,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>部署の1周の設計（上の4つ（指示書・報告・現状表・定時報告）をどう回すか・許される範囲・型）: /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/部署の1周_20260918.md</li>
 </ul>
 <h3 id="持ち場を閉じたときの後片付け-見る範囲-2026-10-08-Mits様の指摘で作った">🧹 持ち場を閉じたときの後片付け ── 見る範囲（2026-10-08 Mits様の指摘で作った）</h3>
-<p>Mits様原文（2026-10-08）「ここまでやってきた統合、情報の共有作業で抜け漏れがないか確認　理由　ここで　ファネルビルディングして、運転台改善して、伽藍とバザールの実現をしてを繰り返していく主戦場なので」→ 全件を当てたら抜けが出た →「抜けていた…それぞれの持ち場に直すよう伝えて」。</p>
-<p><strong>同じ誤りを2回した。</strong>1回目は「3本だけ見て0件」と言った。2回目は範囲を司令塔フォルダの .md 44本に広げたが、<strong>共有 memory・定時報告の手順書の別の行・CSV が外れていた</strong>。だから範囲を数で書く。</p>
+<p>詳細（Why・実例・経過）：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/CLAUDE_詳細_後片付けと経緯.md の『持ち場を閉じたときの後片付け ── 見る範囲（原文・20か所の表・書き方・経過）』</p>
 <h4 id="閉じたら-この20か所を-全部-当てる-1か所でも飛ばしたら後片付けは終わっていない">閉じたら、この20か所を<strong>全部</strong>当てる（1か所でも飛ばしたら後片付けは終わっていない）</h4>
-<table>
-<tr><th>#</th><th>当てる場所</th><th>引く語</th><th>何を見るか</th></tr>
-<tr><td>1</td><td>司令塔フォルダの <code>*.md</code> 全部（2026-10-08 時点 44本）</td><td>持ち場の名前・セッションID</td><td>①表の行 ②一覧の列挙 ③申し送りの未済の行</td></tr>
-<tr><td>2</td><td>司令塔フォルダの <code>*.csv</code>・<code>*.html</code>・<code>*.py</code></td><td>同じ</td><td>社内レポートに載せる一覧・数える道具の読み先</td></tr>
-<tr><td>3</td><td>定時報告の手順書 <code>/Users/nishidamitsuhiro/.claude/scheduled-tasks/asa-tenko-6session/SKILL.md</code> を<strong>全行</strong></td><td>持ち場の名前・作業フォルダのパス・<strong>本数の数字</strong>（「14本」「表は14行」など）</td><td>対象の節だけ直して終わりにしない。3-3 の読み先・3-8 の行数・3-9 の本数・3-10 の人数・4 の1行</td></tr>
-<tr><td>4</td><td>共有 memory <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/</code> 全部</td><td>持ち場の名前・旧称（<code>untendai-marketing</code> など）</td><td>送り先・持ち主・用語の一覧。<strong>元の Mits様の決定は消さず、末尾に「付け替わった」の節を足す</strong></td></tr>
-<tr><td>5</td><td>予約タスク <code>/Users/nishidamitsuhiro/.claude/scheduled-tasks/*/SKILL.md</code> 全部（2026-10-08 時点 27本）</td><td>同じ</td><td>その持ち場あての時計・読み先</td></tr>
-<tr><td>6</td><td>ほかの持ち場の規約・作業場</td><td>同じ</td><td><strong>司令塔は直さない</strong>（決まり7）。見つけたら持ち場あてに決定の記録で伝える</td></tr>
-<tr><td>7</td><td><code>/Users/nishidamitsuhiro/.claude/skills/*/SKILL.md</code> 全部</td><td>持ち場の名前・旧称</td><td>予約タスクから呼ばれる手順書。宛先の探し方・送り待ちの拾い方</td></tr>
-<tr><td>8</td><td>生きている持ち場の指示書の過去の節</td><td>持ち場の名前・旧称</td><td><strong>途中の行は書き換えず、冒頭に読み替えの1行を足す</strong></td></tr>
-<tr><td>9</td><td>共有 memory の索引 <code>MEMORY.md</code> の説明の行</td><td>持ち場の名前・旧称</td><td>本体を付け替えたら索引の説明も直す</td></tr>
-<tr><td>10</td><td>閉じた持ち場の成果物（調査・下書き・モック）と session-log</td><td>閉じた持ち場の名前・成果物の接頭辞（例：<code>oem2_r*</code>）</td><td><strong>まとめた先の指示書に絶対パスで並べたか</strong>。並べていないと、閉じた持ち場で動いた仕事が辿れなくなる</td></tr>
-<tr><td>11</td><td>閉じた持ち場・生きた持ち場の session-log の next_actions／open_questions</td><td><code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/</code> 配下の持ち場名・話題名</td><td><strong>受け取る持ち場の指示書に写したか</strong>。写さないと、session-log を見ない限り仕事が宙に浮く</td></tr>
-<tr><td>12</td><td>報告・指示書の冒頭の、今の状態を書いた文</td><td>「外側7本」「14本」「13本」など本数、「サイドバーのまとまり」など状態</td><td><strong>経過の文と分けて直したか</strong>。経過の文（「外側7本として始まり、同日 13:1x に5本になった」）は残してよいが、「いまの状態」の宣言は直す。本節の下の「書き方」の最後の行がこれ</td></tr>
-<tr><td>13</td><td>共有 memory の「部署の1周」「用語の一覧」など本数・持ち場の列挙を持つ memory</td><td>本数の数字・持ち場の名前・旧称</td><td>4 と同じディレクトリだが、特に本数と列挙を持つ memory（<code>project_busho_no_issyu_shijisho_hokoku_genjohyo.md</code>・用語の一覧 など）を見落としやすい</td></tr>
-<tr><td>14</td><td>担当の一覧 <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/agents/INDEX.md</code></td><td>持ち場の名前・旧称・担当 agent 名</td><td>持ち場の名前を変えた・閉じた時に、INDEX の行も直す</td></tr>
-<tr><td>15</td><td>講座資料の追記（決まり9の対象）</td><td>持ち場の名前・旧称</td><td>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/AIグループ講座_複数セッション運営_20260916_honbun.md の「追記の記録」。本数・持ち場名が出ている箇所</td></tr>
-<tr><td>16</td><td>コードの作業場の docs（例：<code>/Users/nishidamitsuhiro/untendai-marketing/docs/</code>）</td><td>持ち場の名前・旧称（untendai-marketing など）</td><td>その作業場の docs にその持ち場名が出ていないか。<strong>司令塔は直さない</strong>（決まり7）が、見つけたら持ち場あてに決定の記録で伝える</td></tr>
-<tr><td>17</td><td>閉じた持ち場を立てたときの引き継ぎ書（案件フォルダの <code>hikitsugi_*.md</code>・<code>*_引き継ぎ_*.md</code>）</td><td>持ち場の名前・セッションID</td><td>冒頭に閉じた印とまとめた先を書いたか</td></tr>
-<tr><td>18</td><td>社内レポートの一覧 csv と公開ページ（<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/mits-reports/private/6session/</code>）</td><td>持ち場の名前・持ち場の数</td><td>持ち場の数・名前・行が今の形か、作り直して公開したか</td></tr>
-<tr><td>19</td><td>予約タスクの題（<code>list_scheduled_tasks</code> の題）</td><td>持ち場の名前・本数の数字</td><td>本数・名前が今の形か</td></tr>
-<tr><td>20</td><td>各持ち場の時計の手順書（<code>/Users/nishidamitsuhiro/.claude/scheduled-tasks/&lt;時計&gt;/SKILL.md</code>）</td><td>「申し送り」「指示書」「報告」</td><td>申し送りから指示書を読む1歩があるか（決まり10）</td></tr>
-</table>
-<h4 id="書き方">書き方</h4>
-<ul>
-<li>閉じた持ち場の名前が「<strong>経過を書いた文</strong>」に出るのは残してよい（「13:2x にまとめた」など）。消すのは<strong>生きている行</strong>だけ ── 表の行・一覧の列挙・申し送りの未済の行・読み先・送り先</li>
-<li>記録（決定の記録・定時報告）は遡らない（決まり2）。直すのは台帳と手順書と規約</li>
-<li><strong>本数の数字は、名前と一緒に必ず直す。</strong>名前を1つ外して本数を直し忘れると、手順書の中で食い違う（2026-10-08 に「内側6本」と「表は14行」が同じファイルに同居した）</li>
-</ul>
-<p>2026-10-08 に1周目・2周目・3周目・4周目と回して、周ごとに新しい範囲から抜けが出た（1周目25件・2周目8件・3周目約20件・4周目でさらに引き継ぎ書・社内レポート・予約タスクの題・時計の手順書の4か所を範囲に足した）。範囲を先に全部並べてから当てる。</p>
 <h3 id="決まり-このフォルダで働く全員が守る">決まり（このフォルダで働く全員が守る）</h3>
 <p>1. 計測・除外・数え方の決定は、どのセッションで出ても決定の記録に<strong>宛先つき</strong>で書く（急ぎだけ1通も送る）。<strong>配信経路・計測の決定の送り先は、2026-10-08 13:2x に 運転台マーケ → 運転台改善 に付け替わった</strong>（運転台マーケを運転台改善にまとめたため。元は 2026-09-08 Mits様「ここで生成するメールメルマガ経路関係の決まった事は、untendaiマーケティングがuntendaiのアプリに実装していくので、常に決まった事はP2Pで送信して」）。正本: /Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/feedback_haishin_keiro_no_kettei_wa_untendai_marketing_ni_p2p.md</p>
 <p>2. 決定の記録は末尾に足すだけ。途中の行は書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -198,7 +168,7 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <p>7. 他のセッションの持ち場のファイルは書き換えない。相手側の材料は P2P で送る（全体設計図の ☑取消線と決定の記録の末尾への追記は、6つとも書いてよい）。</p>
 <p>8. 関係のあるほかの持ち場に関連のあることは、変更の時に逐次報告通信をする（Mits様原文「関係のある5つのセッションに関連のあることは、変更の時に逐次報告通信をすること」2026-09-14。原文の「5つ」は当時の本数。今は内側6本・外側5本）。</p>
 <h3 id="引き継ぎの決まり">引き継ぎの決まり</h3>
-<p>自動要約が2回を超えたら作業を止め、引き継ぎ書を書いてから新しいセッションに移る。引き継ぎ書の置き場所は各セッションの規約に従う。</p>
+<p>自動要約が2回を超えたら（3回目から）、仕事の区切りで skill <code>session-hikitsugi</code> の手順で移る：引き継ぎ書（session-log）を書く → Notion に保存 → 会話を空にする（/clear）。名前・セッションID・作業フォルダはそのまま残るので、改名もアーカイブも要らず、宛先も変わらない（2026-10-15 Mits様「シームレスに迷わないように進められるように仕組みにしてほしい」）。3回目に入ると hook inject-after-compact.sh が知らせる。</p>
 <h3 id="上位規約-ここで再掲しない・絶対パス参照のみ">上位規約（ここで再掲しない・絶対パス参照のみ）</h3>
 <ul>
 <li>全体規約: /Users/nishidamitsuhiro/.claude/CLAUDE.md</li>
@@ -232,8 +202,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <ul>
   <li>落ちている段が「ページを見た → ボタンを押した」で、押した人がメアドを送っているなら、直す所はページの売り（登録すると何が手に入るか・なぜ要るか・それを信じられる証拠）。登録の仕組み（窓・中継・認証）・メール（号の中身・リンク）・計測・メールからの続きの見せ方の直しを、登録を増やす手として数えない</li>
   <li>知見を集める問いも、この向きで立てる。「メールから来た人が登録しない」と問うと、集まる知見がメールとのつながりに寄る</li>
-  <li>実例：2026-09-21〜22 の1周目。落ちている段を実測で「開いた → 押した」と特定したのに（09-15〜09-21：開いた 109 → 押した 3 → メアドを送った 3）、直しを「メールの語句の続きを着地の先頭に出す」にした。ページそのものの登録の理由は元のままだった（決定の記録 2026-09-22 02:4x ／ 司令塔・同 09:0x ／ 司令塔）</li>
 </ul>
+<p>詳細（Why・実例・経過）：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/CLAUDE_詳細_後片付けと経緯.md の『決まり13 の実例』</p>
 <p>14. <strong>Mits様が司令塔に放り込む動画・記事は、伽藍とバザールの実現を加速させるネタ</strong>（2026-10-07 Mits様）。Mits様原文「これら放り込んでいるのは、どうすれば伽藍とバザールの実現を加速させられるかのネタ。整理かつ、都度、アイデア、活用、我が社への実装法を抽出してほしい」。</p>
 <ul>
   <li>1件来るたびに、ネタ帳 /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/伽藍とバザール加速ネタ帳.html の末尾に1件足す。形は ①出どころ（題名・話者・URL・時刻）②要点（話者の語のまま・時刻つき）③アイデア ④活用 ⑤我が社への実装法（動画の時刻と我が社の記録のファイル名を根拠に添える。裏付けが無いものは「見立て」と頭に書く）⑥他のネタとのつながり</li>

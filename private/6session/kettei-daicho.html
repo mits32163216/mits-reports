@@ -117,7 +117,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-14 16:23 ／ 写した時刻 2026-10-14 18:36</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-15 17:40 ／ 写した時刻 2026-10-15 18:37</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -2751,6 +2752,214 @@ untendai-client  版=1.73.43  組立=2026-09-26 03:39:44  Bundle=com.mits.untend
 <li>登録で UTAGE の読者が1件できて、0日目のメール「AI-Mits＆経営アプリ、使えるようになりました。」と「【AI-MITS】メール認証のご案内」が届いた</li>
 <li>どのセッションで：BS-jikki-kenshu（運転台改善 からの発注）</li>
 <li>宛先：メール配信・計測・自動化／運転台改善</li>
+</ul>
+<hr>
+<h3 id="2026-10-15-15-4x-司令塔-持ち場ごとのモデルを仕事の中身で3つに分けた">2026-10-15 15:4x ／ 司令塔 ── 持ち場ごとのモデルを仕事の中身で3つに分けた</h3>
+<ul>
+<li>宛先：11本すべて（AI-Mits-チューニング／メール配信・計測・自動化／運転台改善／伽藍とバザールの実現／FHL 2026 Notes／wasa_ファネルメイク／_OEM提供考察／UTAGE 入口の集約（トールゲート式）／Meta広告の自動化・最適化サイクル／YouTube チャンネルコンセプト構想／司令塔）＋ EA情報シート調査</li>
+<li>出どころ：Mits様原文（2026-10-15）「このグルーぷのすべての仕事を調べて、今、最適なモデルを一つずつデフォルト設定して」「コーディングが多いセッション、文章がおおいセッションなど」「ーーレポート内のdeepseek推奨は無視してClaude Codeのみ」「GPTも同様に無視」</li>
+<li>決めたこと：<strong>Claude Code は定額（$200 MAX）なので価格では分けない。</strong>仕事の中身と Mits様の待ち時間で3つに分けた</li>
+  <li>取り違えると外に出る仕事（コードの本番・配信・API・整合の突き合わせ・戦略を作る）＝ <strong>claude-opus-5-5</strong></li>
+  <li>Mits様名義の文章・台本・投稿の下書き・討議 ＝ <strong>claude-fable-5-1</strong></li>
+  <li>調べる・数える・突き合わせて報告に書く ＝ <strong>claude-sonnet-5-5</strong></li>
+<li>入れた中身（2026-10-15 実測・設定後に get_session で読み直して確認）</li>
+  <li>opus-5-5：AI-Mits-チューニング（opus-5 から）／メール配信・計測・自動化（opus-5 から）／FHL 2026 Notes（sonnet-5-5 から）／運転台改善（元から）／_OEM提供考察（元から）</li>
+  <li>fable-5-1：伽藍とバザールの実現（opus-5-5 から）／wasa_ファネルメイク（opus-5 から）／YouTube チャンネル構想（fable-5 から）</li>
+  <li>sonnet-5-5：UTAGE 入口の集約（opus-5 から）／Meta広告の自動化（opus-5-5 から）／EA情報シート調査（元から）</li>
+<li><strong>司令塔だけ変えられなかった。</strong>道具の実測の返り：<code>Refusing to change this session&#x27;s own model or effort; ask the user to pick it in the model menu.</code>。司令塔はいま claude-opus-5。最新は claude-opus-5-5</li>
+<li>効き方：<strong>次の回から</strong>効く（走っている回は今のモデルのまま）</li>
+<li>価格の表（ofox カタログ・Mits様が 2026-10-15 に貼られた）を使うのは <strong>AI-Mits 本番（Dify 経由の従量API）のエンジン A/B/C を決めるとき</strong>だけ。Mits様原文「Claude Code内のコーディング・執筆は定額なので、4ラインどれを使っても実質タダ」</li>
+<li>正本：/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/project_shireito_11hon_no_model_wariate.md ／ 選び方の決まり：/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/feedback_model_erabi_wa_claude_code_de_erabu_mono_dake.md</li>
+</ul>
+<hr>
+<h3 id="2026-10-15-16-1x-司令塔-取消と差し替え-物差しをトークン消費に替え-Fable">2026-10-15 16:1x ／ 司令塔 ── 【取消と差し替え】物差しをトークン消費に替え、Fable を1本に絞った</h3>
+<ul>
+<li>宛先：11本すべて＋EA情報シート調査</li>
+<li>出どころ：Mits様原文（2026-10-15）「金銭の意味での『コストパフォーマンス』ではなく、トークン消費パフォーマンスで設定したい」「これも有効なら設定としてはありなのか裏付けとって」</li>
+<li><strong>取消</strong>：同日 15:4x の節のうち「Claude Code は定額なので価格では分けない」という物差し、および「Fable は別枠なので all models 枠を食わない」という見立ては取り消す</li>
+<li>取消の理由（実測）：Fable のサブエージェント1本（120,973トークン）を走らせて枠の差分を取ったら、<strong>Fable 枠（11→12%）と all models 枠（89→90%）が両方 +1 した</strong>。「Fable は all models を食わない」は成り立たない</li>
+  <li>公式 <a href="https://support.claude.com/en/articles/11145838">https://support.claude.com/en/articles/11145838</a> は &quot;Max plans also have a separate weekly limit for Fable&quot; と書くだけで、all models から除くとは書いていない</li>
+  <li>⚠️ 同じ区間で司令塔（Opus 5）も動いているので all models の +1 を Fable 由来と断定はしない。直前の Opus だけの区間では all models は 89% のまま動かなかった、までが実測</li>
+<li><strong>新しい物差し</strong>：司令塔の jsonl 292本・2.2GB を全件集計した「1回の返答で吐く出力トークン」</li>
+  <li>claude-fable-5-1 <strong>2,253</strong>（返答1,804）／claude-fable-5 <strong>2,098</strong>（401）／claude-opus-5 <strong>951</strong>（18,890）／claude-sonnet-5-5 <strong>898</strong>（241）／claude-opus-5-5 <strong>836</strong>（11,452）</li>
+  <li><strong>Fable は Opus 5.5 の 2.7倍のトークンを吐き、しかも枠を2本とも食う＝トークン消費でいちばん不利</strong></li>
+  <li>Sonnet 5.5（898）と Opus 5.5（836）は出力量で差が無い</li>
+  <li>トークン消費の本体は出力ではなく cache の読み込み（Opus 5 は出力 1,797万に対し cache 読込 54億＝300倍）</li>
+<li><strong>差し替えた割り当て</strong>（2026-10-15 16:1x・設定後に get_session で確認）</li>
+  <li>claude-opus-5-5（4本）：運転台改善／AI-Mits-チューニング／メール配信・計測・自動化／FHL 2026 Notes</li>
+  <li>claude-sonnet-5-5（6本）：UTAGE 入口の集約／Meta広告の自動化／_OEM提供考察／伽藍とバザールの実現／wasa_ファネルメイク／EA情報シート調査</li>
+  <li>claude-fable-5-1（1本）：YouTube チャンネル構想（元から Fable 5・effort xhigh。台本と言い回しが本体なのでここだけ残した）</li>
+  <li>司令塔：claude-opus-5（自分では変えられない。画面のモデル選択から）</li>
+<li>いまの枠：all models <strong>90%</strong>・Fable <strong>12%</strong>・5時間 6%・買い足しは enabled=false／spent $0.00（枠を使い切ると止まる設定）</li>
+<li>正本：/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/project_shireito_11hon_no_model_wariate.md</li>
+</ul>
+<hr>
+<h3 id="2026-10-15-16-2x-司令塔-理由の訂正-臨時の枠の数字を-常時運用の根拠にしていた">2026-10-15 16:2x ／ 司令塔 ── 【理由の訂正】臨時の枠の数字を、常時運用の根拠にしていた</h3>
+<ul>
+<li>宛先：11本すべて＋EA情報シート調査</li>
+<li>出どころ：Mits様原文（2026-10-15）「これは、今週の今のことなので、その臨時対策を頼んでいるわけではない、常時運用で考えたのか？それとも臨時対策なのか」</li>
+<li><strong>訂正</strong>：同日 16:1x の節で「Opus を4本に絞ったのは all models が 90% まで来ていて残り 10% で8時間だから」と書いた。これは<strong>今週の枠の状態＝臨時</strong>で、週が替われば消える理由。常時運用の根拠として書いたのは誤り</li>
+<li><strong>常時の根拠として残るもの</strong>（週に依らないモデルの性質）</li>
+  <li>Fable は1回 2,253 トークン＝Opus 5.5（836）の2.7倍。しかも枠を2本とも食う → <strong>Fable を1本に絞るのは常時有効</strong></li>
+  <li>Sonnet 5.5（898）と Opus 5.5（836）は1回の出力量がほぼ同じ → <strong>トークン消費を理由に Opus を Sonnet へ下げる根拠は無い</strong></li>
+  <li>cache 読込が出力の300倍（モデル選びの外の話）</li>
+<li><strong>したがって Opus 4本／Sonnet 6本の分かれ目を決めているのは、トークン消費ではなく仕事の中身</strong>（取り違えると外に出る仕事か／読んで報告するだけの仕事か）。設定の実体は変えず、理由の書き方だけを直した</li>
+  <li>伽藍とバザールの実現・wasa_ファネルメイク（Fable → Sonnet）＝Fable が2.7倍で枠を2本食う（常時）</li>
+  <li>_OEM提供考察（Opus → Sonnet）＝本番に触らず effort も medium の持ち場（仕事の中身・常時）。「枠が 89% だったから」ではない</li>
+  <li>Opus 4本（運転台改善／AI-Mits-チューニング／メール配信・計測・自動化／FHL 2026 Notes）＝取り違えると外に出る仕事（常時）</li>
+<li>⚠️ 未測定：<strong>モデル別の枠の重み</strong>。公式に記載が無く <code>get_usage</code> の返りにも係数が出ない。測るなら枠がリセットされる 2026-10-15 23:59（JST）以降</li>
+<li>正本：/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/project_shireito_11hon_no_model_wariate.md</li>
+</ul>
+<hr>
+<h3 id="2026-10-15-16-3x-司令塔-現時点の最適設定を決めた-持ち場11本-サブエージェン">2026-10-15 16:3x ／ 司令塔 ── 現時点の最適設定を決めた（持ち場11本＋サブエージェント27本）</h3>
+<ul>
+<li>宛先：11本すべて＋EA情報シート調査</li>
+<li>出どころ：Mits様原文（2026-10-15）「soonetとopusを使い分けるのが現実的で、fableは特別設定とするとどんな設定がトークンパフォーマンスがいいか」「ここまでの調査と検証を元に、現時点での最適設定を決めて」</li>
+<li><strong>決めた根拠（実測4つ）</strong></li>
+</ul>
+<p>  1. 今週の消費の内訳：cache 読み込み 59.2%／cache 作成 35.4%／出力 5.4%／入力 0.0% ＝ <strong>94.6% が cache</strong>。消費はモデルの賢さではなく「ターン数 × コンテキストの大きさ」で決まる</p>
+<p>  2. 単価の比（Opus 5.5 = 1.00）：<strong>Sonnet 5.5 = 0.50 / Opus 5 と Opus 4.7 = 1.25 / Fable 5.1 = 2.50</strong></p>
+<p>  3. 1回の返答で吐く出力：Opus 5.5 836／Sonnet 5.5 898＝<strong>ほぼ同じ</strong>（Sonnet にしても吐く量は増えない）／Fable 5.1 2,253</p>
+<p>  4. 公式 <a href="https://claude.com/pricing">https://claude.com/pricing</a> に <strong>「Fable は weekly limits の 50%」</strong> と数値あり＝Fable 専用枠は all models の内枠。Fable を使うと両方減る。<strong>Opus と Sonnet の間の倍率は非公表</strong></p>
+<ul>
+<li><strong>決めた設定</strong></li>
+  <li>持ち場11本（現状維持）：Opus 5.5 4本（運転台改善／AI-Mits-チューニング／メール配信・計測・自動化／FHL 2026 Notes）／Sonnet 5.5 6本（UTAGE 入口の集約／Meta広告の自動化／_OEM提供考察／伽藍とバザールの実現／wasa_ファネルメイク／EA情報シート調査）／Fable 5.1 1本（YouTube チャンネル構想）</li>
+  <li><strong>サブエージェント27本（入れ替えた）</strong>：Opus 5.5 9本／Sonnet 5.5 17本／Fable 5.1 1本（FA-writer）。21本が <code>claude-opus-4-7</code>（1.25倍の旧世代）だったのを全部替えた。置換24・追加3（model 行が無かった討議3本）</li>
+  <li>司令塔（このセッション）は <code>claude-opus-5</code>（1.25倍）。<strong>道具では変えられない</strong>ので画面のモデル選択から</li>
+<li><strong>効く量（今週の実測で換算・枠 1% ≈ $63）</strong>：サブエージェント 21本を opus-4-7 → 内訳どおり替えたことで、今週分なら <strong>$2,830 → 約 $1,330（−$1,500・枠の約 24%）</strong></li>
+<li>agent 定義の置き場所は<strong>1つ</strong>（<code>/Users/nishidamitsuhiro/.claude/agents/</code> と claude-nishida の <code>.claude/agents/</code> は inode 34516954 で同じ実体）。片方を直せば両方に効く</li>
+<li>控え：/private/tmp/claude-501/.../scratchpad/agents_bak_20261015/（home 28本・project 28本）</li>
+<li>正本：/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/project_shireito_11hon_no_model_wariate.md</li>
+</ul>
+<hr>
+<h3 id="2026-10-15-16-5x-司令塔-effort-を検証し-持ち場を全部-high-に揃え">2026-10-15 16:5x ／ 司令塔 ── effort を検証し、持ち場を全部 high に揃えた</h3>
+<ul>
+<li>宛先：11本すべて＋EA情報シート調査</li>
+<li>出どころ：Mits様原文（2026-10-15）「全部の設定が終わったら、次は準じて、effortの設定を検証して」</li>
+<li>前提：同日 Mits様が司令塔を <code>/model claude-opus-5-5</code> に替えられ、モデルの設定は全部終わった</li>
+<li><strong>実測</strong>：jsonl の assistant 行に <code>effort</code> が記録されている。全 jsonl 3,605本・全期間で effort × モデル別に集計</li>
+  <li><strong>1回あたりは effort を上げるほど高い</strong>（Opus 5：medium $0.196／high $0.245／max $0.336）</li>
+  <li><strong>しかし medium は往復が増える</strong>（Opus 5：medium 15.7回／high 11.2回）。消費の 94.6% が毎ターンの cache 読み込みなので、往復の多さが総量を決める</li>
+  <li><strong>1依頼あたりは high が最安</strong>：Opus 5 $2.74（medium $3.08）／Opus 5.5 $1.16（medium $1.53）／Fable 5.1 $4.17（medium $5.41）。<strong>3モデルで同じ向き</strong></li>
+  <li><strong>max は最も高い</strong>：Opus 5 $4.07（high の 1.49倍）／Fable 5.1 $12.83（high の 3.1倍）</li>
+  <li>⚠️ 同じ仕事を effort だけ変えて流した実験ではない。effort ごとに依頼の難しさが違えば、その差を見ている可能性は残る</li>
+<li><strong>決めたこと</strong></li>
+  <li><strong>持ち場12本を全部 high</strong>：司令塔（元から）・持ち場10本・EA情報シート調査。変えたのは3本（_OEM提供考察 medium→high／UTAGE 入口の集約 medium→high／YouTube チャンネル構想 xhigh→high）。設定後に get_session で12本とも high を確認</li>
+  <li><strong>サブエージェントは変えない</strong>：effort が agent 定義で固定され、effort と agent の種類が1対1なので、effort の効果を切り分けられない（1発注あたりで比べると向きが一定しない）。effort 行の無かった2本（BS-jikki-kenshu・sanbo-v2）に <code>effort: high</code> を足しただけ</li>
+<li>正本：/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/project_shireito_11hon_no_model_wariate.md</li>
+</ul>
+<hr>
+<h3 id="2026-10-15-17-0x-司令塔-サブエージェント27本の-effort-を決めた-2本">2026-10-15 17:0x ／ 司令塔 ── サブエージェント27本の effort を決めた（2本を変えた）</h3>
+<ul>
+<li>宛先：11本すべて＋EA情報シート調査</li>
+<li>出どころ：Mits様原文（2026-10-15）「effort が agent 定義で固定　という固定されている定義を最適化の設定地を出して」</li>
+<li><strong>取消</strong>：同日 16:5x の節の「サブエージェントは effort の効果を切り分けられないので変えない」は取り消す。<code>agent-*.meta.json</code> に <code>agentType</code> が入っており、agent の名前ごとに集計できた</li>
+<li><strong>実測</strong>（subagents 2,537発注・API換算 $25,576）</li>
+  <li>同じ agent・同じモデルで effort の値同士を比べられたのは2組：Explore（opus-5）medium $3.59／high $5.20、general-purpose（opus-5）medium $10.27／high $9.50。<strong>サブエージェントでは medium が安いか同程度＝持ち場と向きが逆</strong>。⚠️ high 側は 15発注・5発注と少ない</li>
+  <li><strong>消費の偏り</strong>：BS-engineer 36.3%／FS-utage-pm 10.4%／BS-keiri 9.3%／devils-advocate 8.6%／BA-researcher 7.2%／BS-jikki-kenshu 6.8%（上位6本で 78.6%）</li>
+<li><strong>決めた線</strong>：消費の大きい所は実測の根拠があるときだけ下げる。1% 前後以下の所は下げても全体に効かないので質を守って変えない</li>
+<li><strong>変えた2本</strong></li>
+  <li>devils-advocate：xhigh → <strong>high</strong>（xhigh に払う根拠が実測に無い）</li>
+  <li>BA-researcher：high → <strong>medium</strong>（調べる仕事＝Explore と同じ性質。Explore では medium が 31% 安い）</li>
+<li><strong>変えなかった主なもの</strong>：BS-engineer high（36.3%。近い性質の general-purpose で medium と high がほぼ同じ＝下げる根拠が無い）／BS-keiri low／BS-jikki-kenshu high／FA-writer high／BA-strategist-max max（特別設定・全期間4発注）</li>
+<li>書き換え後：high 18本／medium 7本／max 1本／low 1本</li>
+<li><strong>効き目</strong>：全期間換算 約 −$650＝サブエージェント全体の約 2.5%。モデルの入れ替え（今週換算 −$1,500・枠の約 24%）より1桁小さい</li>
+<li>正本：/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/project_shireito_11hon_no_model_wariate.md</li>
+</ul>
+<hr>
+<h3 id="2026-10-15-17-2x-司令塔-モデルと-effort-の決まりを-書くべき所に書き">2026-10-15 17:2x ／ 司令塔 ── モデルと effort の決まりを、書くべき所に書き、古い記載を直した</h3>
+<ul>
+<li>宛先：11本すべて＋EA情報シート調査</li>
+<li>出どころ：Mits様原文（2026-10-15）「書くべきところに書き込んで、修正すべき事は修正」</li>
+<li>範囲：規約（home・claude-nishida・司令塔・参謀の部門と org 配下）／agent 定義の本文／settings／予約タスク10本／skill 全部／共有 memory 全部を、古いモデル名で引いた</li>
+<li><strong>直したもの</strong></li>
+  <li>settings.json の既定モデル：claude-opus-5 → <strong>claude-opus-5-5</strong>（新しいセッションの既定）。effortLevel は medium のまま（予約タスクが走り切る仕事で、medium が安いか同程度のため）</li>
+  <li>home CLAUDE.md「モデル運用」：2026-09-06 の記載を今日の実測で書き直した</li>
+  <li>参謀の規約「下請けは、仕事に合うモデルで発注する」：決まりが守られていなかった実測（組み込み agent 393回中 389回が model 指定なし）と、組み込み agent を呼ぶときの決まり（Explore・Plan は sonnet／general-purpose・claude は仕事で決める）を足した</li>
+  <li><strong>BS-jikki-kenshu：claude-opus-5-5 → claude-sonnet-5-5。</strong>参謀の規約の表（2026-09-25「実機の検収は sonnet」）と、同日 16:3x の私の設定が食い違っていた。先にあった決まりに合わせた</li>
+  <li>memory feedback_no_court_invoke_tag.md：「opus-4-7 を使う」「Fable は停止中」に付け替わりの節を足した</li>
+  <li>skill mits-reports-publish：Co-Authored-By を Opus 4.7 → Opus 5.5</li>
+  <li>司令塔 CLAUDE.md「11本が共通で読むもの」に割り当ての memory の1行</li>
+<li><strong>分かったこと</strong>：予約タスクには1本ずつのモデル・effort の欄が無い。走った回のモデルは回で違い（10-11 は Opus 5.5、10-14・15 は Sonnet 5.5）、effort はどの回も medium</li>
+<li>正本：/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/project_shireito_11hon_no_model_wariate.md</li>
+</ul>
+<hr>
+<h3 id="2026-10-15-17-3x-司令塔-取消と差し替え-予約タスクのモデルは1本ずつ決められる">2026-10-15 17:3x ／ 司令塔 ── 【取消と差し替え】予約タスクのモデルは1本ずつ決められる</h3>
+<ul>
+<li>宛先：司令塔</li>
+<li><strong>取消</strong>：同日 17:2x の節の「予約タスクには1本ずつのモデル・effort の欄が無い」のうち、<strong>モデルについては取り消す</strong></li>
+<li>根拠：公式 <a href="https://code.claude.com/docs/en/desktop-scheduled-tasks">https://code.claude.com/docs/en/desktop-scheduled-tasks</a> に「The instructions input includes pickers for the permission mode and model」「Schedule, folder, model, and enabled state are not in this file: change them through the Edit form or ask Claude」</li>
+<li>正しくは：モデルは<strong>アプリの Code タブ → Routines → 各タスクの Edit</strong> で1本ずつ決められる。道具（create／update_scheduled_task）とファイル（SKILL.md・scheduled-tasks.json）には項目が無い。いまは10本とも決めていないので、走るたびにアプリの既定のモデルで動く</li>
+<li>effort を1本ずつ決める記載は公式の資料に無い（走った回はどれも medium）</li>
+</ul>
+<hr>
+<h3 id="2026-10-15-17-4x-司令塔-迷ったら-Opus-を検証し-外に出るかで決める-に書">2026-10-15 17:4x ／ 司令塔 ── 「迷ったら Opus」を検証し、「外に出るかで決める」に書き換えた</h3>
+<ul>
+<li>宛先：11本すべて＋EA情報シート調査</li>
+<li>出どころ：Mits様原文（2026-10-15）「規約の『迷ったら Opus』に当たります。　これ自体、今日時点で適切かどうか、検証して書き換える必要あり」</li>
+<li><strong>結論：今日の時点では適切ではない</strong></li>
+</ul>
+<p>  1. Mits様のお言葉ではなかった（2026-09-25 の原文は「そのままOpusで進めて　下請けは適切に発注」だけ）</p>
+<p>  2. 理由の「下げて外すと外に出てから気付く」を裏付ける Sonnet の事故が記録に 0件</p>
+<p>  3. Opus に寄せる損が実際に起きた：週の上限に 09-23〜24 で当たり約12時間すべて止まった（使用量の記録で 100% が49回）。この決まりはその翌日に書かれていた</p>
+<p>  4. Sonnet 5.5 は単価が半分で、1回の出力量はほぼ同じ</p>
+<ul>
+<li><strong>書き換えた決まり</strong>：迷ったときは「外に出るか」で決める。お客様に届く・お金・本番の設定・配布は Opus 5.5（外に出るか分からないときもこちら）。社内の記録・台帳・調べもの・まとめ・下書きは Sonnet 5.5</li>
+  <li>home CLAUDE.md「モデル運用」（正本）と 参謀の規約（home を指す・検証の中身を残した）</li>
+<li><strong>当てはめ</strong>：skill notion-claude-history-importer・claude-history-to-mk-ah-pipeline を opus → sonnet</li>
+<li>正本：/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/project_shireito_11hon_no_model_wariate.md</li>
+</ul>
+<h3 id="2026-10-15-18-0x-司令塔-取消と差し替え-予約タスクのモデルと-effort-1">2026-10-15 18:0x ／ 司令塔 ── 【取消と差し替え】予約タスクのモデルと effort（17:2x・17:3x の一部）</h3>
+<ul>
+<li>宛先：なし</li>
+<li><strong>取消</strong>：17:2x・17:3x の「予約タスクのモデルは SKILL.md・道具からは変えられない」「effort が medium なのは settings の effortLevel: medium のため」「走るたびに settings.json の model で動く」</li>
+<li><strong>差し替え</strong>（devils-advocate がアプリのコード・走った回の記録486件・公式の資料3ページで裏取り）</li>
+  <li>アプリは、タスクの json に model が無いとき、SKILL.md の frontmatter の <code>model: &lt;id&gt;</code> を読む作り。実際に効くかは未確認</li>
+  <li>user の settings.json の effortLevel は Opus 5.5 に効かない（公式 model-config）。走った回の medium はモデルの既定の値</li>
+  <li>走った回のモデルは settings.json の model と合っていない。何で決まっているかは未確認</li>
+  <li>scheduled-tasks.json は2つではなく4つ（今使っているのは claude-code-sessions 配下の1つ）</li>
+<li>残っていること：画面の Routines → Edit にモデルの欄がある（17:3x のとおり）。道具（create／update）にモデルの項目が無い（17:3x のとおり）</li>
+<li>正本：/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/project_shireito_11hon_no_model_wariate.md</li>
+</ul>
+<h3 id="2026-10-15-17-0x-頃-司令塔-予約タスク9本のモデルを決めた-SKILL-md">2026-10-15 17:0x 頃 ／ 司令塔 ── 予約タスク9本のモデルを決めた（SKILL.md の model の行）</h3>
+<ul>
+<li>宛先：運転台改善／AI-Mits-チューニング／伽藍とバザールの実現（自分の持ち場の時計のモデルが決まったため）</li>
+<li>月次決算の3本（毎月1日・11日・21日）＝ claude-opus-5-5。定時報告・運転台の毎朝点検・仲間募集の材料あつめ・お試し版と Dify の数え・Obsidian の週1大掃除・Anthropic 支出の見張り（停止中）＝ claude-sonnet-5-5</li>
+<li>効くかの確認：試験用タスク model-shitei-kakunin で <code>model: claude-haiku-5-5</code> を書いて Run now → 走った回は claude-haiku-5-5。SKILL.md の行が効く（18:0x の「効くかは未確認」を解いた）</li>
+<li>各持ち場が自分の時計の SKILL.md を書き直すときは、冒頭の <code>model:</code> の行を消さない</li>
+<li>正本：/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/project_shireito_11hon_no_model_wariate.md</li>
+</ul>
+<h3 id="2026-10-15-17-04-司令塔-時刻の訂正-今日の司令塔の節の見出しの時刻">2026-10-15 17:04 ／ 司令塔 ── 【時刻の訂正】今日の司令塔の節の見出しの時刻</h3>
+<ul>
+<li>宛先：なし</li>
+<li>2493行目「17:0x」・2512行目「17:2x」・2530行目「17:3x」・2540行目「17:4x」・2555行目「18:0x」の5節は、見出しの時刻を実測せずに書いていた。date の実測では 16:52 にはこの5節のうち18:0x の節を書く直前で、17:04:34 の時点でここまで全部書き終えていた。5節とも実際は 17:04 より前</li>
+<li>中身は直さない。時刻だけこの行で読み替える</li>
+<li>以後、見出しの時刻は書く直前に date で測る</li>
+</ul>
+<h3 id="2026-10-15-17-13-司令塔-毎ターンの読み込みを減らした-決まりのファイルと-ho">2026-10-15 17:13 ／ 司令塔 ── 毎ターンの読み込みを減らした（決まりのファイルと hook）</h3>
+<ul>
+<li>宛先：なし（全セッションに効くが、各持ち場がすることは無い）</li>
+<li>決まりのファイル：司令塔 CLAUDE.md 37,878→28,194 bytes・home CLAUDE.md 33,618→31,082・claude-nishida CLAUDE.md 11,282→10,364。決まりの文は残し、Why・実例・経過・後片付けの20か所の表を同じフォルダの「詳細」ファイルへ移した（消えた行53行は全部詳細ファイルにある）</li>
+<li>hook：inject-rules-unified.sh・inject-notion-db-check.sh・read-record-before-answering.sh の3本。subagent の完了報告と圧縮の要約には鳴らない／同じセッションの2回目以降は短い文。拾う語と文の中身は変えていない。7日分に当てはめると発言時の hook の文は 3,408,828 → 約1,832,000 bytes</li>
+<li>講座資料の下書き：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/AIグループ講座_トークン節約の対策_20261015_shitagaki.html</li>
+</ul>
+<h3 id="2026-10-15-17-26-司令塔-長くなった会話の移り方を仕組みにした-clear-で同">2026-10-15 17:26 ／ 司令塔 ── 長くなった会話の移り方を仕組みにした（/clear で同じセッションを空にする）</h3>
+<ul>
+<li>宛先：FHL 2026 Notes／AI-Mits-チューニング／メール配信・計測・自動化／運転台改善／伽藍とバザールの実現／wasa_ファネルメイク／_OEM提供考察／UTAGE 入口の集約（トールゲート式）／Meta広告の自動化・最適化サイクル／YouTube チャンネルコンセプト構想</li>
+<li>Mits様原文：「これも今後シームレスに迷わないように進められるようにスキルなのかルールなのかメモリなのか仕組みにしてほしい」「司令塔_旧が-2-3-4と増えるのか」</li>
+<li>自動のまとめが3回目に入ったら、仕事の区切りで skill session-hikitsugi：引き継ぎ書（session-log）→ Notion → clear_session(&quot;self&quot;)。名前・セッションID・作業フォルダはそのまま。改名・アーカイブ・番号の付け足しはしない</li>
+<li>3回目に入ると hook inject-after-compact.sh が「引き継ぎの時期」と知らせる</li>
+<li>正本：/Users/nishidamitsuhiro/.claude/skills/session-hikitsugi/SKILL.md ／ 司令塔 CLAUDE.md「引き継ぎの決まり」</li>
+</ul>
+<h3 id="2026-10-15-17-40-司令塔-森田さんとの共同開発の場-Discord-経営の運転台">2026-10-15 17:40 ／ 司令塔 ── 森田さんとの共同開発の場（Discord「経営の運転台 開発（仮）」）は運転台改善が持つ</h3>
+<ul>
+<li>宛先：運転台改善／伽藍とバザールの実現</li>
+<li>Mits様原文：「The Innovation　は顧客とのやりとり、これは開発のやりとりにふさわしくない」「今後、3人目4人目の共同開発者が入ってくるので、DMだと過去の情報が次に新しく入っている人に見せられないのでふさわしくない」「では、新しいサーバーを立てる」「森田さんを入れて」「このChatGPTでの会話が、森田さんとのこの共同開発を開く始まりになっているので、何らかの形で記録」「どちらのセッションで今後扱うか」</li>
+<li>司令塔で済ませたこと：Discord サーバー「経営の運転台 開発（仮）」を作成（テキスト #一般・ボイス 一般のみ・BOT なし）／森田さん（★Yoshiaki Morita）へ 17:38 に招待を送った（<a href="https://discord.gg/T6APPJEkM">https://discord.gg/T6APPJEkM</a> ・30日で切れる・森田さんはまだ入っていない）／始まりの記録を置いた</li>
+<li>今後この場を扱うのは<strong>運転台改善</strong>。森田さんに渡したソースの ZIP・要件定義書・版の受け渡しを運転台改善が持っているため。司令塔は振り分けだけで、この場の運用はしない</li>
+<li>伽藍とバザールの実現へ：2026-09-14 にそちらで出た「情報共有の場はdiscordで別途専門に立てる」が、この日に立った（呼び名は保留のままなので「（仮）」）</li>
+<li>始まりの記録：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/共同開発の始まり_森田さん_ChatGPT会話_20261014.md</li>
+<li>正本：/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/project_untendai_daihoshin.md の「仲間との情報共有の場」</li>
 </ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
