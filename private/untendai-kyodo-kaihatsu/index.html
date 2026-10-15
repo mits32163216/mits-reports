@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>運転台 共同開発の進め方</title>
+<style>
+  :root{
+    --bg:#f7f6f2; --card:#ffffff; --tx:#1f2430; --sub:#5b6170; --line:#e3dfd3;
+    --navy:#14206b; --gold:#c8961e; --gold-bg:#fbf3dc; --green:#2f7d4f; --green-bg:#eaf5ee;
+    --blue-bg:#eef1fb; --pink-bg:#fcebf1;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--tx);
+    font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+    font-size:16px;line-height:1.75}
+  main{max-width:880px;margin:0 auto;padding:28px 16px 72px}
+  header{text-align:center;margin-bottom:28px}
+  h1{font-size:clamp(24px,6vw,34px);margin:0;color:var(--navy);letter-spacing:.04em}
+  .who{margin:10px 0 0;color:var(--sub);font-size:14px}
+  section{background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:22px 18px;margin:0 0 24px;box-shadow:0 2px 10px rgba(20,32,107,.05)}
+  h2{font-size:20px;margin:0 0 14px;color:var(--navy);display:flex;align-items:center;gap:10px}
+  h2 .no{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;
+    border-radius:50%;background:var(--navy);color:#fff;font-size:15px;flex:none}
+  img{display:block;width:100%;height:auto;border-radius:12px;margin:0 0 16px}
+  ol.steps{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+  ol.steps li{display:flex;gap:12px;align-items:center;background:var(--blue-bg);
+    border-radius:12px;padding:10px 14px;font-weight:600}
+  ol.steps li .n{flex:none;width:26px;height:26px;border-radius:50%;background:#fff;
+    color:var(--navy);display:flex;align-items:center;justify-content:center;font-size:14px;
+    border:2px solid var(--navy)}
+  ol.steps li small{display:block;font-weight:400;color:var(--sub);font-size:13px}
+  .dan{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+  .dan li{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);
+    border-radius:12px;padding:10px 14px}
+  .dan li b{flex:none;color:var(--navy);min-width:3em}
+  .dan li.now{background:var(--gold-bg);border:2px solid var(--gold)}
+  .dan li .tag{display:inline-block;margin-left:6px;background:var(--gold);color:#fff;
+    font-size:12px;font-weight:700;border-radius:999px;padding:1px 10px;vertical-align:2px}
+  .grid{display:grid;gap:14px;grid-template-columns:1fr}
+  @media(min-width:640px){.grid{grid-template-columns:1fr 1fr}}
+  .card{border-radius:14px;padding:16px;background:var(--green-bg)}
+  .card.p{background:var(--pink-bg)}
+  .card.b{background:var(--blue-bg)}
+  .card.g{background:var(--gold-bg)}
+  .card h3{margin:0 0 8px;font-size:16px;color:var(--navy)}
+  .card ul{margin:0;padding-left:1.2em}
+  .card li{margin:2px 0}
+  .ch{font-weight:700;color:var(--green)}
+  code{font-family:ui-monospace,Menlo,monospace;background:#fff;border:1px solid var(--line);
+    border-radius:6px;padding:1px 6px;font-size:.92em}
+  .flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 10px}
+  .flow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 12px;font-size:14px;font-weight:600}
+  .flow i{font-style:normal;color:var(--gold);font-weight:700}
+  footer{text-align:center;color:var(--sub);font-size:13px}
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <h1>運転台 共同開発の進め方</h1>
+  <p class="who">西田（Mits）・森田さん・棚原さん</p>
+</header>
+
+<section>
+  <h2><span class="no">1</span>流れはこの1本</h2>
+  <img src="nagare_morita_20261015.png" alt="Discordで話す、自分の枝で直す、これどう？、別の人とロボットが確かめる、合流、製品版から世に出す、の流れの絵" width="1672" height="760">
+  <ol class="steps">
+    <li><span class="n">1</span><div>Discord で話す<small>相談・困りごと・進み具合</small></div></li>
+    <li><span class="n">2</span><div>自分の枝で直す</div></li>
+    <li><span class="n">3</span><div>「これどう？」を出す<small>Pull Request</small></div></li>
+    <li><span class="n">4</span><div>別の人と自動テストが確かめる</div></li>
+    <li><span class="n">5</span><div>西田が本流に合流して製品版に入れ、世に出す</div></li>
+  </ol>
+</section>
+
+<section>
+  <h2><span class="no">2</span>段0 から段5 へ</h2>
+  <img src="dan_20261015.png" alt="段0から段5へ上っていく道の絵" width="1672" height="941">
+  <ul class="dan">
+    <li class="now"><b>段0</b><span>作業場を、人を入れられる状態にする<span class="tag">いまここ</span></span></li>
+    <li><b>段1</b><span>Discord を開発の場として整える（チャンネル3つ）</span></li>
+    <li><b>段2</b><span>森田さん・棚原さんが GitHub に入る</span></li>
+    <li><b>段3</b><span>Pull Request ごとに自動テストが走るようにする</span></li>
+    <li><b>段4</b><span>3人で1往復ずつ試す（小さな直しを1本ずつ）</span></li>
+    <li><b>段5</b><span>4人目から広げる</span></li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="no">3</span>森田さんの動き方</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Discord で話す</h3>
+      <ul>
+        <li><span class="ch">#一般</span>　相談・雑談・困りごと・進み具合</li>
+        <li><span class="ch">#決まったこと</span>　決まったら1行。話し合いはしない</li>
+        <li><span class="ch">#お知らせ</span>　新しい版が製品版に入った・世に出た</li>
+      </ul>
+    </div>
+    <div class="card p">
+      <h3>自分の枝で直す</h3>
+      <ul>
+        <li>枝の名前は <code>yoshi/〈短い中身〉</code></li>
+        <li>やることは Issue に1件書いてから</li>
+        <li>本流（main）には直接入れない</li>
+      </ul>
+    </div>
+    <div class="card b">
+      <h3>「これどう？」を出す（Pull Request）</h3>
+      <div class="flow"><span>Issue</span><i>→</i><span>yoshi/〜 で直す</span><i>→</i><span>Pull Request</span></div>
+      <ul>
+        <li>変更の中身と、影響する画面</li>
+        <li>テストを足したか</li>
+        <li>確かめた人</li>
+      </ul>
+    </div>
+    <div class="card g">
+      <h3>確かめる人</h3>
+      <ul>
+        <li>作った人以外の1人</li>
+        <li>＋ 自動のテスト</li>
+        <li>合格したら、西田が本流に合流</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>経営の運転台　共同開発</footer>
+
+</main>
+</body>
+</html>
