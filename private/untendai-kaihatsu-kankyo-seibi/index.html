@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>開発環境の整備プラン</title>
+<style>
+:root{
+  --bg:#fbfaf7; --card:#ffffff; --ink:#1f2933; --sub:#52606d; --line:#d9dee3;
+  --navy:#1d3557; --gold:#b8860b; --green:#2f7d4f; --red:#b03a2e; --pale:#eef3f8; --palegold:#fbf3df; --palegreen:#e9f5ee; --palered:#fbecea;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.75;font-size:16px}
+main{max-width:980px;margin:0 auto;padding:24px 16px 80px}
+h1{font-size:1.5rem;color:var(--navy);margin:0 0 4px}
+h2{font-size:1.2rem;color:var(--navy);border-left:5px solid var(--gold);padding-left:10px;margin:40px 0 12px}
+h3{font-size:1.05rem;color:var(--navy);margin:24px 0 8px}
+p{margin:8px 0}
+.meta{color:var(--sub);font-size:.9rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
+.ketsuron{background:var(--pale);border:1px solid #c8d6e5}
+.kime{background:var(--palegold);border:1px solid #e8d49a}
+.ok{background:var(--palegreen);border:1px solid #b9dcc6}
+.ng{background:var(--palered);border:1px solid #efc3bd}
+.tbl{overflow-x:auto;margin:10px 0}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.93rem;background:#fff}
+th,td{border:1px solid var(--line);padding:7px 9px;vertical-align:top;text-align:left}
+th{background:#f1f4f7;color:var(--navy);white-space:nowrap}
+td.blank{background:#fffdf5;color:#9a8a5a;text-align:center;min-width:90px}
+code,pre{font-family:"SFMono-Regular",Menlo,monospace;font-size:.85rem}
+pre{background:#f6f7f9;border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;white-space:pre}
+ol,ul{padding-left:1.4em;margin:6px 0}
+li{margin:3px 0}
+.tag{display:inline-block;font-size:.78rem;padding:1px 7px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--sub);margin-right:4px}
+.svgwrap{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px}
+svg{display:block;min-width:640px;width:100%;height:auto}
+small{color:var(--sub)}
+.zukai{margin:14px 0;padding:0}
+.zukai img{display:block;width:100%;max-width:100%;height:auto;border-radius:14px;border:1px solid var(--line)}
+.zukai figcaption{font-size:.88rem;color:var(--sub);margin-top:6px}
+</style>
+</head>
+<body>
+<main>
+
+<h1>運転台 開発環境の整備プラン</h1>
+<p class="meta">2026-10-15 作成／BA-strategist（運転台改善からの発注）／計画まで。GitHub・Discord・コードは何も変えていない（読み取りの測定だけ）</p>
+<p class="meta">出どころの依頼：Mits様（2026-10-15）「関連リンク全部読んで　そして、理解をした上で開発環境の整備github等をプランして」</p>
+
+<!-- ============ ① 結論 ============ -->
+<h2>① 結論 ── 何をどの順で整えるか</h2>
+<div class="card ketsuron">
+<p><b>流れは1本にする：「Discord で話す → GitHub で作る → 仲間が確かめる → 本流（main）に合流 → Mits様の製品版に入る → 世に出すのは Mits様が決める」。</b>最後の2つは今の決まりのまま変えない。</p>
+<ol>
+<li><b>段0　今の作業場を、人を入れられる状態にする</b>（Mits様の決定は要らない）── 作業場の未記録23件の片付け、リポジトリに入っている社内の記録（<code>.claude/</code> の8ファイル）を外す、共同開発者向けの決まり1枚（<code>CONTRIBUTING.md</code>）の下書き</li>
+<li><b>段1　Discord を開発の場として最小限に整える</b>（3人）── チャンネルは3つまで。会話と「決まったこと」を分ける</li>
+<li><b>段2　GitHub に森田さん・棚原さんが入る</b>── <b>ここは Mits様の「公開の形」の決定待ち。</b>今の置き場は非公開で、本流を守る設定が使えない（実測で 403）。招くと過去の履歴（実データが入っていた見本の帳簿の旧版）も見える</li>
+<li><b>段3　合流の確かめを自動にする</b>── 枝から送られた変更（Pull Request）ごとに GitHub 上でテストが走る形を足す。今は Windows の組み立てしか走っていない</li>
+<li><b>段4　3人で1往復ずつ試す</b>── 森田さん・棚原さんが小さな直しを1本ずつ送り、別の1人が確かめ、本流に入り、Mits様の製品版に入るところまで</li>
+<li><b>段5　4人目以降に広げる</b>── 段の数と条件は Mits様の決定待ち（保留）</li>
+</ol>
+<p>段0・段1・段3 の下書きは、Mits様の保留に触れずに進められる。段2 から先は「Mits様が決めること」の1番が決まってから。</p>
+</div>
+
+<figure class="zukai"><img src="共同開発の流れ_1枚絵_20261015.png" alt="Discordで話し、自分の作業場で作り、別の人とロボットが確かめ、製品版に入れ、世に出すのは Mits様が決める、という共同開発の流れ全体を描いたアニメ調の1枚絵。" loading="lazy"><figcaption>図：流れの全体。Discord で話す → GitHub で作る → 仲間と自動テストが確かめる → 製品版に入る。世に出すのは Mits様が決める。</figcaption></figure>
+
+<!-- ============ ② 図 ============ -->
+<h2>② 図 ── 流れと、誰が何を持つか</h2>
+<div class="svgwrap">
+<svg viewBox="0 0 960 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Discord から GitHub、確かめ、本流、製品版、世に出すまでの流れ">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1d3557"/></marker>
+  </defs>
+  <rect x="0" y="0" width="960" height="470" fill="#ffffff"/>
+  <!-- step boxes -->
+  <g font-family="Hiragino Sans, Noto Sans JP, sans-serif" font-size="14" fill="#1f2933">
+    <rect x="12" y="40" width="160" height="110" rx="10" fill="#eef3f8" stroke="#1d3557"/>
+    <text x="92" y="66" text-anchor="middle" font-weight="bold" fill="#1d3557">1 Discord で話す</text>
+    <text x="92" y="90" text-anchor="middle">相談・困りごと</text>
+    <text x="92" y="110" text-anchor="middle">進み具合</text>
+    <text x="92" y="130" text-anchor="middle">#決まったこと</text>
+
+    <rect x="200" y="40" width="160" height="110" rx="10" fill="#eef3f8" stroke="#1d3557"/>
+    <text x="280" y="66" text-anchor="middle" font-weight="bold" fill="#1d3557">2 GitHub で作る</text>
+    <text x="280" y="90" text-anchor="middle">Issue に1件書く</text>
+    <text x="280" y="110" text-anchor="middle">自分の名前の枝で直す</text>
+    <text x="280" y="130" text-anchor="middle">Pull Request を送る</text>
+
+    <rect x="388" y="40" width="160" height="110" rx="10" fill="#eef3f8" stroke="#1d3557"/>
+    <text x="468" y="66" text-anchor="middle" font-weight="bold" fill="#1d3557">3 仲間が確かめる</text>
+    <text x="468" y="90" text-anchor="middle">作った人以外の1人</text>
+    <text x="468" y="110" text-anchor="middle">自動のテスト</text>
+    <text x="468" y="130" text-anchor="middle">やってはいけないこと</text>
+
+    <rect x="576" y="40" width="160" height="110" rx="10" fill="#fbf3df" stroke="#b8860b"/>
+    <text x="656" y="66" text-anchor="middle" font-weight="bold" fill="#7a5a00">4 本流に合流</text>
+    <text x="656" y="90" text-anchor="middle">main に入れる</text>
+    <text x="656" y="110" text-anchor="middle">合流させるのは</text>
+    <text x="656" y="130" text-anchor="middle">Mits様の側だけ</text>
+
+    <rect x="764" y="40" width="184" height="110" rx="10" fill="#fbecea" stroke="#b03a2e"/>
+    <text x="856" y="66" text-anchor="middle" font-weight="bold" fill="#b03a2e">5 製品版→世に出す</text>
+    <text x="856" y="90" text-anchor="middle">release.sh --自分だけ</text>
+    <text x="856" y="110" text-anchor="middle">検収（実機）</text>
+    <text x="856" y="130" text-anchor="middle">世に出すは Mits様</text>
+  </g>
+  <g stroke="#1d3557" stroke-width="2" fill="none" marker-end="url(#ar)">
+    <line x1="172" y1="95" x2="198" y2="95"/>
+    <line x1="360" y1="95" x2="386" y2="95"/>
+    <line x1="548" y1="95" x2="574" y2="95"/>
+    <line x1="736" y1="95" x2="762" y2="95"/>
+  </g>
+  <!-- return arrow -->
+  <path d="M468,150 C468,190 280,190 280,152" stroke="#2f7d4f" stroke-width="2" fill="none" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+  <text x="374" y="200" text-anchor="middle" font-size="13" fill="#2f7d4f" font-family="Hiragino Sans, Noto Sans JP, sans-serif">直しの提案・一緒に直す（何度でも）</text>
+
+  <!-- people lanes -->
+  <g font-family="Hiragino Sans, Noto Sans JP, sans-serif" font-size="13" fill="#1f2933">
+    <text x="12" y="245" font-weight="bold" fill="#1d3557" font-size="15">誰が何を持つか</text>
+    <rect x="12" y="258" width="300" height="196" rx="10" fill="#ffffff" stroke="#d9dee3"/>
+    <text x="24" y="282" font-weight="bold">Mits様</text>
+    <text x="24" y="304">・計器に載せるかを決める（Mits様だけ）</text>
+    <text x="24" y="324">・世に出すかを決める</text>
+    <text x="24" y="344">・自分でも直す（main で直接・今のまま）</text>
+    <text x="24" y="364">・森田さん・棚原さんの変更を確かめる</text>
+    <text x="24" y="384">・下の「Mits様が決めること」</text>
+    <text x="24" y="410" fill="#52606d">道具：release.sh・製品版・検収の依頼</text>
+    <text x="24" y="430" fill="#52606d">（コードの読み込みは参謀と担当が受ける）</text>
+
+    <rect x="330" y="258" width="300" height="196" rx="10" fill="#ffffff" stroke="#d9dee3"/>
+    <text x="342" y="282" font-weight="bold">森田さん（Yoshi）・棚原さん（Tana）</text>
+    <text x="342" y="304">・自分の名前の枝で作る</text>
+    <text x="342" y="324">・Pull Request を送る</text>
+    <text x="342" y="344">・互いの変更と Mits様の変更を確かめる</text>
+    <text x="342" y="364">・各自の AI（ChatGPT・Codex・Claude）</text>
+    <text x="342" y="384">　を使ってよい</text>
+    <text x="342" y="410" fill="#52606d">やらないこと：main に直接入れる・</text>
+    <text x="342" y="430" fill="#52606d">release.sh を叩く・世に出す</text>
+
+    <rect x="648" y="258" width="300" height="196" rx="10" fill="#ffffff" stroke="#d9dee3"/>
+    <text x="660" y="282" font-weight="bold">参謀と担当（AI・Mits様の側）</text>
+    <text x="660" y="304">・送られた変更のコードを読む（取り込むか）</text>
+    <text x="660" y="324">・Mits様の手元だけにある見張り</text>
+    <text x="660" y="344">　（配布物に他人の名前）を合流前に走らせる</text>
+    <text x="660" y="364">・合流後、4本のアプリに写す</text>
+    <text x="660" y="384">・BS-jikki-kenshu の実機検収</text>
+    <text x="660" y="410" fill="#52606d">正本：運転台改善のセッションが</text>
+    <text x="660" y="430" fill="#52606d">Discord の場と GitHub を持つ</text>
+  </g>
+</svg>
+</div>
+<p><small>「計器に載せるか＝Mits様だけ／コードを取り込むか＝参謀」の分け方は 運転台の大きな方向性 4節（project_untendai_daihoshin.md）。Discord の場を運転台改善が持つのは 決定の記録 2026-10-15 17:40。3人が互いに開発者でありレビューする形は ChatGPT 会話 6ad09c7c の発言17・19。</small></p>
+
+<!-- ============ ③ 今の実測 ============ -->
+<h2>③ 今の実測（2026-10-15 19時台・読み取りのみ）</h2>
+<figure class="zukai"><img src="zukai_1_ima_20261015.png" alt="鍵のかかった「GitHub（非公開）」の建物の中に Mits様が1人だけいて、外には入れない人影が2つ。壁には「本流を守る設定は有料」の札。" loading="lazy"><figcaption>図：今の GitHub の置き場は非公開で、中にいるのは Mits様だけ。本流を守る設定は有料（下の実測の 403）。</figcaption></figure>
+
+
+<h3>GitHub：mits32163216/untendai</h3>
+<div class="tbl"><table>
+<tr><th>項目</th><th>実測の値</th><th>叩いたコマンド</th></tr>
+<tr><td>公開・非公開</td><td><b>PRIVATE</b>（<code>"isPrivate":true</code>・<code>"visibility":"PRIVATE"</code>）</td><td><code>gh repo view mits32163216/untendai --json visibility,licenseInfo,defaultBranchRef,hasIssuesEnabled,hasDiscussionsEnabled,…</code></td></tr>
+<tr><td>ライセンス</td><td><code>"licenseInfo":{"key":"apache-2.0","name":"Apache License 2.0"}</code></td><td>同上</td></tr>
+<tr><td>既定の枝</td><td><code>"defaultBranchRef":{"name":"main"}</code></td><td>同上</td></tr>
+<tr><td>Issues</td><td><code>"hasIssuesEnabled":true</code>（件数 0：<code>[]</code>）</td><td>同上／<code>gh issue list --state all</code></td></tr>
+<tr><td>Discussions</td><td><code>"hasDiscussionsEnabled":false</code></td><td>同上</td></tr>
+<tr><td>Projects・Wiki</td><td><code>"hasProjectsEnabled":true</code>・<code>"hasWikiEnabled":false</code></td><td>同上</td></tr>
+<tr><td>Pull Request</td><td>0件（<code>[]</code>）</td><td><code>gh pr list --state all</code></td></tr>
+<tr><td>本流の保護</td><td><b>使えない</b>：<code>"Upgrade to GitHub Pro or make this repository public to enable this feature." "status":"403"</code></td><td><code>gh api repos/mits32163216/untendai/branches/main/protection</code></td></tr>
+<tr><td>Rulesets</td><td>同じ 403（同じ文）</td><td><code>gh api repos/mits32163216/untendai/rulesets</code></td></tr>
+<tr><td>共同作業者</td><td><code>{"login":"mits32163216","role_name":"admin"}</code> の1件だけ</td><td><code>gh api repos/…/collaborators</code></td></tr>
+<tr><td>招待中</td><td>0件（出力なし）</td><td><code>gh api repos/…/invitations</code></td></tr>
+<tr><td>.github/</td><td><code>.github/workflows/build-windows.yml</code> の1本だけ（ISSUE・PR のひな形なし）</td><td><code>gh api repos/…/contents/.github/workflows</code></td></tr>
+<tr><td>Actions</td><td><code>{"name":"build-windows","state":"active"}</code>・<code>"enabled":true</code>。起動条件は <code>workflow_dispatch</code> と <code>push: branches: [ main ]</code>。中身は Windows の組み立てだけで、テストは走らない。直近6回は全部 workflow_dispatch・success（最終 2026-08-26）</td><td><code>gh api repos/…/actions/workflows</code>・<code>gh run list</code></td></tr>
+<tr><td>リモートの枝</td><td><code>main</code> の1本だけ</td><td><code>gh api repos/…/branches</code></td></tr>
+<tr><td>ラベル</td><td>GitHub の既定10個（bug・documentation・duplicate・enhancement・good first issue・help wanted・invalid・question・wontfix・accessibility）</td><td><code>gh label list</code></td></tr>
+<tr><td>最新の Release</td><td><code>運転台 v1.73.28 Latest 2026-09-25</code>（手元の版は 1.76.7。間は世に出していない）</td><td><code>gh release list</code></td></tr>
+<tr><td>そろっている書類</td><td>LICENSE・README のみ。<code>"contributing":null</code>・<code>"issue_template":null</code>・<code>"pull_request_template":null</code>・<code>"code_of_conduct":null</code></td><td><code>gh api repos/…/community/profile</code></td></tr>
+</table></div>
+
+<div class="card ng">
+<p><b>ChatGPT 会話と食い違う所。</b>発言11で ChatGPT は ZIP を読んで「Apache License 2.0 が設定済み」と書いた。ライセンスの設定は事実だが、<b>置き場は非公開</b>。手元の <code>運転台_共同開発のためのローカル情報整理_20261014.md</code>（作業場の直下・未記録）も「GitHub の公開リポジトリも存在し」と書いているが、実測は PRIVATE。</p>
+<p><b>本流の保護の 403 は「無い」ではなく、料金の段の制約。</b>返ってきた文は「Pro に上げるか、公開すれば使える」。権限の不足でも読み込み途中でもない（同じトークンで collaborators・workflows は読めている）。</p>
+<p><b>個人の置き場では、招いた人に「読むだけ」を渡せない。</b>GitHub の説明：「In a private repository, repository owners can only grant write access to collaborators.」（docs.github.com・個人アカウントのリポジトリの権限）。招いた時点で森田さん・棚原さんも main に直接入れられる。</p>
+</div>
+
+<figure class="zukai"><img src="zukai_4_kokai_20261015.png" alt="左は「非公開のまま」：招かれた人が本物の書類を直接書き換えられ、守りは有料。右は「公開にする」：守りは無料で、コードは誰でも見られる。" loading="lazy"><figcaption>図：非公開のままなら、招いた人が本物を直接書き換えられて、守りは有料。公開にすれば、守りは無料になり、コードは誰でも見られる。（「Mits様が決めること」1番）</figcaption></figure>
+
+<h3>作業場：/Users/nishidamitsuhiro/untendai-seiri</h3>
+<div class="tbl"><table>
+<tr><th>項目</th><th>実測の値</th></tr>
+<tr><td>remote</td><td><code>origin https://github.com/mits32163216/untendai.git</code></td></tr>
+<tr><td>未 push</td><td><code>git rev-list --left-right --count origin/main...main</code> → <code>0 0</code>（fetch 後）。最新 <code>2be19cf 2026-10-14 17:00</code></td></tr>
+<tr><td>未記録の変更</td><td><code>git status --porcelain</code> 23行（変更7・未追跡16。<code>src-tauri/resources/sample.db</code>・<code>tools/build-client.sh</code> などを含む）</td></tr>
+<tr><td>手元の枝</td><td>main のほか demobuild・freee・freee-win・marketing・oem-shoukai-code・taiki-honntai・wip-freee-20260925。7つの作業場が1つの .git を分けて使う（<code>git worktree list</code>）。リモートに出ているのは main だけ</td></tr>
+<tr><td>版</td><td><code>src-tauri/tauri.conf.json</code> の <code>"version": "1.76.7"</code></td></tr>
+<tr><td>LICENSE・NOTICE・README・CLAUDE.md・CHANGELOG</td><td>5つともある。<code>CONTRIBUTING.md</code> は無い（<code>No such file or directory</code>）</td></tr>
+<tr><td>テスト</td><td><code>src-tauri/tests/</code> に5本。<code>#[test]</code> の数 320（src-tauri/src 内・grep）。要件定義書の実測は 317 passed・11 ignored（2026-10-14）。今回は走らせていない</td></tr>
+<tr><td>commit 前の見張り</td><td><code>git config core.hooksPath</code> → <code>tools/hooks</code>（この Mac だけの設定）。見張りは ①配布物に他人の名前 ②版 ③テスト。①の一覧は <code>$HOME/.claude/untendai_haifu_kinshi_go.txt</code> でリポジトリの外。<b>一覧が無い作業場では①は何もしない</b>（hook のコメントどおり）</td></tr>
+<tr><td>リポジトリに入っている社内の記録</td><td><code>git ls-files .claude</code> → 8ファイル（BS-jikki-kenshu の記録2・リンク点検の記録5・スキル1）</td></tr>
+<tr><td>CLAUDE.md の中の手元のパス</td><td><code>/Users/nishidamitsuhiro</code> が12行。外の人の手元では辿れない</td></tr>
+<tr><td>見本の帳簿の履歴</td><td><code>src-tauri/resources/sample.db</code> は記録上12回変わっている。2026-10-03 の引き継ぎ書に「履歴の旧 sample.db 11版に実データ → 公開するなら新しい置き場を履歴1からが方向性（Mits様判断待ち）」。<code>.gitignore</code> は <code>*.db</code> を止めているが、sample.db だけは記録に入っている</td></tr>
+<tr><td>すでに渡した物</td><td>森田さんへ ZIP <code>untendai_source_github_main_20261014.zip</code>（main 075f348）を Mits様が Messenger で添付済み。中に遠藤さん・棚原さんの名前の注記と <code>ac_nishida@</code> のメアドがある（引き継ぎ書 2026-10-15）。<code>sanbo.rs</code> の <code>ac_nishida</code> は今も7行</td></tr>
+</table></div>
+
+<h3>Discord</h3>
+<p>測っていない（この回は Chrome を使わない決まりで、Discord の道具はこの回つながらなかった）。記録の上の状態：サーバー「経営の運転台 開発（仮）」、チャンネルは作ったときの既定（テキスト #一般・ボイス 一般）、BOT なし。森田さんの参加は、運転台改善からの発注書に「2026-10-15 17:59 に参加済み」とある（決定の記録は2599行目までで、17:38 の招待までしか書かれていない）。棚原さんへの招待の記録は見当たらない。</p>
+
+<!-- ============ ④ 段ごとの中身 ============ -->
+<h2>④ 段ごとの中身</h2>
+<figure class="zukai"><img src="zukai_2_dan_20261015.png" alt="段0 作業場を整える から 段5 4人目から広げる まで、6つの看板が並ぶ階段を、Mits様・森田さん・棚原さん・自動テストのロボットが上っていく。段2 と 段5 の手前に南京錠。" loading="lazy"><figcaption>図：段0 から段5 へ上っていく。段2（2人を招く）と 段5（4人目から広げる）の手前の南京錠は、Mits様の決定待ちの所。</figcaption></figure>
+
+
+<h3>段0　今の作業場を、人を入れられる状態にする</h3>
+<div class="card">
+<p><b>やること</b></p>
+<ol>
+<li>作業場の未記録23行を、記録するか外すかに分ける（他のセッションの作業中のものがあるので、持ち主を確かめてから）。<span class="tag">理由</span>森田さんたちの変更が main に入ると、Mits様の手元の未記録の直しとぶつかる（記録：2セッション同時編集で片方が消えた事故）</li>
+<li>リポジトリから <code>.claude/</code> の8ファイルを外し、<code>.gitignore</code> に足す。<span class="tag">理由</span>社内の検収の記録・リンク点検の記録で、共同開発者に要らない。招いた瞬間に読める</li>
+<li>共同開発者向けの決まり <code>CONTRIBUTING.md</code> を1枚だけ下書きする（中身は下の「やってはいけないこと」と、流れの6行と、手元の準備）。<span class="tag">理由</span>ChatGPT 発言11「公開されている資料だけで、何をしてはいけないのか判断できる状態にする」・発言14「最初は1〜2ページ程度の禁止事項集で十分」。大きな方向性4節「手引きを厚くしない」とも合う</li>
+<li>リポジトリの <code>CLAUDE.md</code> は消さずに置き、冒頭に「共同開発の人は先に CONTRIBUTING.md」を1行足す。手元のパスの12行は、外の人が読んでも迷わない書き方に直すか、Mits様の側の CLAUDE.md へ移す。<span class="tag">理由</span>森田さんたちも各自の AI にリポジトリを読ませる（会話 08de4「ChatGPTで構想・相談 → GitHub → Codex → Claude」）。AI が辿れないパスを読むと、無い物を探しに行く</li>
+<li>README の食い違いを直す：「いまはマネーフォワードだけ」→ freee の取り込みが製品版に入っている（v1.75.9 から）。<span class="tag">理由</span>ChatGPT 発言14が指摘・案件 CLAUDE.md「人に配るのは製品版」節で確かめられる</li>
+<li>commit 前の見張りを、他の人の手元で動く形にする：版の見張りは <code>marketing</code> 枝と同じく main 以外では版を求めない（並行の Pull Request が同じ版番号を取り合わないため。版は合流させる側が <code>release.sh</code> で上げる）。他人の名前の見張りは一覧を配れないので、<b>合流の前に Mits様の側で走らせる</b>形に置き直す</li>
+</ol>
+<p><b>終わったと言える状態</b>：<code>git status --porcelain</code> が0行／<code>git ls-files .claude</code> が0行／<code>CONTRIBUTING.md</code> の下書きがある（まだ main に入れない）／README に「マネーフォワードだけ」が0件。</p>
+<p><b>Mits様が決めること</b>：なし。直しは「Mits様の製品版に入れる」まで（世に出さない）。</p>
+</div>
+
+<h3>段1　Discord を開発の場として最小限に整える</h3>
+<div class="card">
+<p><b>やること</b>（運転台改善のセッションが持つ）</p>
+<ol>
+<li>テキストのチャンネルを3つにする：<b>#一般</b>（相談・雑談・困りごと・進み具合。既定のものをそのまま使う）／<b>#決まったこと</b>（決まったら1行。誰でも書いてよいが、話し合いはしない）／<b>#お知らせ</b>（新しい版が Mits様の製品版に入った・世に出た、を流す）。<span class="tag">理由</span>会話 6ad09c7c 発言19「極力やりやすく簡単にする」→ ChatGPT「最初から細かいチーム分けや会議、報告義務は設けません」。会話 08de4「会話の履歴と、正式に決定した仕様を区別することが重要」</li>
+<li>領域ごとの8チャンネル（会計・UI-UX 等）は作らない。<span class="tag">理由</span>領域の分け方は保留の「外に開く領域」に当たる。人数が3人で分ける必要がまだ無い（ChatGPT 発言13「最初から8つの開発チームを作る必要はない」）</li>
+<li>#決まったこと に書いたもののうち、コードの決まりになるものは GitHub の <code>CONTRIBUTING.md</code> か Issue に写す。<span class="tag">理由</span>08de4「Discordで何時間議論しても、最終的な決定事項がGitHubなどの正本に反映されなければ、開発の認識がずれてしまいます」</li>
+<li>棚原さんを招く。<span class="tag">理由</span>3人で始める形（発言17・19）。招待は人に届くので、送るのは Mits様の合図のあと</li>
+</ol>
+<p><b>終わったと言える状態</b>：テキストのチャンネルが3つ／森田さん・棚原さんの2人が参加済み／#決まったこと に最初の1行がある。</p>
+<p><b>Mits様が決めること</b>：サーバーの呼び名（保留3番。決まるまで「（仮）」のまま）。チャンネルの数と名前は上で決めた。</p>
+</div>
+
+<h3>段2　GitHub に森田さん・棚原さんが入る</h3>
+<div class="card kime">
+<p><b>この段は「Mits様が決めること」1番（公開の形）が決まるまで動かない。</b>決まった形ごとに、やることが分かれる。</p>
+<div class="tbl"><table>
+<tr><th>決まった形</th><th>やること</th><th>本流を守る方法</th></tr>
+<tr><td>今の非公開の置き場に招く</td><td>2人を collaborator に招く。履歴（旧 sample.db の実データを含む）も2人に見える</td><td>設定では守れない（403）。「main に入れるのは Mits様の側だけ」を CONTRIBUTING.md の決まりにし、push の記録を毎回見る。設定で守るなら有料の Pro（お金が動く）</td></tr>
+<tr><td>履歴を新しくした置き場を作って招く</td><td>今の main の中身から、見本の帳簿の実データ・社内の記録を除いた形で、履歴1から始める。更新の仕組み（<code>updater/index.js</code> が Release を読む先）と <code>release.sh</code> の push 先をどちらにするかを同じ回に決める</td><td>非公開なら上と同じ。公開なら無料で保護が使える</td></tr>
+<tr><td>公開する</td><td>上の「履歴を新しくした置き場」を先に済ませてから公開（今の履歴のまま公開しない）</td><td>main の保護：Pull Request 経由のみ・確かめ1人以上・テスト合格を必須</td></tr>
+</table></div>
+<p><b>どの形でも同じにすること</b>（こちらで決めた）</p>
+<ul>
+<li><b>枝の名前</b>：<code>yoshi/〈短い中身〉</code>・<code>tana/〈短い中身〉</code>。Mits様の側は今のまま main で直す。<span class="tag">理由</span><code>release.sh</code> は main でしか動かない（同 141〜151行）。Mits様の流れを変えずに、外の人の変更だけが Pull Request を通る</li>
+<li><b>合流させる人</b>：Mits様の側だけ（参謀がコードを読み、計器に載せるかは Mits様）。<span class="tag">理由</span>ChatGPT 発言14「本流への統合権限と、一般利用者へのリリース権限を分ける」・大きな方向性4節</li>
+<li><b>合流のあと</b>：Mits様の手元で <code>git pull</code> してから <code>release.sh --自分だけ</code>。<span class="tag">理由</span><code>release.sh</code> は手2で <code>git push origin main</code> を打つ。GitHub 上で合流した分を取り込まずに走らせると push が止まる</li>
+<li><b>Issue の使い方</b>：やることの記録（不具合と、作ると決まったもの）。思いつき・相談は Discord。ラベルは今ある既定の10個だけで始める。<span class="tag">理由</span>発言19「GitHub：やることの記録、コード管理、レビュー、統合」。領域のラベル（internal:〜/external:〜、発言13）は保留2番が決まってから</li>
+<li><b>Discussions・Projects・Wiki</b>：使わない（Discussions は今 false のまま）。<span class="tag">理由</span>相談は Discord に1本化。置き場を増やすと正本が割れる（08de4「仕様書の正本を複数の場所に分散させない」）</li>
+</ul>
+<p><b>終わったと言える状態</b>：森田さん・棚原さんの2人が手元にソースを取り、README どおりに <code>tauri dev</code> で起動でき、<code>cargo test</code> が通る（2人とも Mits様の手を借りずに。ChatGPT 発言14③）。</p>
+</div>
+
+<h3>段3　合流の確かめを自動にする</h3>
+<div class="card">
+<p><b>やること</b></p>
+<ol>
+<li><code>.github/workflows/</code> に、Pull Request ごとに <code>cargo test</code> と版の4か所の整合（<code>tools/check_version.sh</code>）を走らせる1本を足す。今の <code>build-windows.yml</code> はそのまま。<span class="tag">理由</span>実測：今の Actions は main への push と手動でしか走らず、テストを含まない。ChatGPT 発言11・12・14 が同じ点を挙げている</li>
+<li><code>.github/PULL_REQUEST_TEMPLATE.md</code> に4行のチェック：変更の中身と影響する画面／テストを足したか／やってはいけないことに当たらないか／確かめた人。<span class="tag">理由</span>ChatGPT 発言12「統合の品質条件」4つ</li>
+<li><code>.github/ISSUE_TEMPLATE/</code> に不具合の書き方1本：OS・アプリの版（必須）・起きたこと・期待した動き・画面写真。<span class="tag">理由</span>モデリング_GitHubのバザール型 4節4番（Joplin・AppFlowy の形）</li>
+<li>他人の名前の見張り（一覧は配れない）は、合流の前に Mits様の側の作業場で走らせる手順を、運転台改善の手順に1行足す</li>
+</ol>
+<p><b>終わったと言える状態</b>：試しの Pull Request 1本で、テストが GitHub 上で走って合格の印が付く。非公開のままなら、使った分（分）を1回目に測って記録する（非公開の置き場は Actions の無料枠に上限がある）。</p>
+<p><b>Mits様が決めること</b>：なし（非公開のままで無料枠を超える場合だけ、お金が動くので「決めること」6番）。</p>
+</div>
+
+<h3>段4　3人で1往復ずつ試す</h3>
+<div class="card">
+<p><b>やること</b></p>
+<ol>
+<li>森田さん・棚原さんが1本ずつ、小さな直しを Issue に書く（候補：README の直し・表示の小さな直し・テストを1本足す。経営指標の定義には触れない）</li>
+<li>自分の枝で直して Pull Request を送る → 作った人以外の1人が確かめる → 自動のテストが合格 → Mits様の側で合流</li>
+<li>Mits様の製品版に <code>release.sh --自分だけ</code> で入れ、BS-jikki-kenshu が実機で確かめる。4本のアプリへの写しは今の決まりどおり Mits様の側で</li>
+<li>Discord の #お知らせ に「製品版に入った」を1行。世に出すのは Mits様が「出す」と言われたとき</li>
+</ol>
+<p><b>終わったと言える状態</b>：Pull Request が2本（森田さん1・棚原さん1）main に入り、Mits様の製品版の版に含まれている。詰まった所を #決まったこと と CONTRIBUTING.md に写した。<span class="tag">理由</span>ChatGPT 発言12 アクション5・発言14「最低限の安全条件を整えて、小さく始めて実証する」</p>
+<p><b>Mits様が決めること</b>：直しを計器に載せるか（いつもどおり）。</p>
+</div>
+
+<h3>段5　4人目以降に広げる</h3>
+<div class="card">
+<p><b>やること</b>：新しい人は段2の「終わったと言える状態」（自分で起動・テスト）を1人で通せたら、Issue を1本取って段4と同じ1往復をする。流れは変えない（発言19「人数が増えても基本の流れを変えずに拡大する」）。</p>
+<p><b>終わったと言える状態</b>：空欄（段の数と条件が保留のため）。</p>
+<p><b>Mits様が決めること</b>：保留4番・5番。</p>
+</div>
+
+<h3>今の決まりと、外の人が入る形がぶつかる所</h3>
+<div class="tbl"><table>
+<tr><th>今の決まり（出どころ）</th><th>ぶつかる所</th><th>合わせ方</th></tr>
+<tr><td>アプリは4本。製品版に入れた直しは、その回のうちに4本へ（案件 CLAUDE.md 358行〜）</td><td>freee・marketing などの枝は Mits様の Mac にしか無い。外の人は main しか見えない</td><td>外の人は main だけを触る。4本への写しは合流のあと Mits様の側で（今の手順のまま）</td></tr>
+<tr><td><code>release.sh</code> は main でのみ。手2で push（同 2137行〜）</td><td>GitHub 上で合流した分が手元に無いと push が止まる</td><td>合流のあと <code>git pull</code> してから <code>release.sh</code>。外の人は <code>release.sh</code> を叩かない</td></tr>
+<tr><td>製品版に先に入れ、まとめて世に出す（同 461行〜）</td><td>「main に入った＝お客様に届いた」と外の人が受け取りうる</td><td>CONTRIBUTING.md に3段を書く：main に入る／Mits様の製品版に入る／世に出る（Mits様が決める）</td></tr>
+<tr><td>版は commit ごとに上げる（pre-commit ②）</td><td>並行の Pull Request が同じ版番号を取り合う</td><td>main 以外の枝では版を求めない。版は Mits様の側で上げる</td></tr>
+<tr><td>BS-jikki-kenshu の実機検収・顧客や協力者向けの案内は実機で（home CLAUDE.md 裏取り原則7）</td><td>CONTRIBUTING.md・README は協力者向けの案内に当たる</td><td>出す前に BS-jikki-kenshu が、書いた手順（clone→起動→テスト→Pull Request）を1手ずつ実機で通す</td></tr>
+<tr><td>お客様・Mits様の実データを試験に使わない（同 708行・1260行）</td><td>森田さん・棚原さんは自分の会社の数字を入れて試す。旧 sample.db の履歴に実データ</td><td>テスト・見本は架空のデータだけ（<code>sample_db_no_mitsdata.rs</code> が既にある）。各自の帳簿はリポジトリに入れない（<code>*.db</code> を止める）。履歴は保留1番で扱う</td></tr>
+<tr><td>秘密情報を入れない（<code>.gitignore</code> の <code>*.key</code>・<code>.wrangler</code>）</td><td>他人の名前の見張りの一覧はリポジトリの外で、他の人の手元では動かない</td><td>合流の前に Mits様の側で走らせる</td></tr>
+<tr><td>開発中の .app は起動しない（同 351行）</td><td>外の人は <code>tauri dev</code> で起動して確かめる</td><td>これは Mits様の Mac の Keychain の事情。外の人の手元は README の <code>tauri dev</code> でよい。CONTRIBUTING.md に「画面だけなら <code>python3 -m http.server 8791</code>」も書く</td></tr>
+</table></div>
+
+<h3>やってはいけないこと ── CONTRIBUTING.md の下書きの材料</h3>
+<p>すでに Mits様が決めた決まりから写す。ChatGPT の初期案（発言9・12）とほぼ重なる。新しい決まりは足さない（発言9「禁止事項も必要以上に増やさない」）。</p>
+<div class="tbl"><table>
+<tr><th>#</th><th>やってはいけないこと</th><th>出どころ（Mits様が決めた所）</th></tr>
+<tr><td>1</td><td>画面が良し悪しを判定する・経営判断を代わりに決める（考える材料・学び先は入れてよい）</td><td>案件 CLAUDE.md「基本コンセプト」「サジェストは入れる を消さない」（2026-08-31）</td></tr>
+<tr><td>2</td><td>経営指標の定義を、相談なく変える</td><td>大きな方向性4節「計器に載せるか＝Mits様だけ」</td></tr>
+<tr><td>3</td><td>利用者の帳簿をパソコンの外へ送る（AI-Mits の相談を除く）</td><td>README「データはあなたのパソコンの中だけ」</td></tr>
+<tr><td>4</td><td>実在の人・会社の名前、実データ、鍵をコード・見本・テストに入れる</td><td>案件 CLAUDE.md 708行・1260行／pre-commit ①／<code>.gitignore</code></td></tr>
+<tr><td>5</td><td>main に直接入れる・世に出す（Release・latest.json を作る）</td><td>同 461行「世に出す」の内部基準</td></tr>
+<tr><td>6</td><td>会員向けのナレッジ・教材をリポジトリに入れる</td><td>NOTICE「入っていないもの」</td></tr>
+</table></div>
+
+<!-- ============ Mits様が決めること ============ -->
+<h2>Mits様が決めること（値はこちらで埋めていない）</h2>
+<figure class="zukai"><img src="zukai_3_kimeru_20261015.png" alt="Mits様が首をかしげて考えていて、前に6枚の札「公開の形」「外に開く領域」「Discordの呼び名」「コミュニティと場」「段の数と条件」「お金が動くもの」が並んでいる。" loading="lazy"><figcaption>図：Mits様が決めることは6つ。値は空欄のまま（下の表）。</figcaption></figure>
+
+<div class="tbl"><table>
+<tr><th>#</th><th>決めること</th><th>記録の上の今</th><th>決まると進む所</th><th>値</th></tr>
+<tr><td>1</td><td>GitHub での公開の形</td><td>2026-09-26「現段階ナシ」（session-log 2026-09-26_1210）。履歴を新しくした置き場の話は 2026-10-03 から判定待ち</td><td>段2（招き方・本流の守り方・履歴の扱い）</td><td class="blank">（空欄）</td></tr>
+<tr><td>2</td><td>外に開く領域（森田さんの依頼⑦）</td><td>未回答。ChatGPT 発言13の内部4・外部4は森田さんの初期案</td><td>Issue の領域ラベル・CONTRIBUTING.md の「触る前に相談する所」</td><td class="blank">（空欄）</td></tr>
+<tr><td>3</td><td>Discord の呼び名</td><td>「経営の運転台 開発（仮）」。仲間の呼び名の保留と同じ</td><td>サーバー名から（仮）を外す</td><td class="blank">（空欄）</td></tr>
+<tr><td>4</td><td>コミュニティ3層（初期開発の仲間・有料利用者・無料利用者）と場の関係</td><td>2026-09-14「利用者総数でコミュニティ化」。1つの場か分けるかは未言及</td><td>利用者をこの Discord に入れるか・別に立てるか</td><td class="blank">（空欄）</td></tr>
+<tr><td>5</td><td>段の数と条件</td><td>2026-09-14「お金では無いが、同様にレベル分け」。段の数・条件・受け取るものは未決</td><td>段5（4人目以降の入り方）</td><td class="blank">（空欄）</td></tr>
+<tr><td>6</td><td>お金が動くもの（1番が非公開のままのときだけ出る）：本流の保護のための有料の段・Actions の無料枠を超えた分</td><td>実測 403「Upgrade to GitHub Pro or make this repository public」</td><td>段2・段3 で設定で守るか</td><td class="blank">（空欄）</td></tr>
+</table></div>
+
+<!-- ============ ⑤ 取ったもの・取らなかったもの ============ -->
+<h2>⑤ 会話から取ったもの／取らなかったもの</h2>
+<p>ChatGPT の会話の中の「決めた」「採用してよい」は ChatGPT の提案で、Mits様の決定ではない（会話の中でも「まだ西田さんの承認を受けた正式ルールではありません」発言12）。</p>
+
+<h3>会話の時点ごとの変わり目</h3>
+<div class="tbl"><table>
+<tr><th>時点（共有リンク）</th><th>何が変わったか</th></tr>
+<tr><td>6acf0086（7往復）</td><td>発言3：「コアは非公開・変更権限を限定」と Organization に core-private 等を分ける案 → 発言4（要件定義書を読んで）で ChatGPT 自身が「コアを非公開にすることを前提とした共同開発方式は修正が必要」と訂正。発言7：西田さんへ ZIP を頼む文と「⑦外部開発者に開放したい領域」</td></tr>
+<tr><td>6acef342（9往復）</td><td>分かれ道：発言8 森田さんのメモ（解析5項目）・発言9 依頼文の清書。「解析が終わる前に公開する必要はありません」</td></tr>
+<tr><td>6acf012d（15往復）</td><td>発言8 手本4つ（Odoo/OCA・ERPNext・Grafana・Home Assistant）／発言9 「やってはいけないことだけ決める」への賛成と禁止事項の初期案6つ／発言10 claude-nishida は 404／発言11 ZIP を解析（Apache-2.0・CONTRIBUTING 無し・PR ごとのテスト無し）／発言12 3つの作業・禁止事項案（2つ目の版）・品質条件4つ／発言13 内部4・外部4／発言14 ネック3つ「小さく始めて実証」／発言15 ZIP のパスの確認だけ</td></tr>
+<tr><td>6ad08de4（1往復）</td><td>森田さんの別の会話：Discord＋GitHub＋必要なら Google Drive。会話と決定を分ける</td></tr>
+<tr><td>6ad09a71（18往復）</td><td>発言15〜18：西田さん（Mits様）が書き込み。共有リンクでは2人が同じ会話を続けられない → グループチャットの案 → 08de4 を貼って、Discord＝会話・GitHub＝正本・ChatGPT＝支援・Drive＝必要時、8チャンネルの案、人と AI の混合の開発</td></tr>
+<tr><td>6ad09c7c（19往復・最新）</td><td>発言15・16・18 は画像だけの返答（中身は文字として取れておらず、読めていない）。発言17：Mits・Tana・Yoshi が互いに開発者でありレビューする関係。発言19：「Discordで話す → GitHubで作る → 仲間が確認する → 本流に合流する」・チーム分け／会議／報告義務なし</td></tr>
+</table></div>
+
+<div class="card ok">
+<p><b>取ったもの</b></p>
+<ul>
+<li>Discord＝会話、GitHub＝作業と記録、の分け方（08de4・09c7c 発言19）→ 段1・段2</li>
+<li>決まったことは正本へ写す（08de4）→ #決まったこと と CONTRIBUTING.md</li>
+<li>やってはいけないことだけ決めて、あとは自由（発言9。森田さんの発言）。禁止事項は増やさない → 上の6行</li>
+<li>統合の品質条件4つ（発言12）→ Pull Request のひな形</li>
+<li>本流への統合と世に出すことを分ける（発言14）→ 今の「世に出す」の内部基準と同じ向き</li>
+<li>第三者が手を借りずに起動〜テスト〜Pull Request まで通せるか確かめる（発言14③）→ 段2の終わりの状態</li>
+<li>README と実装の食い違い（マネーフォワードだけ／freee もある）（発言14）→ 段0</li>
+<li>3人が互いに開発しレビューする形（発言17）・極力簡単（発言19）→ 図と段1・段4</li>
+<li>コードの分割・プラグインの仕組みは今は決めない（発言9・14）→ この計画に入れていない</li>
+</ul>
+</div>
+<div class="card ng">
+<p><b>取らなかったもの</b></p>
+<ul>
+<li>「コアは非公開」と Organization に core-private・developer-kit・community-extensions を分ける案（発言3）── ChatGPT 自身が発言4で訂正。今は3人で、置き場を増やすと正本が割れる</li>
+<li>内部4・外部4の8領域ラベルと8チャンネル（発言13・09a71 発言18）── 外に開く領域は保留2番。Mits様の決定より先にラベルで形を作らない</li>
+<li>30日プラン・7段階（発言2）── 新しくアプリを作る前提の一般論。運転台はすでに 1.76 まで動いている</li>
+<li>ChatGPT のグループチャットを共有の場にする案（09a71 発言15・16）── Mits様が Discord に決めた（2026-10-15）</li>
+<li>Odoo/OCA・ERPNext・Grafana・Home Assistant を手本にする（発言8）── 読む材料には残す。写す手本は モデリング_GitHubのバザール型（1人で始めたデスクトップアプリ8本）の方が運転台に形が近い</li>
+<li>「Apache License 2.0 が設定済み」を公開済みと読むこと（発言11）── 実測は PRIVATE</li>
+<li>Thinking OS の役割分け（ChatGPT＝対話・Codex＝開発・Claude＝確認）（08de4）── 森田さんの ChatGPT 側の構想。各自がどの AI を使うかは決めない（発言14「開発言語やAI開発ツールの統一」は今は決めない）</li>
+<li>CLA（貢献者の同意書）── モデリング 4節7番：取らない側が Mits様の方針（知財も放棄してもいいくらい）と合う。ただし書くのは CONTRIBUTING.md に入れるかの話なので、段0 の下書きでは触れない</li>
+</ul>
+</div>
+
+<div class="card">
+<p><b>記録の上で気をつける1点（決定ではない）</b>：大きな方向性4節・9節（2026-08-28・09-14）は「貢献者は当てにしない設計」「共同開発ではない」と書いている。2026-10-15 の Mits様の言葉は「今後、3人目4人目の共同開発者が入ってくる」。この計画はその新しい言葉に沿って、手引きは1枚に留める形にした。</p>
+</div>
+
+<!-- ============ ⑥ 出どころ ============ -->
+<h2>⑥ 出どころ一覧</h2>
+<ul>
+<li>ChatGPT 会話6本（全文の写し・作業用の場所）：chatgpt_6acf0086_zenbun.md／chatgpt_6acef342_zenbun.md／chatgpt_6acf012d_zenbun.md／chatgpt_6ad08de4_zenbun.md／chatgpt_6ad09a71_zenbun.md／chatgpt_6ad09c7c_zenbun.md（ユーザー発言 7＋9＋15＋1＋18＋19＝69件）</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/project_untendai_daihoshin.md（1節・4節・7節・9節「保留」「仲間との情報共有の場」）</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/モデリング_GitHubのバザール型_20261014.html（4節・5節）</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/要件定義書_運転台_20261014.md と 要件定義書_運転台_1-6_20261014.md（2節・5-7・5-8・6-5・7節）</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/共同開発の始まり_森田さん_ChatGPT会話_20261014.md</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/CLAUDE.md（1〜60行・358〜500行「アプリは4本」「世に出す」・2137〜2200行・2252〜2283行・2634〜2660行「開発協力の人に渡すのは世に出る前の製品版」）</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/session-log/2026-10-15_1732_untendai-kaizen-hikitsugi.md／2026-10-03_2154_untendai-endo-final-mihon-marume.md（216行目以降）／2026-09-26_1210_oem-case-tsubushi.md（80行）</li>
+<li>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/決定台帳_6セッション共通.md（2585行以降）</li>
+<li>/Users/nishidamitsuhiro/untendai-seiri の README.md・NOTICE・.gitignore・tools/hooks/pre-commit・.github/workflows/build-windows.yml・運転台_共同開発のためのローカル情報整理_20261014.md</li>
+<li>gh（2026-10-15 実測）：repo view・branches/main/protection・rulesets・collaborators・invitations・contents/.github・actions/workflows・actions/permissions・run list・issue list・pr list・label list・release list・community/profile</li>
+<li>GitHub の説明（個人アカウントのリポジトリの権限）：
+<br>https://docs.github.com/en/account-and-profile/reference/permission-levels-for-a-personal-account-repository</li>
+</ul>
+
+</main>
+</body>
+</html>
