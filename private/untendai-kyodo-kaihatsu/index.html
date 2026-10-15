@@ -68,11 +68,11 @@
 
 <section>
   <h2><span class="no">1</span>流れはこの1本</h2>
-  <img src="nagare_morita_20261015.png" alt="Discordで話す、自分の枝で直す、これどう？、別の人とロボットが確かめる、合流、製品版から世に出す、の流れの絵" width="1672" height="760">
+  <img src="nagare_morita_v2_20261015.png" alt="Discordで話す、自分の版で直す、これどう？、別の人とロボットが確かめる、合流、製品版から世に出す、の流れの絵" width="1672" height="760">
   <ol class="steps">
     <li><span class="n">1</span><div>Discord で話す<small>相談・困りごと・進み具合</small></div></li>
-    <li><span class="n">2</span><div>自分の枝で直す</div></li>
-    <li><span class="n">3</span><div>「これどう？」を出す<small>Pull Request</small></div></li>
+    <li><span class="n">2</span><div>自分の版で直す<small>写し取った自分の版（Fork）で自由に作る</small></div></li>
+    <li><span class="n">3</span><div>「これどう？」を出す<small>本流に入れたいものだけ・小さな Pull Request</small></div></li>
     <li><span class="n">4</span><div>別の人と自動テストが確かめる</div></li>
     <li><span class="n">5</span><div>西田が本流に合流して製品版に入れ、世に出す</div></li>
   </ol>
@@ -83,10 +83,10 @@
   <img src="dan_20261015.png" alt="段0から段5へ上っていく道の絵" width="1672" height="941">
   <ul class="dan">
     <li class="now"><b>段0</b><span>作業場を、人を入れられる状態にする<span class="tag">いまここ</span></span></li>
-    <li><b>段1</b><span>Discord を開発の場として整える（チャンネル3つ）</span></li>
-    <li><b>段2</b><span>森田さん・棚原さんが GitHub に入る</span></li>
+    <li><b>段1</b><span>Discord を開発の場として整える（チャンネル5つ）</span></li>
+    <li><b>段2</b><span>森田さん・棚原さんが GitHub で自分の版を持つ</span></li>
     <li><b>段3</b><span>Pull Request ごとに自動テストが走るようにする</span></li>
-    <li><b>段4</b><span>3人で1往復ずつ試す（小さな直しを1本ずつ）</span></li>
+    <li><b>段4</b><span>3人で1往復ずつ試す（自分の版から小さな Pull Request を1本ずつ）</span></li>
     <li><b>段5</b><span>4人目から広げる</span></li>
   </ul>
 </section>
@@ -97,22 +97,24 @@
     <div class="card">
       <h3>Discord で話す</h3>
       <ul>
-        <li><span class="ch">#一般</span>　相談・雑談・困りごと・進み具合</li>
-        <li><span class="ch">#決まったこと</span>　決まったら1行。話し合いはしない</li>
-        <li><span class="ch">#お知らせ</span>　新しい版が製品版に入った・世に出た</li>
+        <li><span class="ch">#雑談・相談</span>　日常の連絡、軽い相談、アイデア。記録しなくてよい</li>
+        <li><span class="ch">#議論・提案</span>　方針、仕組み、改善案。テーマごとにスレッドを立てる</li>
+        <li><span class="ch">#決定・依頼</span>　正式に決めたこと、誰かに頼んだことを短く書く</li>
+        <li><span class="ch">#GitHub通知</span>　Issue の登録・完了、大事な文書の更新が自動で流れる。読むだけ</li>
+        <li><span class="ch">#開発・成果共有</span>　各自が作ったものを画面写真やリンクで見せる</li>
       </ul>
     </div>
     <div class="card p">
-      <h3>自分の枝で直す</h3>
+      <h3>自分の版で直す</h3>
       <ul>
-        <li>枝の名前は <code>yoshi/〈短い中身〉</code></li>
-        <li>やることは Issue に1件書いてから</li>
-        <li>本流（main）には直接入れない</li>
+        <li>写し取った自分の版（Fork）で自由に作る。独自の版のまま残ってよい</li>
+        <li>本流に入れたいものだけ、今の本流から切った小さな Pull Request で出す</li>
+        <li>週に1回、本流を自分の版に取り込む</li>
       </ul>
     </div>
     <div class="card b">
       <h3>「これどう？」を出す（Pull Request）</h3>
-      <div class="flow"><span>Issue</span><i>→</i><span>yoshi/〜 で直す</span><i>→</i><span>Pull Request</span></div>
+      <div class="flow"><span>自分の版で作る</span><i>→</i><span>入れたいものだけ小さく切る</span><i>→</i><span>Pull Request</span></div>
       <ul>
         <li>変更の中身と、影響する画面</li>
         <li>テストを足したか</li>
@@ -127,6 +129,14 @@
         <li>合格したら、西田が本流に合流</li>
       </ul>
     </div>
+  </div>
+  <div class="card b" style="margin-top:14px">
+    <h3>GitHub に残すもの</h3>
+    <ul>
+      <li>決定（方針・決まり・大事な判断）</li>
+      <li>課題（誰かが手を動かすこと。Issue）</li>
+      <li>知識（あとでまた使う手順・知っておくこと）</li>
+    </ul>
   </div>
 </section>
 

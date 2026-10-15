@@ -54,10 +54,10 @@ small{color:var(--sub)}
 <p><b>流れは1本にする：「Discord で話す → GitHub で作る → 仲間が確かめる → 本流（main）に合流 → Mits様の製品版に入る → 世に出すのは Mits様が決める」。</b>最後の2つは今の決まりのまま変えない。</p>
 <ol>
 <li><b>段0　今の作業場を、人を入れられる状態にする</b>（Mits様の決定は要らない）── 作業場の未記録23件の片付け、リポジトリに入っている社内の記録（<code>.claude/</code> の8ファイル）を外す、共同開発者向けの決まり1枚（<code>CONTRIBUTING.md</code>）の下書き</li>
-<li><b>段1　Discord を開発の場として最小限に整える</b>（3人）── チャンネルは3つまで。会話と「決まったこと」を分ける</li>
-<li><b>段2　GitHub に森田さん・棚原さんが入る</b>── <b>ここは Mits様の「公開の形」の決定待ち。</b>今の置き場は非公開で、本流を守る設定が使えない（実測で 403）。招くと過去の履歴（実データが入っていた見本の帳簿の旧版）も見える</li>
+<li><b>段1　Discord を開発の場として最小限に整える</b>（3人）── チャンネルは5つ（雑談・相談／議論・提案／決定・依頼／GitHub通知／開発・成果共有）。会話と「決まったこと」を分ける</li>
+<li><b>段2　森田さん・棚原さんが GitHub で自分の版を持つ</b>── 各自が写し取った自分の版（Fork）で自由に作る。<b>ここは Mits様の「公開の形」の決定待ち。</b>今の置き場は非公開で、本流を守る設定が使えない（実測で 403）。招くと過去の履歴（実データが入っていた見本の帳簿の旧版）も見える</li>
 <li><b>段3　合流の確かめを自動にする</b>── 枝から送られた変更（Pull Request）ごとに GitHub 上でテストが走る形を足す。今は Windows の組み立てしか走っていない</li>
-<li><b>段4　3人で1往復ずつ試す</b>── 森田さん・棚原さんが小さな直しを1本ずつ送り、別の1人が確かめ、本流に入り、Mits様の製品版に入るところまで</li>
+<li><b>段4　3人で1往復ずつ試す</b>── 森田さん・棚原さんが自分の版から、本流に入れたいものだけを小さな Pull Request で1本ずつ送り、別の1人が確かめ、本流に入り、Mits様の製品版に入るところまで</li>
 <li><b>段5　4人目以降に広げる</b>── 段の数と条件は Mits様の決定待ち（保留）</li>
 </ol>
 <p>段0・段1・段3 の下書きは、Mits様の保留に触れずに進められる。段2 から先は「Mits様が決めること」の1番が決まってから。</p>
@@ -79,12 +79,12 @@ small{color:var(--sub)}
     <text x="92" y="66" text-anchor="middle" font-weight="bold" fill="#1d3557">1 Discord で話す</text>
     <text x="92" y="90" text-anchor="middle">相談・困りごと</text>
     <text x="92" y="110" text-anchor="middle">進み具合</text>
-    <text x="92" y="130" text-anchor="middle">#決まったこと</text>
+    <text x="92" y="130" text-anchor="middle">#決定・依頼</text>
 
     <rect x="200" y="40" width="160" height="110" rx="10" fill="#eef3f8" stroke="#1d3557"/>
     <text x="280" y="66" text-anchor="middle" font-weight="bold" fill="#1d3557">2 GitHub で作る</text>
     <text x="280" y="90" text-anchor="middle">Issue に1件書く</text>
-    <text x="280" y="110" text-anchor="middle">自分の名前の枝で直す</text>
+    <text x="280" y="110" text-anchor="middle">自分の版（Fork）で直す</text>
     <text x="280" y="130" text-anchor="middle">Pull Request を送る</text>
 
     <rect x="388" y="40" width="160" height="110" rx="10" fill="#eef3f8" stroke="#1d3557"/>
@@ -130,7 +130,7 @@ small{color:var(--sub)}
 
     <rect x="330" y="258" width="300" height="196" rx="10" fill="#ffffff" stroke="#d9dee3"/>
     <text x="342" y="282" font-weight="bold">森田さん（Yoshi）・棚原さん（Tana）</text>
-    <text x="342" y="304">・自分の名前の枝で作る</text>
+    <text x="342" y="304">・自分の版（Fork）で作る</text>
     <text x="342" y="324">・Pull Request を送る</text>
     <text x="342" y="344">・互いの変更と Mits様の変更を確かめる</text>
     <text x="342" y="364">・各自の AI（ChatGPT・Codex・Claude）</text>
@@ -231,16 +231,16 @@ small{color:var(--sub)}
 <div class="card">
 <p><b>やること</b>（運転台改善のセッションが持つ）</p>
 <ol>
-<li>テキストのチャンネルを3つにする：<b>#一般</b>（相談・雑談・困りごと・進み具合。既定のものをそのまま使う）／<b>#決まったこと</b>（決まったら1行。誰でも書いてよいが、話し合いはしない）／<b>#お知らせ</b>（新しい版が Mits様の製品版に入った・世に出た、を流す）。<span class="tag">理由</span>会話 6ad09c7c 発言19「極力やりやすく簡単にする」→ ChatGPT「最初から細かいチーム分けや会議、報告義務は設けません」。会話 08de4「会話の履歴と、正式に決定した仕様を区別することが重要」</li>
+<li>テキストのチャンネルを5つにする：<b>#雑談・相談</b>（日常の連絡、軽い相談、アイデア。記録しなくてよい）／<b>#議論・提案</b>（方針、仕組み、改善案。テーマごとにスレッドを立てる）／<b>#決定・依頼</b>（正式に決めたこと、誰かに頼んだことを短く書く）／<b>#GitHub通知</b>（Issue の登録・完了、大事な文書の更新が自動で流れる。読むだけ）／<b>#開発・成果共有</b>（各自が作ったものを画面写真やリンクで見せる）。<span class="tag">理由</span>森田さんが ChatGPT で整理した案（会話 6ad0a651「コミュニケーション運用設計 v0.2」の4つと、独自開発の話で足された #開発・成果共有）に合わせた（2026-10-15 Mits様承認）。会話 08de4「会話の履歴と、正式に決定した仕様を区別することが重要」</li>
 <li>領域ごとの8チャンネル（会計・UI-UX 等）は作らない。<span class="tag">理由</span>領域の分け方は保留の「外に開く領域」に当たる。人数が3人で分ける必要がまだ無い（ChatGPT 発言13「最初から8つの開発チームを作る必要はない」）</li>
-<li>#決まったこと に書いたもののうち、コードの決まりになるものは GitHub の <code>CONTRIBUTING.md</code> か Issue に写す。<span class="tag">理由</span>08de4「Discordで何時間議論しても、最終的な決定事項がGitHubなどの正本に反映されなければ、開発の認識がずれてしまいます」</li>
+<li>#決定・依頼 に書いたもののうち、GitHub に残すのは <b>決定・課題・知識</b> の3つだけ（決定は <code>docs/decisions/</code>、課題は Issue、知識は <code>docs/knowledge/</code>。コードの決まりになるものは <code>CONTRIBUTING.md</code> にも）。ふだんの会話は残さない。<span class="tag">理由</span>会話 6ad0a651「登録する情報は3種類に限定」。<span class="tag">理由</span>08de4「Discordで何時間議論しても、最終的な決定事項がGitHubなどの正本に反映されなければ、開発の認識がずれてしまいます」</li>
 <li>棚原さんを招く。<span class="tag">理由</span>3人で始める形（発言17・19）。招待は人に届くので、送るのは Mits様の合図のあと</li>
 </ol>
-<p><b>終わったと言える状態</b>：テキストのチャンネルが3つ／森田さん・棚原さんの2人が参加済み／#決まったこと に最初の1行がある。</p>
-<p><b>Mits様が決めること</b>：サーバーの呼び名（保留3番。決まるまで「（仮）」のまま）。チャンネルの数と名前は上で決めた。</p>
+<p><b>終わったと言える状態</b>：テキストのチャンネルが5つ／森田さん・棚原さんの2人が参加済み／#決定・依頼 に最初の1行がある。</p>
+<p><b>Mits様が決めること</b>：サーバーの呼び名（保留3番。決まるまで「（仮）」のまま）。チャンネルの数と名前は森田さんの案（5つ）に合わせた。</p>
 </div>
 
-<h3>段2　GitHub に森田さん・棚原さんが入る</h3>
+<h3>段2　森田さん・棚原さんが GitHub で自分の版を持つ</h3>
 <div class="card kime">
 <p><b>この段は「Mits様が決めること」1番（公開の形）が決まるまで動かない。</b>決まった形ごとに、やることが分かれる。</p>
 <div class="tbl"><table>
@@ -251,13 +251,13 @@ small{color:var(--sub)}
 </table></div>
 <p><b>どの形でも同じにすること</b>（こちらで決めた）</p>
 <ul>
-<li><b>枝の名前</b>：<code>yoshi/〈短い中身〉</code>・<code>tana/〈短い中身〉</code>。Mits様の側は今のまま main で直す。<span class="tag">理由</span><code>release.sh</code> は main でしか動かない（同 141〜151行）。Mits様の流れを変えずに、外の人の変更だけが Pull Request を通る</li>
+<li><b>直し方</b>：森田さん・棚原さんは、各自が写し取った自分の版（Fork）で自由に作る（独自の版のまま残ってよい）→ 本流に入れたいものだけ、今の本流から切った小さな Pull Request で出す → 週に1回、本流を自分の版に取り込む。Mits様の側は今のまま main で直す。<span class="tag">理由</span>森田さんが ChatGPT で整理した案（会話 6ad0a651「各自がForkして独自開発」「統合したい機能は小さな単位で提案する」「定期的に本流との差分を確認する」・2026-10-15 Mits様承認）。<code>release.sh</code> は main でしか動かない（同 141〜151行）ので、Mits様の流れを変えずに、外の人の変更だけが Pull Request を通る</li>
 <li><b>合流させる人</b>：Mits様の側だけ（参謀がコードを読み、計器に載せるかは Mits様）。<span class="tag">理由</span>ChatGPT 発言14「本流への統合権限と、一般利用者へのリリース権限を分ける」・大きな方向性4節</li>
 <li><b>合流のあと</b>：Mits様の手元で <code>git pull</code> してから <code>release.sh --自分だけ</code>。<span class="tag">理由</span><code>release.sh</code> は手2で <code>git push origin main</code> を打つ。GitHub 上で合流した分を取り込まずに走らせると push が止まる</li>
 <li><b>Issue の使い方</b>：やることの記録（不具合と、作ると決まったもの）。思いつき・相談は Discord。ラベルは今ある既定の10個だけで始める。<span class="tag">理由</span>発言19「GitHub：やることの記録、コード管理、レビュー、統合」。領域のラベル（internal:〜/external:〜、発言13）は保留2番が決まってから</li>
 <li><b>Discussions・Projects・Wiki</b>：使わない（Discussions は今 false のまま）。<span class="tag">理由</span>相談は Discord に1本化。置き場を増やすと正本が割れる（08de4「仕様書の正本を複数の場所に分散させない」）</li>
 </ul>
-<p><b>終わったと言える状態</b>：森田さん・棚原さんの2人が手元にソースを取り、README どおりに <code>tauri dev</code> で起動でき、<code>cargo test</code> が通る（2人とも Mits様の手を借りずに。ChatGPT 発言14③）。</p>
+<p><b>終わったと言える状態</b>：森田さん・棚原さんの2人が自分の版（Fork）を作って手元にソースを取り、README どおりに <code>tauri dev</code> で起動でき、<code>cargo test</code> が通る（2人とも Mits様の手を借りずに。ChatGPT 発言14③）。</p>
 </div>
 
 <h3>段3　合流の確かめを自動にする</h3>
@@ -278,11 +278,11 @@ small{color:var(--sub)}
 <p><b>やること</b></p>
 <ol>
 <li>森田さん・棚原さんが1本ずつ、小さな直しを Issue に書く（候補：README の直し・表示の小さな直し・テストを1本足す。経営指標の定義には触れない）</li>
-<li>自分の枝で直して Pull Request を送る → 作った人以外の1人が確かめる → 自動のテストが合格 → Mits様の側で合流</li>
+<li>自分の版（Fork）で直し、本流に入れたいものだけを今の本流から切った小さな Pull Request で送る → 作った人以外の1人が確かめる → 自動のテストが合格 → Mits様の側で合流</li>
 <li>Mits様の製品版に <code>release.sh --自分だけ</code> で入れ、BS-jikki-kenshu が実機で確かめる。4本のアプリへの写しは今の決まりどおり Mits様の側で</li>
-<li>Discord の #お知らせ に「製品版に入った」を1行。世に出すのは Mits様が「出す」と言われたとき</li>
+<li>Discord の #開発・成果共有 に「製品版に入った」を1行。世に出すのは Mits様が「出す」と言われたとき</li>
 </ol>
-<p><b>終わったと言える状態</b>：Pull Request が2本（森田さん1・棚原さん1）main に入り、Mits様の製品版の版に含まれている。詰まった所を #決まったこと と CONTRIBUTING.md に写した。<span class="tag">理由</span>ChatGPT 発言12 アクション5・発言14「最低限の安全条件を整えて、小さく始めて実証する」</p>
+<p><b>終わったと言える状態</b>：Pull Request が2本（森田さん1・棚原さん1）main に入り、Mits様の製品版の版に含まれている。詰まった所を #決定・依頼 と CONTRIBUTING.md に写した。<span class="tag">理由</span>ChatGPT 発言12 アクション5・発言14「最低限の安全条件を整えて、小さく始めて実証する」</p>
 <p><b>Mits様が決めること</b>：直しを計器に載せるか（いつもどおり）。</p>
 </div>
 
@@ -351,7 +351,8 @@ small{color:var(--sub)}
 <p><b>取ったもの</b></p>
 <ul>
 <li>Discord＝会話、GitHub＝作業と記録、の分け方（08de4・09c7c 発言19）→ 段1・段2</li>
-<li>決まったことは正本へ写す（08de4）→ #決まったこと と CONTRIBUTING.md</li>
+<li>決まったことは正本へ写す（08de4）→ #決定・依頼 と CONTRIBUTING.md</li>
+<li>森田さんの整理（6ad0a651）：チャンネル5つ・各自の版（Fork）で作り、入れたいものだけ小さな Pull Request・週1で本流を取り込む・GitHub に残すのは決定・課題・知識 → 段1・段2・段4（2026-10-15 Mits様承認）</li>
 <li>やってはいけないことだけ決めて、あとは自由（発言9。森田さんの発言）。禁止事項は増やさない → 上の6行</li>
 <li>統合の品質条件4つ（発言12）→ Pull Request のひな形</li>
 <li>本流への統合と世に出すことを分ける（発言14）→ 今の「世に出す」の内部基準と同じ向き</li>
