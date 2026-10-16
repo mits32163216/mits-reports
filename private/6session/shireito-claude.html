@@ -67,12 +67,16 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-15 17:25 ／ 写した時刻 2026-10-15 18:37</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-16 17:59 ／ 写した時刻 2026-10-16 18:35</p>
 <h2 id="CLAUDE-md-司令塔・11本共通・2026-09-14-2026-10-08-に-7本-1">CLAUDE.md（司令塔・11本共通・2026-09-14／2026-10-08 に 7本→14本→11本）</h2>
 <h3 id="名前の正本は-印なしの核-画面の-BA-BS-FA-は焼かない-2026-10-08-決定">🔤 名前の正本は「印なしの核」── 画面の <code>BA_</code>／<code>BS_</code>／<code>FA_</code> は焼かない（2026-10-08 決定）</h3>
 <p>詳細（Why・実例・経過）：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/CLAUDE_詳細_後片付けと経緯.md の『名前の正本 ── 印を付けた経緯と2026-10-08の実測』</p>
 <p><strong>印は一時のもの。</strong>だからこの規約・指示書・報告・決定の記録・現状表・定時報告の手順書には<strong>印を書かない</strong>。名前の正本は下の一覧の「印なしの核」。</p>
-<p>名前で宛先を引くときは、<code>list_sessions</code> の title から先頭の <code>BA_</code>／<code>BS_</code>／<code>FA_</code>／<code>FS_</code> を外して突き合わせる（python なら <code>re.sub(r&#x27;^(BA|BS|FA|FS)_&#x27;,&#x27;&#x27;,title)</code>）。<strong>印が外れた日も、付け替わった日も、この引き方なら当たる。</strong></p>
+<p>名前で宛先を引くときは、<code>list_sessions</code> の title から先頭の <code>★</code> と <code>BA_</code>／<code>BS_</code>／<code>FA_</code>／<code>FS_</code> を外して突き合わせる（python なら <code>re.sub(r&#x27;^(BA|BS|FA|FS)_&#x27;,&#x27;&#x27;,title.lstrip(&#x27;★&#x27;))</code>）。<strong>印が外れた日も、付け替わった日も、この引き方なら当たる。</strong></p>
+<ul>
+<li><strong><code>★</code> は「情報共有の仕組み（指示書・報告・決定の記録の宛先）に入っているセッション」の印</strong>（2026-10-16 Mits様「司令塔グループで情報共有の仕組みに組み込んでいるセッションにのみ★プレフィックスをつけて」）。仕組みに入れたら付け、外したら外す。2026-10-16 に付けたのは、■新司令塔のまとまりの11本（内側6本・外側のうち4本〈_OEM提供考察・UTAGE 入口の集約・Meta広告の自動化・YouTube チャンネルコンセプト構想〉・EA情報シート調査）。wasa_ファネルメイクは、仕組みには入っているが■新司令塔のまとまりから外れていた（group なし）ので付けていない</li>
+</ul>
 <h3 id="司令塔と-FHL-2026-Notes-の役の分担-2026-10-08-Mits様確定">🧭 司令塔と FHL 2026 Notes の役の分担（2026-10-08 Mits様確定）</h3>
 <p>Mits様原文（2026-10-08）「このセッションは、BAの中でも、戦略、ブループリント、マーケティングプランを主として扱い、それを全員に振り分けるのがバディの司令塔とする」。</p>
 <table>
