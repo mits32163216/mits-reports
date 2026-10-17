@@ -144,6 +144,23 @@
   tr.hinichi > th.head{ z-index:4; }
   tr.hinichi > td{ background:#fff; }
   tr.hinichi > td.kyou-col{ background:var(--kyou); }
+  /* 2026-10-17 Mits様「表の一つ一つのコマをトルツメして見やすくして」：コマの中の余白・行の高さ・チェックの枠を詰めた */
+  table:not(#tw-table) th, table:not(#tw-table) td{ padding:3px 5px; }
+  th.head{ line-height:1.2; }
+  th.head.hl{ padding:3px 4px; }
+  th.head.hl .ttl, th.head.hl .ls{ line-height:1.3; }
+  td.hinichi .ymd{ line-height:1.1; }
+  td.taiju-start .v{ line-height:1.1; }
+  td.taiju-start .sa{ margin-top:0; }
+  td.hosu-v .v{ line-height:1.1; }
+  td.hosu-v .bar{ margin:3px 4px 0; height:5px; }
+  td.shushi, td.nensho{ padding:2px 5px; }
+  .page td.shushi, .page td.nensho, .page td.shushi .big{ line-height:1.3 !important; }
+  td.meal{ padding:2px 4px; }
+  td.meal .chk, td.meal .egg-line{ min-height:19px; line-height:1.15; }
+  td.meal .egg-line .chk.egg{ min-height:19px; margin-left:3px; }
+  td.meal .chk::before{ width:14px; height:14px; margin-right:4px; }
+  td.biko-cell{ line-height:1.3; }
 </style>
 </head>
 <body>
@@ -501,14 +518,14 @@
       <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
       <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
       <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
+      <td class="meal empty"></td>
       <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
       <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
       <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
-      <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
-      <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
-      <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
-      <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
-      <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
       <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
       <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
       <td class="meal"><span class="chk m" data-label="コーヒー＋MCT大1">＋MCT大1</span></td>
@@ -524,28 +541,28 @@
     <tr class="hirusugi">
       <th class="head meal-head"><span class="h1">昼過ぎ 13:00</span><span class="h2">1食目</span></th>
       <td class="meal empty"><span class="chk-note">前のプラン</span></td>
-      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span><span class="chk egg" data-label="卵4"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="chk m">ベーコンエッグ・卵2</span><span class="egg-line">卵<span class="chk egg" data-label="卵3"></span><span class="chk egg" data-label="卵4"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="chk m">ベーコンエッグ・卵2</span><span class="egg-line">卵<span class="chk egg" data-label="卵3"></span><span class="chk egg" data-label="卵4"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="chk m">マナ酵素90ml・水540ml</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span></td>
+      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="chk m">ベーコンエッグ・卵2</span><span class="egg-line">卵<span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span></td>
+      <td class="meal"><span class="chk m">ベーコンエッグ・卵2</span></td>
+      <td class="meal"><span class="chk m">マナ酵素90ml・水540ml</span></td>
       <td class="meal"><span class="chk m">マナ酵素90ml・水540ml</span><span class="chk">MCT小1</span><span class="chk"><span class="t">てびち汁 汁だけ1袋分<br>（220g）</span></span></td>
-      <td class="meal"><span class="chk m">マナ酵素90ml・水540ml</span><span class="chk">MCT小1</span><span class="chk"><span class="t">てびち汁 汁だけ1袋分<br>（220g）</span></span></td>
-      <td class="meal"><span class="chk m">カチュー湯</span></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span></span><span class="chk">納豆1</span></td>
+      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span></span><span class="chk">納豆1</span></td>
+      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span></span><span class="chk">納豆1</span></td>
+      <td class="meal empty"></td>
       <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span></td>
-      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
-      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span><span class="chk">MCT小1</span></td>
+      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span></td>
+      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span></td>
+      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span></td>
+      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span></td>
+      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span></td>
+      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span></td>
+      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span></td>
+      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span></td>
+      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span><span class="chk egg" data-label="卵3"></span></span><span class="chk">納豆1</span></td>
       <td class="meal empty"></td>
     </tr>
     <tr class="hirusugi-tsudo">
@@ -580,16 +597,16 @@
       <td class="meal empty"><span class="chk-note">前のプラン</span></td>
       <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span></td>
       <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk m">柿1/2個</span></td>
-      <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span></td>
-      <td class="meal"><span class="chk m">グルタミン5g</span></td>
+      <td class="meal"><span class="chk m">プロテイン2杯</span><span class="chk m">グルタミン5g</span></td>
+      <td class="meal empty"></td>
       <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span><span class="chk-note">今日は散歩なし（最低限の歩数）。グルタミンと塩水は時刻を決めて飲む</span></td>
-      <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span></td>
-      <td class="meal"><span class="chk m">グルタミン5g</span><span class="chk m">マナ酵素20ml</span><span class="chk" data-label="塩水500ml（天然塩ひとつまみ）">塩水500ml</span></td>
+      <td class="meal empty"></td>
+      <td class="meal"><span class="chk m">マナ酵素20ml</span></td>
+      <td class="meal empty"></td>
       <td class="meal"><span class="chk m">グルタミン5g</span></td>
+      <td class="meal empty"></td>
       <td class="meal"><span class="chk m">グルタミン5g</span></td>
-      <td class="meal"><span class="chk m">グルタミン5g</span></td>
-      <td class="meal"><span class="chk m">グルタミン5g</span></td>
-      <td class="meal"><span class="chk m">グルタミン5g</span></td>
+      <td class="meal empty"></td>
       <td class="meal"><span class="chk m">グルタミン5g</span></td>
       <td class="meal"><span class="chk m">グルタミン5g</span></td>
       <td class="meal"><span class="chk m">グルタミン5g</span></td>
@@ -605,18 +622,18 @@
     <tr class="yugata">
       <th class="head meal-head"><span class="h1">夕方 19:00</span><span class="h2">2食目</span></th>
       <td class="meal empty"><span class="chk-note">前のプラン</span></td>
-      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="chk">納豆1</span><span class="chk m">ベーコン100g</span></td>
-      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="chk">納豆1</span></td>
-      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="chk">納豆1</span><span class="chk m">リンゴ1個</span><span class="chk m">マナ酵素60ml</span></td>
+      <td class="meal"><span class="chk">納豆1</span><span class="chk m">ベーコン100g</span></td>
+      <td class="meal"><span class="chk">納豆1</span></td>
+      <td class="meal"><span class="chk m">リンゴ1個</span><span class="chk m">マナ酵素60ml</span></td>
       <td class="meal"><span class="chk-note">ペットボトルの続き（21時まで）</span></td>
       <td class="meal"><span class="chk-note">ペットボトルの続き（21時まで）</span><span class="chk"><span class="t">てびち汁 汁だけ1袋分<br>（220g）</span></span></td>
-      <td class="meal"><span class="chk-note">ペットボトルの続き（21時まで）</span><span class="chk"><span class="t">てびち汁 汁だけ1袋分<br>（220g）</span></span></td>
-      <td class="meal"><span class="chk m">カチュー湯</span><span class="chk">ひじき</span><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span><span class="chk egg" data-label="卵2"></span></span><span class="chk">納豆1</span></td>
+      <td class="meal"><span class="chk-note">ペットボトルの続き（21時まで）</span></td>
+      <td class="meal"><span class="egg-line">卵<span class="chk egg" data-label="卵1"></span></span><span class="chk">納豆1</span></td>
+      <td class="meal"><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span></span></td>
+      <td class="meal"><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span></span></td>
+      <td class="meal"><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span></span></td>
       <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span></span></td>
-      <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span></span></td>
-      <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span></span></td>
-      <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span></span></td>
-      <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span></span></td>
+      <td class="meal"><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span></span></td>
       <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span></span></td>
       <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span></span></td>
       <td class="meal"><span class="chk">納豆1</span><span class="egg-line">泡盛30ml<span class="chk egg" data-label="泡盛1"></span><span class="chk egg" data-label="泡盛2"></span><span class="chk egg" data-label="泡盛3"></span></span></td>
@@ -658,16 +675,19 @@
     </tr>
     <tr class="sapuri">
       <th class="head meal-head"><span class="h1">サプリ</span></th>
-      <td class="meal"></td>
-      <td class="meal"></td>
-      <td class="meal"></td>
-      <td class="meal"></td>
-      <td class="meal"></td>
-      <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：Solaray2・オメガ3 3・D3・STAGE7"><span class="t">昼：Solaray2・<br>オメガ3 3・D3・<br>STAGE7</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：Solaray1">夕：Solaray1</span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
-      <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：Solaray2・オメガ3 3・D3・STAGE7"><span class="t">昼：Solaray2・<br>オメガ3 3・D3・<br>STAGE7</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：Solaray1">夕：Solaray1</span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
-      <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：消化酵素2・Solaray2・オメガ3 3・D3・STAGE7"><span class="t">昼：消化酵素2・<br>Solaray2・<br>オメガ3 3・D3・<br>STAGE7</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：消化酵素2・Solaray1"><span class="t">夕：消化酵素2・<br>Solaray1</span></span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
-      <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：消化酵素2・Solaray2・オメガ3 3・D3・STAGE7"><span class="t">昼：消化酵素2・<br>Solaray2・<br>オメガ3 3・D3・<br>STAGE7</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：消化酵素2・Solaray1"><span class="t">夕：消化酵素2・<br>Solaray1</span></span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
-      <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：消化酵素2・Solaray2・オメガ3 3・D3・STAGE7"><span class="t">昼：消化酵素2・<br>Solaray2・<br>オメガ3 3・D3・<br>STAGE7</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：消化酵素2・Solaray1"><span class="t">夕：消化酵素2・<br>Solaray1</span></span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span></td>
+      <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：Solaray2・オメガ3 3・D3・STAGE7"><span class="t">昼：Solaray2・<br>オメガ3 3・D3・<br>STAGE7</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span></td>
+      <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span></td>
+      <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
+      <td class="meal empty"></td>
       <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：消化酵素2・Solaray2・オメガ3 3・D3・STAGE7・ビタミンC500mg"><span class="t">昼：消化酵素2・<br>Solaray2・<br>オメガ3 3・D3・<br>STAGE7・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：消化酵素2・Solaray1・ビタミンC500mg"><span class="t">夕：消化酵素2・<br>Solaray1・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
       <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：消化酵素2・Solaray2・オメガ3 3・D3・STAGE7・ビタミンC500mg"><span class="t">昼：消化酵素2・<br>Solaray2・<br>オメガ3 3・D3・<br>STAGE7・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：消化酵素2・Solaray1・ビタミンC500mg"><span class="t">夕：消化酵素2・<br>Solaray1・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
       <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：消化酵素2・Solaray2・オメガ3 3・D3・STAGE7・ビタミンC500mg"><span class="t">昼：消化酵素2・<br>Solaray2・<br>オメガ3 3・D3・<br>STAGE7・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：消化酵素2・Solaray1・ビタミンC500mg"><span class="t">夕：消化酵素2・<br>Solaray1・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
@@ -678,10 +698,7 @@
       <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：消化酵素2・Solaray2・オメガ3 3・D3・STAGE7・ビタミンC500mg"><span class="t">昼：消化酵素2・<br>Solaray2・<br>オメガ3 3・D3・<br>STAGE7・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：消化酵素2・Solaray1・ビタミンC500mg"><span class="t">夕：消化酵素2・<br>Solaray1・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
       <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：消化酵素2・Solaray2・オメガ3 3・D3・STAGE7・ビタミンC500mg"><span class="t">昼：消化酵素2・<br>Solaray2・<br>オメガ3 3・D3・<br>STAGE7・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：消化酵素2・Solaray1・ビタミンC500mg"><span class="t">夕：消化酵素2・<br>Solaray1・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
       <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：消化酵素2・Solaray2・オメガ3 3・D3・STAGE7・ビタミンC500mg"><span class="t">昼：消化酵素2・<br>Solaray2・<br>オメガ3 3・D3・<br>STAGE7・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：消化酵素2・Solaray1・ビタミンC500mg"><span class="t">夕：消化酵素2・<br>Solaray1・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
-      <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：消化酵素2・Solaray2・オメガ3 3・D3・STAGE7・ビタミンC500mg"><span class="t">昼：消化酵素2・<br>Solaray2・<br>オメガ3 3・D3・<br>STAGE7・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：消化酵素2・Solaray1・ビタミンC500mg"><span class="t">夕：消化酵素2・<br>Solaray1・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
-      <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：消化酵素2・Solaray2・オメガ3 3・D3・STAGE7・ビタミンC500mg"><span class="t">昼：消化酵素2・<br>Solaray2・<br>オメガ3 3・D3・<br>STAGE7・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：消化酵素2・Solaray1・ビタミンC500mg"><span class="t">夕：消化酵素2・<br>Solaray1・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
-      <td class="meal"><span class="chk" data-label="サプリ朝：クエン酸3・B群2・B12・UltraFlora・クロレラ5"><span class="t">朝：クエン酸3・<br>B群2・B12・<br>UltraFlora・<br>クロレラ5</span></span><span class="chk" data-label="サプリ昼：消化酵素2・Solaray2・オメガ3 3・D3・STAGE7・ビタミンC500mg"><span class="t">昼：消化酵素2・<br>Solaray2・<br>オメガ3 3・D3・<br>STAGE7・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ午後：クエン酸2">午後：クエン酸2</span><span class="chk" data-label="サプリ夕：消化酵素2・Solaray1・ビタミンC500mg"><span class="t">夕：消化酵素2・<br>Solaray1・<br>ビタミンC500mg</span></span><span class="chk" data-label="サプリ寝る前：マグネシウム2粒"><span class="t">寝る前：<br>マグネシウム2粒</span></span></td>
-      <td class="meal"></td>
+      <td class="meal empty"></td>
     </tr>
     <tr class="biko">
       <th class="head">備　考</th>
@@ -913,6 +930,10 @@
   // 2026-10-11 Mits様「10/10 のチェックは4つで、てびち汁が　取っていない　マナ酵素も30mlで済んでしまった」：10/10 にマナ酵素30ml（実際）を足し、90ml のチェックは外す（20ml＝44kcal から比で 66kcal・糖質16.2g）
   // 2026-10-09 Mits様「旅行が無くなり再計画する」：10/18〜10/19 は家で過ごす日として 10/17 と同じ献立（サプリ・塩水・てびち汁 汁だけ1袋分・ビタミンC・水2L以上）にした
   // 2026-10-17 Mits様「過去ももずくは消して」：10/14 以前の もずく50g のマスも外した（チェックは1つも付いていなかった。献立の合計＝計画の摂取は1日 3.5kcal ずつ減る）
+  // 2026-10-17 Mits様「MCT小1も消して」：10/17 以降の昼過ぎの MCT小1 のマスを外した
+  // 2026-10-17 Mits様「過去のチェック、チェックがあったものだけ残してチェック無しは消して」：10/16 までの欄は、同期先にチェックがあるマスだけ残し、無いマスは外した。
+  // 計画の摂取は献立のマスの合計で出していたので、マスを外すと過去の計画が動く。外す前の献立の合計を日ごとに置いて、過去の計画はこの値で固定する（目標は動かさない）
+  const PLAN_KOTEI = {"10/8": 386, "10/9": 476, "10/10": 476, "10/11": 488, "10/12": 681, "10/13": 723, "10/14": 723, "10/15": 723, "10/16": 723};
   const TSUIKA = {};
   // 計画の摂取：ふだんの日は 10/5〜10/6 で確立した 1,000kcal（2026-10-07）から、10/8 以降はプロテイン2杯（178kcal）を外した 822kcal（プロテインが切れるため）。
   // 固形物なし（10/8〜10/10）と復食（10/11〜10/13）は、献立のマスの合計。
@@ -981,7 +1002,7 @@
     for (const d of DAYS) {
       if (d === START) { Fp = FAT_START; Fa = FAT_START; cumP = 0; cumA = 0; }
       const capP = CAP * Fp, capA = CAP * Fa;
-      const planIn = KONDATE_BI.includes(d) && PLAN[d] ? PLAN[d].kcal : (d === '10/4' ? PLAN_BURN - capP : (num(d) >= 1008 ? KAKURITSU - 178 : KAKURITSU) + (TSUIKA[d] || 0));
+      const planIn = PLAN_KOTEI[d] != null ? PLAN_KOTEI[d] : KONDATE_BI.includes(d) && PLAN[d] ? PLAN[d].kcal : (d === '10/4' ? PLAN_BURN - capP : (num(d) >= 1008 ? KAKURITSU - 178 : KAKURITSU) + (TSUIKA[d] || 0));
       const planDef = burnP(d) - planIn;
       const planFat = Math.min(Math.max(planDef, 0), capP) / 9, planOver = Math.max(0, planDef - capP);
       Fp -= planFat / 1000; cumP += planFat;
