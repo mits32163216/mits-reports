@@ -360,7 +360,7 @@
       <td class="blank"></td>
     </tr>
     <tr class="zutsu">
-      <th class="head hl"><div class="hlw"><div class="ttl">カロリー<br>収支<span>kcal</span></div><div class="ls"><div class="r">消費</div><div class="r">燃焼</div><div class="r">摂取</div><div class="big"><i>不足</i></div><div class="r">摂取可</div></div></div></th>
+      <th class="head hl"><div class="hlw"><div class="ttl">カロリー<br>収支<span>kcal</span></div><div class="ls"><div class="r">消費</div><div class="r">燃焼</div><div class="r">摂取可</div><div class="r">摂取</div><div class="big"><i>残り</i></div></div></div></th>
       <td class="shushi"></td>
       <td class="shushi"></td>
       <td class="shushi"></td>
@@ -737,7 +737,7 @@
     "10/14": {kg: 59.9, jikan: "9:20", shibo: 16.1, hosu: 8024, hashiru: 0, hashiru_km: 0, hashiru_fun: 0, kiso: 1454, katsudo: 384, mizu: 1250},
     "10/15": {kg: 60.0, jikan: "12:32", shibo: 16.1, hosu: 7888, hashiru: 0, hashiru_km: 0.0, hashiru_fun: 0, kiso: 1416, katsudo: 311, mizu: 2000},
     "10/16": {kg: 60.0, jikan: "9:58", shibo: 16.1, hosu: 6293, hashiru: 0, hashiru_km: 0.0, hashiru_fun: 0, kiso: 1478, katsudo: 353},
-    "10/17": {jikan: "", hosu: 217, hashiru: 0, hashiru_km: 0.0, hashiru_fun: 0, kiso: 612, katsudo: 19}
+    "10/17": {jikan: "", hosu: 240, hashiru: 0, hashiru_km: 0.0, hashiru_fun: 0, kiso: 626, katsudo: 19}
   };
   // 水分を Mits様が直接おっしゃった日はこちらを使う（ヘルスの記録より優先・自動入力はここを書き換えない）
   // 2026-10-11 Mits様「昨日の水分は4L」（ヘルスの記録は 1,000mL）
@@ -1050,21 +1050,23 @@
         const x = m && S[m[0]]; if (!x) return;
         const line = (a, b2) => '<div class="r"><span>' + a + '</span><b>' + b2 + '</b></div>';
         let h = '';
-        // 2026-10-17 Mits様「表の並び順を変更　1番上が消費次が上限にしてみて」：消費→上限→摂取→不足→要摂取の順
-        // 2026-10-17 Mits様「上限ではなくて、燃焼に変更、要摂取を摂取可にして」：この欄の名前だけ変えた（値は同じ・脂肪kg×69.3kcal と、それを超えた分）
+        // 2026-10-17 Mits様「表の並び順を変更　1番上が消費次が上限にしてみて」「上限ではなくて、燃焼に変更、要摂取を摂取可にして」
+        // 2026-10-17 Mits様「接種可を3段目にして、式を消費引く燃焼にして」：消費→燃焼→摂取可→摂取→不足の順。摂取可＝消費 − 燃焼（脂肪kg×69.3kcal）＝ここまで食べると不足がちょうど燃焼と同じになる量
+        // 2026-10-17 Mits様「摂取可引く摂取🟰残りとする不足欄を残りに変更」：不足の欄を「残り」（摂取可 − 摂取）にした。マイナスは摂取可を超えて食べた分
+        const zan = v => (v < 0 ? '−' : '') + f0(Math.abs(v));
         if (x.mirai) {
-          h = '<div class="mirai">' + line('消費', f0(x.planBurn)) + line('燃焼', '−' + f0(x.capP)) + line('摂取', f0(x.planIn)) +
-              '<div class="big">' + sg(x.planDef) + '</div>' + line('摂取可', f0(x.planOver)) + '</div>';
+          h = '<div class="mirai">' + line('消費', f0(x.planBurn)) + line('燃焼', '−' + f0(x.capP)) + line('摂取可', f0(x.planBurn - x.capP)) + line('摂取', f0(x.planIn)) +
+              '<div class="big">' + zan(x.planBurn - x.capP - x.planIn) + '</div></div>';
         } else if (x.mae) {
-          h = line('消費', x.b ? f0(x.b.v) : '—') + line('燃焼', '−' + f0(x.capA)) + line('摂取', '—') + '<div class="big">—</div>' + line('摂取可', '—');
+          h = line('消費', x.b ? f0(x.b.v) : '—') + line('燃焼', '−' + f0(x.capA)) + line('摂取可', x.b ? f0(x.b.v - x.capA) : '—') + line('摂取', '—') + '<div class="big">—</div>';
         } else {
-          h = line('消費', x.b ? f0(x.b.v) + (x.b.suitei ? '*' : '') : '—') + line('燃焼', '−' + f0(x.capA)) + line('摂取', x.n ? f0(x.kcal) : '—');
+          h = line('消費', x.b ? f0(x.b.v) + (x.b.suitei ? '*' : '') : '—') + line('燃焼', '−' + f0(x.capA)) +
+              line('摂取可', x.b ? f0(x.b.v - x.capA) + (x.kyou ? ' 途中' : '') : '—') + line('摂取', x.n ? f0(x.kcal) : '—');
           if (x.deficit != null) {
             const cls = x.kyou ? '' : (x.over > 50 ? 'warn' : 'good');
-            h += '<div class="big ' + cls + '">' + sg(x.deficit) + (x.kyou ? ' 途中' : '') + '</div>';
-            h += line('摂取可', f0(x.over) + (x.kyou ? ' 途中' : ''));
+            h += '<div class="big ' + cls + '">' + zan(x.b.v - x.capA - x.kcal) + (x.kyou ? ' 途中' : '') + '</div>';
           } else {
-            h += '<div class="big">—</div>' + line('摂取可', '—');
+            h += '<div class="big">—</div>';
           }
         }
         cell.innerHTML = h;
