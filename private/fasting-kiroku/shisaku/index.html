@@ -194,7 +194,7 @@
       <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
     </tr>
     <tr class="zutsu">
-      <th class="head hl"><div class="hlw"><div class="ttl">カロリー<br>収支<span>kcal</span></div><div class="ls"><div class="r">消費</div><div class="r">燃焼</div><div class="r">摂取可</div><div class="r">摂取</div><div class="big"><i>不足</i></div></div></div></th>
+      <th class="head hl"><div class="hlw"><div class="ttl">カロリー<br>収支<span>kcal</span></div><div class="ls"><div class="r">消費</div><div class="r">燃焼</div><div class="r">摂取可</div><div class="r">摂取</div><div class="big"><i>残り</i></div></div></div></th>
       <td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td>
     </tr>
     <tr class="nensho">
@@ -583,9 +583,11 @@
         let h = '';
         // 2026-10-17 Mits様「表の並び順を変更　1番上が消費次が上限にしてみて」「上限ではなくて、燃焼に変更、要摂取を摂取可にして」
         // 2026-10-17 Mits様「接種可を3段目にして、式を消費引く燃焼にして」：消費→燃焼→摂取可→摂取→不足の順。摂取可＝消費 − 燃焼（脂肪kg×69.3kcal）＝ここまで食べると不足がちょうど燃焼と同じになる量
+        // 2026-10-17 Mits様「摂取可引く摂取🟰残りとする不足欄を残りに変更」：不足の欄を「残り」（摂取可 − 摂取）にした。マイナスは摂取可を超えて食べた分
+        const zan = v => (v < 0 ? '−' : '') + f0(Math.abs(v));
         if (x.mirai) {
           h = '<div class="mirai">' + line('消費', f0(x.planBurn)) + line('燃焼', '−' + f0(x.capP)) + line('摂取可', f0(x.planBurn - x.capP)) + line('摂取', f0(x.planIn)) +
-              '<div class="big">' + sg(x.planDef) + '</div></div>';
+              '<div class="big">' + zan(x.planBurn - x.capP - x.planIn) + '</div></div>';
         } else if (x.mae) {
           h = line('消費', x.b ? f0(x.b.v) : '—') + line('燃焼', '−' + f0(x.capA)) + line('摂取可', x.b ? f0(x.b.v - x.capA) : '—') + line('摂取', '—') + '<div class="big">—</div>';
         } else {
@@ -593,7 +595,7 @@
               line('摂取可', x.b ? f0(x.b.v - x.capA) + (x.kyou ? ' 途中' : '') : '—') + line('摂取', x.n ? f0(x.kcal) : '—');
           if (x.deficit != null) {
             const cls = x.kyou ? '' : (x.over > 50 ? 'warn' : 'good');
-            h += '<div class="big ' + cls + '">' + sg(x.deficit) + (x.kyou ? ' 途中' : '') + '</div>';
+            h += '<div class="big ' + cls + '">' + zan(x.b.v - x.capA - x.kcal) + (x.kyou ? ' 途中' : '') + '</div>';
           } else {
             h += '<div class="big">—</div>';
           }
