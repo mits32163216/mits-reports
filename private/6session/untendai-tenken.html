@@ -84,7 +84,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-17 07:20 ／ 写した時刻 2026-10-17 12:36</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-18 07:25 ／ 写した時刻 2026-10-18 12:35</p>
 <h2 id="運転台の毎朝点検-日誌-毎日-7-10・1日1行">運転台の毎朝点検 日誌（毎日 7:10・1日1行）</h2>
 <ul>
 <li>2026-09-16 12:25 ｜ テスト 通った 207・落ちた 0 ｜ 版 1.72.2・食い違い 2 か所（src/index.html v0.66.0／CHANGELOG.md 0.74.0）｜ 未提出 2件 ｜ 気づき：src/index.html と CHANGELOG.md の版が 1.72.2 に追いついていない。check_version.sh は「v1.72.2 のあと 3 件 commit・版は据え置き」と出ている</li>
@@ -118,6 +119,7 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>2026-10-15 07:2x ｜ テスト 通った 317・落ちた 0（飛ばした 11） ｜ 版 1.76.7・食い違い 0 か所（Cargo.toml／tauri.conf.json／src/index.html の app-ver の札／CHANGELOG.md の版の一覧／製品版 /Applications/untendai.app の5か所とも 1.76.7。check_version.sh は「v1.76.7 のあと 1 件 commit・版は 1.76.7 のまま」） ｜ 未提出 22件（前日 17件から5件増：tools/ の4本と sample.db が M、BS-jikki-kenshu の記録が増えた） ｜ 資料の鮮度 印 12／食い違い 4（kaihatsu_no_nagare_genjou_20261003.html と mits-reports/private/untendai-kaihatsu-nagare/index.html の main_version・product_app_version が 書いた v1.76.3 今 v1.76.7） ｜ 気づき 資料2本の版の印が v1.76.3 のまま。「20ヶ月」の古い文言3か所（src/index.html 3855・3922行目／src/mihon.js 317行目）は sample.db が 12ヶ月（2025-10〜2026-09）と実測で確認したが、無人の回では書き込みが断られ未着手（持ち越し3日目）。申し送り 10-15 の1行を読んだ。決定の記録に宛先「運転台改善」の新しい行は無し</li>
 <li>2026-10-16 07:1x ｜ テスト 通った 317・落ちた 0（飛ばした 11） ｜ 版 1.76.7・食い違い 0 か所（Cargo.toml／tauri.conf.json／src/index.html の app-ver の札／CHANGELOG.md の版の一覧／製品版 /Applications/untendai.app の5か所とも 1.76.7。check_version.sh は「v1.76.7 のあと 7 件 commit・版は 1.76.7 のまま」） ｜ 未提出 12件（M 2：sample.db・tools/build-client.sh／?? 10：_mock 5・tools/ の3本ほか。前日22件から減） ｜ 資料の鮮度 印 12／食い違い 4（kaihatsu_no_nagare_genjou_20261003.html と mits-reports/private/untendai-kaihatsu-nagare/index.html の main_version・product_app_version が 書いた v1.76.3 今 v1.76.7・前日と同じ4件） ｜ 気づき 資料2本の版の印が v1.76.3 のまま（2日目）。persona.rs の latest_body_returns_newest_persona は今回 317 通った中に入っており落ちず（10ms 差に頼るテストで、走らせるたびに結果が変わる可能性）。指示書 10-16 の1〜3番（テストの直し・PR／1.76.7 検収5行目の測定／「20ヶ月」4か所）は無人の回の範囲外のため着手せず、申し送り 10-16 の行は未済のまま。決定の記録 10-15 の宛先「運転台改善」は司令塔2件（予約タスクのモデル／共同開発の場の持ち主）を読んだ・片づける作業は無し</li>
 <li>2026-10-17 07:20 ｜ テスト 通った 317・落ちた 0（飛ばした 11） ｜ 版 1.76.7・食い違い 0 か所（Cargo.toml／tauri.conf.json／src/index.html の app-ver の札／CHANGELOG.md の版の一覧／製品版 /Applications/untendai.app の5か所とも 1.76.7。check_version.sh は v1.76.7 のあと 12 件 commit しているが版は据え置きと警告） ｜ 未提出 12件（M: sample.db・build-client.sh／?? _mock 5・tools 3） ｜ 資料の鮮度 印 12／食い違い 6（kaihatsu_no_nagare_genjou_20261003.html と mits-reports/private/untendai-kaihatsu-nagare/index.html の main_version・branch_count・product_app_version） ｜ 気づき：開発の流れの資料2本の印が古い（版 v1.76.3→v1.76.7・枝 8→11）</li>
+<li>2026-10-18 07:2x ｜ テスト 通った 321・落ちた 0（飛ばした 11） ｜ 版 1.76.7・食い違い 0 か所（Cargo.toml／tauri.conf.json／src/index.html の app-ver の札／CHANGELOG.md の版の一覧／製品版 /Applications/untendai.app の5か所とも 1.76.7。check_version.sh は v1.76.7 のあと 14 件 commit しているが版は据え置きと警告） ｜ 未提出 32件（icons-dev の M 多数・tauri.client／mkt.conf.json・build-client.sh・sample.db の M／_mock・icons-client／mkt・tools/check_shiryo_freshness.sh ほかの ??） ｜ 資料の鮮度 印 12／食い違い 6（開発の流れの資料2本の main_version v1.76.3→v1.76.7・branch_count 8→11・product_app_version 1.76.3→1.76.7・前日から変わらず） ｜ 気づき：指示書の1番（変更点一覧 Worker の AI_KEY と URL の入れ替え）は、deploy.sh と鍵の控えを開く操作が Claude Code の見張りに止められて着手できず（回避せず報告に記載）／宛先1件（巡回 10-17 18:3x）を読んだ</li>
 </ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
