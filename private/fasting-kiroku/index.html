@@ -183,7 +183,7 @@
       <td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td><td class="goal shibou"></td>
     </tr>
     <tr class="jissoku-shibou">
-      <th class="head">実測脂肪量<span>kg</span><span>下は目標比</span></th>
+      <th class="head">実測脂肪量<span>kg</span><span>下は10/3比</span></th>
       <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
     </tr>
     <tr class="mokuhyo">
@@ -191,7 +191,7 @@
       <td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td><td class="goal"></td>
     </tr>
     <tr class="taiju">
-      <th class="head">乾燥体重<span>kg</span><span>下は目標比</span></th>
+      <th class="head">乾燥体重<span>kg</span><span>下は10/3比</span></th>
       <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
     </tr>
     <tr class="taishibo">
@@ -318,6 +318,9 @@
     // 2026-10-16 Mits様「10月1日スタート時の計画で、10月31日まで目標脂肪と体重も全部入れて」：始めの計画の式のまま 10/31 まで延ばした（脂肪は毎日 脂肪kg×69.3kcal を燃やす・体重＝61.0 −（10/5 の目標脂肪量 − その日の目標脂肪量）÷ 0.8）。10/20 までの値は式で出し直して全部一致
     "10/21": 59.4, "10/22": 59.4, "10/23": 59.3, "10/24": 59.2, "10/25": 59.1, "10/26": 59.0, "10/27": 58.9, "10/28": 58.8, "10/29": 58.7, "10/30": 58.6, "10/31": 58.6
   };
+  // 10/3：RENPHO で量り始めた日（ヘルスの書き出し weight-time 14:45 62.3kg・まとめ 体脂肪率 17.4%）
+  const KIJUN_1003 = {kg: 62.3, shibo: 17.4};
+  window.KIJUN_1003 = KIJUN_1003;
   window.KIROKU = {jissoku, mokuhyo};
 
   document.querySelectorAll('.page').forEach(page => {
@@ -359,7 +362,8 @@
         if (taijuTd && jd.kg != null) {
           taijuTd.className = 'taiju-start';
           let s = '<span class="v">' + jd.kg.toFixed(1) + '</span>';
-          if (mk != null) { const df = jd.kg - mk; s += '<span class="sa ' + (df <= 0 ? 'good' : 'warn') + '">' + (df > 0 ? '+' : df < 0 ? '−' : '±') + Math.abs(df).toFixed(1) + '</span>'; }
+          // 2026-10-19 Mits様「表の実測脂肪量と乾燥体重のに比較＋−をRENPHO開始日の10/3のデータから減少量にして」：下の数字は目標との差ではなく、10/3（RENPHO で量り始めた日・14:45 62.3kg・17.4%）からの増減
+          { const df = jd.kg - KIJUN_1003.kg; s += '<span class="sa ' + (df <= 0 ? 'good' : 'warn') + '">' + (df > 0 ? '+' : df < 0 ? '−' : '±') + Math.abs(df).toFixed(1) + '</span>'; }
           taijuTd.innerHTML = s;
         }
         if (shiboTd && jd.shibo != null) {
@@ -418,7 +422,8 @@
         const v = jd.kg * jd.shibo / 100, mk = MOKUHYO_SHIBOU[m[0]];
         jtd.className = 'taiju-start';
         let h = '<span class="v">' + v.toFixed(2) + '</span>';
-        if (mk != null) { const df = v - mk; h += '<span class="sa ' + (df <= 0 ? 'good' : 'warn') + '">' + (df > 0 ? '+' : df < 0 ? '−' : '±') + Math.abs(df).toFixed(2) + '</span>'; }
+        // 2026-10-19 Mits様の指示で、下の数字は 10/3 の実測脂肪量（62.3kg × 17.4% ＝ 10.84kg）からの増減
+        { const B = window.KIJUN_1003; const df = v - B.kg * B.shibo / 100; h += '<span class="sa ' + (df <= 0 ? 'good' : 'warn') + '">' + (df > 0 ? '+' : df < 0 ? '−' : '±') + Math.abs(df).toFixed(2) + '</span>'; }
         jtd.innerHTML = h;
       }
     });
