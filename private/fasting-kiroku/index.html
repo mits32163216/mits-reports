@@ -63,7 +63,7 @@
   td.hosu-v .bar i.ok{ background:var(--green); }
 
   /* カロリー収支・脂肪の燃焼・たんぱく質 */
-  tr.zutsu > th, tr.nensho > th, tr.tanpaku > th, tr.toshitsu > th, tr.mizu > th{ background:var(--amber-bg); color:var(--amber); }
+  tr.ruikei > th, tr.zutsu > th, tr.nensho > th, tr.tanpaku > th, tr.toshitsu > th, tr.mizu > th{ background:var(--amber-bg); color:var(--amber); }
   td.shushi, td.nensho{ vertical-align:top; text-align:left; font-size:var(--f3); line-height:1.5; padding:5px 8px; }
   td.shushi .r, td.nensho .r{ display:flex; justify-content:space-between; }
   td.shushi .r b, td.nensho .r b{ font-weight:700; }
@@ -101,7 +101,7 @@
   td.biko-cell{ font-size:var(--f2); line-height:1.45; }
 
   /* 区切り：からだ／カロリー収支／献立／備考 */
-  tr.zutsu > *, tr.gozen > *, tr.biko > *{ border-top:2px solid var(--title); }
+  tr.ruikei > *, tr.gozen > *, tr.biko > *{ border-top:2px solid var(--title); }
   tr.nensho > *, tr.tanpaku > *, tr.toshitsu > *, tr.mizu > *{ border-top:1px solid #e2c58f; }
 
   /* 今日の列 */
@@ -216,6 +216,11 @@
     <tr class="hashiru">
       <th class="head">走　る<span>km<br>歩数</span></th>
       <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+    </tr>
+    <!-- 2026-10-19 Mits様「カロリーの欄の上に毎日の合計の収支をだしてみて　合計消費量　合計摂取量　その差　これを毎日足し続けたモノ」 -->
+    <tr class="ruikei">
+      <th class="head hl"><div class="hlw"><div class="ttl">毎日の<br>収支<span>kcal</span></div><div class="ls"><div class="r">消費量</div><div class="r">摂取量</div><div class="r">差</div><div class="big"><i>累計</i></div></div></div></th>
+      <td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td>
     </tr>
     <tr class="zutsu">
       <th class="head hl"><div class="hlw"><div class="ttl">カロリー<br>収支<span>kcal</span></div><div class="ls"><div class="r">消費</div><div class="r">燃焼</div><div class="r">摂取可</div><div class="r">摂取</div><div class="big"><i>残り</i></div></div></div></th>
@@ -618,6 +623,9 @@
     document.querySelectorAll('.page table').forEach(table => {
       const hin = table.querySelector('tr.hinichi'), tr = table.querySelector('tr.zutsu'); if (!hin || !tr) return;
       const tds = Array.from(tr.children).slice(1);
+      // 2026-10-19 Mits様「カロリーの欄の上に毎日の合計の収支をだしてみて　合計消費量　合計摂取量　その差　これを毎日足し続けたモノ」：差＝消費量−摂取量（プラスは消費が上回った分）。累計は摂取の記録がある 10/5 から足す（10/4 は前のプランで摂取の記録なし）。今日は途中の値で足す。先の日は計画の値で薄く出す
+      const rk = table.querySelector('tr.ruikei'), rtds = rk ? Array.from(rk.children).slice(1) : [];
+      let ruikei = 0, ruikeiAri = false;
       Array.from(hin.children).slice(1).forEach((td, col) => {
         const y = td.querySelector('.ymd'); const m = y && y.textContent.match(/\d+\/\d+/); const cell = tds[col];
         if (!cell) return; cell.innerHTML = '';
@@ -644,6 +652,22 @@
           }
         }
         cell.innerHTML = h;
+        const rc = rtds[col];
+        if (rc) {
+          const sg2 = v => (v < 0 ? '−' : '') + f0(Math.abs(v));
+          let r = '';
+          if (x.mirai) {
+            const sa = x.planBurn - x.planIn; ruikei += sa;
+            r = '<div class="mirai">' + line('消費量', f0(x.planBurn)) + line('摂取量', f0(x.planIn)) + line('差', sg2(sa)) + '<div class="big">' + (ruikeiAri ? sg2(ruikei) : '—') + '</div></div>';
+          } else if (x.mae || !x.b || !x.n) {
+            r = line('消費量', x.b ? f0(x.b.v) : '—') + line('摂取量', '—') + line('差', '—') + '<div class="big">' + (ruikeiAri ? sg2(ruikei) : '—') + '</div>';
+          } else {
+            const sa = x.b.v - x.kcal; ruikei += sa; ruikeiAri = true;
+            const t = x.kyou ? ' 途中' : '';
+            r = line('消費量', f0(x.b.v) + (x.b.suitei ? '*' : '') + t) + line('摂取量', f0(x.kcal) + t) + line('差', sg2(sa) + t) + '<div class="big">' + sg2(ruikei) + t + '</div>';
+          }
+          rc.innerHTML = r;
+        }
         const nc = (Array.from((table.querySelector('tr.nensho') || {children: []}).children).slice(1))[col];
         if (nc) {
           let g = line('必要', '−' + f0(x.planFat) + 'g');
