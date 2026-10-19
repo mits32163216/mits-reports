@@ -246,12 +246,14 @@
 
 <div class="quote">Mits様：「いつもAIがいう『世に出します』をどの内部基準をもつかだな。つまり、製品版だけど実質自分だけが見るにとどめて、まとめて『世に出す』」「OK、それをルールにしよう」</div>
 
+<div class="scroll">
 <table>
 <tr><th>言葉</th><th>何が起きるか</th><th>お客様に届くか</th><th>道具</th></tr>
 <tr><td><b>Mits様の製品版に入れる</b></td><td>版を上げて commit・タグ・push、Mac を組んで <code>/Applications/untendai.app</code> だけ入れ替え</td><td><span class="tag t-ok">届かない</span></td><td><code>bash tools/release.sh --自分だけ &lt;版&gt; "&lt;要約&gt;"</code></td></tr>
 <tr><td><b>世に出す</b></td><td>GitHub に Release を作り、latest.json を新しい版にする</td><td><span class="tag t-out">全員に届く</span></td><td><code>bash tools/release.sh &lt;版&gt; "&lt;要約&gt;"</code></td></tr>
 <tr><td><b>手渡し</b>（freee版）</td><td>zip を相手のフォルダに置き、Mits様が共有する</td><td>その相手だけ</td><td><code>bash tools/build-client.sh</code></td></tr>
 </table>
+</div>
 
 <p><b>世に出すのは2つのときだけ。</b>①Mits様が製品版で触って「出す」と言われたとき ②お客様の手元で数字が間違っている・取り込みが止まっているとき（溜めずに出す）。</p>
 <p class="note">いまの製品版 1.74.4 を世に出すと、お客様全員の製品版にも「freee との連携」と管理者スイッチが出る。</p>
