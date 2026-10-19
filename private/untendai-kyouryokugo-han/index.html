@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>運転台 協力体制になってからの版</title>
+<style>
+  :root{
+    --bg:#f7f6f2; --card:#ffffff; --tx:#1f2430; --sub:#5b6170; --line:#dcd8cc;
+    --navy:#14206b; --gold:#8a6a1f; --green:#2f7d4f; --red:#b0342c;
+    --blue-bg:#eef1fb; --gold-bg:#faf4e4; --green-bg:#eaf5ee; --red-bg:#fbecea;
+    /* アプリのアイコンの色 */
+    --c-dev:#188848; --c-morita:#F848D8; --c-client:#E8B820; --c-mkt:#F08A24; --c-navy:#204088; --c-kakunin:#7a3cc6;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--tx);
+    font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+    font-size:15px;line-height:1.8}
+  main{max-width:1040px;margin:0 auto;padding:28px 16px 80px}
+  h1{font-size:24px;margin:0 0 4px;color:var(--navy);line-height:1.4}
+  .lead{color:var(--sub);margin:0 0 24px;font-size:13px}
+  h2{font-size:19px;color:var(--navy);border-left:5px solid var(--gold);padding-left:10px;margin:40px 0 12px;line-height:1.5}
+  h3{font-size:16px;margin:22px 0 8px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:12px 0}
+  table{width:100%;border-collapse:collapse;font-size:14px;background:var(--card)}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:#efede6;font-weight:700}
+  .tag{display:inline-block;font-size:12px;padding:1px 8px;border-radius:10px;border:1px solid var(--line);margin:0 4px 2px 0;white-space:nowrap}
+  .t-navy{background:#e9edf8;color:var(--c-navy);border-color:#c3cde9}
+  .t-kakunin{background:#f1eafa;color:var(--c-kakunin);border-color:#d6c3ee}
+  .t-gray{background:#f0f0f0;color:#555}
+  .t-out{background:var(--red-bg);color:var(--red);border-color:#efc4bf}
+  .note{font-size:13px;color:var(--sub)}
+  .quote{border-left:3px solid var(--gold);background:var(--gold-bg);padding:8px 12px;margin:8px 0;font-size:14px}
+  svg{max-width:100%;height:auto;display:block}
+  .scroll{overflow-x:auto}
+  .svgwrap{min-width:760px}
+  .dot{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:-1px;margin-right:5px;border:1px solid rgba(0,0,0,.15)}
+  .ver{font-weight:700;font-size:16px;color:var(--navy);white-space:nowrap}
+  ol li,ul li{margin:4px 0}
+  .legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;margin:8px 0 0}
+  .legend span{white-space:nowrap}
+  @media (max-width:720px){
+    body{font-size:14px}
+    h1{font-size:20px}
+    table.stack, table.stack tbody, table.stack tr, table.stack td, table.stack th{display:block;width:100%}
+    table.stack tr:first-child{display:none}
+    table.stack tr{border:1px solid var(--line);border-radius:8px;margin:0 0 10px;overflow:hidden}
+    table.stack td{border:0;border-bottom:1px solid #eee;padding:6px 10px}
+    table.stack td:last-child{border-bottom:0}
+    table.stack td[data-l]::before{content:attr(data-l);display:block;font-size:11px;color:var(--sub);font-weight:700}
+  }
+</style>
+</head>
+<body>
+<main>
+
+<h1>運転台 ── 森田さんとの協力体制になってから、大きく変わった版</h1>
+<p class="lead">2026-10-19 17:40 時点の実測で整理。始まりは 2026-10-14 の森田さんの指摘（v1.76.4）。終わりは今日の最新（西田統合版 v1.77.6・確認版 v1.77.5）。<br>
+（運転台＝社内名。お客様向けの名前は「AI-Mits＆経営アプリ」）</p>
+
+<!-- ============================================================ -->
+<h2>1. いまの状況 ── どの版が何番で、誰に届いているか</h2>
+
+<div class="scroll">
+<table class="stack">
+<tr><th>版の呼び方</th><th>アイコンの色</th><th>いまの版</th><th>誰に届いているか</th><th>ひとこと</th></tr>
+<tr>
+  <td data-l="版の呼び方"><b>西田統合版</b><br><span class="note">旧称：製品版</span></td>
+  <td data-l="アイコンの色"><span class="dot" style="background:var(--c-navy)"></span>紺</td>
+  <td data-l="いまの版"><span class="ver">1.77.6</span><br><span class="note">西田の Mac に入っている版を実測</span></td>
+  <td data-l="誰に届いているか"><span class="tag t-navy">西田だけ</span><br>実データで使う。森田さんにも見せない・外にも出ない</td>
+  <td data-l="ひとこと">確認版にはまだ上げていない</td>
+</tr>
+<tr>
+  <td data-l="版の呼び方"><b>確認版</b></td>
+  <td data-l="アイコンの色"><span class="dot" style="background:var(--c-kakunin)"></span>紫</td>
+  <td data-l="いまの版"><span class="ver">1.77.5</span><br><span class="note">確認版の配信が返す版を実測</span></td>
+  <td data-l="誰に届いているか"><span class="tag t-kakunin">西田＋森田さん</span><br>設定で「確認版を受け取る」を入れたアプリだけ</td>
+  <td data-l="ひとこと">GitHub の公開前のリリースで出す。お客様には届かない</td>
+</tr>
+<tr>
+  <td data-l="版の呼び方"><b>正式版</b></td>
+  <td data-l="アイコンの色"><span class="dot" style="background:var(--c-navy)"></span>紺<br><span class="note">左上に（〜版）は付かない</span></td>
+  <td data-l="いまの版"><span class="ver">1.73.28</span><br><span class="note">2026-09-25 に出した版</span></td>
+  <td data-l="誰に届いているか"><span class="tag t-out">お客様全員</span></td>
+  <td data-l="ひとこと">この協力体制の期間は、まだ新しい版を世に出していない</td>
+</tr>
+<tr>
+  <td data-l="版の呼び方"><b>デモデータ版</b><br><span class="note">西田の開発版と同じ緑</span></td>
+  <td data-l="アイコンの色"><span class="dot" style="background:var(--c-dev)"></span>緑</td>
+  <td data-l="いまの版"><span class="ver">1.77.3</span><br><span class="note">西田の Mac に入っている版を実測</span></td>
+  <td data-l="誰に届いているか"><span class="tag t-gray">西田の Mac だけ</span><br>架空のデモデータ。説明会・動画・写真で見せる</td>
+  <td data-l="ひとこと">確認版と同じ版にそろえる決まり。確認版 1.77.5 への組み直しはこれから</td>
+</tr>
+<tr>
+  <td data-l="版の呼び方"><b>森田さんの開発版</b></td>
+  <td data-l="アイコンの色"><span class="dot" style="background:var(--c-morita)"></span>マゼンタ</td>
+  <td data-l="いまの版"><span class="ver">1.76.7</span><br><span class="note">西田の Mac に確認用として入っている版</span></td>
+  <td data-l="誰に届いているか"><span class="tag t-gray">森田さん</span><br>自分の版で作る。森田さんの Mac の版は森田さん自身が進める</td>
+  <td data-l="ひとこと">西田統合版に取り込まれて初めて、西田の版に入る</td>
+</tr>
+<tr>
+  <td data-l="版の呼び方"><b>ほかの2本</b><br><span class="note">クライアント版（freee）・マーケ版</span></td>
+  <td data-l="アイコンの色"><span class="dot" style="background:var(--c-client)"></span>黄　<span class="dot" style="background:var(--c-mkt)"></span>橙</td>
+  <td data-l="いまの版"><span class="ver">1.76.2</span> ／ <span class="ver">1.74.4</span></td>
+  <td data-l="誰に届いているか"><span class="tag t-gray">西田の Mac だけ</span></td>
+  <td data-l="ひとこと">この期間は組み直していない</td>
+</tr>
+</table>
+</div>
+
+<div class="card">
+<b>正式版 1.73.28 のあとに積んだ変更の記録は、西田統合版 1.77.6 までで 239 件</b>（記録だけの変更も含む・まだ世に出していない）。<br>
+そのうち、画面で見て分かる大きな変わり目だけを、このあと「3」に並べる。
+</div>
+
+<!-- ============================================================ -->
+<h2>2. 版の段と、段ごとの受け持ち</h2>
+
+<div class="card scroll">
+<div class="svgwrap">
+<svg viewBox="0 0 1000 350" xmlns="http://www.w3.org/2000/svg" font-family="Hiragino Sans, sans-serif">
+  <defs>
+    <marker id="ar" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5b6170"/>
+    </marker>
+  </defs>
+
+  <!-- 段の見出し -->
+  <text x="120" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#5b6170">開発版</text>
+  <text x="400" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#5b6170">西田統合版</text>
+  <text x="675" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#5b6170">確認版</text>
+  <text x="905" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#5b6170">正式版</text>
+
+  <!-- 開発版 2本 -->
+  <rect x="20" y="36" width="200" height="74" rx="10" fill="#fff" stroke="#F848D8" stroke-width="3"/>
+  <text x="120" y="64" text-anchor="middle" font-size="15" font-weight="700" fill="#1f2430">森田さんの開発版</text>
+  <text x="120" y="88" text-anchor="middle" font-size="12" fill="#5b6170">自分の版で作る（マゼンタ）</text>
+
+  <rect x="20" y="130" width="200" height="74" rx="10" fill="#fff" stroke="#188848" stroke-width="3"/>
+  <text x="120" y="158" text-anchor="middle" font-size="15" font-weight="700" fill="#1f2430">西田の開発版</text>
+  <text x="120" y="182" text-anchor="middle" font-size="12" fill="#5b6170">デモデータ版も同じ緑</text>
+
+  <!-- 西田統合版 -->
+  <rect x="300" y="64" width="200" height="110" rx="10" fill="#e9edf8" stroke="#204088" stroke-width="3"/>
+  <text x="400" y="96" text-anchor="middle" font-size="16" font-weight="700" fill="#204088">西田統合版</text>
+  <text x="400" y="122" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2430">1.77.6</text>
+  <text x="400" y="146" text-anchor="middle" font-size="12" fill="#5b6170">西田だけ・実データ</text>
+  <text x="400" y="164" text-anchor="middle" font-size="12" fill="#5b6170">直しを繰り返す場</text>
+
+  <!-- 確認版 -->
+  <rect x="580" y="64" width="190" height="110" rx="10" fill="#f1eafa" stroke="#7a3cc6" stroke-width="3"/>
+  <text x="675" y="96" text-anchor="middle" font-size="16" font-weight="700" fill="#7a3cc6">確認版</text>
+  <text x="675" y="122" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2430">1.77.5</text>
+  <text x="675" y="146" text-anchor="middle" font-size="12" fill="#5b6170">西田＋森田さん</text>
+  <text x="675" y="164" text-anchor="middle" font-size="12" fill="#5b6170">お客様には届かない</text>
+
+  <!-- 正式版 -->
+  <rect x="830" y="64" width="150" height="110" rx="10" fill="#e9edf8" stroke="#204088" stroke-width="3"/>
+  <text x="905" y="96" text-anchor="middle" font-size="16" font-weight="700" fill="#204088">正式版</text>
+  <text x="905" y="122" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2430">1.73.28</text>
+  <text x="905" y="146" text-anchor="middle" font-size="12" fill="#5b6170">お客様全員</text>
+
+  <!-- 矢印 -->
+  <line x1="222" y1="76" x2="298" y2="100" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
+  <line x1="222" y1="168" x2="298" y2="142" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
+  <line x1="502" y1="119" x2="578" y2="119" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
+  <line x1="772" y1="119" x2="828" y2="119" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
+  <g font-size="12" font-weight="700" fill="#fff">
+    <circle cx="258" cy="76" r="11" fill="#14206b"/><text x="258" y="80" text-anchor="middle">①</text>
+    <circle cx="258" cy="158" r="11" fill="#14206b"/><text x="258" y="162" text-anchor="middle">②</text>
+    <circle cx="540" cy="100" r="11" fill="#14206b"/><text x="540" y="104" text-anchor="middle">③</text>
+    <circle cx="800" cy="100" r="11" fill="#14206b"/><text x="800" y="104" text-anchor="middle">④</text>
+  </g>
+
+  <!-- 受け持ち -->
+  <text x="20" y="240" font-size="13" font-weight="700" fill="#5b6170">段ごとの受け持ち</text>
+  <rect x="20" y="252" width="280" height="34" rx="8" fill="#fbe9f8" stroke="#F848D8"/>
+  <text x="160" y="274" text-anchor="middle" font-size="13" font-weight="700" fill="#1f2430">森田さんのセッション　①</text>
+  <rect x="20" y="296" width="960" height="34" rx="8" fill="#eaf5ee" stroke="#188848"/>
+  <text x="500" y="318" text-anchor="middle" font-size="13" font-weight="700" fill="#1f2430">運転台改善　②（西田統合版の直し）　③（OK のあと確認版にする）　④（確認版 → 正式版）</text>
+</svg>
+</div>
+</div>
+
+<div class="scroll">
+<table>
+<tr><th style="width:3em">番号</th><th>段</th><th>受け持つセッション</th></tr>
+<tr><td>①</td><td>森田さんの開発版 → 西田統合版に取り込む</td><td><b>森田さんのセッション</b>（運転台 森田さん共同開発の巡回と、その下の取り込みのセッション）</td></tr>
+<tr><td>②</td><td>西田の開発版 → 西田統合版の直し</td><td><b>運転台改善</b></td></tr>
+<tr><td>③</td><td>西田統合版の上で、西田の直し・森田さんの直しを繰り返す → 西田が OK → 確認版にする（森田さんのアプリの設定に確認版の印が出る）</td><td><b>運転台改善</b></td></tr>
+<tr><td>④</td><td>確認版 → 正式版（世に出す）</td><td><b>運転台改善</b></td></tr>
+</table>
+</div>
+<p class="note">確認版は西田の OK のあとに作る。西田統合版で直しを繰り返している間は、確認版を上げない。<br>
+版の色はアプリのアイコンの色に合わせた：<span class="dot" style="background:var(--c-dev)"></span>開発版・デモデータ版（緑）　<span class="dot" style="background:var(--c-morita)"></span>森田さんの開発版（マゼンタ）　<span class="dot" style="background:var(--c-client)"></span>クライアント版（黄）　<span class="dot" style="background:var(--c-mkt)"></span>マーケ版（橙）　<span class="dot" style="background:var(--c-navy)"></span>西田統合版・正式版（紺）　<span class="dot" style="background:var(--c-kakunin)"></span>確認版（紫）</p>
+
+<!-- ============================================================ -->
+<h2>3. 大きく変わった版の一覧（古い順）</h2>
+
+<div class="quote">きっかけ ── 2026-10-14、森田さん：「リンクをクリックした瞬間に画面が切り替わらない」</div>
+
+<div class="scroll">
+<table class="stack">
+<tr><th>版</th><th>日付</th><th>何が変わったか</th><th>どの段まで出たか</th></tr>
+<tr>
+  <td data-l="版"><span class="ver">1.76.4</span></td>
+  <td data-l="日付">10-14</td>
+  <td data-l="何が変わったか"><b>確認メールのリンクを押すと、アプリが手前に出て、すぐ「登録済み」の表示に切り替わる。</b>リンクを押したあとに登録を確かめる間隔を、10秒から1秒に縮めた。森田さんの指摘への最初の答え。</td>
+  <td data-l="どの段まで出たか"><span class="tag t-navy">西田統合版まで</span><br><span class="note">当時の呼び名は製品版</span></td>
+</tr>
+<tr>
+  <td data-l="版"><span class="ver">1.76.6</span></td>
+  <td data-l="日付">10-14</td>
+  <td data-l="何が変わったか"><b>確認メールのリンクを、運転台のアプリが直接受け取れるようにした</b>（Mac と Windows）。リンクを押した瞬間にアプリが受け取って手前に出るので、中継を待つ約4秒を飛ばせる。</td>
+  <td data-l="どの段まで出たか"><span class="tag t-navy">西田統合版まで</span></td>
+</tr>
+<tr>
+  <td data-l="版"><span class="ver">1.77.0</span></td>
+  <td data-l="日付">10-19</td>
+  <td data-l="何が変わったか"><b>森田さんの新しい画面を取り込んだ。</b>ホームが「経営戦略・会計・マーケティング・業務効率化」の4つに分かれ、左のメニューと、右に常に出る AI-Mits の欄ができた。試作の11画面（経営戦略6・業務効率化5）と、スマホ幅の表示も入った。設定に「確認版を受け取る」スイッチを足した。</td>
+  <td data-l="どの段まで出たか"><span class="tag t-navy">西田統合版まで</span></td>
+</tr>
+<tr>
+  <td data-l="版"><span class="ver">1.77.1</span></td>
+  <td data-l="日付">10-19</td>
+  <td data-l="何が変わったか"><b>確認版の最初の版。</b>中身は 1.77.0 と同じ。ここで「確認版」という段ができ、西田と森田さんに届く道が開いた。</td>
+  <td data-l="どの段まで出たか"><span class="tag t-kakunin">確認版</span></td>
+</tr>
+<tr>
+  <td data-l="版"><span class="ver">1.77.3</span></td>
+  <td data-l="日付">10-19</td>
+  <td data-l="何が変わったか"><b>左上のアプリ名のあとに、どの段の版かを示す（〜版）が出る。</b>正式版だけは何も付かない。設定の2つのスイッチ（管理者として使う・確認版を受け取る）は、ON のとき緑になる。</td>
+  <td data-l="どの段まで出たか"><span class="tag t-kakunin">確認版</span></td>
+</tr>
+<tr>
+  <td data-l="版"><span class="ver">1.77.4</span></td>
+  <td data-l="日付">10-19</td>
+  <td data-l="何が変わったか"><b>森田さんの新しい画面から、旧メニューにしかなかった画面へ行けるようになった。</b>左の欄の下に「設定」「自社データにする」「パートナー制度」。配信の数字の画面は「マーケティング」の中から開ける。新しい版のお知らせ・顧客の選択欄・アカウントは左下に出る。確認版のアイコンを紫にした。</td>
+  <td data-l="どの段まで出たか"><span class="tag t-kakunin">確認版</span></td>
+</tr>
+<tr>
+  <td data-l="版"><span class="ver">1.77.5</span></td>
+  <td data-l="日付">10-19</td>
+  <td data-l="何が変わったか"><b>左のメニューと右の AI-Mits の欄を、境目をつまんで幅を変えられる。</b>幅は次に開いたときも残る。左右の欄の文字が、設定の「文字の設定」（小さめ・ふつう・大きめ・もっと大きく）に合わせて変わる。</td>
+  <td data-l="どの段まで出たか"><span class="tag t-kakunin">確認版</span><br><span class="note">いまの確認版</span></td>
+</tr>
+<tr>
+  <td data-l="版"><span class="ver">1.77.6</span></td>
+  <td data-l="日付">10-19</td>
+  <td data-l="何が変わったか"><b>新しいメニューから、旧メニューで隠していた戦略の計器・仕事の計器の項目を、同じ印で隠した</b>（PPM、DMi・CPF軸、ダイヤモンドチャート、KAZEOKE、仕事測定、3つの時給、1action3goal、業務フロー分析、休む仕組み）。消えていた勘定科目と補助科目の 4:2:2:2 の仕分けの表を戻し、会計から行けるようにした。</td>
+  <td data-l="どの段まで出たか"><span class="tag t-navy">西田統合版まで</span><br><span class="note">いまの西田統合版。確認版にはまだ上げていない</span></td>
+</tr>
+</table>
+</div>
+<p class="note">並べなかった版：1.76.5（開発版だけに試験用のメールアドレスの下敷きを足した）・1.76.7（リンクを受け取るのは正式版系のアプリだけにして、開発版・クライアント版・マーケ版は別の受け取り方に分けた）・1.77.2（1.77.3 と同じ直しの途中）。いずれも画面で見て分かる変わり目ではないため。<br>
+正式版に出た版は、この期間にはない（正式版は 1.73.28 のまま）。</p>
+
+<!-- ============================================================ -->
+<h2>4. 協力体制で変わった土台 ── 版ではなく仕組みの変化</h2>
+
+<div class="scroll">
+<table class="stack">
+<tr><th>いつ</th><th>何が変わったか</th></tr>
+<tr><td data-l="いつ">10-15</td><td data-l="何が変わったか"><b>森田さんが Discord に参加。</b>サーバー名は「経営の運転台 開発」。連絡は Discord が中心で、いまのチャンネルは4つ（はじめに・ディスカッション・各自の版・本流の更新）。</td></tr>
+<tr><td data-l="いつ">10-15</td><td data-l="何が変わったか"><b>共同開発の決まりを整えた。</b>始め方を書いた案内、取り込み依頼と不具合・要望のひな形、取り込み依頼のたびに自動で試験を走らせる仕組み。手元の AI の作業記録をコードから外した。</td></tr>
+<tr><td data-l="いつ">10-16</td><td data-l="何が変わったか"><b>GitHub の協力が始まった。</b>森田さんを招待し、森田さんは本流から分けた自分の版を持った。<br>
+同じ日に、<b>本流を GitHub の組織 untendai の untendai/untendai に移した。</b>非公開のまま。本流に書き込めるのは西田だけという規則を入れた。更新を配る中継も、新しい住所に切り替えた。</td></tr>
+<tr><td data-l="いつ">10-16</td><td data-l="何が変わったか"><b>Windows の試験の直し。</b>Windows でだけ落ちていた試験4件を直し、家のフォルダが無い Windows でも動くようにした（Windows 上で 315 件通過・失敗 0）。GitHub 上で落ちていた試験1件も直した。ほとんど使っていなかった GitHub 上の Windows 組み立てはやめた。</td></tr>
+<tr><td data-l="いつ">10-16〜17</td><td data-l="何が変わったか"><b>森田さんが、4カテゴリーの新しい画面を自分の版で作った</b>（ホームの4つの区分・左のメニュー・AI-Mits の欄・試作の画面・スマホ幅）。設計の書類とスクリーンショットは、西田の設計リファレンスから起こした。</td></tr>
+<tr><td data-l="いつ">10-19</td><td data-l="何が変わったか"><b>森田さんの変更を取り込む道ができた。</b>「変更点一覧」の画面で取り込みたい行にチェックを入れ、「チェックしたものを取り込む」を押すと依頼が受け付けられ、取り込み担当が西田統合版へ入れる。最初の依頼は18件で、v1.77.0 になった。</td></tr>
+<tr><td data-l="いつ">10-19</td><td data-l="何が変わったか"><b>版の呼び方を決め直した。</b>開発版 → 西田統合版 → 確認版 → 正式版。新しく「確認版」の段を足した。段ごとの受け持ちも決めた（上の「2」）。版を分けたら、左上の（〜版）とアイコンの色を一緒に決める決まりにした。</td></tr>
+</table>
+</div>
+
+<p class="note" style="margin-top:32px">この一覧の根拠：GitHub untendai/untendai の変更の記録と版の印、GitHub の公開前リリース一覧、更新を配る中継が返す正式版・確認版の番号、西田の Mac に入っているアプリの版（すべて 2026-10-19 17:40 に実測）。呼び方と受け持ちの正本は、経営の運転台の案件の決まりの冒頭。古い全体像は別ページ「運転台 開発の流れと現状」にある。</p>
+
+</main>
+</body>
+</html>
