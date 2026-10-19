@@ -36,9 +36,18 @@
   svg{max-width:100%;height:auto;display:block}
   .scroll{overflow-x:auto}
   ol li,ul li{margin:4px 0}
+  /* ページ間のメニュー */
+  .gnav{background:var(--card);border-bottom:1px solid var(--line)}
+  .gnav-in{max-width:1040px;margin:0 auto;padding:0 12px;display:flex;flex-wrap:wrap;gap:2px}
+  .gnav a,.gnav span{display:block;padding:11px 14px;font-size:14px;line-height:1.4;border-bottom:3px solid transparent}
+  .gnav a{color:var(--navy);text-decoration:none}
+  .gnav a:hover{background:var(--blue-bg)}
+  .gnav span[aria-current]{color:var(--tx);font-weight:700;background:var(--gold-bg);border-bottom-color:var(--gold);cursor:default}
+  @media (max-width:720px){.gnav-in{padding:0 8px}.gnav a,.gnav span{padding:10px 10px;font-size:13px}}
 </style>
 </head>
 <body>
+<nav class="gnav" aria-label="運転台のページ"><div class="gnav-in"><span aria-current="page">開発の流れ</span><a href="../untendai-kyouryokugo-han/">協力体制になってからの版</a></div></nav>
 <main>
 
 <h1>運転台 ── 開発の流れ・手順・いまの姿</h1>
