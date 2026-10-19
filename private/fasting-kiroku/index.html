@@ -165,6 +165,9 @@
   /* 2026-10-19 Mits様「10/3を横スクロールしないように固定して」：10/3 の列（左の見出しの次の列）を、左の見出しの右に留める */
   table:not(#tw-table) tr > :nth-child(2){ position:sticky; left:var(--head); z-index:2; box-shadow:inset -2px 0 0 var(--title); }
   table:not(#tw-table) tr.hinichi > :nth-child(2){ z-index:4; }
+  /* 2026-10-19 Mits様「過去の登録が全部消えたよ」：スマホ（幅375px）では見出し100px＋10/3の150pxで250pxが埋まり、日ごとの列が125pxしか見えず過去の日が見えなくなった。10/3 の列は数字だけなので細くする */
+  table:not(#tw-table) tr > :nth-child(2){ width:84px; min-width:84px; max-width:84px; }
+  @media (max-width:640px){ table:not(#tw-table) tr > :nth-child(2){ width:64px; min-width:64px; max-width:64px; padding-left:2px; padding-right:2px; } }
 </style>
 </head>
 <body>
