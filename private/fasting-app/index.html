@@ -137,12 +137,13 @@ iframe#src{position:absolute;width:1200px;height:800px;left:-99999px;top:0;borde
     const doc = W().document, out = {}, seen = {};
     doc.querySelectorAll('td.meal .chk').forEach(sp => {
       const k = sp.dataset.k; if (!k || !k.startsWith(d + '|') || seen[k]) return; seen[k] = 1;
-      const [, row, nm] = k.split('|'); const base = nm.replace(/\d+$/, '');
+      const [, row, nm] = k.split('|'); const base = seriesBase(nm) || nm;
       const g = out[row] = out[row] || {}; (g[base] = g[base] || []).push(k);
     });
     const extra = Object.keys(A.chk).filter(k => k.startsWith(d + '|') && !seen[k]);
     return { out, extra };
   }
+  const seriesBase = nm => { const b = nm.replace(/\d+$/, ''); return (b !== nm && A.EIYOU[b + '1'] && A.EIYOU[b + '2']) ? b : null; };
   const kcalOf = nm => { const e = A.EIYOU[nm]; if (!e) return null; return e[0] * (/（実際）/.test(nm) && !/マナ酵素/.test(nm) ? 1.1 : 1); };
 
   // ===== 書く =====
@@ -160,8 +161,8 @@ iframe#src{position:absolute;width:1200px;height:800px;left:-99999px;top:0;borde
   const nowRow = () => now().getHours() < 16 ? 'hirusugi' : 'yugata';
   function addItem(nm) {
     const d = kyouDay(), row = nowRow();
-    const base = nm.replace(/\d+$/, '');
-    if (A.EIYOU[base + '1']) {
+    const base = seriesBase(nm) || (A.EIYOU[nm + '1'] && A.EIYOU[nm + '2'] ? nm : null);
+    if (base) {
       for (let i = 1; i <= 9; i++) { const k = d + '|' + row + '|' + base + i; if (A.EIYOU[base + i] && !A.chk[k]) { setK(k, true, '入れました：' + base + '（' + ROWNAME[row] + ' ' + i + 'つ目）'); return; } }
       toast('これ以上は入れられません'); return;
     }
@@ -217,7 +218,7 @@ iframe#src{position:absolute;width:1200px;height:800px;left:-99999px;top:0;borde
       const g = out[row]; if (!g) return;
       h += '<div class="grp"><h4>' + ROWNAME[row] + '</h4>';
       Object.keys(g).forEach(base => {
-        const ks = g[base]; const multi = ks.length > 1 || /\d$/.test(ks[0].split('|')[2]);
+        const ks = g[base]; const multi = ks.length > 1 || !!seriesBase(ks[0].split('|')[2]);
         const e = kcalOf(ks[0].split('|')[2]);
         h += '<div class="item"><span class="nm">' + esc(multi ? base : ks[0].split('|')[2]) + (e != null ? ' <span class="kc">' + f0(e) + 'kcal</span>' : '') + '</span><span class="dots">' +
           ks.map(k => '<button class="dot' + (A.chk[k] ? ' on' : '') + '" data-k="' + esc(k) + '" aria-label="' + esc(k.split('|')[2]) + '"></button>').join('') + '</span></div>';
@@ -235,9 +236,10 @@ iframe#src{position:absolute;width:1200px;height:800px;left:-99999px;top:0;borde
   // ===== 画面：食べた =====
   function rTabeta() {
     const d = kyouDay(), row = nowRow();
-    // よく入れるもの：これまでのチェックの回数順（写真から入れた（実際）は下の欄）
+    // よく入れるもの：直近7日のチェックの回数順（写真から入れた（実際）は下の欄）
     const cnt = {};
-    Object.keys(A.chk).forEach(k => { const nm = k.split('|')[2]; if (!nm || /（実際）/.test(nm) || !A.EIYOU[nm]) return; const b = nm.replace(/\d+$/, ''); cnt[b] = (cnt[b] || 0) + 1; });
+    const kugiri = num(d) - 7;
+    Object.keys(A.chk).forEach(k => { const [dd, , nm] = k.split('|'); if (!nm || num(dd) <= kugiri || num(dd) > num(d) || /（実際）/.test(nm) || !A.EIYOU[nm] || /^サプリ/.test(nm)) return; const b = seriesBase(nm) || nm; cnt[b] = (cnt[b] || 0) + 1; });
     const freq = Object.keys(cnt).sort((a, b) => cnt[b] - cnt[a]).slice(0, 14);
     if (A.EIYOU['ピープロテイン1杯'] && !freq.includes('ピープロテイン1杯')) freq.push('ピープロテイン1杯');
     // 前に入れた食事：（実際）を新しい日の順に
@@ -246,8 +248,8 @@ iframe#src{position:absolute;width:1200px;height:800px;left:-99999px;top:0;borde
     Object.keys(A.EIYOU).forEach(nm => { if (/（実際）/.test(nm) && !jissai[nm]) jissai[nm] = '0/0'; });
     const js = Object.keys(jissai).sort((a, b) => num(jissai[b]) - num(jissai[a]));
     let h = '<div class="top"><b>食べたものを入れる</b><span>' + d + ' ' + ROWNAME[row] + 'に入ります</span></div>';
-    h += '<div class="card"><div class="lbl">よく入れるもの（押すと1つ入ります）</div><div class="chips">' +
-      freq.map(b => { const nm = A.EIYOU[b + '1'] ? b + '1' : b; const e = kcalOf(nm); return '<button class="chip" data-add="' + esc(b) + '">' + esc(b) + (e != null ? ' <span class="kc">' + f0(e) + '</span>' : '') + '</button>'; }).join('') + '</div></div>';
+    h += '<div class="card"><div class="lbl">よく入れるもの（直近7日・押すと1つ入ります）</div><div class="chips">' +
+      freq.map(b => { const nm = A.EIYOU[b] ? b : b + '1'; const e = kcalOf(nm); return '<button class="chip" data-add="' + esc(b) + '">' + esc(b) + (e != null ? ' <span class="kc">' + f0(e) + '</span>' : '') + '</button>'; }).join('') + '</div></div>';
     h += '<div class="card list"><div class="lbl">前に入れた食事（押すと今日に入ります・写真の見積もりは1.1倍込み）</div>' +
       js.map(nm => '<div class="item" data-addj="' + esc(nm) + '"><span class="nm">' + esc(nm.replace('（実際）', '')) + '</span><span class="kc">' + f0(kcalOf(nm)) + 'kcal' + (jissai[nm] !== '0/0' ? '・' + jissai[nm] : '') + '</span></div>').join('') + '</div>';
     h += '<div class="card"><div class="lbl">初めての食事・写真</div>写真とひとことを Claude のセッション（沖縄用ファスティングジュース探索）に送ってください。内訳つきで見積もって記録表に入れます。入ったものは上の「前に入れた食事」に並び、2回目からは押すだけで入ります。</div>';
@@ -265,7 +267,7 @@ iframe#src{position:absolute;width:1200px;height:800px;left:-99999px;top:0;borde
     let tg = '', ac = '', dots = '';
     D.forEach((d, i) => { const t = mokuhyo(d); if (t != null) tg += (tg ? ' ' : '') + X(i).toFixed(1) + ',' + Y(t).toFixed(1); const w = kg(d); if (w != null) { ac += (ac ? ' ' : '') + X(i).toFixed(1) + ',' + Y(w).toFixed(1); dots += '<circle cx="' + X(i).toFixed(1) + '" cy="' + Y(w).toFixed(1) + '" r="2.6" fill="#1f5fbf"/>'; } });
     let ticks = ''; for (let v = Math.ceil(lo); v <= hi; v++) ticks += '<line x1="26" x2="' + Wd + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="#eee"/><text x="0" y="' + (Y(v) + 3) + '" font-size="9" fill="#6b7280">' + v + '</text>';
-    ['10/3', '10/10', '10/17', '10/24', '10/31'].forEach(d => { const i = D.indexOf(d); if (i >= 0) ticks += '<text x="' + (X(i) - 10) + '" y="' + (Hd - 2) + '" font-size="9" fill="#6b7280">' + d + '</text>'; });
+    ['10/3', '10/10', '10/17', '10/24', '10/31'].forEach(d => { const i = D.indexOf(d); if (i >= 0) ticks += '<text x="' + X(i) + '" y="' + (Hd - 2) + '" font-size="9" fill="#6b7280" text-anchor="' + (i === D.length - 1 ? 'end' : i === 0 ? 'start' : 'middle') + '">' + d + '</text>'; });
     let h = '<div class="top"><b>振り返り</b><span>10/3〜' + T + '</span></div>';
     h += '<div class="card"><div class="row"><span class="lbl">体重（青）と目標（点線）</span></div><svg viewBox="0 0 ' + Wd + ' ' + Hd + '" width="100%">' + ticks +
       '<polyline fill="none" stroke="#9aa7bd" stroke-width="1.8" stroke-dasharray="4 3" points="' + tg + '"/><polyline fill="none" stroke="#1f5fbf" stroke-width="2.2" points="' + ac + '"/>' + dots + '</svg></div>';
@@ -306,7 +308,7 @@ iframe#src{position:absolute;width:1200px;height:800px;left:-99999px;top:0;borde
     h += '<div class="card"><div class="lbl">日ごとの献立（押して開く）</div>';
     fut.forEach(d => {
       const { out } = masu(d); let mm = '';
-      Object.keys(ROWNAME).forEach(row => { const g = out[row]; if (!g) return; mm += '<div>' + ROWNAME[row] + '：' + Object.keys(g).map(b => esc(g[b].length > 1 || /\d$/.test(g[b][0].split('|')[2]) ? b + g[b].length : g[b][0].split('|')[2])).join('・') + '</div>'; });
+      Object.keys(ROWNAME).forEach(row => { const g = out[row]; if (!g) return; mm += '<div>' + ROWNAME[row] + '：' + Object.keys(g).map(b => esc(g[b].length > 1 || seriesBase(g[b][0].split('|')[2]) ? b + g[b].length : g[b][0].split('|')[2])).join('・') + '</div>'; });
       h += '<details class="item" style="display:block"><summary class="row"><span>' + d + '（' + youbi(d) + '）</span><span class="lbl">›</span></summary><div class="menu">' + (mm || 'マスなし') + '</div></details>';
     });
     h += '</div>';
