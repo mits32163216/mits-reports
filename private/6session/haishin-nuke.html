@@ -53,7 +53,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-09-16 07:34 ／ 写した時刻 2026-09-16 16:51</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-20 11:35 ／ 写した時刻 2026-10-20 11:47</p>
 <h2 id="配信の抜けと計測の抜けの分析-2026-09-08-2026-09-15">配信の抜けと計測の抜けの分析（2026-09-08 〜 2026-09-15）</h2>
 <p>作成：BA-strategist（司令塔発注）</p>
 <p>作成日時：2026-09-15</p>
@@ -457,7 +458,7 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>配信スキル L414：「あとで送る」を使ったとき（2026-09-08 165282274 の実例：受付 20:49・予約 21:00）…配送予約日時が、入力した予約日時と「分まで」一致するかを見る。「押し直さない」は配信スキル2件</li>
 <li>毎日の配信タスク L295：同じ趣旨（入力した予約日時と分まで一致するか／一致しなければ…）。「分まで一致」1件・「押し直さない」2件</li>
 <li>判定：R2「あとで送る」は両方の手順書に入った</li>
-<li>見張りの知らせ方（持ち場の決定）：予約タスクからはメッセージを送らない。最後の返事の1行目に「&lt;日付&gt; 見張り：起動（なし／止まった／終わった）・空欄スタンド＝…・spro 件数停止＝…」を書き list_task_runs の summary に出す。同じ1行を /Users/nishidamitsuhiro/.claude/scheduled-tasks/mainichi-merumaga-mihari-2310/mihari_kekka.log に追記。メール配信・計測・自動化が翌朝に list_task_runs とこのファイルを読み、司令塔へ ID local_9fa118c7-d668-4215-a7b6-6ee2ceaca29c あてに1行送る（宛先の決まりも下書きの「朝に読む側の手順」に書く）。メールで送る案は外に出る操作なので採らない</li>
+<li>見張りの知らせ方（持ち場の決定）：予約タスクからはメッセージを送らない。最後の返事の1行目に「&lt;日付&gt; 見張り：起動（なし／止まった／終わった）・空欄スタンド＝…・spro 件数停止＝…」を書き list_task_runs の summary に出す。同じ1行を /Users/nishidamitsuhiro/.claude/scheduled-tasks/mainichi-merumaga-mihari-2310/mihari_kekka.log に追記。メール配信・計測・自動化が翌朝に list_task_runs とこのファイルを読み、司令塔へ1行送る（宛名は 送受信の決まり.md 節5-2：画面の名前そのまま）（宛先の決まりも下書きの「朝に読む側の手順」に書く）。メールで送る案は外に出る操作なので採らない</li>
 <li>司令塔の確認：/Users/nishidamitsuhiro/.claude/scheduled-tasks/mainichi-merumaga-mihari-2310 は 07:5x 時点で存在しない（予約タスク未作成のため）→ ログを書く手順は、フォルダが作られた後に動く前提</li>
 <li>見張りの下書きへの list_task_runs と知らせ方の反映：まだ（下書き md5 7cf9a72f07fcaee13b5281c2d8f6a3c1 のまま）。入ったら md5 と行番号が来る</li>
 </ul>
