@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex,nofollow">
+<title>ファスティング記録アプリ モック</title>
+<style>
+:root{
+  --bg:#f4f1ea; --card:#ffffff; --ink:#1d2433; --sub:#6b7280; --line:#e5e1d8;
+  --blue:#1f5fbf; --blue-bg:#e8f0fc; --red:#c62828; --red-bg:#fdecec;
+  --amber:#b7791f; --amber-bg:#fdf3e1; --green:#2e7d32; --navy:#22314f;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.5}
+.wrap{max-width:1500px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:22px;margin:0 0 4px}
+.lead{color:var(--sub);margin:0 0 24px;font-size:14px}
+h2{font-size:17px;margin:36px 0 12px;padding-left:10px;border-left:4px solid var(--navy)}
+.phones{display:flex;gap:22px;overflow-x:auto;padding:6px 4px 18px}
+.ph{flex:0 0 300px}
+.cap{font-size:13px;font-weight:700;margin:0 0 6px}
+.cap small{display:block;font-weight:400;color:var(--sub)}
+.frame{width:300px;height:620px;background:#fff;border:10px solid #1d2433;border-radius:38px;overflow:hidden;position:relative;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.scr{height:100%;overflow-y:auto;padding:14px 12px 80px;background:#faf8f4;font-size:12.5px}
+.top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.top b{font-size:15px}.top span{color:var(--sub);font-size:11px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:10px}
+.lbl{font-size:11px;color:var(--sub)}
+.big{font-size:34px;font-weight:800;line-height:1.1}
+.over{color:var(--red)}.ok{color:var(--blue)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:6px}
+.mini{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:6px;text-align:center}
+.mini div{background:#f6f4ef;border-radius:8px;padding:4px 0}
+.mini b{display:block;font-size:13px}
+.bar{height:8px;background:#eee;border-radius:5px;overflow:hidden;margin-top:4px}
+.bar i{display:block;height:100%;background:var(--blue)}
+.coach{background:var(--amber-bg);border-color:#f0d9a8}
+.coach .lbl{color:var(--amber);font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:18px;padding:5px 10px;font-size:12px}
+.chip.on{background:var(--blue-bg);border-color:var(--blue);color:var(--blue)}
+.dots{display:inline-flex;gap:4px;margin-left:6px}
+.dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--blue)}
+.dot.on{background:var(--blue)}
+.item{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px dashed var(--line)}
+.item:last-child{border-bottom:0}
+.btn{display:block;text-align:center;background:var(--navy);color:#fff;border-radius:12px;padding:11px;font-weight:700;margin-top:8px}
+.btn.lite{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
+.nav{position:absolute;bottom:0;left:0;right:0;height:62px;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:center;font-size:10.5px;color:var(--sub)}
+.nav .a{color:var(--navy);font-weight:700}
+.fab{width:52px;height:52px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;margin-top:-26px;box-shadow:0 4px 10px rgba(0,0,0,.2)}
+.photo{height:120px;border-radius:12px;background:repeating-linear-gradient(45deg,#efe7d8,#efe7d8 10px,#f7f1e6 10px,#f7f1e6 20px);display:flex;align-items:center;justify-content:center;color:var(--sub);margin-bottom:8px}
+.seg{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg span{flex:1;text-align:center;padding:6px 0;font-size:12px}
+.seg .on{background:var(--navy);color:#fff}
+.tag{display:inline-block;font-size:10.5px;border-radius:6px;padding:1px 6px;margin-right:4px}
+.tag.w{background:var(--red-bg);color:var(--red)}.tag.g{background:#e8f5e9;color:var(--green)}
+table.t{width:100%;border-collapse:collapse;font-size:11.5px}
+table.t td,table.t th{padding:5px 3px;border-bottom:1px solid var(--line);text-align:right}
+table.t th{color:var(--sub);font-weight:400}
+table.t td:first-child,table.t th:first-child{text-align:left}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.step{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:13px}
+.step .when{font-weight:800;color:var(--navy);font-size:15px}
+.step ol{margin:6px 0 0;padding-left:18px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 18px;font-size:13.5px}
+.box h3{margin:0 0 8px;font-size:14.5px}
+.box ul{margin:0;padding-left:18px}
+.box li{margin-bottom:5px}
+@media (max-width:900px){.flow,.cols{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>ファスティング記録アプリ（スマホ版）モック</h1>
+<p class="lead">2026-10-20 時点の記録表の数字をそのまま入れた見本です。今の記録表（https://reports.7years.life/private/fasting-kiroku/）は1日1列の表ですが、スマホでは「今日の1日」を縦に読む形に組み替えます。動きは付いていない見本です。</p>
+
+<h2>1日の動き（Mits様の入力のしかたから組んだ順番）</h2>
+<div class="flow">
+  <div class="step"><div class="when">朝</div><ol><li>RENPHO に乗る</li><li>体重・体脂肪・前日の歩数と消費が自動で入る（今の毎朝の自動入力をそのまま使う）</li><li>通知「今日の摂取可は 970kcal・目標との差 +0.2kg」</li></ol></div>
+  <div class="step"><div class="when">昼</div><ol><li>写真を撮る＋ひとこと（例「唐揚げ　おかずだけ」）</li><li>AI が内訳つきで見積もる（揚げ油・たれ・部位の基準どおり）</li><li>ご飯の有無・量を1回押して直し、「記録する」</li></ol></div>
+  <div class="step"><div class="when">夕方〜夜</div><ol><li>今日の画面で「残り」を見る</li><li>予定の卵・納豆・泡盛は丸を押すだけ</li><li>超えていたら、指導のカードが「夜はカチュー湯だけ」と出す</li></ol></div>
+  <div class="step"><div class="when">翌朝</div><ol><li>2日の合計と体重の動きが並んで出る</li><li>目標との乖離・原因（どの食事か）・対策が1行ずつ出る</li><li>目標は動かさない</li></ol></div>
+</div>
+
+<h2>画面（左から 今日／食べた／写真の確認／振り返り／計画）</h2>
+<div class="phones">
+
+<!-- 1 今日 -->
+<div class="ph"><p class="cap">① 今日<small>開いて最初に見る画面。答えは「あと何kcal 食べてよいか」1つ</small></p>
+<div class="frame"><div class="scr">
+  <div class="top"><b>10/20（月）</b><span>18日目・10/31 まで</span></div>
+  <div class="card">
+    <div class="lbl">今日の残り</div>
+    <div class="big over">−316<span style="font-size:14px"> kcal</span></div>
+    <div class="mini"><div><span class="lbl">摂取可</span><b>958</b></div><div><span class="lbl">摂取</span><b>1,275</b></div><div><span class="lbl">燃焼</span><b>674</b></div></div>
+  </div>
+  <div class="card">
+    <div class="row"><span class="lbl">2日の合計の残り（明日の朝の体重に出る分）</span></div>
+    <div class="row"><b class="over" style="font-size:20px">−644</b><span class="lbl">摂取可 1,948 ／ 摂取 2,592</span></div>
+  </div>
+  <div class="card">
+    <div class="row"><span>たんぱく質</span><b class="ok">106 / 96g</b></div><div class="bar"><i style="width:100%"></i></div>
+    <div class="row" style="margin-top:6px"><span>糖質</span><b>40 / 50g</b></div><div class="bar"><i style="width:80%;background:#9aa7bd"></i></div>
+  </div>
+  <div class="card">
+    <div class="row"><span>体重</span><b>59.7kg</b></div>
+    <div class="row lbl"><span>目標 59.5kg</span><span class="over">目標より +0.2kg</span></div>
+    <div class="row lbl"><span>10/3 から</span><span>−2.6kg</span></div>
+  </div>
+  <div class="card coach">
+    <div class="lbl">指導</div>
+    たんぱく質は足りています。夜はカチュー湯だけにして、超過を広げないでください。明日に取り返そうと減らさないこと。
+  </div>
+  <div class="card">
+    <div class="lbl">このあとの予定（夕方）</div>
+    <div class="item"><span>カチュー湯</span><span class="dots"><span class="dot on"></span></span></div>
+    <div class="item"><span>卵</span><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></div>
+    <div class="item"><span>納豆</span><span class="dots"><span class="dot on"></span><span class="dot"></span></span></div>
+    <div class="item"><span>泡盛</span><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></div>
+  </div>
+</div>
+<div class="nav"><span class="a">今日</span><span>食べた</span><span class="fab">＋</span><span>振り返り</span><span>計画</span></div>
+</div></div>
+
+<!-- 2 食べた -->
+<div class="ph"><p class="cap">② 食べた（＋を押す）<small>写真・いつもの・予定、の3つで入力の全部を受ける</small></p>
+<div class="frame"><div class="scr">
+  <div class="top"><b>食べたものを入れる</b><span>10/20 昼過ぎ</span></div>
+  <div class="btn">写真で入れる</div>
+  <div class="btn lite">ひとことで入れる（例：豚甘辛）</div>
+  <div class="card" style="margin-top:12px">
+    <div class="lbl">いつもの（よく入れる順）</div>
+    <div class="chips" style="margin-top:6px">
+      <span class="chip on">カチュー湯</span><span class="chip">卵</span><span class="chip">納豆</span><span class="chip">泡盛1杯</span><span class="chip">ビール500ml</span><span class="chip">マナ酵素30ml</span><span class="chip">ピープロテイン1杯</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="lbl">ちょーでー弁当（お店の献立を覚えておく）</div>
+    <div class="item"><span>唐揚げ弁当 おかずのみ</span><b>717</b></div>
+    <div class="item"><span>ステーキ弁当 ご飯100g</span><b>497</b></div>
+    <div class="item"><span>ナス味噌弁当 ご飯なし</span><b>618</b></div>
+    <div class="lbl" style="margin-top:4px">押すと「ご飯なし／70g／100g」を選ぶだけで入る</div>
+  </div>
+  <div class="card">
+    <div class="lbl">今日の予定から（押すと食べた印）</div>
+    <div class="item"><span>昼 卵</span><span class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot"></span></span></div>
+    <div class="item"><span>昼 納豆</span><span class="dots"><span class="dot on"></span><span class="dot on"></span></span></div>
+    <div class="item"><span>グルタミン5g</span><span class="dots"><span class="dot on"></span></span></div>
+  </div>
+</div>
+<div class="nav"><span>今日</span><span class="a">食べた</span><span class="fab">＋</span><span>振り返り</span><span>計画</span></div>
+</div></div>
+
+<!-- 3 写真の確認 -->
+<div class="ph"><p class="cap">③ 写真の見積もりを確かめる<small>内訳を見せて、Mits様は量を直すだけ</small></p>
+<div class="frame"><div class="scr">
+  <div class="top"><b>見積もり</b><span>「唐揚げ　おかずだけ」</span></div>
+  <div class="photo">写真</div>
+  <div class="card">
+    <div class="item"><span>唐揚げ 3個 201g<br><span class="lbl">鶏もも皮つき・衣と吸油込み</span></span><b>617</b></div>
+    <div class="item"><span>付け合わせ<br><span class="lbl">卵焼き・ポテサラ・炒め・梅干し</span></span><b>100</b></div>
+    <div class="item"><span>見積もりの上乗せ ×1.1</span><b>+72</b></div>
+    <div class="item"><b>合計</b><b>789 kcal</b></div>
+    <div class="lbl">たんぱく質 51.6g ／ 糖質 31.7g</div>
+  </div>
+  <div class="card">
+    <div class="lbl">ご飯</div>
+    <div class="seg" style="margin-top:4px"><span class="on">なし</span><span>70g</span><span>100g</span><span>全部</span></div>
+    <div class="lbl" style="margin-top:8px">唐揚げの個数</div>
+    <div class="seg" style="margin-top:4px"><span>2</span><span class="on">3</span><span>4</span><span>5</span></div>
+  </div>
+  <div class="card">
+    <span class="tag g">ヒスタミン：当たらない</span>
+    <div class="lbl" style="margin-top:4px">魚・大豆・発酵食・作り置きが入ると赤で出す</div>
+  </div>
+  <div class="card">
+    <div class="row"><span class="lbl">記録すると今日の残り</span><span><b class="ok">473</b> → <b class="over">−316</b></span></div>
+  </div>
+  <div class="btn">記録する</div>
+</div>
+<div class="nav"><span>今日</span><span class="a">食べた</span><span class="fab">＋</span><span>振り返り</span><span>計画</span></div>
+</div></div>
+
+<!-- 4 振り返り -->
+<div class="ph"><p class="cap">④ 振り返り<small>目標は動かさず、乖離・原因・対策を並べる</small></p>
+<div class="frame"><div class="scr">
+  <div class="top"><b>振り返り</b><span>10/3〜10/20</span></div>
+  <div class="card">
+    <div class="lbl">体重と目標</div>
+    <svg viewBox="0 0 260 120" width="100%" height="120">
+      <line x1="20" y1="10" x2="20" y2="105" stroke="#ccc"/><line x1="20" y1="105" x2="255" y2="105" stroke="#ccc"/>
+      <polyline fill="none" stroke="#9aa7bd" stroke-width="2" stroke-dasharray="4 3" points="20,20 255,75"/>
+      <polyline fill="none" stroke="#1f5fbf" stroke-width="2.5" points="20,18 33,20 46,40 60,47 73,42 86,55 100,62 113,62 126,67 140,64 153,58 166,60 180,62 193,55 206,52 220,48 233,47 246,59"/>
+      <circle cx="246" cy="59" r="4" fill="#1f5fbf"/>
+      <text x="24" y="16" font-size="9" fill="#6b7280">62.3</text>
+      <text x="200" y="88" font-size="9" fill="#6b7280">目標 59.5</text>
+      <text x="214" y="70" font-size="9" fill="#1f5fbf">59.7</text>
+    </svg>
+  </div>
+  <div class="card">
+    <div class="lbl">2日の合計の残り（棒）と、翌朝の体重の動き</div>
+    <svg viewBox="0 0 260 90" width="100%" height="90">
+      <line x1="10" y1="45" x2="255" y2="45" stroke="#ccc"/>
+      <rect x="20" y="30" width="22" height="15" fill="#1f5fbf"/><rect x="60" y="45" width="22" height="20" fill="#c62828"/><rect x="100" y="45" width="22" height="9" fill="#c62828"/><rect x="140" y="25" width="22" height="20" fill="#1f5fbf"/><rect x="180" y="45" width="22" height="16" fill="#c62828"/><rect x="220" y="45" width="22" height="30" fill="#c62828"/>
+      <text x="16" y="86" font-size="8.5" fill="#6b7280">10/15</text><text x="216" y="86" font-size="8.5" fill="#6b7280">10/20</text>
+    </svg>
+  </div>
+  <div class="card">
+    <div class="lbl">乖離・原因・対策</div>
+    <table class="t">
+      <tr><th>日</th><th>乖離</th><th style="text-align:left;padding-left:6px">原因と対策</th></tr>
+      <tr><td>10/20</td><td class="over">+0.2</td><td style="text-align:left;padding-left:6px">10/19 夜 豚の甘辛炒め 550・泡盛2。→ 夜は残りの内で</td></tr>
+      <tr><td>10/19</td><td class="over">+0.8</td><td style="text-align:left;padding-left:6px">外食3回が続いた（ステーキ・お通し）。→ 外食の日は昼を予定どおりに</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <div class="lbl">体脂肪率は1日ごとに見ない</div>
+    RENPHO の誤差は ±3%。7日の平均だけを出す。
+  </div>
+</div>
+<div class="nav"><span>今日</span><span>食べた</span><span class="fab">＋</span><span class="a">振り返り</span><span>計画</span></div>
+</div></div>
+
+<!-- 5 計画 -->
+<div class="ph"><p class="cap">⑤ 計画<small>10/31 までの献立と、日ごとの摂取可の見通し</small></p>
+<div class="frame"><div class="scr">
+  <div class="top"><b>計画</b><span>目標 10/31 58.6kg</span></div>
+  <div class="card">
+    <table class="t">
+      <tr><th>日</th><th>目標</th><th>摂取可</th><th>予定</th><th>残り</th></tr>
+      <tr><td>10/21</td><td>59.4</td><td>970</td><td>813</td><td class="ok">157</td></tr>
+      <tr><td>10/22</td><td>59.3</td><td>975</td><td>813</td><td class="ok">162</td></tr>
+      <tr><td>10/27</td><td>58.9</td><td>1,000</td><td>747</td><td class="ok">253</td></tr>
+      <tr><td>10/28</td><td>58.8</td><td>1,005</td><td>877</td><td class="ok">128</td></tr>
+      <tr><td>10/31</td><td>58.6</td><td>1,019</td><td>943</td><td class="ok">76</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <div class="lbl">10/21（火）の献立 ― 押して変える</div>
+    <div class="item"><span>昼過ぎ：カチュー湯・卵3・納豆2</span><span class="lbl">›</span></div>
+    <div class="item"><span>歩いたあと：グルタミン5g</span><span class="lbl">›</span></div>
+    <div class="item"><span>夕方：カチュー湯・納豆2・泡盛3まで</span><span class="lbl">›</span></div>
+  </div>
+  <div class="card">
+    <div class="lbl">届く予定</div>
+    NOW ピープロテイン　10/27 頃 → 10/28 から夕方に1杯
+  </div>
+  <div class="card coach">
+    <div class="lbl">指導</div>
+    献立の納豆は大豆の発酵食で、ヒスタミンで避ける並びに当たります。ピープロテインが届いたら、置き換えられます。
+  </div>
+</div>
+<div class="nav"><span>今日</span><span>食べた</span><span class="fab">＋</span><span>振り返り</span><span class="a">計画</span></div>
+</div></div>
+
+</div>
+
+<h2>考え方</h2>
+<div class="cols">
+  <div class="box"><h3>記録表から引き継ぐもの</h3><ul>
+    <li>消費＝基礎代謝＋活動代謝＋食事による消費の3つに分けた式と、脂肪から燃える量の1日の上限</li>
+    <li>1日の残りと2日の合計の残り、達成は青・超過は赤</li>
+    <li>目標体重は始めの計画の式のまま動かさない</li>
+    <li>チェックを端末どうしで揃える仕組み（今の Worker fasting-sync）と、毎朝の自動入力</li>
+  </ul></div>
+  <div class="box"><h3>スマホで新しく足すもの</h3><ul>
+    <li>写真＋ひとことから AI が内訳つきで見積もる（今はこのセッションに送っていただいている部分）</li>
+    <li>お店の献立を覚えておく（ちょーでー弁当など）。2回目からは押すだけ</li>
+    <li>ヒスタミンで避ける食べ物（魚・大豆・発酵食・作り置き）が入ったら、記録する前に知らせる</li>
+    <li>超過した日は、指導のカードが夜と翌日のふるまいを出す</li>
+  </ul></div>
+  <div class="box"><h3>作るときに当たること</h3><ul>
+    <li>写真の見積もりをアプリの中で行うには、Claude の API を呼ぶ中継（Worker）が要る。API の利用料がかかる</li>
+    <li>ファスティング計画webアプリ（https://reports.7years.life/private/fasting-keikaku/）が別の持ち場で公開済み。計画を組む側はそちらにあるので、こちらは「毎日つける・振り返る」に絞ると重ならない</li>
+    <li>Mei さんの記録表も同じひな形なので、1つのアプリで人を切り替えられる形にすると2本作らずに済む</li>
+  </ul></div>
+  <div class="box"><h3>今の記録表との違い</h3><ul>
+    <li>表は1日1列で全期間を横に見る。スマホは「今日」を縦に読み、全期間は振り返りの図に回す</li>
+    <li>見る順番を「残り → 2日の合計 → たんぱく質 → 体重」に固定した（Mits様が実際に見ている順）</li>
+  </ul></div>
+</div>
+</div>
+</body>
+</html>
