@@ -547,11 +547,19 @@
   const now = new Date(); const TODAY = (now.getMonth() + 1) + '/' + now.getDate();
   const num = d => Number(d.split('/')[0]) * 100 + Number(d.split('/')[1]);
   const f0 = v => Math.round(v).toLocaleString('ja-JP');
+  // 2026-10-20 Mits様「消費の見積もりが多め…傾向から類推して掛け率を掛けて少なめにして」「これで、そもそもの摂取可が変わるので意識が変わる」：
+  // 実測（RENPHO の朝3回の平均）から割り出した掛け率。10/6〜10/18 の13日：脂肪量 10.08→9.70kg（−0.38kg×7,000＝2,681kcal）＋脂肪以外 −0.35kg×1,000＝350kcal → 実際に足りなかった分 3,031kcal。
+  // 摂取（写真の見積もりは1.1倍）11,526kcal＋3,031＝実際の消費 14,557kcal ÷ Apple Watch の消費 23,785kcal ＝ 0.61。消費（実績も先の日の見込みも）にこれを掛ける。
+  // 目標（目標脂肪量・目標体重・計画の脂肪の減り）は動かさない（2026-10-11 Mits様「目標とは…乖離と原因と対策を目標で管理する」）
+  const SHOUHI_KAKERITSU = 0.61;
+  // 2026-10-20 Mits様「後半はステーキ・弁当・お通しなど外の食事が増え、写真から見積もりました。油やたれは少なめに見積もりやすいものです。10%多く見積もって」：
+  // 写真から見積もった「（実際）」の食事の kcal を 1.1倍にする（量って入れたマナ酵素は除く）
+  const MITSUMORI_WARIMASHI = 1.1;
   const burnOf = j => {
     if (!j) return null;
-    if (j.kiso != null && j.kiso >= 1300 && j.katsudo != null) return { v: j.kiso + j.katsudo, suitei: false };
+    if (j.kiso != null && j.kiso >= 1300 && j.katsudo != null) return { v: Math.round((j.kiso + j.katsudo) * SHOUHI_KAKERITSU), suitei: false };
     // 2026-10-12 歩くと走るを分けた式（10/3〜10/11 の Apple Watch の実績・走るはフィットネスのワークアウト4回の実測 52.1kcal/km）：消費＝基礎代謝 1,464 ＋ 262 ＋ 14.0×歩く千歩 ＋ 52.1×走る km
-    if (j.hosu != null) return { v: Math.round(1464 + 262 + 14.0 * (j.hosu - (j.hashiru || 0)) / 1000 + 52.1 * (j.hashiru_km || 0)), suitei: true };
+    if (j.hosu != null) return { v: Math.round((1464 + 262 + 14.0 * (j.hosu - (j.hashiru || 0)) / 1000 + 52.1 * (j.hashiru_km || 0)) * SHOUHI_KAKERITSU), suitei: true };
     return null;
   };
 
@@ -568,7 +576,7 @@
       let kcal = 0, p = 0, c = 0, n = 0;
       Object.keys(chk).forEach(k => {
         if (!k.startsWith(d + '|')) return;
-        const e = EIYOU[k.split('|')[2]]; if (e) { kcal += e[0]; p += e[1]; c += e[2]; n++; }
+        const nm = k.split('|')[2], e = EIYOU[nm]; if (e) { kcal += e[0] * (/（実際）/.test(nm) && !/マナ酵素/.test(nm) ? MITSUMORI_WARIMASHI : 1); p += e[1]; c += e[2]; n++; }
       });
       const b = burnOf(K.jissoku[d]);
       let fat = null, deficit = null, over = 0, msg = [];
@@ -639,8 +647,9 @@
         // 2026-10-17 Mits様「摂取可引く摂取🟰残りとする不足欄を残りに変更」：不足の欄を「残り」（摂取可 − 摂取）にした。マイナスは摂取可を超えて食べた分
         const zan = v => (v < 0 ? '−' : '') + f0(Math.abs(v));
         if (x.mirai) {
-          h = '<div class="mirai">' + line('消費', f0(x.planBurn)) + line('燃焼', '−' + f0(x.capP)) + line('摂取可', f0(x.planBurn - x.capP)) + line('摂取', f0(x.planIn)) +
-              '<div class="big">' + zan(x.planBurn - x.capP - x.planIn) + '</div></div>';
+          const pb = Math.round(x.planBurn * SHOUHI_KAKERITSU);
+          h = '<div class="mirai">' + line('消費', f0(pb)) + line('燃焼', '−' + f0(x.capP)) + line('摂取可', f0(pb - x.capP)) + line('摂取', f0(x.planIn)) +
+              '<div class="big">' + zan(pb - x.capP - x.planIn) + '</div></div>';
         } else if (x.mae) {
           h = line('消費', x.b ? f0(x.b.v) : '—') + line('燃焼', '−' + f0(x.capA)) + line('摂取可', x.b ? f0(x.b.v - x.capA) : '—') + line('摂取', '—') + '<div class="big">—</div>';
         } else {
@@ -659,8 +668,8 @@
           const sg2 = v => (v < 0 ? '−' : '') + f0(Math.abs(v));
           let r = '';
           if (x.mirai) {
-            const sa = x.planBurn - x.planIn; ruikei += sa;
-            r = '<div class="mirai">' + line('消費量', f0(x.planBurn)) + line('摂取量', f0(x.planIn)) + line('差', sg2(sa)) + '<div class="big">' + (ruikeiAri ? sg2(ruikei) : '—') + '</div></div>';
+            const pb2 = Math.round(x.planBurn * SHOUHI_KAKERITSU), sa = pb2 - x.planIn; ruikei += sa;
+            r = '<div class="mirai">' + line('消費量', f0(pb2)) + line('摂取量', f0(x.planIn)) + line('差', sg2(sa)) + '<div class="big">' + (ruikeiAri ? sg2(ruikei) : '—') + '</div></div>';
           } else if (x.mae || !x.b || !x.n) {
             r = line('消費量', x.b ? f0(x.b.v) : '—') + line('摂取量', '—') + line('差', '—') + '<div class="big">' + (ruikeiAri ? sg2(ruikei) : '—') + '</div>';
           } else {
