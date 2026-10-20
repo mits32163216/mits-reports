@@ -219,7 +219,7 @@
     </tr>
     <!-- 2026-10-20 Mits様「毎日の収支…の↓にもう枠2日移動平均収支表を作って」：経験則「2日間の収支が3日目の朝に反映」。実測でも1日だと相関 −0.28、2日にまとめると −0.66 になる -->
     <tr class="idou2">
-      <th class="head hl"><div class="hlw"><div class="ttl">2日の<br>合計<span>kcal</span></div><div class="ls"><div class="r">消費量</div><div class="r">摂取量</div><div class="r">差</div><div class="big"><i>減少体重</i></div><div class="r">減少脂肪</div></div></div></th>
+      <th class="head hl"><div class="hlw"><div class="ttl">2日の<br>合計<span>kcal</span></div><div class="ls"><div class="r">消費量</div><div class="r">摂取量</div><div class="r">差</div><div class="r">摂取可</div><div class="big"><i>減少体重</i></div><div class="r">減少脂肪</div></div></div></th>
       <td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td>
     </tr>
     <tr class="zutsu">
@@ -702,7 +702,10 @@
             const f1 = fg(xp), f2 = fg(x);
             const shibog = (f1 != null && f2 != null) ? Math.round(f1 + f2) : null;
             const t = x.kyou ? ' 途中' : '';
-            i2 = line('消費量', f0(hb) + t) + line('摂取量', f0(hk) + t) + line('差', sg2(sa) + t) +
+            // 2026-10-20 Mits様「2日の合計…差の次の行に摂取可を入れて」：摂取可＝2日分の消費 −2日分の燃焼（脂肪kg×69.3kcal の上限）。ここまで食べると脂肪が上限いっぱい燃え、筋肉は減らない
+            const cp = xx => xx.mirai ? xx.capP : xx.capA;
+            const kano = hb - cp(xp) - cp(x);
+            i2 = line('消費量', f0(hb) + t) + line('摂取量', f0(hk) + t) + line('差', sg2(sa) + t) + line('摂取可', f0(kano) + t) +
                  '<div class="big">' + (dg != null ? (dg > 0 ? '+' : dg < 0 ? '−' : '±') + f0(Math.abs(dg)) + 'g' : '—') + '</div>' +
                  line('減少脂肪', shibog != null ? '−' + f0(shibog) + 'g' + t : '—');
             if (x.mirai) i2 = '<div class="mirai">' + i2 + '</div>';
