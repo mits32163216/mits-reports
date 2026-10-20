@@ -144,7 +144,7 @@ iframe#src{position:absolute;width:1200px;height:800px;left:-99999px;top:0;borde
     return { out, extra };
   }
   const seriesBase = nm => { const b = nm.replace(/\d+$/, ''); return (b !== nm && A.EIYOU[b + '1'] && A.EIYOU[b + '2']) ? b : null; };
-  const kcalOf = nm => { const e = A.EIYOU[nm]; if (!e) return null; return e[0] * (/（実際）/.test(nm) && !/マナ酵素/.test(nm) ? 1.1 : 1); };
+  const kcalOf = nm => { const e = A.EIYOU[nm]; return e ? e[0] : null; };
 
   // ===== 書く =====
   let last = null;
@@ -250,7 +250,7 @@ iframe#src{position:absolute;width:1200px;height:800px;left:-99999px;top:0;borde
     let h = '<div class="top"><b>食べたものを入れる</b><span>' + d + ' ' + ROWNAME[row] + 'に入ります</span></div>';
     h += '<div class="card"><div class="lbl">よく入れるもの（直近7日・押すと1つ入ります）</div><div class="chips">' +
       freq.map(b => { const nm = A.EIYOU[b] ? b : b + '1'; const e = kcalOf(nm); return '<button class="chip" data-add="' + esc(b) + '">' + esc(b) + (e != null ? ' <span class="kc">' + f0(e) + '</span>' : '') + '</button>'; }).join('') + '</div></div>';
-    h += '<div class="card list"><div class="lbl">前に入れた食事（押すと今日に入ります・写真の見積もりは1.1倍込み）</div>' +
+    h += '<div class="card list"><div class="lbl">前に入れた食事（押すと今日に入ります）</div>' +
       js.map(nm => '<div class="item" data-addj="' + esc(nm) + '"><span class="nm">' + esc(nm.replace('（実際）', '')) + '</span><span class="kc">' + f0(kcalOf(nm)) + 'kcal' + (jissai[nm] !== '0/0' ? '・' + jissai[nm] : '') + '</span></div>').join('') + '</div>';
     h += '<div class="card"><div class="lbl">初めての食事・写真</div>写真とひとことを Claude のセッション（沖縄用ファスティングジュース探索）に送ってください。内訳つきで見積もって記録表に入れます。入ったものは上の「前に入れた食事」に並び、2回目からは押すだけで入ります。</div>';
     h += '<div class="card"><div class="lbl">今日のチェック</div>' + masuHtml(d) + '</div>';
