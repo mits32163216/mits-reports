@@ -168,6 +168,10 @@
   /* 2026-10-19 Mits様「過去の登録が全部消えたよ」：スマホ（幅375px）では見出し100px＋10/3の150pxで250pxが埋まり、日ごとの列が125pxしか見えず過去の日が見えなくなった。10/3 の列は数字だけなので細くする */
   table:not(#tw-table) tr > :nth-child(2){ width:84px; min-width:84px; max-width:84px; }
   @media (max-width:640px){ table:not(#tw-table) tr > :nth-child(2){ width:64px; min-width:64px; max-width:64px; padding-left:2px; padding-right:2px; } }
+  /* 2026-10-20 Mits様「残りの数字、今は達成したときが赤になっているので、逆にして　達成したら青、太字、オーバーしたら赤」：
+     残りが0以上（摂取可の内に収まった）＝青・太字、マイナス（摂取可を超えた）＝赤 */
+  td.shushi .big.tassei{ color:#1f5fbf !important; font-weight:700 !important; }
+  td.shushi .big.over{ color:var(--red) !important; }
 </style>
 </head>
 <body>
@@ -675,7 +679,8 @@
           h = line('消費', x.b ? f0(x.b.v) + (x.b.suitei ? '*' : '') : '—') + line('燃焼', '−' + f0(x.capA)) +
               line('摂取可', x.b ? f0(x.b.v - x.capA) + (x.kyou ? ' 途中' : '') : '—') + line('摂取', x.n ? f0(x.kcal) : '—');
           if (x.deficit != null) {
-            const cls = x.kyou ? '' : (x.over > 50 ? 'warn' : 'good');
+            const v1 = x.b.v - x.capA - x.kcal;
+            const cls = v1 < 0 ? 'over' : (x.kyou ? '' : 'tassei');
             h += '<div class="big ' + cls + '">' + zan(x.b.v - x.capA - x.kcal) + (x.kyou ? ' 途中' : '') + '</div>';
           } else {
             h += '<div class="big">—</div>';
@@ -710,7 +715,7 @@
             // 2026-10-20 Mits様「2日合計の欄も　カロリー収支（消費・燃焼・摂取可・摂取・残り）と同じようにするんだよ」：並びをカロリー収支にそろえ、残りを大きい数字にする。
             // 残り＝摂取可−摂取。色の付け方もカロリー収支と同じ（摂取可より 50kcal 以上少なく食べた＝筋肉などが減る側は warn）。減少体重・減少脂肪はその下に残す
             const nensho2 = cp(xp) + cp(x), nokori2 = kano - hk;
-            const cls2 = (x.kyou || x.mirai) ? '' : (nokori2 > 50 ? 'warn' : 'good');
+            const cls2 = x.mirai ? '' : (nokori2 < 0 ? 'over' : (x.kyou ? '' : 'tassei'));
             i2 = line('消費', f0(hb) + t) + line('燃焼', '−' + f0(nensho2)) + line('摂取可', f0(kano) + t) + line('摂取', f0(hk) + t) +
                  '<div class="big ' + cls2 + '">' + zan(nokori2) + t + '</div>' +
                  line('減少体重', dg != null ? (dg > 0 ? '+' : dg < 0 ? '−' : '±') + f0(Math.abs(dg)) + 'g' : '—') +
