@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex,nofollow">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ファスティング">
+<meta name="theme-color" content="#faf8f4">
+<title>ファスティング記録</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2322314f'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='sans-serif'%3E%E8%A8%98%3C/text%3E%3C/svg%3E">
+<!--
+  2026-10-20 Mits様「実装して」：モック https://reports.7years.life/private/fasting-app-mock/ をアプリにした。
+  計算はしない。記録表 /private/fasting-kiroku/ を見えない枠で読み込み、記録表の式が出した数字（window.KIROKU_S）を読んで並べ替えるだけ。
+  チェックの付け外しは記録表の window.KIROKU_APP.set を呼ぶので、同期先（Worker fasting-sync）にも記録表と同じ形で送られる。
+  写真からの見積もりは付けていない（アプリの中で行うには Claude の API の利用料がかかるため）。写真は Claude のセッションに送る。
+-->
+<style>
+:root{
+  --bg:#faf8f4; --card:#ffffff; --ink:#1d2433; --sub:#6b7280; --line:#e7e2d8;
+  --blue:#1f5fbf; --blue-bg:#e8f0fc; --red:#c62828; --red-bg:#fdecec;
+  --amber:#a96a12; --amber-bg:#fdf3e1; --navy:#22314f; --gray:#9aa7bd;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.5;font-size:15px}
+main{max-width:520px;margin:0 auto;padding:12px 14px calc(96px + env(safe-area-inset-bottom))}
+.top{display:flex;justify-content:space-between;align-items:baseline;margin:6px 2px 12px}
+.top b{font-size:19px}.top span{color:var(--sub);font-size:12.5px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin-bottom:12px}
+.lbl{font-size:12px;color:var(--sub)}
+.big{font-size:44px;font-weight:800;line-height:1.1;letter-spacing:-.5px}
+.big small{font-size:16px;font-weight:600}
+.over{color:var(--red)}.ok{color:var(--blue)}.mute{color:var(--sub)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.mini{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px;text-align:center}
+.mini div{background:#f5f2ec;border-radius:10px;padding:5px 0}
+.mini b{display:block;font-size:15px}
+.bar{height:9px;background:#eee;border-radius:5px;overflow:hidden;margin-top:4px}
+.bar i{display:block;height:100%;background:var(--blue)}
+.coach{background:var(--amber-bg);border-color:#f0d9a8}
+.coach .lbl{color:var(--amber);font-weight:700}
+.grp{margin-top:6px}
+.grp h4{margin:8px 0 2px;font-size:12px;color:var(--sub);font-weight:600}
+.item{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px dashed var(--line);gap:8px}
+.item:last-child{border-bottom:0}
+.item .nm{flex:1}
+.item .kc{color:var(--sub);font-size:12px;white-space:nowrap}
+.dots{display:inline-flex;gap:7px}
+.dot{width:30px;height:30px;border-radius:50%;border:2px solid var(--blue);background:#fff;padding:0}
+.dot.on{background:var(--blue)}
+.x{border:0;background:#f1eee8;color:var(--sub);border-radius:8px;padding:4px 9px;font-size:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:20px;padding:7px 12px;font-size:14px;color:var(--ink)}
+.chip:active{background:var(--blue-bg)}
+.list .item{cursor:pointer}
+table.t{width:100%;border-collapse:collapse;font-size:13px}
+table.t td,table.t th{padding:7px 3px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}
+table.t th{color:var(--sub);font-weight:400;font-size:11.5px}
+table.t td:first-child,table.t th:first-child{text-align:left}
+table.t td.l{text-align:left;font-size:12px;color:var(--sub)}
+.nav{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+.nav .in{max-width:520px;margin:0 auto;height:64px;display:flex;justify-content:space-around;align-items:center}
+.nav button{border:0;background:none;font-size:12px;color:var(--sub);padding:8px 6px;min-width:56px}
+.nav button.a{color:var(--navy);font-weight:700}
+.nav .fab{width:56px;height:56px;border-radius:50%;background:var(--navy);color:#fff;font-size:30px;line-height:1;margin-top:-28px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom));background:var(--navy);color:#fff;border-radius:12px;padding:10px 14px;font-size:14px;display:none;gap:12px;align-items:center;z-index:9;max-width:92%}
+.toast button{background:none;border:1px solid #fff;color:#fff;border-radius:8px;padding:3px 9px}
+.load{text-align:center;color:var(--sub);padding:60px 0}
+.sec{display:none}.sec.on{display:block}
+svg text{font-family:inherit}
+details summary{list-style:none;cursor:pointer}
+details summary::-webkit-details-marker{display:none}
+.menu{font-size:12.5px;color:var(--sub);padding:4px 0 8px}
+iframe#src{position:absolute;width:1200px;height:800px;left:-99999px;top:0;border:0;visibility:hidden}
+</style>
+</head>
+<body>
+<main>
+  <div id="load" class="load">記録表を読み込んでいます</div>
+  <section id="kyou" class="sec"></section>
+  <section id="tabeta" class="sec"></section>
+  <section id="furikaeri" class="sec"></section>
+  <section id="keikaku" class="sec"></section>
+</main>
+<div class="toast" id="toast"><span id="toastMsg"></span><button id="toastUndo">戻す</button></div>
+<nav class="nav"><div class="in">
+  <button data-t="kyou" class="a">今日</button>
+  <button data-t="tabeta">食べた</button>
+  <button class="fab" data-t="tabeta" aria-label="食べたものを入れる">＋</button>
+  <button data-t="furikaeri">振り返り</button>
+  <button data-t="keikaku">計画</button>
+</div></nav>
+<iframe id="src" src="/private/fasting-kiroku/?app=1" title="記録表"></iframe>
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const f0 = v => Math.round(v).toLocaleString('ja-JP');
+  const sg = v => (v > 0 ? '+' : v < 0 ? '−' : '±') + f0(Math.abs(v));
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const ROWNAME = {gozen:'午前', hirusugi:'昼過ぎ', aruita:'歩いたあと', yugata:'夕方', sapuri:'サプリ'};
+  const YOUBI = '日月火水木金土';
+  const fr = $('#src');
+  let A = null, tab = 'kyou';
+  try { tab = localStorage.getItem('fasting_app_tab') || 'kyou'; } catch (e) {}
+
+  const W = () => fr.contentWindow;
+  const now = () => new Date();
+  const TODAY = () => { const n = now(); return (n.getMonth() + 1) + '/' + n.getDate(); };
+  const num = d => Number(d.split('/')[0]) * 100 + Number(d.split('/')[1]);
+  const prevDay = d => { const [m, dd] = d.split('/').map(Number); return m + '/' + (dd - 1); };
+  const kyouDay = () => { const t = TODAY(), D = A.DAYS; if (D.includes(t)) return t; return num(t) > num(D[D.length - 1]) ? D[D.length - 1] : D[0]; };
+  const youbi = d => { const [m, dd] = d.split('/').map(Number); return YOUBI[new Date(now().getFullYear(), m - 1, dd).getDay()]; };
+
+  // ===== 記録表の数字を読む（式は記録表のものだけ） =====
+  function ichinichi(d) {
+    const x = A.S[d]; if (!x) return null;
+    if (x.mirai) return { mirai: true, burn: x.planBurn, nensho: x.capP, kano: x.planBurn - x.capP, sesshu: x.planIn, nokori: x.planBurn - x.capP - x.planIn, p: null, c: null, needP: x.needP };
+    const r = { mirai: false, kyou: x.kyou, sesshu: x.kcal, p: x.p, c: x.c, needP: x.needP, n: x.n };
+    if (x.b) { r.burn = x.b.v; r.nensho = x.capA; r.kano = x.b.v - x.capA; r.nokori = r.kano - x.kcal; r.suitei = x.b.suitei; }
+    return r;
+  }
+  function futsuka(d) {
+    const pd = prevDay(d), xp = A.S[pd], x = A.S[d]; if (!xp || !x) return null;
+    const hiro = y => y.mirai ? { b: y.planBurn, k: y.planIn } : (y.b ? { b: y.b.v, k: y.kcal } : null);
+    const cp = y => y.mirai ? y.capP : y.capA;
+    const a1 = hiro(xp), a2 = hiro(x); if (!a1 || !a2) return null;
+    const hb = a1.b + a2.b, hk = a1.k + a2.k, kano = hb - cp(xp) - cp(x);
+    const fat = y => y.mirai ? y.planFat : y.fat;
+    return { burn: hb, sesshu: hk, kano, nokori: kano - hk, shibou: (fat(xp) || 0) + (fat(x) || 0) };
+  }
+  const kg = d => ((A.K.jissoku || {})[d] || {}).kg;
+  const mokuhyo = d => (A.K.mokuhyo || {})[d];
+
+  // その日のマス（記録表の画面にあるチェック）と、マスの無いチェック（アプリで足したもの）
+  function masu(d) {
+    const doc = W().document, out = {}, seen = {};
+    doc.querySelectorAll('td.meal .chk').forEach(sp => {
+      const k = sp.dataset.k; if (!k || !k.startsWith(d + '|') || seen[k]) return; seen[k] = 1;
+      const [, row, nm] = k.split('|'); const base = nm.replace(/\d+$/, '');
+      const g = out[row] = out[row] || {}; (g[base] = g[base] || []).push(k);
+    });
+    const extra = Object.keys(A.chk).filter(k => k.startsWith(d + '|') && !seen[k]);
+    return { out, extra };
+  }
+  const kcalOf = nm => { const e = A.EIYOU[nm]; if (!e) return null; return e[0] * (/（実際）/.test(nm) && !/マナ酵素/.test(nm) ? 1.1 : 1); };
+
+  // ===== 書く =====
+  let last = null;
+  function setK(k, on, msg) {
+    A.set(k, on);
+    last = { k, on };
+    toast(msg || ((on ? '入れました：' : '外しました：') + k.split('|')[2]));
+  }
+  function toast(m) {
+    $('#toastMsg').textContent = m; const t = $('#toast'); t.style.display = 'flex';
+    clearTimeout(toast.h); toast.h = setTimeout(() => t.style.display = 'none', 4000);
+  }
+  $('#toastUndo').onclick = () => { if (last) { A.set(last.k, !last.on); toast('戻しました'); last = null; } };
+  const nowRow = () => now().getHours() < 16 ? 'hirusugi' : 'yugata';
+  function addItem(nm) {
+    const d = kyouDay(), row = nowRow();
+    const base = nm.replace(/\d+$/, '');
+    if (A.EIYOU[base + '1']) {
+      for (let i = 1; i <= 9; i++) { const k = d + '|' + row + '|' + base + i; if (A.EIYOU[base + i] && !A.chk[k]) { setK(k, true, '入れました：' + base + '（' + ROWNAME[row] + ' ' + i + 'つ目）'); return; } }
+      toast('これ以上は入れられません'); return;
+    }
+    const k = d + '|' + row + '|' + nm;
+    if (A.chk[k]) { toast('もう入っています：' + nm); return; }
+    setK(k, true, '入れました：' + nm + '（' + ROWNAME[row] + '）');
+  }
+
+  // ===== 画面：今日 =====
+  function rKyou() {
+    const d = kyouDay(), x = ichinichi(d), y = futsuka(d), w = kg(d), t = mokuhyo(d), w0 = kg('10/3');
+    const nichime = num(d) - 1003 + 1;
+    let h = '<div class="top"><b>' + d + '（' + youbi(d) + '）</b><span>' + nichime + '日目・10/31 まで</span></div>';
+    if (x && x.nokori != null) {
+      h += '<div class="card"><div class="lbl">今日の残り' + (x.kyou ? '（途中・消費はこのあとも増えます）' : '') + '</div>' +
+        '<div class="big ' + (x.nokori < 0 ? 'over' : 'ok') + '">' + sg(x.nokori) + '<small> kcal</small></div>' +
+        '<div class="mini"><div><span class="lbl">消費</span><b>' + f0(x.burn) + (x.suitei ? '*' : '') + '</b></div><div><span class="lbl">燃焼</span><b>' + f0(x.nensho) + '</b></div><div><span class="lbl">摂取可</span><b>' + f0(x.kano) + '</b></div><div><span class="lbl">摂取</span><b>' + f0(x.sesshu) + '</b></div></div></div>';
+    } else {
+      h += '<div class="card"><div class="lbl">今日の残り</div><div class="big mute">—</div><div class="lbl">消費のデータ待ち（毎朝と毎時5分の自動入力で入ります）。摂取 ' + f0(x ? x.sesshu : 0) + 'kcal</div></div>';
+    }
+    if (y) h += '<div class="card"><div class="lbl">2日の合計の残り（明日の朝の体重に出る分）</div><div class="row"><b class="' + (y.nokori < 0 ? 'over' : 'ok') + '" style="font-size:24px">' + sg(y.nokori) + '</b><span class="lbl">摂取可 ' + f0(y.kano) + ' ／ 摂取 ' + f0(y.sesshu) + '</span></div></div>';
+    if (x) {
+      const np = x.needP || 96, pp = x.p || 0, cc = x.c || 0;
+      h += '<div class="card"><div class="row"><span>たんぱく質</span><b class="' + (pp >= np ? 'ok' : '') + '">' + Math.round(pp) + ' / ' + np + 'g</b></div><div class="bar"><i style="width:' + Math.min(100, pp / np * 100) + '%"></i></div>' +
+        '<div class="row" style="margin-top:8px"><span>糖質</span><b class="' + (cc > 50 ? 'over' : '') + '">' + Math.round(cc) + ' / 50g</b></div><div class="bar"><i style="width:' + Math.min(100, cc / 50 * 100) + '%;background:' + (cc > 50 ? 'var(--red)' : 'var(--gray)') + '"></i></div></div>';
+    }
+    h += '<div class="card"><div class="row"><span>体重（朝）</span><b>' + (w != null ? w.toFixed(1) + 'kg' : 'まだ') + '</b></div>' +
+      '<div class="row lbl"><span>目標 ' + (t != null ? t.toFixed(1) + 'kg' : '—') + '</span>' + (w != null && t != null ? '<span class="' + (w - t > 0 ? 'over' : 'ok') + '">目標より ' + (w - t > 0 ? '+' : '') + (w - t).toFixed(1) + 'kg</span>' : '') + '</div>' +
+      (w != null && w0 != null ? '<div class="row lbl"><span>10/3 から</span><span>' + (w - w0 > 0 ? '+' : '') + (w - w0).toFixed(1) + 'kg</span></div>' : '') + '</div>';
+    h += coach(d, x, y);
+    h += '<div class="card"><div class="lbl">今日のチェック（押して付け外し）</div>' + masuHtml(d) + '</div>';
+    $('#kyou').innerHTML = h;
+  }
+  function coach(d, x, y) {
+    if (!x) return '';
+    const m = [];
+    if (x.nokori == null) m.push('消費のデータが入るまで、献立の予定どおりに進めてください。');
+    else if (x.nokori < 0) {
+      m.push('今日は摂取可を ' + f0(-x.nokori) + 'kcal 超えています。このあとは予定を外し、カチュー湯だけにして超過を広げないでください。');
+      m.push('明日に取り返そうと減らさないこと。脂肪から燃える量は1日ごとに上限があり、上限を超えて減らした分は筋肉が減ります。');
+    } else {
+      const np = x.needP || 96, lack = np - (x.p || 0);
+      if (lack > 3) { const e = (A.EIYOU['卵1'] || [71, 6.1])[0]; m.push('残り ' + f0(x.nokori) + 'kcal。たんぱく質があと ' + Math.round(lack) + 'g 足りません。卵1個（' + e + 'kcal・6g）かピープロテイン1杯（130kcal・28g）で埋めてください。'); }
+      else m.push('残り ' + f0(x.nokori) + 'kcal の内で。たんぱく質は足りています。');
+      if (y && y.nokori < 0) m.push('2日の合計では ' + f0(-y.nokori) + 'kcal 超えています。明日の朝の体重に出るので、今日は残りの内で止めてください。');
+    }
+    if (x.c > 50) m.push('糖質が ' + Math.round(x.c) + 'g で 50g を超えています。');
+    return '<div class="card coach"><div class="lbl">指導</div>' + m.map(esc).join('<br>') + '</div>';
+  }
+  function masuHtml(d) {
+    const { out, extra } = masu(d); let h = '';
+    Object.keys(ROWNAME).forEach(row => {
+      const g = out[row]; if (!g) return;
+      h += '<div class="grp"><h4>' + ROWNAME[row] + '</h4>';
+      Object.keys(g).forEach(base => {
+        const ks = g[base]; const multi = ks.length > 1 || /\d$/.test(ks[0].split('|')[2]);
+        const e = kcalOf(ks[0].split('|')[2]);
+        h += '<div class="item"><span class="nm">' + esc(multi ? base : ks[0].split('|')[2]) + (e != null ? ' <span class="kc">' + f0(e) + 'kcal</span>' : '') + '</span><span class="dots">' +
+          ks.map(k => '<button class="dot' + (A.chk[k] ? ' on' : '') + '" data-k="' + esc(k) + '" aria-label="' + esc(k.split('|')[2]) + '"></button>').join('') + '</span></div>';
+      });
+      h += '</div>';
+    });
+    if (extra.length) {
+      h += '<div class="grp"><h4>アプリで足したもの・マスの無いチェック</h4>';
+      extra.forEach(k => { const nm = k.split('|')[2], e = kcalOf(nm); h += '<div class="item"><span class="nm">' + esc(nm) + ' <span class="kc">' + (ROWNAME[k.split('|')[1]] || '') + (e != null ? '・' + f0(e) + 'kcal' : '') + '</span></span><button class="x" data-off="' + esc(k) + '">外す</button></div>'; });
+      h += '</div>';
+    }
+    return h || '<div class="lbl">この日のマスはありません</div>';
+  }
+
+  // ===== 画面：食べた =====
+  function rTabeta() {
+    const d = kyouDay(), row = nowRow();
+    // よく入れるもの：これまでのチェックの回数順（写真から入れた（実際）は下の欄）
+    const cnt = {};
+    Object.keys(A.chk).forEach(k => { const nm = k.split('|')[2]; if (!nm || /（実際）/.test(nm) || !A.EIYOU[nm]) return; const b = nm.replace(/\d+$/, ''); cnt[b] = (cnt[b] || 0) + 1; });
+    const freq = Object.keys(cnt).sort((a, b) => cnt[b] - cnt[a]).slice(0, 14);
+    if (A.EIYOU['ピープロテイン1杯'] && !freq.includes('ピープロテイン1杯')) freq.push('ピープロテイン1杯');
+    // 前に入れた食事：（実際）を新しい日の順に
+    const jissai = {};
+    Object.keys(A.chk).forEach(k => { const [dd, , nm] = k.split('|'); if (!/（実際）/.test(nm || '') || !A.EIYOU[nm]) return; if (!jissai[nm] || num(dd) > num(jissai[nm])) jissai[nm] = dd; });
+    Object.keys(A.EIYOU).forEach(nm => { if (/（実際）/.test(nm) && !jissai[nm]) jissai[nm] = '0/0'; });
+    const js = Object.keys(jissai).sort((a, b) => num(jissai[b]) - num(jissai[a]));
+    let h = '<div class="top"><b>食べたものを入れる</b><span>' + d + ' ' + ROWNAME[row] + 'に入ります</span></div>';
+    h += '<div class="card"><div class="lbl">よく入れるもの（押すと1つ入ります）</div><div class="chips">' +
+      freq.map(b => { const nm = A.EIYOU[b + '1'] ? b + '1' : b; const e = kcalOf(nm); return '<button class="chip" data-add="' + esc(b) + '">' + esc(b) + (e != null ? ' <span class="kc">' + f0(e) + '</span>' : '') + '</button>'; }).join('') + '</div></div>';
+    h += '<div class="card list"><div class="lbl">前に入れた食事（押すと今日に入ります・写真の見積もりは1.1倍込み）</div>' +
+      js.map(nm => '<div class="item" data-addj="' + esc(nm) + '"><span class="nm">' + esc(nm.replace('（実際）', '')) + '</span><span class="kc">' + f0(kcalOf(nm)) + 'kcal' + (jissai[nm] !== '0/0' ? '・' + jissai[nm] : '') + '</span></div>').join('') + '</div>';
+    h += '<div class="card"><div class="lbl">初めての食事・写真</div>写真とひとことを Claude のセッション（沖縄用ファスティングジュース探索）に送ってください。内訳つきで見積もって記録表に入れます。入ったものは上の「前に入れた食事」に並び、2回目からは押すだけで入ります。</div>';
+    h += '<div class="card"><div class="lbl">今日のチェック</div>' + masuHtml(d) + '</div>';
+    $('#tabeta').innerHTML = h;
+  }
+
+  // ===== 画面：振り返り =====
+  function rFurikaeri() {
+    const T = kyouDay(), D = ['10/3'].concat(A.DAYS), past = D.filter(d => num(d) <= num(T));
+    // 体重と目標の図
+    const vals = D.map(d => [kg(d), mokuhyo(d)]).flat().filter(v => v != null);
+    const lo = Math.floor(Math.min(...vals) * 2) / 2 - 0.3, hi = Math.ceil(Math.max(...vals) * 2) / 2 + 0.3;
+    const Wd = 320, Hd = 150, X = i => 26 + i * (Wd - 34) / (D.length - 1), Y = v => 8 + (hi - v) / (hi - lo) * (Hd - 26);
+    let tg = '', ac = '', dots = '';
+    D.forEach((d, i) => { const t = mokuhyo(d); if (t != null) tg += (tg ? ' ' : '') + X(i).toFixed(1) + ',' + Y(t).toFixed(1); const w = kg(d); if (w != null) { ac += (ac ? ' ' : '') + X(i).toFixed(1) + ',' + Y(w).toFixed(1); dots += '<circle cx="' + X(i).toFixed(1) + '" cy="' + Y(w).toFixed(1) + '" r="2.6" fill="#1f5fbf"/>'; } });
+    let ticks = ''; for (let v = Math.ceil(lo); v <= hi; v++) ticks += '<line x1="26" x2="' + Wd + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="#eee"/><text x="0" y="' + (Y(v) + 3) + '" font-size="9" fill="#6b7280">' + v + '</text>';
+    ['10/3', '10/10', '10/17', '10/24', '10/31'].forEach(d => { const i = D.indexOf(d); if (i >= 0) ticks += '<text x="' + (X(i) - 10) + '" y="' + (Hd - 2) + '" font-size="9" fill="#6b7280">' + d + '</text>'; });
+    let h = '<div class="top"><b>振り返り</b><span>10/3〜' + T + '</span></div>';
+    h += '<div class="card"><div class="row"><span class="lbl">体重（青）と目標（点線）</span></div><svg viewBox="0 0 ' + Wd + ' ' + Hd + '" width="100%">' + ticks +
+      '<polyline fill="none" stroke="#9aa7bd" stroke-width="1.8" stroke-dasharray="4 3" points="' + tg + '"/><polyline fill="none" stroke="#1f5fbf" stroke-width="2.2" points="' + ac + '"/>' + dots + '</svg></div>';
+    // 2日の合計の残り
+    const bars = past.filter(d => d !== '10/3').map(d => [d, futsuka(d)]).filter(a => a[1]);
+    if (bars.length) {
+      const mx = Math.max(...bars.map(a => Math.abs(a[1].nokori)), 100), bw = (Wd - 30) / bars.length;
+      let b = '<line x1="26" x2="' + Wd + '" y1="50" y2="50" stroke="#ccc"/>';
+      bars.forEach((a, i) => { const v = a[1].nokori, hh = Math.abs(v) / mx * 42, x = 28 + i * bw; b += '<rect x="' + x.toFixed(1) + '" y="' + (v >= 0 ? 50 - hh : 50).toFixed(1) + '" width="' + Math.max(2, bw - 3).toFixed(1) + '" height="' + hh.toFixed(1) + '" fill="' + (v >= 0 ? '#1f5fbf' : '#c62828') + '"/>'; });
+      b += '<text x="26" y="108" font-size="9" fill="#6b7280">' + bars[0][0] + '</text><text x="' + (Wd - 28) + '" y="108" font-size="9" fill="#6b7280">' + bars[bars.length - 1][0] + '</text>';
+      h += '<div class="card"><div class="lbl">2日の合計の残り（青＝摂取可の内・赤＝超過）</div><svg viewBox="0 0 ' + Wd + ' 112" width="100%">' + b + '</svg></div>';
+    }
+    // 乖離・原因
+    let tb = '<table class="t"><tr><th>朝</th><th>体重</th><th>乖離</th><th>前2日の残り</th></tr>';
+    past.slice().reverse().forEach(d => {
+      const w = kg(d), t = mokuhyo(d); if (w == null) return;
+      const pd = prevDay(d), y = A.S[pd] ? futsuka(pd) : null;
+      const meals = Object.keys(A.chk).filter(k => k.startsWith(pd + '|')).map(k => k.split('|')[2]);
+      const awa = meals.filter(n => /^泡盛\d$/.test(n)).length;
+      const js = meals.filter(n => /（実際）/.test(n) && !/マナ酵素/.test(n)).map(n => n.replace('（実際）', ''));
+      const gen = (js.length ? js.join('・') : '') + (awa ? (js.length ? '・' : '') + '泡盛' + awa : '');
+      tb += '<tr><td>' + d + '</td><td>' + w.toFixed(1) + '</td><td class="' + (t != null && w - t > 0 ? 'over' : 'ok') + '">' + (t != null ? (w - t > 0 ? '+' : '') + (w - t).toFixed(1) : '—') + '</td><td class="' + (y && y.nokori < 0 ? 'over' : 'ok') + '">' + (y ? sg(y.nokori) : '—') + '</td></tr>' +
+        (gen ? '<tr><td></td><td colspan="3" class="l">前の日：' + esc(gen) + '</td></tr>' : '');
+    });
+    h += '<div class="card"><div class="lbl">目標との乖離（体重−目標）と、前の2日の残り・前の日の外の食事</div>' + tb + '</table></div>';
+    h += '<div class="card"><div class="lbl">体脂肪率は1日ごとに見ない</div>RENPHO の体脂肪率の誤差は ±3%程度です。信頼するのは朝の同じ時刻の体重です。</div>';
+    $('#furikaeri').innerHTML = h;
+  }
+
+  // ===== 画面：計画 =====
+  function rKeikaku() {
+    const T = kyouDay(), fut = A.DAYS.filter(d => num(d) > num(T));
+    let h = '<div class="top"><b>計画</b><span>目標 10/31 ' + (mokuhyo('10/31') != null ? mokuhyo('10/31').toFixed(1) + 'kg' : '') + '</span></div>';
+    if (!fut.length) { $('#keikaku').innerHTML = h + '<div class="card">先の日はありません</div>'; return; }
+    h += '<div class="card"><table class="t"><tr><th>日</th><th>目標</th><th>摂取可</th><th>予定</th><th>残り</th></tr>';
+    fut.forEach(d => { const x = ichinichi(d); if (!x) return; h += '<tr><td>' + d + '（' + youbi(d) + '）</td><td>' + (mokuhyo(d) != null ? mokuhyo(d).toFixed(1) : '—') + '</td><td>' + f0(x.kano) + '</td><td>' + f0(x.sesshu) + '</td><td class="' + (x.nokori < 0 ? 'over' : 'ok') + '">' + sg(x.nokori) + '</td></tr>'; });
+    h += '</table></div>';
+    h += '<div class="card"><div class="lbl">日ごとの献立（押して開く）</div>';
+    fut.forEach(d => {
+      const { out } = masu(d); let mm = '';
+      Object.keys(ROWNAME).forEach(row => { const g = out[row]; if (!g) return; mm += '<div>' + ROWNAME[row] + '：' + Object.keys(g).map(b => esc(g[b].length > 1 || /\d$/.test(g[b][0].split('|')[2]) ? b + g[b].length : g[b][0].split('|')[2])).join('・') + '</div>'; });
+      h += '<details class="item" style="display:block"><summary class="row"><span>' + d + '（' + youbi(d) + '）</span><span class="lbl">›</span></summary><div class="menu">' + (mm || 'マスなし') + '</div></details>';
+    });
+    h += '</div>';
+    $('#keikaku').innerHTML = h;
+  }
+
+  // ===== 動かす =====
+  function show(t) {
+    tab = t; try { localStorage.setItem('fasting_app_tab', t); } catch (e) {}
+    document.querySelectorAll('.sec').forEach(s => s.classList.toggle('on', s.id === t));
+    document.querySelectorAll('.nav button').forEach(b => b.classList.toggle('a', b.dataset.t === t && !b.classList.contains('fab')));
+    window.scrollTo(0, 0); draw();
+  }
+  function draw() {
+    if (!A || !A.S) return;
+    $('#load').style.display = 'none';
+    try { ({ kyou: rKyou, tabeta: rTabeta, furikaeri: rFurikaeri, keikaku: rKeikaku })[tab](); }
+    catch (e) { $('#load').style.display = 'block'; $('#load').textContent = '表示で問題が起きました：' + e.message; }
+  }
+  document.querySelector('.nav').addEventListener('click', e => { const b = e.target.closest('button[data-t]'); if (b) show(b.dataset.t); });
+  document.querySelector('main').addEventListener('click', e => {
+    const dot = e.target.closest('.dot'); if (dot) { const k = dot.dataset.k; setK(k, !A.chk[k]); return; }
+    const off = e.target.closest('[data-off]'); if (off) { setK(off.dataset.off, false); return; }
+    const ad = e.target.closest('[data-add]'); if (ad) { addItem(ad.dataset.add); return; }
+    const aj = e.target.closest('[data-addj]'); if (aj) { const nm = aj.dataset.addj; if (confirm(nm.replace('（実際）', '') + ' を今日の' + ROWNAME[nowRow()] + 'に入れますか')) addItem(nm); }
+  });
+  function hook() {
+    try {
+      const w = W(); if (!w || !w.KIROKU_APP || !w.KIROKU_S) return false;
+      A = w.KIROKU_APP;
+      w.addEventListener('kiroku-render', () => draw());
+      show(tab); return true;
+    } catch (e) { return false; }
+  }
+  let tries = 0;
+  const wait = () => { if (hook()) return; if (++tries > 100) { $('#load').textContent = '記録表を読み込めませんでした。開き直してください'; return; } setTimeout(wait, 200); };
+  fr.addEventListener('load', () => { tries = 0; wait(); });
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && A) { A.pull(); draw(); } });
+})();
+</script>
+</body>
+</html>
