@@ -571,7 +571,8 @@
   const LBM_KIJUN = 50.2;
   // 2026-10-20 Mits様「後半はステーキ・弁当・お通しなど外の食事が増え、写真から見積もりました。油やたれは少なめに見積もりやすいものです。10%多く見積もって」：
   // 写真から見積もった「（実際）」の食事の kcal を 1.1倍にする（量って入れたマナ酵素は除く）
-  const MITSUMORI_WARIMASHI = 1.1;
+  // 2026-10-20 Mits様「1.1の話はいろいろな数値の整えをする前なので、その話はもうなし」：上乗せをやめた（写真の見積もりは CLAUDE.md の基準で内訳から出す）
+  const MITSUMORI_WARIMASHI = 1;
   const burnOf = (j, kcal) => {
     if (!j) return null;
     const lbm = (j.kg != null && j.shibo != null) ? j.kg * (1 - j.shibo / 100) : LBM_KIJUN;
