@@ -715,7 +715,8 @@
             // 記録表の「脂肪の燃焼 実施」（fat）は既に上限で頭打ちにしているので、その2日分を足す。上限を超えた分は筋肉などから出た分
             const fg = xx => !xx ? null : (xx.mirai ? xx.planFat : (xx.fat != null ? xx.fat : null));
             const f1 = fg(xp), f2 = fg(x);
-            const shibog = (f1 != null && f2 != null) ? Math.round(f1 + f2) : null;
+            // 2026-10-20 Mits様「減少脂肪は2日ぶんだから、そこだけ2で割って」：減少脂肪だけ2日の平均（1日あたり）で出す
+            const shibog = (f1 != null && f2 != null) ? Math.round((f1 + f2) / 2) : null;
             const t = x.kyou ? ' 途中' : '';
             // 2026-10-20 Mits様「2日の合計…差の次の行に摂取可を入れて」：摂取可＝2日分の消費 −2日分の燃焼（脂肪kg×69.3kcal の上限）。ここまで食べると脂肪が上限いっぱい燃え、筋肉は減らない
             const cp = xx => xx.mirai ? xx.capP : xx.capA;
