@@ -762,6 +762,8 @@
         }
       });
     });
+    // 2026-10-20 Mits様「実装して」（スマホのアプリ）：アプリ https://reports.7years.life/private/fasting-app/ がこの表を中に読み込み、計算の結果をここから読む
+    window.KIROKU_S = S; try { window.dispatchEvent(new Event('kiroku-render')); } catch (e) {}
   }
   render();
 
@@ -800,6 +802,17 @@
       render();
     } catch (e) {}
   }
+  // スマホのアプリ（/private/fasting-app/）が使う出口。計算はこの表の式だけで行い、アプリでは式を持たない
+  window.KIROKU_APP = {
+    get chk() { return chk; }, EIYOU, K, DAYS, CAP,
+    get S() { return window.KIROKU_S; },
+    set(k, on) {
+      if (on) chk[k] = 1; else delete chk[k];
+      document.querySelectorAll('td.meal .chk').forEach(sp => { if (sp.dataset.k === k) sp.classList.toggle('on', !!on); });
+      save(); render(); queue(k, !!on); flush();
+    },
+    pull: () => pull()
+  };
   pull();
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') pull(); });
 })();
