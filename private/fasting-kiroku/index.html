@@ -719,7 +719,7 @@
         const ic = itds[col];
         if (ic) {
           const pd = prevDay(m[0]), xp = S[pd];
-          const hiro = xx => !xx ? null : (xx.mirai ? { b: xx.planBurn, k: xx.planIn } : (xx.b && xx.n ? { b: xx.b.v, k: xx.kcal } : null));
+          const hiro = xx => !xx ? null : (xx.mirai ? { b: xx.planBurn, k: xx.planIn } : (xx.b ? { b: xx.b.v, k: xx.kcal } : null));
           const a1 = hiro(xp), a2 = hiro(x);
           let i2 = '';
           if (a1 && a2) {
@@ -729,7 +729,7 @@
             const perkg = (dg != null && dg < 0) ? Math.round(sa * 2 / (-dg / 1000)) : null;
             const t = x.kyou ? ' 途中' : '';
             i2 = line('消費量', f0(hb) + t) + line('摂取量', f0(hk) + t) + line('差', sg2(sa) + t) +
-                 '<div class="big">' + (dg != null ? (dg > 0 ? '+' : '−') + f0(Math.abs(dg)) + 'g' : '—') + '</div>' +
+                 '<div class="big">' + (dg != null ? (dg > 0 ? '+' : dg < 0 ? '−' : '±') + f0(Math.abs(dg)) + 'g' : '—') + '</div>' +
                  line('1kg分', perkg != null ? f0(perkg) : '—');
             if (x.mirai) i2 = '<div class="mirai">' + i2 + '</div>';
           }
