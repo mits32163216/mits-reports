@@ -219,7 +219,7 @@
     </tr>
     <!-- 2026-10-19 Mits様「カロリーの欄の上に毎日の合計の収支をだしてみて　合計消費量　合計摂取量　その差　これを毎日足し続けたモノ」 -->
     <tr class="ruikei">
-      <th class="head hl"><div class="hlw"><div class="ttl">毎日の<br>収支<span>kcal</span></div><div class="ls"><div class="r">消費量</div><div class="r">摂取量</div><div class="r">差</div><div class="big"><i>累計</i></div></div></div></th>
+      <th class="head hl"><div class="hlw"><div class="ttl">毎日の<br>収支<span>kcal</span></div><div class="ls"><div class="r">消費量</div><div class="r">摂取量</div><div class="r">差</div><div class="big"><i>累計</i></div><div class="r">実測差</div></div></div></th>
       <td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td>
     </tr>
     <tr class="zutsu">
@@ -652,6 +652,15 @@
       // 2026-10-19 Mits様「カロリーの欄の上に毎日の合計の収支をだしてみて　合計消費量　合計摂取量　その差　これを毎日足し続けたモノ」：差＝消費量−摂取量（プラスは消費が上回った分）。累計は摂取の記録がある 10/5 から足す（10/4 は前のプランで摂取の記録なし）。今日は途中の値で足す。先の日は計画の値で薄く出す
       const rk = table.querySelector('tr.ruikei'), rtds = rk ? Array.from(rk.children).slice(1) : [];
       let ruikei = 0, ruikeiAri = false;
+      // 2026-10-20 Mits様「ここに載ってない、隠している食事や摂取したものがあるんじゃない」：計算の不足と、体の実際の変化の差を毎日出す。
+      // 差が出る理由は3つ（写真からの見積もりが低い・消費の見積もりが高い・体組成計の誤差）。毎日見えれば、どれがどれだけ効いているかを追える。
+      // 基準は 10/6 の朝（10/5 の行動の結果が出た最初の朝）。その日の翌朝の実測と比べる
+      const KIJUN_ASA = '10/6';
+      const detaKcal = (a, b) => {
+        if (!a || !b || a.kg == null || a.shibo == null || b.kg == null || b.shibo == null) return null;
+        const fa = a.kg * a.shibo / 100, fb = b.kg * b.shibo / 100;
+        return (fa - fb) * 7700 + ((a.kg - fa) - (b.kg - fb)) * 1000;
+      };
       Array.from(hin.children).slice(1).forEach((td, col) => {
         const y = td.querySelector('.ymd'); const m = y && y.textContent.match(/\d+\/\d+/); const cell = tds[col];
         if (!cell) return; cell.innerHTML = '';
@@ -693,6 +702,9 @@
             const t = x.kyou ? ' 途中' : '';
             r = line('消費量', f0(x.b.v) + (x.b.suitei ? '*' : '') + t) + line('摂取量', f0(x.kcal) + t) + line('差', sg2(sa) + t) + '<div class="big">' + sg2(ruikei) + t + '</div>';
           }
+          const dk = detaKcal(K.jissoku[KIJUN_ASA], K.jissoku[nextDay(m[0])]);
+          const sok = (dk != null && ruikeiAri && !x.mirai) ? Math.round(ruikei - dk) : null;
+          r += line('実測差', sok != null ? sg2(sok) : '—');
           rc.innerHTML = r;
         }
         const nc = (Array.from((table.querySelector('tr.nensho') || {children: []}).children).slice(1))[col];
