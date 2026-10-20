@@ -63,7 +63,7 @@
   td.hosu-v .bar i.ok{ background:var(--green); }
 
   /* カロリー収支・脂肪の燃焼・たんぱく質 */
-  tr.ruikei > th, tr.zutsu > th, tr.nensho > th, tr.tanpaku > th, tr.toshitsu > th, tr.mizu > th{ background:var(--amber-bg); color:var(--amber); }
+  tr.ruikei > th, tr.idou2 > th, tr.zutsu > th, tr.nensho > th, tr.tanpaku > th, tr.toshitsu > th, tr.mizu > th{ background:var(--amber-bg); color:var(--amber); }
   td.shushi, td.nensho{ vertical-align:top; text-align:left; font-size:var(--f3); line-height:1.5; padding:5px 8px; }
   td.shushi .r, td.nensho .r{ display:flex; justify-content:space-between; }
   td.shushi .r b, td.nensho .r b{ font-weight:700; }
@@ -220,6 +220,11 @@
     <!-- 2026-10-19 Mits様「カロリーの欄の上に毎日の合計の収支をだしてみて　合計消費量　合計摂取量　その差　これを毎日足し続けたモノ」 -->
     <tr class="ruikei">
       <th class="head hl"><div class="hlw"><div class="ttl">毎日の<br>収支<span>kcal</span></div><div class="ls"><div class="r">消費量</div><div class="r">摂取量</div><div class="r">差</div><div class="big"><i>累計</i></div><div class="r">実測差</div></div></div></th>
+      <td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td>
+    </tr>
+    <!-- 2026-10-20 Mits様「毎日の収支…の↓にもう枠2日移動平均収支表を作って」：経験則「2日間の収支が3日目の朝に反映」。実測でも1日だと相関 −0.28、2日にまとめると −0.66 になる -->
+    <tr class="idou2">
+      <th class="head hl"><div class="hlw"><div class="ttl">2日の<br>平均<span>kcal</span></div><div class="ls"><div class="r">消費量</div><div class="r">摂取量</div><div class="r">差</div><div class="big"><i>体重g</i></div><div class="r">1kg分</div></div></div></th>
       <td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td>
     </tr>
     <tr class="zutsu">
@@ -651,6 +656,8 @@
       const tds = Array.from(tr.children).slice(1);
       // 2026-10-19 Mits様「カロリーの欄の上に毎日の合計の収支をだしてみて　合計消費量　合計摂取量　その差　これを毎日足し続けたモノ」：差＝消費量−摂取量（プラスは消費が上回った分）。累計は摂取の記録がある 10/5 から足す（10/4 は前のプランで摂取の記録なし）。今日は途中の値で足す。先の日は計画の値で薄く出す
       const rk = table.querySelector('tr.ruikei'), rtds = rk ? Array.from(rk.children).slice(1) : [];
+      const ik = table.querySelector('tr.idou2'), itds = ik ? Array.from(ik.children).slice(1) : [];
+      const prevDay = d => '10/' + (Number(d.split('/')[1]) - 1);
       let ruikei = 0, ruikeiAri = false;
       // 2026-10-20 Mits様「ここに載ってない、隠している食事や摂取したものがあるんじゃない」：計算の不足と、体の実際の変化の差を毎日出す。
       // 差が出る理由は3つ（写真からの見積もりが低い・消費の見積もりが高い・体組成計の誤差）。毎日見えれば、どれがどれだけ効いているかを追える。
@@ -666,6 +673,7 @@
         if (!cell) return; cell.innerHTML = '';
         const x = m && S[m[0]]; if (!x) return;
         const line = (a, b2) => '<div class="r"><span>' + a + '</span><b>' + b2 + '</b></div>';
+        const sg2 = v => (v < 0 ? '−' : '') + f0(Math.abs(v));
         let h = '';
         // 2026-10-17 Mits様「表の並び順を変更　1番上が消費次が上限にしてみて」「上限ではなくて、燃焼に変更、要摂取を摂取可にして」
         // 2026-10-17 Mits様「接種可を3段目にして、式を消費引く燃焼にして」：消費→燃焼→摂取可→摂取→不足の順。摂取可＝消費 − 燃焼（脂肪kg×69.3kcal）＝ここまで食べると不足がちょうど燃焼と同じになる量
@@ -690,7 +698,6 @@
         cell.innerHTML = h;
         const rc = rtds[col];
         if (rc) {
-          const sg2 = v => (v < 0 ? '−' : '') + f0(Math.abs(v));
           let r = '';
           if (x.mirai) {
             const pb2 = x.planBurn, sa = pb2 - x.planIn; ruikei += sa;
@@ -706,6 +713,27 @@
           const sok = (dk != null && ruikeiAri && !x.mirai) ? Math.round(ruikei - dk) : null;
           r += line('実測差', sok != null ? sg2(sok) : '—');
           rc.innerHTML = r;
+        }
+        // 2026-10-20 2日の移動平均：その日と前日の消費量・摂取量・差の平均と、前日の朝→翌朝の体重の動き（2日分）。
+        // 1kg分＝2日分の収支 ÷ 減った体重kg。実測では 2,100kcal 前後で、7,700kcal（脂肪だけ）には遠い＝減った分の多くは水分
+        const ic = itds[col];
+        if (ic) {
+          const pd = prevDay(m[0]), xp = S[pd];
+          const hiro = xx => !xx ? null : (xx.mirai ? { b: xx.planBurn, k: xx.planIn } : (xx.b && xx.n ? { b: xx.b.v, k: xx.kcal } : null));
+          const a1 = hiro(xp), a2 = hiro(x);
+          let i2 = '';
+          if (a1 && a2) {
+            const hb = (a1.b + a2.b) / 2, hk = (a1.k + a2.k) / 2, sa = hb - hk;
+            const w0 = K.jissoku[pd], w1 = K.jissoku[nextDay(m[0])];
+            const dg = (w0 && w1 && w0.kg != null && w1.kg != null) ? Math.round((w1.kg - w0.kg) * 1000) : null;
+            const perkg = (dg != null && dg < 0) ? Math.round(sa * 2 / (-dg / 1000)) : null;
+            const t = x.kyou ? ' 途中' : '';
+            i2 = line('消費量', f0(hb) + t) + line('摂取量', f0(hk) + t) + line('差', sg2(sa) + t) +
+                 '<div class="big">' + (dg != null ? (dg > 0 ? '+' : '−') + f0(Math.abs(dg)) + 'g' : '—') + '</div>' +
+                 line('1kg分', perkg != null ? f0(perkg) : '—');
+            if (x.mirai) i2 = '<div class="mirai">' + i2 + '</div>';
+          }
+          ic.innerHTML = i2;
         }
         const nc = (Array.from((table.querySelector('tr.nensho') || {children: []}).children).slice(1))[col];
         if (nc) {
