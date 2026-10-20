@@ -695,11 +695,16 @@
             const dg = (w0 && w1 && w0.kg != null && w1.kg != null) ? Math.round((w1.kg - w0.kg) * 1000) : null;
             // 2026-10-20 Mits様「この表記が意味が分からない　要詳細説明」：「1kg分」をやめ、2日分の差を脂肪に換算した g で出す（脂肪1kg＝7,700kcal）。
             // 体重g と並べると、落ちた体重のうち脂肪が何gで、残りが水分かが読める
-            const shibog = Math.round(sa / 7.7);
+            // 2026-10-20 Mits様「いくら摂取カロリーの収支をマイナスにしても、だいたい700キロカロリー分ぐらいしか脂肪からは燃焼しない」：
+            // 脂肪から1日に出せるのは 脂肪kg×69.3kcal が上限。差をそのまま7.7で割ると、上限を超えて脂肪が減ったことになる。
+            // 記録表の「脂肪の燃焼 実施」（fat）は既に上限で頭打ちにしているので、その2日分を足す。上限を超えた分は筋肉などから出た分
+            const fg = xx => !xx ? null : (xx.mirai ? xx.planFat : (xx.fat != null ? xx.fat : null));
+            const f1 = fg(xp), f2 = fg(x);
+            const shibog = (f1 != null && f2 != null) ? Math.round(f1 + f2) : null;
             const t = x.kyou ? ' 途中' : '';
             i2 = line('消費量', f0(hb) + t) + line('摂取量', f0(hk) + t) + line('差', sg2(sa) + t) +
                  '<div class="big">' + (dg != null ? (dg > 0 ? '+' : dg < 0 ? '−' : '±') + f0(Math.abs(dg)) + 'g' : '—') + '</div>' +
-                 line('減少脂肪', '−' + f0(shibog) + 'g' + t);
+                 line('減少脂肪', shibog != null ? '−' + f0(shibog) + 'g' + t : '—');
             if (x.mirai) i2 = '<div class="mirai">' + i2 + '</div>';
           }
           ic.innerHTML = i2;
