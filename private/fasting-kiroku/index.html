@@ -471,7 +471,8 @@
   const ROWS = ['gozen','hirusugi','hirusugi-tsudo','aruita','yugata','yugata-tsudo','sapuri'];
   const KEY = 'fasting_kiroku_chk_v1';
   // 2026-10-12 計画の消費も同じ式で出し直した：8,000歩 歩く＝1,464＋262＋14.0×8＝1,838kcal（前は 1,832）
-  const PLAN_BURN = 1838, CAP = 69.3, FAT0 = 10.8;
+  // 2026-10-20 計画の消費も同じ3つの式で：基礎（370＋21.6×50.2）×0.90＝1,309 ＋ 活動（262＋14.0×8）×0.70＝262 ＋ 食事 575×0.10＝58 ＝ 1,629kcal
+  const PLAN_BURN = 1629, CAP = 69.3, FAT0 = 10.8;
   // 2026-10-09 Mits様「今日は意図的な散歩に行かない、最低限の徒歩数にする」：10/9 の計画の消費は 2,000歩で置く（1500＋83＋42×2.0＝1,667kcal）
   // 2026-10-11 Mits様「10/11　散歩6000を入れてみて」：10/11 の計画の消費は 6,000歩で置く（1500＋83＋42×6.0＝1,835kcal）
   // 2026-10-12 同じ式で：10/9 は 2,000歩＝1,665kcal・10/11 は 6,000歩＝1,776kcal
@@ -547,19 +548,31 @@
   const now = new Date(); const TODAY = (now.getMonth() + 1) + '/' + now.getDate();
   const num = d => Number(d.split('/')[0]) * 100 + Number(d.split('/')[1]);
   const f0 = v => Math.round(v).toLocaleString('ja-JP');
-  // 2026-10-20 Mits様「消費の見積もりが多め…傾向から類推して掛け率を掛けて少なめにして」「これで、そもそもの摂取可が変わるので意識が変わる」：
-  // 実測（RENPHO の朝3回の平均）から割り出した掛け率。10/6〜10/18 の13日：脂肪量 10.08→9.70kg（−0.38kg×7,000＝2,681kcal）＋脂肪以外 −0.35kg×1,000＝350kcal → 実際に足りなかった分 3,031kcal。
-  // 摂取（写真の見積もりは1.1倍）11,526kcal＋3,031＝実際の消費 14,557kcal ÷ Apple Watch の消費 23,785kcal ＝ 0.61。消費（実績も先の日の見込みも）にこれを掛ける。
-  // 目標（目標脂肪量・目標体重・計画の脂肪の減り）は動かさない（2026-10-11 Mits様「目標とは…乖離と原因と対策を目標で管理する」）
-  const SHOUHI_KAKERITSU = 0.61;
-  // 2026-10-20 Mits様「後半はステーキ・弁当・お通しなど外の食事が増え、写真から見積もりました。油やたれは少なめに見積もりやすいものです。10%多く見積もって」：
-  // 写真から見積もった「（実際）」の食事の kcal を 1.1倍にする（量って入れたマナ酵素は除く）
-  const MITSUMORI_WARIMASHI = 1.1;
-  const burnOf = j => {
+  // 2026-10-20 Mits様「消費量が基礎代謝と生活代謝があるのにこの数値は腑に落ちない」：消費を一律 0.61倍すると基礎代謝まで 880kcal になり、体の仕組みとして成り立たない。
+  // 実測で確かめた：Apple Watch の基礎代謝は 10/5〜10/19 の平均 1,451kcal。除脂肪体重から出す式（Katch-McArdle：370＋21.6×除脂肪kg）の平均 1,455kcal とほぼ同じで、この数字自体は妥当。
+  // そこで消費を3つに分け、下がる理由のあるところだけ下げる。
+  //   ①基礎代謝＝（370＋21.6×除脂肪体重）×0.90。減量を続けると体は基礎代謝を下げる。文献の幅 5〜15% の真ん中を取って 10% 下げる
+  //   ②活動代謝＝Apple Watch の活動エネルギー ×0.70。Apple Watch の歩行の消費は実際より多めに出る（文献の幅 20〜40%）。真ん中を取って 30% 下げる
+  //   ③食事による消費＝摂取 ×0.10。食べた分の約1割は消化に使われる
+  // 除脂肪体重は毎朝の体重×(1−体脂肪率)。測っていない日と先の日は LBM_KIJUN を使う
+  const TAISHA_TEKIOU = 0.90;
+  const KATSUDO_HOSEI = 0.70;
+  const DIT_RITSU = 0.10;
+  const LBM_KIJUN = 50.2;
+  const burnOf = (j, kcal) => {
     if (!j) return null;
-    if (j.kiso != null && j.kiso >= 1300 && j.katsudo != null) return { v: Math.round((j.kiso + j.katsudo) * SHOUHI_KAKERITSU), suitei: false };
+    const lbm = (j.kg != null && j.shibo != null) ? j.kg * (1 - j.shibo / 100) : LBM_KIJUN;
+    const kiso = (370 + 21.6 * lbm) * TAISHA_TEKIOU;
+    const dit = (kcal || 0) * DIT_RITSU;
+    if (j.kiso != null && j.kiso >= 1300 && j.katsudo != null) {
+      const ka = j.katsudo * KATSUDO_HOSEI;
+      return { v: Math.round(kiso + ka + dit), suitei: false, kiso: Math.round(kiso), katsudo: Math.round(ka), dit: Math.round(dit) };
+    }
     // 2026-10-12 歩くと走るを分けた式（10/3〜10/11 の Apple Watch の実績・走るはフィットネスのワークアウト4回の実測 52.1kcal/km）：消費＝基礎代謝 1,464 ＋ 262 ＋ 14.0×歩く千歩 ＋ 52.1×走る km
-    if (j.hosu != null) return { v: Math.round((1464 + 262 + 14.0 * (j.hosu - (j.hashiru || 0)) / 1000 + 52.1 * (j.hashiru_km || 0)) * SHOUHI_KAKERITSU), suitei: true };
+    if (j.hosu != null) {
+      const ka = (262 + 14.0 * (j.hosu - (j.hashiru || 0)) / 1000 + 52.1 * (j.hashiru_km || 0)) * KATSUDO_HOSEI;
+      return { v: Math.round(kiso + ka + dit), suitei: true, kiso: Math.round(kiso), katsudo: Math.round(ka), dit: Math.round(dit) };
+    }
     return null;
   };
 
@@ -578,7 +591,7 @@
         if (!k.startsWith(d + '|')) return;
         const nm = k.split('|')[2], e = EIYOU[nm]; if (e) { kcal += e[0] * (/（実際）/.test(nm) && !/マナ酵素/.test(nm) ? MITSUMORI_WARIMASHI : 1); p += e[1]; c += e[2]; n++; }
       });
-      const b = burnOf(K.jissoku[d]);
+      const b = burnOf(K.jissoku[d], kcal);
       let fat = null, deficit = null, over = 0, msg = [];
       if (mae) { fat = capA / 9; msg.push('前のプラン（摂取の記録なし・上限いっぱい燃えたと置く）'); }
       else if (!mirai && n > 0 && b) {
@@ -647,7 +660,7 @@
         // 2026-10-17 Mits様「摂取可引く摂取🟰残りとする不足欄を残りに変更」：不足の欄を「残り」（摂取可 − 摂取）にした。マイナスは摂取可を超えて食べた分
         const zan = v => (v < 0 ? '−' : '') + f0(Math.abs(v));
         if (x.mirai) {
-          const pb = Math.round(x.planBurn * SHOUHI_KAKERITSU);
+          const pb = x.planBurn;
           h = '<div class="mirai">' + line('消費', f0(pb)) + line('燃焼', '−' + f0(x.capP)) + line('摂取可', f0(pb - x.capP)) + line('摂取', f0(x.planIn)) +
               '<div class="big">' + zan(pb - x.capP - x.planIn) + '</div></div>';
         } else if (x.mae) {
@@ -668,7 +681,7 @@
           const sg2 = v => (v < 0 ? '−' : '') + f0(Math.abs(v));
           let r = '';
           if (x.mirai) {
-            const pb2 = Math.round(x.planBurn * SHOUHI_KAKERITSU), sa = pb2 - x.planIn; ruikei += sa;
+            const pb2 = x.planBurn, sa = pb2 - x.planIn; ruikei += sa;
             r = '<div class="mirai">' + line('消費量', f0(pb2)) + line('摂取量', f0(x.planIn)) + line('差', sg2(sa)) + '<div class="big">' + (ruikeiAri ? sg2(ruikei) : '—') + '</div></div>';
           } else if (x.mae || !x.b || !x.n) {
             r = line('消費量', x.b ? f0(x.b.v) : '—') + line('摂取量', '—') + line('差', '—') + '<div class="big">' + (ruikeiAri ? sg2(ruikei) : '—') + '</div>';
