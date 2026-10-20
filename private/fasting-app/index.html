@@ -91,7 +91,7 @@ iframe#src{position:absolute;width:1200px;height:800px;left:-99999px;top:0;borde
   <button data-t="furikaeri">振り返り</button>
   <button data-t="keikaku">計画</button>
 </div></nav>
-<iframe id="src" src="/private/fasting-kiroku/?app=1" title="記録表"></iframe>
+<iframe id="src" title="記録表"></iframe>
 <script>
 (function(){
   const $ = s => document.querySelector(s);
@@ -101,6 +101,8 @@ iframe#src{position:absolute;width:1200px;height:800px;left:-99999px;top:0;borde
   const ROWNAME = {gozen:'午前', hirusugi:'昼過ぎ', aruita:'歩いたあと', yugata:'夕方', sapuri:'サプリ'};
   const YOUBI = '日月火水木金土';
   const fr = $('#src');
+  // 記録表は開くたびに最新を読む（ブラウザに残った古い記録表で計算しないため）
+  fr.src = '/private/fasting-kiroku/?app=' + Date.now();
   let A = null, tab = 'kyou';
   try { tab = localStorage.getItem('fasting_app_tab') || 'kyou'; } catch (e) {}
 
