@@ -219,7 +219,7 @@
     </tr>
     <!-- 2026-10-20 Mits様「毎日の収支…の↓にもう枠2日移動平均収支表を作って」：経験則「2日間の収支が3日目の朝に反映」。実測でも1日だと相関 −0.28、2日にまとめると −0.66 になる -->
     <tr class="idou2">
-      <th class="head hl"><div class="hlw"><div class="ttl">2日の<br>合計<span>kcal</span></div><div class="ls"><div class="r">消費量</div><div class="r">摂取量</div><div class="r">差</div><div class="big"><i>体重g</i></div><div class="r">1kg分</div></div></div></th>
+      <th class="head hl"><div class="hlw"><div class="ttl">2日の<br>合計<span>kcal</span></div><div class="ls"><div class="r">消費量</div><div class="r">摂取量</div><div class="r">差</div><div class="big"><i>体重g</i></div><div class="r">脂肪g</div></div></div></th>
       <td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td><td class="shushi"></td>
     </tr>
     <tr class="zutsu">
@@ -681,7 +681,7 @@
         }
         cell.innerHTML = h;
         // 2026-10-20 2日の合計：その日と前日の消費量・摂取量・差の合計と、前日の朝→翌朝の体重の動き（2日分）。
-        // 1kg分＝2日分の収支（合計）÷ 減った体重kg。実測では 2,100kcal 前後で、7,700kcal（脂肪だけ）には遠い＝減った分の多くは水分
+        // 脂肪g＝2日分の差 ÷ 7.7（脂肪1kg＝7,700kcal）。体重g（実際に動いた分）と並べると、差の分が水分
         const ic = itds[col];
         if (ic) {
           const pd = prevDay(m[0]), xp = S[pd];
@@ -693,11 +693,13 @@
             const hb = a1.b + a2.b, hk = a1.k + a2.k, sa = hb - hk;
             const w0 = K.jissoku[pd], w1 = K.jissoku[nextDay(m[0])];
             const dg = (w0 && w1 && w0.kg != null && w1.kg != null) ? Math.round((w1.kg - w0.kg) * 1000) : null;
-            const perkg = (dg != null && dg < 0) ? Math.round(sa / (-dg / 1000)) : null;
+            // 2026-10-20 Mits様「この表記が意味が分からない　要詳細説明」：「1kg分」をやめ、2日分の差を脂肪に換算した g で出す（脂肪1kg＝7,700kcal）。
+            // 体重g と並べると、落ちた体重のうち脂肪が何gで、残りが水分かが読める
+            const shibog = Math.round(sa / 7.7);
             const t = x.kyou ? ' 途中' : '';
             i2 = line('消費量', f0(hb) + t) + line('摂取量', f0(hk) + t) + line('差', sg2(sa) + t) +
                  '<div class="big">' + (dg != null ? (dg > 0 ? '+' : dg < 0 ? '−' : '±') + f0(Math.abs(dg)) + 'g' : '—') + '</div>' +
-                 line('1kg分', perkg != null ? f0(perkg) : '—');
+                 line('脂肪g', '−' + f0(shibog) + 'g' + t);
             if (x.mirai) i2 = '<div class="mirai">' + i2 + '</div>';
           }
           ic.innerHTML = i2;
