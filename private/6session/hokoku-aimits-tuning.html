@@ -92,7 +92,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-19 07:37 ／ 写した時刻 2026-10-19 12:36</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-21 07:38 ／ 写した時刻 2026-10-21 12:37</p>
 <h2 id="報告-AI-Mits-チューニング">報告 ── AI-Mits-チューニング</h2>
 <p>この持ち場の窓（7:31 のお試し版と Dify の数え・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_AI-Mits-チューニング.md</p>
@@ -437,6 +438,18 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>指示書 2026-10-19 の1（登録0件4日の点検・試験用の別名での通しの試し登録）は会話のセッションの仕事なので持ち越し。この回では点検に入っていない</li>
 <li>計測：/ev/count HTTP 200（since 2026-09-18・total 822）。お試し版 reg_submit 0・verify_done 1・verify_giveup 0・nudge30s 4・nudge5m 1・nudge10m 0・chat_send_fail 0・to_dl 3（送り側は grep で実装ありを確認）。by_day 最新 10-18=4</li>
 <li>Dify 4アプリ 18／30／24／100（合計172・前日比 0）。CSV に 2026-10-19 の行を足した（1行のみ確認）</li>
+</ul>
+<h3 id="2026-10-21-07-45-毎日の計測の回">2026-10-21 07:45（毎日の計測の回）</h3>
+<ul>
+<li>計測の CSV に 10-21 の行を足した（10-20 の行は取れておらず空のまま）。Dify 4アプリの合計 175（前日比 +3：NORMAL-APP +2・DEEP-APP +1）</li>
+<li>指示書 2026-10-21 の1（登録0件7日の点検・試し登録）はこの回では入らず、会話のセッションへ持ち越し</li>
+</ul>
+<h4 id="2026-10-21-07-5x-指示書-2026-10-21-の1-読んだ範囲だけ">2026-10-21 07:5x 指示書 2026-10-21 の1（読んだ範囲だけ）</h4>
+<ul>
+<li>お試し版 UgSfW8MCzHqv：HTTP 200・メアドの欄は html に3か所・送り先 /register の参照あり・計測 /ev の送り先あり</li>
+<li>計測 30日：reg_open 2・reg_close 2・gate_open 37・gate_submit 10・verify_done 1。10-15〜10-20 の by_day は 3,4,8,4,4（登録の数ではなく計測イベントの数）</li>
+<li>change.7years.life/register に OPTIONS を送ると 404。POST 専用の口なら普通に起こる返事で、これだけでは壊れていると言えない（POST で確かめるには試験用の別名の通しの試し登録が要り、お客様側に認証メールが出るため、この回では押していない）</li>
+<li>07:45 の報告で「申し送りに自分の行は見つかりませんでした」と書いたのは誤り。10-20 と 10-21 に自分の行があり、いま「済み」を書いた</li>
 </ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
