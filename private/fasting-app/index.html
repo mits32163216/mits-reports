@@ -195,7 +195,7 @@ iframe#src{position:absolute;width:1200px;height:800px;left:-99999px;top:0;borde
     h += '<div class="card"><div class="row"><span>体重（朝）</span><b>' + (w != null ? w.toFixed(1) + 'kg' : 'まだ') + '</b></div>' +
       '<div class="row lbl"><span>目標 ' + (t != null ? t.toFixed(1) + 'kg' : '—') + '</span>' + (w != null && t != null ? '<span class="' + (w - t > 0 ? 'over' : 'ok') + '">目標より ' + (w - t > 0 ? '+' : '') + (w - t).toFixed(1) + 'kg</span>' : '') + '</div>' +
       (w != null && w0 != null ? '<div class="row lbl"><span>10/3 から</span><span>' + (w - w0 > 0 ? '+' : '') + (w - w0).toFixed(1) + 'kg</span></div>' : '') + '</div>';
-    h += coach(d, x, y);
+    // 2026-10-21 Mits様「見れば分かることしか言っていなくて全然専門性の深みがないからうざい」：指導のカードを出さない
     h += '<div class="card"><div class="lbl">今日のチェック（押して付け外し）</div>' + masuHtml(d) + '</div>';
     $('#kyou').innerHTML = h;
   }
