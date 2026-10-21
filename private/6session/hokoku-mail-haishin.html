@@ -80,7 +80,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-08 14:58 ／ 写した時刻 2026-10-08 16:00</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-21 20:51 ／ 写した時刻 2026-10-22 06:43</p>
 <h2 id="報告-メール配信・計測・自動化">報告 ── メール配信・計測・自動化</h2>
 <p>この持ち場の窓（9:06 の朝の測定・19:39 のメルマガ・23:13 の見張り・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_メール配信・計測・自動化.md</p>
@@ -477,6 +478,38 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <h3 id="2026-10-08-15-3x-司令塔が-23-07-23-24-を取り消した-台帳はこのまま">2026-10-08 15:3x ── 司令塔が「23:07 → 23:24」を取り消した。台帳はこのまま</h3>
 <p>司令塔が決定の記録に取消を1節足した（<code>## 2026-10-08 14:5x ／ 司令塔</code>）。誤りは司令塔の側で、参謀が前の便に書いた「23:07 は着弾 23:24 とずれている」を<strong>列の意味を自分で確かめずにそのまま使って「直せ」と書いた</strong>とのこと。</p>
 <p>生きているのは「持ち場の台帳は自分で決めて直してよい」の部分だけ。<strong>09-27 と 09-28 の2行の直し（19:49→19:33／18:49→18:33）と、列の意味の確定（手続きを押した時刻。分からない日は配信開始を入れて <code>dashita_te</code> に書き添える。着弾はこの列に入れない）はそのまま正本。</strong>台帳の 2026-09-30 utage <code>23:07</code> は直さない。追加の直しは無い。</p>
+<h3 id="2026-10-21-指示書-2026-10-21-の1・2を済ませた-持ち越し21日目-F0">2026-10-21 ── 指示書 2026-10-21 の1・2を済ませた（持ち越し21日目）。F0-01 の期限切れの案内は 10-08 から各2通増えた</h3>
+<h4 id="1-決定の記録-2026-10-14-16-1x-BS-jikki-kenshu-読んだ-試し登">1. 決定の記録 2026-10-14 16:1x ／ BS-jikki-kenshu ── 読んだ。試し登録の読者は数えの外</h4>
+<p>使ったメアド <code>3216.fun+jikkenshu20261014@gmail.com</code> を jogai_settei.json の正規表現に当てた：<code>^3216\.fun\+.*@gmail\.com$</code> に<strong>当たる → 外れる</strong>（python で当てた出力 <code>外れる = True</code>）。AI-Mits 登録人数の数えには入らない。除外の設定は書き換えていない。この期間に出した号は無いので、dashita_kiroku.csv に足す行は無い。</p>
+<p><strong>号が無いことの実測（2026-10-21・手順書「🔎 その日に号が出たかを確かめる引き方」の形で5経路）</strong>：</p>
+<ul>
+<li>UTAGE <code>message_list</code>（シナリオ bjDd8NXsSPMa〈メルマガ〉メインメルマガ・新しい順）── いちばん新しいのは a2zZxBpISLzx（created_at 2026-09-30 22:59:39）のまま。10月に作った行・10月に send_date がある行は0件</li>
+<li>Gmail <code>&quot;メインメルマガ&quot; after:2026/10/01 in:anywhere</code>（UTAGE・spro 便の先頭の固定文字）→ <strong>0件</strong></li>
+<li>Gmail <code>&quot;西田光弘公式&quot; after:2026/10/01 in:anywhere</code> → 9件。送信元は全部 nishida@dmikz.com（試し登録の読者2人あてのステップ便8通と、10/12「明日から『AI反転グルコン』3回開催します（手ぶらでOK）」1通）。<strong>まぐまぐの便（mailmag@mag2tegami.com）は0件</strong>。10/12 の便はメインメルマガの一覧に無い別の便（号ではない）</li>
+<li>Gmail <code>from:mailmag@mag2tegami.com after:2026/10/01 in:anywhere</code> → <strong>0件</strong></li>
+<li>Gmail <code>from:dai@spro01.com (&quot;予約配信&quot; OR ALCHEMY) after:2026/10/01 in:anywhere</code>（spro の配信完了の知らせ）→ <strong>0件</strong>（最後は 5138・2026-10-01 06:09 JST の完了通知＝9/30号）</li>
+</ul>
+<h4 id="2-決定の記録-2026-10-20-10-10・11-1x・11-5x-司令塔-連絡の決まり">2. 決定の記録 2026-10-20 10:10・11:1x・11:5x ／ 司令塔（連絡の決まり）── 読んだ</h4>
+<p>送受信の決まり.md（80行）と3節を読み、2026-10-20 に司令塔へ「受け取った」を返した（宛名 <code>★BA_司令塔</code>・list_sessions で引き直して送った・msg_id 2d4a22a7-5606-468f-87ec-43412e600362）。あわせて 11:4x の取消（見出しの時刻）と 11:5x ／ Meta広告の自動化（広告から来た登録を数える道が無い・数え方への影響なし）も読んだ。</p>
+<h4 id="3-F0-01-の期限切れの案内-今も出ている-Mits様の合図待ちのまま">3. F0-01 の期限切れの案内 ── 今も出ている（Mits様の合図待ちのまま）</h4>
+<p>UTAGE で数え直した（シナリオ 2JPgrcZIciae・2026-10-21）。16本とも status は reserved のまま（updated_at も 2026-04〜08 のまま＝誰も触っていない）。</p>
+<table>
+<tr><th>ID</th><th>題</th><th>2026-10-08</th><th>2026-10-21</th></tr>
+<tr><td>6HtQJbgRyclK</td><td>残り40日、使い切ってください。（60日目）</td><td>36通・開封24</td><td><strong>38通</strong>・開封26</td></tr>
+<tr><td>uGdoinUJ1iVq</td><td>あと15日で、一度閉じます。（85日目）</td><td>33通・開封25</td><td><strong>35通</strong>・開封25</td></tr>
+</table>
+<p>13日間で、期限（2026-07-30）が過ぎた案内が<strong>さらに4通</strong>出た。決定台帳 2026-10-08 以降に、この件を Mits様が決めた行は無い（語「F0-01」「経営イノベーション_サインナップ」で引いて、2026-10-12 の伽藍とバザールの実現の「読んで片づけた」1行だけ）。</p>
+<h3 id="2026-10-21-20-5x-F0-01-の期限切れの案内2本を止めた-予約解除">2026-10-21 20:5x ── F0-01 の期限切れの案内2本を止めた（予約解除）</h3>
+<ul>
+<li>止めたもの（Mits様 2026-10-21「F0-01の期限切れの2本、止めて」）：シナリオ 2JPgrcZIciae「F0-01_経営イノベーション_サインナップ」のステップメール2本を UTAGE の message_update で status reserved → <strong>draft</strong>（予約解除）にした。本文・送る日・条件は触っていない</li>
+  <li>6HtQJbgRyclK「F0-01-14_残り40日、使い切ってください。」（登録から60日目 08:00・止めるまでの累計 38通・開封26）── updated_at 2026-10-21 20:49:42</li>
+  <li>uGdoinUJ1iVq「F0-01-15_あと15日で、一度閉じます。」（登録から85日目 08:00・止めるまでの累計 35通・開封25）── updated_at 2026-10-21 20:49:45</li>
+<li>確かめ：message_list（status=draft）で total 2・この2本だけ。シナリオの残り14本は reserved のまま</li>
+<li>2本の本文に URL は無い（リンクの生存確認の対象0本）</li>
+<li>控え（戻すときは status を reserved にするだけ）：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261021_F0-01_kigengire_2hon_tomeru_mae.json</li>
+<li>止めていないもの（Mits様が名指しされたのは2本だけ）：同じシナリオの LINE <code>qQoq2B4RKMrd</code>（登録直後）にも「先着100人 or 7月30日で、第一期の枠を一度閉じます」が残っている。SKOOL へ誘う13本（決定台帳 2026-10-08 14:3x ／ 司令塔）もそのまま</li>
+<li>数え方への影響：なし</li>
+</ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
 </body>
