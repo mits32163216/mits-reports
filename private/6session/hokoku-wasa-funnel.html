@@ -186,7 +186,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-22 18:22 ／ 写した時刻 2026-10-22 18:34</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-22 19:37 ／ 写した時刻 2026-10-23 06:36</p>
 <h2 id="報告-wasa-ファネルメイク">報告 ── wasa_ファネルメイク</h2>
 <p>この持ち場のセッションが、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_wasaファネルメイク.md</p>
@@ -234,6 +235,53 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>できなかった：まだ出来ていない（18:21 時点で assets/ だけ）</li>
 <li>次に自分がやる：出来たら検収の線を自分で実測 → Chrome で開く → mits-reports/private/wasa-dan4-local/ に置いて公開用URLにする → private/index.html に載せる → この節に URL を足す</li>
 <li>ほかの持ち場に頼む：なし</li>
+</ul>
+<h3 id="2026-10-22-18-36-和佐の段4ローカル再現-公開用URLに載せた">2026-10-22 18:36 和佐の段4ローカル再現：公開用URLに載せた</h3>
+<ul>
+<li>公開URL（ダッシュボード「マーケティング」群に1行）：</li>
+</ul>
+<p>  <a href="https://reports.7years.life/private/wasa-dan4-local/">https://reports.7years.life/private/wasa-dan4-local/</a></p>
+<ul>
+<li>ダッシュボード：</li>
+</ul>
+<p>  <a href="https://reports.7years.life/private/">https://reports.7years.life/private/</a></p>
+<ul>
+<li>実測（参謀が自分で測った）：ページ 200／参照している23ファイル（画像・フォント・css）のうち 200 以外が 0／noindex が 1／Mits様のメールと rid の出現が 0／ダッシュボードに wasa-dan4-local が 2／origin/main と手元が同じ</li>
+<li>元のファイル（ローカル）：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/_wip/wasa_dan4_local_20261022/index.html</li>
+<li>公開した所：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/mits-reports/private/wasa-dan4-local/ （コミット e128824）</li>
+<li>比べた相手：和佐の元ページは公開が終わっている（/p/j7HQis1d7qa6 に移り「公開は終了しました。」）ので、現役の元ページとの突き合わせはできていない。比べた相手は、元のHTMLに入っていたデータを手元で描いたものと、取得済みのキャプチャ（9月5日）</li>
+<li>再現の中で動かないもの：購入ボタン（押しても何も起きない）・フォーム（送れない）・和佐さんの外部リンク2本（そのまま）</li>
+</ul>
+<h3 id="2026-10-22-19-3x-和佐の段3-第0章-dUfRXXbrV6ws-をローカルに再現">2026-10-22 19:3x 和佐の段3（第0章 dUfRXXbrV6ws）をローカルに再現した（公開はしていない）</h3>
+<ul>
+<li>置いた先：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/_wip/wasa_dan3_local_20261022/index.html （138ファイル・7.1MB）</li>
+<li>撮ったキャプチャ（3枚）：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/_wip/wasa_capture_20261022/</li>
+<li>実測（参謀が自分で測った）：画像2枚のうち読み込めないもの 0／コンソールのエラー 0／Mits様の rid・メールの出現 0（grep -r・全ファイル）／外部リンクは和佐さん側の2本のみ／スクロール高さ 2072</li>
+<li>食い違い：①元ページは、curl では 200 でも、描画の直後に「公開終了」へ飛ぶ（担当が 300ms・1500ms・8000ms の3回で確認）。元の画面は今は撮れない ②部品は記録の14個ではなく、元のデータを数えると13個（出し分けは5個で記録と合う）</li>
+<li>第0章の既存のキャプチャ：Mac のファイル名検索で 0 件（段4で動くと確かめた経路）。Mits様は「ある」と言われているので、devils-advocate が別経路で調査中</li>
+<li>注意：動画の表紙画像に和佐さんの顔が写っている。公開用URLに載せるなら、この画像を含めるかどうかが要る</li>
+</ul>
+<h3 id="2026-10-22-19-4x-和佐の段3-第0章-を公開用URLに載せた">2026-10-22 19:4x 和佐の段3（第0章）を公開用URLに載せた</h3>
+<ul>
+<li>公開URL：</li>
+</ul>
+<p>  <a href="https://reports.7years.life/private/wasa-dan3-local/">https://reports.7years.life/private/wasa-dan3-local/</a></p>
+<ul>
+<li>ダッシュボード（「マーケティング」群に段3の行・段4の行のリンクは絶対URLに直した）：</li>
+</ul>
+<p>  <a href="https://reports.7years.life/private/">https://reports.7years.life/private/</a></p>
+<ul>
+<li>実測（参謀が自分で測った）：ページ 200／公開側の全138ファイルのうち 200以外 0／noindex 1／rid・Mits様のメール 0／ダッシュボードに wasa-dan3-local と wasa-dan4-local／origin/main と手元が同じ（ec44248）</li>
+<li>Mits様の趣旨（19:5x）：参考のページは、レベル1・2・3とその前の視聴動画・オプトインの流れを、MIFG のページから逆算して完成させるためのもの。和佐に限らず受ける</li>
+</ul>
+<h3 id="2026-10-22-20-2x-和佐の段0-入口LP-wasadaisuke-com-を撮って">2026-10-22 20:2x 和佐の段0（入口LP wasadaisuke.com）を撮ってローカルに再現した（公開はしていない）</h3>
+<ul>
+<li>元ページは開いている。描画後に別ページへ飛ばない（待ち 300ms・1500ms・8000ms の3回で最終URLが同じ）。作りは Next.js の自社サイト。段3と違い「公開終了」へは飛ばない</li>
+<li>元のキャプチャ（今日撮った・手元に無かった物）：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/_wip/wasa_capture_20261022/ の dan0_wasadaisuke_optin_motopage.png（幅1428・2856×7008）／_sp390.png（幅390・780×6556）／_raw.html（元の生のHTML）／再現のキャプチャ2枚</li>
+<li>再現：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/_wip/wasa_dan0_local_20261022/index.html （289ファイル・4.8MB）</li>
+<li>実測（参謀が自分で測った）：画像5枚のうち読み込めないもの 0／コンソールのエラー 0／script 0本・form の action 0／rid・Mits様のメール・計測の値（ogcuexqq47・fbevents・clarity・utage.unchains）の出現 0／外部リンクは和佐さんのサイト（wasadaisuke.com）の下端の7本のみ</li>
+<li>元ページの構成（今日の実物）：見出し3つ（無料で手に入るもの5点・セミナー概要・講師プロフィール）＋写真4枚（背景で16秒ごとに入れ替わる）＋プロフィール写真。フォームは3か所で、宛先はどれも UTAGE の登録（utage.unchains.jp/r/3rqz4Cp8Wl4l/store）。再現では送れない</li>
+<li>9/5 の記録との違い：手に入るもの・セミナー概要は、今は画像でなく文字（画像4枚は講演会場の写真で文字なし）。講師プロフィールに 0歳〜38歳の年表7行</li>
 </ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
