@@ -134,7 +134,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-22 07:23 ／ 写した時刻 2026-10-22 12:34</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-22 18:27 ／ 写した時刻 2026-10-22 18:34</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -3382,6 +3383,27 @@ untendai-client  版=1.73.43  組立=2026-09-26 03:39:44  Bundle=com.mits.untend
 </ul>
 <ul>
 <li>2026-10-22 07:1x ／ 運転台改善：資料の鮮度・食い違い 6 件が6日目（kaihatsu_no_nagare_genjou_20261003.html と mits-reports/private/untendai-kaihatsu-nagare/index.html の各3印：main_version 書いた=v1.76.3 今=v1.77.10／branch_count 書いた=8 今=13／product_app_version 書いた=1.76.3 今=1.77.10）／宛先：運転台改善</li>
+</ul>
+<h3 id="2026-10-22-18-22-wasa-ファネルメイク-和佐の段4をローカルに再現して-公開">2026-10-22 18:22 ／ wasa_ファネルメイク ── 和佐の段4をローカルに再現して、公開用URLにしてプライベートダッシュボードに載せる</h3>
+<ul>
+<li>どのセッションで：wasa_ファネルメイク</li>
+<li>宛先：司令塔／FHL 2026 Notes</li>
+<li>Mits様原文（2026-10-22 18:22・wasa_ファネルメイクのセッションで）：「取得したwasaの <a href="https://utage.unchains.jp/p/aETvB4PAwBoH?rid=HuZ1dVN1BjTE">https://utage.unchains.jp/p/aETvB4PAwBoH?rid=HuZ1dVN1BjTE</a> ローカルで再現」「キャプチャがあるはず」「できたらChromeで出して」「記録しておいて、いつでも見られるように公開用URLにしてプライベートダッシュボード」</li>
+<li>元ページ：和佐大輔（株式会社ICC）の売り込みページ（段4・うちの 04 に当たる）。2026-10-22 の実測で HTTP 200・329,457 bytes。生の HTML には日本語が12字しか入っていない（本文は JS で描かれる）</li>
+<li>材料：Mits様が 2026-09-05 14:46 に撮った写真5枚（幅 2856px・高さの合計 119,188px）と PDF（62,774,418 bytes）。/Users/nishidamitsuhiro/Downloads/screencapture-utage-unchains-jp-p-aETvB4PAwBoH-2026-09-05-14_45_47*.png ／ 同じものと縮小版 jpg が _wip/wasa_capture_20260905/</li>
+<li>作っている途中：BS-engineer に発注済み（出力先 /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/_wip/wasa_dan4_local_20261022/ ・2026-10-22 18:21 に assets/ だけできた状態）</li>
+<li>公開先（できたあとに入れる）：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/mits-reports/private/wasa-dan4-local/ ／ URL <a href="https://reports.7years.life/private/wasa-dan4-local/">https://reports.7years.life/private/wasa-dan4-local/</a> ／ private/index.html（プライベート・ダッシュボード）に1行足す</li>
+<li><strong>取消</strong>：BS-engineer への発注書の「再現版を公開しない・mits-reports の下に置かない」は、参謀が足した制約で Mits様の言葉に無かった。Mits様が公開を指示されたので、この制約は取り消す（検収の線9は「公開前に氏名・メールアドレスを伏字にしたこと」に差し替える）</li>
+<li>数え方への影響：なし（読み取りだけ。元ページへのクリック・送信・購入・登録は 0回）</li>
+</ul>
+<h3 id="2026-10-22-18-2x-運転台-森田さん共同開発の巡回-仕事術のアプリケーション-は">2026-10-22 18:2x ／ 運転台 森田さん共同開発の巡回 ── 「仕事術のアプリケーション」は、モックの名前では 1action3goal で、10-19 に本流へ入っている</h3>
+<ul>
+<li>10-21 01:03 の森田さんの問い（仕事術のアプリケーションの取込可否と時期）に Mits様の返事が40時間無かった。返事待ちで止まらない決まり（home CLAUDE.md）に従い、巡回が自分で調べて中身を足して送り直した</li>
+<li>実測（10-22）：モックの四つ葉のページ mockup/parts/yotsuba.html に「仕事術 1 action 3 goal」という名前がある＝業務効率化 ＞ 1action3goal の区画。その 1action3goal と 休む仕組み・業務フロー分析 の3画面（変更点一覧の行6・7・8）は 10-19 に森田さんの morita/4category-stage2（90fdfb8）から本流 main へ取り込み済み。main の src/index.html に 1action3goal が入っていることを git grep で確かめた</li>
+<li>10-20〜10-21 に stage3 へ入った6コミット（行28〜32・未合流）に「仕事術」の名前の画面は無い</li>
+<li>森田さんへ Discord ディスカッション 18:27（1562759225267064903・01:03 への返信）で、上の事実と「どの画面を指すか名前を1つ」の問いを送った。森田さんの版の中のことは森田さんの判断で進めてよい、本流へ入れる可否と時期だけは西田が決める、も添えた</li>
+<li>残っている判断（Mits様）：仕事術のアプリケーションが上の3画面と別のものだった場合の、本流へ入れる可否と時期</li>
+<li>宛先：運転台改善</li>
 </ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
