@@ -1,5 +1,5 @@
 {
- "koushin": "2026-10-26 04:38",
+ "koushin": "2026-10-26 14:07",
  "jissoku": {
   "10/3": {
    "kg": 62.3,
@@ -271,13 +271,14 @@
    "katsudo": 382
   },
   "10/26": {
-   "jikan": "",
-   "hosu": 502,
+   "jikan": "13:32",
+   "hosu": 859,
    "hashiru": 0,
    "hashiru_km": 0.0,
    "hashiru_fun": 0,
-   "kiso": 308,
-   "katsudo": 124
+   "kiso": 812,
+   "katsudo": 147,
+   "kg": 61.1
   }
  },
  "mokuhyo": {
