@@ -107,7 +107,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-25 20:21 ／ 写した時刻 2026-10-26 12:39</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-26 17:22 ／ 写した時刻 2026-10-26 18:36</p>
 <h2 id="報告-運転台改善">報告 ── 運転台改善</h2>
 <p>この持ち場の窓（7:12 の毎朝点検・6時間ごとの機能要望の窓・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_運転台改善.md</p>
@@ -2136,6 +2137,38 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
   <li>「確認版を受け取る」の箱がお客様向けの作りでも出る（本文・写真には 10-19 と同じ決まりで入れていない）</li>
 <li>予見：次の正式版 1.81.x を出すとき、使い方ページの「AI-Mits（右の欄）とお使いのAI」「設定」「左下の未ログインのボタン（学び・機能要望・プラン）」「はじめる前に」の写真と本文を撮り直す必要が出る。根拠：1.81.1 以降で AI-Mits の既定が NORMAL・3つのモードに変わり、かかりつけのスイッチを外し、お試しが30日になる（git log v1.80.0..v1.81.7）。いまの本文は FAST が既定・プランの画面は 90日とかかりつけを写している</li>
 <li>道具：/Users/nishidamitsuhiro/untendai-seiri/help_shots/v1800/（cap.py・cap_tokubetsu2.py・build_live.py・up_v1800.py・kakunin_url.py）。差し替え前の本番の控え live_before/・live_mae_up/、送った中身 sent/</li>
+</ul>
+<h3 id="2026-10-26-午後-別のセッション・枝-ai-sensei・AI先生-設定の手伝い">2026-10-26 午後（別のセッション・枝 ai-sensei・AI先生 設定の手伝い）</h3>
+<ul>
+<li>やったこと：自社データの設定を手伝う AI を、Dify の AI先生 434876af の器で作り直し、アプリの右の欄に組み込んだ（計画 /Users/nishidamitsuhiro/.claude/plans/synthetic-coalescing-prism.md）。作業場 /Users/nishidamitsuhiro/untendai-ai-sensei・枝 ai-sensei（commit 8852219・4addb41・059b3ba）。本流 main には入れていない</li>
+<li>名前：「AI先生 設定の手伝い」（Mits様「AI先生設定の手伝い　これをアプリ内の名前にも使って」）。Dify のアプリの名前も同じ</li>
+<li>Dify（下書きだけ・公開していない）：Opus 5.5・温度 0.2・会話を10往復覚える・書庫「AI先生_設定の手伝い_v1.81」aa574eb8（使い方ページ17本＋コードから写した知らせの文・画面と使い方ページの対応・はじめにやることの8つ・行と箱とボタンの名前・ログインと AI-Mits の場所）。古い書庫 92f80324 と AI先生/knowledge/ は使っていない。Sonnet 5.5 は Dify の一覧に無い（2026-10-26 実測・claude-sonnet-5 まで）</li>
+<li>アプリ：自社データにする を開いている間だけ、右の欄の相手が AI-Mits から AI先生 設定の手伝い に替わる（西田統合版だけ）。はじめにやること の「会計ソフトとつなぐ」「顧客名簿を取ってくる」に「AI先生 設定の手伝い に聞く」。送るのは【いまの画面】【はじめにやること（済んだ数と項目名）】【画面の知らせ（4桁以上の数字は＊）】の3つだけ。売上・顧客の数字は送らない。相談の記録にも残さない。cargo test 通過</li>
+<li>検収（BS-jikki-kenshu・答えの全行をコードと使い方ページに突き合わせ）：1回目 6/10 → 2回目 3/4 → 3回目 3/3 で合格。答え：/Users/nishidamitsuhiro/untendai-ai-sensei/ai_sensei/tameshi_20261026.md・tameshi_20261026_2kaime.md・tameshi_20261026_3kaime.md</li>
+<li>設計書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/AI先生/設計書_AI先生設定の手伝い_20261026.html</li>
+<li>Mits様の合図が要るもの（止めてある）</li>
+  <li>Dify アプリ 434876af の公開。公開版はいまも前の AI先生 のまま</li>
+  <li>中継 aimits-report-proxy に秘密 DIFY_APP_KEY_434876AF を足す（値は Dify のこのアプリの API キー app-XBv…・1本だけある）。中継は app_id の頭8文字で秘密を引くので、コードの直しは要らない。この Mac では wrangler が動かないので Cloudflare の API で入れる。足すまで、アプリから送ると「AI先生 設定の手伝い は、いま準備中です」と出る</li>
+  <li>枝 ai-sensei を main に取り込む・世に出す</li>
+<li>検収で見つかった、お客様に届く文の食い違い（この枝では直していない）</li>
+  <li>使い方ページ「ログイン」I4xd2rI8NNgF の「左の欄のいちばん下の未ログイン」。実物はいちばん下が「旧メニューに戻す」で、ログインのボタンはそのすぐ上。さらに 自社データにする・自社情報設定・設定 を開いている間は、左の欄が設定のメニューに替わってこのボタン自体が出ない（index.html:23715）</li>
+  <li>アプリの知らせの文「左下のアカウント」（commands.rs:273-274）。画面に「アカウント」という文字は出ていない</li>
+<li>予見：画面が変わる版を世に出すたびに、書庫を作り直す必要が出る。根拠：書庫は v1.80.0 の使い方ページと v1.81.7 のコードの文字を写したもの。手順は設計書の「7. 版が変わったとき」</li>
+<li>夕（Mits様「開発版で進めるが筋、それで進められるなら進めて」・許可の設定を替えていただいた後）</li>
+  <li>出す版を西田統合版から<strong>開発版（版の名札「デモデータ版」）だけ</strong>に替えた（commit 172074d）。西田統合版・正式版は AI-Mits のまま</li>
+  <li>Dify 434876af を公開した（Opus 5.5・書庫 aa574eb8・会話10往復）。前の公開版（Sonnet 5・古い書庫 92f80324）は Dify の版の履歴に残る</li>
+  <li>中継 aimits-report-proxy に秘密 DIFY_APP_KEY_434876AF を入れた（Cloudflare の API・201）。中継に送ると答えが返る（HTTP 200）。鍵の値は画面にも手元のファイルにも出していない</li>
+  <li>本流の v1.81.8（STRAC の但し書き）を枝に取り込み（6d3823f・つなぎ目は index.html の末尾1か所）、開発版を枝から組み直して /Applications/untendai-dev.app に入れた（v1.81.8）</li>
+  <li>開発版で確かめた：自社データにする → 右の欄が「AI先生 設定の手伝い」に替わる → Stripe との連携 で「Stripe の秘密鍵はどこで作るんですか」→ 約20秒で答えが出た。答えの URL を押すと Chrome で使い方ページの Stripe の節が開いた。写真 /Users/nishidamitsuhiro/untendai-ai-sensei/ai_sensei/kaihatsuban_kotae_20261026.jpg</li>
+  <li>直した：答えの URL が地の文と同じ色だったので、よくある質問と同じ青にした（c4ae2c8）。開発版を組み直し、UTAGE の CSV の問いで青く出るのを確かめた。写真 /Users/nishidamitsuhiro/untendai-ai-sensei/ai_sensei/kaihatsuban_kotae2_20261026.jpg</li>
+  <li>まだ：本流 main への取り込み・西田統合版・世に出すこと</li>
+<li>試し（Mits様「ユーザーがまだ、やっていない設定をAIが導けるか？それを実験しないと使えない」）：初めての人の言葉で聞き、答えに書いてあるものだけを押した。アプリの中の手順は画面のとおりに案内できた。止まるのは全部アプリの外 ── マネーフォワードのアプリポータルの場所・Stripe の秘密鍵の出し方は書庫に無く「書かれていません」と答える／UTAGE は「右上の API 設定」と案内するが本物は右上のお名前のメニューの中の「API設定（β版機能）」で、追加のあとの手順が無い／エクセルを CSV にする手順は「エクセルのヘルプ」。「見本 CSV：」の「顧客」は、押すとダウンロードのフォルダに customer.csv が保存された（押した直後に探して見落とし、一度「保存されない」と誤って書いて訂正した）。記録 /Users/nishidamitsuhiro/untendai-ai-sensei/ai_sensei/jikken_20261026/kekka.md（440f7c3）。開発版のデータは控えと同じ</li>
+<li>2026-10-26 夜 ── AI-Mits と話すたびに出る「足りない」を AI先生 が導けるようにする（Mits様「目的は、初期設定だけではなくて、都度AI-Mitsにあれがない、これがない、これが設定してないと言われる。それをAI-Mitsと話すたんびにサポートできるようにする」「AI設定先生の方に実施させる試験練習をさせる」「なんで言葉を限定するんだよ…文脈、意味、コンテキストから判断して」「だから、それを準備するんだよ」）</li>
+  <li>試験の問題：西田統合版のデータの写しで AI-Mits の前置きを組み（commands.rs の #[ignore] テスト soeru_heads_dump）、AI-Mits（NORMAL）に8つの話題で12問。答えを丸ごと AI先生 に貼って「アプリで何をすればいいか」を聞く。写しは credentials.json を含むので scratchpad だけに置き、枝に入れていない</li>
+  <li>準備したもの：AI-Mits の話を読んで、アプリで入れる・つなぐ・選ぶものを13件の経験の記録にした（/Users/nishidamitsuhiro/untendai-ai-sensei/ai_sensei/keiken/）。make_keiken.py が書庫25「AI-Mitsが求める設定」と書庫26「つなぐ先のサービスの画面での手順」（Stripe の制限付きキー・UTAGE の API設定（β版機能）・MF のアプリポータル）を作り、Dify の書庫 aa574eb8 に入れた。SYSTEM に「決まった言葉を探さず話全体から、アプリでやることと AI-Mits に言葉で答える問いを分ける」を足した。書庫から引く数 6→8</li>
+  <li>試験：1周目 5問中4問が「書庫に無い」で止まる → 2周目 17問中14問 → 3周目 20問全部 → BS-jikki-kenshu の検収（画面の名前の食い違い 0件）の指摘2つを直して4周目 4問とも直った。採点 /Users/nishidamitsuhiro/untendai-ai-sensei/ai_sensei/shiken_20261026/saiten.md（最新 8949321）</li>
+  <li>アプリに入れる道が無いのに AI-Mits が求めるもの（devils-advocate・BS-jikki-kenshu の両方で反例 0件）：①優良客の判定の線（欄は v1.11.0 で外れたのに sanbo.rs:4468 が「顧客の計器 › お客さまを5つに分ける › 判定の線」と案内）②CPF と打ち手の向き（箱は残るが index.html:18866 で行から外れている）③配信の数字（入れても haishin_keisoku に入るだけで AI-Mits に渡らない。sanbo.rs:1276 は本物のお客さまに毎回「マーケティングの数字が未入力」と渡す）④個人の生活費（画面の localStorage にだけ残る）⑤名簿の同じ方が2つのアドレス（まとめる命令が無く、UTAGE 側でまとめて取り直してもアプリの古い行は残る）。いまの AI先生 は5つとも「アプリに無い」と答える</li>
+  <li>画面で押して確かめていない所：自社データにするの各画面の中・はじめにやること・配信の数字の箱・ペルソナ設定の箱・顧客レントゲンの「この 1 人を書き直す」（実データが要る）。書庫26の外の画面は 9月の記録と今日見たメニューまで（MF の「新規登録」の欄は見ていない）</li>
 </ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
