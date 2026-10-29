@@ -111,7 +111,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-29 11:06 ／ 写した時刻 2026-10-29 12:37</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-29 13:33 ／ 写した時刻 2026-10-29 18:36</p>
 <h2 id="報告-運転台改善">報告 ── 運転台改善</h2>
 <p>この持ち場の窓（7:12 の毎朝点検・6時間ごとの機能要望の窓・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_運転台改善.md</p>
@@ -2271,6 +2272,13 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>2026-10-29 11:06 JST ── 取消：すぐ上の節の「main で直す所は、プランの表のほかに無い」を取り消す</li>
   <li>実測：main も dou2-plan も、プランで分けているのは AI-Mits の NORMAL・DEEP だけ（grow_trial_status・main の index.html 17685〜17710 行）。会計の画面に、プランで入れなくする仕掛けがどちらにも無い。決定どおりにするには新しく作る必要がある</li>
   <li>作るのは道2（plan.rs の宛先）。この実測を道2に送った。運転台改善は main に手を入れない</li>
+</ul>
+<h3 id="2026-10-29-13-33-メニューの統合整理3版目を開発版に入れた-Mits様-開発版に">2026-10-29 13:33 ／ メニューの統合整理3版目を開発版に入れた（Mits様「開発版に入れてみて」）</h3>
+<ul>
+<li>枝 menu-v3（/Users/nishidamitsuhiro/untendai-menu3）c546676。dou2-plan 4a77400 を取り込み済み（ぶつかり0）。/Applications/untendai-dev.app 13:30:54・版 1.81.14</li>
+<li>検収の線6本は BS-engineer の測定で合（52行押して外れ0・外した入口0・console エラー0・目標＠5000 が開き直しで残る）。写真9枚：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/_mock/kakunin_20261028_menu_seiri/jissou_v3_shashin_20261029/</li>
+<li>見つかったこと：「期首から先月まで」の数字は今月の途中まで入る作り（mf.rs 954〜980・freee.rs 512〜）。名前だけ変え、範囲は変えていない</li>
+<li>道2へ先端番号 c546676 を送った。BS-jikki-kenshu はまだ（Mits様の目視の直しのあと）</li>
 </ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
