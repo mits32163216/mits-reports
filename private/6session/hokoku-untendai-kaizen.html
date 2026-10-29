@@ -110,7 +110,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-28 16:59 ／ 写した時刻 2026-10-28 18:36</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-29 11:06 ／ 写した時刻 2026-10-29 12:37</p>
 <h2 id="報告-運転台改善">報告 ── 運転台改善</h2>
 <p>この持ち場の窓（7:12 の毎朝点検・6時間ごとの機能要望の窓・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_運転台改善.md</p>
@@ -2262,6 +2263,14 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
   <li>今の返事：testume → plan &quot;ume&quot;・plan_next null（時計が 12/29 まで進み梅に下がったあと）／ac_nishida → plan &quot;matsu&quot;・plan_next {take, 2026-11-28}</li>
   <li>予見（BS-engineer）：本番でも Stripe 側のメールに大文字が混じる人は見つからない（Stripe の email の絞り込みは大文字と小文字を区別し、中継は小文字で聞いている）。今回は直していない</li>
   <li>B6 は時計を進めていない試験のお客様（FS-utage-pm が A13 で作る 3216.fun+trial20261028@gmail.com など）で行う</li>
+<li>2026-10-29 11:03 JST ── 決定の記録 2026-10-29 11:1x（竹の30日お試し（0円）・フリープラン＝AI-Mits の FAST だけ）を受け取った</li>
+  <li>main のプランの表（src/index.html 10076〜10098 行・v1.81.14）は旧い言葉のまま：「やめたあとの姿：会計の画面と FAST はそのまま」「free と同じ姿」「はじめの 30 日」（竹の が無い）・無料の列「はじめの 30 日だけ」</li>
+  <li>道2の枝（untendai-dou2）にはこの表がまだ入っていないので、道2に場所と行を送った。プランの表は道2が持つので、運転台改善は手を入れない（同じ所を2つのセッションで直して片方が消えるのを避ける）</li>
+<li>2026-10-29 11:05 JST ── 決定の記録 2026-10-29 11:1x「確定：フリープランでは会計の画面に触れない」を受け取った</li>
+  <li>main の src-tauri/src に plan.rs は無い（ls で実測）。プランで画面を出し分けるコードは道2の枝（untendai-dou2 の src-tauri/src/plan.rs）にしか無いので、直すのは道2。運転台改善の main で直す所は、前の節のプランの表（道2が直すと返事済み）のほかに無い</li>
+<li>2026-10-29 11:06 JST ── 取消：すぐ上の節の「main で直す所は、プランの表のほかに無い」を取り消す</li>
+  <li>実測：main も dou2-plan も、プランで分けているのは AI-Mits の NORMAL・DEEP だけ（grow_trial_status・main の index.html 17685〜17710 行）。会計の画面に、プランで入れなくする仕掛けがどちらにも無い。決定どおりにするには新しく作る必要がある</li>
+  <li>作るのは道2（plan.rs の宛先）。この実測を道2に送った。運転台改善は main に手を入れない</li>
 </ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
