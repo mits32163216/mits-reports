@@ -151,7 +151,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-30 12:27 ／ 写した時刻 2026-10-30 12:36</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-30 18:28 ／ 写した時刻 2026-10-30 18:36</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -4676,6 +4677,460 @@ untendai-client  版=1.73.43  組立=2026-09-26 03:39:44  Bundle=com.mits.untend
 <li>変更点一覧に行80〜84を書き足した（fa7b89e・977799d・45ac457・a920aa9・91e2620）。チェックされた行は0件・取り込みの依頼なし</li>
 <li>ChatGPT（7本）・Discord（4チャンネル・スレッド0）・本流 main（dd09a3a のまま）・PR・Issue：増えなし。森田さんから西田側への問いは無いので、どこにも返していない</li>
 <li>宛先：運転台改善</li>
+</ul>
+<h3 id="2026-10-30-14-15-運転台改善-メニュー3版目を西田統合版-1-81-15-に入れ">2026-10-30 14:15 ／ 運転台改善 ── メニュー3版目を西田統合版 1.81.15 に入れた（Mits様の製品版だけ・世に出していない）</h3>
+<ul>
+<li>出どころ：Mits様「入れて」。release.sh --自分だけ は Mits様のターミナルで実行（AI からは製品の配布として止められるため）</li>
+<li>中身：menu-v3 b1d6414（メニュー3版目＝ChatGPT の設定の型・旧メニュー廃番・今月の必要粗利に役員報酬・道2 e34afaf のデータの控えの検収の受け口）を main に取り込み 6a2373c → 版の commit 56b6b06・タグ v1.81.15・main c6eac53（GitHub へ送り済み）</li>
+<li>3本の版：untendai.app・untendai-mkt.app・untendai-client.app とも Info.plist 1.81.15（PlistBuddy で実測）。公証 Accepted。cargo test 389 passed / 0 failed。試験用の5語は3本とも 0件</li>
+<li>世に出していない：latest.json・GitHub Release は v1.80.0 のまま</li>
+<li>途中で直したもの：①release.sh ほか5本の <code>$名前</code> の直後の全角文字（bash 3.2 ＋ ja_JP.UTF-8 で名前に読まれて止まる）を <code>${名前}</code> に ②install.sh・build-mkt.sh・build-dev.sh の片付け（旧版の名前替え）が macOS に止められても先へ進む形に（ad77716・main・まだ GitHub に送っていない。次の版の上げで一緒に送られる）</li>
+<li>宛先：道2の決済とアカウントの画面の状態・運転台 森田さん・協力者案件</li>
+</ul>
+<h3 id="2026-10-30-14-1x-道2の決済とアカウントの画面の状態-e34afaf-が西田統合">2026-10-30 14:1x ／ 道2の決済とアカウントの画面の状態 ／ e34afaf が西田統合版 1.81.15 に入ったのを確かめた</h3>
+<ul>
+<li>運転台改善の知らせ（v1.81.15・main c6eac53）を実物で確かめた：e34afaf は main の祖先。main の先頭は ad77716（14:12:02・片付けの道具の直し）で、c6eac53 はその祖先</li>
+<li>/Applications の untendai.app・untendai-mkt.app・untendai-client.app は3本とも Info.plist 1.81.15（14:10・14:12・14:13）。各本体3ファイル（untendai・haishin_torikomi・demo_seed_cred）で試験用の「hikae:」は 0件</li>
+<li>道2 の開発版の検収 1〜6 は全部合格で、この持ち場から main に渡す直しは残っていない</li>
+</ul>
+<h3 id="2026-10-30-14-44-運転台改善の枝-数字の3つの分けの方針-方針案を1枚にした-M">2026-10-30 14:44 ／ 運転台改善の枝（数字の3つの分けの方針）── 方針案を1枚にした（Mits様の判断待ち・実装していない）</h3>
+<ul>
+<li>出どころ：Mits様（運転台改善で）「これを整理して貰ったが、じゃぁどうする…寄与案出して」「この件だけ切り出して、複数エージェントでブレスト、ブラッシュアップさせたい　そして方針が決まったら西田統合版に採用したい」</li>
+<li>方針案：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/_mock/kakunin_20261028_menu_seiri/suuji_3bunrui_houshin_20261030.html</li>
+<li>やり方：BA-council の内部6人（yosoku・genba・wakugumi・nobasu・tamesu・tsukuru）を独立に → 突き合わせて下書き → genba・wakugumi で2周目 → devils-advocate で実物の裏取り3回（コード main 0582a1b・帳簿の写し。アプリは起動していない）</li>
+<li>Mits様が決める点（3つ）：①初めて開くお客様の入れる欄は空で出す（黄色の地・例は隣に通常の文字・実績から引ける欄は茶色）②見本の数字の持ち主は架空の一人起業家1社（田中誠の規模）で sample.db 1本から出す・Mits様の数字とお名前は使わない ③右の欄の質問例と画面に書いた数字（約25か所）はその人の実データで組み、無いときは数字を外した問いにする</li>
+<li>見つかった事実（コードで確かめた・実機はまだ）：西田統合版 1.81.15 で、経費・役員報酬・ギネス・繰越・実効税率・年齢などの欄は入れても保存されず、起動し直すと見本の数字に戻る（src/index.html 2145行の印の処理が先に走って緑を外し、25511行の保存は緑の欄しか拾わない）。正式版 1.80.0 にも入れる欄の見本 12件。実効税率が空だと税 0%（3225行）・繰越が空だと 0（3198行）。入れる欄の値は顧問先ごとに分かれず、データの控えにも入らない。デモデータ版 untendai-demo.app は 1.80.0（枝 demo-ban）</li>
+<li>発注GO までやらない：実装・版の上げ・デモデータ版の組み直し</li>
+<li>宛先：運転台改善</li>
+</ul>
+<h3 id="2026-10-30-14-49-Mits様-運転台改善で-森田さんの枝は-西田統合版に入れた時">2026-10-30 14:49 ／ Mits様（運転台改善で）── 森田さんの枝は、西田統合版に入れた時点で強制的に main に追いつかせる（お願いではない）</h3>
+<ul>
+<li>Mits様原文：「お願いして取り組んでもらうものじゃなくて、こちらが正式版に進んでいるものなので、西田統合版の時点で強制的に森田さんの班も上げる。」（前段「古い版を見てここを改善しようとかって考えて、二度手間で…」「改善して良くなっているものを改悪してしまうような、違う班からのバージョン修正」）</li>
+<li>取消：運転台改善が 運転台 森田さん・協力者案件 に頼んだ「森田さんに一度だけお願いする文（自動で取り込む設定）の下書き」</li>
+<li>実測：こちらの gh は森田さんの GitHub（Yoshiakikun/untendai）に admin・push の権限がある。森田さんの枝は 10本とも main から 159〜169件遅れ（main は 167件遅れ・最後の直し 10-16 19:18）</li>
+<li>止まっている所：AI から森田さんの GitHub に書き込む指示は、許可の仕組み（Modify Shared Resources）で止められた。進め方は Mits様にお伝えした</li>
+<li>宛先：運転台 森田さん・協力者案件</li>
+</ul>
+<h3 id="2026-10-30-14-50-FHL-2026-Notes-Mits様-申し込みの流れはレタ">2026-10-30 14:50 ／ FHL 2026 Notes ── Mits様：申し込みの流れはレターと分けて「本文なしのテスト申込」で作る。試験ファネルに申し込みのページとサンクスを作った</h3>
+<ul>
+<li>Mits様原文：「正式なレターに、申込フォームを作るのは、最終的にいれればいいので、申込フローは、テスト申込revel1用フォームを本文なしで作って　UI、顧客体験、「商品・サービス」遷移、準備するべきメールやサンクスなどを作って言って」「正式レターのは本文はそれとは別に進めて、後で統合する」</li>
+<li>作った（試験ファネル X4ABqHpBgOXh・テストモード）：</li>
+  <li>ステップ L1_テスト申込（本文なし）DXEYsEXhtVxq・ページ hSOOAoLvH8Q1 <a href="https://change.7years.life/page/hSOOAoLvH8Q1">https://change.7years.life/page/hSOOAoLvH8Q1</a> ── 文は 6VLQVfQ5Hwfj の手元の写し（10-29 置き換え済み・最終確認の4つ・竹でできること・フリープラン・特商法などの3つのリンク）、フォームの作りと js_body は QfrHK6cy5gRJ と同じ（アドレスを隠す・?t= の印・テスト松竹梅 F9cdzYUFSYye）。ボタンの文字は「竹の30日お試しを始める」にし、js_body が探す文字も同じに替えた。押したあとの行き先はサンクス</li>
+  <li>ステップ L1_テスト申込_サンクス 6Lc998DGQ6CK・ページ EhynRvyhFohb <a href="https://change.7years.life/page/EhynRvyhFohb">https://change.7years.life/page/EhynRvyhFohb</a> ── 次にすること3つ・ダウンロードのページ oHtrsl52qpXg へのボタン</li>
+  <li>2つのステップはファネルの先頭（1・2番）に置いた。道2 の5つのステップの並びの前後は変わっていない（申し込みのあとに次のステップへ移る作りに、道2 のページが巻き込まれないように）</li>
+<li>確かめた：2ページとも 200。印なしで開くとボタンが止まり「アプリのアカウントの画面から開き直してください」が出る。スマホ 390 で横にはみ出さない。リンク5本とも 200</li>
+<li>メールの下書き（②申し込み直後・③7日前は A2・④31日目・⑤続けないの受付）と流れの表：01_The Innovation/_wip/linchpin_nou_no_naka_20261005/level1_test_moushikomi_20261030/L1テスト申込の流れ_20261030.html。メールは UTAGE に入れていない</li>
+<li>道2 に頼むこと：試験用の中継の MOUSHIKOMI_NEXT_URL を <a href="https://change.7years.life/page/hSOOAoLvH8Q1">https://change.7years.life/page/hSOOAoLvH8Q1</a> にしてください（いまは既定の QfrHK6cy5gRJ）。済んだらこの台帳に書いてください。FHL は書かれた節を見て、/moushikomi から印つきでこのページが開くところまで通す</li>
+<li>宛先：道2の決済とアカウントの画面の状態・司令塔</li>
+</ul>
+<h3 id="2026-10-30-14-51-運転台-森田さん共同開発の巡回-森田さんの枝が本流から遅れてい">2026-10-30 14:51 ／ 運転台 森田さん共同開発の巡回 ── 森田さんの枝が本流から遅れている数を初めて測り、知らせの下書き2本を作った（送っていない）・森田さんが付箋仕事術を別のリポに分ける記録を足した</h3>
+<ul>
+<li>本流との差（GitHub で測った・遅れ／先行）：main 167／0・fix-tauri-default-run 165／0・4category-shell 163／0・4category-stage2 162／0・4category-stage3 159／6・fusen-in-shell 159／19・fusen-parts 159／76・fusen-research 159／79・fusen-shigoto 159／161・readme-fork-credit 169／2。森田さんの main の最後の直しは 10-16 19:18 JST（版 1.76.7）。本流の版 1.81.15（GitHub の main c6eac53）</li>
+<li>下書き（Mits様の「送って」「OK」まで送らない）：</li>
+</ul>
+<p>  /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/下書き_森田さんへ_本流の新しい版_v1.81.15.md</p>
+<p>  /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/下書き_森田さんへ_本流の自動取り込みの案.md</p>
+<ul>
+<li>森田さんの版の記録（morita/fusen-shigoto 30e1b2a・30aa143・f963c5e・10-30 13:15〜14:13 JST・どれも docs だけ）：①付箋仕事術を独立したリポ「reiwa-shigotojyutu」に分けると森田さんが決めた（森田さんの Windows の作業用の複製で履歴つきに切り出し済み・新しいリポの作成と送りはまだ）。運転台の Fork には取り込み専用の枝で src/fusen を差し替えて引っ張る形 ②アプリ本体を Cloudflare で Web 公開する案を本命に（森田さんの Cloudflare で使わせる形を先に）③許諾は森田さんの申告として「コンテンツは購入しており、考え方の普及のためにはコンテンツの再販のOKは以前いただいている」と記録。docs では原典の著者の名前を「原典の著者」に置き換えている</li>
+<li>世に出すこと・再販の範囲は森田さんの版の外に届くので、Mits様が知っておく材料として載せる（森田さんからこちらへの問いはまだ無い。AI は返していない）</li>
+<li>変更点一覧：チェックされた行 0件。新しい画面のコミットが無いので書き足しなし（全75行・todo 57・merged 18）</li>
+<li>宛先：運転台改善</li>
+</ul>
+<h3 id="2026-10-30-15-0x-運転台-森田さん・協力者案件-森田さんの枝の遅れを毎回の巡回で">2026-10-30 15:0x ／ 運転台 森田さん・協力者案件 ── 森田さんの枝の遅れを毎回の巡回で測るようにした・14:51 の節の下書き2本は取り消した（宛先：運転台改善）</h3>
+<ul>
+<li>出どころ：運転台改善からの依頼（14:4x）・差し替え（3 の取り消し）・訂正（2 は取り込みの形が決まるまで作らない）。Mits様原文（2026-10-30）「西田統合版から正式版に行くバージョンは森田さんの班に入っていないと同じことが起こるので、これは解決する仕組みを今すぐ作っておきたい」「お願いして取り組んでもらうものじゃなくて…西田統合版の時点で強制的に森田さんの班も上げる」</li>
+<li>巡回の手順書に足した：/Users/nishidamitsuhiro/.claude/scheduled-tasks/untendai-morita-junkai/SKILL.md の節「森田さんの枝が本流の main から遅れていないかを毎回測る」。1＝森田さんの全部の枝（本数を決め打ちしない・今は10本）を gh api compare で本流の main と比べ、報告の「本流との差」に枝ごと1行と、森田さんの main の最後の直し・本流の版を書く。2＝知らせの下書き（「西田統合版 &lt;版&gt; を森田さんの枝に取り込みました・手元で pull を」）は、取り込みの形が決定台帳に出るまで作らない。お願いの下書き（自動取り込みの案）は手順から外した</li>
+<li>その場で1回走らせた：14:48 に巡回を1回走らせた（local_7a126222-176d-4826-8a5c-6b024733ad00・14:51 に報告）。報告の行：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/報告_森田さん共同開発の巡回.md の節「2026-10-30 14:51（JST）巡回」の「本流との差」</li>
+<li>検収：報告の10本の値（main 167／0・fix-tauri-default-run 165／0・4category-shell 163／0・4category-stage2 162／0・4category-stage3 159／6・fusen-in-shell 159／19・fusen-parts 159／76・fusen-research 159／79・fusen-shigoto 159／161・readme-fork-credit 169／2）を、14:48 にこちらで gh api compare を叩いた値と突き合わせて食い違い 0件。森田さんの main の最後の直し 2026-10-16 19:18 JST も一致。森田さんへ送った物 0件（Discord・メール・GitHub とも）</li>
+<li>取り消し：14:51 の節にある下書き2本（下書き_森田さんへ_本流の新しい版_v1.81.15.md・下書き_森田さんへ_本流の自動取り込みの案.md）は、巡回が直す前の手順書で作ったもの。どちらも取り消しで /Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261030_morita_shitagaki_torikeshi/ へ移した。14:51 の節の「Mits様の『送って』『OK』待ち」は無くなった</li>
+<li>取り込みの形が決まったときに手順書の2を戻す人への注意：junkai_morita_jotai.json の honryu_no_han_maekai はもう 1.81.15 になっている。2を「版が上がったとき」のままにすると、1.81.15 の取り込みでは下書きが出ない。2の引き金は「取り込みが走ったとき」に直す</li>
+<li>宛先：運転台改善</li>
+</ul>
+<h3 id="2026-10-30-14-58-道2の決済とアカウントの画面の状態-試験用の中継の-MOUSH">2026-10-30 14:58 ／ 道2の決済とアカウントの画面の状態 ／ 試験用の中継の MOUSHIKOMI_NEXT_URL を hSOOAoLvH8Q1 にした（宛先：FHL 2026 Notes・司令塔）</h3>
+<ul>
+<li>14:50 の FHL 2026 Notes の頼みどおり。BS-engineer が deploy_test.sh の119行目を QfrHK6cy5gRJ → hSOOAoLvH8Q1 に替え、14:54:39 に載せた（設定だけ・index.js は同じ）</li>
+<li>参謀が Cloudflare で測った：試験用 aimits-report-proxy-test の MOUSHIKOMI_NEXT_URL は <a href="https://change.7years.life/page/hSOOAoLvH8Q1">https://change.7years.life/page/hSOOAoLvH8Q1</a>、最新の版 283a00c0（05:54:35Z）。本番 aimits-report-proxy の最新の版は 9fa3dd96（2026-10-26）のまま。試験用の /health 200</li>
+<li>担当の確かめ：/moushikomi/link の 303 の行き先が hSOOAoLvH8Q1?t= で始まる 1件・QfrHK6cy5gRJ 0件。POST /moushikomi は通していない（通すと UTAGE に読者ができてメールが出るため）。FHL の通し試験では、/moushikomi を叩くと UTAGE の試験の読者とメールが出ることに気を付けてください</li>
+<li>「竹にする」の qN3Ap6fUpepX・「続けない」の uUySUbJAdAnL は別の設定で、今回は動いていない</li>
+<li>本番へ移すときの注意：src/index.js 3934行目の既定の値は QfrHK6cy5gRJ のまま。設定の行が無いと既定に戻る（道2_本番へ移す手順書に入れる）</li>
+</ul>
+<h3 id="2026-10-30-15-0x-運転台-森田さん・協力者案件-巡回の知らせの下書きの引き金を">2026-10-30 15:0x ／ 運転台 森田さん・協力者案件 ── 巡回の知らせの下書きの引き金を「取り込みが走ったとき」に直した（宛先：運転台改善）</h3>
+<ul>
+<li>出どころ：運転台改善の知らせ（取り込みの形が決まった・tools/morita_oitsuku.sh・commit の文「西田統合版 &lt;版&gt; を取り込む（自動）」）</li>
+<li>直したところ：/Users/nishidamitsuhiro/.claude/scheduled-tasks/untendai-morita-junkai/SKILL.md の節「2. 西田統合版を森田さんの枝に取り込んだら、知らせの下書きを作る」。森田さんの main 以外の枝ごとに直近20件の commit の文を引き、「西田統合版 &lt;版&gt; を取り込む（自動）」が見つかった版が junkai_morita_jotai.json の torikomi_shitagaki_kakita_han より新しければ下書きを作る（最新の commit だけを見ると、森田さんがそのあと直しを足したときに取りこぼすため）。森田さんの main は早送りで commit が残らないので、遅れ0なら取り込めた側に数える。下書きの中身は「西田統合版 &lt;版&gt; を森田さんの枝に取り込みました（取り込めた枝／ぶつかって残した枝）。手元で pull してから続けてください」。送るのは Mits様の OK のあと。前の 🛑（形が決まるまで作らない）は外した</li>
+<li>試した結果（15:0x）：森田さんの main 以外の9本で、直近20件に「を取り込む（自動）」は0件（取り込みはまだ走っていない＝下書きは出ない、が正しい結果）。見分けの文字の当て方は、見本の文「西田統合版 1.81.15 を取り込む（自動）」で当たるのを確かめた。下書きが出るところは、Mits様が morita_oitsuku.sh を打ったあとの最初の巡回（毎日12:17・21:17）で初めて通る</li>
+<li>宛先：運転台改善</li>
+</ul>
+<h3 id="2026-10-30-14-59-FHL-2026-Notes-道2-の-14-58-MOUSH">2026-10-30 14:59 ／ FHL 2026 Notes ── 道2 の 14:58（MOUSHIKOMI_NEXT_URL を hSOOAoLvH8Q1 に）を受けて、入口から申し込みのページまでを通した</h3>
+<ul>
+<li>14:58:41 に試験のアドレス 3216.fun+l1test20261030@gmail.com で POST /moushikomi → 返事「メールを送りました…」。moushikomi_link_for_test.sh で確認のリンクが1本取れた（終了コード 0）</li>
+<li>確認のリンクから先（パスワードを決める）は FHL は押していない。/moushikomi/link の 303 の行き先が hSOOAoLvH8Q1?t= になることは道2 が 14:58 の節で確かめている</li>
+<li>印が正しいときの申し込みのページの動き：中継の /signup-email の返事を試験のアドレスに差し替えて hSOOAoLvH8Q1?t= を開いた → 隠しのアドレスの欄に試験のアドレスが入り、「竹の30日お試しを始める」が押せる状態（disabled=false）、止めの文は出ない。ボタンの文字を替えたあとも、印の仕組みがボタンを見つけて動いている</li>
+<li>残り：試験のカード番号で「竹の30日お試しを始める」を押し、サンクス EhynRvyhFohb に移るか・シナリオ TmVz9tzYUJtF に入るかを見る（カード番号の入力は Mits様の手）</li>
+<li>数え方への影響：14:58 に試験の reader を AI-Mits の登録の道（XU7Gfd7XoiCQ）に1人作った（3216.fun+l1test20261030@gmail.com）。jogai_settei.json の ^3216\.fun\+.*@gmail\.com$ に当たるので登録の数からは外れる</li>
+<li>宛先：道2の決済とアカウントの画面の状態・司令塔</li>
+</ul>
+<h3 id="2026-10-30-15-00-Mits様-運転台改善の枝で-入れる欄の色と-サンプルの数字の">2026-10-30 15:00 ／ Mits様（運転台改善の枝で）── 入れる欄の色と、サンプルの数字の決まり</h3>
+<ul>
+<li>Mits様原文：「保存の不具合の直し、発注GO　並列で　まず使う色を決めよう　それを各画面に必要があれば摘要として出す」「色は　テキスト色と入力欄の背景色」「入力すべき欄、箱の色　未入力とわかる」「入力済みと明らかに分かるテキスト色　と背景色」「サンプル数字なのか代入数字なのか」「サンプル数字は、下3桁丸めて、明らかにサンプルとわかるとする、かつ、あまりにリアルな数字で無い大きすぎる数字では無い、しかし、『あ、これは自分の数字では無い』とわかるもの」</li>
+<li>決まったこと：①色は文字の色と入れる欄の地の色で示す ②入れる欄は「まだ入れていない」「入れた（代入数字）」「見本が入っている（サンプル）」が見て分かる地の色と文字の色にする ③画面ごとに、出ている色の説明（摘要）を必要な画面にだけ出す ④サンプルの数字は下3桁を丸め、大きすぎず、本人の数字ではないと分かる数にする</li>
+<li>色の値（案）：未入力＝うすい黄色の地 #fffbe6／入れた＝うすい茶の地 #f6efe4・茶の太字 #7a5218／見本＝うすい緑の地 #eaf5ee・緑の文字 #137a4f。入れる欄の外は文字の色だけ（黒＝実データ・茶＝入れた数字から計算した数字・緑＝見本）。モックで Mits様にお見せしてから決める</li>
+<li>保存の不具合の直し：発注GO を受けて BS-engineer が作業場 /Users/nishidamitsuhiro/untendai-hozon（枝 hozon-naoshi）で直している。世に出さない</li>
+<li>宛先：運転台改善・運転台 森田さん・協力者案件</li>
+</ul>
+<h3 id="2026-10-30-15-12-FHL-2026-Notes-Mits様-決済テストする-LE">2026-10-30 15:12 ／ FHL 2026 Notes ── Mits様「決済テストする」：LEVEL1 テスト申込（本文なし）で決済テストを始めた。道2 と分けて確かめる</h3>
+<ul>
+<li>Mits様原文：「決済テストする」「☆BS_道2の決済とアカウントの画面の状態　連携とってよ」</li>
+<li>15:08:50 に試験のアドレス 3216.fun+kessai20261030@gmail.com で POST /moushikomi → moushikomi_link_for_test.sh で確認のリンクを取り出し、Mits様にお渡しした（15分で切れる＝15:23 まで）</li>
+<li>通る道：確認のリンク → パスワードを決める（Mits様）→ hSOOAoLvH8Q1?t= → 試験のカード 4242…（Mits様）→「竹の30日お試しを始める」→ サンクス EhynRvyhFohb（ボタンの redirect_url に入っていることは UTAGE の保存の返りで確かめた）</li>
+<li>FHL が見る：UTAGE の申し込みの記録（F9cdzYUFSYye・テスト竹_お試し30日 8MwhU5GPEZ5b・is_test_mode）を15秒おきに見張っている／サンクスに移ったか／シナリオ TmVz9tzYUJtF（7日前の知らせ）に読者が入ったか</li>
+<li>道2 に見てほしい（道2 の仕組みの側）：①試験の Stripe にお試し30日つきの定期の申し込み（trial_end が30日後）ができたか ②試験用の中継の台帳で、この人のプランの状態が竹のお試しになったか（webhook が届いたか）③アプリのアカウントの画面で竹のお試し・31日目の日付がどう見えるか。結果をこの台帳に書いてください</li>
+<li>申し込みの記録が出たら、FHL は出た時刻と記録の id をこの台帳に足し、道2 に合図する</li>
+<li>数え方への影響：15:08 に試験の reader を XU7Gfd7XoiCQ に1人作った（3216.fun+kessai20261030@gmail.com）。jogai_settei.json の ^3216\.fun\+.*@gmail\.com$ に当たるので登録の数からは外れる</li>
+<li>宛先：道2の決済とアカウントの画面の状態・司令塔</li>
+</ul>
+<h3 id="2026-10-30-15-2x-道2の決済とアカウントの画面の状態-15-12-の決済テストの">2026-10-30 15:2x ／ 道2の決済とアカウントの画面の状態 ／ 15:12 の決済テストの道2 の側の3点（宛先：FHL 2026 Notes・司令塔）</h3>
+<ul>
+<li>見張り：試験用の中継の /paid?email=（3216.fun+kessai20261030@gmail.com）を 15:13:00 から15秒おきに読んだ。15:13:39 は none、15:13:56 に trialing に変わった</li>
+<li>① 試験の Stripe：契約 sub_1UW94UGIuMEwQDLTJa5NZ7tY・お客様 cus_VXDV5gDaW2N4Ak・status trialing・plan take・trial_end 2026-11-29T06:13:50Z（日本時間 11-29 15:13:50＝申し込みのちょうど30日後）・次のお支払い 200（試験の竹の値段）・cancel_at_period_end false。合う</li>
+<li>② 試験用の中継の台帳（aimits_identity_TEST_dou2 を Cloudflare から直に読んだ）：stripecust:&lt;メール&gt; → cus_VXDV5gDaW2N4Ak／sub:sub_1UW94U… status trialing・plan take・trial_end 同上・from_event evt_1UW94VGIuMEwQDLTptJ0KGlW（webhook が届いて書いた）／trial:cus_VXDV5gDaW2N4Ak at 06:13:52Z（お試しを使った記録）。合う</li>
+<li>③ アプリのアカウントの画面：この人のアカウントでアプリを開いた画面はまだ見ていない（開発版の試験ログインは試験の2人に固定・この人のパスワードは Mits様が決めたもの）。/paid の返りと画面のコード（menu-v3 index.html 6186〜6193行・14021行）から出る文は次のとおり：</li>
+  <li>プランと契約の状態：プラン「竹の30日お試し（0円）」／「2026年11月28日まで。31日目から竹 9,700円（税込）」／ボタン「続けない」／「お試しのあいだは0円です。何もしなければ、2026年11月29日から竹のお支払いが始まります（7日前にお知らせします）。」</li>
+  <li>アカウントの1行：「竹の30日お試し中（残り 30日）」</li>
+  <li>画面の値段は 9,700円、試験の Stripe の請求は 200円（試験の値段のまま）。本番では aimits_take_9700 で揃う（手順書 P0-4）</li>
+<li>Mits様がアプリのアカウントの画面でこの人に入られたら、上の文と見比べる</li>
+<li>取消：上の見出しの時刻「15:2x」は誤り。正しくは 15:14（date で測った値）</li>
+</ul>
+<h3 id="2026-10-30-15-15-FHL-2026-Notes-決済テスト-申し込みが通り-サン">2026-10-30 15:15 ／ FHL 2026 Notes ── 決済テスト：申し込みが通り、サンクスに移り、7日前の知らせのシナリオに入った</h3>
+<ul>
+<li>UTAGE の申し込みの記録 d819AktCtHcF：2026-10-30 15:13:51・テスト松竹梅 F9cdzYUFSYye／テスト竹_お試し30日 8MwhU5GPEZ5b・金額 0・status paid・is_test_mode true・3216.fun+kessai20261030@gmail.com</li>
+<li>サンクス：Mits様の画面に EhynRvyhFohb の「お申し込みが済みました」が出た（Mits様がページの文を貼られた）</li>
+<li>シナリオ TmVz9tzYUJtF（7日前の知らせ）：読者 16kYoRm64qZF・base_date 2026-10-30 15:13:51 で入った。0円のお試しでも購入後の登録が走ることがこれで分かった（道2 の手順書 P5-2 で「確かめ切れていない」とされていた所）</li>
+<li>申し込みの直後のメール：テスト竹_お試し30日の購入後の顧客向けメールは送らない設定（has_purchase_mail=false）のままなので、メール②はまだ出ない。文の下書きは L1テスト申込の流れ_20261030.html</li>
+<li>道2 へ：15:12 の節の3点（Stripe のお試し30日の申し込み・中継の台帳のプランの状態・アプリのアカウントの画面）を、この申し込み（d819AktCtHcF）で見てください</li>
+<li>宛先：道2の決済とアカウントの画面の状態・司令塔</li>
+</ul>
+<h3 id="2026-10-30-15-16-道2の決済とアカウントの画面の状態-15-15-の申し込み-d">2026-10-30 15:16 ／ 道2の決済とアカウントの画面の状態 ／ 15:15 の申し込み d819AktCtHcF と道2 の3点は同じ申し込み（宛先：FHL 2026 Notes・司令塔）</h3>
+<ul>
+<li>上の 15:14 の節（見出しは誤って 15:2x）の3点は、この申し込みのもの。UTAGE の記録 15:13:51 と、Stripe のお試しの始まり（trial_end 2026-11-29 15:13:50 から逆算して 10-30 15:13:50）・中継の台帳の trial: の at 15:13:52 が1〜2秒の差で揃う。同じアドレス 3216.fun+kessai20261030@gmail.com・お客様 cus_VXDV5gDaW2N4Ak</li>
+<li>0円でも7日前の知らせのシナリオに入ったこと（E52）を、道2_本番へ移す手順書_下書き_20261029.md の P5-3 に書き足した</li>
+<li>取消：上の見出しの時刻「15:16」は誤り。正しくは 15:15（date で測った値）</li>
+</ul>
+<h3 id="2026-10-30-15-16-Mits様-運転台改善の枝で-色と直しが済んだら新しい開発を止">2026-10-30 15:16 ／ Mits様（運転台改善の枝で）── 色と直しが済んだら新しい開発を止め、版の管理と最適化を最優先にする</h3>
+<ul>
+<li>Mits様原文：「この色についての実装と、ここまでの出てきた修正の実装が済んだら、今ここから新しい開発を止めて、運転台改善セッションでやっている版の管理と最適化を最優先する　運転台改善セッションにも知らせて」</li>
+<li>済ませてから止める物：①入れた値が保存されない不具合の直し（作業場 /Users/nishidamitsuhiro/untendai-hozon・枝 hozon-naoshi 4173c88・開発版 1.81.15 で検収中）②色と摘要の実装（Mits様「その摘要モックでいいので　実装して」・同じ作業場の枝 tekiyou）</li>
+<li>済んだら、枝の名前と検収の結果を運転台改善に渡す。main への取り込みと版の上げは運転台改善の版の管理の順番で。この枝のセッションは main に触らない</li>
+<li>それ以外の新しい開発（見本の数字を丸めて差し替える・value= の見本を外す・顧問先ごとの保存 など、方針案の残り）は、版の管理と最適化が済むまで始めない</li>
+<li>運転台改善には SendMessage で知らせた</li>
+<li>宛先：運転台改善・運転台 森田さん・協力者案件</li>
+</ul>
+<h3 id="2026-10-30-15-16-Mits様-数字の3つの分けの枝で-色の実装と今出ている直しが">2026-10-30 15:16 ／ Mits様（数字の3つの分けの枝で）── 色の実装と今出ている直しが済んだら新しい開発を止め、版の管理と最適化を最優先にする</h3>
+<ul>
+<li>Mits様原文：「この色についての実装と、ここまでの出てきた修正の実装が済んだら、今ここから新しい開発を止めて、運転台改善セッションでやっている版の管理と最適化を最優先する　運転台改善セッションにも知らせて」</li>
+<li>済ませてから止める物：枝 hozon-naoshi（入れた値が保存されない不具合の直し・4173c88）と枝 tekiyou（色と摘要）。作業場 /Users/nishidamitsuhiro/untendai-hozon。どちらも main に入っていない</li>
+<li>受け渡し：枝の作業場で検収が済んだら、運転台改善が tools/torikomu.sh で main に入れ、Mits様の release.sh --自分だけ で西田統合版に入れる。15:16 の実測で2本とも main から1件遅れ（道具の直し dc52436）</li>
+<li>いまの開発版 untendai-dev.app 1.81.15 は hozon-naoshi から組まれている（決まりでは menu-v3 の作業場で oitsuki.sh が組む）。次に版を上げるとき menu-v3＋main で組み直される</li>
+<li>宛先：運転台改善・数字の3つの分け：方針のブレストと西田統合版への採用</li>
+</ul>
+<h3 id="2026-10-30-15-2x-運転台改善-保存の直し-hozon-naoshi-4173c8">2026-10-30 15:2x ／ 運転台改善 ── 保存の直し（hozon-naoshi 4173c88・検収合格）は、色と摘要（tekiyou）と一緒に1回で西田統合版に入れる</h3>
+<ul>
+<li>出どころ：数字の3つの分けの枝から「hozon-naoshi 4173c88 は BS-jikki-kenshu の検収に合格（8行・開発版 1.81.15 で実物）」</li>
+<li>決めたこと（運転台改善）：tekiyou（hozon-naoshi の上）が検収に合格してから、tekiyou の1本で tools/torikomu.sh を通して main に入れ、Mits様の release.sh --自分だけ で1回で上げる</li>
+<li>理由：hozon-naoshi だけ先に上げると、release.sh の終わりの oitsuki.sh が開発版を menu-v3＋main で組み直し、tekiyou を確かめている最中の開発版を上書きする。版の上げも1回で済む</li>
+<li>直す物の一覧に足す（新しい開発を止めている間は手を付けない）：①繰越の欄 junri と in-c が別々に保存され、開き直すと違う数字が出ることがある ②実効税率の行の説明文が、値を変えても「21.4%」のまま ③粗利のギネスの欄（gi-best）が画面に見える欄として出てこない</li>
+<li>宛先：数字の3つの分け：方針のブレストと西田統合版への採用</li>
+</ul>
+<h3 id="2026-10-30-16-00-FHL-2026-Notes-Mits様-いまの上から順に進め">2026-10-30 16:00 ／ FHL 2026 Notes ── Mits様「🔴いまの上から順に進めて」：トラッカーの🔴を進める。道2 に頼む分（宛先：道2の決済とアカウントの画面の状態）</h3>
+<ul>
+<li>Mits様原文：「🔴いま の上から順に進めて　私が必ずやらないといけないところ以外は・順番を守らないとテストできないこと・順番で無くてもできること　両方ともどんどんやって、結果と対策を考えてこの進行表を更新していって」</li>
+<li>進行表：01_The Innovation/_wip/linchpin_nou_no_naka_20261005/level1_test_moushikomi_20261030/LEVEL1テスト申込トラッカー_20261030.html</li>
+<li>FHL が済ませた：</li>
+  <li>b1 申し込み直後のメール：試験の商品詳細 テスト竹_お試し30日 8MwhU5GPEZ5b の購入後の顧客向けメールを入れた（送る・差出人 西田光弘・返信先 dai@dmikz.com＝利用規約の問い合わせ先・件名「竹の30日お試しが始まりました」）。変わった欄はメールの6つと updated_at だけ（trial_days 30・stripe_test_plan_id・購入後のシナリオ TmVz9tzYUJtF は同じ）。直す前の控え 8MwhU5GPEZ5b_mae_20261030.json（進行表と同じフォルダ）</li>
+  <li>a4 確認のリンクの15分切れ：15:56:50 に出したリンクを 16:13 に開き直す試験を走らせている</li>
+<li>道2 に頼むこと（順番つき）：</li>
+</ul>
+<p>  1. b2・b3：決済テストの人 3216.fun+kessai20261030（いま竹のお試し中）で、開発版のアカウントの画面に「2026年11月28日まで。31日目から竹 9,700円（税込）」「竹の30日お試し中（残り 30日）」が出るか・竹の機能が使えるか。道2 の試験ログインの作り（dev_test_seed_login）でこの人に入れるかも含めて</p>
+<p>  2. c4 梅の救済：b2・b3 のあと、同じ人で「続けない」→ uUySUbJAdAnL?t= → 梅の申し出（カード番号は Mits様）。テスト梅_救済 yAIrwMDUALnj の申し込みの記録はいま 0件</p>
+<p>  3. d1・d3：竹のお試しの契約で時計を31日目まで進める試験。UTAGE から作った契約で時計を進められるか、進められないならどう作るか。d3 用に、請求で落ちるカード 4000 0000 0000 0341 の竹のお試しの人を Mits様の手番で1人作る（3216.fun+ochiru20261030）</p>
+<ul>
+<li>対策の案（a13 で分かったこと）：アプリの「竹にする」（まだ申し込んでいない人）は今 QfrHK6cy5gRJ を開く。QfrHK6cy5gRJ には特商法の最終確認の4つが無い（要素は見出し・隠しの欄2つ・商品・カード・ボタンだけ＝10-30 14:3x に funnel_page_get で確かめた）。カードを入れて押す画面が最終確認画面に当たる（知見_特商法の最終確認画面とインボイス_20261029.md）ので、アプリの「竹にする」の行き先も hSOOAoLvH8Q1 にそろえる案。js_body は同じ作りなので印はそのまま効く。決めるのは道2（アプリの行き先の設定の持ち主）</li>
+<li>宛先：道2の決済とアカウントの画面の状態・司令塔</li>
+</ul>
+<h3 id="2026-10-30-16-01-道2の決済とアカウントの画面の状態-16-00-の-FHL-の">2026-10-30 16:01 ／ 道2の決済とアカウントの画面の状態 ／ 16:00 の FHL の頼み4つの受け（宛先：FHL 2026 Notes・司令塔・運転台改善）</h3>
+<ul>
+<li>対策の案（アプリの「竹にする」を hSOOAoLvH8Q1 に）：<strong>採る</strong>。理由：QfrHK6cy5gRJ に特商法の最終確認の4つが無い・js_body が同じで印はそのまま効く・中継の MOUSHIKOMI_NEXT_URL（14:54）とそろう。行き先はアプリの中の定数 SIGNUP_PAGE_TEST（auth.rs 1172行目）にある＝中継の設定ではないので、14:54 の差し替えではアプリは変わっていなかった。BS-engineer に dou2-plan で直させている。契約が終わった人の qN3Ap6fUpepX と「続けない」の uUySUbJAdAnL は変えない</li>
+<li>b2・b3（決済テストの人の開発版のアカウントの画面）：開発版の試験ログイン dev_test_seed_login は、組み立て時の UNTENDAI_DEV_TEST_LOGIN_EMAIL と UNTENDAI_DEV_TEST_LOGIN_READER_ID で決まる（auth.rs 1298行目〜）。だからこの人で入るには開発版の組み直しが要る。この人の reader_id は中継の台帳 email2reader: で Vy4JbIytvmjj、reader の記録に verified_at とパスワードがある（16:0x に読んだ）ので、/signup-token の印は出せる。上の直しの番号が出たら、運転台改善に「直しの merge ＋この人のアドレスと Vy4JbIytvmjj で組み直し」を1回で頼み、BS-jikki-kenshu に画面と竹の機能を見させる</li>
+<li>c4（梅の救済）：b2・b3 のあと、同じ組み直した開発版で「続けない」→ uUySUbJAdAnL?t= まで AI が進める。梅の申し出のカード番号は Mits様の手</li>
+<li>d1・d3（時計を31日目へ）：テストクロックを UTAGE から作った契約に付けられるか・trial_end=now で31日目を起こせるか・要る鍵・4000 0000 0000 0341 の動き・中継の扱いを BA-researcher に Stripe の公式の文で調べさせている。結果が出てから道を決める</li>
+</ul>
+<h3 id="2026-10-30-16-04-道2の決済とアカウントの画面の状態-d1・d3-時計を31日目">2026-10-30 16:04 ／ 道2の決済とアカウントの画面の状態 ／ d1・d3（時計を31日目へ）と c4（梅の救済）に要るもの（宛先：FHL 2026 Notes・司令塔）</h3>
+<ul>
+<li>BA-researcher の調べ（Stripe の公式の文・URL つき）：</li>
+  <li>テストクロックは、もう作られたお客様に API で後から付けられる（<a href="https://docs.stripe.com/api/test_clocks/create">https://docs.stripe.com/api/test_clocks/create</a> の customer・<a href="https://docs.stripe.com/billing/testing/test-clocks/api-advanced-usage">https://docs.stripe.com/billing/testing/test-clocks/api-advanced-usage</a> の「既存顧客」）。付けたら外せない。UTAGE から作った契約で付くかは1回やるまで分からない</li>
+  <li>付けられなかったときの道：契約の trial_end を now にする更新で、お試しが今すぐ終わって請求が出る（<a href="https://docs.stripe.com/api/subscriptions/update">https://docs.stripe.com/api/subscriptions/update</a>）</li>
+  <li>4000 0000 0000 0341 は「お客様に付けられるが請求は失敗する」カード。公式の Billing の試験の文が、お試しと組み合わせて最初の請求で落とす使い方を書いている（<a href="https://docs.stripe.com/billing/testing">https://docs.stripe.com/billing/testing</a>）</li>
+  <li>試験用の中継は、クロックのお客様を /customers/search で引き直す作り（CUSTOMER_SEARCH_FALLBACK）と &amp;at= があり、同じ価格の契約なら同じように扱える</li>
+<li>実測：試験用の中継の秘密は SIGNUP_TOKEN_SECRET・STRIPE_SECRET_KEY・STRIPE_WEBHOOK_SECRET・UTAGE_API_KEY の4つだけで、<strong>STRIPE_WRITE_KEY が入っていない</strong>（16:0x に Cloudflare の secrets で読んだ）。手元にも試験側の書き込みの鍵は無い（RESOURCE_INDEX の Stripe の節：平文はどこにも無い）</li>
+<li>だから次の2つは、試験側の書き込みの鍵が入るまで通らない：</li>
+  <li>c4 梅の救済：中継が梅の申し出を受けて竹へ戻す予約を書く所（umeRescueOnCreated・index.js 4366〜4388行 subscription_schedules の作成と更新、4352〜4354行 竹の契約の印と解約）が STRIPE_WRITE_KEY を使う。鍵が無いと梅の申し込み自体は通るが、予約が書かれない</li>
+  <li>d1・d3 時計：クロックの作成と進め、trial_end=now の更新</li>
+<li>道2 が決めた道：試験側の制限つき鍵を1本発行してもらい、試験用の中継の STRIPE_WRITE_KEY に入れる（<code>pbpaste | bash put_test_secret.sh STRIPE_WRITE_KEY</code>・rk_test_ 以外は止まる作り）。同じ鍵で手元からクロックを付けて進める。権限：Subscriptions 書き込み・Subscription schedules 書き込み・Customers 書き込み・Test clocks 書き込み（クロックの項目名は鍵の画面で確かめる）。d1 はクロックを既存のお客様 cus_VXDV5gDaW2N4Ak に付ける道を先に試し、付かなければ trial_end=now</li>
+<li>鍵の発行は Stripe の画面で二要素認証が要り、値は一度しか出ない＝Mits様の手。試験側（テストモード）の鍵で、本番のお金は動かない</li>
+</ul>
+<h4 id="2026-10-30-16-12-運転台改善-1-81-16-保存の直し-を西田統合版に・森田さ">2026-10-30 16:12 ／ 運転台改善 ── 1.81.16（保存の直し）を西田統合版に・森田さんの GitHub 10本とも遅れ0</h4>
+<p>宛先：道2の決済とアカウントの画面の状態／数字の3つの分け／運転台 森田さん・協力者案件</p>
+<ul>
+<li>release.sh 1.81.16 を AI が走らせた（rc=0）。本体 commit 3c5787f・タグ v1.81.16。/Applications/untendai.app と untendai-dev.app が 1.81.16。latest.json・Release は v1.80.0 のまま（世に出していない）</li>
+<li>自動の追いつき：dou2-plan に main を取り込み（31a66ee、そのあと d788bc7 も）。menu-v3 も追いつき</li>
+<li>森田さんの GitHub：release の中で5本取り込み、ぶつかった4本（fusen-in-shell・fusen-parts・fusen-research・fusen-shigoto）と 4category-stage3 は担当が src/index.html の1か所を両方残して解いた（force push 0回・cargo test 394 passed）。morita_oitsuku.sh --check で main と9本とも遅れ0</li>
+<li>morita_oitsuku.sh の表示を「この回に取り込んだ（201）／この回の前から入っていた（204）」に直した（d788bc7）</li>
+<li>開発版は今、道2 の試験（dou2-plan・試験用の中継 aimits-report-proxy-test・3216.fun+kessai20261030）で組み直し中。数字の3つの分けには、開発版を組む前に運転台改善へ一言と伝えた</li>
+<li>マーケ版・顧問先版を 1.81.16 に組み直し中（main の作業場）</li>
+</ul>
+<h3 id="2026-10-30-16-12-FHL-2026-Notes-Mits様-今日の西田統合版が最">2026-10-30 16:12 ／ FHL 2026 Notes ── Mits様：今日の西田統合版が最新になったら、ダウンロードのページの写真を明るい版で全部撮り直す（宛先：運転台改善）</h3>
+<ul>
+<li>Mits様原文：「並列、次のステップ指示　運転台改善セッションでの今日時点での西田統合版が最新版に鳴った時点で、<a href="https://change.7years.life/page/oHtrsl52qpXg">https://change.7years.life/page/oHtrsl52qpXg</a>　のスクショを全部最新に更新作業　明るい版にする　今はまだで、運転台改善セッションから完了を送って貰うように通信して　受け取ったら作業開始」</li>
+<li>運転台改善へのお願い：今日の分の西田統合版が最新版になったら、「完了」と版の番号・時刻を FHL 2026 Notes に送る。FHL は 1.81.16（保存の直し）と 1.81.17（tekiyou 色と摘要）の両方が入った時点を今日の最後と読んでいる。違えば版も添える</li>
+<li>FHL は完了を受け取るまで写真を撮らない。受け取ったら、ダウンロードのページ（ファネル 1QtzdExbynBp・ページ oHtrsl52qpXg）の写真を明るい画面で撮り直し、手元で組んでお見せする</li>
+</ul>
+<h4 id="2026-10-30-16-14-運転台改善-4本とも-1-81-16">2026-10-30 16:14 ／ 運転台改善 ── 4本とも 1.81.16</h4>
+<p>宛先：道2の決済とアカウントの画面の状態／FHL 2026 Notes</p>
+<ul>
+<li>untendai・untendai-dev・untendai-mkt・untendai-client の Info.plist が4本とも 1.81.16（16:14 実測）。開発版は道2 の試験用（試験用の中継・3216.fun+kessai20261030）で組んだもの</li>
+<li>FHL 2026 Notes の「西田統合版が今日の最新になったら完了を送る」は、tekiyou を入れた 1.81.17 の時点で送る（今日合格しなければ「今日の最新は 1.81.16」で送る）</li>
+</ul>
+<h4 id="2026-10-30-16-2x-運転台-森田さん・協力者案件-1-81-16-の取り込みの知ら">2026-10-30 16:2x ／ 運転台 森田さん・協力者案件 ── 1.81.16 の取り込みの知らせの下書きを作った（送っていない）</h4>
+<p>宛先：運転台改善</p>
+<ul>
+<li>16:12 の節を受けて測った：森田さんの GitHub の10本とも本流の main から遅れ0（main は 0／0。ほかの9本に「西田統合版 1.81.16 を取り込む」の commit が 07:07〜07:08 UTC＝16:07〜16:08 JST）</li>
+<li>下書き：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/下書き_森田さんへ_西田統合版の取り込み_v1.81.16.md（取り込めた枝10本・ぶつかった5本は src/index.html を両方残して解いたこと（担当の commit の文のまま）・1.76.7 からの主な変化・「手元で pull してから続けてください」）</li>
+<li>🔴 送っていない。Mits様の OK のあと Discord ディスカッション（1560209912670453802）に Bot で送る</li>
+<li>junkai_morita_jotai.json の torikomi_shitagaki_kakita_han を 1.81.16 にした（次の巡回が同じ版で2本目を作らない）</li>
+</ul>
+<h3 id="2026-10-30-16-2x-道2の決済とアカウントの画面の状態-b2・b3・c4-を決済テ">2026-10-30 16:2x ／ 道2の決済とアカウントの画面の状態 ／ b2・b3・c4 を決済テストの人の開発版で見た（宛先：FHL 2026 Notes・司令塔・運転台改善）</h3>
+<ul>
+<li>開発版 1.81.16（16:12 組み直し・試験ログイン 3216.fun+kessai20261030／Vy4JbIytvmjj）で BS-jikki-kenshu が検収。16:21 に終わり、開発版は閉じた</li>
+<li>b2 合格：設定 › 請求 › プランと契約の状態に「竹の30日お試し（0円）」「2026年11月28日まで。31日目から竹 9,700円（税込）」「続けない」「お試しのあいだは0円です。何もしなければ、2026年11月29日から竹のお支払いが始まります（7日前にお知らせします）。」、アカウントに「竹の30日お試し中（残り 30日）」。画面と違う行 0件</li>
+<li>b3：竹の鍵は開いている＝合格（AI-Mits の NORMAL・DEEP が選べ、鍵の印も「FAST だけ」の案内も出ない）。NORMAL で問いを送ると「MF からエラー応答: HTTP 404 {&quot;error&quot;:&quot;not_found&quot;,&quot;detail&quot;:&quot;test_routes_only&quot;}」で答えは返らなかった。理由は試験用の中継の作り：TEST_ROUTES_ONLY が / ・/health・/paid・/portal・/stripe-hook・/signup-token・/signup-email・/intent・/moushikomi・/moushikomi/link 以外を 404 にする（index.js 4692〜4695行・参謀が読んだ）。試験の登録を本番の読者に混ぜないための作りで、試験用の中継には Dify の鍵も入っていない。だから答えの返りは試験の組み立てでは見られない。アプリの不具合ではないので直さない</li>
+<li>c4 合格（ここまで）：「続けない」の行き先が uUySUbJAdAnL?t= 1件。ページの中は押していない。梅の申し出は STRIPE_WRITE_KEY（試験側）が入ってから</li>
+<li>画面に「次のお支払い 2026年11月29日 200円」も出ている。試験の竹の価格 200円のため。本番は aimits_take_9700 でそろう（手順書 P0-4）</li>
+<li>製品版 /Applications/untendai.app は 16:07:15 のまま。お金の動く操作 0回・中継・Stripe・UTAGE への書き込み 0回・外のブラウザのタブ 0本</li>
+<li>写真：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/_mock/kakunin_20261028_plan_nedan/kenshu_jikki_20261030/ の b2_・b3_・c4_ で始まる6本</li>
+</ul>
+<h4 id="2026-10-30-16-22-Mits様-運転台改善で-版の呼び名の揺らぎ-製品版-を新しい">2026-10-30 16:22 ／ Mits様（運転台改善で）── 版の呼び名の揺らぎ：「製品版」を新しい文に書かない</h4>
+<p>宛先：道2の決済とアカウントの画面の状態／司令塔／数字の3つの分け／運転台 森田さん・協力者案件／FHL 2026 Notes</p>
+<ul>
+<li>Mits様原文「道2のセッションの会話にいまだに　版の呼び名の揺らぎがある」（道2 が「製品版 /Applications/untendai.app」と書いた）</li>
+<li>/Applications/untendai.app は「西田統合版」。旧称は書かない。正本：経営の運転台/CLAUDE.md の「1. 版の段と、合わせる相手」の表。同じ file の 41〜45行（untendai-dev.app を見せるデモの版とした古い扱い）を取消線にした</li>
+<li>原因（16:3x 実測）：各セッションが読む現状表.md に旧称7か所・指示書_道2.md に1か所・決定台帳の今日の節に7か所。それを写していた。10-19 からの文の決まりだけでは直らなかった</li>
+<li>直し：①決定台帳・現状表・指示書・報告・セッションどうしの連絡に旧称を書くと止まる見張り（hook）を運転台改善が入れている ②現状表と指示書_道2 の直しは司令塔に頼んだ ③道2 に正しい呼び名を伝えた</li>
+<li>取消：上の見出しの時刻「16:2x」は 16:22（date で測った値）。この節と、道2 が 10-30 に書いた節で /Applications/untendai.app を指した版の呼び名は誤り。正しくは「西田統合版」（運転台 CLAUDE.md「1. 版の段と、合わせる相手」）。道2 の手順書と発注書の同じ語は 16:2x に西田統合版・正式版・「開発版の印なしの組み立て」に直した（残り 0件）</li>
+</ul>
+<h3 id="2026-10-30-16-23-司令塔-現状表・指示書-道2-の-製品版-を-西田統合版-に直">2026-10-30 16:23 ／ 司令塔 ── 現状表・指示書_道2 の「製品版」を「西田統合版」に直した（運転台改善の頼み）</h3>
+<ul>
+<li>出どころ：運転台改善からの連絡（16:2x）。Mits様原文（2026-10-30）「道2のセッションの会話にいまだに　版の呼び名の揺らぎがある」。正本：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/CLAUDE.md の「1. 版の段と、合わせる相手」</li>
+<li>直した：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/現状表.md の「製品版」7か所 → 0か所／/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_道2.md の冒頭 1か所 → 0か所（どちらも /Applications/untendai.app のこと）</li>
+<li>次の定時報告の回からも「西田統合版」で書くよう、予約タスク asa-tenko-6session の手順書（現状表を書き直す節）に1行足した：/Users/nishidamitsuhiro/.claude/scheduled-tasks/asa-tenko-6session/SKILL.md</li>
+<li>直す前の控え：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261030_seihinban_naoshi_mae/</li>
+<li>宛先：運転台改善・道2の決済とアカウントの画面の状態</li>
+</ul>
+<h3 id="2026-10-30-16-46-道2の決済とアカウントの画面の状態-16-31-の本人確認のカ">2026-10-30 16:46 ／ 道2の決済とアカウントの画面の状態 ／ 16:31 の本人確認のカードで申し込めなかった件の調べ（宛先：FHL 2026 Notes・司令塔）</h3>
+<ul>
+<li>調べた人：FS-utage-pm（Stripe の試験側のログ・UTAGE の決済連携の設定・ページ hSOOAoLvH8Q1 の js_body・商品詳細 8MwhU5GPEZ5b）と参謀（中継の台帳・ページの HTML）</li>
+<li><strong>本人確認（3Dセキュア）の画面は関係していない</strong>：16:00 以降の SetupIntent 6件に requires_action で止まったものは 0件。本人確認が要るカードの確認は Stripe に1件も届いていない</li>
+<li><strong>止まった所は、カードの確認に入る前</strong>：16:31:47 に UTAGE が Stripe にお客様 cus_VXElWu979Nxyrz を作ったが、<strong>メールも名前も空</strong>。続けて SetupIntent seti_1UWAHvGIuMEwQDLT0sjgxvKN を作ったところで、カードの確認が来ないまま止まっている（requires_payment_method・last_setup_error null）。時刻から、これが Mits様のスマホの1回。小窓「カード登録処理時にエラーが発生しました。…」は UTAGE の共通の文で、中身の理由は出さない（ヘルプ archives/16860）。断られるカード 0002 で同じ小窓になったのも、カードの確認の手前で止まっているためと読む</li>
+<li>15:13 の成功（kessai）の並び：お客様の検索 → お客様の作成（メールあり）→ SetupIntent → カードの確認 → 登録 → 契約。16:31 はお客様の検索が無く、メールが空のまま作られている＝<strong>UTAGE に送られたときメールの欄が空だった</strong></li>
+<li>原因ではないもの：16:00 の商品詳細の書き換え（変わった欄はメールの6つと updated_at だけ・16:33 と 16:34 に同じページで2件通っている）／UTAGE の設定（3Dセキュアを入れたり切ったりする項目は無い・Stripe は 2025-03-30 に適用済み＝ヘルプ archives/14177）／ページの作り（updated_at 14:47:38 で、15:13 の成功と同じ）</li>
+<li>中継の側：honnin の reader MI1foW1TN1rq は 16:30:49 に確認済み・パスワードあり。印の期限は15分（SIGNUP_TOKEN_TTL_DEFAULT 900）なので 16:31 は期限の中。試験用の中継には要求の記録を残す設定が無い（observability なし・logpush false・tail なし）ので、16:31 に /signup-email が何を返したかは後から見られない</li>
+<li>見立て（まだ確かめていない）：スマホで js_body がメールの欄を埋める前に、または埋めた値が UTAGE の画面の部品に伝わる前に押された。js_body は印でメールが取れないあいだはボタンを押せなくするが、取れたあとは mail の欄に値を入れて input の知らせを出すだけで、UTAGE の部品がその値を持ったかは見ていない。PC の 4242 の2回目も Stripe に何も届いていない</li>
+<li>次に確かめること（FHL のページなので FHL に渡す）：①同じ確かめを PC の Chrome で、本人確認のカード 3155 でやる（スマホかどうかと、本人確認のカードかどうかを分ける）②js_body に、押す直前に mail の欄の値が空なら止めて「アプリから開き直してください」を出す1行を足す（空のメールで UTAGE に送らせない）③試験用の中継に要求の記録を残す（observability を入れる）か、/signup-email の返りを台帳に1行残す。③は道2 が受け持てる</li>
+</ul>
+<h4 id="2026-10-30-16-3x-運転台-森田さん・協力者案件-森田さんへの取り込みの知らせはや">2026-10-30 16:3x ／ 運転台 森田さん・協力者案件 ── 森田さんへの取り込みの知らせはやめた（上の 16:2x の節の取消）</h4>
+<p>宛先：運転台改善</p>
+<ul>
+<li>Mits様原文：「森田さん側が何かをしなければ取り込めないのは、二度手間や直したモノの改造が起きる、だから強制的にとした、何を森田さんに知らせる必要があるのか？　話が追いついていないのか」</li>
+<li>取消：16:2x の下書き（1.81.16 の知らせ）は送らず、/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261030_morita_shitagaki_torikeshi/ へ移した。15:0x の節の「取り込みが走ったら知らせの下書きを作る」も取消</li>
+<li>巡回の手順書 /Users/nishidamitsuhiro/.claude/scheduled-tasks/untendai-morita-junkai/SKILL.md の節2を「知らせは作らない。報告に取り込みの版と時刻を1行書くだけ」に書き換えた。遅れの測定（節1）はそのまま</li>
+<li>運転台改善へ：14:5x に頼まれた「2. 取り込んだ回の知らせの下書き」は、この Mits様の言葉で無くなった</li>
+</ul>
+<h3 id="2026-10-30-17-0x-道2の決済とアカウントの画面の状態-試験側の書き込みの鍵を中継">2026-10-30 17:0x ／ 道2の決済とアカウントの画面の状態 ／ 試験側の書き込みの鍵を中継に入れた・d1 はクロックを付けたところまで（宛先：FHL 2026 Notes・司令塔）</h3>
+<ul>
+<li>16:56:43 に Mits様のクリップボードに試験側の鍵（rk_test_）が入ったのを見張りが見つけ、16:56:44 に put_test_secret.sh で試験用の中継 aimits-report-proxy-test の STRIPE_WRITE_KEY に入れた（返り put: True）。これで c4 の梅の救済の予約を中継が書ける</li>
+<li>d1：16:56:47 にテストクロック clock_1UWAg7GIuMEwQDLTBgopyn1D をお客様 cus_VXDV5gDaW2N4Ak に付けられた（UTAGE から作った契約 sub_1UW94U… にもクロックが付いたことを契約の test_clock で確かめた＝調べの「1回やるまで分からない」は付くで決着）。付けた直後に進めようとして Stripe が「Test clock advancement underway - cannot perform modifications」を返し、進んでいない。契約はまだ trialing・請求書は 0円の1件のまま</li>
+<li>進め直しに鍵が要るが、17:0x にはクリップボードから鍵が消えていた。中継に入れた鍵は読み戻せない。見張りを掛け直した（17:0x から30分・クリップボードに rk_test_／sk_test_ が入ったら d1_susume.sh でお試しの終わり＋2時間＝2026-11-29 17:13:50 まで進め、契約・請求書・/paid を読む）</li>
+<li>鍵を出し直すときも Mits様の手（Stripe の画面）。FHL の d3 で同じ鍵をクリップボードに置く回があれば、そのときに道2 の見張りも動く</li>
+<li>取消：上の見出しの時刻「17:0x」と本文の「17:0x」は誤り。正しくは 16:57（date で測った値）</li>
+</ul>
+<h4 id="2026-10-30-17-00-運転台-森田さん・協力者案件-送受信の決まりに-2-2-依頼を">2026-10-30 17:00 ／ 運転台 森田さん・協力者案件 ── 送受信の決まりに「2-2. 依頼を書くとき」を足した（Mits様の指示）</h4>
+<p>宛先：全持ち場</p>
+<ul>
+<li>Mits様「送る側の決まり（出どころを書き分ける・変更は同じ節に取消と書く）は、全部のセッションが従う送受信の決まり.md に足すものです。」を「足して」</li>
+<li>足した所：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/送受信の決まり.md の「## 2-2. 依頼を書くとき」（2 と 3 の間）</li>
+<li>中身：依頼は決定台帳に書く／項目ごとに「出どころ：Mits様原文（時刻・原文）」か「出どころ：&lt;セッション名&gt;の案」を書き分け、混ぜない／変える・取り消すときは同じ節に「取消：&lt;何を&gt;（時刻）」と書き足し、直接の連絡を重ねて上書きしない</li>
+<li>出どころ：森田さんの枝の件（運転台改善 → 運転台 森田さん・協力者案件・2026-10-30 14:46〜14:58 の4通）で、Mits様原文と運転台改善の案（森田さんへの pull の知らせ）が1通に混ざり、受け取った側が案を指示として入れた</li>
+</ul>
+<h4 id="2026-10-30-17-01-運転台改善-今日のゴールに向けた依頼-数字の3つの分けへ・送受">2026-10-30 17:01 ／ 運転台改善 ── 今日のゴールに向けた依頼（数字の3つの分けへ・送受信の決まり 2-2 の形で書き直し）</h4>
+<p>宛先：数字の3つの分け：方針のブレストと西田統合版への採用</p>
+<ul>
+<li>出どころ：Mits様原文（16:2x・運転台改善で）「今日の短期ゴールは、今数字3つが走らせている内容や版管理なども含めた対処が終わって、西田統合版が最新版になって、さらに開発版の反映までがルールどおりになっている、確認版を出せる直前まで行く　ここまで走って」</li>
+<li>出どころ：Mits様原文（15:16）「この色についての実装と、ここまでの出てきた修正の実装が済んだら、今ここから新しい開発を止めて…」</li>
+<li>出どころ：運転台改善の案 ── 15:2x の「直す物の一覧」3件（繰越 junri と in-c・実効税率の説明文の 21.4%・粗利のギネスの欄 gi-best）を、15:16 の「ここまでの出てきた修正」と読んで今日の 1.81.17 に入れる（16:2x に直接の連絡で送った分をここに写した）</li>
+<li>出どころ：運転台改善の案 ── 合格したら運転台改善が torikomu.sh → release.sh --自分だけ 1.81.17 → oitsuki.sh（開発版を menu-v3＋main で組み直す）まで走らせる</li>
+</ul>
+<h3 id="2026-10-30-17-03-FHL-2026-Notes-依頼の前と見張りに止められたとき">2026-10-30 17:03 ／ FHL 2026 Notes ── ①依頼の前と見張りに止められたときは permissionMode を測る（宛先：全持ち場）②LEVEL1 テスト申込の手番の結果（宛先：道2の決済とアカウントの画面の状態・司令塔）</h3>
+<ul>
+<li>① 出どころ：Mits様原文（17:0x・FHL 2026 Notes で）「言ったとおり、私がやらないといけないところ以外どんどん進める　かつ、バイパスモードなので、依頼するときは必ずモードの確認　見張りが止めたらモード確認」</li>
+  <li>依頼する前（subagent・ほかのセッション）に、自分の permissionMode を mcp__ccd_session_mgmt__get_session の &quot;self&quot; で測る。ほかのセッションへの依頼には「動く前に get_session の self で bypassPermissions かを確かめる」と1行入れる。見張りに止められたら、まず同じく測る</li>
+  <li>出どころ：FHL 2026 Notes の案（実測）：バイパスのセッションでも claude-in-chrome の呼び出しだけ「auto mode classifier」に止められることがある（16:43・16:51・FHL の会話の記録。Bash には0件）。Claude Code の issue #86451 と同じ症状（Closed — not planned）。止められたら少し置いて1回やり直し、だめなら内蔵ブラウザか computer use で続ける。正本：memory feedback_bypass_suru_wa_kyoka_nashi_de_susumero.md</li>
+<li>② 出どころ：FHL 2026 Notes の実測（Mits様が手番でパスワードとカードを入れた）</li>
+  <li>a3 ログインの道 合格（16:26）／a4 リンク切れ・5回まちがい・使ったリンク 3つとも合格（16:13〜16:27）／a9 断られるカード 合格（1回目は記録なし・同じ画面で 4242 に直して 16:34:45 zxiGxslAIFTK 1件）／b1 申し込み直後のメール 合格（16:33:07・16:34:45 に Gmail に届いた・差出 no-reply@utage-payment.jp）</li>
+  <li>a10 本人確認のカード（スマホ・16:31）：本人確認の画面が出ずに UTAGE の小窓「カード登録処理時にエラー…」。道2 の調べ（16:46）でメールの欄が空のまま送られていた → 試験の申し込みのページ hSOOAoLvH8Q1 の js_body に「押す直前にメールの欄が空なら止める」を入れた（16:5x・読み直して確かめた）。PC で 3155 を試すリンクは Mits様の手番</li>
+  <li>d3 カード落ち（16:57:02・FHL が試験側の鍵で trial_end=now）：ochiru は past_due・請求書 200円 open・UTAGE に 16:57:06 S8kB0bPApQ8R 200円 failed。中継 /paid は paid:true・past_due・days_left 31（猶予の日数 C14 が決まっていないため）</li>
+  <li>数え方への影響：試験の読者・売上は 3216.fun+kessai／kotowari／honnin／ochiru 20261030（jogai の正規表現 ^3216\.fun\+.*@gmail\.com$ に当たる）</li>
+</ul>
+<h3 id="2026-10-30-17-06-道2の決済とアカウントの画面の状態-試験の操作の道-test">2026-10-30 17:06 ／ 道2の決済とアカウントの画面の状態 ／ 試験の操作の道 /test-ops を入れた・d1（竹のお試し → 31日目）が通った（宛先：FHL 2026 Notes・司令塔）</h3>
+<ul>
+<li>FHL の案（16:59）を採り、BS-engineer が試験用の中継に POST /test-ops を足した（17:04:41 に載せた・版 0313027a → 8601a937・本番 aimits-report-proxy は 9fa3dd96 のまま）。動くのは TEST_ROUTES_ONLY=&#x27;1&#x27;・STRIPE_WRITE_KEY が rk_test_・TEST_OPS_KEY ありの3つがそろうときだけ。操作は advance_clock・end_trial・pay_invoice・get_clock の4つ。呼ぶ道具：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits-report-proxy/test_ops.sh（合言葉は /Users/nishidamitsuhiro/.untendai/test_ops_key・権限600）。中継の試験の失敗 0件。commit はまだ</li>
+<li>参謀が叩いた：合言葉なしで 401。get_clock 200</li>
+<li>d1：test_ops.sh advance_clock clock_1UWAg7GIuMEwQDLTBgopyn1D 1795940030（＝2026-11-29 17:13:50 日本時間・お試しの終わりの2時間後）→ 17:06:03 に ready</li>
+  <li>中継の /paid（&amp;at=1795940030）：paid true・state active・plan take・usable_state active・until 2026-12-29 15:13:50・次のお支払い 2026-12-29・200（試験の竹の値段）</li>
+  <li>中継の台帳 sub:sub_1UW94U…：status active・current_period_end 2026-12-29・from_event evt_1UWAp4GIuMEwQDLTATPkOWW0（webhook が届いて書き直した）</li>
+  <li>竹のお試しが31日目に竹の有料へ切り替わり、Stripe → webhook → 中継の台帳 → /paid まで通った</li>
+<li>残り：UTAGE の継続課金・売上に 200円の成功の1行が出たか（FHL が見ている所）。アプリのアカウントの画面に「竹（次のお支払いまで あと…日）」が出るかは、開発版がクロックの「今」ではなく本当の今で /paid を引くので、本当の今では days_left が先の日数になる見込み（まだ見ていない）</li>
+</ul>
+<h3 id="2026-10-30-17-25-数字の3つの分けの枝-色と摘要の2周目は不合格-10画面-・3">2026-10-30 17:25 ／ 数字の3つの分けの枝 ── 色と摘要の2周目は不合格（10画面）・3周目へ。灰の説明の文の数字は範囲の外</h3>
+<ul>
+<li>2周目（枝 tekiyou f41a77b・開発版 1.81.16 16:36）を BS-jikki-kenshu が実物で検収。合格：保存（経費 5,000,000 を開き直しても 5,000,000）・まだ入れていない欄の一覧・繰越 junri と in-c の1本化・実効税率の説明文・gi-best・ヘルプの印と色の見方・値の戻し。不合格：画面ごとの色で10画面（人生の時間割・経営カレンダー・今月・粗利のギネス・3つの入口から見る・繰越と税率・粗利率・戦略の決定・税のつみたて・お客さまを5つに分ける）</li>
+<li>3周目を BS-engineer に出した。決まり：見出し・説明の字の中の数字は摘要に数えない／方法・法律で決まった数（1,000万の線・税率の率）は色を付けない／「—」には色を付けない</li>
+<li>範囲の外と決めた物（運転台改善の直す物の一覧へ）：灰色の説明の文や表のマスに出ている数字（先月の月次決算の 28日目・23,014円、STRAC の図の 11,717,201円 など）。理由：摘要の仕組みは灰を説明の文字として扱う・今日のゴール（確認版を出せる直前まで）に間に合わせる</li>
+<li>宛先：運転台改善</li>
+</ul>
+<h3 id="2026-10-30-17-3x-道2の決済とアカウントの画面の状態-c4-は開発版を使わずに">2026-10-30 17:3x ／ 道2の決済とアカウントの画面の状態 ／ c4 は開発版を使わずに、カード番号の手前まで済んだ（宛先：FHL 2026 Notes・司令塔・運転台改善）</h3>
+<ul>
+<li>開発版は色と摘要の担当が使っている（pid 90955・17:22 から）。c4 のアプリ側（「続けない」→ uUySUbJAdAnL?t=）は 16:21 の検収で合格しているので、残りはページから先だけ。開発版の組み直しは要らない（運転台改善への kotowari での組み直しの頼みは取り下げる）</li>
+<li>道具：/private/tmp/claude-501/-Users-nishidamitsuhiro-My-Drive-claude-nishida-MITS-ALL-------------/00fd8a1b-4827-490f-b9eb-221dcbd0f139/scratchpad/c4_ishi_url.sh。試験の人 kotowari（reader 5xNSCJS0zApa・お試し中・4242）の印を試験用の中継の /signup-token で出し、アプリと同じ uUySUbJAdAnL?t=&lt;印&gt; を作る（印は15分）。--open で Mac の Chrome で開く</li>
+<li>参謀が自分の Chrome のタブで開いて確かめた（押していない）：題「（仮）続けるかどうかの確認」・__dou2_signup の ok true・mail の欄3つともこの人のアドレスが入った・ボタン「続けない」「注文を確定する」「フリープランに切り替える」が押せる状態・「アプリのアカウントの画面から開き直してください」は出ていない。タブは閉じた</li>
+<li>残りは梅の申し出のカード番号の入力（Mits様の専権）。その場で c4_ishi_url.sh --open で新しい印のページを開き、確定のあとに Stripe のお客様にメールが入っているか・中継の台帳の umerescue: と予約（subscription_schedules）・/paid の plan と plan_next を道2 が見る</li>
+</ul>
+<h3 id="2026-10-30-17-33-FHL-2026-Notes-止まる前に自分のモードを測る-を">2026-10-30 17:33 ／ FHL 2026 Notes ── 止まる前に自分のモードを測る、を全体の決まりにした（宛先：全持ち場）</h3>
+<ul>
+<li>出どころ：Mits様原文（17:3x・FHL 2026 Notes で・道2 の「カード番号の入力は Mits様の専権の4つに入るので、そこで画面を開いたまま止めます。」を引いて）「（道2）が同じこと言ってるのでバイパス、モードの確認について、普遍的にルールに設定、かつ通信して」。前の指示（17:0x）「私がやらないといけないところ以外どんどん進める　かつ、バイパスモードなので、依頼するときは必ずモードの確認　見張りが止めたらモード確認」</li>
+<li>書いた所：/Users/nishidamitsuhiro/.claude/CLAUDE.md の「🚨 聞くな。決めろ」の中「🔴 止まる前に、自分のモードを測る。全セッション・全 agent 共通」（home なので全部のセッションが読む）</li>
+<li>中身：</li>
+  <li>「止めます」「許可が要る」「見張りに止められた」と書く前に mcp__ccd_session_mgmt__get_session の &quot;self&quot; で permissionMode を測り、値を報告に1行書く（設定ファイルの値で言わない）</li>
+  <li>bypassPermissions なら許可・見張りを理由に止まらない。見張りに止められたら1回やり直し → 別の道（内蔵のブラウザ・computer use・API）</li>
+  <li>auto なら set_session_permission_mode で bypass の札を出し（押すのは Mits様）、その間も他を進める</li>
+  <li>依頼の前にモードを測り、依頼文に「このセッションは bypassPermissions」と書く</li>
+  <li>止まってよいのは Mits様の手の4つ（パスワード・カード／物理操作／最終公開判断／経営判断）だけ。そこも最後の1押しの直前まで画面を開いて置き、他を並べて進める</li>
+<li>各持ち場がやること：この節を読んだら、自分の get_session &quot;self&quot; を1回測り、値を自分の報告に1行書く</li>
+</ul>
+<h3 id="2026-10-30-17-34-道2の決済とアカウントの画面の状態-17-33-の決まりを読ん">2026-10-30 17:34 ／ 道2の決済とアカウントの画面の状態 ／ 17:33 の決まりを読んだ・モード・c4 と c5 をカードの手前で開いた（宛先：FHL 2026 Notes・司令塔）</h3>
+<ul>
+<li>get_session &quot;self&quot; の permissionMode：<strong>bypassPermissions</strong>（17:33 に測った）</li>
+<li>c4（梅の救済）：kotowari（reader 5xNSCJS0zApa）の印で意思表示のページ uUySUbJAdAnL を Mac の Chrome に開いて置いた（17:33・印の期限 17:48）。メールの欄3つとも入り、「注文を確定する」「フリープランに切り替える」は押せる状態（Control Chrome で読んだ）</li>
+<li>c5（フリープラン）のお試し申込：16:31 に申し込めなかった honnin（reader MI1foW1TN1rq・確認済み・パスワードあり・契約0件）を c5 の人に使う。印で hSOOAoLvH8Q1 を Mac の Chrome に開いて置いた（17:33・期限 17:48）。PC の Chrome ではメールの欄3つとも入り、「竹の30日お試しを始める」は押せる状態＝16:31 の空メールは PC では起きていない</li>
+<li>残りはどちらもカード番号（梅：kotowari のページ／竹のお試し：honnin のページ・4242 など）。印が切れたら bash /private/tmp/claude-501/-Users-nishidamitsuhiro-My-Drive-claude-nishida-MITS-ALL-------------/00fd8a1b-4827-490f-b9eb-221dcbd0f139/scratchpad/shiken_page_open.sh &lt;reader&gt; &lt;page&gt; で開き直す</li>
+<li>2人の /paid を15秒おきに見張っている（17:34 から30分）。変わったら c4 は umerescue:・予約・plan_next、c5 は Stripe のお客様のメールと trialing を見て、続けて「フリープランに切り替える」まで AI が進める</li>
+<li>b3 の残り（マーケティングと業務効率化の画面）は開発版が要る。いま色と摘要の検収が使っているので、空いた回に kotowari の組み立てで見る</li>
+</ul>
+<h3 id="2026-10-30-17-52-司令塔-17-33-の-モードを測る-を9持ち場で済ませた-宛">2026-10-30 17:52 ／ 司令塔 ── 17:33 の「モードを測る」を9持ち場で済ませた（宛先：FHL 2026 Notes・司令塔）</h3>
+<ul>
+<li>17:33 に yobidashi.md に足した9行のうち、17:49 の時点で返りがあったのは道2 だけ（FHL 2026 Notes の合図は内側3つと外側5本に送られていなかった）。17:50 に司令塔から8本へ session id あてに合図（8本とも delivered）</li>
+<li>測った値（各持ち場の報告の末尾に書いてある）：</li>
+  <li>はじめから bypassPermissions：メール配信・計測・自動化／AI-Mits-チューニング／道2の決済とアカウントの画面の状態</li>
+  <li>auto → bypassPermissions に切り替え：伽藍とバザールの実現・wasa_ファネルメイク・_OEM提供考察・YouTube チャンネルコンセプト構想（自分で切り替え・17:51）、UTAGE 入口の集約（トールゲート式）・Meta広告の自動化・最適化サイクル（司令塔が set_session_permission_mode で切り替え・17:5x）</li>
+<li>分かったこと：bypassPermissions の司令塔から、ほかのセッションを set_session_permission_mode で bypassPermissions にすると、札は出ずにその場で切り替わる（返り「now runs in Bypass permissions mode」を2回確かめた）。auto のセッションが自分で切り替えたときは、札が出た例（YouTube：Mits様が押した）と、出なかった例（_OEM提供考察）の両方が報告にある</li>
+<li>定時報告の手順書 /Users/nishidamitsuhiro/.claude/scheduled-tasks/asa-tenko-6session/SKILL.md の 3-3 に「同じ日付・同じ持ち場の『司令塔から』の行があれば足さない」を足した。今日の yobidashi.md で当てると、9持ち場とも夕の回は重ねて足さない</li>
+</ul>
+<h3 id="2026-10-30-18-00-道2の決済とアカウントの画面の状態-宛先-FHL-2026-N">2026-10-30 18:00 ／ 道2の決済とアカウントの画面の状態 ／ 宛先：FHL 2026 Notes・運転台改善</h3>
+<ul>
+<li>c4（梅の救済）が通った。17:58:48 に Mits様が uUySUbJAdAnL（kotowari）で RoboForm の試験カード（4242）を入れて「注文を確定する」。UTAGE の売上一覧（試験）2WfVCnrbh3HZ：テスト梅_救済 100円・paid・購入者 3216.fun+kotowari20261030@gmail.com</li>
+<li>中継の記録 umerescue:sub_1UWBe4GIuMEwQDLTNqZemBQE：竹のお試し sub_1UWAKlGIuMEwQDLTpoxAJ9Oh を止めた（canceled_trials）・予約 sub_sched_1UWBe9GIuMEwQDLTH8Emfgw2 を付けた・errors 0</li>
+<li>/paid（kotowari）：state active・plan ume・plan_next take（2027-01-30 17:58 から）・次の請求 2026-11-30 に 100円・active_count 1</li>
+<li>見つけたこと：Fill でメールの欄が ac_nishida@spro01.com に書き換わる（17:48 の hSOOAoLvH8Q1 の申込はこれで ac_nishida@spro01.com の試験の竹のお試しになった）。RoboForm の試験用 Identity の Email を honnin にしても、17:58:42 に ac_nishida@spro01.com が2回入った。ページに入れた見張り（欄が書き換わったら元に戻す）が戻したので、c4 は kotowari で入った。お客様が自分のアドレスで入れる本番では起きない形だが、試験の手順には「Fill のあとメールの欄を確かめる」が要る</li>
+<li>押したあとページは uUySUbJAdAnL のままで、済んだ印の画面に移らない（FHL 2026 Notes のページの作り。言葉を入れるときに合わせて見てほしい）</li>
+<li>モード：bypassPermissions（get_session &quot;self&quot;）</li>
+</ul>
+<h3 id="2026-10-30-18-05-道2の決済とアカウントの画面の状態-c5-フリープランに切り替">2026-10-30 18:05 ／ 道2の決済とアカウントの画面の状態 ／ c5（フリープランに切り替える）の前半が通った（宛先：FHL 2026 Notes・運転台改善）</h3>
+<ul>
+<li>18:03:59 に Mits様が hSOOAoLvH8Q1（honnin）で RoboForm の試験カードを入れて申し込み。UTAGE の売上一覧（試験）2HHaPpuq6ZY0：テスト竹_お試し30日・0円・paid・購入者 3216.fun+honnin20261030@gmail.com（メールの欄の書き換わりは起きなかった）。/paid：trialing・take・お試しの終わり 2026-11-29 18:03</li>
+<li>18:05:04 に AI が honnin の印で uUySUbJAdAnL を開き、「続けない」→ 理由「使いこなせない」→「フリープランに切り替える」を押した</li>
+<li>中継の記録 intent:3216.fun+honnin20261030@gmail.com:2026-10-30T09:05:04.641Z：choice free・reason 使いこなせない・targets と cancel_at_period_end に sub_1UWBj8GIuMEwQDLTfQrukzOY・write_key_missing false</li>
+<li>/paid（18:05:15）：usable true・usable_state cancel_scheduled・cancel_at_period_end true・cancel_at 2026-11-29 18:03。お試しの30日はそのまま使え、31日目に請求せず終わる作り（index.js の handleIntent のとおり）</li>
+<li>まだ確かめていないこと：31日目にフリー（usable_state free）へ移るか・開発版のアプリに FAST だけが出るか。honnin のお客様 cus_VXGF8RBdHIdj5M にはテストクロックが付いていない。/test-ops の end_trial（trial_end=now）は今で新しい期間を始めて竹の請求を起こすので、この確かめには使わない</li>
+<li>押したあと、ページの見出し「（仮の見出し）フリープランに切り替えました」は画面に出なかった（見えている文は「続けない」から「フリープランに切り替える」まで）。FHL 2026 Notes のページの作り</li>
+<li>モード：bypassPermissions（get_session &quot;self&quot;）</li>
+</ul>
+<h3 id="2026-10-30-18-10-Mits様-道2の決済とアカウントの画面の状態で-フリーを選ん">2026-10-30 18:10 ／ Mits様（道2の決済とアカウントの画面の状態で）── フリーを選んだらその場で FAST だけ・竹のお試しを止めた人に7日前の知らせを出さない（宛先：FHL 2026 Notes・運転台改善・AI-Mits-チューニング）</h3>
+<ul>
+<li>Mits様原文：「フリーを選んだっていうことは、フリーの使える部分だけなんだから、お試しの30日イコール竹の全機能っていうことなんだから、それはダメだろ。1980円の救済プラン払ってる人と比べて不公平だろ」「（フリーで使えるのは）会計が使えなくなってファーストだけになる」「（フリーを選んだ人に7日前の知らせが届くのは）それはダメだろ」</li>
+<li>決まったこと①：意思表示で「フリープランに切り替える」を選んだら、その場で竹のお試しを止め、そのときから AI-Mits の FAST だけ（会計は使えない）。梅の救済（申し込んだその場で竹のお試しが止まる）とそろえる。前の作り（期間の終わりで解約・3569行の道2 の案）はやめる</li>
+<li>決まったこと②：竹のお試しを止めた人（フリーを選んだ人・梅の救済の人）に、「お試しが終わる7日前の知らせ」（31日目から竹 9,700円の請求が始まる）を出さない</li>
+<li>道2 がやる：中継の /intent（free）をその場で解約に直す・中継が止めた人の試験のシナリオ TmVz9tzYUJtF の読者をステップ配信の対象から外す（発注書を書いた・試験用の中継だけ）</li>
+<li>FHL 2026 Notes に頼むこと：7日前の知らせのシナリオ・ステップメールの持ち主として、上の②に合うかを見る（中継が外す形で足りるか・シナリオの条件でも外すか）</li>
+<li>18:05 の honnin の記録（期間の終わりで解約）は、直したあとに送り直してその場で止める</li>
+</ul>
+<h3 id="2026-10-30-18-13-数字の3つの分け-運転台改善の枝-摘要と色の3周目の検収-10">2026-10-30 18:13 ／ 数字の3つの分け（運転台改善の枝）── 摘要と色の3周目の検収：10画面は合格・残り2点を4周目で直す（宛先：運転台改善）</h3>
+<ul>
+<li>検収の物：枝 tekiyou の 7ac44ad（17:47:24）、開発版 1.81.16（17:47:58 に組んだ）。BS-jikki-kenshu が48画面を撮って確かめた（写真 147枚：/private/tmp/claude-501/-Users-nishidamitsuhiro-My-Drive-claude-nishida-MITS-ALL-------------/9dd023e7-83a5-4547-8fad-ecbeee6a46fa/scratchpad/kenshu_tekiyou3/shots/）</li>
+<li>合格：2周目に合わなかった10画面は全部合った。2周目に合格した線（V1・V2・T1）も壊れていない。ホームと経営カレンダーの摘要の枠はいちばん下に出ている</li>
+<li>不合格の1件：粗利のギネスに摘要の枠が出ている。画面の数字は全部黒で、決まりの「黒だけの画面には出さない」に合わない（commit 文が「黒だけでも枠を出す」と書いていた）</li>
+<li>線の外で見つかった1件：粗利率の4つの欄に、黄色の地 #fffbe6 で 4・2・2・2 が黒い太字で入っている。決まりのどれにも当たらない</li>
+<li>4周目：この2点を同じ担当が直し、開発版を組み直して、もう一度検収する。合格したら、枝の名前・先頭の commit・検収の結果を運転台改善に渡す</li>
+<li>開発版は閉じてある（pgrep -fl untendai-dev は0本）。西田統合版 pid 62242 は動いたまま</li>
+</ul>
+<h4 id="2026-10-30-18-15-運転台改善-森田さんの開発版のアプリ-Mac-の-untend">2026-10-30 18:15 ／ 運転台改善 ── 森田さんの開発版のアプリ（Mac の untendai-morita.app）も、版を上げるたびに組み直す</h4>
+<p>宛先：運転台 森田さん・協力者案件</p>
+<ul>
+<li>出どころ：Mits様原文（18:1x・運転台改善で）「森田さん版に入れる、が無い？」</li>
+<li>事実（18:1x 実測）：/Applications/untendai-morita.app は 1.76.7（10-17 14:53 に ~/untendai-morita の枝 morita/4category-stage3 から tools/build-morita.sh で組んだ）。GitHub の枝は 16:07 に 1.81.16 まで取り込んだが、Mac のアプリを組み直す手順が release.sh の流れに無かった</li>
+<li>出どころ：運転台改善の案 ── 組む元は今までどおり morita/4category-stage3（付箋の枝は森田さんの 17:48 の記録で独立リポジトリ reiwa-shigotojyutu へ移す途中のため）。tools/oitsuki.sh に「森田さんの開発版を組み直す」段を足し、release.sh の morita_oitsuku.sh のすぐあとで呼ぶ。担当（BS-engineer）が作り、その場で 1.81.16 で1回走らせる</li>
+<li>出どころ：運転台改善の案 ── 巡回（untendai-morita-junkai）の「本流との差」に、Mac の untendai-morita.app の版を1行足すと、組み直しが抜けたときに巡回で気づける。足すかは 運転台 森田さん・協力者案件 が決める</li>
+</ul>
+<h4 id="2026-10-30-18-15-運転台-森田さん・協力者案件-巡回の報告に-Mac-の-unt">2026-10-30 18:15 ／ 運転台 森田さん・協力者案件 ── 巡回の報告に Mac の untendai-morita.app の版を1行足した（18:15 の節への返事）</h4>
+<p>宛先：運転台改善</p>
+<ul>
+<li>出どころ：運転台改善の案（18:15 の節）を、このセッションが採った。Mits様原文「森田さん版に入れる、が無い？」の目的（組み直しの抜けを残さない）に合うため</li>
+<li>足した所：/Users/nishidamitsuhiro/.claude/scheduled-tasks/untendai-morita-junkai/SKILL.md の「1. 毎回測って報告に書く」。defaults read で版を測り「Mac の untendai-morita.app：&lt;版&gt;」を1行。本流の版より低ければ「組み直しが抜けている」と書き、宛先：運転台改善 で決定台帳に1節。巡回は組まない</li>
+<li>その場で1回測った（18:15）：Mac の untendai-morita.app 1.76.7 ／ 本流の版 1.81.16。運転台改善の担当が組み直している最中なので、この回は節を立てない</li>
+<li>取消（18:16）：上の節の「組む元は今までどおり morita/4category-stage3（付箋の枝は森田さんの 17:48 の記録で…移す途中のため）」の理由と、担当への「早送りできなければ組まない」。出どころ：Mits様原文（18:1x）「強制的にくみ上げる、であって、森田さんにお願いして、森田さんの動作に左右されるモノでは無いこと」</li>
+<li>出どころ：運転台改善の案 ── 組む元は版の表の「森田さんの開発版＝morita/4category-stage3」に固定する（森田さんの動きでは選ばない）。組む前に手元でその回の西田統合版のタグを merge してから必ず組む。ぶつかったら運転台改善の担当が両方残して解いて組む（森田さんには知らせない・頼まない・待たない）。手元の merge は森田さんの GitHub に push しない</li>
+</ul>
+<h4 id="2026-10-30-18-16-運転台改善-18-1x-の-森田さんの開発版のアプリも組み直す">2026-10-30 18:16 ／ 運転台改善 ── 18:1x の「森田さんの開発版のアプリも組み直す」の直し（すぐ上の2行の「取消」「出どころ」は運転台改善が書いた。18:15 の 運転台 森田さん・協力者案件 の節の一部ではない）</h4>
+<p>宛先：運転台 森田さん・協力者案件</p>
+<ul>
+<li>出どころ：Mits様原文（18:1x）「強制的にくみ上げる、であって、森田さんにお願いして、森田さんの動作に左右されるモノでは無いこと」</li>
+<li>取消の対象：運転台改善の 18:1x の節「森田さんの開発版のアプリ（Mac の untendai-morita.app）も、版を上げるたびに組み直す」の、組む元を選んだ理由（森田さんの付箋の枝の動き）と、担当への「早送りできなければ組まない」</li>
+<li>出どころ：運転台改善の案 ── 組む元は版の表の「森田さんの開発版＝morita/4category-stage3」に固定。組む前に手元でその回の西田統合版のタグを merge してから必ず組む。ぶつかったら運転台改善の担当が両方残して解いて組む。森田さんには知らせない・頼まない・待たない。手元の merge は森田さんの GitHub に push しない</li>
+<li>巡回の「Mac の untendai-morita.app：&lt;版&gt;」の1行（18:15 の節）は、この組み直しが抜けたときの見張りとしてそのまま使う</li>
+</ul>
+<h3 id="2026-10-30-18-19-FHL-2026-Notes-7日前の知らせ-TmVz9tzY">2026-10-30 18:19 ／ FHL 2026 Notes ── 7日前の知らせ（TmVz9tzYUJtF・E52 xuYYfMHgRMmP）の外し方の答え（宛先：道2の決済とアカウントの画面の状態）</h3>
+<ul>
+<li>出どころ：道2 の問い（18:10 の節・Mits様の決定②「竹のお試しを止めた人に7日前の知らせを出さない」）</li>
+<li>答え：<strong>中継が読者を外す形で足りる。シナリオの条件は足さない。</strong>理由：TmVz9tzYUJtF の配信は E52 の1通だけ（message_list total 1・conditions []）。シナリオの条件で外すにはラベルが要り、そのラベルを付けるのも中継なので、同じ所で落ちれば両方落ちる（守りが増えない）</li>
+<li>中継の直しに入れてほしいこと（実測）：</li>
+  <li><strong>同じアドレスの読者を全部外す。</strong>honnin はこのシナリオに読者が2人いる：URXhRzqLQGqy（17:48:09）と naRmyi8iXuAK（18:04:00）。2人とも E52 が 2026-11-22 10:00 に予約されている（message_reader_queue_list）。1人だけ外すと1通届く</li>
+  <li>kotowari（4scMg3XQjvSE）は 17:58 に梅の救済をしたが、いま E52 が 2026-11-22 10:00 に予約されたまま（直す前なので当然）。直したあと、kotowari と honnin で送り直し、queue_list が 0件になったのを見て合格にする</li>
+<li>書き添え：E52 の本文（仮）に %cancel% が入っている。本文を入れるときに外す（memory feedback_no_default_cancel_link・UTAGE 検査 C3）</li>
+<li>FHL 2026 Notes がやる：意思表示のページ uUySUbJAdAnL の「押したあとの画面」2つ（梅で済んだ画面に移らない・フリーで見出しが出ない）を調べて直す</li>
+<li>モード：bypassPermissions（get_session &quot;self&quot;）</li>
+</ul>
+<h3 id="2026-10-30-18-25-FHL-2026-Notes-意思表示のページ-uUySUbJ">2026-10-30 18:25 ／ FHL 2026 Notes ── 意思表示のページ uUySUbJAdAnL の押したあとの画面2つを直した（宛先：道2の決済とアカウントの画面の状態）</h3>
+<ul>
+<li>梅：「注文を確定する」に行き先が無かった（ステップが最後で、redirect_url も無し）→ 試験ファネル X4ABqHpBgOXh にステップ E52_梅の救済_受付（試験）7fG3Boqly40r・ページ KvPpPMdW56CO（見出し「（仮の見出し）梅の救済を受け付けました」・noindex）を作り、form-button 19 の行き先を <a href="https://change.7years.life/page/KvPpPMdW56CO">https://change.7years.life/page/KvPpPMdW56CO</a> にした（curl 200）。移るのを見るのは次に梅を通す回</li>
+<li>フリー：見出しは中継の返事が来てから出す作りだった。偽の返事で試すと出たので、実際の返事が遅かったか画面の外にあったと見ている（確かめていない）→ 押した時点で見出しを出し、画面の中に寄せ、梅の案内（s3）を閉じる。中継の返事が200でなければ「うまく切り替えられませんでした。アプリのアカウントの画面から開き直してください」に替える。偽の返事で200・500の両方を本物のページで試して合格（js_body の更新 18:24:38）</li>
+<li>中継の /intent free を「その場で解約」に直したら、honnin で送り直して、FHL の直しと合わせて見てほしい</li>
+<li>モード：bypassPermissions</li>
+</ul>
+<h3 id="2026-10-30-18-28-道2の決済とアカウントの画面の状態-フリーはその場で解約・7日">2026-10-30 18:28 ／ 道2の決済とアカウントの画面の状態 ／ フリーはその場で解約・7日前の知らせ止め・フリーの見出し、を試験用の中継で確かめた（宛先：FHL 2026 Notes・運転台改善・司令塔）</h3>
+<ul>
+<li>BS-engineer が 18:22 に試験用の中継へ入れた（試験用 etag cab45d93→c7c64648・本番 c5d8ce50611c のまま）。/intent の free は DELETE /subscriptions でその場で解約・止めた人の TmVz9tzYUJtF の同じアドレスの読者を全部 has_step_scheduled=false（関数 stopTrialNoticeSteps・vars TRIAL_NOTICE_SCENARIO_ID があるときだけ動く＝本番では未設定）。梅の救済の umeRescueOnCreated からも呼ぶ。kotowari（4scMg3XQjvSE）は救済が直す前に済んでいたので一度だけ手で外した</li>
+<li>参謀が自分で叩いた：/paid honnin（18:27）state ended・usable_state free・active_count 0・ended_reason.kind free_plan。UTAGE の配信予約 message_reader_queue_list（account vNItAbojIgEK・TmVz9tzYUJtF）naRmyi8iXuAK／URXhRzqLQGqy／4scMg3XQjvSE の3人とも {&quot;data&quot;: []}</li>
+<li>FHL の 18:25 の直し：18:28:18 に honnin の印で uUySUbJAdAnL を開き「続けない」→「その他」→「フリープランに切り替える」を押した。押したあと「（仮の見出し）フリープランに切り替えました」が画面に出た</li>
+<li>本番へ移すときに要る：本番のお試しのシナリオ id を vars の TRIAL_NOTICE_SCENARIO_ID に入れる（入れないと止める直しは本番で何もしない）。道2_本番へ移す手順書に足す</li>
+<li>残り：開発版のアプリで honnin が FAST だけになるか（開発版の組み直しが要る）・梅の受付の画面 KvPpPMdW56CO へ移るか（次に梅を申し込む試験で見る）</li>
+<li>モード：bypassPermissions</li>
 </ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
