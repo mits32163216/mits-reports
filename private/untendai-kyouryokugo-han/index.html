@@ -60,6 +60,13 @@
   .gnav a:hover{background:var(--blue-bg)}
   .gnav span[aria-current]{color:var(--tx);font-weight:700;background:var(--gold-bg);border-bottom-color:var(--gold);cursor:default}
   @media (max-width:720px){.gnav-in{padding:0 8px}.gnav a,.gnav span{padding:10px 10px;font-size:13px}}
+  /* 「2」の見出しの下の「現在」と更新のボタン */
+  .genzai{margin:0 0 6px;font-size:14px}
+  .genzai .note{margin-left:6px}
+  .koushin{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin:0 0 10px}
+  .koushin button{font:inherit;font-size:14px;padding:6px 14px;border-radius:8px;border:1px solid var(--navy);background:var(--navy);color:#fff;cursor:pointer}
+  .koushin button:disabled{opacity:.55;cursor:default}
+  .koushin .note{flex:1 1 260px}
 </style>
 </head>
 <body>
@@ -68,7 +75,7 @@
 
 <h1>運転台 ── 森田さんとの協力体制になってから、大きく変わった版</h1>
 <!-- AUTO:lead:start -->
-<p class="lead">2026-10-30 16:08 時点の実測（版を作るたびに道具が実物から取り直す）。始まりは 2026-10-14 の森田さんの指摘（v1.76.4）。いまの西田統合版は v1.81.16、正式版は v1.80.0。<br>
+<p class="lead">2026-10-30 16:11 時点の実測（版を作るたびに道具が実物から取り直す）。始まりは 2026-10-14 の森田さんの指摘（v1.76.4）。いまの西田統合版は v1.81.16、正式版は v1.80.0。<br>
 （運転台＝社内名。お客様向けの名前は「AI-Mits＆経営アプリ」）</p>
 <!-- AUTO:lead:end -->
 
@@ -146,6 +153,10 @@
 
 <!-- ============================================================ -->
 <h2>2. 版の段と、段ごとの受け持ち</h2>
+<!-- AUTO:genzai:start -->
+<p class="genzai" id="han-genzai" data-at="2026-10-30T16:11:52+09:00"><b>2026年10月30日 16:11 現在</b><span class="note">（図と表の数字は、この時刻に実物から取り直したもの）</span></p>
+<!-- AUTO:genzai:end -->
+<div class="koushin"><button type="button" id="han-koushin-btn">いまの版で更新する</button><span class="note" id="han-koushin-msg" role="status" aria-live="polite">押すと、西田の Mac が実物から番号を取り直して公開し直します（1分ほど）。</span></div>
 
 <!-- AUTO:zu:start -->
 <div class="card scroll">
@@ -366,8 +377,70 @@
 </table>
 </div>
 
-<p class="note" style="margin-top:32px">「1」「2」の番号と「3」の最後の行は、版を作るたびに道具（untendai-seiri の tools/han_page_koushin.sh）が実物から取り直す：各 .app の版・更新を配る中継が返す正式版（latest.json）と確認版（kakunin.json）の番号・GitHub untendai/untendai のリリース一覧と版の印・CHANGELOG.md・WEB版の作業場の記録。取り直した時刻は冒頭に書く。「3」の 1.77.6 までの行と「4」は 2026-10-19 17:40 の実測。呼び方と受け持ちの正本は、経営の運転台の案件の決まりの冒頭と決定台帳（2026-10-28 20:5x・21:0x・20:1x）。古い全体像は別ページ「運転台 開発の流れと現状」にある。</p>
+<p class="note" style="margin-top:32px">「1」「2」の番号と「3」の最後の行は、版を作るたびに道具（untendai-seiri の tools/han_page_koushin.sh）が実物から取り直す：各 .app の版・更新を配る中継が返す正式版（latest.json）と確認版（kakunin.json）の番号・GitHub untendai/untendai のリリース一覧と版の印・CHANGELOG.md・WEB版の作業場の記録。取り直した時刻は冒頭と「2」の見出しの下に書く（「2」の「いまの版で更新する」を西田の Mac で押すと、その場で取り直す）。「3」の 1.77.6 までの行と「4」は 2026-10-19 17:40 の実測。呼び方と受け持ちの正本は、経営の運転台の案件の決まりの冒頭と決定台帳（2026-10-28 20:5x・21:0x・20:1x）。古い全体像は別ページ「運転台 開発の流れと現状」にある。</p>
 
 </main>
+<script id="han-koushin-js">
+// 「いまの版で更新する」：西田の Mac の中の受け口（127.0.0.1:8791・untendai-seiri の tools/han_koushin_ukeguchi.py）を呼び、
+// tools/han_page_koushin.sh を走らせる。公開まで済んだら、このページを読み直して新しい「現在」を出す。
+// 受け口が無い所（ほかの Mac・スマホ）では、案内を出して何もしない。
+(function(){
+  var U = "http://127.0.0.1:8791/han-koushin/";
+  var btn = document.getElementById("han-koushin-btn"), msg = document.getElementById("han-koushin-msg");
+  if (!btn || !msg) return;
+  if (/[?&]t=\d+/.test(location.search)) { try { history.replaceState(null, "", location.pathname + location.hash); } catch (e) {} }
+  function genzai(doc){
+    var p = doc.getElementById("han-genzai");
+    if (!p) return null;
+    var b = p.querySelector("b");
+    return { at: p.getAttribute("data-at") || "", txt: (b ? b.textContent : p.textContent).replace(/\s*現在\s*$/, "") };
+  }
+  var mae = genzai(document);
+  function say(s){ msg.textContent = s; }
+  function wait(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+  function call(method, path, ms){
+    var c = new AbortController(), t = setTimeout(function(){ c.abort(); }, ms);
+    var o = { method: method, signal: c.signal, cache: "no-store", mode: "cors" };
+    if (method === "POST") o.headers = { "X-Han-Koushin": "1" };
+    return fetch(U + path, o).finally(function(){ clearTimeout(t); });
+  }
+  function nashi(){
+    say("このボタンは西田の Mac でだけ動きます。最後に更新した時刻：" + (mae ? mae.txt : "（読めません）"));
+    btn.disabled = false;
+  }
+  function byou(t0){ return Math.round((Date.now() - t0) / 1000); }
+  btn.addEventListener("click", async function(){
+    btn.disabled = true;
+    say("西田の Mac の受け口を呼んでいます…");
+    var r;
+    try { r = await call("POST", "hashiru", 5000); } catch (e) { return nashi(); }
+    if (r.status !== 202 && r.status !== 409) return nashi();
+    var t0 = Date.now();
+    for (;;) {
+      await wait(3000);
+      var j;
+      try { j = await (await call("GET", "joutai", 5000)).json(); }
+      catch (e) { say("受け口からの返事が途切れました。少し待ってから、このページを読み直してください。"); btn.disabled = false; return; }
+      if (!j.running) {
+        if (j.rc !== 0) { say("更新が落ちました（終わりの数 " + j.rc + "）：" + (j.saigo || "")); btn.disabled = false; return; }
+        break;
+      }
+      say("実物から番号を取り直して公開しています…（" + byou(t0) + " 秒）");
+      if (byou(t0) > 660) { say("時間がかかりすぎています。少し待ってから、このページを読み直してください。"); btn.disabled = false; return; }
+    }
+    while (byou(t0) < 300) {
+      say("公開ページに出るのを待っています…（" + byou(t0) + " 秒）");
+      try {
+        var h = await (await fetch(location.pathname + "?t=" + Date.now(), { cache: "no-store" })).text();
+        var g = genzai(new DOMParser().parseFromString(h, "text/html"));
+        if (g && (!mae || g.at > mae.at)) { location.replace(location.pathname + "?t=" + Date.now()); return; }
+      } catch (e) {}
+      await wait(5000);
+    }
+    say("公開に時間がかかっています。少し待ってから、このページを読み直してください。");
+    btn.disabled = false;
+  });
+})();
+</script>
 </body>
 </html>
