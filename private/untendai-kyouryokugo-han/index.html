@@ -11,7 +11,7 @@
     --navy:#14206b; --gold:#8a6a1f; --green:#2f7d4f; --red:#b0342c;
     --blue-bg:#eef1fb; --gold-bg:#faf4e4; --green-bg:#eaf5ee; --red-bg:#fbecea;
     /* アプリのアイコンの色 */
-    --c-dev:#188848; --c-morita:#F848D8; --c-client:#E8B820; --c-mkt:#F08A24; --c-navy:#204088; --c-kakunin:#7a3cc6;
+    --c-dev:#188848; --c-morita:#F848D8; --c-client:#E8B820; --c-mkt:#F08A24; --c-navy:#204088; --c-kakunin:#7a3cc6; --c-demo:#b02a30;
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--tx);
@@ -30,6 +30,7 @@
   .t-navy{background:#e9edf8;color:var(--c-navy);border-color:#c3cde9}
   .t-kakunin{background:#f1eafa;color:var(--c-kakunin);border-color:#d6c3ee}
   .t-gray{background:#f0f0f0;color:#555}
+  .t-demo{background:#f8e9ea;color:var(--c-demo);border-color:#e6c0c2}
   .t-out{background:var(--red-bg);color:var(--red);border-color:#efc4bf}
   .note{font-size:13px;color:var(--sub)}
   .quote{border-left:3px solid var(--gold);background:var(--gold-bg);padding:8px 12px;margin:8px 0;font-size:14px}
@@ -66,139 +67,195 @@
 <main>
 
 <h1>運転台 ── 森田さんとの協力体制になってから、大きく変わった版</h1>
-<p class="lead">2026-10-19 17:40 時点の実測で整理。始まりは 2026-10-14 の森田さんの指摘（v1.76.4）。終わりは今日の最新（西田統合版 v1.77.6・確認版 v1.77.5）。<br>
+<!-- AUTO:lead:start -->
+<p class="lead">2026-10-30 14:22 時点の実測（版を作るたびに道具が実物から取り直す）。始まりは 2026-10-14 の森田さんの指摘（v1.76.4）。いまの西田統合版は v1.81.15、正式版は v1.80.0。<br>
 （運転台＝社内名。お客様向けの名前は「AI-Mits＆経営アプリ」）</p>
+<!-- AUTO:lead:end -->
 
 <!-- ============================================================ -->
 <h2>1. いまの状況 ── どの版が何番で、誰に届いているか</h2>
 
+<!-- AUTO:genjou:start -->
 <div class="scroll">
 <table class="stack">
 <tr><th>版の呼び方</th><th>アイコンの色</th><th>いまの版</th><th>誰に届いているか</th><th>ひとこと</th></tr>
-<tr>
-  <td data-l="版の呼び方"><b>西田統合版</b><br><span class="note">旧称：製品版</span></td>
-  <td data-l="アイコンの色"><span class="dot" style="background:var(--c-navy)"></span>紺</td>
-  <td data-l="いまの版"><span class="ver">1.77.6</span><br><span class="note">西田の Mac に入っている版を実測</span></td>
-  <td data-l="誰に届いているか"><span class="tag t-navy">西田だけ</span><br>実データで使う。森田さんにも見せない・外にも出ない</td>
-  <td data-l="ひとこと">確認版にはまだ上げていない</td>
-</tr>
-<tr>
-  <td data-l="版の呼び方"><b>確認版</b></td>
-  <td data-l="アイコンの色"><span class="dot" style="background:var(--c-kakunin)"></span>紫</td>
-  <td data-l="いまの版"><span class="ver">1.77.5</span><br><span class="note">確認版の配信が返す版を実測</span></td>
-  <td data-l="誰に届いているか"><span class="tag t-kakunin">西田＋森田さん</span><br>設定で「確認版を受け取る」を入れたアプリだけ</td>
-  <td data-l="ひとこと">GitHub の公開前のリリースで出す。お客様には届かない</td>
-</tr>
-<tr>
-  <td data-l="版の呼び方"><b>正式版</b></td>
-  <td data-l="アイコンの色"><span class="dot" style="background:var(--c-navy)"></span>紺<br><span class="note">左上に（〜版）は付かない</span></td>
-  <td data-l="いまの版"><span class="ver">1.73.28</span><br><span class="note">2026-09-25 に出した版</span></td>
-  <td data-l="誰に届いているか"><span class="tag t-out">お客様全員</span></td>
-  <td data-l="ひとこと">この協力体制の期間は、まだ新しい版を世に出していない</td>
-</tr>
-<tr>
-  <td data-l="版の呼び方"><b>デモデータ版</b><br><span class="note">確認版と並ぶ版・アイコンは緑</span></td>
-  <td data-l="アイコンの色"><span class="dot" style="background:var(--c-dev)"></span>緑</td>
-  <td data-l="いまの版"><span class="ver">1.77.3</span><br><span class="note">西田の Mac に入っている版を実測</span></td>
-  <td data-l="誰に届いているか"><span class="tag t-gray">西田の Mac だけ</span><br>架空のデモデータ。説明会・動画・写真で見せる</td>
-  <td data-l="ひとこと">確認版と同じ版にそろえる決まり。確認版 1.77.5 への組み直しはこれから</td>
-</tr>
-<tr>
+<tr data-row="morita">
   <td data-l="版の呼び方"><b>森田さんの開発版</b></td>
   <td data-l="アイコンの色"><span class="dot" style="background:var(--c-morita)"></span>マゼンタ</td>
-  <td data-l="いまの版"><span class="ver">1.76.7</span><br><span class="note">西田の Mac に確認用として入っている版</span></td>
+  <td data-l="いまの版"><span class="ver" data-ban="morita">1.76.7</span><br><span class="note">西田の Mac に確認用として入っている版（untendai-morita.app を実測）</span></td>
   <td data-l="誰に届いているか"><span class="tag t-gray">森田さん</span><br>自分の版で作る。森田さんの Mac の版は森田さん自身が進める</td>
   <td data-l="ひとこと">西田統合版に取り込まれて初めて、西田の版に入る</td>
 </tr>
-<tr>
-  <td data-l="版の呼び方"><b>ほかの2本</b><br><span class="note">クライアント版（freee）・マーケ版</span></td>
-  <td data-l="アイコンの色"><span class="dot" style="background:var(--c-client)"></span>黄　<span class="dot" style="background:var(--c-mkt)"></span>橙</td>
-  <td data-l="いまの版"><span class="ver">1.76.2</span> ／ <span class="ver">1.74.4</span></td>
+<tr data-row="dev">
+  <td data-l="版の呼び方"><b>西田の開発版</b></td>
+  <td data-l="アイコンの色"><span class="dot" style="background:var(--c-dev)"></span>緑</td>
+  <td data-l="いまの版"><span class="ver" data-ban="dev">1.81.14</span><br><span class="note">untendai-dev.app を実測（10-30 02:01 に入れた）</span></td>
   <td data-l="誰に届いているか"><span class="tag t-gray">西田の Mac だけ</span></td>
-  <td data-l="ひとこと">この期間は組み直していない</td>
+  <td data-l="ひとこと">開発して、叩いて、検収する所。検収したら西田統合版に入れる</td>
+</tr>
+<tr data-row="tougou">
+  <td data-l="版の呼び方"><b>西田統合版</b><br><span class="note">旧称：製品版</span></td>
+  <td data-l="アイコンの色"><span class="dot" style="background:var(--c-navy)"></span>紺</td>
+  <td data-l="いまの版"><span class="ver" data-ban="tougou">1.81.15</span><br><span class="note">untendai.app を実測（10-30 14:10 に入れた）</span></td>
+  <td data-l="誰に届いているか"><span class="tag t-navy">西田だけ</span><br>実データで使う。森田さんにも見せない・外にも出ない</td>
+  <td data-l="ひとこと">確認版にはまだ上げていない・世に出していない（正式版は v1.80.0）</td>
+</tr>
+<tr data-row="client-mkt">
+  <td data-l="版の呼び方"><b>freee版・マーケ版</b><br><span class="note">クライアント版（freee）・マーケ版</span></td>
+  <td data-l="アイコンの色"><span class="dot" style="background:var(--c-client)"></span>黄　<span class="dot" style="background:var(--c-mkt)"></span>橙</td>
+  <td data-l="いまの版"><span class="ver" data-ban="client">1.81.15</span> ／ <span class="ver" data-ban="mkt">1.81.15</span><br><span class="note">untendai-client.app ／ untendai-mkt.app を実測</span></td>
+  <td data-l="誰に届いているか"><span class="tag t-gray">西田の Mac だけ</span></td>
+  <td data-l="ひとこと">西田統合版と同じ番号で組み直した（freee版 10-30 14:13・マーケ版 10-30 14:12 に入れた）</td>
+</tr>
+<tr data-row="kakunin">
+  <td data-l="版の呼び方"><b>確認版</b></td>
+  <td data-l="アイコンの色"><span class="dot" style="background:var(--c-kakunin)"></span>紫</td>
+  <td data-l="いまの版"><span class="ver" data-ban="kakunin">1.80.0</span><br><span class="note">確認版の配信（kakunin.json）が返す版を実測。いまは正式版と同じ番号。確認版として最後に出したのは v1.77.7（2026-10-19）</span></td>
+  <td data-l="誰に届いているか"><span class="tag t-kakunin">西田＋森田さん</span><br>設定で「確認版を受け取る」を入れたアプリだけ</td>
+  <td data-l="ひとこと">Mits様の OK のあとに作る。GitHub の公開前のリリースで出す。お客様には届かない</td>
+</tr>
+<tr data-row="demo">
+  <td data-l="版の呼び方"><b>デモデータ版</b><br><span class="note">確認版と並ぶ版</span></td>
+  <td data-l="アイコンの色"><span class="dot" style="background:var(--c-demo)"></span>深い赤</td>
+  <td data-l="いまの版"><span class="ver" data-ban="demo">1.80.0</span><br><span class="note">untendai-demo.app を実測（10-28 20:36 に入れた）</span></td>
+  <td data-l="誰に届いているか"><span class="tag t-demo">西田の Mac だけ</span><br>説明会・動画・写真で見せる</td>
+  <td data-l="ひとこと">機能は確認版と同じ・データはデモデータ</td>
+</tr>
+<tr data-row="web">
+  <td data-l="版の呼び方"><b>WEB版</b><br><span class="note">アプリと同じ画面を Chrome で開く</span></td>
+  <td data-l="アイコンの色"><span class="note">アイコンは無い（ブラウザで開く）</span></td>
+  <td data-l="いまの版"><span data-ban="web">正式版と同じ番号（いまなら v1.80.0）</span><br><span class="note">自分の番号は持たない</span></td>
+  <td data-l="誰に届いているか"><span class="tag t-gray">まだ誰にも</span><br>見込みのお客様に「そういう機能があるのか」と見てもらう入口。個人の情報をつなぐのはアプリだけ</td>
+  <td data-l="ひとこと"><b>正式版を世に出すときに、同じコミットから立てる</b>（版の表示は正式版と同じ）。開発中の直しは正式版に入るまで出ない。いまの実物は手元だけ：枝 web-ban-20261028・コミット 6cc1eca（2026-10-28）・土台は v1.81.14 の頃の main・どこにも公開していない（公開先は決まっていない）。正式版 v1.80.0 の中身とはまだ揃っていない</td>
+</tr>
+<tr data-row="seishiki">
+  <td data-l="版の呼び方"><b>正式版</b><br><span class="note">世に出す版</span></td>
+  <td data-l="アイコンの色"><span class="dot" style="background:var(--c-navy)"></span>紺<br><span class="note">左上に（〜版）は付かない</span></td>
+  <td data-l="いまの版"><span class="ver" data-ban="seishiki">1.80.0</span><br><span class="note">2026-10-24 に出した版（latest.json が返す版を実測）</span></td>
+  <td data-l="誰に届いているか"><span class="tag t-out">お客様全員</span></td>
+  <td data-l="ひとこと">WEB版も、この版を世に出すときに同じ中身・同じ番号で立てる</td>
 </tr>
 </table>
 </div>
 
 <div class="card">
-<b>正式版 1.73.28 のあとに積んだ変更の記録は、西田統合版 1.77.6 までで 239 件</b>（記録だけの変更も含む・まだ世に出していない）。<br>
+<b>正式版 v1.80.0 のあとに積んだ変更の記録は、西田統合版 v1.81.15 までで 101 件</b>（記録だけの変更も含む・まだ世に出していない）。<br>
 そのうち、画面で見て分かる大きな変わり目だけを、このあと「3」に並べる。
 </div>
+<!-- AUTO:genjou:end -->
 
 <!-- ============================================================ -->
 <h2>2. 版の段と、段ごとの受け持ち</h2>
 
+<!-- AUTO:zu:start -->
 <div class="card scroll">
 <div class="svgwrap">
-<svg viewBox="0 0 1000 450" xmlns="http://www.w3.org/2000/svg" font-family="Hiragino Sans, sans-serif">
+<svg viewBox="0 0 1000 490" xmlns="http://www.w3.org/2000/svg" font-family="Hiragino Sans, sans-serif">
   <defs>
     <marker id="ar" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#5b6170"/>
     </marker>
   </defs>
 
-  <!-- 段の見出し -->
+  <!-- 段の見出し（左から順に進む・いちばん右が世に出す正式版） -->
   <text x="120" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#5b6170">開発版</text>
   <text x="400" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#5b6170">西田統合版</text>
   <text x="675" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#5b6170">確認版</text>
-  <text x="905" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#5b6170">正式版</text>
+  <text x="905" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#5b6170">正式版（世に出す版）</text>
 
   <!-- 開発版 2本 -->
-  <rect x="20" y="36" width="200" height="74" rx="10" fill="#fff" stroke="#F848D8" stroke-width="3"/>
-  <text x="120" y="64" text-anchor="middle" font-size="15" font-weight="700" fill="#1f2430">森田さんの開発版</text>
-  <text x="120" y="88" text-anchor="middle" font-size="12" fill="#5b6170">自分の版で作る（マゼンタ）</text>
-
-  <rect x="20" y="130" width="200" height="74" rx="10" fill="#fff" stroke="#188848" stroke-width="3"/>
-  <text x="120" y="172" text-anchor="middle" font-size="15" font-weight="700" fill="#1f2430">西田の開発版</text>
+  <rect x="20" y="36" width="200" height="92" rx="10" fill="#fff" stroke="#F848D8" stroke-width="3"/>
+  <text x="128" y="60" text-anchor="middle" font-size="15" font-weight="700" fill="#1f2430">森田さんの開発版</text>
+  <text x="120" y="80" text-anchor="middle" font-size="12" fill="#1f2430">untendai-morita.app</text>
+  <text x="120" y="102" text-anchor="middle" font-size="16" font-weight="700" fill="#1f2430" data-ban="morita">1.76.7</text>
+  <text x="120" y="120" text-anchor="middle" font-size="11" fill="#5b6170">自分の版で作る</text>
+  <rect x="20" y="148" width="200" height="86" rx="10" fill="#fff" stroke="#188848" stroke-width="3"/>
+  <text x="128" y="174" text-anchor="middle" font-size="15" font-weight="700" fill="#1f2430">西田の開発版</text>
+  <text x="120" y="194" text-anchor="middle" font-size="12" fill="#1f2430">untendai-dev.app</text>
+  <text x="120" y="218" text-anchor="middle" font-size="16" font-weight="700" fill="#1f2430" data-ban="dev">1.81.14</text>
 
   <!-- 西田統合版 -->
-  <rect x="300" y="64" width="200" height="110" rx="10" fill="#e9edf8" stroke="#204088" stroke-width="3"/>
-  <text x="400" y="96" text-anchor="middle" font-size="16" font-weight="700" fill="#204088">西田統合版</text>
-  <text x="400" y="122" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2430">1.77.6</text>
-  <text x="400" y="146" text-anchor="middle" font-size="12" fill="#5b6170">西田だけ・実データ</text>
-  <text x="400" y="164" text-anchor="middle" font-size="12" fill="#5b6170">直しを繰り返す場</text>
+  <rect x="300" y="64" width="200" height="140" rx="10" fill="#e9edf8" stroke="#204088" stroke-width="3"/>
+  <text x="408" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#204088">西田統合版</text>
+  <text x="400" y="112" text-anchor="middle" font-size="12" fill="#1f2430">untendai.app</text>
+  <text x="400" y="138" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2430" data-ban="tougou">1.81.15</text>
+  <text x="400" y="162" text-anchor="middle" font-size="12" fill="#5b6170">西田だけ・実データ</text>
+  <text x="400" y="182" text-anchor="middle" font-size="12" fill="#5b6170">直しを繰り返す場</text>
+  <!-- 同じ main で組む別の2本 -->
+  <rect x="300" y="226" width="200" height="66" rx="10" fill="#fff" stroke="#c9c4b6" stroke-width="2" stroke-dasharray="5 4"/>
+  <text x="400" y="250" text-anchor="middle" font-size="13" font-weight="700" fill="#1f2430">freee版・マーケ版</text>
+  <text x="400" y="276" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2430"><tspan data-ban="client">1.81.15</tspan> ／ <tspan data-ban="mkt">1.81.15</tspan></text>
 
   <!-- 確認版 -->
-  <rect x="580" y="64" width="190" height="110" rx="10" fill="#f1eafa" stroke="#7a3cc6" stroke-width="3"/>
-  <text x="675" y="96" text-anchor="middle" font-size="16" font-weight="700" fill="#7a3cc6">確認版</text>
-  <text x="675" y="122" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2430">1.77.5</text>
-  <text x="675" y="146" text-anchor="middle" font-size="12" fill="#5b6170">西田＋森田さん</text>
-  <text x="675" y="164" text-anchor="middle" font-size="12" fill="#5b6170">お客様には届かない</text>
+  <rect x="580" y="64" width="190" height="140" rx="10" fill="#f1eafa" stroke="#7a3cc6" stroke-width="3"/>
+  <text x="683" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#7a3cc6">確認版</text>
+  <text x="675" y="112" text-anchor="middle" font-size="12" fill="#1f2430">untendai.app</text>
+  <text x="675" y="138" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2430" data-ban="kakunin">1.80.0</text>
+  <text x="675" y="154" text-anchor="middle" font-size="10" fill="#5b6170">kakunin.json の版</text>
+  <text x="675" y="174" text-anchor="middle" font-size="12" fill="#5b6170">西田＋森田さん</text>
+  <text x="675" y="192" text-anchor="middle" font-size="12" fill="#5b6170">お客様には届かない</text>
+
+  <!-- デモデータ版（確認版の真下・確認版と並ぶ） -->
+  <rect x="580" y="226" width="190" height="144" rx="10" fill="#fff" stroke="#b02a30" stroke-width="3"/>
+  <text x="683" y="254" text-anchor="middle" font-size="16" font-weight="700" fill="#b02a30">デモデータ版</text>
+  <text x="675" y="274" text-anchor="middle" font-size="12" fill="#1f2430">untendai-demo.app</text>
+  <text x="675" y="298" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2430" data-ban="demo">1.80.0</text>
+  <text x="675" y="320" text-anchor="middle" font-size="12" fill="#5b6170">機能は確認版と同じ</text>
+  <text x="675" y="338" text-anchor="middle" font-size="12" fill="#5b6170">データはデモデータ</text>
+  <text x="675" y="356" text-anchor="middle" font-size="12" fill="#5b6170">説明会・動画・写真で見せる</text>
 
   <!-- 正式版 -->
-  <rect x="830" y="64" width="150" height="110" rx="10" fill="#e9edf8" stroke="#204088" stroke-width="3"/>
-  <text x="905" y="96" text-anchor="middle" font-size="16" font-weight="700" fill="#204088">正式版</text>
-  <text x="905" y="122" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2430">1.73.28</text>
-  <text x="905" y="146" text-anchor="middle" font-size="12" fill="#5b6170">お客様全員</text>
+  <rect x="830" y="64" width="150" height="140" rx="10" fill="#e9edf8" stroke="#204088" stroke-width="3"/>
+  <text x="913" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#204088">正式版</text>
+  <text x="905" y="112" text-anchor="middle" font-size="12" fill="#1f2430">untendai.app</text>
+  <text x="905" y="138" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2430" data-ban="seishiki">1.80.0</text>
+  <text x="905" y="154" text-anchor="middle" font-size="10" fill="#5b6170">latest.json の版</text>
+  <text x="905" y="176" text-anchor="middle" font-size="12" fill="#5b6170">お客様全員</text>
+
+  <!-- WEB版（正式版を世に出すときに、同じコミットから立てる） -->
+  <rect x="830" y="226" width="150" height="190" rx="10" fill="#fff" stroke="#204088" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="905" y="252" text-anchor="middle" font-size="16" font-weight="700" fill="#204088">WEB版</text>
+  <text x="905" y="272" text-anchor="middle" font-size="11" fill="#5b6170">Chrome で開く</text>
+  <text x="905" y="294" text-anchor="middle" font-size="12" font-weight="700" fill="#1f2430">番号は正式版と同じ</text>
+  <text x="905" y="312" text-anchor="middle" font-size="12" fill="#1f2430" data-ban="web">（いまなら 1.80.0）</text>
+  <text x="905" y="334" text-anchor="middle" font-size="11" fill="#1f2430">正式版を世に出すときに</text>
+  <text x="905" y="350" text-anchor="middle" font-size="11" fill="#1f2430">同じコミットから立てる</text>
+  <text x="905" y="376" text-anchor="middle" font-size="11" fill="#b0342c">いまは手元だけ・未公開</text>
+  <text x="905" y="394" text-anchor="middle" font-size="10" fill="#5b6170">コミット 6cc1eca・土台 v1.81.14</text>
 
   <!-- 矢印 -->
-  <line x1="222" y1="76" x2="298" y2="100" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
-  <line x1="222" y1="168" x2="298" y2="142" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
-  <line x1="502" y1="119" x2="578" y2="119" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
-  <line x1="772" y1="119" x2="828" y2="119" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
-  <!-- デモデータ版（確認版と並ぶ・同じ列の下） -->
-  <rect x="580" y="196" width="190" height="110" rx="10" fill="#fff" stroke="#188848" stroke-width="3"/>
-  <text x="675" y="228" text-anchor="middle" font-size="16" font-weight="700" fill="#188848">デモデータ版</text>
-  <text x="675" y="254" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2430">1.77.3</text>
-  <text x="675" y="278" text-anchor="middle" font-size="12" fill="#5b6170">説明会・動画・写真で見せる</text>
-  <text x="675" y="296" text-anchor="middle" font-size="12" fill="#5b6170">確認版と同じ版で組み直す</text>
-  <line x1="502" y1="160" x2="578" y2="246" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
+  <line x1="222" y1="82" x2="298" y2="110" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
+  <line x1="222" y1="191" x2="298" y2="160" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
+  <line x1="502" y1="134" x2="578" y2="134" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
+  <line x1="772" y1="134" x2="828" y2="134" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
+  <line x1="502" y1="190" x2="578" y2="280" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
+  <line x1="905" y1="206" x2="905" y2="224" stroke="#204088" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#ar)"/>
+
   <g font-size="12" font-weight="700" fill="#fff">
-    <circle cx="258" cy="76" r="11" fill="#14206b"/><text x="258" y="80" text-anchor="middle">①</text>
-    <circle cx="258" cy="158" r="11" fill="#14206b"/><text x="258" y="162" text-anchor="middle">②</text>
-    <circle cx="540" cy="100" r="11" fill="#14206b"/><text x="540" y="104" text-anchor="middle">③</text>
-    <circle cx="800" cy="100" r="11" fill="#14206b"/><text x="800" y="104" text-anchor="middle">④</text>
+    <circle cx="258" cy="96" r="11" fill="#14206b"/><text x="258" y="100" text-anchor="middle">①</text>
+    <circle cx="258" cy="176" r="11" fill="#14206b"/><text x="258" y="180" text-anchor="middle">②</text>
+    <circle cx="540" cy="118" r="11" fill="#14206b"/><text x="540" y="122" text-anchor="middle">③</text>
+    <circle cx="800" cy="118" r="11" fill="#14206b"/><text x="800" y="122" text-anchor="middle">④</text>
   </g>
 
   <!-- 受け持ち -->
-  <text x="20" y="340" font-size="13" font-weight="700" fill="#5b6170">段ごとの受け持ち</text>
-  <rect x="20" y="352" width="280" height="34" rx="8" fill="#fbe9f8" stroke="#F848D8"/>
-  <text x="160" y="374" text-anchor="middle" font-size="13" font-weight="700" fill="#1f2430">森田さんのセッション　①</text>
-  <rect x="20" y="396" width="960" height="34" rx="8" fill="#eaf5ee" stroke="#188848"/>
-  <text x="500" y="418" text-anchor="middle" font-size="13" font-weight="700" fill="#1f2430">運転台改善　②（西田統合版の直し）　③（OK のあと確認版にする）　④（確認版 → 正式版）</text>
+  <text x="20" y="404" font-size="13" font-weight="700" fill="#5b6170">段ごとの受け持ち</text>
+  <rect x="20" y="416" width="280" height="30" rx="8" fill="#fbe9f8" stroke="#F848D8"/>
+  <text x="160" y="436" text-anchor="middle" font-size="13" font-weight="700" fill="#1f2430">森田さんのセッション　①</text>
+  <rect x="20" y="452" width="960" height="30" rx="8" fill="#eaf5ee" stroke="#188848"/>
+  <text x="500" y="472" text-anchor="middle" font-size="13" font-weight="700" fill="#1f2430">運転台改善　②（西田統合版の直し）　③（OK のあと確認版にする）　④（確認版 → 正式版・WEB版も同じコミットで立てる）</text>
+
+  <!-- アプリのアイコン（道具が組むたびに各 .app の icon.icns から取り出す。確認版は src-tauri/icons-kakunin・正式版は src-tauri/icons の 128x128.png）。外のファイルは参照しない -->
+  <image data-ikon="morita" x="26" y="46" width="24" height="24" href="data:image/png;base64,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"/>
+  <image data-ikon="dev" x="26" y="160" width="24" height="24" href="data:image/png;base64,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"/>
+  <image data-ikon="tougou" x="306" y="78" width="24" height="24" href="data:image/png;base64,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"/>
+  <image data-ikon="kakunin" x="586" y="78" width="24" height="24" href="data:image/png;base64,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"/>
+  <image data-ikon="seishiki" x="836" y="78" width="24" height="24" href="data:image/png;base64,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"/>
+  <image data-ikon="demo" x="586" y="240" width="24" height="24" href="data:image/png;base64,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"/>
 </svg>
 </div>
 </div>
+<!-- AUTO:zu:end -->
 
 <div class="scroll">
 <table>
@@ -209,8 +266,10 @@
 <tr><td>④</td><td>確認版 → 正式版（世に出す）</td><td><b>運転台改善</b></td></tr>
 </table>
 </div>
-<p class="note">確認版は西田の OK のあとに作る。西田統合版で直しを繰り返している間は、確認版を上げない。<br>
-版の色はアプリのアイコンの色に合わせた：<span class="dot" style="background:var(--c-dev)"></span>開発版・デモデータ版（緑）　<span class="dot" style="background:var(--c-morita)"></span>森田さんの開発版（マゼンタ）　<span class="dot" style="background:var(--c-client)"></span>クライアント版（黄）　<span class="dot" style="background:var(--c-mkt)"></span>マーケ版（橙）　<span class="dot" style="background:var(--c-navy)"></span>西田統合版・正式版（紺）　<span class="dot" style="background:var(--c-kakunin)"></span>確認版（紫）</p>
+<!-- AUTO:hanrei:start -->
+<p class="note">確認版は西田の OK のあとに作る。西田統合版で直しを繰り返している間は、確認版を上げない。WEB版は自分の番号を持たず、正式版を世に出すときに同じコミットから立てる。<br>
+版の色はアプリのアイコンの色に合わせた：<span class="dot" style="background:var(--c-dev)"></span>西田の開発版（緑）　<span class="dot" style="background:var(--c-morita)"></span>森田さんの開発版（マゼンタ）　<span class="dot" style="background:var(--c-navy)"></span>西田統合版・正式版（紺）　<span class="dot" style="background:var(--c-client)"></span>freee版（黄）　<span class="dot" style="background:var(--c-mkt)"></span>マーケ版（橙）　<span class="dot" style="background:var(--c-kakunin)"></span>確認版（紫）　<span class="dot" style="background:var(--c-demo)"></span>デモデータ版（深い赤）</p>
+<!-- AUTO:hanrei:end -->
 
 <!-- ============================================================ -->
 <h2>3. 大きく変わった版の一覧（古い順）</h2>
@@ -224,54 +283,64 @@
   <td data-l="版"><span class="ver">1.76.4</span></td>
   <td data-l="日付" style="white-space:nowrap">10-14</td>
   <td data-l="何が変わったか"><b>確認メールのリンクを押すと、アプリが手前に出て、すぐ「登録済み」の表示に切り替わる。</b>リンクを押したあとに登録を確かめる間隔を、10秒から1秒に縮めた。森田さんの指摘への最初の答え。</td>
-  <td data-l="どの段まで出たか"><span class="tag t-navy">西田統合版まで</span><br><span class="note">当時の呼び名は製品版</span></td>
+  <td data-l="どの段まで出たか"><span class="tag t-out">正式版</span><br><span class="note">世に出した（正式版 v1.80.0 に入っている）</span></td>
 </tr>
 <tr>
   <td data-l="版"><span class="ver">1.76.6</span></td>
   <td data-l="日付" style="white-space:nowrap">10-14</td>
   <td data-l="何が変わったか"><b>確認メールのリンクを、運転台のアプリが直接受け取れるようにした</b>（Mac と Windows）。リンクを押した瞬間にアプリが受け取って手前に出るので、中継を待つ約4秒を飛ばせる。</td>
-  <td data-l="どの段まで出たか"><span class="tag t-navy">西田統合版まで</span></td>
+  <td data-l="どの段まで出たか"><span class="tag t-out">正式版</span><br><span class="note">世に出した（正式版 v1.80.0 に入っている）</span></td>
 </tr>
 <tr>
   <td data-l="版"><span class="ver">1.77.0</span></td>
   <td data-l="日付" style="white-space:nowrap">10-19</td>
   <td data-l="何が変わったか"><b>森田さんの新しい画面を取り込んだ。</b>ホームが「経営戦略・会計・マーケティング・業務効率化」の4つに分かれ、左のメニューと、右に常に出る AI-Mits の欄ができた。試作の11画面（経営戦略6・業務効率化5）と、スマホ幅の表示も入った。設定に「確認版を受け取る」スイッチを足した。</td>
-  <td data-l="どの段まで出たか"><span class="tag t-navy">西田統合版まで</span></td>
+  <td data-l="どの段まで出たか"><span class="tag t-out">正式版</span><br><span class="note">世に出した（正式版 v1.80.0 に入っている）</span></td>
 </tr>
 <tr>
   <td data-l="版"><span class="ver">1.77.1</span></td>
   <td data-l="日付" style="white-space:nowrap">10-19</td>
   <td data-l="何が変わったか"><b>確認版の最初の版。</b>中身は 1.77.0 と同じ。ここで「確認版」という段ができ、西田と森田さんに届く道が開いた。</td>
-  <td data-l="どの段まで出たか"><span class="tag t-kakunin">確認版</span></td>
+  <td data-l="どの段まで出たか"><span class="tag t-out">正式版</span><br><span class="note">世に出した（正式版 v1.80.0 に入っている）</span></td>
 </tr>
 <tr>
   <td data-l="版"><span class="ver">1.77.3</span></td>
   <td data-l="日付" style="white-space:nowrap">10-19</td>
   <td data-l="何が変わったか"><b>左上のアプリ名のあとに、どの段の版かを示す（〜版）が出る。</b>正式版だけは何も付かない。設定の2つのスイッチ（管理者として使う・確認版を受け取る）は、ON のとき緑になる。</td>
-  <td data-l="どの段まで出たか"><span class="tag t-kakunin">確認版</span></td>
+  <td data-l="どの段まで出たか"><span class="tag t-out">正式版</span><br><span class="note">世に出した（正式版 v1.80.0 に入っている）</span></td>
 </tr>
 <tr>
   <td data-l="版"><span class="ver">1.77.4</span></td>
   <td data-l="日付" style="white-space:nowrap">10-19</td>
   <td data-l="何が変わったか"><b>森田さんの新しい画面から、旧メニューにしかなかった画面へ行けるようになった。</b>左の欄の下に「設定」「自社データにする」「パートナー制度」。配信の数字の画面は「マーケティング」の中から開ける。新しい版のお知らせ・顧客の選択欄・アカウントは左下に出る。確認版のアイコンを紫にした。</td>
-  <td data-l="どの段まで出たか"><span class="tag t-kakunin">確認版</span></td>
+  <td data-l="どの段まで出たか"><span class="tag t-out">正式版</span><br><span class="note">世に出した（正式版 v1.80.0 に入っている）</span></td>
 </tr>
 <tr>
   <td data-l="版"><span class="ver">1.77.5</span></td>
   <td data-l="日付" style="white-space:nowrap">10-19</td>
   <td data-l="何が変わったか"><b>左のメニューと右の AI-Mits の欄を、境目をつまんで幅を変えられる。</b>幅は次に開いたときも残る。左右の欄の文字が、設定の「文字の設定」（小さめ・ふつう・大きめ・もっと大きく）に合わせて変わる。</td>
-  <td data-l="どの段まで出たか"><span class="tag t-kakunin">確認版</span><br><span class="note">いまの確認版</span></td>
+  <td data-l="どの段まで出たか"><span class="tag t-out">正式版</span><br><span class="note">世に出した（正式版 v1.80.0 に入っている）</span></td>
 </tr>
 <tr>
   <td data-l="版"><span class="ver">1.77.6</span></td>
   <td data-l="日付" style="white-space:nowrap">10-19</td>
   <td data-l="何が変わったか"><b>新しいメニューから、旧メニューで隠していた戦略の計器・仕事の計器の項目を、同じ印で隠した</b>（PPM、DMi・CPF軸、ダイヤモンドチャート、KAZEOKE、仕事測定、3つの時給、1action3goal、業務フロー分析、休む仕組み）。消えていた勘定科目と補助科目の 4:2:2:2 の仕分けの表を戻し、会計から行けるようにした。</td>
-  <td data-l="どの段まで出たか"><span class="tag t-navy">西田統合版まで</span><br><span class="note">いまの西田統合版。確認版にはまだ上げていない</span></td>
+  <td data-l="どの段まで出たか"><span class="tag t-out">正式版</span><br><span class="note">世に出した（正式版 v1.80.0 に入っている）</span></td>
 </tr>
+<!-- AUTO:ichiran-gyou:start -->
+<tr data-auto-ban="1.81.15">
+  <td data-l="版"><span class="ver">1.81.15</span></td>
+  <td data-l="日付" style="white-space:nowrap">10-30</td>
+  <td data-l="何が変わったか"><b>メニュー3版目（ChatGPT の設定の型）・旧メニュー廃番・今月の必要粗利に役員報酬・データの控えの検収の受け口</b><br><span class="note">CHANGELOG.md の v1.81.15 の行から写した</span></td>
+  <td data-l="どの段まで出たか"><span class="tag t-navy">西田統合版まで</span><br><span class="note">いまの西田統合版。確認版・正式版にはまだ上げていない</span></td>
+</tr>
+<!-- AUTO:ichiran-gyou:end -->
 </table>
 </div>
 <p class="note">並べなかった版：1.76.5（開発版だけに試験用のメールアドレスの下敷きを足した）・1.76.7（リンクを受け取るのは正式版系のアプリだけにして、開発版・クライアント版・マーケ版は別の受け取り方に分けた）・1.77.2（1.77.3 と同じ直しの途中）。いずれも画面で見て分かる変わり目ではないため。<br>
-正式版に出た版は、この期間にはない（正式版は 1.73.28 のまま）。</p>
+<!-- AUTO:ichiran-chuu:start -->
+正式版として世に出した版（v1.73.28 より後・GitHub のリリース一覧）：v1.79.1（2026-10-24）・v1.80.0（2026-10-24）。いまの正式版は v1.80.0。この一覧に並べていない版の中身は、untendai/untendai の CHANGELOG.md にある。</p>
+<!-- AUTO:ichiran-chuu:end -->
 
 <!-- ============================================================ -->
 <h2>4. 協力体制で変わった土台 ── 版ではなく仕組みの変化</h2>
@@ -290,7 +359,7 @@
 </table>
 </div>
 
-<p class="note" style="margin-top:32px">この一覧の根拠：GitHub untendai/untendai の変更の記録と版の印、GitHub の公開前リリース一覧、更新を配る中継が返す正式版・確認版の番号、西田の Mac に入っているアプリの版（すべて 2026-10-19 17:40 に実測）。呼び方と受け持ちの正本は、経営の運転台の案件の決まりの冒頭。古い全体像は別ページ「運転台 開発の流れと現状」にある。</p>
+<p class="note" style="margin-top:32px">「1」「2」の番号と「3」の最後の行は、版を作るたびに道具（untendai-seiri の tools/han_page_koushin.sh）が実物から取り直す：各 .app の版・更新を配る中継が返す正式版（latest.json）と確認版（kakunin.json）の番号・GitHub untendai/untendai のリリース一覧と版の印・CHANGELOG.md・WEB版の作業場の記録。取り直した時刻は冒頭に書く。「3」の 1.77.6 までの行と「4」は 2026-10-19 17:40 の実測。呼び方と受け持ちの正本は、経営の運転台の案件の決まりの冒頭と決定台帳（2026-10-28 20:5x・21:0x・20:1x）。古い全体像は別ページ「運転台 開発の流れと現状」にある。</p>
 
 </main>
 </body>
