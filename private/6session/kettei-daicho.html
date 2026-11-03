@@ -158,7 +158,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-11-02 17:16 ／ 写した時刻 2026-11-02 18:35</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-11-03 12:05 ／ 写した時刻 2026-11-03 12:37</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -5771,6 +5772,237 @@ untendai-client  版=1.73.43  組立=2026-09-26 03:39:44  Bundle=com.mits.untend
 <li>保存した仕分けは mapping_set → rebuild_strac_freee（commands.rs 3371行）で freee の strac の分け先に効く（freee.rs 1211行で読み、1374行で科目名で引く）。テスト saved_mapping_changes_freee_strac_bumon で確かめた</li>
 <li>開発版の写真は freee の本物ではなく、手元の見本の返事（freee 公式の返事の形）で撮った：開発版の freee の顧客（見本 B株式会社）の鍵は見本の値で、本物の鍵は西田統合版にしか無いため。本物で確かめるには、開発版で Mits様が freee の連携（ログインと許可）を1回行う必要がある。西田統合版の鍵を写すと、freee の更新の鍵が1回きりなので西田統合版の連携が切れる</li>
 <li>release.sh 1.82.0 の oitsuki は、この作業の未 commit があったので menu-v3 を飛ばした（17:07）。menu-v3 には main がまだ取り込まれていない</li>
+</ul>
+<h3 id="2026-11-02-18-56-BS-engineer-宛先-運転台改善">2026-11-02 18:56 ／ BS-engineer（宛先：運転台改善）</h3>
+<ul>
+<li>ホームの計器15個を、枠のどこを押しても対応する画面へ移れるようにした。menu-v3 commit 3c85853（開発版だけ・製品版・確認版・お客様には出していない）。出どころ：Mits様「モック見た、それぞれの画像をクリックすると対象のページにいけるようにして」</li>
+<li>行き先が無かった3つ：⑫現預金・⑬余裕度 → 期首から先月まで（読み先 m-cash-okane・m-yoyudo-okane は bunseki の ima の欄。左の欄の R の ok:[&#x27;bunseki&#x27;,&#x27;ima&#x27;] と同じ）／直近7日の相談の題目 → お使いのAI（FBAS）。3つにも見出しの「名前 →」を付けた</li>
+<li>見出しの「名前 →」は残した。押しても移るのは1回（hjGo の stopPropagation）。枠は role=&quot;button&quot;・tabindex=&quot;0&quot;、Enter でも移る。指を乗せたら --ws-n-6 と --line2 で枠を淡く出す（影で描くので並びは動かない）</li>
+<li>開発版で確かめた（18:54）：図の所を押して左の欄の強調が行き先と合った数 15/15・移った回数は各1回／見出しの「目標＠と人数 →」「期首から先月まで →」は各1回／Enter 1回／試しの手順 home の はみ出し=0 丸と重なり=0</li>
+<li>開発版の試しの手順に homekk／homekkgo:&lt;名前&gt;／homekkenter を足した</li>
+<li>写真：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/_mock/kakunin_20261102_home_keiki/jissou_oseru_keiki.png</li>
+</ul>
+<h3 id="2026-11-02-19-24-運転台改善の枝-数字の3つの分け-数字を入れる欄の右寄せの残り">2026-11-02 19:24 ／ 運転台改善の枝（数字の3つの分け）── 数字を入れる欄の右寄せの残り5つを直した（西田統合版 1.82.1）・ヘルプ 1.82.1 ／ 宛先：運転台改善</h3>
+<ul>
+<li>出どころ：Mits様「運転台すべての入力欄を右寄せにしてくれと何回も依頼しているがなぜ直らない」「すべての入力欄って伝わっているよん…全部を確認して進めて、突き止めたら直して。西田統合版を直すのだよ。」</li>
+<li>1.81.25 の直しは画面の中の欄（.hari・data-mihon-hozon）だけに当たり、画面の外の type=number の欄5つが左のままだった：mihari-pct（今月の「この数字の変化を見張る」の窓）／su-hc・su-target（初めて開いたときの画面 #setup）／hk-hc・hk-at（はじめにやること の「設定」）</li>
+<li>直し：html.ws-on input[type=number]:not(#v3-none) を右寄せの決まりに足した（枝 migiyose-mihari 828e63c → main 1e9ebc8・v1.82.1）。Chromium で測った値：直す前 5つとも start／直した後 5つとも right</li>
+<li>release.sh --自分だけ 1.82.1（UNTENDAI_OITSUKI_KUMANAI=1・開発版は組んでいない。ホームの計器のセッションが開発版を使っていたため）。/Applications/untendai.app は 1.82.1。お客様の latest.json は 1.81.24 のまま</li>
+<li>ヘルプ：今月の「この数字の変化を見張る」の写真を 1.82.1 の WEB版（sample.db・1480×1008・2倍・メールアドレスは地の色で塗った）で撮り直し、v1818_getsuji_mihari_gamen.png → v1821_getsuji_mihari_gamen.png。getsuji.html・top.html の「読む前に」を直した。古い写真は /Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261102_help_shashin_mae_v1821/ へ。~/.untendai/help_han.txt を 1.82.1 にした（見張り check-help-tsukurinaoshi.sh の出力0行）</li>
+<li>開発版（menu-v3）には main 1.82.1 がまだ入っていない。次に開発版を組み直す人が取り込む</li>
+</ul>
+<h3 id="2026-11-02-19-33-運転台改善の枝-数字の3つの分け-開発版に-1-82-1-を入">2026-11-02 19:33 ／ 運転台改善の枝（数字の3つの分け）── 開発版に 1.82.1 を入れた ／ 宛先：運転台改善・ホームの計器のセッション（4-13）</h3>
+<ul>
+<li>出どころ：Mits様「開発版にも1.82.1を入れて」</li>
+<li>tools/oitsuki.sh kaihatsuban は menu-v3 に main を取り込むとき src/index.html の6か所でぶつかって取り消した。6か所とも、設定サポーターを出す版を「開発版だけ」→「開発版と西田統合版」に広げた main の側が menu-v3 の側を含む形だったので、main の側を採った（別の作業場で解いた記録 61986cc を menu-v3 に早送り。テスト 408 通過・失敗0）</li>
+<li>/Users/nishidamitsuhiro/untendai-menu3 で build-dev.sh → /Applications/untendai-dev.app v1.82.1（19:33）。menu-v3 の中身で数字の欄5つ（mihari-pct・su-hc・su-target・hk-hc・hk-at）の寄せを測って5つとも right</li>
+<li>19:28 にホームの計器のセッションが枝 home-tougou（main＋ホーム）で組んだ開発版は、この 19:33 の組み直しで menu-v3（ホームの直し＋main 1.82.1）の中身に置き換わった。どちらにもホームの計器と 1.82.1 は入っている</li>
+<li>menu3 の作業場の未 commit（src-tauri/resources/sample.db）はそのまま触っていない</li>
+</ul>
+<h3 id="2026-11-02-19-39-BS-engineer-ホームを西田統合版-1-83-0-に入">2026-11-02 19:39 ／ BS-engineer（ホームを西田統合版 1.83.0 に入れた）／ 宛先：運転台改善</h3>
+<ul>
+<li>Mits様原文「西田統合版に入れて」（開発版のホームの写真と「計器 → 移る画面」15行の表を見て）</li>
+<li>枝 home-tougou（main 5452b60 から）に menu-v3 の 6c8ae6a・30b58b2・f8014dc・22c14b9・582b501・3c85853 をこの順に重ね、1つの記録 a3ddc81 にした（src/index.html だけ）。ced0563（freee の 4:2:2:2 の科目選び）は入れていない。途中で main が 1.82.1 になったので home-tougou に main を取り込み（40d57fb）、torikomu.sh home-tougou（cargo test 410／412 失敗0）→ release.sh --自分だけ 1.83.0。main：856630f（本体・tag v1.83.0）・dc594de（CHANGELOG）。/Applications/untendai.app の Info.plist は 1.83.0。お客様の latest.json は 1.81.24 のまま</li>
+<li>検収：ホームの関数43個（kk*・hj*・home*）の本体を main と menu-v3 3c85853 で比べた差 0行。main の index.html と 3c85853 の違いは ced0563 の分と、main だけにある設定サポーターの出す版の7か所と版の字だけ。856630f の差で isFreee|freee_accounts 0件</li>
+<li>main dc594de から組んだ開発版（v1.83.0・19:37:01 に置いた）で 19:37〜19:38：homekk 合った数=15/15・home はみ出し=0 丸と重なり=0（2回）・console のエラー=0。試しの前後で開発版のデータは控えに戻した（credentials.json は試しの後の方を残した・試し後の分は /Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261102_home_tougou_shiken2_go_no_dev_data/）</li>
+<li>release.sh の終わりの手が menu-v3 に main を取り込み（d137c7a）開発版を 19:34 に組んでいた。試しのあと menu-v3 d137c7a から開発版を組み直した（19:38:40・v1.83.0）。menu3 の作業場の未 commit（sample.db）・main の作業場の sample.db と _mock/ には触っていない。ヘルプは 1.82.1 のまま（参謀が別に頼む）</li>
+</ul>
+<h3 id="2026-11-02-19-40-運転台改善の枝-数字の3つの分け-開発版を-1-83-0-に組">2026-11-02 19:40 ／ 運転台改善の枝（数字の3つの分け）── 開発版を 1.83.0 に組み直した・ヘルプを 1.83.0 にした ／ 宛先：運転台改善・ホームの計器のセッション（4-13）</h3>
+<ul>
+<li>1.83.0（ホームを計器の形にした・4-13 が 19:31 に西田統合版へ）の release と、私の 1.82.1 の開発版の組み立てが重なり、19:33 の時点で開発版は 1.82.1 だった。menu-v3（d137c7a・1.83.0 取り込み済み）から build-dev.sh で組み直し、/Applications/untendai-dev.app v1.83.0（19:34）</li>
+<li>ヘルプ：4-13 が止まっていた（19:37 から動きなし）ので、私が作り直した。1.82.1→1.83.0 の差はホームだけ（左の欄・はじめにやることに当たる行は試しの道具の1行だけ）</li>
+  <li>1.83.0 の WEB版（sample.db・1480×1008・2倍）でホームを撮り直し：v1819_home_home_gamen／v1819_home_home_tekiyou → v1830_home_home_gamen／v1830_home_home_tekiyou（OCR でメールアドレス0件）。古い2枚は /Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261102_help_shashin_mae_v1830/</li>
+  <li>home.html のホームの節を、前の形（4つの箱・箱ごとの「開く →」）から今の形（4つの区画に計器・見出しの右に移り先・枠のどこを押しても移る）に書き直した。WEB版で枠を押して確かめた：顧客 → 顧客の推移／STRAC → STRAC</li>
+  <li>top.html の「読む前に」にホームの2枚は 1.83.0 と足した。~/.untendai/help_han.txt を 1.83.0 にした（見張り check-help-tsukurinaoshi.sh の出力0行）</li>
+</ul>
+<h3 id="2026-11-02-19-45-道2の決済とアカウントの画面の状態-Mits様-1-9-GO">2026-11-02 19:45 ／ 道2の決済とアカウントの画面の状態 ── Mits様「1〜9 GO」の9つを済ませた（試験側・本番を読むだけ・手元の道具）（宛先：FHL 2026 Notes・司令塔・運転台改善）</h3>
+<ul>
+<li>出どころ：Mits様「1〜9 GO」（この持ち場が出した「確認しないでも進められるもの」9つ）</li>
+<li>1・2 試験側の Stripe：honnin の竹のお試し sub_1UWPqGGIuMEwQDLTMie3PyjN（10-31 P0-4 の自動入力でできた分）と、ac_nishida の試験の竹のお試し sub_1UWBToGIuMEwQDLTnBLfgD84（cus_VXFz5CyWwEdwpU）を画面で即時解約（返金なし・お試し中）。honnin と ac_nishida に生きている契約は0。kessai（竹 有効）・kotowari（梅 有効）・ochiru（竹 期限超過）は試験の相手なので残した</li>
+<li>3 「自動キャンセル 2027/01/28」：Stripe の決まり（試験・サンドボックスの契約は作ってから90日で自動で解約）。作ったときの返事は cancel_at null で、中継も UTAGE も付けていない。本番の契約には付かない（Stripe ヘルプ test-mode-subscription-data-retention）</li>
+<li>4 d3「カードを直す」の行き先：アプリ → 中継の /portal → Stripe のポータル（外のブラウザ）。ochiru で開くと英語で「Payment failed」「Update payment method」「Cancel subscription」が出た。開発版は 19:33 に運転台改善の枝が組み直してホームの計器のセッションも使っていたので、ochiru で組み直して押すことはしていない（アプリのボタンから押した確かめはまだ）</li>
+<li>5 P0-6：手順書の「要」の行のうち C9・はじめからフリープランの2つは決まっている。C10・C11・C6・C7・C14・E8・松の入り方・PORTAL_RETURN_URL・どちらの法人で受けるか の9つは決定台帳に決めた節が無い（手順書 P0-6 に表）</li>
+<li>6 手順書に足した：P5-2 にカードの自動入力でメールの欄が前の試験のアドレスに戻る注意／P0-4 の合格と 90日の自動解約／P0-6 の表／2-a・2-b に試験用の中継にあって表に無かった4つ（ENDED_REASON・READER_CUSTOMER_LINK・MOUSHIKOMI_ROUTE・TEST_OPS_KEY）／P1-6 にポータルの言語と解約のボタン</li>
+<li>7 P2-2（本番は名前を読んだだけ）：本番の設定の名前23個と deploy.sh の23個は両方の向きで差0・src/index.js の import 0件・本番の版は 10-29 の控えと同じ（etag c5d8ce50611c・いちばん新しい載せ替え 10-26 07:04・版 d676a6d7）</li>
+<li>8 P2-3：deploy_honban.sh・put_honban_secret.sh・honban_settei.json を中継のフォルダに作った。空打ちだけ（本番には載せていない・秘密の値も入れていない）。止まる所は全部止まった（手順書 P2-3 に結果）</li>
+<li>9 P2-9：試験用の中継で 19:41〜19:43 に、今の版 e0503c81 → 10-30 の版 23c416b3 → e0503c81 と戻してまた戻した。/test-ops の返りが 401 → 404 → 401。今は e0503c81 に戻っている。分かったこと：一覧の etag と設定の一覧は最後に載せた版を出していて、戻しても変わらない → 戻ったかは deployments の version_id と、版で返事が違う道で見る（手順書 P2-9 を直した）</li>
+<li>モード：bypassPermissions</li>
+</ul>
+<h3 id="2026-11-02-19-49-運転台改善-宛先-運転台改善・運転台-森田さん・協力者案件">2026-11-02 19:49 ／ 運転台改善 ／ 宛先：運転台改善・運転台 森田さん・協力者案件</h3>
+<ul>
+<li>Mits様「運転台改善セッションからの枝の版の管理を今時点で確認して…整理して」「他のセッションには今から新しい指示を出さないようにするので、整理して、最適化して」</li>
+<li>作業場を 22 → 6 に畳んだ。16 を /Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261102_untendai_tatanda_sagyouba/ へ移し、git worktree prune で登録だけ外した（枝は消していない・印 archive/menu-seiri-20261102・archive/ai-sensei-20261102）。残り：untendai-seiri（main）・untendai-menu3（menu-v3）・untendai-dou2（dou2-plan）・untendai-demo・untendai-webban・untendai（.git の本体）</li>
+<li>遅れていた版を組み直した：freee版・マーケ版 1.81.17 → 1.83.0、デモデータ版 1.81.23 → 1.81.24（確認版の配信 kakunin.json の版）。版の管理のページは 19:48 に取り直し済み</li>
+<li>遅れの元を直した（main 2478ad9・まだ push していない。次の release.sh の手2で一緒に出る）：release.sh の終わりが freee版・マーケ版を呼んでいなかった → tools/oitsuki.sh soto を足して毎回呼ぶ／正式版を出した回にデモデータ版を組み直していなかった → 正式版の回も呼ぶ。soto を1回走らせ「もう v1.83.0。組まない」を2本とも確かめた</li>
+<li>ヘルプの場所の書き違いを直した：経営の運転台/CLAUDE.md と見張り check-help-tsukurinaoshi.sh の help_20261019/ → help_v1820/</li>
+</ul>
+<h3 id="2026-11-02-19-55-Mits様-道2の決済とアカウントの画面の状態で-竹・松・梅の">2026-11-02 19:55 ／ Mits様（道2の決済とアカウントの画面の状態で）── 竹・松・梅の決済は SDL の Stripe で受け取り、サービスの提供者は西田光弘個人事務所（宛先：FHL 2026 Notes・司令塔・運転台改善）</h3>
+<ul>
+<li>Mits様原文：「法人　SDL、stripeで受取サービス提供は西田光弘個人事務所」</li>
+<li>道2 の読み：受け取りは今つないでいる SDL（Schematic Design Technologies LLC）の Stripe acct_1RPHQJGIuMEwQDLT のまま（本番の UTAGE の決済連携も同じアカウント・控え 10-29）。申し込みのページ・最終確認の画面・利用規約で、サービスを提供する者として出す名前は「西田光弘個人事務所」</li>
+<li>手順書 0-2 の「どちらの法人で受けるか」を「決」にした。P0-6 の決まっていない行は9 → 8（C10・C11・C6・C7・C14・E8・松の入り方・PORTAL_RETURN_URL）</li>
+<li>これで、本番の Stripe に価格6本を作る先（P1-3・P1-4）は SDL のアカウントで確定。P0-4 で試験側の SDL のアカウントで通した作り方がそのまま使える</li>
+</ul>
+<h3 id="2026-11-02-20-18-道2の決済とアカウントの画面の状態-19-55-の節の-道2">2026-11-02 20:18 ／ 道2の決済とアカウントの画面の状態 ── 19:55 の節の「道2 の読み」の直し：出す名前は UTAGE の事業者設定のまま（宛先：FHL 2026 Notes・司令塔）</h3>
+<ul>
+<li>取消：19:55 の節の「サービスを提供する者として出す名前は『西田光弘個人事務所』」（道2 が足した読み。Mits様の原文には無い）</li>
+<li>新：Mits様「UTAGEではこのように設定してるが？」（<a href="https://change.7years.life/payment/business">https://change.7years.life/payment/business</a>）。UTAGE の事業者設定（gjnIufqCoGdL・デフォルト・1件だけ）を読んだ：法人名・屋号「Schematic Design Technologies　(旧OfficeNISHIDA＜西田光弘個人事務所＞)」・所在地 5445 CLARK LAKEWOOD, CA, USA 90712・免税(非課税)事業者・登録番号 空・領収書の宛名の変更 許可しない・領収書のメール 送信しない。申し込みのページ・最終確認の画面に出る名前は、この設定のまま（道2 は変えていない）</li>
+<li>道2 が 19:5x に Mits様へ出した予見「提供者の名前と Stripe の画面の名前が食い違う」は、根拠にした 08-21 の記録（買い手に見える名前は西田光弘個人事務所・那覇市）が古かったので取り下げる。今の UTAGE の名前は SDL の名前と旧名の併記で、Stripe のポータルの「Schematic Design Technologies LLC」と同じ SDL を指す</li>
+<li>手順書 P1-11 に今の事業者設定の値を書き足した</li>
+</ul>
+<h3 id="2026-11-02-20-23-道2の決済とアカウントの画面の状態-決まっていない8つの素案の">2026-11-02 20:23 ／ 道2の決済とアカウントの画面の状態 ── 決まっていない8つの素案の表を作った／道2 の画面がまだ本流に入っていない（宛先：運転台改善・FHL 2026 Notes・司令塔）</h3>
+<ul>
+<li>表：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/道2_決まっていない8つ_素案_20261102.html（C10・C11・C6・C7・C14・E8・松の入り方・PORTAL_RETURN_URL。素案は道2 の案で Mits様の決定ではない。松の入り方は記録に素案が無いので空欄）</li>
+<li>運転台改善へ：道2 の画面の枝 dou2-plan（be24a48）は、開発版の menu-v3（d137c7a）には含まない、本流 main（2478ad9）には含まない（git merge-base --is-ancestor で 20:23 に測った）。本番版のアプリ（手順書 P4-1・P4-2）は本流から組むので、どこかの回で menu-v3 の道2 の画面を本流に入れる必要がある。入れる時期と形は運転台改善の持ち場</li>
+<li>運転台改善へ（見たこと）：アプリの untendai:// の受け口（src/index.html 25500〜25535行）は、受け取るとログインを確かめるだけで、契約の状態（/paid）を読み直さない。ポータルの戻り先を untendai://plan にしても、カードを直して戻ったときの表示は、アカウントの画面を開くまで古いまま（10-31 07:59 の節の「鍵がアカウントの画面を開くまで残る」と同じ所）</li>
+<li>見つけたこと：ポータルが英語で出るのは、中継の /portal が言語（locale）を渡していないため。Stripe の公式の資料では ja を渡せば日本語（docs.stripe.com/api/customer_portal/sessions/create）。中継はまだ直していない</li>
+</ul>
+<h3 id="2026-11-02-20-24-道2の決済とアカウントの画面の状態-取消-すぐ上の-20-23">2026-11-02 20:24 ／ 道2の決済とアカウントの画面の状態 ── 取消：すぐ上の 20:23 の節の「道2 の画面がまだ本流に入っていない」は誤り（宛先：運転台改善・FHL 2026 Notes・司令塔）</h3>
+<ul>
+<li>取消：20:23 の節の見出しの後半と2つ目の箇条（dou2-plan は menu-v3 にも main にも含まれない → 本流に入れる必要がある）</li>
+<li>新（/usr/bin/git で refs/heads/ を名指しして 20:24 に測った）：dou2-plan be24a48 にあって main 2478ad9 に無い commit は17個で、そのうち16個は「Merge branch &#x27;main&#x27; into dou2-plan」。中身のある commit は 4ee3d0e（10-30 16:03・auth.rs の SIGNUP_PAGE_TEST を QfrHK6cy5gRJ → hSOOAoLvH8Q1 に替える・試験の組み立てだけに効く）の1つだけ。道2 の画面（契約の状態 pk-jotai 14か所・paintJotai3・open_portal）は main と menu-v3 の両方に入っている</li>
+<li>運転台改善へ：本番版のために本流へ入れ直すものは無い。4ee3d0e だけが main・menu-v3 のどちらにも入っていない（main の SIGNUP_PAGE_TEST は QfrHK6cy5gRJ のまま）。試験の組み立ての「竹にする」が特商法の最終確認の4つが無いページを開く件（10-30 の節）なので、次に開発版を組むときに取り込むかは運転台改善の持ち場</li>
+<li>誤った訳：rtk を通した git log と git merge-base の出力で枝の先を読み違えた。次から枝の比べは /usr/bin/git と refs/heads/ で測る</li>
+</ul>
+<h3 id="2026-11-02-20-32-運転台改善-宛先-道2の決済とアカウントの画面の状態・AI-M">2026-11-02 20:32 ／ 運転台改善 ／ 宛先：道2の決済とアカウントの画面の状態・AI-Mits-チューニング・FHL 2026 Notes・伽藍とバザールの実現</h3>
+<ul>
+<li>Mits様「WEB版：を公開したい」「解決して公開する」「ステップバイステップでできること続けて、ゴールまで」</li>
+<li><strong>WEB版を公開した：<a href="https://app.7years.life/">https://app.7years.life/</a></strong>（Cloudflare Pages の aimits-web・中身は正式版 v1.81.24 と同じコミットの上・枝 web-ban-v1.81.24 a480a14・作業場 /Users/nishidamitsuhiro/untendai-webban）</li>
+<li>住所：ムームードメインの 7years.life に CNAME app → aimits-web.pages.dev を足した（ログインと「設定を追加」は Mits様の手）。Pages 側の住所の状態 active</li>
+<li>公開の形：webban/seiteki.py で書き出す。数字は手元で全画面を押したときの答え 72件（invoke.json）を引く（配り役 serve.py は公開の場所に要らない）。タブの題名は「AI-Mits＆経営アプリ」（画面のコードの「（モック）」を公開の形でだけ外した）</li>
+<li><strong>本番の中継 aimits-report-proxy の CORS_ORIGIN に <a href="https://app.7years.life">https://app.7years.life</a> を足した</strong>（コードは載せ直していない・設定の変数だけ。設定23本・秘密の値12本はそのまま。change.7years.life からの呼び出しも通ることを確かめた）</li>
+<li>🛑 宛先 道2：deploy_honban.sh の53行目と wrangler.toml の44行目の CORS_ORIGIN に <a href="https://app.7years.life">https://app.7years.life</a> が入っていない。このまま本番へ載せると WEB版の相談・ログインが止まる。載せる前に足すこと</li>
+<li>確かめたこと：お金と会計の8画面・経営戦略・マーケティング・業務効率化・設定が開く・本番の数字 7,738,606 は0件・ページのエラーは ResizeObserver の1件だけ・公開の住所の画面から中継の /dify/43d47f25/v1/parameters 200・/login と /resolve は CORS で弾かれず中継の返事（400）が返る</li>
+<li>確かめていない：本物のアカウントでのログインと新規登録（試し登録は UTAGE の読者が増えるので今回はしていない）。相談の本番の1往復</li>
+<li>次の正式版のとき：release.sh に WEB版を組む手はまだ無い。正式版を出したら untendai-webban で正式版のタグに載せ替え → webban.sh で録り → seiteki.py → wrangler pages deploy（手順は seiteki.py の冒頭）</li>
+</ul>
+<h3 id="2026-11-02-20-36-道2の決済とアカウントの画面の状態-本番の-SDL-の-Str">2026-11-02 20:36 ／ 道2の決済とアカウントの画面の状態 ── 本番の SDL の Stripe に、自分で決めた ID の価格6本を作った（手順書 P1-3・P1-4）（宛先：FHL 2026 Notes・司令塔）</h3>
+<ul>
+<li>出どころ：Mits様 10-29 19:5x「ストライプの正式な設定と、宴の価格設定を準備を進めてみようか」・11-02 19:55 の法人の決め（受け取りは SDL の Stripe）・11-02 20:3x「Stripe の鍵の作成を通す　許可、ここから進めて」</li>
+<li>鍵：本番の制限付きの鍵を、道2 が画面で作り（Prices と Products の書き込みだけ）、本人確認（Touch ID）は Mits様。値は Mits様がクリップボードにコピーし、make_live_plans.sh に直接渡した（画面・ログに出していない）。使い終わってすぐクリップボードを空にし、鍵は画面で期限切れにした</li>
+<li>作ったもの（取り直しで6本とも livemode true・jpy・month）：dou2_shiken_ume_100（100）・dou2_shiken_take_200（200）・dou2_shiken_matsu_300（300）・aimits_ume_1980（1,980）・aimits_take_9700（9,700）・aimits_matsu_19700（19,700）。商品6つ（prod_VYQM…）は手順書 P1-3 の節に書いた</li>
+<li>つないでいない：本番の UTAGE の商品詳細・ポータル・中継の PLAN_PRICES・どのページにも。今の本番のお客様には効かない</li>
+<li>これで試験側と本番の両方に同じ ID の価格がそろった（UTAGE ヘルプ8913 の決まり）。P1-5（6つの id を1文字ずつ突き合わせる）はこの取り直しの出力で、本番の6つが P0-4 の試験側と同じ文字</li>
+</ul>
+<h3 id="2026-11-02-20-40-道2の決済とアカウントの画面の状態-本番の-UTAGE-の商品">2026-11-02 20:40 ／ 道2の決済とアカウントの画面の状態 ── 本番の UTAGE の商品詳細3本に本番の価格を入れた・ポータルを日本語に・載せる道具を本番の CORS に合わせた（宛先：運転台改善・FHL 2026 Notes・司令塔）</h3>
+<ul>
+<li>本番の UTAGE（手順書 P3-2〜P3-4 の価格の欄）：竹_お試し30日 R8wtg9rIdqrb・竹_再開用 uvDShbldC2Lv の stripe_plan_id（本番の欄）に dou2_shiken_take_200、梅_救済 NwITR1ql2x1T に dou2_shiken_ume_100 を入れた（20:38）。試験の欄は前から同じ ID。UTAGE が本番の Stripe で ID の有無を確かめて通った。どのページにもつないでいない</li>
+<li>ポータルの言語：中継の /portal が Stripe のポータルを作るときに locale ja を付けるようにした（src/index.js）。手元の試験5本 合わなかった数0（test_plan 75件合格・locale ja の確かめを1件足した）。試験用の中継に載せた（etag 8540f1f39696）。ochiru で開いて日本語で出た。本番の中継には入れていない（P2-4 で入る）</li>
+<li>運転台改善の 20:32 の節（宛先 道2）への返事：deploy_honban.sh・deploy.sh・wrangler.toml の CORS_ORIGIN に <a href="https://app.7years.life">https://app.7years.life</a> を足した。あわせて deploy_honban.sh は、本番の今の設定の値（CORS_ORIGIN ほか9つ）と違えば止まるようにした（古い値で試して止まった・今の値で回1・回2 の空打ちが通った）</li>
+<li>本番の中継の版：20:25（UTC 11:25）の 91ef5388 が運転台改善の CORS の変更。道2 は本番の中継に載せていない</li>
+</ul>
+<h3 id="2026-11-02-20-51-道2の決済とアカウントの画面の状態-Mits様の決定-松はこの">2026-11-02 20:51 ／ 道2の決済とアカウントの画面の状態 ── Mits様の決定「松はこの版では出さない」（宛先：運転台改善・FHL 2026 Notes・司令塔）</h3>
+<ul>
+<li>Mits様原文：「松はこの版では出さない」（11-02 20:51・道2 のセッション）。手順書 0-2 の「松を申し込みのページに出すか・松に竹の30日お試しから入れるか」が決まった</li>
+<li>道2 が直したもの：手順書 P0-6・P1-6（ポータルの切り替え先は竹だけ・確かめ方は梅も松も0件）・P3-3（再開用に松を足さない）・P5-6（この版ではやらない）。決まっていない8つの表の松の行を ☑ にし、C11 は「この版では効く場面が無い」と書いた</li>
+<li>本番の Stripe の松の価格（aimits_matsu_19700・dou2_shiken_matsu_300・11-02 20:36 に作った）はそのまま置く。どの商品詳細にもポータルにもつながないので、お客様が選ぶ道は無い</li>
+<li>宛先 運転台改善：開発版（/Users/nishidamitsuhiro/untendai-seiri の src/index.html）は松を出している。プランの表の松の列（11904行・12074行）・「竹・松でお使いいただけます」の文（11158・20023・20031・22227行）・松のボタン（7135・7600行）。11-02 の main で grep した行番号。この版で松を消すか伏せるかは運転台改善の持ち場で決めてほしい（道2 は書き換えていない）</li>
+</ul>
+<h3 id="2026-11-02-21-14-運転台改善-WEB版をアプリの体験版にした-宛先-運転台改善・">2026-11-02 21:14 ／ 運転台改善 ／ WEB版をアプリの体験版にした（宛先：運転台改善・AI-Mits-チューニング）</h3>
+<ul>
+<li>Mits様原文「web版の入力可能欄にデモ版でいれた数字を入れて、右寄せも直して」「AI-Mitsに数字を渡すという機能も、サンプルデータ、代入数字を使ってアプリと同じことを実現したい。それが顧客体験となって、アプリをダウンロードして、使い続けてもらいたい」</li>
+<li><a href="https://app.7years.life/">https://app.7years.life/</a> に出した（Cloudflare Pages の公開 9d2788de・枝 web-ban-v1.81.24 のコミット 842b693〜3663841）</li>
+<li>数字：デモデータ版と同じ帳簿（make-demo-data.py・見本の会社 ABC商会）。ホーム 今の＠ 60万円/人・100円損益 65.0円、経費 3,000,000 などの入れる欄もデモの値</li>
+<li>AI-Mits：NORMAL・DEEP はアプリの sanbo_send と同じ関数（soeru_heads）で作った見本の数字を添えて送る。FAST はジャンルの1行だけ（アプリと同じ）。本番で NORMAL に1通送り「今期粗利 600,000 円・買った人 35 人」と見本の数字で答えたことを確かめた</li>
+<li>数字の欄は右寄せ（WEB版の層だけ・アプリは今も左寄せ）。月の欄の頭が切れるのも直した</li>
+<li>同じ日の直し：発言の時刻が9時間ずれていた（20:46 → 05:46）のを直した／ヘルプ撮影用の _shot.html（同意の印を書き込むページ）が公開に混ざっていたのを外した</li>
+<li>試しの相談（Mits様のアカウント 3216.fun@gmail.com）：20:45〜20:47 に FAST・NORMAL・DEEP 各1通、21:13 に NORMAL 1通</li>
+<li>宛先 AI-Mits-チューニング：DEEP（1a8d8b9c）の答えに「user[TIMER_3MIN_REMAINING]」「assistantそれでは…」の文字がそのまま出た（20:47・WEB版。アプリのコードにこの印を消す処理は無い＝grep で0件）</li>
+<li>手順の正本：/Users/nishidamitsuhiro/untendai-webban/webban/seiteki.py の冒頭</li>
+</ul>
+<h3 id="2026-11-03-01-38-道2の決済とアカウントの画面の状態">2026-11-03 01:38 ／ 道2の決済とアカウントの画面の状態</h3>
+<ul>
+<li>Mits様の決定：C7「ポータルで解約できないように」（道2_決まっていない8つ_素案 の素案どおり）</li>
+<li>試験側でやった：Stripe 試験の既定のポータル設定 bpc_1UVRVrGIuMEwQDLTVyfmM5vh で「サブスクリプションをキャンセル」をオフにして保存。試験用の中継の /portal で ochiru（3216.fun+ochiru20261030）のポータルを開き、「サブスクをキャンセル」が出ないこと（「決済手段の更新」は出る）を確かめた</li>
+<li>本番のやり方：P1-6 で本番の既定のポータル設定の解約をオフにする。中継は configuration を渡さないので既定が効く。中継のコードは変えない。本番の /portal は今 PORTAL_RETURN_URL が空で閉じているので、いま払っている方への影響は無い</li>
+<li>直したファイル：道2_本番へ移す手順書_下書き_20261029.md（0-2 の C7 の行・P0-6 の C7 の行・1-b の解約の行）／道2_決まっていない8つ_素案_20261102.html（C7 を ☑）</li>
+<li>残る穴（素案・決まっていない）：アプリを開けない人は意思表示のページを開けない。メールの返信・問い合わせで受け、こちらが Stripe の画面で期間の終わりの解約にする案。受け口の文は P0-5</li>
+</ul>
+<h3 id="2026-11-03-01-44-運転台改善-DEEP-の答えに-user-TIMER-3MIN">2026-11-03 01:44 ／ 運転台改善 ／ DEEP の答えに「user[TIMER_3MIN_REMAINING]」が出る原因（宛先：AI-Mits-チューニング）</h3>
+<ul>
+<li>原因：DEEP（1a8d8b9c）の N12_final_answer の SYSTEM に、昔の30分お試しの終わり方の決まり「R1（残3分シグナル）：発話に [TIMER_3MIN_REMAINING] があったら『それでは、最後の質問になりますが…』で切り出す」が残っている。11-02 20:47 の答え（会話 44991f07）は「確認できています」のあとに、この決まりを手本に偽の続き「user[TIMER_3MIN_REMAINING]」「assistantそれでは、最後の質問になりますが…」を自分で書き足していた。WEB版の利用者は毎回新しい user（webban-…）で、前の会話は混ざっていない</li>
+<li>同じ R1 は FAST（14d6df13）・NORMAL（43d47f25）・NORMAL-WEB（e472bc1f）の LLM の箱にも入っている（下書き・公開版とも。11-03 に console API で実測）</li>
+<li>運転台のアプリにも WEB版にも、この印を送る処理は無い（grep 0件）。印を送っていたのは昔の LP のタイマー（sendTimerSignal）だけ</li>
+<li>直し方の案：4つの頭から R1 の段（印の説明と固定文）を外し、公開し直す。R2〜R4（〆の決まり）は印を使っていないので、残すかどうかは持ち場で決める</li>
+<li>試しの会話（ログに残っている・消すのは Mits様の手）：DEEP 20:47 会話 44991f07／NORMAL 20:47 会話 d9e2ba38・21:13 会話 a37ff234／FAST 20:45 会話 718f2ab6（user はすべて webban-ed1zct7emvz702zm）</li>
+</ul>
+<h3 id="2026-11-03-01-53-道2の決済とアカウントの画面の状態">2026-11-03 01:53 ／ 道2の決済とアカウントの画面の状態</h3>
+<ul>
+<li>Mits様の指示：「7日前の知らせのメールに意思表示のページの入口を載せて」（C7 でポータルの解約を閉じたので、アプリを開けない人の「続けない」の道）</li>
+<li>作り：UTAGE のメールには一人ずつの印を入れられない（置き換え文字は標準21種だけ）ので、メールには中継の /intent-mail?m=%mail% を載せる。開くと「リンクを送る」のボタン1つ（開いただけでは送らない）。押すと、そのアドレスに竹のお試しがある人にだけ、/signup-token と同じ印（15分）つきの意思表示のページのリンクを、本人の受信箱へ1人に絞ったメールで送る。返事はどのアドレスでも同じ。同じアドレスへは120秒に1通まで。他人のアドレスを入れても、届くのは本人の受信箱</li>
+<li>中継：src/index.js に /intent-mail（札 INTENT_MAIL_ROUTE &quot;1&quot; と INTENT_PAGE_URL がある Worker だけ）。試験 test_intent_mail.mjs 合わなかった数0・今までの5本も0（test_plan 75件合格）。試験用の中継に載せた（etag 91bf0b788187）。本番の中継には入れていない</li>
+<li>UTAGE 試験側：7日前の知らせ xuYYfMHgRMmP（シナリオ TmVz9tzYUJtF）の本文に入口の行を足し、短縮 URL を使わない（original_url）にした。送る時刻は23日目 10:00 のまま（更新後に読んで確かめた）</li>
+<li>通しの確かめ：試験側の Stripe で honnin（3216.fun+honnin20261030・cus_VXUpUVlopGYmyD）に竹 ¥9,700 の30日お試しを作り → 入口を開く（アドレスの + が化けずに欄に入った）→「リンクを送る」→ UTAGE に本人1人宛のメール ZagKcsvPZZ8H ができた → そのリンクの意思表示のページ → 続けない → その他 → フリープランに切り替える →「フリープランに切り替えました」→ 中継の /paid で honnin は ended（お試しが止まった）</li>
+<li>本番で要るもの：本番の中継に /intent-mail を載せる（P2-9 の札2つ）・本番の7日前の知らせに本番の中継の入口・INTENT_PAGE_URL は P3-6 の本番の意思表示のページ。手順書の 1-d の表と P2 の設定の表に足した</li>
+<li>追記（01:56）：UTAGE のメール ZagKcsvPZZ8H は 01:54:03 に送り終わった（completed・送った数1）</li>
+<li>2026-11-03 07:24 ／ 運転台改善：資料の鮮度・食い違い 16 件（kaihatsu_no_nagare_genjou_20261003.html と untendai-kaihatsu-nagare/index.html の印。main_version 書いた=v1.81.14 今=v1.83.0 ほか）／宛先：運転台改善</li>
+</ul>
+<h3 id="2026-11-03-10-58-運転台改善-BS-engineer-確認版-1-83-1-と正">2026-11-03 10:58 ／ 運転台改善（BS-engineer） ── 確認版 1.83.1 と正式版 1.83.2 を世に出し、WEB版も 1.83.2 に載せ替えた（済んだ）</h3>
+<ul>
+<li>済んだ：release.sh は終わり、/Users/nishidamitsuhiro/untendai-webban-1832 はもう使っていない</li>
+<li>出どころ：Mits様原文（2026-11-03）「確認版、世に出すをいっぺんにやって」「確認版 v1.83.1 の次の世に出す版も mac も win も出してね」</li>
+<li>リリースノート：docs/release-notes/v1.83.1.md・v1.83.2.md（8363031・前の正式版 v1.81.24 からの変わり目7件：ホームの4区画と計器15個／数字の欄の右寄せ／顧問先ごとに分けた／会計ソフト名の出し分け／生活費を AI-Mits に／Stripe の2つ目の鍵／顧客レントゲンのまとめ・書き直し・名簿の書き出し。設定サポーターは確認版・正式版に出ないので入れていない）</li>
+<li>確認版 v1.83.1（c462373・release.sh --確認版・終わりの数 0）：Release は Pre-release・資産4本（Mac .tar.gz・.sig／Windows .exe・.sig）／Discord「本流の更新」1通・「確認版」1通／Drive「確認版受け渡し」に Mac zip・Windows exe と変更点.md の節／確認版メール4人（西田・森田さん・棚原さん・遠藤さん）</li>
+<li>正式版 v1.83.2（84df109・release.sh 印なし・終わりの数 0）：Release は Latest・資産4本（Mac 2本・Windows 2本）／latest.json と kakunin.json がどちらも 1.83.2、platforms は darwin-aarch64 と windows-x86_64 の両方・windows は untendai_1.83.2_x64-setup.exe／Discord「本流の更新」1通／/Applications/untendai.app 1.83.2・untendai-dev.app 1.83.2（手8は飛ばさずに走らせた。menu3 の作業場は sample.db の開いただけの差しか無かった）</li>
+<li>WEB版：枝 web-ban-v1.83.2 をタグ v1.83.2 から作り（新しい作業場 /Users/nishidamitsuhiro/untendai-webban-1832・untendai-webban の枝は切り替えていない）、web-ban-v1.81.24 の WEB版の7つを順に重ねた（先頭 136d373）。842b693 は commands.rs がぶつかり、main に同じ形の genre_line_for が既にあったので、それを使う形に解いた（試験 405 通過）。見本の帳簿はデモデータ版の帳簿の写しに make-demo-data.py → serve.py → 左の欄の押し回り（開いた 32・本番の数字 0・エラー 0）→ seiteki.py（録り 84 件）→ wrangler pages deploy aimits-web（5c281273）。<a href="https://app.7years.life/">https://app.7years.life/</a> は 200・index.html に v1.83.2 が1件・webban-data/version.json 1.83.2・ホームの計器が出て本番の数字 7,738,606 は 0件</li>
+<li>予見：WEB版の「設定」は押しても中が空のまま（今の公開の 1.81.24 でも同じだった。押し回りの設定16画面は開かずに数えた）。WEB版の設定サポーターは送っても答えが返らない（webban.js に sensei_send が無い・運転台改善が 1.83.3 で直す）</li>
+<li>版の管理のページ：WEB版の行を新しい作業場で読み直した（HAN_WEBBAN_DIR=/Users/nishidamitsuhiro/untendai-webban-1832 で han_page_koushin.sh・mits-reports 2e37ab4）</li>
+<li>触っていないもの：ヘルプ（help_v1820・help_han.txt は 1.83.0 のまま）・/Applications/untendai.app を開いていない・sample.db と _mock/ は commit に入れていない（v1.83.0..HEAD で 0件。作業場の sample.db は出す前の控えに戻した・表の中身は同じ）</li>
+<li>宛先：運転台改善</li>
+</ul>
+<h3 id="2026-11-03-11-2x-運転台-森田さん・協力者案件-確認版・正式版だけで出した回は">2026-11-03 11:2x ／ 運転台 森田さん・協力者案件 ── 確認版・正式版だけで出した回は、森田さんの枝に本流が入らない（1.83.1〜1.83.4 で12件遅れ）</h3>
+<p>宛先：運転台改善</p>
+<ul>
+<li>測った値（11-03 11:2x JST・morita_oitsuku.sh --check）：森田さんの main と枝12本が全部、本流 main から遅れ12件。最後の自動の取り込みは「西田統合版 1.83.0 を取り込む（自動）」（11-02 19:34 JST）</li>
+<li>遅れの中身：v1.83.1〜v1.83.4 の版上げと記録。その中の 7efd225「確認版：設定サポーターをどの版でも使えるようにした v1.83.3」は直しそのもの。西田統合版（--自分だけ）を通らずに確認版で入った</li>
+<li>理由（tools/release.sh 179〜187行）：morita_oitsuku.sh と morita_app_kumu は <code>if [ &quot;${MITS_ONLY}&quot; = &quot;1&quot; ]</code> の中だけで呼ばれる。--確認版・印なし（正式版）の回は呼ばれない。11-03 の 1.83.4（正式版）は、この節を書いた時点で走っている途中（pid 94035）。これも呼ばない形</li>
+<li>出どころ：Mits様原文（10-30 14:49）「お願いして取り組んでもらうものじゃなくて、こちらが正式版に進んでいるものなので、西田統合版の時点で強制的に森田さんの班も上げる。」と、前段の「二度手間」「改悪」</li>
+<li>運転台 森田さん・協力者案件の案：release.sh が 0 で終わった回は、--自分だけ に限らず morita_oitsuku.sh を呼ぶ（版を上げた回は全部、森田さんの枝にも入る）。今たまっている12件は、次に release.sh を走らせた回か、手で1回 <code>bash tools/morita_oitsuku.sh</code> で入る</li>
+<li>森田さんへの知らせは作っていない（10-30 16:3x Mits様「何を森田さんに知らせる必要があるのか？」）</li>
+</ul>
+<h3 id="2026-11-03-11-31-運転台改善-BS-jikki-kenshu・BS-engine">2026-11-03 11:31 ／ 運転台改善（BS-jikki-kenshu・BS-engineer） ── ヘルプ 1.83.2 の検収が通った（help_v1820 の 1.83.2 分の直しは済んだ）</h3>
+<ul>
+<li>出どころ：Mits様原文（2026-11-03）「ヘルプの検収も通して」</li>
+<li>1回目の検収（BS-jikki-kenshu・v1.83.2 の WEB版 sample.db・名札を外した姿）：17本 924行を見て合わない行11件＋近いもの1件で不合格</li>
+<li>直し（BS-engineer）：kokyaku・home・kaikei・jishadata・mokuhyo・getsuji・aimits・hajimeru・account の12か所と書き足し2つ（ホーム右上の「目標＠と人数」・アカウントのメニューの「組み立て」の行）。写真 v1832_kokyaku_suii_gamen.png・v1832_kaikei_guinness_gamen.png を撮り直した（前の写真は /Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261103_help_shashin_mae_v1832/）</li>
+<li>2回目の検収：17本 938行で文章は全部合格。写真2枚の左上の題に WEB版の道具が足す「（WEB版）」が写っていて不合格 → 撮り直し、写真の文字の読み取りで「WEB版」0件・7,738,606 0件・メールアドレス0件・「AI-Mits &amp; 経営アプリ」各1件</li>
+<li>対象外（1.83.3 の分）：jishadata.html の設定サポーターの行と写真、aimits.html の設定サポーターの行と写真2枚、top.html:34 の注記</li>
+<li>~/.untendai/help_han.txt の1行目を 1.83.2 にした</li>
+<li>運転台改善は 1.83.3・1.83.4 のヘルプの作り直し（jishadata の写真7枚ほか）に入ってよい</li>
+<li>宛先：運転台改善</li>
+</ul>
+<h3 id="2026-11-03-11-36-運転台改善-別枝-ホーム・4分割・数字の3つ分け・設定サポータ">2026-11-03 11:36 ／ 運転台改善 ／ 別枝（ホーム・4分割・数字の3つ分け・設定サポーター）を確認版〜正式版・Win・Mac・WEB版に揃えた（宛先：運転台改善・運転台 森田さん・協力者案件・ホームの計器のセッション（4-13）・AI-Mits-チューニング）</h3>
+<ul>
+<li>出どころ：Mits様原文「運転台改善セッションの別枝、ホーム、4分割、数字の3つ分け、設定サポーターを全部、確認版〜正式版、win、mac、web版にも最新の状態で揃えて」「齟齬やぶつかりがあるかもしれないので、事前に調査しながらやって」</li>
+<li>事前の調べ：ホーム・4分割（1.83.0）・数字の欄の右寄せ（1.82.1）・設定サポーター（1.82.0）は西田統合版に入っていた。menu-v3 と main のアプリの差は ced0563（freee の 4:2:2:2 の科目選び・開発版だけ・本物の freee で未確認）だけで、名前の出た4つには当たらない。ced0563 は入れていない</li>
+<li>ぶつかり1：4-13 の BS-engineer が 1.83.2 の release.sh を走らせている最中だった（pid 51790）。終わるまで main・WEB版に書き込まずに待った</li>
+<li>齟齬1：設定サポーターは index.html の4か所で「開発版と西田統合版だけ」に隠してあった（確認版・正式版・デモデータ版では出ない）→ 4か所を外した（main・v1.83.3）</li>
+<li>齟齬2：WEB版は名札が西田統合版なので設定サポーターが出るのに、webban.js に sensei_send が無く送っても答えが返らなかった → H.sensei_send・H.sensei_open_link を足した（頭の3行・4桁以上の数字を伏せるのは sanbo.rs と同じ。Rust の試験5件を JS で通して合わなかった数0）。手元の配り役 serve.py の中継の一覧にも 434876af を足した</li>
+<li>Dify 434876af：下書きと公開版の差 0（指示文・つなぎ・設定）。11-02 に止められた公開はそのあと済んでいた</li>
+<li>出した版：確認版 v1.83.3（7efd225・Release Pre-release・Mac/Win 資産4本・Drive・Discord「本流の更新」「確認版」・確認版メール4人）→ 正式版 v1.83.4（48f2ce8・Release Latest・Mac/Win 資産4本・latest.json 1.83.4・platforms darwin-aarch64 と windows-x86_64）。Mac の /Applications の6本（西田統合版・開発版・デモデータ版・森田さんの開発版・freee版・マーケ版）は全部 1.83.4</li>
+<li>WEB版 1.83.4：枝 web-ban-v1.83.4（作業場 /Users/nishidamitsuhiro/untendai-webban-sensei・web-ban-v1.83.2 に v1.83.4 を取り込み・ぶつかり0件・dc0e3c1・GitHub に push）。押し回り 48 項目・開いた 32・本番の数字 0・エラー 0 → seiteki.py（録り 84 件）→ wrangler（c9a399f9）。<a href="https://app.7years.life/">https://app.7years.life/</a> は 200・version.json 1.83.4・webban.js に sensei_send 1件。本番の中継は app.7years.life からの 434876af を通す（事前の問い合わせ 204・parameters 200）。手元の WEB版で Mits様のログインのまま送って 13 秒で答えが返った</li>
+<li>確かめた実物（デモデータ版 1.83.3）：AI-Mits の画面の「他のAIが経営をサポート」に設定サポーター／データ設定のデータ・マーケティング設定の UTAGE・CSV で右の欄が設定サポーター／AI-Mits の答えの下に「この答えの設定のことを設定サポーターに聞く」</li>
+<li>誤り：確認版 1.83.3 のリリースノートに、確かめずに「はじめにやること に『設定サポーターに聞く』を付けた」「別の画面へ移っても設定サポーターのまま」と書いた。今の「はじめにやること」はどの行も「開く」だけで、そのボタンは古い画面の部品にしか無かった。GitHub の Release 本文・Drive の変更点.md・Discord の2通は直した。<strong>4人に送った確認版メール（UTAGE OsqMmRE9d4my）は直せない</strong>。正式版 1.83.4 のノートは直した文で出した</li>
+<li>森田さんの枝：11:2x の節のとおり12件遅れていたので morita_oitsuku.sh を手で1回（main と枝12本の遅れ 0）。release.sh を --確認版・正式版の回も呼ぶ形に直した（main ff99e34）</li>
+<li>版の管理のページ：WEB版の行が untendai-webban（1.81.24）に決め打ちだったので、いちばん新しい web-ban-v の作業場を読むように直した（main 020c6fd）。指さずに走らせて dc0e3c1（web-ban-v1.83.4）を読んだ・食い違い 0</li>
+<li>ヘルプ：help_v1820 に設定サポーターの節（jishadata.html s7・aimits.html s4・top.html の1文・写真3枚 v1833_*）。BS-jikki-kenshu の検収中。help_han.txt は、4-13 の 1.83.2 分が済み、こちらの検収が通ってから 1.83.4 に上げる</li>
+<li>試しの会話（消すのは Mits様の手）：設定サポーター（434876af）11-03 11:3x 会話 f1e30f0c（user は webban- で始まる WEB版の名前）</li>
+<li>予見：設定サポーターの答えが「サンプルデータを消す手順は、いまの書庫では見つけられませんでした」と返った（上の試しの会話）。11-01 の2周目で書庫に足した手順を引けていない。根拠：上の会話の答えの文</li>
+<li>2026-11-03 11:38 ／ 運転台改善：11:2x の節（森田さんの枝が12件遅れ）を受け取った。morita_oitsuku.sh を2回走らせ main と枝12本の遅れ 0（最後 11:38）。release.sh を --確認版・正式版の回も呼ぶ形に直した（main ff99e34）。いまの仕事：ヘルプの 1.83.3〜1.83.4 の作り直し（jishadata.html の右の欄が AI-Mits のままの写真7枚の撮り直しと、設定サポーターの節の検収）。4-13 の 1.83.2 の直し11件と再検収の節が台帳に出たら取りかかる／宛先：運転台 森田さん・協力者案件・ホームの計器のセッション（4-13）</li>
+</ul>
+<h3 id="2026-11-03-11-54-運転台改善-ヘルプ-1-83-4-済み-help-han-1">2026-11-03 11:54 ／ 運転台改善 ── ヘルプ 1.83.4 済み（help_han 1.83.4）・ホームを左の欄の横に出す直しを開発版に入れた（宛先：運転台改善・ホームの計器のセッション（4-13））</h3>
+<ul>
+<li>ヘルプ：設定サポーターの節（jishadata s7・aimits s4・top.html の1文）を BS-jikki-kenshu がデモデータ版 1.83.4 で検収し、合わない行0件。押さずに残った1行「押すと、その答えを設定サポーターに渡します。」は運転台改善が開発版で押して確かめた（自社データにするへ移り、右の欄の設定サポーターに答えが渡って返事が来た）。jishadata の写真7枚は BS-engineer が WEB版 1.83.4 で撮り直し（v1834_*・右の欄が設定サポーター7/7・メールアドレス0・「WEB版」0・「西田統合版」0・欠けたファイル0。古い7枚は /Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261103_help_shashin_mae_v1834/）。~/.untendai/help_han.txt を 1.83.4 にした</li>
+<li>Dify に試しの会話が1件増えた（開発版で設定サポーターに聞くを押した分・11:53）</li>
+<li>ホーム：Mits様原文「今ホームと鳴っているモノにログインが無いし導線が画像だけなので、不便　メニューバーの横に出るようにして、メニューバー内のガイドも修正して」「これは開発版からがいいか、それとも統合版？確認版？」→ 作りの変更なので開発版から（2026-10-31 の決まり）。menu-v3 e7801f4：ホームでも左の欄を出し、ホームは左の欄の右に置く。ホームの上の行のアプリ名と右上の丸は隠した（左の欄の上と下に同じもの）。左の欄の「← ホーム」を家の絵の「ホーム」にし、ホームが出ている間だけ印。/Applications/untendai-dev.app を組み直し、Mits様の窓の大きさ（1526×1098）で試験の一手 home：はみ出し=0 丸と重なり=0 計器の図=12・console のエラー=0。今月 → ホームの行き来で印が付け替わる。写真 /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/_mock/kakunin_20261103_home_hidari/kaihatsuban_home_hidari_no_ran.jpg</li>
+<li>予見：窓の幅が Mits様の窓より狭い（800×600 の窓で測った）と、ホームの「仕掛ける」が区画からはみ出し丸と重なる（はみ出し=1）。ホームの最小幅 1180px に左の欄の幅が足されるため。西田統合版に入れたら、ヘルプの左の欄の写真（「← ホーム」が写っている）とホームの写真を撮り直す</li>
+</ul>
+<h3 id="2026-11-03-12-05-運転台改善-ホームを左の欄の横に出す直しを西田統合版-1-83">2026-11-03 12:05 ／ 運転台改善 ── ホームを左の欄の横に出す直しを西田統合版 1.83.5 に入れた（宛先：運転台改善・ホームの計器のセッション（4-13）・運転台 森田さん・協力者案件）</h3>
+<ul>
+<li>出どころ：Mits様原文「西田統合版に入れて」（開発版のホームの写真を見て）</li>
+<li>main の上に 911092b（menu-v3 e7801f4 と同じ中身・ホームの直しだけ。menu-v3 の ced0563 freee の 4:2:2:2 は入れていない）を枝 home-hidari に切り、torikomu.sh（見張り全部通過・cargo test 2通り）→ release.sh --自分だけ 1.83.5（終わり 0）</li>
+<li>/Applications の untendai・untendai-dev・untendai-morita・untendai-mkt・untendai-client が 1.83.5。確認版・デモデータ版・正式版・WEB版は 1.83.4 のまま（お客様には出ていない）。版の管理のページ 9項目・食い違い 0（ae5258f）</li>
+<li>ヘルプ：home.html の文を2か所直した（ホームでも左の欄が出る・アカウントは左の欄のいちばん下）。ホームと左の欄の写真の撮り直しは BS-engineer が走行中。済んだら help_han を 1.83.5 に</li>
 </ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
