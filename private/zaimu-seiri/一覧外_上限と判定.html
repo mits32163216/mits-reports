@@ -227,11 +227,11 @@ tr.sub-head.foldable td:hover { background: #e5d9f4; }
   同じボタンをもう一度押すと未判定に戻ります。この画面から Notion は書き換えません。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1793850381"></script>
-<script src="zaimu_seiri_state.js?v=1793850381"></script>
-<script src="zaimu_seiri_sync.js?v=1793850381"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1793850381"></script>
-<script src="zaimu_seiri_kijun.js?v=1793850381"></script>
+<script src="zaimu_seiri_data.js?v=1793850758"></script>
+<script src="zaimu_seiri_state.js?v=1793850758"></script>
+<script src="zaimu_seiri_sync.js?v=1793850758"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1793850758"></script>
+<script src="zaimu_seiri_kijun.js?v=1793850758"></script>
 <script>
 // 見立ての理由を読みやすく出す（Mits様 2026-09-20「見立ての理由が煩雑で読みづらい　整理して」）
 // note は「／」区切りで新しい順に積んである。1行目＝いまの置き場所の理由（いちばん新しい判断）、2行目＝元の記録、残りは「変更の記録」に畳む
@@ -473,7 +473,8 @@ function render(){
       const gt = gi.reduce((t,i)=>t+(Number(i.total)||0),0);
       const key = c + "::" + label, pv = (plansAll[key] && Number(plansAll[key].plan)) || 0;
       const foldable = gi.length >= SUB_FOLD_MIN || label === "家族カード（41014）コンビニ・スーパー";   // Mits様 2026-09-20「家族カード（41014）コンビニ・スーパーも畳んで」（9行でも畳む）
-      const isSubOpen = foldable ? !!subOpenMap[key] : true;   // 10行未満は常に開いた扱い
+      const hasNew10 = gi.some(i => /^m-o\d/.test(i.id));   // 10月に新しく出た行（m-o..）がある中分類は最初から開く（2026-11-05・開閉の保存キーは別のまま）
+      const isSubOpen = foldable ? (!!subOpenMap[key] || hasNew10) : true;   // 10行未満は常に開いた扱い
       const mark = foldable ? `<span class="sub-fold-mark">${isSubOpen?'▼':'▶'}</span>` : "";
       const trCls = "sub-head" + (foldable ? " foldable" : "");
       const bodyHtml = isSubOpen ? gi.map(rowOf).join("") : "";
@@ -508,7 +509,7 @@ function render(){
     }
     const after = b.actual - b.keep - b.cut - b.once;
     const plans = loadPlan();
-    const isOpen = !!loadOpen()[c];
+    const isOpen = !!loadOpen()[c] || b.items.some(i => /^m-o\d/.test(i.id));   // 10月の新しい行がある大項目は最初から開く（2026-11-05）
     return `<div class="section${isRouhi && subHidden() ? ' hide-subs' : ''}${isOpen ? '' : ' folded'}">
       <div class="section-head" data-cat="${esc(c)}">
         <h2><span class="fold-mark">${isOpen ? '▼' : '▶'}</span>${esc(c)} <span class="section-sub">${b.items.length}件・月平均 ${fmtYen(b.actual)}円・${KIKAN}の総額 ${fmtYen(b.items.reduce((t,i)=>t+(i.total||0),0))}円・<b style="color:#c0392b;">削る総額 ${fmtYen(b.items.filter(i=>(stOf(i,state)||{}).status==="cut").reduce((t,i)=>t+(i.total||0),0))}円（月 ${fmtYen(b.cut)}円）</b>・<span style="white-space:nowrap;color:#6a3fa0;">削る予定額（月）合計 <b>${fmtYen(catPlan(plans, c))}円</b>（中分類の合計 ${fmtYen(subPlanSum(plans, c))}円 ＋ </span><label class="plan-box" style="white-space:nowrap;">大分類に直接 <input class="plan-input" data-cat="${esc(c)}" type="text" inputmode="numeric" value="${(plans[c] && plans[c].plan) ? fmtYen(plans[c].plan) : ""}" placeholder="0" style="width:100px;text-align:right;font-size:14px;padding:2px 6px;border:1px solid #c8ccd3;border-radius:4px;">円）</label></span></h2>

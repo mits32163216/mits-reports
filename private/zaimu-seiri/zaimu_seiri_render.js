@@ -326,7 +326,7 @@ function render() {
     items.forEach((it, i) => {
       const st = getStatus(it, state);
       const dt = getStatusDate(it, state);
-      const tr = document.createElement("tr");
+      const tr = document.createElement("tr"); tr.id = it.id;
       const isExcluded = it.excluded === true;
       // 状態クラス
       if (isExcluded) tr.classList.add("st-excluded");
@@ -357,7 +357,7 @@ function render() {
           <button data-id="${it.id}" data-act="keep" class="${st==='keep'?'on-keep':''}">継続（パン）</button>
         </td>`;
       tr.innerHTML = `${actionsCell}
-        <td class="name">${nameHtml}${notionHtml}</td>
+        <td class="name">${nameHtml}${notionHtml}${it.kouho_2611 ? `<div class="kouho-2611" style="margin-top:4px;padding:3px 6px;background:#fff4e5;border-left:3px solid #c0392b;color:#7a2a12;font-size:12px;text-decoration:none;opacity:1;">11月の解約候補（2026-11-05 BS-keiri）：${escapeHtml(it.kouho_2611.riyuu)}</div>` : ""}</td>
         <td class="amount">${fmtYen(it.amount)}円${it.cycle==='annual'?'<span class="badge-annual">年払い</span>':''}</td>
         <td class="annual-amt">${it.cycle==='annual' && it.annual_amount ? escapeHtml(it.annual_amount) : ""}</td>
         <td class="bar-cell"><div class="row-bar-outer"><div class="row-bar-inner" style="width:${barPct}%"></div></div></td>
