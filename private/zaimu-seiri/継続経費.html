@@ -112,11 +112,11 @@ td.paydate { font-size: 11px; color: var(--sub); width: 90px; white-space: nowra
   <br>この画面から編集や保存はできません。表示だけです（メモ・備考も表示のみ）。
 </div>
 
-<script src="zaimu_seiri_data.js?v=1793850758"></script>
-<script src="zaimu_seiri_state.js?v=1793850758"></script>
-<script src="zaimu_seiri_sync.js?v=1793850758"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1793850758"></script>
-<script src="zaimu_seiri_kijun.js?v=1793850758"></script>
+<script src="zaimu_seiri_data.js?v=1793850814"></script>
+<script src="zaimu_seiri_state.js?v=1793850814"></script>
+<script src="zaimu_seiri_sync.js?v=1793850814"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1793850814"></script>
+<script src="zaimu_seiri_kijun.js?v=1793850814"></script>
 <script>
 "use strict";
 
@@ -193,10 +193,10 @@ function renderMonthly(items) {
   }
   const rows = items.map(it => {
     const memo = H.loadUserNote(it.id);
-    const memoTxt = memo !== null ? memo : (it.memo || '');
+    const memoTxt = memo !== null ? ((it.memo && memo !== it.memo) ? memo + '\n――データ側の覚え書き：' + it.memo : memo) : (it.memo || '');   // 2026-11-05 Mits様の備考とデータ側の覚え書きを両方出す
     const irregularBadge = it._isIrregular ? '<span style="font-size:10px;color:var(--gold);border:1px solid var(--gold);border-radius:3px;padding:0 3px;margin-left:4px;">不定期</span>' : '';
     return `<tr class="st-keep">
-      <td class="name">${escapeHtml(it.name)}${irregularBadge}</td>
+      <td class="name">${escapeHtml(it.name)}${irregularBadge}${it.kouho_2611 ? `<div style="margin-top:4px;padding:3px 6px;background:#fff4e5;border-left:3px solid #c0392b;color:#7a2a12;font-size:12px;">11月の解約候補（2026-11-05 BS-keiri）：${escapeHtml(it.kouho_2611.riyuu)}</div>` : ""}</td>
       <td class="amount">${fmtYen(it.amount)}円</td>
       <td class="card">${escapeHtml(it.card || "")}</td>
       <td class="paydate">${it.last_paid || ""}</td>
@@ -227,7 +227,7 @@ function renderAnnual(items) {
   }
   const rows = items.map(it => {
     const memo = H.loadUserNote(it.id);
-    const memoTxt = memo !== null ? memo : (it.memo || '');
+    const memoTxt = memo !== null ? ((it.memo && memo !== it.memo) ? memo + '\n――データ側の覚え書き：' + it.memo : memo) : (it.memo || '');   // 2026-11-05 Mits様の備考とデータ側の覚え書きを両方出す
     const annualDisp = it.annual_amount ? escapeHtml(it.annual_amount) : "—";
     return `<tr class="st-keep">
       <td class="name">${escapeHtml(it.name)}</td>

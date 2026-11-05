@@ -363,7 +363,7 @@ function render() {
         <td class="bar-cell"><div class="row-bar-outer"><div class="row-bar-inner" style="width:${barPct}%"></div></div></td>
         <td class="cum">${cumStr}</td>
         <td class="card">${escapeHtml(it.card || "")}</td>
-        <td class="memo${loadUserNote(it.id)!==null?' user-note':''}" contenteditable="plaintext-only" data-id="${it.id}" data-default="${escapeAttr(it.memo || '')}">${escapeHtml(loadUserNote(it.id) !== null ? loadUserNote(it.id) : (it.memo || ''))}</td>
+        <td class="memo${loadUserNote(it.id)!==null?' user-note':''}" contenteditable="plaintext-only" data-id="${it.id}" data-default="${escapeAttr(it.memo || '')}">${escapeHtml(loadUserNote(it.id) !== null ? loadUserNote(it.id) : (it.memo || ''))}${(loadUserNote(it.id) !== null && it.memo && loadUserNote(it.id) !== it.memo) ? `<div class="memo-data" contenteditable="false" style="margin-top:4px;padding-top:4px;border-top:1px dashed #c8ccd3;color:#5b6170;white-space:pre-wrap;">データ側の覚え書き（読むだけ）：${escapeHtml(it.memo)}</div>` : ""}</td>
         <td class="paydate${it.last_paid && it.last_paid < "2026-08-01" ? " stale" : ""}">${it.last_paid || ""}</td>
         <td class="paydate">${(isAnnualSection && st === 'done') ? '—（解約済み）' : (it.next_due || '')}</td>
         <td class="date">${dt || ""}</td>
@@ -587,7 +587,8 @@ function onMemoBlur(e) {
   const el = e.currentTarget;
   const id = el.getAttribute("data-id");
   const def = el.getAttribute("data-default") || "";
-  const text = el.innerText.trim();
+  const cl = el.cloneNode(true); cl.querySelectorAll(".memo-data").forEach(x => x.remove());   // データ側の覚え書きは保存に混ぜない（2026-11-05）
+  const text = (el.querySelector(".memo-data") ? cl.textContent : el.innerText).trim();
   setUserNote(id, text, def);
   if (text !== def && text.length > 0) el.classList.add("user-note");
   else el.classList.remove("user-note");
