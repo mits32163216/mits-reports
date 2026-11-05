@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>設定サポーター 実装トラッカー（最終更新 2026-11-05）</title>
+<style>
+:root{--bg:#f7f6f2;--card:#fff;--ink:#1d2330;--sub:#4a5262;--line:#e2dfd6;--gray:#9aa0a8;
+--r:#d23b3b;--y:#d89a12;--b:#2f6fd0;--z:#7a6bb0;--warn:#b3261e;--warnbg:#fdecea;--goal:#1f6f43;--goalbg:#e8f4ec;--wait:#6b5b00;--waitbg:#fff6d6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15181d;--card:#1e232a;--ink:#e8eaee;--sub:#b3b9c3;--line:#333a44;--gray:#6f7680;--warnbg:#3a1f1d;--goalbg:#1c3326;--waitbg:#332d12}}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.7 -apple-system,"Hiragino Sans","Yu Gothic",sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:22px;margin:0 0 4px}
+h2{font-size:19px;margin:28px 0 10px}
+.small{font-size:14.5px;color:var(--sub)}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
+.legend span{display:inline-block;margin:2px 10px 2px 0}
+.tag{display:inline-block;font-size:13px;font-weight:700;border-radius:6px;padding:1px 8px;margin:0 6px 4px 0;white-space:nowrap}
+.t-fuka{background:var(--warnbg);color:var(--warn);border:1px solid var(--warn)}
+.t-aizu{background:var(--goalbg);color:var(--goal);border:1px solid var(--goal)}
+.t-saki{background:var(--waitbg);color:var(--wait);border:1px solid var(--wait)}
+.t-ugoku{background:#e7f0fd;color:#1f4f9a;border:1px solid #1f4f9a}
+.item{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-left:8px solid var(--gray);border-radius:8px;padding:12px 14px;margin:8px 0}
+.item.r{border-left-color:var(--r)}.item.y{border-left-color:var(--y)}.item.z{border-left-color:var(--z)}
+.item input{width:22px;height:22px;margin-top:4px;flex:none}
+.no{font-weight:700;min-width:2.2em}
+.ttl{font-weight:700}
+.sum{color:var(--sub);font-size:14.5px;margin-left:4px}
+.sub{font-size:14.5px;color:var(--sub);margin-top:4px}
+.sub b{color:var(--ink)}
+.item.done .ttl,.item.done .sub,.item.done .no,.item.done .sum{text-decoration:line-through;color:var(--gray)}
+.item.done .sub b{color:var(--gray)}
+.head{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+a{color:var(--b)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+td,th{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>設定サポーター 実装トラッカー</h1>
+<div class="small">最終更新 2026-11-05 ／ 持ち場：AI-Mits-チューニング ／ <span id="count"></span></div>
+
+<div class="box">
+<b>決まっている方向（2026-11-05 Mits様）</b>
+<ul class="small" style="margin:6px 0 0;padding-left:1.2em">
+<li>設定サポーターの費用は<b>顧客を維持する投資</b>。物差しは CPO 5,000円・竹 6か月6万円／1年12万円。辞める人は感覚値で30〜40%</li>
+<li>投資に対して<b>何人が残り、何人が竹を払ったかを計測しながら直し続ける</b>。今は数が少なく、頼れる数値はまだ無い</li>
+<li><b>正式版は Dify のまま</b>。西田の開発版と西田統合版は実験の流れにして直し続ける。正式版の載せ替えは Mits様の指示が出たときだけ</li>
+<li>Dify 版も微修正を続け、<b>正式版で効いているかを逐次確かめる</b></li>
+<li>なくしたいのは<b>見当違いの答え</b>と<b>答えない</b>こと（Mits様）</li>
+</ul>
+</div>
+
+<div class="box legend small">
+<b>見方</b><br>
+<span>左の帯の色＝重要度：<b style="color:var(--r)">■ いま</b>（決め手・土台）／<b style="color:var(--y)">■ 近いうち</b>／<b style="color:var(--z)">■ 完成後</b></span><br>
+<span class="tag t-fuka">お客様に届く</span>正式版のお客様の答えやログインに効く。入れれば戻せるが、届いた答えは戻らない<br>
+<span class="tag t-aizu">Mits様の合図</span>Mits様の合図・指示が出てから入れる<br>
+<span class="tag t-saki">先にやる</span>これが済まないと、後ろの段が始められない<br>
+<span class="tag t-ugoku">動いている</span>担当が今やっている<br>
+並びは仕事の順番。済んだものは同じ位置で ☑＋取消線＋グレーになる（チェックはこのブラウザに残る）
+</div>
+
+<h2>段取り</h2>
+<div id="list"></div>
+
+<h2>資料（<span id="sn"></span>件）</h2>
+<div class="box"><table id="siryo"><tr><th>日</th><th>資料</th><th>何のため</th></tr></table></div>
+</div>
+
+<script>
+const GROUPS = [
+ {id:"k1", lvl:"r", no:"済", sum:"正確性の測り", label:"答えの正確性を3つの数（名前・手順・着いたか）で測った", done:true,
+  sub:"名前が画面にあった：Dify 92%・実験 94%（6回）／96%・97%（40往復）。差は揺れの内。抜けた手 7対4。結果：seikakusei_20261105/kekka.md"},
+ {id:"k2", lvl:"r", no:"済", sum:"Dify の外れ方", label:"Mits様の会話を Dify の記録から引いて、見当違い・答えないを数えた", done:true,
+  sub:"43往復で 答えない 5（12%）・見当違い 0・迷い 4。ご本人と見られるのは3往復だけ。<b>同じ問いでも書庫を引けた回と引けなかった回で答えが変わる</b>（往復22と26）。速さ：Dify 17.4秒・実験 21.3秒（アプリ経由・真ん中の値）"},
+ {id:"k3", lvl:"r", no:"済", sum:"方向性", label:"方向性を決定の記録に残した（投資・計測・版の分け方・Dify の微修正）", done:true,
+  sub:"決定台帳 2026-11-05 の4節。宛先は運転台改善・司令塔・FHL 2026 Notes ほか"},
+
+ {id:"s1", lvl:"r", no:"1", sum:"計測の土台", label:"中継のログインの記録を調べ、「登録 → 14日後もログイン → 竹を払った」を月ごとに数える道具を作る", done:true,
+  tags:["saki"],
+  sub:"<b>Mits様「中継のログインの記録が残っているか調べて　その仕組みを作って」</b>。結果：中継は自分ではログインを残していない。Cloudflare の記録に起動のたびの /paid・/resolve（読者の番号つき）が<b>7日だけ</b>残る。道具 keisoku_toushi.py を作り、11-05 10:09 に走らせた：登録59・外した32・残り27・14日後も開いた7・竹を払った＝取れない（本番の竹がまだ売られていない・/paid の答えは記録されない）。担当 BS-engineer。結果 keisoku_toushi_20261105/kekka.md"},
+ {id:"s1b", lvl:"r", no:"1-2", sum:"6日ごとに回す", label:"計測の道具を6日より短い間隔で自動で回す（Cloudflare の記録は7日で消える）",
+  tags:["saki"],
+  sub:"回さない日が7日続くと、いちばん古い日の分が数えられないまま消える。2 を本番に出せばこの制限は無くなるが、それまでは時計で回す"},
+ {id:"s2", lvl:"r", no:"2", sum:"本番の中継", label:"ログインの記録を残す仕組みを本番の中継に出す",
+  tags:["fuka","aizu"],
+  sub:"試験用の中継では済み：本体の index.js は変えず、前に薄い1枚 kiroku_wrap.js を挟む。ログイン・登録のたびと、1人1日1回の起動を1行残す（時刻・読者の番号・端末の値・版・国。IP・メール・パスワードは残さない・400日で消える）。応答の違いは0か所。本番は変更0。出すときは今本番に載っているコードをそのまま使う（deploy.sh は DIFY_APP_KEY_434876AF を落とすので使わない）。端末の値とアカウントをつなぐには、アプリが2つの見出しを送る直しが別に要る（運転台改善の持ち場）。<b>先に 1</b>"},
+ {id:"s3", lvl:"y", no:"3", sum:"写真の番号", label:"ヘルプの写真に番号を付け、実験の流れの答えの下に写真を出す（開発版の実験の枝だけ）",
+  done:true,
+  sub:"<b>Mits様「写真の番号付けを実験の流れで試して　go」</b>。書庫の写真の説明92か所に番号（92本とも画像につながった）。31往復のうち27往復に写真が付き、答えの案内する画面と合ったのは26。書庫に無い番号が画面に出たのは0。アプリの画面で3問とも写真が出て、押すと大きく出る。費用457円。実験の流れも答えの上限2048に2回当たったので4096に上げた。枝 settei-jikken の commit 8a331d9・c97eb48（push していない）。担当 BS-engineer。結果：shashin_20261105/kekka.md"},
+ {id:"s4", lvl:"r", no:"4", sum:"Dify の切れ", label:"Dify の答えが画面で途中で切れる原因を調べる", done:true,
+  sub:"<b>Mits様「Difyの切れる件の原因を調べて」</b>。原因：Dify の LLM ノード（claude-opus-5-5）の答えの長さの上限が <b>2048 トークン</b>。切れた2往復はどちらも答えがちょうど 2048 トークン、ほかの41往復は最大 1985。画面に出る字は416字と707字なので、画面に出ない思考の分も同じ上限に入っている見込み（推測）。中継・アプリは切っていない。読めたのは下書きの設定で、公開中の版は 401 で読めず。担当 BA-researcher"},
+ {id:"s5", lvl:"r", no:"5", sum:"実験の失敗率", label:"実験の流れの「見当違い・答えない」の割合を測る（3 の答えに印を付ける）",
+  tags:["saki"],
+  sub:"投資が返るかを決める、まだ測っていない数。Dify で外れた9往復を実験の流れにも聞いた答えで測る。新しく流す費用は無し。<b>先に 3</b>。これが出ると 10 と、正式版の載せ替えの判断の材料が揃う"},
+ {id:"s6", lvl:"y", no:"6", sum:"書庫に4件", label:"書庫に4件足す（マネーフォワードと連携の飛ばし／同じ人が2つのアドレス／ペルソナ設定／外のサービスの案内）",
+  tags:["fuka","aizu"],
+  sub:"書庫は Dify と実験の流れの両方が読む1本。Dify に入れると正式版のお客様の答えが変わるので、直す前と後の答えを比べてから。入れた版を決定の記録に1行。<b>先に 3</b>（3 が書庫を触っているため）"},
+ {id:"s7", lvl:"r", no:"7", sum:"受け手を常に", label:"実験の流れの受け手（jikken_server）を Mac で常に動かす（起動時に起きる・落ちたら起き直す）",
+  tags:["saki"],
+  sub:"西田統合版は Mits様が毎日使う版。受け手が止まっていると設定サポーターが答えない。<b>先に 3</b>（3 が受け手のファイルを直しているため）。これが済まないと 8 に進めない"},
+ {id:"s8", lvl:"r", no:"8", sum:"版の切り替え", label:"西田の開発版と西田統合版の設定サポーターを実験の流れに切り替える（運転台改善の持ち場）",
+  tags:["saki"],
+  sub:"main は確認版・正式版の元なので、<b>効くのは開発版と西田統合版だけ</b>と分かる印を版ごとに付ける。決定の記録で運転台改善に渡し済み。<b>先に 7</b>"},
+ {id:"s12", lvl:"r", no:"8-2", sum:"版ごとに作り直す", label:"アプリを直すたびに、書庫と写真を作り直し続ける仕組みを作る",
+  tags:["saki"],
+  sub:"<b>Mits様「今後もこの運転台アプリ自体、経営アプリ自体が常に修正と改善とさらに機能追加が起きるので、初期はその変更のたびに最適化、ブラッシュアップ、アップデートをし続ける必要がある。その仕組みを作る必要がある。写真を撮って載せ替えたり、書庫の書き換えをしたり」</b>。今ある仕組み：西田統合版を組み上げたらヘルプを作り直す（経営の運転台 CLAUDE.md 10節・見張り3つ・版の記録 ~/.untendai/help_han.txt）。その続きに足す：①ヘルプが作り直されたら、書庫（make_shoko.py）と写真の番号の表をそのヘルプから作り直す ②書庫の版の記録を残し、ヘルプの版より古ければ見張りが知らせる ③決まった問いを流して、作り直す前と後の答えを比べる ④実験の流れの枝に入れる ⑤Dify にも入れる（これだけは正式版のお客様に届くので、③の比べを添えて Mits様の合図で）。今の差：書庫の元は 1.80.0 のヘルプ（make_shoko.py 3行目）・ヘルプの版は 1.83.7（help_han.txt）。どの画面が変わったかは未確認"},
+ {id:"s12b", lvl:"r", no:"8-3", sum:"今の書庫を揃える", label:"書庫と写真を、今のヘルプ（1.83.7）から作り直す（仕組みの最初の1回）",
+  tags:["saki"],
+  sub:"仕組みを作ったら、その場で1回走らせる。<b>先に 3</b>（3 が書庫と写真の番号を触っているため）。6 の書庫に4件足すのは、この作り直しのあとに重ねる"},
+ {id:"s9", lvl:"y", no:"9", sum:"Dify の直し", label:"Dify の切れを直す",
+  tags:["fuka","aizu"],
+  sub:"直す所：LLM ノードの答えの長さの上限 2048 を上げる（1985 まで来た往復があるので、2048 のままだと再発する）。上げる値は未決。Dify アプリ 434876af は全部の版で共通（main の sanbo.rs 43行目）。直すとその場で正式版の答えが変わり、答えが長くなる分の費用も増える。決まった問いで前後を比べてから"},
+ {id:"s10", lvl:"y", no:"10", sum:"費用を下げる", label:"費用を下げる手を試す（今の画面の節と目次だけ渡す・1時間の取り置き・点検の段を外す）",
+  sub:"1時間の取り置きなら1日30往復で 5分の取り置きの約4分の1。画面の節だけ渡せば閾値はほぼ無くなる。点検は118往復で書き直し0回、外せば約5秒速くなる。<b>先に 5</b>"},
+ {id:"s11", lvl:"z", no:"11", sum:"正式版の載せ替え", label:"正式版の設定サポーターを Dify から実験の流れに載せ替える",
+  tags:["fuka","aizu"],
+  sub:"<b>Mits様「ある時点で私が正式版の設定サポーターをDefiから実験版への搭載を指示する」</b>。お客様のアプリから使うには、中継から Claude を呼ぶ形が要る。材料は 1・5 の数"},
+];
+const SIRYO = [
+ {d:"11-05", n:"計測の土台（登録・14日後・竹）", f:"keisoku_toushi_20261105/kekka.md", w:"中継の記録の調べと、月ごとの表・本番に出す手順"},
+ {d:"11-05", n:"正確性の測り（3つの数）", f:"settei_jikken_20261104/seikakusei_20261105/kekka.md", w:"名前・手順・着いたかを Dify と実験の流れで比べた表"},
+ {d:"11-05", n:"Mits様の会話の外れ方", f:"settei_jikken_20261104/mits_kaiwa_20261105/kekka.md", w:"Dify 43往復の見当違い・答えない・速さ"},
+ {d:"11-05", n:"決定の記録", f:"../../司令塔/決定台帳_6セッション共通.md", w:"2026-11-05 の方向性4節"},
+ {d:"11-04", n:"設定サポーターの試し（15節が完走の結果）", f:"settei_supporter_tameshidai_20261104.html", w:"実験の流れと Dify の通しの試験6回・決まった問い40往復"},
+ {d:"11-04", n:"Muse の使い勝手の調査", f:"muse_ux_chousa_20261104/muse_ux_chousa_20261104.html", w:"7-B を公文型をやめた経緯に合わせて直した"},
+];
+const KEY = "settei_supporter_tracker_20261105";
+const TAG = {fuka:["t-fuka","お客様に届く"], aizu:["t-aizu","Mits様の合図"], saki:["t-saki","先にやる"], ugoku:["t-ugoku","動いている"]};
+let st = {};
+try { st = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e) { st = {}; }
+function isDone(it){ return (it.id in st) ? st[it.id] : !!it.done; }
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(st)); } catch(e) {} }
+function render(){
+  const L = document.getElementById("list"); L.innerHTML = "";
+  let d = 0, nowLeft = 0, soonLeft = 0;
+  GROUPS.forEach(function(it){
+    const done = isDone(it); if (done) d++; else if (it.lvl === "r") nowLeft++; else if (it.lvl === "y") soonLeft++;
+    const el = document.createElement("div"); el.className = "item " + it.lvl + (done ? " done" : "");
+    const tags = (it.tags || []).filter(function(t){ return !(done && t === "ugoku"); }).map(function(t){ return '<span class="tag ' + TAG[t][0] + '">' + TAG[t][1] + '</span>'; }).join("");
+    el.innerHTML = '<input type="checkbox"' + (done ? " checked" : "") + '><div><div class="head"><span class="no">' + it.no + '</span><span class="ttl">' + it.label + '</span><span class="sum">［' + it.sum + '］</span></div><div>' + tags + '</div><div class="sub">' + it.sub + '</div></div>';
+    el.querySelector("input").addEventListener("change", function(e){ st[it.id] = e.target.checked; save(); render(); });
+    L.appendChild(el);
+  });
+  document.getElementById("count").textContent = "済 " + d + "／" + GROUPS.length + "件・のこり いま " + nowLeft + "・近いうち " + soonLeft;
+}
+function renderSiryo(){
+  const T = document.getElementById("siryo");
+  const local = location.protocol === "file:";
+  SIRYO.forEach(function(s){ const tr = document.createElement("tr"); tr.innerHTML = "<td>" + s.d + "</td><td>" + (local ? "<a href=\"" + encodeURI(s.f) + "\">" + s.n + "</a>" : s.n + "<br><span class=\"small\">02_AI-MITS/_wip/" + s.f + "（Mac の中）</span>") + "</td><td>" + s.w + "</td>"; T.appendChild(tr); });
+  document.getElementById("sn").textContent = SIRYO.length;
+}
+render(); renderSiryo();
+</script>
+</body>
+</html>
