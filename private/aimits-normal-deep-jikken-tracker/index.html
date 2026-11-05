@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8"><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI-Mits NORMAL・DEEP 実験トラッカー（最終更新 2026-11-05 22:15・指示文 v6）</title>
+<title>AI-Mits NORMAL・DEEP 実験トラッカー（最終更新 2026-11-06 00:15・指示文 v6）</title>
 <style>
 :root{--bg:#f7f6f2;--card:#fff;--ink:#1d2330;--sub:#4a5262;--line:#e2dfd6;--gray:#9aa0a8;
 --r:#d23b3b;--y:#d89a12;--b:#2f6fd0;--z:#7a6bb0;--warn:#b3261e;--warnbg:#fdecea;--goal:#1f6f43;--goalbg:#e8f4ec;--wait:#6b5b00;--waitbg:#fff6d6}
@@ -104,10 +104,10 @@ const GROUPS = [
   sub:"<b>済 11-05 21:26</b>：失敗0・禁止の語0・問い2つ以上0・打ち消し0・同じ数字3往復以上0・書庫に無い固有名詞0。お客様に出た答えで前置きの数字が無いのは 240 中 6（6件とも1桁の数字を使っていて数え方が外す）。1往復の真ん中 NORMAL 18.73秒・7.5円／DEEP 29.43秒・16.3円・額 $26.54。途中で受け手 8800 が起こし直され13会話を流し直した（汚れ 0／60）。FAST・Dify には送っていない"},
  {id:"k16", lvl:"y", no:"8-3", sum:"AIの書庫", label:"Mits様の AI についての考えを書庫に足す（別のセッション）", done:true,
   sub:"<b>済 11-05 22:15</b>：書庫の文書 /Users/nishidamitsuhiro/untendai-aimits-jikken/engine/shoko/mits_ai_no_kangae.md（原文の写しと出どころだけ）。元：AI グループ講座の本文・二刀流 v2 統合版・F1-08・LEVEL1 レター控え（4C・成長期）・シラバス ver2・二刀流セミナーレター。書庫を足した版は /normal_v6s・/deep_v6s（本線の v6 とは別・試しは 8801 で流して止めた）。Mits様<b>「4つのC を貯めて／この回答をするときには…二刀流の納品動画を会員サイトのURLを案内する」「この動画を見て方針を確認してください」「なぜそれを見るのか？見たらどうなるのかは寄り添って答える回答を添えないとみる気にならない」</b>。N3 の流し直し（7回目の版）：1回目から「今は広がり始めの2年・周りと同じことをやっても売れる」、途中で「自分の商品に AI を足して出す」、最後に「この2年は稼ぎながら 4つのC を貯める時期」と The Library の動画「AI二刀流セミナー（アーカイブ版）」を、見たらどうなるか（今自分がどこにいるかが分かる・今日やる1つが決まる・焦りが消える）を添えて案内した（NORMAL・DEEP とも）。残る所：案内が2本とも5回目（最後）に付いた。担当：セッション「AI-Mits 書庫に Mits様の AI についての意見を足す」"},
- {id:"k11", lvl:"y", no:"9", sum:"開発版に載せる", label:"合格した作りを開発版に、Mac だけ切り替える印つきで載せる", tags:["aizu"],
-  sub:"Mits様「これが通ったら、版の流れのとおり開発版へ移します。OK go」。<b>21:32 パッチができて設定サポーターの直しに渡した</b>（kaihatsuban/aimits_v6_sanbo.patch・010b768 に当たる・cargo check 誤り0・8800 との通しの試験 NORMAL・DEEP 各2往復済み・8800 に渡らないのは前回の宿題・次の話題・呼ばれたい名前）。組み直しは33問の試験のあと。src-tauri/src/sanbo.rs だけの差分で、menu-v3 の 010b768 の上（#[cfg(feature = &#39;dev-test&#39;)]・~/.untendai/aimits_jikken_url があれば 8800 の /normal_v6・/deep_v6 へ・FAST は Dify のまま）。組み立ては設定サポーターの直しのセッションが /Users/nishidamitsuhiro/untendai-menu3 で持つ（決定台帳 21:12・21:19）。差分ができたら渡して、設定サポーターと一緒に2回目の組み立て"},
- {id:"k12", lvl:"y", no:"10", sum:"開発版で流し直す", label:"開発版から30問を流し直し、実験環境とのずれを見る",
-  sub:"実験環境ではアプリの前置きを手で組むので、アプリ経由で同じ答えになるかを確かめる"},
+ {id:"k11", lvl:"y", no:"9", sum:"開発版に載せる", label:"合格した作りを開発版に、Mac だけ切り替える印つきで載せる", tags:["aizu"], done:true,
+  sub:"<b>済 11-05 23:59</b>：設定サポーターの直しが menu-v3＝69ed41a（a4bb001 入り）で組み直した開発版 v1.83.7（23:49）を受け取り、23:50 に ~/.untendai/aimits_jikken_url（http://127.0.0.1:8800）を置いた。開発版の画面から NORMAL・DEEP に N3 の1通目を1つずつ送り、8800 の記録の tag untendai-kaihatsuban の行が 4 → 6（23:57 normal_v6 12.6秒・23:59 deep_v6 23.7秒）。写真 kaihatsuban/dan1_shashin/。FAST は Dify のまま。Mits様<b>「開発版をいじり始めたら、私の確認不要なことは完了まで進めてほしい」</b>。Mits様「これが通ったら、版の流れのとおり開発版へ移します。OK go」。<b>21:32 パッチができて設定サポーターの直しに渡した</b>（kaihatsuban/aimits_v6_sanbo.patch・010b768 に当たる・cargo check 誤り0・8800 との通しの試験 NORMAL・DEEP 各2往復済み・8800 に渡らないのは前回の宿題・次の話題・呼ばれたい名前）。組み直しは33問の試験のあと。src-tauri/src/sanbo.rs だけの差分で、menu-v3 の 010b768 の上（#[cfg(feature = &#39;dev-test&#39;)]・~/.untendai/aimits_jikken_url があれば 8800 の /normal_v6・/deep_v6 へ・FAST は Dify のまま）。組み立ては設定サポーターの直しのセッションが /Users/nishidamitsuhiro/untendai-menu3 で持つ（決定台帳 21:12・21:19）。差分ができたら渡して、設定サポーターと一緒に2回目の組み立て"},
+ {id:"k12", lvl:"y", no:"10", sum:"開発版で流し直す", label:"開発版から30問を流し直し、実験環境とのずれを見る", done:true,
+  sub:"<b>済 11-06 00:10</b>：開発版の組み立て（見本の帳簿・顧客3人・前置き 6.5千字）で30問 × NORMAL・DEEP・5往復＝60会話を 8800 に流した。失敗0・6往復以上0・禁止の語0・同じ数字の使い回し0（実験環境と同じ）。前置きの数字を使った答え NORMAL 96%→91%・DEEP 99%→94%。ずれた24回のうち18回は帳簿の違い（開発版は1桁の値ばかり・取引30件や111人の行が無い）、6回は答えの揺れ、組み立て方で数字を落とした回は0。1往復の真ん中 NORMAL 21.1秒・8.0円／DEEP 31.4秒・15.6円。額 $28.52。結果 kaihatsuban/zure_30_kekka.md。次は Mits様の開発版での検収（西田統合版は触らない）。元の目的：実験環境ではアプリの前置きを手で組むので、アプリ経由で同じ答えになるかを確かめる"},
  {id:"k13", lvl:"y", no:"11", sum:"西田統合版", label:"西田統合版に入れて微修正する", tags:["aizu"],
   sub:"西田統合版は微修正の段（決定台帳 10-31 07:31）"},
  {id:"k14", lvl:"z", no:"12", sum:"正式版の載せ替え", label:"正式版の NORMAL・DEEP を Dify から最高案に載せ替える", tags:["fuka","aizu"],
@@ -120,6 +120,8 @@ const GROUPS = [
   sub:"リンクにスタンドごとの印（utm）を付けるのは メール配信・計測・自動化 の持ち場（決定台帳 11-05 21:42 で頼んだ）。めどが付いたら広告（Meta広告の自動化・最適化サイクル）へ。広告の URL パラメーターの1行は11-05 午前に Meta の公式で確かめ済み"},
 ];
 const SIRYO = [
+ {d:"11-06", n:"開発版から30問を流し直した結果（実験環境とのずれ）", f:"aimits_jikken_20261105/kaihatsuban/zure_30_kekka.md", w:"60会話・全30行の表・ずれた24回の元"},
+ {d:"11-05", n:"盲検の画面 7回目（v6 と書庫を足した v6s）", f:"aimits_jikken_20261105/chiisai_mawashi/mokuken_v7.html", w:"N3〜N5 × 4つの作り・12枚・欄5つ"},
  {d:"11-05", n:"AI の書庫を足して N3 を流し直した結果", f:"aimits_jikken_20261105/gooufuku/N3_shoko_ai_kekka_20261105.md", w:"版ごとの答え（1本目〜7回目の版）・二刀流の動画の案内"},
  {d:"11-05", n:"30問で確かめた結果（v6）", f:"aimits_jikken_20261105/chiisai_mawashi/kakunin_30_v6.md", w:"60会話の検収・秒と円"},
  {d:"11-05", n:"盲検の画面 5回目（v6・漠然とした3問）", f:"aimits_jikken_20261105/chiisai_mawashi/mokuken_v6.html", w:"N1〜N3 × 3つの作り・9枚"},
