@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI-Mits NORMAL・DEEP 実験トラッカー（最終更新 2026-11-05）</title>
+<style>
+:root{--bg:#f7f6f2;--card:#fff;--ink:#1d2330;--sub:#4a5262;--line:#e2dfd6;--gray:#9aa0a8;
+--r:#d23b3b;--y:#d89a12;--b:#2f6fd0;--z:#7a6bb0;--warn:#b3261e;--warnbg:#fdecea;--goal:#1f6f43;--goalbg:#e8f4ec;--wait:#6b5b00;--waitbg:#fff6d6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15181d;--card:#1e232a;--ink:#e8eaee;--sub:#b3b9c3;--line:#333a44;--gray:#6f7680;--warnbg:#3a1f1d;--goalbg:#1c3326;--waitbg:#332d12}}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.7 -apple-system,"Hiragino Sans","Yu Gothic",sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:22px;margin:0 0 4px}
+h2{font-size:19px;margin:28px 0 10px}
+.small{font-size:14.5px;color:var(--sub)}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
+.legend span{display:inline-block;margin:2px 10px 2px 0}
+.tag{display:inline-block;font-size:13px;font-weight:700;border-radius:6px;padding:1px 8px;margin:0 6px 4px 0;white-space:nowrap}
+.t-fuka{background:var(--warnbg);color:var(--warn);border:1px solid var(--warn)}
+.t-aizu{background:var(--goalbg);color:var(--goal);border:1px solid var(--goal)}
+.t-saki{background:var(--waitbg);color:var(--wait);border:1px solid var(--wait)}
+.t-ugoku{background:#e7f0fd;color:#1f4f9a;border:1px solid #1f4f9a}
+.item{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-left:8px solid var(--gray);border-radius:8px;padding:12px 14px;margin:8px 0}
+.item.r{border-left-color:var(--r)}.item.y{border-left-color:var(--y)}.item.z{border-left-color:var(--z)}
+.item input{width:22px;height:22px;margin-top:4px;flex:none}
+.no{font-weight:700;min-width:2.2em}
+.ttl{font-weight:700}
+.sum{color:var(--sub);font-size:14.5px;margin-left:4px}
+.sub{font-size:14.5px;color:var(--sub);margin-top:4px}
+.sub b{color:var(--ink)}
+.item.done .ttl,.item.done .sub,.item.done .no,.item.done .sum{text-decoration:line-through;color:var(--gray)}
+.item.done .sub b{color:var(--gray)}
+.head{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+a{color:var(--b)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+td,th{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>AI-Mits NORMAL・DEEP 実験トラッカー</h1>
+<div class="small">最終更新 2026-11-05 ／ 持ち場：AI-Mits-チューニング ／ <span id="count"></span></div>
+
+<div class="box">
+<b>決まっている方向（2026-11-05 Mits様）</b>
+<ul class="small" style="margin:6px 0 0;padding-left:1.2em">
+<li><b>「NORMAL・DEEPの実験環境を作って　発注GO」「両方とも　最高を実験するんだよね」</b>。NORMAL も DEEP も最高案を、アプリにつながない Mac の中の実験環境で作る</li>
+<li>費用は<b>顧客を維持する投資</b>。安いか高いかは大した問題でなくなり、物差しは<b>質</b>（Mits様）</li>
+<li>版の流れ：実験環境で吟味 → 開発版（Mac だけ切り替える印つき）→ 西田統合版 → 正式版は <b>Dify のまま</b>、載せ替えは Mits様の指示（決定台帳 2026-11-05 11:41）</li>
+<li>Dify の5アプリ・中継・アプリ・WEB版・正式版は、この実験では<b>変えない</b></li>
+</ul>
+</div>
+
+<div class="box">
+<b>質の物差し</b>
+<ul class="small" style="margin:6px 0 0;padding-left:1.2em">
+<li><b>段1 失敗を0に</b>：答えない／見当違い／作り話／途中で切れる／<b>前置きが長くアドバイスが遅い</b>／<b>設定が無いことばかり言い、聞いたことにすぐ答えない</b>／<b>名前にこだわり2回目・3回目も同じことを聞く</b>（太字は Mits様が使って挙げられたもの）</li>
+<li><b>段2 当たりの深さ</b>：6月の7軸（主題・論点・原典・切り分け・Mits様らしさ・明日動ける・誠実さ）各10点で70点</li>
+<li><b>段3 持ち味</b>：NORMAL は学びの該当箇所が当たる／DEEP は実際の相談の事例（MK）を正しく選ぶ</li>
+<li><b>合格の線：FAST（書庫を引かない）より良いこと</b>。Mits様「ファーストが西田メソッド…を引いていない回答をしているんだけど、そちらの方がいい回答に見えてしまうこと」</li>
+</ul>
+</div>
+
+<div class="box legend small">
+<b>見方</b><br>
+<span>左の帯の色＝重要度：<b style="color:var(--r)">■ いま</b>／<b style="color:var(--y)">■ 近いうち</b>／<b style="color:var(--z)">■ 完成後</b></span><br>
+<span class="tag t-fuka">お客様に届く</span>正式版のお客様の答えに効く<br>
+<span class="tag t-aizu">Mits様の合図</span>Mits様の合図・指示が出てから進める<br>
+<span class="tag t-saki">先にやる</span>これが済まないと、後ろの段が始められない<br>
+<span class="tag t-ugoku">動いている</span>担当が今やっている<br>
+並びは仕事の順番。済んだものは同じ位置で ☑＋取消線＋グレーになる（チェックはこのブラウザに残る）。左の番号と［ ］の一語は探すための目印で、記号に意味は無い
+</div>
+
+<h2>段取り</h2>
+<div id="list"></div>
+
+<h2>資料（<span id="sn"></span>件）</h2>
+<div class="box"><table id="siryo"><tr><th>日</th><th>資料</th><th>何のため</th></tr></table></div>
+</div>
+
+<script>
+const GROUPS = [
+ {id:"k1", lvl:"r", no:"済", sum:"質の物差し", label:"質の物差しを置いた（段1〜3・合格の線は FAST より良いこと）", done:true,
+  sub:"Mits様が使って挙げられた5つを段1に入れた。物差しの中身は上の枠。決定台帳 2026-11-05 11:41"},
+ {id:"k2", lvl:"r", no:"済", sum:"版の流れ", label:"版の流れを決めた（実験環境 → 開発版 → 西田統合版・正式版は Dify のまま）", done:true,
+  sub:"<b>開発版＝開発して、叩いて、検収する所</b>（決定台帳 2026-10-28 20:5x・21:0x）。大きな直しは開発版で確かめてから西田統合版（10-31 08:21）。正式版の扱いは設定サポーターと同じ（11-05 10:10）"},
+ {id:"k3", lvl:"r", no:"1", sum:"30問", label:"30問の表を作る（6月の18問＋12問）", tags:["saki","ugoku"],
+  sub:"足す12問：2回目・3回目まで続く会話4本／手元の数字（未入力の欄を含む）3本／学びの該当箇所2本／事例（MK）の選び3本。前置きはアプリが付ける全文を見本の数字で組む。Mits様の実データは使わない。担当 jikken-A"},
+ {id:"k4", lvl:"r", no:"2", sum:"今の3つの答え", label:"今の Dify（FAST・NORMAL・DEEP）に30問を流して答えを取る", tags:["ugoku"],
+  sub:"試しの名前 aimits-jikken-20261105 で送る。Dify の設定は変えない。流した数は決定台帳に「数え方への影響」として残す。担当 jikken-A"},
+ {id:"k5", lvl:"r", no:"3", sum:"NORMAL 最高案", label:"NORMAL の最高案を作る（書庫の全文・前置きを分ける・点検・学びの該当箇所）", tags:["ugoku"],
+  sub:"西田メソッドの書庫5本（約28,402字）を切らずに渡す。答えは Opus 5.5。前置きを相談から分けて別の欄で渡す。答えの横に学びの該当箇所を1つ。担当 jikken-B"},
+ {id:"k6", lvl:"r", no:"4", sum:"DEEP 最高案", label:"DEEP の最高案を作る（事例の目次を全部・選ぶ係に履歴を渡さない・点検）", tags:["ugoku"],
+  sub:"今の DEEP は13回中7回、事例が選ばれず本文なしで答えた（11-04 18:17）。根は前置きと履歴が選ぶ係に届くこと・目次が100件で止まること（11-04 18:22〜18:29）。<b>相談の録音は出さない</b>（Mits様 11-04 18:17）。担当 jikken-B"},
+ {id:"k7", lvl:"r", no:"5", sum:"最高案に30問", label:"30問を NORMAL・DEEP の最高案に流す", tags:["ugoku"],
+  sub:"1 の表ができてから。1往復ごとに秒・トークン・円を記録。担当 jikken-B"},
+ {id:"k8", lvl:"r", no:"6", sum:"盲検の画面", label:"どの作りの答えか伏せて並べ、Mits様が印と点を付けられる画面を作る", tags:["ugoku"],
+  sub:"段1の失敗の印・段2の7軸・段3の当たり。印はブラウザに残り、書き出せる。担当 jikken-A"},
+ {id:"k9", lvl:"r", no:"7", sum:"自由に聞く画面", label:"Mits様が思い付いた問いを、素の Opus 5.5・NORMAL 最高案・DEEP 最高案に同時に聞ける画面を作る", tags:["ugoku"],
+  sub:"決まった問いでは拾えない「使ってみて感じたこと」を拾うため。Mac の中の受け手に直に送る。担当 jikken-B"},
+ {id:"k10", lvl:"y", no:"8", sum:"Mits様の吟味", label:"Mits様が盲検の画面と自由に聞く画面で吟味する", tags:["aizu"],
+  sub:"結果を集めて、FAST より良いか・段1の失敗が減ったかを出す。直す所があれば実験環境で直して流し直す"},
+ {id:"k11", lvl:"y", no:"9", sum:"開発版に載せる", label:"合格した作りを開発版に、Mac だけ切り替える印つきで載せる", tags:["aizu"],
+  sub:"設定サポーターの別の枝と同じ形（印のファイルがあるときだけ Mac の受け手に送る）。開発版の枝は運転台改善の持ち場"},
+ {id:"k12", lvl:"y", no:"10", sum:"開発版で流し直す", label:"開発版から30問を流し直し、実験環境とのずれを見る",
+  sub:"実験環境ではアプリの前置きを手で組むので、アプリ経由で同じ答えになるかを確かめる"},
+ {id:"k13", lvl:"y", no:"11", sum:"西田統合版", label:"西田統合版に入れて微修正する", tags:["aizu"],
+  sub:"西田統合版は微修正の段（決定台帳 10-31 07:31）"},
+ {id:"k14", lvl:"z", no:"12", sum:"正式版の載せ替え", label:"正式版の NORMAL・DEEP を Dify から最高案に載せ替える", tags:["fuka","aizu"],
+  sub:"Mits様の指示が出たときだけ。お客様のアプリから使うには、中継から Claude を呼ぶ形が要る"},
+];
+const SIRYO = [
+ {d:"11-05", n:"NORMAL・DEEP を投資として見る", f:"aimits_normal_deep_toushi_20261105.html", w:"案ごとの投資額・費用・返りの式。公開用URL：reports.7years.life/private/aimits-normal-deep-toushi/"},
+ {d:"11-05", n:"決定の記録", f:"../../司令塔/決定台帳_6セッション共通.md", w:"2026-11-05 11:41 の節（発注GO・版の流れ・質の物差し）"},
+ {d:"11-05", n:"実験の結果の置き場", f:"aimits_jikken_20261105/", w:"30問・答え・盲検の画面・自由に聞く画面（担当が作っている）"},
+ {d:"11-04", n:"NORMAL は中間案・DEEP は最高案の整理", f:"aimits_normal_chukan_deep_saikou_20261104.html", w:"最高案の中身（4・5・13節）"},
+ {d:"06-13", n:"6月の盲検の物差し（7軸70点）", f:"ab_blind_scoring_20260613.md", w:"段2の物差しの元"},
+];
+const KEY = "aimits_normal_deep_jikken_tracker_20261105";
+const TAG = {fuka:["t-fuka","お客様に届く"], aizu:["t-aizu","Mits様の合図"], saki:["t-saki","先にやる"], ugoku:["t-ugoku","動いている"]};
+let st = {};
+try { st = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e) { st = {}; }
+function isDone(it){ return (it.id in st) ? st[it.id] : !!it.done; }
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(st)); } catch(e) {} }
+function render(){
+  const L = document.getElementById("list"); L.innerHTML = "";
+  let d = 0, nowLeft = 0, soonLeft = 0;
+  GROUPS.forEach(function(it){
+    const done = isDone(it); if (done) d++; else if (it.lvl === "r") nowLeft++; else if (it.lvl === "y") soonLeft++;
+    const el = document.createElement("div"); el.className = "item " + it.lvl + (done ? " done" : "");
+    const tags = (it.tags || []).filter(function(t){ return !(done && t === "ugoku"); }).map(function(t){ return '<span class="tag ' + TAG[t][0] + '">' + TAG[t][1] + '</span>'; }).join("");
+    el.innerHTML = '<input type="checkbox"' + (done ? " checked" : "") + '><div><div class="head"><span class="no">' + it.no + '</span><span class="ttl">' + it.label + '</span><span class="sum">［' + it.sum + '］</span></div><div>' + tags + '</div><div class="sub">' + it.sub + '</div></div>';
+    el.querySelector("input").addEventListener("change", function(e){ st[it.id] = e.target.checked; save(); render(); });
+    L.appendChild(el);
+  });
+  document.getElementById("count").textContent = "済 " + d + "／" + GROUPS.length + "件・のこり いま " + nowLeft + "・近いうち " + soonLeft;
+}
+function renderSiryo(){
+  const T = document.getElementById("siryo");
+  const local = location.protocol === "file:";
+  SIRYO.forEach(function(s){ const tr = document.createElement("tr"); tr.innerHTML = "<td>" + s.d + "</td><td>" + (local ? "<a href=\"" + encodeURI(s.f) + "\">" + s.n + "</a>" : s.n + "<br><span class=\"small\">02_AI-MITS/_wip/" + s.f + "（Mac の中）</span>") + "</td><td>" + s.w + "</td>"; T.appendChild(tr); });
+  document.getElementById("sn").textContent = SIRYO.length;
+}
+render(); renderSiryo();
+</script>
+</body>
+</html>
