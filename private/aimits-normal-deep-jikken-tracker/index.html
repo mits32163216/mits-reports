@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI-Mits NORMAL・DEEP 実験トラッカー（最終更新 2026-11-05）</title>
+<title>AI-Mits NORMAL・DEEP 実験トラッカー（最終更新 2026-11-05 21時台・指示文 v6）</title>
 <style>
 :root{--bg:#f7f6f2;--card:#fff;--ink:#1d2330;--sub:#4a5262;--line:#e2dfd6;--gray:#9aa0a8;
 --r:#d23b3b;--y:#d89a12;--b:#2f6fd0;--z:#7a6bb0;--warn:#b3261e;--warnbg:#fdecea;--goal:#1f6f43;--goalbg:#e8f4ec;--wait:#6b5b00;--waitbg:#fff6d6}
@@ -98,10 +98,14 @@ const GROUPS = [
   sub:"<b>済 11-05 12:4x</b>：5つの作りでカード190枚（38回×5）。段1の失敗の印・段2の7軸・段3の当たり。印はブラウザに残り、書き出せる。今の3つの作りで組んだ版はできた（カード114枚）。最高案の2つが入ったら組み直す（190枚）。担当 jikken-A"},
  {id:"k9", lvl:"r", no:"7", sum:"自由に聞く画面", label:"Mits様が思い付いた問いを、素の Opus 5.5・NORMAL 最高案・DEEP 最高案に同時に聞ける画面を作る", done:true,
   sub:"<b>済 11-05 12:4x</b>：受け手は Mac の中で常に動く（launchd com.mits.aimits-saikou-engine・127.0.0.1:8800）。決まった問いでは拾えない「使ってみて感じたこと」を拾うため。Mac の中の受け手に直に送る。担当 jikken-B"},
- {id:"k10", lvl:"y", no:"8", sum:"Mits様の吟味", label:"Mits様が盲検の画面と自由に聞く画面で吟味する", tags:["aizu"],
-  sub:"結果を集めて、FAST より良いか・段1の失敗が減ったかを出す。直す所があれば実験環境で直して流し直す"},
+ {id:"k10", lvl:"y", no:"8", sum:"Mits様の吟味", label:"Mits様が盲検の画面で吟味する（3問ずつ5回・v2→v6）", done:true,
+  sub:"<b>済 11-05 20:57</b>：Mits様「3問か5問を作って…繰り返していった方がいい」で3問ずつ小さく回した。1回目 v2（先送り・問いが多い）→2回目 v3（Mits様「正論過ぎて、はぁ、と」「情報量が多すぎて萎える」）→3回目 v4（短くしたら上辺に。Mits様「一切かかりつけにする情報を引っ張ってなくて、上辺の話」）→4回目 v5（運転台の数字を相談に合わせて1つ選ぶ・数字に近い3問）：6枚とも FAST より上→5回目 v6（言っていない不安を打ち消さない・同じ数字を使い回さない・漠然とした3問）：印 0／9・3問とも FAST より上。Mits様「数字も知っていて、『お』と思って話そうかなと思う」（DEEP N1）。FAST は3問とも「詰問調」"},
+ {id:"k15", lvl:"y", no:"8-2", sum:"30問で確認", label:"v6 を30問（60会話・5往復）で最後に確かめる", done:true,
+  sub:"<b>済 11-05 21:26</b>：失敗0・禁止の語0・問い2つ以上0・打ち消し0・同じ数字3往復以上0・書庫に無い固有名詞0。お客様に出た答えで前置きの数字が無いのは 240 中 6（6件とも1桁の数字を使っていて数え方が外す）。1往復の真ん中 NORMAL 18.73秒・7.5円／DEEP 29.43秒・16.3円・額 $26.54。途中で受け手 8800 が起こし直され13会話を流し直した（汚れ 0／60）。FAST・Dify には送っていない"},
+ {id:"k16", lvl:"y", no:"8-3", sum:"AIの書庫", label:"Mits様の AI についての考えを書庫に足す（別のセッション）",
+  sub:"Mits様（5回目 N3）「AIについての回答は私が考えていることと違うので、AI講座やグルコンから私の意見を書庫に入れる必要がある」「業務改善は通過点の手段で、何をすべきかは言っている」「AIに関しての整理は別枝にして」。元：AI グループ講座の本文・二刀流 v2 統合版・F1-08・LEVEL1 レター（4C・成長期）。書庫を足した版は受け手 8800 の /normal_v6s・/deep_v6s（本線の v6 とは別）。21時台：4C 版で「今は広がり始めの2年」「自分が持っているものに AI を足して、小さく出し続ける」まで届いた。「4つのC を貯める」の中身はまだ出ていない。担当：セッション「AI-Mits 書庫に Mits様の AI についての意見を足す」"},
  {id:"k11", lvl:"y", no:"9", sum:"開発版に載せる", label:"合格した作りを開発版に、Mac だけ切り替える印つきで載せる", tags:["aizu"],
-  sub:"設定サポーターの別の枝と同じ形（印のファイルがあるときだけ Mac の受け手に送る）。開発版の枝は運転台改善の持ち場"},
+  sub:"Mits様「これが通ったら、版の流れのとおり開発版へ移します。OK go」。<b>いま</b>：src-tauri/src/sanbo.rs だけの差分を、menu-v3 の 010b768 の上で作っている（#[cfg(feature = &#39;dev-test&#39;)]・~/.untendai/aimits_jikken_url があれば 8800 の /normal_v6・/deep_v6 へ・FAST は Dify のまま）。組み立ては設定サポーターの直しのセッションが /Users/nishidamitsuhiro/untendai-menu3 で持つ（決定台帳 21:12・21:19）。差分ができたら渡して、設定サポーターと一緒に2回目の組み立て"},
  {id:"k12", lvl:"y", no:"10", sum:"開発版で流し直す", label:"開発版から30問を流し直し、実験環境とのずれを見る",
   sub:"実験環境ではアプリの前置きを手で組むので、アプリ経由で同じ答えになるかを確かめる"},
  {id:"k13", lvl:"y", no:"11", sum:"西田統合版", label:"西田統合版に入れて微修正する", tags:["aizu"],
@@ -110,6 +114,12 @@ const GROUPS = [
   sub:"Mits様の指示が出たときだけ。お客様のアプリから使うには、中継から Claude を呼ぶ形が要る"},
 ];
 const SIRYO = [
+ {d:"11-05", n:"30問で確かめた結果（v6）", f:"aimits_jikken_20261105/chiisai_mawashi/kakunin_30_v6.md", w:"60会話の検収・秒と円"},
+ {d:"11-05", n:"盲検の画面 5回目（v6・漠然とした3問）", f:"aimits_jikken_20261105/chiisai_mawashi/mokuken_v6.html", w:"N1〜N3 × 3つの作り・9枚"},
+ {d:"11-05", n:"盲検の画面 4回目（v5・数字に近い3問）", f:"aimits_jikken_20261105/chiisai_mawashi/mokuken_v5.html", w:"S1・G1・Q2 × 3つの作り・9枚"},
+ {d:"11-05", n:"盲検の画面 3回目（v4）", f:"aimits_jikken_20261105/chiisai_mawashi/mokuken_v4.html", w:"N1〜N3・9枚"},
+ {d:"11-05", n:"盲検の画面 2回目（v3）", f:"aimits_jikken_20261105/chiisai_mawashi/mokuken_v3.html", w:"Q5・Q8・Q10・9枚"},
+ {d:"11-05", n:"設定サポーターに渡した問い33問", f:"aimits_jikken_20261105/gooufuku/toi_ichiran_settei_supporter_yo.md", w:"30問＋N1〜N3"},
  {d:"11-05", n:"NORMAL・DEEP を投資として見る", f:"aimits_normal_deep_toushi_20261105.html", w:"案ごとの投資額・費用・返りの式。公開用URL：reports.7years.life/private/aimits-normal-deep-toushi/"},
  {d:"11-05", n:"決定の記録", f:"../../司令塔/決定台帳_6セッション共通.md", w:"2026-11-05 11:41 の節（発注GO・版の流れ・質の物差し）"},
  {d:"11-05", n:"盲検の画面（5つの作り・190枚）", f:"aimits_jikken_20261105/mokuken.html", w:"Mits様が伏せて印と点を付ける"},
