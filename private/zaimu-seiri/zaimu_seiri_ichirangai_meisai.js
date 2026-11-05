@@ -1,7 +1,7 @@
 // 本番（財務整理_TOP.html 394行目・一覧外_上限と判定.html が読む）。2026-11-05 BS-keiri：旧1〜2行目の「下書き（本番ではない）」「本番には未投入」は古い但し書きだったので直した
 // 2026-11-05 BS-keiri：10月分を投入して 2026-01〜2026-10（10ヶ月）にした・USD→JPYレート: 148
 // - 元データ：csv_inbox/ の10月分（Amex US 44000/81007/72006 の 2026-10_full、BOA 5511/3245・Chase 5669/0430 の 2026-10_full、Wise USD 2026-10、Amex JP 42008 の 11-20/21-31 の mf（# 期間外の行を含む）、PayPay 14310 の3本）
-// - 10月分を足した行には oct_2026（count/usd/jpy/yen）を付けた。新しい相手は m-o01〜m-o23（status は null・素案）
+// - 10月分を足した行には oct_2026（count/usd/jpy/yen）を付けた。新しい相手は m-o01〜m-o23（m-o15 は欠番：DF.ペイデイ＝借入の返済の側なので入れなかった）。status は null・素案
 // - 全行 monthly = Math.round(total / 10) で再計算。突き合わせは末尾の oct_2026_check
 // - 以前の経過：2026-10-01 BS-keiri 9月分込み v3（m-k081 JOINUS 9月分加算・m-k152 ROYAL HOST の card 書き換え）
 //
@@ -10,7 +10,7 @@ var ICHIRANGAI_MEISAI = {
 "months": 10,
 "rate_usd": 148,
 "target_monthly": 478023,
-"items_sum_monthly": 770257,
+"items_sum_monthly": 768466,
 "expected_after_adjust": 784655,
 "diff_actual_vs_expected": 0,
 "caps": {"基本支出":0,"現金生活費":116914,"カード生活費":16961,"浪費":30688,"投資":48126,"旅行":51989},
@@ -417,8 +417,7 @@ var ICHIRANGAI_MEISAI = {
     {"id": "m-o20", "category": "基本支出", "row": "", "merchant": "サイゼリヤ 埼玉県 吉川市（Amex JP 42008）", "card": "Amex JP 42008", "user": "Mits様", "count": 1, "total": 2540, "monthly": 254, "first": "2026-10-23", "last": "2026-10-23", "note": "10月に初出。素案：81007 の SAIZERIYA（m-f60）に合わせて基本支出（2026-11-05 BS-keiri 10月分で追加）", "status": null, "status_date": null, "sub": "", "oct_2026": {"count": 1, "usd": 0.0, "jpy": 2540, "yen": 2540}},
     {"id": "m-o21", "category": "基本支出", "row": "", "merchant": "平和交通株式会社 和田町 神奈川県 横（Amex JP 42008）", "card": "Amex JP 42008", "user": "Mits様", "count": 1, "total": 1000, "monthly": 100, "first": "2026-10-23", "last": "2026-10-23", "note": "10月に初出。素案：81007 の HEIWA CO（m-f66）に合わせて基本支出（2026-11-05 BS-keiri 10月分で追加）", "status": null, "status_date": null, "sub": "", "oct_2026": {"count": 1, "usd": 0.0, "jpy": 1000, "yen": 1000}},
     {"id": "m-o22", "category": "基本支出", "row": "", "merchant": "DCS・根岸店 東京都 渋谷区（Amex JP 42008）", "card": "Amex JP 42008", "user": "Mits様", "count": 1, "total": 1080, "monthly": 108, "first": "2026-10-23", "last": "2026-10-23", "note": "10月に初出。正体は未確認（素案で基本支出）（2026-11-05 BS-keiri 10月分で追加）", "status": null, "status_date": null, "sub": "", "oct_2026": {"count": 1, "usd": 0.0, "jpy": 1080, "yen": 1080}},
-    {"id": "m-o23", "category": "基本支出", "row": "", "merchant": "株式会社はなまる 香川県 丸亀市（Amex JP 42008）", "card": "Amex JP 42008", "user": "Mits様", "count": 1, "total": 960, "monthly": 96, "first": "2026-10-27", "last": "2026-10-27", "note": "10月に初出。素案で基本支出（2026-11-05 BS-keiri 10月分で追加）", "status": null, "status_date": null, "sub": "", "oct_2026": {"count": 1, "usd": 0.0, "jpy": 960, "yen": 960}},
-    {"id": "m-o15", "category": "基本支出", "row": "", "merchant": "DF.ペイデイ（PayPay 銀行の口座振替）", "card": "PayPay 銀行 14310", "user": "Mits様", "count": 1, "total": 17908, "monthly": 1791, "first": "2026-10-27", "last": "2026-10-27", "note": "10/27 17,908円。9/28 にも同額（PayPay 10月1日回の CSV に期間外として載っている）。サーカス10月実績の表では 2026年に4回・71,632円。1〜9月分はこの一覧に行が無かったので未投入。正体は未確認（素案で基本支出）（2026-11-05 BS-keiri 10月分で追加）", "status": null, "status_date": null, "sub": "", "oct_2026": {"count": 1, "usd": 0.0, "jpy": 17908, "yen": 17908}}
+    {"id": "m-o23", "category": "基本支出", "row": "", "merchant": "株式会社はなまる 香川県 丸亀市（Amex JP 42008）", "card": "Amex JP 42008", "user": "Mits様", "count": 1, "total": 960, "monthly": 96, "first": "2026-10-27", "last": "2026-10-27", "note": "10月に初出。素案で基本支出（2026-11-05 BS-keiri 10月分で追加）", "status": null, "status_date": null, "sub": "", "oct_2026": {"count": 1, "usd": 0.0, "jpy": 960, "yen": 960}}
 ],
 "removed": [
     {"id": "m-t03", "category": "投資", "row": "", "merchant": "MUUMUUDOMAIN", "card": "Amex US 44000", "user": "Mits様", "count": 4, "total": 27623, "monthly": 3453, "first": "2026-03-31", "last": "2026-07-03", "note": "抜けの追加（Mits様 2026-09-20 JUNKUDO 指摘）／CSV(20260909)集計 4件@148／ドメイン更新", "status": null, "status_date": null, "sub": "ドメイン", "removed": "サブスク整理 k2-36 ムームードメイン と二重（Mits様 2026-09-20 参謀照合）"},
@@ -438,5 +437,5 @@ var ICHIRANGAI_MEISAI = {
     {"id": "m-s02", "category": "投資", "row": "", "merchant": "ZOOM.COM 888-799-966 SAN JOSE CA", "card": "Amex US 44000", "user": "Mits様", "count": 1, "total": 24404, "monthly": 3051, "first": "2026-09-26", "last": "2026-09-26", "note": "2026年9月の分（一覧の集計期間 2026-01〜08 の外）／原典 amex_us_44000_2026-09_full.csv／USD $164.89@148／素案：仕事の会議に使う道具なので『投資』に置いた。参謀の検算待ち", "status": null, "status_date": null, "sub": "", "removed_reason": "サブスク整理 k3-11 Zoom（年払い）へ移動（Mits様 2026-10-01「年払い　継続」）"},
     {"id": "m-s11", "category": "投資", "row": "", "merchant": "LPTC情報配信ペ-ジ 東京都 港区", "card": "Amex JP 42008", "user": "Mits様", "count": 1, "total": 66000, "monthly": 8250, "first": "2026-09-11", "last": "2026-09-11", "note": "2026年9月の分（一覧の集計期間 2026-01〜08 の外）／原典 amex_jp_42008_2026-09-01-15_full.csv（円建てなのでレート換算なし・66,000円）／素案：情報配信の役務なので『投資』に置いた。参謀の検算待ち", "status": null, "status_date": null, "sub": "", "removed_reason": "サブスク整理 k3-12 LPTC情報配信ページ（年払い）へ移動（Mits様 2026-10-01「年払い　来年　解約」）"}
 ],
-"oct_2026_check": {"csv_files": "csv_inbox/ の10月分（下の build の対象一覧）", "usd_csv_net": 3205.96, "jpy_csv_net": -1041354, "usd_to_items": 4408.18, "jpy_to_items": 454584, "usd_other": {"S": 1427.0, "P": 3180.9, "I": -5810.12}, "jpy_other": {"L": 40357, "S": 88000, "I": -1782969, "P": 158674}, "legend": "M=この一覧の行へ／S=サブスク一覧（data.js）の行へ／L=借入の返済（data.js k1）へ／P=自分の口座・カードの間の支払い（二重になるので入れない）／I=入金（入れない）。Pending・確定前は入れていない"}
+"oct_2026_check": {"csv_files": "csv_inbox/ の10月分（下の build の対象一覧）", "usd_csv_net": 3205.96, "jpy_csv_net": -1041354, "usd_to_items": 4408.18, "jpy_to_items": 436676, "usd_other": {"S": 1427.0, "P": 3180.9, "I": -5810.12}, "jpy_other": {"L": 58265, "S": 88000, "I": -1782969, "P": 158674}, "legend": "M=この一覧の行へ／S=サブスク一覧（data.js）の行へ／L=借入の返済（data.js k1）へ／P=自分の口座・カードの間の支払い（二重になるので入れない）／I=入金（入れない）。Pending・確定前は入れていない"}
 };
