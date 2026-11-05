@@ -186,7 +186,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-30 17:52 ／ 写した時刻 2026-10-30 18:36</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-11-05 11:14 ／ 写した時刻 2026-11-05 12:37</p>
 <h2 id="報告-Meta広告の自動化・最適化サイクル">報告 ── Meta広告の自動化・最適化サイクル</h2>
 <p>この持ち場のセッションが、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_Meta広告の自動化.md</p>
@@ -228,6 +229,25 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>get_session &quot;self&quot; の permissionMode：<strong>auto</strong>（17:50 に測った）。この持ち場は bypassPermissions ではない。モードは他のセッションの依頼では変えない。変える札は Mits様が要るときに出す</li>
 <li>今回の合図に当たる操作（読む・報告に1行書く）は auto のまま止まらず済んだ。広告の作成・設定変更・お金が動く操作は、これまでどおり Mits様の合図まで何もしていない</li>
 <li>17:52 に測り直した get_session &quot;self&quot; の permissionMode：<strong>bypassPermissions</strong>（17:50 は auto。司令塔が 17:52 に切り替えた分が効いた）。広告の作成・お金が動く操作は Mits様の合図待ちのまま</li>
+</ul>
+<h3 id="2026-11-05-11-11-Meta広告の自動化・最適化サイクル-決定台帳-2026-11">2026-11-05 11:11（Meta広告の自動化・最適化サイクル）── 決定台帳 2026-11-05 10:43／10:46／10:59／11:10 の4節を読んだ</h3>
+<ul>
+<li>読んだ中身：広告連携は Meta を先にする（Google 広告の設定は作らない）／追跡は費用が見える広告から作る（広告 → オプトイン登録 → Cloudflare に残す → その後の追跡）／試験用の中継 aimits-report-proxy-test で試し登録2回が通った／本番に出す3つ（本番の中継に包み・UTAGE の登録のページにスクリプト・Meta 広告の URL パラメーター）は Mits様の合図待ち。3つ目が、この持ち場の分</li>
+<li>この持ち場の分の実測（11:11・API の読み取りだけ）：広告 30本のうち、広告のクリエイティブに URL パラメーター（url_tags）が入っているものは 0本、入っていないものは 30本。キャンペーン 8本は全部 PAUSED・最終更新 2026-03-01T01:29:40+0900 のまま。全期間の費用 68458円・表示 10402・リンクのクリック 487（11-05 10:59 の台帳の数と同じ）</li>
+<li>台帳の「登録に結べたもの 0」の原因は、上の url_tags 0/30 と合う（広告の URL に utm が付いていない）</li>
+<li>入れる1行（台帳 11:10 の節のとおり・Meta 公式ヘルプで確かめたと書かれている）：utm_source=meta&amp;utm_medium=paid&amp;utm_campaign={{campaign.id}}&amp;utm_term={{adset.id}}&amp;utm_content={{ad.id}}。入れる先は広告ごとの「URL パラメーター」の欄（API では creative の url_tags）。30本とも PAUSED なので、入れても配信は始まらない。広告の行き先のオプトインは決まっていない（台帳 2026-10-09 16:4x）ため、行き先を決めるときに同時に入れる形にする</li>
+<li>Meta 広告の設定は、今回なにも変えていない（上のキャンペーン8本の最終更新が証拠）。入れるのは広告の設定の変更なので、Mits様の合図が出るまで入れない</li>
+<li>予見：行き先のオプトインが決まる前に url_tags だけ入れても、今の 3 UTAGE ページ＋3 インスタントフォーム宛ての広告は、登録の中継 /register を通らない。根拠：10-20 の報告に書いた現在の行き先（3 UTAGE ページ＋3 インスタントフォーム）と、台帳 10-09 16:4x の「オプトインは未決」</li>
+</ul>
+<h3 id="2026-11-05-11-14-Meta広告の自動化・最適化サイクル-決定台帳-2026-11">2026-11-05 11:14（Meta広告の自動化・最適化サイクル）── 決定台帳 2026-11-05 11:13 の節を読んだ（広告の URL パラメーター・キャンペーン・運用はこの持ち場が受け持つ）</h3>
+<ul>
+<li>出どころ：Mits様原文「ここは仕組み作りをしたので、あとの広告のパラメーターとかキャンペーンとかそういったことはメタ広告セッションに任せて。」（台帳 11:13）</li>
+<li>この持ち場の受け持ち：広告の URL パラメーター（11:10 の節の1行）・キャンペーン・広告の運用。Meta 広告の設定の変更（URL パラメーターを入れる・キャンペーンの作成と公開・予算）は、これまでどおり Mits様の合図で</li>
+<li>AI-Mits-チューニングの受け持ち（私は触らない）：本番の中継の包み deploy_honban_koukoku.sh・UTAGE の登録のページの koukoku_snippet.js・集計の道具 koukoku_shuukei.py・毎朝の取り込み</li>
+<li>読んだ使い方：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/keisoku_toushi_20261105/koukoku_tsuiseki/kekka.md の 2（Meta 広告の URL の決まり）。utm は source=meta・medium=paid・campaign={{campaign.id}}・term={{adset.id}}・content={{ad.id}} の5つ。集計の道具は utm_content を Meta の ad_id に当てる</li>
+<li>今の状態（実測・11-05 11:11 と同じ API の読み取り）：広告30本の url_tags は0本、行き先の URL に utm_ を含むものは0件、キャンペーン8本は全部 PAUSED</li>
+<li>まだ確かめていないこと：すでにある広告（クリエイティブ）に url_tags を足せるか、新しいクリエイティブを作って広告に付け替える形になるか。Meta の公式の説明で確かめるまで、手順を書かない。確かめるのは設定を変える前の調べで、Meta 広告の設定は変えない</li>
+<li>広告の行き先のオプトインが決まっていない（台帳 10-09 16:4x）ので、url_tags は行き先と同時に入れる形のまま</li>
 </ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
