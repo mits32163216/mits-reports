@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI-Mits NORMAL・DEEP を投資として見る（2026-11-05）</title>
+<style>
+:root{--bg:#fbfaf6;--fg:#1d2733;--mut:#5b6672;--line:#d9d4c7;--acc:#0d3b66;--warn:#a4381b;--ok:#1d6b3a;--soft:#f1eee3}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.85 "Hiragino Sans","Yu Gothic",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:28px 18px 80px}
+h1{font-size:27px;line-height:1.5;margin:0 0 6px;color:var(--acc)}
+h2{font-size:22px;margin:46px 0 10px;padding:8px 12px;border-left:6px solid var(--acc);background:var(--soft)}
+h3{font-size:19px;margin:26px 0 6px;color:var(--acc)}
+p,li{margin:6px 0}
+.meta{color:var(--mut);font-size:16px}
+.box{border:1px solid var(--line);background:#fff;padding:12px 16px;border-radius:6px;margin:12px 0}
+.warn{border-color:var(--warn)}
+.ng{color:var(--warn);font-weight:700}
+.ok{color:var(--ok);font-weight:700}
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;margin:10px 0;background:#fff;font-size:16px;line-height:1.65}
+th,td{border:1px solid var(--line);padding:6px 9px;vertical-align:top;text-align:left}
+th{background:var(--soft)}
+td.n{text-align:right;white-space:nowrap}
+code{background:var(--soft);padding:1px 5px;border-radius:3px;font-size:15px}
+.src{color:var(--mut);font-size:15px}
+</style></head><body><main>
+<h1>AI-Mits の NORMAL と DEEP を、投資として見直す</h1>
+<p class="meta">2026-11-05 ／ BA-strategist ／ 11-04 の「NORMAL は中間案・DEEP は最高案」の HTML（14節）の再考 ／ 読むだけ・何も変えていない・「やる」「発注GO」は出ていない。為替は 158.29円（Mits様の指定どおり）。</p>
+<div class="box"><b>この1枚の結論</b>
+<ul>
+<li>今の本番の往復は少ない。Cloudflare の7日ログで NORMAL 39・DEEP 20・FAST 5（1日あたり 5.6・2.9・0.7）。この規模では <b>AI の費用は月に数百円の差</b>で、投資の中身は費用でなく<b>作る手間と Mits様の検収の時間</b>。</li>
+<li>返りの池も小さい。残った人 27 人（登録59−外した32）の1割が竹に進んで6か月払っても、全員分で 162,000円。うち答えの失敗で辞める人を回復できる分は、仮の置き方で <b>8,505円前後</b>（3節）。</li>
+<li>だから順番は、<b>投資 0 円で効く手を先</b>（相談と前置きを分ける・DEEP の選ぶ工程の履歴を切る・目次を100件で止めない・モデルを Opus 5.5 に替える）、<b>計測の土台を先</b>、自前の作り直し（DEEP の最高案・NORMAL の最高案・ゼロベース）は<b>数が貯まってから</b>。</li>
+<li>NORMAL の中間案は、仮の置き方で<b>1日およそ 31 往復まで</b>追加費用が返りで賄える（月の登録 9 人のとき・4節）。今はそれより少ないので費用は問題にならない。</li>
+</ul></div>
+<p class="src">表の「元」欄の略称は、いちばん下の「元の一覧」にある絶対パスの記号。式は <code>トークン数 × 単価 ÷ 100万 × 158.29</code>。「推測」は私の置き方、「⚠️ 未確認」は確かめていないもの、「仮」は実測が無く置いた数。</p>
+
+<h2>1. 投資の物差しと、AI-Mits でどの数が違うか</h2>
+<h3>1-1. Mits様が置いた物差し（今日の決定の記録）</h3>
+<div class="wrap"><table>
+<tr><th>物差し</th><th>値</th><th>元</th></tr>
+<tr><td>1人の獲得費用（CPO）</td><td>5,000円</td><td>台帳 11-05 09:57・10:00（L5937〜5945）</td></tr>
+<tr><td>竹の月額</td><td>9,700円（1万円に丸めて使う）</td><td>台帳 11-05 09:57（L5937〜）</td></tr>
+<tr><td>1人が竹を払い続けたときの値打ち</td><td>6か月 6万円／1年 12万円</td><td>台帳 11-05 09:57</td></tr>
+<tr><td>うまくいかずに辞める人</td><td>30〜40%（感覚値）。Mits様が設定の話として言った数</td><td>台帳 11-05 09:57。AI-Mits の答えにも当てはめるのは<b>推測</b></td></tr>
+<tr><td>登録した人のうち竹に進む割合</td><td>1割（参謀の仮・Mits様は決めていない）</td><td>台帳 11-05 09:57「決まっていないこと」</td></tr>
+<tr><td>残った人／14日後も開いた人</td><td>27人／7人（少なめに出ている）</td><td>K（計測 kekka.md 月ごとの表）</td></tr>
+<tr><td>竹を払った人数</td><td>取れない（中継は支払いの商品を見ていない・ログも7日）</td><td>K 同表</td></tr>
+</table></div>
+<h3>1-2. AI-Mits でだけ違う数</h3>
+<div class="wrap"><table>
+<tr><th>項目</th><th>AI-Mits での値</th><th>設定サポーターとの違い</th><th>元</th></tr>
+<tr><td>誰が使えるか</td><td>フリープラン＝FAST だけ／竹（30日お試し 0円を含む）と梅（1,980円の救済・竹と同じ機能・最大3か月）＝NORMAL・DEEP／松＝この版では出さない</td><td>設定サポーターは全部のプランで同じ</td><td>台帳 L3627（梅）・L3640（フリー）・L4419（1,980円）・L5151（松）</td></tr>
+<tr><td>1回の相談の往復</td><td><b>⚠️ 未測</b>。参考：設定サポーターは 24会話・43往復＝1会話あたり約1.8往復</td><td>AI-Mits は未測</td><td>M（引き直し kekka.md §1）</td></tr>
+<tr><td>今の本番の往復（7日）</td><td>NORMAL 39・DEEP 20・FAST 5（<b>内部の回線を含む・分けていない ⚠️</b>）。設定サポーターは外の回線 0</td><td>設定サポーターは 81往復で外の回線は 0</td><td>K（道ごとの件数・設定サポーターの表）</td></tr>
+<tr><td>1往復で LLM に入る量</td><td>NORMAL：問い 6,517〜9,914字（前置きつき）。DEEP：問い 29,000〜43,500字。<b>会話の履歴が全部乗る</b>（記憶の設定が回数制限なし）</td><td>設定サポーターは約 7,900 トークン</td><td>台帳 L5450〜（13:22 の節・12:42 の節）、HTML 5-3</td></tr>
+<tr><td>資料の大きさ</td><td>NORMAL の書庫：使う5本 28,402字（≈25,562トークン・式 字数×0.9）。DEEP：MK の目次 計画 557行・実際に読むのは先頭 100行</td><td>設定サポーターの書庫 90,891字＝84,417トークン</td><td>HTML 4節・13-8、台帳 11-04 20:48 の節</td></tr>
+<tr><td>答えを書くモデルと上限</td><td>FAST・NORMAL・DEEP とも <code>claude-opus-5</code>（旧版・Opus 5.5 の 1.25倍の単価）。答えの長さの上限 max_tokens は<b>指定なし</b>（thinking は off）</td><td>設定サポーターは Opus 5.5・上限 <b>2048</b>（答えが切れた）</td><td>D（Dify 管理の画面で今日読んだ）、home CLAUDE.md モデル運用</td></tr>
+</table></div>
+<div class="box"><b>Dify の上限の読み取り結果</b>（2026-11-05 Mac の時計 10:3x・Dify の管理の API を読んだだけ・タブは閉じた）<br>
+設定サポーター 434876af：claude-opus-5-5・温度 0.2・<b>max_tokens 2048</b>（切れの原因と同じ値が今も入っている）。<br>
+NORMAL-APP 43d47f25・NORMAL-WEB e472bc1f・FAST-APP 14d6df13：claude-opus-5・max_tokens の指定なし。DEEP 1a8d8b9c：選ぶ2つは claude-haiku-4-5・答えは claude-opus-5・上限の指定なし。<br>
+<b>指定なしのときの上限の既定値は ⚠️ 未確認</b>（Dify とモデルの提供元の既定に従う。今日は読めていない）。だから「AI-Mits にも設定サポーターと同じ2048の切れが起きるか」は、<b>2048そのものは入っていないので同じ形では起きない。ただし既定値が小さければ起きうる</b>。確かめ方は5節。</div>
+
+<h2>2. 案ごとの投資額</h2>
+<h3>2-1. 作る手間（AI の作業は円でなく日数と、Mits様の時間で）</h3>
+<div class="wrap"><table>
+<tr><th>案</th><th>AI が作る日数（推測）</th><th>Mits様の時間</th><th>円で出る費用</th><th>元</th></tr>
+<tr><td>投資0の手（相談と前置きを分ける・選ぶ工程の履歴を切る・目次を100件で止めない・モデルを Opus 5.5 に替える）</td><td>Dify の設定の直しが主。1〜2日</td><td>直す前後を決まった問いで比べて、悪くならないことの確認</td><td>ほぼ0（比べる流しが約 444円）</td><td>台帳 11-05 10:11（L5952〜・Dify も微修正し逐次確かめる）。日数は<b>推測</b></td></tr>
+<tr><td>NORMAL 中間案</td><td>書庫の書き直し・Dify の流れ・アプリ／Worker／WEB版の送り方・版上げ。3〜5日</td><td>書庫の中身の検収、画面（学びの該当箇所）の目視、版上げの合図</td><td>決まった問いを流す費用が1回 約 586円</td><td>HTML 4節の「作り直す所」。日数は<b>推測</b>。設定サポーターの実験環境は 11-04 20:08→20:48 の約40分で Mac 上で動いた（台帳 L5882〜）ので、部品を流用できる範囲は短い</td></tr>
+<tr><td>NORMAL 最高案の実験環境（Mac の中だけ）</td><td>1日（設定サポーターで部品が揃った。11-04 の実験環境と同じ作り）</td><td>比べる結果を読む</td><td>比べる流し1回 約 912円＋取り置きが切れた最初の1往復ごとに約 29円</td><td>台帳 L5882〜、式は2-3。日数は<b>推測</b></td></tr>
+<tr><td>DEEP 最高案（自前の流れ）</td><td>5〜10日。自前の保守と置き先の見積もりが残る（HTML 5節「まだ見積もっていない」）</td><td>Notion の鍵の守り方・並べて動かして比べる・切り替えの判断</td><td>並べて動かす間は Dify と自前の両方の消費</td><td>HTML 5節。日数は<b>推測</b></td></tr>
+<tr><td>ゼロベース（13節・3つとも1本の流れ）</td><td>2週間以上（推測）。作り直しの量が最大</td><td>上と同じ＋書庫・測る道具の検収</td><td>同上</td><td>HTML 13-8「作り直しの量が大きい」</td></tr>
+</table></div>
+<p class="src">AI の作業の費用は定額の枠の中で、円でも出せない（⚠️ 未測）。上の日数は設定サポーターの実績（実験環境40分・通しの試験6回＋40往復が 11-04 20:48 から 11-05 00:41 の間）から置いた推測で、実績ではない。</p>
+
+<h3>2-2. 1往復の AI の費用（トークンの数は実測の字数×0.9。0.9 は 12:42 の節の「字とトークンがほぼ同じ比」から）</h3>
+<div class="wrap"><table>
+<tr><th>作り</th><th>内訳（式）</th><th>1往復</th><th>元</th></tr>
+<tr><td>NORMAL 今（Dify・claude-opus-5）</td><td>入り 7,394（問い 8,216字×0.9）×$5 ＋ 出 600×$25</td><td><b>8.2円</b></td><td>入りの字数は 13:22 の 6,517〜9,914字の中央。出 600 は 12:42 の節（設定サポーターの出 559〜643）。<b>推測</b>。12:42 に書かれた「2,900〜3,600トークン」は材料56字の試しの値で食い違う ⚠️</td></tr>
+<tr><td>NORMAL 中間案</td><td>答え：入り 10,094（問い＋材料4件約3,000字）×$4 ＋ 出 600×$20 = 8.3円／並べ直し（Sonnet 5.5）入り4,000 = 1.4円／点検（Sonnet 5.5）入り4,500・出100 = 1.6円</td><td><b>11.3円</b>（今より +3.1円）</td><td>点検の入り 4,500・出 100 は 12:42 の見積もり。材料の字数・並べ直しの量は<b>推測</b>。単価は依頼文の価格表</td></tr>
+<tr><td>NORMAL 最高案 道2（書庫の全文を取り置き）— 取り置き中</td><td>答え：全文 25,562 を読み $0.20 ＋ 前置き 7,394×$4 ＋ 出 600×$20 = 7.4円／点検：全文を読み＋入り8,000 = 3.5円</td><td><b>10.9円</b></td><td>設定サポーターの実験は実測で 1往復の真ん中 8.37円（Dify 6.43円）、写真つきで 11.9円（shashin 11-05）。本件は<b>推測</b></td></tr>
+<tr><td>　同・取り置きが切れた最初の1往復</td><td>追加：全文を書き置く単価との差。5分：29円 ／ 1時間：47円</td><td>+29円（5分）／ +47円（1時間）</td><td>式 全文トークン×(書き置き単価−読み単価)。設定サポーターの全文（84,417トークン）では約100円と実測（00:41 の節）</td></tr>
+<tr><td>DEEP 今（1往復目）</td><td>選ぶ2つ（haiku 4.5）入り 32,625×$1×2 ＋ 答え（claude-opus-5）入り 35,625×$5 ＋ 出 700×$25</td><td><b>41.5円</b></td><td>問い 36,250字＝29,000〜43,500字の中央。<b>haiku の単価 $1／$5 は ⚠️ 未確認</b>（今回公式の表を開いていない）。MK 本文 3,000 と出 700 は<b>推測</b></td></tr>
+<tr><td>DEEP 今（3往復目／5往復目）</td><td>履歴が全部乗る。入りが 97,875／163,125</td><td><b>113.8円／186.1円</b></td><td>同上。4回目の答えで選ぶ工程に約20万字の履歴が渡っていたのは 5-3 節の実測。1相談の合計は 1往復 41円・3往復 233円・5往復 569円</td></tr>
+<tr><td>DEEP 最高案（相談だけ渡す・履歴は要点だけ）</td><td>選ぶ（Sonnet 5.5）入り3,500 ＋ 答え（Opus 5.5）入り 38,625×$4・出700×$20 ＋ 点検 入り9,000</td><td><b>30.9円</b>（往復が増えても平ら）</td><td>5節の表は履歴の扱いを書いていない。履歴を要点だけにする置き方は 13-5 節の案で、<b>推測</b></td></tr>
+</table></div>
+<h3>2-3. 1日の往復の数ごとの費用（1日の費用・円）</h3>
+<p class="src">取り置きが切れる回数は、使う時間を12時間として「5分ごとの区切り144／1時間ごとの区切り12に、往復がどれだけ当たるか」の確率で置いた（推測・取り置きは人をまたいで共有される前提）。</p>
+<div class="wrap"><table>
+<tr><th>1日の往復</th><th>NORMAL 今</th><th>NORMAL 中間案</th><th>道2（5分の取り置き）</th><th>道2（1時間の取り置き）</th><th>道2が切れる回数（5分／1時間）</th><th>中間案 − 今（月）</th></tr>
+<tr><td class="n">10</td><td class="n">82</td><td class="n">113</td><td class="n">386</td><td class="n">427</td><td class="n">10／7</td><td class="n">922円</td></tr>
+<tr><td class="n">30</td><td class="n">247</td><td class="n">339</td><td class="n">1,105</td><td class="n">844</td><td class="n">27／11</td><td class="n">2,765円</td></tr>
+<tr><td class="n">100</td><td class="n">823</td><td class="n">1,130</td><td class="n">3,160</td><td class="n">1,652</td><td class="n">72／12</td><td class="n">9,215円</td></tr>
+<tr><td class="n">300</td><td class="n">2,468</td><td class="n">3,389</td><td class="n">6,889</td><td class="n">3,830</td><td class="n">126／12</td><td class="n">27,646円</td></tr>
+</table></div>
+<p>見えること：道2は取り置きが効いていても、中間案より安くなる往復の数は無い（取り置き中の1往復は 10.9円と中間案の 11.3円でほぼ同じで、切れた回の上乗せが残るため）。DEEP は今の作りだと往復が増えるほど膨らみ、最高案は平ら（30.9円）。<b>DEEP は最高案の方が1往復目から安い見込み</b>（41.5円→30.9円）。ただし履歴を要点だけにするのは Dify のままでも設定で効く（選ぶ工程の記憶を切る）ので、自前に移す理由にはならない。</p>
+<p><b>投資0の手の効き</b>：モデルを claude-opus-5 から Opus 5.5 に替えると答えの単価が 4/5 になる（単価の比 1.25 は home CLAUDE.md）。NORMAL 今の 8.2円が 6.6円（−1.6円）。答えの質が変わらないかは決まった問いで前後を比べる ⚠️ 未確認（Opus 5 と 5.5 の差は今回測っていない）。</p>
+
+<h2>3. 案ごとの返り</h2>
+<h3>3-1. 減らせる失敗の実測（「見当違い」「答えない」）</h3>
+<div class="wrap"><table>
+<tr><th>対象</th><th>失敗の実測</th><th>元</th></tr>
+<tr><td>DEEP（AI-Mits 本番・13回）</td><td>MK が選ばれず本文なし 7回（54%）。うち 5回（38%）は選ぶ係が履歴に押されて相談に答えてしまった空振り、2回は作りどおり。目次は先頭100件しか読まない</td><td>HTML 5-3 節（11-04 18:2x の実測）、台帳 L5735〜</td></tr>
+<tr><td>NORMAL（AI-Mits 本番）</td><td>11-02〜11-04 は書庫が引けず材料0件で答えていた（15:06 に OpenAI の鍵を入れて戻った）。試しの実行3回では材料が56字しか乗っていない。<b>決まった問いでの当たり ⚠️ 未測</b></td><td>台帳 L5450〜・5513〜・5665（15:06）</td></tr>
+<tr><td>設定サポーター Dify（類推の元・43往復）</td><td>答えない 5（12%）・迷い 4（9%）・見当違い 0。外れ 9／43＝21%</td><td>M（引き直し §3）</td></tr>
+<tr><td>設定サポーター 実験の流れ（26往復）</td><td>答えない 0・迷い 2（8%）・見当違い 0。Dify で外れた9問のうち実験でも外れたのは2。外れ 2／26＝8%</td><td>S（失敗の比べ §2-2・§3）</td></tr>
+<tr><td>点検が書き直した回数</td><td>118往復で0回（設定サポーター）。点検は作り話を見るもので、「答えない」「迷い」を減らす働きは実測に出ていない</td><td>台帳 11-05 00:41（L5906〜）</td></tr>
+<tr><td>設定サポーターの答えの切れ</td><td>31往復中2（6%）が上限2048で切れた。4096にして流し直した5往復は全部届いた</td><td>S（失敗の比べ §2-1）</td></tr>
+</table></div>
+<p>設定サポーターは AI-Mits と別のアプリで、外れ方も違う（書庫の全文を渡す／選ぶ工程が無い）。上の「21%→8%」は<b>AI-Mits の NORMAL・DEEP にそのまま当てはまる数ではない</b>。回復できる割合 r は、21%→8%で6割減なので控えめに半分と置いた（仮）。</p>
+<h3>3-2. 返りの式と、1人あたりの期待値</h3>
+<p>返り（円）＝ 月の登録者 R × 辞める割合 35% × その原因が AI-Mits の失敗である割合 q × 直して維持できる割合 r（仮 50%）× 竹に進む割合 10% × 竹の値打ち（6万／12万円）。q は<b>未測</b>で、10%・30%・50% と3通り置く。</p>
+<div class="wrap"><table>
+<tr><th>q（辞める人のうち、答えの失敗が原因の割合）</th><th>登録者1人あたりの期待値（6か月 6万円）</th><th>（1年 12万円）</th><th>月の登録 9人のとき月の返り（6か月）</th><th>30人のとき</th><th>100人のとき</th></tr>
+<tr><td>10%（仮）</td><td class="n">105円</td><td class="n">210円</td><td class="n">945円</td><td class="n">3,150円</td><td class="n">10,500円</td></tr>
+<tr><td>30%（仮）</td><td class="n">315円</td><td class="n">630円</td><td class="n">2,835円</td><td class="n">9,450円</td><td class="n">31,500円</td></tr>
+<tr><td>50%（仮）</td><td class="n">525円</td><td class="n">1,050円</td><td class="n">4,725円</td><td class="n">15,750円</td><td class="n">52,500円</td></tr>
+</table></div>
+<p class="src">元：式は上。月の登録 9人＝残った人27÷3か月（8月3・9月22・10月2・合計27。K の月ごとの表。推測の平均）。竹1割は参謀の仮、30〜40%はMits様の感覚値、q と r は仮。何倍返るか＝返り÷追加費用は4節。</p>
+
+<h2>4. 閾値 ── どこから割に合うか</h2>
+<h3>4-1. NORMAL 中間案（今より +3.1円／往復）</h3>
+<div class="wrap"><table>
+<tr><th>1日の往復 N</th><th>月の追加費用</th><th>要る月の登録者（q=10%）</th><th>（q=30%）</th><th>（q=50%）</th><th>（q=30%・1年 12万円）</th></tr>
+<tr><td class="n">10</td><td class="n">922円</td><td class="n">8.8人</td><td class="n">2.9人</td><td class="n">1.8人</td><td class="n">1.5人</td></tr>
+<tr><td class="n">30</td><td class="n">2,765円</td><td class="n">26.3人</td><td class="n">8.8人</td><td class="n">5.3人</td><td class="n">4.4人</td></tr>
+<tr><td class="n">100</td><td class="n">9,215円</td><td class="n">87.8人</td><td class="n">29.3人</td><td class="n">17.6人</td><td class="n">14.6人</td></tr>
+<tr><td class="n">300</td><td class="n">27,646円</td><td class="n">263.3人</td><td class="n">87.8人</td><td class="n">52.7人</td><td class="n">43.9人</td></tr>
+</table></div>
+<p>読み方：月の登録が9人のとき、追加費用が返りで賄えるのは <b>1日 10（q=10%）／31（q=30%）／51（q=50%）往復まで</b>、竹の値打ちを1年と見れば q=30% で 62 往復まで（式 N＝R×1人の期待値÷(追加費用×30)）。<b>今の NORMAL は1日約 5.6 往復</b>なので、費用は返りの範囲に十分収まる。</p>
+<h3>4-2. 規模を3つ置いたときの月の収支（追加費用を引いたあと・仮）</h3>
+<div class="wrap"><table>
+<tr><th>規模</th><th>月の登録 R</th><th>1日の往復 N</th><th>月の返り（q=30%・6か月）</th><th>月の追加費用</th><th>差し引き</th><th>作る費用が10万円相当なら回収まで</th></tr>
+<tr><td class="n">今の規模</td><td class="n">9</td><td class="n">5.6</td><td class="n">2,835円</td><td class="n">516円</td><td class="n">2,319円</td><td class="n">43か月</td></tr>
+<tr><td class="n">3倍</td><td class="n">30</td><td class="n">18.7</td><td class="n">9,450円</td><td class="n">1,723円</td><td class="n">7,727円</td><td class="n">13か月</td></tr>
+<tr><td class="n">10倍</td><td class="n">100</td><td class="n">62.0</td><td class="n">31,500円</td><td class="n">5,714円</td><td class="n">25,786円</td><td class="n">4か月</td></tr>
+</table></div>
+<p class="src">N は「今の 5.6 往復÷月の登録 9人＝1人あたり約0.62」の比で伸ばした推測（K の7日ログ。内部の回線を含む ⚠️）。10万円相当は<b>例</b>で、作る費用の実額は未測。</p>
+<h3>4-3. 案ごとの1行</h3>
+<div class="wrap"><table>
+<tr><th>案</th><th>閾値の1行</th><th>元</th></tr>
+<tr><td>投資0の手</td><td><b>往復の数に関わらず割に合う</b>（費用が上がらず、DEEP の空振り38%を作り直し無しで直せる）。ただし直す前後を決まった問いで比べてから</td><td>2-2 の式、HTML 5-3</td></tr>
+<tr><td>NORMAL 中間案</td><td>月の登録9人・q=30%で <b>1日31往復まで</b>追加費用を返りが賄う。今(約6往復)はその下で、費用は問題にならず、<b>回収は作る費用の大きさ次第</b>（4-2）</td><td>4-1・4-2</td></tr>
+<tr><td>NORMAL 最高案（実験環境）</td><td>本番に載せる案ではなく、差を測る費用。道2は1日10往復で中間案より <b>+273円（5分）／+314円（1時間）</b>。割に合うかは「道2が中間案より当たりが良い差」次第で、設定サポーターでは<b>互角</b>（1,523対1,513）</td><td>2-3、台帳 11-04 20:48（L5882〜）</td></tr>
+<tr><td>DEEP 最高案</td><td>1往復目から費用は今より下がる見込み（41.5→30.9円）。だが同じ下げは<b>Dify のまま選ぶ工程の記憶を切る</b>だけでも取れる。自前に移す分は、作る日数（5〜10日）と保守に見合う<b>上乗せの当たり</b>があるかで決まり、その差は未測</td><td>2-2、HTML 5節</td></tr>
+</table></div>
+
+<h2>5. 判断の材料として、まだ測っていない数と、その測り方</h2>
+<div class="wrap"><table>
+<tr><th>まだ測っていない数</th><th>測り方（計測の土台とのつなぎ）</th><th>元</th></tr>
+<tr><td>NORMAL・DEEP の決まった問いでの今の当たり（見当違い・答えない・学びの箇所・MK の選び）</td><td>6月の AB の仕組み（18問・7軸70点・盲検）に2回目以降・数字つき・学びの箇所を足して流す。印の付け方は引き直しの ichiran.tsv と同じにして、設定サポーターと並べる。<b>Dify に試しの会話が溜まるので、試しの名前で送り、毎朝の数えから外す</b></td><td>台帳 L5777（19:05）・L5882〜、HTML 14-3</td></tr>
+<tr><td>AI-Mits の1相談あたりの往復数と、1日の往復</td><td>Cloudflare の7日ログは件数だけ。人ごとにつなぐ鍵が無い。計測の土台（試験用の中継に入れた記録の包み）を本番に出すと、reader_id ごとの起動の日が残る。Dify 側は会話ごとの messages 数を、アプリの種類ごとに数える</td><td>K §3・§4（本番に出す差分と手順・Mits様の合図）</td></tr>
+<tr><td>内部の回線と外の回線の往復の分け</td><td>7日ログの NORMAL 39・DEEP 20・FAST 5 を回線で分ける（設定サポーターは分け済みで外は 0）</td><td>K 設定サポーターの表</td></tr>
+<tr><td>竹を払った人数と額</td><td>中継は商品を見ていない。UTAGE の決済と Stripe の購入を reader_id かアドレスにつなぐ。つながるまで返りは仮のまま</td><td>K 「竹を払った人数が取れない理由」</td></tr>
+<tr><td>q（辞める原因が答えの失敗である割合）</td><td>辞めた人の最後の相談を、見当違い／答えない／答えたで印付け。14日後の開きと並べる。数が貯まるまで決め手にしない（Mits様 11-05）</td><td>台帳 L5945（10:00）</td></tr>
+<tr><td>AI-Mits の max_tokens 指定なしのときの上限</td><td>Dify の公開版の設定で指定なしのときの値を確かめ、答えの長さの上位（設定サポーターは約 1,400〜1,800 トークン）と並べる。または AI-Mits の長い答えを1つ流して stop の理由を見る</td><td>D、M §4-1</td></tr>
+<tr><td>haiku 4.5・Opus 5 の単価</td><td>公式の料金の表を開いて確かめる（今回は開いていない）</td><td>⚠️ 未確認</td></tr>
+<tr><td>NORMAL の中間案の材料の量と並べ直しの量</td><td>書庫を書き直したあとの1切れの字数と、引く件数を測る（今の切れ端は 407個中 198個（48.6%）が30字未満）</td><td>HTML 2節</td></tr>
+</table></div>
+
+<h2>6. 元の試案（11-04 の HTML）から変わる所</h2>
+<div class="wrap"><table>
+<tr><th>節</th><th>11-04 の内容</th><th>投資の見方での動き</th><th>理由（元）</th></tr>
+<tr><td>3-a 相談と前置きを分ける</td><td>両方に効く土台</td><td><span class="ok">上がる（最優先）</span></td><td>費用が上がらず、NORMAL は書庫が働き、DEEP は選ぶ工程の履歴が切れる。投資0</td></tr>
+<tr><td>3-b 決まった問いの表</td><td>今の当たりを測る</td><td><span class="ok">上がる</span></td><td>返りの q・r が未測のままでは、どの案も割に合うか言えない。6月の AB を広げる（台帳 L5777）</td></tr>
+<tr><td>3-c 点検の工程</td><td>作り話を見る</td><td><span class="ng">下がる</span></td><td>118往復で書き直し0回。「答えない」「迷い」を減らす働きが実測に無く、+1.6円／往復と待ち時間が増える。数字の取り違えを見る価値は残るので外さないが、返りの根拠にしない</td></tr>
+<tr><td>4節 NORMAL 中間案</td><td>Dify に残す</td><td>そのまま。<b>書庫と送り方の部分は上がり、並べ直しと点検は下がる</b></td><td>4-1：今の規模では費用は月数百円差。効きは書庫が働くこと</td></tr>
+<tr><td>5節 DEEP 最高案（自前）</td><td>Corpus2Skill を芯に自前へ</td><td><span class="ng">下がる（後ろへ）</span></td><td>空振りの根は選ぶ工程の履歴と目次100件で、Dify のままで直せる。自前は上乗せ分だけが投資対象で、差は未測。作る日数5〜10日・保守が残る</td></tr>
+<tr><td>5-2 NORMAL 最高案の実験環境</td><td>アプリにつながない実験</td><td><b>小さく残す</b></td><td>設定サポーターで同じ作りが1日未満で動いた。差は互角で、道2は取り置きが切れる費用が乗る。AI-Mits で試すのは決まった問いが揃ってから</td></tr>
+<tr><td>5-3 DEEP の Notion を読む所</td><td>目次100件・選ぶ係の空振り</td><td><span class="ok">上がる</span></td><td>13回中5回（38%）の空振りは作り直し無しで直せる。DEEP の返りに直結</td></tr>
+<tr><td>8節 方向性との合致</td><td>登録の増加には直接効かない</td><td><b>内容は同じ、見え方が変わる</b></td><td>返りは「辞める人を減らす」の1経路だけで、池は小さい（3節）。決まり13のとおり登録を増やす手はページの売り</td></tr>
+<tr><td>13節 ゼロベース</td><td>1本の流れ・Dify を外す</td><td><span class="ng">下がる（保留）</span></td><td>作る日数2週間以上・返りの池が小さい・竹の払いが数えられない。今は台帳に決定が0件のまま。数が貯まったときに再考</td></tr>
+<tr><td>追加（11-04 の HTML に無い）</td><td>—</td><td><span class="ok">モデルを Opus 5.5 に替える</span></td><td>答えの単価が4/5。決まった問いで前後を比べる</td></tr>
+</table></div>
+
+<h2>7. 予見・反論・デメリット</h2>
+<h3>予見（根拠つき）</h3>
+<ul>
+<li>予見：今の規模では、案の費用の差は数字として出ない。根拠：NORMAL は1日約 5.6 往復で、中間案の追加費用は月 513円（式 3.1円×5.6×30）。</li>
+<li>予見：投資の判断は、数が貯まってから変わる。根拠：竹を払った人数が取れず（K）、q が未測、残った人が27人で、Mits様自身が「信頼に値する数値はない」と言っている（台帳 L5945）。</li>
+<li>予見：DEEP を使う人が増えると、今の作りの費用が先に効いてくる。根拠：履歴が全部乗るので、5往復の相談の合計が1往復の約 14 倍（569円÷41円・2-2 の式）。</li>
+<li>予見：Dify の指示文を直すと、その場で本番のお客様の答えが変わる。根拠：設定サポーターは全部の版が同じ Dify アプリを呼ぶ（台帳 L5964）。AI-Mits の4アプリも本番が直結。</li>
+</ul>
+<h3>当然出る反論と答え</h3>
+<ul>
+<li>反論「費用が月数百円なら、中間案を全部やればいい」→ 費用でなく作る手間と検収の時間が本体。返りの池は小さく（3節）、数が貯まる前に作り直すと、どの手が効いたか分けにくい（HTML 8節）。投資0の手を先にして、測る土台を入れてから中間案が筋。</li>
+<li>反論「類推が設定サポーターで、AI-Mits ではない」→ そのとおり。3-1 の最初の2行だけが AI-Mits の実測で、21%→8% は類推。だから r は控えめの半分に置き、結論を「割に合う」でなく閾値で出した。</li>
+<li>反論「竹に進む1割は根拠が無い」→ 参謀の仮。式の係数なので、実測が出たら差し替える。</li>
+</ul>
+<h3>デメリット</h3>
+<ul>
+<li>投資0の手を先にすると、「中間案の効き目」と混ざる。直す前後を決まった問いで比べて分ける。</li>
+<li>Opus 5.5 への替えは、答えの質が変わる可能性が未確認。haiku・Opus 5 の単価も未確認。</li>
+<li>返りの係数（q・r・1割）が仮なので、4節の閾値は桁の目安で、数字そのものを決め手にしない。</li>
+<li>この HTML は案。何も作っていない・Dify・中継・アプリ・Notion は変えていない。</li>
+</ul>
+
+<h2>元の一覧</h2>
+<div class="wrap"><table>
+<tr><th>記号</th><th>絶対パス</th></tr>
+<tr><td>台帳（L行番号）</td><td>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/決定台帳_6セッション共通.md</td></tr>
+<tr><td>HTML 4・5・8・13・14節</td><td>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_normal_chukan_deep_saikou_20261104.html</td></tr>
+<tr><td>K（計測）</td><td>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/keisoku_toushi_20261105/kekka.md</td></tr>
+<tr><td>M（Mits様の会話の引き直し）</td><td>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/settei_jikken_20261104/mits_kaiwa_20261105/kekka.md</td></tr>
+<tr><td>S（失敗の比べ）</td><td>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/settei_jikken_20261104/shippai_hikaku_20261105/kekka.md</td></tr>
+<tr><td>shashin</td><td>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/settei_jikken_20261104/shashin_20261105/kekka.md</td></tr>
+<tr><td>D（Dify の上限）</td><td>Dify 管理の API /console/api/apps/〈id〉/workflows/publish を 2026-11-05 に読んだ（ファイルではない）。結果は1-2の枠</td></tr>
+<tr><td>モデルの単価比 1.25</td><td>/Users/nishidamitsuhiro/.claude/CLAUDE.md の「モデル運用（グローバル）」</td></tr>
+<tr><td>単価（Opus 5.5・Sonnet 5.5・為替）</td><td>依頼文に書かれた価格表</td></tr>
+</table></div>
+</main></body></html>
