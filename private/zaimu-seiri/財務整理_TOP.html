@@ -403,17 +403,17 @@ window.addEventListener("DOMContentLoaded", function(){   // data.js は下で�
   document.getElementById("kouho-2611-sum").textContent = y(list.reduce((a,it) => a + it.kouho_2611.getsu, 0));
   document.getElementById("kouho-2611-tbody").innerHTML = list.map(it => {
     const k = it.kouho_2611, nen = it.annual_jpy || k.getsu * 12;
-    return "<tr><td>" + e(it.name) + "</td><td class=amount>" + y(k.getsu) + "円</td><td class=amount>" + y(nen) + "円</td><td>" + e(it.card || "") + "</td><td><a href=" + encodeURI(k.gamen) + "#" + it.id + ">" + e(k.gamen) + " の " + it.id + "</a></td><td>" + e(k.riyuu) + "</td></tr>";
+    return "<tr><td>" + e(it.name) + "</td><td class=amount>" + y(k.getsu) + "円</td><td class=amount>" + y(nen) + "円</td><td>" + e(k.card || it.card || "") + "</td><td><a href=" + encodeURI(k.gamen) + "#" + it.id + ">" + e(k.gamen) + " の " + it.id + "</a></td><td>" + e(k.riyuu) + "</td></tr>";
   }).join("");
 });
 </script>
 <!-- TOP: legend以下は無し -->
-<script src="zaimu_seiri_data.js?v=1793850863"></script>
-<script src="zaimu_seiri_state.js?v=1793850863"></script>
-<script src="zaimu_seiri_sync.js?v=1793850863"></script>
-<script src="zaimu_seiri_ichirangai_meisai.js?v=1793850863"></script>
-<script src="zaimu_seiri_kijun.js?v=1793850863"></script>
-<script src="zaimu_seiri_render.js?v=1793850863"></script>
+<script src="zaimu_seiri_data.js?v=1793850977"></script>
+<script src="zaimu_seiri_state.js?v=1793850977"></script>
+<script src="zaimu_seiri_sync.js?v=1793850977"></script>
+<script src="zaimu_seiri_ichirangai_meisai.js?v=1793850977"></script>
+<script src="zaimu_seiri_kijun.js?v=1793850977"></script>
+<script src="zaimu_seiri_render.js?v=1793850977"></script>
 <script>
 // 3段目：サブスク外の判定ページ（zaimu_seiri_ichirangai_meisai.js）から計算する（2026-09-19 Mits様指示・一覧外の経費ページは廃止）
 (function(){
