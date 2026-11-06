@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>AI-Mits NORMAL・DEEP 実験トラッカー（最終更新 2026-11-06 11:29・指示文 v6）</title>
+<title>AI-Mits NORMAL・DEEP 実験トラッカー（最終更新 2026-11-06 14:00・指示文 v6）</title>
 <style>
 :root{--bg:#f7f6f2;--card:#fff;--ink:#1d2330;--sub:#4a5262;--line:#e2dfd6;--gray:#9aa0a8;
 --r:#d23b3b;--y:#d89a12;--b:#2f6fd0;--z:#7a6bb0;--warn:#b3261e;--warnbg:#fdecea;--goal:#1f6f43;--goalbg:#e8f4ec;--wait:#6b5b00;--waitbg:#fff6d6}
@@ -121,6 +121,8 @@ const GROUPS = [
   sub:"<b>済 11-06 11:19</b>：盲検 mokuken_v7b の NORMAL v6s N3 に Mits様<b>「おおむねいい、ただ、相変わらず4Cを説明していないので簡易説明は作っているはずなので、答えて」</b>（決定台帳 11-06 11:15）。書庫の「1回目は断って動画へ」を「聞かれたら1回目から2〜3行」に直した。N3 で NORMAL 4回目・DEEP 3回目（どちらも初めて聞かれた往復）に4つを2〜3行で答えた・断り0。会話 kaiwa/*_v6s_kai7_4c.jsonl"},
 {id:"k33", lvl:"y", no:"8-7", sum:"N4・N5の直し", label:"N4・N5 の直し（AI エージェントの話と受講者の例を N4・DEEP N5 にも出す）", done:true,
   sub:"<b>済 11-06 11:29</b>：Mits様<b>「N4 と N5 の直し、発注GO」</b>（決定台帳 11-06 11:17）。盲検の印 N4「チャッピーレベル、AIエージェントに遠い　不合格」に合わせ、書庫の使い方の節に、時刻で自分から動く持ち場・実装と検証の AI を分ける・自分は判断だけ、を NORMAL・DEEP どちらでも出す行と、N4 型の相談の行を足した。koe2→n45：エージェントの話 NORMAL 2→5・DEEP 0→3、受講者の例 NORMAL 2→3・DEEP 1→3（6会話すべて）、チャット止まり NORMAL 5→3・DEEP 6→7。会話 kaiwa/*_v6s_kai7_n45.jsonl"},
+{id:"k34", lvl:"y", no:"8-8", sum:"7cの直し6つとC", label:"盲検 7c の印の直し6つと DEEP の葉（7d）", done:true,
+  sub:"<b>済 11-06 14:00</b>：Mits様<b>「発注GO　書庫の直し6つとCをあわせて」</b>（決定台帳 11-06 13:42）。書庫に①講座の前置き ②4つのC を突き放さない ③動画の長さ 79分57秒 ④例は前置き→ビフォア→プロセス→アフター→ベネフィット ⑤動画は話の流れからつなぐ ⑥1回目にチャット型とエージェント型の区別と Claude Code。DEEP の葉4枚（engine/mokuji_ha/）を /deep_v6s だけが読む。検収：言えません・突き放し 0件／1回目の区別 6/6／本文なし14件→0。残り：例が6本中5本で不動産。情報の扱い方の葉は西田の文が見つからず作っていない。盲検 7d https://reports.7years.life/private/aimits-mokuken-v7d/"},
  {id:"k17", lvl:"r", no:"13", sum:"測る仕組みを本番に", label:"11-06 午前：本番の中継にログインの記録と広告の追跡を1回で載せ、オプトインのページに記録のスクリプトを入れる", tags:["fuka","aizu","saki"],
   sub:"Mits様（11-05 21:4x）<b>「まずは自分のメルマガで、その後に広告で流すようにオプトインに流して、メールアドレスで登録してもらって、アプリをダウンロードしてもらってという流れをやる。それをメルマガである程度測定して、めどがついたら広告を出していく」「11/7には必ず出す」</b>。載せる道具：keisoku_toushi_20261105/koukoku_tsuiseki/deploy_honban_koukoku_kiroku.sh（koukoku_wrap.js → kiroku_wrap.js → index.js）。元の deploy_honban_koukoku.sh は KIROKU_LOGIN を足さない作りで、そのままだとログインの記録が本番で動かなかった（設定サポーターの直しが 11-05 21:4x に見つけた）。11-05 21:50 に新しい道具で本番を変えない試し（dry）済み：index.js の差0・足す設定は KOUKOKU_TSUISEKI=1 と KIROKU_LOGIN=1 の2本だけ・秘密12本 inherit・書き込み先 IDENTITY（KV aimits_identity）は本番にある・本番への書き換え0件。戻すのも同じ道具の modosu で。本番の中継に載せるのはこのセッションだけ（設定サポーターの直しは載せない）。お客様の登録とログインの道に入るので Mits様の合図で出す。アプリを開いた記録の毎朝の取り込み（6:15・launchd com.mits.keisoku-torikomi）は別に動いている"},
  {id:"k18", lvl:"r", no:"14", sum:"通しの試し", label:"11-06 午後：試験用のアドレスで メール→オプトイン（短い動画・メールアドレス）→40分ほどの動画→LEVEL 1 レター→竹の30日お試しの申し込み（カード）→ダウンロード→ログイン を1人分通し、どの段まで記録に残るかを確かめる",
