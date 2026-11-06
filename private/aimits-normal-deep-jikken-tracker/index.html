@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>AI-Mits NORMAL・DEEP 実験トラッカー（最終更新 2026-11-06 10:53・指示文 v6）</title>
+<title>AI-Mits NORMAL・DEEP 実験トラッカー（最終更新 2026-11-06 11:19・指示文 v6）</title>
 <style>
 :root{--bg:#f7f6f2;--card:#fff;--ink:#1d2330;--sub:#4a5262;--line:#e2dfd6;--gray:#9aa0a8;
 --r:#d23b3b;--y:#d89a12;--b:#2f6fd0;--z:#7a6bb0;--warn:#b3261e;--warnbg:#fdecea;--goal:#1f6f43;--goalbg:#e8f4ec;--wait:#6b5b00;--waitbg:#fff6d6}
@@ -117,6 +117,8 @@ const GROUPS = [
   sub:"<b>済 11-06 10:32</b>：Mits様<b>「すべてにおいて、資料作り程度の　チャットAIの情報しか書庫に入っていない…もっとAIエージェント活用に振らないと全然だめ　AI講座を読んでいないのか？」</b>（決定台帳 11-06 10:15・10:17）。書庫に節「AI エージェントの使い方」（グルコン BE-02・AI講座 F1-07／F1-04／F1-01／F0-03・AIグループ講座本文から28か所・全件当たり）。8801 で N3・N4・N5：答えの行動が AI に貼る・まとめさせるだけの往復 NORMAL 3→3・DEEP 3→0、「次から AI に先にやらせ、自分は確かめるだけ」まで行った往復 NORMAL 0→3・DEEP 0→3。残る所：渡す仕事が提案資料の下書きだけ・時計／毎朝は0・N4 は持ち場の話にならない・4つのC の中身を言った往復が 0→2。会話 kaiwa/*_v6s_kai7_agent.jsonl。mokuken_v7 の組み直しは AI-Mits-チューニング"},
 {id:"k31", lvl:"y", no:"8-5", sum:"受講者の声", label:"グルコンのレターの「受講中の方の声」を「こんなこともできる」として書庫に足す（別のセッション）", done:true,
   sub:"<b>済 11-06 10:53</b>：Mits様<b>「レターの中に、参加者の詳細な顧客の声があるでしょ、あれを整理して、「こんなこともできる」として書庫が持てば、ユーザーの質問に応答して、じつはこんなことができるようになるので、まずは触ってみましょう、と言える」</b>。元はグルコンのレター（ページ v8pQL82x2Am1）の11人分・28か所すべて当たり。「AI・焦りの相談では2回目か3回目で1回だけ例を1つ」にしたら、NORMAL N3・N5、DEEP N3 の2回目に出た（名前は0）。残る所：N4・DEEP N5 は0・例が3回とも同じ方（不動産の月次レポート）・NORMAL N5 に元に無い言い換え。会話 kaiwa/*_v6s_kai7_koe2.jsonl"},
+{id:"k32", lvl:"y", no:"8-6", sum:"4Cは1回目から", label:"4つのC は1回目に聞かれたときも2〜3行で答える（書庫を直して N3 を流し直す）", done:true,
+  sub:"<b>済 11-06 11:19</b>：盲検 mokuken_v7b の NORMAL v6s N3 に Mits様<b>「おおむねいい、ただ、相変わらず4Cを説明していないので簡易説明は作っているはずなので、答えて」</b>（決定台帳 11-06 11:15）。書庫の「1回目は断って動画へ」を「聞かれたら1回目から2〜3行」に直した。N3 で NORMAL 4回目・DEEP 3回目（どちらも初めて聞かれた往復）に4つを2〜3行で答えた・断り0。会話 kaiwa/*_v6s_kai7_4c.jsonl"},
  {id:"k17", lvl:"r", no:"13", sum:"測る仕組みを本番に", label:"11-06 午前：本番の中継にログインの記録と広告の追跡を1回で載せ、オプトインのページに記録のスクリプトを入れる", tags:["fuka","aizu","saki"],
   sub:"Mits様（11-05 21:4x）<b>「まずは自分のメルマガで、その後に広告で流すようにオプトインに流して、メールアドレスで登録してもらって、アプリをダウンロードしてもらってという流れをやる。それをメルマガである程度測定して、めどがついたら広告を出していく」「11/7には必ず出す」</b>。載せる道具：keisoku_toushi_20261105/koukoku_tsuiseki/deploy_honban_koukoku_kiroku.sh（koukoku_wrap.js → kiroku_wrap.js → index.js）。元の deploy_honban_koukoku.sh は KIROKU_LOGIN を足さない作りで、そのままだとログインの記録が本番で動かなかった（設定サポーターの直しが 11-05 21:4x に見つけた）。11-05 21:50 に新しい道具で本番を変えない試し（dry）済み：index.js の差0・足す設定は KOUKOKU_TSUISEKI=1 と KIROKU_LOGIN=1 の2本だけ・秘密12本 inherit・書き込み先 IDENTITY（KV aimits_identity）は本番にある・本番への書き換え0件。戻すのも同じ道具の modosu で。本番の中継に載せるのはこのセッションだけ（設定サポーターの直しは載せない）。お客様の登録とログインの道に入るので Mits様の合図で出す。アプリを開いた記録の毎朝の取り込み（6:15・launchd com.mits.keisoku-torikomi）は別に動いている"},
  {id:"k18", lvl:"r", no:"14", sum:"通しの試し", label:"11-06 午後：試験用のアドレスで メール→オプトイン（短い動画・メールアドレス）→40分ほどの動画→LEVEL 1 レター→竹の30日お試しの申し込み（カード）→ダウンロード→ログイン を1人分通し、どの段まで記録に残るかを確かめる",
