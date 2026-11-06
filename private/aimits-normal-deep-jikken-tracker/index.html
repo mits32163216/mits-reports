@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>AI-Mits NORMAL・DEEP 実験トラッカー（最終更新 2026-11-06 14:00・指示文 v6）</title>
+<title>AI-Mits NORMAL・DEEP 実験トラッカー（最終更新 2026-11-06 15:4x・指示文 v6）</title>
 <style>
 :root{--bg:#f7f6f2;--card:#fff;--ink:#1d2330;--sub:#4a5262;--line:#e2dfd6;--gray:#9aa0a8;
 --r:#d23b3b;--y:#d89a12;--b:#2f6fd0;--z:#7a6bb0;--warn:#b3261e;--warnbg:#fdecea;--goal:#1f6f43;--goalbg:#e8f4ec;--wait:#6b5b00;--waitbg:#fff6d6}
@@ -40,7 +40,7 @@ td,th{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-alig
 <body>
 <div class="wrap">
 <h1>AI-Mits NORMAL・DEEP 実験トラッカー</h1>
-<div class="small">最終更新 2026-11-05 ／ 持ち場：AI-Mits-チューニング ／ <span id="count"></span></div>
+<div class="small">最終更新 2026-11-06 ／ 持ち場：AI-Mits-チューニング ／ <span id="count"></span></div>
 
 <div class="box">
 <b>決まっている方向（2026-11-05 Mits様）</b>
@@ -119,6 +119,8 @@ const GROUPS = [
   sub:"<b>済 11-05 23:59</b>：設定サポーターの直しが menu-v3＝69ed41a（a4bb001 入り）で組み直した開発版 v1.83.7（23:49）を受け取り、23:50 に ~/.untendai/aimits_jikken_url（http://127.0.0.1:8800）を置いた。開発版の画面から NORMAL・DEEP に N3 の1通目を1つずつ送り、8800 の記録の tag untendai-kaihatsuban の行が 4 → 6（23:57 normal_v6 12.6秒・23:59 deep_v6 23.7秒）。写真 kaihatsuban/dan1_shashin/。FAST は Dify のまま。Mits様<b>「開発版をいじり始めたら、私の確認不要なことは完了まで進めてほしい」</b>。Mits様「これが通ったら、版の流れのとおり開発版へ移します。OK go」。<b>21:32 パッチができて設定サポーターの直しに渡した</b>（kaihatsuban/aimits_v6_sanbo.patch・010b768 に当たる・cargo check 誤り0・8800 との通しの試験 NORMAL・DEEP 各2往復済み・8800 に渡らないのは前回の宿題・次の話題・呼ばれたい名前）。組み直しは33問の試験のあと。src-tauri/src/sanbo.rs だけの差分で、menu-v3 の 010b768 の上（#[cfg(feature = &#39;dev-test&#39;)]・~/.untendai/aimits_jikken_url があれば 8800 の /normal_v6・/deep_v6 へ・FAST は Dify のまま）。組み立ては設定サポーターの直しのセッションが /Users/nishidamitsuhiro/untendai-menu3 で持つ（決定台帳 21:12・21:19）。差分ができたら渡して、設定サポーターと一緒に2回目の組み立て"},
  {id:"k12", lvl:"y", no:"10", sum:"開発版で流し直す", label:"開発版から30問を流し直し、実験環境とのずれを見る", done:true,
   sub:"<b>済 11-06 00:10</b>：開発版の組み立て（見本の帳簿・顧客3人・前置き 6.5千字）で30問 × NORMAL・DEEP・5往復＝60会話を 8800 に流した。失敗0・6往復以上0・禁止の語0・同じ数字の使い回し0（実験環境と同じ）。前置きの数字を使った答え NORMAL 96%→91%・DEEP 99%→94%。ずれた24回のうち18回は帳簿の違い（開発版は1桁の値ばかり・取引30件や111人の行が無い）、6回は答えの揺れ、組み立て方で数字を落とした回は0。1往復の真ん中 NORMAL 21.1秒・8.0円／DEEP 31.4秒・15.6円。額 $28.52。結果 kaihatsuban/zure_30_kekka.md。次は Mits様の開発版での検収（西田統合版は触らない）。元の目的：実験環境ではアプリの前置きを手で組むので、アプリ経由で同じ答えになるかを確かめる"},
+ {id:"k35", lvl:"y", no:"10-2", sum:"開発版で一旦完了", label:"3つのセッション（AI-Mits-チューニング・書庫・設定サポーターの直し）の直しを開発版に入れて、一旦完了にする", done:true,
+  sub:"<b>済 11-06 15:4x</b>：Mits様<b>「今この段階でここまで修正しているAI-MITSの初期や設定サポーターの直しは、開発版に入れて一旦完了に向かう」「当然、開発版でぶつかったり壊れたりしないように確認してからね。」「発注GO　あなたがプランしたものを最後まで完走させて。」</b>（決定台帳 14:11・14:14）。①AI-Mits：受け手 8800 で、印のファイル engine/kaihatsuban_wa_v6s がある間は開発版から届く /normal_v6・/deep_v6 を v6s の作り（書庫の足し・DEEP の葉・Cowork ではなく Claude Code）で答える（アプリは組み直さない・台帳 14:17）。開発版の画面から1回の起動で流した（15:26）：AI-Mits 12/12 往復・v6s の作り 12/12・Cowork と Claude Code 2/2・79分57秒 2/2・突き放し 0・エラー 0。そのあと情報の扱い方の1行と不動産の例の偏りの直しを入れて 8800 を起こし直した（15:30・台帳 15:40）：伏せる型 0・不動産の例 6本中5→2。②設定サポーター：画面から 6/6 往復・freee 0・決済明細 0。古い版の画面の名前を直した（commit 0ab7b1d・残り 0）・AI-Mits から押して来た問いは新しい会話にした（turn 1・1・1／続き 2・台帳 15:39）。範囲の外：WEB版・正式版の Dify・西田統合版・UTAGE の使い方ページ・学びの選び方（RAG の作り直しへ）・DEEP に変えますの窓と開き直さない作り（運転台改善）。次は Mits様の開発版の検収。結果 kaihatsuban/gamen_kakunin_v6s_20261106.md"},
  {id:"k13", lvl:"y", no:"11", sum:"西田統合版", label:"西田統合版に入れて微修正する", tags:["aizu"],
   sub:"西田統合版は微修正の段（決定台帳 10-31 07:31）"},
  {id:"k14", lvl:"z", no:"12", sum:"正式版の載せ替え", label:"正式版の NORMAL・DEEP を Dify から最高案に載せ替える", tags:["fuka","aizu"],
