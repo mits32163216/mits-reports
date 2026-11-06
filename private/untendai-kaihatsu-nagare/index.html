@@ -21,21 +21,24 @@
   h2{font-size:19px;color:var(--navy);border-left:5px solid var(--gold);padding-left:10px;margin:40px 0 12px}
   h3{font-size:16px;margin:22px 0 8px}
   .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:12px 0}
-  table{width:100%;border-collapse:collapse;font-size:14px;background:var(--card)}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card)}
   th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
   th{background:#efede6;font-weight:700}
-  code{font-family:"SF Mono",Menlo,monospace;font-size:12.5px;background:#f0eee7;padding:1px 5px;border-radius:4px}
+  code{font-family:"SF Mono",Menlo,monospace;font-size:12.5px;background:#f0eee7;padding:1px 5px;border-radius:4px;word-break:break-all}
   pre{background:#f0eee7;border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto;font-size:12.5px;line-height:1.6}
-  .tag{display:inline-block;font-size:12px;padding:1px 8px;border-radius:10px;border:1px solid var(--line);margin-right:4px}
+  .tag{display:inline-block;font-size:12px;padding:1px 8px;border-radius:10px;border:1px solid var(--line);margin:1px 4px 1px 0}
   .t-ok{background:var(--green-bg);color:var(--green);border-color:#bfe0cb}
   .t-me{background:var(--blue-bg);color:var(--navy);border-color:#c9d1f1}
   .t-out{background:var(--red-bg);color:var(--red);border-color:#efc4bf}
   .t-old{background:#f0f0f0;color:#666}
+  .t-blank{background:var(--gold-bg);color:var(--gold);border-color:#e5d6a8}
   .note{font-size:13px;color:var(--sub)}
   .quote{border-left:3px solid var(--gold);background:var(--gold-bg);padding:8px 12px;margin:8px 0;font-size:14px}
   svg{max-width:100%;height:auto;display:block}
   .scroll{overflow-x:auto}
   ol li,ul li{margin:4px 0}
+  .sw{display:inline-block;width:12px;height:12px;border-radius:3px;border:1px solid #0003;vertical-align:-1px;margin-right:4px}
+  td small{color:var(--sub);display:block}
   /* ページ間のメニュー */
   .gnav{background:var(--card);border-bottom:1px solid var(--line)}
   .gnav-in{max-width:1040px;margin:0 auto;padding:0 12px;display:flex;flex-wrap:wrap;gap:2px}
@@ -51,251 +54,429 @@
 <main>
 
 <h1>運転台 ── 開発の流れ・手順・いまの姿</h1>
-<p class="lead">2026-10-03 時点の実測で整理。自然にできあがってきた形を、決まりと実物の両方から書き起こしたもの。<br>
-（運転台＝社内名。お客様向けの名前は「AI-Mits＆経営アプリ」）<br>最終実測日：2026-10-12（印を埋めた値は tools/check_shiryo_freshness.sh で毎朝突き合わせる）</p>
+<p class="lead">2026-10-28 19:3x の実測で整理（前の版の写し：同じフォルダの <code>index_20261028_mae.html</code>）。決まりと実物の両方から書き起こしたもの。<b>整理だけ</b>で、直し方・やり方の提案は書かない。分からない所は「未確認」と書き、叩いたコマンドを添えた。<br>
+（運転台＝社内名。お客様向けの名前は「AI-Mits＆経営アプリ」）<br>最終実測日：2026-10-28（印を埋めた値は tools/check_shiryo_freshness.sh で毎朝突き合わせる）</p>
 
 <!-- 鮮度点検の印（画面には出ない・tools/check_shiryo_freshness.sh が読む） -->
-<!-- jissoku: main_version | v1.76.3 | /usr/bin/git -C /Users/nishidamitsuhiro/untendai-seiri describe --tags --abbrev=0 -->
-<!-- jissoku: branch_count | 8 | /usr/bin/git -C /Users/nishidamitsuhiro/untendai-seiri branch | /usr/bin/wc -l | /usr/bin/tr -d ' ' -->
-<!-- jissoku: world_version | 1.73.28 | /usr/bin/curl -sfS https://untendai-update.3216-fun.workers.dev/latest.json | python3 -c 'import json,sys;print(json.load(sys.stdin)["version"])' -->
-<!-- jissoku: commit_count_28_to_763 | 188 | /usr/bin/git -C /Users/nishidamitsuhiro/untendai-seiri rev-list --count v1.73.28..v1.76.3 -->
-<!-- jissoku: product_app_version | 1.76.3 | /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" /Applications/untendai.app/Contents/Info.plist 2>/dev/null -->
+<!-- jissoku: main_version | v1.81.14 | /usr/bin/git -C /Users/nishidamitsuhiro/untendai-seiri describe --tags --abbrev=0 -->
+<!-- jissoku: branch_count | 18 | /usr/bin/git -C /Users/nishidamitsuhiro/untendai-seiri branch | /usr/bin/wc -l | /usr/bin/tr -d ' ' -->
+<!-- jissoku: world_version | 1.80.0 | /usr/bin/curl -sfS https://untendai-update.3216-fun.workers.dev/latest.json | python3 -c 'import json,sys;print(json.load(sys.stdin)["version"])' -->
+<!-- jissoku: commit_count_world_to_main | 57 | /usr/bin/git -C /Users/nishidamitsuhiro/untendai-seiri rev-list --count v1.80.0..v1.81.14 -->
+<!-- jissoku: app_count | 6 | /bin/ls -d /Applications/untendai*.app | /usr/bin/wc -l | /usr/bin/tr -d ' ' -->
+<!-- jissoku: product_app_version | 1.81.13 | /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" /Applications/untendai.app/Contents/Info.plist 2>/dev/null -->
 <!-- jissoku: client_app_version | 1.76.2 | /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" /Applications/untendai-client.app/Contents/Info.plist 2>/dev/null -->
+<!-- jissoku: dev_app_version | 1.81.14 | /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" /Applications/untendai-dev.app/Contents/Info.plist 2>/dev/null -->
+<!-- jissoku: mkt_app_version | 1.74.4 | /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" /Applications/untendai-mkt.app/Contents/Info.plist 2>/dev/null -->
+<!-- jissoku: demo_app_version | 1.80.0 | /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" /Applications/untendai-demo.app/Contents/Info.plist 2>/dev/null -->
+<!-- jissoku: morita_app_version | 1.76.7 | /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" /Applications/untendai-morita.app/Contents/Info.plist 2>/dev/null -->
+<!-- jissoku: kakunin_version | 1.80.0 | /usr/bin/curl -sfS https://untendai-update.3216-fun.workers.dev/kakunin.json | python3 -c 'import json,sys;print(json.load(sys.stdin)["version"])' -->
+<!-- jissoku: webban_last_commit | 6cc1eca | /usr/bin/git -C /Users/nishidamitsuhiro/untendai-webban log -1 --format=%h -->
 <!-- ============================================================ -->
-<h2>1. ひと目で：直しがお客様に届くまで</h2>
+<h2>1. ひと目で：版の段と、段ごとの受け持ち</h2>
 
 <div class="card scroll">
-<svg viewBox="0 0 1000 470" xmlns="http://www.w3.org/2000/svg" font-family="Hiragino Sans, sans-serif">
+<svg viewBox="0 0 1000 520" xmlns="http://www.w3.org/2000/svg" font-family="Hiragino Sans, sans-serif" role="img" aria-label="版の段と、段ごとの受け持ち・アプリの WEB版">
   <defs>
-    <marker id="ar" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#5b6170"/>
-    </marker>
-    <marker id="arR" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#b0342c"/>
-    </marker>
+    <marker id="ar" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5b6170"/></marker>
   </defs>
+  <!-- 版の数字は 2026-10-28 20:19 の実測（Info.plist・kakunin.json・latest.json） -->
 
-  <!-- 直し -->
-  <rect x="20" y="190" width="140" height="70" rx="10" fill="#faf4e4" stroke="#8a6a1f"/>
-  <text x="90" y="220" text-anchor="middle" font-size="15" font-weight="700" fill="#1f2430">直し</text>
-  <text x="90" y="242" text-anchor="middle" font-size="12" fill="#5b6170">モック→目視→実装</text>
+  <!-- 段の見出し -->
+  <text x="120" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#5b6170">開発版</text>
+  <text x="400" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#5b6170">西田統合版</text>
+  <text x="675" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#5b6170">確認版</text>
+  <text x="890" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#5b6170">正式版</text>
 
-  <!-- main -->
-  <rect x="210" y="175" width="160" height="100" rx="10" fill="#eef1fb" stroke="#14206b" stroke-width="2"/>
-  <text x="290" y="210" text-anchor="middle" font-size="16" font-weight="700" fill="#14206b">main</text>
-  <text x="290" y="232" text-anchor="middle" font-size="12" fill="#5b6170">~/untendai-seiri</text>
-  <text x="290" y="252" text-anchor="middle" font-size="12" fill="#5b6170">コードはここ1本</text>
-  <line x1="160" y1="225" x2="208" y2="225" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
 
-  <!-- 4 apps -->
-  <rect x="440" y="30" width="230" height="70" rx="10" fill="#ffffff" stroke="#14206b"/>
-  <text x="555" y="58" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2430">西田統合版（Mits様の Mac）</text>
-  <text x="555" y="80" text-anchor="middle" font-size="12" fill="#5b6170">release.sh --自分だけ</text>
+  <!-- 開発版 2本 -->
+  <rect x="20" y="36" width="200" height="96" rx="10" fill="#fff" stroke="#F848D8" stroke-width="3"/>
+  <text x="120" y="60" text-anchor="middle" font-size="15" font-weight="700" fill="#1f2430">森田さんの開発版</text>
+  <text x="120" y="80" text-anchor="middle" font-size="12" fill="#1f2430">untendai-morita.app</text>
+  <text x="120" y="102" text-anchor="middle" font-size="16" font-weight="700" fill="#1f2430">1.76.7</text>
+  <text x="120" y="122" text-anchor="middle" font-size="11" fill="#5b6170">自分の版で作る（マゼンタ）</text>
 
-  <rect x="440" y="120" width="230" height="70" rx="10" fill="#ffffff" stroke="#14206b"/>
-  <text x="555" y="148" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2430">freee版（Mits様が名指しされたとき）</text>
-  <text x="555" y="170" text-anchor="middle" font-size="12" fill="#5b6170">build-client.sh → zip</text>
+  <rect x="20" y="150" width="200" height="86" rx="10" fill="#fff" stroke="#188848" stroke-width="3"/>
+  <text x="120" y="176" text-anchor="middle" font-size="15" font-weight="700" fill="#1f2430">西田の開発版</text>
+  <text x="120" y="196" text-anchor="middle" font-size="12" fill="#1f2430">untendai-dev.app</text>
+  <text x="120" y="220" text-anchor="middle" font-size="16" font-weight="700" fill="#1f2430">1.81.14</text>
 
-  <rect x="440" y="210" width="230" height="70" rx="10" fill="#ffffff" stroke="#14206b"/>
-  <text x="555" y="238" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2430">開発版（見せるデモ）</text>
-  <text x="555" y="260" text-anchor="middle" font-size="12" fill="#5b6170">build-dev.sh・架空データだけ</text>
+  <!-- 西田統合版 -->
+  <rect x="300" y="64" width="200" height="140" rx="10" fill="#e9edf8" stroke="#204088" stroke-width="3"/>
+  <text x="400" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#204088">西田統合版</text>
+  <text x="400" y="112" text-anchor="middle" font-size="12" fill="#1f2430">untendai.app</text>
+  <text x="400" y="138" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2430">1.81.13</text>
+  <text x="400" y="162" text-anchor="middle" font-size="12" fill="#5b6170">西田だけ・実データ</text>
+  <text x="400" y="182" text-anchor="middle" font-size="12" fill="#5b6170">直しを繰り返す場</text>
 
-  <rect x="440" y="300" width="230" height="70" rx="10" fill="#ffffff" stroke="#14206b"/>
-  <text x="555" y="328" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2430">マーケ版</text>
-  <text x="555" y="350" text-anchor="middle" font-size="12" fill="#5b6170">marketing の枝（10-09 に main に取り込み済み・枝は残す）</text>
+  <!-- 確認版 -->
+  <rect x="580" y="64" width="190" height="140" rx="10" fill="#f1eafa" stroke="#7a3cc6" stroke-width="3"/>
+  <text x="675" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#7a3cc6">確認版</text>
+  <text x="675" y="112" text-anchor="middle" font-size="12" fill="#1f2430">untendai.app</text>
+  <text x="675" y="138" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2430">1.80.0</text>
+  <text x="675" y="154" text-anchor="middle" font-size="10" fill="#5b6170">kakunin.json の版</text>
+  <text x="675" y="174" text-anchor="middle" font-size="12" fill="#5b6170">西田＋森田さん</text>
+  <text x="675" y="192" text-anchor="middle" font-size="12" fill="#5b6170">お客様には届かない</text>
 
-  <line x1="370" y1="205" x2="438" y2="70" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
-  <line x1="370" y1="215" x2="438" y2="155" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
-  <line x1="370" y1="240" x2="438" y2="245" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
-  <line x1="370" y1="255" x2="438" y2="330" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
-  <text x="380" y="352" font-size="11" fill="#5b6170">手で merge</text>
+  <!-- 正式版 -->
+  <rect x="800" y="64" width="180" height="140" rx="10" fill="#e9edf8" stroke="#204088" stroke-width="3"/>
+  <text x="890" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#204088">正式版</text>
+  <text x="890" y="112" text-anchor="middle" font-size="12" fill="#1f2430">untendai.app</text>
+  <text x="890" y="138" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2430">1.80.0</text>
+  <text x="890" y="154" text-anchor="middle" font-size="10" fill="#5b6170">latest.json の版</text>
+  <text x="890" y="174" text-anchor="middle" font-size="12" fill="#5b6170">お客様全員</text>
 
-  <!-- Mits 検収 -->
-  <rect x="720" y="30" width="120" height="70" rx="35" fill="#eaf5ee" stroke="#2f7d4f"/>
-  <text x="780" y="60" text-anchor="middle" font-size="14" font-weight="700" fill="#2f7d4f">Mits様が</text>
-  <text x="780" y="80" text-anchor="middle" font-size="14" font-weight="700" fill="#2f7d4f">触って検収</text>
-  <line x1="670" y1="65" x2="718" y2="65" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
+  <!-- 矢印 -->
+  <line x1="222" y1="84" x2="298" y2="110" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
+  <line x1="222" y1="193" x2="298" y2="160" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
+  <line x1="502" y1="134" x2="578" y2="134" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
+  <line x1="772" y1="134" x2="798" y2="134" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
 
-  <!-- 出す -->
-  <rect x="870" y="30" width="110" height="70" rx="10" fill="#fbecea" stroke="#b0342c" stroke-width="2"/>
-  <text x="925" y="58" text-anchor="middle" font-size="14" font-weight="700" fill="#b0342c">「出す」</text>
-  <text x="925" y="80" text-anchor="middle" font-size="12" fill="#b0342c">の合図</text>
-  <line x1="840" y1="65" x2="868" y2="65" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
+  <!-- デモデータ版（確認版の真下） -->
+  <rect x="580" y="226" width="190" height="150" rx="10" fill="#fff" stroke="#b02a30" stroke-width="3"/>
+  <text x="675" y="252" text-anchor="middle" font-size="16" font-weight="700" fill="#b02a30">デモデータ版</text>
+  <text x="675" y="272" text-anchor="middle" font-size="12" fill="#1f2430">untendai-demo.app</text>
+  <text x="675" y="296" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2430">1.80.0</text>
+  <text x="675" y="318" text-anchor="middle" font-size="12" fill="#5b6170">機能は確認版と同じ</text>
+  <text x="675" y="336" text-anchor="middle" font-size="12" fill="#5b6170">データはデモデータ</text>
+  <text x="675" y="354" text-anchor="middle" font-size="12" fill="#5b6170">説明会・動画・写真で見せる</text>
+  <line x1="502" y1="190" x2="578" y2="290" stroke="#5b6170" stroke-width="2" marker-end="url(#ar)"/>
 
-  <!-- 世に出す -->
-  <rect x="760" y="170" width="220" height="110" rx="10" fill="#fbecea" stroke="#b0342c"/>
-  <text x="870" y="198" text-anchor="middle" font-size="15" font-weight="700" fill="#b0342c">世に出す</text>
-  <text x="870" y="222" text-anchor="middle" font-size="12" fill="#1f2430">release.sh（--自分だけ 無し）</text>
-  <text x="870" y="242" text-anchor="middle" font-size="12" fill="#1f2430">GitHub の Release を作る</text>
-  <text x="870" y="262" text-anchor="middle" font-size="12" fill="#1f2430">latest.json を新しい版に</text>
-  <line x1="925" y1="100" x2="900" y2="168" stroke="#b0342c" stroke-width="2" marker-end="url(#arR)"/>
+  <!-- アプリの WEB版（正式版と同じコミットから立てる） -->
+  <rect x="800" y="240" width="180" height="166" rx="10" fill="#eaf5ee" stroke="#2f7d4f" stroke-width="2"/>
+  <text x="890" y="266" text-anchor="middle" font-size="15" font-weight="700" fill="#2f7d4f">アプリの WEB版</text>
+  <text x="890" y="286" text-anchor="middle" font-size="12" fill="#1f2430">.app ではない</text>
+  <text x="890" y="304" text-anchor="middle" font-size="11" fill="#1f2430">正式版と同じコミットから立てる</text>
+  <text x="890" y="322" text-anchor="middle" font-size="11" fill="#5b6170">数字は sample.db</text>
+  <text x="890" y="340" text-anchor="middle" font-size="11" fill="#5b6170">tools/webban.sh</text>
+  <text x="890" y="358" text-anchor="middle" font-size="11" fill="#5b6170">localhost:8801</text>
+  <text x="890" y="376" text-anchor="middle" font-size="11" fill="#5b6170">手元の localhost だけ</text>
+  <text x="890" y="394" text-anchor="middle" font-size="11" fill="#5b6170">公開先は未決</text>
+  <line x1="890" y1="204" x2="890" y2="238" stroke="#2f7d4f" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+  <text x="898" y="226" font-size="11" fill="#2f7d4f">同じコミット</text>
 
-  <!-- お客様 -->
-  <rect x="760" y="330" width="220" height="90" rx="10" fill="#ffffff" stroke="#b0342c"/>
-  <text x="870" y="360" text-anchor="middle" font-size="15" font-weight="700" fill="#1f2430">お客様全員の正式版</text>
-  <text x="870" y="384" text-anchor="middle" font-size="12" fill="#5b6170">「新しい版があります」が出る</text>
-  <text x="870" y="404" text-anchor="middle" font-size="12" fill="#5b6170">ダウンロードのページも新版に</text>
-  <line x1="870" y1="280" x2="870" y2="328" stroke="#b0342c" stroke-width="2" marker-end="url(#arR)"/>
+  <g font-size="12" font-weight="700" fill="#fff">
+    <circle cx="258" cy="96" r="11" fill="#14206b"/><text x="258" y="100" text-anchor="middle">①</text>
+    <circle cx="258" cy="178" r="11" fill="#14206b"/><text x="258" y="182" text-anchor="middle">②</text>
+    <circle cx="540" cy="118" r="11" fill="#14206b"/><text x="540" y="122" text-anchor="middle">③</text>
+    <circle cx="786" cy="118" r="11" fill="#14206b"/><text x="786" y="122" text-anchor="middle">④</text>
+  </g>
 
-  <!-- 例外 -->
-  <text x="20" y="420" font-size="12" fill="#b0342c">例外：お客様の手元で数字が間違っている／取り込みが止まっている → 溜めずにその場で世に出す</text>
-  <text x="20" y="445" font-size="12" fill="#5b6170">赤い線より左は、お客様に何も届かない（Mits様の Mac の中と、手渡しの相手だけ）</text>
-  <line x1="740" y1="20" x2="740" y2="20" stroke="#b0342c"/>
-  <line x1="745" y1="150" x2="745" y2="440" stroke="#b0342c" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <!-- 受け持ち -->
+  <text x="20" y="426" font-size="13" font-weight="700" fill="#5b6170">段ごとの受け持ち</text>
+  <rect x="20" y="436" width="280" height="34" rx="8" fill="#fbe9f8" stroke="#F848D8"/>
+  <text x="160" y="458" text-anchor="middle" font-size="13" font-weight="700" fill="#1f2430">森田さんのセッション　①</text>
+  <rect x="20" y="478" width="960" height="34" rx="8" fill="#eaf5ee" stroke="#188848"/>
+  <text x="500" y="500" text-anchor="middle" font-size="13" font-weight="700" fill="#1f2430">運転台改善　②（西田統合版の直し）　③（OK のあと確認版にする）　④（確認版 → 正式版）</text>
+  <!-- アプリのアイコン（2026-10-28 22:3x に /Applications の各 .app の icon.icns から取り出した絵。確認版だけ src-tauri/icons-kakunin/128x128.png）。外のファイルは参照しない。箱より後に置いて上に重ねる -->
+  <image x="30" y="46" width="24" height="24" href="data:image/png;base64,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"/>
+  <image x="30" y="163" width="24" height="24" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAHhlWElmTU0AKgAAAAgABAEaAAUAAAABAAAAPgEbAAUAAAABAAAARgEoAAMAAAABAAIAAIdpAAQAAAABAAAATgAAAAAAAACQAAAAAQAAAJAAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAADCgAwAEAAAAAQAAADAAAAAACbrUrQAAAAlwSFlzAAAWJQAAFiUBSVIk8AAACbtJREFUaAXVWmlsVNcVPvfNm8X2eGMx3ijbOEASQqAtlNAlFFIgSykRP5q2UiqlPxJ+pFJbqUmkqPxqEjW0Uf8kavqLJIoUpYGKBpoqRCINO4Wy22Bw8ArGmMHrLO+92++745l6Ua2ZseuEa83Me/Pue/c753znO+fNs5JxRvW2xwpVkV7qaW+FeN6vxFK12tPjnDHxQ8pSIp5uFct61VLWUd2vTrVv2z3wv66M2WNHzW83T/f8iadF659orRcp2xLteIL9sZP/H98oJek1lVL1otTbVjLwRtsLO2+OXm6MAdUvbfye9qk/iq0Waheg3SkCPRpZet8HY3yWiKMblKufbX9+7z/Sh/g5woCqVzb+GNb+WSwJGY8Pn/kFbzMi4kkMLPhZx6/3vpOGkzGg+qVH1mlb7wZlQuBg+viX6xP5AUrFlKMea3/+w48JzhhQ+/v105yEOgIrI182z4/24FBuNNoBvbL1Fx91Iy6gedJ6RgV9X3rwxEoHEysxc19RKnXIOal9ctcXnrBElM1gYrtyUcXsZRZ1XltSd8eAp4FQRmImdtvz3JXgldKem43tWc+hDLjaxcvLlA8mnAWNty0fki+jH1lfc/hESKvyHHeljav/cjITl8CTXlICll8WFFXJvHClTA+WiE9Z0pMckOb+TrnSf01uJ/vFr3wwyKThcGxZbZtcAHZboz2YLNmkty14dk3FUnm4eoVEwlVS4AtC+lKYUsa5cj12S/Z3npYP249Kd6IPxtpZgR4xCV0BsavKlzdMiug7oMu0QLE8HXlEVs+4W3hR1BTjecMWfgFD0FcZSpFGVxGN1xv/JidvNZqIjQCY5c6kGEDPE/yL9zwhC0tmSwIUskGPtsGbcjraJC0DnaCVKzODpXJP6VzMqUGkQB0YFHMT8mr9X+RQ1/m8jMgjdiNdg0AasM/etQnAagHUkYTryFvN++Sja/+SKLhuwoHTODfkC8iy8gXy03kPyZyiWRJErvwc53bGotKE3KDhuYz8MmjYCgkA3lD1NVk98244VMkgPPrKhffk3eb90u/EDcCgzy98ETyZdPhmvbx4ZofU97SYJC71h+XJeesEKZ22ddgK429OyAB6tByLP1hxn/yz86y8eXmv/ObMW3Ks+yKSN2Akk8szP0ghzmc+0+td8R55rWGnRJHEPL68PCJLyuaJA4fkMnzhdZFtuZwwei49e/TWRdnZdtB49GaiV/xDqkLATOT5kNOawhnSCxllxFgLKKs0osgukPvL5uP+xTL5cLi7PicaTTgHbiX7pMCzZUsxbtoAds/AKWNjSnSUPLVgvWys+roB1dDbKr+rf9/wnQZQiQ53XZDNtQ+AXn6pK64xkXNxnSHlHe2vMft5U8hFcx5QtmwqWi5bS9fK2tBiQd01dOAqpMJSUGJTzSqTG6TJkrK58njtalOdOYdGdMajhkbcLwsUSZEvZKLG/WxGXhEg+BKrQJ4If0MW2BUGNNRdBnTCgOXC3K8IlhmQCUnx2kEeVIbKTbFLg3MgwaQVNZUG8ZWSrexikHMEyOug8ssPwysBfmYG/MF4o5yPtw8BEEOZ81CZ2+A92wrKIylzAkWLxnGAKYYyRTa8jr+4m0wZky7dZtb4bzlHgB5bX7hYIvYsAz4O737Qf1xOxVsAXqUKFNakJ6/2X5ftKFJbZn8LyRqUz26ckz0dx5DkKa0nreaiFpQHwiZypFOfE8uo1/jQU0dzMoDUqbRLZUVwvgGvEeVdfSfkZLwZURl7KXr8CDSfXqdBrBEEP7wTfahymTnGpo5Vm4WQypbtyIlCVJn7ArOlSAXNomcSLfLv+NUMeBKDXuUgTRgtSmr6ezZtafA0hvXjAfRNnMfu9LMb5w3NzAWyfBvrtnFOJI8X+Geahoxl6Xi8acRspt2DBYvl3mCNxNAP7Y81SGPiujHWND44zr6JyfydiiWyNfIovlGmG93ZekCa0TPl2plmbQCTrEAFpMwqMh7t1YNyzbk9BA73APD8Nwvq5NHCpQakwm1fta9c3vA+kS63zygPO9HqgmnQ/dWydtb9po0gpU5Fr8h7zZ/mVMDSnsuaQqRBABHwo2Ohp2MaTZuhS0ruWF0X+atT1ME7DSq2QjLHPyOj+wl4nvcKm2tXmUSlt8/dvopu9H0ZcOM5JW/agKwjwBPIa/5x0AyCNlqIbbYMUW/ANGRJFDSaxfk97iC2U0byPDZ0CgnreJ7s7Tgkb3/+CZRnMC/v83pZG2A6TZ2UPh2XsAoZ77KYdbo9Q8ZY8ulgg9SCNtV2mWkrDqM2XE52Alwq0AHQhcr0QcsBgD8ul3rbUvUhxxaawNMjBwNAGyRmu3sL3C6TAgnI4kCVdAxEUzIIL3d5vfJm736ZbU8DxZLS6nSbdTIRQMT+hI6VNzEz7RIpRttAKk5kZG0AFyERzsbbZHlgrqHMqmBETsdbpdvrRyjRBuAVB/CGRAd/AjT7aXCUytn+afIVe7rMRwUPW0HZ0XsAh0nJ/1IsPT/bz6yTmBf0IdQXk9fkinPDKAgV6fHwV6UQ6sSk5aC3Kbc0hsO0CPDywkClPFX8bflB4XJZHpwjp1BD+ry4mW8m5vmWkwH0Ez3594HTCH3C1IM6OwUs4q8wSZsAWBrDF7fZsa4pWCQ/QuMXNCmn5UyiVY7FmvJO3OG25nVTT3DLQnNkSyH6/CFPs81oQmSanC65DTXi9xW+Eqnzz8JnqZFS/g7U4tyUHX0HzZx0lIYDynU7pxxIX5xATsauGg9/v3CZTLfCRk3r0OAt9FcaVqfnsv3gQSrR2WSr7Oo/IT3eYIZi6Xn5fsJRIEYezwNoxDkkdLsTldWhOlkSqEWVLgSOjOYY/juITAeU61D8MhK+BXvepIEndlX18oYWrfDrHD2Vx2CxYn/DmlBrl8ss0KYQCkPPR6FO7W5UOtByMB+Y3PnrzShwUDmldSvaQ7UdP+7+QSfz+3GXPyVaADaAAnch0S7npA0rESbva1PVmj9iMWKTOfigA+V8u21ZviOua57kTcg5BEsPT9XAA0jtA3aLz2GVJ5cg8lO19sTX4QMOYCZ2yzxEVrLDhGTil56SKxiswEzsppD5/N7rOu423glGECOxEjO9ZQwwT/u07xnkHe+op8SLeS1CbMBoASsx8xqZrOvdd+lK8brI52jCHsbdlJ1PbcgLVJYn0fNKq9SD7uf2/DV9WsYAftH3ceOZku9GjkFaVyi/NcNMyq88pK8/8U8mrB8wXeG/GjzZ8dzeXcMvOsIAHujd13i5dM2972rl9igt1fhqhrnAVBrCIkXQWBNb9aLVa5YT3Nr+wu6zw8Fze1zC3wn/bvMfjLcsOJvjGv0AAAAASUVORK5CYII="/>
+  <image x="310" y="78" width="24" height="24" href="data:image/png;base64,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"/>
+  <image x="590" y="78" width="24" height="24" href="data:image/png;base64,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"/>
+  <image x="810" y="78" width="24" height="24" href="data:image/png;base64,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"/>
+  <image x="590" y="238" width="24" height="24" href="data:image/png;base64,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"/>
 </svg>
 </div>
 
 <div class="card">
-<b>流れを一言で：</b>直しはいつも main に入れる → main から4本を組む → 西田統合版に「自分だけ」で入れて溜める → Mits様が触って OK、「出す」と言われたときだけ世に出す。<br>
-<b>freee版を西田統合版に「組み込む」作業は、もう無い。</b>freee の枝は 2026-09-25 に main へ入り、それ以後 freee版は main から別の名前で組んでいる。西田統合版と freee版は同じコード。
+<b>流れを一言で（版の段の正本・決定台帳 2026-10-28 20:5x）：</b>開発版（森田さんの開発版・西田の開発版）で開発して、叩いて、検収したら西田統合版に入れる → 西田統合版（西田だけ・実データ・<code>--自分だけ</code>）で直しを繰り返す → Mits様が触って OK → 確認版（西田＋森田さん・お客様には届かない）→ 「出す」と言われたとき正式版（お客様全員）。<br>
+西田の開発版は <code>/Applications/untendai-dev.app</code>（左上（開発版））。デモデータ版は <code>/Applications/untendai-demo.app</code>（10-28 20:36:18 に入った・1.80.0・左上（デモデータ版））。西田統合版のあとで確認版と並び、機能は確認版と同じ、データはデモデータ（説明会・動画・写真で見せる）（決定台帳 2026-10-28 21:0x）。<br>
+<small>経過：2026-10-19〜10-28 は untendai-dev.app が（デモデータ版）と呼ばれていた。10-28 21:0x に Mits様「違う、untendai-dev.app　を開発版　untendai-demo.app　を作ってデモデータ版にする」（決定台帳の写し）。</small><br>
+森田さんの開発版は別の repo で、森田さんのセッションが main に取り込む。<br>
+アプリの WEB版は、正式版を出すとき同じコミットから立てる（決定台帳 2026-10-28 20:1x）。アプリの画面（<code>src/index.html</code>）を1字も変えずに配り、会計・顧客の数字は同じコミットの <code>sample.db</code> を、アプリの本体の関数で読んで出す。<b>お試し版のページ（UTAGE UgSfW8MCzHqv）も「WEB版」と呼ばれることがあるが、別の物（下の表 2 にだけ載せる）。</b><br>
+<small>いまの実測：西田の開発版 <code>untendai-dev.app</code> は 20:11:01 に組み直され、西田の開発版の作業（枝 dou2-plan <code>fe3a370</code>・道2の決済の画面）が入っている。左上の版名は「（開発版）」1件・「（デモデータ版）」0件・<code>plan_next</code> 3件。デモデータ版 <code>untendai-demo.app</code> は 20:36:18 に入り、確認版 v1.80.0 の上に組まれている（枝 demo-ban <code>f3ff148</code>・作業場 <code>~/untendai-demo</code>）。</small>
 </div>
 
 <!-- ============================================================ -->
-<h2>2. アプリは4本（2026-10-03 実測）</h2>
+<h2>2. 版の一覧（2026-10-28 19:3x 実測）── 何がどこに入っているか</h2>
+
+<p class="note">行数は8：<code>/Applications/untendai*.app</code> の6本（実測：<code>ls -d /Applications/untendai*.app</code> が6本・20:36 に untendai-demo.app が入って5本から6本になった）＋アプリの WEB版 1行＋お試し版のページ 1行。「正式版」「確認版」は西田統合版と同じ <code>untendai.app</code> に入る呼び名なので、表の下の小さな表で分けた。</p>
 
 <div class="scroll">
-<table>
-<tr><th>アプリ</th><th>入っている場所・識別子</th><th>組むもと</th><th>組む道具</th><th>いまの版（組んだ時刻）</th><th>誰の手元にあるか</th></tr>
-<tr><td><b>西田統合版</b></td><td><code>/Applications/untendai.app</code><br><code>com.mits.untendai</code></td><td>main</td><td><code>release.sh --自分だけ</code><br>（中で <code>build-signed.sh</code>）</td><td>1.76.3（10-12・見本の帳簿を架空に戻す・2026-10-12 実測）</td><td><span class="tag t-me">Mits様 1.76.3</span><br><span class="tag t-me">協力者（コンサルタント）1.76.3（Drive の untendai_1.76.3_mac_arm64.zip・2026-10-12 置いた・未共有）</span><br><span class="tag t-out">お客様は 1.73.28</span></td></tr>
-<tr><td><b>freee版</b><br>（クライアント版）</td><td><code>/Applications/untendai-client.app</code><br><code>com.mits.untendai.client</code></td><td>main（09-25 から）</td><td><code>build-client.sh</code> → zip</td><td>1.76.2（10-12 15:3x 実測）</td><td><span class="tag t-old">協力者Aさん 1.73.24</span><br><span class="tag t-old">協力者Bさん 1.74.4（Drive の untendai-client_1.74.4_mac_arm64.zip・2026-10-04 差し替え・未共有）</span><br><span class="tag t-out">2026-10-12 Mits様確定：協力者に渡すのは西田統合版。freee版は Mits様が名指しされたときだけ（2026-10-19 からは協力者に確認版を渡す）</span></td></tr>
-<tr><td><b>開発版</b></td><td><code>/Applications/untendai-dev.app</code><br><code>com.mits.untendai.dev</code></td><td>main</td><td><code>build-dev.sh</code></td><td>1.73.53 の表示（中身は 09-30 20:27 の main・見本A／B／C）</td><td><span class="tag t-me">Mits様の Mac だけ</span></td></tr>
-<tr><td><b>マーケ版</b></td><td><code>/Applications/untendai-mkt.app</code><br><code>com.mits.untendai.mkt</code></td><td>marketing の枝<br><code>~/untendai-marketing</code></td><td><code>build-mkt.sh</code></td><td>1.74.4（10-04 21:36・2026-10-08 実測。10-09 に marketing の中身は main に入ったので、以後は main から組んだ 1.75.0 の西田統合版と中身が同じになる）</td><td><span class="tag t-me">Mits様の Mac だけ</span></td></tr>
+<table id="tbl-ban-1">
+<tr><th>呼び名</th><th>左上の（〜版）・アイコンの色</th><th>入っている場所・識別子</th><th>今の版<br>（Info.plist）</th><th>入っているデータ</th></tr>
+
+<tr id="row-tougou"><td><b>西田統合版</b><br><small>（正式版・確認版も同じ .app の呼び名・下の小さな表）</small></td>
+<td>（西田統合版）<small>Mac に印のファイル <code>nishida_tougou_ban.shirushi</code> がある（実測 <code>ls</code>）ため。<code>ban_label_for</code>：commands.rs 4331行</small>
+<span class="sw" style="background:#26408a"></span>紺<small>実測 #26408a（sips で読んだ値）・記録 #204088</small></td>
+<td><code>/Applications/untendai.app</code><br><code>com.mits.untendai</code><br><small>Apple の署名あり（TeamIdentifier 3J869F77SZ）</small></td>
+<td><b>1.81.13</b><small>更新 10-28 15:59:08</small></td>
+<td>Mits様の実データ<small>customer 1,863行（untendai.db 5.1M・件数だけ読んだ）</small></td></tr>
+
+<tr id="row-client"><td><b>freee版</b><br><small>（クライアント版）</small></td>
+<td>（freee開発版）<small>画面の上のタイトル：tauri.client.conf.json の title「AI-Mits＆経営アプリ（freee開発版）」</small>
+<span class="sw" style="background:#f2c200"></span>黄<small>実測 #f2c200・記録 #f2c200</small></td>
+<td><code>/Applications/untendai-client.app</code><br><code>com.mits.untendai.client</code><br><small>Apple の署名あり（TeamIdentifier 3J869F77SZ）</small></td>
+<td><b>1.76.2</b><small>更新 10-12 15:35:36</small></td>
+<td><span class="tag t-blank">未確認</span>データの場所に untendai.db が無い（credentials.json 250B・customers.db 20K だけ）。2026-10-03 の記録は「Mits様の Mac では Mits様の2社の実データ」<small>叩いたコマンド：<code>ls -la ~/Library/Application\ Support/com.mits.untendai.client</code></small></td></tr>
+
+<tr id="row-dev"><td><b>西田の開発版</b><br><small>（開発して、叩いて、検収する所。検収したら西田統合版に入れる＝決定台帳 2026-10-28 20:5x・21:0x。2026-10-19〜10-28 はこの .app が（デモデータ版）と呼ばれていた）</small></td>
+<td>（開発版）<small>20:11:01 に組み直された実行ファイルの実測：「（開発版）」1件・「（デモデータ版）」0件（<code>/usr/bin/grep -a -c</code>）。枝 dou2-plan <code>fe3a370</code>「左上の版名：（デモデータ版）→（開発版）に戻した」で組まれた</small>
+<span class="sw" style="background:#5c6675"></span>灰青<small>実測 #5c6675（19:3x）。記録は緑（台帳 2026-10-17：#1f8a4c／CLAUDE.md 138行：#188848・決定台帳 21:0x「アイコン緑」）</small></td>
+<td><code>/Applications/untendai-dev.app</code><br><code>com.mits.untendai.dev</code><br><small>adhoc 署名</small></td>
+<td><b>1.81.14</b><small>更新 10-28 20:11:01（実行ファイルの時刻。19:34:40・19:37:16 にも入れ替わった）</small></td>
+<td>架空のデモデータ<small>customer 20行・20行とも example.com のメール（untendai.db 308K）。道2の作業（dou2-plan）が入っている</small></td></tr>
+
+<tr id="row-demo"><td><b>デモデータ版</b><br><small>（西田統合版のあとで確認版と並ぶ。機能は確認版と同じ・データはデモデータ・説明会・動画・写真で見せる＝決定台帳 2026-10-28 20:5x・21:0x）</small></td>
+<td>（デモデータ版）<small>実行ファイルの実測：「（デモデータ版）」1件・「（開発版）」0件</small>
+<span class="sw" style="background:#b02a30"></span>深い赤<small>実測 #b02a30（<code>icon.icns</code> と <code>icons-demo/128x128.png</code> の両方）。2026-10-28 22:1x Mits様「色はそれでいい」で決めた色と同じ</small></td>
+<td><code>/Applications/untendai-demo.app</code><br><code>com.mits.untendai.demo</code><br><small>adhoc 署名・20:36:18 に入った</small></td>
+<td><b>1.80.0</b><small>確認版 v1.80.0 の上に組んだ（枝 demo-ban <code>f3ff148</code>・作業場 <code>~/untendai-demo</code>・<code>tools/build-demo.sh</code>）</small></td>
+<td>デモデータ</td></tr>
+
+<tr id="row-mkt"><td><b>マーケ版</b></td>
+<td>（マーケ開発版）<small>tauri.mkt.conf.json の title「運転台（マーケ開発版）」</small>
+<span class="sw" style="background:#e0761a"></span>橙<small>実測 #e0761a・記録 #e0761a</small></td>
+<td><code>/Applications/untendai-mkt.app</code><br><code>com.mits.untendai.mkt</code><br><small>adhoc 署名</small></td>
+<td><b>1.74.4</b><small>更新 10-17 15:02:43</small></td>
+<td>customer 0行<small>untendai.db 260K・customer 以外の表は未読。見本か実データかの記録は <span class="tag t-blank">未確認</span>（叩いたコマンド：<code>sqlite3 &lt;写し&gt; "select count(*) from customer"</code>）</small></td></tr>
+
+<tr id="row-morita"><td><b>森田さんの版</b></td>
+<td>（森田さんの版・4カテゴリ 段階3）<small>tauri.morita.conf.json の title</small>
+<span class="sw" style="background:#ff4fd8"></span>マゼンタ<small>実測 #ff4fd8・記録 #ff4fd8</small></td>
+<td><code>/Applications/untendai-morita.app</code><br><code>com.mits.untendai.morita</code><br><small>adhoc 署名</small></td>
+<td><b>1.76.7</b><small>更新 10-17 14:53:52</small></td>
+<td>架空のデモデータ<small>customer 20行・20行とも example.com のメール（untendai.db 340K）</small></td></tr>
+
+<tr id="row-webban"><td><b>アプリの WEB版</b><br><small>（枝 web-ban-20261028・<b>お試し版のページとは別</b>・2026-10-28 20:1x の決定で組み方を変えた）</small></td>
+<td>（WEB版）<small>webban.js が左上の名札を「（WEB版）」にする（中では <code>ban_label</code> に「西田統合版」を返して左メニューを全部出す）。20:0x に Chrome で左上が「AI-Mits &amp; 経営アプリ（WEB版）」と出るのを見た</small>
+アイコン：なし（.app ではない）</td>
+<td>作業場 <code>/Users/nishidamitsuhiro/untendai-webban</code><br>起動 <code>bash tools/webban.sh</code> → <code>http://localhost:8801/</code><br><small>20:0x に新しい組み方で立てて、Chrome で全部の画面を開いた。<code>/Applications</code> には入っていない</small></td>
+<td><b>1.81.14</b><small>立てた元のコミットの版。アプリの本体（Cargo の版）から1か所で取る。画面の左下のアカウントに「v1.81.14・組み立て 10/28 19:56」と出る（20:0x 実測）。正式版を出したら、その正式版の版になる</small></td>
+<td>見本の数字（同じコミットの <code>src-tauri/resources/sample.db</code>）<small>アプリの本体の関数（<code>webban_data</code>）で、空の帳簿に sample.db を入れて読む。アプリの「サンプルデータを入れる」と同じ関数。入った表の中身は西田の開発版 untendai-dev.app の帳簿と7表とも一致（20:0x・中身の md5）。本番の数字 7,738,606 は 0件</small>
+AI-Mits の相談だけ本当に動く（中継経由で Dify の3つ：FAST <code>14d6df13</code>・NORMAL <code>43d47f25</code>・DEEP <code>1a8d8b9c</code>）</td></tr>
+
+<tr id="row-otameshi"><td><b>お試し版のページ</b><br><small>（UTAGE・<b>アプリの WEB版とは別</b>）</small></td>
+<td>アプリではない（左上の印・アイコンの色は無い）</td>
+<td><code>https://change.7years.life/page/UgSfW8MCzHqv</code><br>Dify <code>e472bc1f</code>（「AI-MITS v2 e472bc1f NORMAL-WEB」・RESOURCE_INDEX 158行）</td>
+<td>版番号は無い<small>Dify の SYSTEM は 2026-10-28 17:53 に NORMAL-APP 43d47f25 と同じ文にした（台帳 3318行）</small></td>
+<td>見本の数字なし・AI-Mits の相談だけ<small>この調査では UTAGE・Dify の画面を開いていない（読むだけの指示）。中身の確認は台帳の記録による</small></td></tr>
 </table>
 </div>
-<p class="note">4本ともデータの置き場所は別（<code>~/Library/Application Support/&lt;識別子&gt;/</code>）。同じ Mac で同時に開いても数字は混ざらない。<br>
-ここに無い枝の作業場：<code>~/untendai-freee</code>（先端 8b3e4b6・2026-09-25。main に入り済み）。<br>
-<b>2026-10-08 Mits様決定（司令塔が手続き中）</b>：会話のセッション「運転台マーケ」を「運転台改善」に統合する。<br>
-<b>2026-10-09 Mits様決定（FHL 2026 Notes の『発注GO』）</b>：コードの枝 marketing の 54 commit を main に取り込んだ（merge 0c9d5b8・v1.75.0）。枝そのものと作業場 <code>~/untendai-marketing</code> は残す。<code>updater/wrangler.toml</code>（本番 Worker 名）と <code>src-tauri/resources/sample.db</code>（見本の帳簿）は main の中身を保つ。世に出さない（<code>--自分だけ</code> で西田統合版にだけ入れる）。</p>
+
+<h3>2-2. 西田統合版・確認版・正式版は、同じ <code>untendai.app</code> に入る3つの呼び名</h3>
+<div class="scroll">
+<table id="tbl-3yobina">
+<tr><th>呼び名</th><th>どこにある物</th><th>今の版</th><th>左上の（〜版）・色</th><th>組み立ての道具</th></tr>
+<tr><td><b>西田統合版</b></td><td>Mits様の Mac の <code>/Applications/untendai.app</code></td><td>1.81.13（main は 1.81.14）</td><td>（西田統合版）・紺</td><td><code>bash tools/release.sh --自分だけ &lt;版&gt; "&lt;要約&gt;"</code></td></tr>
+<tr><td><b>確認版</b></td><td>GitHub の公開前の Release／Drive「確認版受け渡し」／<code>kakunin.json</code>。「確認版を受け取る」を入れたアプリだけが読む</td><td>kakunin.json は今 <b>1.80.0</b>（latest.json と同じ）。公開前の Release の最後は v1.77.7（2026-10-19 09:10:58Z）。Drive の中身は 1.77.7 の zip・exe（10-19 20:05）</td><td>（確認版）・紫（記録 #7a3cc6）。Mac の untendai.app は手 8b で同じ版を紺で組み直して入れるので紫にならない（release.sh 冒頭）</td><td><code>bash tools/release.sh --確認版 &lt;版&gt; "&lt;要約&gt;"</code></td></tr>
+<tr><td><b>正式版</b></td><td>GitHub の Release（Latest）／<code>latest.json</code>。お客様全員に「新しい版があります」が出る</td><td><b>1.80.0</b>（2026-10-24T10:01:27Z・実測 <code>curl latest.json</code>）</td><td>（〜版）は付かない・紺</td><td><code>bash tools/release.sh &lt;版&gt; "&lt;要約&gt;"</code></td></tr>
+</table>
+</div>
+<p class="note">世に出ていない溜まり：v1.80.0 から main の v1.81.14 まで <b>57</b> の commit（<code>git rev-list --count v1.80.0..v1.81.14</code>）。</p>
 
 <!-- ============================================================ -->
-<h2>3. 枝の移り変わり（自然にこうなった）</h2>
+<h2>3. 版の一覧（続き）── どこから組むか・誰が受け持つか・直しの流れ</h2>
 
-<div class="card scroll">
-<svg viewBox="0 0 1000 330" xmlns="http://www.w3.org/2000/svg" font-family="Hiragino Sans, sans-serif">
-  <!-- main line -->
-  <line x1="40" y1="150" x2="960" y2="150" stroke="#14206b" stroke-width="4"/>
-  <text x="40" y="138" font-size="13" font-weight="700" fill="#14206b">main</text>
+<div class="scroll">
+<table id="tbl-ban-2">
+<tr><th>呼び名</th><th>組む元：枝・作業場・最後のコミット（実測）</th><th>組み立ての道具</th><th>受け持つセッション</th><th>直しの流れ</th></tr>
 
-  <!-- freee branch (上に伸びて v1.73.39 で main に戻る) -->
-  <path d="M120,150 C160,70 200,70 240,70 L460,70 C500,70 520,110 540,150" fill="none" stroke="#2f7d4f" stroke-width="3"/>
-  <text x="250" y="60" font-size="13" font-weight="700" fill="#2f7d4f">freee の枝（~/untendai-freee）</text>
-  <text x="470" y="90" font-size="12" fill="#2f7d4f">09-25 main に統合（v1.73.39・5eb0ec9）</text>
+<tr><td><b>西田統合版</b></td>
+<td>枝 <code>main</code>・<code>/Users/nishidamitsuhiro/untendai-seiri</code><br>最後 <code>dd09a3a</code>（10-28 16:00:03「記録：v1.81.14 の commit を CHANGELOG に埋めた」）<br>
+Mac の 1.81.13 ＝ タグ v1.81.13（<code>19057dd</code> 10-28 15:57:56）。main の版は 1.81.14（タグ v1.81.14 <code>d4d0bf1</code> 10-28 15:59:49）。<br>
+作業場の未 commit：41行（他のセッションの分を含む・19:3x）</td>
+<td><code>tools/release.sh --自分だけ</code>（中で <code>build-signed.sh</code> → <code>install.sh</code>）</td>
+<td><b>運転台改善</b><br><small>経営の運転台/CLAUDE.md 124〜126行</small></td>
+<td>森田さんの版 → 西田統合版に取り込む（森田さんのセッション）<br>西田の開発版 → 西田統合版の直し（運転台改善）<br>西田統合版の上で直しを繰り返す → Mits様 OK → 確認版 → 正式版（運転台改善）<br><small>CLAUDE.md 117〜128行（2026-10-19 Mits様確定）</small></td></tr>
 
-  <!-- marketing branch (下に伸びて 10-09 に main に戻る) -->
-  <path d="M700,150 C740,215 780,215 820,215 L910,215 C935,215 940,180 935,160" fill="none" stroke="#2f7d4f" stroke-width="3"/>
-  <text x="740" y="245" font-size="12" fill="#2f7d4f">marketing の枝（~/untendai-marketing・枝は残す）</text>
-  <text x="740" y="265" font-size="12" fill="#2f7d4f">10-09 main に取り込み（Merge 0c9d5b8・v1.75.0）</text>
+<tr><td><b>freee版</b></td>
+<td>版 1.76.2 と合うのは main のタグ v1.76.2（<code>dc2ace4</code> 10-11 22:26:37）。<br>
+一方 CLAUDE.md 491行の表は組む枝を <code>freee</code>（~/untendai-freee）・<code>freee-win</code> と書き、旧ページは「main（09-25 から）」と書いていた。freee 枝の版は 1.74.4・最後 <code>4bce0ca</code>（10-17 14:59:42）でアプリの 1.76.2 と合わない。<br>
+<span class="tag t-blank">未確認</span>どれから組んだか（叩いたコマンド：全枝の tauri.conf.json の版を <code>git show &lt;枝&gt;:src-tauri/tauri.conf.json</code> で照合・組んだ時の commit を示す記録は見つからず）<br>
+main の作業場で <code>tools/build-client.sh</code>・<code>tauri.client.conf.json</code> が未 commit の変更中・<code>icons-client/</code> が未追跡</td>
+<td><code>tools/build-client.sh</code>（Apple 署名・公証・staple・zip）。Windows は <code>build-client-win.sh</code></td>
+<td>受け持ち表（CLAUDE.md 121〜126行）に載っていない <span class="tag t-blank">未確認</span><br><small>記録：2026-10-12 Mits様確定「freee版は Mits様が名指しされたときだけ」（旧ページ）</small></td>
+<td>2026-09-25 の決まり「西田統合版に入れた画面の直しは、その回のうちに4本へ」（CLAUDE.md 491行）。いま5本になってから、この流れが続いているか <span class="tag t-blank">未確認</span><br><small>v1.76.2 から main の v1.81.14 までは 146 commit（<code>rev-list --count</code>）</small></td></tr>
 
-  <!-- version dots on main -->
-  <g font-size="11" fill="#1f2430">
-    <!-- v1.73.24: freee 枝上 協力者Aさん 向け開発版 -->
-    <circle cx="330" cy="70" r="6" fill="#fff" stroke="#2f7d4f" stroke-width="2"/>
-    <text x="305" y="43">1.73.24</text>
-    <text x="340" y="43" fill="#5b6170">freee版・協力者Aさんへ（09-21）</text>
+<tr><td><b>西田の開発版</b><br><small>untendai-dev.app</small></td>
+<td>CLAUDE.md 41行（2026-10-28 21:0x より前の記録）：中身は main から組んだもの。<br>
+<b>19:34:40 と 19:37:16 の2回、1.81.14 へ入れ替わった。</b>実行ファイルに <code>plan_next</code> が3件（<code>/usr/bin/grep -a -c plan_next</code>）。dou2-plan の <code>auth.rs</code> にこの名前がある。西田統合版（1.81.13）の実行ファイルは0件。<br>
+組み元の枝は dou2-plan（作業場 <code>~/untendai-dou2</code>・最後 <code>7fadde6</code> 10-28 17:30:47）と読める。dou2 の作業場に未 commit の変更が動いていて（<code>build.rs</code>・<code>sample.db</code>・<code>auth.rs</code>・<code>commands.rs</code>・<code>lib.rs</code>・<code>src/index.html</code>）、それを含めて組んだかは <span class="tag t-blank">未確認</span><br>
+19:32 の時点では 1.81.8（main のタグ v1.81.8 <code>ec58d11</code> と枝 <code>ai-sensei</code> の両方と版が合った）</td>
+<td><code>tools/build-dev.sh</code>（tauri.dev.conf.json・feature <code>dev-test</code>）。どの作業場から走らせたかは <span class="tag t-blank">未確認</span></td>
+<td>確認版を出す回に同じ版で組み直す（CLAUDE.md 41行）＝ 確認版を出す <b>運転台改善</b>。dou2-plan の作業は運転台改善が BS-engineer に振っている（報告_運転台改善 2086行）</td>
+<td>CLAUDE.md 41行の決まりは「確認版と同じ版にする・西田統合版の回は組み直さない」。dou2-plan は「本流 main・Mits様の製品版には入れない」と記録にある（報告_運転台改善 2086行）<br><small>アイコンの緑は main の作業場の未 commit の変更の中にだけある（下の食い違い表）</small></td></tr>
 
-    <!-- v1.73.28: いま世に出ている（赤丸） -->
-    <circle cx="430" cy="150" r="7" fill="#b0342c"/>
-    <text x="410" y="178" font-weight="700" fill="#b0342c">1.73.28</text>
-    <text x="395" y="195" fill="#b0342c">いま世に出ている（09-25）</text>
+<tr><td><b>マーケ版</b></td>
+<td>枝 <code>marketing</code>・<code>/Users/nishidamitsuhiro/untendai-marketing</code><br>最後 <code>a76875a</code>（10-17 14:59:42・版 1.74.4・アイコンの commit）<br>
+2026-10-09 に marketing の 54 commit は main に入った（merge <code>0c9d5b8</code>・旧ページと台帳の記録）。枝の先頭 <code>a76875a</code> そのものは main に含まれない（実測 <code>git merge-base --is-ancestor</code>）。<br>
+作業場の未 commit：4行</td>
+<td><code>tools/build-mkt.sh</code></td>
+<td>2026-10-08 Mits様決定「運転台マーケ」を「運転台改善」に統合（旧ページの記録）＝ <b>運転台改善</b></td>
+<td>旧ページ（09-25）：西田統合版 → 手で merge。10-09 の取り込みのあとの流れは <span class="tag t-blank">未確認</span></td></tr>
 
-    <!-- v1.73.39: freee → main 統合 -->
-    <circle cx="540" cy="150" r="6" fill="#fff" stroke="#14206b" stroke-width="2"/>
-    <text x="520" y="135">1.73.39</text>
+<tr><td><b>森田さんの版</b></td>
+<td>森田さんの repo <code>Yoshiakikun/untendai</code>・clone <code>/Users/nishidamitsuhiro/untendai-morita</code>（<code>git worktree list</code> の11本には入らない別の clone）<br>
+チェックアウト中 <code>morita/4category-stage3</code>・<code>5598aab</code>（10-17 00:57:55・版 1.76.7）＝ アプリの 1.76.7 と合う。<br>
+同じ枝の origin 側は <code>b8dfe16</code>（10-21 01:46:01）で、clone は6つ遅れ（最後に fetch した時点）。origin 側でいちばん新しい枝は <code>morita/fusen-shigoto</code> <code>a7fb512</code>（10-28 10:46:22）</td>
+<td><code>~/untendai-morita/tools/build-morita.sh</code>（build-dev.sh の写し・feature <code>dev-test</code>・「コミットしない」と冒頭にある）</td>
+<td>森田さんの版 → 西田統合版に取り込む：森田さんのセッション（運転台 森田さん共同開発の巡回・その下の取り込みのセッション）<br><small>CLAUDE.md 123行</small></td>
+<td>取り込みは1件1枝の PR・見本の数字の画面は実データにつないでから（台帳 2026-10-17）。2026-10-19 に 4category-shell（99f43c6）・stage2（90fdfb8）・stage3（5598aab）・fix-tauri-default-run（2411867）を取り込む決定（台帳 2772〜2775行）。森田さんの版の中は森田さんの判断（台帳 2754行）</td></tr>
 
-    <!-- v1.73.53 -->
-    <circle cx="610" cy="150" r="6" fill="#fff" stroke="#14206b" stroke-width="2"/>
-    <text x="590" y="135">1.73.53</text>
+<tr><td><b>アプリの WEB版</b></td>
+<td>枝 <code>web-ban-20261028</code>・<code>/Users/nishidamitsuhiro/untendai-webban</code><br>
+最後 <b><code>6cc1eca</code></b>（10-28 20:07:39「WEB版：数字を sample.db から出す…」）。土台 <code>dd09a3a</code>（main）の上に2つ。main は早送りで取り込める（<code>git merge-base --is-ancestor main web-ban-20261028</code> が真）。<br>
+<code>src/</code> の差は 0行。足したのは：<code>tools/webban.sh</code>・<code>webban/serve.py</code>・<code>webban/webban.js</code>・<code>webban/kenshu.js</code>・<code>src-tauri/src/bin/webban_data.rs</code>・<code>Cargo.toml</code> の feature <code>webban</code>（付けたときだけ組まれる。製品版・各版の組み立てには入らない）</td>
+<td><code>bash tools/webban.sh</code>：このコミットで <code>webban_data</code> を組み → <code>python3 webban/serve.py 8801</code>。配るときに <code>src/index.html</code> の <code>&lt;script src="mihon.js"&gt;</code> の直後へ <code>webban.js</code> を1本足す。会計・顧客の数字は <code>/__webban/invoke</code> から <code>webban_data</code>（アプリの <code>#[tauri::command]</code> の関数そのもの）に聞く。それ以外（ログイン・相談・書く操作）は今までどおり webban.js／mihon.js</td>
+<td>組み方は運転台改善が BS-engineer に出した（台帳 2026-10-28 20:0x・20:1x）。もとの発注は AI-Mits-チューニング（19:0x）</td>
+<td><b>正式版を出すとき、同じ作業場・同じコミットのまま <code>bash tools/webban.sh</code> で立てる</b>（決定台帳 2026-10-28 20:1x・リポジトリの CLAUDE.md の「世に出す」の表に1行）。西田の開発版（untendai-dev.app・dou2-plan）の枝にはついて行かない。道2の画面は dou2-plan が main に入るまで WEB版に出ない</td></tr>
 
-    <!-- v1.74.0 -->
-    <circle cx="690" cy="150" r="6" fill="#14206b"/>
-    <text x="670" y="135">1.74.0</text>
-    <text x="645" y="120" fill="#5b6170">管理者版（9/30）</text>
-
-    <!-- v1.74.1 -->
-    <circle cx="760" cy="150" r="6" fill="#14206b"/>
-    <text x="740" y="178">1.74.1</text>
-    <text x="720" y="195" fill="#5b6170">西田統合版でも freee（10/01）</text>
-
-    <!-- v1.74.2 -->
-    <circle cx="820" cy="150" r="6" fill="#14206b"/>
-    <text x="800" y="135">1.74.2</text>
-
-    <!-- v1.74.3 -->
-    <circle cx="880" cy="150" r="6" fill="#14206b"/>
-    <text x="860" y="135">1.74.3</text>
-
-    <!-- v1.74.4 -->
-    <circle cx="900" cy="150" r="6" fill="#14206b"/>
-    <text x="880" y="135">1.74.4</text>
-
-    <!-- v1.75.0: main の今の版（最新・navy 太線）── marketing を取り込んだ merge commit -->
-    <circle cx="935" cy="150" r="8" fill="#14206b" stroke="#8a6a1f" stroke-width="2"/>
-    <text x="905" y="178" font-weight="700" fill="#14206b">1.75.0</text>
-    <text x="895" y="195" fill="#5b6170">main の今の版</text>
-    <text x="895" y="210" fill="#5b6170">（10/09・marketing 取り込み）</text>
-  </g>
-
-  <text x="40" y="295" font-size="12" fill="#5b6170">v1.73.28 → v1.75.0 の間に 159 の commit が溜まっている（世に出していない・2026-10-09 実測・/usr/bin/git rev-list --count v1.73.28..v1.75.0）</text>
-  <text x="40" y="313" font-size="12" fill="#5b6170">全枝8本（うち動いた3本を描いた・他5本は止まっている or 退避：demobuild・freee-win・oem-shoukai-code・taiki-honntai・wip-freee-20260925）／2026-10-09 実測</text>
-</svg>
+<tr><td><b>お試し版のページ</b></td>
+<td>コードの枝ではない（UTAGE のページ＋Dify）。Dify は <code>e472bc1f</code>（幹）→ <code>14d6df13</code>（FAST）→ <code>43d47f25</code>（NORMAL）の順に複製した出自（memory feedback_keito…）</td>
+<td>UTAGE のページ更新・Dify の下書き → 公開（この調査では叩いていない）</td>
+<td><b>AI-Mits-チューニング</b><br><small>司令塔/CLAUDE.md 41行「お試し版 UgSfW8MCzHqv の画面と Dify の頭」</small></td>
+<td>アプリの Dify の頭（NORMAL-APP 43d47f25）→ お試し版の Dify（e472bc1f）へ写す。2026-10-28 17:25 と 17:53 に公開（台帳 3297行・3318行）</td></tr>
+</table>
 </div>
 
+<h3>3-2. アプリの WEB版：決まっていること・決まっていないこと（記録のとおり）</h3>
+<div class="card">
+<p style="margin-top:0"><b>Mits様が決めたこと（2026-10-28 18:0x・原文は台帳 3326行）</b></p>
+<ol>
+<li>WEB版＝デスクトップアプリと同じ画面を Chrome で開ける形</li>
+<li>左メニューは全部押せて、見本の数字（会計）・マーケティング・業務効率化の今の画面が見られる</li>
+<li>個人の情報をつなぐのはデスクトップアプリだけ。WEB版では「そういう機能がある」と見せる</li>
+<li>かかりつけのボタンは残し、押すとアプリのダウンロードへ（https://change.7years.life/p/nPC0MfBNagSy）</li>
+<li>AI-Mits は FAST・NORMAL・DEEP の3つとも WEB で使える（手元の数字を添える動きは WEB では動かない）</li>
+<li>WEB版もログインした人が使う前提（2026-10-28 17:5x・memory project_web_ban_mo_login_zentei）</li>
+</ol>
+<p><b>どこにも公開していない（記録と実測）</b>：発注書「今回は手元で開けるところまで」・台帳 19:0x「手元で作った」。実測：配り役は <code>127.0.0.1</code> だけで待つ（serve.py 174行）／枝に upstream が無い（<code>git for-each-ref refs/heads/web-ban-20261028 --format='%(upstream)'</code> が空）／origin に <code>web-ban</code> を含む枝が 0本（<code>git ls-remote --heads origin | grep -c web-ban</code>）。</p>
+<p><b>決まっていないこと（発注書・台帳のとおり・空欄）</b></p>
+<ul>
+<li>WEB版をどこで公開するか（UTAGE のページに入れるか、別の場所か）：<span class="tag t-blank">未決</span></li>
+<li>Dify の利用者の名前を、ブラウザごとの <code>try-</code> からアカウントにひもづく形に変えるか：<span class="tag t-blank">未決</span></li>
+<li>本番の中継での実際のログイン・新規登録：確かめていない（台帳 19:0x「試験はログイン済みの状態を仕込んで行った」）</li>
+</ul>
+<p><b>決まったこと（2026-10-28 20:0x・20:1x）</b>：WEB版は西田統合版の流れ（main）の上に置き、正式版を世に出すときに同じコミットから立てる。数字は mihon.js の作り物ではなく sample.db から。版の表示は立てた元のコミットの版。</p>
+<p><b>検収（20:0x・新しい組み方で再測）</b>：左メニューと設定の48画面すべて開く・真っ白 0件・ページのエラー 0件・本番の数字 7,738,606 は 0件／FAST・NORMAL・DEEP 3/3 で返事の1文目が「AI西田です。」（Dify の user <code>web-ban-check-20261028</code>）／かかりつけを押すとダウンロードの案内（https://change.7years.life/p/nPC0MfBNagSy）。写真は <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/webban_kenshu_20261028_sampledb</code>。</p>
+<p><b>前の検収の記録（19:0x・AI-Mits-チューニングが台帳に書いた実測）</b>：48画面すべて開く／ページ由来のエラー 0件／FAST・NORMAL・DEEP 3/3 で「AI西田です。光弘さん、…」／名前を尋ねる文 0件／撮った画面54枚は <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/webban_kenshu_20261028</code>。アプリ側の取りこぼし：バブルチャートは <code>[data-go="bubble"]</code> を押したときだけ読み込まれ、新しい左メニューからは読み込まれない（WEB版では左メニューを押したときに代わりに読み込ませている・運転台改善へ）。</p>
+</div>
+
+<h3>3-3. お試し版のページと Dify：記録された食い違い（2026-10-28 17:5x・調べただけ・まだ直していない）</h3>
+<div class="card">
+<ol style="margin:0">
+<li>相談を送るとき inputs が空（ログインした人の名前 <code>authMe.name</code> を持っているのに <code>call_name</code> を渡していない）</li>
+<li>Dify の user がブラウザごとの <code>try-</code>（アカウントにひもづかない・端末を替えると別人になる）</li>
+<li>「90日間（3ヶ月）は無料」が2か所（アプリのお試しは 30日）</li>
+<li>「AI-Mits をかかりつけにする」スイッチ（アプリでは外すと 10-25 に確定）。※ 18:0x に Mits様が「かかりつけのボタンは残す」と決めたので、<b>アプリの WEB版</b>については取り消し（台帳 3329行）</li>
+<li>FAST・DEEP は「アプリだけ」でダウンロードの画面に送る。※ 18:0x に「3つとも WEB で使える」と決まった</li>
+<li>登録の画面がページの中にある（オプトインで先にメアド登録する流れとの関係は未決）</li>
+</ol>
+<p class="note" style="margin-bottom:0">出どころ：決定台帳 3318〜3329行。上の4・5はアプリの WEB版については決まったが、お試し版のページが今どうなっているかは、この調査では見ていない <span class="tag t-blank">未確認</span></p>
+</div>
 
 <!-- ============================================================ -->
-<h2>4. 言葉を2つに分ける（2026-09-14 Mits様確定）</h2>
+<h2>4. 枝と作業場の全件（2026-10-28 19:3x 実測・デモデータ版の2本は 22:3x に足した）</h2>
+<p class="note">範囲：<code>git worktree list</code>（12本）＋<code>git branch -a</code>（ローカル18本・リモート追跡 origin 5本）＋森田さんの clone。「先／遅」は main との差の commit 数（<code>git rev-list --count main..枝</code> と <code>枝..main</code>）。先が 0 の枝は、全部の commit が main に入っている。</p>
+<div class="scroll">
+<table id="tbl-eda">
+<tr><th>枝</th><th>作業場</th><th>版</th><th>最後のコミット</th><th>main との差</th><th>未commit</th><th>記録にある中身</th></tr>
+<tr><td><code>main</code></td><td>~/untendai-seiri</td><td>1.81.14</td><td><code>3d63735</code> 10-28 20:30:51（22:3x 実測。19:3x は <code>dd09a3a</code>）</td><td>—</td><td>41</td><td>コードの本流。西田統合版・西田の開発版（版番号の一致）</td></tr>
+<tr><td><code>demo-ban</code></td><td>~/untendai-demo</td><td>1.80.0</td><td><code>f3ff148</code> 10-28 20:28:50「デモデータ版（untendai-demo.app）を確認版 v1.80.0 の上に足した」</td><td>先59・遅1</td><td>0</td><td>デモデータ版 untendai-demo.app。確認版 v1.80.0 の上に組む（22:3x 実測）</td></tr>
+<tr><td><code>demobuild</code></td><td>~/untendai-demobuild</td><td>1.73.11</td><td><code>cdb79b1</code> 09-21 13:49:52</td><td>先337・遅0</td><td>7</td><td>古い作業場（22:3x 実測）</td></tr>
+<tr><td><code>dou2-plan</code></td><td>~/untendai-dou2</td><td>1.81.14</td><td><code>7fadde6</code> 10-28 17:30:47「道2 B6：試験用の中継からプランを読む通し…」</td><td>先2・遅0</td><td>5〜6（動いている）</td><td>西田の開発版の作業の枝・道2（梅・竹・松の見分け）。「本流 main・Mits様の製品版には入れない」（報告_運転台改善 2086行）。19:34 と 20:11 に西田の開発版 untendai-dev.app へ組み入れられた（上の 3・21:0x の決定でこれが正しい形）</td></tr>
+<tr><td><code>web-ban-20261028</code></td><td>~/untendai-webban</td><td>1.81.14</td><td><code>6cc1eca</code> 10-28 20:07:39</td><td>先2・遅0</td><td>0</td><td>アプリの WEB版（上の 3-2）</td></tr>
+<tr><td><code>watasu</code></td><td>~/untendai-watasu</td><td>1.81.12</td><td><code>9512ea8</code> 10-26 18:40:07</td><td>先0・遅4</td><td>0</td><td>AI-Mits の返事を Claude Code／Codex に渡す（memory fact_20261024_untendai_watasu_jikki）</td></tr>
+<tr><td><code>ai-sensei</code></td><td>~/untendai-ai-sensei</td><td>1.81.8</td><td><code>d26a5ab</code> 10-27 13:58:45</td><td>先30・遅12</td><td>0</td><td>AI先生（設定の手伝い）。「本流 main と同じファイルを他の仕事が触っているため枝を分ける」（台帳 3118行）</td></tr>
+<tr><td><code>marketing</code></td><td>~/untendai-marketing</td><td>1.74.4</td><td><code>a76875a</code> 10-17 14:59:42</td><td>先1・遅175</td><td>4</td><td>マーケ版の組み元。10-09 に 54 commit を main へ取り込み済み</td></tr>
+<tr><td><code>freee</code></td><td>~/untendai-freee</td><td>1.74.4</td><td><code>4bce0ca</code> 10-17 14:59:42</td><td>先1・遅229</td><td>1</td><td>freee 連携の枝。10-17 のアイコンの commit が先頭</td></tr>
+<tr><td><code>freee-win</code></td><td>~/untendai-freee-win</td><td>1.73.27</td><td><code>8233d10</code> 10-17 14:59:42</td><td>先9・遅304</td><td>1</td><td>freee 版の Windows 側</td></tr>
+<tr><td><code>oem-shoukai-code</code></td><td>~/untendai-oem-shoukai</td><td>1.73.53</td><td><code>3f414b0</code> 09-26 14:54:06</td><td>先0・遅244</td><td>5</td><td>運転台の OEM 商会版のソース（司令塔/mac_youryou_chousa_20261008.md 55行）</td></tr>
+<tr><td><code>demobuild</code></td><td>~/untendai-demobuild</td><td>1.73.11</td><td><code>cdb79b1</code> 09-21 13:49:52</td><td>先0・遅336</td><td>7</td><td>2026-09-25 の記録で「切り離し」（CLAUDE.md 2106行）</td></tr>
+<tr><td><code>taiki-honntai</code></td><td>~/untendai</td><td>1.60.5</td><td><code>4c7be2e</code> 09-14 12:51:23</td><td>先5・遅438</td><td>17</td><td>remote に push されていない（2026-09-25 の記録・今も origin に無い）</td></tr>
+<tr><td><code>menu-kahen</code></td><td>作業場なし</td><td>1.77.4</td><td><code>35021c4</code> 10-19 16:54:41</td><td>先0・遅99</td><td>—</td><td>左のメニューと右の AI-Mits の欄の幅を変えられる（台帳 2026-10-19 16:5x）。全部 main に入っている</td></tr>
+<tr><td><code>menu-kakushi-20261019</code></td><td>作業場なし</td><td>1.77.5</td><td><code>18d1a39</code> 10-19 17:23:39</td><td>先0・遅95</td><td>—</td><td>新しいメニューで隠していた項目を隠す。全部 main に入っている</td></tr>
+<tr><td><code>fix/persona-latest-body-test</code></td><td>作業場なし（origin にも同名）</td><td>1.76.7</td><td><code>36a998e</code> 10-16 11:33:30</td><td>先0・遅127</td><td>—</td><td>GitHub 上の自動テスト（台帳 2732行）。全部 main に入っている</td></tr>
+<tr><td><code>fix/windows-test-4ken</code></td><td>作業場なし（origin にも同名）</td><td>1.76.7</td><td><code>907b8e1</code> 10-16 18:50:47</td><td>先1・遅125</td><td>—</td><td>Windows でだけ落ちる試験4件</td></tr>
+<tr><td><code>win-home-nashi</code></td><td>作業場なし（origin にも同名）</td><td>1.76.7</td><td><code>cff2e80</code> 10-16 19:12:27</td><td>先1・遅124</td><td>—</td><td>HOME が無い Windows でも動く</td></tr>
+<tr><td><code>wip-freee-20260925</code></td><td>作業場なし</td><td>1.73.30</td><td><code>ec01fae</code> 10-04 21:44:57</td><td>先1・遅296</td><td>—</td><td>freee 枝の 09-25 の未 commit を退避</td></tr>
+<tr><td><code>origin/test/jidou-test-tameshi</code></td><td>リモートだけ</td><td>1.76.7</td><td><code>aeaf380</code> 10-15 21:00:49</td><td>先1・遅131</td><td>—</td><td>自動テストが PR で走るかの試し（「合流させずに閉じる」）</td></tr>
+</table>
+</div>
+<p class="note">行数20＝作業場のある12本＋作業場の無いローカル7本（menu-kahen・menu-kakushi-20261019・fix/persona-latest-body-test・fix/windows-test-4ken・win-home-nashi・wip-freee-20260925・demobuild）＋リモートだけ1本。作業場の未 commit 行数は <code>git status --short | wc -l</code>。</p>
 
-<div class="quote">Mits様：「いつもAIがいう『世に出します』をどの内部基準をもつかだな。つまり、製品版だけど実質自分だけが見るにとどめて、まとめて『世に出す』」「OK、それをルールにしよう」<br><span class="note">（引用の中の呼び名は当時のもの。今の呼び方では西田統合版）</span></div>
+<h3>4-2. 森田さんの clone（<code>/Users/nishidamitsuhiro/untendai-morita</code>・別の repo）</h3>
+<div class="scroll">
+<table>
+<tr><th>枝</th><th>先頭（最後に fetch した時点）</th><th>メモ</th></tr>
+<tr><td><code>main</code></td><td><code>f509774</code> 10-16 19:18:50</td><td>origin の push 先は <code>DISABLED_no_push.invalid</code>（push できない作り）</td></tr>
+<tr><td><code>morita/4category-stage3</code>（チェックアウト中）</td><td>ローカル <code>5598aab</code> 10-17 00:57:55／origin <code>b8dfe16</code> 10-21 01:46:01</td><td>morita.app 1.76.7 と版が合うのはローカルの先頭</td></tr>
+<tr><td><code>morita/4category-shell</code></td><td><code>99f43c6</code> 10-16 22:49:45</td><td>—</td></tr>
+<tr><td><code>morita/4category-stage2</code></td><td><code>90fdfb8</code> 10-16 23:35:31</td><td>—</td></tr>
+<tr><td><code>morita/fix-tauri-default-run</code></td><td><code>2411867</code> 10-16 20:00:15</td><td>—</td></tr>
+<tr><td><code>morita/readme-fork-credit</code></td><td><code>72d87d0</code> 10-16 19:52:44</td><td>—</td></tr>
+<tr><td><code>morita/fusen-in-shell</code></td><td><code>bb58a6a</code> 10-25 20:19:52</td><td>付箋仕事術</td></tr>
+<tr><td><code>morita/fusen-parts</code></td><td><code>99558f4</code> 10-28 10:45:34</td><td>付箋仕事術</td></tr>
+<tr><td><code>morita/fusen-shigoto</code></td><td><code>a7fb512</code> 10-28 10:46:22</td><td>付箋仕事術</td></tr>
+</table>
+</div>
+
+<!-- ============================================================ -->
+<h2>5. 言葉と道具（2026-09-14・2026-10-19 Mits様確定）</h2>
+
+<div class="quote">Mits様（2026-09-14）：「いつもAIがいう『世に出します』をどの内部基準をもつかだな。つまり、製品版だけど実質自分だけが見るにとどめて、まとめて『世に出す』」「OK、それをルールにしよう」<br><span class="note">（引用の中の「製品版」は当時の呼び名。今の呼び方では西田統合版）</span></div>
 
 <div class="scroll">
 <table>
 <tr><th>言葉</th><th>何が起きるか</th><th>お客様に届くか</th><th>道具</th></tr>
-<tr><td><b>西田統合版に入れる</b></td><td>版を上げて commit・タグ・push、Mac を組んで <code>/Applications/untendai.app</code> だけ入れ替え</td><td><span class="tag t-ok">届かない</span></td><td><code>bash tools/release.sh --自分だけ &lt;版&gt; "&lt;要約&gt;"</code></td></tr>
-<tr><td><b>世に出す</b></td><td>GitHub に Release を作り、latest.json を新しい版にする</td><td><span class="tag t-out">全員に届く</span></td><td><code>bash tools/release.sh &lt;版&gt; "&lt;要約&gt;"</code></td></tr>
-<tr><td><b>手渡し</b>（freee版）</td><td>zip を相手のフォルダに置き、Mits様が共有する</td><td>その相手だけ</td><td><code>bash tools/build-client.sh</code></td></tr>
+<tr><td><b>西田統合版に入れる</b></td><td>版を上げて commit・タグ・push、Mac を組んで <code>/Applications/untendai.app</code> だけ入れ替え。Mits様の Mac に名札の印を置く（<code>nishida_tougou_ban.shirushi</code>）</td><td><span class="tag t-ok">届かない</span></td><td><code>bash tools/release.sh --自分だけ &lt;版&gt; "&lt;要約&gt;"</code></td></tr>
+<tr><td><b>確認版を出す</b></td><td>GitHub に公開前の Release を作り、<code>kakunin.json</code> が新しい版を返す（<code>latest.json</code> は動かさない）。Drive「確認版受け渡し」に zip・exe を足し、Discord「確認版」に出し、「確認版が出ました」メールを送る（手 7b〜7e）。同じ版を紺で組み直して Mac の untendai.app に入れる（手 8b）</td><td><span class="tag t-me">「確認版を受け取る」を入れたアプリだけ</span></td><td><code>bash tools/release.sh --確認版 &lt;版&gt; "&lt;要約&gt;"</code></td></tr>
+<tr><td><b>世に出す（正式版）</b></td><td>GitHub に Release を作り、latest.json を新しい版にする</td><td><span class="tag t-out">全員に届く</span></td><td><code>bash tools/release.sh &lt;版&gt; "&lt;要約&gt;"</code></td></tr>
+<tr><td><b>西田の開発版を組む</b></td><td><code>/Applications/untendai-dev.app</code> を入れ替え。作業の枝で組む（今は dou2-plan）。デモデータ版 untendai-demo.app を組む道具はまだ無い</td><td><span class="tag t-ok">届かない</span></td><td><code>bash tools/build-dev.sh</code></td></tr>
+<tr><td><b>freee版を手渡す</b></td><td>zip を相手のフォルダ（Drive <code>遠藤さん/untendai-client_配布</code> など）に置き、Mits様が共有する</td><td>その相手だけ</td><td><code>bash tools/build-client.sh</code></td></tr>
+<tr><td><b>WEB版を立てる</b></td><td>正式版を世に出した直後に、同じ作業場・同じコミットで。アプリの画面を localhost:8801 で配り、数字はそのコミットの sample.db から。本番の DB・/Applications のアプリには触らない</td><td><span class="tag t-ok">届かない（公開していない）</span></td><td><code>bash tools/webban.sh</code></td></tr>
 </table>
 </div>
 
-<p><b>世に出すのは2つのときだけ。</b>①Mits様が西田統合版で触って「出す」と言われたとき ②お客様の手元で数字が間違っている・取り込みが止まっているとき（溜めずに出す）。</p>
-<p class="note">いまの西田統合版 1.74.4 を世に出すと、お客様全員の正式版にも「freee との連携」と管理者スイッチが出る。</p>
+<p><b>世に出すのは2つのときだけ</b>（旧ページ・2026-10-03 の記録のまま）：①Mits様が西田統合版で触って「出す」と言われたとき ②お客様の手元で数字が間違っている・取り込みが止まっているとき（溜めずに出す）。</p>
+
+<h3>5-1. 版の見分けの印（2026-10-19 Mits様）</h3>
+<ul>
+<li>新しい版を足すときは、その場で①左上のアプリ名のあとの（〜版）②アイコンの色、の2つを決める。正式版だけは（〜版）を付けず、アイコンは紺（#204088）</li>
+<li>版ごとの色（決まりの値と、アイコンの絵から読んだ値。2026-10-28 22:3x 実測）：西田の開発版 緑 <b>#188848</b>（絵も #188848）・森田さんの開発版 マゼンタ 記録 #F848D8（絵は <b>#ff4fd8</b>）・freee版 黄 <b>#f2c200</b>・マーケ版 橙 <b>#e0761a</b>・西田統合版／正式版 紺 記録 #204088（絵は <b>#26408a</b>）・確認版 紫 <b>#7a3cc6</b>・デモデータ版 深い赤 <b>#b02a30</b>（決定台帳 2026-10-28 22:1x／経営の運転台 CLAUDE.md 130〜138行）。読み方：<code>sips -s format png</code> で icns から出し、透けていない点のいちばん多い色を数えた</li>
+<li>名札「西田統合版」は、Mits様の Mac に置いた印で決める（2026-10-25・v1.80.1 から。CLAUDE.md 112行）。それまでは「自分の版 > latest.json の版」で決めていて、正式版を出した直後に名札が空になった</li>
+</ul>
 
 <!-- ============================================================ -->
-<h2>5. 手順（いま実際に回している形）</h2>
+<h2>6. 手順（いま実際に回している形）</h2>
 
-<h3>5-1. 直しを入れる</h3>
+<h3>6-1. 直しを入れる</h3>
 <ol>
-<li>画面の直しは <b>モックを作る → Mits様が目視 → 実装</b> の順（2026-08-29）。モックは明るい画面で Chrome で開く</li>
+<li>画面の直しは <b>モックを作る → Mits様が目視 → 実装</b> の順（2026-08-29）。モックは明るい画面で開く</li>
 <li>main（<code>~/untendai-seiri</code>）に commit する。他の人がまだ commit していないファイルは入れない・戻さない</li>
 <li>含めたい直しを <code>git add</code> してから組む（2026-09-26・版が2つ出た事故から）</li>
 </ol>
 
-<h3>5-2. 西田統合版に入れる</h3>
-<pre>bash tools/release.sh --自分だけ 1.74.2 "直しの要約"
-bash tools/build-dev.sh          # 開発版も同じ main で組み直す（--自分だけ は開発版を入れ替えない）</pre>
+<h3>6-2. 西田統合版に入れる</h3>
+<pre>bash tools/release.sh --自分だけ 1.81.14 "直しの要約"
+bash tools/build-dev.sh          # 西田の開発版 untendai-dev.app を組む（作業場で走らせる）（--自分だけ は入れ替えない）</pre>
 <ul>
 <li>入れたあと、<b>タグの中身と入っているアプリの中身を突き合わせる</b>（2026-09-26・1日で3回ずれた）</li>
 <li>動いている西田統合版が古いまま残ることがある。起動の時刻が組んだ時刻より前なら、閉じて開き直す（2026-10-01 に実際に起きた）</li>
 <li>確かめる：<code>curl -s https://untendai-update.3216-fun.workers.dev/latest.json</code> の version が変わっていない＝世に出ていない</li>
 </ul>
 
-<h3>5-3. 西田統合版を手渡す（協力者・コンサルタント）（2026-10-12 Mits様確定。2026-10-19 からは協力者に確認版を渡す）</h3>
-<p class="quote">Mits様（2026-10-12）：「製品版はまだ世に出ていないけれども、私が実データを使い確かめるもの。自社データ等を入れなければサンプルデータが表示されるのが当然。開発協力の人に実際に使ってもらうのは世に出る前の製品版の段階が妥当だとすると、私が使うのと同じ状況であるのがふさわしい。だから、自社データをつなげる前はサンプルデータが表示される。それ以外のデータが表示されるわけがない。」<br><span class="note">（引用の中の呼び名は当時のもの。今の呼び方では西田統合版）</span></p>
+<h3>6-3. 確認版を出す・開発協力の方に渡す（2026-10-19 Mits様）</h3>
 <ol>
-<li><code>bash tools/make_sample_db.sh</code> で見本の帳簿（<code>src-tauri/resources/sample.db</code>）を架空の中身に差し替える（開発版 DB の中身を写す。実データの印が1つでもあれば見張り試験 <code>sample_db_no_mitsdata.rs</code> が <code>cargo test</code> で落とす）</li>
-<li><code>bash tools/release.sh --自分だけ &lt;版&gt; "&lt;要約&gt;"</code> で西田統合版を組み直し、<code>/Applications/untendai.app</code>（<code>com.mits.untendai</code>）を上げる。世には出さない</li>
-<li><b>実データの検査</b>（下の 6）を全部通す。<code>/Applications/untendai.app</code> を <code>ditto -c -k --keepParent --sequesterRsrc</code> で zip にする（おまけの実行ファイル <code>demo_seed_cred</code>・<code>haishin_torikomi</code> も入ったまま。西田統合版の中身そのもの）</li>
-<li>まっさら状態の画面は、Mits様の帳簿（<code>~/Library/Application Support/com.mits.untendai</code>）に触らずに確かめる手段で（<code>HOME</code> を <code>/tmp/&lt;ts&gt;</code> に変えて <code>open -n</code> は 2026-10-12 試行で GUI が立ち上がらなかった）。zip 内の <code>sample.db</code> を <code>sqlite3</code> で直接検査する代替で済ます（コードは「空の DB 状態なら <code>sample.db</code> の中身を <code>applyDS</code> で表示する」作りのため）</li>
-<li>案内「はじめに読んでください.md」を実物の画面の文字どおりに書き、BS-jikki-kenshu の検収に通す</li>
-<li>相手のフォルダ（<code>すごいコンサル/&lt;お名前&gt;/</code>）に zip・案内を置く</li>
-<li><b>共有と連絡は Mits様</b></li>
+<li>確認版は <b>Mits様の OK の後</b>に作る。西田統合版で直しを繰り返している間は確認版を上げない（CLAUDE.md 128行）</li>
+<li><code>bash tools/release.sh --確認版 &lt;版&gt; "&lt;要約&gt;"</code>。受け渡しは Drive「確認版受け渡し」（ID <code>1cm26Jza24AyJiXv8spBJnQVi-cVcSn5L</code>）の1フォルダに追加していく。前の版は消さない</li>
+<li>Discord「運転台 開発」の「確認版」に変わったところが出る。新しく入った人に見えるのはここだけ</li>
+<li>確認版が出ましたメールを送る（<code>tools/kakunin_uketawashi.py mail</code>・同じ版・同じ宛先には2回送らない）</li>
 </ol>
-<p class="note">「freee版（<code>com.mits.untendai.client</code>・<code>build-client.sh</code>）」を渡すのは、Mits様が名指しされたときだけ。</p>
+<p class="note">Drive に置いてあるファイル（ls の結果・誰が開いたかは <span class="tag t-blank">未確認</span>）：確認版受け渡し＝1.77.7（Mac zip・Windows exe・10-19）／森田さん＝1.76.3（zip・exe）・1.77.4（exe）／棚原さん＝1.76.3（zip）／遠藤さん＝untendai-client_配布（client 1.74.4 zip・1.76.3 の zip と exe）。</p>
 
-<h3>5-4. 世に出す（Mits様の「出す」のあと）</h3>
+<h3>6-4. 世に出す（Mits様の「出す」のあと）</h3>
 <pre>bash tools/release.sh &lt;溜めた最後の版&gt; "要約"</pre>
 <p class="note">手1〜4（版・push・Mac）は済み判定で飛ばし、手5 Windows・手6 Release・手7 latest.json から走る。</p>
 
+<h3>6-5. WEB版を立てる（正式版と同じコミットから）</h3>
+<pre>bash tools/release.sh &lt;版&gt; "&lt;要約&gt;"   # 正式版を世に出す
+bash tools/webban.sh                 # 同じ作業場・同じコミットのまま → http://localhost:8801/
+# いま（web-ban-20261028 が main に入る前）は：
+bash /Users/nishidamitsuhiro/untendai-webban/tools/webban.sh</pre>
+
 <!-- ============================================================ -->
-<h2>6. 実データを渡さないための確かめ（協力者Bさん向けで実施）</h2>
+<h2>7. 実データを渡さないための確かめ（2026-10-03・1.74.1 の記録。今の版では再測していない）</h2>
 
 <div class="card scroll">
 <svg viewBox="0 0 1000 150" xmlns="http://www.w3.org/2000/svg" font-family="Hiragino Sans, sans-serif">
@@ -317,48 +498,82 @@ bash tools/build-dev.sh          # 開発版も同じ main で組み直す（--�
 </div>
 
 <table>
-<tr><th>何を</th><th>結果（2026-10-03・1.74.1 の時点の記録。今は 1.74.4）</th></tr>
+<tr><th>何を</th><th>結果（2026-10-03・1.74.1 の時点の記録）</th></tr>
 <tr><td>zip の中身</td><td>Info.plist／本体／icon.icns／resources/sample.db／_CodeSignature の5本</td></tr>
 <tr><td>協力者Aさんの会社名・協力者Aさん・事業所番号・実際の金額</td><td>0件（zip を開いた中身で）</td></tr>
 <tr><td>同梱の見本の帳簿</td><td>104行・moneyforward だけ・顧客は架空の25名・メールは example.com</td></tr>
 <tr><td>まっさらな起動</td><td>最初の画面に名前・会社名・金額 0件（写真あり）</td></tr>
 <tr><td>残っているもの（お金の実データではない）</td><td>Mits様のメールアドレス（自己購入を外す決まった文字・<code>sanbo.rs:2316</code>・画面には出ない）／中継の署名の鍵1本（協力者Aさんの版と同じ作り）／AI-Mits の紹介文・会社概要</td></tr>
 </table>
+<p class="note">今の版（確認版 1.77.7・西田統合版 1.81.13）で同じ確かめをした記録：<span class="tag t-blank">未確認</span>（叩いたコマンド：台帳と CLAUDE.md の「実データの検査」の語を grep・2026-10-03 以降の再測の記録は見つからず）</p>
 
 <!-- ============================================================ -->
-<h2>7. 西田統合版と freee版で、それぞれ何が見えるか（2026-10-03・1.74.1 の時点の記録。今は 1.74.4）</h2>
+<h2>8. 版ごとに出る・隠れる項目（記録）</h2>
 <table>
-<tr><th></th><th>西田統合版</th><th>freee版</th><th>開発版</th></tr>
-<tr><td>マネーフォワードとの連携</td><td>出る</td><td>出る</td><td>出る</td></tr>
-<tr><td>freee との連携</td><td>出る（1.74.1 から・2026-10-03 時点の記録）</td><td>出る</td><td>出ない</td></tr>
-<tr><td>管理者スイッチ（顧問先を足して切り替える）</td><td>出る（設定 → アカウント）</td><td>出る（設定 → アカウント）</td><td>出る</td></tr>
-<tr><td>入っているデータ</td><td>Mits様の Mac では Mits様の実データ／手渡し先では見本（架空）</td><td>Mits様の Mac では Mits様の2社の実データ／手渡し先では空</td><td>架空の見本A・B・C だけ</td></tr>
-<tr><td>協力者（コンサルタント）に渡すのはどれか（2026-10-12 Mits様確定。2026-10-19 からは協力者に確認版を渡す）</td><td><b>これを渡す</b></td><td>Mits様が名指しされたときだけ</td><td>渡さない</td></tr>
+<tr><th></th><th>西田統合版</th><th>確認版・正式版</th><th>freee版</th><th>untendai-dev.app（記録の時点の呼び名は開発版）</th></tr>
+<tr><td>開発途中の計器 9項目（<code>HIDE_PROD</code>：PPM・DMi・CPF軸・ダイヤモンドチャート・KAZEOKE・仕事測定・3つの時給・1action3goal・業務フロー分析・休む仕組み）</td><td>出る</td><td>隠れる（Mits様が項目を名指しされたときだけ外す）</td><td>隠れる</td><td>隠れる</td></tr>
+<tr><td>freee との連携（<code>freee-only</code> の印）</td><td>出る</td><td>出る（記録上）</td><td>出る</td><td>出ない（2026-10-03 の記録）</td></tr>
+<tr><td>管理者スイッチ（顧問先を足して切り替える）</td><td>出る（設定 → アカウント）</td><td>出る</td><td>出る</td><td>出る</td></tr>
 </table>
-<p class="note">出し分けは画面の印で行う：<code>freee-only</code>（client と production で出す）・<code>client-hide</code>（お渡し用で隠す）。印の無いものは4本すべてに出る。</p>
+<p class="note">出どころ：経営の運転台/CLAUDE.md 107行・旧ページ（2026-10-03）。<code>HIDE_PROD</code> と <code>freee-only</code> が今の <code>src/index.html</code> にあるかだけ確かめた（<code>grep -c</code> で HIDE_PROD 7件・freee-only 7件）。画面で出るかどうかは今回見ていない <span class="tag t-blank">未確認</span>。出し分けの印：<code>freee-only</code>（client と production で出す）・<code>client-hide</code>（お渡し用で隠す）。印の無いものは全部に出る。</p>
 
 <!-- ============================================================ -->
-<h2>8. 決算のあとの突き合わせ（2026-10-01 追加）</h2>
+<h2>9. 決算のあとの突き合わせ（2026-10-01 追加）</h2>
 <p>月次決算で口座ごとの残高が1円まで合ったら、運転台に取り込み直し、「現在位置」の5つ（売上高・売上総利益・経費合計・控除前所得金額・現預金）を元の会計ソフトの試算表と並べる。2026-10-01 は両社とも差0円。</p>
 <ul>
-<li>ヘルプ：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/help_kessan_go_untendai_tsukiawase.md</code></li>
+<li>ヘルプ：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/help_kessan_go_untendai_tsukiawase.md</code>（実在を確認）</li>
 <li>毎月1日の予約タスク「前月の月次決算を締める」の手順に組み込み済み</li>
 </ul>
 
 <!-- ============================================================ -->
-<h2>9. 実際に踏んだ落とし穴</h2>
+<h2>10. 実際に踏んだ落とし穴</h2>
 <table>
 <tr><th>いつ</th><th>何が起きたか</th><th>いまの決まり</th></tr>
-<tr><td>09-25</td><td>西田統合版の直しが freee版・マーケ版に届いていなかった</td><td>西田統合版に入れた画面の直しは、その回のうちに4本へ</td></tr>
+<tr><td>09-25</td><td>西田統合版の直しが freee版・マーケ版に届いていなかった</td><td>西田統合版に入れた画面の直しは、その回のうちに他の版へ（CLAUDE.md 491行）</td></tr>
 <tr><td>09-26</td><td>タグの中身と入っているアプリの中身が1日で3回ずれた</td><td>入れたら必ず突き合わせる</td></tr>
 <tr><td>09-26</td><td>お客様の画面に試験用のボタンが出た（出し分けの印が片方向だけ）</td><td><code>client-hide</code> を作り、両方向に</td></tr>
 <tr><td>09-30</td><td>版を上げるときのテストが、別の作業で縮めた見本の帳簿で落ちた</td><td>他の人の commit していないファイルは触らない・落ちたら止めて返す</td></tr>
 <tr><td>10-01</td><td>新しい版を入れたのに、古い西田統合版が動いたままで画面が変わらなかった</td><td>起動の時刻を見て、古ければ開き直す</td></tr>
-<tr><td>10-01</td><td>アプリの窓が画面の外（x=1800）に出ていてつかめなかった</td><td><code>window.json</code> を控えてから画面の中に書き換えて開き直す</td></tr>
+<tr><td>10-01</td><td>アプリの画面の枠が画面の外（x=1800）に出ていてつかめなかった</td><td><code>window.json</code> を控えてから画面の中に書き換えて開き直す</td></tr>
 <tr><td>10-01</td><td>西田統合版と freee版が同じ戻り先（<code>localhost:27852</code>）を使う</td><td>freee につなぐときは、もう片方を閉じておく</td></tr>
+<tr><td>10-24</td><td>1.80.0 を正式版で出したら、Mac の版と latest.json の版が同じになり、名札が空になって、隠す9項目（経営戦略では4つ）も隠れた</td><td>名札は Mits様の Mac に置いた印で決める（10-25・v1.80.1）</td></tr>
 </table>
 
-<p class="note" style="margin-top:32px">正本の決まり：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/CLAUDE.md</code>（「アプリは4本ある」「世に出す の内部基準」ほか）。この HTML は 2026-10-03 の実測を写した一覧で、決まりの正本ではない。</p>
+<!-- ============================================================ -->
+<h2>11. 記録と実測が食い違っている所（2026-10-28 19:3x・見つけたものを並べるだけ）</h2>
+<table id="tbl-kuichigai">
+<tr><th>#</th><th>記録に書いてあること</th><th>実測</th><th>叩いたコマンド</th></tr>
+<tr><td>1</td><td>main の版は 1.81.14（タグ v1.81.14）</td><td>Mac の西田統合版は 1.81.13。アプリの更新 10-28 15:59:08・タグ v1.81.14 は 15:59:49（41秒あと）</td><td><code>PlistBuddy Print CFBundleShortVersionString</code>／<code>git log -1 --format=%ci v1.81.14</code>／<code>stat -f %Sm</code></td></tr>
+<tr><td>2</td><td>西田の開発版 untendai-dev.app のアイコンは緑（台帳 2026-10-17：#1f8a4c・CLAUDE.md 138行：#188848）</td><td>入っている .app は灰青 #5c6675。main に commit 済みの <code>icons-dev</code> も灰青で、緑 #1f8a4c は main の作業場の未 commit の変更の中にある。緑の commit は freee・marketing・freee-win 枝（10-17 14:59:42）にある</td><td><code>sips -s format bmp</code> で icon.icns と <code>git show HEAD:src-tauri/icons-dev/128x128@2x.png</code> と作業場の同じファイルの1点を読んだ</td></tr>
+<tr><td>3</td><td>freee版は freee 枝・freee-win 枝から組む（CLAUDE.md 491行）。旧ページは「main から（09-25 から）」</td><td>アプリは 1.76.2。freee 枝は 1.74.4。main のタグ v1.76.2 と版が合う。組んだ元の commit を示す記録は見つからず</td><td><code>git show &lt;枝&gt;:src-tauri/tauri.conf.json</code>／<code>git tag</code></td></tr>
+<tr><td>4</td><td>マーケ版は marketing 枝・10-09 に main へ取り込み済み（旧ページ）</td><td>取り込んだのは 10-09 の merge 0c9d5b8 まで。枝の先頭 a76875a（10-17）は main に含まれない</td><td><code>git merge-base --is-ancestor marketing main</code></td></tr>
+<tr><td>5</td><td>untendai-dev.app を、西田の開発版の作業の枝 dou2-plan から組み直している最中（依頼文・19:3x）</td><td>19:32 の実測では untendai-dev.app は 1.81.8 のままだったが、19:34:40 と 19:37:16 に 1.81.14 に入れ替わった。実行ファイルに plan_next が3件（西田統合版は0件）。dou2 作業場の未 commit は 0行→5〜6行に動いている</td><td><code>PlistBuddy</code>／<code>stat -f %Sm</code>／<code>/usr/bin/grep -a -c plan_next /Applications/untendai-dev.app/Contents/MacOS/untendai</code>／<code>git status --short | wc -l</code></td></tr>
+<tr><td>6</td><td>経営の運転台/CLAUDE.md 117〜126行「森田さんの版 → 西田統合版に取り込む」</td><td>森田さんの clone のチェックアウトは origin の同じ枝より6つ遅れ（morita.app 1.76.7 は遅れている側の版と合う）</td><td><code>git branch -a -vv</code>（森田さんの clone）</td></tr>
+<tr><td>7</td><td>freee版のデータは 2026-10-03 の記録で「Mits様の2社の実データ」</td><td>untendai-client のデータの場所に untendai.db が無い</td><td><code>ls -la ~/Library/Application\ Support/com.mits.untendai.client</code></td></tr>
+<tr><td>8</td><td>アイコンの色の記録（経営の運転台/CLAUDE.md 138行）：西田統合版／正式版 紺 #204088・森田さんの開発版 マゼンタ #F848D8</td><td>アイコンの絵から読んだ色は #26408a・#ff4fd8。ほかの4つ（開発版 #188848・確認版 #7a3cc6・デモデータ版 #b02a30・freee版 #f2c200・マーケ版 #e0761a）は記録と同じ。図の色分けは Mits様の決まり「アプリのアイコンの色に合わせる」（CLAUDE.md 138行）に従って絵の色をそのまま使っている</td><td><code>sips -s format png -Z 48 …/icon.icns</code> → 透けていない点の最頻値（Python Pillow）</td></tr>
+</table>
+<p class="note">上の表は食い違いを並べただけで、どちらが正しいかは判定していない。</p>
+
+<!-- ============================================================ -->
+<h2>12. 表の値ごとの出どころ</h2>
+<table id="tbl-demokoro">
+<tr><th>値</th><th>コマンドかファイルの行</th></tr>
+<tr><td>/Applications の本数 5</td><td><code>ls -d /Applications/untendai*.app</code></td></tr>
+<tr><td>各 .app の版・識別子・更新日時</td><td><code>/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" /Applications/&lt;名&gt;.app/Contents/Info.plist</code>・<code>CFBundleIdentifier</code>・<code>stat -f %Sm /Applications/&lt;名&gt;.app</code></td></tr>
+<tr><td>Apple の署名</td><td><code>codesign -dv /Applications/&lt;名&gt;.app</code>（untendai・untendai-client は TeamIdentifier 3J869F77SZ／dev・mkt・morita は Signature=adhoc）</td></tr>
+<tr><td>アイコンの色</td><td><code>sips -s format png|bmp /Applications/&lt;名&gt;.app/Contents/Resources/icon.icns</code> の上の中央の1点（sips の色変換で #204088 が #26408a のように少しずれる）</td></tr>
+<tr><td>データの場所・customer の行数</td><td><code>ls -la ~/Library/Application\ Support/&lt;識別子&gt;/</code>／dev・mkt・morita は untendai.db の写しに <code>sqlite3 "select count(*) from customer"</code>／西田統合版は <code>sqlite3 -readonly</code> で件数だけ</td></tr>
+<tr><td>左上の（〜版）</td><td>経営の運転台の <code>src-tauri/src/commands.rs</code> 4331行 <code>ban_label_for</code>・<code>tauri.dev.conf.json</code>・<code>tauri.client.conf.json</code>・<code>tauri.mkt.conf.json</code>・（森田さんの clone）<code>tauri.morita.conf.json</code> の title</td></tr>
+<tr><td>枝・作業場・最後のコミット・版</td><td><code>git -C /Users/nishidamitsuhiro/untendai-seiri worktree list</code>／<code>branch -a -vv</code>／<code>log -1 --format='%h|%ci|%s'</code>／<code>git show &lt;枝&gt;:src-tauri/tauri.conf.json</code>／<code>rev-list --count main..&lt;枝&gt;</code>（git は <code>/usr/bin/git</code> で叩いた）</td></tr>
+<tr><td>latest.json 1.80.0・kakunin.json 1.80.0</td><td><code>curl -s https://untendai-update.3216-fun.workers.dev/latest.json</code>・<code>/kakunin.json</code></td></tr>
+<tr><td>公開前の Release の最後 v1.77.7</td><td><code>gh release list --repo untendai/untendai --limit 6</code></td></tr>
+<tr><td>Drive の中身</td><td><code>ls -la "/Users/nishidamitsuhiro/My Drive/00_TOP_仕事/01_Google/すごいコンサル/確認版受け渡し"</code>ほか</td></tr>
+<tr><td>WEB版の最後のコミット 6cc1eca・差・数字の一致</td><td><code>git -C /Users/nishidamitsuhiro/untendai-webban log -1 --format=%h</code>／<code>git diff --stat dd09a3a 6cc1eca -- src</code>／<code>curl http://localhost:8801/__webban/version.json</code>／WEB版の一時の帳簿と西田の開発版 untendai-dev.app の帳簿の写しを <code>sqlite3 … "select * from &lt;表&gt; order by rowid" | md5</code> で7表比べた</td></tr>
+<tr><td>受け持つセッション</td><td>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/CLAUDE.md の 117〜128行（🧭 版の段ごとの受け持ち）／司令塔/CLAUDE.md 41行</td></tr>
+<tr><td>WEB版の決定・検収の記録</td><td>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/決定台帳_6セッション共通.md の 3297〜3360行（2026-10-28 18:0x・17:5x・19:0x・20:0x）／発注書_WEB版をアプリの画面で作る_20261028.md／memory project_web_ban_mo_login_zentei.md</td></tr>
+</table>
+
+<p class="note" style="margin-top:32px">正本の決まり：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/CLAUDE.md</code>（「版の呼び方」「版の段ごとの受け持ち」「アプリは4本ある」ほか）。この HTML は 2026-10-28 の実測を写した一覧で、決まりの正本ではない。直す前の版：同じフォルダの <code>index_20261028_mae.html</code>。</p>
 
 </main>
 </body>
