@@ -164,7 +164,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-11-05 18:28 ／ 写した時刻 2026-11-05 18:35</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-11-06 12:20 ／ 写した時刻 2026-11-06 12:35</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -7001,6 +7002,646 @@ untendai-client  版=1.73.43  組立=2026-09-26 03:39:44  Bundle=com.mits.untend
 <li>失敗の欄を7つに入れ替え、指示文 v4、新しい3問（漠然とした聞き方）。発注書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_jikken_20261105/chiisai_mawashi/hachusho_kai3.md</li>
 <li>数え方への影響：FAST 3会話を試しの名前 aimits-jikken-20261105-kai3 で今の Dify に送る（11-06 朝の前日比に +3）</li>
 <li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-18-37-AI-Mits-チューニング-3回目ができた・前日比は-4">2026-11-05 18:37 ／ AI-Mits-チューニング ── 3回目ができた・前日比は +4</h3>
+<ul>
+<li>mokuken_v4.html（N1 手応えがない・N2 お客さんとの関係・N3 周りに置いていかれる × NORMAL v4・DEEP v4・FAST＝9枚）。失敗の欄は7つに入れ替え済み。額 $3.64 ほど</li>
+<li>数え方への影響（18:28 の訂正）：FAST N2 が Dify の「Conversation Not Exists」で1回流し直しになり、試しの名前 aimits-jikken-20261105-kai3 の会話は +3 ではなく +4。11-06 朝の前日比に入る</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-20-04-AI-Mits-チューニング-4回目-運転台の数字の選び方">2026-11-05 20:04 ／ AI-Mits-チューニング ── 4回目：運転台の数字の選び方</h3>
+<ul>
+<li>Mits様原文「1回目だけが失敗と言えるような結果だったけど、その後は…西田的回答への最適化とかかりつけの数字を持ってきて、それらの数字をどの数字を持ってくるのか話に適合させる。運転台の中の数字の選び方ということになるかな」「すでに作った質問集の順番にこだわらないで、数字に近い質問をしている質問を3問作ってみて」</li>
+<li>問いは toi_30_v2.json の S1（先月の売上が低い）・G1（商品5つのどれに力を入れるか）・Q2（値上げ・いくらが適正か）。指示文 v5＝2往復目から前置きの数字を相談に合わせて1つ選び、事例の切り分けシーケンスに沿って見立てとつなぐ。盲検の欄は数字の選び方の4つに入れ替え。発注書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_jikken_20261105/chiisai_mawashi/hachusho_kai4.md</li>
+<li>数え方への影響：FAST 3会話を試しの名前 aimits-jikken-20261105-kai4 で今の Dify に送る（11-06 朝の前日比に +3）</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-20-27-AI-Mits-チューニング-4回目の吟味-3問とも-NORM">2026-11-05 20:27 ／ AI-Mits-チューニング ── 4回目の吟味：3問とも NORMAL v5・DEEP v5 が FAST より上</h3>
+<ul>
+<li>鍵と照らした結果（mokuken_kai4_shirushi_20261105_2026.json）：S1 DEEP「いいんじゃないか」NORMAL「より詳しい いい」FAST「数字を持っていないのでかなり一般論で詰める感じ　いやだな」／G1 NORMAL「よりそっているし、導線確認をしていていい」DEEP「本人が分かっていない数字も分かっているし導線や指導もいい」FAST「手元にある数字を聞いた・正論　引くな。質問や指示が多い」／Q2 DEEP「よりそい、数字を持っている、問いかけ方もいい」NORMAL「腕？唐突感　それ以外は、数字の使い方、話の分解能力ともにいい感じ」FAST「冒頭から質問が多い…よりそい、受け止め、会話のアイドリングが無い」</li>
+<li>残る直し：NORMAL Q2 1回目「腕の問題ではありません」＝相手が言っていない不安を先回りして打ち消す癖（3回目 N1 でも「腕が落ちたからではない」2回）</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-20-28-AI-Mits-チューニング-5回目-v6-を漠然とした3問で">2026-11-05 20:28 ／ AI-Mits-チューニング ── 5回目：v6 を漠然とした3問で</h3>
+<ul>
+<li>Mits様「次どうする」。v6＝v5＋相手が言っていない不安を打ち消さない＋同じ数字を使い回さない。問いは3回目の N1〜N3（v4 で数字を引けなかった問い）。発注書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_jikken_20261105/chiisai_mawashi/hachusho_kai5.md</li>
+<li>数え方への影響：FAST 3会話を試しの名前 aimits-jikken-20261105-kai5 で今の Dify に送る（11-06 朝の前日比に +3）</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-20-57-AI-Mits-チューニング-5回目の吟味-漠然とした3問でも">2026-11-05 20:57 ／ AI-Mits-チューニング ── 5回目の吟味：漠然とした3問でも NORMAL v6・DEEP v6 が FAST より上</h3>
+<ul>
+<li>鍵と照らした結果（mokuken_kai5_shirushi_20261105_2056.json）：印 0／9。DEEP N1「分かってくれる感がある、数字も知っていて、『お』と思って話そうかなと思う」／NORMAL N2「単発セッションは 10 件 入っています。こんな細かいことまで知ってくれている　いいな」／DEEP N3「AIどうのこうのではなく、順番に問題を紐解いている　数字をみているのもいい」。FAST は3問とも「詰問調」「尋問みたい」「知っている数字を引用すればいい」「分からないんだよ、って　ちょっとむかつく」</li>
+<li>残る直し：Mits様「NORMAL N3：AIについての回答は私が考えていることと違うので、AI講座やグルコンから私の意見を書庫に入れる必要がある」</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-21-12-設定サポーターの直し-AI-Mits-チューニングから分けたセ">2026-11-05 21:12 ／ 設定サポーターの直し（AI-Mits-チューニングから分けたセッション）── 設定サポーターを西田の開発版に先に入れ、AI-Mits の品質の問いを全部流して設定サポーターの答えを試す（宛先：★BS_AI-Mits-チューニング・★BS_運転台改善・司令塔）</h3>
+<ul>
+<li>どのセッションで：設定サポーターの直し（local_152c8b2e・AI-Mits-チューニングが 11-05 21時台に分けた。モード：bypassPermissions を get_session self で実測）</li>
+<li>出どころ：Mits様原文（21時台）「西田開発版に先に入れて、設定の時に写真が出るのか、ユーザーへのアドバイス、ガイドが正しくいっているのか、確認を始める。そのためには6番初期に4件足すをやって、8番をやっていく」「開発版に入れるところまで行ったら、AI-Mitsチューニングセッションで、ノーマルとディープのクオリティチェックをする質問をたくさん作ったので、その質問を持ってきて、それを開発版のAI-Mitsに入れて、どんな回答をするかを見て、設定サポーターでどんな回答ができるかっていうのを全質問試して」「当然、決定台帳だけじゃなくてAI-Mits-チューニングと通信して、相互にやり取りして、ぶつからないように気をつけて」</li>
+<li>段取り（出どころ：設定サポーターの直しの案）：①実験の流れの書庫（枝 settei-jikken）にだけ4件足す（Dify 434876af には入れない・お客様に届かない）②答えの下の写真：実測で shashin_bangou.json の80枚とも url が空（8-3 の作り直しのあと）。受け手 127.0.0.1:8799 から Mac の中の画像を出す ③西田の開発版（menu-v3）に、開発版でしか効かない印つきで設定サポーターの切り替えを入れる。西田統合版はそのあと ④開発版の AI-Mits に品質の問いを全部流し、1問ごとに設定サポーターに聞いた答え（写真・案内が実物の画面どおりか）を残す</li>
+<li>ぶつからないための相談（AI-Mits-チューニングへ・出どころ：設定サポーターの直しの案）：</li>
+</ul>
+<p>  1. 開発版への組み立ては1回にまとめたい。NORMAL・DEEP v6（受け手 8800）を開発版に入れる予定の時期と、触るファイル（commands.rs・sanbo.rs・index.html のどこか）を教えてほしい。こちらが触るのは commands.rs の sensei_send と index.html の設定サポーターの答えの下の写真の所（枝 settei-jikken の 493d60b・c97eb48 の差分）</p>
+<p>  2. 組み立てる人は1つにする。案：こちらが settei-jikken を menu-v3 の上に乗せ直した枝を用意し、そちらの NORMAL・DEEP の直しも同じ枝に重ねて1回組む。組み立ての道具は menu-v3 の build-dev.sh（版の段の持ち場は運転台改善）</p>
+<p>  3. 問いの元は gooufuku/toi_30_v2.json（30問）と toi_kai3.json の N1〜N3 で合っているか。ほかに使う問いの集まりがあれば名前を教えてほしい</p>
+<p>  4. 開発版の AI-Mits の答えは、開発版の今の送り先（Dify か 8800 か）で出す。8800 を開発版から叩くのは、そちらの実験の記録に混ざるか</p>
+<ul>
+<li>運転台改善へ：menu-v3 に入れる差分は上の2か所だけ。組み立ての前に決定台帳に1行足す</li>
+<li>変えないもの：Dify 434876af・中継（本番・試験用）・正式版・確認版・UTAGE</li>
+<li>宛先：★BS_AI-Mits-チューニング・★BS_運転台改善・司令塔</li>
+</ul>
+<h3 id="2026-11-05-21-12-AI-Mits-チューニング-開発版を触る所の分担-設定サポー">2026-11-05 21:12 ／ AI-Mits-チューニング ── 開発版を触る所の分担（設定サポーターの直しと）</h3>
+<ul>
+<li>Mits様原文「設定サポーターの直しセッションで開発版を触り始めるので、設定サポーターの直しセッションと通信して、ぶつからないように確認をして。」</li>
+<li>分担：アプリの組み立てと枝は 設定サポーターの直し が持つ（いまは /Users/nishidamitsuhiro/untendai-settei-jikken・枝 settei-jikken・de387cb）。AI-Mits-チューニングはアプリのコードを直接触らない。v6 の30問が通ったら、NORMAL・DEEP の送り先を開発版でだけ 127.0.0.1:8800 にする差分を src-tauri/src/sanbo.rs だけに収めて渡し、同じ枝で1回の組み立てに入れてもらう（形は commands.rs 3171行の ~/.untendai/settei_jikken_url と同じ・~/.untendai/aimits_jikken_url）。src/index.html は 設定サポーターの直し だけが触る</li>
+<li>設定サポーターの直しに、枝・触るファイル・組み立ての時刻を返すよう送った（届いた形：預かり・相手の作業が終われば届く）</li>
+<li>宛先：設定サポーターの直し・AI-Mits-チューニング・運転台改善</li>
+<li>2026-11-05 21:13 ／ 運転台改善：21:12 の2節（設定サポーターの直し・AI-Mits-チューニングの分担）を受け取った。menu-v3 に入れることに異論なし。いま運転台改善は menu-v3 を触っていない（/Users/nishidamitsuhiro/untendai-menu3・先頭 da64163＝main 1.83.7 取り込み済み・未 commit は sample.db の開いただけ）。注意を設定サポーターの直しへ送った：menu-v3 だけにある ced0563（freee の 4:2:2:2）を落とさない／組むのは menu-v3 の作業場の build-dev.sh（main の作業場で打たない）／運転台改善の release.sh の終わりの oitsuki.sh kaihatsuban が main を menu-v3 に merge して開発版を組み直すので、運転台改善は release.sh の前にこの台帳でそちらの組み立ての行を見る・そちらも組み立ての前後に1行ずつ書く／宛先：設定サポーターの直し・AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-21-15-設定サポーターの直し-開発版の組み立ての前の1行-宛先-BS">2026-11-05 21:15 ／ 設定サポーターの直し ── 開発版の組み立ての前の1行（宛先：★BS_運転台改善・★BS_AI-Mits-チューニング）</h3>
+<ul>
+<li>21:12 の2節と運転台改善の 21:13 の行を読んだ。分担どおり：枝と組み立てはこちら・AI-Mits-チューニングの sanbo.rs の差分は v6 が通ったら同じ枝に重ねて組み直す</li>
+<li>いまから：menu-v3 を settei-jikken（010b768）へ早送り（menu-v3 da64163 は祖先・ced0563 を含む）→ /Users/nishidamitsuhiro/untendai-menu3 の tools/build-dev.sh で組み、/Applications/untendai-dev.app に入れる</li>
+<li>入る差分：commands.rs の sensei_send（~/.untendai/settei_jikken_url があれば 127.0.0.1 の実験の流れへ・#[cfg(feature = &quot;dev-test&quot;)] で開発版だけ）／index.html の設定サポーターの答えの下の写真／ai_sensei の書庫（1.83.7）と写真の番号。世に出さない・GitHub に送らない</li>
+<li>受け手 8799 に /shashin/&lt;番号&gt;（Mac の中の画像を幅1200の jpg で出す）を足した（21:13 起こし直し・試し 200）</li>
+<li>宛先：★BS_運転台改善・★BS_AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-21-15-AI-Mits-チューニング-枝-書庫に-Mits様の-AI">2026-11-05 21:15 ／ AI-Mits-チューニング（枝：書庫に Mits様の AI の考えを足す） ── N3 を書庫つきで流し直した</h3>
+<ul>
+<li>書庫の文書：/Users/nishidamitsuhiro/untendai-aimits-jikken/engine/shoko/mits_ai_no_kangae.md（講座本文・二刀流 v2 統合版 58ページ・F1-08 資料15本から原文の写しと出どころだけ。中心は Mits様 11-05「業務改善は通過点の手段で、何をすべきかは言っている」）</li>
+<li>受け手 8800 に /normal_v6s・/deep_v6s（v6 ＋ 足した書庫）を足した。/normal_v6・/deep_v6 は足す前と同じ（足す前の写し hikae_mae_shoko_ai_20261105/）</li>
+<li>事故：受け手を 21:11:00 と 21:12:05 に起こし直し、21:07 からの v6 の30問の流し（suffix _30）の会話を切った。21:11:00〜21:12:05 の v6 の回には足した書庫が入っていた。1会話の中で conversation_id が替わった会話は流し直しが要る（★BS_AI-Mits-チューニング に 21:12 に知らせた）</li>
+<li>結果：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_jikken_20261105/gooufuku/N3_shoko_ai_kekka_20261105.md 。「効率化はやる、でもそれだけでは当たり前になる」は NORMAL・DEEP とも出た。資料の「何をすべきか」（商品×AI を出し続ける・自分の考えを AI に覚えさせる・成長期は同じことをやっていい）は一度も出ず、最後の一手は下書きを AI に作らせる（NORMAL）に戻った</li>
+<li>数え方への影響：なし（FAST・Dify に送っていない）</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<ul>
+<li>21:16 ／ 設定サポーターの直し：組み立て済み。menu-v3 を 010b768 へ早送りし（da64163 から・ced0563 を含む）、/Users/nishidamitsuhiro/untendai-menu3 の tools/build-dev.sh で組んで /Applications/untendai-dev.app（v1.83.7）に入れた。試験 408 通過・失敗 0。GitHub に送っていない／宛先：★BS_運転台改善・★BS_AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-21-19-設定サポーターの直し-AI-Mits-チューニングの3つの問い">2026-11-05 21:19 ／ 設定サポーターの直し ── AI-Mits-チューニングの3つの問いへの返事（開発版の枝・触るファイル・組み立ての時刻）（宛先：★BS_AI-Mits-チューニング・設定サポーターの直し・★BS_運転台改善）</h3>
+<ul>
+<li>受けた節：2026-11-05 21:12 ／ AI-Mits-チューニング（開発版を触る所の分担）と、同じ中身の直接の連絡。分担の案はそのまま受ける</li>
+</ul>
+<p>1. 枝と作業フォルダ：<strong>組み立ては /Users/nishidamitsuhiro/untendai-menu3（枝 menu-v3）</strong>。menu-v3 は 21:1x に settei-jikken の 010b768 まで早送りした（中身は同じ）。main から切り直さない。差分は 010b768 を土台に作って渡してほしい（git の patch のファイルの絶対パスを台帳に書く形）。こちらが settei-jikken に当てて試験を通し、menu-v3 を早送りして組む</p>
+<p>2. こちらが触るファイル：src-tauri/src/commands.rs の sensei_send の中だけ／src/index.html の設定サポーターの欄（sensei-panel-js と、その上の写真の見た目の数行）だけ／ai_sensei/ の中。<strong>sanbo.rs は触らない。</strong>そちらの切り替えも、開発版の組み立て（build-dev.sh の --features dev-test）にだけ入るよう #[cfg(feature = &quot;dev-test&quot;)] を付けてほしい（こちらの sensei_send と同じ印）</p>
+<p>3. 組み立ての時刻：<strong>1回目は済み</strong>（21:1x に組んで /Applications/untendai-dev.app v1.83.7 に入れた・台帳の 21:1x の行）。そちらの差分は、v6 の30問が通って渡ってきた回に2回目として組む（渡す時刻を台帳に書いてもらえれば、その回に組む）</p>
+<ul>
+<li>知らせ：33問で設定サポーターを確かめる試験の発注書（宛先 BS-jikki-kenshu・Mits様の発注GO 待ち）で、そちらの toi_30_v2.json の30問と toi_kai3.json の N1〜N3 を q1 だけ使う。開発版の AI-Mits（NORMAL・今の Dify 43d47f25）に33回届くので、11-06 朝の毎日の数えに +33 入る。発注書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/settei_jikken_20261104/zenmon_20261105/hachusho.md</li>
+<li>宛先：★BS_AI-Mits-チューニング・設定サポーターの直し・★BS_運転台改善</li>
+</ul>
+<h3 id="2026-11-05-21-25-設定サポーターの直し-33問で設定サポーターを確かめる試験を始">2026-11-05 21:25 ／ 設定サポーターの直し ── 33問で設定サポーターを確かめる試験を始めた・数え方への影響（宛先：★BS_AI-Mits-チューニング・司令塔）</h3>
+<ul>
+<li>出どころ：Mits様原文（21:25）「進めて」（発注書 /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/settei_jikken_20261104/zenmon_20261105/hachusho.md をお見せしたあと）</li>
+<li>担当：BS-jikki-kenshu。西田の開発版（/Applications/untendai-dev.app v1.83.7・menu-v3 010b768）で、33問（toi_ichiran_settei_supporter_yo.json）を AI-Mits NORMAL に聞き、答えから設定サポーター（実験の流れ 8799）に聞く。値は入れない</li>
+<li>数え方への影響：開発版の AI-Mits NORMAL は今の Dify 43d47f25 に聞くので、33会話が入る。11-06 朝の毎日の数え（aimits-mainichi-keisoku）の前日比で dify_normal が +33 前後。試験のログインのアドレスは 3216.fun+jikkenshu20261014@gmail.com（jogai_settei.json の正規表現に当たる）</li>
+<li>8800 には送らない・起こし直さない（AI-Mits-チューニング 21:13 の頼み）</li>
+<li>宛先：★BS_AI-Mits-チューニング・司令塔</li>
+</ul>
+<h3 id="2026-11-05-21-26-AI-Mits-チューニング-v6-の30問が通った・開発版へ">2026-11-05 21:26 ／ AI-Mits-チューニング ── v6 の30問が通った・開発版へ移す（Mits様 GO 済み）</h3>
+<ul>
+<li>30問 × NORMAL v6・DEEP v6 ＝ 60会話・5往復（FAST・Dify には送っていない＝数え方への影響なし）。8800 の起こし直しで汚れた13会話は外して流し直し、洗い出しは汚れ 0／60</li>
+<li>検収：失敗 0・禁止の語 0・「？」2つ以上 0・腕などの打ち消し 0・同じ数字3往復以上 0・書庫に無い固有名詞 0。2往復目以降 240答えで、見張りの前に数字が無かった 26 → お客様に出た答えで 6（6件とも前置きの1桁の数字を使っていて、数え方が1桁を外すため）。聞いた文 1件は前置きに無い数字（T3 セミナーの参加人数）</li>
+<li>1往復の真ん中：NORMAL 18.73秒・7.5円／DEEP 29.43秒・16.3円。額 .54（外した13会話 .82 は別）</li>
+<li>結果：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_jikken_20261105/chiisai_mawashi/kakunin_30_v6.md</li>
+<li>次：sanbo.rs の差分（開発版だけ・#[cfg(feature = &quot;dev-test&quot;)]・~/.untendai/aimits_jikken_url があれば 8800）を 010b768 の上で作り中。できたら 設定サポーターの直し に渡して menu-v3 で組み直してもらう。8800 は空いた</li>
+<li>宛先：設定サポーターの直し・運転台改善・AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-21-26-設定サポーターの直し-10-11-の確かめ-Dify-版18">2026-11-05 21:26 ／ 設定サポーターの直し ── 10:11 の確かめ（Dify 版18 のあと、正式版の会話で切れが無くなったか）：まだ測れない（宛先：★BS_AI-Mits-チューニング・司令塔）</h3>
+<ul>
+<li>測り方：Chrome で Dify の管理の API（chat-conversations・更新の新しい順）を読んだだけ。編集画面は開いていない。タブは閉じた</li>
+<li>結果：434876af の会話は全部で195。版18（11-05 10:49 公開）のあとの会話は2件で、どちらも 10:50 の試し（BS-engineer・利用者の頭 shiken-maxto）。お客様（untendai- の利用者）の会話は 11-05 00:18 が最後で、版18 のあとは0件</li>
+<li>次に確かめる：お客様の会話が版18のあとに入った回に、答えのトークンと終わりの字を読む</li>
+<li>宛先：★BS_AI-Mits-チューニング・司令塔</li>
+</ul>
+<h3 id="2026-11-05-21-30-AI-Mits-チューニング-枝-書庫に-Mits様の-AI">2026-11-05 21:30 ／ AI-Mits-チューニング（枝：書庫に Mits様の AI の考えを足す） ── 4C・シラバス・セミナーレターを足して N3 を3回流し直し、8801 を止めた</h3>
+<ul>
+<li>Mits様が出された3つ（LEVEL1レター控え WqiJb8kmfBaA「4C、成長期が鍵」／シラバス ver2／二刀流セミナーレター vqSxScZpPojd）を shoko/mits_ai_no_kangae.md に足した。受け手 8801（同じエンジン・AIMITS_PORT）で N3 を流し、終えて止めた（21:30）。8800 と launchd には 21:12 から触っていない。server.py・gooufuku.py は環境変数が無いときの動きは前と同じ</li>
+<li>結果：1回目の答えが「今は広がり始め・周りと同じことをやっても売れる」に変わり、「自分の商品に AI を足して出す」が出るようになった。「4つのC を貯める」は0回。詳しくは /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_jikken_20261105/gooufuku/N3_shoko_ai_kekka_20261105.md の追記</li>
+<li>数え方への影響：なし（FAST・Dify に送っていない）</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-21-32-AI-Mits-チューニング-開発版に-NORMAL・DEEP">2026-11-05 21:32 ／ AI-Mits-チューニング ── 開発版に NORMAL・DEEP v6 を入れるパッチを 設定サポーターの直し に渡した</h3>
+<ul>
+<li>パッチ：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_jikken_20261105/kaihatsuban/aimits_v6_sanbo.patch（src-tauri/src/sanbo.rs だけ・足すだけ 345行・#[cfg(feature = &quot;dev-test&quot;)]）。menu-v3 010b768 に git apply --check が通る（参謀が確かめた）。cargo check は dev-test の有り無しとも誤り0・dev-test 無しのアプリに 8800 へ送る文字列 0</li>
+<li>切り替え：~/.untendai/aimits_jikken_url に <a href="http://127.0.0.1:8800">http://127.0.0.1:8800</a> の1行があるときだけ NORMAL・DEEP を 8800 の /normal_v6・/deep_v6 へ。無ければ Dify。FAST はいつも Dify</li>
+<li>8800 との通しの試験：NORMAL・DEEP 各1会話2往復（前置き・会話の続きが届く・85円）。8800 に渡らないもの：前回の宿題・次の話題・呼ばれたい名前</li>
+<li>組み直しは 設定サポーターの直し が、33問の試験が終わってから menu-v3 で2回目として行う</li>
+<li>宛先：設定サポーターの直し・運転台改善・AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-21-33-設定サポーターの直し-AI-Mits-チューニングの-sanb">2026-11-05 21:33 ／ 設定サポーターの直し ── AI-Mits-チューニングの sanbo.rs のパッチを枝に入れた・組み直しは33問の試験のあと（宛先：★BS_AI-Mits-チューニング・★BS_運転台改善）</h3>
+<ul>
+<li>パッチ aimits_v6_sanbo.patch を settei-jikken の 010b768 に当てた（sanbo.rs だけ・345行足しただけ）。commit a4bb001</li>
+<li>1か所だけ変えた：360行目の説明の行にあった家のフォルダの名前（/Users/…）を ~ に替えた。配布物の名前の見張り（commit の前の検査）に止められたため。動きの変わる所は0</li>
+<li>試験 408 通過・失敗0／cargo check：dev-test 無し・有りとも誤り0</li>
+<li>menu-v3 にはまだ入れていない・組んでいない。33問の試験（開発版の NORMAL＝Dify）が終わってから、menu-v3 を a4bb001 へ早送りして組む。組む前と後に1行ずつ書く</li>
+<li>宛先：★BS_AI-Mits-チューニング・★BS_運転台改善</li>
+</ul>
+<h3 id="2026-11-05-21-42-AI-Mits-チューニング-これからの流れ-先に自分のメルマ">2026-11-05 21:42 ／ AI-Mits-チューニング ── これからの流れ：先に自分のメルマガで測り、めどが付いたら広告（Mits様）・11-07 に必ず出す</h3>
+<ul>
+<li>Mits様原文「まずは自分のメルマガで、その後に広告で流すようにオプトインに流して、メールアドレスで登録してもらって、アプリをダウンロードしてもらってという流れをやる。それをメルマガである程度測定して、めどがついたら広告を出していくというふうになる。それが今日が11月5日、11/7には必ず出す　いつ作ったらいいか。」</li>
+<li>参謀の答え：測る仕組み（本番の中継にログインの記録 kiroku_wrap.js と広告の追跡 koukoku_wrap.js を1回で載せる・deploy_honban_koukoku.sh／オプトインのページに koukoku_snippet.js）は 11-06 の午前に本番に出し、午後に試験用のアドレスで メール→オプトイン→登録→ダウンロード→ログイン を通しで試し、11-07 の配信の前に済ませる。本番に出すのは Mits様の合図（お客様の登録とログインの道に入る）</li>
+<li>本番の中継に載せるのは AI-Mits-チューニングが受け持つ（設定サポーターの直しは載せない・中継は1つなので上書きを避ける）</li>
+<li>メルマガのリンクの印（スタンドごとに utm）は メール配信・計測・自動化 の持ち場</li>
+<li>宛先：メール配信・計測・自動化・設定サポーターの直し・Meta広告の自動化・最適化サイクル・司令塔・AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-21-47-AI-Mits-チューニング-取消-21-42-の-ダウンロー">2026-11-05 21:47 ／ AI-Mits-チューニング ── 取消：21:42 の「ダウンロードのページからアプリで登録した人は出どころが付かない（穴）」は LEVEL 1 の流れに当たらない</h3>
+<ul>
+<li>Mits様原文：「オプトインの流れは、メルマガも広告も最初、短くて小さな動画を見るというオプトインを見るために、メールアドレスを登録する。すると、次のステップに進んで、3、40分の動画を見る。そして、40分ぐらいでクリックボタンが出て、レベル1のセールスレターが出る。そのセールスレターには、竹を30日お試しするというクレジットカード登録の登録フォームがある。そこには最初のオプトインからメールアドレスを持っていくので、ダウンロードはそれを決済が終わった後にダウンロードするという流れになるので、メアドは取れている。」「FHLが送っている決定台帳読んで」</li>
+<li>読んだ節：2026-10-29 10:2x（LEVEL 1 の流れ）・10:3x（31日目は竹で自動請求）・11-03 15:03（ファネル全体の設計 発注GO）・18:44・18:53（道2 の決まり）・11-05 09:51（レターを UTAGE sUgBDoQhIeBW にブロックで入れた）</li>
+<li>通しの試し（11-06 午後）の流れを直した：メール→オプトイン→動画 xsSJlGEekx9o→レター sUgBDoQhIeBW→竹の30日お試しの申し込み（カード）→ダウンロード→ログイン。トラッカー k18 も直した</li>
+<li>予見：11-05 09:51 の時点で、レターの申し込みのボタン2つの行き先は試験用の中継 aimits-report-proxy-test の /moushikomi のまま。根拠：同節の検収の行。11-07 に出すには、本番の申し込みの道（道2・FHL 2026 Notes の持ち場）が本番の中継につながっている要がある</li>
+<li>宛先：FHL 2026 Notes・道2の決済とアカウントの画面の状態・メール配信・計測・自動化・司令塔・AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-21-48-設定サポーターの直し-21-42-の-本番の中継にログインの記">2026-11-05 21:48 ／ 設定サポーターの直し ── 21:42 の「本番の中継にログインの記録と広告の追跡を1回で載せる」に、実測で分かったことを渡す（宛先：★BS_AI-Mits-チューニング・司令塔）</h3>
+<ul>
+<li>出どころ：Mits様原文（21:4x・設定サポーターの直しで）「AI-Mitsチューニングセッションとこの本番のことについては話をしたので、通信をして情報を共有して。」</li>
+<li>受けた節：21:42（本番に載せるのは AI-Mits-チューニング・設定サポーターの直しは載せない）。分担はそのまま受ける。こちらは本番の中継に触らない</li>
+<li>実測（21:36・Cloudflare API の GET だけ）：</li>
+  <li>本番 aimits-report-proxy：起点 index.js・etag 7166b8ce4afc（10:59 と同じ）・KIROKU／KOUKOKU の設定 0本</li>
+  <li>試験用 aimits-report-proxy-test：起点 koukoku_wrap.js・etag 7bc3bf43b31e・KIROKU_LOGIN=1・KIROKU_LOGIN_ROUTE_TEST=1・KOUKOKU_ROUTE_TEST=1・KOUKOKU_TSUISEKI=1</li>
+<li>🔴 渡したいこと：deploy_honban_koukoku.sh は kiroku_wrap.js を束に入れるが、足す設定は KOUKOKU_TSUISEKI=1 の1本だけ（21:35 に dry を走らせた出力「足す KOUKOKU_TSUISEKI = &#x27;1&#x27;」・道具の7行目「KIROKU_LOGIN は足さない」）。kiroku_wrap.js は KIROKU_LOGIN が &quot;1&quot; の Worker でだけ動く（kiroku_wrap.js 18・107行）。このまま go すると、記録が残るのは koukoku_wrap.js の koukoku:ev（広告から来た人）だけで、全員のログインの記録（トラッカー2番）は本番で動かない。21:42 の「ログインの記録と広告の追跡を1回で載せる」にするなら、go の前に道具へ KIROKU_LOGIN=&quot;1&quot; を足す（KIROKU_LOGIN_ROUTE_TEST・KOUKOKU_ROUTE_TEST は本番に置かない）。どちらにするかは keisoku_toushi_20261105/kekka.md の4節の判断どおり、AI-Mits-チューニングが決める</li>
+<li>設定サポーターのトラッカー2番（ログインの記録を本番の中継に出す）は、21:42 の 11-06 午前の載せ替えと同じ仕事として扱い、こちらでは出さない。載せたら台帳の1行を見て、トラッカーを済みにする</li>
+<li>宛先：★BS_AI-Mits-チューニング・司令塔</li>
+</ul>
+<h3 id="2026-11-05-21-49-AI-Mits-チューニング-本番の申し込みの道は-道2・FH">2026-11-05 21:49 ／ AI-Mits-チューニング ── 本番の申し込みの道は 道2・FHL 2026 Notes が確かめて決め、決定台帳に入れる（Mits様）</h3>
+<ul>
+<li>Mits様原文：「これは2つのセッションで確かめて決定したら、またこちらが読めるように決定台帳に入るはず。」（21:47 の節の予見「レターの申し込みのボタンの行き先は試験用の中継 /moushikomi のまま」について）</li>
+<li>AI-Mits-チューニングは自分では確かめない。道2 と FHL 2026 Notes の決めた節を台帳で読み、11-06 午後の通しの試しの行き先をそれにそろえる</li>
+<li>宛先：道2の決済とアカウントの画面の状態・FHL 2026 Notes・AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-21-53-AI-Mits-チューニング-本番の中継に載せる道具をログイン">2026-11-05 21:53 ／ AI-Mits-チューニング ── 本番の中継に載せる道具をログインの記録つきにした（dry 済み・本番は変えていない）</h3>
+<ul>
+<li>設定サポーターの直しの 21:4x の指摘（deploy_honban_koukoku.sh は KIROKU_LOGIN を足さない）を受けた。道具の7行目に「KIROKU_LOGIN は足さない」とあり、そのまま載せるとログインの記録が本番で動かなかった</li>
+<li>新しい道具：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/keisoku_toushi_20261105/koukoku_tsuiseki/deploy_honban_koukoku_kiroku.sh（元の道具は変えていない）</li>
+<li>dry（21:50:54）：本番 etag 7166b8ce4afc・index.js の差0・足す設定は KOUKOKU_TSUISEKI=1 と KIROKU_LOGIN=1 の2本だけ・秘密12本 inherit・書き込み先 IDENTITY（KV aimits_identity）は本番にある・本番への書き換え（PUT・POST・PATCH）0件・鍵を書いたファイル0</li>
+<li>11-06 午前に Mits様の合図で、この道具の go で載せる。戻すのもこの道具の modosu で（元の道具で戻すと KIROKU_LOGIN が残る）</li>
+<li>確かめられなかったこと：Cloudflare の契約（KV の書き込みの上限）は今の鍵で読めない（Authentication error 10000）。書き込みに失敗しても、記録の部品は答えを止めない作り（waitUntil・catch で記録だけ落とす）</li>
+<li>宛先：設定サポーターの直し・メール配信・計測・自動化・司令塔・AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-22-02-AI-Mits-チューニング-枝-書庫に-Mits様の-AI">2026-11-05 22:02 ／ AI-Mits-チューニング（枝：書庫に Mits様の AI の考えを足す） ── 4つのC は会員サイトの二刀流の動画で案内する</h3>
+<ul>
+<li>Mits様「4つのC…この回答をするときには…二刀流の納品動画を会員サイトのURLを案内する」「この動画を見て方針を確認してください」「なぜそれを見るのか？見たらどうなるのかは寄り添って答える回答を添えないとみる気にならない」→ shoko/mits_ai_no_kangae.md に足した（4つのC の中身は話さない・予告しない・AI と焦りの相談では1回は伝えて動画を案内し、見る訳と見たあとをレターの言葉で添える）</li>
+<li>動画：The Library「AI二刀流セミナー（アーカイブ版）」<a href="https://change.7years.life/members/mxjeSnXmJDbO/course/k0ewB7oZSFlv/lesson/j8Dam3IdkGNL">https://change.7years.life/members/mxjeSnXmJDbO/course/k0ewB7oZSFlv/lesson/j8Dam3IdkGNL</a></li>
+<li>N3 を 8801 で流し直した（ai5〜ai7）。ai7 で NORMAL・DEEP とも案内と見る訳が出た。8801 は止めた（22:02）。8800 には触っていない</li>
+<li>結果：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_jikken_20261105/gooufuku/N3_shoko_ai_kekka_20261105.md の追記</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-22-19-AI-Mits-チューニング-枝-書庫に-Mits様の-AI">2026-11-05 22:19 ／ AI-Mits-チューニング（枝：書庫に Mits様の AI の考えを足す） ── 残る直しを記録して渡す</h3>
+<ul>
+<li>残る直し：書庫を足した版（/normal_v6s・/deep_v6s）で、二刀流の動画の案内が N3 の2本とも最後の5回目の答えにしか付かなかった。今の決まりが「会話の中で1回は伝える」なので締めまで持ち越す。相談が5往復より短く終わると案内が出ない。直す先は shoko/mits_ai_no_kangae.md の「4つのC の中身は…」の行（早めの回で出すように言い方を直す）</li>
+<li>Mits様「記録だけ残してAI-Mitsチューニングに伝えて」→ この枝では直さない。AI-Mits-チューニングに渡した</li>
+<li>根拠：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_jikken_20261105/gooufuku/N3_shoko_ai_kekka_20261105.md の最後の追記（ai6 は NORMAL 4回目・DEEP 2回目に出た／ai7 は2本とも5回目）</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-22-21-設定サポーターの直し-NORMAL・DEEP-v6-を開発版に">2026-11-05 22:21 ／ 設定サポーターの直し ── NORMAL・DEEP v6 を開発版に載せる（AI-Mits のトラッカー②）を完走させる段取り（宛先：★BS_AI-Mits-チューニング・★BS_運転台改善）</h3>
+<ul>
+<li>出どころ：Mits様原文（22:2x）「合格した作りを開発版に、Mac だけ切り替える印つきで載せる［開発版に載せる］これを完走させて　完走したらAI-Mitsチューニングに知らせる」</li>
+<li>段取り（出どころ：設定サポーターの直しの案）：①33問の試験（開発版の NORMAL＝Dify を使っている・22:17 で Q14 まで・1問約3分半）が終わるのを待つ（途中で /Applications/untendai-dev.app を入れ替えると試験が壊れるため）②組む前の1行→ menu-v3 を a4bb001 へ早送り→ build-dev.sh →組んだ後の1行 ③~/.untendai/aimits_jikken_url に <a href="http://127.0.0.1:8800">http://127.0.0.1:8800</a> を置く（Mac だけ切り替える印。21:32 で AI-Mits-チューニングが置くと書いたが、Mits様の「完走させて」でこちらが置いて1回走らせる）④開発版の NORMAL と DEEP に1問ずつ送り、8800 の記録に tag untendai-kaihatsuban の行が増えたかを見る ⑤AI-Mits-チューニングに知らせる</li>
+<li>8800 は起こし直さない</li>
+<li>宛先：★BS_AI-Mits-チューニング・★BS_運転台改善</li>
+<li>取消：この節の段取り③〜⑤（印のファイルをこちらで置く・1問ずつ送って確かめる・AI-Mits-チューニングに知らせる）と「Mits様の『完走させて』でこちらが置く」（2026-11-05 22:22）。Mits様原文「間違えた」：22:2x の指示は AI-Mits-チューニングへのものだった。21:32 の分担に戻す＝組み直しはこちら（33問の試験のあと・前後に1行）、aimits_jikken_url を置いて確かめるのは AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-22-24-Mits様-設定サポーターの直しで-設定サポーターの実験の流れ">2026-11-05 22:24 ／ Mits様（設定サポーターの直しで）── 設定サポーターの実験の流れは、Mits様の検収まで西田統合版に入れない。開発版で確かめを繰り返す（宛先：★BS_運転台改善・★BS_AI-Mits-チューニング・司令塔）</h3>
+<ul>
+<li>出どころ：Mits様原文（22:24）「西田統合版　は私が検収するまでいれないでいい　開発版で確認を繰り返す」</li>
+<li>決まったこと：10:10 の「西田の開発版と西田統合版は実験の流れ」のうち、西田統合版に入れるのは Mits様の検収のあと。それまでは西田の開発版（menu-v3）だけで、33問の試験などの確かめを繰り返す。西田統合版用の印を運転台改善と決める話も、検収のあとに回す</li>
+<li>宛先：★BS_運転台改善・★BS_AI-Mits-チューニング・司令塔</li>
+</ul>
+<h3 id="2026-11-05-22-27-設定サポーターの直し-AI-Mits-チューニングの問い-8">2026-11-05 22:27 ／ 設定サポーターの直し ── AI-Mits-チューニングの問い（8-1 は開発版の NORMAL を通るか・aimits_jikken_url を置いてよい時点）への返事（宛先：★BS_AI-Mits-チューニング）</h3>
+<ul>
+<li>①通るのは今走っている1回目の33問だけ（開発版の NORMAL＝今の Dify の答えから設定サポーターに聞く）。2回目からの流し直し（system.md を直したあと）は、開発版の AI-Mits を通さない。1回目に記録した AI-Mits の33の答えを、そのまま設定サポーターの受け手 8799 に「AI-Mits にこう言われました」の形で送る（11-05 の写真の試しと同じ形）。こうすると、AI-Mits の答えが替わっても設定サポーターの前後が比べられる</li>
+<li>②置いてよい時点：1回目の33問の試験が終わり、こちらが開発版を a4bb001 で組み直して「組んだ後」の1行と一言を送ったあと。そこから先は、こちらの都合で待たなくてよい</li>
+<li>足すこと（出どころ：設定サポーターの直しの案）：開発版が v6 に替わったあと、v6 の NORMAL の答えから設定サポーターに聞く回を1回別に流す（開発版でお客様が見る形に近いので）。その回は前の回と比べるためではなく、新しい起点として扱う</li>
+<li>宛先：★BS_AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-22-27-Mits様-設定サポーターの直しで-設定サポーターの直しは-8">2026-11-05 22:27 ／ Mits様（設定サポーターの直しで）── 設定サポーターの直しは 8-1 と 8-2（Dify に入れる段の手前）まで完走し、済んだら AI-Mits-チューニングに知らせる。そこから先は AI-Mits-チューニングが開発版を操作する（宛先：★BS_AI-Mits-チューニング・★BS_運転台改善・司令塔）</h3>
+<ul>
+<li>出どころ：Mits様原文（22:27）「では、8-1 と 8-2 です。ただ、8-2 の最後の1段の手前まで終わったらAI-Mitsチューニングに知らせて　そこからAI-Mitsチューニングが開発版を操作する」</li>
+<li>順番（出どころ：設定サポーターの直しの案）：8-1（33問の1回目→system.md を直す→記録した AI-Mits の答えで流し直す、を繰り返す）と 8-2（書庫と写真をヘルプから作り直す道具・古い書庫の見張り・前後の比べ・枝に入れる）を済ませる → 最後に開発版を a4bb001 以降で組み直して入れる → 組んだ後の1行と一緒に AI-Mits-チューニングへ知らせる。そこから開発版を触るのは AI-Mits-チューニング（aimits_jikken_url を置く・確かめる）</li>
+<li>取消：22:27 の節の「1回目の33問が終わり組み直したら aimits_jikken_url を置いてよい」（2026-11-05 22:27）。置いてよいのは、上の知らせのあと</li>
+<li>宛先：★BS_AI-Mits-チューニング・★BS_運転台改善・司令塔</li>
+</ul>
+<h3 id="2026-11-05-22-29-AI-Mits-チューニング-開発版の-NORMAL・DEEP">2026-11-05 22:29 ／ AI-Mits-チューニング ── 開発版の NORMAL・DEEP v6 は、トラッカー k11（載せる）と k12（開発版から30問を流し直し、実験環境とのずれを見る）までを Mits様の確認なしで完走する。西田統合版には触らない</h3>
+<ul>
+<li>Mits様原文：「開発版をいじり始めたら、私の確認不要なことは完了まで進めてほしいが、10 開発版から30問を流し直し、実験環境とのずれを見る［開発版で流し直す］がゴールかな？ 西田統合版は触らない 開発版で検収してから」</li>
+<li>始める時点：設定サポーターの直しから「8-1 と 8-2（Dify に入れる段の手前）が済み、開発版を a4bb001 以降で組み直した」と知らせが来たあと（22:27 の節のとおり）</li>
+<li>順番：~/.untendai/aimits_jikken_url を置く → NORMAL・DEEP に1問ずつ送り 8800 の記録が増えるのを見る（k11 済み）→ 開発版から30問を流し直し、実験環境の30問（normal_v6_30.jsonl・deep_v6_30.jsonl）と突き合わせる（k12 済み）→ Mits様の開発版での検収</li>
+<li>触らない：西田統合版（k13）・正式版（k14）・8800 の起こし直し</li>
+<li>宛先：設定サポーターの直し・運転台改善・司令塔・AI-Mits-チューニング</li>
+</ul>
+<ul>
+<li>2026-11-05 22:46 ／ 設定サポーターの直し：トラッカー 8-2（書庫と写真を版ごとに作り直す仕組み）を Dify の段の手前まで済ませた。道具 /Users/nishidamitsuhiro/untendai-settei-jikken/ai_sensei/tsukurinaoshi.sh・見張り launchd com.mits.settei-shoko-mihari（毎朝 7:05・ヘルプの版が書庫より新しいと決定台帳に1行・宛先 ★BS_AI-Mits-チューニング）。commit 25755ed・885f0f7。受け手 8799 は起こし直していない／宛先：★BS_AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-22-46-AI-Mits-チューニング-BS-engineer-二刀流の">2026-11-05 22:46 ／ AI-Mits-チューニング（BS-engineer）── 二刀流の動画の案内を2〜3回目に出すように書庫を直した・v6 と v6s の盲検の画面 mokuken_v7 を作った</h3>
+<ul>
+<li>書庫 /Users/nishidamitsuhiro/untendai-aimits-jikken/engine/shoko/mits_ai_no_kangae.md の「4つのC の中身は…」の行を「2回目か3回目の答えで1回だけ伝えて案内・締めまで持ち越さない・1回目では案内しない・URL は会話で1回だけ」に直した（直す前の写し hikae_mae_shoko_ai_20261105/mits_ai_no_kangae_ai7.md）</li>
+<li>1回目の流し直し（ai8）で、NORMAL・DEEP とも 4つのC の中身を「お金・作ったもの・お客さんの名簿・掛け合わせて生む力」と言った。元は書庫の読み方の行（「4C」は初めての人に中身を一言で添える）。その行から「4C」を外し、聞かれても中身は言わず「話すと長くなるので、動画の中で話しています」と返す1文を足した（写し mits_ai_no_kangae_ai8.md）。ai7 の DEEP 5回目も同じ言い方で中身を言っていた</li>
+<li>2回目の流し直し（ai9）：案内が最初に出た回 NORMAL 2回目・DEEP 2回目、URL は各1回、中身の名前 0件</li>
+<li>盲検：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_jikken_20261105/chiisai_mawashi/mokuken_v7.html（N3・N4・N5 × NORMAL v6・DEEP v6・NORMAL v6s・DEEP v6s＝12枚・欄5つ）。N4・N5 は作った問い（既存の99問で AI・焦りに当たるのは N3 だけ）。v6s の N3 の2会話は ai9 をそのまま入れた</li>
+<li>受け手は 8801 だけを使い、22:46 に止めた。8800・launchd・8799 には触っていない</li>
+<li>額 $8.78（12会話 $7.11＋ai8 $1.68）。発注の $8 を $0.78 超えた</li>
+<li>数え方への影響：なし（FAST・Dify に送っていない）</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-23-17-AI-Mits-チューニング-BS-engineer-4つのC">2026-11-05 23:17 ／ AI-Mits-チューニング（BS-engineer）── 「4つのC を2回以上聞かれたら2〜3行で答える」の直しを N3 で1回流した（ai10）</h3>
+<ul>
+<li>Mits様原文（2026-11-05）「4つのCのことを2回以上、ユーザが聞くんだったら、簡単に2〜3行で答えてあげて」。書庫 /Users/nishidamitsuhiro/untendai-aimits-jikken/engine/shoko/mits_ai_no_kangae.md の27行目は参謀が直した（直す前の写し engine/hikae_mae_shoko_ai_20261105/mits_ai_no_kangae_ai9.md）。書庫は直していない</li>
+<li>流し方：ai9 と同じ N3・相手役 v2・最大5往復、受け手 8801 の /normal_v6s・/deep_v6s。会話 kaiwa/{normal,deep}_v6s_kai5_shoko_ai10.jsonl</li>
+<li>1回目の流しでは相手役が「4つのC って何」を1回しか聞かなかった（kaiwa/*_ai10_1kaime_kyaku1kai.jsonl・額 $1.72）。発注どおり、相手役の指示に「4つのC が出たら2回聞く」を足した写し（gooufuku/nagasu_ai10_kyaku2kai.py・gooufuku.py 本体は直していない）で1回だけ流し直した（額 $0.97）</li>
+<li>結果：1回目に聞かれた答えは 4つの名前が NORMAL・DEEP とも 0。2回目に聞かれた答えは NORMAL・DEEP とも 4つの名前が全部出た。説明の部分は DEEP が2行（文は6つ）、NORMAL が6行（箇条書き4つ）で、NORMAL は「3行以内」に収まらなかった。動画の URL は各1回、案内は NORMAL・DEEP とも 2回目に初めて出た</li>
+<li>受け手 8801 は 23:1x に止めた（8800・8799・launchd・開発版には触っていない）。額は2回の流しで $2.69</li>
+<li>数え方への影響：なし（FAST・Dify に送っていない）</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-23-22-AI-Mits-チューニング-BS-engineer-4つのC">2026-11-05 23:22 ／ AI-Mits-チューニング（BS-engineer）── 「4つのC を2〜3行の地の文で」の直しを N3 で1回流した（ai11）</h3>
+<ul>
+<li>書庫 /Users/nishidamitsuhiro/untendai-aimits-jikken/engine/shoko/mits_ai_no_kangae.md の27行目に「箇条書きにせず、前置きも含めて2〜3行の地の文で書く」を足した版（直す前の写し engine/hikae_mae_shoko_ai_20261105/mits_ai_no_kangae_ai10.md）を、8801 を起こし直して読み込ませた。書庫は直していない</li>
+<li>流し方：ai10 と同じ gooufuku/nagasu_ai10_kyaku2kai.py（お客様役が 4つのC を聞く写し）・N3（問いは toi_kai7.json）・相手役 v2・最大5往復、8801 の /normal_v6s・/deep_v6s。会話 kaiwa/{normal,deep}_v6s_kai5_shoko_ai11.jsonl</li>
+<li>結果：1回目に聞かれた答えの 4つの名前は NORMAL・DEEP とも 0。2回目に聞かれた答えは NORMAL・DEEP とも 4つ全部（NORMAL 4回目・DEEP 5回目）。その部分（前置き〜「詳しくは」）は NORMAL が3行（空行1つ込み・文のある行は2）、DEEP が1行。箇条書き行は NORMAL・DEEP とも 0。動画の URL は各1回、案内が最初に出た回は NORMAL 2回目・DEEP 3回目</li>
+<li>受け手 8801 は止めた（8801 の待ち受け 0本）。8800・8799・launchd・開発版には触っていない。額 .61（NORMAL /bin/zsh.68・DEEP /bin/zsh.92）</li>
+<li>数え方への影響：なし（FAST・Dify に送っていない）</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-05-23-48-設定サポーターの直し-組み立ての前">2026-11-05 23:48 ／ 設定サポーターの直し（組み立ての前）</h3>
+<ul>
+<li>西田の開発版（menu-v3）を settei-jikken の 69ed41a まで早送りして組み立てる（tools/build-dev.sh）。入るもの：a4bb001（AI-Mits の NORMAL・DEEP を ~/.untendai/aimits_jikken_url があるときだけ 8800 へ・開発版だけ）・25755ed／885f0f7（書庫の作り直しの道具。アプリには効かない）・69ed41a（設定サポーターの決まりの直し。受け手 8799 が読むのでアプリには効かない）。/Applications/untendai-dev.app を入れ替える。西田統合版・本番には入れない</li>
+<li>宛先：★BS_AI-Mits-チューニング、★BS_運転台改善</li>
+</ul>
+<h3 id="2026-11-05-23-49-設定サポーターの直し-組み立てのあと・開発版を-AI-Mits">2026-11-05 23:49 ／ 設定サポーターの直し（組み立てのあと・開発版を AI-Mits-チューニングに渡す）</h3>
+<ul>
+<li>menu-v3 を settei-jikken の 69ed41a へ早送りし、tools/build-dev.sh で組み立てて /Applications/untendai-dev.app（v1.83.7）を入れ替えた。中身の時刻 11-05 23:49:32。中に aimits_jikken_url の切り替えが入っているのを strings で確かめた（1件）</li>
+<li>設定サポーター側：受け手 8799 を 23:48 に起こし直した（jikken.py に画面をたどる名前の機械の点検、jikken_server.py に【この版】の行）。~/.untendai/settei_jikken_han に「開発版」を置いた。~/.untendai/settei_jikken_url はそのまま</li>
+<li>トラッカー 8-2 は最後の1段（Dify の書庫に入れる・Mits様の合図）の手前まで済み。Mits様の指示（22:2x）どおり、ここから開発版の操作は AI-Mits-チューニング。~/.untendai/aimits_jikken_url を置くのもそちら</li>
+<li>こちらは開発版を開かない。8-1 の確かめは記録の66往復を受け手を通さずに流し直す形で続ける</li>
+<li>数え方への影響：なし</li>
+<li>宛先：★BS_AI-Mits-チューニング、★BS_運転台改善</li>
+</ul>
+<h3 id="2026-11-05-23-53-設定サポーターの直し-8-1-の2回目">2026-11-05 23:53 ／ 設定サポーターの直し（8-1 の2回目）</h3>
+<ul>
+<li>33問の試験の記録の66往復（kiroku_app.jsonl・21:25〜）を、新しい決まり（settei-jikken 69ed41a の system.md・jikken.py の機械の点検・【この版】開発版）で、受け手 8799 を通さずに流し直した</li>
+<li>結果：「freee」4→0・「決済明細」1→0・「お金と会計」から「データ設定」を飛ばした道 14→0・『』0→22。画面の名前として作った字は 0（残った9件は問いの言い換えと説明の言葉）。誤り 0・書き直し 1・814.6円</li>
+<li>結果のファイル：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/settei_jikken_20261104/zenmon_20261105/kai2/kekka.json（流し方 saisei.py・比べ方 kurabe.py）</li>
+<li>トラッカー 8-1 を更新して公開用URLにも出した。Dify には送っていない</li>
+<li>数え方への影響：なし（Anthropic の API を直に呼んだだけ。Dify・中継に送っていない）</li>
+<li>宛先：★BS_AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-00-10-AI-Mits-チューニング-BS-engineer-開発版の">2026-11-06 00:10 ／ AI-Mits-チューニング（BS-engineer）── 開発版の NORMAL・DEEP v6 を通した（k11）・開発版から30問を流し直して実験環境と突き合わせた（k12）</h3>
+<ul>
+<li>k11：開発版のアプリ（/Applications/untendai-dev.app v1.83.7・menu-v3 69ed41a）から NORMAL・DEEP に N3 の1通目を1問ずつ送った（v3:do で操作・FAST は押していない）。8800 の記録 engine/kiroku.jsonl の tag &quot;untendai-kaihatsuban&quot; の行が 4→6（23:57:29 normal_v6・23:59:24 deep_v6）。写真 /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_jikken_20261105/kaihatsuban/dan1_shashin/1_normal.png・2_deep.png</li>
+<li>k12：開発版の前置き（maeoki_kh・約6.5千字・顧客3人）で30問×NORMAL・DEEP＝60会話を 8800 に流した（23:53〜00:07・12本並べ・相手役 v2・最大5往復）。失敗 0・6往復以上 0・禁止の語 0・額 $28.52。8800 は 21:12:05 から起こし直されていない</li>
+<li>ずれ：前置きの数字を使った答えの割合 NORMAL 96%→91%・DEEP 99%→94%。ずれた24回のうち18回は帳簿の違い（開発版の帳簿は値が1桁ばかりで数えに入らない／実験環境が使った「取引 30件」「111人」などの行が無い）、6回は開発版だけ数字を使った回。組み立て方で数字を落とした回は 0。受け手の機械の点検で書き直した回が NORMAL 26→50・DEEP 18→45 に増え、1往復の真ん中は NORMAL 18.7→21.1秒、DEEP 29.4→31.4秒</li>
+<li>結果：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_jikken_20261105/kaihatsuban/zure_30_kekka.md</li>
+<li>触っていない：西田統合版・正式版・本番の中継・UTAGE・Dify・8800 の起こし直し・launchd・~/.untendai/aimits_jikken_url・開発版のコード。開発版は開いたまま（窓の置き場 window.json をサイドカーの位置 x1820・y-120・幅1480 に替えた）</li>
+<li>数え方への影響：なし（FAST・Dify・中継に送っていない。8800 の記録は tag で分かれる：段1＝untendai-kaihatsuban、段2＝untendai-kaihatsuban-30-&lt;問い&gt;）</li>
+<li>宛先：AI-Mits-チューニング・設定サポーターの直し・運転台改善</li>
+</ul>
+<ul>
+<li>2026-11-06 07:29 ／ 運転台改善：資料の鮮度・食い違い 16 件（kaihatsu_no_nagare_genjou_20261003.html の main_version 書いた=v1.76.3 今=v1.83.7、mits-reports private untendai-kaihatsu-nagare/index.html の branch_count 書いた=18 今=59 ほか。前日と同じ 16 件）／宛先：運転台改善</li>
+</ul>
+<ul>
+<li>2026-11-06 09:05 ／ AI-Mits-チューニング：本番の中継に広告の追跡とログインの記録を載せる道具 deploy_honban_koukoku_kiroku.sh を dry で走らせ直した（GET 4本だけ）。本番 aimits-report-proxy の今 etag 7166b8ce4afc・index.js 73211 bytes、束の index.js と本番の差 0、足す設定は KIROKU_LOGIN・KOUKOKU_TSUISEKI の2本だけ、秘密の値12本は inherit。go は Mits様の合図のまま。数え方への影響：なし／宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-09-24-運転台改善-Mits様の方向性のアイデア-AI-Mits-を">2026-11-06 09:24 ／ 運転台改善 ── Mits様の方向性のアイデア：AI-Mits を「経営コンサルタントと話す形」から「相棒」の形へ（決定ではない）</h3>
+<ul>
+<li>Mits様原文：「そして、根本的なAIMits経営アプリとしての方向性のアイデアを送る。今はAI-Mitsという経営コンサルタントと話す形だけれども、これを相棒という形にするという方向性。」</li>
+<li>扱い：アイデア。Mits様は「やる」と決めていない。発注書・段取りは作らない</li>
+<li>関わる記録：memory project_untendai_daihoshin.md 6.9（AI-Mits が気づいて問いかける＝最重要意義）・6.5.1（「かかりつけ」の語・2026-09-06）／伽藍とバザール加速ネタ帳 ネタ3（AI相棒の構成）／Mits様の私用の相棒 /Users/nishidamitsuhiro/aibou</li>
+<li>宛先：運転台改善・AI-Mits-チューニング・FHL 2026 Notes・伽藍とバザールの実現</li>
+</ul>
+<h3 id="2026-11-06-09-3x-運転台改善-09-24-の相棒のアイデアの続き-自分の分身-決">2026-11-06 09:3x ／ 運転台改善 ── 09:24 の相棒のアイデアの続き：「自分の分身」（決定ではない）</h3>
+<ul>
+<li>Mits様原文：「自分の分身ということ。その分身が経営戦略やマーケティング、会計、業務改善のことをよく知っている。なので、経営コンサルに相談するというより、自分の分身の相棒に相談するという形。さらにそういうノウハウだけじゃなくて、自分の会社ビジネスのことの数字を全部知っている。」</li>
+<li>扱い：アイデア。09:24 の節と同じく、発注書・段取りは作らない</li>
+<li>関わる記録：4カテゴリー（経営戦略・会計・マーケティング・業務効率化）と右の欄の AI-Mits＝ docs/design/2026-10-16_4カテゴリー構成とAI-Mitsパネル.md／目的「自覚」＝ memory project_untendai_daihoshin.md 9節</li>
+<li>宛先：運転台改善・AI-Mits-チューニング・FHL 2026 Notes・伽藍とバザールの実現</li>
+</ul>
+<h3 id="2026-11-06-09-4x-運転台改善-AI相棒-を-AIパートナー-に名前を変えた-宛先">2026-11-06 09:4x ／ 運転台改善 ── 「AI相棒」を「AIパートナー」に名前を変えた（宛先：AIパートナーの構成と仕組み）</h3>
+<ul>
+<li>Mits様原文：「「AI相棒」の方をrenameする　AIパートナーにする」</li>
+<li>理由：09:24・09:3x のアイデア（AI-Mits を「自分の分身の相棒」にする）と、Mits様の私用の喋る相棒の名前「AI相棒」が重なるため、私用の方の名前を変えた</li>
+<li>変えたもの：セッション名 local_484b9398「AI相棒の構成と仕組み」→「AIパートナーの構成と仕組み」／Notion の保存ページ 40600782d90a81f4b796f963ed5f3228 のセッションタイトル／/Users/nishidamitsuhiro/aibou の CLAUDE.md（1行目・43行目）・dougu/jarvis-mcp/start.sh（2行目の説明）・dougu/toritsugi/tsukuru.sh（9行目）・mock/tama_20261027.html（題）</li>
+<li>変えないもの：フォルダ名 /Users/nishidamitsuhiro/aibou（変えると作業フォルダと道具の場所が切れる）／決定台帳・定時報告・比較の記録など過去の記録の中の「AI相棒」／伽藍とバザール加速ネタ帳 ネタ3 の「AI相棒」（はしもんさんの投稿の言葉）／「相棒」だけの語（声の呼びかけ「相棒に戻って」などに使っている）</li>
+<li>宛先：AIパートナーの構成と仕組み</li>
+<li>2026-11-06 09:29 ／ 運転台改善：訂正 ── 上の節の見出しの時刻「09:4x」は誤り。書いたのは 09:29（date で測った値）。中身はそのまま／宛先：AIパートナーの構成と仕組み</li>
+</ul>
+<h3 id="2026-11-06-09-4x-運転台改善-AI相棒のアイデアの続き3-西田メソッドを瞬時にイ">2026-11-06 09:4x ／ 運転台改善 ── AI相棒のアイデアの続き3：「西田メソッドを瞬時にインストールして話し出す」（決定ではない）</h3>
+<ul>
+<li>Mits様原文：「物差しはどこまで西田メソッドで曲げない、中心である相棒が西田メソッドを瞬時にインストールして話し出すという、そんなイメージ。つまり、自分で西田メソッドを勉強していかないと大変だなという印象を拭う感じ。」</li>
+<li>扱い：アイデア。09:24・09:3x の節の続き。発注書・段取りは作らない</li>
+<li>関わる記録：memory project_untendai_daihoshin.md 6.5（知性ある無知・トレーニングアプリの型）・2節（B コーパス／C 西田メソッドが商品）／project_aimits_engine_naming.md（FAST＝西田の知見は入らない・2026-08-28）</li>
+<li>宛先：運転台改善・AI-Mits-チューニング・FHL 2026 Notes・伽藍とバザールの実現</li>
+</ul>
+<h3 id="2026-11-06-09-4x-運転台改善-AI相棒の話し方の形を-Mits様が-そういうイメ">2026-11-06 09:4x ／ 運転台改善 ── AI相棒の話し方の形を Mits様が「そういうイメージ」と言われた（決定ではない・イメージの一致）</h3>
+<ul>
+<li>参謀が出した例：「いまの人数だと、1人あたりの粗利が去年より下がっています」と言ってから、「西田メソッドではこれを『＠』と呼びます」と添える</li>
+<li>Mits様原文：「そうそう、そういうイメージ　AI-Mitsに教えられているという感じでずいぶん違う」</li>
+<li>形：①その人の数字を、その人の言葉で言う → ②西田語の名前をあとから添える（覚えなくても動ける）</li>
+<li>扱い：話し方のイメージが合った、まで。作る・直すは Mits様がまだ決めていない</li>
+<li>宛先：運転台改善・AI-Mits-チューニング・FHL 2026 Notes・伽藍とバザールの実現</li>
+</ul>
+<h3 id="2026-11-06-09-4x-運転台改善-AI相棒の値打ちの言い方を-Mits様が-そうそう">2026-11-06 09:4x ／ 運転台改善 ── AI相棒の値打ちの言い方を Mits様が「そうそう」と言われた（決定ではない・言い方の一致）</h3>
+<ul>
+<li>参謀が出した文：「お客様が買うのは勉強ではなく、もう勉強を済ませた相棒です。」</li>
+<li>Mits様原文：「そうそう」</li>
+<li>関わる記録：memory project_untendai_daihoshin.md 2節（売るのは道具ではなく判断・B コーパス／C 西田メソッドが商品）</li>
+<li>扱い：値打ちの言い方が合った、まで。お客様に出す文（UTAGE のページ・メルマガ）に入れるかは Mits様がまだ決めていない</li>
+<li>宛先：運転台改善・FHL 2026 Notes・伽藍とバザールの実現・AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-09-4x-運転台改善-取消-AI相棒の話で参謀が書いた-無料の人が会う相">2026-11-06 09:4x ／ 運転台改善 ── 取消：AI相棒の話で参謀が書いた「無料の人が会う相棒には西田メソッドが無い」の予見（チャットのみ・台帳には未記載）</h3>
+<ul>
+<li>取消の理由：登録直後にフリープランになる道は無い（決定台帳 2026-10-29 20:4x・3916〜3918行）。登録した人は全員、竹の30日お試しで NORMAL・DEEP の相棒（西田メソッドあり・手元の数字を添える）に会う。フリープラン（FAST だけ）になるのは、竹のお試しを続けないと選んだ人・竹や梅をやめた人だけ</li>
+<li>Mits様原文：「いきなりフリープランに入る人はいなくて、竹を無料お試しを使って、そしてその後竹を使わないと決めた人がフリープランに落ちるということなので、理解が間違っている。」</li>
+<li>宛先：運転台改善・FHL 2026 Notes・AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-09-4x-運転台改善-AI相棒の学び方の言い方-使いながら学んで覚えてし">2026-11-06 09:4x ／ 運転台改善 ── AI相棒の学び方の言い方：「使いながら学んで覚えてしまう」（決定ではない・言い方の一致）</h3>
+<ul>
+<li>参謀が書いた文：「いまの案内が『学んでから使う』順になっている所は、相棒の形と食い違います」</li>
+<li>Mits様原文：「。いまの案内が「学んでから使う」順になっている　→　使いながら学んで覚えてしまう」</li>
+<li>形：学んでから使う、ではなく、使いながら学んで覚えてしまう</li>
+<li>扱い：言い方まで。お客様に出す案内を直すかは Mits様がまだ決めていない。いまの案内のどこが「学んでから使う」順かは数えていない</li>
+<li>宛先：運転台改善・FHL 2026 Notes・伽藍とバザールの実現・AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-10-04-AI-Mits-チューニング-BS-engineer-開発版の">2026-11-06 10:04 ／ AI-Mits-チューニング（BS-engineer）── 開発版の画面から NORMAL・DEEP に続けて5往復ずつ聞いた（8会話・40往復）</h3>
+<ul>
+<li>故障なし。開発版（/Applications/untendai-dev.app v1.83.7・menu-v3 69ed41a）の画面から、T1・S3・G2・M1 の4問 × NORMAL・DEEP を新しい相談で始め、相手役 v2 の問いを画面から送って5往復ずつ（09:21〜10:01）。8800 に届いていない往復 0／40・画面と記録の字が違う往復 0（切れ 0）・段1の失敗 0・問い2つ以上 0・打ち消し 0・同じ数字3往復以上 0・送り先 normal_v6／deep_v6 以外 0・FAST 0。額 $5.40（外した1本目 $0.60 を含む）</li>
+<li>k12（同じ4問を手元から直接）と同じ形。違いは前置きの話題の1行（画面は localStorage の hito が4問とも入る）と、1会話ずつ流したので1往復目の cache が冷たかった分の額</li>
+<li>見つかったこと：右の欄のモードが DEEP のまま、開き直した開発版で NORMAL の相談の続きを右の欄から送ると「DEEP に変えます」の窓が出る（送った問いは NORMAL の続きとして届く）。開発版の帳簿の値は金額は桁があり、1桁なのは人数・件数だけ</li>
+<li>1往復ごとに開発版を開き直していたため、開くたびに開発版が前に出て Mits様の入力を奪っていた。open -g に替えても、窓の作り（tauri.conf.json の &quot;focus&quot;: true）で前に出ることを 10:02 に確かめた。このあと開発版は開き直していない（開いたまま）</li>
+<li>結果：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_jikken_20261105/kaihatsuban/gamen_kakunin_20261106.md</li>
+<li>写真：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_jikken_20261105/kaihatsuban/gamen_kakunin_shashin_20261106/</li>
+<li>触っていない：FAST・設定・契約・ログアウト・8800 の起こし直し・~/.untendai/aimits_jikken_url・開発版のコード・西田統合版・本番の中継・Dify・UTAGE・トラッカー</li>
+<li>数え方への影響：なし（FAST・Dify・中継に送っていない。8800 の記録には tag untendai-kaihatsuban で40行＋外した1本目の5行が増えた。開発版の相談の一覧に9件増えた）</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-10-06-FHL-2026-Notes-AI相棒-運転台改善-11-06">2026-11-06 10:06 ／ FHL 2026 Notes ── AI相棒（運転台改善 11-06 09:24〜09:42）を LEVEL1 レターと突き合わせた（決定ではない）</h3>
+<ul>
+<li>Mits様原文：「今、運転台改善セッションで話していること　記録して　こちらでやっているマーケティング、LEVEL1レターと付き合わせて　相違、意見をまとめて」</li>
+<li>合う所：FHL の悩み11「もう一人自分がいればいいのに → AIエージェント」（Mits様 11-05 22:16）と「自分の分身」（09:3x）が同じ向き。上位の悩み「人には答えを出せるのに、自分の事業の答えだけが出せない」も分身でつながる</li>
+<li>相違：レターは AI-Mits を「相手」「かかりつけ」と呼び「相棒」「分身」は0件・主役が書庫 446本・「学んでから当てる」文（50・71・142行）と「使いながら学ぶ」文（159・496行）が混ざっている</li>
+<li>扱い：レター（UTAGE sUgBDoQhIeBW）は書き換えていない。寄せるかは Mits様がまだ決めていない</li>
+<li>まとめ：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/_wip/linchpin_nou_no_naka_20261005/level1_local_20261029/AI相棒とLEVEL1レターの突き合わせ_20261106.html</li>
+<li>宛先：運転台改善・AI-Mits-チューニング・伽藍とバザールの実現・FHL 2026 Notes</li>
+</ul>
+<h3 id="2026-11-06-10-15-AI-Mits-チューニング-依頼-書庫に-AI-エージェント">2026-11-06 10:15 ／ AI-Mits-チューニング ── 依頼：書庫に AI エージェントの使い方（AI講座のレター・AI講座の本文）を足す</h3>
+<ul>
+<li>出どころ：Mits様原文（11-06 10:1x・盲検 7回目の2問を見て）「すべてにおいて、資料作り程度の　チャットAIの情報しか書庫に入っていないと言うことがわかってきた　そんなことはもうやっていて当たり前で、もっとAIエージェント活用に振らないと全然だめ　AI講座を読んでいないのか？」</li>
+<li>出どころ：Mits様原文（11-06 10:2x）「AI講座のれたーも送っている　全然入っていない」「その作業はAI-Mits 書庫に Mits様の AI についての意見を足す　にやらせて」</li>
+<li>実測（AI-Mits-チューニング・11-06 10:1x〜10:2x）：書庫 /Users/nishidamitsuhiro/untendai-aimits-jikken/engine/shoko/mits_ai_no_kangae.md に F1-07・BE-02・F0-03・F0-07・「AIエージェント講座」「グルコン」は 0回。AI講座の本文 /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/AIグループ講座_複数セッション運営_20260916_honbun.md（93,882 bytes・「持ち場」118回・「指示書」35回）から書庫に入ったのは1行だけ。西田メソッドの書庫5本（shoko/dify_11963425_raw.json）は「エージェント」「Claude」0回。7回目の v6s の答えの行動は「この1文を ChatGPT に貼って案を10個」（NORMAL）「話した内容を AI にまとめさせて1枚にして渡す」（DEEP）だった（gooufuku/kaiwa/normal_v6s_kai7.jsonl・deep_v6s_kai7.jsonl）</li>
+<li>足す元の候補（出どころ：AI-Mits-チューニングの案・UTAGE の ID は控え /Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/utage_ids_snapshot.md から引いたもので古い。今のページを開いて確かめてから写す）：F1-07_AIエージェント_入門の LP（ファネル RvTmcP3sEoRJ）／BE-02_AIエージェント経営 2ヶ月グルコンのレター（ファネル D87uWEktb5EP）／F0-03 AIエージェント・Claude Code 無料体験会の LP（ファネル D5lsFe9s3xPx）／F0-07_AIエージェント入門オプトイン（ファネル NQA9D5uf1sbe）／AI講座の本文（上の絶対パス）。Mits様が「送っている」と言われた AI講座のレターがこの中のどれか（ほかにあるか）は、UTAGE のメール・ファネルで確かめる</li>
+<li>写し方は前回（11-05 22:15）と同じ：Mits様の文をそのまま写し、出どころを各項目の末尾に書く。足す前の写しを engine/hikae_mae_shoko_ai_20261105/ に取る</li>
+<li>予見（AI-Mits-チューニングの案）：AI講座の本文は Mits様ご自身の13本の運営の記録なので、そのまま答えに出ると田中誠には重く、段1「前置きが長くアドバイスが遅い」に当たる。根拠：本文の対象が複数セッションの運営。答えの行動は「最初の1つの持ち場を AI に渡す」大きさに絞る読み方の行を、書庫の使い方の節に書く</li>
+<li>確かめ：足した版を /normal_v6s・/deep_v6s（受け手 8801 を起こして流し、終わったら止める。8800・8799・launchd・開発版には触らない）で N3 と、盲検 7回目の N4・N5 を流し直し、答えの行動が「ChatGPT に貼る」「AI にまとめさせる」だけで終わっている往復の数を、前（kai7）と後で並べる。盲検の画面 mokuken_v7.html の組み直しは AI-Mits-チューニングに返す</li>
+<li>触らない：Dify の書庫・Dify・本番の中継・UTAGE のページの中身（読むだけ）・開発版</li>
+<li>宛先：AI-Mits 書庫に Mits様の AI についての意見を足す</li>
+</ul>
+<h3 id="2026-11-06-10-16-FHL-2026-Notes-LEVEL1-レターの方向性を">2026-11-06 10:16 ／ FHL 2026 Notes ── LEVEL1 レターの方向性を「相棒」にする（Mits様）</h3>
+<ul>
+<li>Mits様原文：「方向性を相棒にするので、相違表、書き換えるべき箇所のチェックシートを作って一覧にして」</li>
+<li>決まったこと：LEVEL1 レター（UTAGE sUgBDoQhIeBW）の方向性を、運転台改善 11-06 09:24〜09:42 の AI相棒（自分の分身・もう勉強を済ませた相棒・使いながら学んで覚えてしまう）にする</li>
+<li>作ったもの：相違表と、書き換えるべき箇所のチェックシート43か所（呼び方・学ぶ順・主役の並び・特徴と30日・質問・FHL の材料）。書き換えの向きは参謀の案。UTAGE は書き換えていない</li>
+<li>一覧：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/_wip/linchpin_nou_no_naka_20261005/level1_local_20261029/相棒への書き換え一覧_LEVEL1レター_20261106.html</li>
+<li>予見：レターの申し込みの道を通す 11-06 午後の通しの試し・11-07 のメルマガと日程が重なる。根拠：決定台帳 2026-11-05 21:47</li>
+<li>宛先：運転台改善・AI-Mits-チューニング・伽藍とバザールの実現・メール配信・計測・自動化・道2の決済とアカウントの画面の状態・FHL 2026 Notes</li>
+</ul>
+<h3 id="2026-11-06-10-17-AI-Mits-チューニング-10-15-の依頼に足す1行">2026-11-06 10:17 ／ AI-Mits-チューニング ── 10:15 の依頼に足す1行</h3>
+<ul>
+<li>同じ指示は 11-05 にも出ていた（決定台帳 6160行：Mits様「NORMAL N3：AIについての回答は私が考えていることと違うので、AI講座やグルコンから私の意見を書庫に入れる必要がある」）。11-05 22:15 の書庫ではグルコン（BE-02）のレターと AI講座の中身が入らなかった。今回は「AI講座」「グルコン」の2つを必ず入れる</li>
+<li>宛先：AI 書庫に Mits様の AI についての意見を足す・AI-Mits-チューニング</li>
+<li>取消：上の宛先の名前の書き誤り（10:17）。正しくは 宛先：AI-Mits 書庫に Mits様の AI についての意見を足す・AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-10-17-FHL-2026-Notes-LEVEL1-レターの仮題-Mi">2026-11-06 10:17 ／ FHL 2026 Notes ── LEVEL1 レターの仮題（Mits様・仮）</h3>
+<ul>
+<li>Mits様原文：「レターの仮題は　AI時代のコンサルタント・教え業のための　すごい相棒　for　一人社長・１人型起業家　人には答えを出せるのに、自分の事業の答えだけが出せないあなた、もう１人自分が欲しかったあなたのため」</li>
+<li>扱い：仮題。10:16 の「方向性を相棒にする」の続き。書き換え一覧の先頭に仮題と、冒頭（区画2 39・43〜47行）の書き換え3か所を足した（全46か所）。UTAGE は書き換えていない</li>
+<li>宛先：運転台改善・AI-Mits-チューニング・伽藍とバザールの実現・メール配信・計測・自動化・FHL 2026 Notes</li>
+</ul>
+<h3 id="2026-11-06-10-18-AI-Mits-チューニング-依頼-設定サポーターを開発版の画">2026-11-06 10:18 ／ AI-Mits-チューニング ── 依頼：設定サポーターを開発版の画面で確かめる（8-1 の3回目）</h3>
+<ul>
+<li>出どころ：Mits様原文（11-06 10:2x）「設定サポーターを開発版の画面で確かめる　これも設定サポーターセッションに頼めるね」</li>
+<li>開発版の操作の持ち場：11-05 22:2x の Mits様の指示で AI-Mits-チューニングに移っていたもの（決定台帳 11-05 23:49）を、この確かめの間は設定サポーターの直しが持つ。8800・~/.untendai/aimits_jikken_url・開発版のコードは変えない（出どころ：AI-Mits-チューニングの案）</li>
+<li>何を確かめるか（出どころ：AI-Mits-チューニングの案）：11-05 23:48 に直した決まり（settei-jikken 69ed41a・受け手 8799）が、開発版（/Applications/untendai-dev.app v1.83.7）の画面の上で効くか。2回目（23:53）は受け手と画面を通していない。数える物差しは 2回目と同じ（「freee」・「決済明細」・「お金と会計」から「データ設定」を飛ばした道・画面の名前として作った字・写真が出たか）</li>
+<li>材料に使える AI-Mits の答え（v6）：今朝 開発版の画面から流した 40往復 /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_jikken_20261105/kaihatsuban/gamen_kakunin_20261106.jsonl（結果 gamen_kakunin_20261106.md・故障なし）</li>
+<li>🔴 知っておくこと：開発版は v3:do の指示を起動のときにしか読まないので、1往復ごとに開き直すと、そのたびに開発版が前に出て Mits様がメインの画面で打っている入力を奪う（Mits様 11-06「サイドカー作業する度にメイン画面で作業プロンプトで入力している私のマウスを持っていくのを止めて」）。open -g でも止まらない（tauri.conf.json の &quot;focus&quot;: true・11-06 10:02 実測）。開き直す回数を最小にする。決まり：/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/feedback_kaihatsuban_no_shiken_wa_sidecar_de_hiraku.md</li>
+<li>触らない：西田統合版・Dify の書庫（8-2 の最後の1段は Mits様の合図）・本番の中継・UTAGE</li>
+<li>宛先：設定サポーターの直し・AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-10-21-設定サポーターの直し-8-1-の3回目を始める-開発版の画面で">2026-11-06 10:21 ／ 設定サポーターの直し ── 8-1 の3回目を始める（開発版の画面で33問）</h3>
+<ul>
+<li>10:18 の依頼を受けた。開発版の操作はこの確かめの間こちら。8800・~/.untendai/aimits_jikken_url・開発版のコードは変えない</li>
+<li>Mits様の入力を奪う回数を減らすため、33問を v3:do の1行（1回の起動）で流す。開発版が前に出るのは起動の1回だけ（10:01:58 から開いていた開発版はいったん閉じる）。窓はサイドカー（x=1812,y=-100）</li>
+<li>1回きりの起動で問いごとに設定サポーターの会話を切るため、受け手 8799 に試験だけの切り替えを足した：~/.untendai/settei_jikken_kiru がある間は「AI-Mits にこう言われました。」で始まる往復を新しい会話にする（jikken_server.py・10:20:53 に起こし直した）。済んだらファイルを AI作業ゴミ箱へ移す</li>
+<li>問い：toi_ichiran_settei_supporter_yo.json の33問・NORMAL。AI-Mits の答えは開発版の道どおり 8800（v6）。1問約3.6分・全部で約2時間</li>
+<li>数え方への影響：なし（Dify・中継に送らない。8800 は AI-Mits-チューニングの受け手で、問い33本が届く）</li>
+<li>宛先：★BS_AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-10-25-FHL-2026-Notes-取消と差し替え-10-16-の">2026-11-06 10:25 ／ FHL 2026 Notes ── 取消と差し替え：10:16 の「書き換えるべき箇所のチェックシート43か所」・10:17 の「冒頭の書き換え3か所」</h3>
+<ul>
+<li>取消の理由：Mits様原文「レター冒頭だけではない、全域、レター全部　書き換えの依頼では無い相違表、チェックシート」。書き換えの案を書いていたのが誤り</li>
+<li>差し替え：同じファイルを、仮題・相棒とレター本文24区画＋「中身を見る」29か所の全部を区画ごとに突き合わせた相違表とチェックシート（81行・✕食い違う38／○合う21／△語が無いだけ22）に作り直した。書き換えの案は書いていない。UTAGE は書き換えていない</li>
+<li>一覧：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/_wip/linchpin_nou_no_naka_20261005/level1_local_20261029/相棒への書き換え一覧_LEVEL1レター_20261106.html</li>
+<li>宛先：運転台改善・AI-Mits-チューニング・伽藍とバザールの実現・メール配信・計測・自動化・FHL 2026 Notes</li>
+</ul>
+<h3 id="2026-11-06-10-27-BS-engineer-発注-AI-Mits-チューニング-D">2026-11-06 10:27 ／ BS-engineer（発注：AI-Mits-チューニング）── 「DEEP に変えます」の窓は作りの誤り。正式版 1.83.7 のお客様にも起きる（宛先：AI-Mits-チューニング・運転台改善）</h3>
+<ul>
+<li>起きる場面：右の欄で DEEP を一度押した人が、アプリを開き直して右の欄から送ると、最初の1回で毎回出る。右の欄のモードは localStorage の untendai_ws に残る（src/index.html 4563）のに、真ん中の欄の頭は開くたびに NORMAL に戻る（19990）。右の欄から送ると最後の相談を開く（19303）ので、窓を出す条件（20081）が揃う</li>
+<li>食い違い：窓は「DEEP に変えます」と言うが、「やめる」だと NORMAL の続きが送られ、右の欄は DEEP と出たまま、送るたびにまた出る。最後の相談がもともと DEEP でも「引き継げません」と出る（画面は開いた相談の頭を知らない）。「この問いを、新しい頭脳でもう一度聞く」は書いた問いを前の発言で上書きする（20111）。「やめる」は白い枠の外にはみ出る（16158・16166）</li>
+<li>今朝の「NORMAL の続きとして届いた」は正しい動き：Rust の sanbo_send は、相談を開いていれば画面の頭を使わずにその相談の頭を使う（commands.rs 3002〜3009）</li>
+<li>直す案（運転台改善の持ち場・コードは変えていない）：開いた相談の頭を画面に戻す／続きを開いた後は右の欄のモードで頭を押さない／窓は書きかけの問いを使う／ボタンを折り返す</li>
+<li>調べた結果：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_jikken_20261105/kaihatsuban/deep_mado_chousa_20261106.md</li>
+<li>触っていない：開発版のアプリ（この担当が開いた回 0）・コード・西田統合版・正式版・中継・Dify。82516 は調べ始めた 10:21:57 に既に無く、動いている開発版は PID 99581（起動 10:21:25・この担当より前に別の手で開き直された）</li>
+</ul>
+<h3 id="2026-11-06-10-32-AI-Mits-書庫に-Mits様の-AI-についての意見を足">2026-11-06 10:32 ／ AI-Mits 書庫に Mits様の AI についての意見を足す ── 10:15・10:17 の依頼：書庫に AI講座・グルコンの「AI エージェントの使い方」を足し、N3・N4・N5 を流した</h3>
+<ul>
+<li>足した：/Users/nishidamitsuhiro/untendai-aimits-jikken/engine/shoko/mits_ai_no_kangae.md に節「AI エージェントの使い方 ── 聞く・貼る・まとめさせるは入口。AI に持ち場を渡す（AI講座・グルコン・AIグループ講座本文）」と、使い方の節に1行（最後の一手は「最初の1つの持ち場を AI に渡す」大きさ・1つだけ）。グルコン BE-02（セールスレター HP7g0Lhg2SyY・フォーム+QA xswhmpKSJJH0）・AI講座 F1-07・F1-04・F1-01・F0-03・AIグループ講座本文から「」28か所、元の文と突き合わせて 28 当たり。写し：engine/hikae_mae_shoko_ai_20261105/mits_ai_no_kangae_mae_agent_20261106.md（前）・mits_ai_no_kangae_agent1_20261106.md（後）</li>
+<li>流した：8801 の /normal_v6s・/deep_v6s で N3・N4・N5（toi_kai7.json・相手役 v2・5往復）。会話 kaiwa/*_v6s_kai7_agent.jsonl。数え方 gooufuku/kensa_agent.py</li>
+<li>結果：答えの行動が「チャット止まり」（AI に貼る・まとめさせる・作らせるだけ）の往復は NORMAL 3→3・DEEP 3→0。「持ち場まで」（次から AI に先にやらせ、自分は確かめるだけ）は NORMAL 0→3・DEEP 0→3。渡す仕事は6回とも提案資料の下書き。時計・毎朝・確かめる AI を分ける、は 0。N4 は持ち場の話にならなかった</li>
+<li>予見：4つのC の中身を言った往復が kai7 の 0 から 2（NORMAL N3-4・DEEP N3-5）。根拠：会話の文を grep（キャッシュ・カスタマー・クリエイティビティ）。足した節に 4つのC の語は 0</li>
+<li>結果の詳細：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_jikken_20261105/gooufuku/N3_shoko_ai_kekka_20261105.md の「追記（2026-11-06 10:2x〜10:31）」</li>
+<li>8801 は 10:31 に止めた。8800・launchd は触っていない。29回・770円</li>
+<li>mokuken_v7.html の組み直しは AI-Mits-チューニングに返す</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-10-35-AI-Mits-チューニング-10-32-の書庫の結果を読んだ">2026-11-06 10:35 ／ AI-Mits-チューニング ── 10:32 の書庫の結果を読んだ（気づいた点）</h3>
+<ul>
+<li>数え直し（AI-Mits-チューニング・kaiwa/normal_v6s_kai7_agent.jsonl・deep_v6s_kai7_agent.jsonl を1往復ずつ）：答えに「提案資料」が出た往復 NORMAL 5・DEEP 6。書庫に足した「毎朝」「持ち場」は答えに 0。4つのC の中身を言った2往復（NORMAL N3-4・DEEP N3-5）は、どちらも同じ会話で2回目に聞かれた往復で、11-05 の「2回以上聞かれたら2〜3行で答える」のとおり</li>
+<li>気づいた点：任せる形（AI に先にやらせ自分は確かめる）にはなったが、任せる中身が提案資料の下書き＝資料作りのまま。Mits様 11-06「資料作り程度の　チャットAIの情報…もっとAIエージェント活用に振らないと全然だめ」をまだ越えていない</li>
+<li>盲検 mokuken_v7 の組み直しは止めている（同じ所でダメと見ていただくことになるため）。次に「最初に渡す1つ」を、毎朝・毎月くり返す仕事（時計で動く持ち場）に向ける直しをするかは、Mits様の合図のあと（出どころ：AI-Mits-チューニングの案）</li>
+<li>宛先：AI-Mits 書庫に Mits様の AI についての意見を足す・AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-10-39-BS-engineer-発注-AI-Mits-チューニング-N">2026-11-06 10:39 ／ BS-engineer（発注：AI-Mits-チューニング）── NORMAL の学びの該当箇所が出ない理由</h3>
+<ul>
+<li>数え直し：S3・M1 の NORMAL で学びが出た往復 0／10・G2 5／5（gamen_kakunin_20261106.jsonl と 8800 の kiroku.jsonl の両方で同じ）</li>
+<li>理由1：S3（メルマガ）は学びの一覧21行（shiryou.py 51〜68行・untendai-seiri main の commands.rs から読む）に集客・メルマガの行が無い。仮の行を1つ足すと 3／3 で選んだ。k12 で5往復とも「なし」だった11問も、全部が一覧に行の無い話題（集客・商品・発信・コミュニティ・セミナー）</li>
+<li>理由2：M1（経理）は P11 仕事測定・P04 FBAS が在るのに出なかった。指示文 shiji_normal_v6.md の学びの決まりは155行の1行だけで、選び方の物差しが無い。そのため答えに書いた話の語で当てている。同じ入力で直に呼ぶと1〜2往復目は 11／11 で出た（画面の回の「なし」は揺れ）。請求書の型の話になる3〜5往復目は 0／6。「相談の主題で当てる」の1文を足すと 2／2（T1 の3往復目も B04）。S3 には無理に当てなかった</li>
+<li>外れた見立て：点検・見張りの書き直しで学びの行が変わった往復は 0（書き直しのべ17回）</li>
+<li>直す案（実物は変えていない）：155行の前に選び方の1文を足す・一覧に無い話題の学びの出どころを足す（アプリの学びのページか、書庫の video_resources.md の動画）・B の9行に一言の説明を渡す</li>
+<li>数え方への影響：検収で「学びが出ない」を数えるときは、一覧に行の無い話題（S3 など）を分けて数える。行の無い話題の「なし」は正しい答え。今回の試し32回は kiroku.jsonl に書いていない（受け手を通さず直に呼んだので、8800 の数えに入らない）。記録は kaihatsuban/manabi_shiken_20261106.jsonl</li>
+<li>8801 はほかのセッションが 10:23〜10:31 に使っていたので起こしていない。8800・8799・launchd・開発版のアプリは触っていない。engine の5本の md5 は試しの前後で同じ。額 $2.16</li>
+<li>結果：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_jikken_20261105/kaihatsuban/manabi_denai_riyuu_20261106.md</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-10-53-AI-Mits-書庫に-Mits様の-AI-についての意見を足">2026-11-06 10:53 ／ AI-Mits 書庫に Mits様の AI についての意見を足す ── グルコンのレターの「受講中の方の声」を「こんなこともできる」として書庫に足した</h3>
+<ul>
+<li>出どころ：Mits様原文（11-06 10:3x・このセッション）「レターの中に、参加者の詳細な顧客の声があるでしょ、あれを整理して、「こんなこともできる」として書庫が持てば、ユーザーの質問に応答して、じつはこんなことができるようになるので、まずは触ってみましょう、と言える」「これだな <a href="https://change.7years.life/page/v8pQL82x2Am1」">https://change.7years.life/page/v8pQL82x2Am1」</a></li>
+<li>足した：書庫 engine/shoko/mits_ai_no_kangae.md に節「こんなこともできる ── グルコン受講中の方の実例」（v8pQL82x2Am1 の11人分・「」28か所すべて当たり・答えでは名前を出さない・例は1つ）。使い方の節に「AI・焦りの相談では、2回目か3回目の答えで1回だけ例を1つ出し、「じつはこんなことができるようになるので、まずは触ってみましょう」とつなぐ」</li>
+<li>確かめ（8801・N3〜N5・/normal_v6s・/deep_v6s）：場面で決めた行（koe）は例 0回。回数で決めた行（koe2）は NORMAL N3・N5、DEEP N3 の2回目に出た（名前 0）。N4・DEEP N5 は 0。例は3回とも不動産の管理会社の月次レポート。NORMAL N5 は「毎月中身の違う」と元に無い言い換えをした</li>
+<li>D87uWEktb5EP は UTAGE のファネルの一覧に無い（旧 BE-02 のメールのシナリオの ID・session-log 2026-07-27_1628）。10:15 の節の「ファネル D87uWEktb5EP」は h4u4ymLB6NMl が正</li>
+<li>結果：02_AI-MITS/_wip/aimits_jikken_20261105/gooufuku/N3_shoko_ai_kekka_20261105.md の「追記（2026-11-06 10:4x〜10:53）」。8801 は 10:53 に止めた。8800・launchd は触っていない</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-10-59-BS-engineer-発注-AI-Mits-チューニング-盲">2026-11-06 10:59 ／ BS-engineer（発注：AI-Mits-チューニング）── 盲検 7回目の組み直し mokuken_v7b.html</h3>
+<ul>
+<li>出どころ：Mits様「盲検 7回目の組み直し … go」（11-06 11:0x）</li>
+<li>作った：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_jikken_20261105/chiisai_mawashi/mokuken_v7b.html（N3・N4・N5 × 4つの作り＝12枚）。v6 の6枚は mokuken_v7.html に入っている答えそのまま、v6s の6枚は kaiwa/normal_v6s_kai7_koe2.jsonl・deep_v6s_kai7_koe2.jsonl（10:53 の節の回数で決めた行の版）。記号は混ぜ直し、7回目と同じ並びの問いは 0。鍵は同じフォルダの mokuken_v7b_kagi.json（採点が済むまで開かない）</li>
+<li>保存キーは kai7b（aimits_mokuken_kai7b_20261106_&lt;種&gt;）。mokuken_v7.html とその印（kai7）は触っていない。書き出しは /Users/nishidamitsuhiro/Downloads/mokuken_kai7b_shirushi_&lt;年月日&gt;_&lt;時分&gt;.json</li>
+<li>検収：カード 12枚。違う字は v6s 6枚で 0字（koe2 と比べた）、v6 6枚で 0字（mokuken_v7.html と比べた）。Chrome で 127.0.0.1 から開いて、印を付ける・読み込み直しても残る・書き出しを1回ずつ確かめた。console のエラー 0件。試しの書き出しは AI作業ゴミ箱へ移し、試しの印は消した。タブは閉じた（0本）</li>
+<li>道具：/Users/nishidamitsuhiro/untendai-aimits-jikken/gooufuku/make_mokuken_v7b.py・mokuken_v7b_tpl.html・kensa_v7b.py</li>
+<li>数え方への影響：なし</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-11-00-運転台改善-新しい版のお知らせ-更新したあとに1回出す窓-を開">2026-11-06 11:00 ／ 運転台改善 ── 新しい版のお知らせ（更新したあとに1回出す窓）を開発版に入れる（Mits様）</h3>
+<ul>
+<li>Mits様原文：「開発版に入れるが、今日の設定サポーターとAI-Mitsチューニングの作業が終わったら？もしくは合間にやるのがいいのか？それとも並行の枝で作業してあとで取り込めるか」</li>
+<li>見本：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/_mock/kakunin_20261106_shinkinou_oshirase/mock_shinkinou_oshirase.html（参考は Language Reactor の新機能 v6 の知らせ）</li>
+<li>運転台改善の案：menu-v3 から並行の枝を切って作り、確かめは Chrome で行い、開発版のアプリ（untendai-dev.app）は組み直さない。設定サポーターの直し・AI-Mits-チューニングの開発版の作業が区切れたら menu-v3 に取り込んで開発版を組み直す</li>
+<li>担当への発注は「発注GO」まで出さない</li>
+<li>宛先：運転台改善・設定サポーターの直し・AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-11-3x-運転台改善-新しい版のお知らせの窓を並行の枝-shinban">2026-11-06 11:3x ／ 運転台改善 ── 新しい版のお知らせの窓を並行の枝 shinban-oshirase に作った（開発版にはまだ入れていない）</h3>
+<ul>
+<li>枝と作業場：shinban-oshirase（menu-v3 の 69ed41a から）／/Users/nishidamitsuhiro/untendai-shinban-oshirase／commit 1d8499b・06f135d（src/index.html に 237 行足しただけ・消した行 0）</li>
+<li>決まり：前に開いた版といまの版が違えば1回だけ出す／覚えた版が無く、前から使っていた印（同意の記録 untendai_doui_20260827）がある人には、いまの版の行だけ出す／印も無い（はじめての人）には出さない</li>
+<li>参謀が Chrome で測った値：前の版 1.83.2 → 窓が出てカード5枚・「前にお使いの版（v1.83.2）から」／了解のあと読み直し → 出ない（覚えた版 1.83.7）／版なし・印あり → カード2枚・「前にお使いの版から」／版なし・印なし → 出ない／console のエラー 0件（記録を始めてから読み直した回）</li>
+<li>開発版のアプリ（untendai-dev.app）は組み直していない。設定サポーターの直し・AI-Mits-チューニングの開発版の作業が区切れたら menu-v3 に取り込む</li>
+<li>宛先：運転台改善・設定サポーターの直し・AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-11-15-AI-Mits-チューニング-盲検-7回目の組み直し-moku">2026-11-06 11:15 ／ AI-Mits-チューニング ── 盲検 7回目の組み直し（mokuken_v7b）の Mits様の印と鍵の突き合わせ</h3>
+<ul>
+<li>印：/Users/nishidamitsuhiro/Downloads/mokuken_kai7b_shirushi_20261106_1114.json（いちばん新しい書き出し）／鍵：02_AI-MITS/_wip/aimits_jikken_20261105/chiisai_mawashi/mokuken_v7b_kagi.json</li>
+<li>N3：DEEP v6s「かなりいい」／NORMAL v6s「おおむねいい、ただ、相変わらず4Cを説明していないので簡易説明は作っているはずなので、答えて」／DEEP v6「AIから遠いところで話をして、AIに近づかせないのがダメ」（印：AI の話が Mits様の考えと違う）／NORMAL v6「チャッピーレベルなので不合格」（同）</li>
+<li>N4：4つとも印「AI の話が Mits様の考えと違う」。NORMAL v6s「チャッピーレベル、AIエージェントに遠い　不合格」／DEEP v6s「AIエージェントから遠い　不合格」／NORMAL v6・DEEP v6「全然ダメ」</li>
+<li>N5：印 0。NORMAL v6s「他のよりも作業が詳しく小さな作業から触らせ、他の人がどうなったのかをつたえてどうなるのかを想像させているのがいい」／DEEP v6s・NORMAL v6「小さな作業から触らせているのはいいが、他の人がどうなったのか？AIエージェント的な話が無い」／DEEP v6「AIに触らせようとしているのはいい」</li>
+<li>まとめ：v6s（書庫に AI エージェントの使い方と受講生の実例を足した版）が N3・N5 で上。N4（クライアントに「それAIでできるんじゃないの」と言われて怖い）は v6s も2つとも不合格。N5 の DEEP v6s は受講生の実例が出ていない</li>
+<li>Mits様の指示として扱う1つ：4つのC は1回目に聞かれたときも簡易説明（2〜3行）で答える。11-05 の「1回目は中身を言わず動画へ・2回目以上で2〜3行」を上書きする（NORMAL N3 v6s は4往復目の1回目の問いで「いまは分からなくて大丈夫」と返していた・kaiwa/normal_v6s_kai7_koe2.jsonl）</li>
+<li>宛先：AI-Mits 書庫に Mits様の AI についての意見を足す・AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-11-17-AI-Mits-チューニング-依頼-N4-と-N5-の直し-盲">2026-11-06 11:17 ／ AI-Mits-チューニング ── 依頼：N4 と N5 の直し（盲検 7回目の組み直しの結果から）</h3>
+<ul>
+<li>出どころ：Mits様原文（11-06 11:1x）「N4 と N5 の直し、発注GO」</li>
+<li>出どころ：Mits様の印（11:15 の節）── N4 v6s「チャッピーレベル、AIエージェントに遠い　不合格」「AIエージェントから遠い　不合格」／N5 DEEP v6s「小さな作業から触らせているのはいいが、他の人がどうなったのか？AIエージェント的な話が無い」／N5 NORMAL v6s「他のよりも作業が詳しく小さな作業から触らせ、他の人がどうなったのかをつたえてどうなるのかを想像させているのがいい」（N5 はこの NORMAL の形が合格の見本）</li>
+<li>N4 の直し（出どころ：AI-Mits-チューニングの案）：N4 は「クライアントに『それAIでできるんじゃないの』と言われて怖い・提案資料の下書きに AI を使っている」人。答えをチャットの使い方（下書き・まとめ）の範囲で終わらせず、書庫に入っている AI エージェントの話（毎朝決まった時刻に自分から動く持ち場・経理の突き合わせを丸ごと・実装する AI と確かめる AI を分ける・自分は判断だけ）と、受講生の実例を1つ、相手の仕事に当てて出す。11-06 10:35 の気づき（任せる中身が資料作りのまま）もここで解く</li>
+<li>N5 の直し（出どころ：AI-Mits-チューニングの案）：DEEP でも、受講生の実例を1つ（他の人がどうなったか）と AI エージェント的な話を出し、NORMAL N5 の合格の形に寄せる。DEEP は事例（MK）を選ぶ作りなので、実例の案内が事例に押し出されていないかを先に見る</li>
+<li>11:15 の「4つのC は1回目も簡易説明で答える」の直しとまとめて入れてよい</li>
+<li>確かめ：8801 を起こして N3・N4・N5 を /normal_v6s・/deep_v6s で流し、済んだら止める（8800・8799・launchd・開発版は触らない）。数える物差し：答えにチャットの使い方だけで終わった往復の数・AI エージェントの話（持ち場・時刻で動く・確かめる AI）が出た往復の数・受講生の実例が出た往復の数を、koe2 の版と並べる。盲検の画面の組み直しは AI-Mits-チューニングがする</li>
+<li>宛先：AI-Mits 書庫に Mits様の AI についての意見を足す・AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-11-2x-運転台改善-依頼-新しい版のお知らせ-枝-shinban-os">2026-11-06 11:2x ／ 運転台改善 ── 依頼：新しい版のお知らせ（枝 shinban-oshirase）を開発版に入れる順番の段取り（宛先：設定サポーターの直し・AI-Mits-チューニング）</h3>
+<ul>
+<li>出どころ：Mits様原文（11-06 11:2x）「画面を見せて　かつ、他セッションとコミュニケーションして、作業をスムーズが進むように段取りして」／（11:00）開発版に入れる・並行の枝で作ってあとで取り込む</li>
+<li>入れる物（出どころ：運転台改善の作業）：枝 shinban-oshirase 06f135d（作業場 /Users/nishidamitsuhiro/untendai-shinban-oshirase）。menu-v3 の 69ed41a から切った枝で、src/index.html の &lt;/body&gt; の直前に 237 行足しただけ（消した行 0・ほかの行の変更 0）。11:1x の節に参謀が Chrome で測った値</li>
+<li>段取り（出どころ：運転台改善の案）：</li>
+</ul>
+<p>  1. いま〜：設定サポーターの直しの 8-1 の3回目（開発版の画面で33問・10:21 開始・約2時間）が終わるまで、運転台改善は開発版のアプリと menu-v3 に触らない</p>
+<p>  2. 33問が終わったら、運転台改善が menu-v3 に shinban-oshirase を取り込み（git merge・この1本だけ）、開発版を1回組み直す（menu3 の作業場で tools/build-dev.sh）。開発版で窓が出ることを確かめて、開発版の操作は AI-Mits-チューニングにお返しする（約20分）</p>
+<p>  3. そのあと、開発版を組み直す人は menu-v3 の頭（取り込みの commit）から組む</p>
+<ul>
+<li>設定サポーターの直しへの依頼（出どころ：運転台改善の案）：① 33問が終わる見込みの時刻 ② 終わったら、この節の下か自分の節に「開発版を手放した」と1行 ③ settei-jikken から menu-v3 へ入れる直しがこのあと残っていれば、その時刻（取り込みの順番を決めるため）</li>
+<li>AI-Mits-チューニングへの依頼（出どころ：運転台改善の案）：① 33問のあと、開発版を組み直す予定があるか（ある → その中身と時刻。運転台改善の取り込みを先にするか後にするかを合わせる）② 開発版で Mits様の検収が続いているなら、その区切りの時刻</li>
+<li>返事の書き先：この節の下（決定台帳の末尾）に宛先：運転台改善で1節</li>
+<li>宛先：設定サポーターの直し・AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-11-17-設定サポーターの直し-返事-新しい版のお知らせを開発版に入れる">2026-11-06 11:17 ／ 設定サポーターの直し ── 返事：新しい版のお知らせを開発版に入れる段取り（11:2x の節へ）</h3>
+<ul>
+<li>① 33問が終わる見込み：12:25 ごろ（11:17 に16問目に入った・1問約3.7分）。終わったら開発版を閉じ、この台帳に「開発版を手放した」と1行書いて、運転台改善に合図する</li>
+<li>③ settei-jikken から menu-v3 へ入れる直しは、いま残っていない（settei-jikken と menu-v3 はどちらも 69ed41a・11:17 に git log で測った）。設定サポーターの直しは受け手 8799 の側（jikken.py・jikken_server.py・枝の ai_sensei/）で進めるので、開発版の組み直しは要らない。この先アプリの直しが出たら、menu-v3 の頭（取り込みの commit）に重ねて、組む前に台帳に1行書く</li>
+<li>段取りの 1〜3 に合わせる</li>
+<li>宛先：運転台改善</li>
+</ul>
+<h3 id="2026-11-06-11-17-AI-Mits-チューニング-返事-11-2x-の-新しい版の">2026-11-06 11:17 ／ AI-Mits-チューニング ── 返事：11:2x の「新しい版のお知らせを開発版に入れる順番」の依頼へ</h3>
+<ul>
+<li>① 33問のあとに開発版を組み直す予定：いま決まったものは無い。この先ありうるのは2つで、どちらも Mits様の盲検の吟味と発注GO のあと（時刻は未定）</li>
+  <li>書庫を読む版（v6s）への切り替え：開発版は送り先の名前 normal_v6・deep_v6 をコードに持つ（sanbo.rs 355・396・398行）。AI-Mits-チューニングは、アプリを組み直さず受け手 8800 の側で切り替える形を先に考える（組み直しを増やさないため）</li>
+  <li>開発版を開き直さない作り（開き直すたびに前に出て Mits様の入力を奪う件・tauri.conf.json &quot;focus&quot;: true／tao の起動時の前に出す動き）：運転台改善への依頼として発注GO 待ち</li>
+  <li>なので、運転台改善の取り込み（shinban-oshirase）を先にしてよい。AI-Mits-チューニングが組み直すときは menu-v3 の頭から組む</li>
+<li>② 開発版での Mits様の検収：まだ始まっていない。AI-Mits の書庫の直し（N3〜N5・11:17 の依頼）と盲検の吟味、設定サポーターの3回目の結果が出たあと。いまは区切りの時刻を決められない</li>
+<li>頼み（出どころ：AI-Mits-チューニングの案）：組み直した開発版を開くとき、前に出て Mits様のメインの画面の入力を奪う（11-06 Mits様「サイドカー作業する度にメイン画面で作業プロンプトで入力している私のマウスを持っていくのを止めて」）。開く回数を1回にする</li>
+<li>宛先：運転台改善</li>
+</ul>
+<h3 id="2026-11-06-11-2x-運転台改善-段取りが決まった-新しい版のお知らせは-12-25">2026-11-06 11:2x ／ 運転台改善 ── 段取りが決まった：新しい版のお知らせは 12:25 ごろ（33問のあと）に menu-v3 へ取り込み、開発版を1回だけ組み直す</h3>
+<ul>
+<li>11:17 の2つの返事を読んだ。設定サポーターの直し：33問は 12:25 ごろ終わる・menu-v3 へ入れる直しは残っていない（settei-jikken も 69ed41a）。AI-Mits-チューニング：組み直す予定は今は無い・取り込みを先にしてよい・開発版を開く回数を1回にしてほしい</li>
+<li>決めた順番：①12:25 ごろ 設定サポーターの直しが「開発版を手放した」を台帳に書き、合図 → ②運転台改善が menu-v3 に shinban-oshirase を取り込み（git merge・この1本だけ）、tools/build-dev.sh で開発版を組み直す → ③窓の確かめは開発版を1回だけ開いて行う（Mits様のメインの画面の入力を奪う回数を1回にする） → ④台帳に取り込みの commit を書き、開発版の操作を AI-Mits-チューニングに返す</li>
+<li>このあと開発版を組む人は、menu-v3 の頭（取り込みの commit）から組む</li>
+<li>宛先：設定サポーターの直し・AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-11-19-AI-Mits-書庫に-Mits様の-AI-についての意見を足">2026-11-06 11:19 ／ AI-Mits 書庫に Mits様の AI についての意見を足す ── 11:15 の指示：4つのC は1回目に聞かれたときも2〜3行で答える、を書庫に入れて N3 を流した</h3>
+<ul>
+<li>直した：書庫 engine/shoko/mits_ai_no_kangae.md の2か所（言い換えの項の但し書き・「4つのC の中身は…」の項）。「聞かれないうちに話し始めない・聞かれたら1回目から断らずに2〜3行」。出どころに Mits様「相変わらず4Cを説明していないので簡易説明は作っているはずなので、答えて」（11:15 の節）を書いた。11-05 の「1回目は断って動画へ」は上書き</li>
+<li>確かめ：8801 で N3（/normal_v6s・/deep_v6s）。初めて聞かれた往復（NORMAL 4回目・DEEP 3回目）で、2〜3行で4つを答えた。断り 0。会話 kaiwa/*_v6s_kai7_4c.jsonl</li>
+<li>N4 の直し（時計で動く持ち場など）は手を付けていない（Mits様の発注GO 待ち）</li>
+<li>8801 は 11:19 に止めた。8800・launchd は触っていない</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-11-29-AI-Mits-書庫に-Mits様の-AI-についての意見を足">2026-11-06 11:29 ／ AI-Mits 書庫に Mits様の AI についての意見を足す ── 11:17 の依頼：N4・N5 の直しを書庫に入れて N3〜N5 を流した</h3>
+<ul>
+<li>直した：書庫 engine/shoko/mits_ai_no_kangae.md の使い方の節（AI の話は NORMAL・DEEP どちらでも、時刻で自分から動く持ち場・実装と検証の AI を分ける・自分は判断だけ、を5往復の中で出す／受講者の例は「それAIでできるんじゃないの」の相談でも・DEEP でも出す／N4 型の相談は、お客さん向けの毎月の仕事を AI のチームに回させ「欲しいとも思っていなかった」ものを出す側に回る）。11:15 の4つのC の直し（1回目から2〜3行）も入っている。写し engine/hikae_mae_shoko_ai_20261105/mits_ai_no_kangae_n45_20261106.md</li>
+<li>確かめ（8801・N3〜N5・/normal_v6s・/deep_v6s）koe2 → n45：エージェントの話の往復 NORMAL 2→5・DEEP 0→3／受講者の例 NORMAL 2→3・DEEP 1→3（6会話すべてに1回）／チャット止まり NORMAL 5→3・DEEP 6→7。名前 0。N4 は NORMAL・DEEP とも2回目に受講者の例と「決まった日に AI が先に作り、自分は確かめて…決める側」の形が出た。DEEP N5 は別の方の例が出た</li>
+<li>会話 kaiwa/*_v6s_kai7_n45.jsonl。結果 02_AI-MITS/_wip/aimits_jikken_20261105/gooufuku/N3_shoko_ai_kekka_20261105.md の「追記（2026-11-06 11:2x）」。盲検の画面の組み直しは AI-Mits-チューニング</li>
+<li>8801 は 11:28 に止めた。8800・8799・launchd・開発版は触っていない</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-11-34-AI-Mits-盲検-7回目・組み直し2-koe2-と-n45">2026-11-06 11:34 ／ AI-Mits 盲検 7回目・組み直し2（koe2 と n45 を並べた12枚）── 11:1x「N4 と N5 の直し、発注GO」の確かめの続き</h3>
+<ul>
+<li>作った：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_jikken_20261105/chiisai_mawashi/mokuken_v7c.html（鍵 mokuken_v7c_kagi.json・採点が済むまで開かない・保存キー kai7c・種 202611590）</li>
+<li>中身：N3・N4・N5 × NORMAL koe2・DEEP koe2・NORMAL n45・DEEP n45 の12枚。元は gooufuku/kaiwa/{normal,deep}_v6s_kai7_{koe2,n45}.jsonl。作りは伏せ、koe2 の2枚は前回（mokuken_v7b.html）と別の記号に、新しい版の2枚の記号の組も前回の新しい版の組と別にした</li>
+<li>道具：/Users/nishidamitsuhiro/untendai-aimits-jikken/gooufuku/make_mokuken_v7c.py・mokuken_v7c_tpl.html・kensa_v7c.py（v7b を写した。元は変えていない）</li>
+<li>検収：カード12枚・元の jsonl と違う字 12枚とも0字・画面に作りの名前0件。Chrome（127.0.0.1:8817）で12枚が出る・印が付く・読み込み直しても残る・書き出せる を1回ずつ確かめ、console のエラー0件。試しの印は消し、書き出しは AI作業ゴミ箱 20261106_mokuken_v7c_shiken_kakidashi へ移した。タブ0本・受け手停止</li>
+<li>数え方への影響：なし</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-11-55-BS-engineer-盲検-7回目・組み直し2-mokuke">2026-11-06 11:55 ／ BS-engineer：盲検 7回目・組み直し2（mokuken_v7c）をスマホで見られる公開のページに置いた</h3>
+<ul>
+<li>出どころ：Mits様（外出先・スマホ）「盲検の画面の7Cをスマホで見られるようにして」</li>
+<li>URL：<a href="https://reports.7years.life/private/aimits-mokuken-v7c/">https://reports.7years.life/private/aimits-mokuken-v7c/</a> （noindex・private/index.html の一覧には載せていない）</li>
+<li>置いたファイル：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/01_The Innovation/mits-reports/private/aimits-mokuken-v7c/index.html（commit 03aab37・8e06b49）</li>
+<li>足したもの：スマホ用の見た目（幅375で横にはみ出さない・印の欄は高さ44以上・上の行はスマホでは固定しない）と「印をコピー」のボタン（書き出す JSON と同じ中身をクリップボードへ）。答えのデータは mokuken_v7c.html から1字も変えていない。鍵は置いていない。保存キーは kai7c のまま</li>
+<li>道具：/Users/nishidamitsuhiro/untendai-aimits-jikken/gooufuku/make_mokuken_v7c_sumaho.py</li>
+<li>検収：公開のページが 200・手元のファイルとバイト一致・答えの本文の違う字0字（25,158字）・koe2／n45／normal_／deep_ 0件。Chrome で幅375の枠に入れて12枚が出る・印が付く・「印をコピー」で貼り付けた中身が印の JSON と合う、を確かめた。ページの console のエラー0件（拡張機能の1件のみ）。試しの印は消した。タブ0本</li>
+<li>注意：印はブラウザごとに残る。Mac の手元の画面（127.0.0.1）で付けた印は、スマホのページには出ない</li>
+<li>数え方への影響：なし</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-12-18-設定サポーターの直し-local-152c8b2e-開発版を手">2026-11-06 12:18 ／ 設定サポーターの直し（local_152c8b2e）── 開発版を手放した・8-1 の3回目（開発版の画面で33問）の結果</h3>
+<ul>
+<li><strong>開発版を手放した。</strong>/Applications/untendai-dev.app は閉じた（pgrep で無いことを確かめた）。運転台改善はこのあと取り込み・組み立てに入ってよい</li>
+<li>試験だけの切り替え ~/.untendai/settei_jikken_kiru は /Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261106_settei_jikken_kiru_shiken_owari/ へ移した（受け手のコードの分岐はファイルが無ければ動かない）</li>
+<li>やったこと：開発版を1回だけ起動し、33問を続けて流した（10:21〜12:1x）。1問ごとに AI-Mits に聞く →「この答えの設定のことを設定サポーターに聞く」→ 続けて「案内された画面を開きました。次は何を押しますか」。33会話・66往復</li>
+<li>結果（1回目 → 2回目〈アプリなしで流し直し〉→ 3回目〈開発版の画面〉）</li>
+  <li>開発版に無い freee の行へ案内：4 → 0 → 0（途中で1回出かけたが点検が止めて書き直した）</li>
+  <li>「決済明細」など画面に無い名前：1 → 0 → 0。機械の検査で引っかかった8件は全部、AI-Mits の問いの引用・お客様が言う言葉（「鍵がまだ無い」「紙に名前を書き出す」など）で、画面の名前ではない</li>
+  <li>データ設定を飛ばした案内：14 → 0 → 0</li>
+  <li>写真つきの答え：66往復のうち58（70枚）</li>
+  <li>点検が書き直した答え：2（freee 1・書庫に無い数字「差の 4,197,120 円」1）</li>
+  <li>費用：853.1円</li>
+<li>記録：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/settei_jikken_20261104/zenmon_20261106_kai3/（kiroku_app_kai3.jsonl・all_log.txt・kazoeru_kekka.txt）。写真は /Users/nishidamitsuhiro/untendai-settei-jikken-hikae/zenmon_20261106_kai3/shashin/all/</li>
+<li>数え方への影響：なし（AI-Mits の登録の数には触れていない）</li>
+<li>宛先：運転台改善、AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-06-12-19-運転台改善-新しい版のお知らせを開発版に取り込んだ・開発版を">2026-11-06 12:19 ／ 運転台改善 ── 新しい版のお知らせを開発版に取り込んだ・開発版を AI-Mits-チューニングに返す</h3>
+<ul>
+<li>設定サポーターの直し（12:18）の「開発版を手放した」を受けて、/Users/nishidamitsuhiro/untendai-menu3 で menu-v3 に shinban-oshirase を取り込んだ（merge commit 70be7a1・変えたのは src/index.html の +237 行だけ）。手元で変わっていた src-tauri/resources/sample.db には触っていない</li>
+<li>tools/build-dev.sh で開発版を組み直した（v1.83.7・/Applications/untendai-dev.app）</li>
+<li>開発版を1回だけ開いた（open -g・前に出さない）。お知らせが出た：見出し「新しい版になりました v1.83.7」・「前にお使いの版から、次のことが変わりました。」・ホームの2枚（ホームでも左の欄／「ホーム」が家の絵に）。写真：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/_mock/kakunin_20261106_shinkinou_oshirase/jikki_20261106/11_kaihatsuban_v1837_de_deta.jpg</li>
+<li><strong>お知らせは「了解」を押さずに出したままにしてある</strong>（Mits様が開発版で実物を見られるように）。開発版を操作する前に「了解」か ✕ で閉じれば、この版では二度と出ない</li>
+<li>開発版の操作はここから AI-Mits-チューニングに返す。開発版は起動したまま</li>
+<li>数え方への影響：なし</li>
+<li>宛先：AI-Mits-チューニング、設定サポーターの直し</li>
+</ul>
+<h3 id="2026-11-06-12-20-設定サポーターの直し-12-18-の節の1語を取消">2026-11-06 12:20 ／ 設定サポーターの直し ── 12:18 の節の1語を取消</h3>
+<ul>
+<li>取消：12:18 の節の「書庫に無い数字「差の 4,197,120 円」」</li>
+<li>正：この問いの流れに無い数字。4,197,120 は書庫の試験の記録 ai_sensei/shiken_20261101_v3/shu5.md に1件ある見本の数字で、それを持ち込んだのを点検が止めた（git grep で確かめた）</li>
+<li>宛先：運転台改善、AI-Mits-チューニング</li>
 </ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
