@@ -167,7 +167,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-11-07 12:31 ／ 写した時刻 2026-11-07 12:36</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-11-07 16:26 ／ 写した時刻 2026-11-07 18:35</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -8495,6 +8496,131 @@ untendai-client  版=1.73.43  組立=2026-09-26 03:39:44  Bundle=com.mits.untend
 <li>段2（設定サポーターの書庫の作り直し）は、この版のヘルプで進めてよい</li>
 <li>数え方への影響：なし</li>
 <li>宛先：設定サポーターの直し</li>
+</ul>
+<h3 id="2026-11-07-13-21-BS-engineer-設定サポーターの直しから-設定サポータ">2026-11-07 13:21 ／ BS-engineer（設定サポーターの直しから） ── 設定サポーターの Dify の書庫に正式版 1.83.10 の使い方を入れ、比べて、戻した</h3>
+<ul>
+<li>入れた中身：dify_shoko_1837_20261106/shoko_18310/kumi/shoko/ の 01〜17（「（写真 &lt;ページ&gt;-&lt;2桁&gt;：」を「（写真：」に変えた写し）。入れた先：書庫 aa574eb8（アプリ 434876af）</li>
+<li><strong>正式版のお客様の答えが新しい書庫で答えられていたのは 2026-11-07 13:02:36〜13:18:37</strong>（約16分）。13:18:37 からは前の書庫（1.80.0 の使い方）に戻っている</li>
+<li>入れていた間の数：使う側の使い方 17本・かたまり 83・「（写真 &lt;ページ&gt;-&lt;2桁&gt;」0件・「答える頭脳を選ぶ」0件・手で足した文書の差 0本・公開中の設定の差 0か所・後の40往復の空の答え 0件・途中で切れた答え 0件</li>
+<li>戻した理由：40往復の「名前が画面に無い」（11-05 の meishou_mae_ato.py と同じ数え方）が前 6 → 後 9 に増えた（発注書の 5）。戻したあとの写しと入れる前の写しの差は 0</li>
+<li>戻し方の場所・入れ直す手順・前後の表：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/settei_jikken_20261104/dify_shoko_1837_20261106/kekka.md（写しは同じフォルダの mae/・ato/・modoshi/）</li>
+<li>~/.untendai/shoko_han.txt の4行目は直していない（戻したため）。新しく足した8本は書庫に「切」で残してある（消していない）</li>
+<li>費用：前後の80往復で 534.6円（Dify の total_price × 158.29円）</li>
+<li>数え方への影響：試しの会話 80本（user は shiken-shoko18310-mae-／shiken-shoko18310-ato-）が設定サポーターの会話の記録に入った</li>
+<li>宛先：設定サポーターの直し・AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-07-13-23-設定サポーターの直し-西田統合版の設定サポーターを実験の流れ">2026-11-07 13:23 ／ 設定サポーターの直し ── 西田統合版の設定サポーターを実験の流れ（8799）にした。段3 の画面の試験は、Mits様の画面を使う時間をいただいてから（宛先：★BS_AI-Mits-チューニング・★BS_運転台改善）</h3>
+<ul>
+<li>置いたファイル：~/.untendai/tougou_settei_url（<a href="http://127.0.0.1:8799/sensei">http://127.0.0.1:8799/sensei</a>）。この時刻から、西田統合版（/Applications/untendai.app・起動中 PID 39625）の設定サポーターは 8799 で答える。AI-Mits の tougou_aimits_url は置いていない（AI-Mits は Dify のまま）</li>
+<li>段3 を担当に出していない理由：西田統合版には開発版の「押さずに叩く」仕掛け（commands.rs 3667行 dev_test_sousa・#[cfg(feature = &quot;dev-test&quot;)]）が入っていない。app_* の道具は後ろの画面を押せない（11-06 15:28 の節：0往復で止まった）。押すには画面を取る computer use が要り、Mits様のマウスを持っていく</li>
+<li>Dify の書庫の入れ替え：13:02〜13:18 に入れて、名前の数え 6→9 で戻した（13:21 の節）。今の Dify は前の書庫（1.80.0）のまま</li>
+<li>数え方への影響：西田統合版の設定サポーターの往復は 8799 の kiroku_app.jsonl に han「西田統合版」で残る（Dify の会話の数からは外れる）</li>
+</ul>
+<h3 id="2026-11-07-13-54-設定サポーターの直し-西田統合版にも-押さずに叩く-仕掛けを入">2026-11-07 13:54 ／ 設定サポーターの直し ── 西田統合版にも「押さずに叩く」仕掛けを入れる、発注GO（宛先：★BS_運転台改善）</h3>
+<ul>
+<li>Mits様原文（設定サポーターの直しで）：「画面を取らずに回せる仕掛けを、西田統合版に入れる（私のお勧めです）：　これgo」</li>
+<li>理由：手順3（西田統合版の画面での通しの試験）が 13:34・13:41 の2回とも0往復（後ろからは押せない・前に出すと Mits様のキー・マウスで毎回止まる）。8799 の記録 13:41 以後 0往復・8800 の最後の記録 11:47:54</li>
+<li>発注書C：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/settei_jikken_20261104/tougouban_20261107/hachusho_C_untendai_kaizen.md（dev_test_sousa と画面の受け手を any(dev-test, tougou) に。dev_test_paid.json は入れない。確認版・森田さんの開発版・freee版・マーケ版に 0件）</li>
+<li>西田統合版の AI-Mits の切り替え（tougou_aimits_url）は 13:51 に外した。Dify のまま。設定サポーター（tougou_settei_url）は 8799 のまま</li>
+<li>数え方への影響：なし</li>
+<li>宛先：★BS_運転台改善</li>
+</ul>
+<h3 id="2026-11-07-14-08-運転台改善-西田統合版-1-83-14-に-押さずに叩く-を入">2026-11-07 14:08 ／ 運転台改善 ── 西田統合版 1.83.14 に「押さずに叩く」を入れた（13:54 の発注GO・発注書C の結果）（宛先：設定サポーターの直し）</h3>
+<ul>
+<li>commit：c040203（v1.83.14・main）／記録 76346ca（CHANGELOG）／版の管理のページ fdc41d3。menu-v3 には 010b16d で取り込んだ</li>
+<li>直した所：commands.rs の dev_test_sousa・dev_test_matsu・dev_test_kiroku・dev_test_kiroku_ni_kaku と lib.rs の登録3つの印を <code>#[cfg(any(feature = &quot;dev-test&quot;, feature = &quot;tougou&quot;))]</code> に。dev_test_kiroku の中の hikae の分かれ（データの控えを書き出す一手）は dev-test のまま。dev_test_hirakanai・dev_test_mado・dev_test_credentials・auth.rs の dev_test_paid_tsukurimono は dev-test のまま。index.html は直していない（invoke が失敗したら何もしない作り）。直しは Codex（gpt-6.1-terra・low）、cargo check 3通り（tougou・dev-test・印なし）error 0件を運転台改善が測った</li>
+<li>release.sh --自分だけ 1.83.14 を叩いた時刻：13:58（叩く直前に決定台帳の 7474行より後を読み、開発版を使っている持ち場の行は0件）。終わり 14:06・code=0</li>
+<li>組んだ物の中身を数えた出力（grep -c -a）：</li>
+  <li>/Applications/untendai.app 1.83.14 com.mits.untendai：dev_test_sousa.hint=1・dev_test_paid.json=0・dev_test_hirakanai=0・tougou_settei_url=1</li>
+  <li>/Applications/untendai-client.app（freee版）1.83.14・untendai-mkt.app（マーケ版）1.83.14・untendai-demo.app 1.83.10：dev_test_sousa.hint=0・dev_test_paid.json=0</li>
+  <li>/Applications/untendai-morita.app（森田さんの開発版）1.83.14：dev_test_sousa.hint=1・dev_test_paid.json=1・settei_jikken_url=1・tougou_settei_url=0。森田さんの開発版は前から印 dev-test で組んでいる（tools/build-dev.sh 47行 <code>--features dev-test</code>）ので、この1件は dev-test から入ったもの。tougou の物は0件。発注書C の検収の線「森田さんの開発版に0件」は、この形では満たしていない</li>
+  <li>確認版は今回組んでいない（--自分だけ は確認版を組まない・今の確認版は 1.83.10）。確認版の組み立ては UNTENDAI_TOUGOU を外して呼ぶ（release.sh 639行）</li>
+<li>hint で1手を通した記録（Mits様のマウス・キーを使わずに・西田統合版を 14:07:29 に open -g で開き直した）：~/Library/Application Support/com.mits.untendai/dev_test_sousa.log</li>
+  <li><code>2026-11-07 14:07:35	── v3 の操作：v3:do;where（版 v1.83.14）</code></li>
+  <li><code>2026-11-07 14:07:35	V3DO where 画面=bunseki 見出し=業務効率化 パンくず=ホーム＞業務効率化 欄=</code></li>
+  <li>dev_test_sousa.hint は読まれて消えた（ls で無い）。今の西田統合版は PID 48316</li>
+<li>注意：v3:do の一手の save は、西田統合版で開いている画面の保存のボタンを押す（index.html 28239行あたり）。西田統合版は Mits様の実データなので、hint に save・set: を入れる回は帳簿・設定の数字が変わる</li>
+<li>数え方への影響：なし</li>
+<li>宛先：設定サポーターの直し</li>
+</ul>
+<h3 id="2026-11-07-14-14-運転台改善-ヘルプを西田統合版-1-83-14-に合わせた-h">2026-11-07 14:14 ／ 運転台改善 ── ヘルプを西田統合版 1.83.14 に合わせた（help_han.txt を 1.83.14 に）</h3>
+<ul>
+<li>1.83.13 → 1.83.14 の画面のコードの差：<code>git diff v1.83.13 v1.83.14 -- src/</code> は index.html 1行（アカウントのメニューの版の数字 app-ver）だけ</li>
+<li>突き合わせ（Codex gpt-6-luna・low が数え、運転台改善が同じスクリプトを走らせ直して rc=0 を確かめた）：ヘルプ17ページの「」と &lt;b&gt; の文字 738件（例 60件を別に数えた）。1.83.13 にあって 1.83.14 に無い文字 0件。両方の版にそのままの形では無い文字 86件は全件、ボタンと見出しをつないだ文・画面に入る数字や名前の例で、1.83.13 の検収のときと同じ物</li>
+<li>ヘルプの版の数字は「写真では v1.81.18」などの写真の例なので、直す所は0か所。ヘルプの html は書き換えていない</li>
+<li>結果：/private/tmp/claude-501/-Users-nishidamitsuhiro-My-Drive-claude-nishida-MITS-ALL-------------/e398500b-cf94-4f3e-86ea-96d161611ed2/scratchpad/codex/help18314_tsukiawase_result.md（スクリプト compare_help18314.py が同じ所）</li>
+<li>数え方への影響：なし</li>
+<li>宛先：運転台改善</li>
+<li>取消（14:12・運転台改善）：この節の見出しの時刻「14:14」は誤り。date で測った値は 14:12</li>
+<li>14:33 ／ 設定サポーターの直し：~/.untendai/tougou_aimits_url（<a href="http://127.0.0.1:8800">http://127.0.0.1:8800</a>）は、手順3（西田統合版で hint を使った通しの試験）のために参謀が 14:08:53 に置いた。13:34・13:41 にも試験のために置き、13:3x・13:51 に外している（13:34 と 13:41 は台帳に書いていなかった）。手順3 が済んだら外して AI-Mits を Dify に戻す（担当への発注書に「済んだら AI作業ゴミ箱/20261107_tougou_aimits_url_3/ へ mv」と書いた）。外したら時刻をこの下に1行足す。宛先：★BS_AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-07-14-56-BS-engineer-設定サポーターの直しから-西田統合版">2026-11-07 14:56 ／ BS-engineer（設定サポーターの直しから） ── 西田統合版 1.83.14 で hint を使って手順3（NORMAL 3会話・設定サポーター・freee の1問）を2回流した（宛先：設定サポーターの直し・AI-Mits-チューニング）</h3>
+<ul>
+<li>流した時刻：1回目 14:13:44〜14:30:08・2回目 14:31:59〜14:54:24。開き直しは各1回（open -g -a）。window.json・帳簿・設定の値の欄・save は触っていない。set: は入力欄 sb-input・ws-ai-input だけ</li>
+<li>2回目の数：AI-Mits の答えが画面に出た 6/6（8800 kiroku.jsonl 1728→1734・normal_v6・tag untendai-tougouban）・設定サポーターの答えが画面に出た 7/7（8799 の 14:08:53 より後・han「西田統合版」は 2回目 7・1回目と合わせて通算 11）・押して来た問いの turn 1・1・1・続けて送った問い turn 2・2・2・案内された画面へ移る手が答えの画面と合った 2/3・写真が返った往復 5/7（画面で目視は freee の1往復）・freee の答えの「freee との連携」0件・エラー表示 0件・v3:do の「見つからない」0件</li>
+<li>1回目：AI-Mits 4/5・設定サポーター 4/7。会話3の1問目に 8800 が 323.2 秒かかり、画面の待ちを超えた（時間切れ）。会話2・3 の「案内された画面を開きました」の答えが空 3回。参謀の指示（Mits様「その数問のためにファインチューニングに労力使う必要はない」）で、2回目に時間切れが出ても流し直さない形にした（2回目は時間切れ 0）</li>
+<li>費用：2回目 544.6円（AI-Mits 147.2・設定サポーター 397.4）・1回目 446.2円・合計 990.8円</li>
+<li>後始末：~/.untendai/tougou_aimits_url を AI作業ゴミ箱/20261107_tougou_aimits_url_3/ へ mv（西田統合版の AI-Mits は Dify に戻った）。tougou_settei_url は残した。西田統合版は起動したまま（PID 67022）</li>
+<li>西田統合版の窓の位置：流す前 x=79,y=152 → 流した後 x=53,y=343（こちらでは書いていない・アプリが閉じるときに自分で書く値）</li>
+<li>結果の全文：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/settei_jikken_20261104/tougouban_20261107/kekka.md の「手順3（hint で流した回）」</li>
+<li>数え方への影響：8800 の kiroku.jsonl に tag untendai-tougouban の行が 11 増えた（登録・配信・計測には触れていない）。西田統合版の帳簿に AI-Mits の相談が残るかは確かめていない</li>
+<li>宛先：設定サポーターの直し・AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-07-14-58-設定サポーターの直し-手順3-の結果を参謀が記録で数え直した・">2026-11-07 14:58 ／ 設定サポーターの直し ── 手順3 の結果を参謀が記録で数え直した・書庫の freee の名前の直し 2ef3cf9 を取り消した（宛先：AI-Mits-チューニング・運転台改善）</h3>
+<ul>
+<li>14:33 の行の続き：~/.untendai/tougou_aimits_url は 14:55:19 に AI作業ゴミ箱/20261107_tougou_aimits_url_3/ へ移った（ls -laT のフォルダの時刻）。西田統合版の AI-Mits は Dify に戻った。tougou_settei_url は置いたまま</li>
+<li>数え直し（8799 の kiroku_app.jsonl・14:31:59 より後）：han「西田統合版」7往復・turn 1,2,1,2,1,2,3・写真の付いた往復 5。担当の 14:56 の節と同じ</li>
+<li>食い違い1点：「freee との連携」は 0件ではなく1件。答えではなく、アプリが送った【いまの画面】の欄（14:54:04 turn 3 の gamen「自社データにする › freee との連携」）。西田統合版 1.83.14 の画面に、その名前の見出しがある（v1.83.14 src/index.html 17322行 <code>&lt;span class=&quot;bt&quot;&gt;freee との連携&lt;/span&gt;</code>・freee の行が出る版だけ）</li>
+<li>だから 12:47 の直し 2ef3cf9（「freee との連携」→「freee」の画面）は誤り。ヘルプに無い名前＝画面に無い名前、と決めていた。枝 settei-jikken に取消の commit bc03660（14:57）を入れ、8799 を utsusu.sh で 14:57:33 に起こし直した（PID 91402）。書庫 20・21・23 に「freee との連携」4か所が戻った（git grep で 1・1・2）</li>
+<li>8800 の 323.2秒（1回目・会話3）は事実として記録するだけ。直しは頼まない（Mits様「その数問のためにファインチューニングに労力使う必要はない」）</li>
+<li>案内された画面へ移る手が合ったのは 2/3。会話2 は答えが「AI-Mits に戻る」を案内していて、先に決めた go:UTAGE と合わなかった（試験の手の決め方の問題で、答えの誤りではない）</li>
+<li>数え方への影響：なし</li>
+<li>宛先：AI-Mits-チューニング・運転台改善（ヘルプに「freee との連携」の見出しが無い）</li>
+<li>訂正（15:03・設定サポーターの直し）：14:56 の節の「エラー表示 0件」は画面の字の数。console のエラー 1件（14:54:24 selStart.appendChild）と ✗ 1件（14:32:03・開き直した直後）がある。8800 の秒数は 323.2 を除いて 15.16〜91.71 秒（BS-jikki-kenshu の検収）</li>
+</ul>
+<h3 id="2026-11-07-15-44-AI-Mits-の-RAG-見直し">2026-11-07 15:44 ／ AI-Mits の RAG 見直し</h3>
+<ul>
+<li>Mits様原文「もっと積極的にCODEX使って貰った方がいいな」（見せられた画面：Codex の週の上限 残り90%・リセットまで6日18時間）</li>
+<li>決めたこと：Codex に出す決まり（/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/Codexに出す決まり_試行_20261107.md）の「4. 使う量の線」に足した。測る道具を作る・走らせる・試しの問いを組むも Codex。1本走っている間も、前の結果を要らない部分を別の1本で並べて出す。残りの%と日数から1日の量を出して配る（いま1日約13%）</li>
+<li>実測：11:54 残り92% → 15:4x 残り90%（午後に使ったのは約2%）</li>
+<li>数え方への影響：なし</li>
+<li>宛先：AI-Mits-チューニング・設定サポーター・運転台改善（Codex に出す決まりを採用しているセッション）</li>
+</ul>
+<h3 id="2026-11-07-16-04-AI-Mits-の-RAG-見直し-試しの話題の区切りを7話題">2026-11-07 16:04 ／ AI-Mits の RAG 見直し ── 試しの話題の区切りを7話題 × 3回に変えた</h3>
+<ul>
+<li>Mits様原文「間をとって21なので7話題かける3回やろう」（参謀の案は 10＋11話題の2回。理由：5話題では1回に測れる問いが10本で少ない／21話題一気では決まりを直す機会が無い）</li>
+<li>Mits様原文「このMKで全部で100ぐらいのチャンクになるので、そこの100ぐらいまでがいろいろ試し終わった後に、トータル200ぐらいのチャンクになって、その後にその200ぐらいで何らかの実験を仕上げていって、方向性を決めていく」</li>
+<li>割り当て：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/D_shuukyaku/kensaku_shiken/wadai_wariate_7x3.json（残り21話題を乱数で7つずつ）。4回目は Codex 2本（A：MK-20 話題1・11・12／MK-94 話題1、B：MK-68 話題1・5／MK-94 話題4）で 16:04 の少し前に出した</li>
+<li>いまの数：15話題・答えのチャンク97本。見積もり：4回目のあと約140本・5回目のあと約210本・6回目のあと約240本（1分あたり約0.95本、Word の操作の場面はチャンクにしない場合）</li>
+<li>スキル /Users/nishidamitsuhiro/.claude/skills/rag-kakiokoshi-maeshori/SKILL.md の 6 に入れた</li>
+<li>数え方への影響：なし</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-07-16-06-AI-Mits-の-RAG-見直し-実験は6回目-約240本">2026-11-07 16:06 ／ AI-Mits の RAG 見直し ── 実験は6回目（約240本）まで行ってから・回ごとに止まる</h3>
+<ul>
+<li>Mits様原文「6回目　64分（うち Word の操作の場面28分）28〜69本 約240本　ここまで行ってから。4，5，6を連続してやらないで、都度止まって新しい課題の確認して、私が次に行くといったらやる」</li>
+<li>決めたこと：約200本の実験は、6回目まで終えて約240本になってから仕上げる。4・5・6回目は1回ごとに、作る → 検収 → その回の話題だけで測る → 新しい課題を Mits様に出す → 止まる。次の回の Codex は Mits様の「次に行く」で出す</li>
+<li>15:5x の節の「約200本に届くのは5回目のあと」は見積もりのまま。実験を始める点は6回目のあと（この節で置き換えた）</li>
+<li>スキル /Users/nishidamitsuhiro/.claude/skills/rag-kakiokoshi-maeshori/SKILL.md の 6 に入れた</li>
+<li>数え方への影響：なし</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-07-16-15-AI-Mits-書庫に-Mits様の-AI-についての意見を足">2026-11-07 16:15 ／ AI-Mits 書庫に Mits様の AI についての意見を足す（宛先：AI-Mits-チューニング）── AI講座・AI の考えの書庫を AI-Mits-チューニングに引き継いだ</h3>
+<ul>
+<li>出どころ：Mits様（このセッションで）「AI講座やAI未来のことなどは、今後あってもAI-Mitsチューニングでやれば大丈夫か」→「渡して」</li>
+<li>この先、AI講座・AI の未来・AI エージェントの使い方を書庫に足すのは AI-Mits-チューニング</li>
+<li>引き継ぎ：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_jikken_20261105/shoko_moto/引き継ぎ_AI講座とAIの考えの書庫_20261107.md（書庫と葉の場所・写した元の文・足し方の手順・触らないもの・RAG 見直しと合わせること）。同じものを共有のメモのフォルダにも置いた</li>
+<li>写した元の文（UTAGE のページ24本・レッスン25本・二刀流 v2 の文・LEVEL1 の控え・節の元2本）は一時フォルダにしか無かったので、同じフォルダの shoko_moto/ に写した</li>
+</ul>
+<h3 id="2026-11-07-16-26-AI-Mits-の-RAG-見直し-雑談は答えのチャンクにせず">2026-11-07 16:26 ／ AI-Mits の RAG 見直し ── 雑談は答えのチャンクにせず印を付けて検索から外す</h3>
+<ul>
+<li>Mits様原文「で進めよう」（参謀の案「この種の話題は答えのチャンクにせず、別の扱い（「誰の考えか＝雑談」の印を付けて検索から外す）にすることです」への答え）</li>
+<li>根拠：4回目の7話題のうち4つがチェックイン・近況・チェックアウト。54本中24本がそこから出て、Branch の要検証22本のうち18本が集まった（chunk_dai4.json を python で数えた）</li>
+<li>一緒に直す（参謀の発注書の抜け）：消す数字は相談者の会社の実数だけで、西田の原則の名前・数字は残す（4回目で「9回の法則」「心配の96%」が消えた）／西田の問いは「？」の形でなく狙いで拾う</li>
+<li>4回目の54本に当てて測り直す仕事を Codex に出す。5回目は Mits様の「次に行く」の後</li>
+<li>スキル /Users/nishidamitsuhiro/.claude/skills/rag-kakiokoshi-maeshori/SKILL.md の 6 に入れた</li>
+<li>数え方への影響：なし</li>
+<li>宛先：AI-Mits-チューニング</li>
 </ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
