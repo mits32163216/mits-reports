@@ -103,7 +103,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-11-08 07:38 ／ 写した時刻 2026-11-08 12:35</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-11-09 01:15 ／ 写した時刻 2026-11-09 12:38</p>
 <h2 id="報告-AI-Mits-チューニング">報告 ── AI-Mits-チューニング</h2>
 <p>この持ち場の窓（7:31 のお試し版と Dify の数え・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_AI-Mits-チューニング.md</p>
@@ -754,6 +755,23 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li>指示書の最新の節は 10-23 まで。新しい節は無い</li>
 <li>11-08 の計測の行を CSV に足した（検収：11-08 の行は1行だけ）。読むだけで、お試し版・Dify・UTAGE には書き込んでいない</li>
 <li>/ev/count 200・登録系の8件は to_dl=2 以外 0（送り側 grep で実装ありを確認）。Dify は4アプリとも前日と同数</li>
+</ul>
+<h3 id="2026-11-09-01-15-実験の-Chatflow-0ebb0dab-の公開版を-API">2026-11-09 01:15 実験の Chatflow 0ebb0dab の公開版を API で測った（1回目：301枚／2回目：97k回2）</h3>
+<ul>
+<li>出どころ：■BS_AI-Mits の RAG 見直しの依頼（決定台帳 2026-11-09 00:27・発注GO）、Mits様「回2のKnowledgeにつなぎ替えてもう一回測って」</li>
+<li>流した物：33問（1往復）＋Q3・Q4 の5往復2本＝43件。2回とも空・エラー 0、材料 43/43 件取得、鍵の文字の混入 0（参謀が grep で確かめた）</li>
+<table>
+<tr><th></th><th>1回目 301枚</th><th>2回目 97k回2</th></tr>
+<tr><td>33問のうち当たりが8件に入った</td><td>13</td><td>31</td></tr>
+<tr><td>5往復10回のうち当たりが入った</td><td>6</td><td>10</td></tr>
+<tr><td>当たりを答えが使った（43件・使った／一部）</td><td>10／5</td><td>28／6</td></tr>
+<tr><td>1回目の答えが80〜200字（35件）</td><td>19</td><td>19</td></tr>
+<tr><td>共感の一言から入った（35件）</td><td>0</td><td>0（名乗りが先頭）</td></tr>
+<tr><td>お客様の番を AI が書いた</td><td>0</td><td>1（Q4-3 の末尾「usement, その聞き方ならできそうです…」）</td></tr>
+<tr><td>判定のぶれ（10組のうち同じ）</td><td>8</td><td>7</td></tr>
+</table>
+<li>結果：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/D_shuukyaku/kensaku_shiken/koukaiban_shiken/20261109_004100_kekka.md ・ /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/D_shuukyaku/kensaku_shiken/koukaiban_shiken/20261109_010151_kekka.md</li>
+<li>道具（次から走らせるだけ）：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/D_shuukyaku/kensaku_shiken/koukaiban_shiken/koukaiban_shiken.py・koukaiban_suuchi.py・koukaiban_jidou.py（走らせ方は kekka.md の末尾）</li>
 </ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>

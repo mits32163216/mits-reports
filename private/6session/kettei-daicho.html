@@ -170,7 +170,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-11-08 17:58 ／ 写した時刻 2026-11-08 18:35</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-11-09 11:44 ／ 写した時刻 2026-11-09 12:38</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -8746,6 +8747,184 @@ untendai-client  版=1.73.43  組立=2026-09-26 03:39:44  Bundle=com.mits.untend
 <li>Cohere：Mits様が Install・鍵を保存。33問の当たり（材料がある12問）：トップK＝1 で6問・5 で9問・8 で10問（ローカルの一番良い設定 5・9・9 と同じか多い）</li>
 <li>落とし穴：Knowledge が1つだけだと、ノードの Top K・Rerank ではなく Knowledge 自身の Retrieval Setting が効く</li>
 <li>結果：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/D_shuukyaku/kensaku_shiken/kekka_dify_33_20261108.md</li>
+</ul>
+<h3 id="2026-11-08-18-53-BS-AI-Mits-の-RAG-見直し-宛先-AI-Mits">2026-11-08 18:53 ／ BS_AI-Mits の RAG 見直し → 宛先：AI-Mits-チューニング</h3>
+<ul>
+<li>決めたこと：Dify の検索の層は General（1チャンク＝1セグメント）・ドキュメント＝ブランチ・text-embedding-3-large・Vector Search＋Rerank（Cohere rerank-v4.0-pro）・Knowledge の Top K 50 → Code で上位8件。親子チャンクと Hybrid Search は使わない</li>
+<li>根拠：材料がある12問の試験1・試験4（8位まで：General 10問・親子 11問／1位：General 6問・親子 3問。Hybrid と Vector は Rerank のあと同じ。gemini-embedding-001 は Rerank のあと 3-large と同じ数）。/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/D_shuukyaku/kensaku_shiken/kekka_shiken1_4_20261108.md</li>
+<li>材料が無い21問は外して測る（Mits様「これを外して　実験すればいいんだよ」）。点数の線で「材料なし」を判定する案（柱5）はやめた</li>
+<li>本番（NORMAL-APP 43d47f25 ほか）は触っていない。作った Knowledge 3つは実験用</li>
+</ul>
+<h3 id="2026-11-08-19-51-BS-AI-Mits-の-RAG-見直し-97MK-に広げる">2026-11-08 19:51 ／ BS_AI-Mits の RAG 見直し ── 97MK に広げる 回1 を出した（6本の前処理）</h3>
+<ul>
+<li>Mits様原文「go」（クリアの後の最初の発言）。引き継ぎ書の判定待ち「この方向性（書き起こし→仕分け→チャンク→問い）で97MKへ進めるか」への答えとして受けた</li>
+<li>一度に97本は出さない（11-07 13:11 Mits様「いっぺんにやるのは愚行」・11-08 13:40 方針「臨界点までやったらその後をしない」）。数本ずつ足して、臨界点の物差し1・2を測る</li>
+<li>回1 の6本：MK-8・MK-13・MK-24・MK-69・MK-77・MK-88。選んだ理由：材料が無かった21問のうち全MKで材料が見つかった18問の出どころで名前の挙がった回数が多い順。6本で18問のうち12問（Q8・Q9・Q11・Q12・Q15・M1・M2・M3・T3・T4・S3・G2）を押さえる</li>
+<li>前処理は BA-corpus 6本（Sonnet 5.5）。発注書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/shirabe/hachu_97mk_kai1_maeshori_20261108.md</li>
+<li>このあと：話題ごとのチャンク作りを Codex に出す（仕分けに「話の進め方だけのチャンク（K75・K73・K26 の種類）を外す」を足す）→ 物差し1・2 → Dify の Knowledge に足して材料のある問いで測り直す</li>
+<li>本番（NORMAL-APP ほか）は触らない。数え方への影響：なし</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-08-19-55-BS-AI-Mits-の-RAG-見直し-回1-の前処理6本を">2026-11-08 19:55 ／ BS_AI-Mits の RAG 見直し ── 回1 の前処理6本を BA-corpus から Codex に付け替えた</h3>
+<ul>
+<li>Mits様原文「前にも言ったけど、コーデックスを積極的に使ってね」（2回目の指摘）</li>
+<li>BA-corpus 6本はファイルを書く前に止めた。同じ発注書のまま Codex 6本（gpt-6.1-sol・effort medium・Notion は読むだけ）に出し直した</li>
+<li>残し方の直し：決まりが引き継ぎ書と 司令塔/Codexに出す決まり_試行_20261107.md にしか無く、空にした後の会話で読まれなかった。memory に足した：/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/feedback_sagyou_wa_codex_ni_sekkyokuteki_ni_dasu.md</li>
+<li>数え方への影響：なし</li>
+<li>宛先：AI-Mits-チューニング・設定サポーターの直し・運転台改善</li>
+</ul>
+<h3 id="2026-11-08-20-02-BS-AI-Mits-の-RAG-見直し-チャンクが増えた後に">2026-11-08 20:02 ／ BS_AI-Mits の RAG 見直し ── チャンクが増えた後に AB テストで決めることを記録した</h3>
+<ul>
+<li>Mits様原文「メモしておいて　チャンクサイズ、トップKの8から,10、12くらいのテスト　スコア閾値など母数が増えた後にABテスト」</li>
+<li>記録（決定ではなく、あとで試すことのメモ）：チャンクサイズ／トップK＝8・10・12／スコア閾値（Rerank の点数の線）を、97MK を足してチャンクの母数が増えた後に AB テストで比べる。今の278件では決めない</li>
+<li>書いた所：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/D_shuukyaku/kensaku_shiken/taisaku_kensaku_20261108.md の末尾の節</li>
+<li>数え方への影響：なし</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-08-20-19-BS-AI-Mits-の-RAG-見直し-OraJAM-20">2026-11-08 20:19 ／ BS_AI-Mits の RAG 見直し ── OraJAM #20「エンジニアのためのRAG入門」の PDF を読み、応用の提案を書いた（提案。作るのは指示が出てから）</h3>
+<ul>
+<li>Mits様原文「並列　Youtubeから資料を得た　保存、読み込み、使える技術、考え方の抜き出し　応用の提案」</li>
+<li>保存・本文（113ページ）・抜き出し（技術55・考え方39・出どころ53）は Codex。応用の提案は参謀</li>
+<li>提案の順：①会話の流れを踏まえて問いを書き換えてから検索（柱4・PDF p.86–90）＋込み入った問いを要素ごとに分ける（p.95・Q16）を1つのノードで ②材料に無い打ち手を答えに作らせない（p.45–48・答え側なので AI-Mits-チューニングへ）③母数が増えた後にブランチで絞り込み・チャンクのサイズ・トップK＝8／10／12／20・スコア閾値を AB（p.55・p.74–79）④渡す8件の並べ方（p.99）</li>
+<li>置き場：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/shirabe/orajam20_rag_nyumon/orajam20_ouyou_teian.md</li>
+<li>数え方への影響：なし</li>
+<li>宛先：AI-Mits-チューニング（提案3 は答え側の指示文の範囲）</li>
+</ul>
+<h3 id="2026-11-08-21-33-BS-AI-Mits-の-RAG-見直し-97MK-回1-を">2026-11-08 21:33 ／ ■BS_AI-Mits の RAG 見直し：97MK 回1 を Dify に入れて33問を引き直した</h3>
+<ul>
+<li>Knowledge a6de4730（ブランチ12本・687チャンク）。材料がある問い 12問→29問・材料が無い問い 21問→4問（Q12・S2・G1・N2）</li>
+<li>上位8件に当たりが入る問い 26／29。検索の取りこぼし3問（Q6・T3・N3）</li>
+<li>判定の担当は前回より当たりを多く付ける（前からのチャンクで 13% 対 1.4%）。29 は上振れの側の数</li>
+<li>33問は外さずに毎回全部で測る（狙っていない6問に材料が入った）</li>
+<li>置き場：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/D_shuukyaku/kensaku_shiken/kekka_97k1_33_20261108.md</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-08-21-51-BS-AI-Mits-の-RAG-見直し-97MK-回2-の6">2026-11-08 21:51 ／ ■BS_AI-Mits の RAG 見直し：97MK 回2 の6本を選び、前処理を Codex 6本に出した</h3>
+<ul>
+<li>Mits様「回2のMK選んで進めて」</li>
+<li>選んだ6本：MK-2・MK-58（Q12 返済の順番・手元の現金）／MK-51（G1・N2）／MK-44（G1・F・J）／MK-61・MK-97（B 価格・値上げ・C）</li>
+<li>選び方：材料が無い4問のうち Zoom に出どころがある3問の出どころ＋回1 で薄いままの B・F・J・C。S2 は Zoom の96本に出どころが無いので選ばない</li>
+<li>発注書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/shirabe/hachu_97mk_kai2_maeshori_20261108.md</li>
+<li>同じ回：Mits様「このテスト結果も…同じページ内に図解で反映させて」→ report_97k1_20261108.html に ⑧-2 を足す仕事を Codex に出した（21:50）</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-08-22-16-BS-AI-Mits-の-RAG-見直し-Corpus2Ski">2026-11-08 22:16 ／ ■BS_AI-Mits の RAG 見直し：Corpus2Skill（DEEP）の資料から RAG に使える物を走査した</h3>
+<ul>
+<li>Mits様「この資料等から、このRAGの改善プロジェクトに使えるものはあるか 走査、探索、してみて」「difyのdeepのアプリ、ナレッジも見て」「存在意義もnotionの最初の方の思考プロセスから良く理解して」</li>
+<li>存在意義（「このページの目的」2026-03）：「切り分けの技術こそが価値」「FAQ Botを作るな」。5/2「まずはRAGをやりながらデータを貯めつつcorpus準備」＝RAG をやめる決定ではない</li>
+<li>使える物の上位：DEEP が同じ33問で選んだ MK（T3→MK-42・N3→MK-60/22 ほか・回3 の候補）／論点DB 557論点の Primary・Secondary（ブランチの要検証の物差し）／MK-N の主訴・切り分けシーケンス（問いを増やす元）</li>
+<li>注意：DEEP と原典のアプリの Code ノードに Notion の鍵がそのまま書いてある（触っていない）</li>
+<li>置き場：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/shirabe/corpus2skill_matome_20261108.md</li>
+<li>数え方への影響：なし</li>
+<li>宛先：AI-Mits-チューニング（DEEP の N12 の決まり・答え側）</li>
+</ul>
+<h3 id="2026-11-09-00-27-BS-AI-Mits-の-RAG-見直し-実験の-Chatfl">2026-11-09 00:27 ／ ■BS_AI-Mits の RAG 見直し：実験の Chatflow の公開版を、公開し直すたびに API で決まった問いを流して測る（依頼）</h3>
+<ul>
+<li>出どころ：Mits様原文（2026-11-08・「先ほどやったパブリッシュした後に、チャット画面からChromeを使って設問を入れて、V6のバージョンでテストするのをAI 3つチューニング経由でCodexに毎回定期的に外注するように依頼するのはどうだろう」）</li>
+<li>出どころ：Mits様原文（2026-11-09・「APIで入れる形で発注書を書いて」→ 書いた発注書に「発注GO」）</li>
+<li>出どころ：■BS_AI-Mits の RAG 見直しの案：時計で回さず、公開し直したときに毎回1回走らせる（公開し直していなければ同じ物を測り直すだけになるため）。判定するモデルを固定し、毎回10組を判定し直してぶれを見る</li>
+<li>発注書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/D_shuukyaku/kensaku_shiken/hachu_aimits_tuning_koukaiban_shiken_api_20261109.md</li>
+<li>頼むこと：手順1（0ebb0dab の API の鍵を Dify の画面で作り .claude/data/dify_app_key_0ebb0dab.secret に置く・引用と帰属を確かめる）は AI-Mits-チューニングのセッションが自分でやる。手順2〜5（33問＋5往復2本を /v1/chat-messages で流す・検索と答えを測る・判定のぶれを見る）は Codex に出す。1回目は今の公開版で走らせて比べる元にする</li>
+<li>書く物：同じフォルダの koukaiban_shiken/&lt;日付時刻&gt;_raw.json・_kekka.md。結果は 報告_AI-Mits-チューニング.md に1節と、この台帳に「宛先：■BS_AI-Mits の RAG 見直し」で1行</li>
+<li>このセッションのモード：bypassPermissions（2026-11-09 get_session で測った）</li>
+<li>数え方への影響：なし（AI-Mits の登録の数には触れない）</li>
+<li>宛先：★BS_AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-09-00-30-BS-AI-Mits-チューニング-実験の-Chatflow">2026-11-09 00:30 ／ ★BS_AI-Mits-チューニング：実験の Chatflow 0ebb0dab の「引用と帰属」を入にして公開し直した（公開版の試験の依頼 00:27 の手順1）</h3>
+<ul>
+<li>出どころ：■BS_AI-Mits の RAG 見直しの依頼（この台帳 2026-11-09 00:27 の節・Mits様の「発注GO」）。発注書の手順1「切なら入にして公開し直す」</li>
+<li>した事：Features の Citations and Attributions が切だったので入にし、Publish Update（公開版 #3）。公開の前に、下書きと公開版（「v6の決まりを足した 1108」）を console の API で突き合わせ、ノード・つなぎは同じで、違いは retriever_resource だけだったことを確かめた</li>
+<li>指示文・ノード・Knowledge は触っていない</li>
+<li>API の鍵は、まだ作れていない：「Create new Secret key」を押す操作が、このセッションの見張り（auto mode classifier）に止められた。モードは bypassPermissions（get_session で測った）。鍵を作るボタンは Mits様に押していただく。画面は API Key の画面を開いたまま置いてある</li>
+<li>数え方への影響：なし</li>
+<li>宛先：■BS_AI-Mits の RAG 見直し</li>
+</ul>
+<h3 id="2026-11-09-00-44-BS-AI-Mits-の-RAG-見直し-97MK-回2-を">2026-11-09 00:44 ／ ■BS_AI-Mits の RAG 見直し：97MK 回2 を Dify に入れて33問を引き直した</h3>
+<ul>
+<li>出どころ：Mits様原文（2026-11-08「回2のMK選んで進めて」・2026-11-09「回2の続きを進めて」「回2の結果をレポートに図解で反映させて」）</li>
+<li>入れた物：回2 の6本（MK-2・58・51・44・61・97）→ Knowledge「RAG見直し_ブランチ12本_3-large_97k回2」bb0fc38f-8bb5-4aa9-8370-c700dd3df750・1183件</li>
+<li>結果：材料が無い問い 4 → 1（S2 だけ。Q12・G1・N2 に材料が入った）／上位8件に当たりが入る問い 31／32（取りこぼしは N3 の1問。Q6 19→1位・T3 9→1位）／物差し1 89.9% → 81.4%（迷いを除くと 75.8% → 68.1%）</li>
+<li>判定の甘さ：上位8件の新しい組の当たりの割合は回1 と同じ 52%。全件を読んで挙げた候補は 43% → 56%。前からの組を判定し直す見張りは今回0組</li>
+<li>置き場：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/D_shuukyaku/kensaku_shiken/kekka_97k2_33_20261109.md</li>
+<li>レポート：report_97k1_20261108.html に ⑧-3 を足す（Codex に出した・00:43）</li>
+<li>数え方への影響：なし</li>
+<li>宛先：★BS_AI-Mits-チューニング（S2 は Zoom に出どころが無いので答えを準備する側）</li>
+</ul>
+<h3 id="2026-11-09-00-44-BS-AI-Mits-の-RAG-見直し-00-44-の節の取">2026-11-09 00:44 ／ ■BS_AI-Mits の RAG 見直し：00:44 の節の取消（1行）</h3>
+<ul>
+<li>取消：00:44 の宛先の行の「S2 は Zoom に出どころが無いので答えを準備する側」（2026-11-09 00:44）。確かめたのは今の1183件に当たりが0件（51組を判定）まで。残りの82本の MK は見ていない。回3 で出どころが見つからなければ答えを準備する側</li>
+<li>宛先：★BS_AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-09-00-52-BS-AI-Mits-の-RAG-見直し-00-44-の2つ目">2026-11-09 00:52 ／ ■BS_AI-Mits の RAG 見直し：00:44 の2つ目の節（取消）の取消</h3>
+<ul>
+<li>取消：00:44 の2つ目の節「残りの82本の MK は見ていない」（2026-11-09 00:52）。zenmk_21mon_shouron.md で Zoom の96本（一覧97件）を全部読み、UTAGE・Stripe・消込・突き合わせの grep も0件だった。00:44 の1つ目の節の「S2 は Zoom に出どころが無いので答えを準備する側」が正しい</li>
+<li>宛先：★BS_AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-09-00-53-BS-AI-Mits-の-RAG-見直し-97MK-回3-の6">2026-11-09 00:53 ／ ■BS_AI-Mits の RAG 見直し：97MK 回3 の6本を選び、前処理を Codex 6本に出した</h3>
+<ul>
+<li>出どころ：Mits様原文（2026-11-09「回3のMK選んで進めて」）</li>
+<li>選び方（■BS_AI-Mits の RAG 見直しの案）：33問はほぼ全部に材料が入ったので、この回から薄いブランチで選ぶ。薄さ＝今の Knowledge の枚数 ÷ 97MK での推計枚数：C 5%・J 6%・F 8% が低い。主のブランチが C・J・F の回から2本ずつ。J の2本は N3（AI への焦り）で DEEP が選んだ MK から</li>
+<li>6本：MK-60（J）・MK-22（J）・MK-47（C）・MK-86（C）・MK-39（F）・MK-63（F）</li>
+<li>発注書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/shirabe/hachu_97mk_kai3_maeshori_20261109.md</li>
+<li>レポート：report_97k1_20261108.html に ⑧-3（回2）を足した。Chrome で開いて、升目の色の数（材料あり・上位8件に当たり 67／上位8件の外 6／材料が無い 26 ＝前・回1・回2 の合計）と横にはみ出さないことを確かめた</li>
+<li>数え方への影響：なし</li>
+<li>宛先：★BS_AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-09-00-58-BS-AI-Mits-チューニング-実験の-Chatflow">2026-11-09 00:58 ／ ★BS_AI-Mits-チューニング：実験の Chatflow 0ebb0dab を公開し直した（Knowledge を回2に替えた）</h3>
+<ul>
+<li>出どころ：Mits様原文（2026-11-09）「回2のKnowledgeにつなぎ替えてもう一回測って」</li>
+<li>した事：Knowledge Retrieval の Knowledge を 137555aa（RAG見直し_301枚_20261108）から bb0fc38f（RAG見直し_ブランチ12本_3-large_97k回2）に替え、00:58 に公開。替えたあと公開版を console の API で読み、dataset_ids が bb0fc38f・rerank-v4.0-pro・Top K 50・引用と帰属 入 であることを確かめた。指示文・ほかのノードは触っていない</li>
+<li>API の鍵は 00:3x に Mits様が作られ、.claude/data/dify_app_key_0ebb0dab.secret に置いた（chmod 600・/v1/parameters 200）</li>
+<li>測り直し：公開版の試験の1回目（301枚・00:41 に43件を流し終えた）が済んだら、同じ道具で2回目を Codex に出す。発注書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/D_shuukyaku/kensaku_shiken/koukaiban_shiken/hachu_codex_koukaiban_shiken_kai2.md</li>
+<li>数え方への影響：なし</li>
+<li>宛先：■BS_AI-Mits の RAG 見直し</li>
+</ul>
+<h3 id="2026-11-09-01-15-BS-AI-Mits-チューニング-公開版の試験-1回目-30">2026-11-09 01:15 ／ ★BS_AI-Mits-チューニング：公開版の試験 1回目（301枚）・2回目（97k回2）の結果</h3>
+<ul>
+<li>当たりが8件に入った問い 13/33 → 31/33、5往復 6/10 → 10/10。答えが当たりを使った 10 → 28（43件）。80〜200字 19/35 → 19/35、共感から入った 0 → 0。お客様の番の自作 0 → 1（Q4-3）。判定のぶれ 8/10・7/10 一致（3組より多くは変わっていない）</li>
+<li>結果：報告_AI-Mits-チューニング.md の同じ時刻の節・/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/D_shuukyaku/kensaku_shiken/koukaiban_shiken/20261109_010151_kekka.md</li>
+<li>数え方への影響：なし</li>
+<li>宛先：■BS_AI-Mits の RAG 見直し</li>
+</ul>
+<h3 id="2026-11-09-01-46-BS-AI-Mits-の-RAG-見直し-97MK-回3-を">2026-11-09 01:46 ／ ■BS_AI-Mits の RAG 見直し：97MK 回3 を Dify に入れて33問を引き直した・判定のぶれが大きいと分かった</h3>
+<ul>
+<li>出どころ：Mits様原文（2026-11-09「回3のMK選んで進めて」）</li>
+<li>入れた物：MK-60・22・47・86・39・63 → Knowledge「RAG見直し_ブランチ12本_3-large_97k回3」abf6cc07-cf95-4f00-ace7-5fbc513ced8d・1672件</li>
+<li>結果：材料が無い問い 1（S2）のまま／上位8件に当たり 32／32（N3 が 25位 → 3位）／物差し1 81.4% → 74.5%（迷いを除くと 68.1% → 61.5%）</li>
+<li>判定のぶれ：上位8件の新しい組の当たりの割合が 52%（回1・回2）→ 74%（回3）。前の判定を伏せて20組を別の担当に判定し直させると、同じは12組。前の当たり8組のうち5組が「近い」に下がった</li>
+<li>読み：33問の数は頭打ちで、しかも判定の甘さで上に出ている。回ごとの比べには、判定する担当と物差しを固定して前の判定をそろえ直すことが要る</li>
+<li>置き場：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/D_shuukyaku/kensaku_shiken/kekka_97k3_33_20261109.md</li>
+<li>数え方への影響：なし</li>
+<li>宛先：★BS_AI-Mits-チューニング（公開版の試験の手順5〈判定のぶれの見張り〉の裏付け）</li>
+</ul>
+<h3 id="2026-11-09-03-53-BS-AI-Mits-の-RAG-見直し-97MK-回4-を">2026-11-09 03:53 ／ ■BS_AI-Mits の RAG 見直し：97MK 回4 を Dify に入れて33問を引き直した・33問の数は動かず、物差し1は 71.9%</h3>
+<ul>
+<li>出どころ：Mits様原文（2026-11-09「次」・回3 の報告のあと）</li>
+<li>入れた物：MK-74・21（C）／MK-16（J）／MK-35（F）／MK-67・72（H）→ Knowledge「RAG見直し_ブランチ12本_3-large_97k回4」dd88a41e-e77b-4489-a386-6c360301d61b・2151件</li>
+<li>結果：材料が無い問い 1（S2）・上位8件に当たり 32／32・上位1件 25問で、回3 と同じ。N3 のために選んだ MK-16 から N3 の当たりは0件</li>
+<li>物差し1：74.5% → 71.9%（迷いを除くと 61.5% → 54.4%）。下がり方は −8.5・−6.9・−2.6</li>
+<li>判定のぶれ：前の判定を伏せて20組を判定し直すと同じは13組。前の当たり8組のうち当たりのままは4組。回2 の判定は 2／6 しかそろわず、回3 の判定は 5／5 そろった</li>
+<li>置き場：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/D_shuukyaku/kensaku_shiken/kekka_97k4_33_20261109.md</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-09-07-03-伽藍とバザールの実現-週1の材料あつめ・予約タスク-nakam">2026-11-09 07:03 ／ 伽藍とバザールの実現（週1の材料あつめ・予約タスク nakama-boshu-zairyo-shuji）</h3>
+<ul>
+<li>宛先に自分が入る行（11-06 09:24〜10:25 の相棒の方向性10件）を読んだ。普及・募集の決定ではないので、手を動かす仕事は無い。済み。保留（仲間の呼び名／募る人数と期間／仲間だけが先に受け取れるもの）は埋めていない</li>
+<li>宛先：なし</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-09-07-37-AI-Mits-チューニング-毎朝の計測-11-09-の行を足">2026-11-09 07:37 ／ AI-Mits-チューニング ── 毎朝の計測（11-09）の行を足した</h3>
+<ul>
+<li>どのセッションで：AI-Mits-チューニング</li>
+<li>宛先：なし</li>
+<li>11-09 07:45 の行を aimits_mainichi_keisoku.csv に1行足した（同じ日付は1行）。Dify 4アプリ 117／158／73／100（合計448）で前日と差0。/ev/count は HTTP 200・to_dl=2・by_day の最新は 11-08=1。宛先に自分が入る 11-08 の節は RAG の作り直しの話で、計測の仕事に要る手当ては無し</li>
+</ul>
+<h3 id="2026-11-09-11-44-BS-AI-Mits-の-RAG-見直し-97MK-のレポート">2026-11-09 11:44 ／ ■BS_AI-Mits の RAG 見直し：97MK のレポートに回3・回4 の結果と「良くなった点・悪くなった点」を図で足した</h3>
+<ul>
+<li>Mits様原文「回4の結果をレポートに図解で反映させて」（その前に「端的に良くなっている点、悪くなっている点　それぞれ、良くするためにはどうすればいいか」）</li>
+<li>report_97k1_20261108.html に ⑧-4（id=&quot;dify-33-kai34&quot;）を足した：33問の積み上げ棒5本・上位K の線・その回のチャンクが上位8件に入った数・物差し1の線・判定のぶれの見張り・薄いブランチの残り・良い点と悪い点の表。作ったのは Codex（hachu_codex_report_97k34_tsuika.md）。参謀が Chrome で全節を見て、物差し1の図が横幅いっぱいに広がっていたので幅の上限 560px を足した。375px の幅ではみ出す要素 0件</li>
+<li>数え方への影響：なし</li>
+<li>宛先：AI-Mits-チューニング</li>
 </ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
