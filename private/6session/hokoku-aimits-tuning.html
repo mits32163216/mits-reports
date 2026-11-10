@@ -104,7 +104,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-11-09 01:15 ／ 写した時刻 2026-11-09 12:38</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-11-10 07:38 ／ 写した時刻 2026-11-10 12:37</p>
 <h2 id="報告-AI-Mits-チューニング">報告 ── AI-Mits-チューニング</h2>
 <p>この持ち場の窓（7:31 のお試し版と Dify の数え・会話の回）が、指示書の仕事を終えるたびに<strong>末尾に型どおり足す</strong>。司令塔が定時報告の回（6:34／12:34／18:34）に読み、現状表に写す。</p>
 <p>指示書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/指示書_AI-Mits-チューニング.md</p>
@@ -772,6 +773,32 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 </table>
 <li>結果：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/D_shuukyaku/kensaku_shiken/koukaiban_shiken/20261109_004100_kekka.md ・ /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/D_shuukyaku/kensaku_shiken/koukaiban_shiken/20261109_010151_kekka.md</li>
 <li>道具（次から走らせるだけ）：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/D_shuukyaku/kensaku_shiken/koukaiban_shiken/koukaiban_shiken.py・koukaiban_suuchi.py・koukaiban_jidou.py（走らせ方は kekka.md の末尾）</li>
+</ul>
+<h3 id="2026-11-09-19-39-公開版の試験-3回目-指示文を-v6-の全文に替えた">2026-11-09 19:39 ／ 公開版の試験 3回目：指示文を v6 の全文に替えた</h3>
+<ul>
+<li>出どころ：Mits様「全然改善しない原因は？」「Ragセッションと相談していい方法を考えて」「Go」（決定台帳 19:04〜19:26）</li>
+<li>替えた物：Chatflow 0ebb0dab の指示文だけ（v6 全文・[TIMER の1文を外す）。Knowledge 97k回2 bb0fc38f・モデル claude-opus-5 は2回目と同じ</li>
+<li>答えの形（2回目 → 3回目）：1回目80〜200字 19/35 → 35/35／共感から入る 0/35 → 33/35／名乗りで始まる 36/43 → 0/43／お客様の番の自作 1 → 0／問いの形の文が2つ以上 3/43 → 10/43（悪くなった）</li>
+<li>検索：当たり 41/43 → 41/43（同じ Knowledge なので変わらない）</li>
+<li>答えの利用：使った 28 → 18・一部 6 → 16（1回に話を1つに絞ったため。判定は RAG 見直しのそろえ直しのあとに読み直す）</li>
+<li>判定のぶれ：前の判定10組の判定し直しで 7/10 一致</li>
+<li>残り：問いを2つ聞く答えが10件／「学び：」「使った書庫：」の2行がお客様に見える（Chatflow に消すノードが無い）／モデルが手元の実験環境と違う</li>
+<li>結果：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/D_shuukyaku/kensaku_shiken/koukaiban_shiken/20261109_192740_kekka.md</li>
+</ul>
+<h3 id="2026-11-09-20-57-公開版の試験-4回目-モデルを-claude-opus-5-5">2026-11-09 20:57 ／ 公開版の試験 4回目：モデルを claude-opus-5-5 に替え、2行を消すノードを足した</h3>
+<ul>
+<li>出どころ：Mits様「つぎは？」→「Go」（決定台帳 20:38・20:40）</li>
+<li>替えた物：モデル claude-opus-5 → claude-opus-5-5／「学び：」「使った書庫：」の2行を消す Code ノード。指示文・Knowledge 97k回2 は3回目と同じ</li>
+<li>2回目 → 3回目 → 4回目：問いの文が2つ以上 3 → 10 → 0／43・1回目80〜200字 19 → 35 → 35／35・共感から入る 0 → 33 → 32／35・名乗り 35 → 0 → 0／35・お客様の番の自作 0・タイマー 0</li>
+<li>答えの利用（新しい数え方）：使った 28 → 15 → 26・一部 5 → 7 → 7・問いで返した 0 → 17 → 6・使っていない 10 → 4 → 4</li>
+<li>検索：41/43 で同じ。判定のぶれ 9/10 一致</li>
+<li>共感の機械判定に合わなかった1回目：Q9・T1・N1</li>
+<li>結果：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/D_shuukyaku/kensaku_shiken/koukaiban_shiken/20261109_204054_kekka.md</li>
+</ul>
+<h3 id="2026-11-10-07-41-毎朝の計測">2026-11-10 07:41（毎朝の計測）</h3>
+<ul>
+<li>計測の口 untendai-update は HTTP 200・total 69。Dify 4アプリは前日と同じ（合計448）。to_dl=2。記録：_wip/aimits_mainichi_keisoku.csv の 2026-11-10 の行</li>
+<li>指示書の最新の節は 10-23 のまま・新しい仕事なし</li>
 </ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
