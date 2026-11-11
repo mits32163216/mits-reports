@@ -221,6 +221,15 @@ li{margin:3px 0}
 <li><b>目的の障害</b>：毎朝の Phase A（6:00）・Phase C（6:30）の cron は、ログの書き先 ~/Desktop/reaction-source が無いので動いていない。前のログは「Not logged in」だった。直していない（動かすと毎朝 Notion に MK が作られるので、動かすかは別に決める）</li>
 <li>sheets_updater.py は、付け替えた手順書で1回通すまで置いたまま（そのあと AI作業ゴミ箱へ）</li>
 </ul>
+<h2>11. 時計を新しい流れに入れ替えた（2026-11-11 16:1x・Mits様「ダウンロードしてその後Notionに書き込むとかと言うのは古い仕組み」）</h2>
+<ul>
+<li><b>足した</b>：毎晩 1:30 の AI 書き起こし（launchd <code>com.mits.consul-ai-kakiokoshi</code>・本体 <code>/Users/nishidamitsuhiro/.local/share/kakiokoshi-ai/ai_kakiokoshi.py</code>）。台帳から「AI で書き起こし直し」が未着手のすごいコンサルを古い順に最大40本、5:30 を過ぎたら次の1本に入らない。音声はこの Mac の中だけ（お客様の声を Google ドライブに置かない）→ mlx-whisper → 声の特徴量を残す → <code>02_AI-MITS/書き起こし/zoom_ai/&lt;日付&gt;_&lt;動画ID&gt;.txt</code> → 台帳に記録 → 音声は AI作業ゴミ箱へ</li>
+<li><b>走らせた</b>：安藤 2018-04-06（63分・970区切り・1.8分）を手で、佐々木 2018-04-06（639区切り・1.0分）を launchd から。どちらも台帳に「済み」と書き起こしの在りかが入った</li>
+<li><b>話者は自動で分けない</b>：西田の声の見本（前の3本から作った）だけで分ける方法を測ったら、Codex の見分けの点と MK-61 で 9点中4点しか合わなかった（前の分け方は7点）。話者の見分けは Codex が中身を読む手順に残す</li>
+<li><b>止めた</b>：毎朝 6:00（consul-video-dl：mp4 を落として Notta に渡す）と 6:30（notta-to-mk-pipeline：Notta から MK を作って Notion に書く）の cron。ログの書き先 ~/Desktop/reaction-source が無く、Claude を呼ぶ前に止まる状態だったことを確かめた。cron の表からこの2行を外す書き込みは、20秒以上返らなかった（外した後の表：<code>/Users/nishidamitsuhiro/.local/share/kakiokoshi-ai/crontab_ato_20261111.txt</code>）</li>
+<li><b>そのまま</b>：Windows の Zoom の自動アップ（main.py・18:00・受け取りのフォルダに書く形に替え済み・同期待ち）と notion-zoom-sort-daily（19:00・すごい専用の Notion のページを人ごとのページへ移す。Notion のページは要約を置くページとして残すので続ける）</li>
+<li><b>台帳の「次にやること」</b>：Notta の書き起こし・MK は数えない形にした（AI で書き起こす → 話者を見分ける → 前処理とチャンクカット）</li>
+</ul>
 </main>
 </body>
 </html>

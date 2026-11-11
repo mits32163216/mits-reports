@@ -100,13 +100,13 @@ td code{font-size:11.5px;word-break:break-all}
 <div class="lab"><b>4. 書き起こし</b><small>動画 → 文字</small></div>
 <div>
 <div class="fork">
-<div class="col"><b>今までの道（MK-1〜97 を作った道）</b>
-<div class="box ugoku"><h4>動画を落とす</h4><p>スキル consul-video-dl（yt-dlp・<code>_360p_QuickTime.mp4</code>）。97本</p></div>
-<div class="box ugoku"><h4>Notta が書き起こす</h4><p>ファイル名の QuickTime で Notta が拾い、Notion「notta/コンサル回答ナレッジ用」に写す（99ページ）</p></div>
-<div class="box ugoku"><h4>MK 化</h4><p>BA-corpus（notta-to-mk-pipeline）。1動画＝1 MK。コンサル回答ナレッジDB v2 に MK-1〜97</p></div>
+<div class="col"><b>今までの道（MK-1〜97 を作った道・2026-11-11 に時計から外した・有効なものとして数えない）</b>
+<div class="box mada"><h4>動画を落とす</h4><p>スキル consul-video-dl（yt-dlp・<code>_360p_QuickTime.mp4</code>）。97本</p></div>
+<div class="box mada"><h4>Notta が書き起こす</h4><p>ファイル名の QuickTime で Notta が拾い、Notion「notta/コンサル回答ナレッジ用」に写す（99ページ）</p></div>
+<div class="box mada"><h4>MK 化</h4><p>BA-corpus（notta-to-mk-pipeline）。1動画＝1 MK。コンサル回答ナレッジDB v2 に MK-1〜97</p></div>
 </div>
 <div class="col"><b>これからの道（Notta を使わない）</b>
-<div class="box tame"><h4>AI で書き起こす</h4><p><code>kakiokoshi.py</code>（mlx-whisper・speechbrain）。今は書き起こし直し 3本（MK-1・8・61）</p></div>
+<div class="box ugoku"><h4>AI で書き起こす（毎晩 1:30）</h4><p><code>/Users/nishidamitsuhiro/.local/share/kakiokoshi-ai/ai_kakiokoshi.py</code>（launchd com.mits.consul-ai-kakiokoshi）。台帳からすごいコンサルを古い順に最大40本。音声はこの Mac の中だけ → mlx-whisper → <code>書き起こし/zoom_ai/</code> → 台帳に記録。1時間の回で1〜2分。話者はここでは分けない（声だけで分ける方法は Codex の見分けと合わなかった）</p></div>
 <div class="box tame"><h4>話者の見分け</h4><p>Codex が西田とお客様を見分ける。96本のうち 使う45・食い違いを外して使う20・番号では分けない4・<b>書き起こし直す27</b>・使わない1（<code>washa_kubun_96.json</code>）</p></div>
 <div class="box mada"><h4>残り</h4><p>まだ書き起こしていない動画 1,436本、書き起こし直す 24本（台帳の「次にやること」）</p></div>
 </div>
@@ -180,7 +180,7 @@ td code{font-size:11.5px;word-break:break-all}
 <tr><th>図の番号</th><th>状態</th><th>数</th></tr>
 <tr><td>1〜2 コンサル・上げる</td><td>動いている</td><td>自動アップ 90本（2026-06 から）。台帳に入る動画 1,576本（2018-04〜）</td></tr>
 <tr><td>3 台帳</td><td>設計と素案まで</td><td>分類：すごいコンサル 1,281／他の個別相談 85／他のコンサル 63／未分類 63／範囲の外 43／無料個別相談 41（すごいコンサルの名簿「sugoiコンサル」で分け直した後）</td></tr>
-<tr><td>4 書き起こし</td><td>MK は 97本。AI の書き起こしは試し3本</td><td>話者を見分けた 96本のうち、使える 69本・書き起こし直す 27本</td></tr>
+<tr><td>4 書き起こし</td><td>2026-11-11 から毎晩 AI で書き起こす（すごいコンサル 1,281本を古い順に）。試し：安藤・佐々木 2018-04-06 の2本と、前の3本（MK-1・8・61）</td><td>話者を見分けた 96本のうち、使える 69本・書き起こし直す 27本</td></tr>
 <tr><td>5 前処理とチャンクカット</td><td>ルール作りの途中（試しの3本・7話題×3回）</td><td>—</td></tr>
 <tr><td>6 Knowledge</td><td>試している</td><td>答え 1,895枚・聞き返し 82枚</td></tr>
 <tr><td>7 AI でのコンサル</td><td>公開版は「先頭に質問分類器（書籍5.5の形）」。直した形（s5）は下書き</td><td>s5：1位 36／上位3 50／上位12 62（72問）</td></tr>
