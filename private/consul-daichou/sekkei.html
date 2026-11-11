@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>コンサル動画台帳の設計</title>
+<style>
+:root{--bg:#fafaf7;--card:#fff;--ink:#222;--sub:#666;--line:#e3e1da;--acc:#2b5f9e;--warn:#a4441f;--ok:#2f7a4f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;font-size:15px;line-height:1.75}
+main{max-width:980px;margin:0 auto;padding:28px 16px 80px}
+h1{font-size:22px;margin:0 0 4px}
+h2{font-size:18px;margin:36px 0 10px;padding-bottom:4px;border-bottom:2px solid var(--line)}
+h3{font-size:15px;margin:20px 0 6px}
+p{margin:6px 0}
+.note{color:var(--sub);font-size:13px}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);margin:8px 0;font-size:13.5px}
+th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:#f3f2ed;color:var(--sub);font-weight:600;font-size:12.5px}
+td.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+code{background:#f1efe8;padding:1px 5px;border-radius:4px;font-size:12.5px;word-break:break-all}
+.box{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:10px 0}
+.warn{color:var(--warn)}
+.ok{color:var(--ok)}
+ol,ul{padding-left:22px;margin:6px 0}
+li{margin:3px 0}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px}
+.flow span{background:#fff;border:1px solid var(--line);border-radius:6px;padding:4px 10px}
+.flow b{color:var(--sub);font-weight:400}
+@media(max-width:700px){table{font-size:12px}th,td{padding:5px 6px}}
+</style>
+</head>
+<body>
+<main>
+<h1>コンサル動画台帳の設計（ポケット一つ）</h1>
+<p class="note">2026-11-11 作成。棚卸しと設計まで。今の台帳（スプレッドシート・Notion・processed_recordings.json）は書き換えていません。<br>
+画面の見本：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/コンサル動画台帳/consul_daichou_gamen_mihon.html</code>（1,576本が入った見本・行を押すと作業履歴と AI の台帳の1行が開く）</p>
+
+<div class="box">
+<b>結論</b>
+<ul>
+<li>コンサル動画は、スプレッドシート2本（タブ3つ）・Notion 13か所・YouTube・Zoom の自動アップの記録・AI の手元のファイルに分かれていた。YouTube の動画 ID で突き合わせると、<b>台帳に入れる動画は 1,576本</b>（うち範囲の外 43本）。</li>
+<li>いちばん大きな表は、スプレッドシート「コンサル動画の一覧」ではなく、<b>別のスプレッドシート（Zoom の自動アップが書く方）のタブ「Auto zoom Rec All」</b>だった。1,499本で、「コンサル動画の一覧」の 1,257本を全部含む。</li>
+<li>AI の台帳は手元のデータベース 1つ（<code>consul_daichou.sqlite</code>）。動画1本に1行・鍵は YouTube の動画 ID。分類・作業履歴・どの台帳から来たかを全部ここに持つ。素案はもう組み上がっている（下の「動かしたもの」）。</li>
+<li>Mits様が見るのは HTML の画面 1枚。スプレッドシートの役目（ここから選ぶ・作業を記録する）をこの画面に移し、引き継いだあとスプレッドシートは使わない。</li>
+</ul>
+</div>
+
+<h2>1. 棚卸し ── 範囲と全件の数</h2>
+<p><b>範囲の宣言</b>：コンサル動画を持っている所として、次の全部を叩いた。スプレッドシートのタブは Google の公開の一覧（htmlview）で全タブを数えた。Notion は「コンサル」「個別相談」「無料相談」「コンサル素材」「3_Organize」で検索して出た台帳と、その子のページまで全部たどった（担当に書き出させ、ファイルで受け取った）。YouTube はチャンネルの全アップロードを鍵で読んだ（限定公開・非公開を含む）。</p>
+<table>
+<tr><th>台帳</th><th>在りか</th><th>件数</th><th>中身・分かったこと</th></tr>
+<tr><td>スプレッドシート「コンサル動画の一覧」タブ「コンサル回答ナレッジ元DB」</td><td><code>1ScX1H9JAUtlo1-PEkFR6bFlNDihrj2faQnfAiA7dv3c</code></td><td class="n">1,259行<br>1,257本</td><td>2018-04〜2026-01。新MK・旧MK・動画DL日付・LEAF日付があるのは 97本。<span class="warn">同じ動画が2行</span>：（動画 ID は外した）（行1128・1129）、（動画 ID は外した）（行269 清水・行270 辰巳 ── 相手が違うのに同じ動画）</td></tr>
+<tr><td>同じスプレッドシートのタブ「＿−勉強用すごい_Mits」</td><td>同上</td><td class="n">1,298行<br>1,257本</td><td>動画は元DB と同じ。<span class="warn">列「MK-N」に旧MK の番号が入っている</span>（元DB の「新MK」と 96行で値が違う）。古いスキルの読み方と合わない、の元はここ</td></tr>
+<tr><td>スプレッドシート（自動アップが書く方）タブ「Auto zoom Rec All」</td><td><code>1H681tZvZ3T9jdRV235GcpkTr9Ueu1eqjqH9N3flRFa4</code></td><td class="n">1,540行<br>1,499本</td><td>元DB の 1,257本を全部含み、2026-01〜11 の自動アップ 242本が上に足されている。クライアント欄は、自動アップの行では Zoom の会議名（「すごい専用」「コンサルティング」「〜さん：無料体験からの個別相談日程」など）。このスプレッドシートにも元DB・勉強用すごいの2タブの写しがあり、今日の中身は同じ</td></tr>
+<tr><td>Zoom の自動アップの処理済みの記録</td><td><code>Zoom録画自動アップ/_wip/processed_recordings.json</code></td><td class="n">94件</td><td>YouTube に上がった 90件・上がっていない 4件（中身が薄い・録画が空で止めたもの）。Windows の機械（TimeWaver）が毎日 18:00 に走らせている</td></tr>
+<tr><td>YouTube チャンネル @nishidaDMC</td><td><code>UC3PbBmcoWO6leuh5vPvXm3g</code></td><td class="n">2,321本</td><td>中身が読めたのは 2,298本（限定公開 2,256・非公開 32・公開 10）。再生リスト「コンサルティングサブ」121本・「MTG1」260本ほか 16本</td></tr>
+<tr><td>Notion「🎬 コンサル動画 一覧（見本・2026-08-19）」</td><td><code>aa038491e38c429c990f6de6d862c464</code></td><td class="n">242件</td><td>説明文の「8件」は古い。実際は 242件（08-19 の記録どおり）。素材タイプ ①すごい 18／②有料個別コンサル 12／③無料個別相談 39／④個別サポート回 69／⑤グループ回 49／⑥判定不能 55。うち 14件は「重複・退避側」（7月に消えた動画）</td></tr>
+<tr><td>Notion「🎓 すごいコンサル」＋「以前のすごいコンサル生」</td><td><code>16e00782d90a80e7bfd9ee83dbe31b11</code></td><td class="n">231ページ<br>192本</td><td>富田・三浦・屋嘉比・田中・遠藤・棚原・川田の7名のページの下に回ごとのページ。いちばん古い回は 2024-12-10</td></tr>
+<tr><td>Google ドライブ「すごいコンサル」のフォルダ（2026-11-11 Mits様が示された）</td><td><code>1QRg_1ImeSs5HUUeAoltpsQ3SBVpSqh74</code></td><td class="n">表1本<br>人のフォルダ 12＋OLD 5</td><td>スプレッドシート「sugoiコンサル」<code>15YxK2ce9C2XRG9xesg-3Alapz3gWHCG_rxpEaTAGpRw</code> の年ごとのタブ（2018_合計・2019_合計・2020・2021・2022・2023・20234-・202401 $）に、その年に金額がある人＝すごいコンサルの会員が並ぶ。2018-05 から。人のフォルダのうち 森田（運転台のアプリの受け渡し）・長瀬（Mits様がご自分のコンサルタントに出した報告）・あきや（声かけシート）は会員の記録ではない</td></tr>
+<tr><td>Notion「以前のすごいコンサル生」</td><td><code>3e300782d90a8162a5a8e858de770d53</code></td><td class="n">32ページ<br>24本</td><td>熱海さん 12（2024-12-09〜2025-09-04）・徳久さん 8（2025-01-14〜2026-03-02）・安藤さん・佐々木さん・高田さん・TK佐藤さん 各1（2018-04〜07）</td></tr>
+<tr><td>Notion 月別アーカイブ</td><td>コンサル素材の下</td><td class="n">247ページ<br>180本</td><td>2025-08〜2026-07 の12か月</td></tr>
+<tr><td>Notion ③個別相談・②有料個別コンサル・④AIグループ講座・1_Capture／Inbox</td><td>コンサル素材 / 3_Organize の下</td><td class="n">27＋3＋4＋17本</td><td>08-19 に Notion の上で振り分けた先</td></tr>
+<tr><td>Notion「Auto Zoom Rec ALL」</td><td><code>25500782d90a80a0a06ef626ea1f6c3b</code></td><td class="n">18ページ<br>17本</td><td>録画ごとのページの多くは 08-19 にコンサル素材の下へ移された</td></tr>
+<tr><td>Notion「Auto zoom 一覧」のデータベース</td><td><code>39300782d90a811492b3d3fbd1c5ced8</code></td><td class="n">106件<br>21本</td><td>2026-07 頃の別のまとめ。種別（個別相談・無料体験セミナー・コンサル予約[P]）</td></tr>
+<tr><td>Notion「コンサル回答ナレッジDB v2」</td><td><code>941eb11dc4674beea67e95245a547edb</code></td><td class="n">97件</td><td>MK-1〜97。動画の URL が全件にある</td></tr>
+<tr><td>Notion 旧コンサル回答ナレッジDB（参照禁止）</td><td><code>11609a73f19849af9179c721bee7519e</code></td><td class="n">98件<br>88本</td><td>突き合わせに使っただけ。取り込まない</td></tr>
+<tr><td>Notion「notta/コンサル回答ナレッジ用」</td><td><code>34d00782d90a80b69305cfabff34df12</code></td><td class="n">99ページ</td><td>Notta が写した書き起こし。MK のページから 96ページに結びつく。題名は <code>[20251223_yakabi_360p_QuickTime]</code> の形で、動画 ID は持たない。日付と識別子で MK に結びつく</td></tr>
+<tr><td>AI の手元：書き起こし</td><td><code>02_AI-MITS/書き起こし/</code></td><td class="n">zoom 98本<br>直し 3本</td><td>zoom/MK-*.txt（Notta の書き起こし）・zoom_kakinaoshi/MK-*.txt（AI で書き起こし直し）・washa_kubun_96.json（話者の見分けの区分）。<b>youtube/ の 850本は他の人の YouTube の字幕</b>（チャンネルにあるのは 7本）、utage/ の 203本は UTAGE の動画で、どちらもコンサル動画ではない</td></tr>
+<tr><td>AI の手元：落とした動画</td><td><code>02_AI-MITS/reaction-source/archive/</code>・<code>動画以外/.dl-log.json</code></td><td class="n">97本</td><td>consul-video-dl が落とした mp4。DL の記録 96件・MK 化した Notta のページ 102件</td></tr>
+</table>
+
+<h3>動画1本ごとの突き合わせ（YouTube の動画 ID で）</h3>
+<table>
+<tr><th>まとまり</th><th class="n">本数</th><th>中身</th></tr>
+<tr><td>台帳に入れる動画（重複なし）</td><td class="n"><b>1,576</b></td><td>スプレッドシートのどれかにある 1,485・Notion にだけある 84・自動アップの記録にだけある 7（うち YouTube に上げていない 4）</td></tr>
+<tr><td>　うち YouTube にある</td><td class="n">1,542</td><td></td></tr>
+<tr><td>　うちチャンネルに無い</td><td class="n">30</td><td>2019〜2023 の 9本（削除済みか別のチャンネル）・2026-05 の岡戸さん 2本・Notion で「削除済」の 19本ほか</td></tr>
+<tr><td>　うち YouTube に上げていない</td><td class="n">4</td><td>自動アップが「中身が薄い」「録画が空」で止めた回。仮の鍵 <code>zoom:&lt;開始時刻&gt;</code></td></tr>
+<tr><td>7月に消えて上げ直した動画</td><td class="n">14</td><td>スプレッドシートと Notion には消えた古い ID が書いてある。Zoom の開始時刻（＝上げ直した動画の題名）で突き合わせ、新しい ID の1行にまとめた。古い ID は列 kyu_youtube_id に残す。Auto zoom Rec All には同じ回が新旧2行ずつある</td></tr>
+<tr><td>同じ動画が表に2行</td><td class="n">2</td><td>上の表の「元DB」の行を参照</td></tr>
+<tr><td><b>どの台帳にも載っていない</b>チャンネルの動画</td><td class="n"><b>756</b></td><td>2017年の Zoom 録画 308・2020年の Zoom 録画 175・2018年 86・2025年 76（「すごい専用」6・MTG 6・セミナー 15 を含む）・2026年 12 ほか。題名が日時だけで、コンサルか、グループ回・セミナーかは題名からは決まらない。一覧：<code>_tanaoroshi/channel_dake_756.json</code></td></tr>
+</table>
+
+<h2>2. AI の台帳（裏のデータベース）</h2>
+<p>在りか：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/コンサル動画台帳/consul_daichou.sqlite</code>（SQLite・1ファイル）。表の作り：<code>_tanaoroshi/schema.sql</code>。<br>
+理由：AI が SQL で数え・しぼり・書き足すのに Notion の API より速く確実で、スプレッドシートのように列の並びで読み方が壊れない。1ファイルなので「どこが正本か」で迷わない。</p>
+<table>
+<tr><th>表</th><th>1行の単位</th><th>持つもの</th></tr>
+<tr><td>douga（動画）</td><td>動画1本</td><td>youtube_id（鍵）・分類・分類の根拠・相手・元の名前・Zoom の会議名と開始時刻と UUID・前の動画 ID・日付・長さ・YouTube の題名と公開の状態・MK 番号・旧MK・Notion のページ・書き起こしの在りか・話者の区分・注意・最後に書いた時刻</td></tr>
+<tr><td>tejun_jotai（手順の状態）</td><td>動画1本×手順6つ</td><td>未着手／着手／済み／やり直しが要る／やらない</td></tr>
+<tr><td>sagyou_rireki（作業履歴）</td><td>作業1回</td><td>いつ・何の手順を・誰が（どのセッション・どの道具・どの担当）・証拠（ファイル・ページ・数字）・この行を誰が書いたか。<b>足すだけで書き換えない</b>（直すときは新しい行を足す）</td></tr>
+<tr><td>demoto（出どころ）</td><td>動画×元の台帳</td><td>どの台帳の何行目から来たか。引き継ぎの控え</td></tr>
+</table>
+<p><b>手順6つ</b>（見本で Mits様が見られた並びのまま）：動画を落とす → 書き起こし → 話者の見分け → MK 化 → AI で書き起こし直し → 書き起こし直しの見分け。Notta をやめて AI で書き起こす流れに移ったら、手順の並びはそのとき足す（この発注の外）。</p>
+<p><b>書き込む道は1つ</b>：AI も画面も、手元の小さな道具 <code>daichou.py</code>（作る予定）だけを通して書く。<code>daichou.py kiroku &lt;動画ID&gt; &lt;手順&gt; &lt;状態&gt; --dare &lt;セッション名・道具&gt; --shouko &lt;証拠&gt;</code> が、作業履歴に1行足し、手順の状態を書き換える。</p>
+
+<h2>3. 分類の列 ── 当てはめ方と数</h2>
+<p>分類は Mits様の言われた4つ（すごいコンサル／無料個別相談／他の個別相談／他のコンサル）に、決まらないものの「未分類」と、グループ回・セミナー・講座の「範囲の外」を足した6つ。上から順に当てて、最初に当たったもので決める。根拠は行ごとに書いてある（画面で行を押すと見える）。</p>
+<table>
+<tr><th>順</th><th>手がかり</th><th>当てはめ</th><th class="n">本数</th></tr>
+<tr><td>1</td><td>Notion「🎓 すごいコンサル」か「以前のすごいコンサル生」のクライアントのページの下にその動画がある</td><td>すごいコンサル</td><td class="n">216</td></tr>
+<tr><td>2</td><td>Notion「🎬 コンサル動画 一覧」の素材タイプ</td><td>①すごい→すごいコンサル／②有料個別コンサル→他の個別相談／③無料個別相談→無料個別相談／④個別サポート回→他の個別相談／⑤グループ回→範囲の外。UTAGE イベントがセミナー・勉強会・体験会なら範囲の外</td><td class="n">他の個別相談 55・無料 35・範囲の外 35</td></tr>
+<tr><td>3</td><td>Zoom の会議名</td><td>「西田事務所講座用」→範囲の外／「無料体験」「無料個別相談」→無料個別相談／「有料クライアント用個別コンサル予約」「コンサル予約[P]」→他の個別相談</td><td class="n">無料 6・範囲の外 8</td></tr>
+<tr><td>4</td><td>会議名・表の名前に「すごい」がある（「すごい専用」の部屋の名前は除く）</td><td>すごいコンサル</td><td class="n">1</td></tr>
+<tr><td>5</td><td>相手がすごいコンサルの名簿にあり、日付がその人の会員の期間の中。名簿と期間はスプレッドシート「sugoiコンサル」の年ごとのタブ（金額がある年）。2024-02〜11 は表が 202401 で止まっているので 202401 にいる人は続けて会員と読んだ（案）。2024-12 から先は Notion の回のページの日付</td><td>すごいコンサル。期間の外の回は他のコンサル</td><td class="n">すごい 1,064・期間の外 38</td></tr>
+<tr><td>6</td><td>会議名「すごい専用」で、ほかの手がかりが無い</td><td>すごいコンサル（相手は未特定）</td><td class="n">0（今は全部ほかで決まった）</td></tr>
+<tr><td>7</td><td>表のクライアント欄に名前があり、名簿に無い人</td><td>他のコンサル。ただし同じ人の1年以内の別の回が個別相談なら他の個別相談（案）</td><td class="n">他のコンサル 25・他の個別相談 30</td></tr>
+<tr><td>8</td><td>どれにも当たらない（会議名が「コンサルティング」「コンサルティングサブ」だけ・空・⑥判定不能）</td><td>未分類</td><td class="n">63</td></tr>
+</table>
+<p><b>合計</b>：すごいコンサル 1,281／他の個別相談 85／他のコンサル 63／未分類 63／範囲の外 43／無料個別相談 41 ＝ 1,576本（2026-11-11 すごいコンサルの名簿で分け直した後）。</p>
+<table>
+<tr><th>年</th><th class="n">すごい</th><th class="n">無料</th><th class="n">他の個別</th><th class="n">他のコンサル</th><th class="n">未分類</th><th class="n">範囲の外</th></tr>
+<tr><td>2018</td><td class="n">105</td><td class="n">0</td><td class="n">0</td><td class="n">11</td><td class="n">0</td><td class="n">0</td></tr>
+<tr><td>2019</td><td class="n">210</td><td class="n">0</td><td class="n">0</td><td class="n">21</td><td class="n">0</td><td class="n">0</td></tr>
+<tr><td>2020</td><td class="n">101</td><td class="n">0</td><td class="n">0</td><td class="n">0</td><td class="n">0</td><td class="n">0</td></tr>
+<tr><td>2021</td><td class="n">179</td><td class="n">0</td><td class="n">0</td><td class="n">18</td><td class="n">0</td><td class="n">0</td></tr>
+<tr><td>2022</td><td class="n">145</td><td class="n">0</td><td class="n">0</td><td class="n">0</td><td class="n">0</td><td class="n">0</td></tr>
+<tr><td>2023</td><td class="n">202</td><td class="n">0</td><td class="n">0</td><td class="n">1</td><td class="n">1</td><td class="n">0</td></tr>
+<tr><td>2024</td><td class="n">137</td><td class="n">0</td><td class="n">0</td><td class="n">8</td><td class="n">0</td><td class="n">0</td></tr>
+<tr><td>2025</td><td class="n">110</td><td class="n">0</td><td class="n">18</td><td class="n">0</td><td class="n">23</td><td class="n">8</td></tr>
+<tr><td>2026</td><td class="n">90</td><td class="n">41</td><td class="n">67</td><td class="n">4</td><td class="n">38</td><td class="n">35</td></tr>
+</table>
+<p><b>すごいコンサルの名簿（スプレッドシート「sugoiコンサル」の年ごとのタブで金額がある人）</b></p>
+<ul>
+<li>2018：知野・清水（今は三浦）・辰巳・富田・鈴木・山下・川田・猪上・皆川・佐々木・ゼクス・TK佐藤・直井</li>
+<li>2019：知野・清水・辰巳・富田・鈴木・山下・川田・猪上・皆川</li>
+<li>2020：知野・清水・辰巳・富田・鈴木・山下・川田・猪上・皆川・徳久・田中・熱海</li>
+<li>2021：知野・清水・富田・山下・猪上・徳久・田中・熱海（辰巳・川田は 2021 のタブで金額 0）</li>
+<li>2022〜2023：清水・富田・猪上・徳久・田中・熱海・小松幸志。2023-03 から 酒井・岡島英樹・下山英子・屋嘉比桂（20234- のタブ）</li>
+<li>2024-01（202401 $ のタブ）：清水・富田・猪上・徳久・田中・熱海・小松・酒井・岡島・下山・屋嘉比</li>
+<li>2024-12 から：Notion「すごいコンサル」の回のページ（富田・三浦・屋嘉比・田中・遠藤・熱海〈2025-09-04 まで〉・徳久〈2026-03-02 まで〉・棚原〈2026-04-06 から〉・川田〈2026-09-05 から〉）</li>
+</ul>
+<p><b>当てはめで決めたこと（理由1行ずつ）</b></p>
+<ul>
+<li>「他の個別相談」＝すごいコンサルのメンバーでない人の単発の有料個別コンサルと、AI グループ講座の受講生への個別サポート回。どちらも1回ずつの個別の回だから。</li>
+<li>「他のコンサル」＝すごいコンサルの会員でない人、または会員の期間の外の回の、続きもののコンサル。名簿の期間の外の回を「すごい」に入れないのは、名簿が金額のある年で書かれているから。</li>
+<li>「熱海・村田・高橋」のように相手が複数名の回も、会社への1件のコンサルとして「他のコンサル」に入れた。グループ回（講座の複数参加）とは別物と読んだ。</li>
+</ul>
+<p class="warn"><b>Notion どうしの食い違い 37本</b>：「🎓 すごいコンサル」の下にあるのに「🎬 コンサル動画 一覧」では ④個別サポート回 24本・⑤グループ回 12本・⑥判定不能 1本。今は 1（すごいコンサルのページ）を先に当てている。画面では ⚠ が付き、行を押すと中身が出る。Mits様が画面で直された値が、どの手がかりより先に効く（作業履歴に「分類を直す」の行が残る）。</p>
+
+<h2>4. 作業履歴の残し方</h2>
+<ul>
+<li>動画1本ごとに、何の手順を・いつ・誰が（どのセッション・どの道具・どの担当）・証拠つきで1行。着手したときに「着手」、終えたときに「済み」の行を足す。足すだけで、消さない・書き換えない。</li>
+<li>今までの記録は、引き継ぎのときに履歴の行に起こした：スプレッドシートの動画DL日付（97本）・LEAF日付＝MK 化（97本）・話者の見分け（96本・2026-11-10）・AI で書き起こし直し（3本・2026-11-11）・自動アップ（90本）。Notta の書き起こしは日時の記録が無いので「（記録なし）・MK があるので済みと読む」と書いた。</li>
+<li>手順の状態（tejun_jotai）は履歴のいちばん新しい行から決まる。画面の色の四角はここを見ている。</li>
+<li>「次にやること」は状態から自動で出す：未着手なら「AI で書き起こす」、話者が混ざっていて書き起こし直していなければ「AI で書き起こし直す」など。今の数：AI で書き起こす 1,436／書き起こし直す 24／書き起こし直しを見分ける 3／済み 70／範囲の外 43。</li>
+</ul>
+
+<h2>5. Mits様が見る画面（スプレッドシートの役目を移す）</h2>
+<ul>
+<li>見本：<code>consul_daichou_gamen_mihon.html</code>（明るい画面）。分類・次にやること・年・元の台帳・名前でしぼる。行を押すと作業履歴・分類の根拠・Notion のページ・AI の台帳の1行が開く。</li>
+<li>行の中の「作業を記録する・分類を直す」から、手順の状態と分類を直せる。本番では、この画面を手元の小さなサーバー（<code>daichou.py serve</code>・127.0.0.1 だけで開く）から開き、押すと <code>daichou.py kiroku</code> と同じ道で作業履歴に1行足す。見本では保存しない。</li>
+<li>画面のデータは AI の台帳から書き出す（<code>daichou_gamen_data.js</code>）。画面は読むだけで、正本は AI の台帳だけ。</li>
+<li>スプレッドシートの今の記録（番号・相手・日付・新MK・旧MK・DL日付・LEAF日付・URL・長さ・修正版の名前・Notion の URL）は全部 AI の台帳に入っている。元の行番号は demoto に残した。</li>
+</ul>
+
+<h2>6. 今の台帳からの移し方</h2>
+<table>
+<tr><th>台帳</th><th>取り込むもの</th><th>取り込んだあと</th></tr>
+<tr><td>スプレッドシート「コンサル動画の一覧」（2タブ）</td><td>全行（済み）</td><td><b>使わない</b>。読むだけの控えとして残す（消さない）。書き込みは止める（下の 7）</td></tr>
+<tr><td>スプレッドシート「Auto zoom Rec All」</td><td>全行（済み）</td><td><b>自動アップからの書き込みを止める</b>（下の 8）。控えとして残す</td></tr>
+<tr><td>processed_recordings.json</td><td>全件（済み）</td><td><b>残す</b>。自動アップが同じ録画を二度上げないための記録なので、自動アップの道具の中の役目として続ける</td></tr>
+<tr><td>Notion「🎬 コンサル動画 一覧」・コンサル素材の下（すごい・個別相談・有料個別・AIグループ講座・月別・Inbox）</td><td>動画 ID・素材タイプ・相手・UTAGE イベント・Zoom 会議名・ページの URL（済み）</td><td>分類の正本は AI の台帳に移る。Notion のページは<b>要約・Zoom Docs を置くページとして残す</b>（AI の台帳から URL で指す）。振り分けの作業は Notion ではやめる</td></tr>
+<tr><td>Notion「🎓 すごいコンサル」</td><td>回ごとの動画 ID（済み）</td><td>すごいコンサルのクライアントの資料を置くページ（台帳の外の役目）として残す</td></tr>
+<tr><td>Notion「コンサル回答ナレッジDB v2」・notta/コンサル回答ナレッジ用</td><td>MK 番号・動画 URL（済み）・Notta のページの URL（担当の報告のあとで足す）</td><td><b>残す</b>（MK の中身と Notta の書き起こしの正本）。AI の台帳は MK 番号とページの URL で指すだけ</td></tr>
+<tr><td>Notion「Auto Zoom Rec ALL」・「Auto zoom 一覧」</td><td>ページの URL（済み）</td><td>新しく作るのは止める（下の 8）。今のページは残す</td></tr>
+<tr><td>AI の手元の書き起こし・washa_kubun_96.json・.dl-log.json</td><td>在りか・区分・DL の記録（済み）</td><td>ファイルは今の場所のまま。作業を終えた道具は AI の台帳に履歴を1行足す</td></tr>
+</table>
+
+<h2>7. スプレッドシートを読み書きしている道具・決まりの付け替え案</h2>
+<table>
+<tr><th>道具・決まり</th><th>今</th><th>付け替え</th></tr>
+<tr><td>スキル consul-video-dl<br><code>~/.claude/skills/consul-video-dl/SKILL.md</code></td><td>gviz で表を読み、E列が空の行を上から5本選ぶ。落としたら sheets_updater.py で E列に DL日付</td><td>選ぶのは <code>daichou.py erabu --tejun 動画を落とす --bunrui …</code>（未着手から選ぶ）。落としたら <code>daichou.py kiroku &lt;ID&gt; 動画を落とす 済み --dare consul-video-dl --shouko &lt;ファイル&gt;</code>。ファイル名の <code>_360p_QuickTime.mp4</code> は変えない</td></tr>
+<tr><td>スキル notta-to-mk-pipeline<br><code>~/.claude/skills/notta-to-mk-pipeline/SKILL.md</code></td><td>gviz で URL を引き、MK を作ったら D列（MK番号）・F列（LEAF日付）を書く。<span class="warn">スキルの本文は「E列＝処理日」、道具の中身は「F列＝LEAF日付」で食い違っている</span></td><td>動画の引き当ては AI の台帳（日付＋識別子 → youtube_id）。MK を作ったら <code>daichou.py kiroku &lt;ID&gt; "MK 化" 済み --shouko MK-98</code> と <code>daichou.py set &lt;ID&gt; mk MK-98</code></td></tr>
+<tr><td>sheets_updater.py<br><code>02_AI-MITS/reaction-source/動画以外/sheets_updater.py</code></td><td>1ScX の1枚目のタブの D・E・F 列を書く（スキルは Desktop の古いパスを指していて、そこには無い）</td><td>使わない。AI作業ゴミ箱へ移すのは付け替えが済んで1回通してから</td></tr>
+<tr><td>memory <code>rules_consul_video_pipeline.md</code> 5節</td><td>「スプレッドシートが未処理／処理済みの唯一の真実源」</td><td>「AI の台帳 consul_daichou.sqlite が唯一の正本。スプレッドシートは 2026-11-11 までの控え」に書き換え。1〜4節（データをどこに置くか・1動画＝1MK・本文を写さない・QuickTime）はそのまま</td></tr>
+<tr><td>BA-corpus の決まり<br><code>.claude/org/03_BA/BA-corpus/CLAUDE.md</code>・<code>.claude/agents/BA-corpus.md</code></td><td>完了後にスプレッドシート D列・F列を更新</td><td>完了後に <code>daichou.py kiroku</code></td></tr>
+<tr><td>BS-engineer の個人 memory<br><code>.claude/agent-memory/BS-engineer/feedback_spreadsheet_update_on_mk_creation.md</code>・<code>consul-pipeline-design.md</code></td><td>スプレッドシートの D・E 列の更新</td><td>同上に書き換え</td></tr>
+<tr><td>memory <code>reference_ai_mits_consul_videos.md</code>・<code>reference_consul_knowledge_db_v2.md</code></td><td>スプレッドシートの ID を案内</td><td>AI の台帳の在りかを先に書き、スプレッドシートは控えと書く</td></tr>
+</table>
+
+<h2>8. Zoom の自動アップとのつなぎ方</h2>
+<div class="flow"><span>Zoom の録画</span><b>→</b><span>main.py（Windows・毎日 18:00）</span><b>→</b><span>YouTube に上げる</span><b>→</b><span>受け取りのフォルダに1件1ファイル</span><b>→</b><span>daichou.py torikomi（Mac）</span><b>→</b><span>AI の台帳に1行＋履歴「YouTube に上げる」</span></div>
+<ul>
+<li>main.py は今、YouTube に上げたあと「Auto zoom Rec All」の2行目に1行足し、Notion にページを作っている。ここを<b>受け取りのフォルダ</b> <code>コンサル動画台帳/uketsuke/&lt;動画ID&gt;.json</code> に1ファイル書く形に替える（中身：動画 ID・Zoom の会議名・開始時刻・UUID・長さ・Notion のページの URL・上げた時刻・止めた理由）。</li>
+<li>理由：main.py は Windows の機械で Google ドライブの同じフォルダを書いている。SQLite のファイルを2台の機械から同期越しに書くと壊れるおそれがあるので、Windows は1件1ファイルを置くだけにし、AI の台帳へ入れるのは Mac の側（<code>daichou.py torikomi</code>）だけにする。</li>
+<li>torikomi は、受け取りのフォルダのファイルを読んで AI の台帳に1行足し、分類を会議名で当て（3 の順）、履歴に「YouTube に上げる」を足し、読んだファイルを <code>uketsuke/sumi/</code> に移す。<code>daichou.py</code> のどの命令の頭でも先に走る。</li>
+<li>Notion のページ（Zoom の AI の要約・Zoom Docs）は要るので続ける。スプレッドシートへの書き込みだけ止める。</li>
+<li>「中身が薄い」「録画が空」で止めた回も受け取りのフォルダに書き、AI の台帳に「YouTube に上げていない」として入れる（今の 4本と同じ扱い）。</li>
+</ul>
+
+<h2>9. 目的の障害・予見されること</h2>
+<ul>
+<li><b>どの台帳にも載っていない 756本</b>：2017・2018・2020 の Zoom 録画が大半。コンサルなら書き起こしの材料が 1.5 倍ほど増える。題名が日時だけなので、分けるには中身を見る（書き起こしの冒頭・長さ・Zoom の参加者）しかない。今の台帳には入れていない（範囲に入れるかは中身を見てから）。</li>
+<li><b>他のコンサルに残った 63本の中身</b>：名簿の期間の外が 38本 ── 辰巳 2021-01〜05（10）・川田 2021-01〜04（8）── 2021 のタブで金額 0／佐々木 2019-01〜04（8）── 名簿は 2018 だけ／遠藤 2024-07〜11（8）── Notion の回のページは 2024-12-09 から／棚原 2026-02〜03（4）── Notion の回のページは 2026-04-06 から。名簿に無い人が 25本 ── 高田 2018（11）・2019（9）（名簿の表に無いが、Notion「以前のすごいコンサル生」に高田さん 2018-04-14 のページがある）・Ren 2019（2）・杉浦 2019（2）・名前が「-」の 2023（1）。この分け方は画面で行を押して直せば、直した記録が作業履歴に残る</li>
+<li><b>Notta の話者の番号が当てにならない</b>ことは、AI で書き起こし直す流れで解く予定（この発注の外）。AI の台帳の「次にやること」が、その流れの仕事の一覧になる：書き起こす 1,436本・書き起こし直す 24本。</li>
+<li><b>スプレッドシートが2本ある</b>：1ScX と 1H681 の両方に同じ2タブがある。今日は中身が同じだが、片方だけ手で直されると食い違う。引き継いだあとは両方とも控えで、どちらも書かない。</li>
+<li><b>Mits様の記録の中で、AI の台帳に移っていないもの</b>：スプレッドシートの色・メモ（gviz の CSV には出ない）。あるかどうかは Google の画面で確かめていない。</li>
+</ul>
+
+<h2>動かしたもの（その場で1回走らせた）</h2>
+<ul>
+<li>組み立ての道具：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/コンサル動画台帳/_tanaoroshi/build_daichou.py</code>（読むだけ。元の台帳には書かない）</li>
+<li>出た AI の台帳の素案：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/コンサル動画台帳/consul_daichou.sqlite</code>（douga 1,576行・作業履歴・出どころ）</li>
+<li>出た画面のデータ：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/コンサル動画台帳/daichou_gamen_data.js</code></li>
+<li>棚卸しの数：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/コンサル動画台帳/_tanaoroshi/tanaoroshi_kekka.json</code></li>
+<li>元の台帳の書き出し（2026-11-11 時点）：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/コンサル動画台帳/_tanaoroshi/raw/</code></li>
+<li><s style="color:#999">まだ作っていないもの：daichou.py・main.py の付け替え・スキルと memory の書き換え。</s> → 2026-11-11 15:4x に作って切り替えた（下）</li>
+</ul>
+<h2>10. 切り替えた（2026-11-11 15:4x・Mits様「そのまま次のステップに進んで」）</h2>
+<ul>
+<li><b>台帳の正本</b>：<code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/コンサル動画台帳/consul_daichou.sqlite</code>。読み書きは <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/コンサル動画台帳/daichou.py</code> だけ（kiroku・set・erabu・miru・sagasu・torikomi・kakidashi・serve）。切り替える前の控え：<code>_tanaoroshi/consul_daichou_hikitsugi_20261111.sqlite</code>。組み立ての道具 build_daichou.py は、切り替え後の台帳を作り直して消さないよう止めた</li>
+<li><b>画面</b>：<code>cd "/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/コンサル動画台帳" &amp;&amp; python3 daichou.py serve</code> → http://127.0.0.1:8765/ 。行を開いて「記録」を押すと作業履歴に1行足す（写しの台帳で押して、1行入ったのを確かめた）。画面の本体は <code>consul_daichou_gamen.html</code>（見本はそのまま残した）</li>
+<li><b>手順書</b>：consul-video-dl（選ぶ＝erabu・記録＝kiroku）・notta-to-mk-pipeline（引く＝sagasu・記録＝kiroku と set）・予約タスク consul-phase-c-auto をスプレッドシートから付け替えた。consul-video-dl の置き場所の記載は ~/Desktop/reaction-source（無い）から <code>/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/reaction-source/</code> に直した</li>
+<li><b>決まり</b>：memory rules_consul_video_pipeline.md の5節を書き換え。BA-corpus の部門と agent の決まり・BS-engineer の個人 memory 2本・memory reference 2本に付け替えの印を足した</li>
+<li><b>自動アップ</b>：main.py（Windows）はスプレッドシート「Auto zoom Rec All」に書く代わりに <code>コンサル動画台帳/uketsuke/&lt;動画ID&gt;.json</code> を置く形に替えた（前の版：<code>Zoom録画自動アップ/_wip/main.py.mae_20261111</code>）。受け渡しの部分だけ写しで走らせ、取り込みまで通した。Notion のページ・Chatwork の知らせ・Zoom のごみ箱はそのまま</li>
+<li><b>本物で1回通した</b>：erabu で選んだ1本目（佐々木 2018-04-06）と武田 2026-01-26 は、落とした記録（.dl-log.json）にあるのにスプレッドシートに書かれていなかったので「済み」を記録。次の高田 2018-04-14（（動画 ID は外した））を実際に落とし（48.2MB）、kiroku で記録、sagasu --fairu でファイル名から引き直せ、画面にも出た。「動画を落とす」の済みは 97 → 100 本</li>
+<li><b>目的の障害</b>：Windows の Google ドライブの同期が 2026-11-06 20:00 から止まっている（Windows から見える一番新しいファイルが 11-06 19:59・Windows の main.py は 11-03 のまま・コンサル動画台帳のフォルダが Windows に無い）。同期が戻るまで自動アップは前の main.py で走り、スプレッドシートに書く。取りこぼさないよう、daichou.py は処理済みの記録（processed_recordings.json）にあって台帳に無い分も拾う（写しで確かめた）</li>
+<li><b>目的の障害</b>：毎朝の Phase A（6:00）・Phase C（6:30）の cron は、ログの書き先 ~/Desktop/reaction-source が無いので動いていない。前のログは「Not logged in」だった。直していない（動かすと毎朝 Notion に MK が作られるので、動かすかは別に決める）</li>
+<li>sheets_updater.py は、付け替えた手順書で1回通すまで置いたまま（そのあと AI作業ゴミ箱へ）</li>
+</ul>
+</main>
+</body>
+</html>

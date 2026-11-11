@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>コンサル動画台帳</title>
+<style>
+:root{--bg:#fafaf7;--card:#fff;--ink:#222;--sub:#666;--line:#e3e1da;--sugoi:#b4542e;--muryo:#2f7a4f;--kobetsu:#2b5f9e;--hoka:#6b4f9e;--mibun:#999;--soto:#c9c6bd;--done:#2f7a4f;--todo:#d8d5cc;--redo:#d9a23b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;font-size:14px;line-height:1.6}
+main{max-width:1240px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:20px;margin:0 0 4px}
+.note{color:var(--sub);font-size:12px;margin:0 0 12px}
+.bar{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px;align-items:center}
+.bar .lab{font-size:12px;color:var(--sub);margin-right:4px;min-width:84px}
+.bar button{border:1px solid var(--line);background:var(--card);border-radius:6px;padding:4px 10px;font-size:13px;cursor:pointer}
+.bar button.on{border-color:var(--ink);font-weight:600;background:#f1efe8}
+.bar input,.bar select{border:1px solid var(--line);border-radius:6px;padding:5px 8px;font-size:13px;background:#fff}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line)}
+th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:12px;color:var(--sub);font-weight:600;background:#f3f2ed;position:sticky;top:0}
+tr.row{cursor:pointer}
+tr.row:hover{background:#f7f6f1}
+.bun{display:inline-block;padding:1px 8px;border-radius:10px;color:#fff;font-size:12px;white-space:nowrap}
+.steps{display:flex;gap:3px}
+.steps span{width:14px;height:14px;border-radius:3px;background:var(--todo)}
+.steps span.d{background:var(--done)}.steps span.w{background:var(--redo)}
+.next{font-size:12px;color:var(--sub)}
+.warn{color:#a4441f;font-size:12px}
+tr.detail td{background:#fcfbf8;padding:12px 16px}
+.cols{display:grid;grid-template-columns:1.2fr 1fr;gap:16px}
+@media(max-width:820px){.cols{grid-template-columns:1fr}table{font-size:12px}.hide-s{display:none}}
+.hist{margin:0;padding:0;list-style:none}
+.hist li{padding:4px 0;border-bottom:1px dashed var(--line);font-size:13px}
+.hist .t{color:var(--sub);font-size:12px;margin-right:6px}
+.hist .who{color:var(--sub);font-size:12px}
+pre{background:#f3f2ed;border:1px solid var(--line);border-radius:6px;padding:10px;font-size:11px;overflow:auto;margin:0;max-height:320px}
+h3{font-size:13px;margin:12px 0 6px}
+.legend{font-size:12px;color:var(--sub);margin:8px 0}
+.legend b{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin:0 3px 0 10px}
+.kiroku{border:1px solid var(--line);border-radius:6px;padding:10px;background:#fff;margin-top:10px}
+.kiroku select,.kiroku input{font-size:13px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;margin:2px 4px 2px 0}
+.kiroku button{font-size:13px;padding:4px 12px;border-radius:5px;border:1px solid var(--ink);background:var(--ink);color:#fff;cursor:pointer}
+.pager{margin:10px 0;display:flex;gap:8px;align-items:center;font-size:13px}
+.pager button{border:1px solid var(--line);background:#fff;border-radius:5px;padding:3px 10px;cursor:pointer}
+a{color:var(--kobetsu)}
+.msg{font-size:12px;color:var(--muryo);margin-left:8px}
+</style>
+</head>
+<body>
+<main>
+<h1>コンサル動画台帳</h1>
+<p class="note"><a href="sekkei.html">設計書</a> ／ <a href="workflow.html">Zoom から AI-Mits までの流れ（図解）</a> ／ 公開版：名前は姓だけ・YouTube の動画 ID と Notion の URL は外してある・記録は手元の画面（python3 daichou.py serve）でだけできる</p>
+<p class="note" id="head"></p>
+<div class="bar" id="b_bun"><span class="lab">分類</span></div>
+<div class="bar" id="b_next"><span class="lab">次にやること</span></div>
+<div class="bar"><span class="lab">しぼる</span><input id="q" placeholder="名前・会議名・MK・番号" size="24"><select id="nen"></select><select id="moto"></select><button id="clr">しぼりを外す</button></div>
+<p class="legend">手順の並び：動画を落とす → 書き起こし → 話者の見分け → MK 化 → AI で書き起こし直し → 書き起こし直しの見分け<b style="background:var(--done)"></b>済み<b style="background:var(--redo)"></b>やり直しが要る<b style="background:var(--todo)"></b>未着手</p>
+<div class="pager" id="pg1"></div>
+<table>
+<thead><tr><th>分類</th><th>クライアント</th><th>日付</th><th class="hide-s">長さ</th><th>MK</th><th>手順</th><th>次にやること</th><th class="hide-s">番号</th></tr></thead>
+<tbody id="tb"></tbody>
+</table>
+<div class="pager" id="pg2"></div>
+</main>
+<script src="data.js"></script>
+<script>
+const STEPS=["動画を落とす","書き起こし","話者の見分け","MK 化","AI で書き起こし直し","書き起こし直しの見分け"];
+const BUNRUI=["すごいコンサル","無料個別相談","他の個別相談","他のコンサル","未分類","範囲の外"];
+const COLOR={"すごいコンサル":"var(--sugoi)","無料個別相談":"var(--muryo)","他の個別相談":"var(--kobetsu)","他のコンサル":"var(--hoka)","未分類":"var(--mibun)","範囲の外":"var(--soto)"};
+const SC={"済み":"d","やり直しが要る":"w","未着手":""};
+const PER=100;
+let st={bun:"すべて",next:"すべて",q:"",nen:"",moto:"",page:0};let hiraita="";
+try{Object.assign(st,JSON.parse(localStorage.getItem("consul_daichou_st")||"{}"));st.page=0}catch(e){}
+function save(){try{localStorage.setItem("consul_daichou_st",JSON.stringify(st))}catch(e){}}
+function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function len(s){if(!s)return"";const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return(h?h+":"+String(m).padStart(2,"0"):m)+":"+String(x).padStart(2,"0")}
+const nens=[...new Set(DAI.map(r=>(r.date||"").slice(0,4)).filter(Boolean))].sort().reverse();
+document.getElementById("nen").innerHTML='<option value="">年：すべて</option>'+nens.map(n=>`<option>${n}</option>`).join("");
+const motos=[...new Set(DAI.flatMap(r=>r.demoto))].sort();
+document.getElementById("moto").innerHTML='<option value="">元の台帳：すべて</option>'+motos.map(n=>`<option>${esc(n)}</option>`).join("");
+function ok(r,skip){
+  if(skip!=="bun"&&st.bun!=="すべて"&&r.bunrui!==st.bun)return false;
+  if(skip!=="next"&&st.next!=="すべて"&&r.next!==st.next)return false;
+  if(st.nen&&!(r.date||"").startsWith(st.nen))return false;
+  if(st.moto&&!r.demoto.includes(st.moto))return false;
+  if(st.q){const q=st.q.toLowerCase();const hay=[r.client,r.zoom_topic,r.mk,r.no,(r.client_raw||[]).join(" "),r.yt_title].join(" ").toLowerCase();if(!hay.includes(q))return false}
+  return true;
+}
+function bar(id,key,vals,lab){
+  const el=document.getElementById(id);
+  const base=DAI.filter(r=>ok(r,key));
+  const c={};base.forEach(r=>{c[r[key==="bun"?"bunrui":"next"]]=(c[r[key==="bun"?"bunrui":"next"]]||0)+1});
+  const keys=["すべて",...vals.filter(v=>c[v]),...Object.keys(c).filter(k=>!vals.includes(k)).sort((a,b)=>c[b]-c[a])];
+  el.innerHTML=`<span class="lab">${lab}</span>`+keys.map(k=>`<button class="${k===st[key]?"on":""}" data-v="${esc(k)}">${esc(k)} ${k==="すべて"?base.length:c[k]}本</button>`).join("");
+  el.querySelectorAll("button").forEach(b=>b.onclick=()=>{st[key]=b.dataset.v;st.page=0;draw()});
+}
+function detail(r){
+  const h=r.hist.length?r.hist.map(x=>`<li><span class="t">${esc(x[0])}</span>${esc(x[1])}　<span class="who">${esc(x[2])}／${esc(x[3])}</span></li>`).join(""):"<li>作業履歴はまだありません（未着手）</li>";
+  const ura={no:r.no,bunrui:r.bunrui,bunrui_konkyo:r.bunrui_konkyo,client:r.client,client_raw:r.client_raw,zoom_topic:r.zoom_topic,date:r.date,nagasa_sec:r.nagasa_sec,yt_title:r.yt_title,yt_privacy:r.yt_privacy,yt_jotai:r.yt_jotai,mk:r.mk,kyu_mk:r.kyu_mk,notion_pages:r.notion_pages,washa_kubun:r.washa_kubun,tejun:r.tejun,demoto:r.demoto,chui:r.chui};
+  const np=(r.notion_pages||[]).map(p=>`<li>${esc(p.title||p.daichou)} <span class="who">${esc(p.daichou)}</span></li>`).join("");
+  return `<td colspan="8"><div class="cols"><div>
+   <h3 style="margin-top:0">作業履歴</h3><ul class="hist">${h}</ul>
+   <p class="note" style="margin-top:8px">分類の根拠：${esc(r.bunrui_konkyo)}</p>
+   ${r.chui.length?`<p class="warn">注意：${r.chui.map(esc).join("／")}</p>`:""}
+   ${np?`<h3>Notion のページ</h3><ul class="hist">${np}</ul>`:""}
+   </div><div><h3 style="margin-top:0">AI の台帳の1行（裏のデータ）</h3><pre>${esc(JSON.stringify(ura,null,1))}</pre></div></div></td>`;
+}
+function draw(){
+  save();
+  document.getElementById("q").value=st.q;document.getElementById("nen").value=st.nen;document.getElementById("moto").value=st.moto;
+  bar("b_bun","bun",BUNRUI,"分類");bar("b_next","next",[],"次にやること");
+  const rows=DAI.filter(r=>ok(r));
+  const pages=Math.max(1,Math.ceil(rows.length/PER));if(st.page>=pages)st.page=pages-1;
+  const pgh=`<button ${st.page?"":"disabled"} data-d="-1">前</button>${rows.length}本中 ${st.page*PER+1}〜${Math.min(rows.length,(st.page+1)*PER)}本目<button ${st.page<pages-1?"":"disabled"} data-d="1">次</button>`;
+  ["pg1","pg2"].forEach(id=>{const e=document.getElementById(id);e.innerHTML=pgh;e.querySelectorAll("button").forEach(b=>b.onclick=()=>{st.page+=+b.dataset.d;draw();scrollTo(0,0)})});
+  const tb=document.getElementById("tb");tb.innerHTML="";
+  rows.slice(st.page*PER,(st.page+1)*PER).forEach(r=>{
+    const tr=document.createElement("tr");tr.className="row";
+    tr.innerHTML=`<td><span class="bun" style="background:${COLOR[r.bunrui]}">${esc(r.bunrui)}</span></td><td>${esc(r.client||r.zoom_topic||"（名前なし）")}${r.chui.length?' <span class="warn">⚠</span>':""}</td><td>${esc(r.date)}</td><td class="hide-s">${len(r.nagasa_sec)}</td><td>${esc(r.mk)}</td><td><div class="steps">${STEPS.map(s=>`<span class="${SC[r.tejun[s]]||""}" title="${s}：${r.tejun[s]}"></span>`).join("")}</div></td><td class="next">${esc(r.next)}</td><td class="hide-s">${esc(r.no)}${r.yt_jotai==="ある"?"":`<span class="warn">（${esc(r.yt_jotai)}）</span>`}</td>`;
+    const dt=document.createElement("tr");dt.className="detail";dt.style.display="none";dt.innerHTML=detail(r);
+    if(r.no===hiraita)dt.style.display="";
+    tr.onclick=()=>{dt.style.display=dt.style.display==="none"?"":"none";hiraita=dt.style.display===""?r.no:""};
+    if(dt.querySelector(".k_go"))dt.querySelector(".k_go").onclick=async e=>{e.stopPropagation();const m=dt.querySelector(".msg");
+      if(location.protocol==="file:"){m.textContent="この画面はサーバーから開いたときだけ保存できます（python3 daichou.py serve）";return}
+      const tejun=dt.querySelector(".k_tejun").value,jotai=dt.querySelector(".k_jotai").value,memo=dt.querySelector(".k_memo").value;
+      const bunruiNi=tejun==="（分類を直す）";
+      if(bunruiNi!==BUNRUI.includes(jotai)){m.textContent=bunruiNi?"分類を直すときは、右で分類を選んでください":"手順には、右で状態（着手・済み など）を選んでください";return}
+      m.textContent="保存中…";
+      try{const res=await fetch("/kiroku",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({youtube_id:r.youtube_id,tejun,jotai,memo})});
+        const j=await res.json();if(!res.ok){m.textContent="保存できませんでした："+(j.error||res.status);return}
+        Object.assign(r,j);hiraita=r.youtube_id;draw();
+        const tb2=[...document.querySelectorAll("tr.detail")].find(x=>x.style.display==="");if(tb2)tb2.querySelector(".msg").textContent="台帳に1行足しました";
+      }catch(err){m.textContent="保存できませんでした："+err}};
+    tb.appendChild(tr);tb.appendChild(dt);
+  });
+}
+document.getElementById("q").oninput=e=>{st.q=e.target.value;st.page=0;draw()};
+document.getElementById("nen").onchange=e=>{st.nen=e.target.value;st.page=0;draw()};
+document.getElementById("moto").onchange=e=>{st.moto=e.target.value;st.page=0;draw()};
+document.getElementById("clr").onclick=()=>{st={bun:"すべて",next:"すべて",q:"",nen:"",moto:"",page:0};draw()};
+document.getElementById("head").textContent=`AI の台帳（consul_daichou.sqlite）の ${DAI.length} 本（公開版・2026-11-11 15:53 に書き出し）。行を押すと、作業履歴と AI の台帳の1行が開きます。分類は記録から AI が当てた案で、根拠を行ごとに書いています。`;
+draw();
+</script>
+</body>
+</html>
