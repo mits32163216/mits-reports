@@ -174,7 +174,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-11-11 01:18 ／ 写した時刻 2026-11-11 12:37</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-11-11 17:29 ／ 写した時刻 2026-11-11 18:34</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -9554,6 +9555,198 @@ untendai-client  版=1.73.43  組立=2026-09-26 03:39:44  Bundle=com.mits.untend
 <li>物差し（直す用72問）：1位・上位3件・上位12件 = s4 34・50・59 → s5 36・50・62（上限 44・57・66）。4往復で検索に進まなかった問い 2 → 0。判定は Codex 4本・見張り33組は4本とも合格</li>
 <li>聞き返しの言い方（新しい欄・道具 /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_jikken_20261105/chiisai_mawashi/bunrui20/monosashi/iikata.py）：AI の言い方（困って・困りごと・場面・どんなとき）s4 38/89 → s5 1/84。西田の形 11/89 → 79/84。ただし 79 のうち 65 は「今日扱いたいことの頭出しをしましょうか」</li>
 <li>頭出しに寄った理由：お客様役（ddb3f943）の指示が「最初のひと言は気持ちだけ」と AI が決めた作りで、72問とも「モヤモヤしていて」で始まる。お客様役の話し方は書き起こしから取り直していない（残り）</li>
+</ul>
+<h3 id="2026-11-11-13-03-コンサル動画の管理台帳を一つにまとめる設計-AI-Mits-チ">2026-11-11 13:03 ／ コンサル動画の管理台帳を一つにまとめる設計（AI-Mits-チューニングが立てたセッション）：棚卸しと設計と画面の見本ができた・今の台帳は書き換えていない</h3>
+<ul>
+<li>宛先：AI-Mits-チューニング</li>
+<li>棚卸し：YouTube の動画 ID で突き合わせて、台帳に入る動画 1,576本（表のどれかにある 1,485・Notion にだけある 84・自動アップの記録にだけある 7）。いちばん大きな表は「コンサル動画の一覧」1ScX ではなく、自動アップが書く 1H681 のタブ「Auto zoom Rec All」（1,499本・1ScX の 1,257本を全部含む）。1ScX のタブ「勉強用すごい_Mits」は列「MK-N」に旧MK の番号（元DB の新MK と 96行で違う）。2026-07 に消えて上げ直した 14本は Zoom の開始時刻で新しい ID にまとめた。どの台帳にも載っていないチャンネルの動画 756本（2017・2018・2020 の Zoom 録画が大半）は入れていない</li>
+<li>分類（案・根拠は行ごと）：すごいコンサル 218／無料個別相談 41／他の個別相談 55／他のコンサル 1,156／未分類 63／範囲の外（グループ回・セミナー・講座）43。Notion の「すごいコンサル」と「コンサル動画 一覧」の素材タイプが食い違う 37本に印。Notion「以前のすごいコンサル生」に 2018 の回が4本あり、2018〜2023 の「他のコンサル」にすごいコンサルが混じっている見込み（期間の記録は見つからなかった）</li>
+<li>設計：AI の台帳は手元の SQLite 1つ（consul_daichou.sqlite・表は 動画／手順の状態／作業履歴〈足すだけ〉／出どころ）。Mits様の画面は HTML。スプレッドシートは控えにして書き込みを止める。Zoom の自動アップ（Windows の main.py）は受け取りのフォルダに1件1ファイルを置き、Mac 側が取り込む。付け替える道具・決まり：consul-video-dl・notta-to-mk-pipeline・sheets_updater.py・memory rules_consul_video_pipeline.md 5節・BA-corpus・BS-engineer の memory</li>
+<li>まだ作っていない：daichou.py（記録・選ぶ・取り込み・画面のサーバー）・main.py の付け替え・スキルと memory の書き換え（設計で止めた）</li>
+<li>設計：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/コンサル動画台帳/sekkei_consul_daichou_20261111.html</li>
+<li>画面の見本：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/コンサル動画台帳/consul_daichou_gamen_mihon.html</li>
+<li>組み立ての道具と素案：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/コンサル動画台帳/_tanaoroshi/build_daichou.py → consul_daichou.sqlite・daichou_gamen_data.js</li>
+<li>Mits様がこのセッションで頼まれた図解（Zoom のコンサル → チャンク → AI-Mits → AI でのコンサル）：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/AI-Mits_ワークフロー図解_20261111.html</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-11-13-17-コンサル動画の管理台帳を一つにまとめる設計-訂正-13-03">2026-11-11 13:17 ／ コンサル動画の管理台帳を一つにまとめる設計：訂正 ── 13:03 の「混じっている見込み（期間の記録は見つからなかった）」の言い方</h3>
+<ul>
+<li>宛先：AI-Mits-チューニング</li>
+<li>「2018〜2023 の他のコンサルにすごいコンサルが混じっている」は推測。根拠は Notion「以前のすごいコンサル生」の 2018 の回4本だけ</li>
+<li>期間の記録を探した範囲：共有 memory・session-log・context・references・02_AI-MITS の文字のファイル・Notion「すごいコンサル」「以前のすごいコンサル生」の本文の頭。どれも0件。Notion の全体の検索とメール・UTAGE の申し込みの記録は、まだ探していない</li>
+</ul>
+<h3 id="2026-11-11-13-23-コンサル動画の台帳-すごいコンサルの会員をスプレッドシート-s">2026-11-11 13:23 ／ コンサル動画の台帳：すごいコンサルの会員をスプレッドシート「sugoiコンサル」の名簿で当て直した（宛先：AI-Mits-チューニング）</h3>
+<ul>
+<li>出どころ：Mits様「すごいのメンバーがわかるので見て」（Google ドライブ「すごいコンサル」のフォルダ 1QRg_1ImeSs5HUUeAoltpsQ3SBVpSqh74）</li>
+<li>名簿：スプレッドシート「sugoiコンサル」15YxK2ce9C2XRG9xesg-3Alapz3gWHCG_rxpEaTAGpRw の年ごとのタブで金額がある人。2018-05 から。2024-02〜11 は 202401 のタブの人を続けて会員と読んだ（案）。2024-12 から先は Notion の回のページ</li>
+<li>分け直した数（1,576本）：すごいコンサル 1,281／他の個別相談 85／他のコンサル 63／未分類 63／範囲の外 43／無料個別相談 41。13:03 の「すごい 218・他のコンサル 1,156」と 13:17 の訂正は、これで置き換わる</li>
+<li>他のコンサルに残った 63本：名簿の期間の外 38（辰巳二郎 2021・川田岳史 2021・佐々木 2019・遠藤謙太 2024-07〜11・棚原秀樹 2026-02〜03）・名簿に無い 25（高田 2018〜2019 が 20。Notion「以前のすごいコンサル生」に高田さん 2018-04-14 のページがある）</li>
+<li>書き換えたもの：AI の台帳 consul_daichou.sqlite・画面のデータ daichou_gamen_data.js・設計 sekkei_consul_daichou_20261111.html の 1 と 3・図解 AI-Mits_ワークフロー図解_20261111.html の状態の表。Notion・スプレッドシート・processed_recordings.json は書き換えていない</li>
+</ul>
+<h3 id="2026-11-11-15-48-コンサル動画の台帳-AI-の台帳-consul-daichou">2026-11-11 15:48 ／ コンサル動画の台帳：AI の台帳（consul_daichou.sqlite）に切り替えた（宛先：AI-Mits-チューニング）</h3>
+<ul>
+<li>出どころ：Mits様「概ね90%はそれで良くて、あと10%は後で調整すれば良いので、そのまま次のステップに進んで」（このセッション・分類の当て直しへのお答え）</li>
+<li>正本は /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/コンサル動画台帳/consul_daichou.sqlite だけ。読み書きは /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/コンサル動画台帳/daichou.py（kiroku・set・erabu・miru・sagasu・torikomi・kakidashi・serve）。画面は python3 daichou.py serve → <a href="http://127.0.0.1:8765/">http://127.0.0.1:8765/</a></li>
+<li>スプレッドシート（1ScX・1H681）・sheets_updater.py は 2026-11-11 までの控え。書き換えていない・読まない。付け替えた：consul-video-dl・notta-to-mk-pipeline・予約タスク consul-phase-c-auto・memory rules_consul_video_pipeline 5節・BA-corpus の決まり2本・BS-engineer の memory 2本と索引・memory reference 2本</li>
+<li>main.py（Windows）はスプレッドシートの代わりに /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/コンサル動画台帳/uketsuke/&lt;動画ID&gt;.json を置く形に替えた（前の版 main.py.mae_20261111）</li>
+<li>本物で1回通した：高田 2018-04-14（X1vZBu-ajyc）を落として記録・画面に出た。.dl-log.json にあってスプレッドシートに無かった2本（佐々木 2018-04-06・武田 2026-01-26）も「済み」にした。動画を落とす 済み 97 → 100</li>
+<li>障害：Windows の Google ドライブの同期が 11-06 20:00 から止まっていて、新しい main.py が Windows に届いていない。届くまでは前の版で動き、daichou.py は processed_recordings.json から取りこぼしを拾う。Phase A・C の cron はログの書き先（~/Desktop/reaction-source）が無く止まっている（直していない）</li>
+<li>設計書の 10 節：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/コンサル動画台帳/sekkei_consul_daichou_20261111.html</li>
+</ul>
+<ul>
+<li>2026-11-11 15:55｜AI-Mits-チューニングの枝（コンサル動画台帳）｜コンサル動画台帳の公開版を公開用URL（mits-reports/private/consul-daichou）に載せ、プライベート・ダッシュボードの「経営の運転台」に1行足した。URL：<a href="https://reports.7years.life/private/consul-daichou/">https://reports.7years.life/private/consul-daichou/</a> （設計書 sekkei.html・図解 workflow.html つき）｜公開版は名前を姓だけ・YouTube の動画 ID と Notion の URL を外し、記録のボタン無し（見るだけ）。書き出しの道具：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/コンサル動画台帳/kokai_private.py（台帳を直したら走らせて push）｜実測：ページ・data.js・sekkei・workflow とも 200、伏字の漏れ（姓名の組・下の名前・動画 ID・メール）0、noindex あり｜コミット 7a98288｜宛先：AI-Mits-チューニング｜出どころ：Mits様「ローカルでページが準備できたら、公開用URLにして、そしてプライベートダッシュボードに追加して」</li>
+</ul>
+<h3 id="2026-11-11-16-08-コンサル動画の時計を新しい流れに入れ替えた-毎晩-1-30-に">2026-11-11 16:08 ／ コンサル動画の時計を新しい流れに入れ替えた：毎晩 1:30 に AI で書き起こす（宛先：AI-Mits-チューニング）</h3>
+<ul>
+<li>出どころ：Mits様「今動いてスケジュールされている。内容を最適にアップデートして、例えばダウンロードしてその後Notionに書き込むとかと言うのは古い仕組みなのでこの新しい仕組みに最適化する」／前の回「まずすごいコンサルだけ。時系列で古いのから順番に書き起こしを始めてみたい」「すでにマークがついてるもの書き起こしがある。有効なものではない」</li>
+<li>足した：launchd com.mits.consul-ai-kakiokoshi（毎晩 1:30）→ /Users/nishidamitsuhiro/.local/share/kakiokoshi-ai/ai_kakiokoshi.py。台帳からすごいコンサルを古い順に最大40本・5:30 で打ち止め。音声はこの Mac の中だけ → mlx-whisper → 02_AI-MITS/書き起こし/zoom_ai/&lt;日付&gt;_&lt;動画ID&gt;.txt → 台帳に記録。話者は分けない</li>
+<li>走らせた：安藤 2018-04-06（63分・1.8分）・佐々木 2018-04-06（1.0分・launchd から）。台帳に済みと在りかが入った</li>
+<li>測った：声の見本だけで話者を分ける方法は Codex の見分けと MK-61 で 9点中4点（前の分け方は7点）→ 自動では分けず、Codex が中身を読む手順に残す</li>
+<li>止めた：毎朝の cron 6:00（consul-video-dl）・6:30（notta-to-mk-pipeline）は、ログの書き先が無く Claude を呼ぶ前に止まる状態だった（実測）。cron の表から外す書き込みは 20秒以上返らず未了（外した後の表：/Users/nishidamitsuhiro/.local/share/kakiokoshi-ai/crontab_ato_20261111.txt）。手順書2本に「前の流れ・時計から外した」の印</li>
+<li>そのまま：Windows の main.py（18:00・受け取りのフォルダ形式・同期待ち）・notion-zoom-sort-daily（19:00・Notion のページを人ごとに置く役は残す）</li>
+<li>台帳の「次にやること」から Notta・MK を外した：AI で書き起こす → 話者を見分ける → 前処理とチャンクカット。設計書 11 節・図解・memory rules_consul_video_pipeline 6節・公開版を更新</li>
+</ul>
+<ul>
+<li>2026-11-11 16:17｜AI-Mits-チューニングの枝（コンサル動画台帳）｜Corpus2Skill（DEEP）で台帳を使うための準備：Notion「Claude履歴保存」の Corpus2Skill のページ12本の全文と手元の記録を BA-researcher が調べ（/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/コンサル動画台帳/_tanaoroshi/corpus2skill_shirabe_20261111.md）、台帳に足す項目の案を SQL にした（/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/コンサル動画台帳/_tanaoroshi/schema_corpus2skill_an.sql・動画の列8つ・話題の表 wadai・手順4つ）。台帳にはまだ入れていない（写しで流して1,576本が変わらないことを確かめた）。主訴・書き換えた問い・書き換えた理由は保留（戦術5）のまま空で持つ。葉を新しい書き起こしで作り直すかの記録は無い。DEEP の Code ノードに Notion の鍵がそのまま書いてある｜宛先：AI-Mits-チューニング｜出どころ：Mits様「Deepにあたるコーパス2スキルの方でも活用するので…必要な記録とか要素は追加できるように準備しておいて欲しい」</li>
+</ul>
+<ul>
+<li>2026-11-11 16:25｜AI-Mits-チューニングの枝（コンサル動画台帳）｜DEEP（1a8d8b9c・13ノード）の流れから、後日の Corpus2Skill の直しに要る項目を台帳に入れた：話題の表 wadai（Step見出し・Branch・論点ID・状況・本当の相談・枝の質問・西田の答え・問いの形・時刻の範囲・書き起こし・使ってよいか・Mits様の判定・目次に載せるか）と答えの表 kotae（何を答えたか・時刻の範囲）、動画の列8つ。daichou.py に wadai／wadai-miru。前処理の手順書 rag-kakiokoshi-maeshori の手順5に「書いた欄をその場で台帳にも入れる」を足した（NORMAL の手順5の欄が DEEP の論点の中身とほぼ同じため・二度手間を無くす）。主訴・書き換えた問い・書き換えた理由（保留・戦術5）と Mits様の判定は道具から書かない。設計書13節｜宛先：AI-Mits-チューニング（前処理の手順書を使う側）｜出どころ：Mits様「Deepで使っているアプリのノード、フローを見て…入れておいたらいい項目を洗い出して。目的は二度手間にならないために、今のうちに同一作業の中で準備してしまいたい」</li>
+</ul>
+<h3 id="2026-11-11-16-27-AI-Mits-チューニング-Knowledge-の-答え-に">2026-11-11 16:27 ／ AI-Mits-チューニング：Knowledge の「答え」にお客様の声が混ざっていないかを確かめ、混ざった8枚を直し、答えが相づちだけの29枚を外した Knowledge を作った（Mits様「チャンクの中にお客さんの声が混ざっているかどうかチェックをして適切に対処する」）</h3>
+<ul>
+<li>宛先：■BS_AI-Mits の RAG 見直し</li>
+<li>対象：d36071a7（1,895枚）のうちコンサルから作った 1,538枚（MK 1,348・K 190）。西田1人の話（動画 161・THE BIBLE 196）は見ていない</li>
+<li>確かめ方：①答えの文を1文ずつ、前処理版（D_maeshori_v2/MK-*.md の本文。話者は中身で付け直した版）の段落と機械で突き合わせた → 1,369枚は全文が西田の段落に当たった・お客様の段落にだけ当たる文は0 ②機械で決めきれない169枚と、全部西田と出た中から無作為の60枚を Codex 3本が中身で判定</li>
+<li>結果：お客様の文が入っていたのは8枚・11文で、どれも短い返事（「わかりました。」「あります、あります。」「例文を1日何個、これ？」など）。無作為の60枚は60枚ともお客様の文なし。答えが「はい。」「そうですね。」の相づちだけ（4枚は空）のチャンクが29枚あった（お客様の声ではない）</li>
+<li>訂正：前の回に「K04（MK-68）の答えはお客様の文で始まっている」と言ったのは誤り。前処理版では 00:33:40 の西田の段落で、お客様のメモを西田が読み上げている所</li>
+<li>対処：8枚はお客様の文だけを抜いた（西田の文は1字も変えていない・機械で確かめた）。29枚は外した。新しい Knowledge「RAG見直し_ラウンド6_9本除外_お客様の声と相づち除外」31237c9d（1,866枚・材料と1枚ずつ一致）。実験アプリ 0ebb0dab と物差しの写し 25e356ae の下書きの引く先を d36071a7 → 31237c9d に付け替えた。公開はしていない。d36071a7 と本番は触っていない</li>
+<li>外した29枚は、これまでの物差しの判定で当たりになったことが一度もない（外れが22回）。上限の数は変わらない</li>
+<li>Dify の契約の上限：資料（documents）は全部で500本まで。今ちょうど500本。上限のため、新しい Knowledge は12本の枝を9本にまとめて入れた（G+J・H+K・I+L。チャンクの区切りは同じ）。次に Knowledge を作るときは、使っていない Knowledge を片付けないと入らない</li>
+<li>記録：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits_jikken_20261105/chiisai_mawashi/bunrui20/okyaku_maji/（kikai_tsukiawase.json・hachu_*.md・kekka/kekka_*.json・taisho_ichiran.json）・材料 monosashi/general_branch_r6_jogai9_okyaku.json</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h4 id="2026-11-11-16-28-コンサル動画台帳-AI-Mits-チューニングの分かれ-訂正2">2026-11-11 16:28 ／ コンサル動画台帳（AI-Mits-チューニングの分かれ） ── 訂正2つ</h4>
+<p>宛先：AI-Mits-チューニング</p>
+<ul>
+<li>取消：これまでの行と rules_consul_video_pipeline.md に書いた「MK-1〜97 は有効なものではない（Mits様）」。Mits様の原文は「すでにマークがついてるもの書き起こしがある。有効なものではない」で、MK-1〜97 には触れていない。MK を作り直すか残すかは決まっていない</li>
+<li>取消：「新論点DB 4ff1989a は 5/9 の作り直しで主訴・書き換えた問い・3点組・キーワード・時刻を落とした」。4ff1989a の元は判定記録DB 65e76680 で、最初から無い。5つの項目は旧論点DB 86dc52a8 にだけある。目次の読み先を移した理由の記録は無い</li>
+<li>確かめ方：devils-advocate が決定台帳全8,450行・session-log 388本・memory 528本・Notion（判定記録DB と 86dc52a8 の項目の実物）・jsonl 4,379発言の3経路で当てた。直したファイル：/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/rules_consul_video_pipeline.md／/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/コンサル動画台帳/_tanaoroshi/corpus2skill_shirabe_20261111.md（末尾に訂正の節）／/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/コンサル動画台帳/sekkei_consul_daichou_20261111.html（12節）</li>
+</ul>
+<h3 id="2026-11-11-16-37-AI-Mits-チューニング-使っていない-Knowledge">2026-11-11 16:37 ／ AI-Mits-チューニング：使っていない Knowledge 12個を Dify から片付けた・「答えは西田の言葉だけ」の決まりを前処理の手順書に足して台帳のセッションに送った（Mits様「片付けるべき過去の会のは今すぐ片付けて」「今作ったNishidaの言葉だけを入れると言うルールを動画整理をやっている台帳のセッションにそのルールを通信で送ってあげて」）</h3>
+<ul>
+<li>宛先：■BS_AI-Mits の RAG 見直し／コンサル動画の管理台帳を一つにまとめる設計</li>
+<li>片付けた12個（どのアプリの下書き・公開版からも引かれていないことを13アプリ全部で確かめた）：d36071a7 ラウンド6_話者が混ざる9本を除外・b6b3a474 ラウンド5・0dbefd13 278・dd88a41e 97k回4・abf6cc07 97k回3・bb0fc38f 97k回2・a6de4730 97k回1・bfa9ad9a General_cohere（チャンク0）・75c9ae8f General_gemini・0b59b220 親子・137555aa 301枚・92cf3042 西田の聞き返し_実例126</li>
+<li>消す前に全チャンクと設定を写した（チャンクの数は Dify と一致）：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261111_dify_knowledge_katazuke/（1 Knowledge ＝ 1 JSON）</li>
+<li>残した7個：31237c9d（実験アプリと物差しの写しの下書き）・3da4923e 聞き返し82（同）・04593a73 ラウンド6（実験アプリ 0ebb0dab の公開版が引いている）・aa574eb8 設定サポーター・acd3bf44 AI実装先生・11963425 AI-MITS v2（本番 43d47f25 と NORMAL-WEB v2）・92f80324 AI先生ナレッジ（ほかの持ち場）</li>
+<li>資料の数：500（上限）→ 78</li>
+<li>決まり：/Users/nishidamitsuhiro/.claude/skills/rag-kakiokoshi-maeshori/SKILL.md の「6. それから切る」に「チャンクの『答え』には西田の言葉だけを入れる」を足した。台帳のセッション（local_148400f5）に同じ中身を送った（届いた）</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-11-16-43-コンサル動画台帳-AI-Mits-チューニングの分かれ-答えは">2026-11-11 16:43 ／ コンサル動画台帳（AI-Mits-チューニングの分かれ）：「答えは西田の言葉だけ」を台帳の道具に組み込んだ（AI-Mits-チューニング経由の Mits様の指示・16:37 の節を受けた）</h3>
+<ul>
+<li>宛先：AI-Mits-チューニング</li>
+<li>daichou.py wadai が、入れる前に前処理版の段落（[時:分:秒] 西田／お客様）と突き合わせる。お客様の文が西田の答えに入っている・相づちだけ／空の答え・答えの時刻の始まり／終わりがお客様の段落 のどれかなら1話題も入れずに止まる。中身で西田と決めたときだけ --shouchi &quot;&lt;理由&gt;&quot;（理由は作業履歴に残る）</li>
+<li>試し（台帳の写しで・MK-13）：違反の例は5件出て0話題、合格の例は1話題入って作業履歴に「西田の言葉だけ：合格」</li>
+<li>本物の台帳の話題（wadai）・答え（kotae）は 0行（16:44 に sqlite3 で数えた）。直すものなし</li>
+<li>足した所：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/コンサル動画台帳/daichou.py・/Users/nishidamitsuhiro/.claude/skills/rag-kakiokoshi-maeshori/SKILL.md 手順5の台帳の行・/Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/memory/rules_consul_video_pipeline.md 5節</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-11-16-44-AI-Mits-チューニング-AI-Mits-の流れの持ち分を">2026-11-11 16:44 ／ AI-Mits-チューニング：AI-Mits の流れの持ち分を4つのセッションに決めた・頼まれた先が違うときの受け渡しの決まりを作った・重なっていた資料を片付けた（Mits様）</h3>
+<ul>
+<li>宛先：コンサル動画台帳／AI-Mits の RAG 見直し／運転台改善／AI-Mits-チューニング</li>
+<li>出どころ：Mits様原文（2026-11-11・AI-Mits-チューニングで）「動画の台帳整理のセッションを作り、そこが動画書き起こしをして、チャンクの整理準備をし、そしてAI 3つの改善プロセスをここでやり、それを運転代で実装して検証テストをしてと言う流れができたんだけど、持ち分が曖昧になってきたので整理してもらえるかな」→（整理の案を見て）「決定台帳に書き込み、それぞれの持ち分の仕事と言うことを決めて、常にレポートと読み込みっていうのをお互いにするようにして、かつ私が支持するセッションを間違えたりわからなかったり、違うところに発注した場合は、適切なセッションに通信してその内容を受け渡して、適切なセッションで実施するようにルールを作っておいて欲しい。同時に重複している書き込みや資料や保持してるデータは整理してほしい。」</li>
+<li>持ち分（正本：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/CLAUDE.md の節「🧩 AI-Mits の流れの持ち分」）</li>
+  <li>コンサル動画台帳：動画の台帳・書き起こし（毎晩の AI 書き起こし・27本の書き起こし直し）・話者の見分けと区分・新しい書き起こしの前処理とチャンクにする作業</li>
+  <li>AI-Mits の RAG 見直し：チャンクの作り方の決まり（スキル rag-kakiokoshi-maeshori）・Knowledge を作る／直す／片付ける・チャンクで引く試験（100問）</li>
+  <li>AI-Mits-チューニング：AI の3つの係（質問分類器・聞き返しの係・検索の問いに変える係）の改善・係を通した物差し・実験アプリ 0ebb0dab と中継</li>
+  <li>運転台改善：西田統合版に入れる・Mits様の実データで目で見て確かめる</li>
+<li>お互いに報告し、読む：手順が済んだら次の持ち分を宛先にして決定台帳に書く。開かれた回に自分宛ての行を読む。見張り daichou-atesaki-wo-yomu.sh の宛先の表 /Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/data/daichou_atesaki.json に「AI-Mits の RAG 見直し」「コンサル動画台帳」が無く、この2つには自分宛ての行が差し込まれていなかった → 2つを足した。画面の題名で当たり、自分宛ての節が引けることを走らせて確かめた</li>
+<li>受け渡しの決まり：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/送受信の決まり.md の 2-3 を足した（持ち分の外の指示は自分でやらず、決定台帳に Mits様の原文ごと書いて持ち分のセッションに合図し、Mits様に1行返す。受け取った側は Mits様の指示として実施する。例外は Mits様が「ここでやって」と言われたとき）</li>
+<li>今日の手順5（Knowledge）をこのセッションがやった分は、持ち分では RAG 見直しの仕事：お客様の声と相づちだけのチャンクの除外（16:27 の節・Knowledge 31237c9d）、使っていない Knowledge 12個の片付け（16:37 の節）。中身はそれぞれの節のとおり。RAG 見直しは、この2節を自分の受け持ちの記録として読む</li>
+<li>重なっていた物を片付けた</li>
+  <li>話者の区分：washa_kubun_96.json と台帳の列の2か所 → 96本とも同じことを確かめ、正本を台帳の列にした。json は控え（扱いのファイルの冒頭に書いた）。扱いのファイルの表の「20本」は数え違いで、正しくは19本（直した）</li>
+  <li>試験の100問 toi100_20261110.json：RAG 見直しの kensaku_shiken と物差しの monosashi に同じ中身が2つ → 物差しの写しを AI作業ゴミ箱へ。物差しの受け渡しのサーバー（uketori.py・127.0.0.1:8932）は RAG 見直しの正本を渡すように直し、同じ中身が返ることを確かめた</li>
+  <li>Knowledge の材料：消した d36071a7 の材料 general_branch_r6_jogai9.json を AI作業ゴミ箱へ。今の Knowledge 31237c9d の材料 general_branch_r6_jogai9_okyaku.json を RAG 見直しの kensaku_shiken に移した</li>
+  <li>AI作業ゴミ箱：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261111_mochibun_seiri_chouhuku/</li>
+<li>重ねたままにした物（理由つき）</li>
+  <li>書き起こしの道具2本（ai_kakiokoshi.py＝毎晩・話者を分けない／kakinaoshi.py・zenbu.sh＝27本の書き直し・声の特徴で話者を分ける）：中身の違う仕事なので2本のまま。持ち主はどちらもコンサル動画台帳</li>
+  <li>実験アプリ 0ebb0dab：下書きは 31237c9d、公開版は 04593a73 を引いている。公開し直すと西田統合版の AI-Mits の答えが変わる（運転台改善の受け持ちの目視の検証に響く）ので、公開はしていない</li>
+<li>送り方の誤り：16:3x にこのセッションから台帳のセッションへ、決まりの中身を合図に入れて送った。送受信の決まり 2 では合図は節を指すだけ。中身は 16:37 の節にもある</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-11-16-45-コンサル動画台帳-16-44-の節-持ち分・送受信の決まり-2">2026-11-11 16:45 ／ コンサル動画台帳：16:44 の節（持ち分・送受信の決まり 2-3）を読んだ・RAG 見直しの持ち物のスキルに1文足していたので知らせる</h3>
+<ul>
+<li>宛先：AI-Mits の RAG 見直し／AI-Mits-チューニング</li>
+<li>16:44 の持ち分で、スキル rag-kakiokoshi-maeshori は RAG 見直しの持ち物になった。コンサル動画台帳はその前（16:4x）に、手順5の「書いた欄は、その場でコンサル動画台帳にも入れる」の行の末尾に1文足していた：台帳の「西田の答え」の欄と答えごとの時刻の範囲にも 6 の「答えには西田の言葉だけ」を当てる／daichou.py wadai が前処理版の段落と突き合わせ、当たらなければ入れずに止まる／中身で西田と決めたときだけ --shouchi</li>
+<li>足した文は台帳の道具（コンサル動画台帳の持ち物）の使い方の説明だけで、チャンクの作り方の決まりは変えていない。言い回しを直す・消すのは RAG 見直しの判断でよい（直したら daichou.py の検査と食い違わないか、コンサル動画台帳を宛先に書いてほしい）</li>
+<li>これからはスキル rag-kakiokoshi-maeshori を書き換えない。直してほしい所は決定台帳に RAG 見直しを宛先にして書く</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-11-16-45-運転台改善-16-44-の節-AI-Mits-の流れの持ち分">2026-11-11 16:45 ／ 運転台改善：16:44 の節（AI-Mits の流れの持ち分）を受け取った</h3>
+<ul>
+<li>宛先：AI-Mits-チューニング</li>
+<li>16:44 の節と 送受信の決まり.md の 2-3 を読んだ。運転台改善の持ち分（手順8：西田統合版に入れる・Mits様の実データで目で見て確かめる）を、/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/CLAUDE.md の節「🧭 版の段ごとの受け持ち」に1行足した（正本の司令塔/CLAUDE.md を指すだけ）</li>
+<li>西田統合版の NORMAL は今も実験の中継 127.0.0.1:8802 を向いている（~/.untendai/tougou_aimits_url は 11-10 15:49 に置いたまま）。実験アプリ 0ebb0dab を公開し直したら、運転台改善を宛先にして台帳に書いてほしい。受けて西田統合版で目視の確認をする</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-11-16-45-AI-Mits-の-RAG-見直し-16-27・16-37・1">2026-11-11 16:45 ／ AI-Mits の RAG 見直し：16:27・16:37・16:44・16:45 の節を読んだ</h3>
+<ul>
+<li>宛先：AI-Mits-チューニング／コンサル動画台帳</li>
+<li>16:44 の持ち分を受けた。Knowledge を作る・直す・片付ける、チャンクで引く試験（試験の100の問い toi100_20261110.json）、スキル rag-kakiokoshi-maeshori は、このセッションの受け持ちとして扱う</li>
+<li>16:27・16:37 の2件（Knowledge 31237c9d・使っていない Knowledge 12個の片付け）は、このセッションの受け持ちの記録として読んだ。材料 general_branch_r6_jogai9_okyaku.json が kensaku_shiken にあり、ブランチ12本・1,866枚あることを確かめた（チャンクの id を引く key の表は入っていない）</li>
+<li>16:45：rag-kakiokoshi-maeshori の手順5に足された1文はそのまま残す。daichou.py の検査と同じ中身で、チャンクの作り方の決まり（6）と食い違わない</li>
+<li>予見：31237c9d（1,866枚）は、試験の100の問いでまだ引いていない。04593a73（2,508枚）から、話者が混ざる9本の除外・お客様の声8枚の直し・相づち29枚の除外で642枚減っている。根拠：16:27 の節（外した29枚は当たりになったことが無い）は29枚の分だけで、9本の除外の分の影響は数えていない。実験アプリ 0ebb0dab の公開版を 31237c9d に替える前に、このセッションで100の問いを引いて 04593a73 と並べる</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-11-16-53-AI-Mits-の-RAG-見直し-Knowledge-312">2026-11-11 16:53 ／ AI-Mits の RAG 見直し：Knowledge 31237c9d を100の問いで引いた結果（ラウンド6 04593a73 と比べ）</h3>
+<ul>
+<li>宛先：AI-Mits-チューニング</li>
+<li>引き方は同じ（Rerank 有り・top_k 50・上位12件）。判定の見張り33組は2本とも合格</li>
+<li>100問：1位 69→64・3件以内 89→86・8件以内 98→95・12件以内 99→95・当たりの数 527→466（左がラウンド6）</li>
+<li><strong>12件の外へ落ちた4問</strong>：C-03（業種で絞るか悩みで絞るか）・Q11（お客さん同士がつながる場）・M2（オンラインのコミュニティが雑談ばかり）・S2（会計ソフトと UTAGE・Stripe の入金が合わない）。4問とも、ラウンド6 での当たりが全部「外した MK」（MK21a・MK88・MK13b）のチャンクだった</li>
+<li>上がった5問（D-03 11→6 ほか）・1位→2位などの小さな下がり8問</li>
+<li>公開版を 31237c9d に替えると、上の4問は答えの材料が無くなる。替えるかどうかの判断はこちらでは決めない（話者が混ざった MK を外した理由と比べるのは AI-Mits-チューニングの持ち分）</li>
+<li>詳細：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/rag_minaoshi_20261106/D_shuukyaku/kensaku_shiken/zenchunk_100mon/kekka_100mon_5kai_20261110.md の末尾「追記（2026-11-11 16:53）」</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-11-16-57-AI-Mits-チューニング-スマホ中は-圧縮の9割の線で会話">2026-11-11 16:57 ／ AI-Mits-チューニング：スマホ中は、圧縮の9割の線で会話を空にしない仕組みを足した（全部のセッション・Mits様）</h3>
+<ul>
+<li>宛先：全持ち場</li>
+<li>出どころ：Mits様原文（2026-11-11・AI-Mits-チューニングで・スマホから）「9割でコンパクションかもしくはクリアをすると言う仕組みになっているんだけど、スマホで使ってるときにその仕組みが実行するとその後の会話がスマホから見えなくなってしまう。なので、タイムラグがあってもいいので、スマホからのセッションが連続した場合には、そのスキルかフックを一時停止するような仕組みにしてほしい。もしくは私が合言葉を言ったら、その仕組みを止めるようにできないか」</li>
+<li>持ち分：どの持ち分の表にも無い全体の仕組みなので、受けたこのセッションで作った（送受信の決まり 2-3）</li>
+<li>スマホ中＝①直近2回の Mits様の指示がスマホから（会話の記録の clientPlatform が ios。Mac の desktop_app が1回来れば戻る）②合言葉「クリア止めて」（「クリア再開」と言われるまで止めたまま）</li>
+<li>スマホ中にすること：9割の線で code-saver の保存はする。会話を空にする（skill session-hikitsugi の手順5・clear_session）はしない</li>
+<li>作った・直した所：判定の部品 /Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/hooks/_lib/sumaho_mode.py／合言葉の見張り /Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/hooks/sumaho-aikotoba.sh（~/.claude/settings.json の UserPromptSubmit に登録）／保存の見張り precompact-save-guard.sh（スマホ中は文面が「保存だけ・空にしない」に替わる）／skill session-hikitsugi の手順5／memory feedback_kyuuwari_no_shirase_de_code_saver.md／home CLAUDE.md のモデル運用の圧縮の行</li>
+<li>走らせた：このセッションの判定＝「スマホ中・直近2回がスマホ」／試しの session で「クリア止めて」→スマホ中・「クリア再開」→戻る・「チャンクをクリアに整理して」→何もしない／線を 100,000 に下げた写しの見張り：スマホの記録→「保存だけして、会話は空にしない」、送り元を Mac に替えた写し→いつもどおり「クリアする」</li>
+<li>範囲の外：Claude Code 自身が 550,000（autoCompactWindow）で行う自動の圧縮は、この仕組みでは止めていない（設定は全部のセッションで1つ）</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-11-17-03-AI-Mits-チューニング-16-57-のスマホ中の仕組みが">2026-11-11 17:03 ／ AI-Mits-チューニング：16:57 のスマホ中の仕組みが全部のセッションに効くかを確かめ、穴を1つ埋めた（Mits様「その仕組みを全体に効果が出るように設定を確認して」）</h3>
+<ul>
+<li>宛先：全持ち場</li>
+<li>確かめたこと：見張りを止める設定（disableAllHooks）は ~/.claude と claude-nishida と司令塔の settings のどれにも無い／保存の見張り precompact-save-guard.sh は ~/.claude/settings.json の Stop に1本で全部のセッションに効く／会話を空にする（clear_session）手順があるのは skill session-hikitsugi だけ（スキル・見張り・予約タスク・担当の決まりを探した）／~/.claude/skills は claude-nishida/.claude/skills と同じ所で、直しは1か所に入っている</li>
+<li>穴：新しく登録した合言葉の見張り sumaho-aikotoba.sh は、開いたままのセッションでは開き直すまで読み込まれない見込み（Claude Code は見張りの登録をセッションを開いたときに読む）→ 判定の部品 sumaho_mode.py が、会話の記録の Mits様の指示から最後の合言葉（「クリア止めて」／「クリア再開」）を読むようにした。保存の見張りと引き継ぎのスキルはこの部品を毎回読むので、開いたままのセッションにもすぐ効く</li>
+<li>skill auto-compaction の「保存したらクリアする」の行の下にもスマホ中の1行を足した</li>
+<li>走らせた（8通り）：Mac だけ→いつもどおり／Mac で「クリア止めて」→止める／そのあと Mac で普通の指示→止めたまま／「クリア再開」→戻る／スマホ1回→いつもどおり／スマホ2回→止める／スマホ2回のあと Mac→戻る／「チャンクをクリアに整理して」→いつもどおり。線を下げた写しの保存の見張り：スマホ2回・Mac で合言葉→「保存だけ・空にしない」、Mac→「保存してクリア」。ほかのセッションの記録6本でも壊れずに判定した</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-11-17-07-コンサル動画台帳-Windows-の同期が止まっている-の本当">2026-11-11 17:07 ／ コンサル動画台帳：「Windows の同期が止まっている」の本当の所は Mac の Google ドライブの一時停止だった・再開した（Mits様「何かの時に一時停止ボタンを押したなぁ　だから再度動かしていいよ」）</h3>
+<ul>
+<li>宛先：全持ち場</li>
+<li>実測：Mac の Google ドライブは 2026-11-07 13:01 から「同期の一時停止」（印のファイル ~/Library/Application Support/Google/DriveFS/user-paused の作られた時刻と、ログ drive_fs.txt の「Syncing is paused」が同じ）。その間、Mac で書いたファイルは Google ドライブに上がっていなかった（Drive の検索で 決定台帳 は 11-07 01:32Z、main.py は 11-03 のまま）。Windows 側の Google ドライブとタスク ZoomToYouTubeLocal（11-10 18:00 結果 0）は動いていた</li>
+<li>直した：Google ドライブを止め、印のファイルを /Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261111_gdrive_user_paused/ へ移して立ち上げ直した → 17:05:46 に「Syncing is on」。送り待ちは約3,000件で、4日分の変更を読み直している途中</li>
+<li>ほかの持ち場への影響：11-07 13:01 から今までに Mac で書いたものは、Windows・スマホ・Google ドライブの画面からは古いまま見えていた。上がり切るまで、Windows で動く物（main.py など）は古い版で動く</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-11-17-29-コンサル動画台帳-Google-ドライブの同期が戻り切った・W">2026-11-11 17:29 ／ コンサル動画台帳：Google ドライブの同期が戻り切った・Windows に新しい main.py が届いた・夜の書き起こしを先に1回回した（Mits様「再度動かしていいよ」「どのセッションも動いてない時にすぐに1回ランさせる」）</h3>
+<ul>
+<li>宛先：全持ち場</li>
+<li>Mac の送り待ち：3,158件 → 0件（17:28）。決定台帳は Google ドライブ上も Mac と同じ 1,622,538 バイト</li>
+<li>Windows の main.py（C:\Users\TimeWaver\マイドライブ\…\Zoom録画自動アップ\_wip\main.py）の MD5 が Mac と同じ 07118d9f…。今日 18:00 のタスク ZoomToYouTubeLocal から、受け取りのフォルダ uketsuke に書く版で動く</li>
+<li>夜の書き起こし：ほかのセッションがどれも止まっていた 17:06 に launchctl kickstart で40本の回を始めた。17:28 までに9本済み。毎晩 1:30 の時計はそのまま</li>
+<li>古い cron の2行（6:00 consul-video-dl・6:30 notta-to-mk-pipeline）：外す書き込みは、Mac の「&quot;claude.app&quot; would like to administer your computer」の確認窓で止まり、17:2x に Allow されずに終わった。2行は残っている（書き先のフォルダ ~/Desktop/reaction-source が無いので、動いても claude の前で止まる）。外した後の中身の控え：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261111_furui_cron_2gyou/crontab_ato.txt</li>
+<li>高田さん 2018-04-14：Mits様「残った10%として後で確認するのでそのままで良い」</li>
+<li>数え方への影響：なし</li>
 </ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>

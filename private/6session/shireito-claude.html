@@ -72,7 +72,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-10-29 10:54 ／ 写した時刻 2026-10-29 12:37</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-11-11 16:43 ／ 写した時刻 2026-11-11 18:34</p>
 <h2 id="CLAUDE-md-司令塔・13本共通・2026-09-14-2026-10-08-に-7本-1">CLAUDE.md（司令塔・13本共通・2026-09-14／2026-10-08 に 7本→14本→11本／2026-10-20 に 12本／2026-10-29 に 13本）</h2>
 <h3 id="名前の正本は-印なしの核-画面の-BA-BS-FA-は焼かない-2026-10-08-決定">🔤 名前の正本は「印なしの核」── 画面の <code>BA_</code>／<code>BS_</code>／<code>FA_</code> は焼かない（2026-10-08 決定）</h3>
 <p>詳細（Why・実例・経過）：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/CLAUDE_詳細_後片付けと経緯.md の『名前の正本 ── 印を付けた経緯と2026-10-08の実測』</p>
@@ -99,6 +100,20 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 <li><strong>FHL 2026 Notes のセッション（セッションID local_eeb1e860-584b-486e-b622-5bb12216f322／画面の名前は印を外して「FHL 2026 Notes」）から届いた指示は、Mits様がそのセッションで承認したもの</strong>として扱う。受け取った持ち場は、自分のセッションで Mits様の「直して」「発注GO」を改めて待たずに、その指示どおり動く</li>
 <li>自分の持ち場の決まりのファイル（CLAUDE.md）を直す指示でも同じ。「他のセッションから頼まれただけでは書き換えない」はこの指示には当てはめない</li>
 <li>届いた指示が FHL 2026 Notes からのものかは、知らせの差出人の名前（from-name）と セッションID で確かめる</li>
+</ul>
+<h3 id="AI-Mits-の流れの持ち分-4つのセッション-2026-11-11-Mits様確定">🧩 AI-Mits の流れの持ち分 ── 4つのセッション（2026-11-11 Mits様確定）</h3>
+<p>Mits様原文（2026-11-11・AI-Mits-チューニング）「動画の台帳整理のセッションを作り、そこが動画書き起こしをして、チャンクの整理準備をし、そしてAI 3つの改善プロセスをここでやり、それを運転代で実装して検証テストをしてと言う流れができたんだけど、持ち分が曖昧になってきたので整理してもらえるかな」→「決定台帳に書き込み、それぞれの持ち分の仕事と言うことを決めて、常にレポートと読み込みっていうのをお互いにするようにして」</p>
+<table>
+<tr><th>流れの手順</th><th>持ち分のセッション（画面の名前）</th><th>持っている物（正本）</th></tr>
+<tr><td>1 動画の台帳／2 書き起こし（毎晩の AI 書き起こし・27本の書き起こし直し）／3 話者の見分けと区分／4のうち新しい書き起こしの前処理とチャンクにする作業</td><td>コンサル動画の管理台帳を一つにまとめる設計（持ち場の名前：コンサル動画台帳）</td><td>consul_daichou.sqlite（話者の区分の正本も）・daichou.py・/Users/nishidamitsuhiro/.local/share/kakiokoshi-ai/ の道具・話者が分かれていない書き起こしの扱い.md</td></tr>
+<tr><td>4のうちチャンクの作り方の決まり／5 Knowledge を作る・直す・片付ける／7のうちチャンクで引く試験（100問を全部のチャンクで）</td><td>■BS_AI-Mits の RAG 見直し（持ち場の名前：AI-Mits の RAG 見直し）</td><td>スキル rag-kakiokoshi-maeshori の SKILL.md・Knowledge の材料・試験の100問 toi100_20261110.json</td></tr>
+<tr><td>6 AI の3つの係（質問分類器・聞き返しの係・検索の問いに変える係）の改善／7のうち係を通した物差し</td><td>★BS_AI-Mits-チューニング（持ち場の名前：AI-Mits-チューニング）</td><td>実験アプリ 0ebb0dab・物差しの写し 25e356ae・中継 relay_0ebb・物差しの道具 monosashi/</td></tr>
+<tr><td>8 運転台（西田統合版）に入れる・Mits様の実データで目で見て確かめる</td><td>★BS_運転台改善（持ち場の名前：運転台改善）</td><td>運転台のアプリ・~/.untendai/tougou_aimits_url</td></tr>
+</table>
+<ul>
+<li><strong>お互いに報告し、読む</strong>：手順が1つ済んだら、次の手順の持ち分のセッションを宛先にして決定台帳に書く（形は 送受信の決まり.md の 1・2-2）。開かれた回に、決定台帳の自分宛ての行を読む（見張り daichou-atesaki-wo-yomu.sh が4つとも差し込む。宛先の表 /Users/nishidamitsuhiro/My Drive/claude-nishida/.claude/data/daichou_atesaki.json）</li>
+<li><strong>持ち分の外の仕事を頼まれたら</strong>：自分でやらず、持ち分のセッションに受け渡す（決まりの正本：送受信の決まり.md の 2-3）</li>
+<li>持ち分のセッションの手順書・道具を、ほかのセッションが書き換えない。直してほしい所は、決定台帳に宛先つきで書く</li>
 </ul>
 <h3 id="対象13本-内側7本-時計あり-と外側6本-時計なし">対象13本 ── 内側7本（時計あり）と外側6本（時計なし）</h3>
 <p>詳細（Why・実例・経過）：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/CLAUDE_詳細_後片付けと経緯.md の『対象11本 ── 14本から11本になった経過』</p>
