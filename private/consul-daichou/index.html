@@ -64,6 +64,9 @@ th.f.act .ic{color:var(--sugoi);font-weight:700}
 .pop button.s{display:block;width:100%;text-align:left;border:0;background:none;padding:5px 6px;border-radius:5px;cursor:pointer;font-size:13px}
 .pop button.s:hover,.pop button.s.on{background:#f1efe8}
 .pop input.ps{width:100%;border:1px solid var(--line);border-radius:6px;padding:5px 8px;margin:8px 0 6px;font-size:13px}
+.pop .ikkatsu{display:flex;gap:6px;margin:0 0 6px}
+.pop .ikkatsu button{flex:1;border:1px solid var(--line);background:#fff;border-radius:5px;padding:4px 8px;cursor:pointer;font-size:13px}
+.pop .ikkatsu button:hover{background:#f1efe8}
 .pop .lst{max-height:260px;overflow:auto;border:1px solid var(--line);border-radius:6px;padding:4px 6px}
 .pop label{display:flex;gap:6px;align-items:center;padding:2px 0;cursor:pointer}
 .pop label .n{margin-left:auto;color:var(--sub);font-size:11px;padding-left:6px}
@@ -90,7 +93,7 @@ th.f.act .ic{color:var(--sugoi);font-weight:700}
 </table></div>
 <div class="pager" id="pg2"></div>
 </main>
-<script src="data.js?v=2026-11-12_1735"></script>
+<script src="data.js?v=2026-11-12_1741"></script>
 <script>
 const STEPS=["動画を落とす","書き起こし","話者の見分け","MK 化","AI で書き起こし直し","書き起こし直しの見分け"];
 const BUNRUI=["すごいコンサル","無料個別相談","他の個別相談","他のコンサル","グルコン","勉強会","セミナー","未分類"];
@@ -182,6 +185,7 @@ function pop(c,th){
   const so=st.sort&&st.sort.k===c.k?st.sort.d:0;
   el.innerHTML=`<button class="s${so>0?" on":""}" data-d="1">↑ 昇順で並べる（小さい順・古い順・あいうえお順）</button><button class="s${so<0?" on":""}" data-d="-1">↓ 降順で並べる（大きい順・新しい順）</button>${st.sort?'<button class="s" data-d="0">並べ替えを外す（もとの順）</button>':""}
    <input class="ps" placeholder="「${c.lab}」の中をさがす">
+   <div class="ikkatsu"><button class="ze">すべて選ぶ</button><button class="zh">すべて外す</button></div>
    <div class="lst"><label class="all"><input type="checkbox" class="ca">（すべて選ぶ）<span class="n">${base.length}本</span></label>${vals.map((v,i)=>`<label data-i="${i}"><input type="checkbox" class="cv" data-i="${i}" ${on.has(v)?"checked":""}>${esc(v)}<span class="n">${cnt[v]}本</span></label>`).join("")}</div>
    <div class="ft"><span class="m"></span>${now?'<button class="hz">このしぼりを外す</button>':""}<button class="cx">やめる</button><button class="go">OK</button></div>`;
   document.body.appendChild(el);popEl=el;
@@ -194,6 +198,8 @@ function pop(c,th){
   el.querySelector(".ps").oninput=e=>{const q=e.target.value.toLowerCase();el.querySelectorAll("label[data-i]").forEach(l=>{l.style.display=vals[+l.dataset.i].toLowerCase().includes(q)?"":"none"});caSet()};
   el.querySelector(".ca").onchange=e=>{mieru().forEach(l=>l.querySelector("input").checked=e.target.checked)};
   el.querySelectorAll(".cv").forEach(x=>x.onchange=caSet);
+  el.querySelector(".ze").onclick=()=>{mieru().forEach(l=>l.querySelector("input").checked=true);caSet()};
+  el.querySelector(".zh").onclick=()=>{mieru().forEach(l=>l.querySelector("input").checked=false);caSet();el.querySelector(".m").textContent=""};
   el.querySelector(".cx").onclick=popTojiru;
   const hz=el.querySelector(".hz");if(hz)hz.onclick=()=>{delete st.f[c.k];st.page=0;popTojiru();draw()};
   el.querySelector(".go").onclick=()=>{
@@ -258,7 +264,7 @@ document.getElementById("q").oninput=e=>{st.q=e.target.value;st.page=0;draw()};
 document.getElementById("nen").onchange=e=>{st.nen=e.target.value;st.page=0;draw()};
 document.getElementById("moto").onchange=e=>{st.moto=e.target.value;st.page=0;draw()};
 document.getElementById("clr").onclick=()=>{st=SHOKI();draw()};
-document.getElementById("head").textContent=`AI の台帳（consul_daichou.sqlite）の ${DAI.length} 本（公開版・2026-11-12 17:35 に書き出し）。行を押すと、作業履歴と AI の台帳の1行が開きます。分類は記録から AI が当てた案で、根拠を行ごとに書いています。`;
+document.getElementById("head").textContent=`AI の台帳（consul_daichou.sqlite）の ${DAI.length} 本（公開版・2026-11-12 17:41 に書き出し）。行を押すと、作業履歴と AI の台帳の1行が開きます。分類は記録から AI が当てた案で、根拠を行ごとに書いています。`;
 draw();
 </script>
 </body>
