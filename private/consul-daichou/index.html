@@ -46,6 +46,23 @@ h3{font-size:13px;margin:12px 0 6px}
 .pager button{border:1px solid var(--line);background:#fff;border-radius:5px;padding:3px 10px;cursor:pointer}
 a{color:var(--kobetsu)}
 .msg{font-size:12px;color:var(--muryo);margin-left:8px}
+th.f{cursor:pointer;user-select:none;white-space:nowrap}
+th.f:hover{background:#ebe9e1}
+th.f .ic{font-size:11px;color:#aaa;margin-left:4px}
+th.f.act{color:var(--ink)}
+th.f.act .ic{color:var(--sugoi);font-weight:700}
+.pop{position:absolute;z-index:20;background:#fff;border:1px solid var(--line);border-radius:8px;box-shadow:0 6px 24px rgba(0,0,0,.15);padding:10px;width:290px;max-width:calc(100vw - 32px);font-size:13px;color:var(--ink)}
+.pop button.s{display:block;width:100%;text-align:left;border:0;background:none;padding:5px 6px;border-radius:5px;cursor:pointer;font-size:13px}
+.pop button.s:hover,.pop button.s.on{background:#f1efe8}
+.pop input.ps{width:100%;border:1px solid var(--line);border-radius:6px;padding:5px 8px;margin:8px 0 6px;font-size:13px}
+.pop .lst{max-height:260px;overflow:auto;border:1px solid var(--line);border-radius:6px;padding:4px 6px}
+.pop label{display:flex;gap:6px;align-items:center;padding:2px 0;cursor:pointer}
+.pop label .n{margin-left:auto;color:var(--sub);font-size:11px;padding-left:6px}
+.pop label.all{border-bottom:1px dashed var(--line);margin-bottom:2px;font-weight:600}
+.pop .ft{display:flex;gap:6px;justify-content:flex-end;align-items:center;margin-top:8px;flex-wrap:wrap}
+.pop .ft button{border:1px solid var(--line);background:#fff;border-radius:5px;padding:4px 12px;cursor:pointer;font-size:13px}
+.pop .ft button.go{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pop .ft .m{color:#a4441f;font-size:12px;margin-right:auto}
 </style>
 </head>
 <body>
@@ -59,7 +76,7 @@ a{color:var(--kobetsu)}
 <p class="legend">手順の並び：動画を落とす → 書き起こし → 話者の見分け → MK 化 → AI で書き起こし直し → 書き起こし直しの見分け<b style="background:var(--done)"></b>済み<b style="background:var(--redo)"></b>やり直しが要る<b style="background:var(--todo)"></b>未着手</p>
 <div class="pager" id="pg1"></div>
 <table>
-<thead><tr><th>分類</th><th>クライアント</th><th>日付</th><th class="hide-s">長さ</th><th>MK</th><th>手順</th><th>次にやること</th><th class="hide-s">番号</th></tr></thead>
+<thead><tr id="hr"></tr></thead>
 <tbody id="tb"></tbody>
 </table>
 <div class="pager" id="pg2"></div>
@@ -71,8 +88,24 @@ const BUNRUI=["すごいコンサル","無料個別相談","他の個別相談",
 const COLOR={"すごいコンサル":"var(--sugoi)","無料個別相談":"var(--muryo)","他の個別相談":"var(--kobetsu)","他のコンサル":"var(--hoka)","未分類":"var(--mibun)","範囲の外":"var(--soto)"};
 const SC={"済み":"d","やり直しが要る":"w","未着手":""};
 const PER=100;
-let st={bun:"すべて",next:"すべて",q:"",nen:"",moto:"",page:0};let hiraita="";
-try{Object.assign(st,JSON.parse(localStorage.getItem("consul_daichou_st")||"{}"));st.page=0}catch(e){}
+const SHOKI=()=>({bun:"すべて",next:"すべて",q:"",nen:"",moto:"",page:0,f:{},sort:null});
+let st=SHOKI();let hiraita="";
+try{Object.assign(st,JSON.parse(localStorage.getItem("consul_daichou_st")||"{}"));st.page=0;if(!st.f||typeof st.f!=="object")st.f={}}catch(e){}
+// 見出しを押すと出る、エクセルの形の「並べ替え・しぼり」。v は しぼりの一覧に出す値、s は並べ替えに使う値
+function mkn(s){const m=String(s||"").match(/(\d+)/);return m?+m[1]:1e9}
+function nagaK(s){if(!s)return"（なし）";const m=s/60;return m<30?"30分未満":m<60?"30〜60分":m<90?"60〜90分":"90分以上"}
+function sumi(r){return STEPS.filter(x=>r.tejun[x]==="済み").length}
+const COLS=[
+ {k:"c_bun",lab:"分類",v:r=>r.bunrui,s:r=>BUNRUI.indexOf(r.bunrui)},
+ {k:"c_client",lab:"クライアント",v:r=>r.client||r.zoom_topic||"（名前なし）",s:r=>r.client||r.zoom_topic||""},
+ {k:"c_date",lab:"日付",v:r=>(r.date||"").slice(0,7)||"（なし）",s:r=>r.date||"",gyaku:1},
+ {k:"c_naga",lab:"長さ",hs:1,v:r=>nagaK(r.nagasa_sec),s:r=>r.nagasa_sec||0},
+ {k:"c_mk",lab:"MK",v:r=>r.mk||"（空白）",s:r=>mkn(r.mk)},
+ {k:"c_tejun",lab:"手順",v:r=>"済み "+sumi(r)+"／6",s:sumi},
+ {k:"c_next",lab:"次にやること",v:r=>r.next||"（なし）",s:r=>r.next||""},
+ {k:"c_yt",lab:"番号",hs:1,v:r=>r.yt_jotai==="ある"?"ある":"無い",s:r=>r.no}
+];
+function kurabe(x,y){return typeof x==="number"&&typeof y==="number"?x-y:String(x).localeCompare(String(y),"ja")}
 function save(){try{localStorage.setItem("consul_daichou_st",JSON.stringify(st))}catch(e){}}
 function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 function len(s){if(!s)return"";const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return(h?h+":"+String(m).padStart(2,"0"):m)+":"+String(x).padStart(2,"0")}
@@ -86,7 +119,51 @@ function ok(r,skip){
   if(st.nen&&!(r.date||"").startsWith(st.nen))return false;
   if(st.moto&&!r.demoto.includes(st.moto))return false;
   if(st.q){const q=st.q.toLowerCase();const hay=[r.client,r.zoom_topic,r.mk,r.no,(r.client_raw||[]).join(" "),r.yt_title].join(" ").toLowerCase();if(!hay.includes(q))return false}
+  for(const c of COLS){if(skip===c.k)continue;const a=st.f[c.k];if(a&&!a.includes(c.v(r)))return false}
   return true;
+}
+function midashi(){
+  const hr=document.getElementById("hr");
+  hr.innerHTML=COLS.map(c=>{const so=st.sort&&st.sort.k===c.k,fi=!!st.f[c.k];
+    return `<th class="f${c.hs?" hide-s":""}${so||fi?" act":""}" data-k="${c.k}" title="押すと 並べ替え・しぼり">${c.lab}<span class="ic">${so?(st.sort.d>0?"↑":"↓"):""}${fi?"●":""}▾</span></th>`}).join("");
+  hr.querySelectorAll("th").forEach(th=>th.onclick=e=>{e.stopPropagation();pop(COLS.find(c=>c.k===th.dataset.k),th)});
+}
+let popEl=null;
+function popTojiru(){if(popEl){popEl.remove();popEl=null}}
+document.addEventListener("click",e=>{if(popEl&&!popEl.contains(e.target))popTojiru()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")popTojiru()});
+function pop(c,th){
+  const mae=popEl&&popEl.dataset.k===c.k;popTojiru();if(mae)return;
+  const base=DAI.filter(r=>ok(r,c.k));const cnt={},sk={};
+  base.forEach(r=>{const v=c.v(r);cnt[v]=(cnt[v]||0)+1;const s=c.s(r);if(!(v in sk)||kurabe(s,sk[v])<0)sk[v]=s});
+  const now=st.f[c.k];if(now)now.forEach(v=>{if(!(v in cnt)){cnt[v]=0;sk[v]=""}});
+  const vals=Object.keys(cnt).sort((a,b)=>kurabe(sk[a],sk[b])*(c.gyaku?-1:1));
+  const on=new Set(now||vals);
+  const el=document.createElement("div");el.className="pop";el.dataset.k=c.k;
+  const so=st.sort&&st.sort.k===c.k?st.sort.d:0;
+  el.innerHTML=`<button class="s${so>0?" on":""}" data-d="1">↑ 昇順で並べる（小さい順・古い順・あいうえお順）</button><button class="s${so<0?" on":""}" data-d="-1">↓ 降順で並べる（大きい順・新しい順）</button>${st.sort?'<button class="s" data-d="0">並べ替えを外す（もとの順）</button>':""}
+   <input class="ps" placeholder="「${c.lab}」の中をさがす">
+   <div class="lst"><label class="all"><input type="checkbox" class="ca">（すべて選ぶ）<span class="n">${base.length}本</span></label>${vals.map((v,i)=>`<label data-i="${i}"><input type="checkbox" class="cv" data-i="${i}" ${on.has(v)?"checked":""}>${esc(v)}<span class="n">${cnt[v]}本</span></label>`).join("")}</div>
+   <div class="ft"><span class="m"></span>${now?'<button class="hz">このしぼりを外す</button>':""}<button class="cx">やめる</button><button class="go">OK</button></div>`;
+  document.body.appendChild(el);popEl=el;
+  const rc=th.getBoundingClientRect(),w=el.offsetWidth;
+  el.style.top=(rc.bottom+scrollY+2)+"px";el.style.left=Math.max(8,Math.min(rc.left+scrollX,scrollX+document.documentElement.clientWidth-w-8))+"px";
+  el.onclick=e=>e.stopPropagation();
+  const mieru=()=>[...el.querySelectorAll("label[data-i]")].filter(l=>l.style.display!=="none");
+  const caSet=()=>{const m=mieru();el.querySelector(".ca").checked=m.length>0&&m.every(l=>l.querySelector("input").checked)};caSet();
+  el.querySelectorAll("button.s").forEach(b=>b.onclick=()=>{const d=+b.dataset.d;st.sort=d?{k:c.k,d}:null;st.page=0;popTojiru();draw()});
+  el.querySelector(".ps").oninput=e=>{const q=e.target.value.toLowerCase();el.querySelectorAll("label[data-i]").forEach(l=>{l.style.display=vals[+l.dataset.i].toLowerCase().includes(q)?"":"none"});caSet()};
+  el.querySelector(".ca").onchange=e=>{mieru().forEach(l=>l.querySelector("input").checked=e.target.checked)};
+  el.querySelectorAll(".cv").forEach(x=>x.onchange=caSet);
+  el.querySelector(".cx").onclick=popTojiru;
+  const hz=el.querySelector(".hz");if(hz)hz.onclick=()=>{delete st.f[c.k];st.page=0;popTojiru();draw()};
+  el.querySelector(".go").onclick=()=>{
+    const q=el.querySelector(".ps").value;
+    const sel=[...el.querySelectorAll("label[data-i]")].filter(l=>(!q||l.style.display!=="none")&&l.querySelector("input").checked).map(l=>vals[+l.dataset.i]);
+    if(!sel.length){el.querySelector(".m").textContent="1つ以上選んでください";return}
+    if(sel.length===vals.length&&vals.every(v=>cnt[v]>0))delete st.f[c.k];else st.f[c.k]=sel;
+    st.page=0;popTojiru();draw()};
+  el.querySelector(".ps").focus();
 }
 function bar(id,key,vals,lab){
   const el=document.getElementById(id);
@@ -111,7 +188,9 @@ function draw(){
   save();
   document.getElementById("q").value=st.q;document.getElementById("nen").value=st.nen;document.getElementById("moto").value=st.moto;
   bar("b_bun","bun",BUNRUI,"分類");bar("b_next","next",[],"次にやること");
+  midashi();
   const rows=DAI.filter(r=>ok(r));
+  if(st.sort){const c=COLS.find(x=>x.k===st.sort.k);if(c)rows.sort((a,b)=>kurabe(c.s(a),c.s(b))*st.sort.d);else st.sort=null}
   const pages=Math.max(1,Math.ceil(rows.length/PER));if(st.page>=pages)st.page=pages-1;
   const pgh=`<button ${st.page?"":"disabled"} data-d="-1">前</button>${rows.length}本中 ${st.page*PER+1}〜${Math.min(rows.length,(st.page+1)*PER)}本目<button ${st.page<pages-1?"":"disabled"} data-d="1">次</button>`;
   ["pg1","pg2"].forEach(id=>{const e=document.getElementById(id);e.innerHTML=pgh;e.querySelectorAll("button").forEach(b=>b.onclick=()=>{st.page+=+b.dataset.d;draw();scrollTo(0,0)})});
@@ -139,8 +218,8 @@ function draw(){
 document.getElementById("q").oninput=e=>{st.q=e.target.value;st.page=0;draw()};
 document.getElementById("nen").onchange=e=>{st.nen=e.target.value;st.page=0;draw()};
 document.getElementById("moto").onchange=e=>{st.moto=e.target.value;st.page=0;draw()};
-document.getElementById("clr").onclick=()=>{st={bun:"すべて",next:"すべて",q:"",nen:"",moto:"",page:0};draw()};
-document.getElementById("head").textContent=`AI の台帳（consul_daichou.sqlite）の ${DAI.length} 本（公開版・2026-11-11 16:28 に書き出し）。行を押すと、作業履歴と AI の台帳の1行が開きます。分類は記録から AI が当てた案で、根拠を行ごとに書いています。`;
+document.getElementById("clr").onclick=()=>{st=SHOKI();draw()};
+document.getElementById("head").textContent=`AI の台帳（consul_daichou.sqlite）の ${DAI.length} 本（公開版・2026-11-12 14:31 に書き出し）。行を押すと、作業履歴と AI の台帳の1行が開きます。分類は記録から AI が当てた案で、根拠を行ごとに書いています。`;
 draw();
 </script>
 </body>
