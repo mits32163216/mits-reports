@@ -82,7 +82,7 @@ th.f.act .ic{color:var(--sugoi);font-weight:700}
 </table>
 <div class="pager" id="pg2"></div>
 </main>
-<script src="data.js?v=2026-11-12_1450"></script>
+<script src="data.js?v=2026-11-12_1453"></script>
 <script>
 const STEPS=["動画を落とす","書き起こし","話者の見分け","MK 化","AI で書き起こし直し","書き起こし直しの見分け"];
 const BUNRUI=["すごいコンサル","無料個別相談","他の個別相談","他のコンサル","未分類","範囲の外"];
@@ -108,6 +108,7 @@ function namaeTag(r){const c=r.client||"";
 const COLS=[
  {k:"c_bun",lab:"分類",v:r=>r.bunrui,s:r=>BUNRUI.indexOf(r.bunrui)},
  {k:"c_client",lab:"クライアント",v:r=>r.client||r.zoom_topic||"（名前なし）",s:r=>r.client||r.zoom_topic||""},
+ {k:"c_event",lab:"イベント名",v:r=>r.event||"（空白）",s:r=>r.event||"￿"},
  {k:"c_date",lab:"日付",v:r=>(r.date||"").slice(0,7)||"（なし）",s:r=>r.date||"",gyaku:1},
  {k:"c_naga",lab:"長さ",hs:1,v:r=>nagaK(r.nagasa_sec),s:r=>r.nagasa_sec||0},
  {k:"c_mk",lab:"MK",v:r=>r.mk||"（空白）",s:r=>mkn(r.mk)},
@@ -128,7 +129,7 @@ function ok(r,skip){
   if(skip!=="next"&&st.next!=="すべて"&&r.next!==st.next)return false;
   if(st.nen&&!(r.date||"").startsWith(st.nen))return false;
   if(st.moto&&!r.demoto.includes(st.moto))return false;
-  if(st.q){const q=st.q.toLowerCase();const hay=[r.client,r.zoom_topic,r.mk,r.no,(r.client_raw||[]).join(" "),r.yt_title].join(" ").toLowerCase();if(!hay.includes(q))return false}
+  if(st.q){const q=st.q.toLowerCase();const hay=[r.client,r.event,r.zoom_topic,r.mk,r.youtube_id,(r.client_raw||[]).join(" "),r.yt_title].join(" ").toLowerCase();if(!hay.includes(q))return false}
   for(const c of COLS){if(skip===c.k)continue;const a=st.f[c.k];if(a&&!a.includes(c.v(r)))return false}
   return true;
 }
@@ -185,9 +186,9 @@ function bar(id,key,vals,lab){
 }
 function detail(r){
   const h=r.hist.length?r.hist.map(x=>`<li><span class="t">${esc(x[0])}</span>${esc(x[1])}　<span class="who">${esc(x[2])}／${esc(x[3])}</span></li>`).join(""):"<li>作業履歴はまだありません（未着手）</li>";
-  const ura={no:r.no,bunrui:r.bunrui,bunrui_konkyo:r.bunrui_konkyo,client:r.client,client_raw:r.client_raw,zoom_topic:r.zoom_topic,date:r.date,nagasa_sec:r.nagasa_sec,yt_title:r.yt_title,yt_privacy:r.yt_privacy,yt_jotai:r.yt_jotai,mk:r.mk,kyu_mk:r.kyu_mk,notion_pages:r.notion_pages,washa_kubun:r.washa_kubun,tejun:r.tejun,demoto:r.demoto,chui:r.chui};
+  const ura={no:r.no,bunrui:r.bunrui,bunrui_konkyo:r.bunrui_konkyo,client:r.client,event:r.event,client_raw:r.client_raw,zoom_topic:r.zoom_topic,date:r.date,nagasa_sec:r.nagasa_sec,yt_title:r.yt_title,yt_privacy:r.yt_privacy,yt_jotai:r.yt_jotai,mk:r.mk,kyu_mk:r.kyu_mk,notion_pages:r.notion_pages,washa_kubun:r.washa_kubun,tejun:r.tejun,demoto:r.demoto,chui:r.chui};
   const np=(r.notion_pages||[]).map(p=>`<li>${esc(p.title||p.daichou)} <span class="who">${esc(p.daichou)}</span></li>`).join("");
-  return `<td colspan="8"><div class="cols"><div>
+  return `<td colspan="9"><div class="cols"><div>
    <h3 style="margin-top:0">作業履歴</h3><ul class="hist">${h}</ul>
    <p class="note" style="margin-top:8px">分類の根拠：${esc(r.bunrui_konkyo)}</p>
    ${r.chui.length?`<p class="warn">注意：${r.chui.map(esc).join("／")}</p>`:""}
@@ -207,7 +208,7 @@ function draw(){
   const tb=document.getElementById("tb");tb.innerHTML="";
   rows.slice(st.page*PER,(st.page+1)*PER).forEach(r=>{
     const tr=document.createElement("tr");tr.className="row";
-    tr.innerHTML=`<td><span class="bun" style="background:${COLOR[r.bunrui]}">${esc(r.bunrui)}</span></td><td>${esc(r.client||r.zoom_topic||"（名前なし）")}${namaeTag(r)}${r.chui.length?' <span class="warn">⚠</span>':""}</td><td>${esc(r.date)}</td><td class="hide-s">${len(r.nagasa_sec)}</td><td>${esc(r.mk)}</td><td><div class="steps">${STEPS.map(s=>`<span class="${SC[r.tejun[s]]||""}" title="${s}：${r.tejun[s]}"></span>`).join("")}</div></td><td class="next">${esc(r.next)}</td><td class="hide-s">${esc(r.no)}${r.yt_jotai==="ある"?"":`<span class="warn">（${esc(r.yt_jotai)}）</span>`}</td>`;
+    tr.innerHTML=`<td><span class="bun" style="background:${COLOR[r.bunrui]}">${esc(r.bunrui)}</span></td><td>${esc(r.client||r.zoom_topic||"（名前なし）")}${namaeTag(r)}${r.chui.length?' <span class="warn">⚠</span>':""}</td><td>${esc(r.event||"")}</td><td>${esc(r.date)}</td><td class="hide-s">${len(r.nagasa_sec)}</td><td>${esc(r.mk)}</td><td><div class="steps">${STEPS.map(s=>`<span class="${SC[r.tejun[s]]||""}" title="${s}：${r.tejun[s]}"></span>`).join("")}</div></td><td class="next">${esc(r.next)}</td><td class="hide-s">${esc(r.no)}${r.yt_jotai==="ある"?"":`<span class="warn">（${esc(r.yt_jotai)}）</span>`}</td>`;
     const dt=document.createElement("tr");dt.className="detail";dt.style.display="none";dt.innerHTML=detail(r);
     if(r.no===hiraita)dt.style.display="";
     tr.onclick=()=>{dt.style.display=dt.style.display==="none"?"":"none";hiraita=dt.style.display===""?r.no:""};
@@ -229,7 +230,7 @@ document.getElementById("q").oninput=e=>{st.q=e.target.value;st.page=0;draw()};
 document.getElementById("nen").onchange=e=>{st.nen=e.target.value;st.page=0;draw()};
 document.getElementById("moto").onchange=e=>{st.moto=e.target.value;st.page=0;draw()};
 document.getElementById("clr").onclick=()=>{st=SHOKI();draw()};
-document.getElementById("head").textContent=`AI の台帳（consul_daichou.sqlite）の ${DAI.length} 本（公開版・2026-11-12 14:50 に書き出し）。行を押すと、作業履歴と AI の台帳の1行が開きます。分類は記録から AI が当てた案で、根拠を行ごとに書いています。`;
+document.getElementById("head").textContent=`AI の台帳（consul_daichou.sqlite）の ${DAI.length} 本（公開版・2026-11-12 14:53 に書き出し）。行を押すと、作業履歴と AI の台帳の1行が開きます。分類は記録から AI が当てた案で、根拠を行ごとに書いています。`;
 draw();
 </script>
 </body>
