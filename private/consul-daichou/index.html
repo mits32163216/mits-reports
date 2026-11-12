@@ -9,7 +9,10 @@
 :root{--bg:#fafaf7;--card:#fff;--ink:#222;--sub:#666;--line:#e3e1da;--sugoi:#b4542e;--muryo:#2f7a4f;--kobetsu:#2b5f9e;--hoka:#6b4f9e;--mibun:#999;--soto:#c9c6bd;--done:#2f7a4f;--todo:#d8d5cc;--redo:#d9a23b}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;font-size:14px;line-height:1.6}
-main{max-width:1240px;margin:0 auto;padding:24px 16px 64px}
+main{max-width:none;margin:0 auto;padding:24px 16px 64px}
+.hyou{overflow-x:auto}
+tr.row td{white-space:nowrap}
+tr.detail td{white-space:normal}
 h1{font-size:20px;margin:0 0 4px}
 .note{color:var(--sub);font-size:12px;margin:0 0 12px}
 .bar{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px;align-items:center}
@@ -76,13 +79,13 @@ th.f.act .ic{color:var(--sugoi);font-weight:700}
 <div class="bar"><span class="lab">しぼる</span><input id="q" placeholder="名前・会議名・MK・番号" size="24"><select id="nen"></select><select id="moto"></select><button id="clr">しぼりを外す</button></div>
 <p class="legend">手順の並び：動画を落とす → 書き起こし → 話者の見分け → MK 化 → AI で書き起こし直し → 書き起こし直しの見分け<b style="background:var(--done)"></b>済み<b style="background:var(--redo)"></b>やり直しが要る<b style="background:var(--todo)"></b>未着手</p>
 <div class="pager" id="pg1"></div>
-<table>
+<div class="hyou"><table>
 <thead><tr id="hr"></tr></thead>
 <tbody id="tb"></tbody>
-</table>
+</table></div>
 <div class="pager" id="pg2"></div>
 </main>
-<script src="data.js?v=2026-11-12_1453"></script>
+<script src="data.js?v=2026-11-12_1455"></script>
 <script>
 const STEPS=["動画を落とす","書き起こし","話者の見分け","MK 化","AI で書き起こし直し","書き起こし直しの見分け"];
 const BUNRUI=["すごいコンサル","無料個別相談","他の個別相談","他のコンサル","未分類","範囲の外"];
@@ -230,7 +233,7 @@ document.getElementById("q").oninput=e=>{st.q=e.target.value;st.page=0;draw()};
 document.getElementById("nen").onchange=e=>{st.nen=e.target.value;st.page=0;draw()};
 document.getElementById("moto").onchange=e=>{st.moto=e.target.value;st.page=0;draw()};
 document.getElementById("clr").onclick=()=>{st=SHOKI();draw()};
-document.getElementById("head").textContent=`AI の台帳（consul_daichou.sqlite）の ${DAI.length} 本（公開版・2026-11-12 14:53 に書き出し）。行を押すと、作業履歴と AI の台帳の1行が開きます。分類は記録から AI が当てた案で、根拠を行ごとに書いています。`;
+document.getElementById("head").textContent=`AI の台帳（consul_daichou.sqlite）の ${DAI.length} 本（公開版・2026-11-12 14:55 に書き出し）。行を押すと、作業履歴と AI の台帳の1行が開きます。分類は記録から AI が当てた案で、根拠を行ごとに書いています。`;
 draw();
 </script>
 </body>
