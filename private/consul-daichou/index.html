@@ -51,6 +51,11 @@ a{color:var(--kobetsu)}
 .msg{font-size:12px;color:var(--muryo);margin-left:8px}
 .tag{display:inline-block;margin-left:6px;padding:0 6px;border:1px solid var(--line);border-radius:8px;font-size:11px;color:var(--sub);background:#f6f5f0;white-space:nowrap;vertical-align:1px}
 th.f{cursor:pointer;user-select:none;white-space:nowrap}
+th .nobi{position:absolute;right:-3px;top:0;bottom:0;width:9px;cursor:col-resize;z-index:2}
+th .nobi:hover,th .nobi.ugoku{background:linear-gradient(to right,transparent 3px,var(--sugoi) 3px,var(--sugoi) 5px,transparent 5px)}
+table.kotei{table-layout:fixed;width:auto}
+table.kotei th,table.kotei tr.row td{overflow:hidden;text-overflow:ellipsis}
+
 th.f:hover{background:#ebe9e1}
 th.f .ic{font-size:11px;color:#aaa;margin-left:4px}
 th.f.act{color:var(--ink)}
@@ -85,7 +90,7 @@ th.f.act .ic{color:var(--sugoi);font-weight:700}
 </table></div>
 <div class="pager" id="pg2"></div>
 </main>
-<script src="data.js?v=2026-11-12_1733"></script>
+<script src="data.js?v=2026-11-12_1735"></script>
 <script>
 const STEPS=["動画を落とす","書き起こし","話者の見分け","MK 化","AI で書き起こし直し","書き起こし直しの見分け"];
 const BUNRUI=["すごいコンサル","無料個別相談","他の個別相談","他のコンサル","グルコン","勉強会","セミナー","未分類"];
@@ -140,7 +145,27 @@ function midashi(){
   const hr=document.getElementById("hr");
   hr.innerHTML=COLS.map(c=>{const so=st.sort&&st.sort.k===c.k,fi=!!st.f[c.k];
     return `<th class="f${c.hs?" hide-s":""}${so||fi?" act":""}" data-k="${c.k}" title="押すと 並べ替え・しぼり">${c.lab}<span class="ic">${so?(st.sort.d>0?"↑":"↓"):""}${fi?"●":""}▾</span></th>`}).join("");
-  hr.querySelectorAll("th").forEach(th=>th.onclick=e=>{e.stopPropagation();pop(COLS.find(c=>c.k===th.dataset.k),th)});
+  hr.querySelectorAll("th").forEach(th=>{th.insertAdjacentHTML("beforeend",`<span class="nobi" title="左右に引くと幅が変わる・2回押すと全部の幅を元に戻す"></span>`);th.onclick=e=>{e.stopPropagation();pop(COLS.find(c=>c.k===th.dataset.k),th)}});
+  habaKakeru();
+  hr.querySelectorAll(".nobi").forEach(nb=>{
+    nb.onclick=e=>e.stopPropagation();
+    nb.ondblclick=e=>{e.stopPropagation();HABA={};habaSave();midashi()};
+    nb.onmousedown=e=>{e.preventDefault();e.stopPropagation();
+      const th=nb.parentElement,k=th.dataset.k,x0=e.clientX;
+      if(!Object.keys(HABA).length){hr.querySelectorAll("th").forEach(t=>{if(t.offsetWidth)HABA[t.dataset.k]=t.offsetWidth});habaKakeru()}
+      const w0=HABA[k]||th.offsetWidth;nb.classList.add("ugoku");
+      const mv=ev=>{HABA[k]=Math.max(40,w0+ev.clientX-x0);habaKakeru()};
+      const up=()=>{nb.classList.remove("ugoku");document.removeEventListener("mousemove",mv);document.removeEventListener("mouseup",up);habaSave()};
+      document.addEventListener("mousemove",mv);document.addEventListener("mouseup",up)}});
+}
+// 列の幅（見出しの右端を引いて変える・この端末のブラウザに覚える）2026-11-12 Mits様「幅を自分で調整できるように」
+let HABA={};try{HABA=JSON.parse(localStorage.getItem("consul_daichou_haba")||"{}")||{}}catch(e){HABA={}}
+function habaSave(){try{localStorage.setItem("consul_daichou_haba",JSON.stringify(HABA))}catch(e){}}
+function habaKakeru(){
+  const hr=document.getElementById("hr"),tb=hr.closest("table"),ths=[...hr.querySelectorAll("th")];
+  if(!Object.keys(HABA).length){tb.classList.remove("kotei");tb.style.width="";ths.forEach(t=>t.style.width="");return}
+  let sum=0;ths.forEach(t=>{const w=HABA[t.dataset.k]||t.offsetWidth||100;if(t.offsetParent!==null||getComputedStyle(t).display!=="none"){t.style.width=w+"px";sum+=w}});
+  tb.classList.add("kotei");tb.style.width=sum+"px";
 }
 let popEl=null;
 function popTojiru(){if(popEl){popEl.remove();popEl=null}}
@@ -233,7 +258,7 @@ document.getElementById("q").oninput=e=>{st.q=e.target.value;st.page=0;draw()};
 document.getElementById("nen").onchange=e=>{st.nen=e.target.value;st.page=0;draw()};
 document.getElementById("moto").onchange=e=>{st.moto=e.target.value;st.page=0;draw()};
 document.getElementById("clr").onclick=()=>{st=SHOKI();draw()};
-document.getElementById("head").textContent=`AI の台帳（consul_daichou.sqlite）の ${DAI.length} 本（公開版・2026-11-12 17:33 に書き出し）。行を押すと、作業履歴と AI の台帳の1行が開きます。分類は記録から AI が当てた案で、根拠を行ごとに書いています。`;
+document.getElementById("head").textContent=`AI の台帳（consul_daichou.sqlite）の ${DAI.length} 本（公開版・2026-11-12 17:35 に書き出し）。行を押すと、作業履歴と AI の台帳の1行が開きます。分類は記録から AI が当てた案で、根拠を行ごとに書いています。`;
 draw();
 </script>
 </body>
