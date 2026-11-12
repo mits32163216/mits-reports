@@ -46,6 +46,7 @@ h3{font-size:13px;margin:12px 0 6px}
 .pager button{border:1px solid var(--line);background:#fff;border-radius:5px;padding:3px 10px;cursor:pointer}
 a{color:var(--kobetsu)}
 .msg{font-size:12px;color:var(--muryo);margin-left:8px}
+.tag{display:inline-block;margin-left:6px;padding:0 6px;border:1px solid var(--line);border-radius:8px;font-size:11px;color:var(--sub);background:#f6f5f0;white-space:nowrap;vertical-align:1px}
 th.f{cursor:pointer;user-select:none;white-space:nowrap}
 th.f:hover{background:#ebe9e1}
 th.f .ic{font-size:11px;color:#aaa;margin-left:4px}
@@ -81,7 +82,7 @@ th.f.act .ic{color:var(--sugoi);font-weight:700}
 </table>
 <div class="pager" id="pg2"></div>
 </main>
-<script src="data.js?v=2026-11-12_1433"></script>
+<script src="data.js?v=2026-11-12_1442"></script>
 <script>
 const STEPS=["動画を落とす","書き起こし","話者の見分け","MK 化","AI で書き起こし直し","書き起こし直しの見分け"];
 const BUNRUI=["すごいコンサル","無料個別相談","他の個別相談","他のコンサル","未分類","範囲の外"];
@@ -95,6 +96,15 @@ try{Object.assign(st,JSON.parse(localStorage.getItem("consul_daichou_st")||"{}")
 function mkn(s){const m=String(s||"").match(/(\d+)/);return m?+m[1]:1e9}
 function nagaK(s){if(!s)return"（なし）";const m=s/60;return m<30?"30分未満":m<60?"30〜60分":m<90?"60〜90分":"90分以上"}
 function sumi(r){return STEPS.filter(x=>r.tejun[x]==="済み").length}
+// クライアント欄が人の名前でないとき（Zoom の会議名・空）に、見分けの印と開始時刻（日本時間）を後ろに付ける（2026-11-12 Mits様）
+const KAIGIMEI=["","-","コンサルティング","コンサルティングサブ","西田事務所講座用","MTG1","すごい専用","西田自分撮り動画セミナーver.1"];
+function jst(r){const m=String(r.yt_title||r.zoom_start||"").match(/(\d{4})-(\d{2})-(\d{2})[T ](\d{1,2}):(\d{2})/);if(!m)return"";
+  const d=new Date(Date.UTC(+m[1],+m[2]-1,+m[3],+m[4],+m[5])+9*3600e3);return String(d.getUTCHours()).padStart(2,"0")+":"+String(d.getUTCMinutes()).padStart(2,"0")}
+function namaeMoto(r){const h=(r.hist||[]).map(x=>x.join(" ")).filter(x=>x.includes("client："));const t=h.length?h[h.length-1]:"";
+  return t.includes("UTAGE")?"UTAGE の予約":t.includes("カレンダー")?"カレンダーの予定":t.includes("Notion")?"Notion":""}
+function namaeTag(r){const c=r.client||"";
+  if(KAIGIMEI.includes(c)){const t=jst(r);return `<span class="tag">会議名${t?"・"+t+"開始":""}</span>`}
+  const m=namaeMoto(r);return m?`<span class="tag">${m}</span>`:""}
 const COLS=[
  {k:"c_bun",lab:"分類",v:r=>r.bunrui,s:r=>BUNRUI.indexOf(r.bunrui)},
  {k:"c_client",lab:"クライアント",v:r=>r.client||r.zoom_topic||"（名前なし）",s:r=>r.client||r.zoom_topic||""},
@@ -197,7 +207,7 @@ function draw(){
   const tb=document.getElementById("tb");tb.innerHTML="";
   rows.slice(st.page*PER,(st.page+1)*PER).forEach(r=>{
     const tr=document.createElement("tr");tr.className="row";
-    tr.innerHTML=`<td><span class="bun" style="background:${COLOR[r.bunrui]}">${esc(r.bunrui)}</span></td><td>${esc(r.client||r.zoom_topic||"（名前なし）")}${r.chui.length?' <span class="warn">⚠</span>':""}</td><td>${esc(r.date)}</td><td class="hide-s">${len(r.nagasa_sec)}</td><td>${esc(r.mk)}</td><td><div class="steps">${STEPS.map(s=>`<span class="${SC[r.tejun[s]]||""}" title="${s}：${r.tejun[s]}"></span>`).join("")}</div></td><td class="next">${esc(r.next)}</td><td class="hide-s">${esc(r.no)}${r.yt_jotai==="ある"?"":`<span class="warn">（${esc(r.yt_jotai)}）</span>`}</td>`;
+    tr.innerHTML=`<td><span class="bun" style="background:${COLOR[r.bunrui]}">${esc(r.bunrui)}</span></td><td>${esc(r.client||r.zoom_topic||"（名前なし）")}${namaeTag(r)}${r.chui.length?' <span class="warn">⚠</span>':""}</td><td>${esc(r.date)}</td><td class="hide-s">${len(r.nagasa_sec)}</td><td>${esc(r.mk)}</td><td><div class="steps">${STEPS.map(s=>`<span class="${SC[r.tejun[s]]||""}" title="${s}：${r.tejun[s]}"></span>`).join("")}</div></td><td class="next">${esc(r.next)}</td><td class="hide-s">${esc(r.no)}${r.yt_jotai==="ある"?"":`<span class="warn">（${esc(r.yt_jotai)}）</span>`}</td>`;
     const dt=document.createElement("tr");dt.className="detail";dt.style.display="none";dt.innerHTML=detail(r);
     if(r.no===hiraita)dt.style.display="";
     tr.onclick=()=>{dt.style.display=dt.style.display==="none"?"":"none";hiraita=dt.style.display===""?r.no:""};
@@ -219,7 +229,7 @@ document.getElementById("q").oninput=e=>{st.q=e.target.value;st.page=0;draw()};
 document.getElementById("nen").onchange=e=>{st.nen=e.target.value;st.page=0;draw()};
 document.getElementById("moto").onchange=e=>{st.moto=e.target.value;st.page=0;draw()};
 document.getElementById("clr").onclick=()=>{st=SHOKI();draw()};
-document.getElementById("head").textContent=`AI の台帳（consul_daichou.sqlite）の ${DAI.length} 本（公開版・2026-11-12 14:33 に書き出し）。行を押すと、作業履歴と AI の台帳の1行が開きます。分類は記録から AI が当てた案で、根拠を行ごとに書いています。`;
+document.getElementById("head").textContent=`AI の台帳（consul_daichou.sqlite）の ${DAI.length} 本（公開版・2026-11-12 14:42 に書き出し）。行を押すと、作業履歴と AI の台帳の1行が開きます。分類は記録から AI が当てた案で、根拠を行ごとに書いています。`;
 draw();
 </script>
 </body>
