@@ -11,3 +11,6 @@ node_modules/
 # → 公開用HTML（private/karaoke-ai/ 直下の *.html）は _wip 外なので追跡対象のまま
 private/karaoke-ai/_wip/
 
+
+# コンサル動画台帳（お客様のフルネーム入り）は公開の GitHub に置かない。合言葉つきの入口 mits-private Worker からだけ出す（2026-11-12）
+private/consul-daichou/
