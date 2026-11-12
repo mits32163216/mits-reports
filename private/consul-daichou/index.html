@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>コンサル動画台帳</title>
 <style>
-:root{--bg:#fafaf7;--card:#fff;--ink:#222;--sub:#666;--line:#e3e1da;--sugoi:#b4542e;--muryo:#2f7a4f;--kobetsu:#2b5f9e;--hoka:#6b4f9e;--mibun:#999;--soto:#c9c6bd;--done:#2f7a4f;--todo:#d8d5cc;--redo:#d9a23b}
+:root{--bg:#fafaf7;--card:#fff;--ink:#222;--sub:#666;--line:#e3e1da;--sugoi:#b4542e;--muryo:#2f7a4f;--kobetsu:#2b5f9e;--hoka:#6b4f9e;--grucon:#a8761c;--benkyo:#2f7d7d;--semi:#8a4f73;--mibun:#999;--soto:#c9c6bd;--done:#2f7a4f;--todo:#d8d5cc;--redo:#d9a23b}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;font-size:14px;line-height:1.6}
 main{max-width:none;margin:0 auto;padding:24px 16px 64px}
@@ -85,11 +85,11 @@ th.f.act .ic{color:var(--sugoi);font-weight:700}
 </table></div>
 <div class="pager" id="pg2"></div>
 </main>
-<script src="data.js?v=2026-11-12_1630"></script>
+<script src="data.js?v=2026-11-12_1632"></script>
 <script>
 const STEPS=["動画を落とす","書き起こし","話者の見分け","MK 化","AI で書き起こし直し","書き起こし直しの見分け"];
-const BUNRUI=["すごいコンサル","無料個別相談","他の個別相談","他のコンサル","未分類","範囲の外"];
-const COLOR={"すごいコンサル":"var(--sugoi)","無料個別相談":"var(--muryo)","他の個別相談":"var(--kobetsu)","他のコンサル":"var(--hoka)","未分類":"var(--mibun)","範囲の外":"var(--soto)"};
+const BUNRUI=["すごいコンサル","無料個別相談","他の個別相談","他のコンサル","グルコン","勉強会","セミナー","未分類","範囲の外"];
+const COLOR={"すごいコンサル":"var(--sugoi)","無料個別相談":"var(--muryo)","他の個別相談":"var(--kobetsu)","他のコンサル":"var(--hoka)","グルコン":"var(--grucon)","勉強会":"var(--benkyo)","セミナー":"var(--semi)","未分類":"var(--mibun)","範囲の外":"var(--soto)"};
 const SC={"済み":"d","やり直しが要る":"w","未着手":""};
 const PER=100;
 const SHOKI=()=>({bun:"すべて",next:"すべて",q:"",nen:"",moto:"",page:0,f:{},sort:null});
@@ -233,7 +233,7 @@ document.getElementById("q").oninput=e=>{st.q=e.target.value;st.page=0;draw()};
 document.getElementById("nen").onchange=e=>{st.nen=e.target.value;st.page=0;draw()};
 document.getElementById("moto").onchange=e=>{st.moto=e.target.value;st.page=0;draw()};
 document.getElementById("clr").onclick=()=>{st=SHOKI();draw()};
-document.getElementById("head").textContent=`AI の台帳（consul_daichou.sqlite）の ${DAI.length} 本（公開版・2026-11-12 16:30 に書き出し）。行を押すと、作業履歴と AI の台帳の1行が開きます。分類は記録から AI が当てた案で、根拠を行ごとに書いています。`;
+document.getElementById("head").textContent=`AI の台帳（consul_daichou.sqlite）の ${DAI.length} 本（公開版・2026-11-12 16:32 に書き出し）。行を押すと、作業履歴と AI の台帳の1行が開きます。分類は記録から AI が当てた案で、根拠を行ごとに書いています。`;
 draw();
 </script>
 </body>
