@@ -67,6 +67,10 @@
   .koushin button{font:inherit;font-size:14px;padding:6px 14px;border-radius:8px;border:1px solid var(--navy);background:var(--navy);color:#fff;cursor:pointer}
   .koushin button:disabled{opacity:.55;cursor:default}
   .koushin .note{flex:1 1 260px}
+  /* 今のステージを閉じる段取り（2026-11-13）：済んだ行は ☑＋取消線＋グレー */
+  .dandori td.mark{width:2.2em;text-align:center;font-size:16px}
+  .dandori tr.sumi td{color:#9a9a9a;background:#f6f6f6}
+  .dandori tr.sumi td.naiyou{text-decoration:line-through}
 </style>
 </head>
 <body>
@@ -75,7 +79,7 @@
 
 <h1>運転台 ── 森田さんとの協力体制になってから、大きく変わった版</h1>
 <!-- AUTO:lead:start -->
-<p class="lead">2026-11-13 12:44 時点の実測（版を作るたびに道具が実物から取り直す）。始まりは 2026-10-14 の森田さんの指摘（v1.76.4）。いまの西田統合版は v1.83.16、正式版は v1.83.10。<br>
+<p class="lead">2026-11-13 12:56 時点の実測（版を作るたびに道具が実物から取り直す）。始まりは 2026-10-14 の森田さんの指摘（v1.76.4）。いまの西田統合版は v1.83.16、正式版は v1.83.10。<br>
 （運転台＝社内名。お客様向けの名前は「AI-Mits＆経営アプリ」）</p>
 <!-- AUTO:lead:end -->
 
@@ -152,9 +156,54 @@
 <!-- AUTO:genjou:end -->
 
 <!-- ============================================================ -->
+<!-- 今のステージを閉じる段取り（2026-11-13・手で書く節。道具 han_page_koushin.py は AUTO の印の外を書き換えない）。済んだら ☑＋取消線＋グレー（tr に class="sumi"） -->
+<h2>今のステージを閉じる段取り（2026-11-13）</h2>
+<div class="quote">Mits様（2026-11-13）「開発版、二次統合版、確認版、正式版っていう流れを全て今いろいろなセッションでやっている改善を集約してアップデートして次のステージに行く。今のステージとしては完了させたい。」</div>
+<p class="note">発注書：02_AI-MITS/_wip/stage_kanryou_20261113/hachusho_4hon.md（決定台帳 2026-11-13 12:43）。アプリの中身は開発版と main で差 0行（集約は済んでいる）。残りはエンジン・ヘルプ・版を出すの3つ。</p>
+<h3>A. エンジンを固める</h3>
+<div class="card scroll"><table class="stack dandori">
+<tr><th></th><th>受け持ち</th><th>中身</th></tr>
+<tr><td class="mark" data-l="済み">☐</td><td data-l="受け持ち">AI-Mits-チューニング</td><td class="naiyou" data-l="中身">A1 質問分類器の試験（実際の相談の入口74・発言326を物差しの写し 25e356ae に流す）。結果は「改善か改悪か」を先に</td></tr>
+<tr><td class="mark" data-l="済み">☐</td><td data-l="受け持ち">AI-Mits-チューニング</td><td class="naiyou" data-l="中身">A2 改悪でなければ、0ebb0dab の下書き（s6＋答えの指示文 v7 u2b＋Knowledge e6470ac9）を公開</td></tr>
+<tr><td class="mark" data-l="済み">☐</td><td data-l="受け持ち">AI-Mits-チューニング</td><td class="naiyou" data-l="中身">A3 本番用のアプリ「AI-MITS NORMAL v7（本番）」を 0ebb0dab から写して作る（43d47f25 は触らない）</td></tr>
+<tr><td class="mark" data-l="済み">☐</td><td data-l="受け持ち">AI-Mits-チューニング</td><td class="naiyou" data-l="中身">A4 新しいアプリの id と鍵の入れ方を、決定台帳に宛先：運転台改善で書く（鍵の値は書かない）</td></tr>
+</table></div>
+<h3>B. 確認版・正式版の AI-Mits を新しいエンジンへ</h3>
+<div class="card scroll"><table class="stack dandori">
+<tr><th></th><th>受け持ち</th><th>中身</th></tr>
+<tr><td class="mark" data-l="済み">☐</td><td data-l="受け持ち">運転台改善</td><td class="naiyou" data-l="中身">B1 全部の版で NORMAL を「相談の文＝query・前置き＝inputs.maeoki（削ってから）・名前＝inputs.call_name」で送る<br><span class="note">11-13 12:54 作り済み（sanbo.rs の soudan_wake）。id が入るまでは今までどおり 43d47f25</span></td></tr>
+<tr><td class="mark" data-l="済み">☐</td><td data-l="受け持ち">運転台改善</td><td class="naiyou" data-l="中身">B2 中継に新しい送り先（新しいアプリの鍵を入れる。Worker のコードは変えない）<br><span class="note">鍵を入れる道具は用意済み（put_honban_secret.sh）。id 待ち</span></td></tr>
+<tr><td class="mark" data-l="済み">☐</td><td data-l="受け持ち">運転台改善</td><td class="naiyou" data-l="中身">B3 西田統合版は ~/.untendai/tougou_aimits_url がある間は Mac の中の中継のまま<br><span class="note">11-13 12:54 作り済み</span></td></tr>
+<tr><td class="mark" data-l="済み">☐</td><td data-l="受け持ち">運転台改善</td><td class="naiyou" data-l="中身">B4 試験用の中継で1往復・Dify の記録で inputs.maeoki を確かめる<br><span class="note">11-13 12:5x 実験アプリ 0ebb0dab で3つとも合格（shiken_normal_v7.py）。新しいアプリで走らせ直す</span></td></tr>
+</table></div>
+<h3>C. ヘルプと資料</h3>
+<div class="card scroll"><table class="stack dandori">
+<tr><th></th><th>受け持ち</th><th>中身</th></tr>
+<tr><td class="mark" data-l="済み">☐</td><td data-l="受け持ち">運転台改善</td><td class="naiyou" data-l="中身">C1 ヘルプを出す版に合わせて作り直す（BS-jikki-kenshu の合格まで）</td></tr>
+<tr><td class="mark" data-l="済み">☐</td><td data-l="受け持ち">運転台改善</td><td class="naiyou" data-l="中身">C2 資料の鮮度・食い違い16件（決定台帳 11-13 07:23）を直す</td></tr>
+<tr class="sumi"><td class="mark" data-l="済み">☑</td><td data-l="受け持ち">運転台改善</td><td class="naiyou" data-l="中身">C3 現状表の「latest.json が 1.73.28 のまま」は古い（今 1.83.10）と決定台帳に書く<br><span class="note">11-13 12:54 決定台帳に書いた（宛先：司令塔）</span></td></tr>
+</table></div>
+<h3>D. 版を出す（A・B・C のあと・始めは AI-Mits-チューニングの合図）</h3>
+<div class="card scroll"><table class="stack dandori">
+<tr><th></th><th>受け持ち</th><th>中身</th></tr>
+<tr><td class="mark" data-l="済み">☐</td><td data-l="受け持ち">運転台改善</td><td class="naiyou" data-l="中身">D1 西田統合版（release.sh --自分だけ）→ Mits様が実データで AI-Mits と画面を確かめる</td></tr>
+<tr><td class="mark" data-l="済み">☐</td><td data-l="受け持ち">運転台改善</td><td class="naiyou" data-l="中身">D2 確認版（release.sh --確認版）：Windows に署名が付く初めての版。Windows の実機で、落として開いたときに止められないか確かめる</td></tr>
+<tr><td class="mark" data-l="済み">☐</td><td data-l="受け持ち">運転台改善</td><td class="naiyou" data-l="中身">D3 Mits様の「出して」のあと正式版</td></tr>
+<tr><td class="mark" data-l="済み">☐</td><td data-l="受け持ち">運転台改善</td><td class="naiyou" data-l="中身">D4 正式版のあと WEB版の枝 web-ban-v&lt;その版&gt; を立て、WEB版の AI-Mits の送り先もそろえる</td></tr>
+</table></div>
+<h3>この段に入れないもの（残して、次の段で扱う）</h3>
+<div class="card"><ul>
+<li>道2（決済とアカウント）：本番の決済＝お金が動く。本番の中継に /intent-mail を載せる所が Mits様の合図待ち</li>
+<li>方針2（分野ごとに要る分だけ前置きを渡す）：Mits様が保留（11-12 17:16）</li>
+<li>前置きを短い版にする（改善策3）：go が出ていない</li>
+<li>設定サポーターの実験の枝（settei-jikken）：「この枝は世に出さない」の枝</li>
+<li>答えがチャンクと食い違う文の直し（u2 で 3.6%→8.6%）：次のステージの最初の直し</li>
+</ul></div>
+
+<!-- ============================================================ -->
 <h2>2. 版の段と、段ごとの受け持ち</h2>
 <!-- AUTO:genzai:start -->
-<p class="genzai" id="han-genzai" data-at="2026-11-13T12:44:16+09:00"><b>2026年11月13日 12:44 現在</b><span class="note">（図と表の数字は、この時刻に実物から取り直したもの）</span></p>
+<p class="genzai" id="han-genzai" data-at="2026-11-13T12:56:04+09:00"><b>2026年11月13日 12:56 現在</b><span class="note">（図と表の数字は、この時刻に実物から取り直したもの）</span></p>
 <!-- AUTO:genzai:end -->
 <div class="koushin"><button type="button" id="han-koushin-btn">いまの版で更新する</button><span class="note" id="han-koushin-msg" role="status" aria-live="polite">押すと、西田の Mac が実物から番号を取り直して公開し直します（1分ほど）。</span></div>
 
