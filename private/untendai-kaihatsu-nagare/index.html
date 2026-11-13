@@ -56,21 +56,11 @@
 <h1>運転台 ── 開発の流れ・手順・いまの姿</h1>
 <p class="lead">2026-10-28 19:3x の実測で整理（前の版の写し：同じフォルダの <code>index_20261028_mae.html</code>）。決まりと実物の両方から書き起こしたもの。<b>整理だけ</b>で、直し方・やり方の提案は書かない。分からない所は「未確認」と書き、叩いたコマンドを添えた。<br>
 （運転台＝社内名。お客様向けの名前は「AI-Mits＆経営アプリ」）<br>最終実測日：2026-10-28（印を埋めた値は tools/check_shiryo_freshness.sh で毎朝突き合わせる）</p>
+<p class="lead" style="background:#fff4c2;padding:6px 10px;border-radius:6px;color:#1f2430"><b>このページの版の番号・枝の数・WEB版の最後のコミットは、2026-10-28 19:3x の実測の値です</b>（2026-11-13 運転台改善が注記。流れ・手順の説明は今も同じ）。今の版の番号は、版を出すたびに道具（tools/han_page_koushin.sh・release.sh から呼ばれる）が実物から取り直す「版の管理」のページを見てください：<br><a href="https://reports.7years.life/private/untendai-kyouryokugo-han/">https://reports.7years.life/private/untendai-kyouryokugo-han/</a></p>
 
 <!-- 鮮度点検の印（画面には出ない・tools/check_shiryo_freshness.sh が読む） -->
-<!-- jissoku: main_version | v1.81.14 | /usr/bin/git -C /Users/nishidamitsuhiro/untendai-seiri describe --tags --abbrev=0 -->
-<!-- jissoku: branch_count | 18 | /usr/bin/git -C /Users/nishidamitsuhiro/untendai-seiri branch | /usr/bin/wc -l | /usr/bin/tr -d ' ' -->
-<!-- jissoku: world_version | 1.80.0 | /usr/bin/curl -sfS https://untendai-update.3216-fun.workers.dev/latest.json | python3 -c 'import json,sys;print(json.load(sys.stdin)["version"])' -->
 <!-- jissoku: commit_count_world_to_main | 57 | /usr/bin/git -C /Users/nishidamitsuhiro/untendai-seiri rev-list --count v1.80.0..v1.81.14 -->
 <!-- jissoku: app_count | 6 | /bin/ls -d /Applications/untendai*.app | /usr/bin/wc -l | /usr/bin/tr -d ' ' -->
-<!-- jissoku: product_app_version | 1.81.13 | /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" /Applications/untendai.app/Contents/Info.plist 2>/dev/null -->
-<!-- jissoku: client_app_version | 1.76.2 | /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" /Applications/untendai-client.app/Contents/Info.plist 2>/dev/null -->
-<!-- jissoku: dev_app_version | 1.81.14 | /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" /Applications/untendai-dev.app/Contents/Info.plist 2>/dev/null -->
-<!-- jissoku: mkt_app_version | 1.74.4 | /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" /Applications/untendai-mkt.app/Contents/Info.plist 2>/dev/null -->
-<!-- jissoku: demo_app_version | 1.80.0 | /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" /Applications/untendai-demo.app/Contents/Info.plist 2>/dev/null -->
-<!-- jissoku: morita_app_version | 1.76.7 | /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" /Applications/untendai-morita.app/Contents/Info.plist 2>/dev/null -->
-<!-- jissoku: kakunin_version | 1.80.0 | /usr/bin/curl -sfS https://untendai-update.3216-fun.workers.dev/kakunin.json | python3 -c 'import json,sys;print(json.load(sys.stdin)["version"])' -->
-<!-- jissoku: webban_last_commit | 6cc1eca | /usr/bin/git -C /Users/nishidamitsuhiro/untendai-webban log -1 --format=%h -->
 <!-- ============================================================ -->
 <h2>1. ひと目で：版の段と、段ごとの受け持ち</h2>
 
