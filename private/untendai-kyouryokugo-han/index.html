@@ -79,7 +79,7 @@
 
 <h1>運転台 ── 森田さんとの協力体制になってから、大きく変わった版</h1>
 <!-- AUTO:lead:start -->
-<p class="lead">2026-11-13 22:55 時点の実測（版を作るたびに道具が実物から取り直す）。始まりは 2026-10-14 の森田さんの指摘（v1.76.4）。いまの西田統合版は v1.83.26、正式版は v1.83.10。<br>
+<p class="lead">2026-11-14 15:13 時点の実測（版を作るたびに道具が実物から取り直す）。始まりは 2026-10-14 の森田さんの指摘（v1.76.4）。いまの西田統合版は v1.83.26、正式版は v1.83.10。<br>
 （運転台＝社内名。お客様向けの名前は「AI-Mits＆経営アプリ」）</p>
 <!-- AUTO:lead:end -->
 
@@ -100,7 +100,7 @@
 <tr data-row="dev">
   <td data-l="版の呼び方"><b>西田の開発版</b></td>
   <td data-l="アイコンの色"><span class="dot" style="background:var(--c-dev)"></span>緑</td>
-  <td data-l="いまの版"><span class="ver" data-ban="dev">1.83.26</span> ＋ <b data-ban="dev-sa">西田統合版と同じ中身</b><br><span class="note">untendai-dev.app を実測（11-13 22:53 に入れた）。直しの量は、ページを書くたびに git diff --numstat main menu-v3 -- src src-tauri/src で数え直す（記録・写真・実験のファイルは数えない）</span></td>
+  <td data-l="いまの版"><span class="ver" data-ban="dev">1.83.26</span> ＋ 西田統合版にまだ無いアプリの直し <b data-ban="dev-sa">54ファイル（+6,941行）</b><br><span class="note">untendai-dev.app を実測（11-14 15:08 に入れた）。直しの量は、ページを書くたびに git diff --numstat main menu-v3 -- src src-tauri/src で数え直す（記録・写真・実験のファイルは数えない）</span></td>
   <td data-l="誰に届いているか"><span class="tag t-gray">西田の Mac だけ</span></td>
   <td data-l="ひとこと">開発して、叩いて、検収する所。検収したら西田統合版に入れる</td>
 </tr>
@@ -204,7 +204,7 @@
 <!-- ============================================================ -->
 <h2>2. 版の段と、段ごとの受け持ち</h2>
 <!-- AUTO:genzai:start -->
-<p class="genzai" id="han-genzai" data-at="2026-11-13T22:55:46+09:00"><b>2026年11月13日 22:55 現在</b><span class="note">（図と表の数字は、この時刻に実物から取り直したもの）</span></p>
+<p class="genzai" id="han-genzai" data-at="2026-11-14T15:13:39+09:00"><b>2026年11月14日 15:13 現在</b><span class="note">（図と表の数字は、この時刻に実物から取り直したもの）</span></p>
 <!-- AUTO:genzai:end -->
 <div class="koushin"><button type="button" id="han-koushin-btn">いまの版で更新する</button><span class="note" id="han-koushin-msg" role="status" aria-live="polite">押すと、西田の Mac が実物から番号を取り直して公開し直します（1分ほど）。</span></div>
 
@@ -234,7 +234,8 @@
   <text x="128" y="174" text-anchor="middle" font-size="15" font-weight="700" fill="#1f2430">西田の開発版</text>
   <text x="120" y="194" text-anchor="middle" font-size="12" fill="#1f2430">untendai-dev.app</text>
   <text x="120" y="218" text-anchor="middle" font-size="16" font-weight="700" fill="#1f2430" data-ban="dev">1.83.26</text>
-  <text x="120" y="250" text-anchor="middle" font-size="12" font-weight="700" fill="#188848" data-ban="dev-sa">西田統合版と同じ中身</text>
+  <text x="120" y="240" text-anchor="middle" font-size="10" fill="#5b6170">＋ 西田統合版にまだ無いアプリの直し</text>
+  <text x="120" y="260" text-anchor="middle" font-size="13" font-weight="700" fill="#188848" data-ban="dev-sa">54ファイル（+6,941行）</text>
 
   <!-- 西田統合版 -->
   <rect x="300" y="64" width="200" height="140" rx="10" fill="#e9edf8" stroke="#204088" stroke-width="3"/>
