@@ -179,7 +179,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-11-13 18:16 ／ 写した時刻 2026-11-13 18:35</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-11-14 07:05 ／ 写した時刻 2026-11-14 12:37</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -10391,6 +10392,314 @@ untendai-client  版=1.73.43  組立=2026-09-26 03:39:44  Bundle=com.mits.untend
 <li>手順書 S3 の「登録済みの名前」を 7つ → 8つに直した（tejunsho_security_4dankai_20261113.md 83行・9-11）</li>
 <li>宛先：運転台改善・AI-Mits-チューニング</li>
 </ul>
+<h3 id="2026-11-13-18-37-MEMORY-md-の容量を空けた-宛先-AI-Mits-チュ">2026-11-13 18:37 ／ MEMORY.md の容量を空けた（宛先：AI-Mits-チューニング）</h3>
+<ul>
+<li>詰める前：24,527 / 24,576 bytes（空き49 bytes）→ 詰めた後：21,690 bytes（空き2,886 bytes）。目安の22,000 bytes 以下</li>
+<li>やったこと：「🔴 全 session 適用 重要 memory」の各行の説明を8文字までに短くした。行は消していない・🔴の印は外していない（63本のまま）。🟠の索引は触っていない</li>
+<li>確かめたこと：詰める前後の名前を突き合わせて、394個→394個・落ちた名前0件・増えた名前0件。memory の実ファイルは触っていない</li>
+<li>控え：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261113_MEMORY_md_tsumeru_mae/MEMORY.md（詰める前の全文）</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-13-19-12-memory-524本の整理-基本・書き換え・迷う-を反映した">2026-11-13 19:12 ／ memory 524本の整理（基本・書き換え・迷う）を反映した（宛先：AI-Mits-チューニング）</h3>
+<ul>
+<li>Mits様の指示：memory は積み上がり、考え方が変わった。今も使う基本／今は変わって書き換えるもの／AI が迷って飛ばして読むもの、に分けて整理したい（原文の趣旨）。方針「重箱の隅に労力を割かず、全体の整理ができればいい」</li>
+<li>判定：524本を12の担当が本文を最後まで読んで分けた → A 基本 371／B 書き換え 76／C 迷う 77。一覧：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/memory整理_20261113.html（全件の判定は同じフォルダの memory整理_20261113_全件.json）</li>
+<li>反映したもの：①B のうち「索引に載っていた40本」を今の決まりに書き換え → 別の検収担当が評価 → 「要直し」30本を修正 ②C の77本の解消案（A化37・B化33・統合7）を反映 ③基本（A）なのに索引に無かった60本を MEMORY.md の🟠に追加</li>
+<li>反映しなかったもの：B のうち索引に載っていない36本（起動時に読まれないので後回し）。細部の指摘（様の付け忘れ・語順など）は直す対象から外した</li>
+<li>MEMORY.md：23,033 / 24,576 bytes（空き 1,543 bytes）。名前は詰める前の394個が全部残り、落ち0件。追加の前の控え：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261113_MEMORY_md_tsumeru_mae/MEMORY_追加前.md</li>
+<li>書き換えた117本の形式点検：先頭の区切り・name・改訂行がそろっていて問題0本。書き換え前の控え：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261113_memory_B40_kakikae_mae/・20261113_memory_B40_naoshi_mae/・20261113_memory_C77_hanei_mae/</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-13-19-21-運転台-セキュリティ問題-中継の-set-password-は">2026-11-13 19:21 ／ 運転台 セキュリティ問題：中継の /set-password は読者の番号だけで誰のパスワードでも上書きできる（宛先：運転台改善・道2の決済とアカウントの画面の状態）</h3>
+<ul>
+<li>handleSetPassword は、署名のないクッキー aimits_session（値＝読者の番号そのまま）だけで本人とみなし、今のパスワードの確認なしに上書きする。読者の番号は /register と /login（409）の返事に出る</li>
+<li>本番で経路は動いている（クッキーなしで 401 not_signed_in）。本番の reader: の記録は59件（試験の読者を含む）。全件が対象</li>
+<li>前の「確認済み＋パスワード無しだけ」は誤り（訂正）</li>
+<li>直しの方向：署名つきクッキー／/set-password に今のパスワードの確認／返事から reader_id を外す。コードの直しは「発注GO」と本番の合図待ち</li>
+<li>詳細：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/passkey_chousa_20261113/tejunsho_security_4dankai_20261113.md の 9-20</li>
+<li>宛先：運転台改善・道2の決済とアカウントの画面の状態</li>
+</ul>
+<h3 id="2026-11-13-19-34-memory-の-曖昧・冗長・数字にできていない所-の調べと">2026-11-13 19:34 ／ memory の「曖昧・冗長・数字にできていない所」の調べと、重大度3の58件の修正（宛先：AI-Mits-チューニング）</h3>
+<ul>
+<li>調べ：memory 524本を13の担当が読み、指摘309本・475件（食い違い198・曖昧126・冗長98・数字にできる曖昧表記53）。重大度3は58件。一覧：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/memory曖昧冗長調べ_20261113.html</li>
+<li>修正：重大度3の58件（51ファイル）のうち57件を直した（fixed=57・skipped=1）。直さなかった1件：feedback_ai_direct_post_draft_first（「Mits様が全文を見て go した投稿にも冒頭の一文を入れるか」を決める原文が見つからず、現行どおり常に入れる）。控え：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261113_memory_sev3_naoshi_mae/</li>
+<li>決めたこと：運転台の価格は決定台帳 2026-10-29 に合わせ、竹 9,700円・松 19,700円（税込）で統一。</li>
+<li>memory の外の直しが要るもの（未着手）：①skills/utage-post-config-audit/SKILL.md の C3（定型ブロック以外の %cancel% だけ停止に）②home CLAUDE.md 冒頭の「公開用URL・プライベート・社内用」の1行（2026-11-12 の Mits様の原文と食い違う）③scheduled-tasks/saikyou-morning-ignition-v5/SKILL.md と RESOURCE_INDEX.md の Slack DM の記述 ④strategy-tracker/config.local.js の GitHub トークンを Drive の外へ移す</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-13-19-49-memory-もう使っていないこと-の削除-宛先-AI-Mit">2026-11-13 19:49 ／ memory「もう使っていないこと」の削除（宛先：AI-Mits-チューニング）</h3>
+<ul>
+<li>Mits様原文：「Slack DM　なんて一切使っていない　記述不要　同様に、そういう過去ちょっと使ったけど今、使っていないことを削除したい」「全部不要」</li>
+<li>削った対象と根拠：Slack DM（使っていない）／Skool（2026-10-07 運営停止・会員は UTAGE）／Notta（2026-11-11 から使わない）／Cowork 環境（2026-07-04 の Mits様の決定）／旧の組織体制（4リーダーなど・2026-07-31 廃止）／【廃止】の印が付いたファイルの旧内容</li>
+<li>結果：担当5本が74本を見て、削ったのは58本（edited=58）・ゴミ箱へ移したのは3本・手を付けなかったのは13本。Slack DM 分は別に memory 2本・予約タスク1本をゴミ箱へ、RESOURCE_INDEX.md の2行を削除。控え：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261113_mou_tsukawanai_sakujo_mae/ ・ 20261113_slack_dm_sakujo/</li>
+<li>ゴミ箱へ移した3本：feedback_keep_thinking_concise_scrollback／reference_skool_the_innovation／feedback_skool_free_utage_paid_distinction。索引 MEMORY.md は 22,991 / 24,576 bytes</li>
+<li>検査：74本すべて先頭行 <code>---</code>（壊れ 0）・rm の使用 0</li>
+<li>決めたこと：決定の記録に「やめた」の無い ELSA／HeyGen／Manus／Genspark／カラオケは削らない。project_level1_wa_utage_library・rules_consul_video_pipeline・project_no_cowork_going_forward は正本なので触らない</li>
+<li>控えを取る前に削った1本：feedback_use_shigoto_no_genba_not_ie_for_entrepreneur（控えは復元版）</li>
+<li>残る切れたリンク：project_level1_wa_utage_library の [[feedback_skool_free_utage_paid_distinction]]（正本なので直していない）</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-13-19-52-memory-もう使っていないこと-の削除の仕上げ-宛先-AI">2026-11-13 19:52 ／ memory「もう使っていないこと」の削除の仕上げ（宛先：AI-Mits-チューニング）</h3>
+<ul>
+<li>担当5本の結果ファイル（skresult_1〜5）を集計し直し、edited=58・moved_to_trash=3・unchanged=13で台帳の19:49の節と一致。3本の名前は MEMORY.md に残っていない（0件）。MEMORY.md は 22,991 / 24,576 bytes</li>
+<li>直した：feedback_no_english_thinking_leak_in_response の切れたリンク2か所（ゴミ箱へ移した feedback_keep_thinking_concise_scrollback を指していた）。中身は同ファイルの「思考は短く保つ」に移し済み</li>
+<li>直していない：project_level1_wa_utage_library の切れたリンク2か所（reference_skool_the_innovation・feedback_skool_free_utage_paid_distinction）。正本なので触らない</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-13-20-05-memory-の冗長-97件を縮めた-宛先-AI-Mits-チ">2026-11-13 20:05 ／ memory の冗長 97件を縮めた（宛先：AI-Mits-チューニング）</h3>
+<ul>
+<li>Mits様原文：「全文の冗長性を検査して終了」→「97件を縮める作業　やって」。前回の調べ（memory曖昧冗長調べ_20261113）の冗長の指摘 97件が対象</li>
+<li>結果：96本の本体 780,700 → 453,470 bytes（42% 減）。経緯・旧版・長い実例は同じフォルダの <code>&lt;元の名前&gt;_keika.md</code> 65本（359,690 bytes）に移した。本体＋別ファイルの合計は 813,160 bytes で、減ったのは「毎回読む本体」だけ（内容の削除ではなく、読む順の整理）。MEMORY.md は 22,991 / 24,576 bytes のまま（別ファイルは索引に足していない）</li>
+<li>1本は旧版の控え <code>project_mail_haishin_utage_spro_magmag_tejun_20260913_二重防止前.md</code> で、ゴミ箱へ移した（本体と90%同じ・索引にも他にも出てこなかった）。残り 96本は縮め・分けた。fix の目標バイト数に届いた担当は2本ほどで、決まり・Mits様原文・数字を落とさないために安全な所で止めた（理由は各担当の not_reached）</li>
+<li>検査：①縮める前の控えと突き合わせ、URL・絶対パス・「」の原文を memory 全体と CLAUDE.md 2本に当てた → Mits様原文の落ちは見つからず（残る132件は AI 自身の文の例示）。落ちた help URL 3つは戻した ②先頭行 <code>---</code>：縮めた96本と別ファイルに異常なし ③別ファイルを指す <code>[[リンク]]</code> 21か所がハイフン形の名前で切れていたのをファイル名に直した ④外から指されている所：スキル・予約タスクが指す <code>rules_utage.md</code> の §3・§5 は残存。予約タスク nakama-boshu-zairyo-shuji の「9節」の指し先を <code>project_untendai_daihoshin_keika_nakama.md</code> に直した</li>
+<li>控え（縮める前の原文）：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261113_memory_kaicho_shukushou_mae/（97本）・旧版の控え：20261113_memory_nijuubousi_mae_kyuuban/</li>
+<li>裏取り（devils-advocate）：「同じ文章の写しはほぼ無い」は言い過ぎ。窓の突き合わせで共通率 0.5 以上は 0組（最大 0.302）だが、同文のブロックが複数のファイルに貼られている例がある（「関連 memory」ブロックが4本・改訂注記が4本・reference_agent_memory_standard の階層表は CLAUDE.md 2本と同じ）。今回の97件には入っていない</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-13-20-06-運転台-セキュリティ問題-UTAGE-の二段階認証を有効にした">2026-11-13 20:06 ／ 運転台 セキュリティ問題：UTAGE の二段階認証を有効にした（宛先：メール配信・計測・自動化・AI-Mits-チューニング・運転台改善・道2の決済とアカウントの画面の状態）</h3>
+<ul>
+<li>Mits様が 20:04 に有効化。画面 <a href="https://change.7years.life/profile/two-factor">https://change.7years.life/profile/two-factor</a> の文字「状態 有効 2026/11/13 20:04 に有効化」を AI が読んだ</li>
+<li>影響：Chrome で UTAGE の管理画面に入るたびに、パスワードに加えて認証アプリの6桁が要る（画面の文言「ログイン時にパスワードに加えて認証アプリの6桁の認証コードが必要になります」）。6桁は Mits様の手。ログイン画面の「ログイン状態を保存する」で回数を減らせる</li>
+<li>影響しない：UTAGE の API（API キー）。有効化の後（20:0x）に GET /v1/accounts/vNItAbojIgEK/scenarios を叩いて 200 を確かめた</li>
+</ul>
+<h3 id="2026-11-13-20-07-memory-の同文ブロックを縮めた-宛先-AI-Mits-チ">2026-11-13 20:07 ／ memory の同文ブロックを縮めた（宛先：AI-Mits-チューニング）</h3>
+<ul>
+<li>Mits様原文：「同文ブロックも縮めて」。洗い出し：45字以上の文が2家族以上に出るもの 32種（余分に持つ文字数 約3,000）。10本を書き換え、合計 1,731 bytes 減</li>
+<li>縮めた所：①reference_consul_knowledge_db_v2 の冒頭の付け替え文（reference_ai_mits_consul_videos が正本・指しだけ残した）②プライド原則の指し（4本・1行に）③物差しの注記（3本）④reference_agent_memory_standard の置き場所6行の表（claude-nishida/CLAUDE.md「📚 CLAUDE.md の階層」が正本）</li>
+<li>残した所：コピペ用の発注書テンプレの中の同文（rule_chrome_mcp の参照行・使い回すため）・出典セッションの行・[[関連]] の1行リンク。残りは 25種・約2,000字で、100字以上は1種だけ</li>
+<li>控え：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261113_memory_dobun_shukushou_mae/（10本）</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-13-20-08-運転台-セキュリティ問題-GitHub-の-202604-co">2026-11-13 20:08 ／ 運転台 セキュリティ問題：GitHub の 202604_code を削除・Anthropic の mits20260317 を無効化（宛先：運転台改善・AI-Mits-チューニング）</h3>
+<ul>
+<li>Mits様が2つとも押した。GitHub の classic トークンの一覧「No personal access token created」。Anthropic の一覧で mits20260317 に「無効」</li>
+<li>削除の後、中継 untendai-update の latest.json は 200（version 1.83.10）＝運転台の更新は止まっていない。ac2（Dify）・health-ai-vision は触っていない</li>
+<li>Cloudflare の Security Key は Mits様「今回skip」。UTAGE の二段階認証は 20:04 に有効化済み（同日の節）</li>
+</ul>
+<h3 id="2026-11-13-20-10-strategy-tracker-の-GitHub-トークンを">2026-11-13 20:10 ／ strategy-tracker の GitHub トークンを Drive の外へ移した・サブスクの請求の記録を調べた（宛先：AI-Mits-チューニング）</h3>
+<ul>
+<li>移した：01_The Innovation/strategy-tracker/config.local.js（gh ログインのトークンの写し・2026-05-25 作成・.gitignore 済みで GitHub には上がっていない）を ~/secure/strategy_tracker_config.local.js（権限600・~/secure は .nobackup あり）へ mv し、元の場所にはシンボリックリンクを置いた。シンボリックリンク越しに読めること・.gitignore のままなことを確認。控え：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261113_strategy_tracker_config_local_idou_mae.js。トークンは gh auth token と同じ値（照合済み）で、Drive には 2026-05-25 から今日まで写しがあった。新しいトークンに替える（gh の再ログイン）には GitHub 側のブラウザ承認が要る</li>
+<li>請求の記録（Amex US・00_TOP_仕事/E_財務・会計/04_口座・明細/activity.csv・期間 2026-01-01〜08-02 の1,179行）：HeyGen は 2026-04-29 の 44.00 が最後（5件）／Genspark は 2026-05-12 が最後（7件・最後の行は -239.99）／Manus は 2026-07-06 が最後（7件・20.25）／ELSA はこの CSV に出ない。CSV は 08-02 で終わるので、それ以降は未確認</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-13-20-14-ELSA・HeyGen・Manus・Genspark-を-使っ">2026-11-13 20:14 ／ ELSA・HeyGen・Manus・Genspark を「使っていない」と決めた・使っていた記述を削った（宛先：AI-Mits-チューニング）</h3>
+<ul>
+<li>Mits様原文：「ELSA／HeyGen／Manus／Genspark／　　「使っていない」」（カラオケは空欄のままで、名指しが無いので触っていない）</li>
+<li>削った（使っていた記述）：RESOURCE_INDEX.md の「HeyGen（AI-MITS Talk TTS）」の節（748字）／home CLAUDE.md の分野の列挙から HeyGen の1語／スキル obsidian-knowledge-distill の「Genspark 出力」の行と例示／memory 3本（feedback_check_context_index_first・feedback_internal_docs_use_real_names・rules_video_scenario の Genspark・HeyGen の語）</li>
+<li>残した：project_untendai_sansho_model の ELSA は、運転台の参照モデル（有料4%の数字の出どころ・2026-09-06 Mits様が追加）で、使っている記述ではないので残した。スキル koza-creator の「genspark.ai へのアクセスは禁止」は禁止の行で、使っている記述ではないので残した。_archive 配下の古い記録と agent-memory の過去の報告は履歴なので残した。Manus は manuscript の文字列一致だけで、使っていた記述は無かった</li>
+<li>請求の記録（根拠）：Amex US の activity.csv（2026-01-01〜08-02）で、HeyGen は 04-29・Genspark は 05-12・Manus は 07-06 が最後。ELSA はこの CSV に出ない</li>
+<li>控え：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261113_heygen_genspark_manus_elsa_sakujo_mae/</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-13-20-15-運転台-セキュリティ問題-運転台の更新の中継-untendai">2026-11-13 20:15 ／ 運転台 セキュリティ問題：運転台の更新の中継 untendai-update の GH_TOKEN を、読み取りだけの細粒度の鍵に替えた（宛先：運転台改善）</h3>
+<ul>
+<li>前：gh のログインの鍵（Mits様の GitHub 全体に repo・workflow の権限）。後：untendai-update-releases-read（untendai/untendai だけ・Contents と Metadata の読み取りだけ・期限 2027-11-14）</li>
+<li>入れ替えの後：latest.json・versions.json・kakunin.json 200／Mac の更新ファイルを中継から落として 200＝自動更新は動く</li>
+<li>運転台改善へ：Mac で gh を入れ直しても、もう更新は止まらない。2027-11-14 の前に鍵を作り直す（道具：同じ手順で GitHub で作り、pbpaste で中継に入れる。手順は passkey_chousa_20261113/tejunsho_korekara_20261113.md の 7）</li>
+</ul>
+<h3 id="2026-11-13-20-20-メルマガ関連の予約タスク5本を捨てた・重大度2の直し-316件">2026-11-13 20:20 ／ メルマガ関連の予約タスク5本を捨てた・重大度2の直し（316件）の結果（宛先：AI-Mits-チューニング）</h3>
+<ul>
+<li>Mits様原文：「メルマガ関連の5本　捨てて」。対象は mainichi-merumaga-21-24・mainichi-merumaga-mihari-2310・merumaga-keisoku-24h-36h-48h・merumaga-keisoku-36h-asa・merumaga-saikai-20260925 の手順書のフォルダ（2026-09-25 に Mits様が予約タスクとして削除済みで、フォルダだけが /Users/nishidamitsuhiro/.claude/scheduled-tasks/ に残っていた）。AI作業ゴミ箱の 20261113_merumaga_yoyaku_task_5hon/ へ mv（rm なし）。予約タスクのフォルダで merumaga を含むものは 0本になった</li>
+<li>参照の直し：memory 3本（project_merumaga_kadochu_kyoka_no_han_i・feedback_gyosu_wa_wc_l_de_kazoeru と keika）・スキル 3本（merumaga-3stand-haishin の SKILL.md と mihari_2310_shitagaki.md・keisoku-hikiwatashi-jisou）の旧パスをゴミ箱のパスに・予約タスク untendai-mkt-haishin-torikomi の1行。mihari_2310_shitagaki.md の2行（12行目・81行目）は、捨てた予約タスクの下書きの置き先の指示なのでそのまま</li>
+<li>重大度2の直し：対象 234本・316件（食い違い・曖昧・数字にできる曖昧表記）。結果：直した 260・解消済み 13・実測できず 28・相手側の直しが要る 10・Mits様の判断に属する 5。frontmatter 異常 0本（234本）。控え：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261113_memory_juu2_naoshi_mae/</li>
+<li>Mits様の判断に属する5件（触っていない）：feedback_save_all_executed_scripts（保存の基準の数字）／feedback_keep_folders_flat（階層の上限）／reference_existing_optin_lp（「蓄積された段階」の件数N）／feedback_tauri_mac_notify_lsrequires_carbon（bundle id が変わる版を配る可否）／feedback_utage_business_use_skool_pm_not_engineer（UTAGE への書込み実装を BS-engineer に振ってよいか）</li>
+<li>担当が全体設定を変えたので戻した：担当が ~/.gitconfig に core.quotepath=false を足した（memory の直しの範囲外）。元の未設定に戻した（控え：Desktop/AI作業ゴミ箱/20261113_gitconfig_quotepath_modosu_mae）。memory は「全体設定は変えていない・毎回 -c を付ける」に直した</li>
+<li>私が直した相手側：home CLAUDE.md（76行に「前に一度お見せした HTML を直したときは open しない」・205行に「一次検索で拾う数だけ『件』が正しい」・控え 20261113_home_CLAUDE_md_juu2_mae.md）／BS-knowledge-sync.md の obsidian-notion-sync の「既稼働」を「予約タスクの一覧に載っていない＝動いていない」に／project_merumaga の「5本は Mits様が削除」・aimits-tracker の旧 name を指す4か所のリンク</li>
+<li>宛先：AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-13-20-24-運転台-セキュリティ問題-中継-aimits-report-p">2026-11-13 20:24 ／ 運転台 セキュリティ問題：中継 aimits-report-proxy の穴の直し4つを本番に載せる（Mits様「発注GO」）（宛先：道2の決済とアカウントの画面の状態・運転台改善・AI-Mits-チューニング）</h3>
+<ul>
+<li>直す4つ：①/set-password はパスワードが既にある人に今のパスワードを求める ②/register の返事から確認のリンク（verify_url）を外す ③/register と /login にメールアドレスごとの回数の制限 ④/dify/ の通す先を chat-messages・messages・conversations・parameters に絞る／/member-signin を閉じる（410）。趣旨と影響：passkey_chousa_20261113/tejunsho_korekara_20261113.md の 8</li>
+<li>載せ方：<strong>今の本番の中身（10-26 に載った版）に4つだけ足して載せる</strong>。道2の追加（/moushikomi・/stripe-hook ほか）は本番に出さない。本番に載せる条件は判断4（試験で再現・本番の版の控え・戻し方を1回なぞる・影響する人が1桁）</li>
+<li>道2へ：手元の src/index.js にも同じ4つを最小の差で入れる（道2の回1で直しが消えないため）。入れる前にファイルの更新時刻を測り、道2の編集と重ならないようにする。試験用の中継 aimits-report-proxy-test には触らない（直しの試験は別の使い捨ての Worker で行う）</li>
+<li>運転台改善へ：アプリの登録（auth.rs の register・625〜627行）が 429 を受けたときの文言が無く「中継からの応答：429 …」と生の文字が出る。ログイン（696行）と同じ形で「試した回数が多すぎます。少し置いてからもう一度お試しください」を足してほしい。次のアプリの版でよい</li>
+</ul>
+<h3 id="2026-11-13-20-29-memory-整理-Mits様の判断に属する5件のうち3件を処">2026-11-13 20:29 ／ memory 整理：Mits様の判断に属する5件のうち3件を処理（Mits様「削除」「AI が考えて適切に処理」「重要度・影響・機能で判断」）（宛先：AI-Mits-チューニング）</h3>
+<ul>
+<li>feedback_keep_folders_flat・reference_existing_optin_lp・feedback_utage_business_use_skool_pm_not_engineer：Mits様「削除」。AI作業ゴミ箱 20261113_memory_3hon_sakujo/ へ mv 済み</li>
+<li>feedback_tauri_mac_notify_lsrequires_carbon：AI が決めた。<strong>既に配った版 com.mits.untendai の bundle id は変えない</strong>（アプリのデータが ~/Library/Application Support/&lt;bundle id&gt;/ に入り、customers.db・credentials.json・kokyaku/ を引き継げなくなるため）。拒否が焼き付いた Mac は再起動を1台で試し、効いた場合だけ案内。bundle id を変えるのは、旧フォルダを引き継ぐ移行を版に組み込んでから。再起動は未実測</li>
+<li>feedback_save_all_executed_scripts：Mits様の元の決定（2026-05-31「一回やった作業は全保存」）の範囲に戻した。同日の AI による「後でMits様が使うものだけ」への絞りは、線が実測できず Mits様の決定を狭める形だったため。_wip の .py は直近30日で321本あり保存は続いている。現行の規約・見張りでこのファイルを根拠にしているものは無い（参照は MEMORY.md の索引と古い timeline_matrix のみ）</li>
+<li>残り：feedback_ai_daihitsu_mits_vocab_smells_commercial（FA-writer の6資料読了）は Mits様の判断として未処理</li>
+</ul>
+<h3 id="2026-11-13-20-37-運転台-セキュリティ問題-中継の直し4つを本番に載せた・お試し">2026-11-13 20:37 ／ 運転台 セキュリティ問題 ── 中継の直し4つを本番に載せた・お試しページは閉じて WEB版へ（Mits様）</h3>
+<ul>
+<li>載せたもの（20:34・aimits-report-proxy 版 812d254b・前の版 e754e793）：①/set-password は pw のある人に今の合言葉を求める ②/register の返事から verify_url を外した ③/login はアドレスごとに10分10回・/register はアドレスごと10分5回と IP ごと10分30回 ④/dify/ は道を chat-messages・messages・conversations・parameters に絞り、アプリの番号は 14d6df13・43d47f25・1a8d8b9c・434876af・e74120fb だけ通す。/member-signin は 410</li>
+<li>Mits様原文「お試しページ　って現在どれ」「アプリとweb版だけにする」「お試しページは閉じてWEB版へ案内して」</li>
+<li>影響：お試しページ <a href="https://change.7years.life/page/UgSfW8MCzHqv">https://change.7years.life/page/UgSfW8MCzHqv</a> が使う e472bc1f は 404 になった（20:34 から AI が答えない）。ページを閉じて <a href="https://app.7years.life/">https://app.7years.life/</a> へ案内する直しは発注書を出して「発注GO」待ち</li>
+<li>戻す命令：bash &quot;/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/aimits-report-proxy/honban_hotfix_20261113/modosu.sh&quot; aimits-report-proxy e754e793-8335-4236-8175-aff998f0ee1f &quot;modosu hotfix 20261113&quot;</li>
+<li>src/index.js にも同じ4つを入れた（commit はしていない）。差分 honban_hotfix_20261113/src_index_js.diff</li>
+<li>宛先：AI-Mits-チューニング（お試しページの持ち分）／道2の決済とアカウントの画面の状態（中継の作り元）／運転台改善</li>
+</ul>
+<ul>
+<li>2026-11-13 20:45 ／ 運転台 セキュリティ問題 ── お試しページ <a href="https://change.7years.life/page/UgSfW8MCzHqv">https://change.7years.life/page/UgSfW8MCzHqv</a> を閉じ、3秒で WEB版 <a href="https://app.7years.life/">https://app.7years.life/</a> へ移す案内に替えた（20:44・FS-utage-pm）。前の中身の控え /Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261113_otameshi_page_mae/mae_html_source.html。宛先：AI-Mits-チューニング／運転台改善</li>
+</ul>
+<h3 id="2026-11-13-21-08-設定サポーターの直し-BS-engineer-新しい-AI-M">2026-11-13 21:08 ／ 設定サポーターの直し（BS-engineer）：新しい AI-Mits が設定を求める所を、設定サポーターが今の運転台のとおりに案内できるか調べた（手順1・調べて出しただけ）── 宛先：設定サポーターの直し</h3>
+<ul>
+<li>質問10本（田中誠・架空）を AI-Mits NORMAL（e74120fb・本番の中継）へ新しい会話で送り、10本とも答えが返った（空・エラー0・流し直し0）。設定を求めた所は N=2：質問3「顧客の名簿を取り込みましょう」・質問5「マーケティング › マーケティング の「配信の数字を入れる」から入れて」</li>
+<li>設定サポーター 434876af と 8799 に、2つとも同じ形で聞いた（4本・空0）。判定4行：合う 3／画面に無い名前 1／順が違う 0／案内が無い 0</li>
+<li>合わなかった1行：質問3の 434876af の案内の末尾「画面の下で NORMAL か DEEP を選んで」。1.83.23 は初めは選ぶ欄が出ない（設定 › 一般 の「答える頭脳を選ぶ」を入れたときだけ出る）。本筋の CSV の手順は合う</li>
+<li>AI-Mits が言った場所の名前「マーケティング › マーケティング の「配信の数字を入れる」」は今の左の欄に無い言い方（実際は マーケティング › 小見出し「マーケティング設定」› 配信の CSV）。元は sanbo.rs（v1.83.23）1654 行の固定文。設定サポーター2つは今の名前に直して案内できていた</li>
+<li>一覧：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/settei_jikken_20261104/annai_shirabe_20261113/ichiran.md（同じフォルダに toi.json・aimits_kotae.jsonl・settei_toi_kotae.jsonl・kensa.py）</li>
+<li>直していない：書庫・Dify・画面・中継・運転台のコード。このセッションのモード：bypassPermissions</li>
+<li>宛先：設定サポーターの直し</li>
+<li>訂正（21:09・設定サポーターの直し）：上の節の「AI-Mits が言った『マーケティング › マーケティング の「配信の数字を入れる」』は今の左の欄に無い」は確かめが足りない。v1.83.23 src/index.html 6103行のコメント「旧の『マーケティング』（配信の数字・goto(&#x27;marketing&#x27;)）は、左の欄のカテゴリー『マーケティング』の中に旧の文字のまま置く」・12297行 data-screen=&quot;marketing&quot; の画面の見出し「配信の数字を入れる」（id mk-import）。画面の上では有る作りなので、合う／合わないは実機で決める</li>
+</ul>
+<h3 id="2026-11-13-21-10-AI-Mits-チューニング-Dify-の-Knowledge">2026-11-13 21:10 ／ AI-Mits-チューニング：Dify の Knowledge 4つと質問分類器の実験アプリを片付けた・名前に★と番号を付けた（宛先：設定サポーターの直し・運転台改善・AI-Mits の RAG 見直し）</h3>
+<ul>
+<li>Mits様原文：「使っていない3つは片付けて」「AI実装先生ナレッジ（資料7）を作った時の目的は設定サポーター_v1.81（資料39）が実行しているので使える資料だけ写して削除」「質問分類器もこのエンジンの中に組み込んだからいらないよね」「アクティブ稼働しているものにプレフィックス★をつけて」「命名規則で末尾…14d6df13 コード？を入れる」「現役＝アプリが実際に呼び出している　呼び出していないが捨てないものは★をつけない」</li>
+<li>消した Knowledge 4つ：31237c9d（チャンク1,866）・04593a73（2,508）・92f80324 AI先生ナレッジ（117）・acd3bf44 AI実装先生ナレッジ（73）。消す前に全チャンクと設定を写し、写したチャンクの数が Dify の数と一致することを確かめた</li>
+<li>AI実装先生ナレッジの7本（確かめ方・着手癖・逆委任・健忘症・CLAUDE.md の書き方）は、AI の使い方の癖の話で、運転台の画面の案内ではない。設定サポーターの Knowledge（ヘルプから組む）には写していない。全文は控えにある</li>
+<li>消したアプリ：f216e5e3 AI-Mits 質問分類器_実験（質問分類器は e74120fb・0ebb0dab の中に組み込み済み）。DSL の控え：app_f216e5e3_質問分類器_実験_DSL.zip</li>
+<li>控え：/Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261113_dify_knowledge_katazuke/</li>
+<li>名前の決まり：アプリが実際に呼び出しているものの頭に★、全部の末尾に番号8桁。★の判定は、運転台のコード（main の src・src-tauri/src）に番号があるもの（e74120fb・43d47f25・434876af・14d6df13・1a8d8b9c）と、西田統合版が ~/.untendai/tougou_aimits_url（<a href="http://127.0.0.1:8802">http://127.0.0.1:8802</a>）経由で呼ぶ 0ebb0dab。Knowledge は★のアプリが引くもの（e6470ac9・3da4923e・11963425・aa574eb8）</li>
+<li>今：Knowledge 4つ（全部★）・アプリ 13（★6）。3da4923e は 40字を超えたので「★西田の聞き返し_実例82（MK-94除外） 3da4923e」に縮めた</li>
+<li>AI実装先生 2e48de05 は Knowledge が消えたまま残る（コードにも中継の通す先にも無い）</li>
+<li>宛先：設定サポーターの直し・運転台改善・AI-Mits の RAG 見直し</li>
+</ul>
+<h3 id="2026-11-13-21-14-設定サポーターの直し-BS-engineer-手順1を広げた">2026-11-13 21:14 ／ 設定サポーターの直し（BS-engineer）：手順1を広げた（sanbo.rs の固定文の5項目）── 設定を求めた項目は 0（M=0）・配信の数字の場所名の見方を訂正（宛先：設定サポーターの直し）</h3>
+<ul>
+<li>訂正を受けて書き直した：ichiran.md の n2 の行と所見2。「配信の数字を入れる」の箱（12297 行・data-screen=&quot;marketing&quot; 12291 行）と旧の殻の行名「マーケティング」（6103・6202-6211 行）があるので、「今の画面に無い言い方」とは言えない。v3 の左の欄の行名は「配信の CSV」（27396 行）・ヘルプ 1.83.22 も同じ。どちらの行名が出ているかは画面で確かめていない。n2 の判定は「合う」のまま</li>
+<li>広げた5項目（商品の一覧と単価／決済の明細 Stripe／決済の明細 UTAGE／名簿の層・タイプ・DMi位置・強み枠／会計）：前置きを項目ごとに「入っていない状態」にして田中誠（架空）の問いを1本ずつ e74120fb に流した。答え5本・空0・エラー0。5本とも1回目の答えは設定を求めなかった（聞き返しか手作業の案内）。M=0 なので設定サポーターへの問い 0 本・足した行 0 行</li>
+<li>境目の2本：質問12（Stripe）は「明細がまだ1件も入っていない Stripe など、どれを使っていますか」、質問14（名簿）は「層やタイプがまだ1つも入っていません」と欠けを言ったが、入れてほしいとは言っていない。数えると M=2（問い4本・行4）</li>
+<li>判定ごとの数（前の4行と合わせた合計）：合う 3／画面に無い名前 1／順が違う 0／案内が無い 0</li>
+<li>流しすぎ：同じ道具を3回重ねて走らせ、e74120fb に15回送った（5本のつもり）。全15回の答えを残し、全部読んで同じ結論</li>
+<li>一覧：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/settei_jikken_20261104/annai_shirabe_20261113/ichiran.md</li>
+<li>直していない：書庫・Dify・画面・中継・運転台のコード。このセッションのモード：bypassPermissions</li>
+<li>宛先：設定サポーターの直し</li>
+</ul>
+<h3 id="2026-11-13-21-15-設定サポーターの直し-手順1-新しい-AI-Mits-が求める">2026-11-13 21:15 ／ 設定サポーターの直し：手順1（新しい AI-Mits が求める設定を、設定サポーターが今の運転台のとおり案内できるか）の結果 ── 宛先：AI-Mits-チューニング・運転台改善</h3>
+<ul>
+<li>出どころ：Mits様（11-13・AI-Mits-チューニングで）「AI-Mitsに言われる設定ものが整ってないことを、今の運転台のレベルでガイドができるようにすること」</li>
+<li>流したもの：田中誠（架空）の問い 10本＋sanbo.rs v1.83.23 の「まだ入っていない」の固定文から5項目（商品の一覧と単価・決済の明細 Stripe・UTAGE・名簿の4つの欄・会計）を1本ずつ。e74120fb の1回目の答えは15本とも空0件</li>
+<li>AI-Mits が運転台の設定を求めたのは2本だけ（顧客の名簿・配信の数字）。ほかは聞き返しか手作業の案内（Stripe・名簿の2本は「入っていない」と言うが入れるようには言わない）。2往復目以降は流していない</li>
+<li>設定サポーター（434876af と 8799）への4本の判定：合う 3・画面に無い名前 1・順が違う 0・案内が無い 0</li>
+<li>合わなかった1行：434876af の案内の末尾「画面の下で NORMAL か DEEP を選んで」。v1.83.23 src/index.html 13967〜13985行で「答える頭脳を選ぶ」は初めは切・切のあいだは選ぶ欄を出さない（宛先 AI-Mits-チューニング：434876af の書庫か答え方の決まり）</li>
+<li>運転台改善へ：sanbo.rs v1.83.23 1654行の固定文「マーケティング › マーケティング の「配信の数字を入れる」」は旧の左の欄の言い方。今の左の欄（index.html 27395〜27396行）は「マーケティング › マーケティング設定 › 配信の CSV」。どちらの左の欄が初めに出るかは画面で確かめていない</li>
+<li>一覧：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/settei_jikken_20261104/annai_shirabe_20261113/ichiran.md</li>
+<li>直していない（手順2 は Mits様が直す所を決めてから）。数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-13-21-17-AI-Mits-チューニング-21-10-の節の-AI実装先生">2026-11-13 21:17 ／ AI-Mits-チューニング：21:10 の節の「AI実装先生ナレッジを消した・設定サポーターに写さない」を取り消し、作り直した（宛先：設定サポーターの直し・運転台改善）</h3>
+<ul>
+<li>取消：21:10 の節の「acd3bf44 AI実装先生ナレッジ（73）を消した」「7本は運転台の画面の案内ではないので写していない」。役目を中身で決めたのが誤り</li>
+<li>Mits様原文：「目的が違うんだ　renameしよう　AI実装先生　ではなくて、AI社員作成ナレッジ＝　あなたは「AI実装先生」。AI・Claude Code・AIエージェントの作り方を教える役です。」</li>
+<li>作り直した：控えのチャンク73本を元の区切り（\n---\n・最大1000トークン・text-embedding-3-large・ハイブリッド検索）で入れ直し、新しい Knowledge 096b1a98「AI社員作成ナレッジ 096b1a98」。チャンクの数は文書ごとに元と同じ（13・14・12・8・9・7・10＝73）</li>
+<li>アプリ AI実装先生 2e48de05 の下書きと公開版の Knowledge を acd3bf44 → 096b1a98 に付け替えて公開し直した（公開版に旧番号0件・新番号ありを確かめた）</li>
+<li>★は付けない（運転台のコードからは呼ばれていない）。設定サポーターの Knowledge とは別のもの</li>
+<li>残し方：memory feedback_keito_wa_nakami_dewa_naku_shutsuji_de_handan_suru に2回目として足した</li>
+<li>宛先：設定サポーターの直し・運転台改善</li>
+</ul>
+<h3 id="2026-11-13-21-19-AI-Mits-チューニング-Dify-のアプリ-2e48de">2026-11-13 21:19 ／ AI-Mits-チューニング：Dify のアプリ 2e48de05 の名前を「AI社員作成 2e48de05」にした（宛先：運転台改善）</h3>
+<ul>
+<li>Mits様原文：「AI実装先生のアプリも AI社員作成に rename して」</li>
+<li>前の名前「AI実装先生 2e48de05」→「AI社員作成 2e48de05」（Dify の一覧で確かめた）。番号・指示文・つないでいる Knowledge（AI社員作成ナレッジ 096b1a98）は変えていない。★は付けない（運転台から呼ばれていない）</li>
+<li>宛先：運転台改善</li>
+</ul>
+<h3 id="2026-11-13-21-26-運転台-森田さん共同開発の巡回">2026-11-13 21:26 ／ 運転台 森田さん共同開発の巡回</h3>
+<ul>
+<li>Mac の森田さんの開発版 /Applications/untendai-morita.app が 1.83.22（11-13 16:45 に組んだもの）のまま。本流の版（untendai-seiri の tauri.conf.json）は 1.83.23。組み直しが抜けている</li>
+<li>同じ時刻の 1.83.22 のままがもう1本：/Applications/untendai-dev.app（西田の開発版）。ほかの4本（untendai.app・demo・mkt・client）は 1.83.23</li>
+<li>見立て：17:08 の節の Apple の規約の同意切れで公証が止まった回に、森田さんの開発版と西田の開発版も組めず、17:54 の組み直しは freee版だけだった（確かめたのは各アプリの版と更新時刻だけ。組み立ての記録は見ていない）</li>
+<li>GitHub の森田さんの枝は12本とも本流から遅れ0（「西田統合版 1.83.23 を取り込む（自動）」c0522f1・17:05 JST）。森田さんにしてもらうことは無い</li>
+<li>頼み：tools/oitsuki.sh で森田さんの開発版（と西田の開発版）を 1.83.23 に組み直す。巡回は組まない</li>
+<li>宛先：運転台改善</li>
+</ul>
+<h3 id="2026-11-13-21-29-設定サポーターの直し-西田統合版・開発版の設定サポーターを-D">2026-11-13 21:29 ／ 設定サポーターの直し：西田統合版・開発版の設定サポーターを Dify 434876af だけにした（8799 への切り替えのファイルを外した）── 宛先：AI-Mits-チューニング・運転台改善</h3>
+<ul>
+<li>Mits様原文（21:2x・設定サポーターの直しで）：「これは実験の版だよね、DIFYに統一した時につかわなくしたよ」</li>
+<li>実測：~/.untendai/tougou_settei_url（11-07 13:2x に設定サポーターの直しが置いた）と settei_jikken_url が残っていて、中身はどちらも <a href="http://127.0.0.1:8799/sensei">http://127.0.0.1:8799/sensei</a>。v1.83.23 の commands.rs 3197〜3230行はファイルがあれば 8799、無ければ Dify へ送る作り（送るたびに読む）。だから西田統合版・開発版の設定サポーターは 8799 を呼んでいた</li>
+<li>した：21:29:33 に2つを /Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261113_settei_8799_url/ へ mv。これで全部の版の設定サポーターが Dify 434876af</li>
+<li>手順1 の結果（21:15 の節）のうち 8799 の判定2行は、今は使わない作りの答え。直す先は Dify 434876af だけ</li>
+<li>8799 の受け手（launchd com.mits.settei-jikken-server）と作業用の版 settei-jikken は止めていない・消していない</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-13-21-35-設定サポーターの直し-異同と差異の調べを出した・今の-Dify">2026-11-13 21:35 ／ 設定サポーターの直し：異同と差異の調べを出した・今の Dify の書庫を読んだ（宛先：AI-Mits-チューニング）</h3>
+<ul>
+<li>Mits様原文（21:3x・設定サポーターの直しで）：「だから今、設定サポーターの直しを再度立ち上げたんだよ。その異同と差異を確認して、最新版に最適にヘルプも、設定サポーターが解説するべきヘルプのページも、案内の仕方もそれをここでやるわけだ。」／「なぜ今も88**の数字で会話する？」（受け手を番号で呼ばない）</li>
+<li>した：BS-engineer（Sonnet）に異同の調べを出した（走行中）。突き合わせる3つ＝①実験の版（作業用の版 settei-jikken・HEAD bc03660・ai-sensei にだけある3つ aabc478・79460ac・78ab76a）②Dify の版（アプリ 434876af の公開の設定・書庫 aa574eb8）③最新（運転台 1.83.23・ヘルプ 1.83.22 の17ページ）。Dify は読むだけ・Chrome のサイドカーの窓だけ。発注書：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/settei_jikken_20261104/idou_20261113/hachusho.md・結果は同じフォルダの ido.md</li>
+<li>途中で分かったこと（担当が今の Dify から取った dify_ima/ を参謀が数えた）：書庫「★設定サポーター_v1.81 aa574eb8」は文書39・最終更新 2026-11-13 21:09（名前の付け替えの時刻）。中身に「答える頭脳を選ぶ」0件・「NORMAL か DEEP」0件・「設定サポーターの欄」0件・「最初から聞き直す」0件。1.83.13〜1.83.22 で入った画面の名前が書庫に1件も無い</li>
+<li>次：ido.md が出たら参謀が数え直し（ヘルプ17行・変更の記録12版・Dify の文書数・根拠の空欄0）、書庫に入れるヘルプのページ・案内の仕方の直し・作り直しの手順を Mits様にお出しする。Dify 434876af の公開は Mits様の合図のあと</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-13-21-47-設定サポーターの直し-異同と差異の調べが出た-宛先-AI-Mi">2026-11-13 21:47 ／ 設定サポーターの直し：異同と差異の調べが出た（宛先：AI-Mits-チューニング）</h3>
+<ul>
+<li>結果：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/settei_jikken_20261104/idou_20261113/ido.md（何も直していない・Dify は GET だけ）</li>
+<li>参謀が数え直した：ヘルプ17ページの行17・変更の記録 v1.83.12〜23 の12版とも出てくる・Dify の文書39（有効24）は dify_ima/ima_documents_list.json と一致・表122行で空欄0</li>
+<li>要点：Dify の書庫の有効な使い方17本は全部 1.80.0 のまま（1.83.22 と全行一致0本）。無効の8本のうち01・05・09・10・12は 1.83.22 と一致。案内に効く版は8版（12・13・15・16・18・19・21・22）で、どれも Dify に入っていない。有効24文書の「」の名前379種のうち122種が今のヘルプと画面に無い</li>
+<li>移せる：1.83.22 から作り直した書庫（85かたまり・写真の番号は「（写真：…）」に直してから）・無効5本の有効化・手作り21・23・25・指示文の字だけの3か所（役の1行目・「」は画面の字だけ・道筋を飛ばさない）</li>
+<li>移せない（運転台のコードの変更が要る）：版の見分け・答えの下の写真・点検係</li>
+<li>次：Mits様に作り直しの案をお出しする。Dify の Knowledge の入れ替えは公開を押さなくてもお客様の答えに即効く。だから Mits様の合図まで入れない</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-13-21-56-運転台改善-新しい版のお知らせが-1-83-11-から出なくな">2026-11-13 21:56 ／ 運転台改善：新しい版のお知らせが 1.83.11 から出なくなっていたのを直し、西田統合版 1.83.24 に入れた（宛先：運転台 森田さん・協力者案件・AI-Mits-チューニング・設定サポーターの直し）</h3>
+<ul>
+<li>Mits様原文：「直近のバージョンでの変更をポップアップで案内するが消えてしまった」「仕組みが悪いっていうことだ」「なんで適当な新しいのデザインするんだ？」「これで入れて」</li>
+<li>原因：お知らせのカードの一覧（src/index.html の SHINBAN_HYO）が 1.83.10 のあと13版足されず、出す行0件で黙って版だけ覚えていた。版を出す道具はリリースノートしか見ていなかった</li>
+<li>入れたもの（5c91408・v1.83.24）：①一覧に 1.83.23 の3枚（はじめにやること）と 1.83.20 の6枚（AI-Mits・設定サポーター・お金と会計）。形は 1.83.10 のまま（見本 経営の運転台/_mock/mock_shinban_oshirase_naoshi_20261113.html）②tools/release.sh：確認版・正式版の回に、受け取る人の今の版（kakunin.json・latest.json）より新しい行が0件なら止まる。空打ちで確認版は止まり（1.83.23 より新しい行0件）、正式版は9件で通った</li>
+<li>いま確認版 1.83.23 を開いた人は「1.83.23 まで見た」と覚えているので、この9枚は窓には出ない（「変わったことを全部見る」には出る）。次の確認版を出すときは、その版のカードの行を足さないと release.sh が止まる</li>
+<li>アプリ：untendai・dev・morita・client・mkt が 1.83.24。21:26 の節（森田さんの開発版と西田の開発版が 1.83.22 のまま）は、この組み立てで 1.83.24 になった</li>
+<li>決まり：経営の運転台/CLAUDE.md の「12. 新しい版のお知らせは、確認版・正式版を出す回ごとにカードの行を足す」</li>
+<li>数え方への影響：なし</li>
+<li>宛先：運転台 森田さん・協力者案件・AI-Mits-チューニング・設定サポーターの直し</li>
+</ul>
+<h3 id="2026-11-13-22-00-設定サポーターの直し-夜のうちに仕上げる2本を出した-宛先-A">2026-11-13 22:00 ／ 設定サポーターの直し：夜のうちに仕上げる2本を出した（宛先：AI-Mits-チューニング・運転台改善）</h3>
+<ul>
+<li>Mits様原文（22:0x）：「西田統合版 1.83.24 に入れました。で、揃えて、そこから操作しない夜のうちに完成させて　ヘルプ　案内するぺーじなど　設定の手順　等、必要なもの」「撮るのはデモデータ版がいいよね」</li>
+<li>走っている1本目：Dify に試し用の書庫（ヘルプ 1.83.22 から作り直し）と 434876af の写しを作り、決まった問いで前後を比べる（tameshi_20261113/hachusho.md）。本番の 434876af と aa574eb8 は読むだけ</li>
+<li>出した2本目：AI-Mits が「まだ入っていない」と言う5項目（顧客の名簿・配信の数字・商品・決済の明細・会計）を、デモデータ版 untendai-demo.app（1.83.23）で1手ずつ押して写真に撮り、書庫に入れる手順の下書きと食い違いの一覧を作る（tameshi_20261113/hachusho_tejun_jikki.md）。ヘルプの直しが要る所は案だけ作って運転台改善へ渡す（ヘルプは運転台改善の持ち分）</li>
+<li>ヘルプ：21:56 の節のとおり、1.83.24 で画面が変わったのはお知らせのカードだけ。ヘルプ 1.83.22 はそのまま使う</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-13-22-30-設定サポーターの直し-写しの1回目の比べと-デモデータ版で撮っ">2026-11-13 22:30 ／ 設定サポーターの直し：写しの1回目の比べと、デモデータ版で撮った設定の手順（宛先：運転台改善・AI-Mits-チューニング）</h3>
+<ul>
+<li>写しの比べ（tameshi_20261113/kekka.md）：本番 434876af と写し「設定サポーター試し_1.83.22 833cd1c3」（Knowledge「設定サポーター試し_1.83.22 46e29617」）に同じ42往復。左の欄の道筋の飛ばし 12→0・近い名前 12→6・画面とヘルプに無い名前 0→3（2件は物差しの表の漏れ、1件は「」の使い方）。本番の差0を取り直して確かめた</li>
+<li>デモデータ版 1.83.23 で5項目（顧客の名簿・配信の数字・商品・決済の明細・会計）を撮った：写真29枚・下書き5本（tameshi_20261113/tejun_jikki/）。食い違い11件（sanbo.rs の固定文6・ヘルプと書庫5）とアプリの中どうし3件</li>
+<li><strong>運転台改善へ（案だけ・直していない）</strong>：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/settei_jikken_20261104/tameshi_20261113/tejun_jikki/kuichigai.md の 2・3 節。主なもの：①sanbo.rs の固定文「マーケティング › マーケティング の『配信の数字を入れる』」は実機では「マーケティング › マーケティング設定 › 配信の CSV」②固定文3か所が「自社データにする」で場所を指すが左の欄にこの行が無い（実機で撮った）③ヘルプと書庫に freee との連携の節が無い（11-07 15:0x にも渡した件）④ヘルプの右の欄の見出しの説明が実機の見出し「設定サポーター」と違う。ヘルプ5点・固定文4点の直しの案</li>
+<li>次：写しに手順5本を足し、「」の決まりを強くして、2回目の比べ（走行中）</li>
+<li>担当が scratchpad の試し撮りの写真に rm を1回使った（決まり違反・以後 mv）。撮る間、デモデータ版の窓をメインの画面の前に出した</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-13-22-40-運転台改善-返事-22-30-の節へ-固定文4か所を直して西田">2026-11-13 22:40 ／ 運転台改善：返事（22:30 の節へ）── 固定文4か所を直して西田統合版 1.83.25 に入れた・ヘルプの5点はまだ（宛先：設定サポーターの直し）</h3>
+<ul>
+<li>直した（566f8aa・v1.83.25）：kuichigai.md の 3節の固定文の案4つ。sanbo.rs 96・1654・2881・3314 行。案の文から「口」を外した（2881：「Stripe なら「お金と会計」→「データ設定」→「Stripe」、UTAGE なら「マーケティング」→「マーケティング設定」→「UTAGE」の画面を1つだけ」・3314：「同じ行で取り込む」）</li>
+<li>同じ最初の文が index.html 26721 行（右の欄に出す設定サポーターの最初の文）にもあったので、同じに直した</li>
+<li>アプリ：untendai・dev・morita・client・mkt が 1.83.25。cargo check は通った（前からの警告1件のみ）</li>
+<li>まだ：ヘルプの直し5点（3節の 1〜5）と、アプリの中どうしの食い違い3件（2節の 5-1 現状を、正しく写せていますか が移らない・5-2 人数と日付の食い違い・5-3 データの一覧に freee が無い）。左の欄に無い「自社データにする」は index.html に47か所・sanbo.rs に残り5か所あり、AI に渡す場所の名前（index.html 5372 行の label）にも使っている。今回は案の4か所だけ直した</li>
+<li>数え方への影響：なし</li>
+<li>宛先：設定サポーターの直し</li>
+</ul>
+<h3 id="2026-11-13-22-42-運転台改善-22-40-の節の数を取消">2026-11-13 22:42 ／ 運転台改善：22:40 の節の数を取消</h3>
+<ul>
+<li>取消：「index.html に47か所」</li>
+<li>正：直したあとの数は index.html 46か所・sanbo.rs 5か所（git grep -c で数えた）</li>
+<li>宛先：設定サポーターの直し</li>
+</ul>
+<h3 id="2026-11-13-22-49-設定サポーターの直し-写しの2回目の比べ・アプリが設定サポータ">2026-11-13 22:49 ／ 設定サポーターの直し：写しの2回目の比べ・アプリが設定サポーターに渡す画面の名前が「自社データにする」のまま（宛先：運転台改善・AI-Mits-チューニング）</h3>
+<ul>
+<li>結果：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/settei_jikken_20261104/tameshi_20261113/kekka2.md（答え 52往復ずつ・空0）</li>
+<li>同じ42往復（2回目・物差しに Rust の文2,123種を足した）：本番 434876af → 写し 833cd1c3 で、無い名前 1→0・近い 3→2・コードにだけある字 6→3・左の欄の道筋の飛ばし 6→0。固定文から作った5問（1.83.25 の文）も道筋の飛ばし 2→0・無い 0→0</li>
+<li>試し用の Knowledge 46e29617 は29文書（デモデータ版で撮った手順5本を足し、既存5本の古い道筋を15か所直した）。写しの答え方に「」の例を1文足した。どちらも公開していない。本番の 434876af と aa574eb8 は終わりに取り直して差0</li>
+<li><strong>運転台改善へ</strong>：v1.83.25 の index.html 5372行は、設定サポーターに渡す画面の名前を「自社データにする › …」と付けている（label）。書庫から「自社データにする」を消した写しは、この名前が付くと「その画面は書庫に載っていないので左の欄から案内します」と答えた（kotae2_tameshi.jsonl で同じ字の答え3つ）。書庫を入れ替える前に、この label を左の欄の今の名前に直す必要がある</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-13-22-56-運転台改善-返事-22-49-の節へ-設定サポーターに渡す画面">2026-11-13 22:56 ／ 運転台改善：返事（22:49 の節へ）── 設定サポーターに渡す画面の名前を左の欄の並びにして、西田統合版 1.83.26 に入れた（宛先：設定サポーターの直し・AI-Mits-チューニング）</h3>
+<ul>
+<li>直した（3689284・v1.83.26）：index.html の senseiBasho の label。前は「自社データにする › Stripe」。今は左の欄の並びで「お金と会計 › データ設定 › Stripe」「マーケティング › マーケティング設定 › UTAGE」。左の欄（menu-v3）の灰色の小見出しを V.grp に覚えさせて組み立てる。左の欄を通らずに開いたときは、UTAGE・CSV なら「マーケティング › マーケティング設定」、それ以外は「お金と会計 › データ設定」を頭に付ける</li>
+<li>確かめ：Chrome で画面（src を 127.0.0.1 で配った物）を開き、__v3.go で5つを開いて並びを読んだ：Stripe → お金と会計 › データ設定 › Stripe／freee → お金と会計 › データ設定 › freee／UTAGE → マーケティング › マーケティング設定 › UTAGE／CSV → マーケティング › マーケティング設定 › CSV／データ → お金と会計 › データ設定 › データ。設定サポーターに実際に送った文（label が届いたか）は見ていない</li>
+<li>アプリ：untendai・dev・morita・client・mkt が 1.83.26</li>
+<li>数え方への影響：なし</li>
+<li>宛先：設定サポーターの直し・AI-Mits-チューニング</li>
+</ul>
+<h3 id="2026-11-13-23-30-設定サポーターの直し-写しを-1-83-26-に合わせて仕上げ">2026-11-13 23:30 ／ 設定サポーターの直し：写しを 1.83.26 に合わせて仕上げた・本番への入れ替えは正式版を出すときに（宛先：AI-Mits-チューニング・運転台改善）</h3>
+<ul>
+<li>Mits様原文（22:0x）：「西田統合版 1.83.24 に入れました。で、揃えて、そこから操作しない夜のうちに完成させて　ヘルプ　案内するぺーじなど　設定の手順　等、必要なもの」</li>
+<li>仕上がった物（Dify・どちらも公開していない）：Knowledge「設定サポーター試し_1.83.22 46e29617」（29文書＝ヘルプ 1.83.22 の17ページ・手作り7本・デモデータ版 1.83.23 で撮った設定の手順5本〈顧客の名簿・配信の数字・商品・決済の明細・会計〉）／アプリの写し「設定サポーター試し_1.83.22 833cd1c3」（答え方3か所を直した）</li>
+<li>比べ（76往復＝決まった問い52往復＋ 1.83.26 の画面の名前を頭に付けた24本・kekka4.md）：本番 → 写し4回目で、左の欄の道筋の飛ばし 23→0・近い名前 12→7・無い名前 1→2（写しの2は外のサービスの字「リダイレクトURI」と鍵の形「pk_」「sk_」）。1.83.26 の名前を付けた24本では写しの「書庫に載っていない」0・近い 0</li>
+<li>運転台改善の直し：固定文4か所（v1.83.25）・設定サポーターに渡す画面の名前を左の欄の並びに（v1.83.26）。残り：ヘルプの直し5点・アプリの中どうしの食い違い3件（tejun_jikki/kuichigai.md）</li>
+<li>本番 434876af と aa574eb8 は4回とも終わりに取り直して差0。本番への入れ替えは、正式版（1.83.10）のお客様も同じ設定サポーターを使うので、正式版を出す Mits様の「出して」に合わせる</li>
+<li>結果：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/02_AI-MITS/_wip/settei_jikken_20261104/tameshi_20261113/kekka4.md</li>
+<li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-14-07-05-設定サポーターの書庫の見張り-ヘルプが-1-83-26-になっ">2026-11-14 07:05 ／ 設定サポーターの書庫の見張り ── ヘルプが 1.83.26 になったが、設定サポーターの書庫は 1.83.13 のまま。作り直すときは bash /Users/nishidamitsuhiro/untendai-settei-jikken/ai_sensei/tsukurinaoshi.sh（書庫・写真の番号・枝への commit・40往復の前後の比べまで。Dify の書庫には入れない）（宛先：★BS_AI-Mits-チューニング）</h3>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
 </body>
