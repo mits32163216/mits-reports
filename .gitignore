@@ -14,3 +14,6 @@ private/karaoke-ai/_wip/
 
 # コンサル動画台帳（お客様のフルネーム入り）は公開の GitHub に置かない。合言葉つきの入口 mits-private Worker からだけ出す（2026-11-12）
 private/consul-daichou/
+
+# 源泉の動画｜題とBranch（Zoom のコンサルの中身が入る）は公開の GitHub に置かない。合言葉つきの入口 mits-private Worker からだけ出す（2026-11-14）
+private/gensen-douga/
