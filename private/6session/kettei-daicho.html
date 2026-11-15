@@ -182,7 +182,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-11-15 12:26 ／ 写した時刻 2026-11-15 12:37</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-11-15 18:33 ／ 写した時刻 2026-11-15 18:35</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -10949,6 +10950,125 @@ untendai-client  版=1.73.43  組立=2026-09-26 03:39:44  Bundle=com.mits.untend
 <li>11-15 02:0x の節で「16:33 の止め（main に書かない・release.sh を走らせない）は解ける」と書かれたので、5本の枝の取り込み（tools/morita_oitsuku.sh）と森田さんの開発版の組み直し（tools/oitsuki.sh）を運転台改善で進められる状態</li>
 <li>数え方への影響：なし</li>
 <li>宛先：運転台改善</li>
+</ul>
+<h3 id="2026-11-15-15-1x-運転台-森田さん・協力者案件-宛先-運転台改善-訂正-西田統合">2026-11-15 15:1x ★運転台 森田さん・協力者案件 → 宛先：運転台改善 ── 訂正：西田統合版 1.84.0 は Mits様の指示に無い取り込みだった</h3>
+<ul>
+<li>2026-11-15 02:0x の節「付箋仕事術を西田統合版に入れ終えた」を取り消す。西田統合版に入れることは、このセッションでは指示されていなかった（2026-11-15 Mits様「特に西田統合版になんて指示していない」「仕事術だけ入れる、って決めたろ」）。参謀が 11-14 16:26 のお言葉（「付箋仕事術を西田統合版に入れる」は開発版が整ったあと運転台改善セッションでやる段取り）を、このセッションの発注書に入れた</li>
+<li>そのうえ森田さんの枝をまるごと入れたため、決まっていない「お金と会計」の一番上の画面（src/accounting）とペルソナ管理（src/persona-builder）も 1.84.0 に入っている</li>
+<li>1.84.0 をどう戻すかは、Mits様の「発注GO」が出るまで決まっていない。それまで西田統合版の 1.84.0 の上に、付箋・会計・ペルソナに関わる直しを積まないでいただきたい（積むと戻すときにぶつかる）</li>
+<li>ヘルプの作り直し（1.84.0 向け）は止めた。help_han.txt は 1.83.29 のまま</li>
+</ul>
+<h3 id="2026-11-15-15-4x-運転台-森田さん・協力者案件-宛先-運転台改善-お金と会計の一">2026-11-15 15:4x ★運転台 森田さん・協力者案件 → 宛先：運転台改善 ── お金と会計の一番上の画面とペルソナ管理を戻している（担当が走行中）・問い合わせへの答え</h3>
+<ul>
+<li>指示：Mits様（2026-11-15 15:2x）「開発版、西田統合版ともに、「お金と会計の一番上の画面も、ペルソナ管理」元に戻せ　発注GO」</li>
+<li>担当：BS-engineer（Opus 5.5）。発注書 /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/.claude/worktrees/agitated-fermi-5abdcb/発注書_お金と会計とペルソナを元に戻す_20261115.md</li>
+  <li>main の src/index.html から2つの画面の差し替えを外す → release.sh --自分だけ（開発版 menu-v3 にも入る）→ 両方の版を実機で撮る → BS-jikki-kenshu</li>
+  <li>src/accounting・src/persona-builder・src/jisha-joho-settei のフォルダは消さない（画面に出さなくするだけ）</li>
+<li>問い合わせ1（戻したあとの版）：まだ決まっていない（担当の release.sh が終わったら、この下に1行足す）</li>
+<li>問い合わせ1（付箋仕事術）：今回の指示で戻すのは2つの画面だけ。付箋仕事術と業務効率化の行は、西田統合版にも開発版にも残る。外す指示は出ていない</li>
+<li>15:1x の節の「西田統合版 1.84.0 は指示に無い取り込みだった」は、参謀が経緯を調べる前に書いた文。調べた経緯：11-14 16:28 に参謀が発注書へ西田統合版の手順を足し、16:30 に Mits様の「発注GO」が出た。お金と会計とペルソナは、参謀が枝をまるごと入れる形にしたために入った（Mits様の指示に無い）</li>
+<li>問い合わせ2（release.sh が終わった時刻）：終わったら、この下に1行足す</li>
+<li>問い合わせ3（11-14 21:27 の①②と、入れ忘れかもしれない3か所の検収）：このセッションの側で止める理由は無い。担当の release.sh が終わり、参謀が両方の版を実機で確かめたあとに、この下に「始めてよい」の1行を足す。検収の発注書は、戻したあとの版に書き換えてから出すこと</li>
+</ul>
+<h3 id="2026-11-15-15-38-運転台を見て使えるダッシュボードに作り変える-運転台改善から分">2026-11-15 15:38 ／ 運転台を見て使えるダッシュボードに作り変える（運転台改善から分けたセッション）── 枝 dashboard-kashika を 1.84.1 の記録から切った・枝の3つの決め</h3>
+<ul>
+<li>作業場 /Users/nishidamitsuhiro/untendai-dashboard・枝 dashboard-kashika。元は main bae62ab（記録：v1.84.1。お金と会計の一番上の画面とペルソナ管理を戻した版）。/Users/nishidamitsuhiro/untendai-seiri には書いていない</li>
+<li>畳む条件：見本で Mits様の OK が出た画面が、全部 main に入ったら畳む</li>
+<li>枝の物を入れる場所：新しい見せ方の CSS・JS は src/keiki/ に寄せ、src/index.html には呼び出しの行だけを足す</li>
+<li>畳むまでの上限：1画面ずつ、OK の出た画面からその回に tools/torikomu.sh で main に入れる。入れた回は宛先「運転台改善」「運転台 森田さん・協力者案件」でここに書く（ヘルプが合わなくなるため）</li>
+<li>計画のページ（Mits様にお見せ中）：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/_mock/dashboard_20261115/keikaku.html</li>
+<li>数え方への影響：なし</li>
+<li>宛先：運転台改善</li>
+</ul>
+<h3 id="2026-11-15-15-5x-運転台-森田さん・協力者案件-宛先-運転台改善-15-4x-の">2026-11-15 15:5x ★運転台 森田さん・協力者案件 → 宛先：運転台改善 ── 15:4x の節の続き：1.84.1 ができた（お金と会計の一番上の画面・ペルソナ管理を戻した）</h3>
+<ul>
+<li>版：1.84.1。main 11f0613（本体）・bae62ab（CHANGELOG）。release.sh は exit 0、記録の最後の書き込み 15:32</li>
+<li>/Applications/untendai.app・untendai-dev.app は 1.84.1。menu-v3 の先頭は 92c9ff3。森田さんの開発版は src/index.html でぶつかり release.sh が取り消したので 1.83.29 のまま（16adcf0。担当は解いていない）</li>
+<li>参謀が測った値：main・menu-v3 とも、e0ea57d との src/index.html の違いの行で accounting・persona を含む行は 0行。開発版のペルソナ設定は 1.83.29 の画面（「AI-Mits とペルソナ設定をする」「新しく作る（空欄で）」「既存の .md を取り込む」）に戻ったのを写真で見た</li>
+<li>残り：西田統合版の「お金と会計」の一番上・ペルソナ設定、開発版の「お金と会計」の一番上、西田統合版の付箋仕事術の写真4枚と BS-jikki-kenshu の検収。全画面の操作が「user interrupt」で返り続けて撮れていない</li>
+<li>問い合わせ3（11-14 21:27 の①②・入れ忘れかもしれない3か所の検収）：main と release.sh には、このセッションはもう書かない。①②は始めてよい。3か所の検収の発注書は 1.84.1 宛てに書き換えてから</li>
+</ul>
+<h3 id="2026-11-15-15-41-運転台改善-11-14-21-27-の-を-1-84-1-で走">2026-11-15 15:41 ／ 運転台改善 ── 11-14 21:27 の①②を 1.84.1 で走らせた：森田さんの枝5本は GitHub でぶつかって触らず・森田さんの開発版は手元の取り込みが2か所ぶつかり組めていない</h3>
+<ul>
+<li>①：bash tools/morita_oitsuku.sh（書き込む形）。森田さんの main は本流に追いついている（遅れ0）。6本は前から入っていた（204）。fusen-in-shell 99／fusen-research 42／fusen-shigoto 102／fusen-version-decision 102／4category-stage3 112 はぶつかった（409）ので触らなかった。決まりどおり森田さんの側で main を取り込んで解く枝</li>
+<li>②：bash tools/oitsuki.sh morita 1.84.1 は終わりの数 3。/Users/nishidamitsuhiro/untendai-morita で v1.84.1 を取り込むと src/index.html の2か所でぶつかる（森田さんのお金と会計の一番上の画面・ペルソナ管理の上書き ⇔ 付箋仕事術の上書き）。道具が取り消して 16adcf0 に戻した。/Applications/untendai-morita.app は 1.83.29 のまま</li>
+<li>解く発注書（両方の行を残す・森田さんの GitHub には push しない）：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/_morita_kumi_1841/hachusho.md（Mits様の「発注GO」待ち）</li>
+<li>3か所の検収の発注書は 1.84.1 宛てに書き換えた：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/_kenshu_10hon_1840/hachusho.md（Mits様の「発注GO」待ち）</li>
+<li>数え方への影響：なし</li>
+<li>宛先：運転台 森田さん・協力者案件</li>
+</ul>
+<h3 id="2026-11-15-17-22-運転台を見て使えるダッシュボードに作り変える-運転台改善から分">2026-11-15 17:22 ／ 運転台を見て使えるダッシュボードに作り変える（運転台改善から分けたセッション）── Mits様の指示：すごいコンサルの名前ごとに初回〜5回目を書き起こし、アドバイスの傾向（効果の8割を生む2割）を取り出してダッシュボードに入れたい</h3>
+<ul>
+<li>Mits様原文（17:1x）：「コンサル動画の管理台帳を整理したので、名前で一覧にして初回から五回とかを、書き起こしを過去のコンサルの人数分、全部をすれば、どんな業種でも同じようにアドバイスをしているんだなっていうのが集約できて、そのうちの大事な2割、いつも効果が出ると思って使っている、効果が8割ある2割のメソッドっていうのが明示化できる。それをダッシュボードに入れていきたい。」</li>
+<li>Mits様原文（17:2x）：「最初はすごいだけでいい。業種は書き起こして、その中から会話から抜き出せば自ずとわかる。」</li>
+<li>台帳の実測（2026-11-15 17:22・consul_daichou.sqlite を読んだだけ。書いていない）：すごいコンサルで名前のある相手 21人・名前ごとの初回〜5回目 101本・うち「AI で書き起こし直し」済み 55本・残り 46本（76.4時間）</li>
+<li>見つけたこと：毎晩 1:30 の ai_kakiokoshi.py は 2026-11-15 01:30 に「空きが 20GB を切ったので止める 15GB」で止まった。2026-11-15 17:22 の空きは 12GB（df -h /）。選ぶ順は全体の日付の古い順で、名前ごとの初回〜5回目の順ではない（11-15 に選んだのは 2019-03-04 の佐々木・富田太・山下和宏 ほか）</li>
+<li>このセッションの持ち分：取り出した2割を運転台のどの画面のダッシュボードにどう入れるか。書き起こし・話者の見分け・業種を会話から抜き出すのは、持ち分の表のとおりコンサル動画台帳の側</li>
+<li>数え方への影響：なし</li>
+<li>宛先：コンサル動画台帳</li>
+</ul>
+<h3 id="2026-11-15-17-25-運転台を見て使えるダッシュボードに作り変える-運転台改善から分">2026-11-15 17:25 ／ 運転台を見て使えるダッシュボードに作り変える（運転台改善から分けたセッション）── 毎晩の書き起こしが止まった原因：書き起こした音声（wav）を同じディスクの AI作業ゴミ箱に毎晩 約7GB 置いている</h3>
+<ul>
+<li>Mits様原文（17:2x）：「これが一番問題。先にこっちを処置。」「もしかしたら臨時でダウンロードしたものをずっと保存してるのか。」</li>
+<li>実測：ディスクの空き 12GB（df -h /System/Volumes/Data・使用 883GB／926GB）。ai_kakiokoshi.py の91行目が wav を /Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/&lt;日付&gt;_consul_onsei へ shutil.move している。11-11 39本 6.6GB／11-12 40本 7.2GB／11-13 40本 6.9GB／11-14 39本 6.6GB（1本 約175MB の wav）。同じディスクの中の移動なので空きは増えない</li>
+<li>AI作業ゴミ箱の全体：202GB（大きい順：20261102_untendai_tatanda_sagyouba 55.8GB／20261113_untendai_tatanda_sagyouba 34.3GB／20261112_miru2_onsei 10.9GB／20261016_worktree_6hon_honntai 8.3GB／consul_onsei 4日分 27.3GB）</li>
+<li>空けるのは AI作業ゴミ箱を Mits様が目で見て空にする手（恒久削除は Mits様）。このセッションは何も消していない・動かしていない</li>
+<li>コンサル動画台帳への受け渡し：ai_kakiokoshi.py が毎晩 約7GB を同じディスクに残す作りのままだと、空けても 40本ずつ埋まっていく（46本残りなら約8GB）。音声の残し方（wav のまま残すか）は道具の持ち分の側で決める</li>
+<li>数え方への影響：なし</li>
+<li>宛先：コンサル動画台帳</li>
+</ul>
+<h3 id="2026-11-15-17-43-運転台改善-森田さんの-GitHub-の枝-1-84-1-の自">2026-11-15 17:43 ／ 運転台改善 ── 森田さんの GitHub の枝：1.84.1 の自動の取り込みで、森田さんのお金と会計の一番上の画面・ペルソナ管理が2本の枝から消えた（実測）</h3>
+<ul>
+<li>測ったもの：<code>bash tools/morita_oitsuku.sh --check</code>（17:40）と、/Users/nishidamitsuhiro/untendai-morita で枝ごとの記録を /usr/bin/git で辿った（createAccountingTop・createPersonaBuilder の行の数）</li>
+<li>遅れ：4category-stage3 112・fusen-shigoto 102・fusen-version-decision 102・fusen-in-shell 99・fusen-research 42。ほかの6本は0。5本とも src/index.html の 6113・6168行あたりでぶつかる（fusen-shigoto・fusen-version-decision は README.md も）</li>
+<li>起きたこと：1.84.0 で森田さんの記録 cc73ba4（10-20「会計トップv3を4カテゴリー構成に実装」）が main に入り、1.84.1 の 11f0613 がその行を消した。git はこの「消した」を main の新しい直しとして扱うので、main を取り込むと森田さんの枝からも画面が消える</li>
+<li>消えた枝：fusen-parts・fusen-sync（1.83.29 の時点で3行あった → 11-15 15:29 の「西田統合版 1.84.1 を取り込む（自動）」で0行）。fix-tauri-default-run・readme-fork-credit・4category-shell・4category-stage2 は、1.84.0 で入ってきた行が 1.84.1 で消えただけで、1.83.29 の時点と同じ（なくなった物は無い）</li>
+<li>ぶつかっている5本は、解くときに main の側を取ると同じように消える。記録は残っているので戻せる（force push はしていない）</li>
+<li>数え方への影響：なし</li>
+<li>宛先：運転台 森田さん・協力者案件</li>
+</ul>
+<h3 id="2026-11-15-17-5x-運転台-森田さん・協力者案件-運転台改善の問い-17-43-の">2026-11-15 17:5x ／ 運転台 森田さん・協力者案件 ── 運転台改善の問い（17:43 の節・森田さんの GitHub の枝）への答え（事実だけ）</h3>
+<p>1. 1.84.0／1.84.1 で森田さんの枝・画面をどう扱うと決めていたか</p>
+<ul>
+  <li>「森田さんの版の中身は消さない」という決めは無い（決定台帳を「消さない」×「森田」で grep・0件）。このセッションの発注書2本にも無い</li>
+  <li>発注書に書いたのは「森田さんの GitHub に書かない・森田さんに知らせない」だけ（発注書_開発版にも業務効率化の5行を出す_20261114.md の「しないこと」・発注書_お金と会計とペルソナを元に戻す_20261115.md の「しないこと」。どちらも /Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/.claude/worktrees/agitated-fermi-5abdcb/）</li>
+  <li>この「書かない」は release.sh の中の morita_oitsuku.sh（10-30 Mits様の強制の追いつき）と食い違っていた。参謀はそれを外さずに <code>release.sh --自分だけ</code> を2回走らせた。1.84.1 の戻しが森田さんの枝に伝わることは、参謀は発注の前に見ていなかった</li>
+  <li>cc73ba4 を main に入れたのはこのセッション（1.84.0・11-14 発注書の手順6・7で morita/fusen-sync を torikomu.sh でまるごと入れた）。1.84.1 の戻しの出どころは Mits様「開発版、西田統合版ともに、「お金と会計の一番上の画面も、ペルソナ管理」元に戻せ　発注GO」。名指しは開発版と西田統合版の2つで、森田さんの開発版・森田さんの枝は言葉に無い</li>
+</ul>
+<p>2. 森田さんに知らせたか：知らせていない（根本「森田さんに何もさせない」と発注書の「知らせない」のとおり）。Discord「経営の運転台 開発」の 11-10 以降の書き込みは MitsMCP の確認版のお知らせ2件と GitHub の自動の知らせ5件だけで、森田さんの書き込みは0件（17:5x に API で全チャンネルの直近5件を読んだ）</p>
+<p>3. 森田さんが今作っているもの（/Users/nishidamitsuhiro/untendai-morita で /usr/bin/git・作者が森田悦章の最新の記録）</p>
+<ul>
+  <li>いちばん新しい：morita/fusen-version-decision ce5b10e 11-01 18:55「付箋: 初版をブラウザ版（Chrome・Edge 105以降）にする方式決定を記録」</li>
+  <li>次：fusen-shigoto 66bed75 10-31 22:58（3分の全機能ツアーの記録）・fusen-sync 系6本 a6b511e 10-31 18:31・fusen-research 37b8547 10-29・fusen-in-shell bb58a6a 10-25・4category-stage3 b8dfe16 10-21 01:46「自社情報設定のブラウザ版を追加」</li>
+  <li>11-02 以降、森田さん本人の記録は0本。お金と会計の一番上の画面・ペルソナ管理を今も使う・直す予定かの記録は、このセッションには無い（Discord にも書き込みが無い）</li>
+</ul>
+<p>4. 11-14 以降にこのセッションが森田さんの GitHub（Yoshiakikun/untendai）に書いたもの</p>
+<ul>
+  <li>PR・force push：0</li>
+  <li>release.sh の中の morita_oitsuku.sh が、2回とも同じ6本に main を merge して送った：fix-tauri-default-run・fusen-parts・fusen-sync・readme-fork-credit・4category-shell・4category-stage2（1.84.0 は 11-14 16:4x、1.84.1 は 11-15 15:29:51〜15:30:01。作者 mits32163216）。ぶつかった5本（fusen-in-shell・fusen-research・fusen-shigoto・fusen-version-decision・4category-stage3）は2回とも触っていない（記録：/private/tmp/claude-501/-Users-nishidamitsuhiro-My-Drive-claude-nishida-MITS-ALL---------------claude-worktrees-agitated-fermi-5abdcb/e5ade0db-cc2d-498a-a091-4901df4dca04/scratchpad/release_1840_mine.log の297〜315行・release_1841.log の275〜293行）</li>
+  <li>5本の先頭 11-14 16:16 の記録は、このセッションの release.sh の前（16:14 の本流の更新）のもの</li>
+</ul>
+<p>5. こちらで分かっている危うい所</p>
+<ul>
+  <li>morita_oitsuku.sh は版を出すたびに自動で走るので、main から森田さん由来の行を消すと、次の版で森田さんの枝からも消える。1.84.1 のあと版を出せば、同じことがまた起きる</li>
+  <li>森田さんの開発版（untendai-morita.app・4category-stage3）は 1.83.29 のまま。release.sh の指示は「両方の行が残る形に解く」。main の側を取ると、森田さんの開発版からもお金と会計の一番上の画面・ペルソナ管理が消える</li>
+  <li>根本（10-16 11:12「森田さんは自分の扱いたい所を自分の進め方で作り…西田は森田さんの開発の進め方に口を挟まない」・10-16 ②枝分かれ 11:13「別の森田さんなら森田さんの版を作り続ける」）から見ると、fusen-parts・fusen-sync から画面が消えたのは、こちらの戻しが森田さんの版の中身を変えたことになる。戻すかどうかは Mits様の決断（このセッションは決めない）</li>
+<li>宛先：運転台改善</li>
+</ul>
+<h3 id="2026-11-15-17-58-運転台改善-森田さんの枝から画面が消えた件-devils-ad">2026-11-15 17:58 ／ 運転台改善 ── 森田さんの枝から画面が消えた件：devils-advocate 2本の裏取りの結果（Mits様「危うさを感じる。他のエージェントで裏取りさせて」「仕組みの問題も確認、裏取りして」）</h3>
+<ul>
+<li>結果：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/_morita_eda_uradori_20261115/kekka.md（事実）・shikumi_kekka.md（仕組み）</li>
+<li>17:43 の節の直し：fusen-parts・fusen-sync で消えたのは src/index.html の58行（森田悦章の書いた行が57行・読み込みの &lt;link&gt;／&lt;script&gt; 5行を含む）。「3行」ではない。フォルダ src/accounting・src/persona-builder・src/jisha-joho-settei は6本とも残っている</li>
+<li>17:43 より前の運転台改善の書き方の直し：1.84.0（8e467dd）は menu-v3 をまとめて入れたのではなく、森田さんの fusen-sync の先頭 0624dde を直に main に入れた取り込み（運転台改善が /usr/bin/git で親を確かめた）</li>
+<li>ぶつかっている5本は、ぶつかりの印の外で読み込みの5行が黙って消える（4category-stage3 で取り込んだあとの形を作って数えた：今5行 → 取り込み後0行）。印を0件にしても画面は出ない。発注書 _morita_kumi_1841/hachusho.md に「消えた行を全部戻す・読み込みの行が5」の検査を足した</li>
+<li>仕組みの穴（shikumi_kekka.md の7つのうち主なもの）：① main から森田さんの枝・menu-v3・dou2-plan へ流す向きに「消える行の見張り」が無い（torikomu.sh の④は逆の向きだけ）。CLAUDE.md 185行と morita_oitsuku.sh 18行の「force push を使わないから森田さんの直しは消えない」は実際の動きと逆 ② torikomu.sh は枝をまるごと入れる作りで、名指しした物だけに絞る見張りが無い ③ 409 は「森田さんの側で解く」と「森田さんには頼まない」が組み合わさって誰も解かない ④ release.sh を走らせてよいセッションの決めと、同時に走らせない止めが無い（release.sh の終わりは、誰が走らせても森田さんの GitHub に書く） ⑤「森田さんの版の中は森田さんの判断」（10-16・10-17）と「強制的に上げる」（10-30）のどちらが勝つかが書かれていない</li>
+<li>数え方への影響：なし</li>
+<li>宛先：運転台 森田さん・協力者案件、司令塔</li>
+</ul>
+<h3 id="2026-11-15-18-33-削除の準備のセッション-2a55963a-宛先-運転台改善">2026-11-15 18:33 ／ 削除の準備のセッション（2a55963a）→ 宛先：運転台改善</h3>
+<ul>
+<li>Mits様「区分3の組み立ての途中の物、消して」。運転台の作業フォルダ7つ（seiri・menu3・dou2・demo・settei-jikken・webban-18310・morita）の src-tauri/target を /Users/nishidamitsuhiro/Desktop/AI作業ゴミ箱/20261115_消してよい_組み立ての途中の物 に移した（206G・組み立て中 0件を pgrep で確かめてから）</li>
+<li>次の組み立ては最初から組み直すので時間がかかる。/Applications のアプリは触っていない</li>
 </ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
