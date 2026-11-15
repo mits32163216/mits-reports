@@ -181,7 +181,8 @@ footer.page { margin-top:40px; padding-top:16px; border-top:1px dashed var(--lin
 
 
 
-<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-11-14 16:46 ／ 写した時刻 2026-11-14 18:35</p>
+
+<p style="font-size:12px;color:var(--muted);margin:0 0 18px;">正本の最終更新 2026-11-15 12:26 ／ 写した時刻 2026-11-15 12:37</p>
 <h2 id="決定台帳-6セッション共通・2026-09-14-起票">決定台帳（6セッション共通・2026-09-14 起票）</h2>
 <p>対象：AI-Mits 登録（1st stage）に関わる計測・除外・数え方・仕組みの決定。</p>
 <p>書き方：末尾に足すだけ。途中を書き換えない。修正は「取消 + 新しい行」で足す。</p>
@@ -10920,6 +10921,34 @@ untendai-client  版=1.73.43  組立=2026-09-26 03:39:44  Bundle=com.mits.untend
 <li>宛先：★運転台 森田さん・協力者案件</li>
 <li>読んだ：/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/司令塔/.claude/worktrees/agitated-fermi-5abdcb/研究_アトサキ時計の取り入れ_20261114.md（38行・付箋仕事術に無いもの9つ）。付箋仕事術を開発するときの材料として使う。棚原さんのものを取り込むかは 2026-10-24 の保留のまま扱い、こちらから取り込みには進まない</li>
 <li>数え方への影響：なし</li>
+</ul>
+<h3 id="2026-11-14-21-27-運転台-森田さん共同開発の巡回-西田統合版-1-84-0-付箋">2026-11-14 21:27 ／ 運転台 森田さん共同開発の巡回 ── 西田統合版 1.84.0（付箋仕事術入り）は 16:40 に main に入っている・森田さんの枝5本と Mac の森田さんの開発版が 1.84.0 に追いついていない</h3>
+<ul>
+<li>測ったこと（21時台）：本流 main は 8e467dd「取り込み：森田さんの付箋仕事術を西田統合版に入れる v1.84.0」（16:40 JST）・1484e4e 記録（16:41）。札 v1.84.0 あり。/Applications の untendai・untendai-dev・untendai-client・untendai-mkt は 1.84.0</li>
+<li>決定台帳には 17:1x の節が約束した「入れ終えた」の節がまだ無い（9605行まで grep で「入れ終え」「1.84.0」を見た）。運転台改善は 16:33 の節で「入れ終えたという節が届くまで main に書かない・release.sh を走らせない」と止まっている → main はもう 1.84.0 なので、止めている理由は済んでいる（付箋仕事術を入れたのは ★運転台 森田さん・協力者案件 の回）</li>
+<li>森田さんの GitHub の枝（compare main...Yoshiakikun:&lt;枝&gt;）：1.84.0 の自動取り込み（16:42〜16:43）が入ったのは main・fix-tauri-default-run・fusen-parts・fusen-sync・readme-fork-credit・4category-shell・4category-stage2 の7本。<strong>入っていない5本</strong>（1.83.29 までは入っている）：fusen-in-shell 遅れ97／fusen-research 遅れ40／fusen-shigoto 遅れ100／fusen-version-decision 遅れ100／4category-stage3 遅れ110。5本とも付箋の古い作りを持つ枝なので、morita_oitsuku.sh が src/fusen で取り込めなかったと見ている（推測・道具の出力は見ていない）</li>
+<li>Mac の /Applications/untendai-morita.app は 1.83.29（16:16 に組んだもの）── 1.84.0 の組み直しが抜けている</li>
+<li>運転台改善に頼むこと：①5本の枝を 1.84.0 に追いつかせる（取り込みは強制・森田さんには何も頼まない）②森田さんの開発版を 1.84.0 で組み直す（tools/oitsuki.sh）③16:36 の節の「残り」（新しい版の西田統合版での確かめ）に進める状態になっている</li>
+<li>数え方への影響：なし</li>
+<li>宛先：運転台改善</li>
+</ul>
+<h3 id="2026-11-15-02-0x-運転台-森田さん・協力者案件-宛先-運転台改善-付箋仕事術を西">2026-11-15 02:0x ★運転台 森田さん・協力者案件 → 宛先：運転台改善 ── 付箋仕事術を西田統合版に入れ終えた（1.84.0）・ヘルプの作り直しはこのセッションが持つ</h3>
+<ul>
+<li>17:1x の節で約束した「入れ終えた」の知らせ（遅れて書いた）：main 8e467dd「取り込み：森田さんの付箋仕事術を西田統合版に入れる v1.84.0」（2026-11-14 16:40）・1484e4e（16:41）。開発版 menu-v3 06a3b37（16:44）。/Applications の untendai・untendai-dev・untendai-client・untendai-mkt は 1.84.0。このセッションの担当は 16:56 に止め、release.sh が走っている数は 0（11-15 01:5x に ps で測った）</li>
+<li>これで 16:33 の節の「main に書かない・release.sh を走らせない」の止めは解ける。付箋仕事術のこの先の開発は 17:1x のとおり運転台改善</li>
+<li>ヘルプの作り直し（経営の運転台/CLAUDE.md 節10）：1.84.0 を組んだのはこのセッションなので、このセッションが持つ。運転台改善はヘルプに触らない（11-15 02:0x の運転台改善の申し出どおり）。help_han.txt は 1.83.29 のまま</li>
+<li>ヘルプの作り直しで止まっていること：1.84.0 でペルソナ管理の画面が森田さんの作り（persona-builder）に替わった（git diff e0ea57d 8e467dd -- src/index.html の routeOf・renderCenter の上書き）。前の画面（ヘルプの写真 help_v1820/shashin/v1818_kokyaku_persona_gamen.png：見本_太郎／見本_花子・「AI-Mits とペルソナ設定をする」「新しく作る（空欄で）」）に戻すかどうかを Mits様にお聞きしている。決まってから作り直しの発注書を Mits様の「発注GO」で出す</li>
+<li>数え方への影響：なし</li>
+<li>宛先：運転台改善</li>
+</ul>
+<h3 id="2026-11-15-07-05-設定サポーターの書庫の見張り-ヘルプが-1-83-29-になっ">2026-11-15 07:05 ／ 設定サポーターの書庫の見張り ── ヘルプが 1.83.29 になったが、設定サポーターの書庫は 1.83.13 のまま。作り直すときは bash /Users/nishidamitsuhiro/untendai-settei-jikken/ai_sensei/tsukurinaoshi.sh（書庫・写真の番号・枝への commit・40往復の前後の比べまで。Dify の書庫には入れない）（宛先：★BS_AI-Mits-チューニング）</h3>
+<h3 id="2026-11-15-12-26-運転台-森田さん共同開発の巡回-11-14-21-27-の節の">2026-11-15 12:26 ／ 運転台 森田さん共同開発の巡回 ── 11-14 21:27 の節の2つ（森田さんの枝5本・Mac の森田さんの開発版）は、12時台もまだ 1.84.0 に追いついていない</h3>
+<ul>
+<li>測ったもの（11-15 12時台）：GitHub の compare main...Yoshiakikun:&lt;枝&gt;。遅れが残るのは fusen-in-shell 97／fusen-research 40／fusen-shigoto 100／fusen-version-decision 100／4category-stage3 110（21:27 と同じ数。7本は遅れ0）。森田さんの版に 11-14 21:25 以降のコミットは0件</li>
+<li>/Applications/untendai-morita.app は 1.83.29 のまま（defaults read で測った・本流 tauri.conf.json は 1.84.0）</li>
+<li>11-15 02:0x の節で「16:33 の止め（main に書かない・release.sh を走らせない）は解ける」と書かれたので、5本の枝の取り込み（tools/morita_oitsuku.sh）と森田さんの開発版の組み直し（tools/oitsuki.sh）を運転台改善で進められる状態</li>
+<li>数え方への影響：なし</li>
+<li>宛先：運転台改善</li>
 </ul>
 
 <footer class="page">11セッション社内レポート ／ 非公開エリア（noindex, nofollow）<br>このページは検索エンジンに載せていません。URLを知っている人だけが見られます。</footer>
