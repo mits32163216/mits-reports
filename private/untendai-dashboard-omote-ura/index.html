@@ -8,266 +8,270 @@
 <title>表と裏の階層（モック・2026-11-17）</title>
 <style>
 :root{color-scheme:light;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Kaku Gothic ProN',Meiryo,sans-serif;font-size:14px;color:#1f1f1d;background:#fff}*{box-sizing:border-box}body{margin:0;background:#fff;line-height:1.6}header{padding:28px 32px 22px;border-bottom:1px solid #e6e6e3}h1{font-size:23px;line-height:1.5;margin:0 0 8px;font-weight:700}header p{margin:0;color:#76766f}.wrap{max-width:1380px;margin:auto}.switcher{padding:22px 32px 16px}.tabs{display:flex;gap:10px;flex-wrap:wrap}.tab{font:inherit;font-weight:600;padding:11px 18px;border:1px solid #deded9;border-radius:8px;background:#f7f7f5;color:#5c5c56;cursor:pointer}.tab[aria-selected="true"]{background:#1f1f1d;border-color:#1f1f1d;color:#fff}.lead{margin:12px 0 0;color:#76766f}.layout{display:grid;grid-template-columns:300px minmax(0,1fr);align-items:stretch;border-top:1px solid #e6e6e3;border-bottom:1px solid #e6e6e3}aside{background:#f7f7f5;border-right:1px solid #e6e6e3;padding:18px 10px;min-height:400px}.row{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;cursor:pointer;overflow-wrap:anywhere;line-height:1.5}.row:hover{background:#ececea}.row.current{background:#e4e4e1;font-weight:600}.row:focus-visible,.tab:focus-visible{outline:2px solid #1d4ed8;outline-offset:2px}.row.dai{font-weight:700;font-size:1.2rem;margin-top:8px}.row.chu{font-weight:600;margin-left:18px}.row.detail{margin-left:36px;font-size:14px;padding-top:6px;padding-bottom:6px}.label{min-width:0}.chevron{width:0;height:0;flex:0 0 auto;border-top:4px solid transparent;border-bottom:4px solid transparent;border-left:5px solid #a3a39c;margin-left:auto;transition:transform .15s}.row[aria-expanded="true"] .chevron{transform:rotate(90deg)}[hidden]{display:none!important}.dot{display:inline-block;flex:0 0 7px;width:7px;height:7px;border-radius:50%;background:var(--kind);vertical-align:middle;margin-right:3px}.note{font-size:12px;font-weight:400;color:#8a8a84;margin-left:5px}.effect{display:block;font-size:12px;font-weight:400;color:#b45309;margin-top:3px}.content{min-width:0;padding:28px 36px 40px}.placeholder{margin:0;color:#76766f}.breadcrumb{font-size:12px;color:#76766f;margin:0 0 20px;overflow-wrap:anywhere}.content h2{font-size:21px;line-height:1.6;margin:0 0 16px;overflow-wrap:anywhere}.kind{display:inline-block;font-size:12px;font-weight:600;color:var(--kind);border:1px solid currentColor;border-radius:5px;padding:3px 10px;margin-bottom:18px}.frame{height:220px;border:1px dashed #bdbdb5;border-radius:10px;background:#fcfcfa;display:flex;align-items:center;justify-content:center;color:#76766f;padding:20px}.frame.ura{height:120px}.all-section{padding:28px 32px 40px}.all-section>h2{font-size:18px;margin:0 0 18px}.all-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px}.all{border:1px solid #e6e6e3;border-radius:10px;padding:18px 20px;min-width:0}.all h3{font-size:17px;margin:0 0 8px}.counts{font-size:12px;color:#76766f;margin:0 0 18px}.all-row{line-height:1.6;padding:4px 0;overflow-wrap:anywhere}.all-row.dai{font-weight:700;font-size:1.2rem;margin-top:14px;padding-top:12px;border-top:1px solid #e6e6e3}.all-row.chu{padding-left:18px;font-weight:600;margin-top:6px}.all-row.detail{padding-left:36px}@media(max-width:680px){header{padding:20px}h1{font-size:20px}.switcher{padding:18px 20px}.layout,.all-grid{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid #e6e6e3;min-height:0}.content{padding:24px 20px}.all-section{padding:24px 20px}.tab{padding:10px 12px}.all{padding:16px}}
+
+.executive-grid,.diagram-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.executive-section{border:1px solid #e6e6e3;border-radius:10px;padding:14px;min-width:0}.section-head{font-weight:700;font-size:1.2rem;margin-bottom:12px}.diagram{height:150px;flex-direction:column;justify-content:center;text-align:center;margin:0}.diagram.small{height:70px;padding:8px;font-size:13px}.diagram small{font-size:11px;font-weight:400;color:#76766f}.diagram:hover{background:#f2f2ef}.detail-frame{height:260px}.screen-label{font-size:12px;color:#76766f;margin:-8px 0 20px}.crumb{display:inline-flex;padding:0;border-radius:2px;vertical-align:baseline;font-size:inherit;color:inherit}.crumb:hover{text-decoration:underline}.setting-section{display:flex;gap:8px;align-items:center;border:1px solid #deded9;border-radius:8px;padding:18px;min-height:76px}.setting-section .dot{order:-1}.item-count{margin-left:auto;color:#76766f}.kind-heading{display:flex;align-items:baseline;gap:6px}.setting-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(110px,40%);gap:16px;padding:10px 0;border-bottom:1px solid #e6e6e3}.input-shape{display:block;height:34px;border:1px solid #deded9;border-radius:5px;background:#fff}.row:focus-visible{outline:2px solid #1d4ed8;outline-offset:2px}@media(max-width:680px){.executive-grid,.diagram-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<header><div class="wrap"><h1>表と裏の階層（モック・2026-11-17）</h1><p>全体 → 大テーマ → 中テーマ → 各詳細</p></div></header>
+<header><div class="wrap"><h1>表と裏の階層（モック・2026-11-17）</h1><p>エグゼクティブダッシュボード → 大テーマ → 中テーマ → 詳細ダッシュボード（1つずつ下りる）</p></div></header>
 <div class="wrap">
 <div class="switcher"><div id="tabs" class="tabs" role="tablist" aria-label="表と裏"></div><p id="lead" class="lead"></p></div>
 <div id="panel" class="layout" role="tabpanel"><aside><nav id="nav" aria-label="階層"></nav></aside><main id="content" class="content"></main></div>
 <section class="all-section"><h2>全部の一覧（省略なし）</h2><div id="all" class="all-grid"></div></section>
 </div>
 <script id="kaisou-data" type="application/json">{
- "omote": {
-  "title": "経営ダッシュボード（仮）",
-  "lead": "表：ダッシュボードで見えるもの、分析されたもの",
-  "top": [
-   "ダイヤモンドチャート"
-  ],
-  "dai": [
-   {
-    "name": "経営戦略",
-    "chu": [
-     {
-      "name": "経営計画",
-      "items": [
-       "今期の目標（逆算の図）",
-       "人生の時間割（残りの時間・いくら要るか）",
-       "経営カレンダー"
-      ]
-     },
-     {
-      "name": "DMi",
-      "items": [
-       "今の＠がどの位置か"
-      ]
-     }
+  "omote": {
+    "title": "経営ダッシュボード（仮）",
+    "lead": "表：ダッシュボードで見えるもの、分析されたもの",
+    "top": [
+      "エグゼクティブダッシュボード",
+      "ダイヤモンドチャート"
+    ],
+    "dai": [
+      {
+        "name": "経営戦略",
+        "chu": [
+          {
+            "name": "経営計画",
+            "items": [
+              "今期の目標（逆算の図）",
+              "人生の時間割（残りの時間・いくら要るか）",
+              "経営カレンダー"
+            ]
+          },
+          {
+            "name": "DMi",
+            "items": [
+              "今の＠がどの位置か"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "お金と会計",
+        "chu": [
+          {
+            "name": "P/L",
+            "items": [
+              "今月",
+              "先月の月次決算",
+              "期首から先月まで",
+              "移動平均",
+              "STRAC",
+              "100円損益",
+              "粗利のギネス",
+              "3つの入口から見る"
+            ]
+          },
+          {
+            "name": "B/S（個人）",
+            "items": [
+              "余裕度24 の逆算",
+              "現預金5,000万を何年で〔足した詳細〕"
+            ]
+          },
+          {
+            "name": "B/S（ビジネス）",
+            "items": [
+              "税のつみたて"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "マーケティング",
+        "chu": [
+          {
+            "name": "お客さまの5つ",
+            "items": [
+              "お客さまを5つに分ける",
+              "顧客レントゲン",
+              "顧客の推移",
+              "バブルチャート",
+              "客単価・年間回数〔足した詳細〕",
+              "要る現役の客数〔足した詳細〕"
+            ]
+          },
+          {
+            "name": "配信",
+            "items": [
+              "配信の移り変わり",
+              "配信の分析"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "業務効率化",
+        "chu": [
+          {
+            "name": "時給",
+            "items": [
+              "今の時給（粗利 ÷ 働いた時間）"
+            ]
+          },
+          {
+            "name": "FBAS",
+            "items": [
+              "仕事測定（FBAS）",
+              "お使いのAI（FBAS）",
+              "業務フロー分析",
+              "外に出した時間と人数〔足した詳細〕"
+            ]
+          },
+          {
+            "name": "PPM",
+            "items": [
+              "PPM"
+            ]
+          },
+          {
+            "name": "仕事術",
+            "items": [
+              "付箋仕事術",
+              "1action3goal",
+              "宿題と期限〔足した詳細〕"
+            ]
+          }
+        ]
+      }
     ]
-   },
-   {
-    "name": "お金と会計",
-    "chu": [
-     {
-      "name": "P/L",
-      "items": [
-       "今月",
-       "先月の月次決算",
-       "期首から先月まで",
-       "移動平均",
-       "STRAC",
-       "100円損益",
-       "粗利のギネス",
-       "3つの入口から見る"
-      ]
-     },
-     {
-      "name": "B/S（個人）",
-      "items": [
-       "余裕度24 の逆算",
-       "現預金5,000万を何年で〔足した詳細〕"
-      ]
-     },
-     {
-      "name": "B/S（ビジネス）",
-      "items": [
-       "税のつみたて"
-      ]
-     }
+  },
+  "ura": {
+    "title": "経営の決定と設定（仮）",
+    "lead": "裏：表の元になる 決定と設定",
+    "top": [
+      "はじめにやること"
+    ],
+    "dai": [
+      {
+        "name": "経営戦略",
+        "chu": [
+          {
+            "name": "決定",
+            "items": [
+              "目標＠",
+              "いつまでに",
+              "＠の目標（2,000万か3,000万か）〔足した詳細〕",
+              "今期の利益と売上の目標",
+              "賞味期限・何歳まで現役・何歳まで生きる想定",
+              "打ち手の向き（DMi：横移動／縦移動／勝ちにいく）",
+              "どの軸で戦うか（CPF：コンビニ／プロ／フレンドリー）→ 実行でマーケティングに影響",
+              "KAZEOKE"
+            ]
+          },
+          {
+            "name": "設定",
+            "items": [
+              "スタッフの人数",
+              "いまの年齢"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "お金と会計",
+        "chu": [
+          {
+            "name": "決定",
+            "items": [
+              "配分 4:2:2:2",
+              "4:2:2:2 の仕分け",
+              "役員報酬",
+              "繰越利益剰余金（会社に積む額）",
+              "個人の貯蓄率",
+              "余裕度の定義〔足した詳細〕",
+              "売上ゼロでもかかるコストの科目〔足した詳細〕"
+            ]
+          },
+          {
+            "name": "設定",
+            "items": [
+              "会計年度",
+              "粗利率（会計の実績を使うか、手で入れるか）",
+              "実効税率",
+              "経費（年）",
+              "個人の生活費",
+              "無収入時支出",
+              "粗利のギネスの線"
+            ]
+          },
+          {
+            "name": "接続・取り込み",
+            "items": [
+              "マネーフォワード",
+              "freee",
+              "Stripe",
+              "データ"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "マーケティング",
+        "chu": [
+          {
+            "name": "決定",
+            "items": [
+              "ペルソナ",
+              "商品を「欲しい・必要」のどこに置くか（欲しい×必要）〔画面なし〕",
+              "モノ・システム・ヒトの順に何を売るか（CPF3x3）〔画面なし〕",
+              "現役の客数の目標〔足した詳細〕",
+              "区分ごとの打ち手〔足した詳細〕",
+              "王道の打ち手の追う数字〔足した詳細〕"
+            ]
+          },
+          {
+            "name": "設定",
+            "items": [
+              "離脱の日数"
+            ]
+          },
+          {
+            "name": "接続・取り込み",
+            "items": [
+              "UTAGE",
+              "CSV",
+              "配信の CSV"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "業務効率化",
+        "chu": [
+          {
+            "name": "決定",
+            "items": [
+              "目標の時給〔足した詳細〕",
+              "働く時間と休む日",
+              "やめる・外に出す業務（FBAS）",
+              "たたむ商品（PPM）"
+            ]
+          },
+          {
+            "name": "設定",
+            "items": [
+              "働いた時間（FA・FS・BA・BS）"
+            ]
+          },
+          {
+            "name": "接続・取り込み",
+            "items": [
+              "お使いの AI の作業フォルダの登録"
+            ]
+          }
+        ]
+      }
     ]
-   },
-   {
-    "name": "マーケティング",
-    "chu": [
-     {
-      "name": "お客さまの5つ",
-      "items": [
-       "お客さまを5つに分ける",
-       "顧客レントゲン",
-       "顧客の推移",
-       "バブルチャート",
-       "客単価・年間回数〔足した詳細〕",
-       "要る現役の客数〔足した詳細〕"
-      ]
-     },
-     {
-      "name": "配信",
-      "items": [
-       "配信の移り変わり",
-       "配信の分析"
-      ]
-     }
-    ]
-   },
-   {
-    "name": "業務効率化",
-    "chu": [
-     {
-      "name": "時給",
-      "items": [
-       "今の時給（粗利 ÷ 働いた時間）"
-      ]
-     },
-     {
-      "name": "FBAS",
-      "items": [
-       "仕事測定（FBAS）",
-       "お使いのAI（FBAS）",
-       "業務フロー分析",
-       "外に出した時間と人数〔足した詳細〕"
-      ]
-     },
-     {
-      "name": "PPM",
-      "items": [
-       "PPM"
-      ]
-     },
-     {
-      "name": "仕事術",
-      "items": [
-       "付箋仕事術",
-       "1action3goal",
-       "宿題と期限〔足した詳細〕"
-      ]
-     }
-    ]
-   }
-  ]
- },
- "ura": {
-  "title": "経営の決定と設定（仮）",
-  "lead": "裏：表の元になる 決定と設定",
-  "top": [
-   "はじめにやること"
-  ],
-  "dai": [
-   {
-    "name": "経営戦略",
-    "chu": [
-     {
-      "name": "決定",
-      "items": [
-       "目標＠",
-       "いつまでに",
-       "＠の目標（2,000万か3,000万か）〔足した詳細〕",
-       "今期の利益と売上の目標",
-       "賞味期限・何歳まで現役・何歳まで生きる想定",
-       "打ち手の向き（DMi：横移動／縦移動／勝ちにいく）",
-       "どの軸で戦うか（CPF：コンビニ／プロ／フレンドリー）→ 実行でマーケティングに影響",
-       "KAZEOKE"
-      ]
-     },
-     {
-      "name": "設定",
-      "items": [
-       "スタッフの人数",
-       "いまの年齢"
-      ]
-     }
-    ]
-   },
-   {
-    "name": "お金と会計",
-    "chu": [
-     {
-      "name": "決定",
-      "items": [
-       "配分 4:2:2:2",
-       "4:2:2:2 の仕分け",
-       "役員報酬",
-       "繰越利益剰余金（会社に積む額）",
-       "個人の貯蓄率",
-       "余裕度の定義〔足した詳細〕",
-       "売上ゼロでもかかるコストの科目〔足した詳細〕"
-      ]
-     },
-     {
-      "name": "設定",
-      "items": [
-       "会計年度",
-       "粗利率（会計の実績を使うか、手で入れるか）",
-       "実効税率",
-       "経費（年）",
-       "個人の生活費",
-       "無収入時支出",
-       "粗利のギネスの線"
-      ]
-     },
-     {
-      "name": "接続・取り込み",
-      "items": [
-       "マネーフォワード",
-       "freee",
-       "Stripe",
-       "データ"
-      ]
-     }
-    ]
-   },
-   {
-    "name": "マーケティング",
-    "chu": [
-     {
-      "name": "決定",
-      "items": [
-       "ペルソナ",
-       "商品を「欲しい・必要」のどこに置くか（欲しい×必要）〔画面なし〕",
-       "モノ・システム・ヒトの順に何を売るか（CPF3x3）〔画面なし〕",
-       "現役の客数の目標〔足した詳細〕",
-       "区分ごとの打ち手〔足した詳細〕",
-       "王道の打ち手の追う数字〔足した詳細〕"
-      ]
-     },
-     {
-      "name": "設定",
-      "items": [
-       "離脱の日数"
-      ]
-     },
-     {
-      "name": "接続・取り込み",
-      "items": [
-       "UTAGE",
-       "CSV",
-       "配信の CSV"
-      ]
-     }
-    ]
-   },
-   {
-    "name": "業務効率化",
-    "chu": [
-     {
-      "name": "決定",
-      "items": [
-       "目標の時給〔足した詳細〕",
-       "働く時間と休む日",
-       "やめる・外に出す業務（FBAS）",
-       "たたむ商品（PPM）"
-      ]
-     },
-     {
-      "name": "設定",
-      "items": [
-       "働いた時間（FA・FS・BA・BS）"
-      ]
-     },
-     {
-      "name": "接続・取り込み",
-      "items": [
-       "お使いの AI の作業フォルダの登録"
-      ]
-     }
-    ]
-   }
-  ]
- }
-}</script>
+  }
+}
+</script>
 <script>
 'use strict';
 const DATA=JSON.parse(document.getElementById('kaisou-data').textContent);
 const COLORS={'決定':'#1d4ed8','設定':'#6b7280','接続・取り込み':'#15803d'};
-const state={side:'omote',omote:{open:new Set(),selected:null},ura:{open:new Set(),selected:null}};
+const state={side:'omote',omote:{open:new Set(),selected:{type:'top',t:0,key:'top-0'}},ura:{open:new Set(),selected:{type:'top',t:0,key:'top-0'}}};
 function element(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;}
 function appendName(parent,name){
   const label=element('span','label');
@@ -285,40 +289,68 @@ function row(name,level,key,kind){
   const r=element('div','row '+level);r.setAttribute('role','button');r.setAttribute('tabindex','0');r.setAttribute('data-key',key);r.setAttribute('data-name',name);
   if(kind)dot(r,kind);appendName(r,name);return r;
 }
-function collapsible(r,kids,key){
-  const open=state[state.side].open.has(key);kids.hidden=!open;kids.id=state.side+'-'+key+'-children';r.setAttribute('aria-expanded',String(open));r.setAttribute('aria-controls',kids.id);r.appendChild(element('span','chevron'));
-  bind(r,()=>{const next=r.getAttribute('aria-expanded')!=='true';if(next)state[state.side].open.add(key);else state[state.side].open.delete(key);r.setAttribute('aria-expanded',String(next));kids.hidden=!next;});
+
+function selection(type,i,j,k,t=0){return {type,i,j,k,t,key:type==='top'?'top-'+t:type==='dai'?'dai-'+i:type==='chu'?'dai-'+i+'-chu-'+j:'dai-'+i+'-chu-'+j+'-item-'+k};}
+function nameOf(s){const data=DATA[state.side];return s.type==='top'?data.top[s.t]:s.type==='dai'?data.dai[s.i].name:s.type==='chu'?data.dai[s.i].chu[s.j].name:data.dai[s.i].chu[s.j].items[s.k];}
+function go(s,reveal=true){
+  const local=state[state.side];local.selected=s;
+  if(reveal&&s.type!=='top'){local.open.add('dai-'+s.i);if(s.type!=='dai')local.open.add('dai-'+s.i+'-chu-'+s.j);}
+  renderNav();renderContent();
 }
-function choose(r,selection){
-  state[state.side].selected=selection;
-  const previous=document.getElementById('nav').querySelector('.current');
-  if(previous){previous.classList.remove('current');previous.removeAttribute('aria-current');}
-  r.classList.add('current');r.setAttribute('aria-current','page');renderContent();
-}
-function selectable(r,selection){if(state[state.side].selected?.key===selection.key){r.classList.add('current');r.setAttribute('aria-current','page');}bind(r,()=>choose(r,selection));}
 function renderNav(){
-  const nav=document.getElementById('nav');nav.replaceChildren();const data=DATA[state.side];
-  data.top.forEach((name,t)=>{const key='top-'+t,r=row(name,'top',key);selectable(r,{key,name});nav.appendChild(r);});
+  const nav=document.getElementById('nav');nav.replaceChildren();const data=DATA[state.side],local=state[state.side];
+  function entry(name,level,s,kind,kids){
+    const r=row(name,level,s.key,kind);
+    if(local.selected.key===s.key){r.classList.add('current');r.setAttribute('aria-current','page');}
+    if(kids){const open=local.open.has(s.key);kids.hidden=!open;kids.id=state.side+'-'+s.key+'-children';r.setAttribute('aria-expanded',String(open));r.setAttribute('aria-controls',kids.id);r.appendChild(element('span','chevron'));}
+    bind(r,()=>{if(kids){if(local.open.has(s.key))local.open.delete(s.key);else local.open.add(s.key);}go(s,false);document.getElementById('nav').querySelector('[data-key="'+s.key+'"]').focus();});return r;
+  }
+  data.top.forEach((name,t)=>nav.appendChild(entry(name,'top',selection('top',undefined,undefined,undefined,t))));
   data.dai.forEach((d,i)=>{
-    const key='dai-'+i,r=row(d.name,'dai',key),children=element('div','dai-children');
-    d.chu.forEach((c,j)=>{
-      const childKey=key+'-chu-'+j,t=row(c.name,'chu',childKey,state.side==='ura'?c.name:null),details=element('div','chu-children');
-      c.items.forEach((name,k)=>{const itemKey=childKey+'-item-'+k,item=row(name,'detail',itemKey);selectable(item,{key:itemKey,name,dai:d.name,chu:c.name});details.appendChild(item);});
-      collapsible(t,details,childKey);children.appendChild(t);children.appendChild(details);
+    const children=element('div','dai-children');
+    d.chu.forEach((c,j)=>{const details=element('div','chu-children');
+      c.items.forEach((name,k)=>details.appendChild(entry(name,'detail',selection('detail',i,j,k))));
+      children.appendChild(entry(c.name,'chu',selection('chu',i,j),state.side==='ura'?c.name:null,details));children.appendChild(details);
     });
-    collapsible(r,children,key);nav.appendChild(r);nav.appendChild(children);
+    nav.appendChild(entry(d.name,'dai',selection('dai',i),null,children));nav.appendChild(children);
   });
 }
+function action(name,cls,s){const r=row(name,cls,s.key);r.setAttribute('data-target',s.type);bind(r,()=>go(s));return r;}
+function kindBadge(parent,kind){const badge=element('span','kind',kind);badge.style.setProperty('--kind',COLORS[kind]);parent.appendChild(badge);}
+function diagram(parent,name,s,small=false){const r=action(name,'frame diagram'+(small?' small':''),s);r.appendChild(element('small','','ここに図'));parent.appendChild(r);}
 function renderContent(){
-  const content=document.getElementById('content');content.replaceChildren();const selected=state[state.side].selected;
-  if(!selected){content.appendChild(element('p','placeholder','左の各詳細を押すと、ここに出ます'));return;}
-  const path=[DATA[state.side].title];if(selected.dai)path.push(selected.dai,selected.chu);path.push(selected.name);
-  const breadcrumb=element('p','breadcrumb');path.forEach((name,index)=>{if(index)breadcrumb.appendChild(element('span','',' › '));appendName(breadcrumb,name);});content.appendChild(breadcrumb);
-  const heading=element('h2');appendName(heading,selected.name);content.appendChild(heading);
-  if(!selected.dai)return;
-  if(state.side==='ura'){const kind=element('span','kind',selected.chu);kind.style.setProperty('--kind',COLORS[selected.chu]);content.appendChild(kind);}
+  const content=document.getElementById('content');content.replaceChildren();const s=state[state.side].selected,data=DATA[state.side],front=state.side==='omote';
+  content.setAttribute('data-screen',s.type);
+  const breadcrumb=element('p','breadcrumb');
+  const path=[{name:data.title,s:selection('top')}];
+  if(s.type!=='top'){
+    path.push({name:data.dai[s.i].name,s:selection('dai',s.i)});
+    if(s.type!=='dai')path.push({name:data.dai[s.i].chu[s.j].name,s:selection('chu',s.i,s.j)});
+    if(s.type==='detail')path.push({name:nameOf(s),s});
+  }else path.push({name:nameOf(s),s});
+  path.forEach((p,n)=>{if(n)breadcrumb.appendChild(element('span','',' › '));breadcrumb.appendChild(action(p.name,'crumb',p.s));});content.appendChild(breadcrumb);
+  const heading=element('h2');appendName(heading,!front&&s.type==='chu'?data.dai[s.i].name+' › '+nameOf(s):nameOf(s));content.appendChild(heading);
+  if(s.type==='top'){
+    if(!front)return;
+    if(s.t!==0){content.appendChild(element('div','frame','ここに図'));return;}
+    const grid=element('div','executive-grid');
+    data.dai.forEach((d,i)=>{const section=element('section','executive-section');section.appendChild(action(d.name,'section-head',selection('dai',i)));const images=element('div','diagram-grid compact');d.chu.forEach((c,j)=>diagram(images,c.name,selection('chu',i,j),true));section.appendChild(images);grid.appendChild(section);});content.appendChild(grid);return;
+  }
+  if(s.type==='dai'){
+    content.appendChild(element('p','screen-label',front?'大テーマのダッシュボード':'決定と設定'));
+    const grid=element('div','diagram-grid');data.dai[s.i].chu.forEach((c,j)=>{
+      if(front)diagram(grid,c.name,selection('chu',s.i,j));
+      else{const section=action(c.name,'setting-section',selection('chu',s.i,j));dot(section,c.name);section.appendChild(element('span','item-count',String(c.items.length)));grid.appendChild(section);}
+    });content.appendChild(grid);return;
+  }
+  const c=data.dai[s.i].chu[s.j];
+  if(s.type==='chu'){
+    if(front){content.appendChild(element('p','screen-label','中テーマのダッシュボード'));const grid=element('div','diagram-grid');c.items.forEach((name,k)=>diagram(grid,name,selection('detail',s.i,s.j,k)));content.appendChild(grid);}
+    else{const kind=element('div','kind-heading');dot(kind,c.name);kindBadge(kind,c.name);content.appendChild(kind);const list=element('div','setting-list');c.items.forEach((name,k)=>{const r=action(name,'setting-row',selection('detail',s.i,s.j,k));const empty=element('span','input-shape');empty.setAttribute('aria-hidden','true');r.appendChild(empty);list.appendChild(r);});content.appendChild(list);}return;
+  }
+  if(front)content.appendChild(element('p','screen-label','詳細ダッシュボード'));else kindBadge(content,c.name);
   const captions={'決定':'ここで決める','設定':'ここに事実を入れる','接続・取り込み':'ここで外とつなぐ・取り込む'};
-  content.appendChild(element('div','frame '+state.side,state.side==='omote'?'ここに図（チャート・グラフ）':captions[selected.chu]));
+  content.appendChild(element('div','frame '+(front?'detail-frame':'ura'),front?'ここに図（チャート・グラフ）':captions[c.name]));
 }
 function switchSide(side){
   state.side=side;
@@ -339,8 +371,9 @@ function renderAll(){
     data.dai.forEach(d=>{line(d.name,'dai');d.chu.forEach(c=>{line(c.name,'chu',side==='ura'?c.name:null);c.items.forEach(name=>line(name,'detail'));});});all.appendChild(section);
   });
 }
+
 Object.entries(DATA).forEach(([side,data])=>{
-  const tab=element('button','tab',(side==='omote'?'表＝':'裏＝')+data.title);tab.id='tab-'+side;tab.type='button';tab.setAttribute('role','tab');tab.setAttribute('data-side',side);tab.setAttribute('aria-controls','panel');tab.addEventListener('click',()=>switchSide(side));
+  const tab=element('button','tab',(side==='omote'?'表＝':'裏＝')+data.title);tab.id='tab-'+side;tab.type='button';tab.setAttribute('role','tab');tab.setAttribute('data-side',side);tab.setAttribute('aria-controls','panel');bind(tab,()=>switchSide(side));
   tab.addEventListener('keydown',event=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(event.key)){event.preventDefault();const next=event.key==='Home'?'omote':event.key==='End'?'ura':state.side==='omote'?'ura':'omote';switchSide(next);document.getElementById('tab-'+next).focus();}});
   document.getElementById('tabs').appendChild(tab);
 });
