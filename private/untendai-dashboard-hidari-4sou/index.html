@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="robots" content="noindex,nofollow">
+<title>左の欄を4層に当てた案（モック・2026-11-17）</title>
+<style>
+:root{color-scheme:light;--f-note:14px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Kaku Gothic ProN',Meiryo,sans-serif;color:#1f1f1d;background:#fff;font-size:14px}*{box-sizing:border-box}body{margin:0;background:#fff}header{padding:28px 32px 22px;border-bottom:1px solid #e6e6e3}h1{font-size:23px;line-height:1.5;margin:0 0 8px;font-weight:700}header p{margin:0;color:#76766f;line-height:1.7}.layout{display:grid;grid-template-columns:280px minmax(0,1fr);align-items:start;max-width:1160px;margin:auto}aside{background:#f7f7f5;border-right:1px solid #e6e6e3;min-height:calc(100vh - 130px);padding:20px 10px}h2{font-size:17px;margin:0 0 16px}aside h2{font-size:14px;color:#76766f;padding:0 10px}#v3-nav .v3-row{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:8px;cursor:pointer;white-space:normal;overflow-wrap:anywhere;color:#1f1f1d;font-size:var(--f-note);line-height:1.45}#v3-nav .v3-row:hover{background:#ececea}#v3-nav .v3-row.v3-on{background:#e4e4e1;font-weight:600}#v3-nav .v3-row:focus-visible{outline:2px solid #76766f;outline-offset:1px}#v3-nav .v3-row.v3-grp{font-weight:700;font-size:calc(var(--f-note)*1.2)}#v3-nav .v3-row.theme{font-weight:600;color:#1f1f1d}#v3-nav .v3-row.unnamed{color:#a3a39c;border:1px dashed #bdbdb5;margin:3px 0}#v3-nav .v3-chev{margin-left:.1em;width:.62em;height:.62em;flex:0 0 .62em;color:#a3a39c;fill:currentColor;stroke:none;transition:transform .15s}#v3-nav .v3-row.v3-open .v3-chev{transform:rotate(90deg)}#v3-nav .v3-kids{padding:2px 0 8px 18px}#v3-nav .v3-kids .v3-row{padding:5px 10px}.mark{flex:0 0 1em;color:#76766f}.mark.unknown{color:#a3a39c}[hidden]{display:none!important}.legend{color:#76766f;font-size:12px;line-height:1.8;padding:16px 10px 0;white-space:normal;overflow-wrap:anywhere}main{padding:26px 36px 40px;min-width:0}section{margin-bottom:32px}p,li{line-height:1.85}ul{padding-left:1.3em;margin:0}li{margin:7px 0}#counts p{margin:6px 0}.extra-group{margin:20px 0}h3{font-size:14px;margin:0 0 7px;font-weight:600}.extra-group ul{list-style:none;padding:0}.extra-group li{display:flex;gap:8px;margin:4px 0}.extra-group .mark{padding-top:0}@media(max-width:680px){header{padding:20px}h1{font-size:20px}.layout{grid-template-columns:1fr}aside{min-height:0;border-right:0;border-bottom:1px solid #e6e6e3}main{padding:24px 20px}}.all{border:1px solid #e6e6e3;border-radius:10px;padding:14px 16px}.all .ln{display:flex;gap:8px;align-items:baseline;line-height:1.5;padding:3px 0;overflow-wrap:anywhere}.all .ln.l2{font-weight:700;font-size:16.8px;margin-top:14px;padding-top:12px;border-top:1px solid #e6e6e3}.all .ln.l3{font-weight:600;padding-left:18px;margin-top:6px}.all .ln.l3.unnamed .nm{color:#a3a39c}.all .ln.l4{padding-left:36px}.all .sou{flex:0 0 auto;font-size:11px;color:#a3a39c;font-weight:400;margin-left:auto;padding-left:8px;white-space:nowrap}
+</style></head><body>
+<header><h1>左の欄を4層に当てた案（モック・2026-11-17）</h1><p>全体 → 大テーマ（4大ジャンル）→ その中のテーマ → 各詳細</p></header>
+<div class="layout"><aside aria-label="左の欄のモック"><h2>左の欄のモック</h2><nav id="v3-nav" aria-label="左の欄"></nav><div class="legend">◎ 必要不可欠　○ 必要　△ あればいい　？ 印がまだ無い</div></aside>
+<main><section><h2>この案の当て方</h2><div id="counts"></div></section>
+<section><h2>4層の全部の一覧（省略なし）</h2><div id="all" class="all"></div></section>
+<section><h2>決まっていない所</h2><ul>
+<li>名前の無いテーマが4つある（経営戦略に2つ・マーケティングに1つ・業務効率化に1つ）</li>
+<li>設定のまとまり3つ（お金と会計の設定・データ設定・マーケティング設定）を「テーマ」に数えてよいか</li>
+<li>3番目の層の印（◎○△）が10行とも無い</li>
+<li>はじめにやること・AI-Mits・学び は4層のどこにも入っていない（西田統合版の並びのまま置いた）</li>
+</ul></section><section><h2>西田統合版の並びに無い12個（どのテーマの下かが決まっていない）</h2><div id="extra"></div></section></main></div>
+<script>
+'use strict';
+const DATA={
+  "nav": [
+    {
+      "t": "全体",
+      "i": "home"
+    },
+    {
+      "t": "はじめにやること",
+      "i": "check"
+    },
+    {
+      "t": "AI-Mits",
+      "i": "chat",
+      "ai": 1
+    },
+    {
+      "t": "経営戦略",
+      "i": "target",
+      "g": [
+        {
+          "h": "目標設定",
+          "k": [
+            "目標＠と人数",
+            "今期の目標",
+            "人生の時間割",
+            "戦略の決定"
+          ]
+        },
+        {
+          "h": "",
+          "k": [
+            "経営カレンダー"
+          ]
+        },
+        {
+          "h": "",
+          "k": [
+            "PPM",
+            "DMi・CPF軸",
+            "ダイヤモンドチャート",
+            "KAZEOKE"
+          ]
+        }
+      ]
+    },
+    {
+      "t": "お金と会計",
+      "i": "yen",
+      "g": [
+        {
+          "h": "会計データ",
+          "k": [
+            "今月",
+            "先月の月次決算",
+            "期首から先月まで"
+          ]
+        },
+        {
+          "h": "分析",
+          "k": [
+            "移動平均",
+            "STRAC",
+            "100円損益",
+            "粗利のギネス"
+          ]
+        },
+        {
+          "h": "お金と会計の設定",
+          "k": [
+            "3つの入口から見る",
+            "税のつみたて",
+            "会計年度",
+            "粗利率",
+            "4:2:2:2 の仕分け",
+            "役員報酬と経費",
+            "繰越と税率",
+            "生活費と貯蓄",
+            "粗利のギネスの線"
+          ]
+        },
+        {
+          "h": "データ設定",
+          "k": [
+            "データ",
+            "マネーフォワード",
+            "freee",
+            "Stripe"
+          ]
+        }
+      ]
+    },
+    {
+      "t": "マーケティング",
+      "i": "mega",
+      "g": [
+        {
+          "h": "",
+          "k": [
+            "お客さまを5つに分ける",
+            "顧客レントゲン",
+            "顧客の推移",
+            "バブルチャート",
+            "ペルソナ設定"
+          ]
+        },
+        {
+          "h": "マーケティング設定",
+          "k": [
+            "UTAGE",
+            "CSV",
+            "配信の CSV"
+          ]
+        }
+      ]
+    },
+    {
+      "t": "業務効率化",
+      "i": "zap",
+      "g": [
+        {
+          "h": "",
+          "k": [
+            "仕事測定（FBAS）",
+            "3つの時給",
+            "1action3goal",
+            "業務フロー分析",
+            "休む仕組み",
+            "付箋仕事術",
+            "お使いのAI（FBAS）"
+          ]
+        }
+      ]
+    },
+    {
+      "t": "学び",
+      "i": "book"
+    }
+  ],
+  "marks": {
+    "◎": [
+      "全体",
+      "経営戦略",
+      "お金と会計",
+      "マーケティング",
+      "業務効率化",
+      "はじめにやること",
+      "AI-Mits",
+      "データ",
+      "マネーフォワード",
+      "freee",
+      "会計年度",
+      "期首から先月まで",
+      "先月の月次決算",
+      "今月",
+      "移動平均",
+      "目標＠と人数",
+      "今期の目標",
+      "戦略の決定",
+      "DMi・CPF軸",
+      "＠の目標（2,000万か3,000万か）"
+    ],
+    "○": [
+      "お客さまを5つに分ける",
+      "顧客レントゲン",
+      "顧客の推移",
+      "バブルチャート",
+      "CSV",
+      "UTAGE",
+      "Stripe",
+      "粗利率",
+      "役員報酬と経費",
+      "繰越と税率",
+      "4:2:2:2 の仕分け",
+      "STRAC",
+      "100円損益",
+      "粗利のギネス",
+      "3つの入口から見る",
+      "人生の時間割",
+      "生活費と貯蓄",
+      "経営カレンダー",
+      "粗利のギネスの線",
+      "KAZEOKE",
+      "宿題と期限",
+      "余裕度の定義",
+      "現預金5,000万を何年で",
+      "売上ゼロでもかかるコストの科目",
+      "現役の客数の目標",
+      "要る現役の客数"
+    ],
+    "△": [
+      "ペルソナ設定",
+      "お使いのAI（FBAS）",
+      "PPM",
+      "ダイヤモンドチャート",
+      "客単価・年間回数",
+      "仕事測定（FBAS）",
+      "3つの時給",
+      "1action3goal",
+      "業務フロー分析",
+      "休む仕組み",
+      "付箋仕事術",
+      "税のつみたて",
+      "配信の CSV",
+      "学び",
+      "区分ごとの打ち手",
+      "王道の打ち手の追う数字",
+      "目標の時給",
+      "外に出した時間と人数"
+    ]
+  },
+  "extra": [
+    {
+      "t": "経営戦略",
+      "k": [
+        "＠の目標（2,000万か3,000万か）",
+        "現預金5,000万を何年で"
+      ]
+    },
+    {
+      "t": "お金と会計",
+      "k": [
+        "余裕度の定義",
+        "売上ゼロでもかかるコストの科目"
+      ]
+    },
+    {
+      "t": "マーケティング",
+      "k": [
+        "客単価・年間回数",
+        "現役の客数の目標",
+        "要る現役の客数",
+        "区分ごとの打ち手",
+        "王道の打ち手の追う数字"
+      ]
+    },
+    {
+      "t": "業務効率化",
+      "k": [
+        "宿題と期限",
+        "目標の時給",
+        "外に出した時間と人数"
+      ]
+    }
+  ]
+};
+function mark(name){return Object.keys(DATA.marks).find(s=>DATA.marks[s].includes(name))||'？';}
+function element(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;}
+let selected=null;
+function select(row){if(selected){selected.classList.remove('v3-on');selected.removeAttribute('aria-current');}selected=row;row.classList.add('v3-on');row.setAttribute('aria-current','page');}
+function row(name,cls,level){const r=element('div','v3-row '+cls);r.setAttribute('role','button');r.setAttribute('tabindex','0');r.setAttribute('data-name',name);if(level)r.setAttribute('data-level',level);const m=mark(name);/* 2026-11-17 Mits様「左のメニューバーの大テーマは◎いらない」：大テーマ（2番目の層）の行には印を付けない */if(level!==2)r.appendChild(element('span','mark'+(m==='？'?' unknown':''),m));r.appendChild(element('span','label',name));return r;}
+function bind(row,action){row.addEventListener('click',action);row.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();action();}});}
+function toggle(row,kids){const open=row.getAttribute('aria-expanded')!=='true';row.setAttribute('aria-expanded',String(open));row.classList.toggle('v3-open',open);kids.hidden=!open;}
+let controlId=0;
+function collapsible(row,kids){kids.hidden=true;kids.id='kids-'+(++controlId);row.setAttribute('aria-controls',kids.id);row.setAttribute('aria-expanded','false');const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('class','v3-chev');svg.setAttribute('viewBox','0 0 10 10');svg.setAttribute('aria-hidden','true');const path=document.createElementNS('http://www.w3.org/2000/svg','path');path.setAttribute('d','M2 1 L8 5 L2 9 Z');svg.appendChild(path);row.appendChild(svg);bind(row,()=>toggle(row,kids));}
+const nav=document.getElementById('v3-nav');
+DATA.nav.forEach(n=>{if(!n.g){const r=row(n.t,'',n.t==='全体'?1:null);bind(r,()=>select(r));nav.appendChild(r);return;}const r=row(n.t,'v3-grp',2),kids=element('div','v3-kids');n.g.forEach(g=>{const t=row(g.h||'（名前なし）','theme'+(g.h?'':' unnamed'),3),details=element('div','v3-kids');g.k.forEach(k=>{const d=row(k,'detail',4);bind(d,()=>select(d));details.appendChild(d);});collapsible(t,details);kids.appendChild(t);kids.appendChild(details);});collapsible(r,kids);nav.appendChild(r);nav.appendChild(kids);});
+const groups=DATA.nav.filter(n=>n.g),themes=groups.flatMap(n=>n.g),named=themes.filter(g=>g.h).length;
+const counts=[['1番目の層（全体）',DATA.nav.filter(n=>n.t==='全体').length],['2番目の層（大テーマ）',groups.length],['3番目の層（その中のテーマ）',themes.length+'＝名前あり'+named+'・名前なし'+(themes.length-named)],['4番目の層（各詳細）',themes.reduce((n,g)=>n+g.k.length,0)]];
+counts.forEach(c=>document.getElementById('counts').appendChild(element('p','',c[0]+' '+c[1])));
+/* 2026-11-17 Mits様「モック内の大テーマ、各テーマ,詳細は省略せずにすべて載せて」：左の欄のモックと同じデータから、全部の行を開いたまま並べる */
+(function(){const box=document.getElementById('all');function ln(name,level,cls,sou,noMark){const d=element('div','ln '+cls);if(!noMark){const m=mark(name);d.appendChild(element('span','mark'+(m==='？'?' unknown':''),m));}d.appendChild(element('span','nm',name));d.appendChild(element('span','sou',sou));box.appendChild(d);}
+DATA.nav.forEach(n=>{if(!n.g){ln(n.t,1,'l1',n.t==='全体'?'1番目の層':'4層の外');return;}ln(n.t,2,'l2','2番目の層（大テーマ）',true);n.g.forEach(g=>{ln(g.h||'（名前なし）',3,'l3'+(g.h?'':' unnamed'),'3番目の層（テーマ）');g.k.forEach(k=>ln(k,4,'l4','4番目の層（詳細）'));});});})();
+DATA.extra.forEach(g=>{const section=element('div','extra-group');section.appendChild(element('h3','',g.t));const ul=element('ul');g.k.forEach(k=>{const li=element('li'),m=mark(k);li.appendChild(element('span','mark'+(m==='？'?' unknown':''),m));li.appendChild(element('span','',k));ul.appendChild(li);});section.appendChild(ul);document.getElementById('extra').appendChild(section);});
+</script></body></html>
