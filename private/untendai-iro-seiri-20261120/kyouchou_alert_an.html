@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>強調とアラートの色の案</title>
+<style>
+:root{--bg:#ffffff;--card:#f7f8fc;--line:#e3e6f0;--tx:#212529;--sub:#505461;--link:#1a5fd0;--good:#1f6b45;--bad:#a63f3f;--amber:#7a5e1f}
+body{margin:0;background:var(--bg);color:var(--tx);font:17px/1.7 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif}
+main{max-width:980px;margin:0 auto;padding:32px 16px 64px}
+h1{font-size:25.5px;margin:0 0 6px}
+h2{font-size:20.4px;margin:40px 0 10px;padding-top:16px;border-top:1px solid var(--line)}
+p.m,.m{color:var(--sub);font-size:13.6px}
+table{width:100%;border-collapse:collapse;margin:12px 0}
+th,td{border-bottom:1px solid var(--line);padding:10px 8px;text-align:left;vertical-align:top;font-size:15px}
+th{color:var(--sub);font-weight:600;font-size:13.6px}
+.sw{display:inline-block;width:18px;height:18px;border-radius:4px;border:1px solid rgba(0,0,0,.12);vertical-align:-3px;margin-right:6px}
+.chip{display:inline-block;margin:0 10px 6px 0;white-space:nowrap}
+.chip code{font-size:13.6px}
+.n{color:var(--sub);font-size:13.6px}
+.an{font-weight:700}
+.rei{background:var(--card);border-radius:10px;padding:14px 16px;margin:10px 0}
+.rei .row{display:flex;gap:28px;flex-wrap:wrap}
+.rei .col{min-width:260px}
+.rei .lb{color:var(--sub);font-size:13.6px;margin-bottom:4px}
+.big{font-size:20.4px;font-weight:600}
+.arrow{color:var(--sub);margin:0 6px}
+ul{padding-left:22px}
+@media (max-width:640px){th,td{font-size:14px;padding:8px 4px}.rei .col{min-width:0}}
+</style>
+</head>
+<body>
+<main>
+<h1>強調とアラートの色の案</h1>
+<p class="m">2026-11-20 ／ ダッシュボード版（明るい配色）／ 根拠：Codex がコードの色を数えた結果（先頭 5857bce・/Users/nishidamitsuhiro/My Drive/claude-nishida/MITS-ALL/経営プロジェクト/経営の運転台/_mock/dashboard_20261115/kekka_kyouchou_alert_iro_20261120.md）と、13:36 ごろに画面116か所で測った色（_iro_gamen.json・背景と枠とグラフを寄せる前の測り）。「回」は、その色が出ていた画面の数を足した物</p>
+
+<h2>物差し</h2>
+<ul>
+<li>見ている人の一貫性：同じ役は、どの画面でも同じ色に見えるようにする（背景・枠・グラフと同じ物差し）</li>
+<li>色は文字だけで示す（11-20 決定：良い・悪いの地と枠に色を付けない）。だから、字として白地で読める濃さの色にする</li>
+<li>使う色は、明るい配色の色の変数（2026-08-28 に読みやすさを測って決めた --good・--bad・--amber・--link）から取る。新しい色は足さない</li>
+</ul>
+
+<h2>案</h2>
+<table>
+<tr><th style="width:16%">役</th><th>今、明るい画面に出ている色（画面に出た回数）</th><th style="width:24%">案</th></tr>
+<tr><td>良い</td><td>
+<span class="chip"><span class="sw" style="background:#1e8a4c"></span><code>#1e8a4c</code> <span class="n">434</span></span>
+<span class="chip"><span class="sw" style="background:#146b47"></span><code>#146b47</code> <span class="n">288</span></span>
+<span class="chip"><span class="sw" style="background:#1f6b45"></span><code>#1f6b45</code> <span class="n">61</span></span>
+<span class="chip"><span class="sw" style="background:#4cc38a"></span><code>#4cc38a</code> <span class="n">32・暗い配色用の色</span></span>
+<span class="chip"><span class="sw" style="background:#1f7a45"></span><code>#1f7a45</code> <span class="n">12</span></span>
+<span class="chip"><span class="sw" style="background:#0f7a55"></span><code>#0f7a55</code></span>
+<span class="chip"><span class="sw" style="background:#0f7c86"></span><code>#0f7c86</code> <span class="n">良し悪しの「良い」</span></span>
+</td><td class="an"><span class="sw" style="background:#1f6b45"></span>#1f6b45 の1色<br><span class="n">白地で 6.47</span></td></tr>
+<tr><td>悪い</td><td>
+<span class="chip"><span class="sw" style="background:#c0392b"></span><code>#c0392b</code> <span class="n">118</span></span>
+<span class="chip"><span class="sw" style="background:#a63f3f"></span><code>#a63f3f</code> <span class="n">10</span></span>
+<span class="chip"><span class="sw" style="background:#d00000"></span><code>#d00000</code> <span class="n">4</span></span>
+<span class="chip"><span class="sw" style="background:#b42318"></span><code>#b42318</code> <span class="n">2</span></span>
+<span class="chip"><span class="sw" style="background:#e07070"></span><code>#e07070</code> <span class="n">コードに18か所・画面0</span></span>
+</td><td class="an"><span class="sw" style="background:#a63f3f"></span>#a63f3f の1色<br><span class="n">白地で 6.17</span></td></tr>
+<tr><td>注意<br><span class="n">（良いと悪いの間）</span></td><td>
+<span class="chip"><span class="sw" style="background:#e8b33e"></span><code>#e8b33e</code> <span class="n">91・暗い配色用の金</span></span>
+<span class="chip"><span class="sw" style="background:#7a5e1f"></span><code>#7a5e1f</code> <span class="n">10</span></span>
+<span class="chip"><span class="sw" style="background:#a4551f"></span><code>#a4551f</code> <span class="n">6</span></span>
+<span class="chip"><span class="sw" style="background:#e89466"></span><code>#e89466</code> <span class="n">4</span></span>
+<span class="chip"><span class="sw" style="background:#a97800"></span><code>#a97800</code> <span class="n">1</span></span>
+</td><td class="an"><span class="sw" style="background:#7a5e1f"></span>#7a5e1f の1色<br><span class="n">白地で 6.09（#e8b33e は 1.92 で字として読めない）</span></td></tr>
+<tr><td>強調</td><td>
+<span class="chip"><span class="sw" style="background:#1a5fd0"></span><code>#1a5fd0</code> <span class="n">2,795・字・枠・線・選んだ印のどれにも出ている</span></span>
+</td><td class="an"><span class="sw" style="background:#1a5fd0"></span>色は足さない<br><span class="n">青を「押せる物」と「今年・実績の線」だけに絞って立たせる</span></td></tr>
+</table>
+
+<h2>15:2x 追記：上の案は3色とも黒を混ぜた色（Mits様の指摘）</h2>
+<p>上の3色は、明るさを落として彩度も下げた色（黒を混ぜた、くすんだ色）です。明るさ 27〜45％・彩度 45〜59％。押せる物の青 #1a5fd0（明るさ46％・彩度78％）より濁って見え、目に飛び込むというアラートの役が弱くなります。白地で読める濃さ（4.5 以上）だけを物差しにして選んだためです。</p>
+<p>同じ読める濃さ（4.5 以上）のまま、黒をなるべく混ぜずに、色の鮮やかさを残した案：</p>
+<table>
+<tr><th style="width:16%">役</th><th>上の案（黒を混ぜた色）</th><th>黒を混ぜない案</th></tr>
+<tr><td>良い</td><td><span class="sw" style="background:#1f6b45"></span><code>#1f6b45</code> <span class="n">明るさ27・彩度55・6.47</span></td><td class="an"><span class="sw" style="background:#0b893f"></span>#0b893f <span class="n">明るさ29・彩度85・4.51</span></td></tr>
+<tr><td>悪い</td><td><span class="sw" style="background:#a63f3f"></span><code>#a63f3f</code> <span class="n">明るさ45・彩度45・6.17</span></td><td class="an"><span class="sw" style="background:#da3a2f"></span>#da3a2f <span class="n">明るさ52・彩度70・4.52</span></td></tr>
+<tr><td>注意</td><td><span class="sw" style="background:#7a5e1f"></span><code>#7a5e1f</code> <span class="n">明るさ30・彩度59・6.09</span></td><td class="an"><span class="sw" style="background:#ad6200"></span>#ad6200 <span class="n">明るさ34・彩度100・4.62</span></td></tr>
+</table>
+<div class="rei"><div class="row">
+<div class="col"><div class="lb">黒を混ぜない案</div>
+<div><span style="color:#0b893f">前年の同じ月より ▲1,234,567円</span></div>
+<div><span style="color:#da3a2f">必要なベースより ▼765,432円</span></div>
+<div><span style="color:#ad6200">目標までもう少し（注意）</span></div>
+<div class="big"><span style="color:#0b893f">A</span><span class="arrow">／</span><span style="color:#da3a2f">E</span></div>
+</div></div></div>
+<p class="m">黄・金は明るいままだと白地で読めない（#e8b33e は 1.92）。黄の系統で読める濃さにすると、どうしても茶に寄るので、注意は橙寄り（色相34度）にした。数字は白地に対する読みやすさの比（4.5 以上で本文として読める）</p>
+
+<h2>見え方（白地・字の色だけ）</h2>
+<div class="rei"><div class="row">
+<div class="col"><div class="lb">今</div>
+<div><span style="color:#1e8a4c">前年の同じ月より ▲1,234,567円</span></div>
+<div><span style="color:#c0392b">必要なベースより ▼765,432円</span></div>
+<div><span style="color:#e8b33e">目標までもう少し（注意）</span></div>
+<div class="big"><span style="color:#1e8a4c">A</span><span class="arrow">／</span><span style="color:#c0392b">E</span></div>
+</div>
+<div class="col"><div class="lb">案</div>
+<div><span style="color:#1f6b45">前年の同じ月より ▲1,234,567円</span></div>
+<div><span style="color:#a63f3f">必要なベースより ▼765,432円</span></div>
+<div><span style="color:#7a5e1f">目標までもう少し（注意）</span></div>
+<div class="big"><span style="color:#1f6b45">A</span><span class="arrow">／</span><span style="color:#a63f3f">E</span></div>
+</div>
+</div></div>
+
+<h2>理由</h2>
+<ul>
+<li>良い・悪い・注意の3色は、明るい配色の色の変数として、2026-08-28 に読みやすさを測って決めた色。これに寄せると色の数がいちばん減り、新しい色を足さずに済む</li>
+<li>今いちばん多く出ている緑 #1e8a4c と赤 #c0392b は、ダッシュボード版で足した図と詳細のページの色（hikaku.css・shousai_seiseki.css の --green・--red）。決まった変数とは別に書かれているので、同じ「良い」が画面によって2つの緑に分かれている</li>
+<li>強調に金を使うと、注意の金とぶつかる。強調は今の青をそのまま使い、青を使う所を絞って立たせる</li>
+</ul>
+
+<h2>寄せない色（役が違う）</h2>
+<table>
+<tr><th style="width:24%">色</th><th>役</th><th style="width:16%">画面に出た回数</th></tr>
+<tr><td><span class="sw" style="background:#137a4f"></span><code>#137a4f</code></td><td>見本の数字（見本の色の3色の決まり・決定台帳 2026-11-18 12:56）</td><td>177</td></tr>
+<tr><td><span class="sw" style="background:#7a5218"></span><code>#7a5218</code></td><td>入れた数字の茶（入れる欄の色分け）</td><td>649</td></tr>
+<tr><td><span class="sw" style="background:#8b6620"></span><code>#8b6620</code></td><td>下の行の「実データの写し」の帯の地。良い・悪い・注意のどれにも当たらない</td><td>116画面すべて</td></tr>
+</table>
+
+<h2>決めていただきたいこと</h2>
+<ul>
+<li>良い・悪い・注意を、上の3色に寄せるか</li>
+<li>強調に色を足さず、青の使う所を絞る形にするか</li>
+<li>下の行の帯の茶 #8b6620 をどうするか（今のまま・灰にする・決定の色に寄せる）</li>
+</ul>
+</main>
+</body>
+</html>

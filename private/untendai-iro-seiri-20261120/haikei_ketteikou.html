@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>色の決定稿</title>
+<style>
+:root{--tx:#212529;--sub:#505461;--line:#e3e6f0;--line2:#ccd2e4;--men:#f7f8fc;--link:#1a5fd0}
+body{background:#fff;color:var(--tx);font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:17px;line-height:1.75;max-width:980px;margin:32px auto;padding:0 20px}
+h1{font-size:25.5px;margin:0 0 4px}h2{font-size:20.4px;margin:40px 0 10px;padding-bottom:4px;border-bottom:2px solid var(--tx)}
+h3{font-size:17px;margin:20px 0 6px}
+.lead{color:var(--sub);font-size:13.6px}
+.box{border:1px solid var(--line);border-radius:10px;padding:12px 18px;margin:12px 0}
+.step{display:grid;grid-template-columns:64px 1fr;gap:12px;border-left:2px solid var(--line2);padding:4px 0 14px 14px;margin-left:6px}
+.step .t{font-size:13.6px;color:var(--sub);font-variant-numeric:tabular-nums}
+blockquote{margin:6px 0;padding:6px 14px;border-left:3px solid var(--line2);background:var(--men)}
+table{border-collapse:collapse;width:100%;margin:8px 0}th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}th{background:var(--men);font-weight:600}
+.sw{display:inline-block;width:26px;height:26px;border:1px solid #ccc;border-radius:5px;vertical-align:middle;margin-right:6px;overflow:hidden;background:#fff}.sw>span{display:block;width:100%;height:100%}
+code{font-size:13.6px}
+.tag{display:inline-block;font-size:11.05px;border:1px solid var(--line2);border-radius:4px;padding:0 6px;margin-left:6px;color:var(--sub);font-weight:400}
+.kimari{font-weight:600}
+</style></head><body>
+
+<h1>色の決定稿（背景・枠・グラフ）</h1>
+<p class="lead">経営の運転台・ダッシュボード版（2026-11-20）。運転台のような業務アプリを作る人に向けて、背景の色を「調べる → 似た色をまとめる → 絞る → 決める → そもそも何色要るかを問い直す」で決めた記録。調べた結果のまとめ：/Users/nishidamitsuhiro/運転台の受け渡し/iro_chousa_20261120/matome.html</p>
+
+<div class="box">
+<p class="kimari">この事例で分かったこと</p>
+<p>1. 何か月も足し算で作ったアプリは、背景だけで67色になっていた。前のアプリの色と、暗い配色用の色が、明るい画面に残っていた。<br>
+2. 似た色を選び直すだけでは足りない。物差しは「見ている人の一貫性」── 同じ役の背景は、どの画面でも同じ色に見えること。<br>
+3. その先に「そもそも何色要るか」がある。背景は場所と状態を見分けるためだけに使い、良い・悪いの意味は字の色で伝えると、5色で足りる。</p>
+</div>
+
+<h2>流れ</h2>
+
+<div class="step"><div class="t">12:04</div><div><b>調べる</b>
+<blockquote>アプリ全体で使われている色を調べてほしい。（中略）前のアプリの時の色だし、あとはグラフとかで青が多用されてるので、色の色数、色のバランスっていうのを確認したい。</blockquote>
+<p>Codex が Chrome で109の画面を開き、背景・文字・枠・図の色を全部測った。字の大きさは別の調べものに分けた（「色は色、文字は文字でやりたい」）。</p></div></div>
+
+<div class="step"><div class="t">14:0x</div><div><b>分かったこと</b>
+<table><tr><th>使い道</th><th>色の数</th></tr>
+<tr><td>背景</td><td>67</td></tr><tr><td>文字</td><td>33</td></tr><tr><td>枠</td><td>16</td></tr><tr><td>グラフ（灰を除く）</td><td>46</td></tr><tr><td>コードに書かれている色</td><td>458種類</td></tr></table>
+<p>白に近い灰が6種類並び、設定の画面だけ前のアプリの黄みの灰 <code>#f7f7f5</code> だった。押せる物の青 <code>#1a5fd0</code> が、文字・枠・選んだ印・グラフの全部に出ていた。</p></div></div>
+
+<div class="step"><div class="t">14:08</div><div><b>似た色をまとめる</b>
+<blockquote>それぞれ（中略）に追記の形で同系・近似色をだして。色番号とともに。そして私が選んでいく、選んだら近似の色は揃える。一番上から</blockquote>
+<p>同じ系統で見た目の差が小さい色を1つのまとまりにした。背景は12のまとまりになった。</p></div></div>
+
+<div class="step"><div class="t">14:29</div><div><b>AI が2つに絞る</b>
+<blockquote>まずちかい色があるもの、最後に2つから選べばいいくらいにAIが選んで。（中略）基本的にはシンプル、ソフィスティケート、クライアントはコンサルタントのような人が使う、知性度が高い人、そういう人を基準に絞り込んで</blockquote>
+<p>絞り方：明るい配色の色の変数（2026-08-28 に読みやすさを測って決めた色）を1つ目に推す。黄みの灰（前のアプリの色）は外す。暗い配色用の色は明るい配色の色に寄せる。</p></div></div>
+
+<div class="step"><div class="t">14:31</div><div><b>物差しを決める</b>
+<blockquote>背景12種類　一番求めるのは見ている人の一貫性、一貫性で選んで決めて</blockquote>
+<p>色を選ぶのではなく、役を見つけて役ごとに1色にした。たとえば「選んだ物」の背景は、ダッシュボードでは薄い青、設定の左の一覧では前のアプリの灰 <code>#e4e4e1</code> だった。同じ役なので同じ薄い青にする。</p></div></div>
+
+<div class="step"><div class="t">14:34</div><div><b>そもそも何色要るかを問い直す</b>
+<blockquote>次は背景にそもそも12色もいるのかっていう問題</blockquote>
+<p>運転台の決まり「色は文字だけ。塗らない・囲まない」に照らすと、背景に要る役は5つになる。</p></div></div>
+
+<div class="step"><div class="t">14:4x</div><div><b>同じ手順を、枠とグラフに繰り返す</b>
+<blockquote>手順は今背景でやったように、近似色を整えて推しを決めて、それを決定して、そしてそれ以外で使われてるものはその決定色に寄せていく。これをグラフ、枠、それぞれで同じこと繰り返して。最終的には例外をなくしていく。</blockquote>
+<p>手順：① 近い色をまとめる ② 推しを決めて決定する ③ まとまりの外の色も、役が同じなら決定色に寄せる ④ 使い道ごとに繰り返し、最後に例外を無くす。</p></div></div>
+
+<h2>背景の決定（役ごとに1色）<span class="tag">決定・ダッシュボード版に入れている途中</span></h2>
+<table>
+<tr><th>役</th><th>色</th><th>揃えた物</th></tr>
+<tr><td>地</td><td><span class="sw"><span style="background:#ffffff"></span></span><code>#ffffff</code></td><td>箱の地 <code>#fcfcff</code> も同じ白に。箱は線で分かる</td></tr>
+<tr><td>一段沈めた面</td><td><span class="sw"><span style="background:#f7f8fc"></span></span><code>#f7f8fc</code></td><td>AI-Mits の吹き出し・増減の札・見本の札・表の見出し・前のアプリの左の一覧など14色</td></tr>
+<tr><td>選んだ印・今いる所</td><td><span class="sw"><span style="background:#1a5fd0;opacity:.09"></span></span><code>#1a5fd0 透9%</code></td><td>設定の左の一覧の選んだ行（前のアプリの <code>#e4e4e1</code>）・期間のボタン・今いる所の印</td></tr>
+<tr><td>入力欄</td><td><span class="sw"><span style="background:#fffbe6"></span></span><code>#fffbe6</code></td><td>スタッフ・年齢の入力欄のベージュ <code>#f6efe4</code>（入力欄の薄い黄は 2026-10-29 の決まり）</td></tr>
+<tr><td>良い</td><td><span class="sw"><span style="background:#edf7f0"></span></span><code>#edf7f0</code></td><td>成績 A・B と同じ薄い緑</td></tr>
+<tr><td>悪い</td><td><span class="sw"><span style="background:#fcefeb"></span></span><code>#fcefeb</code></td><td>成績 E と同じ薄い赤</td></tr>
+<tr><td>区切りの線の面</td><td><span class="sw"><span style="background:#e3e6f0"></span></span><code>#e3e6f0</code></td><td>AI-Mits の欄の上下の帯など</td></tr>
+</table>
+
+<h2>枠の線の決定（役ごとに1色）<span class="tag">決定・ダッシュボード版に入れている途中</span></h2>
+<table><tr><th>役</th><th>決定色</th><th>寄せた色</th></tr>
+<tr><td>薄い線（区切り・表の見出し・札の枠）</td><td><span class="sw"><span style="background:#e3e6f0;opacity:1"></span></span><code>#e3e6f0</code></td><td>#e5e7ed・#edf0f4・#dbdee5・#f7f9fb、前のアプリの黄みの灰 #efefec・#e6e6e3</td></tr>
+<tr><td>濃い線（ボタン・選ぶ欄の枠）</td><td><span class="sw"><span style="background:#ccd2e4;opacity:1"></span></span><code>#ccd2e4</code></td><td>#dce0e8・#505461</td></tr>
+<tr><td>選んだ印の線</td><td><span class="sw"><span style="background:#1a5fd0;opacity:0.28"></span></span><code>#1a5fd0</code> 透28%</td><td>（そのまま）</td></tr>
+<tr><td>入力欄の線</td><td><span class="sw"><span style="background:#e6c35c;opacity:1"></span></span><code>#e6c35c</code></td><td>入力欄に付いていた茶 #7a5218・緑 #137a4f</td></tr>
+<tr><td>点いている印</td><td><span class="sw"><span style="background:#1f6b45;opacity:1"></span></span><code>#1f6b45</code></td><td>#146b47</td></tr></table>
+<h2>グラフの色の決定（役ごとに1色）<span class="tag">決定・ダッシュボード版に入れている途中</span></h2>
+<p>見つかった食い違い：表の STRAC は暗い配色用の色（#58a6ff・#4cc38a・#e8b33e・#a371f7・#e89466）、裏の STRAC ワークシートは明るい配色の色で描いていた。同じ物が表と裏で違う色に見えていたので、明るい配色の色の変数に揃える。</p>
+<table><tr><th>役</th><th>決定色</th><th>寄せた色</th></tr>
+<tr><td>今年・実績の線</td><td><span class="sw"><span style="background:#1a5fd0;opacity:1"></span></span><code>#1a5fd0</code></td><td>（そのまま）</td></tr>
+<tr><td>比べる線・灰の点（前年・必要なペース）</td><td><span class="sw"><span style="background:#9aa0ad;opacity:1"></span></span><code>#9aa0ad</code></td><td>#9fb2c4・#8fa1b3・#78828c（透明度つき）</td></tr>
+<tr><td>系列の青</td><td><span class="sw"><span style="background:#11159f;opacity:1"></span></span><code>#11159f</code></td><td>#58a6ff</td></tr>
+<tr><td>系列の緑</td><td><span class="sw"><span style="background:#1f6b45;opacity:1"></span></span><code>#1f6b45</code></td><td>#4cc38a・#4e8f1e・#137a4f</td></tr>
+<tr><td>系列の金</td><td><span class="sw"><span style="background:#7a5e1f;opacity:1"></span></span><code>#7a5e1f</code></td><td>#e8b33e</td></tr>
+<tr><td>系列の紫</td><td><span class="sw"><span style="background:#0a0d6b;opacity:1"></span></span><code>#0a0d6b</code></td><td>#a371f7</td></tr>
+<tr><td>系列の橙（変動費）</td><td><span class="sw"><span style="background:#a4551f;opacity:1"></span></span><code>#a4551f</code></td><td>#e89466</td></tr>
+<tr><td>目盛り・軸の字</td><td><span class="sw"><span style="background:#505461;opacity:1"></span></span><code>#505461</code></td><td>#5c6b7a・#5a6070・#8fa1b3</td></tr>
+<tr><td>暗い配色の線・地の残り</td><td><span class="sw"><span style="background:#ccd2e4;opacity:1"></span></span><code>#ccd2e4</code> <span class="sw"><span style="background:#212529;opacity:1"></span></span><code>#212529</code></td><td>#2c3d52 → #ccd2e4、#0e141b → #212529</td></tr></table>
+<p class="lead">透明度つきの色（薄い面）は、同じ透明度のまま決定色に寄せる。</p>
+
+<h2>次の案（背景を5色にする）<span class="tag">判断待ち</span></h2>
+<table>
+<tr><th>役</th><th>色</th><th>使う所</th></tr>
+<tr><td>地</td><td><code>#ffffff</code></td><td>ページと箱</td></tr>
+<tr><td>面</td><td><code>#f7f8fc</code></td><td>一段沈めた所（表の見出し・札・吹き出し・ボタンの地）</td></tr>
+<tr><td>選んだ印</td><td><code>#1a5fd0 透9%</code></td><td>選んだ物・今いる所</td></tr>
+<tr><td>入力欄</td><td><code>#fffbe6</code></td><td>書き込む所</td></tr>
+<tr><td>押すボタン</td><td><code>#1a5fd0</code></td><td>強く押させる1か所</td></tr>
+</table>
+<p>やめる物：良い・悪いの薄い地（良し悪しは字の緑・赤だけで示す）、区切りの線の面（線は線で引く）、表／裏の切り替えボタンの灰青の地（白の地に線の枠）。そのまま残す物：AI-Mits の印の水色 <code>#c9e4f8</code>（印の色で、背景の役ではない）。</p>
+<p>判断を待っている2つ：濃紺の「経営の壁打ち相手 AI-Mits に聞く」を押すボタンの青に寄せるか／良い・悪いの地をやめて字の色だけにするか。</p>
+
+<h2>このあと色で整えること</h2>
+<p>強調色と、アラート・警告に使う色をどう決めるか（Mits様 14:3x「この後色で整えたいのは、強調色とアラート、警告する場合に使う色をどう決めるか」）。</p>
+
+</body></html>
