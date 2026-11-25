@@ -1,0 +1,70 @@
+/* ホーム用の見た目：Claude Design「見本の画面」の色・文字・部品の作りを写した（2026-11-25）。文・数字・写真・順番・リンクは変えない。 */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap");
+body.home-page {
+  --blue: #1553b8; --red: #1553b8; --sky: #f6f8fc; --cream: #f3f7fe; --line: #dfe5ee;
+  --shadow: 0 6px 22px rgb(17 32 58 / 6%);
+  color: #1d2a3d;
+  font: 17px/1.85 "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", meiryo, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+body.home-page a { color: #1553b8; text-underline-offset: 4px; }
+body.home-page a:hover { color: #0f3f8f; text-decoration-thickness: 2px; }
+body.home-page h1, body.home-page h2, body.home-page h3 { color: #11203a; }
+html { scroll-padding-top: 110px; }
+body.home-page small { color: #5d6878; }
+body.home-page .notice { padding: 7px 16px; background: #eef1f5; color: #5d6878; font-size: 12px; }
+body.home-page .header {
+  gap: 12px 28px; padding: 14px max(16px, calc((100% - 1200px) / 2));
+  background: rgba(255,255,255,.96); backdrop-filter: blur(8px);
+  border-bottom: 1px solid #dfe5ee; box-shadow: none;
+}
+body.home-page .topnav a { color: #1d2a3d; font-size: 14px; font-weight: 700; padding: 6px 0; border-bottom: 2px solid transparent; }
+body.home-page .topnav a:hover { color: #1553b8; border-bottom-color: transparent; }
+body.home-page .topnav a[aria-current=page] { color: #1553b8; border-bottom: 2px solid #1553b8; }
+body.home-page .topnav .registration-link a { font-weight: 700; }
+body.home-page .button {
+  background: #1553b8; border: 1px solid #1553b8; color: #fff; border-radius: 8px;
+  font-size: 14px; font-weight: 700; padding: 11px 18px; line-height: 1.6;
+}
+body.home-page .button:hover { background: #0f3f8f; border-color: #0f3f8f; color: #fff; }
+body.home-page .header > .button, body.home-page .header-registration .button { font-size: 14px; padding: 11px 18px; }
+body.home-page .main .button { font-size: 16px; padding: 14px 24px; }
+body.home-page .button-secondary { background: #fff; color: #1553b8; border: 1px solid #1553b8; }
+body.home-page .button-secondary:hover { background: #eef3fb; color: #0f3f8f; border-color: #0f3f8f; }
+body.home-page .main > h1 { color: #5d6878; background: #f3f7fe; font-size: 14px; }
+body.home-page .main > .hero { background: #f3f7fe; }
+body.home-page .main .wire[data-wf-background="white"] { background: #fff; }
+body.home-page .main .wire[data-wf-background="sky"] { background: #f6f8fc; }
+body.home-page .main .wire[data-wf-background="cream"] { background: #f3f7fe; }
+body.home-page .main > .wire { padding-top: 56px; padding-bottom: 56px; border-top: 1px solid #e6ebf2; }
+body.home-page .hero-copy h2 { color: #11203a; font-weight: 700; letter-spacing: .01em; }
+body.home-page .hero-copy > p, body.home-page .hero-visual p { color: #5d6878; }
+body.home-page .hero-visual img { border: 1px solid #dfe5ee; border-radius: 12px !important; box-shadow: 0 16px 40px rgb(17 32 58 / 12%); }
+body.home-page img { border-radius: 12px !important; }
+body.home-page .cell { border: 1px solid #dfe5ee; border-radius: 12px; box-shadow: 0 6px 22px rgb(17 32 58 / 6%); }
+body.home-page .source { color: #6d7785; }
+body.home-page .mitei {
+  background: #f1f3f6; color: #465062; border: 1px dashed #8a95a5; border-radius: 999px;
+  padding: 1px 10px; font-size: 12px; font-weight: 700;
+}
+body.home-page .funnel-steps li { background: #f3f7fe; border: 1px solid #a9c0e6; border-radius: 10px; }
+body.home-page .web-preview-step { background: #eef3fb; border: 1px solid #dfe5ee; border-radius: 10px; }
+body.home-page .external { background: #f3f7fe; border: 1px solid #a9c0e6; border-radius: 12px; }
+body.home-page th { background: #eef3fb; color: #11203a; }
+body.home-page th, body.home-page td { border-color: #dfe5ee; }
+body.home-page table { border-radius: 8px; }
+body.home-page blockquote { margin: 16px 0; padding: 14px 20px; background: #fff; border-left: 4px solid #1553b8; border-radius: 0 8px 8px 0; color: #2b3442; }
+body.home-page .more-sections { background: #f6f8fc; }
+body.home-page .more-sections > summary { color: #1553b8; border-block: 1px solid #dfe5ee; }
+body.home-page .next-page { background: #fff; }
+body.home-page .footer { background: #0f2547; border-top: 0; color: #d6deea; }
+body.home-page .footer a, body.home-page .footer .muted, body.home-page .footer small { color: #cfd9ec; }
+body.home-page .footer a:hover { color: #fff; }
+body.home-page .funnel-diagram .funnel-node { background: #eef3fb; border-color: #a9c0e6; }
+body.home-page .funnel-diagram .funnel-node:nth-of-type(4n+3) { background: #f3f7fe; }
+body.home-page .funnel-diagram .funnel-arrow { color: #1553b8; }
+@media (max-width: 700px) {
+  body.home-page { font-size: 16px; }
+  html { scroll-padding-top: 140px; }
+  body.home-page .main > .wire { padding-top: 40px; padding-bottom: 40px; }
+}
